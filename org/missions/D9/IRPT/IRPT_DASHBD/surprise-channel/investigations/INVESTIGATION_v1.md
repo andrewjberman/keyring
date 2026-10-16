@@ -19869,7 +19869,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
 
 ```json
@@ -19923,5 +19922,58 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "ARMED with owner ~F2 as the CTO asked. Next acts of this seat: a per-firm census of the custodian action and type codes and a proposed Opal vocabulary with its four-postulate record (the taxonomy law), then the contract."
+}
+```
+
+## IRPT_DASHBD-D2-S104 -- Cottonwood gold income_received is null on every floor-era row against a non-nullable source contract; the series `income` becomes number-or-null
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S104",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T01:03:46Z",
+  "one_line": "The Cottonwood gold account_return_daily rows from its floor day carry income_received null on every row, while the source table contract declares income_received non-nullable except for source orion with flow_claim absent; the series contract's `income` array (never null) cannot carry them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (0.4.2): income_received nullable false, nullable_when {source orion, flow_claim absent}; org/standards/IRPT_DASHBD_SERIES_CONTRACT.json (0.2.0): income never null, 0.0 on a day with none.",
+  "world_is": "Issuer ruling: series contract 0.3.0 makes `income` number-or-null (Amendment 1 of TO-DB-b-278), and the source contract gets a 0.4.3 edit that names the Black Diamond-computed source as a case where income_received is null (a later cell of the same round). The publisher writes the null as it is and never as zero. Counts only, read from the Cottonwood gold table (65 date partitions 2026-07-10 to 2026-10-14, 52,468 rows, 979 accounts): income_received null on 52,468 of 52,468 rows, income_return null on 52,468, holdings_price_return null on 52,468, market_value_eod and external_flow null on 0; source reads 'computed from Black Diamond values and flows' on every row; day_quality MEASURED 46,232 and NOT_MEASURABLE 6,236. The adapter's own header states the income columns are null because the method separates no income. The table before the floor day (3,325 partitions from 2013) has market_value_eod null on 1,559,722 of 1,691,729 rows and is not read by the publish.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W416-S1 -- TO-DB-c-24: the sparse cone leaves the portal suite's contract paths unmaterialized, so the full InvestorReporting run fails 68 tests identically at base and head
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W416-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~416",
+  "surfaced_at": "2026-10-16T00:50:34Z",
+  "one_line": "The worktree wk-IRPT_DASHBD-416 is a sparse cone (portal/src/pages/InvestorReporting and org/standards). Suite files that read docs/contracts/investor-reporting and infra/aws/lambda/investor-reporting/_contracts fail with ENOENT. The full run bun test src/pages/InvestorReporting gives 68 fail and 27 errors at base e578b378 and at head 8f560680, with the same 44 unique failing names, so the cell adds no failure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal head 8f560680a0e38390aaa1634549bc8eda21f7eec9: bun test src/pages/InvestorReporting ran 1108 tests across 402 files, 68 fail, 27 errors",
+      "base run at e578b378d332ad1505018be3801466dac7aeeade (base DashboardPerformance.tsx and iv-e-125 restored, new test moved aside): 1102 tests across 401 files, 68 fail, 27 errors; the two sets of 44 unique failing names are identical",
+      "load errors read: ENOENT open 'C:\\dev\\wk-IRPT_DASHBD-416\\docs\\contracts\\investor-reporting\\v1\\routes.json' and ENOENT open 'C:\\dev\\wk-IRPT_DASHBD-416\\infra\\aws\\lambda\\investor-reporting\\_contracts\\AnalysisReport.v2.schema.json'"
+    ]
+  },
+  "spec_asserts": "TO-DB-c-24 step 6: from the portal worktree the failing-test names after bun test src/pages/InvestorReporting are a subset of the names before.",
+  "world_is": "The subset holds with equality: no name fails after that did not fail at base. The folder is not green in this sparse cone for reasons outside DB-c-24, because paths under docs/ and infra/aws/ are not materialized. The cone was not changed and nothing was widened."
 }
 ```
