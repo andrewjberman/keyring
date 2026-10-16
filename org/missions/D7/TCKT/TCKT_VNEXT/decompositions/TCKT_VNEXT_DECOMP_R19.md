@@ -41,6 +41,8 @@ the ruling is a defect fix inside PRD C-FENCE, not an endpoint change. Row S134 
 | `R19-mg-6` | the staff-row migration | 3 | `opal-users-v2` (19 rows, one attribute each) | WORLD | pair, before REL |
 | `R19-rl-7` | the release pair for items 1 to 3 (code, env), after `TO-R18-REL` or combined with it | 1, 2, 3 | `opal-ticket-api` | WORLD | L1, L2, L3, TR merged; MIG done; pair signed |
 
+**AMENDMENT 1 (issuer, 2026-10-16, found at the drain; no new cell).** The whole-folder run on the merged tree (L1, L2, L3, TR) read 451 passed, 1 failed: `R19-ai-2`'s users stub in `tests/test_analyst_intake_scoped.py` returns a PROFILE row with no list and no marker, which `R19-ps-3` refuses. The fix (the stub's row gains `scope_all_firms: True`, no assertion changes) is a re-opening of `TO-R19-L2` (its step 7), re-seated in slot 46: the gate refuses a new order file in a round that already has an issuance, and the fix belongs to the cell that wrote the stub.
+
 **Chains (M = 5):** {L1}, {L2}, {L3}, {TR}, {MIG, REL}. **Fan-out: 4 of 5 chains, cap 4 (the dell2 CPU budget), reason:** the three lambda cells edit disjoint functions of one file and merge at the drain (conflicts are
 resolved by the issuer, hunks do not overlap); the applier's chain is staged behind them.
 
