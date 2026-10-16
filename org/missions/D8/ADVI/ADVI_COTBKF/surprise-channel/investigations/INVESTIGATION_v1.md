@@ -9981,3 +9981,30 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W187-S1 -- CB97cs1-AC2 reads price_source for a Yahoo name, which the builder never writes there; the labels reconcile to the Yahoo points, so the criterion fails as written
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W187-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~187",
+  "surfaced_at": "2026-10-16T06:50:44Z",
+  "one_line": "CB97cs1-AC2 reads price_source for a Yahoo name, but price_source is the store name by builder design, so yahoo_source_rows is 0 on a build whose labels reconcile to the price file's Yahoo points; AC2 fails as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cs1_ac2_label_check.py run by the worker: LABELS adv_rows=21102041 yahoo_source_rows=0 labelled_rows=3709042 equal=False (counts only)",
+      "data/assets/scripts/silver/commonwealth_fwd3_serve.py@14793ce188 lines 320-333 (yahoo_priced reads the per-point source column) and line 458 (price_source is the store column)",
+      "scratch counts, off git: .scratch/cotbkf_r97/labels.log and control.log (price file: 1,325,110 yahoo_finance and 705,133 linear_interpolation cusip-days; 3,709,042 labelled rows = 4,038,997 Yahoo-keyed priced rows less 329,955 cash-at-par rows)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~187/SERVED_MOVE_RELABEL_RECORD.json (control: price_source equal on all served and built rows; yahoo_points)"
+    ]
+  },
+  "spec_asserts": "CB97cs1-AC2 (CB-cs-1 item 5): the built account_day_value must name a Yahoo-sourced price_source on at least one row (yahoo_source_rows 1 or more); zero means the regrade did not carry the source. Item 5 counts the same price_source rows.",
+  "world_is": "The regrade carried the source: the new price file's per-point source column names yahoo_finance on 1,325,110 cusip-days and linear_interpolation on 705,133, and the builder's use_class labels 3,709,042 priced non-cash rows, exactly the Yahoo-keyed set. But price_source in the served and built tables is the store name by builder design (served and built are equal on all 21,102,041 rows), so no row names a Yahoo source and AC2 reads 0. The check's premise, that a Yahoo label shows in price_source, does not hold for this schema. Not established: whether price_source was meant to name the source.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
