@@ -1,13 +1,13 @@
 # AMGT_HARVST task order -- `HVST-cc-4` -- ROUND 88, workstream BBG-CAUSE: THE `bbg` PAGE CLOSURE IS TRACED ON ONE LOCAL LEG AND ITS CAUSE IS NAMED (CTO round-87 analysis, item 4)
 
-<!-- ===================== SEAT FACE -- read by 0.7.0_AE_CloudOps~SC1 ===================== -->
+<!-- ===================== SEAT FACE -- read by 0.7.0_AE_CloudOps~HV1 ===================== -->
 
 <to_id>AMGT_HARVST.TO-HVST-cc-4.the-bbg-page-closure-is-traced-to-its-cause</to_id>
 <decomp_ref>
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
 <owned_cells>HVST-cc-4</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~SC1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~HV1</issued_to>
 <issued_by>2.0.0_SA_COO~W1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -24,7 +24,7 @@ Branch G took `bbg` out of the dell1 runner (`ledger/ROUND87_BBG_BRANCH_G_PRESS_
 
 - (a) `<main>` is `C:\dev\ajb_workspace`; `<pin>` is `C:\dev\wk-harvest-runner-pin-ddd7dcdc38` (the registered task's `WorkingDirectory`); read both, do not assume.
 - (b) The failing security file exists: `<main>\.runtime\harvest-cycle\state\cycles\bbg\securities\security-7f993eb1cab6b5ea.json`; and a security whose `bbg` job ended `no_new_articles` exists in the same folder, `security-b0fe721e1f2a0d8b.json` (the first job of the 08:11Z leg), as the control.
-- (c) The runner is whatever it is: this cell never stops, starts or edits it, and takes no stop file. The same seat holds `HVST-cc-5` (the long hold): do `HVST-cc-5` steps 1 to 3 first (stop, re-register, the +3 and +15 reads), THEN run this cell while you hold; the two never touch the same file or process.
+- (c) The runner is whatever it is: this cell never stops, starts or edits it, and takes no stop file. The same seat holds `HVST-cc-5` (the long hold; read it at `task-orders/AMGT_HARVST.TO-HVST-cc-5.wsj-and-barrons-run-their-first-productive-dell1-cycles.md`): do `HVST-cc-5` steps 1 to 3 first (stop, re-register, the +3 and +15 reads), THEN run this cell while you hold; the two never touch the same file or process.
 
 ## 2. THE ACT (dell1, `<pin>` as the working directory)
 
@@ -39,24 +39,24 @@ Branch G took `bbg` out of the dell1 runner (`ledger/ROUND87_BBG_BRANCH_G_PRESS_
 8. Write `cc4_budget.out` with `JOBS_RUN=<n>` (1 to 3) and the three run ids.
 9. Anything odd: one row `AMGT_HARVST-D1-S<next free D1 number>`, then keep working. Commit your files with `.tools/safe-commit.sh`.
 
-Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/`.
+Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/`.
 
 <paths>
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 ## PROOF OF SPEC (each invocation LITERAL, on dell1, from the repo root)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="HVST-cc-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc4_trace.out</invocation><expect>(?m)^CLOSED_BY=(vendor_page|runner_minimise|runner_timeout|other)$</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-cc-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc4_trace.out</invocation><expect>(?m)^CONTROL_ARM_C=PASS$</expect></criterion>
-  <criterion id="AC3" cell_refs="HVST-cc-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc4_budget.out</invocation><expect>(?m)^JOBS_RUN=[1-3]$</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-cc-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/cc4_trace.out</invocation><expect>(?m)^CLOSED_BY=(vendor_page|runner_minimise|runner_timeout|other)$</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-cc-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/cc4_trace.out</invocation><expect>(?m)^CONTROL_ARM_C=PASS$</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-cc-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/cc4_budget.out</invocation><expect>(?m)^JOBS_RUN=[1-3]$</expect></criterion>
 </proof_of_spec>
 
 - The checker reads `<expect>` as a regular expression. At the base the three files do not exist (all FAIL as expected). AC2 can read `FAIL` only if the harness or the account is at fault; then the cell stays `pending` and the issuer reads your note.
-- INSTANCE NAMED EXACTLY `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/AMGT_HARVST.TO-HVST-cc-4.the-bbg-page-closure-is-traced-to-its-cause.proof_of_spec.json` with `to_id` `AMGT_HARVST.TO-HVST-cc-4.the-bbg-page-closure-is-traced-to-its-cause` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-4.the-bbg-page-closure-is-traced-to-its-cause.md`. Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` and report its last line.
+- INSTANCE NAMED EXACTLY `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/AMGT_HARVST.TO-HVST-cc-4.the-bbg-page-closure-is-traced-to-its-cause.proof_of_spec.json` with `to_id` `AMGT_HARVST.TO-HVST-cc-4.the-bbg-page-closure-is-traced-to-its-cause` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-4.the-bbg-page-closure-is-traced-to-its-cause.md`. Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` and report its last line.
 - A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. The channel file has MIXED line endings and is append-only: append a row by BYTES and check the diff reads N insertions and 0 deletions.
 - Do not edit this order file: the issuer flips its status.
 

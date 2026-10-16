@@ -1,13 +1,13 @@
 # AMGT_HARVST task order -- `HVST-cc-5` -- ROUND 88, workstream RUNNER-ORDER: `wsj` AND `barrons` RUN THEIR FIRST COMPLETE DELL1 CYCLES AND EACH IS REPORTED (CTO round-87 analysis, item 5; CTO ruling msg 6776)
 
-<!-- ===================== SEAT FACE -- read by 0.7.0_AE_CloudOps~SC1 ===================== -->
+<!-- ===================== SEAT FACE -- read by 0.7.0_AE_CloudOps~HV1 ===================== -->
 
 <to_id>AMGT_HARVST.TO-HVST-cc-5.wsj-and-barrons-run-their-first-productive-dell1-cycles</to_id>
 <decomp_ref>
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
 <owned_cells>HVST-cc-5</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~SC1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~HV1</issued_to>
 <issued_by>2.0.0_SA_COO~W1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -24,6 +24,7 @@ The runner takes publishers in series. Registered as `sa,wsj,barrons` (since `HV
 
 - (a) The CTO's ruling msg 6776 (re-register as `wsj,barrons,sa`; condition on the `sa` restart below) and `HVST-cb-15` complete (`task-orders/AMGT_HARVST.TO-HVST-cb-15.sa-and-bbg-join-the-dell1-runner-seeded.md`, `<status>complete</status>`).
 - (b) `<main>` is `C:\dev\ajb_workspace`; `<pin>` is the registered `WorkingDirectory` (`C:\dev\wk-harvest-runner-pin-ddd7dcdc38`); `<state>`, `<runtime>`, `<stop>` are exactly as in the registered task's own arguments. Read them, do not assume.
+- (c0) You are a FRESH lane for this project (one project per Tier-2 seat instance: `0.7.0_AE_CloudOps~SC1` also holds an `MDPF_SECCLASS` order, so the runner work moves to you). `0.7.0_AE_CloudOps~SC1` has been holding the hourly reads of `HVST-cb-15` (its step 11): read the latest `deliverables/0.7.0_AE_CloudOps~SC1/round87/cb15_check_interim<N>.out` and `cb15_c_a4.out` first to learn the runner's state and its record forms, and read `task-orders/AMGT_HARVST.TO-HVST-cb-15.sa-and-bbg-join-the-dell1-runner-seeded.md` steps 2, 4, 5 and 9 for the stop, `-Plan`, registration and read forms this order cites. SC1's hourly reads end when YOUR `cc5_t0.txt` is written; do not run both.
 - (c) The runner is Running on `sa`; record the log's last `JOB` line, the current `sa` cycle id and its pairs done in `cc5_before.out`.
 
 ## 2. THE ACT (dell1)
@@ -39,11 +40,11 @@ The runner takes publishers in series. Registered as `sa,wsj,barrons` (since `HV
 7. **While you hold (after step 3) also run `HVST-cc-4`** (`task-orders/AMGT_HARVST.TO-HVST-cc-4.the-bbg-page-closure-is-traced-to-its-cause.md`): it is independent of the runner and takes about an hour.
 8. Anything odd: one row `AMGT_HARVST-D1-S<next free D1 number>`, then keep working. Tell the issuer when each of `wsj`, `barrons` and the `sa` restart check has its line.
 
-Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/`.
+Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/`.
 
 <paths>
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 org/critical_paths/.open_deploys/harvst-cc5-runner-order-20261016.json
 org/critical_paths/change_management/
@@ -53,12 +54,12 @@ org/critical_paths/change_management/
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-cc-5"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.Arguments"</invocation><expect>--publishers wsj barrons sa --refresh-once</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-cc-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc5_first_cycles.out</invocation><expect>(?s)CYCLE wsj \S+ asked=\d+ new=\d+ accepted=\d+ failed=\d+ upload_lines=\d+ s3_get_count=\d+ s3_get_bytes=\d+.*CYCLE barrons \S+ asked=\d+ new=\d+ accepted=\d+ failed=\d+ upload_lines=\d+ s3_get_count=\d+ s3_get_bytes=\d+</expect></criterion>
-  <criterion id="AC3" cell_refs="HVST-cc-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc5_first_cycles.out</invocation><expect>(?m)^SA_RESTART_DUPLICATES=0 SA_RESTART_UPLOAD_GETS=0$</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-cc-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/cc5_first_cycles.out</invocation><expect>(?s)CYCLE wsj \S+ asked=\d+ new=\d+ accepted=\d+ failed=\d+ upload_lines=\d+ s3_get_count=\d+ s3_get_bytes=\d+.*CYCLE barrons \S+ asked=\d+ new=\d+ accepted=\d+ failed=\d+ upload_lines=\d+ s3_get_count=\d+ s3_get_bytes=\d+</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-cc-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/cc5_first_cycles.out</invocation><expect>(?m)^SA_RESTART_DUPLICATES=0 SA_RESTART_UPLOAD_GETS=0$</expect></criterion>
 </proof_of_spec>
 
 - The checker reads `<expect>` as a regular expression. At the base AC1 reads `--publishers sa wsj barrons --refresh-once` (FAIL as expected, the registered list is `sa wsj barrons`); AC2 and AC3 files do not exist (FAIL as expected). If Branch F fires AC3 cannot read `=0`: write what happened, leave the cell `pending`, and the issuer reads it.
-- INSTANCE NAMED EXACTLY `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/AMGT_HARVST.TO-HVST-cc-5.wsj-and-barrons-run-their-first-productive-dell1-cycles.proof_of_spec.json` with `to_id` `AMGT_HARVST.TO-HVST-cc-5.wsj-and-barrons-run-their-first-productive-dell1-cycles` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-5.wsj-and-barrons-run-their-first-productive-dell1-cycles.md`. Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` and report its last line.
+- INSTANCE NAMED EXACTLY `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/AMGT_HARVST.TO-HVST-cc-5.wsj-and-barrons-run-their-first-productive-dell1-cycles.proof_of_spec.json` with `to_id` `AMGT_HARVST.TO-HVST-cc-5.wsj-and-barrons-run-their-first-productive-dell1-cycles` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-5.wsj-and-barrons-run-their-first-productive-dell1-cycles.md`. Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` and report its last line.
 - NEVER-2: open a ledger entry at the start (`org/critical_paths/.open_deploys/harvst-cc5-runner-order-20261016.json`, with its `change_management/` record) and close it at the end; the entry names the one scheduled task it re-registers.
 - A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. The channel file has MIXED line endings and is append-only: append a row by BYTES and check the diff reads N insertions and 0 deletions.
 - Do not edit this order file: the issuer flips its status.
@@ -73,7 +74,7 @@ This order touches none of them.
 
 **ISSUER NOTES:**
 - Authority: CTO round-87 analysis (`ledger/ROUND_ANALYSIS.round87.md`, msg 6766) item 5; CTO ruling msg 6776 (YES, with the `sa` restart condition); CTO addendum 4 and its amendments 1 to 3 stand; Branch F and the 5 GiB bar unchanged; MSTR relays each publisher's first-cycle report to site Z (the CTO's analysis names it).
-- **Measured at the cut (15:0xZ):** `sa` 22 of 242 jobs in 6 hours (AAPL and AMZN about 1 hour each); `barrons` 27 jobs in 70 minutes at the old pin (about 10 hours per 242 pairs); `wsj` 242 pairs in about 1 hour (cycle `20261016T054619Z`, new 0). So this cell holds about 12 hours before the `sa` restart check; it is the seat's long hold, and the `HVST-cb-15` hourly reads stop when this order's reads begin (they are the same reads, restarted from this T0).
+- **Measured at the cut (15:0xZ):** `sa` 22 of 242 jobs in 6 hours (AAPL and AMZN about 1 hour each); `barrons` 27 jobs in 70 minutes at the old pin (about 10 hours per 242 pairs); `wsj` 242 pairs in about 1 hour (cycle `20261016T054619Z`, new 0). So this cell holds about 12 hours before the `sa` restart check; it is this seat's long hold, and the `HVST-cb-15` hourly reads (SC1's) stop when this order's T0 is written (they are the same reads, restarted from this T0).
 - **Not covered, named:** a per-leg budget with rotation (a later cell: the pass stays serial); `bbg` (off the list, `HVST-cc-4` names its cause); `ft`; an `sa` session expiry (a finding, no sign-in by any hand).
 - **SENT:** with the round-88 issuance.
 
