@@ -20212,3 +20212,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The ruling moved the portal test out of this order's criteria, and the worker's branch no longer carries a portal grade. The portal test file is unchanged; its last measured run (on contract commit 2fd42fcb40) failed at the optional-list parity arm, the page naming three optional names against the contract's five. It was not re-run after the income amendment, and it is expected to stay red on the merged contract until the page's cell updates its mirror. Owner of that disarm: the drain's issuer."
 }
 ```
+## IRPT_DASHBD-D2-W226-S3 -- DB147-2-AC3 grant clause walks the completed DB-b-279 commits, so AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W226-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~226",
+  "surfaced_at": "2026-10-16T02:58:42Z",
+  "one_line": "DB147-2-AC3 cannot pass as written: its grant clause walks every commit by this worker since the round's issuance, which includes the completed DB-b-279 commits",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r147/p148_cothandler.py@5eeb255c85: own_commits() takes --author=0.9.0_WK_IRPT_DASHBD~226 from the first add of the TO-DB-b-280 file (a989b48c08) to HEAD, and check_grant() then refuses any path outside this order's grant",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-279.publisher-unreported-days-and-nullable-income.md@36498ea07e: the completed order whose commits 88fee9c1ea and 36498ea07e touch publisher.py and its test, both issued in the same round commit a989b48c08",
+      "AC3 run at 5eeb255c85: FAIL: the worker's commits touch files outside its grant: publisher.py and test_publisher_unreported.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DB147-2-AC3 requires that the worker's commits change only the handler, its test file, the folder, the investigation file and task-order files. The order's own commits are the ones made for this order.",
+  "world_is": "The range from the round's issuance commit to HEAD carries two commits by this serial for the completed DB-b-279 order. The grant clause refuses them as outside the grant. The handler, the test file, the folder, the channel and the order touch only this order's grant, and the 14 tests and the facts record pass the other clauses. AC3 cannot pass without a change to the checker's commit selection, which this order does not name. Stopped on this clause; the status stays pending."
+}
+```
+
