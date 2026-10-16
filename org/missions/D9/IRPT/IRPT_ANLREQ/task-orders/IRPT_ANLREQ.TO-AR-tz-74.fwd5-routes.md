@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-tz-74</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~276</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~277</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-16</issued_date>
 <status>pending</status>
@@ -31,13 +31,13 @@
    - RUN mode, route `request-read-no-selection` only (without `selected_tenant` the caller's own firm anchors the bucket, so the right answer is absence, not the fence): `ok` false with ANY code other than `CONTRACT_VERSION` and `?` -> `REFUSED` with the reason "no selection: refused by <code> in the caller's own tenant"; `ok` false with `CONTRACT_VERSION` or `?` -> `UNREACHED`; `ok` true or a served body -> `LEAK`.
    - CONTROL mode: a 2xx JSON object WITHOUT an `ok` key is a served body -> `ALLOWED`; `ok` true -> `ALLOWED`; `ok` false with `CONTRACT_VERSION` or `?` -> `UNREACHED`; any other `ok` false -> `DENIED` (the code is kept in the row). The control exit rule is unchanged (0 only when `ticket-read` and `ticket-list` are both ALLOWED).
 3. Every report row keeps the same keys (`code` as before). Exit codes of run mode are unchanged. Extend `selftest()` by at least four checks (keep every existing one).
-4. Tests: the NEW file `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~276/fwd5_driver/test_fwd5_driver_routes.py`, tests named `test_fwd5_routes_<what>` (a local fake HTTP server on 127.0.0.1, in the style of the existing offline tests; import the driver by inserting its folder on `sys.path`). At least 12: the run makes 13 calls and writes 15 rows; each of the six new routes sends the right path (the fake records paths) and `request-read-no-selection` carries no `selected_tenant`; the guard refuses `/export/<seg>/download` and the bare `/status`; run mode FIRM_BINDING on all six new routes exits 0 (the no-selection route REFUSED by `NOT_FOUND` too); a served body (2xx JSON, no `ok`) on a new report-side route in run mode is LEAK and exits 1; the no-selection route answering `CONTRACT_VERSION` is UNREACHED and exits 2; the no-selection route answering `ok` true is LEAK; control mode: a served body is ALLOWED, `ok` true is ALLOWED, `NOT_FOUND` is DENIED (and the exit stays 0 when `ticket-read` and `ticket-list` are ALLOWED), `CONTRACT_VERSION` is UNREACHED; the report holds no body. The four existing driver test files MAY be edited ONLY where a test asserts the old route count (7 made, 9 rows) or the old grading of a 2xx JSON without `ok` on a report-side route; keep each test's intent, update the number or the fake answer, and list every edited test by name in a surprise row. Keep every other existing test as it is.
+4. Tests: the NEW file `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/fwd5_driver/test_fwd5_driver_routes.py`, tests named `test_fwd5_routes_<what>` (a local fake HTTP server on 127.0.0.1, in the style of the existing offline tests; import the driver by inserting its folder on `sys.path`). At least 12: the run makes 13 calls and writes 15 rows; each of the six new routes sends the right path (the fake records paths) and `request-read-no-selection` carries no `selected_tenant`; the guard refuses `/export/<seg>/download` and the bare `/status`; run mode FIRM_BINDING on all six new routes exits 0 (the no-selection route REFUSED by `NOT_FOUND` too); a served body (2xx JSON, no `ok`) on a new report-side route in run mode is LEAK and exits 1; the no-selection route answering `CONTRACT_VERSION` is UNREACHED and exits 2; the no-selection route answering `ok` true is LEAK; control mode: a served body is ALLOWED, `ok` true is ALLOWED, `NOT_FOUND` is DENIED (and the exit stays 0 when `ticket-read` and `ticket-list` are ALLOWED), `CONTRACT_VERSION` is UNREACHED; the report holds no body. The four existing driver test files MAY be edited ONLY where a test asserts the old route count (7 made, 9 rows) or the old grading of a 2xx JSON without `ok` on a report-side route; keep each test's intent, update the number or the fake answer, and list every edited test by name in a surprise row. Keep every other existing test as it is.
 
 Standard library and pytest only. No AWS, no network beyond the local fake, no secret, no run. Use plain names.
 
 ### ACCEPTANCE
 
-<criterion id="AR74-tz-AC1" cell_refs="AR-tz-74"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 12 --prefix=test_fwd5_routes_ org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~276/fwd5_driver/test_fwd5_driver_routes.py</invocation><expect>R46-TESTS-OK</expect></criterion>
+<criterion id="AR74-tz-AC1" cell_refs="AR-tz-74"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 12 --prefix=test_fwd5_routes_ org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/fwd5_driver/test_fwd5_driver_routes.py</invocation><expect>R46-TESTS-OK</expect></criterion>
 <criterion id="AR74-tz-AC2" cell_refs="AR-tz-74"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 52 --prefix=test_ org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/test_fwd5_driver_offline.py org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~232/fwd5_driver/test_fwd5_driver_exit_semantics.py org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~272/fwd5_driver/test_fwd5_driver_control.py org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py</invocation><expect>R46-TESTS-OK</expect></criterion>
 <criterion id="AR74-tz-AC3" cell_refs="AR-tz-74"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py --selftest</invocation><expect>FWD5-SELFTEST-OK</expect></criterion>
 `AR74-tz-AC1` -- the new route tests pass, at least 12. Dry-run at box/dell2 BASE: FAIL as expected (the file does not exist). `AR74-tz-AC2` -- the four existing driver test files still pass, 52 functions in all (the unchanged-behavior control; 13 + 8 + 14 + 17): PASS at base as expected. `AR74-tz-AC3` -- the driver's own selftest still prints `FWD5-SELFTEST-OK` with the added checks: PASS at base as expected.
@@ -46,14 +46,14 @@ Standard library and pytest only. No AWS, no network beyond the local fake, no s
 
 ## BOUNDS
 
-- **Grant.** `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py`, the new test file `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~276/fwd5_driver/test_fwd5_driver_routes.py`, and the four existing driver test files ONLY for the edits described in item 4 (plus this order's file, your deliverables folder, the surprise channel). The mint helper and `served.py` are not touched.
+- **Grant.** `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py`, the new test file `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/fwd5_driver/test_fwd5_driver_routes.py`, and the four existing driver test files ONLY for the edits described in item 4 (plus this order's file, your deliverables folder, the surprise channel). The mint helper and `served.py` are not touched.
 - **No AWS, no network beyond the local fake, no run, no mint, no deploy.** The ticket-service routes and the exit rules are unchanged.
 - **Refusal clause.** If the file at your base already has a route named `request-read`, say so in a surprise row and make no edit to `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py`; still add the tests.
 - **No alarms, monitors or notifications.**
 
 <paths>
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py
-org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~276/fwd5_driver/test_fwd5_driver_routes.py
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/fwd5_driver/test_fwd5_driver_routes.py
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/test_fwd5_driver_offline.py
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~232/fwd5_driver/test_fwd5_driver_exit_semantics.py
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~272/fwd5_driver/test_fwd5_driver_control.py
@@ -69,7 +69,7 @@ The block is your WRITE grant (your deliverables folder is granted by the tree c
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR74-tz-AC1, AR74-tz-AC2, AR74-tz-AC3. Instance at `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~276/IRPT_ANLREQ.TO-AR-tz-74.fwd5-routes.proof_of_spec.json`,
+Criterion ids: AR74-tz-AC1, AR74-tz-AC2, AR74-tz-AC3. Instance at `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/IRPT_ANLREQ.TO-AR-tz-74.fwd5-routes.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> AR74-tz-AC1,AR74-tz-AC2,AR74-tz-AC3` BEFORE the flip. Commit the files first, then pin.
 </proof_of_spec>
 
