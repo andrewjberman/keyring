@@ -28521,3 +28521,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Whose walk it was is NOT known: the holder host is `Andrew`, not a dell1 name; a walk of another seat or box started about 00:52Z and never reached its finally block (the machine slept or the terminal closed). The one reading made: the holder was not live (368 minutes against walks of at most about 10). If that walk was in fact running, it will print a login failure and re-arm itself; no data was written by the disarm. Owner of the question who held it: whichever seat walked at about 00:52Z; 0.0.0_AB_MSTR~DELL1 can read the hosts. No monitor is proposed."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W483-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~483",
+  "surfaced_at": "2026-10-16T07:39:25Z",
+  "one_line": "The Write tool rendered the \\uXXXX escape sequences of the gu-1 diff as the characters themselves in the patch file and in the new test module; the order's ASCII rule was broken on the first write and repaired by a byte-level conversion before any commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Bounds 2.1 of AMGT-gu-1: Python source is ASCII-only, non-ASCII characters are written as \\uXXXX escapes, as the diff does; section 1 gives the diff with those escapes.",
+  "world_is": "On the first Write of the diff as a patch file, eight lines held literal characters where the order has escapes (U+00A3, U+00A5, U+00D7, U+2010, U+2011, U+2012, U+2212, U+00AD, U+00DF), so git apply --check failed at contract.py:57; the same tool, on the first write of test_gu1_remedy.py, left 41 non-ASCII bytes and the module's own ASCII test failed. Both were repaired by converting every non-ASCII character to its escape (a byte check, zero non-ASCII bytes after), and the three source files were then verified ASCII-only before the commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git apply --check of the first patch file failed with 'patch failed: lib/research/aifill/contract.py:57'; a per-line scan listed the non-ASCII lines (6-12, 15, 18 of the patch file)",
+      "pytest of lib/research/aifill/tests/test_gu1_remedy.py: test_this_test_module_is_ascii_only failed on the first run; the module carried 41 non-ASCII bytes before the conversion and zero after",
+      "lib/research/aifill/contract.py, grounding.py, orchestrate.py and tests/test_gu1_remedy.py: zero non-ASCII bytes at the committed state"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect in the order: the diff is correct and applies once its escapes are escapes. The hazard is the write path for content that carries escape sequences; a worker writing such a file should count non-ASCII bytes after the first write, not trust the write. No change to any tool is proposed here."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W483-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~483",
+  "surfaced_at": "2026-10-16T07:39:25Z",
+  "one_line": "The surprise-channel row schema the worker rules name is absent from this sparse worktree; it is present in the HEAD tree and was read only after a read-only sparse add of its folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "The worker surprise-channel rule names org/surprise_channel/schemas/investigation_item.schema.json as the row schema, which a worker reads in its own worktree before filing a row.",
+  "world_is": "In the sparse worktree C:/dev/wk-resapp-483 the folder org/surprise_channel is not checked out: Glob under org returned no match and the path does not exist. The file is in the HEAD tree (git ls-tree -r HEAD lists org/surprise_channel/schemas/investigation_item.schema.json and remediation_row.schema.json). It was read after git sparse-checkout add org/surprise_channel, a read-only addition that is not committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob pattern **/investigation_item.schema.json under C:/dev/wk-resapp-483/org returned no files",
+      "git ls-tree -r HEAD --name-only | grep investigation_item in C:/dev/wk-resapp-483 lists org/surprise_channel/schemas/investigation_item.schema.json",
+      "git sparse-checkout add org/surprise_channel, then the schema file printed with its required list (id, surfaced_by, surfaced_at, one_line, class, grounding, disposition)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Sparse checkout hygiene for a worker that files rows: the row schema folder is not in the default sparse set. Recorded so the row gate's schema read is not assumed to be satisfied by a worktree that lacks it."
+}
+```
