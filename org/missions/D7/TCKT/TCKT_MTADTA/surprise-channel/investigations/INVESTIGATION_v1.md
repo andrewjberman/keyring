@@ -614,6 +614,29 @@
     "spec_asserts": "Only the group's members (MFA-gated) and the collector role can invoke the door; a non-member's invoke is refused.",
     "world_is": "Same-account IAM allows an invoke when any identity policy or the resource policy allows and nothing explicitly denies. The box user, administrators and the laptop agents' user hold lambda:InvokeFunction in their own policies, so they invoke without MFA and reach get_day on the member alias. The bucket policy's explicit Deny does bind them for S3.",
     "notes": "Disarmed when the probe in TO-MD-r1 item 7d reads AccessDenied for the box identity on both aliases and the collector role still passes its carve-out. MD-r-2 (the consent and the real fires) stays staged until then. Nothing real is stored yet. Correction: the commit 2eefc8d50e message calls this row D1-S6; D1-S6 is the CloudOps seat's office-egress row, and this is D1-S7."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S8",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-16T08:56:46Z",
+    "one_line": "TO-MD-r1 item 5's list-layer-versions call is denied to the box identity (AccessDenied on the public layer account), so the pinned layer version is the highest one a get-layer-version-by-arn probe could read, 31, not a proven newest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (the issuer; the order's command is the issuer's text)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda list-layer-versions on arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python312 -> AccessDeniedException lambda:ListLayerVersions for cloudops-dell1-agent-user",
+        "get-layer-version-by-arn over versions 14 to 60: readable 14 to 24, 27, 29, 31 (31 created 2026-08-03, python3.12, x86_64); versions 25, 26, 28, 30 and 32 to 60 answer AccessDenied, which is also what a version that does not exist or is not public answers",
+        "infra/aws/terraform/trino/layer.auto.tfvars at 8691d491db pins version 31; the root's other pipelines pin version 16"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-r1 item 5: read the CURRENT version ARN of AWSSDKPandas-Python312 with list-layer-versions and pin it.",
+    "world_is": "The list call is refused, so currency cannot be read; 31 is the highest version the identity can read. A newer public version that answers AccessDenied would not be seen. The access Lambda runs on version 31 either way.",
+    "notes": "If a newer version matters, the pin is one line in layer.auto.tfvars and an in-place update of aws_lambda_function.access."
   }
 ]
 ```
