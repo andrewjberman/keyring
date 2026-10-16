@@ -17,6 +17,8 @@
 
 **Risk class WORLD** is the floor of the paths below (`infra/` and the producer bundled into a deployed function), not a statement that anything is deployed: python files, a JSON standard and tests; no AWS, no deploy, no push. The producer is bundled into the 49 Financial `reporting-gold` function; moving its code to the cloud is a LATER code-update pair of this seat's.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~07:0xZ, on worker row IRPT_DASHBD-D2-W230-S1; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** the row is a DEFECT OF THE ISSUER'S ORDER, ruled here: step 3 wired `acd.default_table().as_of()`, but `class_days` reads through its OWN `acd.ClassTable()`, so the date would be None on every emitted day (and a warm container's process-wide table would keep an earlier run's date). **Step 3 is REPLACED:** in the handler, define a module-level `_CLASS_TABLE = None` beside `_CLASS_CONTEXT`; in `class_days` declare `global _CLASS_TABLE`, build the table ONCE as a local (`table = acd.ClassTable()`), assign `_CLASS_TABLE = table`, and pass that SAME `table` to `acd.compute_classes(..., table=table, ...)` (no `ClassTable()` expression in the call); in `emit_classes` every `acd.emit_class_day(...)` call passes `classification_as_of=(_CLASS_TABLE.as_of() if _CLASS_TABLE is not None else None)`. The table is fresh per run, so its `as_of()` is the oldest GetItem date of THIS run. No other line of the handler changes. The updated checker `p154_classdated.py` (in your tree via the carry commit) states the clause; your module, contract, tests and facts record stand unless you find the handler edit forces something else.
+
 ---
 
 ## WORKER FACE
