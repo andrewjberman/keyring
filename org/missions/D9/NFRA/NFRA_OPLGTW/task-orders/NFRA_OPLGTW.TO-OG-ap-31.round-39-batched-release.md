@@ -76,7 +76,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-31.round-39-batched-release.
 - Pre-cut: `ap31.AC1` and `ap31.AC2` base FAIL as expected (`ap31_release.json`, the ask and `CODE3_SERVED.json` absent). `ap31.AC1` PASS arm exercised on a git-plumbing release commit built from the live ref (12 files: PASS) with three control arms failing for the right reason (tools.py touched, the deploy script changed, a registry file not byte-equal); `ap31.AC2` served-record arm exercised: a good record OK, an arm false NO, a `tools/list` drift NO.
 - `OG-en-15` replaced a `transaction_id` dedupe that was dropping real rows (rows Z-S314, A2): the release changes the count of transactions an analyst sees for the same account. The ask states it.
 
-<status>staged</status>
+<status>complete</status>
 <round>39</round>
 <workstream>ENRICH-R39-C</workstream>
 <slot>~AE</slot>
