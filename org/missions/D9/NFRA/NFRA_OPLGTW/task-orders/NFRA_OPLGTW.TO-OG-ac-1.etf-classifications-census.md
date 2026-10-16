@@ -68,7 +68,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ac-1.etf-classifications-census
 - After it: a build cell (the tool) and a grant order to `0.7.0_AE_CloudOps~ZS`, cut from the spec.
 - Pre-cut: ac1.AC1 base FAIL as expected (census and spec absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>CLASS-INCREMENT</workstream>
 <slot>~113</slot>
