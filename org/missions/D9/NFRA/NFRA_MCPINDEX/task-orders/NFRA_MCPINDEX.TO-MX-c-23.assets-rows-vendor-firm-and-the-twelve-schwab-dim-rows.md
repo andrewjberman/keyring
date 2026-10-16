@@ -130,3 +130,7 @@ Do these IN ORDER and nothing else:
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`.
 
 <status>issued</status>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-16 ~09:47Z) on A3; MX-c-23 COMPLETE.** Worker ~45 (haiku, high) placed the final catalog and committed it in two commits (bc3d492c18 the regraded proof instance and a3_evidence; 701c995e7d the catalog alone); the issuer verified from the commits, not the report: the catalog blob at 701c995e7d is cf7616c08ec6b50a4676f962546ec6e732772e39 (md5 9519ebce3a1b92cee07a5507d1912dd3), six files changed and nothing else. Drained by `safe-merge.sh` at 739786b974. Issuer re-run on the merged tree: c23.AC1-AC4 PASS (136 map entities equal; 12 of 12 new rows, 9 linked; 1,182 pairs, 96 newly visible, cross-firm leaks 0; 127 index entries, serves 7 of 7), c21.AC1-AC2 PASS; `round-close-check` round 18 reads MAY-CLOSE. The pipeline gate then refused the flip on the instance's artifact pins (six entries still PENDING-THIS-COMMIT for files committed earlier); the issuer pinned each to the commit that carried it, pointed the four evidence entries at a3_evidence, and added the catalog itself (701c995e7d). Gate limb that graded this ruling: the flip-needs-a-VALID-instance limb of to-pipeline-gate, VALID after the pins.
+
+<status>complete</status>

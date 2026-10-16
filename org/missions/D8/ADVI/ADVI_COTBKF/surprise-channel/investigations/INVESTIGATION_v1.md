@@ -10472,3 +10472,57 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W192-S1 -- the Bloomberg close stores are not CUSIP-keyed (primary keys mostly non-CUSIP, two others by ticker), so the CUSIP coverage join reaches none of them
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W192-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~192",
+  "surfaced_at": "2026-10-16T09:53:36Z",
+  "one_line": "The primary Bloomberg close store keys 569 of its 656 security ids by non-CUSIP shapes, and the two other Bloomberg close stores (bbg/ and price_history_px_last) are keyed by ticker label, so the CUSIP join the coverage script runs cannot reach them; the measured coverage of the unpriced holding-days is 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-etfs/rivalfunds/etfs/gold/security_market/ (14 parquet objects, footer columns security_id, date, px_close, source; source value blp_client.reference_data) read by 0.9.0_WK_ADVI_COTBKF~192 at HEAD 85c0226f91: 656 distinct security_id values with a positive close, 87 of them 9-character alphanumeric, 569 other shapes (counts only)",
+      "s3://opal-data-etfs/bbg/ history_topup.parquet (39 objects, columns date, PX_LAST, DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, security; security = ticker label) and fund_daily.parquet (39 objects); bloomberg/harvest/bronze/price_history_px_last/ (10 JSON objects, series keyed by ticker label): 188 and 95 labels, 9,858 and 26,823 positive points, read at HEAD 85c0226f91",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cy1_bbg_coverage_check.py@85c0226f91 joins on the cusip column (set to security_id in the record) against the served unpriced rows: BBG-COVERAGE unpriced_rows_covered=0 unpriced_cusips_covered=0 (record deliverables/0.9.0_WK_ADVI_COTBKF~192/BBG_COVERAGE_RECORD.json)"
+    ]
+  },
+  "spec_asserts": "TO CB-cy-1 item 2: the primary is the location that holds Bloomberg daily closes by security and date, and its three column names hold the security id, the date and the close (cusip, date, close in the issuer's script's vocabulary); the Cottonwood request lists are CUSIP lists.",
+  "world_is": "The primary (rivalfunds security_market) is CUSIP-keyed for only 87 of its 656 ids; the rest are other identifier shapes, and the join is by exact string. The two other Bloomberg close stores are keyed by ticker label with no CUSIP mapping in the tree, so they cannot be joined by the script. Its 11 dates (2026-09-29 to 2026-10-14) never coincide with the 3,322 dates of the unpriced holding-days (2013-04-08 to 2026-06-22), so the primary covers 0 of 15,973,399 unpriced holding-days.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-S19 -- the issuer dispositions D1-W192-S1 and D1-W193-S1 and measures the ticker-keyed Bloomberg stores: 1,960 of 15,973,399 unpriced holding-days covered
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S19",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T10:01:20Z",
+  "one_line": "the issuer dispositions D1-W192-S1 and D1-W193-S1 and measures what the CUSIP-keyed script could not: the ticker-keyed Bloomberg stores cover 1,960 of 15,973,399 unpriced holding-days (0.012%) on 4 securities",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~192/BBG_COVERAGE_RECORD.json (worker ~192, merged @bdae2f5b31): primary CUSIP-keyed store opal-data-etfs rivalfunds/etfs/gold/security_market/: 14 objects, 5,696 close points, 656 ids, 11 dates (2026-09-29 to 2026-10-14), 0 of 4,371 unpriced securities and 0 of 15,973,399 unpriced holding-days covered (their dates run 2013-04-08 to 2026-06-22); 41 of 3,059 listed securities have a close there (8 never-priced, 29 gap); the record states that the two ticker-keyed stores were not measured",
+      "the issuer's date check of those two stores (counts): opal-data-etfs bbg/ 10,054 PX_LAST points on 263 dates, 2025-09-30 to 2026-10-14, 182 of them on or before 2026-06-22; opal-data-harvest bloomberg/harvest/bronze/price_history_px_last/ windows 2025-08-28 to 2026-10-14, 214 dates on or before 2026-06-22",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cy1_issuer_ticker_coverage.py, run by the issuer: TICKER-COVERAGE labels=283 mapped_unique=168 ambiguous=11 unmapped=104 points=36681 mapped_points=16281 unpriced_cusips_covered=4 unpriced_rows_covered=1960 unpriced_rows=15973399",
+      "worker ~193 (merged @fee69b943b) found the module emits 'reported value is null' (commonwealth_monthly_grade.py line 118); the partition script was amended @dbb4ffeba0 and its counts did not move"
+    ]
+  },
+  "spec_asserts": "CTO round 103 item 1: which of the 3,059 listed securities came back priced from Bloomberg history and how many of the 15,973,399 UNPRICED holding-days those closes cover. D1-W192-S1: the primary store's keys are mostly not CUSIP-shaped (569 of 656), so the CUSIP join reaches none of the ticker-keyed stores.",
+  "world_is": "What Opal's store holds of returned Bloomberg history is short and recent: every store reaches back to August or September 2025 at the earliest, while the unpriced holding-days run from 2013 to 2026-06-22. The CUSIP-keyed primary covers none of them. Through the two ticker-keyed stores, mapped to securities by the first token of the label against the transactions universe's ticker symbols (168 labels map to exactly one security, 11 are ambiguous, 104 have no match, mostly foreign or non-held tickers), 4 unpriced securities and 1,960 holding-days are covered, 0.012%. That is a floor for the ticker route (the 115 unmapped or ambiguous labels are not counted), but the stores' date reach caps it: nothing before 2025-08-28 is covered by any Bloomberg store. 41 of the 3,059 listed securities have a close in the primary and none of those closes falls on an unpriced day. So the Bloomberg history already in the store does not fill the gap; filling it needs a history pull for the unpriced securities back to 2013, which goes only through the Bloomberg queue and on Andrew's word.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W192-S1: handled by the issuer's ticker-keyed measure (this row). W193-S1: the script is amended and no count moves. The coverage numbers are the answer to the CTO's item 1; nothing about a served value follows."
+}
+```
