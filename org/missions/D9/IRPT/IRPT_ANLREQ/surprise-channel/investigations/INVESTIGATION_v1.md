@@ -21163,3 +21163,85 @@
 }
 ```
 
+---
+
+## IRPT_ANLREQ-D2-W228-S1 -- The live factory imports the keyed writer as the flat module durable_job, not ycharts.generate.durable_job as the order states
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W228-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~228",
+  "surfaced_at": "2026-10-16T04:34:42Z",
+  "one_line": "The order says import mark_hop_failure_keyed from ycharts.generate.durable_job; the factory imports it as durable_job after _extend_path(), the same module name _lease_refused already reads, so the writer's LeaseRefused and the op's catch are one class.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-74 DO (1): the factory imports mark_hop_failure_keyed lazily from ycharts.generate.durable_job, following the module's path pattern.",
+  "world_is": "commentary_draft_store.py _lease_refused (base dccd7a3cdc) imports `from durable_job import LeaseRefused` after _extend_path() puts ycharts/generate on sys.path. The name ycharts.generate.durable_job needs investor-reporting/ on sys.path, which _extend_path does not add. Two import names load two module objects with two LeaseRefused classes, and the writer's refusal would then escape the op's `except refused` mapping. The factory therefore uses the flat name. The new test file's own sys.path insert hides a failure of the _extend_path import guard, so that guard is not exercised by the tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py _lease_refused and _live_jobs_factory at 337f92b74a plus this cell's edit",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py:56 mark_hop_failure_keyed at dccd7a3cdc"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W228-S2 -- The source-map entry irpt-commentary-draft-store-lambda does not package ycharts/generate/durable_job.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W228-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~228",
+  "surfaced_at": "2026-10-16T04:34:42Z",
+  "one_line": "The live fail path imports durable_job.py, which the draft-store entry neither lists in files[] nor stages in staged_from[]; a deploy from this source would fail on the fail path. The map was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-74 REPORT (4): report whether the source-map entry irpt-commentary-draft-store-lambda packages durable_job.py with the function's other members; if it does not, file an OBSERVATION row naming the entry and the missing member, and do not edit the map.",
+  "world_is": "lambda-source-map.json entry irpt-commentary-draft-store-lambda (line 7142 at dccd7a3cdc): files[] and staged_from[] carry commentary_draft_store.py, repository.py, retention.py, composition.py, acceptance.py, submission.py, keys.py, lib/opal_naming.py and the registry JSON files; ycharts/generate/durable_job.py appears in neither list. The durable_job.py rows at lines 4063, 4658, 5387 and 5544 belong to other entries. build-and-upload.sh stages staged_from[] members flat and runs import-closure-check.py at line 547; that check was not run here, so whether it refuses this build is unverified. Nothing is deployed by this order, so the hazard is inert until that function is built and deployed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json entry irpt-commentary-draft-store-lambda at dccd7a3cdc (lines 7142 to 7266)",
+      "infra/aws/lambda/ci/build-and-upload.sh staged_from materialization and import-closure-check call at dccd7a3cdc"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W228-S3 -- The source-level disarm of IRPT_ANLREQ-D2-W225-S1 is not the integration check the disarm names
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W228-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~228",
+  "surfaced_at": "2026-10-16T04:34:42Z",
+  "one_line": "This cell swaps the jobs factory to the keyed writer in source; the integration check against the real function (the disarm condition of IRPT_ANLREQ-D2-S139) was not run, because this order makes no AWS call and deploys nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~T2",
+  "spec_asserts": "IRPT_ANLREQ-D2-S139 disarm: a wiring cell swaps the jobs factory to the keyed writer after the AR-g-109 merge, with the integration check against the real function; cut then, not before.",
+  "world_is": "The swap is in source at this cell's commit (fakes only, 12 cases green). The integration check against the real function is not run. IRPT_ANLREQ-D2-W225-S1 therefore stays ARMED until the issuer runs that check before any deploy of irpt-commentary-draft-store-lambda; the packaging gap of IRPT_ANLREQ-D2-W228-S2 belongs to that check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_ANLREQ-D2-S139 (disarm text)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W225-S1 (ARMED)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
