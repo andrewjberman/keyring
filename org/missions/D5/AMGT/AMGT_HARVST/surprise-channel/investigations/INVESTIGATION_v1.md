@@ -9566,5 +9566,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "notes": "WHY THIS IS AN OBSERVATION: one job in 70, the runner continued, nothing stored is wrong. If it repeats, the question for the issuer is whether something on the box closes Chrome processes (a reaper) or whether the profile is contended; five errors in a row stop the publisher's leg (the driver's own cap).",
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W147-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~147",
+      "surfaced_at": "2026-10-16T00:13:07Z",
+      "one_line": "A backfill pair with no local wm| mark (no article stored since the change, or a pre-change progress database) is bounded at the floor, and a pair whose candidates are all already held never writes a mark, so each of its jobs re-pages back to the floor.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~W1",
+      "spec_asserts": "HVST-cb-11 section 0 and 1.a-b: the job's bound comes from the local state row wm|publisher|security, the local state is authoritative (CTO design B, msg 6339), and only a STORED article advances the mark.",
+      "world_is": "The code offers no seed: _note_local_watermark is called only after the articles INSERT commit, and the held-in-bucket and duplicate branches of run_job continue before that point. A progress.sqlite3 written before this change has articles rows and no wm| row, so its pairs bound at the floor; a pair whose candidates are all already held stores nothing and keeps no mark, so every backfill job of that pair pages to the floor (capped by listing_page_cap). Read from code only; no progress database or box was read, and the articles table carries no published value to seed from.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py run_job: duplicate and held-in-bucket branches continue before the store (base 3467e51337)",
+          "lib/opal_data_harvest/worker.py: _note_local_watermark called once, after the articles INSERT commit (cell edit, uncommitted at filing)",
+          "lib/opal_data_harvest/harvest_grammar.py: backfill_bound with local_watermark None returns the floor (cell edit, uncommitted at filing)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
