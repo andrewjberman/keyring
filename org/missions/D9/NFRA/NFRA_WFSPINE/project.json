@@ -17,8 +17,8 @@
   ],
   "name": "M365 workflow activity spine: every employee's Microsoft 365 actions as one timeline, to find recurring workflows and where AI can remove work",
   "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew's 'yes do it' to the CRO brief (2026-10-16 ~01:2xZ) and his placement word 'It should live on Dell1 (f086)' (~01:36Z, relayed). Collects the Office 365 audit feed under a new single-purpose app (the gateway stays delegated-only), lands it, and derives per-person timelines, hand-off chains, recurring workflows, step timing and ranked AI candidates; Andrew sets the population. No alerting. D9 placement is LAPTOP; this member runs on DELL1 by his word (per-member placement exception).",
-  "phase": "2026-10-16 ~02:5xZ (1.0.0_SA_CTO~DELL1): L2 endpoint FWD-1..FWD-9 written @f96be0de11; awaiting Andrew's confirmation of DONE WHEN before L4.",
-  "blocking": "Andrew's confirmation of the DONE WHEN (his 2026-09-03 word: he confirms the CTO's DONE WHEN from /endpoint --forward).",
+  "phase": "2026-10-16 ~03:5xZ (1.0.0_SA_CTO~DELL1): DONE WHEN CONFIRMED by Andrew ('Yes I like this layout you have for the project. I approve.'); L4 PRD in progress at the CTO.",
+  "blocking": null,
   "brief_ref": "docs/briefs/m365-workflow-activity-spine-brief-20261016.md@441e9ca92f",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_M365_WORKFLOW_SPINE_20261016.md",
   "prds": [],
@@ -31,6 +31,7 @@
   },
   "coo_lane": null,
   "rulings": [
-    "PLACEMENT DELL1 -- Andrew-direct 2026-10-16 ~01:36Z (relayed), VERBATIM: 'It should live on Dell1 (f086).' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_013xZ_F086_9987_RELAYED.md)."
+    "PLACEMENT DELL1 -- Andrew-direct 2026-10-16 ~01:36Z (relayed), VERBATIM: 'It should live on Dell1 (f086).' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_013xZ_F086_9987_RELAYED.md).",
+    "DONE WHEN CONFIRMED -- Andrew-direct 2026-10-16 ~03:5xZ, VERBATIM: 'Yes I like this layout you have for the project. I approve.' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_035xZ_WFSPINE_DONE_WHEN_APPROVED.md)."
   ]
 }
