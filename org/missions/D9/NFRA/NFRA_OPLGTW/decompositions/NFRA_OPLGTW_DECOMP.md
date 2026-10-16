@@ -2466,3 +2466,11 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-cl-9` | one `none_owed` row for `etfs` (type `hand-kept carrier`, the served object's own key, evidence `portal_json_served.py:374` and `:376`) in `infra/logic/registry/name_rulings.json`; no code, no override | `infra/logic/registry/name_rulings.json` | WORLD | ~111 | `OG-sv-1` merged (40051277fc), `OG-cl-8` merged (2ed472c4b9) |
 
 **fanout:** 1 of 1 chains, cap 8. One chain with `OG-cl-8` (the same file): cl-8 first, cl-9 second, both in slot ~111. The issuer's hookup of the seven json-served tools is on trunk (`7200f493d2`).
+
+## ADDENDUM R3-T.80 (2.0.0_SA_COO~O, 2026-10-16 ~04:0xZ, UTC) -- round 37, workstream NAMING-GATE-RULINGS: the commit-time naming gate grades a name with a name_rulings.json row from that row (XA-20261016T034740Z-28da ruled (a); CTO msg 34713)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ng-2` | `.tools/naming-gate.py` reuses `naming-apply-gate.py`'s `ruling_amend` (name, node type) lookup: `none_owed` or an equal `canonical` is RULED (passes, row cited), a different `canonical` REFUSEs, no row leaves the grade unchanged; three self-test arms (admit, no-row control, other-type control); the ten refused lines (8 bd49f, 2 etfs) re-graded RULED; no override | `.tools/naming-gate.py`, optionally `.tools/tests/test_naming_gate_rulings.py` | WORLD | ~114 | `OG-cl-8`, `OG-cl-9` merged (the five rows on the base) |
+
+**fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell. It is an `OG-ap-23` batch cell: the release commit cannot land in ENFORCE until the ten lines grade RULED. Before the merge the issuer re-runs the self-test, plants a name with no row and a row for another pair, and re-grades the ten lines.
