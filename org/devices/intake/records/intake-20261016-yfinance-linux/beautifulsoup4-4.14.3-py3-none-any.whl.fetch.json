@@ -1,0 +1,77 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-yfinance-linux",
+  "requested": {
+    "name": "beautifulsoup4",
+    "version": "4.14.3",
+    "python_tag": "py3",
+    "abi_tag": "none",
+    "platform_tag": "any",
+    "file_name": "beautifulsoup4-4.14.3-py3-none-any.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [
+    {
+      "url": "https://pypi.org/pypi/beautifulsoup4/4.14.3/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 5900,
+      "at": "2026-10-16T07:00:23Z"
+    },
+    {
+      "url": "https://pypi.org/pypi/beautifulsoup4/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 95080,
+      "at": "2026-10-16T07:00:23Z"
+    },
+    {
+      "url": "https://pypi.org/integrity/beautifulsoup4/4.14.3/beautifulsoup4-4.14.3-py3-none-any.whl/provenance",
+      "method": "GET",
+      "status": 404,
+      "bytes": 80,
+      "at": "2026-10-16T07:00:23Z"
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/1a/39/47f9197bdd44df24d67ac8893641e16f386c984a0619ef2ee4c51fbbc019/beautifulsoup4-4.14.3-py3-none-any.whl",
+      "method": "GET",
+      "status": 200,
+      "bytes": 107721,
+      "at": "2026-10-16T07:00:23Z"
+    }
+  ],
+  "published": {
+    "sha256": "0918bfe44902e6ad8d57732ba310582e98da931428d231a5ecb9e7c703a735bb",
+    "size": 107721,
+    "upload_time": "2025-11-30T15:08:24.087063Z",
+    "yanked": false,
+    "requires_python": ">=3.7.0"
+  },
+  "project": {
+    "release_count": 54,
+    "first_release_at": "2013-10-02T12:43:44.049307Z",
+    "this_release_at": "2025-11-30T15:08:24.087063Z"
+  },
+  "attestation": "absent",
+  "attestation_url": "https://pypi.org/integrity/beautifulsoup4/4.14.3/beautifulsoup4-4.14.3-py3-none-any.whl/provenance",
+  "held_path": "holding/intake-20261016-yfinance-linux/beautifulsoup4-4.14.3-py3-none-any.whl",
+  "held_sha256": "0918bfe44902e6ad8d57732ba310582e98da931428d231a5ecb9e7c703a735bb",
+  "held_bytes": 107721,
+  "outcome": "held",
+  "reason": "digest and size equal the published values",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~132",
+  "device": "laptop",
+  "at": "2026-10-16T07:00:23Z",
+  "approval": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+    "sha256": "2c354d03c2f427537f55b14c576669e66b7ddbdc18dfdfb38453cf0e6cdfc47e",
+    "matched": true
+  },
+  "release_files": [
+    "beautifulsoup4-4.14.3-py3-none-any.whl",
+    "beautifulsoup4-4.14.3.tar.gz"
+  ],
+  "index_file_name": "beautifulsoup4-4.14.3-py3-none-any.whl",
+  "received_sha256": "0918bfe44902e6ad8d57732ba310582e98da931428d231a5ecb9e7c703a735bb",
+  "received_bytes": 107721
+}

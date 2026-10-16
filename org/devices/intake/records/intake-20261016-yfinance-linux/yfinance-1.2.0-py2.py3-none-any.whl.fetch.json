@@ -1,0 +1,77 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-yfinance-linux",
+  "requested": {
+    "name": "yfinance",
+    "version": "1.2.0",
+    "python_tag": "py2.py3",
+    "abi_tag": "none",
+    "platform_tag": "any",
+    "file_name": "yfinance-1.2.0-py2.py3-none-any.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [
+    {
+      "url": "https://pypi.org/pypi/yfinance/1.2.0/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 8075,
+      "at": "2026-10-16T07:03:33Z"
+    },
+    {
+      "url": "https://pypi.org/pypi/yfinance/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 215336,
+      "at": "2026-10-16T07:03:33Z"
+    },
+    {
+      "url": "https://pypi.org/integrity/yfinance/1.2.0/yfinance-1.2.0-py2.py3-none-any.whl/provenance",
+      "method": "GET",
+      "status": 404,
+      "bytes": 77,
+      "at": "2026-10-16T07:03:33Z"
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/1e/60/462859de757ac56830824da7e8cf314b8b0321af5853df867c84cd6c2128/yfinance-1.2.0-py2.py3-none-any.whl",
+      "method": "GET",
+      "status": 200,
+      "bytes": 130247,
+      "at": "2026-10-16T07:03:34Z"
+    }
+  ],
+  "published": {
+    "sha256": "1c27d1ebfc6275f476721cc6dba035a49d0cf9a806d6aa1785c9e10cf8a610d8",
+    "size": 130247,
+    "upload_time": "2026-02-16T19:52:33.109055Z",
+    "yanked": false,
+    "requires_python": null
+  },
+  "project": {
+    "release_count": 150,
+    "first_release_at": "2019-05-26T11:21:44.155839Z",
+    "this_release_at": "2026-02-16T19:52:33.109055Z"
+  },
+  "attestation": "absent",
+  "attestation_url": "https://pypi.org/integrity/yfinance/1.2.0/yfinance-1.2.0-py2.py3-none-any.whl/provenance",
+  "held_path": "holding/intake-20261016-yfinance-linux/yfinance-1.2.0-py2.py3-none-any.whl",
+  "held_sha256": "1c27d1ebfc6275f476721cc6dba035a49d0cf9a806d6aa1785c9e10cf8a610d8",
+  "held_bytes": 130247,
+  "outcome": "held",
+  "reason": "digest and size equal the published values",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~132",
+  "device": "laptop",
+  "at": "2026-10-16T07:03:33Z",
+  "approval": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+    "sha256": "2c354d03c2f427537f55b14c576669e66b7ddbdc18dfdfb38453cf0e6cdfc47e",
+    "matched": true
+  },
+  "release_files": [
+    "yfinance-1.2.0-py2.py3-none-any.whl",
+    "yfinance-1.2.0.tar.gz"
+  ],
+  "index_file_name": "yfinance-1.2.0-py2.py3-none-any.whl",
+  "received_sha256": "1c27d1ebfc6275f476721cc6dba035a49d0cf9a806d6aa1785c9e10cf8a610d8",
+  "received_bytes": 130247
+}
