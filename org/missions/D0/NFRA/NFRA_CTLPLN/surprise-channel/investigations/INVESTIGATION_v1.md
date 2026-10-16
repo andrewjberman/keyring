@@ -12494,3 +12494,88 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Check 8 now passes for all 17 (BLOCKING W133-S1 cleared by the CTO's file block at 0f1ce30022). The four refused records read check 8 passed with the signed path; their verdict is not_checked because of check 6. Dell2 CTO's PROCEED (11f0240cd4) was received; the Taildrop was not sent because the 52-file pack does not exist."
 }
 ```
+
+## NFRA_CTLPLN-W137-S1 -- the sparse set omits org/missions and placement-check reads it silently as empty
+
+```json
+{
+  "id": "NFRA_CTLPLN-W137-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~137",
+  "surfaced_at": "2026-10-16T10:33:08Z",
+  "one_line": "CT-ay-1: the worktree's sparse set had no org/missions, and placement-check.py read that folder silently as empty: 1 live project and 0 cross-box overlaps with rc 0 and no error, against 30 live projects and 62 overlaps once org/missions was added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ay-1.fwd7-cross-box-overlaps-by-class.md@7d4aef5b93 -- the worker face says a missing folder is cured by git sparse-checkout add, and the retry is named in the report",
+      ".tools/placement-check.py@7d4aef5b93 lines 80 and 96 -- read_projects globs org/missions/D*/*/*/project.json and each home's task-orders; an absent folder yields no rows and no error",
+      "worktree ctlpln-137 at 7d4aef5b93 before the fix: git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/modules/graph, org/ref, org/standards, org/missions/D0/NFRA/NFRA_CTLPLN; the read printed 'live projects: 1', 'FINDINGS: 0 unplaced/unreadable, 0 cross-box write overlap(s)', rc 0",
+      "the same worktree after git sparse-checkout add org/missions (worktree only, no commit): 'live projects: 30', 'FINDINGS: 0 unplaced/unreadable, 62 cross-box write overlap(s)', rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, the cell: if a command fails because a file or folder is missing, run git sparse-checkout add <folder> (likely org/projects and org/missions), retry, and name the folder in the report. The read is run from the worktree root over every live project row.",
+  "world_is": "The command did not fail; it printed a complete-looking read over 1 of 30 live projects. The tool reads no org/projects path (its project rows come from the glob over org/missions and its register from org/devices/DEVICES.json), and org/mcp/drive_mode does not exist at HEAD. org/missions is the one folder the sparse set lacked. A worktree cut by .tools/wk-provision.sh with the same set reads a false zero for every cross-box overlap check, with rc 0.",
+  "notes": "The worker added org/missions to the worktree's sparse checkout only (git sparse-checkout add org/missions); no tracked file, register or project row changed. The hazard is for the next reader of a sparse worktree: a placement read there is not evidence of zero overlaps until the folder set is checked. Fix (the provision set or a refusal on an absent folder) is the issuer's call; not proposed here."
+}
+```
+
+## NFRA_CTLPLN-W137-S2 -- the cell's cut count of 64 does not match the live read (62) at the pin
+
+```json
+{
+  "id": "NFRA_CTLPLN-W137-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~137",
+  "surfaced_at": "2026-10-16T10:33:08Z",
+  "one_line": "CT-ay-1: the cell says the placement read prints 64 cross-box overlaps at the cut; at HEAD 7d4aef5b93 with org/missions present it prints 62 over 30 live projects, and the round-27 ruling says 58 and the earlier FWD-7 read says 56.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ay-1.fwd7-cross-box-overlaps-by-class.md@7d4aef5b93 -- the cell text: 'at the cut it reads 64 (FINDINGS: 0 unplaced/unreadable, 64 cross-box write overlap(s))'",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~137/FWD7_PROJECT_PATH_OVERLAPS.md@09b6330807 -- the live read: 62 OVERLAP lines; the tool's FINDINGS line counts 62; live projects 30",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/ledger/ROUND_ANALYSIS.round27.md@22207d353b ruling 4 -- 'the 58 cross-box write overlaps'",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~106/FWD7_OVERLAP_CLASSES.md@7d4aef5b93 -- the earlier read: 'Denominator: 56 OVERLAP lines read'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, THE CELL: at the cut python .tools/placement-check.py (read-only) reads 64 (FINDINGS: 0 unplaced/unreadable, 64 cross-box write overlap(s)).",
+  "world_is": "At HEAD 7d4aef5b93 with org/missions in the sparse set, the read prints FINDINGS: 0 unplaced/unreadable, 62 cross-box write overlap(s) over 30 live projects, and the classifier's total (62) agrees with it. The 64 is not reproduced at this pin. Its cause is not established by this worker; the live state moved between the cut and this read.",
+  "notes": "The classifier does not depend on the figure 64: it checks its total against the tool's own FINDINGS line on every run, and the report prints both. The three figures (56, 58, 64) and the live 62 are recorded as read, not reconciled."
+}
+```
+
+## NFRA_CTLPLN-W137-S3 -- a directory claim over a file is NOT-SAME-FILE by the reused rule, so the directory-claim clause of PROJECT-SAME-FILE cannot fire
+
+```json
+{
+  "id": "NFRA_CTLPLN-W137-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~137",
+  "surfaced_at": "2026-10-16T10:33:08Z",
+  "one_line": "CT-ay-1: 13 of the 62 overlap lines are NOT-SAME-FILE only because one path is a directory claim over a path under it (for example infra/aws/lambda/ci over infra/aws/lambda/ci/lambda-source-map.json); the reused prefix rule reads them as different files, and rule 3's directory-claim clause can never fire because rule 2 is checked first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~137/FWD7_PROJECT_PATH_OVERLAPS.md@09b6330807 -- the NOT-SAME-FILE table: 13 lines, each with a directory claim in the relation column; lines naming lambda-source-map.json under infra/aws/lambda/ci or infra/aws/lambda are among them",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~137/fwd7_classify.py@baed654d2b -- classify(): rule 2 (strict directory-prefix parent, differing) precedes rule 3 (equal path)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ay-1.fwd7-cross-box-overlaps-by-class.md@7d4aef5b93 -- BUILD 1: 'NOT-SAME-FILE when one path is a strict directory-prefix parent ... the two projects change different files'; PROJECT-SAME-FILE 'or one is a directory claim over the other's directory and neither rule above fired'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, BUILD 1: NOT-SAME-FILE when one path is a strict directory-prefix parent of the other and the two differ, meaning the two projects change different files; PROJECT-SAME-FILE when the two paths are the same file, or one is a directory claim over the other's directory and neither rule above fired.",
+  "world_is": "A directory claim covers every file under it, so the prefix relation does not show that the two projects change different files. Of the 62 lines, 13 are NOT-SAME-FILE on this basis, several naming lambda-source-map.json that the PROJECT-SAME-FILE table also lists. Because the prefix rule is checked first, the directory-claim clause of PROJECT-SAME-FILE is unreachable, so every directory claim reads NOT-SAME-FILE by construction. The classifier follows the rule as written and prints the relation on each such line; it does not reclassify.",
+  "notes": "Consequence for the CTO: PROJECT-SAME-FILE = 9 counts equal paths only. Whether the 13 directory-claim lines are same-file overlaps is a rule question for the CTO, who decides whether any becomes a cell. The worker proposes no change to the rule, the tool or the register."
+}
+```
