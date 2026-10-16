@@ -1175,10 +1175,12 @@ def case_check_6_records_the_cross_platform_comparison_and_the_crlf_count(env):
     w = env.add_wheel(tags=("cp312", "cp312", "manylinux_2_17_x86_64"), py_bytes=b"VALUE = 1\n")
     record, _ = env.check(w.name)
     ev = record["checks"][5]["evidence"]
-    assert record["checks"][5]["verdict"] == "failed", "the verdict of check 6 does not change"
+    # round 28 (ruling 3, amendment 1): the CRLF-only difference across platforms is cleared by the platform rule, so check 6 passes
+    assert record["checks"][5]["verdict"] == "passed", "a cross-platform CRLF-only difference is platform-normalised-equal"
     assert ev["compared_across_platforms"] is True and ev["installed_platform"] == "win_amd64", ev
     assert ev["held_platform"] == "manylinux_2_17_x86_64" and ev["py_differing_count"] == 1, ev
     assert ev["differ_after_crlf_normalisation"] == 0, ev
+    assert ev["platform_normalised_equal"] == [ic.SYN_NAME + "/__init__.py"] and ev["py_differing_after_platform_rules"] == 0, ev
 
 
 CASES = [
