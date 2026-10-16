@@ -65,7 +65,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ng-3.release-modules-naming-cle
 - After this merges the issuer re-GOes Phase A with a new `trunk_sha`.
 - Pre-cut: ng3.AC1 base FAIL as expected (3 REFUSE); ng3.AC2 base FAIL as expected (0 rows, 2 typed sites).
 
-<status>pending</status>
+<status>complete</status>
+<status_reason>closed by the issuer 2026-10-16: the worker's AC1 FAIL was one line, admin_gateway_breakdown.py:164 (opal-data-bd), an environment effect of its sparse tree (the gate's live-read client infra/aws/globgrph/projection_client.py was not in the cone; row Z-W111-S16). The issuer re-ran ng3.AC1 in the main tree on trunk 396b0690d5: rc=0, REFUSE 0, RULED 11, 13 graded, PASS; ng3.AC2 PASS (worker and issuer).</status_reason>
 <round>37</round>
 <workstream>NAMING-RELEASE-CLEAN</workstream>
 <slot>~111</slot>
