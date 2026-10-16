@@ -23665,3 +23665,106 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W2101-S1 -- contract 0.5.0 reads and source_txn_id_coverage for Inflection are all-partition counts that the order does not restate
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The Inflection reads and source_txn_id_coverage hold all-partition row counts (218,054,352 rows over 154 partitions), the same snapshot-weighted basis the order restates for the counts; the order names neither section, and the checker pins both to the round-130 reads, so 0.5.1 carries them unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order restates every Inflection count over every partition on the latest snapshot, and lists the sections that change; reads and source_txn_id_coverage are not in that list.",
+  "world_is": "In the 0.5.1 contract reads.inflection.rows and source_txn_id_coverage.inflection.rows are 218054352 over 154 partitions (the round-130 all-partition read). The checker reads_problems and coverage_problems pin them to RD_READS_R130.json and RD_ID_COVERAGE_R130.json, so the criterion passes with these values.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json reads.inflection and source_txn_id_coverage.inflection at f0cd10473c",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py reads_problems and coverage_problems at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left unchanged by this cell. Whether a later round restates them is for the issuer to rule."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S2 -- offset_rule keeps its all-partition distinct-key figure and its round-132 reason text; only candidate_rows is restated
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The 0.5.0 offset_rule holds distinct_keys_with_a_candidate (1) and a reason that names the round-132 pairing census; the round-135 latest-snapshot records carry no distinct-key figure. The order restates candidate_rows only, so 0.5.1 keeps the other two unchanged and the reason's provenance is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order says offset_rule.candidate_rows is the latest-snapshot figure only and lists the changed sections; the other offset_rule fields are not named.",
+  "world_is": "In 0.5.1 row_filter.inflection.offset_rule has candidate_rows 1 (the R135 latest snapshot), distinct_keys_with_a_candidate 1 (copied from 0.5.0, the all-partition pairing census) and the 0.5.0 reason text. The checker rules_problems reads only candidate_rows, so it passes either way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json row_filter.inflection.offset_rule at f0cd10473c",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R135_INFLECTION_SNAPSHOT_CENSUS.json at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stated in the generator's docstring. The issuer may want the distinct-key figure restated or dropped in a later cell."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S3 -- checker requires the sources price method to carry latest-snapshot figures; the order lists sources as unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "DBF135-1-AC1 cannot PASS as the order writes it: p135_contract.py price_correction_problems requires the sources.inflection price method to state 1,080,128 and 1,079,919 (the latest-snapshot fund-family figures), while the order lists sources as unchanged, and the 0.5.0 method states 154,828,670 and 154,808,844.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's Unchanged list keeps sources from 0.5.0, and its refusal clause says a checker rule that disagrees with the order is followed as the order writes it and filed as a row.",
+  "world_is": "The 0.5.1 contract, as the order writes it, has sources identical to 0.5.0 (the price method is the 0.5.0 text). The checker prints the two reason lines inflection price method must state '1,080,128' and '1,079,919' and DBF135-1-AC1 FAIL (rc 1). A control with only that method's figures patched, reverted after the run, prints DBF135-1-AC1 PASS, so this rule is the only blocker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py price_correction_problems and source_problems at f0cd10473c",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json sources.inflection price entry at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decision for the issuer: restate the sources price method on the latest snapshot (a sources change the order does not list), or amend the checker. No route taken in this cell. The order stays open."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S4 -- served_note is unchanged and does not name contract 0.5.1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The 0.5.0 served_note records the 0.4.2 and 0.5.0 history only; the order lists everything else as unchanged, so 0.5.1 does not add its own history sentence to the note.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order keeps everything in 0.5.0 that it does not list (served false included) unchanged.",
+  "world_is": "In 0.5.1 served_note is byte-identical to the 0.5.0 text, and served is false. The contract's contract_version, supersedes and authored_by name 0.5.1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json served_note at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A documentation-only point. The version history is carried by supersedes and contract_version."
+}
+```
+
