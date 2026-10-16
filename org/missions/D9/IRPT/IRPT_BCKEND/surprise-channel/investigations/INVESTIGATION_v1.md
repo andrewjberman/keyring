@@ -40825,3 +40825,78 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W446-S1 -- The minting pin worktree came up with a sparse index: 76354 of 81551 entries were skip-worktree, so infra/ was absent until the bits were cleared in the pin only.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W446-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~446",
+  "surfaced_at": "2026-10-16T00:44:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "git worktree add --detach of the minting pin b1d354cfc9 left 76354 of 81551 index entries skip-worktree; the pin's infra/ tree was missing until the bits were cleared and the tree checked out, in the pin worktree only.",
+  "spec_asserts": "The worker face makes the minting pin a full detached checkout, sparse checkout disabled in that worktree alone, as IB-pr-595 did.",
+  "world_is": "git worktree add populated 5197 files and kept the sparse index; setting core.sparseCheckout false in config.worktree afterwards did not repopulate it. Fix applied in the pin only: update-index --no-skip-worktree over the 76354 listed paths, then checkout-index -a -f; the pin then holds 81551 tracked files and the infra/aws/lambda/investor-reporting tree is present. The main worktree was not touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pin worktree C:/Users/Test/AppData/Local/Temp/claude/C--dev-ajb-workspace/5b5f4f1a-3f41-49e1-a06c-e9ff03f559ec/scratchpad/wk446/pins/49financial at b1d354cfc9: git ls-files -t counted 76354 S entries of 81551 before the fix",
+      "first firm run on the pin failed with FileNotFoundError at infra/aws/lambda/investor-reporting/holdings/publication.py; after the fix the firm run built and tested (worker log wk446/run/firm.log)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W446-S2 -- 36 pin files read as modified in git status although their raw bytes equal the pin commit: the pin commit stores CRLF blobs under an eol=lf attribute, so the clean-tree precondition was replaced by a raw-blob equality check.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W446-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~446",
+  "surfaced_at": "2026-10-16T00:44:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pin worktree at b1d354cfc9 reports 36 M entries that are byte-identical to their commit blobs (CRLF in i/crlf and w/crlf under the text eol=lf attribute); the harness required a clean pin, so it checks raw equality for those entries instead.",
+  "spec_asserts": "The IB-pr-595 harness and this order's method start from a clean pin worktree (git status empty) before the transplant files are copied in.",
+  "world_is": "git status lists 36 M entries in the pin; for all 36, git hash-object --no-filters equals git rev-parse HEAD:<path>; git ls-files --eol reads i/crlf w/crlf attr/text eol=lf. The build read the raw bytes; the live comparison changed exactly the two overlay members and no other closure member.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pin worktree C:/Users/Test/AppData/Local/Temp/claude/C--dev-ajb-workspace/5b5f4f1a-3f41-49e1-a06c-e9ff03f559ec/scratchpad/wk446/pins/49financial: git status --porcelain listed 36 entries, all M, before the candidate copy-in",
+      "firm run log (worker wk446/run/firm.log): pin entries reported modified by the line-ending filter (raw bytes equal to the commit): 36; changed closure members=2; unexpected=0"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W446-S3 -- The session date statement reads 2026-10-15 while the UTC clock read 2026-10-16 at the live read; the record's read_date is the UTC date of the read.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W446-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~446",
+  "surfaced_at": "2026-10-16T00:44:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks for read_date as today ISO, but the session date and the UTC clock disagree across midnight; the record carries 2026-10-16, the UTC date of the read.",
+  "spec_asserts": "The order's record field read_date is today ISO and the worker face gives no timezone for today.",
+  "world_is": "date -u printed 2026-10-16T00:29Z when the candidate was built and the live bundle read; the session's date statement said 2026-10-15. The record's read_date is 2026-10-16. The check p241_cells.py does not compare read_date with any calendar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "date -u +%FT%TZ output in worktree C:/dev/wk-IRPT_BCKEND-446 at base 807d46f0de: 2026-10-16T00:29Z (first act) and 2026-10-16T00:44:33Z (rows)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~446/IB241-1_addendum_candidate.json: read_date 2026-10-16"
+    ]
+  }
+}
+```
