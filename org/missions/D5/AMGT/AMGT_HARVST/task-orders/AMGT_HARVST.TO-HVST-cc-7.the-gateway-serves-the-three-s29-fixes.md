@@ -23,8 +23,8 @@ comp-adversary: RUN at L5 -- the adversary is a deploy of a tree that is not the
 ## 1. START CONDITIONS (any false: DO NOT START, file one row, and the issuer reads it)
 
 - (a) `HVST-cc-1`, `HVST-cc-2` and `HVST-cc-3` are `<status>complete</status>` and merged on `box/dell1` (`006828d8d5`, `44a1048df9`, `0ce056da15`); the release branch of step 0 carries their six files onto the live base.
-- (b) A never-widen pair for the gateway deploy is SIGNED at the current bytes (COO half and CTO half, `ledger/`), naming the blast radius (the `opal-gateway` service and every tool on it), the rollback per artifact (the previous deployed tarball and its S3 key, read at the start), and the served reads below. The issuer sends the pair's path in the send note. Without it: DO NOT START.
-- (c) A deploy ledger entry is open at the start and closed at the end (NEVER-2; `org/critical_paths/change_management/` and the sentinel `org/critical_paths/.open_deploys/harvst-cc7-gateway-s29-20261016.json`).
+- (b) The never-widen pair for the gateway deploy is SIGNED at the current bytes: COO half `deliverables/2.0.0_SA_COO_W1/round88/NEVER_WIDEN_HALF_COO_CC7_GATEWAY_S29.md` (sha256 `b5c79b76ca3bc1a1e913601b9ea4f924cff2999e509957ec490dd762cffde710`) and CTO half `ledger/NEVER_WIDEN_CC7_GATEWAY_S29_CTO_HALF.md` (msg 6895), with the CTO's added condition **C-6**: read the MCP tool-name count and `/health` BEFORE and AFTER, on BOTH branches; they must be equal (127 at the last release record); a different count after the deploy means a path outside the six shipped: Branch F, roll back. The gateway serves every box, so STATE THE RESTART WINDOW (start and end, UTC) in the deploy ledger entry. Read both halves before you start.
+- (c) A deploy ledger entry is open at the start and closed at the end (NEVER-2; `org/critical_paths/change_management/` and the sentinel `org/critical_paths/.open_deploys/harvst-cc7-gateway-s29-20261016.json`). The entry also holds the restart window and the before and after tool-name counts (C-6).
 
 ## 2. THE ACT (dell1)
 
@@ -69,11 +69,11 @@ This order touches none of them.
 - **STAGED, not sent.** It waits on the three build cells' merges and on the never-widen pair (start condition b). The receiving seat is `0.7.0_AE_CloudOps~SC1`, the AMGT CloudOps lane on dell1 (CLAUDE.md rule 34, Andrew-direct 2026-10-16 ~15:4xZ: one CloudOps lane per macro per box). The runner hold of `HVST-cc-5` is `0.7.0_AE_CloudOps~HV1`'s, so this order does not wait on it.
 - Authority: CTO round-87 analysis (msg 6766) rulings for `D1-S29` and ERRATUM 1 (msg 6780); close condition of REMEDIATION_v19 (the surfacing seat reads each on the served data). After `AC1` to `AC3` the issuer asks `4.0.0_SA_CRO~DELL1` (the surfacing seat) to read the three names itself.
 - **Not covered, named:** a silver REBUILD for KMB's misfiled report (the cc-2 on-the-fly check serves without it when the stored row carries the header; otherwise a rebuild is owed and is a later cell); adding Procter & Gamble or `KIMBERA MM` to the universe; the `modelSheet.ts` label.
-- **SENT:** NOT YET.
+- **SENT 2026-10-16 ~16:5xZ** after both halves were signed (COO `a84dbdc1e7`; CTO msg 6895 with C-6). Sequence at the seat: `HVST-cc-5` runner steps first (done), then this order, `HVST-cc-4`'s Arm A' last.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>88</round>
 <workstream>S29-SERVE</workstream>
 <slot>dell1</slot>
