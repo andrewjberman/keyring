@@ -111,3 +111,24 @@ This addendum is the explicit word. The round-18 line therefore reads met for 28
     without `address` resolve exactly as before.
 - **(b) is refused.** An adapter that builds its own path bypasses the catalog: the lookup contract, and the fence that reads it,
   would no longer see that read.
+
+### Ruling ~13:4xZ (CVO~Z msg 35029, row NFRA_OPLGTW-Z-S292 BLOCKING): `-live` routes to its OWN role scoped to the four opal-data-bd prefixes
+
+- **Measured by the CVO:**
+  - `role_key` drops `-live`, so the four 49F live reads assume the `blackdiamond49f` role.
+  - That role carries an explicit Deny on `opal-data-bd`, and simulate reads explicitDeny on `unrealized` and `transactions`.
+  - Once the catalog gap is closed, every read would be refused.
+- **Where the Deny came from:** my A2 ruling (msg 34134), which held the client tools to `opal-data-assets`. Andrew's v3.6 word
+  (10-14 ~18:3xZ) came later and admits 49F BD from `opal-data-bd`. v3.6 item 2 already fixes the shape: "a role scoped to
+  `opal-data-bd/silver/`, with its own never-widen ask (never the global internal reader)". The Deny was correct under A2; v3.6
+  overtook it, and no cell carried that through to IAM.
+- **Ruled:** `-live` routes to a DEDICATED read role. It is GetObject and ListBucket, read-only, on exactly
+  `opal-data-bd/silver/{unrealized,transactions,allocations,fees}/`, and assumable only by the gateway.
+  - The `blackdiamond49f` role keeps its explicit Deny on `opal-data-bd`, so the per-firm assets role can never reach bd.
+  - The grant is a never-widen act with all three halves. The ask names the four prefixes as a literal list.
+  - The `role_key` change and the test are `2.0.0_SA_COO~O`'s cell: a `-live` table assumes the new role, and a non-live table
+    still assumes `blackdiamond49f`.
+- **Refused:** narrowing the existing role's Deny. One role would then reach two buckets, and the fence would rest on a Deny's
+  exception list.
+- **Order:** the IAM grant and the code ride the SAME batched release as `~MI`'s `address` field. OG-en-11 is re-run on the served
+  host, and Z-S292 closes on that run. The CVO's "my OG-ap-24 half missed it" is noted; my own A2 is the origin.
