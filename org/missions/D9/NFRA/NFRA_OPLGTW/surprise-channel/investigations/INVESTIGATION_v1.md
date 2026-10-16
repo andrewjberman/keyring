@@ -25919,3 +25919,57 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "RULED, a recipe repair for the next release order (issuer): a release tree cut on the live ref carries the live ref's .tools/halt-gate-check.sh, which rejects a rule-34 lane (~<MACRO><n>), and its sparse cone needs one org/<tier>/ home folder matching the base. Both refusals came before any upload and were cured with no override. The next batched release order's step 2 therefore says: lay the TRUNK copy of .tools/halt-gate-check.sh into the release tree UNCOMMITTED, add a CloudOps home folder to the cone, and restore both before the deploy tree's clean check (as the naming-gate overlay already is). Not a defect of OG-ap-31: nothing half-landed."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T23:20:21Z",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S327",
+  "one_line": "OG-ev-3: ev3.AC1 cannot pass as written -- the transactions window is 317754041 bytes, a 9-digit run the check's hygiene limb rejects, and the host's memory guard stopped transactions at 1 complete run of the 5 required.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/WINDOW_MEASURE.json",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev3_transactions.json (and .raw.txt)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev3_fees.json",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ev3.AC1.sh",
+      "ev3.AC1 prints: transactions runs 1; content hygiene long digit runs 1 (want 0); verdict outside (rule says outside); fees runs 5; RESULT: FAIL"
+    ]
+  },
+  "spec_asserts": "The record WINDOW_MEASURE.json can carry bytes as an int for both tables, five runs per table, and contain no digit run of 9 or more (ev3.AC1 limbs 1 and 3).",
+  "world_is": "Two conflicts. (1) bytes for the transactions window is an int of 9 digits (the 334 files total 317754041 bytes as stored), and the check's own regex flags any run of 9 or more digits, so the limb can only pass for a window under 100000000 bytes; the fees window (32251262) passes. (2) Run 1 of transactions took 239.888 s with the host at 78.5 percent used memory (no swap; the gateway process resident 122 MB before and after); run 2 reached 81.6 percent and my guard (80 percent, stricter than the order's 85) stopped it at 190 of 334 files. The 5 runs of fees completed (peak 43.8 percent). The verdict does not depend on the missing runs: the one complete transactions run is 8 times the 30 s threshold and the 5 fees runs sit at 146 to 147 s. I did not repeat transactions in separate processes on a live no-swap host to complete a record the hygiene limb would still reject.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Verdict word is reported to the issuer: outside. The status stays staged. A re-cut of the check (bytes in KiB or a hygiene bound that spares a bytes count) and the choice to run transactions 4 more times in separate processes are the issuer's."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T23:20:21Z",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S328",
+  "one_line": "OG-ev-3: the 13-month read is slow because every ctx.read_rows call lists the whole prefix first (about 0.4 s of 0.55 s on fees), so 396 partitions cost 146 s even at concurrency 16 with only 32 MB of data.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev3_diag.json (single-threaded, fees, newest partition, 3 repetitions: typed_scope.list_keys over 2009 objects 0.375 to 0.462 s; read_parquet of the one key 0.087 to 0.193 s; the whole ctx.read_rows 0.512 to 0.608 s)",
+      "infra/aws/ec2/opal-gateway/app/client_core.py read_rows at the live release 4be300110e: it calls typed_scope.list_keys(scope, real) on every call, then picks the key for the date",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev3_fees.json: 5 runs at concurrency 16 read 396 files in 145.7 to 147.2 s with the host CPU 52 to 54 percent busy of 2 vCPUs"
+    ]
+  },
+  "spec_asserts": "Reading every dated partition of a window through the installed adapter's read path is bounded by the data read.",
+  "world_is": "It is bounded by the per-call prefix listing, which is repeated once per partition: about 80 percent of a single call on fees. At concurrency 16 the 396 calls took 146 s against about 218 s serial (396 x 0.55 s), a 1.5 times speed-up, consistent with a python-side cost that does not parallelise (the listing is processed on the GIL; the host used about one of two vCPUs). Not isolated further: I did not profile inside list_keys. A reader that lists the prefix once and reads the dated keys directly would remove the repeated listing; that is a design choice for the code cell, not measured here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and seconds only. Bears on OG-en-17."
+}
+```
