@@ -29,7 +29,6 @@ arming record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_
 - `dell2 92c0`: client-facing PROD push (CLAUDE.md Agent Autonomy).
 - Recursive deletes (CLAUDE.md Agent Autonomy): the dell1 `SCRATCH2` and `SCRATCH_TARGET` folders; the site Z `ae72` folders.
 - NFRA_TRNSPT S11: the Research series invite through Lauren, or admin consent for fix 2.
-- `FIDELES_IMAP_SECRET`: his credential.
 - Sittings, sign-ins and sends: `21d9`, `21c5`, `8ed7`, `f0d2`, `def4`, `a519`, `44eb`, `8f2b`, `c9a4`, `b87f`, `e260`.
 - `dell2 c02c`: postponed.
 

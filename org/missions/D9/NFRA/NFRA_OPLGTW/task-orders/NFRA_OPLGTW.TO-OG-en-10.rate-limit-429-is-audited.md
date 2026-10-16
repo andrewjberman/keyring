@@ -72,7 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-10.rate-limit-429-is-audited
 - Round 38 (CTO finding msg 34991), workstream ENRICH-R38-B (decomposition addendum R3-T.94). Risk WORLD by the L6 floor, no deploy in this cell; rides the batched gateway release. The row for the finding is filed by the issuer with the limiter's config read (identity limit 120 per 60 s, in-memory sliding log, every /mcp POST counted) and this cell as its instrument; whether to raise the limit or give the seats distinct identities is decided AFTER the first 429 audit rows exist (a number chosen without the count would be a guess).
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38-B</workstream>
 <slot>~124</slot>

@@ -55,7 +55,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-11.bd49f-served-source.proof
 - Round 38 (CTO msg 35014), workstream ENRICH-R38-C (decomposition addendum R3-T.95; a third workstream for the L6 gate's one-issuer-per-workstream key). The CTO asked for the 49F BD adapter on `opal-data-bd` to be cut "if not cut". It is cut and built already: `OG-cl-2` (complete) wrote the adapter over the live `opal-data-bd/silver/` tables, `OG-ap-24` (applied) extended `gateway-blackdiamond-read-role`, and both are live in `3d5c9c8bf1`. What is NOT on record is the served measurement; this cell supplies it. If the measurement shows the assets copy, the cause is read from the code path and a code cell follows (not guessed here).
 - Pre-cut: en11.AC1 base FAIL as expected (`BD49F_SERVED.json` absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38-C</workstream>
 <slot>~AE</slot>

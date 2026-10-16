@@ -46,23 +46,6 @@ landed by 1.0.0_SA_CTO~DELL2; each other box's CTO lands its own.
 
 ## Arms
 
-- **`0.0.0_AB_MSTR~DELL1`: `/fideles watch`, the ONE reader of the fabric's mailbox `andrew@fideles.capital`; failover
-  `0.0.0_AB_MSTR~DELL2`, never both at once**, DIRECTED, chooser Andrew. Andrew-direct ~03:4xZ 2026-10-16 at the laptop
-  `2.0.0_SA_COO~CA` terminal, VERBATIM: "Dell1 MSTR should do it. we use DELL1 as the primary operator for muse. If Dell1 is
-  down, Dell2 takes it. Both dells should maintain the muse folder on their box."
-  - Record: `org/tier1_exec/2.0.0_SA_COO~CA/ANDREW_DIRECT_20261016_034xZ_FIDELES_SKILL_DELL1_MSTR_OWNS_MUSE_MAIL_WATCHER.md`
-    @01a931b97d.
-  - Skill: `.claude/skills/fideles/SKILL.md` @90a3659746.
-  - The watcher is `.tools/fideles-watch.py watch`, a Windows scheduled task on dell1 and dell2. It is NOT a session Monitor
-    and spends no inference.
-  - Only the holder of the S3 lease `fabric/fideles/v1/lease.json` reads the mailbox. dell1 holds it; dell2 takes it only after
-    15 minutes without a dell1 renewal.
-  - Each new muse mail lands as one file in the holder MSTR's inbox.
-  - Installed by `/fideles install` (`0.0.0_AB_MSTR~DELL1`, then `~DELL2`).
-  - Install precondition: the `FIDELES_IMAP_SECRET` Secrets Manager secret (the Gmail app password for
-    `andrew@fideles.capital`). Creating it is Andrew's.
-  - Stop: his stand-down. Landed by 1.0.0_SA_CTO.
-
 - **Every COO lane seated on a non-terminal project, on every box: `/canonical-drive 60m` over its own project**, DIRECTED,
   chooser Andrew. Andrew-direct ~20:3xZ 2026-10-13 at the MSTR terminal, VERBATIM: "ON, 60m loops for /self-drive,
   /canonical-drive, /govern for the relevant agents" (relayed by 0.0.0_AB_MSTR msg 108887). Then at the `1.0.0_SA_CTO` terminal
