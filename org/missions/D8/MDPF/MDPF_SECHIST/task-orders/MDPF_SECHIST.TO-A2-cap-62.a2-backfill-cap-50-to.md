@@ -78,7 +78,7 @@ Write the proof_of_spec instance, flip <status> to complete, commit under the gr
 
 <!-- ===================== RECORD FACE -- never travels to a worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <risk>WORLD</risk>
 <direct_act>true</direct_act>
 <slot>~25</slot>
