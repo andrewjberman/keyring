@@ -22827,3 +22827,32 @@
   "world_is": "The upload route refuses an internal caller's on-behalf upload that does not name a firm advisor; the form's advisor field carried a typed name (SYNTHETIC FWD-1 advisor) that is not a directory advisor, and the upload never reached the resident. The driver's wait ran 780 s past a form that had already failed in under a minute (its still-checking branch did not apply). A further window needs a ruling on the advisor value and on stopping the wait at the failure sentence."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W169-S1 -- AR-y-377 step 1: no existing portal read returns a firm's advisors with their email, so the advisor_email picker build is STOPPED
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W169-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~169",
+  "surfaced_at": "2026-10-16T21:21:00Z",
+  "one_line": "AR-y-377 step 1: no existing portal read at origin/DEV fcbf2bce returns a firm's advisors WITH their email. The build is stopped: no picker, no advisor_email member, no test file, no candidate branch. The issuer needs a backend cell that serves a firm's advisor directory with email before the portal cell can run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-377 step 1 (WORKER FACE): in portal origin/DEV find which existing directory read returns a firm's advisors WITH their email; if none exists, STOP the build, file a BLOCKING surprise row naming exactly what you searched, and report; do not invent a route and do not make the email free text.",
+  "world_is": "No such read exists at origin/DEV fcbf2bce. The Investor Reporting directory reads (directory-search, directory-browse, resolve-scope) return DirectoryEntry rows keyed to firm, client, relationship and account, with no advisor or email member. The Ticket Center firm chooser returns firms only. The advisor input is a typed name. The only email read on the Investor Reporting page is the signed-in user's own address. The on-behalf upload therefore has no advisor_email source in the portal. The searched paths, line numbers and negative-search counts are in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~169/r43/ADVISOR_DIRECTORY_READ.json at the commit that files this row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@fcbf2bce src/pages/InvestorReporting/contracts/wire/DirectoryEntry.ts lines 12-19: ids carries firm_id, client_id, relationship_id, account_ids; no advisor or email member",
+      "portal@fcbf2bce src/api/endpoints/investor-reporting.ts lines 1242-1289: searchDirectory, browseDirectory and resolveScope return DirectoryEntry, DirectoryBrowsePage and ResolvedScope only; grep email in this file returns 0 hits",
+      "portal@fcbf2bce src/pages/InvestorReporting/contracts (native Grep for email, advisors, partners): 0 hits; directory-browse.ts lines 29-71 admit only the closed DirectoryEntry key set",
+      "portal@fcbf2bce src/pages/TicketCenter/TicketCenter.tsx lines 104-121 loadAllowedFirms returns firms as {id, label} only; src/pages/TicketCenter/analysisRequest.ts line 372 calls uploadAnalysisInput(input.upload, input.answers.firm) with no advisor argument",
+      "portal@fcbf2bce src/api/endpoints/advisor-intelligence.ts reads platinum/advisors return advisor_id and advisor_name only (0 email hits); trade-submission.ts TradeUser is the trade-approval user record, not a firm directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
