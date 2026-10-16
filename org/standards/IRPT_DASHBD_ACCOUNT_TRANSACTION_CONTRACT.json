@@ -1,10 +1,10 @@
 {
-  "contract_version": "0.3.0",
-  "supersedes": "0.2.0 (graded: the CVO's J1 PASS 20 of 20 by natural key)",
+  "contract_version": "0.4.0",
+  "supersedes": "0.3.0 (withheld by the issuer, round 131: the Cottonwood Action-lookup defect, 3 of 87 Action values carry a trailing space and read CODE_NOT_IN_MAPPING; the 0.2.0 J1 PASS of round 129 stands for the 49 Financial rows)",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
-  "authored_by": "0.9.0_WK_IRPT_DASHBD~1601",
-  "authored_under": "IRPT_DASHBD.TO-DB-f-1601 (round 130, workstream ~F2, F-SHIP), cell DB-f-1601 of IRPT_DASHBD_DECOMP_R130_F.md, following the CTO round-129 analysis for F-SHIP (msg 9211: source_txn_id's per-row claim with all-partition coverage per firm; the custodian and empty-to-null transforms stated; the Cottonwood producer) and the CTO's ruling msg 9192 item 4.",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "authored_under": "IRPT_DASHBD.TO-DB-f-1701 (round 131, workstream ~F2, F-SHIP), cell DB-f-1701 of IRPT_DASHBD_DECOMP_R131_F.md, following the CTO round-130 analysis for F-SHIP (msg 9245: one normalisation function, source_action_raw on every row, a criterion over every distinct live source value, a collision a finding, J1 on a fresh sample) and the round-131 issuer's Inflection census.",
   "table": "account_transaction",
   "grain": "account x transaction line",
   "partition": "date=YYYY-MM-DD",
@@ -29,7 +29,7 @@
       "name": "business_date",
       "type": "date32[day]",
       "nullable": false,
-      "meaning": "The business date of the row, the date= partition it is written under. 49 Financial: the silver partition's business date. Cottonwood: the adapter's performance day, the first NYSE trading day on or after the Trade Date (the adapter's window_day rule).",
+      "meaning": "The business date of the row, the date= partition it is written under. 49 Financial: the silver partition's business date. Cottonwood: the adapter's performance day, the first NYSE trading day on or after the Trade Date (the adapter's window_day rule). Inflection: the transDate as read (strict YYYY-MM-DD); no calendar roll, because the Inflection adapter keys on transDate.",
       "claim": "measured"
     },
     {
@@ -43,7 +43,7 @@
       "name": "settle_date",
       "type": "date32[day]",
       "nullable": true,
-      "meaning": "The settlement date: the settlmnt_date column of the transaction table (round-128 ground read); for Cottonwood the Settle Date column. Null when the value is missing or unparsable.",
+      "meaning": "The settlement date: the settlmnt_date column of the transaction table (round-128 ground read); for Cottonwood the Settle Date column. Null when the value is missing or unparsable; null on every Inflection row (the table has no settlement column).",
       "claim": "measured"
     },
     {
@@ -66,35 +66,35 @@
       "name": "symbol",
       "type": "string",
       "nullable": true,
-      "meaning": "The security symbol, the ticker_symbol column (49 Financial) or the Symbol column (Cottonwood); null on a row with no security.",
+      "meaning": "The security symbol, the ticker_symbol column (49 Financial), the Symbol column (Cottonwood) or the ticker column (Inflection); null on a row with no security.",
       "claim": "measured"
     },
     {
       "name": "asset_name",
       "type": "string",
       "nullable": true,
-      "meaning": "The security's name. The 49 Financial live schema (140 columns) has no name column (round-128 ground read), so the column is null on every 49 Financial row; Cottonwood reads its Asset Name column.",
+      "meaning": "The security's name. The 49 Financial live schema (140 columns) has no name column (round-128 ground read), so the column is null on every 49 Financial row; Cottonwood reads its Asset Name column; Inflection reads productName.",
       "claim": "absent"
     },
     {
       "name": "units",
       "type": "double",
       "nullable": true,
-      "meaning": "The quantity column, named as the units (round-128 ground read); for Cottonwood the Units column. Null when the row carries none.",
+      "meaning": "The quantity column, named as the units (round-128 ground read); for Cottonwood the Units column; for Inflection noUnits. Null when the row carries none.",
       "claim": "measured"
     },
     {
       "name": "price",
       "type": "double",
       "nullable": true,
-      "meaning": "The price column (round-128 ground read); for Cottonwood the Price column. Null when the row carries none.",
+      "meaning": "The price column (round-128 ground read); for Cottonwood the Price column; for Inflection navPrice where noUnits is non-zero and navPrice is positive (see sources.inflection). Null when the row carries none.",
       "claim": "measured"
     },
     {
       "name": "amount",
       "type": "double",
       "nullable": false,
-      "meaning": "The custodian's money amount. 49 Financial: gross_amount; on a cash row the sign is taken from debit_credit as account_return_daily takes it (CREDIT positive, DEBIT negative); on an in-kind row debit_credit is a position side and is not read as a cash sign. Cottonwood: the Market Value, signed by the External Flow word as the adapter does (+abs for Contribution, -abs for Withdrawal) and as booked otherwise.",
+      "meaning": "The custodian's money amount. 49 Financial: gross_amount; on a cash row the sign is taken from debit_credit as account_return_daily takes it (CREDIT positive, DEBIT negative); on an in-kind row debit_credit is a position side and is not read as a cash sign. Cottonwood: the Market Value, signed by the External Flow word as the adapter does (+abs for Contribution, -abs for Withdrawal) and as booked otherwise. Inflection: transAmount as booked.",
       "claim": "inferred",
       "method": "gross_amount, the money column the adapter declares (money_column). The sign is taken from debit_credit on cash rows: CREDIT positive, DEBIT negative (direction_map)."
     },
@@ -102,7 +102,7 @@
       "name": "fee",
       "type": "double",
       "nullable": true,
-      "meaning": "The stated sum, for each firm, of the columns the contract's fee_basis names (49 Financial: commission, exchange_processing_fee, broker_service_fee, prime_broker_fee, trade_away_fee, redemption_fee, other_fee, step_in_fee, research_fee; Cottonwood: Transaction Fee and Account Fee). A null column counts as nothing; a row whose named columns are all null has fee null, never zero.",
+      "meaning": "The stated sum, for each firm, of the columns the contract's fee_basis names (49 Financial: commission, exchange_processing_fee, broker_service_fee, prime_broker_fee, trade_away_fee, redemption_fee, other_fee, step_in_fee, research_fee; Cottonwood: Transaction Fee and Account Fee). A null column counts as nothing; a row whose named columns are all null has fee null, never zero. Inflection: null (no fee column).",
       "claim": "inferred",
       "method": "Per row, the sum of the fee-named columns listed in from_columns and of commission; null when every listed column is null. markupmarkdown is not summed (a price markup, not a fee charge) and exec_brok_comm is not summed (its meaning as a fee is not established from the census or the tracked records)."
     },
@@ -110,23 +110,23 @@
       "name": "custodian",
       "type": "string",
       "nullable": false,
-      "meaning": "The custodian of the row, lower-cased: the custody entry's constant (sources.json custodian) for 49 Financial, and Cottonwood's Custodian column for Cottonwood. The round-128 ground read names custdian_id as the custodian identity column for 49 Financial; the constant is what a person reads, and custdian_id is not read onto the row.",
+      "meaning": "The custodian of the row, lower-cased: the custody entry's constant (sources.json custodian) for 49 Financial, and Cottonwood's Custodian column and Inflection's custodianName for those firms. The round-128 ground read names custdian_id as the custodian identity column for 49 Financial; the constant is what a person reads, and custdian_id is not read onto the row.",
       "claim": "inferred",
-      "method": "The custodian constant of the custody entry (49 Financial) or the Custodian column (Cottonwood), stripped and lower-cased by the producer; set once per entry in the registry."
+      "method": "The custodian constant of the custody entry (49 Financial) or the Custodian or custodianName column (Cottonwood, Inflection), stripped and lower-cased by the producer; set once per entry in the registry."
     },
     {
       "name": "flow_class",
       "type": "string",
       "nullable": false,
-      "meaning": "The flow class of the row's code: EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION or UNRESOLVED. 49 Financial: the tran_srcde code's class. Cottonwood: the External Flow word (Contribution EXTERNAL_IN, Withdrawal EXTERNAL_OUT) or the pair's class.",
+      "meaning": "The flow class of the row's code: EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION or UNRESOLVED. 49 Financial: the tran_srcde code's class. Cottonwood: the External Flow word (Contribution EXTERNAL_IN, Withdrawal EXTERNAL_OUT) or the pair's class. Inflection: the description's class in its source_mapping row, by inflection_flow_rule.",
       "claim": "inferred",
-      "method": "49 Financial: per tran_srcde through flow_class_rule over the CRO table's (partition, rule) pairs: one class when the code's CRO rows agree, UNRESOLVED when they disagree or the table does not hold the code. The silver-only codes and IRAWH and MCE are fixed in source_mapping. Cottonwood: cottonwood_mapping (the External Flow rule, then the pair's flow_class_none). The round-128 ground read names the 49 Financial key (tran_srcde, tr_cd, sb_cd); this contract keys on tran_srcde, the key source_mapping holds."
+      "method": "49 Financial: per tran_srcde through flow_class_rule over the CRO table's (partition, rule) pairs: one class when the code's CRO rows agree, UNRESOLVED when they disagree or the table does not hold the code. The silver-only codes and IRAWH and MCE are fixed in source_mapping. Cottonwood: cottonwood_mapping (the External Flow rule, then the pair's flow_class_none). Inflection: inflection_flow_rule applied in the order NNA, CorporateAction, account_boundary in or out, Internal, Return by word. The round-128 ground read names the 49 Financial key (tran_srcde, tr_cd, sb_cd); this contract keys on tran_srcde, the key source_mapping holds."
     },
     {
       "name": "source_txn_id",
       "type": "string",
       "nullable": true,
-      "meaning": "The per-transaction identifier of the row, a PER-ROW CLAIM: present where the firm's source column (49 Financial cashiering_transaction_identifier; Cottonwood TransactionID) is non-null and non-blank, and absent (null) where it is not. It is never a universal key: source_txn_id_coverage states each firm's coverage over every partition with its denominator.",
+      "meaning": "The per-transaction identifier of the row, a PER-ROW CLAIM: present where the firm's source column (49 Financial cashiering_transaction_identifier; Cottonwood TransactionID; Inflection id) is non-null and non-blank, and absent (null) where it is not. It is never a universal key: source_txn_id_coverage states each firm's coverage over every partition with its denominator.",
       "claim": "inferred",
       "method": "The per-transaction cashiering identifier column, read by name; values not read."
     },
@@ -137,6 +137,13 @@
       "meaning": "How the row's code is covered by the mapping: MEASURED, CODE_NOT_IN_MAPPING or UNMAPPED_BY_TABLE.",
       "claim": "inferred",
       "method": "MEASURED when tran_srcde maps to a type word; CODE_NOT_IN_MAPPING when the mapping lacks the code; UNMAPPED_BY_TABLE when the mapping holds the code as UNMAPPED."
+    },
+    {
+      "name": "source_action_raw",
+      "type": "string",
+      "nullable": true,
+      "meaning": "The source value the type and action were looked up from, exactly as received, unstripped: the 49 Financial tran_srcde code, the Cottonwood Action, or the Inflection transactionDescription. Null where the source cell is missing. Carried on every row, including a row the mapping does not hold.",
+      "claim": "measured"
     }
   ],
   "sources": {
@@ -425,10 +432,12 @@
       },
       {
         "target": "price",
-        "source": "avgPrice",
-        "from_columns": [],
+        "source": "navPrice",
+        "from_columns": [
+          "noUnits"
+        ],
         "claim": "inferred",
-        "method": "avgPrice read as the average execution price; navPrice is the NAV and is not used."
+        "method": "The price is navPrice where noUnits is non-zero and navPrice is positive, and null otherwise (never zero). The round-128 ground read named avgPrice for this target; it read no value. The round-131 census (values-free, R131_INFLECTION_FIELD_CENSUS.json) finds avgPrice null or blank on every one of 218,054,352 rows, so the producer never reads it. navPrice times noUnits equals transAmount within one percent on 154,808,844 of 154,828,670 unit-bearing rows (non-zero noUnits and a positive navPrice), so navPrice is the unit price the amount is booked at."
       },
       {
         "target": "amount",
@@ -507,19 +516,21 @@
       "field": "custodian",
       "firms": [
         "49financial",
-        "cottonwood"
+        "cottonwood",
+        "inflection"
       ],
-      "rule": "The producer strips the value and LOWER-CASES it: the 49 Financial custody constant and Cottonwood's Custodian column, so the word reads the same across firms. A value is lower-cased, never upper-cased or title-cased.",
+      "rule": "The producer strips the value and LOWER-CASES it: the 49 Financial custody constant, Cottonwood's Custodian column and Inflection's custodianName, so the word reads the same across firms. A value is lower-cased, never upper-cased or title-cased. An Inflection line whose custodianName is null or blank is refused.",
       "claim": "inferred",
-      "method": "The strip and lower-case calls in account_transaction.custodian() (49 Financial) and in the Cottonwood normaliser's custodian field; asserted by the offline tests of both modules on made-up custodians."
+      "method": "The strip and lower-case calls in account_transaction.custodian() (49 Financial), in the Cottonwood normaliser's custodian field and in the Inflection normaliser; asserted by the offline tests of the three modules on made-up custodians."
     },
     {
       "field": "symbol",
       "firms": [
         "49financial",
-        "cottonwood"
+        "cottonwood",
+        "inflection"
       ],
-      "rule": "The producer strips the text; an EMPTY or BLANK value becomes NULL, never the empty string. The 49 Financial symbol is ticker_symbol; the Cottonwood symbol is Symbol.",
+      "rule": "The producer strips the text; an EMPTY or BLANK value becomes NULL, never the empty string. The 49 Financial symbol is ticker_symbol; the Cottonwood symbol is Symbol; the Inflection symbol is ticker.",
       "claim": "inferred",
       "method": "The shared text helper of each module (strip, then empty or blank to None); asserted by the offline tests on an empty and a blank symbol."
     },
@@ -527,21 +538,23 @@
       "field": "asset_name",
       "firms": [
         "49financial",
-        "cottonwood"
+        "cottonwood",
+        "inflection"
       ],
-      "rule": "The producer strips the text; an EMPTY or BLANK asset name becomes NULL. The 49 Financial column is null on every row (claim absent: the live schema has no name column); Cottonwood reads its Asset Name column.",
+      "rule": "The producer strips the text; an EMPTY or BLANK asset name becomes NULL. The 49 Financial column is null on every row (claim absent: the live schema has no name column); Cottonwood reads its Asset Name column; Inflection reads productName.",
       "claim": "inferred",
-      "method": "The same text helper as symbol; the 49 Financial producer sets None by construction, the Cottonwood producer reads the column."
+      "method": "The same text helper as symbol; the 49 Financial producer sets None by construction, the other two read their column."
     },
     {
       "field": "source_txn_id",
       "firms": [
         "49financial",
-        "cottonwood"
+        "cottonwood",
+        "inflection"
       ],
-      "rule": "The producer strips the text; an EMPTY or BLANK identifier becomes NULL. So a null source_txn_id is either a source identifier that was empty or blank, or one the source never carried; source_txn_id_coverage and the source column tell the two apart.",
+      "rule": "The producer strips the text; an EMPTY or BLANK identifier becomes NULL. So a null source_txn_id is either a source identifier that was empty or blank, or one the source never carried; source_txn_id_coverage and the source column tell the two apart. The Inflection identifier is the integral id as a string, and null where id is not integral.",
       "claim": "inferred",
-      "method": "The shared text helper of each module, read from cashiering_transaction_identifier (49 Financial) and TransactionID (Cottonwood); asserted by the offline tests on an empty and a missing identifier."
+      "method": "The shared text helper of each module, read from cashiering_transaction_identifier (49 Financial), TransactionID (Cottonwood) and id (Inflection); asserted by the offline tests on an empty and a missing identifier."
     }
   ],
   "source_txn_id_coverage": {
@@ -597,7 +610,7 @@
     },
     "inflection": {
       "chosen_column": "id",
-      "per_row_claim": "A row's source_txn_id is PRESENT where the source column (id) is non-null and non-blank, and ABSENT (null) where it is not. The column is NEVER a universal key: 218,054,352 of 218,054,352 rows (100.0000 percent) carry a value over all 154 partitions. No present row shares its value with another row of the same partition; the Inflection producer is pending (firms_pending), so this is the coverage read only.",
+      "per_row_claim": "A row's source_txn_id is PRESENT where the source column (id) is non-null and non-blank, and ABSENT (null) where it is not. The column is NEVER a universal key: 218,054,352 of 218,054,352 rows (100.0000 percent) carry a value over all 154 partitions. No present row shares its value with another row of the same partition, on the round-130 read over every partition, so the id column is unique within each partition on that read.",
       "rows": 218054352,
       "partitions_read": 154,
       "all_partitions": true,
@@ -883,11 +896,141 @@
       "reason": "A miscellaneous adjustment's cash direction is not stated by the table, so it stays UNRESOLVED until a specimen is read."
     }
   ],
+  "inflection_flow_rule": [
+    {
+      "bucket": "NNA",
+      "nna_direction": "in",
+      "account_boundary": null,
+      "words": null,
+      "flow_class": "EXTERNAL_IN",
+      "reason": "New money: an NNA line in the in direction is cash that arrives from outside the firm (a client or employer deposit, a rollover or a merge from another account)."
+    },
+    {
+      "bucket": "NNA",
+      "nna_direction": "out",
+      "account_boundary": null,
+      "words": null,
+      "flow_class": "EXTERNAL_OUT",
+      "reason": "New money: an NNA line in the out direction is cash that leaves the firm (a client distribution, a cancelled account, a transfer out to another account or an external account)."
+    },
+    {
+      "bucket": "CorporateAction",
+      "nna_direction": null,
+      "account_boundary": null,
+      "words": null,
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "A corporate action (a split, a spin-off, an expiry) changes the holding and moves no money across the account boundary."
+    },
+    {
+      "bucket": "Internal",
+      "nna_direction": null,
+      "account_boundary": "in",
+      "words": null,
+      "flow_class": "EXTERNAL_IN",
+      "reason": "An internal journal whose account boundary is in: the money comes into this account from another account of the firm, so it is an external inflow for this account."
+    },
+    {
+      "bucket": "Internal",
+      "nna_direction": null,
+      "account_boundary": "out",
+      "words": null,
+      "flow_class": "EXTERNAL_OUT",
+      "reason": "An internal journal whose account boundary is out: the money leaves this account for another account of the firm, so it is an external outflow for this account."
+    },
+    {
+      "bucket": "Internal",
+      "nna_direction": null,
+      "account_boundary": null,
+      "words": null,
+      "flow_class": "INTERNAL",
+      "reason": "An internal line with no boundary direction (a trade, a sweep, a reinvestment, a corporate-action journal) stays inside the account."
+    },
+    {
+      "bucket": "Return",
+      "nna_direction": null,
+      "account_boundary": "out",
+      "words": null,
+      "flow_class": "EXTERNAL_OUT",
+      "reason": "A return-bucket line whose boundary is out is a tax or charge paid to an outside party (federal, state or foreign tax withheld), so the money leaves the account."
+    },
+    {
+      "bucket": "Return",
+      "nna_direction": null,
+      "account_boundary": null,
+      "words": [
+        "Capital gain",
+        "Dividend",
+        "Interest"
+      ],
+      "flow_class": "INCOME",
+      "reason": "A return-bucket line with no boundary whose word is Capital gain, Dividend or Interest is income earned on the holdings and kept in the account."
+    },
+    {
+      "bucket": "Return",
+      "nna_direction": null,
+      "account_boundary": null,
+      "words": [
+        "Fee",
+        "Fee credit",
+        "Management fee",
+        "Trading expense"
+      ],
+      "flow_class": "FEE",
+      "reason": "A return-bucket line with no boundary whose word is Fee, Fee credit, Management fee or Trading expense is a charge or a credit of a charge taken from the account."
+    },
+    {
+      "bucket": "Return",
+      "nna_direction": null,
+      "account_boundary": null,
+      "words": "other",
+      "flow_class": "INTERNAL",
+      "reason": "Any other return-bucket line with no boundary (a tax credit, a return of capital, other income) stays inside the account."
+    }
+  ],
+  "key_normalisation": {
+    "function": "normalise_key",
+    "module": "account_transaction",
+    "rule": "strip surrounding whitespace and nothing else; case is kept; the mapping's keys and every producer's lookup use this one function"
+  },
+  "source_action_raw_sources": {
+    "49financial": {
+      "column": "tran_srcde",
+      "rule": "The code exactly as received, unstripped: the value the 49 Financial lookup is made from, carried on every row (null where the cell is missing)."
+    },
+    "cottonwood": {
+      "column": "Action",
+      "rule": "The Action exactly as received from the vendor, unstripped, carried on every row (null where the cell is missing); the lookup normalises it by the one key function."
+    },
+    "inflection": {
+      "column": "transactionDescription",
+      "rule": "The transactionDescription exactly as received, unstripped, carried on every row (null where the cell is missing); the lookup normalises it by the one key function."
+    }
+  },
+  "row_filter": {
+    "inflection": {
+      "column": "status",
+      "keep": [
+        "Complete"
+      ],
+      "rows": 218054352,
+      "kept_rows": 191360953,
+      "excluded_rows_per_status": {
+        "Inactive": 308,
+        "Pending": 12542026,
+        "Pending Corporate Action": 616,
+        "Rejected": 13991249,
+        "Reversed": 159200
+      },
+      "unknown_status": "REFUSED",
+      "reason": "Inflection's status column has six values. The Inflection adapter (adapters/inflection_account_return_daily.py, STATUS_COMPLETE) keeps Complete rows only, and so does this table: a Complete line is a transaction that happened. The five other statuses (Inactive, Pending, Pending Corporate Action, Rejected, Reversed) are not transactions that happened; they are counted per status in excluded_rows_per_status and never served. A status outside the six is refused. No other firm has a status column."
+    }
+  },
   "source_mapping": [
     {
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "$JNL",
+      "source_key": "$JNL",
       "opal_type": "Account transfer",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -896,6 +1039,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "$TYPE",
+      "source_key": "$TYPE",
       "opal_type": "Journal",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -904,6 +1048,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "ABFEA",
+      "source_key": "ABFEA",
       "opal_type": "Management fee",
       "flow_class": "FEE",
       "reason": null
@@ -912,6 +1057,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "ABFEE",
+      "source_key": "ABFEE",
       "opal_type": "Management fee",
       "flow_class": "FEE",
       "reason": null
@@ -920,6 +1066,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "ADJ",
+      "source_key": "ADJ",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Two rows with two meanings: the FC row (rule misc-adj, FUNDS ADJUSTMENT) is a cash funds adjustment, and the IC row (rule corp-actions-ic, POSITION ADJ) is a security position adjustment. They take different words (Adjustment and Corporate action), so the table gives this code no single meaning."
@@ -928,6 +1075,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "ADRF",
+      "source_key": "ADRF",
       "opal_type": "Fee",
       "flow_class": "FEE",
       "reason": null
@@ -936,6 +1084,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "ADRFA",
+      "source_key": "ADRFA",
       "opal_type": "Fee",
       "flow_class": "FEE",
       "reason": null
@@ -944,6 +1093,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "AS1CR",
+      "source_key": "AS1CR",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Rule misc-adj with a generic description (MISC ADJUSTMENT); the table does not say whether cash moves, and the Adjustment word is defined with no cash flow."
@@ -952,6 +1102,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "AS1DR",
+      "source_key": "AS1DR",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Rule checks-classified with the description SCHWAB CHECK; the same description is a deposit on one code and a paid check on another, and this row states neither direction, so no single word fits."
@@ -960,6 +1111,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "AS1FE",
+      "source_key": "AS1FE",
       "opal_type": "Fee",
       "flow_class": "FEE",
       "reason": null
@@ -968,6 +1120,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "ASG",
+      "source_key": "ASG",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -976,6 +1129,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BILL",
+      "source_key": "BILL",
       "opal_type": "Management fee",
       "flow_class": "FEE",
       "reason": null
@@ -984,6 +1138,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BKINA",
+      "source_key": "BKINA",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -992,6 +1147,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BKINT",
+      "source_key": "BKINT",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1000,6 +1156,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BKSWP",
+      "source_key": "BKSWP",
       "opal_type": "Journal",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1008,6 +1165,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BKTRF",
+      "source_key": "BKTRF",
       "opal_type": "Journal",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1016,6 +1174,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BRINA",
+      "source_key": "BRINA",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1024,6 +1183,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BRSWP",
+      "source_key": "BRSWP",
       "opal_type": "Journal",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1032,6 +1192,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BWBKI",
+      "source_key": "BWBKI",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1040,6 +1201,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BWCAP",
+      "source_key": "BWCAP",
       "opal_type": "Tax withheld",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1048,6 +1210,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BWCRI",
+      "source_key": "BWCRI",
       "opal_type": "Tax withheld",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1056,6 +1219,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BWDIA",
+      "source_key": "BWDIA",
       "opal_type": "Tax withheld",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1064,6 +1228,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BWDIV",
+      "source_key": "BWDIV",
       "opal_type": "Tax withheld",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1072,6 +1237,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BWDYE",
+      "source_key": "BWDYE",
       "opal_type": "Tax withheld",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1080,6 +1246,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "BWSTG",
+      "source_key": "BWSTG",
       "opal_type": "Tax withheld",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1088,6 +1255,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CAPU",
+      "source_key": "CAPU",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1096,6 +1264,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CDINT",
+      "source_key": "CDINT",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1104,6 +1273,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CDMT",
+      "source_key": "CDMT",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1112,6 +1282,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CFR",
+      "source_key": "CFR",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1120,6 +1291,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CFRAJ",
+      "source_key": "CFRAJ",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1128,6 +1300,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CFRYE",
+      "source_key": "CFRYE",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1136,6 +1309,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CGC",
+      "source_key": "CGC",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1144,6 +1318,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CHE",
+      "source_key": "CHE",
       "opal_type": "Withdrawal",
       "flow_class": "EXTERNAL_OUT",
       "reason": null
@@ -1152,6 +1327,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CHEA",
+      "source_key": "CHEA",
       "opal_type": "Deposit",
       "flow_class": "EXTERNAL_IN",
       "reason": null
@@ -1160,6 +1336,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CHK",
+      "source_key": "CHK",
       "opal_type": "Withdrawal",
       "flow_class": "EXTERNAL_OUT",
       "reason": null
@@ -1168,6 +1345,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CIL",
+      "source_key": "CIL",
       "opal_type": "UNMAPPED",
       "flow_class": "CORPORATE_ACTION",
       "reason": "Rule cash-in-lieu; a cash payment for a fractional share. The table does not say whether a sale of the fraction or a corporate-action payment, so no single word fits."
@@ -1176,6 +1354,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CILA",
+      "source_key": "CILA",
       "opal_type": "UNMAPPED",
       "flow_class": "CORPORATE_ACTION",
       "reason": "Rule cash-in-lieu; a cash payment for a fractional share. The table does not say whether a sale of the fraction or a corporate-action payment, so no single word fits."
@@ -1184,6 +1363,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CLIQ",
+      "source_key": "CLIQ",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1192,6 +1372,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CMR",
+      "source_key": "CMR",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1200,6 +1381,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CSMR",
+      "source_key": "CSMR",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1208,6 +1390,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CVN",
+      "source_key": "CVN",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1216,6 +1399,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "CYE",
+      "source_key": "CYE",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1224,6 +1408,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DBS1B",
+      "source_key": "DBS1B",
       "opal_type": "Deposit",
       "flow_class": "EXTERNAL_IN",
       "reason": null
@@ -1232,6 +1417,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DDEFT",
+      "source_key": "DDEFT",
       "opal_type": "Deposit",
       "flow_class": "EXTERNAL_IN",
       "reason": null
@@ -1240,6 +1426,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DEL",
+      "source_key": "DEL",
       "opal_type": "Transfer out",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -1248,6 +1435,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DFR",
+      "source_key": "DFR",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1256,6 +1444,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DFRAJ",
+      "source_key": "DFRAJ",
       "opal_type": "Dividend",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -1264,6 +1453,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DFRYE",
+      "source_key": "DFRYE",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1272,6 +1462,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DFYAJ",
+      "source_key": "DFYAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1280,6 +1471,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DIV",
+      "source_key": "DIV",
       "opal_type": "Dividend",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -1288,6 +1480,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DIVAJ",
+      "source_key": "DIVAJ",
       "opal_type": "Dividend",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -1296,6 +1489,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPAJ",
+      "source_key": "DPAJ",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Rule misc-adj with no description; the table does not say whether cash moves, and the Adjustment word is defined with no cash flow."
@@ -1304,6 +1498,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPCRS",
+      "source_key": "DPCRS",
       "opal_type": "Deposit",
       "flow_class": "EXTERNAL_IN",
       "reason": null
@@ -1312,6 +1507,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPCSC",
+      "source_key": "DPCSC",
       "opal_type": "Deposit",
       "flow_class": "EXTERNAL_IN",
       "reason": null
@@ -1320,6 +1516,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPCSH",
+      "source_key": "DPCSH",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Rule misc-adj with no description; the table does not say whether cash moves, and the Adjustment word is defined with no cash flow."
@@ -1328,6 +1525,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPGVT",
+      "source_key": "DPGVT",
       "opal_type": "Deposit",
       "flow_class": "EXTERNAL_IN",
       "reason": null
@@ -1336,6 +1534,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPINS",
+      "source_key": "DPINS",
       "opal_type": "Deposit",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -1344,6 +1543,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPMOD",
+      "source_key": "DPMOD",
       "opal_type": "Deposit",
       "flow_class": "EXTERNAL_IN",
       "reason": null
@@ -1352,6 +1552,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPRET",
+      "source_key": "DPRET",
       "opal_type": "Withdrawal",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -1360,6 +1561,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DPWRF",
+      "source_key": "DPWRF",
       "opal_type": "Deposit",
       "flow_class": "EXTERNAL_IN",
       "reason": null
@@ -1368,6 +1570,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DRT",
+      "source_key": "DRT",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1376,6 +1579,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DST",
+      "source_key": "DST",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1384,6 +1588,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DYAJ",
+      "source_key": "DYAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1392,6 +1597,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "DYE",
+      "source_key": "DYE",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1400,6 +1606,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "EXC",
+      "source_key": "EXC",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1408,6 +1615,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "EXP",
+      "source_key": "EXP",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1416,6 +1624,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "EXRT",
+      "source_key": "EXRT",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1424,6 +1633,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "EXWT",
+      "source_key": "EXWT",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": "Silver-only code (not in the CRO table). The description carries the word MATURED, a security that matured. Corporate action names expiry as the issuer-side end of a holding, and a maturity is that end, so Corporate action."
@@ -1432,6 +1642,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "FCQ",
+      "source_key": "FCQ",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1440,6 +1651,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "FEE",
+      "source_key": "FEE",
       "opal_type": "Fee",
       "flow_class": "FEE",
       "reason": null
@@ -1448,6 +1660,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "FEEA",
+      "source_key": "FEEA",
       "opal_type": "Fee",
       "flow_class": "FEE",
       "reason": null
@@ -1456,6 +1669,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "FS",
+      "source_key": "FS",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1464,6 +1678,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "FTP",
+      "source_key": "FTP",
       "opal_type": "Tax withheld",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1472,6 +1687,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "FTR",
+      "source_key": "FTR",
       "opal_type": "Tax withheld",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1480,6 +1696,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "GSPAJ",
+      "source_key": "GSPAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1488,6 +1705,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "GUP",
+      "source_key": "GUP",
       "opal_type": "Fee credit",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1496,6 +1714,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "INT",
+      "source_key": "INT",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1504,6 +1723,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "INTAJ",
+      "source_key": "INTAJ",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1512,6 +1732,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "INTR",
+      "source_key": "INTR",
       "opal_type": "Fee",
       "flow_class": "INCOME",
       "reason": null
@@ -1520,6 +1741,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "INTRA",
+      "source_key": "INTRA",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1528,6 +1750,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "IRAWH",
+      "source_key": "IRAWH",
       "opal_type": "Tax withheld",
       "flow_class": "EXTERNAL_OUT",
       "reason": null
@@ -1536,6 +1759,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "JNL",
+      "source_key": "JNL",
       "opal_type": "Journal",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -1544,6 +1768,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "LIT",
+      "source_key": "LIT",
       "opal_type": "UNMAPPED",
       "flow_class": "CORPORATE_ACTION",
       "reason": "Rule corp-misc with the description Litigation; the table does not say whether a settlement is income, a return of cost or a correction, so no single word fits."
@@ -1552,6 +1777,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "MCE",
+      "source_key": "MCE",
       "opal_type": "Tax withheld",
       "flow_class": "EXTERNAL_OUT",
       "reason": null
@@ -1560,6 +1786,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "MEXC",
+      "source_key": "MEXC",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1568,6 +1795,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "MGFEA",
+      "source_key": "MGFEA",
       "opal_type": "Management fee",
       "flow_class": "FEE",
       "reason": null
@@ -1576,6 +1804,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "MGFEE",
+      "source_key": "MGFEE",
       "opal_type": "Management fee",
       "flow_class": "FEE",
       "reason": null
@@ -1584,6 +1813,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NC",
+      "source_key": "NC",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1592,6 +1822,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDFR",
+      "source_key": "NDFR",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1600,6 +1831,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDFRA",
+      "source_key": "NDFRA",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1608,6 +1840,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDIV",
+      "source_key": "NDIV",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1616,6 +1849,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDIVA",
+      "source_key": "NDIVA",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1624,6 +1858,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDR",
+      "source_key": "NDR",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1632,6 +1867,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDRAJ",
+      "source_key": "NDRAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1640,6 +1876,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDST",
+      "source_key": "NDST",
       "opal_type": "Other income",
       "flow_class": "INCOME",
       "reason": null
@@ -1648,6 +1885,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDSTA",
+      "source_key": "NDSTA",
       "opal_type": "Other income",
       "flow_class": "INCOME",
       "reason": null
@@ -1656,6 +1894,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDV",
+      "source_key": "NDV",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1664,6 +1903,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDVAJ",
+      "source_key": "NDVAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1672,6 +1912,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NDYE",
+      "source_key": "NDYE",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1680,6 +1921,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "NFRYE",
+      "source_key": "NFRYE",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1688,6 +1930,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "ORG",
+      "source_key": "ORG",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1696,6 +1939,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PDEF",
+      "source_key": "PDEF",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1704,6 +1948,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PDEFT",
+      "source_key": "PDEFT",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Rules deposits and withdrawals under one description, MONEYLINK TRANSFER: one row is an inflow and one an outflow. The description does not give the direction, so the table gives this code no single meaning."
@@ -1712,6 +1957,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PDR",
+      "source_key": "PDR",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1720,6 +1966,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PDRAJ",
+      "source_key": "PDRAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1728,6 +1975,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PDRTN",
+      "source_key": "PDRTN",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Rules returned-deposits, deposits and withdrawals under one empty description: the rows run in both directions. The table gives this code no single meaning."
@@ -1736,6 +1984,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PDRYE",
+      "source_key": "PDRYE",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1744,6 +1993,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PDV",
+      "source_key": "PDV",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1752,6 +2002,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PDVAJ",
+      "source_key": "PDVAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1760,6 +2011,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PIL",
+      "source_key": "PIL",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1768,6 +2020,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PILAJ",
+      "source_key": "PILAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1776,6 +2029,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PILR",
+      "source_key": "PILR",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1784,6 +2038,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PRIN",
+      "source_key": "PRIN",
       "opal_type": "Return of capital",
       "flow_class": "INCOME",
       "reason": null
@@ -1792,6 +2047,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "PRO",
+      "source_key": "PRO",
       "opal_type": "UNMAPPED",
       "flow_class": "CORPORATE_ACTION",
       "reason": "Rule corp-misc with the description CREDIT PRO and category Dividends and Interest. The description does not say whether the credit is income or a correction, so no single word fits."
@@ -1800,6 +2056,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "QDR",
+      "source_key": "QDR",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1808,6 +2065,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "QDV",
+      "source_key": "QDV",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1816,6 +2074,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "QDVAJ",
+      "source_key": "QDVAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1824,6 +2083,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RADJ",
+      "source_key": "RADJ",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Rule no-rule with no description; the table does not say whether cash moves, and the Adjustment word is defined with no cash flow."
@@ -1832,6 +2092,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RCR",
+      "source_key": "RCR",
       "opal_type": "Adjustment",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1840,6 +2101,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RDM",
+      "source_key": "RDM",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1848,6 +2110,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RDMC",
+      "source_key": "RDMC",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1856,6 +2119,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RDPC",
+      "source_key": "RDPC",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": "Silver-only code (not in the CRO table). The description carries the words PARTIAL CALL, a bond partial redemption: the same issuer redemption event as the table's REDEMP/CONVERSION codes, so Corporate action."
@@ -1864,6 +2128,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "REC",
+      "source_key": "REC",
       "opal_type": "Transfer in",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -1872,6 +2137,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RFR",
+      "source_key": "RFR",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1880,6 +2146,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RID",
+      "source_key": "RID",
       "opal_type": "Reinvestment",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1888,6 +2155,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RIDA",
+      "source_key": "RIDA",
       "opal_type": "Reinvestment",
       "flow_class": "INTERNAL",
       "reason": null
@@ -1896,6 +2164,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "ROC",
+      "source_key": "ROC",
       "opal_type": "Return of capital",
       "flow_class": "INCOME",
       "reason": null
@@ -1904,6 +2173,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "RS",
+      "source_key": "RS",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -1912,6 +2182,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "S1C",
+      "source_key": "S1C",
       "opal_type": "Withdrawal",
       "flow_class": "EXTERNAL_OUT",
       "reason": null
@@ -1920,6 +2191,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "S1INA",
+      "source_key": "S1INA",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1928,6 +2200,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "S1INT",
+      "source_key": "S1INT",
       "opal_type": "Interest",
       "flow_class": "INCOME",
       "reason": null
@@ -1936,6 +2209,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SCFR",
+      "source_key": "SCFR",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1944,6 +2218,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SCFRA",
+      "source_key": "SCFRA",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1952,6 +2227,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SCGYE",
+      "source_key": "SCGYE",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1960,6 +2236,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SDIV",
+      "source_key": "SDIV",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1968,6 +2245,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SDVYE",
+      "source_key": "SDVYE",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -1976,6 +2254,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SFRYE",
+      "source_key": "SFRYE",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -1984,6 +2263,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SMFEE",
+      "source_key": "SMFEE",
       "opal_type": "Management fee",
       "flow_class": "FEE",
       "reason": null
@@ -1992,6 +2272,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SMR",
+      "source_key": "SMR",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -2000,6 +2281,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SND",
+      "source_key": "SND",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -2008,6 +2290,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SNDYE",
+      "source_key": "SNDYE",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -2016,6 +2299,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SO",
+      "source_key": "SO",
       "opal_type": "Corporate action",
       "flow_class": "INCOME",
       "reason": null
@@ -2024,6 +2308,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SQD",
+      "source_key": "SQD",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -2032,6 +2317,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SQDAJ",
+      "source_key": "SQDAJ",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Silver-only code (not in the CRO table). The description carries an issuer name and no transaction word, and the AJ ending is not a basis for a meaning (the record decides on the description, never on a sub-code or a suffix), so the table and the silver give no single meaning here."
@@ -2040,6 +2326,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "STCG",
+      "source_key": "STCG",
       "opal_type": "Capital gain",
       "flow_class": "INCOME",
       "reason": null
@@ -2048,6 +2335,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "STK",
+      "source_key": "STK",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -2056,6 +2344,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "STOP",
+      "source_key": "STOP",
       "opal_type": "UNMAPPED",
       "flow_class": "EXTERNAL_IN",
       "reason": "Rule deposits with the description Stop Check Payment. A stop credits back a check that was paid, a reversal of an earlier withdrawal, not an inflow from outside; the rule and the description disagree and no single word fits."
@@ -2064,6 +2353,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "SUD",
+      "source_key": "SUD",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -2072,6 +2362,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "T/A",
+      "source_key": "T/A",
       "opal_type": "Account transfer",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -2080,6 +2371,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "TOA",
+      "source_key": "TOA",
       "opal_type": "Account transfer",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -2088,6 +2380,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "TPFEE",
+      "source_key": "TPFEE",
       "opal_type": "Management fee",
       "flow_class": "FEE",
       "reason": null
@@ -2096,6 +2389,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "TRADE",
+      "source_key": "TRADE",
       "opal_type": "Adjustment",
       "flow_class": "INTERNAL",
       "reason": null
@@ -2104,6 +2398,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "TRM",
+      "source_key": "TRM",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -2112,6 +2407,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "TYP",
+      "source_key": "TYP",
       "opal_type": "Journal",
       "flow_class": "UNRESOLVED",
       "reason": null
@@ -2120,6 +2416,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "UDR",
+      "source_key": "UDR",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -2128,6 +2425,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "UDV",
+      "source_key": "UDV",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -2136,6 +2434,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "UDYAJ",
+      "source_key": "UDYAJ",
       "opal_type": "Dividend",
       "flow_class": "INCOME",
       "reason": null
@@ -2144,6 +2443,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "VOID",
+      "source_key": "VOID",
       "opal_type": "UNMAPPED",
       "flow_class": "EXTERNAL_IN",
       "reason": "Rule deposits with the description Voided Check. A voided check credits back a check that was paid, a reversal of an earlier withdrawal, not an inflow from outside; the rule and the description disagree and no single word fits."
@@ -2152,6 +2452,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "WLES",
+      "source_key": "WLES",
       "opal_type": "UNMAPPED",
       "flow_class": "UNRESOLVED",
       "reason": "Rule lending-misc-ic with no description; securities lending income and a lending return cannot be told apart from the table, so no single word fits."
@@ -2160,6 +2461,7 @@
       "firm": "49financial",
       "field": "tran_srcde",
       "source_value": "WTEX",
+      "source_key": "WTEX",
       "opal_type": "Corporate action",
       "flow_class": "CORPORATE_ACTION",
       "reason": null
@@ -2168,8 +2470,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Client Contribution",
+      "source_key": "Client Contribution",
       "opal_type": "Deposit",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_IN",
       "reason": null,
       "not_observed": false
     },
@@ -2177,8 +2480,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Employer Contribution",
+      "source_key": "Employer Contribution",
       "opal_type": "Deposit",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_IN",
       "reason": null,
       "not_observed": false
     },
@@ -2186,8 +2490,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Rollover Contribution",
+      "source_key": "Rollover Contribution",
       "opal_type": "Transfer in",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_IN",
       "reason": null,
       "not_observed": false
     },
@@ -2195,8 +2500,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Merge In from Other Account",
+      "source_key": "Merge In from Other Account",
       "opal_type": "Transfer in",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_IN",
       "reason": null,
       "not_observed": false
     },
@@ -2204,8 +2510,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "External Account Activity In",
+      "source_key": "External Account Activity In",
       "opal_type": "Transfer in",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_IN",
       "reason": null,
       "not_observed": false
     },
@@ -2213,8 +2520,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Client Distribution",
+      "source_key": "Client Distribution",
       "opal_type": "Withdrawal",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_OUT",
       "reason": null,
       "not_observed": false
     },
@@ -2222,8 +2530,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Cancel Account",
+      "source_key": "Cancel Account",
       "opal_type": "Withdrawal",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_OUT",
       "reason": null,
       "not_observed": true
     },
@@ -2231,8 +2540,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Merge Out to Other Account",
+      "source_key": "Merge Out to Other Account",
       "opal_type": "Transfer out",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_OUT",
       "reason": null,
       "not_observed": false
     },
@@ -2240,8 +2550,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "External Account Activity Out",
+      "source_key": "External Account Activity Out",
       "opal_type": "Transfer out",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_OUT",
       "reason": null,
       "not_observed": false
     },
@@ -2249,8 +2560,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Buy Exchange",
+      "source_key": "Buy Exchange",
       "opal_type": "Buy",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2258,8 +2570,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Sell Exchange",
+      "source_key": "Sell Exchange",
       "opal_type": "Sell",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2267,8 +2580,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Income Reinvested",
+      "source_key": "Income Reinvested",
       "opal_type": "Reinvestment",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2276,8 +2590,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Starting Value",
+      "source_key": "Starting Value",
       "opal_type": "UNMAPPED",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": "Internal bucket, but the yaml calls it a synthetic per-position opening seed, not a transaction a client made.",
       "not_observed": false
     },
@@ -2285,8 +2600,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Merge In Exchange",
+      "source_key": "Merge In Exchange",
       "opal_type": "Journal",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2294,8 +2610,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Merge Out Exchange",
+      "source_key": "Merge Out Exchange",
       "opal_type": "Journal",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2303,8 +2620,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Internal Account Journal In",
+      "source_key": "Internal Account Journal In",
       "opal_type": "Journal",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_IN",
       "reason": null,
       "not_observed": false
     },
@@ -2312,8 +2630,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Internal Account Journal Out",
+      "source_key": "Internal Account Journal Out",
       "opal_type": "Journal",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_OUT",
       "reason": null,
       "not_observed": false
     },
@@ -2321,8 +2640,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Decrease in Value",
+      "source_key": "Decrease in Value",
       "opal_type": "Adjustment",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2330,8 +2650,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Spin Off in",
+      "source_key": "Spin Off in",
       "opal_type": "Corporate action",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2339,8 +2660,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Spin Off out",
+      "source_key": "Spin Off out",
       "opal_type": "Corporate action",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2348,8 +2670,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Dividend Reinvested",
+      "source_key": "Dividend Reinvested",
       "opal_type": "Reinvestment",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2357,8 +2680,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Interest Reinvested",
+      "source_key": "Interest Reinvested",
       "opal_type": "Reinvestment",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2366,8 +2690,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Return of Capital",
+      "source_key": "Return of Capital",
       "opal_type": "Return of capital",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2375,8 +2700,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Return of Principal (Bonds)",
+      "source_key": "Return of Principal (Bonds)",
       "opal_type": "Return of capital",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2384,8 +2710,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Dividend Paid from Cash",
+      "source_key": "Dividend Paid from Cash",
       "opal_type": "Dividend",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2393,8 +2720,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Income Paid",
+      "source_key": "Income Paid",
       "opal_type": "Other income",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2402,8 +2730,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Dividend to Cash",
+      "source_key": "Dividend to Cash",
       "opal_type": "Dividend",
-      "flow_class": null,
+      "flow_class": "INCOME",
       "reason": null,
       "not_observed": false
     },
@@ -2411,8 +2740,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Management Fee",
+      "source_key": "Management Fee",
       "opal_type": "Management fee",
-      "flow_class": null,
+      "flow_class": "FEE",
       "reason": null,
       "not_observed": false
     },
@@ -2420,8 +2750,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Long Term Gain to Cash",
+      "source_key": "Long Term Gain to Cash",
       "opal_type": "Capital gain",
-      "flow_class": null,
+      "flow_class": "INCOME",
       "reason": null,
       "not_observed": false
     },
@@ -2429,8 +2760,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Trading Expense",
+      "source_key": "Trading Expense",
       "opal_type": "Trading expense",
-      "flow_class": null,
+      "flow_class": "FEE",
       "reason": null,
       "not_observed": false
     },
@@ -2438,8 +2770,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Short Term Gain to Cash",
+      "source_key": "Short Term Gain to Cash",
       "opal_type": "Capital gain",
-      "flow_class": null,
+      "flow_class": "INCOME",
       "reason": null,
       "not_observed": false
     },
@@ -2447,8 +2780,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Interest Paid in Cash",
+      "source_key": "Interest Paid in Cash",
       "opal_type": "Interest",
-      "flow_class": null,
+      "flow_class": "INCOME",
       "reason": null,
       "not_observed": false
     },
@@ -2456,8 +2790,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Federal Tax Withheld",
+      "source_key": "Federal Tax Withheld",
       "opal_type": "Tax withheld",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_OUT",
       "reason": null,
       "not_observed": false
     },
@@ -2465,8 +2800,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Fee Credit",
+      "source_key": "Fee Credit",
       "opal_type": "Fee credit",
-      "flow_class": null,
+      "flow_class": "FEE",
       "reason": null,
       "not_observed": false
     },
@@ -2474,8 +2810,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "State Tax Withheld",
+      "source_key": "State Tax Withheld",
       "opal_type": "Tax withheld",
-      "flow_class": null,
+      "flow_class": "EXTERNAL_OUT",
       "reason": null,
       "not_observed": false
     },
@@ -2483,8 +2820,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Foreign Tax Withheld",
+      "source_key": "Foreign Tax Withheld",
       "opal_type": "Tax withheld",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2492,8 +2830,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Foreign Dividend Tax",
+      "source_key": "Foreign Dividend Tax",
       "opal_type": "Tax withheld",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2501,8 +2840,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Tax Credit",
+      "source_key": "Tax Credit",
       "opal_type": "Tax withheld",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     },
@@ -2510,8 +2850,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Interest Paid",
+      "source_key": "Interest Paid",
       "opal_type": "Interest",
-      "flow_class": null,
+      "flow_class": "INCOME",
       "reason": null,
       "not_observed": false
     },
@@ -2519,8 +2860,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "ADR Fee",
+      "source_key": "ADR Fee",
       "opal_type": "Fee",
-      "flow_class": null,
+      "flow_class": "FEE",
       "reason": null,
       "not_observed": false
     },
@@ -2528,8 +2870,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Administrative Fee",
+      "source_key": "Administrative Fee",
       "opal_type": "Fee",
-      "flow_class": null,
+      "flow_class": "FEE",
       "reason": null,
       "not_observed": false
     },
@@ -2537,8 +2880,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Administrative Fee Adjustment",
+      "source_key": "Administrative Fee Adjustment",
       "opal_type": "Fee credit",
-      "flow_class": null,
+      "flow_class": "FEE",
       "reason": null,
       "not_observed": false
     },
@@ -2546,8 +2890,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Wire Fee",
+      "source_key": "Wire Fee",
       "opal_type": "Fee",
-      "flow_class": null,
+      "flow_class": "FEE",
       "reason": null,
       "not_observed": false
     },
@@ -2555,8 +2900,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Stock Split",
+      "source_key": "Stock Split",
       "opal_type": "Corporate action",
-      "flow_class": null,
+      "flow_class": "CORPORATE_ACTION",
       "reason": null,
       "not_observed": false
     },
@@ -2564,8 +2910,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Reverse Stock Split",
+      "source_key": "Reverse Stock Split",
       "opal_type": "Corporate action",
-      "flow_class": null,
+      "flow_class": "CORPORATE_ACTION",
       "reason": null,
       "not_observed": false
     },
@@ -2573,8 +2920,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Expired-",
+      "source_key": "Expired-",
       "opal_type": "Corporate action",
-      "flow_class": null,
+      "flow_class": "CORPORATE_ACTION",
       "reason": null,
       "not_observed": false
     },
@@ -2582,8 +2930,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Remark",
+      "source_key": "Remark",
       "opal_type": "UNMAPPED",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": "Internal bucket, but the yaml says Remark is a position seed only where a ticker is present and a cash-shaped Remark fails loud to UNRESOLVED; its meaning depends on the row shape.",
       "not_observed": false
     },
@@ -2591,8 +2940,9 @@
       "firm": "inflection",
       "field": "type",
       "source_value": "Reversal",
+      "source_key": "Reversal",
       "opal_type": "Adjustment",
-      "flow_class": null,
+      "flow_class": "INTERNAL",
       "reason": null,
       "not_observed": false
     }
@@ -2602,202 +2952,235 @@
       "Contribution": "EXTERNAL_IN",
       "Withdrawal": "EXTERNAL_OUT"
     },
-    "action_derivation": "A Cottonwood line whose vendor Action is null or blank derives its action word from its (Transaction Type, Transaction Sub Type) pair through the type table (type_action), the same rule as a 49 Financial code with no action field. The live read finds no null Action in Cottonwood, so this is a stated fallback that no observed line uses; the Action values that the vendor does carry map through cottonwood_mapping.actions.",
+    "action_derivation": "A Cottonwood line whose vendor Action is null or blank (after normalising, round 131) derives its action word from its (Transaction Type, Transaction Sub Type) pair through the type table (type_action), the same rule as a 49 Financial code with no action field. The live read finds no null Action in Cottonwood, so this is a stated fallback that no observed line uses; the Action values that the vendor does carry map through cottonwood_mapping.actions.",
     "type_pairs": [
       {
         "source_value": "Buy | Buy",
+        "source_key": "Buy | Buy",
         "opal_type": "Buy",
         "flow_class_none": "INTERNAL",
         "reason": "Buy type and Buy sub type: a purchase of a security. Contribution rows are EXTERNAL_IN by the rule, None rows INTERNAL."
       },
       {
         "source_value": "Buy | Dividend Reinvestment",
+        "source_key": "Buy | Dividend Reinvestment",
         "opal_type": "Reinvestment",
         "flow_class_none": "INTERNAL",
         "reason": "Buy type with a Dividend Reinvestment sub type: income used to buy more of the same holding; no cash leaves the account."
       },
       {
         "source_value": "Capital Gains | Long-Term",
+        "source_key": "Capital Gains | Long-Term",
         "opal_type": "Capital gain",
         "flow_class_none": "INCOME",
         "reason": "Capital Gains type, Long-Term sub type: a long-term capital gain distribution."
       },
       {
         "source_value": "Capital Gains | Short-Term",
+        "source_key": "Capital Gains | Short-Term",
         "opal_type": "Capital gain",
         "flow_class_none": "INCOME",
         "reason": "Capital Gains type, Short-Term sub type: a short-term capital gain distribution."
       },
       {
         "source_value": "Cash Deposit | Cash Deposit",
+        "source_key": "Cash Deposit | Cash Deposit",
         "opal_type": "Deposit",
         "flow_class_none": null,
         "reason": "Cash added to the account from outside; all rows are Contribution, so EXTERNAL_IN by the rule."
       },
       {
         "source_value": "Cash Withdrawal | Cash Withdrawal",
+        "source_key": "Cash Withdrawal | Cash Withdrawal",
         "opal_type": "Withdrawal",
         "flow_class_none": null,
         "reason": "Cash paid out of the account to the client; all rows are Withdrawal, so EXTERNAL_OUT by the rule."
       },
       {
         "source_value": "Corporate Action | Cash in Lieu",
+        "source_key": "Corporate Action | Cash in Lieu",
         "opal_type": "Corporate action",
         "flow_class_none": "CORPORATE_ACTION",
         "reason": "Corporate Action type: cash paid in lieu of a fractional share from an issuer event."
       },
       {
         "source_value": "Corporate Action | Conversion In",
+        "source_key": "Corporate Action | Conversion In",
         "opal_type": "Corporate action",
         "flow_class_none": "CORPORATE_ACTION",
         "reason": "Corporate Action type: a conversion into the holding, caused by the issuer."
       },
       {
         "source_value": "Corporate Action | Conversion Out",
+        "source_key": "Corporate Action | Conversion Out",
         "opal_type": "Corporate action",
         "flow_class_none": "CORPORATE_ACTION",
         "reason": "Corporate Action type: a conversion out of the holding, caused by the issuer."
       },
       {
         "source_value": "Corporate Action | Merger",
+        "source_key": "Corporate Action | Merger",
         "opal_type": "Corporate action",
         "flow_class_none": "CORPORATE_ACTION",
         "reason": "Corporate Action type: a merger of holdings, caused by the issuer."
       },
       {
         "source_value": "Corporate Action | Reverse Split",
+        "source_key": "Corporate Action | Reverse Split",
         "opal_type": "Corporate action",
         "flow_class_none": "CORPORATE_ACTION",
         "reason": "Corporate Action type: a reverse split, caused by the issuer."
       },
       {
         "source_value": "Corporate Action | Spinoff",
+        "source_key": "Corporate Action | Spinoff",
         "opal_type": "Corporate action",
         "flow_class_none": "CORPORATE_ACTION",
         "reason": "Corporate Action type: a spin-off, caused by the issuer."
       },
       {
         "source_value": "Corporate Action | Split",
+        "source_key": "Corporate Action | Split",
         "opal_type": "Corporate action",
         "flow_class_none": "CORPORATE_ACTION",
         "reason": "Corporate Action type: a split, caused by the issuer."
       },
       {
         "source_value": "Dividend | Dividend",
+        "source_key": "Dividend | Dividend",
         "opal_type": "Dividend",
         "flow_class_none": "INCOME",
         "reason": "Dividend type and sub type: a dividend paid by a holding."
       },
       {
         "source_value": "Dividend | Non-Taxable",
+        "source_key": "Dividend | Non-Taxable",
         "opal_type": "Dividend",
         "flow_class_none": "INCOME",
         "reason": "Dividend type with a Non-Taxable sub type: a dividend with a tax status, still a dividend."
       },
       {
         "source_value": "Dividend | Qualified",
+        "source_key": "Dividend | Qualified",
         "opal_type": "Dividend",
         "flow_class_none": "INCOME",
         "reason": "Dividend type with a Qualified sub type: a dividend with a tax status, still a dividend."
       },
       {
         "source_value": "Dividend Reinvestment | Dividend Reinvestment",
+        "source_key": "Dividend Reinvestment | Dividend Reinvestment",
         "opal_type": "Reinvestment",
         "flow_class_none": "INTERNAL",
         "reason": "Dividend paid and reinvested in the same holding; no cash leaves the account."
       },
       {
         "source_value": "Expense | Buy of Accrued Interest",
+        "source_key": "Expense | Buy of Accrued Interest",
         "opal_type": "UNMAPPED",
         "flow_class_none": "UNRESOLVED",
         "reason": "Expense type with a Buy of Accrued Interest sub type: the vendor words do not say whether the row is a trading cost, an income item or a cost-basis movement, so it is left undecided rather than guessed."
       },
       {
         "source_value": "Expense | Expense",
+        "source_key": "Expense | Expense",
         "opal_type": "Fee",
         "flow_class_none": "FEE",
         "reason": "Expense type: a charge against the account. Withdrawal rows are EXTERNAL_OUT by the rule, None rows FEE."
       },
       {
         "source_value": "Expense | Tax Withholding",
+        "source_key": "Expense | Tax Withholding",
         "opal_type": "Tax withheld",
         "flow_class_none": null,
         "reason": "Tax Withholding sub type: tax taken from the account; all rows are Withdrawal, so EXTERNAL_OUT by the rule. The ratified Tax withheld word is INTERNAL; the conflict is filed as a surprise row."
       },
       {
         "source_value": "Income | Income",
+        "source_key": "Income | Income",
         "opal_type": "Other income",
         "flow_class_none": "INCOME",
         "reason": "Income type: income paid to the account that is not a dividend, interest or capital gain."
       },
       {
         "source_value": "Interest | Buy of Accrued Interest",
+        "source_key": "Interest | Buy of Accrued Interest",
         "opal_type": "UNMAPPED",
         "flow_class_none": "UNRESOLVED",
         "reason": "Interest type with a Buy of Accrued Interest sub type: the buyer pays accrued interest, which the vendor words do not place as income or as a cost-basis movement, so it is left undecided rather than guessed."
       },
       {
         "source_value": "Interest | Interest",
+        "source_key": "Interest | Interest",
         "opal_type": "Interest",
         "flow_class_none": "INCOME",
         "reason": "Interest type and sub type: interest credited or paid."
       },
       {
         "source_value": "Interest | Sale of Accrued Interest",
+        "source_key": "Interest | Sale of Accrued Interest",
         "opal_type": "Interest",
         "flow_class_none": "INCOME",
         "reason": "Interest type with a Sale of Accrued Interest sub type: accrued interest received on a sale, read as interest."
       },
       {
         "source_value": "Interest | Tax-Exempt",
+        "source_key": "Interest | Tax-Exempt",
         "opal_type": "Interest",
         "flow_class_none": "INCOME",
         "reason": "Interest type with a Tax-Exempt sub type: municipal bond interest, interest with a tax status only."
       },
       {
         "source_value": "Journal | Journal",
+        "source_key": "Journal | Journal",
         "opal_type": "Journal",
         "flow_class_none": "INTERNAL",
         "reason": "Journal type and sub type: a book entry between accounts or sub-accounts."
       },
       {
         "source_value": "Management Fee | Management Fee",
+        "source_key": "Management Fee | Management Fee",
         "opal_type": "Management fee",
         "flow_class_none": null,
         "reason": "Management Fee type: a fee for management; all rows are Withdrawal, so EXTERNAL_OUT by the rule."
       },
       {
         "source_value": "Management Fee | Rebate",
+        "source_key": "Management Fee | Rebate",
         "opal_type": "Fee credit",
         "flow_class_none": null,
         "reason": "Management Fee type with a Rebate sub type: a reversal that returns part of a fee; all rows are Contribution, so EXTERNAL_IN by the rule."
       },
       {
         "source_value": "Return of Capital | Return of Capital",
+        "source_key": "Return of Capital | Return of Capital",
         "opal_type": "Return of capital",
         "flow_class_none": "INTERNAL",
         "reason": "Return of Capital type: a repayment of principal, not income; it lowers cost basis."
       },
       {
         "source_value": "Sale | Redemption",
+        "source_key": "Sale | Redemption",
         "opal_type": "Sell",
         "flow_class_none": "INTERNAL",
         "reason": "Sale type with a Redemption sub type: a holding sold back to its issuer or fund."
       },
       {
         "source_value": "Sale | Sale",
+        "source_key": "Sale | Sale",
         "opal_type": "Sell",
         "flow_class_none": "INTERNAL",
         "reason": "Sale type and sub type: a sale of a security. Withdrawal rows are EXTERNAL_OUT by the rule, None rows INTERNAL."
       },
       {
         "source_value": "Transfer In | Transfer In",
+        "source_key": "Transfer In | Transfer In",
         "opal_type": "Transfer in",
         "flow_class_none": null,
         "reason": "Transfer In type and sub type; all rows are Contribution, so EXTERNAL_IN by the rule."
       },
       {
         "source_value": "Transfer Out | Transfer Out",
+        "source_key": "Transfer Out | Transfer Out",
         "opal_type": "Transfer out",
         "flow_class_none": "EXTERNAL_OUT",
         "reason": "Transfer Out type and sub type. The live read of round 130 finds no null Action in Cottonwood (87 values, none missing), so the lines that the round-128 analysis counted as lacking an Action are the lines whose External Flow is None. By the CTO's round-128 ruling (msg 9175) the pair's class for lines marked None is EXTERNAL_OUT; no line is dropped or left blank."
@@ -2806,436 +3189,523 @@
     "actions": [
       {
         "source_value": "044S - 021",
+        "source_key": "044S - 021",
         "opal_action": "UNMAPPED",
         "reason": "A code with no description in the value; the value names no kind of event."
       },
       {
         "source_value": "10 - TFR~",
+        "source_key": "10 - TFR~",
         "opal_action": "Transfer",
         "reason": "TFR in the value reads as a transfer."
       },
       {
         "source_value": "ACAT In",
+        "source_key": "ACAT In",
         "opal_action": "Transfer",
         "reason": "ACAT is an account transfer between institutions, inbound."
       },
       {
         "source_value": "ADR tax/fee",
+        "source_key": "ADR tax/fee",
         "opal_action": "UNMAPPED",
         "reason": "The value names both a tax and a fee; the vendor words do not say which the row is."
       },
       {
         "source_value": "Bank Interest",
+        "source_key": "Bank Interest",
         "opal_action": "Income",
         "reason": "Interest credited on cash."
       },
       {
         "source_value": "Buy",
+        "source_key": "Buy",
         "opal_action": "Trade",
         "reason": "A purchase of a security."
       },
       {
         "source_value": "Buy Money Market ",
+        "source_key": "Buy Money Market",
         "opal_action": "Trade",
         "reason": "A purchase of a money market holding (trailing space kept)."
       },
       {
         "source_value": "Buy of Accrued Interest",
+        "source_key": "Buy of Accrued Interest",
         "opal_action": "Trade",
         "reason": "A purchase; the accrued interest paid on it is part of the purchase."
       },
       {
         "source_value": "CREDIT - ",
+        "source_key": "CREDIT -",
         "opal_action": "UNMAPPED",
         "reason": "A credit with no kind stated (trailing space kept)."
       },
       {
         "source_value": "Cancelled Dividend Reinvestment",
+        "source_key": "Cancelled Dividend Reinvestment",
         "opal_action": "Adjustment",
         "reason": "A cancelled reinvestment is a reversal, a bookkeeping change."
       },
       {
         "source_value": "Cash Deposit",
+        "source_key": "Cash Deposit",
         "opal_action": "Contribution",
         "reason": "Cash in from outside the firm."
       },
       {
         "source_value": "Cash Withdrawal",
+        "source_key": "Cash Withdrawal",
         "opal_action": "Withdrawal",
         "reason": "Cash out to the client."
       },
       {
         "source_value": "Cash in Lieu of Fractional Shares",
+        "source_key": "Cash in Lieu of Fractional Shares",
         "opal_action": "Adjustment",
         "reason": "A corporate-action cash item; the ratified Corporate action word takes the Adjustment action."
       },
       {
         "source_value": "Check Paid",
+        "source_key": "Check Paid",
         "opal_action": "Withdrawal",
         "reason": "A check paid out of the account."
       },
       {
         "source_value": "Check Paid Adjustment",
+        "source_key": "Check Paid Adjustment",
         "opal_action": "Adjustment",
         "reason": "A correction to a check paid."
       },
       {
         "source_value": "Check Received",
+        "source_key": "Check Received",
         "opal_action": "Contribution",
         "reason": "A check received into the account."
       },
       {
         "source_value": "Contribution",
+        "source_key": "Contribution",
         "opal_action": "Contribution",
         "reason": "The vendor word Contribution."
       },
       {
         "source_value": "Corporate/Government Bond Interest",
+        "source_key": "Corporate/Government Bond Interest",
         "opal_action": "Income",
         "reason": "Interest on a bond holding."
       },
       {
         "source_value": "Corporate/Government Bond Interest Adjustment",
+        "source_key": "Corporate/Government Bond Interest Adjustment",
         "opal_action": "Adjustment",
         "reason": "A correction to bond interest."
       },
       {
         "source_value": "Current Year Contribution",
+        "source_key": "Current Year Contribution",
         "opal_action": "Contribution",
         "reason": "A contribution for the current year."
       },
       {
         "source_value": "DST Other Fee",
+        "source_key": "DST Other Fee",
         "opal_action": "Fee",
         "reason": "A fee."
       },
       {
         "source_value": "DST TRANSFER IN",
+        "source_key": "DST TRANSFER IN",
         "opal_action": "Transfer",
         "reason": "A transfer in."
       },
       {
         "source_value": "Direct Deposit",
+        "source_key": "Direct Deposit",
         "opal_action": "Contribution",
         "reason": "A deposit into the account from outside."
       },
       {
         "source_value": "Direct Deposit Adjustment",
+        "source_key": "Direct Deposit Adjustment",
         "opal_action": "Adjustment",
         "reason": "A correction to a direct deposit."
       },
       {
         "source_value": "Direct Rollover Cash",
+        "source_key": "Direct Rollover Cash",
         "opal_action": "Transfer",
         "reason": "A rollover of cash from another plan or account."
       },
       {
         "source_value": "Dividend",
+        "source_key": "Dividend",
         "opal_action": "Income",
         "reason": "A dividend paid by a holding."
       },
       {
         "source_value": "Dividend Adjustment",
+        "source_key": "Dividend Adjustment",
         "opal_action": "Adjustment",
         "reason": "A correction to a dividend."
       },
       {
         "source_value": "Dividend Reinvestment",
+        "source_key": "Dividend Reinvestment",
         "opal_action": "Income",
         "reason": "Income used to buy more of the same holding."
       },
       {
         "source_value": "Dividend Reversal",
+        "source_key": "Dividend Reversal",
         "opal_action": "Adjustment",
         "reason": "A reversal of a dividend, a bookkeeping change."
       },
       {
         "source_value": "EF Transfer In",
+        "source_key": "EF Transfer In",
         "opal_action": "Transfer",
         "reason": "An electronic funds transfer in, read as a transfer."
       },
       {
         "source_value": "EF Transfer Out",
+        "source_key": "EF Transfer Out",
         "opal_action": "Transfer",
         "reason": "An electronic funds transfer out, read as a transfer."
       },
       {
         "source_value": "Exchange",
+        "source_key": "Exchange",
         "opal_action": "Trade",
         "reason": "An exchange of one holding for another: a sale and a purchase."
       },
       {
         "source_value": "Exchange To Fund",
+        "source_key": "Exchange To Fund",
         "opal_action": "Trade",
         "reason": "An exchange into a fund: a sale and a purchase."
       },
       {
         "source_value": "Exchange from Fund",
+        "source_key": "Exchange from Fund",
         "opal_action": "Trade",
         "reason": "An exchange out of a fund: a sale and a purchase."
       },
       {
         "source_value": "FT Withheld",
+        "source_key": "FT Withheld",
         "opal_action": "Tax",
         "reason": "Foreign tax withheld."
       },
       {
         "source_value": "Federal Tax Withholding",
+        "source_key": "Federal Tax Withholding",
         "opal_action": "Tax",
         "reason": "Federal tax withheld."
       },
       {
         "source_value": "Fee Charged",
+        "source_key": "Fee Charged",
         "opal_action": "Fee",
         "reason": "A charge against the account."
       },
       {
         "source_value": "Foreign Dividend",
+        "source_key": "Foreign Dividend",
         "opal_action": "Income",
         "reason": "A dividend from a foreign holding."
       },
       {
         "source_value": "Foreign Dividend Adjustment",
+        "source_key": "Foreign Dividend Adjustment",
         "opal_action": "Adjustment",
         "reason": "A correction to a foreign dividend."
       },
       {
         "source_value": "Foreign Tax Paid",
+        "source_key": "Foreign Tax Paid",
         "opal_action": "Tax",
         "reason": "Foreign tax paid."
       },
       {
         "source_value": "Funds Received from Bank Acount",
+        "source_key": "Funds Received from Bank Acount",
         "opal_action": "Contribution",
         "reason": "Money received from an outside bank (the vendor spelling is kept)."
       },
       {
         "source_value": "Funds Sent to Bank Account",
+        "source_key": "Funds Sent to Bank Account",
         "opal_action": "Withdrawal",
         "reason": "Money sent to an outside bank."
       },
       {
         "source_value": "IRA Transfer - Cash",
+        "source_key": "IRA Transfer - Cash",
         "opal_action": "Transfer",
         "reason": "A cash transfer between IRA accounts or institutions."
       },
       {
         "source_value": "Interest",
+        "source_key": "Interest",
         "opal_action": "Income",
         "reason": "Interest credited or paid."
       },
       {
         "source_value": "Journal",
+        "source_key": "Journal",
         "opal_action": "Transfer",
         "reason": "A book entry between accounts; the ratified Journal word takes the Transfer action."
       },
       {
         "source_value": "Long Term Capital Gains",
+        "source_key": "Long Term Capital Gains",
         "opal_action": "Income",
         "reason": "A long-term capital gain distribution."
       },
       {
         "source_value": "MGFEE - DEBIT",
+        "source_key": "MGFEE - DEBIT",
         "opal_action": "Fee",
         "reason": "A management fee debit."
       },
       {
         "source_value": "Management Fee",
+        "source_key": "Management Fee",
         "opal_action": "Fee",
         "reason": "A management fee."
       },
       {
         "source_value": "Management Fee Adjustment",
+        "source_key": "Management Fee Adjustment",
         "opal_action": "Adjustment",
         "reason": "A correction to a management fee."
       },
       {
         "source_value": "Management Fee Reversal",
+        "source_key": "Management Fee Reversal",
         "opal_action": "Fee",
         "reason": "A reversal of a fee; the ratified Fee credit word takes the Fee action."
       },
       {
         "source_value": "Merger",
+        "source_key": "Merger",
         "opal_action": "Adjustment",
         "reason": "A corporate action, non-cash."
       },
       {
         "source_value": "Normal Distribution",
+        "source_key": "Normal Distribution",
         "opal_action": "Withdrawal",
         "reason": "A distribution paid out to the client."
       },
       {
         "source_value": "OID Amount Calculated",
+        "source_key": "OID Amount Calculated",
         "opal_action": "Income",
         "reason": "An original issue discount accrual."
       },
       {
         "source_value": "OTHER - ",
+        "source_key": "OTHER -",
         "opal_action": "UNMAPPED",
         "reason": "A value with no kind stated (trailing space kept)."
       },
       {
         "source_value": "Other Activity",
+        "source_key": "Other Activity",
         "opal_action": "UNMAPPED",
         "reason": "A generic label with no kind stated."
       },
       {
         "source_value": "Other Fee",
+        "source_key": "Other Fee",
         "opal_action": "Fee",
         "reason": "A fee."
       },
       {
         "source_value": "Partial Distribution",
+        "source_key": "Partial Distribution",
         "opal_action": "Withdrawal",
         "reason": "A partial distribution paid out."
       },
       {
         "source_value": "Premature Distribution",
+        "source_key": "Premature Distribution",
         "opal_action": "Withdrawal",
         "reason": "A distribution paid out before the due date."
       },
       {
         "source_value": "Principal Payment",
+        "source_key": "Principal Payment",
         "opal_action": "Adjustment",
         "reason": "A return of principal, read as the ratified Return of capital word."
       },
       {
         "source_value": "QDV - DEBIT",
+        "source_key": "QDV - DEBIT",
         "opal_action": "UNMAPPED",
         "reason": "A code with no vendor description; the value does not name its kind."
       },
       {
         "source_value": "Redemption",
+        "source_key": "Redemption",
         "opal_action": "Trade",
         "reason": "A holding sold back to its issuer or fund."
       },
       {
         "source_value": "Return of Capital",
+        "source_key": "Return of Capital",
         "opal_action": "Adjustment",
         "reason": "A repayment of principal, as the ratified Return of capital word."
       },
       {
         "source_value": "Reverse Split",
+        "source_key": "Reverse Split",
         "opal_action": "Adjustment",
         "reason": "A corporate action, non-cash."
       },
       {
         "source_value": "Roth Conversion",
+        "source_key": "Roth Conversion",
         "opal_action": "Transfer",
         "reason": "A movement between account types."
       },
       {
         "source_value": "Royalty Trust Payment",
+        "source_key": "Royalty Trust Payment",
         "opal_action": "Income",
         "reason": "A royalty trust payment."
       },
       {
         "source_value": "Sale",
+        "source_key": "Sale",
         "opal_action": "Trade",
         "reason": "A sale of a security."
       },
       {
         "source_value": "Sale of Accrued Interest",
+        "source_key": "Sale of Accrued Interest",
         "opal_action": "Income",
         "reason": "Accrued interest received on a sale, read as interest income."
       },
       {
         "source_value": "Sep-IRA Contribution",
+        "source_key": "Sep-IRA Contribution",
         "opal_action": "Contribution",
         "reason": "A contribution to a SEP-IRA."
       },
       {
         "source_value": "Short Term Capital Gains",
+        "source_key": "Short Term Capital Gains",
         "opal_action": "Income",
         "reason": "A short-term capital gain distribution."
       },
       {
         "source_value": "Special Memorandum Account",
+        "source_key": "Special Memorandum Account",
         "opal_action": "Adjustment",
         "reason": "A memo entry with no cash flow."
       },
       {
         "source_value": "Spinoff",
+        "source_key": "Spinoff",
         "opal_action": "Adjustment",
         "reason": "A corporate action, non-cash."
       },
       {
         "source_value": "Split",
+        "source_key": "Split",
         "opal_action": "Adjustment",
         "reason": "A corporate action, non-cash."
       },
       {
         "source_value": "Systematic Withdrawal Plan",
+        "source_key": "Systematic Withdrawal Plan",
         "opal_action": "Withdrawal",
         "reason": "A scheduled withdrawal paid out to the client."
       },
       {
         "source_value": "TOA - LONG",
+        "source_key": "TOA - LONG",
         "opal_action": "UNMAPPED",
         "reason": "A code with no vendor description; the value does not spell out its kind."
       },
       {
         "source_value": "Tax-Exempt Municipal Bond Interest",
+        "source_key": "Tax-Exempt Municipal Bond Interest",
         "opal_action": "Income",
         "reason": "Municipal bond interest."
       },
       {
         "source_value": "Transfer Cash to Custodian",
+        "source_key": "Transfer Cash to Custodian",
         "opal_action": "Transfer",
         "reason": "A cash transfer to a custodian."
       },
       {
         "source_value": "Transfer In",
+        "source_key": "Transfer In",
         "opal_action": "Transfer",
         "reason": "A transfer in."
       },
       {
         "source_value": "Transfer In of Accrued Interest",
+        "source_key": "Transfer In of Accrued Interest",
         "opal_action": "Transfer",
         "reason": "A transfer in carrying accrued interest."
       },
       {
         "source_value": "Transfer Memo",
+        "source_key": "Transfer Memo",
         "opal_action": "Adjustment",
         "reason": "A memo entry with no value of its own."
       },
       {
         "source_value": "Transfer Out",
+        "source_key": "Transfer Out",
         "opal_action": "Transfer",
         "reason": "A transfer out."
       },
       {
         "source_value": "Transfer Purchase",
+        "source_key": "Transfer Purchase",
         "opal_action": "Trade",
         "reason": "A purchase made by transfer."
       },
       {
         "source_value": "Transfer Redemption",
+        "source_key": "Transfer Redemption",
         "opal_action": "Trade",
         "reason": "A sale made by transfer."
       },
       {
         "source_value": "Valuation Decrease",
+        "source_key": "Valuation Decrease",
         "opal_action": "Adjustment",
         "reason": "A revaluation with no cash flow."
       },
       {
         "source_value": "Wire Transfer",
+        "source_key": "Wire Transfer",
         "opal_action": "Transfer",
         "reason": "A wire between institutions; its direction is not in the value (the External Flow column carries it)."
       },
       {
         "source_value": "Wire Transfer to Bank",
+        "source_key": "Wire Transfer to Bank",
         "opal_action": "Withdrawal",
         "reason": "A wire to an outside bank."
       },
       {
         "source_value": "exc-in",
+        "source_key": "exc-in",
         "opal_action": "Adjustment",
         "reason": "A conversion in: the non-cash corporate-action word."
       },
       {
         "source_value": "exc-out",
+        "source_key": "exc-out",
         "opal_action": "Adjustment",
         "reason": "A conversion out: the non-cash corporate-action word."
       }
@@ -3245,14 +3715,10 @@
   "new_code_reason": "CODE_NOT_IN_MAPPING",
   "firms_served": [
     "49financial",
-    "cottonwood"
+    "cottonwood",
+    "inflection"
   ],
-  "firms_pending": [
-    {
-      "firm": "inflection",
-      "reason": "No producer exists yet; the Inflection producer is the next drain (round 131), because it touches this contract again. Its ground read is round 128: settle_date and fee are absent from its 36 columns. 47 of the 48 ratified descriptions are live in the census; the 48th is marked not_observed. Its source_txn_id is the id column, read over every partition in round 130."
-    }
-  ],
+  "firms_pending": [],
   "rule24_records": {
     "coverage": {
       "postulates": {
@@ -3313,8 +3779,8 @@
       "read_at_utc": "2026-10-16T08:48:27Z"
     }
   },
-  "schema_hash": "8861518a4ef58baad75b8cf7f91e697fd197191a0fc18a64eb1384ace164d6b4",
+  "schema_hash": "58790f62fe63c9ca342caaa9e91c6084d348163924bc7153e0013591807a7fac",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines of columns joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries (the same method as the account_class_daily and account_return_daily contracts).",
   "served": false,
-  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.3.0 supersedes 0.2.0, which the CVO's J1 passed 20 of 20 by natural key. Cottonwood's producer is account_transaction_cottonwood.py and is not wired; the release is a never-widen act that waits on the producers, on the CVO's judgment at L9 (DBF130-1-J1), and on a CTO and COO sign-off."
+  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.4.0 supersedes 0.3.0, which the issuer withholds (the Cottonwood Action-lookup defect). 0.4.0 serves all three firms: the Inflection producer is written in round 131 and is not wired. The round-128 ground read named avgPrice as Inflection's price source and read no value; the round-131 census finds avgPrice null or blank on every row, so the price is navPrice (sources.inflection). The release is a never-widen act that waits on the CVO's judgment at L9 (DBF131-1-J1 and J2) and on a CTO and COO sign-off."
 }

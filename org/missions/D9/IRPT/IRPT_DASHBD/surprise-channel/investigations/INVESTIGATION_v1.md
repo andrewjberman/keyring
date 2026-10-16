@@ -22134,7 +22134,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-S113 -- 49 Financial history_scope is a constant PARTIAL_HISTORY in the gold producer; three series end early on a positive day
 
 ```json
@@ -22508,3 +22507,178 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W1701-S1 -- the worktree's materialised folders omit the two folders the offline tests import: data/assets/scripts/lib and infra/aws/lambda/v2_portal/_shared
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "The worker face's list of materialised folders omits data/assets/scripts/lib (stream_parquet, imported by account_return_daily) and infra/aws/lambda/v2_portal/_shared (etf_classifications_dynamodb, imported by account_class_daily), so the producer and class-daily test files fail at collection until both are added to the sparse checkout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The materialised folders the worker face names are sufficient for the producers' offline tests and for tests/test_account_class_daily.py.",
+  "world_is": "account_return_daily.py imports stream_parquet from data/assets/scripts/lib, and account_class_daily.py imports etf_classifications_dynamodb from infra/aws/lambda/v2_portal/_shared. Neither folder was materialised in the worktree. The worker ran git sparse-checkout add for both (a read-only materialisation; no file was edited). The folder list is not changed by this row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest collection at worktree HEAD 46b175f775, before any edit: ModuleNotFoundError No module named 'stream_parquet', then No module named 'etf_classifications_dynamodb'",
+      "after git sparse-checkout add data/assets/scripts/lib and infra/aws/lambda/v2_portal/_shared the three baseline test files collect and report 102 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S2 -- the round-128 ground read still names avgPrice as Inflection's price source; the 0.4.0 contract corrects it to navPrice
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "RD_FWD5_GROUND_INFLECTION_R128.json names avgPrice for the price target; the round-131 census finds avgPrice null or blank on every row, so contract 0.4.0 sources price from navPrice and the ground read is left as the record of the round-128 read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The contract's sources entries equal the round-128 ground reads, the price included (the 0.3.0 wording).",
+  "world_is": "The ground-read record (read only, round 128) names avgPrice as the price source, and it read no value. The round-131 field census finds avgPrice null or blank on all 218,054,352 rows. Contract 0.4.0 states the price as navPrice where noUnits is non-zero and navPrice is positive, with the census figures in its method and served_note, and the generator overrides and asserts that one entry. The checker skips the price entry in its ground comparison.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RD_FWD5_GROUND_INFLECTION_R128.json targets[price].source is avgPrice (1401 record, unchanged in this round)",
+      "R131_INFLECTION_FIELD_CENSUS.json null_or_blank_rows_all.avgPrice is 218054352 of rows 218054352"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S3 -- keyed_map takes one more keyword, label, so the collision refusal names the firm's mapping
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "The order gives keyed_map(rows, field, fn); the refusal must name the firm or table, which the three arguments cannot carry, so keyed_map has a keyword-only label (default 'source values') as well.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "keyed_map(rows, field=source_value, fn=normalise_key) REFUSES a collision with a message naming collide, the firm or table, and the key.",
+  "world_is": "keyed_map(rows, field, fn, label) in account_transaction.py refuses with 'REFUSED: <label>: two source values collide: ... both normalise to one key ...'. The three positional and default arguments are as the order gives them; the label is a keyword with a default and no caller depends on it being absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_transaction.py keyed_map at commit be2a2a6ef5 (the label keyword)",
+      "tests/test_account_transaction.py keyed_map collision test and tests/test_account_transaction_cottonwood.py collision tests match 'collide'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S4 -- the order's commit trailer names Claude Sonnet 5.5; this worker's model is Haiku 5.5, so the commits carry the Haiku trailer
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "The worker face asks each commit message to end with Co-Authored-By: Claude Sonnet 5.5; the environment and the attribution rule identify this worker as Haiku 5.5, so the trailer written is Co-Authored-By: Claude Haiku 5.5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Each commit message file ends with the line Co-Authored-By: Claude Sonnet 5.5 (worker face, commit rule).",
+  "world_is": "The worker's model is claude-haiku-5-5. An attribution line that names another model would be false, so the commits carry Co-Authored-By: Claude Haiku 5.5, as the attribution rule the session gives requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the session environment states the model as Haiku 5.5 with model ID claude-haiku-5-5",
+      "commit be2a2a6ef5 message ends with Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S5 -- the Inflection per-row claim of source_txn_id coverage said the producer was pending; the sentence is rewritten now that firms_pending is empty
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "source_txn_id_coverage is listed as unchanged, but the 0.3.0 Inflection per_row_claim says the producer is pending (firms_pending); in 0.4.0 firms_pending is empty, so the generator rewrites that one sentence from the round-130 counts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "source_txn_id_coverage is unchanged from 0.3.0 (the order's unchanged list).",
+  "world_is": "The Inflection per_row_claim sentence of 0.3.0 names the pending producer, which is false in 0.4.0. The generator states the round-130 count (zero repeated values in zero partitions) instead. The counts, the chosen column and the all-partition run are copied unchanged; the 49 Financial and Cottonwood entries come from the unchanged functions.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.3.0 contract at commit 46b175f775, source_txn_id_coverage.inflection.per_row_claim names firms_pending",
+      "0.4.0 contract at commit 92f6952b00, firms_pending is an empty list and the Inflection per_row_claim is rewritten"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S6 -- the Internal bucket's catch-all classes two income descriptions INTERNAL: Dividend Paid from Cash (word Dividend) and Income Paid (word Other income)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "Applied as the order states it (Internal before Return by word), the rule gives INTERNAL to two taxonomy descriptions in the Internal bucket whose ratified words are income words: Dividend Paid from Cash (Dividend) and Income Paid (Other income).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "The Inflection flow rule places income by its word inside the Return bucket, and every other bucket by its own rule (order: (Internal, null, null) INTERNAL).",
+  "world_is": "Both descriptions sit in the taxonomy's Internal bucket with no account boundary, so the rule gives them INTERNAL, and the Return-by-word step is never reached for them. Contract 0.4.0 carries flow_class INTERNAL on their two source_mapping rows, and the Inflection producer serves those rows as INTERNAL. Whether a Dividend or an Other income line should read INCOME is a ruling for the CTO; the worker applies the rule as written and does not change it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml: type_desc Dividend Paid from Cash and Income Paid, bucket Internal, no nna_direction and no account_boundary",
+      "contract 0.4.0 source_mapping rows for Dividend Paid from Cash and Income Paid carry flow_class INTERNAL (commit 92f6952b00)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S7 -- the naming gate printed a WARN (REFUSE, not enforced) on the literal "inflection" used as a subscript in account_transaction_inflection.py; the module now reads the row filter through FIRM
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:27:17Z",
+  "one_line": "At the step-5 commit the naming gate graded account_transaction_inflection.py line 92, words[row_filter][inflection], as a NEW hand-kept carrier of 'inflection' outside every permitted context (WARN window: not blocking). The row filter is now read through FIRM, the registry key, in a follow-up commit; the words file's keyed literals stay the class of IRPT_DASHBD-D2-W1601-S5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A carrier of the registry key 'inflection' reads it through lookup('inflection') or the module's FIRM, and the naming gate's live census runs at commit.",
+  "world_is": "Commit e1ba8ccd1d printed NAMING REFUSE x1 at account_transaction_inflection.py:92 with LIVE-READ-FAILED (the served-graph client blocked the live pull); the verdict was WARN because the ENFORCE switch is off. The follow-up reads words[row_filter][FIRM]; the lookup at FIRM is unchanged. The live census still cannot run on this box.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh output for commit e1ba8ccd1d: [naming-gate] NAMING REFUSE data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py:92 inflection -> lookup('inflection'); NAMING-GATE: WARN 1 graded",
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py line 92 at commit e1ba8ccd1d: rf = words[\"row_filter\"][\"inflection\"]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
