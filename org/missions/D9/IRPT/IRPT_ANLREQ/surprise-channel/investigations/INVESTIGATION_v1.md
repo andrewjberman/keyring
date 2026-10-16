@@ -22279,3 +22279,56 @@
   "world_is": "In FWD-1 window 2 the request was accepted but the ticket never got report_ref, so the Ticket Center's hop-failure read (which takes the request id from ticket.report_ref.request_id) made no status call for it. WHY step 4 did not land is NOT read: either POST /report was never sent or it was refused, and neither the service log nor the driver's record can tell which. Candidates, not measured: the creator route's conditions (the actor must equal created_by and the ticket have an attachment and no report_ref); the page's step 4 not reached after step 3; a transient failure. The instrument that would read it is the page's own step lines (a future filing under a driver that captures them) or per-route logging; neither was on."
 }
 ```
+
+## IRPT_ANLREQ-D2-S150 -- the "Did you mean" suggestion is a nondeterministic LLM output; run 3 selected its files on it (CTO msg 9685 item 4)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T17:13:31Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S150",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "SET 2 and SET 3 showed the suggestion AAPL for ALPPL and APPL; run 3 showed none for the same two, and its plan had selected branches on the suggestion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/fwd1run/RUN3_OUTCOME_20261016.md lines 8, 12 and 16 (read at 2e87b54871)",
+      "CTO msg 9685 item 4: file a row; the selection rule picked on a nondeterministic output"
+    ]
+  },
+  "spec_asserts": "A live proof plan selects its branches on door answers that repeat for the same input.",
+  "world_is": "The advisory candidates are an LLM output (security_resolution.verified_suggestions displays only candidates the provider found or, since AR-g-133, the checker kept). RUN3_OUTCOME reports AAPL for ALPPL and APPL in SET 2 and SET 3 and NONE in run 3, with two of the three advisory calls returning OK. The door's own answers (TICKER_NOT_FOUND with Replace, No, UNRESOLVED, the TIMXX notice) were stable. Owner 2.0.0_SA_COO~Y2 (plan) with the CTO ruling in msg 9685: window 4 plans only deterministic branches and grades the suggestion when it appears. Not an engine defect; no product change. Clears when window 4's plan is signed on deterministic branches."
+}
+```
+
+## IRPT_ANLREQ-D2-S151 -- FWD-1 run 3's selection rule picked U1 and U2 on the Kimi suggestion, which SET 2 and SET 3 showed (AAPL) and the run did not: a plan keyed on a nondeterministic output
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-16T17:20:00Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S151",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "Run 3's decisions file keyed U1 (ALPPL, Yes) on an advisory suggestion that SET 2 and SET 3 showed and the run did not, and the driver, with no Yes button, pressed 0 of 3 planned decisions in 780 s.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_fwd1_r3/A_SET2_ROWS_R3.txt: ALPPL and APPL TICKER_NOT_FOUND with suggestion PRESENT symbol=AAPL source=KIMI_CHECK_PROVIDER_VERIFIED",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_fwd1_r3/A_RUN_FWD1_R3.txt lines 45 to 51 (SET 3 selection; the run's four findings with suggestion ABSENT for ALPPL, APPL and ZQXWVK)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_fwd1_r3/A_RUN_JOURNAL_R3.txt: three IRPT_RESIDENT_KIMI kind=check calls, 15.5 s OK, 119.0 s KIMI_TIMEOUT, 17.6 s OK",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_fwd1_r3/run/step_log.txt and run_report.json: FORM-DECISIONS symbols pressed 0 of 3, ticket_id null, Timeout 780000ms",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/fwd1run/RUN3_OUTCOME_20261016.md @2e87b54871"
+    ]
+  },
+  "spec_asserts": "Addendum 3's selection rule treats a candidate that reads NOT_FOUND with a suggestion as a stable U1 (Yes) row, and the driver's decisions loop answers the planned prompts until the ticket answer arrives.",
+  "world_is": "The suggestion is an LLM output (the resident's Kimi check) and was present twice and absent once for the same symbols under the same code, so the selection rule picked on a nondeterministic output; and when the planned Yes button was absent the driver pressed nothing for 780 s with no screenshot after Submit, so what the form showed is NOT read. The CTO's ruling (msg 9684): window 4 plans only deterministic branches, treats the suggestion as opportunistic and never selects on it, and the driver falls through whichever prompt the door shows and screenshots each round."
+}
+```
