@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-16T12:19:55.965695+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261016T133848Z
 **Deploy:** IRPT_DASHBD TO-DB-b-298: APPLY the signed 49 Financial series-publish pair (packet sha256 29b7df738efc, COO half @023604d076, CTO half @582155d0b7); APPLIER 0.7.0_AE_CloudOps~DB2: build and upload a NEW VERSION of the irpt-49f-reporting-publish-lambda bundle (publisher 0.4.0), plan EXACTLY 0 add / 1 change / 0 destroy (the function by CODE attributes only), ONE safe-apply NOT BEFORE 13:00Z and never 12:05Z to 13:00Z, the absent-days check, a one-shard DRY RUN, a ONE-ACCOUNT republish and the FULL republish of the 6949 series, all under irpt/49financial/platinum/reporting/; schedule ENABLED and untouched; NO delete; ledger stays OPEN
 **Authored by:** 0.7.0_AE_CloudOps~DB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -29,3 +29,4 @@
 - 20261016T131256Z LEG L5 closed: Act 4 ONE-ACCOUNT republish, payload shape {accounts 1} (the handler uploads unless dry_run), account_hash12 5ce40a62a18
 - 20261016T131749Z LEG L6 closed: Act 5 FULL republish, payload {}, one synchronous invoke --cli-read-timeout 0 at 2026-10-16T13:13:35Z (returned 13:13:53
 - 20261016T131813Z LEG L6 closed: Act 5 FULL republish, payload {}, one synchronous invoke --cli-read-timeout 0 at 2026-10-16T13:13:35Z (returned 13:13:53
+- 20261016T133848Z CLOSED -- all 6 legs proven
