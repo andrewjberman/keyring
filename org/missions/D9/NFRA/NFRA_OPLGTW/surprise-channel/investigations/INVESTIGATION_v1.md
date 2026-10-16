@@ -20630,3 +20630,26 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost of the miss: the criterion could never pass on this store, for any principal. Fix is two lines in mg1.AC2.sh (TypeDeserializer on the scope; read dates.calendar_months). A revoke is available under the same role if the halves want the writes undone anyway."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S175",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T12:10Z",
+    "one_line": "gateway_query_catalog answers a key-resolution failure ('off-catalog: no W5 row for this key -- not resolvable') with http_status 403, the authorization status, so a caller reads 'still denied' where the class is 'not found'; the Bloomberg seat nearly reported a false DENIED into round 38 on it.",
+    "class": "OBSERVATION",
+    "spec_asserts": "A refusal's status code names its class: an authorization refusal is the entitlement chokepoint's shape (guard_denied, code entitlement_denied); an unresolvable key is a not-found or bad-argument class.",
+    "world_is": "0.0.3_BG_BBGTerminal re-exercise 2026-10-16 ~11:4xZ: gateway_query_catalog(key='mp.01.aum-metrics') -> {'error': 'off-catalog: no W5 row for this key -- not resolvable (...)', 'key': 'mp.01.aum-metrics', 'http_status': 403}, without guard_denied; opal_describe on the same key reads catalogued true and servable true to the same principal.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-10-16/capability_reexercise_8_gateway_tools_after_og_mg_1_7_pass_1_not_proven.md section 2",
+        "infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py:150 (PrefixRefused 'off-catalog' raised by the tool)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Relayed from the Bloomberg seat's handover (its section 2); filed by this seat because no row carried it. Remedy, the tool's owner (built under NFRA_MCPINDEX MX-q-3, served by this gateway): map an off-catalog key to 404 or a non-authorization 4xx, or add an error_class field consumers branch on. Not ARMED: nothing is mis-served; the hazard is a mis-read."
+  }
+  ```
