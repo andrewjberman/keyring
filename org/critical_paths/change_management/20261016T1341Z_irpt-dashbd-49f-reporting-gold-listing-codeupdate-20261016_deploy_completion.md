@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-16T13:41:20.691914+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261016T152240Z
 **Deploy:** IRPT_DASHBD TO-DB-b-300: APPLY the signed 49 Financial reporting-gold pair (packet sha256 d2c27ac2bdc5, COO half @c17e5d10b9, CTO half @89ca7c661c); APPLIER 0.7.0_AE_CloudOps~DB2: build and upload a NEW VERSION of the irpt-49f-reporting-gold-lambda bundle, plan EXACTLY 0 add / 2 change / 0 destroy (the ONE s3:prefix value irpt/49financial/gold/filled_report_values/* added on ListExactlyTheSixGoldPrefixes, and the function by CODE attributes only), ONE safe-apply outside 11:35Z to 12:00Z, the hop-1 FIRST WRITE of 2026-10-15, a ONE-DAY backfill of 2026-10-15, the flip count, then the republish of the series (only after the publish pair ledger is CLOSED); both schedules untouched; NO delete; ledger stays OPEN
 **Authored by:** 0.7.0_AE_CloudOps~DB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -28,3 +28,4 @@
 - 20261016T140255Z LEG L4 closed: Act 3 hop-1 FIRST WRITE: ONE synchronous event {day 2026-10-15}, --cli-read-timeout 0, no retry, 2026-10-16T13:55:59Z (r
 - 20261016T145320Z LEG L5 closed: Act 4 ONE-DAY backfill {backfill 2026-10-15 to 2026-10-15, accounts population}, one synchronous invoke --cli-read-timeo
 - 20261016T150618Z LEG L6 closed: Act 5 REPUBLISH of the series on irpt-49f-reporting-publish-lambda, payload {}, one synchronous invoke --cli-read-timeou
+- 20261016T152240Z CLOSED -- all 6 legs proven
