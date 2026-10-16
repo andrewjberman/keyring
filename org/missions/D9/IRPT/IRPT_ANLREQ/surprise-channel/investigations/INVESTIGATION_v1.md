@@ -23112,3 +23112,29 @@
   "dismissal_reason": "The field is display only and the server decides authority; the CTO disarmed the row for DEV and window 5, and no PROD promote of the candidate is asked, so the hazard of a needless field for an unrestricted staff filer cannot reach a client."
 }
 ```
+
+## IRPT_ANLREQ-D2-W173-S3 -- the serial ~173, this worktree and its folder were used before TO-AR-y-381: rows S1 and S2 and the TO-AR-g-54 record already exist, so this order continues at S3
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W173-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~173",
+  "surfaced_at": "2026-10-16T23:29:44Z",
+  "one_line": "The serial 0.9.0_WK_IRPT_ANLREQ~173, this worktree (branch wk-IRPT_ANLREQ-173) and the folder deliverables/0.9.0_WK_IRPT_ANLREQ~173 were used before this order: TO-AR-g-54's commits, proof and r7/ record are on the branch and the channel already holds rows W173-S1 and S2. This order's rows continue at S3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-381 worker face: the worktree is the issuer's provision for ~173 and the write grant is the order's three paths plus deliverables/0.9.0_WK_IRPT_ANLREQ~173/ (its r43/ record and the proof instance); a row id is IRPT_ANLREQ-D2-W<n>-S<k> with k the next unused within the coordinate.",
+  "world_is": "At HEAD 05df1731dd the folder deliverables/0.9.0_WK_IRPT_ANLREQ~173 holds IRPT_ANLREQ.TO-AR-g-54.engine-compose-and-variants-read.proof_of_spec.json and r7/ENGINE_COMPOSE_READ.json, committed at 9a7685aafc, 80be7fd041 and a3f17b27b7; INVESTIGATION_v1.md holds IRPT_ANLREQ-D2-W173-S1 (BLOCKING, closed by S2) at lines 17505 and 17533. The order's files are new paths in that folder; no earlier file is edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --oneline -- org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~173 at HEAD 05df1731dd: 9a7685aafc, 80be7fd041, a3f17b27b7",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md lines 17505-17545: IRPT_ANLREQ-D2-W173-S1 and IRPT_ANLREQ-D2-W173-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a blocker: the order's files are new paths and k is S3 by the channel's own count. The issuer rules whether a serial is reused by design across orders."
+}
+```
