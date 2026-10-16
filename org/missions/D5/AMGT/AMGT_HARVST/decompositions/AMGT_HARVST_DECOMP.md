@@ -4159,3 +4159,15 @@ The first complete cycle on pin Q (`wsj`, `20261016T003123Z`) cost 5 GETs / 96,8
 - **Fan-out:** 1 worker, 1 chain, cap 8.
 - **Behaviour change named in the order:** rows this runtime never appended are unknown to it, so an identical row already in S3 can be appended again; a duplicate is not a wrong value (consumers read the newest row per key).
 - **Checks dry-run at the base before the cut:** AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`110 passed`).
+
+## 115. ROUND 87, workstream EGRESS-SEED -- reading the merged cb-12 found a date-key miss and no seed; `HVST-cb-14` CUT (CTO addendum 3 and C-d3, msgs 6395 and 6396), 2026-10-16 ~02:5xZ
+
+The CTO signed the re-pin for cb-12 and added C-d3: before the first upload to a table under the new pin, `silver_known` holds that table's existing keys, seeded once; the first uploads' record states the seed source and 0 duplicate keys written. cb-12 does not seed (it starts empty), and reading its lookup against the real keys found a second defect: the `listing_hit` key holds a `datetime.date` (`silver_from_bronze.py:655`), `encode_key` stores it as a string, and `silver_append` looks up with the `date` object, so a re-uploaded `listing_hit` row is never recognised as unchanged. Both are cb-12's, and mine (the cb-12 order named the datetime limit as acceptable).
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-14` | `cb-14` | **`silver_known.load` returns a `KnownMap` whose `get` normalises the key through `encode_key`** (a `date` key now matches); **a one-off command** `seed_silver_known seed` (reads each uploader table once, writes `silver_known` and a snapshot file) and `check --since` (lists new parts, counts rows already in the snapshot as DUPLICATES); the cb-12 test that pinned the old limit is updated. | LOCAL (direct act, about 120 lines) | worker `0.9.0_WK_AMGT_HARVST~149` | CUT, pending |
+| `HVST-cb-13` | (staged) | **The re-pin to a head carrying cb-12 and cb-14**, wsj and barrons, with the seed run by the executor while the runner is stopped, and the check after the first uploads (C-d3). Its order text is re-read for the seed and the check before it is sent. | WORLD | seat `0.7.0_AE_CloudOps~SC1` | STAGED behind cb-14 |
+
+- **Fan-out:** 1 worker, 1 chain, cap 8.
+- **Checks dry-run at the base before the cut:** cb-14 AC1 base FAIL as expected (the new test file does not exist); AC2 base PASS as expected (`110 passed`); the cb-12 file reads `9 passed` at the base.
