@@ -81,7 +81,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** DIRECT-ACT: one cell, about 70 product lines plus tests, LOCAL; no L2, L4-R or L8-L10; the close is the issuer's one real run (the aifill suite plus the api serve test at the merged head; and `stamp_validation` over a real stored document from the live read, written to a local file only). The CTO's ruling (msgs 6444, 6446) and the four-postulate record are in the decomposition section 16. The stored documents are stamped by the issuer at the store write under its own never-widen pair, not by this cell. Reference edit proven in a scratch copy: 16 of 16 arms, 303 contract and grounding tests pass with it.
 
-<status>pending</status>
+<status>complete -- 2026-10-16 by the issuer (2.0.0_SA_COO~R2): worker ~482 merged at 7e99d74fe0 (build 21cae8f3d5); instance VALID rc=0, re-run by the issuer in the worker tree: AC1 AIFILL GS-2 ARMS: YES (16 of 16), AC2 332 passed. Drain check at the merged head: aifill suite plus api serve test 852 passed, ruff clean. Real run: stamp_validation over the stored ASML_NA_Equity document read from S3 (local file only, deliverables/2.0.0_SA_COO~R2/round108_aifill_close/stamp_validation_ASML_stored_doc_LOCAL_ONLY.json): the three NONE blocks PASS and HELD, the two filled blocks (mgmt_bio, mgmt_recent) REFUSED and HELD with the contract's own problem 'grounding record is missing'; the stamped document otherwise validates. Row W482-S1 (the sparse cone omits org/surprise_channel) is an OBSERVATION, no act.</status>
 <round>108</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~482</slot>
