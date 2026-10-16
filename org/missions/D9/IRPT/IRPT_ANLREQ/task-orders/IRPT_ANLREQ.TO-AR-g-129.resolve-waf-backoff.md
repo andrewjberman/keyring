@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-g-129</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~262</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~263</issued_to>
 <issued_by>2.0.0_SA_COO~G2</issued_by>
 <issued_date>2026-10-16</issued_date>
 <status>pending</status>
@@ -20,14 +20,17 @@
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~262`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-262` (branch `wk-IRPT_ANLREQ-262`), provisioned by the issuer with `infra/aws/lambda/investor-reporting`, `lib`, `.tools`, `org/standards` and the project folder on disk. Work only there. First confirm `org/` and `.tools/` exist in it.
-- Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~262 <0.9.0_WK_IRPT_ANLREQ~262@opal.agent>" -F <msgfile> -- <paths>`. Write the message file with the Write tool. Do not pre-`git add`. The workspace worktree may show ` M portal` and a modified `.parquet` fixture: never commit either. (A provisioner error about a portal sub-worktree does not concern you.)
-- A row id has the form `IRPT_ANLREQ-D2-W262-S<k>` (take the next free `<k>`; check the channel file for `W262` first); `surfaced_at` of any row = `date -u +%FT%TZ` at filing. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (Python 3.9 syntax: no `X | None`, no `match`). No non-ASCII in what you add.
+You are `0.9.0_WK_IRPT_ANLREQ~263`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-263` (branch `wk-IRPT_ANLREQ-263`), provisioned by the issuer with `infra/aws/lambda/investor-reporting`, `lib`, `.tools`, `org/standards` and the project folder on disk. Work only there. First confirm `org/` and `.tools/` exist in it.
+- Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~263 <0.9.0_WK_IRPT_ANLREQ~263@opal.agent>" -F <msgfile> -- <paths>`. Write the message file with the Write tool. Do not pre-`git add`. The workspace worktree may show ` M portal` and a modified `.parquet` fixture: never commit either. (A provisioner error about a portal sub-worktree does not concern you.)
+- A row id has the form `IRPT_ANLREQ-D2-W263-S<k>` (take the next free `<k>`; check the channel file for `W263` first); `surfaced_at` of any row = `date -u +%FT%TZ` at filing. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (Python 3.9 syntax: no `X | None`, no `match`). No non-ASCII in what you add.
 - No live call, NO PUSH, no deploy, no AWS call, no network, no install. Scratch outside the product tree.
 - Run each test file ON ITS OWN (`python -m pytest -q <one file>`).
 
-### Read first (under `C:/dev/wk-irpt-anlreq-262/infra/aws/lambda/investor-reporting/ycharts/generate/`)
+- **INHERITED STATE (re-seat, issuer ruling on row W262-S1).** Worker `0.9.0_WK_IRPT_ANLREQ~262` made the product change and wrote the tests but its sparse worktree could not run them. You are re-seated on the SAME branch tip: your worktree `C:/dev/wk-irpt-anlreq-263` is a FULL checkout of branch `wk-IRPT_ANLREQ-263`, created from the tip of `wk-IRPT_ANLREQ-262` (commits `175596f205` the change and tests, `d063c6cbf2` row W262-S1, `7f0e78bcb7` worker 262's proof instance). The product change in `resident_worker.py` is correct and the issuer's build and guard arms pass on it: do NOT change it. Your job is ONLY to make the tests run and pass, and to produce your own proof. Run `python -m pytest -q <file>` on `tests/test_resolve_upload.py` first and read the failures: in the issuer's full-checkout run, 10 of the new tests fail because the real assembly calls the heartbeat (a `VisibilityTimeout=900` call) BEFORE the RETRY branch sets the back-off, so the recorded list is `[900, <delay>]`, not `[<delay>]`.
+- **TEST FIX (the only edit allowed to the tests):** in `CountingQueue` and the new tests, assert on the LAST recorded visibility (`queue.timeouts[-1]`), and, where a test now says `queue.timeouts == [..]`, say `queue.timeouts[-1:] == [..]` (for the fourth receive, assert the message was deleted and that no visibility call follows the 900-s heartbeat: `queue.timeouts[-1:] in ([], [900])`). The expectations on the journal lines, the deletes and the delays 150, 300, 450 and 60 stay exactly as written above. Do not touch the existing tests of the file.
+
+### Read first (under `C:/dev/wk-irpt-anlreq-263/infra/aws/lambda/investor-reporting/ycharts/generate/`)
 
 - `resident_worker.py`: the constant `RESOLVE_RETRY_VISIBILITY_S` (line ~858), `RESOLVE_MAX_RECEIVES` (line ~877) and the `poll_once` function's `elif result["state"] == "RETRY":` branch (lines ~978-989), and `tests/test_resolve_upload.py` (the `Queue` double, `assembly(...)`, `broker_world.world({...})`, and `test_provider_outage_is_retry_and_the_message_stays`).
 
@@ -108,7 +111,7 @@ with
 <paths>
 infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
 infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resolve_upload.py
-org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~262/
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~263/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-129.resolve-waf-backoff.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -120,7 +123,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Criterion ids: AR129-g-AC1, AR129-g-AC2, AR129-g-AC3. Instance at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~262/IRPT_ANLREQ.TO-AR-g-129.resolve-waf-backoff.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~263/IRPT_ANLREQ.TO-AR-g-129.resolve-waf-backoff.proof_of_spec.json`.
 - Set its `to_id` to exactly `IRPT_ANLREQ.TO-AR-g-129`, and its `decomp_ref` to the order's `<decomp_ref>` block (the proof gate requires it).
 - Each acceptance entry's `invocation` is the criterion's text EXACTLY (put the `timeout` bound in the evidence line, not in the invocation).
 - In `artifacts_produced`, name each COMMITTED file with the hash of the commit that holds it: commit the product files first, then the proof and the status flip.
