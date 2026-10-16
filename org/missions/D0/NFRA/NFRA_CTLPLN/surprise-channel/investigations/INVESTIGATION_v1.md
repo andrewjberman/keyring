@@ -13735,3 +13735,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether those three assertions are repaired in a later cell; the cell does not repair them)."
 }
 ```
+
+## NFRA_CTLPLN-W145-S15 -- the round-19 register suite's first invocation exceeds the 120 s bound in both runs; its slow sub-tool reads origin refs, not the map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T21:19:30Z",
+  "one_line": "test_round19_register.py --fwd2 ran past the 120 s suite bound (rc=124) in both suite runs of this cell (base: FAIL rc=1 inside the bound). Timed alone, its sub-tool .tools/crossbox-matrix.py ran past 110 s; that tool reads origin/box/* refs through git show and does not read the Lambda map. Red at the base and red after, so the verdict is unchanged in kind; the label moved from FAIL to TIMEOUT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SUITES_BASE.txt row round19_register | FAIL | rc=1,1 (run at ca239c0486); SUITES_AFTER.txt row round19_register | TIMEOUT | rc=124,1 (second run, idle machine)",
+      "timed alone: .tools/crossbox-matrix.py rc=124 secs=110 (bound of the timing script); .tools/seat-list.py show --all rc=0 secs=1; lib/devices.py names rc=0 secs=1",
+      "grep of .tools/crossbox-matrix.py: the tool reads each origin ref through git show and the working-tree folder of crossbox json files; no reference to lambda-source-map or function-map"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The suite table is the cell's record of neighbouring suites: a suite red at the base stays red and is listed, and a timeout is the recorded output, retried once at most (worker face, step 5 and the bound rule).",
+  "world_is": "The suite was retried once (two whole runs) and timed out both times. The slow step is outside the cell's paths and outside the Lambda map; the cause (the count of origin refs read by the sub-tool on this box) was not isolated in this cell.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether the sub-tool's runtime is a separate row for its owner)."
+}
+```
