@@ -76,7 +76,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sv-2.cma-assumptions-tool.proof
 - Same slot ~113 as OG-sv-1: it continues the same worker on a branch the issuer has synced to trunk after the sv-1 merge (the module must be on the base).
 - Pre-cut: sv2.AC1 and sv2.AC2 base FAIL as expected.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>JSON-SERVED-2</workstream>
 <slot>~113</slot>
