@@ -9,6 +9,13 @@ fetch is refused before any request or fails midway.
 
   fetch --batch B --name N --version V --python-tag T --abi-tag T --platform-tag T
         [--index-base URL] [--approved-by PATH]
+  fetch --ecosystem npm --batch B --name N --version V --approved-by PATH [--registry-base URL]
+        The npm limb (CTO ruling 2026-10-16, cell CT-cc-1). The approval file must contain the exact line name@version
+        (a scoped name whole: @babel/core@7.29.7), checked before any socket; the request goes ONLY to
+        https://registry.npmjs.org/<name>/<version> (a scoped name as @babel%2Fcore), then to that document's dist.tarball,
+        which must be on registry.npmjs.org. ONE .tgz is held UNCHECKED under the held name
+        <name with @ removed and / as __>-<version>.tgz (for example babel__core-7.29.7.tgz). --registry-base is for a
+        LOOPBACK test registry only. The tags are not used by npm.
   list  --batch B
   resolve --closure <closure json> --target cp312-linux_x86_64 --approved-by PATH [--index-base URL]
         [--host-pydeps <json>] [--out <json>]
@@ -55,6 +62,12 @@ _NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 _VER_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.!+_]*$")
 _TAG_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.]*$")
 _SHA_RE = re.compile(r"^[0-9a-f]{64}$")
+# npm limb (CT-cc-1): the public registry, its one host, the names and versions it accepts, and the tarball size cap
+NPM_PUBLIC_BASE = "https://registry.npmjs.org"
+NPM_PUBLIC_HOSTS = ("registry.npmjs.org",)
+NPM_TARBALL_CAP = 200 * 1024 * 1024
+NPM_NAME_RE = re.compile(r"^(?:@[a-z0-9][a-z0-9._~-]*/)?[a-z0-9][a-z0-9._~-]*$")
+NPM_VERSION_RE = re.compile(r"^[0-9A-Za-z][0-9A-Za-z.+-]*$")
 
 
 class Refuse(Exception):
@@ -109,6 +122,32 @@ def same_file(built, candidate):
     return norm_dist(b[0]) == norm_dist(c[0]) and b[1] == c[1]
 
 
+def npm_held_name(name, version):
+    """The held file name of one npm tarball: the name with @ removed and / as __, a dash, the version, .tgz.
+    Rule (page APPROVAL_AND_SIGNED_FILE_DEMANDS.md section 1a): @babel/core 7.29.7 -> babel__core-7.29.7.tgz."""
+    return "%s-%s.tgz" % (name.replace("@", "").replace("/", "__"), version)
+
+
+def npm_line_pattern(line):
+    """The exact-line search for an npm approval line name@version: not preceded by a letter, digit, . _ - / @ or ~,
+    not followed by a letter, digit, . _ + ! - or ~. A bare core@1.0.0 never matches a line @babel/core@1.0.0."""
+    return r"(?<![A-Za-z0-9._/@~-])%s(?![A-Za-z0-9._+!~-])" % re.escape(line)
+
+
+def npm_approval_gate(path, lines):
+    """Before ANY socket: the approval file must exist and contain the exact name@version of every line (npm form)."""
+    if not path or not os.path.isfile(path):
+        raise Refuse("approval file does not exist: %s" % ascii_text(os.path.basename(path or "-")))
+    with open(path, "rb") as fh:
+        raw = fh.read()
+    text = raw.decode("utf-8", "replace")
+    missing = [ln for ln in lines if not re.search(npm_line_pattern(ln), text)]
+    if missing:
+        raise Refuse("approval file %s lacks %d of %d exact line(s): %s" % (
+            ascii_text(os.path.basename(path)), len(missing), len(lines), ", ".join(missing)))
+    return {"file": os.path.basename(path), "sha256": hashlib.sha256(raw).hexdigest(), "lines_matched": len(lines)}
+
+
 # ---------------------------------------------------------------- locations
 
 def holding_root():
@@ -153,10 +192,11 @@ def _port(parsed):
 class Policy:
     """The closed set of (scheme, host, port) a request may go to, derived from the index base."""
 
-    def __init__(self, base):
+    def __init__(self, base, public_hosts=PUBLIC_HOSTS):
         parsed = urllib.parse.urlparse(base)
         self.loopback = parsed.hostname in LOOPBACK_HOSTS
         self.host_port = (parsed.hostname, _port(parsed))
+        self.public_hosts = tuple(public_hosts)
 
     def check(self, url, segment=None):
         """Raise Refuse unless url is inside the closed set (and ends in `segment` when given)."""
@@ -177,9 +217,9 @@ class Policy:
         else:
             if p.scheme != "https":
                 raise Refuse("non-HTTPS url on the public base: %s" % url[:200])
-            if host not in PUBLIC_HOSTS or port != 443:
+            if host not in self.public_hosts or port != 443:
                 raise Refuse("host %s:%s is outside the closed set %s: %s" % (
-                    host, port, ",".join(PUBLIC_HOSTS), url[:200]))
+                    host, port, ",".join(self.public_hosts), url[:200]))
         if segment is not None:
             last = urllib.parse.unquote(p.path.rsplit("/", 1)[-1])
             if last != segment:
@@ -206,8 +246,13 @@ def make_opener(loopback):
 class Fetch:
     def __init__(self, a):
         self.a = a
-        self.base = (a.index_base or PUBLIC_BASE).rstrip("/")
-        self.policy = Policy(self.base)
+        self.eco = getattr(a, "ecosystem", None) or "pypi"
+        if self.eco == "npm":
+            self.base = (getattr(a, "registry_base", None) or NPM_PUBLIC_BASE).rstrip("/")
+            self.policy = Policy(self.base, NPM_PUBLIC_HOSTS)
+        else:
+            self.base = (a.index_base or PUBLIC_BASE).rstrip("/")
+            self.policy = Policy(self.base)
         self.file_name = None
         self.index_file_name = None
         self.part = None
@@ -235,6 +280,8 @@ class Fetch:
             "device": this_device(),
             "at": utcnow(),
         }
+        if self.eco == "npm":
+            self.rec["ecosystem"] = "npm"
 
     # -- request machinery -------------------------------------------------
 
@@ -374,6 +421,8 @@ class Fetch:
             raise Refuse("index base %s is not the public index" % self.base)
 
     def run(self):
+        if self.eco == "npm":
+            return self.run_npm()
         a = self.a
         self.validate()
         self.gate_public()
@@ -446,6 +495,71 @@ class Fetch:
         self.rec["held_path"] = "holding/%s/%s" % (a.batch, self.file_name)
         self.rec["held_sha256"], self.rec["held_bytes"] = self.sha_seen, self.size_seen
         self.rec["outcome"], self.rec["reason"] = "held", "digest and size equal the published values"
+
+    # -- the npm limb (CT-cc-1; the CTO ruling of 2026-10-16) --------------
+
+    def run_npm(self):
+        """Approval line first (no socket on a refusal), then the version document, then its dist.tarball on the
+        registry host only, then ONE .tgz held unchecked. The checks in intake_check.py read it next."""
+        a = self.a
+        if a.index_base:
+            raise Refuse("--ecosystem npm takes --registry-base, not --index-base")
+        if a.registry_base and not is_loopback_base(a.registry_base):
+            raise Refuse("--registry-base is for a loopback test registry only; the public registry is %s" % NPM_PUBLIC_BASE)
+        if not (isinstance(a.name, str) and NPM_NAME_RE.match(a.name)):
+            raise Refuse("invalid npm package name: %s" % ascii_text(a.name)[:80])
+        if not NPM_VERSION_RE.match(a.version or ""):
+            raise Refuse("invalid npm version: %s" % ascii_text(a.version)[:80])
+        self.file_name = npm_held_name(a.name, a.version)
+        self.rec["requested"]["file_name"] = self.file_name
+        line = "%s@%s" % (a.name, a.version)
+        if not a.approved_by:
+            raise Refuse("npm fetch needs --approved-by <file> naming the exact line %s" % line)
+        self.rec["approval"] = npm_approval_gate(a.approved_by, [line])
+        # (a) the version document: one address, the exact name and version
+        q = urllib.parse.quote
+        status, doc = self.get_json("%s/%s/%s" % (self.base, q(a.name, safe="@"), q(a.version, safe="")))
+        if status == 404:
+            raise Refuse("no such version on the registry (HTTP 404)")
+        if status != 200:
+            raise Fail("version document answered HTTP %s" % status)
+        dist = doc.get("dist")
+        if not isinstance(dist, dict):
+            raise Fail("registry document has no dist object")
+        tarball, integrity, shasum = dist.get("tarball"), dist.get("integrity"), dist.get("shasum")
+        if not isinstance(tarball, str) or not tarball:
+            raise Refuse("registry document names no dist.tarball")
+        # (b) the tarball's address is checked BEFORE any request for it: the registry host only
+        self.policy.check(tarball)
+        last = urllib.parse.unquote(urllib.parse.urlparse(tarball).path.rsplit("/", 1)[-1])
+        if not last.endswith(".tgz"):
+            raise Refuse("dist.tarball is not a .tgz file: %s" % ascii_text(tarball)[:200])
+        att = dist.get("attestations")
+        att_url = att.get("url") if isinstance(att, dict) and isinstance(att.get("url"), str) else None
+        self.rec["attestation"] = "present" if att_url else "absent"
+        self.rec["attestation_url"] = att_url
+        self.rec["published"] = {
+            "sha256": None, "size": None,
+            "integrity": integrity if isinstance(integrity, str) else None,
+            "shasum": shasum if isinstance(shasum, str) else None,
+            "url": tarball, "upload_time": None, "yanked": False, "requires_python": None,
+        }
+        # (c) the one file, streamed to a part file; NOT checked here
+        folder = os.path.join(holding_root(), "holding", a.batch)
+        os.makedirs(folder, exist_ok=True)
+        final = os.path.join(folder, self.file_name)
+        self.part = final + ".part"
+        st, _ = self.get(tarball, segment=last, sink=True, limit=NPM_TARBALL_CAP)
+        if st != 200:
+            raise Fail("tarball url answered HTTP %s" % st)
+        self.rec["received_sha256"], self.rec["received_bytes"] = self.sha_seen, self.size_seen
+        if self.size_seen > NPM_TARBALL_CAP:
+            raise Refuse("tarball larger than %d bytes" % NPM_TARBALL_CAP)
+        os.replace(self.part, final)
+        self.part = None
+        self.rec["held_path"] = "holding/%s/%s" % (a.batch, self.file_name)
+        self.rec["held_sha256"], self.rec["held_bytes"] = self.sha_seen, self.size_seen
+        self.rec["outcome"], self.rec["reason"] = "held", "fetched from the registry host; NOT yet checked (intake_check.py reads it)"
 
     @staticmethod
     def project_facts(proj, version):
@@ -928,6 +1042,9 @@ def cmd_fetch(a):
     if not _BATCH_RE.match(a.batch):
         print("ERROR: invalid --batch %r (letters, digits, . _ -)" % a.batch)
         return 2
+    if getattr(a, "ecosystem", "pypi") != "npm" and getattr(a, "registry_base", None):
+        print("ERROR: --registry-base is for --ecosystem npm")
+        return 2
     f = Fetch(a)
     rec = f.execute()
     path = write_record(rec)
@@ -978,10 +1095,13 @@ def main(argv=None):
     f.add_argument("--batch", required=True)
     f.add_argument("--name", required=True)
     f.add_argument("--version", required=True)
-    f.add_argument("--python-tag", required=True)
-    f.add_argument("--abi-tag", required=True)
-    f.add_argument("--platform-tag", required=True)
+    f.add_argument("--python-tag", default=None, help="pypi only (required for pypi)")
+    f.add_argument("--abi-tag", default=None, help="pypi only (required for pypi)")
+    f.add_argument("--platform-tag", default=None, help="pypi only (required for pypi)")
     f.add_argument("--index-base", default=None)
+    f.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi",
+                   help="pypi (default): a wheel from the index; npm: one .tgz from the npm registry (CT-cc-1)")
+    f.add_argument("--registry-base", default=None, help="npm only: a LOOPBACK test registry base")
     f.add_argument("--approved-by", default=None, help="signed batch approval file (required for the public index)")
     f.set_defaults(fn=cmd_fetch)
     ls = sub.add_parser("list", help="what the holding folder and the records hold for a batch")
@@ -996,6 +1116,11 @@ def main(argv=None):
     rs.add_argument("--out", default=None, help="JSON output (a .md table is written beside it)")
     rs.set_defaults(fn=cmd_resolve)
     a = ap.parse_args(argv)
+    if a.cmd == "fetch" and a.ecosystem == "pypi":
+        missing = [flag for flag, v in (("--python-tag", a.python_tag), ("--abi-tag", a.abi_tag),
+                                        ("--platform-tag", a.platform_tag)) if v is None]
+        if missing:
+            f.error("the following arguments are required: %s" % ", ".join(missing))
     return a.fn(a)
 
 
