@@ -20,3 +20,15 @@ Recorded by 1.0.0_SA_CTO, same turn.
 
 The rest of the list (items 6 to 11 and 13) are acts only he can do: sittings, sign-ins, sends and remote-desktop sessions.
 Approving them does not perform them; they stay open until he does them. `f643` and `2d0b` were already ruled by this seat.
+
+## Addendum ~03:5xZ: 318f heard and approved (FWD-17)
+
+This seat read him the tabulate intake record in session (`CTO_CHECK8_NFRA_CTLPLN_INTAKE_TABULATE_20261016.md` @9aed0e1263):
+what checks 1 to 7 ruled out and the three things they cannot rule out (a taken-over maker account, whether the antivirus
+inspected the file, a file already bad in February). He asked what the record was about and was told: the NFRA_CTLPLN
+package-intake path, with tabulate as a stand-in test package and nothing added to `requirements.txt`. His words, VERBATIM:
+
+> thats good, i approve of this
+
+`laptop-20261015T123058Z-318f` closes on this word. FWD-17's "DONE WHEN" (one delivered package's record read to him,
+including what was not checked) is met for the tabulate record. The FWD-17 grade itself is the CVO's to read at L8/L9.
