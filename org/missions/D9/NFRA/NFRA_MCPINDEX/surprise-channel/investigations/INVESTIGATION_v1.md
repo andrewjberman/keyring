@@ -9500,6 +9500,90 @@ carries none.
     "spec_asserts": "The orders MX-c-26 (A2, A3) and the face written by the issuer asserted that the four new live entries could carry firm: null and an entity name with the token bd, and that a clean table row needs no fork-registry entry.",
     "world_is": "The emitter's group map treats a present firm: None against a mapped firm as a conflict; the loader joins the fork registry by contract id and the join overrides bucket and key_template; the naming gate's alias table makes bd a carrier of 49financial. All three were found by running the emitter and the enforcing gate on the candidate, not by the worker's criteria as first written.",
     "dismissal_reason": "The faces were the issuer's; each defect was fixed by an amendment and the placed catalog (blob b81c48aa3c, md5 910ed6e3) re-graded PASS by r16.AC1, r16.AC2, c23.AC4, c21.AC2 and r13.AC3 strict on the emit, the enforcing naming gate exit 0, and c26.AC1 to AC3 plus r16.AC1/AC2 on the merged tree. The lesson is carried to the round-19 analysis: run the emitter AND the enforcing gate on a candidate before a cell that feeds them is flipped."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-16T19:14:07Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The hand overlay that c27.AC1 and c27.AC2 require (workflows/atom_decomposition/hand_overlay.json) is REFUSED by the enforcing naming gate: 40 NEW hand-kept carriers (the firm tokens 49financial and blackdiamond in the entity names, the prefixes, the key templates and the firm values), so the file is not committed; commit 308da62f7d carries the generator and the test file only.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/naming-gate.py --diff <patch adding workflows/atom_decomposition/hand_overlay.json> --enforce --staged-paths <list of that path> printed NAMING-GATE: REFUSE 40 graded (every refusal on the overlay's lines 4-88; the context rule permits a firm token only in infra/logic/registry/*.json, a generated file, or a key()/address()/name()/lookup() argument) and exited 1; order bound 4 requires exit 0.",
+        "The same gate on the committed generator and test file (commit 308da62f7d) exits 0 with 0 graded refusals; .tools/commit-gate.sh is clean for both files.",
+        "The overlay values are read from the tracked files at 5eafe7e416: the eight workflows/atom_decomposition/catalog_entries/opal_data_assets_silver_49financial_<t>_silver_legacy.yaml prefixes (blackdiamond/49financial/silver_legacy/<t>/) and opal_data_etfs_gold_book.yaml open_items. The file is held at .scratch/mx50/hand_overlay.json in the worktree."
+      ]
+    },
+    "spec_asserts": "Order bound 4 and the Steps: the overlay file is a NEW .json that the naming gate must pass with exit 0 under --enforce; c27.AC1 requires the eight tracked prefixes and the gold open_items to be restored (0 entries differing).",
+    "world_is": "A .json outside the registry context may not carry a firm token, and the tracked values the overlay must restore carry one, so the gate and c27.AC1 cannot both be met by the file as specified. Where the file may live, or how its values are carried, is the issuer's decision: the registry folder is outside this order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-16T19:14:07Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "With the overlay applied, the existing integration assertion IntegrationTests::test_every_clean_row_is_carrier_free (workflows/atom_decomposition/tests/test_gen_silver_rows.py lines 436-438) FAILS, because the eight restored legacy prefixes carry carrier tokens. c27.AC3 therefore cannot pass while c27.AC1 passes; the test file is outside this order's paths and shared with worker ~51.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Overlay applied in the worktree at commit 308da62f7d plus the overlay: pytest over test_regen_preserves.py, test_gen_silver_rows.py, test_read_links.py and test_read_links_repeat.py gave 1 failed, 76 passed; the failure is test_every_clean_row_is_carrier_free, with the eight opal_data_assets_silver_49financial_<t>_silver_legacy rows as its dirty set (catalog_tokens.carrier() reads True for their prefix).",
+        "Overlay held out (the committed state): c27.AC3.sh gave pytest rc=0: 77 passed, RESULT PASS.",
+        "The tracked state already holds the carrier prefixes: 12 tracked entries under workflows/atom_decomposition/catalog_entries/ carry carrier tokens at 5eafe7e416 (the eight legacy entries and the four blackdiamond_live_<t> entries)."
+      ]
+    },
+    "spec_asserts": "Steps 1 and 3 of the order: the control line, with tests/test_regen_preserves.py added, passes; c27.AC3 expects pytest rc=0 on test_gen_silver_rows.py. Item 2 of the cell: the overlay is applied by default when hand_overlay.json sits beside the script.",
+    "world_is": "The default overlay restores tracked values that the carrier-free assertion forbids, so the existing test and c27.AC1 conflict. Resolving it needs a decision the order does not make (an assertion scoped to generated values, or an overlay that is not the default); nothing in this order's paths resolves it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-16T19:14:07Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A regeneration is not a fixed point on the catalog-* rows of legacy_addresses.json: the replace behaviour the order keeps drops 36 of the 143 tracked catalog-* rows and writes 120; no criterion grades those rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Trial of the committed generator into a temp copy of infra/logic/registry/legacy_addresses.json (.scratch/mx50/v1/legacy.json, run with the overlay): 120 catalog-* rows written, 20 distinct pairs held by another row and not added; the tracked file holds 143 catalog-* rows at 5eafe7e416.",
+        "36 tracked catalog-* keys are not produced (for example catalog-opal-data-assets-silver-49financial-allocations-silver-legacy and catalog-opal-data-etfs-gold-book); the 120 produced keys are equal to their tracked rows (0 changed).",
+        "The hazard is standing: a run with --registry-file pointed at the repo registry performs the same replacement (write_registry in workflows/atom_decomposition/gen_silver_rows.py at 308da62f7d), so every such run drops the 36 rows."
+      ]
+    },
+    "spec_asserts": "Cell section 1 ('Why'): a regeneration must be a fixed point on the tracked state. Item 4: the legacy-address file keeps its current behaviour.",
+    "world_is": "The current behaviour is a replacement of every catalog-* row, so the fixed-point premise holds for the entries and the fork registry but not for the catalog-* rows. c27.AC2 grades only the non-catalog-* rows, so no criterion sees the 36 dropped rows."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-16T19:14:07Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "write_fork_registry still replaces labels with the --labels-from group map values when that argument is named, although item 4 of the order says the merge keeps labels as they are; the order's rule holds when --labels-from is absent, and the check does not name it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/gen_silver_rows.py at 308da62f7d, write_fork_registry: the labels branch 'if labels is not None: doc[labels] = sorted(labels)' is the MX-c-23 contract, kept unchanged; without --labels-from the file's labels are kept.",
+        "c27_check.py regen() passes no --labels-from; c27.AC2 check 'the fork registry's other top-level keys are equal' printed ok (labels equal)."
+      ]
+    },
+    "spec_asserts": "Cell item 4: the merge keeps every other top-level key of the file (_about, entities, labels) as it is.",
+    "world_is": "The MX-c-23 contract (a run that names --labels-from writes labels) and the order's keep-labels rule differ only for that run. The code keeps the MX-c-23 contract and the issuer decides which one stands."
   }
 ]
 ```
