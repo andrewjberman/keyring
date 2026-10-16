@@ -22200,6 +22200,7 @@
   "world_is": "The worktree's sparse-checkout cone names .tools, infra/aws/lambda/investor-reporting, infra/logic/registry, lib and org/devices, and not docs/. HEAD tracks docs/contracts/investor-reporting/v1/AnalysisReport.schema.json, but that path is absent from the worktree. test_frozen_worker imports intake/tests/test_retained_uploads.py, which imports reports/tests/test_repository.py, which reads that schema at its line 19. The collection raises FileNotFoundError before any test runs, so each file exits rc=2 with 1 error. The build and guard arms import resident_worker alone and run. The new tests appended to test_resolve_upload.py were therefore not executed in this worktree; their behaviour is exercised by the build and guard arms. Nothing was materialised into docs/ and the sparse cone was not changed."
 }
 ```
+
 ## IRPT_ANLREQ-D2-W266-S1 -- TO-AR-g-134 asks for every non-test .py under ycharts/generate/ to be read; 9 of its 23 files were not opened
 
 ```json
@@ -22222,5 +22223,30 @@
   },
   "spec_asserts": "TO-AR-g-134 worker face: read, at least, every .py file in infra/aws/lambda/investor-reporting/ycharts/generate/ (not tests/); search the id terms with Grep and read each hit's surroundings.",
   "world_is": "The folder holds 23 non-test .py files. Nine were not opened, because they carry none of the holding, security, price or identifier terms. The record's coverage key names all 23 and their status. The 46 trace rows and the 17 YES rows do not depend on the nine unopened files."
+}
+```
+
+## IRPT_ANLREQ-D2-W265-S1 -- safe-commit's client-data-check found no hashed account-id list on this box, so commit 3bd9f1036d was not checked for client account ids.
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~265",
+  "surfaced_at": "2026-10-16T16:15:48Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W265-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit's client-data-check found no hashed account-id list on this box, so commit 3bd9f1036d was not checked for client account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 3bd9f1036d: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+      "git show --stat 3bd9f1036d: 3 files changed (intake/security_resolution.py, intake/tests/test_kept_holding.py, intake/tests/test_door_yfinance_first.py); the commit is local on wk-IRPT_ANLREQ-265 and nothing was pushed."
+    ]
+  },
+  "spec_asserts": "A worker commit made through safe-commit is checked for client account ids before it lands.",
+  "world_is": "On this box the hashed account-id list is absent and OPAL_ACCOUNT_ID_HASHES is unset, so the check reports ABSENT and the commit is recorded as not checked; the commit gate passed on its other checks."
 }
 ```
