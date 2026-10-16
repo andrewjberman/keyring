@@ -19497,3 +19497,105 @@ name the one known failure instead of silently inheriting it.
     "notes": "Filed because the issuer asked that Z-S158 be closed and a row cannot be mutated by its filer."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:11:57Z",
+    "one_line": "After every firm-name literal of the client modules reads through lookup(), the full-add naming gate in ENFORCE still REFUSEs 8 lines of client_adapter_bd49f.py: Black Diamond dim column names, a silver table name and a response key, none of them a firm name.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py, base 5aeafbda15> --staged-paths <9 paths> --enforce: NAMING-GATE REFUSE 9 graded, of which 8 are REFUSE on client_adapter_bd49f.py at lines 54, 269, 272, 275, 409, 412, 442 (output saved as W/CL7_AFTER.txt).",
+        "READ infra/logic/registry/scopes.json, the 49financial row: alias bd is refused in every slot per NAMING_SCHEMA refused_tokens, and lookup('bd') returns the 49financial row whose short form is 49f, so no registry row supplies a Black Diamond column prefix.",
+        "READ app/client_adapter_bd49f.py at the worktree: DIM_COLUMNS, row.get('bd_account_id') and the fact_bd_allocation table name are upstream data identifiers; renaming them changes what the adapter reads.",
+        "RAN python .tools/naming-gate.py --diff <git diff HEAD of app/client_*.py> --enforce: NAMING-GATE PASS 1 graded; the eight strings are untouched context at HEAD, not added lines."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-7 items 1, 2 and 5 and AC2: every hand-kept firm-name literal in the seven adapters and the core reads through lookup(), and the full-add naming gate over app/client_*.py in ENFORCE prints no REFUSE.",
+    "world_is": "The firm literals are conformed (gate lines for firm tokens: 0). Eight strings of bd49f still REFUSE under the full-add construction: bd_account_id and bd_account_number (the Black Diamond dim column names), fact_bd_allocation (a silver table name) and market_value_profile (a response key that the gate classes as an INSTANCE_PROFILE name). Their firm-token content is the refused alias bd or an out-of-pattern class, and no lookup() row supplies a replacement, so they stay byte-identical. The release diff against HEAD does not grade them. Disposition is the CTO's or CRO's: a sanctioned spelling for the Black Diamond column prefix, or a rule for upstream identifiers. No gate was overridden and no override was placed.",
+    "notes": "AC2 stays FAIL as written (REFUSE 8, want 0). Its literal-count half holds (0)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:11:57Z",
+    "one_line": "The alias orion/4698, the core's spelling of the inflection Orion master 4698, is not a registry spelling: lookup('orion/4698') raises KeyError, so it is a missing registry row.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python -I lib/opal_naming.py lookup() over the spellings at the worktree (base 5aeafbda15): 49financial, 49f, bd49f, bd, cottonwood, inflection and 4698 resolve; orion/4698 raises KeyError.",
+        "READ infra/logic/registry/scopes.json: the 4698 MASTER row (firm inflection) carries no alias orion/4698; no row of the registry spells it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-7 item 2: a scope the registry does not hold is a KeyError, which is a missing registry row to file as a BLOCKING row naming the scope; every firm alias typed as a literal reads through lookup().",
+    "world_is": "client_core._names() keeps the literal orion/4698 unchanged as the key of its alias map (the gate grades it CONFORMANT as SECRET), and no adapter reads it. 4698 resolves to the MASTER row whose firm is inflection, so only the vendor-prefixed spelling is missing. The row is for 4.0.0_SA_CRO~Z to write; this seat added no row and placed no override.",
+    "notes": "Non-application to the adapters: none reads orion/4698. Affects only the core alias map."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:11:57Z",
+    "one_line": "The gateway hookup registers the adapters at import, but FIRMS now binds at first call, so with the registry unreadable the vendor disjointness check is deferred until the first call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ app/tools.py at the worktree (base 5aeafbda15), the for-loop that calls _cc.register_adapter on the seven adapter modules at import.",
+        "READ app/client_core.py register_adapter at the worktree: _firms_of(module) binds the module, and on CoreRefusal registry_unavailable the check is skipped so the gateway still starts."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-7 item 3: each adapter module imports safely with no registry read at import, and the firm constants resolve lazily at the first call.",
+    "world_is": "When the registry is unreadable at import, a vendor's modules are registered without the disjointness check; the check runs the first time the registry binds. Nothing overlaps today: the Black Diamond pair serves 49financial and cottonwood, and the other five modules are disjoint. Where the registry is readable, registration binds and checks as before.",
+    "notes": "Latent: it matters only for an overlap added while the registry is unreadable."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:11:57Z",
+    "one_line": "tests/test_og_ch1.py run as a file already fails test_ogch1_ac02 at HEAD: its first admitted call imports app.tools, which re-registers the real adapters over the fakes the test registered.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN pytest tests/test_og_ch1.py in a git archive extract of HEAD 5aeafbda15 at .scratch/headcheck: 1 failed (test_ogch1_ac02, ValueError a different adapter is already registered), 5 passed.",
+        "RAN the same file at the worktree after OG-cl-7: 1 failed (test_ogch1_ac02, same ValueError), 5 passed. The test_og_cl1 through test_og_cl6 suites pass 50 of 50."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-7 item 4: every existing client test still passes.",
+    "world_is": "The failure is pre-existing: admit_scope imports app.tools lazily inside the test, and the tools import registers the seven real adapters into the dict the test has just reset, which holds the fakes for blackdiamond. Because the failure is at HEAD, OG-cl-7 changes nothing here; the file's named test ac04 passes again after the module attribute restore.",
+    "notes": "Non-application: a run of the whole gateway suite, where another test may import app.tools first."
+  }
+  ```
