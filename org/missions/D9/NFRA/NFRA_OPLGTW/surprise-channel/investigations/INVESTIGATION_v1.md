@@ -20681,3 +20681,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Behaviour is as the order states: the lag is in trading days against T-1, the Monday case gives 0 for a Friday chatter, and no calendar-day arithmetic is used."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~120",
+  "surfaced_at": "2026-10-16T12:13:02Z",
+  "id": "NFRA_OPLGTW-Z-W120-S3",
+  "one_line": "Section 5 of this order flips its own <status> tag on the order file, which is not in the order's <paths>; the same grant gap as NFRA_OPLGTW-Z-W117-S1, met again on the en-6 order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-6.chatter-lag-in-trading-days.md section 3 lists six surfaces; the order file itself is not one of them. Line 70 carries the single <status>staged</status> tag.",
+      "Section 5 of the same order: flip the ONE <status> tag to complete only if both criteria PASS; the closing commit carries the instance, the deliverables and the flip together."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "<paths> is the write grant for this order (section 3); the <status> flip in section 5 is part of the procedure and is made on the order file.",
+  "world_is": "The flip touches the order file, outside <paths>. It is made in the closing commit with the instance and the deliverables, and the lane gate result of that commit is stated in the report.",
+  "notes": "Class to carry, as NFRA_OPLGTW-Z-W117-S1 states: an order whose procedure flips its own status names that file in <paths>."
+}
+```

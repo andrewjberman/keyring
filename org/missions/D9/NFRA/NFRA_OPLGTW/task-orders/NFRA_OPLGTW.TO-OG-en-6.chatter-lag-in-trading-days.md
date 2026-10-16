@@ -67,7 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-6.chatter-lag-in-trading-day
 - Round 38 (CTO round-37 analysis, E6), workstream ENRICH-R38 (decomposition addendum R3-T.93). Risk WORLD by the L6 floor (a gateway infrastructure path), no deploy in this cell; rides the next batched gateway release with E4, E5 and E8.
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38</workstream>
 <slot>~120</slot>
