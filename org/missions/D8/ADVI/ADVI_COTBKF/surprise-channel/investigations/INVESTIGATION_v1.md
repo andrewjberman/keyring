@@ -10472,3 +10472,29 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W192-S1 -- the Bloomberg close stores are not CUSIP-keyed (primary keys mostly non-CUSIP, two others by ticker), so the CUSIP coverage join reaches none of them
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W192-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~192",
+  "surfaced_at": "2026-10-16T09:53:36Z",
+  "one_line": "The primary Bloomberg close store keys 569 of its 656 security ids by non-CUSIP shapes, and the two other Bloomberg close stores (bbg/ and price_history_px_last) are keyed by ticker label, so the CUSIP join the coverage script runs cannot reach them; the measured coverage of the unpriced holding-days is 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-etfs/rivalfunds/etfs/gold/security_market/ (14 parquet objects, footer columns security_id, date, px_close, source; source value blp_client.reference_data) read by 0.9.0_WK_ADVI_COTBKF~192 at HEAD 85c0226f91: 656 distinct security_id values with a positive close, 87 of them 9-character alphanumeric, 569 other shapes (counts only)",
+      "s3://opal-data-etfs/bbg/ history_topup.parquet (39 objects, columns date, PX_LAST, DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, security; security = ticker label) and fund_daily.parquet (39 objects); bloomberg/harvest/bronze/price_history_px_last/ (10 JSON objects, series keyed by ticker label): 188 and 95 labels, 9,858 and 26,823 positive points, read at HEAD 85c0226f91",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cy1_bbg_coverage_check.py@85c0226f91 joins on the cusip column (set to security_id in the record) against the served unpriced rows: BBG-COVERAGE unpriced_rows_covered=0 unpriced_cusips_covered=0 (record deliverables/0.9.0_WK_ADVI_COTBKF~192/BBG_COVERAGE_RECORD.json)"
+    ]
+  },
+  "spec_asserts": "TO CB-cy-1 item 2: the primary is the location that holds Bloomberg daily closes by security and date, and its three column names hold the security id, the date and the close (cusip, date, close in the issuer's script's vocabulary); the Cottonwood request lists are CUSIP lists.",
+  "world_is": "The primary (rivalfunds security_market) is CUSIP-keyed for only 87 of its 656 ids; the rest are other identifier shapes, and the join is by exact string. The two other Bloomberg close stores are keyed by ticker label with no CUSIP mapping in the tree, so they cannot be joined by the script. Its 11 dates (2026-09-29 to 2026-10-14) never coincide with the 3,322 dates of the unpriced holding-days (2013-04-08 to 2026-06-22), so the primary covers 0 of 15,973,399 unpriced holding-days.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
