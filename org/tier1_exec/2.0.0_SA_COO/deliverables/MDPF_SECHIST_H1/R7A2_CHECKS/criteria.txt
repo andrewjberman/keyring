@@ -1,0 +1,3 @@
+<criterion id="A2-AC1" cell_refs="A2-cap-62"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R7A2_CHECKS/r7a2_diff_check.py</invocation><expect>A2-DIFF-OK</expect></criterion>
+<criterion id="A2-AC2" cell_refs="A2-cap-62"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R7A2_CHECKS/r7a2_default_cap.py</invocation><expect>A2-CAP-OK planned=62 capped=8</expect></criterion>
+<criterion id="A2-AC3" cell_refs="A2-cap-62"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R7A2_CHECKS/r7a2_pull_tests.py</invocation><expect>A2-TESTS-OK passed=13</expect></criterion>

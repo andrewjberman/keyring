@@ -56,3 +56,11 @@ No data edge: `SH-t-2` builds its own partition fixture, so it does not consume 
    tree takes it. Routed to site Z's owner through `0.0.0_AB_MSTR~DELL1`.
 2. **The one real run of FWD-1:** the morning after the first site Z run, read CSCO, BX and a security an Opal ETF newly bought, on the Positioning page,
    classification and the eight windows (1D, WTD, MTD, 1M, QTD, 1Q, YTD, 1Y).
+3. **A2-cap-62 (added 2026-10-15 ~23:5xZ, issuer record, NOT a cell of any round's rectangle):** Andrew-direct da0c ("Positioning ETF pull can have slight
+   increase", CTO msgs 6322 and 6323) raises the one constant `BACKFILL_CAP` from 50 to 62 in `integrations/bloomberg/pipeline/etf_daily_pull.py`, a direct act
+   off the never-widen pair (COO half @62b505c131, CTO half @4a3570e841), minted by `.tools/direct-act-order.py`. It carries this token only so the minter
+   can name the act here; no round's rectangle and no round-6 order changes.
+
+| cell | what (issuer's direct act, not a round cell) |
+|---|---|
+| A2-cap-62 | `BACKFILL_CAP` 50 to 62, one line, one worker, off the signed pair above (the L6 gate reads a cell id from a table's first column) |
