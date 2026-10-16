@@ -16,14 +16,14 @@
   "bus_message_id": "826c969f-c1d9-4f29-8a2a-90c126149a85"
  },
  "ack": {
-  "at": "2026-10-16T10:30:12Z",
+  "at": "2026-10-16T10:23:39Z",
   "by": "1.0.0_SA_CTO~DELL2",
-  "bus_message_id": "af437186-b100-4689-b2b3-45ca6afd3cd1"
+  "bus_message_id": null
  },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-16T10:30:11Z",
+  "to_by": "1.0.0_SA_CTO~DELL2"
  }
 }
