@@ -3040,3 +3040,54 @@
   "notes": "Screenshots of the full page and of the assets segments are NOT committed: the real index names carry Schwab master numbers (8-digit runs) and this box's client-data check is not running (Z-S63). The fix is small and LOCAL: let the Indexes paragraph (and any other prose that can hold an unbroken name) scroll inside its own box with overflow-x auto, add a real 60-plus character index name to the checked-in fixture so the 390 px render sees it, and a test pinning the rule. The disarm is that cell; it needs the CTO's analysis to carry it (a defect found at the close is the next round's first item). The legibility grade (S1 item iii) reads FAIL until it lands."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W38-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~38",
+  "surfaced_at": "2026-10-16T11:32:49Z",
+  "one_line": "pf8.AC2 offenders=0 cannot be met as ordered: with the .gateway-indexes rule (overflow-x auto) the Indexes paragraph is the only offender, and the one ancestor the measure exempts is a .gateway-scroll box, which the existing test 'every table cell keeps its text on one line' pins to the table count.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "pf8.AC2 expects offenders=0 at 390 and 1280 px and defines an offender as an element outside a .gateway-scroll box whose content is wider than its own box, giving the next offender the same treatment (a scrolling box). MP-pf-8 section 2 bounds: every existing test keeps its name and passes, and an existing assertion changes only for an index count or list.",
+  "world_is": "At mcportal c66ca82952 (on 090b9cdc85) the long-name render at 390 px reads scrollWidth=390 innerWidth=390 ok=yes, so the page no longer scrolls sideways, but offenders=7, all P.gateway-indexes: the paragraph sits outside any .gateway-scroll box and its 65-character name is wider than its 328 px column. The measure exempts only elements inside a .gateway-scroll box; wrapping the paragraph in one fails gateway.test.tsx line 383, which asserts that the count of that exact marker equals the table count. I did not wrap the paragraph and did not edit the assertion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal/src/pages/gateway/gateway.test.tsx@c66ca82952:383 -- expect(tables.length).toBe(html.split('<div class=\"gateway-scroll\">').length - 1)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pf/checks/_gw_measure.cjs@3406cb91b5:14 -- if (e.closest('.gateway-scroll')) continue, the only exemption the offender count applies",
+      "pf8.AC2 run 2026-10-16 under timeout 120: 'long names at 390: scrollWidth=390 innerWidth=390 offenders=7 ok=yes P.gateway-indexes,P.gateway-indexes,P.gateway-indexes'; 'long names at 1280: scrollWidth=1280 innerWidth=1280 offenders=0 ok=yes'; RESULT: FAIL, exit=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decision for the issuer: either the table-count assertion or the offender definition is amended, or the paragraph gets a .gateway-scroll wrapper with that assertion amended. The CSS rule itself meets item 1 of the cell (AC1 PASS, 72 pass 0 fail, tsc rc 0, build rc 0). Both the cell's written rule and the existing test are unchanged in their meaning; no existing assertion changed."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W38-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~38",
+  "surfaced_at": "2026-10-16T11:32:49Z",
+  "one_line": "The pf8.AC2 short-name control no longer measures short names: the cell's own fixture change put the 65-character name into the checked-in fixture, so the control at 390 px reads offenders=1 on the same paragraph.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "pf8.AC2 names the fixture as checked in as the SHORT-name control, and the cell's preface says the fixture's names are short; MP-pf-8 section 1 item 2 adds the 65-character name to that same fixture.",
+  "world_is": "At mcportal c66ca82952 the checked-in fixture carries opal_data_assets_silver_commonwealth_cottonwood_account_day_value on the opal-data-assets channel indexes and on commonwealth_get_holdings, so the control is no longer a short-name render: 'short names at 390 (control): scrollWidth=390 innerWidth=390 offenders=1 ok=yes P.gateway-indexes'. Item 2 and the control's premise cannot both hold; this is the same root as W38-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal/src/pages/gateway/gateway.cgroup.fixture.ts@c66ca82952:28 -- commonwealth_get_holdings indexes now end with the 65-character name",
+      "mcportal/src/pages/gateway/gateway.cgroup.fixture.ts@c66ca82952:37 -- the opal-data-assets channel indexes now end with the 65-character name",
+      "pf8.AC2 run 2026-10-16 under timeout 120: 'short names at 390 (control): scrollWidth=390 innerWidth=390 offenders=1 ok=yes P.gateway-indexes'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not ARMED: no future normal operation harms through this row; it records that the control's premise does not hold after item 2."
+}
+```
