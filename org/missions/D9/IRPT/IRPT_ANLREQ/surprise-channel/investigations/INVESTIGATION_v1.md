@@ -22514,3 +22514,82 @@
   "world_is": "answerAfterSubmit is the only reader of the form after the Submit click, and it runs only with --decisions. A run without --decisions waits the 240 s ticket bound and never re-clicks. The amended driver keeps that path as signed and adds no action there. Whether that path should re-click is not stated by the order and is not changed here."
 }
 ```
+
+## IRPT_ANLREQ-D2-W270-S5 -- The commit gate's client-data check printed WARN and did not run on commit 2b2bce7deb: the hashed account-id list is absent on this device
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T19:01:54Z",
+    "one_line": "The commit gate's client-data check printed WARN and did not run on commit 2b2bce7deb: the hashed account-id list is absent on this device",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order commits the code and tests through .tools/safe-commit.sh and treats a commit that passes the gates it runs as checked.",
+    "world_is": "safe-commit.sh printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids. The commit landed as 2b2bce7deb. A listing of C:/Users/Test/.opal/ run at filing shows only _set_aside_20261011/. The staged diff is one product file and one test file written in this session.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/wk-irpt-anlreq-270 commit 2b2bce7deb: safe-commit.sh output, client-data-check WARN line",
+        "listing of C:/Users/Test/.opal/ at filing lists only _set_aside_20261011/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W270-S6 -- The risk-reflex HOLD on resident_worker.py cites a deploy record that the sparse worktree does not hold on disk; the record is readable only from the HEAD blob
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S6",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T19:01:54Z",
+    "one_line": "The risk-reflex HOLD on resident_worker.py cites a deploy record that the sparse worktree does not hold on disk; the record is readable only from the HEAD blob",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order grants paths in this worktree and says to read them there.",
+    "world_is": "The pre-commit risk-reflex printed HOLD on resident_worker.py and cited org/critical_paths/change_management/20260927T0551Z_irpt-resident-waf-refresh-20260927_deploy_completion.md:4. That record is tracked at HEAD and its Status is CLOSED (nothing stranded, closed 20260927T055524Z). It is not on disk in C:/dev/wk-irpt-anlreq-270 because core.sparseCheckout is true; it was read with git show HEAD:<path>. The commit went through. This order deploys nothing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config --get core.sparseCheckout prints true in C:/dev/wk-irpt-anlreq-270",
+        "git show HEAD:org/critical_paths/change_management/20260927T0551Z_irpt-resident-waf-refresh-20260927_deploy_completion.md (Status: CLOSED, line 2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W269-S1 -- the commit gate could not run its client account-id check on this device: the hashed id list is absent, so the commit printed WARN and was not checked
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~269",
+  "surfaced_at": "2026-10-16T19:03:45Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W269-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit gate's client-data-check printed WARN because the hashed account-id list is not at C:\\Users\\Test\\.opal\\account_id_hashes.txt on this device, so commit 8116e45eb8 (AR-g-142 code and tests) was not checked for client account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 8116e45eb8 on branch wk-IRPT_ANLREQ-269 (5 files): 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the same commit output: the commit gate, naming gate, to-pipeline gate and surprise-row gate all passed; the account id 2200001 in the new test file already appears in ycharts/session/tests/test_resident_session.py at 9d765b4c8c"
+    ]
+  },
+  "spec_asserts": "The order commits through safe-commit.sh, whose gates include a client account-id check that runs on every commit, so a commit of the session tests is checked for client account ids before it lands.",
+  "world_is": "On this device the hashed account-id list (OPAL_ACCOUNT_ID_HASHES or the default path) is absent, so the check printed WARN and passed the commit unchecked. The worker did not place or create the list; no account id was added by this order beyond the fixture id that the sibling tests already carry."
+}
+```
