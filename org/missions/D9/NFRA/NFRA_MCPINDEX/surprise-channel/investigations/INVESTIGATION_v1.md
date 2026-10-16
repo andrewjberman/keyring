@@ -8876,6 +8876,32 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S122",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T02:38Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-W45-S6 and Z-W45-S7 came from the sparse worker worktree, which has no portal/src/api; the issuer's tree has it. At the workspace root the emitter ran with all five group maps (173 of 173 applied, unused 0, 100 served tools) and the atom_decomposition suite passed 282 of 282. Z-W45-S8 is the intended MX-c-30 scope drop: the two removed rows are the platinum/advi/49financial/ prefixes in scope_exclusions.json, and c23.AC2 reads removed 2, unexpected new rows 0.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W45-S6",
+      "NFRA_MCPINDEX-Z-W45-S7",
+      "NFRA_MCPINDEX-Z-W45-S8"
+    ],
+    "one_line": "DISARMS Z-W45-S6 (the emitter cannot run in the worker's worktree) and Z-W45-S7, and dismisses Z-W45-S8. The issuer ran the emitter at the workspace root; c23.AC1-AC4 PASS on the regenerated catalog (226 table rows, 1386 pairs, 96 newly visible, cross-firm leaks 0, serves wrong 0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py at the workspace root, 2026-10-16: HARVEST ROWS 78, TOOL INDEX N=100 a=11 b=77 c=12, GROUP-MAP rows applied 173 of 173, unused 0",
+        "c23.AC1 to AC4 and c21.AC1 to AC3 re-run PASS by the issuer; python -m pytest workflows/atom_decomposition/tests: 282 passed"
+      ]
+    },
+    "spec_asserts": "MX-c-23 step 3: the catalog regenerates in the worktree with HARVEST ROWS, SILVER and TOOL INDEX lines and no EMIT REFUSED line.",
+    "world_is": "The worker's sparse worktree lacks portal/src/api, so the emitter refuses there; the issuer's tree emits cleanly. The first issuer emit refused once on OG-ap-21's new tool harvest_get_published_analysis (no tool_index entry, then no bucket); both were added by the issuer (an issuer act, pending_members.yaml and the members.yaml buckets list)."
   }
 ]
 ```
