@@ -660,6 +660,29 @@
     "spec_asserts": "CTO ruling 6605 / TO-MD-r1 item 7b: the door is reachable by Andrew_Berman alone, with his MFA device.",
     "world_is": "The MFA condition tests that some device was used, not whose. A second enabled device named for another person on the same user lets that person's phone satisfy the gate for any session of this user. It still needs the user's AWS credentials, so nothing is reachable by the device alone. The device name is the only evidence of whose phone it is; ownership is not established here.",
     "notes": "Nothing changed. If the second device is not Andrew's, removing it is an IAM act on his user and is his word."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S10",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+    "surfaced_at": "2026-10-16T13:30:00Z",
+    "one_line": "The consent URL printed by register_app.py fails with AADSTS1003031 because the script never sets requiredResourceAccess on the app, although the ActivityFeed.Read role is assigned.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (cut the register_app.py fix as an order; the consent grant itself is made); this seat only surfaces",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "laptop 1.0.0_SA_CTO msg 109686, relayed by 0.0.0_AB_MSTR on bus 23afd49c at 13:20Z: Andrew ran register_app.py --apply on the laptop at 13:16Z; read afterwards: one app, ActivityFeed.Read role assigned, 1 client secret, api-credentials holds 1 version (value not read)",
+        "the same message: the consent URL fails with AADSTS1003031 because the script never sets requiredResourceAccess",
+        "this seat measured none of this; it read no Microsoft or AWS state and did not open the script"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Card step 5 (TCKT_MTADTA.TO-MD-r2.andrew_consent_card.md): Andrew opens the printed consent URL and grants consent.",
+    "world_is": "As reported by the laptop CTO, the printed consent URL is not usable (AADSTS1003031), yet the laptop CTO reports the role assigned and the grant made; how consent was reached is not stated in the relay. Also reported: card step 1 (the unified audit-log check, Get-AdminAuditLogConfig) was not run because Andrew holds no Exchange role; someone who does still owes it.",
+    "notes": "Nothing changed by this seat. The client id is in a Taildrop file in dell1 Downloads and is not recorded here."
   }
 ]
 ```
