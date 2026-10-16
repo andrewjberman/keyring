@@ -2474,3 +2474,11 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-ng-2` | `.tools/naming-gate.py` reuses `naming-apply-gate.py`'s `ruling_amend` (name, node type) lookup: `none_owed` or an equal `canonical` is RULED (passes, row cited), a different `canonical` REFUSEs, no row leaves the grade unchanged; three self-test arms (admit, no-row control, other-type control); the ten refused lines (8 bd49f, 2 etfs) re-graded RULED; no override | `.tools/naming-gate.py`, optionally `.tools/tests/test_naming_gate_rulings.py` | WORLD | ~114 | `OG-cl-8`, `OG-cl-9` merged (the five rows on the base) |
 
 **fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell. It is an `OG-ap-23` batch cell: the release commit cannot land in ENFORCE until the ten lines grade RULED. Before the merge the issuer re-runs the self-test, plants a name with no row and a row for another pair, and re-grades the ten lines.
+
+## ADDENDUM R3-T.81 (2.0.0_SA_COO~O, 2026-10-16 ~04:4xZ) -- round 37, workstream CLASS-INCREMENT: census of the DynamoDB etf-classifications table and the spec of its tool and grant (the NAMED NEXT INCREMENT; CTO ruling @d97ea3ae82 section 2; CRO G4 section 3.3)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ac-1` | read-only census (`DescribeTable`, a bounded `Scan`: counts, key schema, attribute names, `classified_by` counts, the freshness field and its newest date, each with a claim word) and a spec of `mdpf_get_security_classification` with its ONE grant (read action on the table ARN, no write, no scan) and its refusal arms; no code, no IAM | `ETF_CLASS_CENSUS.json`, `ETF_CLASS_SPEC.md` under the worker's deliverables folder | WORLD | ~113 | none |
+
+**fanout:** 1 of 1 chains, cap 8. Disjoint from `OG-ap-23` (no code, no IAM). It is outside the 22:00Z line; the build cell and the grant order (`0.7.0_AE_CloudOps~ZS`, three halves) are cut from its spec.
