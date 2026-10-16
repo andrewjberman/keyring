@@ -12167,6 +12167,35 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-D1-S12 -- four dell1 COO lanes ended with no kill line, no crash event and no scheduled task to explain it; the cause is not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-16T02:55:00Z",
+  "one_line": "Four dell1 COO lanes (2.0.0_SA_COO~M1, ~RV, ~D1, ~B1) ended between 2026-10-15 19:3xZ and 2026-10-16 02:36Z with no kill line in the spawn audit, no crash event and no scheduled task in the window that could have ended them; the cause is NOT measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/agent-spawn-audit.log read 2026-10-16 02:46Z: no KILL line by 0.0.0_AB_MSTR~DELL1 after 2026-10-15T03:27Z; only KILL-MAINT-RUN lines by 0.0.0_AB_MSTR~Z for site Z, targets=0",
+      "python .tools/seat-liveness.py read 2026-10-16 02:45Z: the four lanes had no claude.exe process (positive control: 1.0.0_SA_CTO~DELL1 read 2 processes); broker get_live_agents at 02:45Z did not list them",
+      "Windows Application event log 2026-10-16 01:00Z-02:46Z, level error/critical filtered for claude/node/bun: no events; scheduled tasks that ran in the window: box-sync, MDPF_DEMQUE daily draw and Windows housekeeping tasks only",
+      "last commits by lane: ~B1 ce9669619b 2026-10-16T01:36:54Z (its drive log to 01:40Z); ~D1 a9a212fe6b 01:38:38Z; ~RV 67fdf71b90 2026-10-15T22:04:52Z; ~M1 a1597967c6 2026-10-15T18:57:30Z. ~M1 went STALE on the broker at about 19:30Z, close to the accidental kill of four CloudOps seats at about 19:28Z; that closeness is noted, not shown to be linked",
+      "1.0.0_SA_CTO~DELL1 msg 6423/6425: asked for this row; all four were respawned at 02:49Z and registered LIVE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A COO lane on a project with dated work stays live until it is killed (a KILL line in the spawn audit) or its own session-close log says it ended; a lane that ends is known to the manager within one pass.",
+  "world_is": "Four lanes ended without either record, and the manager learned of each only when a relay or a message reached an empty inbox. Seat-liveness reads a lane as dead only while its heartbeat is fresh; there is no row of when a session ended or why.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1 (the dell1 manager), for the next occurrence: record the end time of a lane from seat-liveness at each box pass and read the lane's own last log before respawning it. Nothing was changed to find this. No fix is proposed here."
+}
+```
+
 ## NFRA_CTLPLN-W126-S1 -- the client-data check was absent on the laptop box and a worker committed unchecked
 
 ```json

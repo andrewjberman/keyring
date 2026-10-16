@@ -1,0 +1,11 @@
+{
+  "schema": "intake-request/1",
+  "id": "REQ-20261016T025712Z-tabulate",
+  "name": "tabulate",
+  "version": "0.9.0",
+  "needed_by": "2.0.0_SA_COO~C (NFRA_CTLPLN laptop lane): ONE read-only table of the crossbox register's call and acknowledgement states, rendered with tabulate, for the round-25 journey read-out. TEST ACT: it is the deliberate drive of FWD-16's absent-package arm (CTO round-24 analysis ruling 1), and says so.",
+  "why_no_approved": "tabulate is NOT in requirements.txt and the intake register reads UNKNOWN for it; the smallest pure-Python wheel (py3-none-any, no dependencies) that requirements.txt lacks. Nothing is added to requirements.txt; the package stays in a TARGET outside git on the receiving box.",
+  "requested_by": "2.0.0_SA_COO~C",
+  "requested_at": "2026-10-16T02:57:12Z",
+  "decisions": []
+}
