@@ -13460,3 +13460,107 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "For a workstream whose round runs its orders in a Tier-2 applier's own folder (org/tier2_senior/<seat>/task_orders), the check lists them as 'seat-folder orders', counts them 'not complete and outside the verdict' until the issuer flips their status, and sees judgment=0, so MAY-CLOSE is printed before any judgment of the round is counted (the round-3 sitting printed MAY-CLOSE on a FAIL for the same family of reason, row NFRA_CTLPLN-D2-S6). The CTO's rule stands: the round is graded by the CVO's verdict, not the gate."
 }
 ```
+
+## NFRA_CTLPLN-W147-S1 -- the ruled npm fetch set reads no publish time, so check 4 (release age) cannot read its facts
+
+```json
+{
+  "id": "NFRA_CTLPLN-W147-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~147",
+  "surfaced_at": "2026-10-16T18:27:49Z",
+  "one_line": "Check 4 (release age and earlier releases) has no source under the ruled npm fetch set: the version document carries no publish time and no release count, so the limb records check 4 failed with that reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO: name the release-age source for npm (a ruling on the packument or a time field), or rule that a per-file WAIVE check 4 line is the accepted state, before the next cell signs its batch",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@488f3fb25c check_4_npm: the failed reason names the version-document-only fetch",
+      "org/devices/intake/intake_fetch.py@488f3fb25c Fetch.run_npm: requests <base>/<name>/<version> then dist.tarball only; the record's project is None",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_INTAKE_NPM_TARBALL_LIMB_FOR_DELL1_BUN_20261016.md@0c771fe5fb item 2 (Fetch: only the version document, then dist.tarball)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Checks 1-8 run in npm mode in each existing check's place, with the same record shape and verdict vocabulary (CTO ruling 2026-10-16, Ruling item 3).",
+  "world_is": "The ruled fetch set reads only the version document and its dist.tarball; the publish time and release count that check 4 reads are not in that set. check_4_npm therefore reads failed, and a WAIVE check 4 line is the only way a tarball releases today.",
+  "notes": "Measured at the cell's tests: test_intake_npm.py arm a releases both packages only with a WAIVE check 4 line. Decision owner: 1.0.0_SA_CTO."
+}
+```
+
+## NFRA_CTLPLN-W147-S2 -- check 3 (already on this machine) is a Python site-packages read, not in the wheel-only list the ruling named
+
+```json
+{
+  "id": "NFRA_CTLPLN-W147-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~147",
+  "surfaced_at": "2026-10-16T18:27:49Z",
+  "one_line": "The ruling names platform tags, the .py byte compare and RECORD as the wheel-only checks that are not_applicable in npm mode; check 3 is not in that list, and the limb makes it not_applicable as well.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@488f3fb25c check_3_npm: returns not_applicable with the reason that no npm package is installed into the Python site-packages",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_INTAKE_NPM_TARBALL_LIMB_FOR_DELL1_BUN_20261016.md@0c771fe5fb item 3 (the wheel-only checks named there)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The wheel-only checks (platform tags, .py byte compare, RECORD) are not_applicable with a reason in npm mode; every other check keeps its place (CTO ruling item 3).",
+  "world_is": "Check 3 measures whether this machine already runs the version, through find_installed over site-packages. Npm packages reach no site-packages here, so the limb reads not_applicable for it, which the ruling did not name."
+}
+```
+
+## NFRA_CTLPLN-W147-S3 -- the sparse worktree omitted the CTO deliverables, docs/briefs and the surprise schema folders the tests and the gate read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W147-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~147",
+  "surfaced_at": "2026-10-16T18:27:49Z",
+  "one_line": "The base run of test_intake_check.py read 58/60 ok=False until org/tier1_exec/1.0.0_SA_CTO/deliverables and docs/briefs were added to the sparse checkout; the surprise schema folder was also absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_check.py@b003101721 line 913: assert REAL_SIGNATURE.is_file() and REAL_APPROVAL.is_file(), 'the two CTO files must be in this tree'",
+      "org/devices/intake/test_intake_check.py@b003101721 line 29: BRIEF = REPO_ROOT / docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md (FileNotFoundError at base)",
+      "worktree sparse-checkout list at the cut (.tools, docs/briefs added, org/tier1_exec/1.0.0_SA_CTO/deliverables added, org/surprise_channel added)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTcc1-AC3 base control: INTAKE-CHECK-TEST cases=60/60 skipped=0 ok=True, on a worktree that holds the paths the task order names.",
+  "world_is": "The cut's sparse checkout omitted two folders the test reads. Base read cases=58/60 ok=False (two cases: the CTO files and the brief); after git sparse-checkout add of the two folders the base read cases=60/60 ok=True. The surprise schema folder was added for the same reason."
+}
+```
+
+## NFRA_CTLPLN-W147-S4 -- refusals whose file name does not validate all write one shared record, invalid_request.whl.fetch.json
+
+```json
+{
+  "id": "NFRA_CTLPLN-W147-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~147",
+  "surfaced_at": "2026-10-16T18:27:49Z",
+  "one_line": "A fetch refused before its held file name is known writes its record to invalid_request.whl.fetch.json, so each such refusal replaces the one before it; the npm limb now names the held file first, which leaves the shared name for invalid names only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@488f3fb25c write_record: base = (requested file_name or 'invalid_request.whl') + '.fetch'; a non-held prior record is overwritten",
+      "worker run at the cell: two refusals against one records folder left one file, invalid_request.whl.fetch.json (requested file_name None for the second)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A refusal writes its record beside the file it concerns (<file name>.fetch.json), so the audit trail of one refusal is not lost to another.",
+  "world_is": "The shared name is used whenever no valid file name is known, PyPI and npm alike; a later refusal of that kind replaces the record of an earlier one. The PyPI behaviour is unchanged by this cell."
+}
+```
