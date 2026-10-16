@@ -8321,3 +8321,28 @@ by dell1 or by this seat.
   "world_is": "Declared but not applied: no schedule, no function, gics_sector on 0 rows. Whether to apply it, and whether its source covers most of the held value, is this project's call; IRPT_DASHBD does not apply it and cuts no sector cell until a source covers at least 80 percent of value (the CTO's rule)."
 }
 ```
+
+## MDPF_SECCLASS-D1-S44 -- disposition of D2-S1: the unapplied sector writer is FWD-12's known open state; the apply is carried to the CTO
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S44",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-16T22:31Z",
+  "one_line": "Disposition of MDPF_SECCLASS-D2-S1: the unapplied sector writer is the known open state of FWD-12 (built SC-e-28 @4da617c979, declared not applied since round 9), not a new defect; the apply is a WORLD act carried to the CTO for round 28.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "decompositions/MDPF_SECCLASS_DECOMP_R9.md:27 states the writer is built (proof VALID @fdc388f145) and not applied; DECOMP_R10 and R11 carry FWD-12 as 'sector writer apply, then the sector write'",
+      "infra/aws/terraform/mdpf-secclass/sector-writer/ holds iam.tf, lambda.tf, main.tf, schedule.tf at HEAD; D2-S1's live reads (no schedule, no function, gics_sector 0 of 11,375) are accepted as held, not re-run here"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D2-S1: the sector writer is declared with a daily schedule, so gics_sector is filled.",
+  "world_is": "FWD-12 reads NOT REALIZED. The apply (a new Lambda and schedule, then a write over etf-classifications rows) is a SERVED/WORLD move that needs a never-widen pair and the CTO; this seat does not apply it on a row. Source coverage of held value (IRPT_DASHBD's 80 percent rule) is not measured here. Carried to the CTO as a round-28 enrichment candidate with a recommendation to apply after the E_18 ship and the partners-data repoint, so only one served change moves per fire."
+}
+```
