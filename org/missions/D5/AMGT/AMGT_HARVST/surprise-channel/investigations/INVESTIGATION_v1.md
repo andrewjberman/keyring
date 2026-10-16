@@ -9631,5 +9631,33 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S24",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-16T00:50:00Z",
+     "one_line": "The worker rows of HVST-cb-10 and HVST-cb-11 (D1-W146-S1, -S2 and D1-W147-S1) are dispositioned: two were harmless notes, the third is a carried, bounded cost of design B.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-10 and HVST-cb-11 order texts (counters; a job's bound from local state with no silver S3 read).",
+     "world_is": "W146-S1: __main__.main had a local import of store that would have shadowed the module import; the worker removed that one line (merged 62fcc1978e). W146-S2: the two new run-record keys land on the runtime-root copy only, the bronze copy having been persisted earlier inside worker.run; the ledger is the cycle's authority. W147-S1 (ARMED, my disarm): a pair with no local mark is bounded at the cycle floor, and a pair whose candidates are all already held never writes a mark, so its jobs re-page to the floor each cycle; the floor is the last completed cycle's start date (the runner passes it), so the cost is listing requests bounded to about one cycle of dates, not silver reads. The real read after both merges: the same bbg job went from 747 GETs / 212,043,826 bytes to 0 / 0 (ledger/ROUND87_EGRESS_FIX_REAL_READ_20261016.md).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND87_EGRESS_FIX_REAL_READ_20261016.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-11.a-job-derives-its-backfill-bound-from-local-state.md COMPLETE note",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-10.every-collector-process-reports-its-own-s3-gets.md COMPLETE note"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W146-S1",
+      "AMGT_HARVST-D1-W146-S2",
+      "AMGT_HARVST-D1-W147-S1"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "W146-S1 resolved by the worker; W146-S2 inert by design (ledger is authoritative); W147-S1 is a named, bounded cost of the CTO's design B (listing requests to the floor, no silver reads), carried and not fixed."
+    }
 ]
 ```
