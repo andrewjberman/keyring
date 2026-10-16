@@ -52,7 +52,8 @@ The limb is one cell. dell1's redeploy (SC1) waits on that cell's receipt, which
 
 ## ADDENDUM 1 (~17:4xZ): the ask is WITHDRAWN, so the cell is NOT cut
 
- msg 109732 (bus abe3ffce): dell1 withdrew the 50-package ask on 's ruling (dell1 msg 6936).
+`0.0.0_AB_MSTR` msg 109732 (bus abe3ffce): dell1 withdrew the 50-package ask on `1.0.0_SA_CTO~DELL1`'s ruling (dell1 msg 6936).
+`2.0.0_SA_COO~C` withdrew its question in the same minute.
 No consumer remains, so the npm limb is not cut (YAGNI, build ladder step 1).
 
 The design above stands as the shape of that limb, to be cut the day a live npm need arrives. The batch approval is VOID.
