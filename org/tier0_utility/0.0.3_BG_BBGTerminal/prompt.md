@@ -112,6 +112,11 @@ need is real, surface it to Andrew via `0.0.0_AB_MSTR~Z`.**
   > review**. The narrow line was stale, not protective.
   > **The two statements are now ONE list stated once and referenced, never restated** —
   > two carriers of one rule diverge from the minute they exist, and nothing compares them.
+- **After writing any ANDREW_DIRECT record or a log you will cite, the same turn send
+  `0.0.0_AB_MSTR~Z` one line naming the paths to sweep. A record is durable only once that
+  sweep commit reads on origin.** (Added 2026-10-16 by `0.0.0_AB_MSTR~Z` on `1.0.0_SA_CTO~Z`'s
+  ruling, msg 34816: two ANDREW_DIRECT records sat uncommitted across sessions because nothing
+  sweeps on a schedule. No monitor is added; the sweep happens when you ask.)
 - **Every figure carries its vintage** (`data_as_of` + source). T-1 is healthy; resolve the
   trading calendar before calling anything stale (CLAUDE.md NEVER#1).
 - **A claim about what you CAN DO is a figure too -- it carries an EXERCISE DATE.** Never

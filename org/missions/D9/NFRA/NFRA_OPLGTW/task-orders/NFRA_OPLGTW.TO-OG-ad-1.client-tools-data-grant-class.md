@@ -28,12 +28,12 @@ Today the five tools `client_resolve_account`, `client_get_holdings`, `client_ge
    - `test_ogad1_ac03`: an unprofiled principal with tier MASTER_ADMIN passes each of the five (`decide` returns None).
    - `test_ogad1_ac04`: a principal with an ACTIVE profile whose grant does not name the tool is denied each of the five unless its tier is MASTER_ADMIN (build the profile and grant the way `tests/test_og_bd3.py` does).
    - `test_ogad1_ac05`: nothing else moved: the five `schwab_*` tools and `blackdiamond_list_fees` keep their class and their decisions, and every other tool of `NATIVE_TOOLS` is still outside `DATA_GRANT_TOOLS` (compare the family set with the pre-change set plus exactly the five).
-3. Pins: `tests/test_data_entitlement_family.py` pins the non-data tool count (`len(non_data) == 113` and its comments "discovery: all 113 non-data tools" / "the profile denies none of the 113"). The five leave the non-data set, so the pin becomes 108 and the comments follow (113 to 108). Change only those numbers. Do NOT change `tests/test_entitlement_admin.py` (the registered-tool count 122 is unchanged) and do NOT touch `app/tools.py` or `app/destructive_ops.py`.
-4. Run the entitlement suites (`ad1.AC2.sh` runs them): `test_data_entitlement_family`, `test_entitlement_admin`, `test_og_bd2`, `test_og_bd3`, plus your new file; any other entitlement test that pins the five in `NATIVE_TOOLS` is yours to update to the new truth and name in the report.
+3. Pins: `tests/test_data_entitlement_family.py` pins the non-data tool count (`len(non_data) == 113` and its comments "discovery: all 113 non-data tools" / "the profile denies none of the 113"). The five leave the non-data set, so the pin becomes 108 and the comments follow (113 to 108). Change only those numbers. Do NOT touch `app/tools.py` or `app/destructive_ops.py`. AMENDMENT A1 (issuer, from your report rows Z-W113-S8 and S9): the tests that pin the old NATIVE membership are now YOURS to follow, and only to the new truth, never weakened: (a) `tests/test_entitlement_admin.py` `test_ogz2_ac08`: the registered-name union (line ~315) gains `de.CLIENT_TOOLS` and the equality (line ~366) gains `len(de.CLIENT_TOOLS)`; the 122 registered-tool pin there is unchanged; (b) `tests/test_data_entitlement_guard.py` `test_ogz1_ac06`, `test_ogz1_ac07` and `test_ogz1_ac11`: they pin the old NATIVE membership; make each follow the new truth (the five client tools are DATA_GRANT and TIER_ADMITTED, not NATIVE) with the smallest edit, and say what each asserted before and after. `test_ogz1_ac08` of that file was red BEFORE this change (route-class pin missing three routes): leave it alone and list it. Your `test_ogpf1_ac04` family-pin edit (6 to 11) is approved.
+4. Run the entitlement suites (`ad1.AC2.sh` runs them): `test_data_entitlement_family`, `test_entitlement_admin`, `test_og_bd2`, `test_og_bd3`, plus your new file, and run `tests/test_data_entitlement_guard.py` and print which of its tests fail before and after your edits (the only red one that may remain is `test_ogz1_ac08`); any other entitlement test that pins the five in `NATIVE_TOOLS` is yours to update to the new truth and name in the report.
 
 ## 2. BOUNDS
 
-- `app/data_entitlement.py`, `tests/test_og_ad1.py`, the pin numbers in `tests/test_data_entitlement_family.py`, and the record files. No other module, no release, no deploy, no IAM.
+- `app/data_entitlement.py`, `tests/test_og_ad1.py`, the pins in `tests/test_data_entitlement_family.py`, the follow-the-truth edits in `tests/test_entitlement_admin.py` and `tests/test_data_entitlement_guard.py`, and the record files. No other module, no release, no deploy, no IAM.
 - Never: push, `git stash`, rebase, `checkout --` or `clean`; weaken a test to make it pass; print an account number or a person's name; override a gate.
 - REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
 
@@ -46,11 +46,12 @@ infra/aws/ec2/opal-gateway/tests/test_data_entitlement_family.py
 infra/aws/ec2/opal-gateway/tests/test_og_bd2.py
 infra/aws/ec2/opal-gateway/tests/test_og_bd3.py
 infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py
+infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py
 infra/aws/ec2/opal-gateway/app/tier.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-You WRITE only `data_entitlement.py`, `tests/test_og_ad1.py`, `tests/test_data_entitlement_family.py` (the numbers), the files under `W/` and the investigation file (append rows only if you hit a surprise); the rest you only READ (an entitlement test elsewhere that must follow, you name in the report and the issuer adds it to the order). `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~113/`. Rows: id `NFRA_OPLGTW-Z-W113-S<k>` (continue after your last), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
+You WRITE only `data_entitlement.py`, `tests/test_og_ad1.py`, `tests/test_data_entitlement_family.py`, `tests/test_entitlement_admin.py` and `tests/test_data_entitlement_guard.py` (the follow-the-truth edits above), the files under `W/` and the investigation file (append rows only if you hit a surprise); the rest you only READ (an entitlement test elsewhere that must follow, you name in the report and the issuer adds it to the order). `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~113/`. Rows: id `NFRA_OPLGTW-Z-W113-S<k>` (continue after your last), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
 
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 

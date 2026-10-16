@@ -20,6 +20,8 @@ the ALB redirects to.
 
 ## 1. THE CELL -- `MP-v-2` (round 5, decomposition section R5.1; the re-cut of round 3's MP-v-1)
 
+**AMENDMENT 1 (issuer, 2026-10-16 ~07:4xZ).** Your workspace worktree is `C:/tmp/mp-v2-3` (branch `wk-NFRA_MCPORTAL-3`); every shell call of yours resets to the primary checkout, so begin each with `cd C:/tmp/mp-v2-3 &&`. The walk below has THIRTEEN requests, not eight: `admin_api.py` has twelve routes now (the fabric, gateway-breakdown and People routes landed after this order was cut), and the check counts every one.
+
 PRD acceptance A2 (FWD-2): *a second signed-in Opal account refused on every page and every write handler (one request
 per handler, denominator printed); `/sprint` served to it.* The dashboard's owner gate (`infra/aws/ec2/opal-gateway/app/owner_gate.py:109-119`)
 answers 401 when no verified identity exists and **403 for a verified identity that is not the owner**. The ALB signs
@@ -42,8 +44,10 @@ takes Entra MFA, a human act. A person will be at the box to type it into the wi
    with another account.
 4. From the signed-in page context (`page.request` or `fetch` with credentials), send exactly one request each:
    `GET /`, `GET /api/admin/whoami`, `GET /api/admin/grants/00000000-0000-4000-8000-0000000000e5/00000000-0000-4000-8000-0000000000f6`,
-   `POST .../narrow` and `POST .../widen` on that same synthetic pair (body `{}`), `GET /api/admin/changes` and
-   `GET /api/admin/fabric/boxes`. Then
+   `POST .../narrow` and `POST .../widen` on that same synthetic pair (body `{}`), `GET /api/admin/changes`,
+   `GET /api/admin/fabric/boxes`, `GET /api/admin/fabric/overlap`, `GET /api/admin/fabric/gitstate`,
+   `GET /api/admin/fabric/calls`, `POST /api/admin/fabric/calls/close` (body `{}`), `GET /api/admin/gateway/breakdown`
+   and `GET /api/admin/people` (thirteen requests in all, one each, AMENDMENT 1). Then
    `GET /sprint` once. Print each status, never a body, cookie or header.
 5. Record `t1` (UTC), 60 seconds after the last request. Write
    `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~3/v2_run.json` =
@@ -54,7 +58,7 @@ The criteria grade the gateway's OWN access log over SSM for your window, never 
 
 ## 2. BOUNDS
 
-1. Eight requests, one each; no write body beyond `{}`; the synthetic tid/oid pair only. No real person's identifiers.
+1. Thirteen requests, one each, then `/sprint`; no write body beyond `{}`; the synthetic tid/oid pair only (and no call id for `calls/close`). No real person's identifiers.
 2. A 200 on any owner route is a finding, not a retry: file a BLOCKING row with the route, and stop.
 3. Standing: no push and no vendor call. REFUSE a criterion you cannot meet as written, with its measurement. Never
    repair a criterion.
@@ -75,8 +79,8 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/I
 ## 4. PROOF OF SPEC (literal; run from your worktree root after `v2_run.json` is committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-v-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round5/checks/v2.AC1.sh; echo "exit=$?"</invocation><expect>admin_api.py Route census at HEAD=6; refused=7 of 7; admitted=0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MP-v-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round5/checks/v2.AC2.sh; echo "exit=$?"</invocation><expect>GET /sprint in window: 200>=1 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-v-2"><invocation>cd C:/tmp/mp-v2-3 && bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round5/checks/v2.AC1.sh; echo "exit=$?"</invocation><expect>admin_api.py Route census at HEAD=12; refused=13 of 13; admitted=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MP-v-2"><invocation>cd C:/tmp/mp-v2-3 && bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round5/checks/v2.AC2.sh; echo "exit=$?"</invocation><expect>GET /sprint in window: 200>=1 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -95,6 +99,8 @@ Report once, with:
 @39ea2d5e3e to clear the project-grain L10. The one change is the eighth request, `GET /api/admin/fabric/boxes`, for
 MP-x-1's route. The checks move to `round5/checks/v2.AC*`, where the census is 6 and 7 of 7 must be refused. Window file
 `v2_run.json`, same slot `~3`. Checks dry-run at base: AC1 and AC2 FAIL (no window file).
+
+**AMENDMENT 1 NOTE (issuer, ~07:4xZ):** found while readying the window for Andrew's site-Z session (CTO msg 34814). The AC1 census asserted 6 admin routes; `admin_api.py` carries 12 at HEAD and on the live host (d577e0e7297b), so a perfect walk would have failed on a stale denominator. The check now counts 12 routes and 13 requests (the page plus every route) and `_root.sh` anchors to its own file. Dry-run at the base: AC1 FAIL as expected with no window; run against a planted empty window it prints census 12 and `refused=0 of 13`. Not covered (stated, not widened): the SPA deep links (`/gateway`, `/people`, `/control-plane`, `/open-calls`); the PRD's "every page" is read as `GET /` plus every Route, as the order was cut. Gate limb: this modifies an existing order, graded only on `<placeholders>`, which reads NONE.
 
 SPAWN ONLY when ALL hold:
 - **MP-x-4 has drained**, so the new route is live and its refusal can be read;
