@@ -707,6 +707,30 @@
     "spec_asserts": "TO-MD-r2 AC3: at least two scheduled collector invocations since the subscriptions started, and no function error since then.",
     "world_is": "One scheduled fire exists, and it timed out; Lambda's two async retries are the second and third START lines, so the 2 counted invocations are one failed fire, not two scheduled fires. The check cannot tell a timeout from a success. Where the collector waits for 300 s is not established here: the Management API listing or the token call (source_client.py) are the calls after the cursor read, and neither logs.",
     "notes": "No hand invoke, no retry, no code change. The next scheduled fire at about 14:31Z is expected to fail the same way and would be a second failed fire, not evidence for AC3. Disabling the rule is a Terraform change to collector.tf, outside this order's grant."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S12",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-16T13:49:30Z",
+    "one_line": "The first scheduled fire of the collector timed out at 300 s and was retried from zero twice: a cold start fetches the whole 7-day backlog one blob at a time and writes nothing before the limit; and the fires check read OK on it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (this order's issuer: TO-MD-x2 reopened with a time budget; TM1 reapplies collector.tf)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/m365-metadata-trino-collector-lambda 13:31Z to 13:44Z: three REPORT lines Status: timeout, Duration 300000 ms, Max Memory Used 104-108 MB, no application log line",
+        "0.7.0_AE_CloudOps~TM1 msg 6722 (door answered each time: op=get_state outcome=absent, about 2 s)",
+        "the issuer's read-only listing timings with the app credential (no event body read): one 24-hour window of one content type lists 9 to 87 blobs in 0.2 to 1.8 s, so the listing is not the slow part",
+        "r2_check_r2.py fires read R2-FIRES-OK on two timed-out invocations because it grepped errorMessage and Traceback only; fixed to count Status: timeout and Task timed out"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Two scheduled fires land cleanly within the Lambda limit; a fire that cannot finish leaves the work it did.",
+    "world_is": "With no cursor the fire lists seven days of blobs and fetches them sequentially before writing bronze or the cursor; the fetch total exceeds 300 s, so a timeout loses everything and each retry starts over. The tenant's unified audit feed holds content for all seven days (so audit logging is on: the earlier unrun check is answered by this read). The fires check counted REPORT lines and greps for errorMessage/Traceback, which a timeout never writes.",
+    "notes": "Repair: a time budget with save-as-you-go and parallel fetch (TO-MD-x2 reopened, criterion AC4), timeout 900 in collector.tf, one counts-only log line per fire. The seat then rebuilds the zip and applies the in-place update (TO-MD-r2). Attempts 2 and 3 of fire 1 spent the same 300 s each; the 14:31Z and later scheduled fires fail the same way until the repair lands."
   }
 ]
 ```
