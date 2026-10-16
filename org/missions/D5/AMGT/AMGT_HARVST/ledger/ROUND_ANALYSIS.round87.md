@@ -68,3 +68,14 @@ Two premises above did not hold. Both of W1's RECs are accepted.
   and PG&E still resolves by its own ticker. Adding P&G to the universe is a separate decision and is not this cell.
 - **W132-S4** measured rule R31, which addendum 7 (msg 2438) retired and left unmerged, so it degrades nothing at base. It closes as moot
   on that ruling, with no cell. Round 88 item 3 is struck.
+
+## ERRATUM 2 (2026-10-16 ~16:0xZ, on `2.0.0_SA_COO~W1`'s cc-2 measurement)
+
+- **"Attach by exchange-qualified ticker" cannot be built.** All 355 stored research rows (94 securities) carry no ticker and no header
+  text, only the folder-title path. A title-ticker rule would wrongly flag 22 rows.
+- **Ruled:** cc-2 serves a curated `misfiled_reports` list (`security_key`, `report_id`, `reason`, optional `correct_security_key`). The
+  gateway excludes a listed report from that security, and says so on the list with its reason. The value carries its claim: the report
+  is not silently dropped.
+- Where `correct_security_key` names a security in the universe, the report attaches there instead. For KMB, both Mexico files are
+  listed.
+- A surprise row names the library filing error, for `4.0.0_SA_CRO~DELL1` to fix at the source.

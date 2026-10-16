@@ -7,7 +7,7 @@
 <owned_cells>MP-pd-7</owned_cells>
 </decomp_ref>
 <to_id>NFRA_MCPORTAL.TO-MP-pd-7</to_id>
-<issued_to>0.7.0_AE_CloudOps~MQ</issued_to>
+<issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -55,7 +55,7 @@ exactly MP-pc-5's steps 0 to 4, with these changes: the release census names ONL
 
 In order:
 1. **Step 0: the hookup** (above), tested with `tests/test_admin*.py tests/test_owner_gate.py` on `box/sitez` HEAD with the payload: 0 failed.
-2. **The ASK and the pair.** Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NEVER_WIDEN_ASK_MP-pd-7.md` with the blast
+2. **The ASK and the pair.** Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~NFRA1/NEVER_WIDEN_ASK_MP-pd-7.md` with the blast
    radius of BOTH acts (Act A's one function; Act B's five files, the two new routes, the bundle swap, the manifest record, one restart,
    two S3 keys), what it may never touch (the MCP tool surface, any IAM, any other resource or service, the deploy scripts), the census, the
    tests, both rollbacks proven, the read-backs (AC1, AC2), and the failure branches in WORDS BOTH HALVES REPEAT, as MP-pc-5's ASK section 7 did:
@@ -69,11 +69,11 @@ In order:
 3. **Rollback, proven before the act**, for both acts, and the rollback TIME measured as MP-pc-5 did (record which and the seconds).
 4. **NEVER-2 ledger, on your branch, in this order.** `python .tools/deploy_ledger.py open ...` with slug `nfra-mcportal-pd-release`; legs:
    Lambda package build and apply, bundle build, gateway release build and upload, SSM pull and restart, manifest record. Put the census, tests,
-   rollbacks and this order's path in `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/MP-pd-7_PRE_ACT_RECORD.md`, one pointer
+   rollbacks and this order's path in `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~NFRA1/MP-pd-7_PRE_ACT_RECORD.md`, one pointer
    line in the entry; commit the entry AND its sentinel `org/critical_paths/.open_deploys/nfra-mcportal-pd-release.json`. ACT A, then ACT B from
    the release tree with ITS scripts (`bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`; its
    stale-base guard must read the live ref unchanged at both reads). Close every leg with its proof and commit the close BEFORE the AC reads.
-5. **Close report** `deliverables/0.7.0_AE_CloudOps~MQ/MP-pd-7_CLOSE_REPORT.md`, which MUST contain the line `GW_LAMBDA_SHA256=<the
+5. **Close report** `deliverables/0.7.0_AE_CloudOps~NFRA1/MP-pd-7_CLOSE_REPORT.md`, which MUST contain the line `GW_LAMBDA_SHA256=<the
    function's CodeSha256 after Act A>` on a line of its own (AC2 reads it), the new `deployed_commit`, the tool counts, the rollback time and how
    it was measured.
 
@@ -94,7 +94,7 @@ infra/aws/lambda/ci/lambda-source-map.json
 infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcportal-pd-release.json
-org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/**
+org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~NFRA1/**
 org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/**
 </paths>
 
@@ -115,7 +115,7 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/I
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NFRA_MCPORTAL.TO-MP-pd-7.person-access-release.proof_of_spec.json`.
+Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~NFRA1/NFRA_MCPORTAL.TO-MP-pd-7.person-access-release.proof_of_spec.json`.
 Report once, to `2.0.0_SA_COO~MP`, with: the census; both acts' before and after (function code hash; tool counts); the two check outputs; both
 rollbacks and their measured time; the new `deployed_commit`; and any row. Tell `2.0.0_SA_COO~O` the new `deployed_commit` when the ledger closes.
 
@@ -126,6 +126,8 @@ because the new action is unreachable until the gateway route exists, so Act A i
 three cells drain, this order waits: a Lambda built from a release that does not know `person_access` answers RECORD-KIND-NOT-LIVE to every
 write (the safe state, tested by MP-pd-2). The write half of FWD-21 is Andrew-only (C2). Checks dry-run at base: AC1 FAIL (no entry), AC2 FAIL
 (close report absent). Executed once as MP-pc-5 (this seat), so the mechanics are its own.
+
+**AMENDMENT A1 (the issuer's, 2026-10-16 ~16:0xZ; CTO msgs 35104/35110/35114, CLAUDE.md rule 34):** the order was staged to `0.7.0_AE_CloudOps~MQ`; CloudOps is now seated one lane per macro per box, so every new NFRA CloudOps order goes to `0.7.0_AE_CloudOps~NFRA1` (seated by MSTR~Z at the first such need) and ~MQ retires. `<issued_to>` and every path of this order's own deliverables folder (the ASK, the pre-act record, the close report, the proof instance, the grant) now name `~NFRA1`; the one citation of `~MQ`'s MP-pc-5 ASK (a real, executed file) is left as it is. The order stays STAGED and the CTO's hold on PD (OG-cp-1 and Andrew's sitting) is unchanged; at the GO the issuer sends MSTR~Z one line naming this order so the lane is seated before the order is sent.
 
 <status>staged</status>
 <round>2</round>

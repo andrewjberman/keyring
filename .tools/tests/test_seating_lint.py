@@ -209,6 +209,31 @@ def main() -> int:
         check("the skip is COUNTED in the frame, not silent",
               any("untracked in-flight file(s) SKIPPED" in x for x in f_u), str(f_u)[:200])
 
+    # ---- ARMS 14-16: CLAUDE.md rule 34 -- CloudOps is seated by MACRO (Andrew-direct 2026-10-16) ----
+    cloudops = "0.7.0_AE_CloudOps~A"
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d)
+        mod.WORKSPACE = tmp
+        mod.PROJECTS = tmp / "org" / "projects"
+        mod._TRACKED_TOS = None
+        _ws(tmp, [("MACRA_ONE", "TO-1", cloudops, "ACTIVE", True)])
+        v, _ = mod.seating_check(_subject(tmp, "MACRA_TWO", "TO-1", cloudops))
+        check("CloudOps lane, SAME macro, second project -> legal (rule 34)", not v, str(v)[:160])
+        # the paired control on the same fixture: a DIFFERENT macro must still refuse
+        v2, _ = mod.seating_check(_subject(tmp, "MACRB_ONE", "TO-1", cloudops))
+        check("CloudOps lane, DIFFERENT macro -> REFUSED (rule 34 control)",
+              any("SEATING:" in x and "MACRA_ONE" in x for x in v2), str(v2)[:160])
+
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d)
+        mod.WORKSPACE = tmp
+        mod.PROJECTS = tmp / "org" / "projects"
+        mod._TRACKED_TOS = None
+        _ws(tmp, [("MACRA_ONE", "TO-1", "0.9.9_XX_Fixture~A", "ACTIVE", True)])
+        v, _ = mod.seating_check(_subject(tmp, "MACRA_TWO", "TO-1", "0.9.9_XX_Fixture~A"))
+        check("non-CloudOps class, SAME macro, second project -> still REFUSED",
+              any("SEATING:" in x and "MACRA_ONE" in x for x in v), str(v)[:160])
+
     width = max(len(n) for n, _, _ in results)
     for name, verdict, detail in results:
         line = f"  {verdict:4s} {name.ljust(width)}"
