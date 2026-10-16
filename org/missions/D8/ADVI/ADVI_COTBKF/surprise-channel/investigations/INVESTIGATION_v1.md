@@ -10063,3 +10063,55 @@ round.** Never edit an existing row.
   "dismissal_reason": "Disarmed by the disarm owner's read of the fixed reader and its passing planted-point test at the trunk, before any SECHIST security_series object; the CVO closes the remediation row (REMEDIATION_v53). The writer's source vocabulary is the writer owner's to state when the first object is written."
 }
 ```
+
+## ADVI_COTBKF-D1-W188-S1 -- CB-cu-1 item 4: 151 silver linear_interpolation points are Yahoo in the fresh store frame but priced NOT_YAHOO in the served table (79 securities)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W188-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~188",
+  "surfaced_at": "2026-10-16T07:55:38Z",
+  "one_line": "CB99cu1 comparison: 151 served priced points (79 securities) that the fresh store frame labels linear_interpolation under the silver canonical store carry a NOT_YAHOO served label, because the round-97 price file credits the same day to the gold holdings store (bd_snapshot) and the served row is priced from it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~188/STORE_DERIVED_YAHOO_RECORD.json (difference_categories; sets A_minus_B=184, B_minus_A=0; counts only)",
+      "scratch counts, off git: C:/Dev/ajb_workspace/.scratch/cotbkf_r99/compare_phase.log (CAT line: points=151 securities=79 A_minus_B store=cottonwood-silver-canonical-prices store_source=linear_interpolation pf_source=bd_snapshot served_price_source=cottonwood-gold-canonical-holdings served_use_class=NOT_YAHOO)",
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py@a3e1619245 as_traded_store (line 300) drops silver linear_interpolation days it does not bracket; the round-97 regrade log records days_dropped_unbracketed=3962 (candidate cause, not established)"
+    ]
+  },
+  "spec_asserts": "CB-cu-1 item 4 (round 99): the store-derived Yahoo set S, built from each store's own source label, and the served use_class labels B agree on the served priced points (A minus B and B minus A both zero, equal=True).",
+  "world_is": "Category: A_minus_B store=cottonwood-silver-canonical-prices store_source=linear_interpolation pf_source=bd_snapshot served_price_source=cottonwood-gold-canonical-holdings served_use_class=NOT_YAHOO. 151 points in 79 securities. The fresh frame (no as-traded substitution, by order) credits these security-days to the silver canonical store as linear_interpolation; the served table prices them from a different store, and the served label is NOT_YAHOO as that store's source implies. The difference is one-directional (B minus A = 0). Cause not established; it is not repaired here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W188-S2 -- CB-cu-1 item 4: 33 silver linear_interpolation points are Yahoo in the fresh store frame but priced NOT_YAHOO in the served table (3 securities)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W188-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~188",
+  "surfaced_at": "2026-10-16T07:55:38Z",
+  "one_line": "CB99cu1 comparison: 33 served priced points (3 securities) that the fresh store frame labels linear_interpolation under the silver canonical store carry a NOT_YAHOO served label, because the round-97 price file credits the same day to the bbg testpull store (bloomberg_stored) and the served row is priced from it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~188/STORE_DERIVED_YAHOO_RECORD.json (difference_categories; sets A_minus_B=184, B_minus_A=0; counts only)",
+      "scratch counts, off git: C:/Dev/ajb_workspace/.scratch/cotbkf_r99/compare_phase.log (CAT line: points=33 securities=3 A_minus_B store=cottonwood-silver-canonical-prices store_source=linear_interpolation pf_source=bloomberg_stored served_price_source=etfs-bbg-testpull-ticker-history served_use_class=NOT_YAHOO)",
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py@a3e1619245 as_traded_store (line 300) drops silver linear_interpolation days it does not bracket; the round-97 regrade log records days_dropped_unbracketed=3962 (candidate cause, not established)"
+    ]
+  },
+  "spec_asserts": "CB-cu-1 item 4 (round 99): the store-derived Yahoo set S, built from each store's own source label, and the served use_class labels B agree on the served priced points (A minus B and B minus A both zero, equal=True).",
+  "world_is": "Category: A_minus_B store=cottonwood-silver-canonical-prices store_source=linear_interpolation pf_source=bloomberg_stored served_price_source=etfs-bbg-testpull-ticker-history served_use_class=NOT_YAHOO. 33 points in 3 securities. The fresh frame (no as-traded substitution, by order) credits these security-days to the silver canonical store as linear_interpolation; the served table prices them from a different store, and the served label is NOT_YAHOO as that store's source implies. The difference is one-directional (B minus A = 0). Cause not established; it is not repaired here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
