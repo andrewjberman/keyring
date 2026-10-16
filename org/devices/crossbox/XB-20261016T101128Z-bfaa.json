@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN round 28 FWD-23: write this box's seat list (seats.json) and name one graded piece of work",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_R28_FWD23_SEAT_LIST.md",
  "opened_at": "2026-10-16T10:11:28Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-16T10:23:39Z",
+  "by": "1.0.0_SA_CTO~DELL2",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
