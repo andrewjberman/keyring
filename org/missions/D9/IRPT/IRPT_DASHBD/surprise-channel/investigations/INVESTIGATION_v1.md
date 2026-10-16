@@ -22760,3 +22760,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer: the DB-b-294 spy predates the rewrite keyword. The fix is a grant decision (widen the spy's signature in test_history_scope_derivation.py, or the order's 3(b) states the keyword is passed only when true). Not repaired by the worker."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W240-S1 -- the p165 form clause refuses the one unchanged 49F member whose packaged_as differs from its repo_path, so AC1 to AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W240-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~240",
+  "surfaced_at": "2026-10-16T11:16:20Z",
+  "one_line": "The p165 check_repin form clause requires packaged_as equal to repo_path for every staged member, but irpt-49f-reporting-gold-lambda has an unchanged member (infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py, packaged_as etf_classifications_dynamodb.py) at base and at HEAD, so AC1, AC2 and AC3 refuse the entry although the re-pin is complete.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2 of the cell: packaged_as and repo_path do not change, and every other member stays byte for byte. DB165-1-AC1: each entry differs from the base only in its stale members' pin and sha256. The checker's check_repin (the proven p158 clause) requires, for every staged member, packaged_as == repo_path == the base repo_path.",
+  "world_is": "At base 7459521a08 and at HEAD ebe2302322 the third staged member of irpt-49f-reporting-gold-lambda has packaged_as etf_classifications_dynamodb.py against repo_path infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py. Its sha256 matches HEAD, so it is not stale and is byte-identical to base. Across the three entries 1 of 48 members has this form. The 14 stale members are re-pinned and nothing else moved, yet the form clause refuses the entry. Satisfying the criteria needs the checker widened (outside the grant) or packaged_as changed (forbidden by step 2). Neither was taken; the order is left open for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I checks/r149/p165_repin_three.py . DB165-1-AC1 at ebe2302322: FAIL: irpt-49f-reporting-gold-lambda: member form: infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py (AC2 fails identically, the same check runs first)",
+      "read of staged_from in infra/aws/lambda/ci/lambda-source-map.json at base 7459521a08 and at HEAD ebe2302322: packaged_as differs from repo_path in 1 of 48 members (12 + 21 + 15), the same member in both"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the p165 form clause, copied from the p158 check_repin, assumes packaged_as equals repo_path for every member; the 49F etf member is the one exception and is unchanged by this order. Not repaired by the worker: the checker and packaged_as are outside the grant or fixed by step 2. The BUILD_ONLY runs of the three entries exited 0 and printed the base64 hashes recorded in the facts record; the build also printed UNENFORCED warnings for the publish entry's modules (no BUILD_MANIFEST.json), which this order does not mention."
+}
+```
