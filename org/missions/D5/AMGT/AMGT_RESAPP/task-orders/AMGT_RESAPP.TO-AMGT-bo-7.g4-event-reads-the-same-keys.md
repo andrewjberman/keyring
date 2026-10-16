@@ -74,7 +74,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** found 2026-10-16 ~12:1xZ while writing the COO half for the 8-key re-enable. READ in `filings/batch.py`: `plan_only_check` is called only under `args.plan_only` (lines 450-489 and 596); the real loop calls `run_group` for every planned group with no skip-on-unchanged. READ in `llm_batch/inputs.py`: `would_run` runs the constant `tasks.FILINGS_PLAN_ONLY`. Consequence if enabled as merged at `83f65c6344`: the unfiltered count (171) never reaches zero, so the task is due every trading day and each run re-analyzes the 8 keyed names, about USD 4.5 to 5.6 a run. This corrects the issuer's own earlier statements (the bo-5 issuer notes and `G4_ENABLE_PAIR_MEASUREMENTS_20261016.md`: "a cap left in place re-reads the same 20 (all unchanged, no spend)" and "a second day's run over the 8 skips them as unchanged"), which were inferred from the plan-only check and not read in the run path. The new COO half states this and names the correction. The whole-universe event (names that can never resolve are counted as would-run forever) is the CTO's, not this cell's.
 
-<status>pending</status>
+<status>complete</status>
 <round>108</round>
 <slot>0.9.0_WK_AMGT_RESAPP~481</slot>
 <fabric>dell1</fabric>
