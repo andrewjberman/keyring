@@ -30,6 +30,8 @@ TESTS (new file `tests/test_og_en10.py`; read `tests/test_ratelimit*.py` and the
 - `test_ogen10_ac03`: a failing audit writer leaves the answer a 429 with the same body and raises nothing; below the limit no row is written and the response is untouched.
 If an existing test pins that a refusal writes no audit row, update it to the new truth with the smallest edit and name it; never weaken it.
 
+AMENDMENT A2 (issuer, 2026-10-16 ~13:3xZ, after your report; the CTO's ruling msg 35000 asks, once the rows exist, for "peak requests per 60 s per identity, and which client fills the window"; this text is part of your face): the row as built shows the count but not WHO filled it. Extend, small: (a) `app/ratelimit.py` records the request's CLIENT with each timestamp in the identity's window (the middleware already holds the validated token's `client_id` claim from `_bearer_auth`; pass it into `enforce_identity_counted`; an absent client is the string `none`); the sliding-window behaviour, the limit and the fail-open path do not change. (b) The audit row gains `by_client`: a map from a short stable hash of the client id (the first 8 hex characters of its sha256; `none` for absent; never the id itself) to that client's request count inside the window at the refusal, at most the five largest plus an `other` total, and `distinct_clients` (the number of clients in the window). (c) One more named test, `test_ogen10_ac04`: two clients drive one identity past the limit with a known split (for example 100 from one, 30 from the other); the refusal row's `by_client` shows both hashes with those counts, `distinct_clients` is 2, no client id appears in the row, and the 429 answer is unchanged. Update the AC1 invocation's named tests to include `test_ogen10_ac04` (4 of 4) and re-run everything; your instance and status must come out of the re-run, not carried over. Leading-edge folding (your row S2) is accepted as built.
+
 ## 2. BOUNDS
 
 - Write only the files in `<paths>`. No release, no deploy, no IAM, no change of any limit value or default.
@@ -54,7 +56,7 @@ You WRITE the three app files only as far as the change needs and `tests/test_og
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-en-10"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_named.sh tests/test_og_en10.py test_ogen10_ac01 test_ogen10_ac02 test_ogen10_ac03; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 3 of 3; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-en-10"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_named.sh tests/test_og_en10.py test_ogen10_ac01 test_ogen10_ac02 test_ogen10_ac03 test_ogen10_ac04; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 4 of 4; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-en-10"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_wkbound.sh 0.9.0_WK_NFRA_OPLGTW~124 '^infra/aws/ec2/opal-gateway/(app/(ratelimit|server|audit)\.py|tests/(test_og_en10|test_ratelimit|test_rate_limit|test_server_guard)\.py)$'; echo "exit=$?"</invocation><expect>(?s)write-set bound for 0\.9\.0_WK_NFRA_OPLGTW~124: files touched [1-9]\d*; product files [1-9]\d*; outside the allowed set 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -70,7 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-10.rate-limit-429-is-audited
 - Round 38 (CTO finding msg 34991), workstream ENRICH-R38-B (decomposition addendum R3-T.94). Risk WORLD by the L6 floor, no deploy in this cell; rides the batched gateway release. The row for the finding is filed by the issuer with the limiter's config read (identity limit 120 per 60 s, in-memory sliding log, every /mcp POST counted) and this cell as its instrument; whether to raise the limit or give the seats distinct identities is decided AFTER the first 429 audit rows exist (a number chosen without the count would be a guess).
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>complete</status>
+<status>staged</status>
 <round>38</round>
 <workstream>ENRICH-R38-B</workstream>
 <slot>~124</slot>
