@@ -22974,3 +22974,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "dismissal_reason": "W1701-S6 is ruled by its disarm owner: the class stays INTERNAL as landed; the pairing census is a round-132 criterion, not a hazard."
 }
 ```
+
+## IRPT_DASHBD-D2-S119 -- iv-e-124 passes on merged portal DEV against contract 0.3.3: the W225 hazard is disarmed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S119",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T12:45:15Z",
+  "one_line": "iv-e-124 passes on merged portal DEV (f91881ad5c) against the trunk series contract 0.3.3: the W225 hazard (the page's key lists red against the contract) is disarmed on DEV as the CTO's msg 9311 asked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 9311: disarm W225 when iv-e-124 passes on merged DEV; CTO rulings on call 80ad (XA-20261016T122825Z-7f7d, RULED): complete the 6099 merge-forward taking the candidate's seriesContract.ts for that one path.",
+  "world_is": "Measured 2026-10-16 ~12:5xZ: a detached tree at origin/DEV f91881ad5ca7 (MSTR's push of my hand-completed merge of cand/dell2/irpt-series-mirror-contract-033 @831f974aa1, DEV-PUSH-GATE ADMITTED) with a copy of the trunk org/standards/IRPT_DASHBD_SERIES_CONTRACT.json (0.3.3) beside it: bun test iv-e-124 reads ARM(a) parity failures 0, the planted-key control arm true, VERDICT SERIES-CONTRACT-OK, 1 pass 0 fail. The merge: parents dc057891b0 and 831f974aa1, exactly one conflicted path (seriesContract.ts) resolved with the candidate's file, whose blob 012590d021 equals origin/PROD's (64f9dba10528) and the candidate's; iv-e-124 plus the unreported-days test 9 of 9 and typecheck rc 0 on the merged tree before the push. Rows W225-S1 and W225-S2 (first disarmed against contract 0.3.0 in row S109) are disarmed against 0.3.3 on DEV, PROD (64f9dba10528) and trunk.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal ls-remote origin refs/heads/DEV = f91881ad5ca7 (this seat's read after MSTR's push, msg 9361); bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-124.series-contract.test.ts on a detached worktree at that sha: VERDICT SERIES-CONTRACT-OK",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md addendum 80ad; DT receipt org/tier2_senior/0.4.0_DT_ClientPlatform~DELL2/deliverables/irpt_dashbd_m33/A_PROMOTE_M33.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The contract-lands-with-its-reader rule (CTO msg 9311, from round 150) prevents a repeat."
+}
+```
+
