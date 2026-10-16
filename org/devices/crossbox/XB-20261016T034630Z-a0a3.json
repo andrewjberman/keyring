@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN round 25: receive the tabulate pack on a scratch target, commit pip-logged receipts",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_R25_DELL1_SCRATCH_RECEIVE.md",
  "opened_at": "2026-10-16T03:46:30Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-16T03:50:05Z",
   "bus_message_id": "a2dea470-24bb-4b40-aa2c-439bc6728f1e"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-16T03:51:44Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

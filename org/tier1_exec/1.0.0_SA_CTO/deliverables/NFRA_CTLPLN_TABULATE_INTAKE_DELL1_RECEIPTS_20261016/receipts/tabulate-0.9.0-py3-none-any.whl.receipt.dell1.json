@@ -1,0 +1,40 @@
+{
+  "schema": "intake-receipt/1",
+  "device": "dell1",
+  "python": "3.14.7",
+  "file_name": "tabulate-0.9.0-py3-none-any.whl",
+  "received_sha256": "024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f",
+  "check_record_sha256": "8178cfa9b6148528ebac81d54725ffbd061aca9b3168228dce4a94292b07add4",
+  "install": {
+    "command": [
+      "C:\\Users\\Test\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+      "-m",
+      "pip",
+      "install",
+      "--no-index",
+      "--no-deps",
+      "--target",
+      "C:\\dev\\_intake_tabulate_20261016\\SCRATCH2\\tabulate-0.9.0-py3-none-any",
+      "C:\\dev\\_intake_tabulate_20261016\\PACK2\\tabulate-0.9.0-py3-none-any.whl"
+    ],
+    "rc": 0,
+    "target_form": "target",
+    "interpreter": "C:\\Users\\Test\\AppData\\Local\\Programs\\Python\\Python314\\python.exe"
+  },
+  "imports": [
+    {
+      "module": "tabulate",
+      "rc": 0,
+      "first_error_line": "",
+      "class": "imported"
+    }
+  ],
+  "outcome": "installed_imported",
+  "reason": "all 1 top-level module(s) imported",
+  "at": "2026-10-16T03:53:05Z",
+  "pip_log": {
+    "file": "tabulate-0.9.0-py3-none-any.whl.prove-pip.dell1.log",
+    "sha256": "49006dd41c4f8c93aa3a54b600d93e42f751881735d6072d99e179e8f78b32cd",
+    "bytes": 697
+  }
+}
