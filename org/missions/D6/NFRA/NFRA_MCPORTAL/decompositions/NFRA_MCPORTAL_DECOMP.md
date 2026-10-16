@@ -1833,3 +1833,23 @@ chain R3   MP-pf-7   (no edge; the S1 served arm of MP-pf-4 still waits on MX-r-
 
 The re-run owed when F2 adds a principal (`pf7.run.sh` and `r3_principal_sets.py`, MP-pf-7) carries ONE added criterion: the raw side prints the table's TOTAL POLICY items and each EXCLUDED class with its count and its reason, beside the grant-bearing set. Today those are: 3 probe principals (`POLICY#probe-*`, not GUIDs), 1 EMAILDENY digest (`POLICY#EMAILDENY#<digest>`), and the operator_audit-only principals (0). The nine POLICY items MP-pf-7 printed were a post-filter count shown beside the table's 1,669 denominator; the re-run prints the pre-filter count.
 Status of the rest: Z-C-S40 REALIZED for today (CTO). S1 (MP-pf-4, the served /gateway read) stays issued behind OG-ap-23 (after OG-ng-2) and MX-r-15. The probe residue Z-S160 is NFRA_OPLGTW's; Z-S63 stays ARMED on 0.0.0_AB_MSTR~Z.
+
+# v15 -- WORKSTREAM PF, ROUND 5: the Indexes paragraph scrolls inside its own box (2026-10-16 ~11:2xZ, 2.0.0_SA_COO~MP)
+
+Source: row `NFRA_MCPORTAL-Z-S64` (BLOCKING, the issuer's, filed at the S1 served run) and the CTO's ruling msg 34947: "CUT NOW -- one LOCAL mcportal cell". PRD v0.9 unchanged; ENDPOINT unchanged.
+
+## PF5.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~11:2xZ)
+
+The SERVED breakdown body (read over SSM at 10:59:30Z, deployed 0cb4a87bcb, mcportal 090b9cdc85) rendered through the real GatewayView and CSS in a real browser at a true 390 px: `documentElement.scrollWidth` 561 against 390. Cause: `p.gateway-indexes`, a channel's comma-joined index names, holds an unbroken name of about 65 characters (`opal_data_assets_silver_commonwealth_cottonwood_account_day_value`) wider than its 328 px column; six sections overflow. 1280 px is unaffected. The MP-pf-2 fixture carries short names (`idx-positions`), which is why its tests and the first render passed.
+The check (`pf8.AC2.sh`) plants that real-length name in every channel's and tool's index list itself, so the worker's own fixture cannot make it pass, and measures at 390 and 1280 in a real browser (Edge via playwright-core, viewport emulation): at the base it reads `scrollWidth=557`, 16 offenders (FAIL as expected), with the short-name control and the 1280 px read ok.
+
+## PF5.1 CELL `MP-pf-8` -- the Indexes paragraph scrolls inside its own box  (view; one chain; LOCAL)
+
+1. `mcportal/src/pages/gateway/gateway.css`: `.gateway-indexes` takes `overflow-x: auto` (the paragraph keeps wrapping between names; a single name wider than the box scrolls inside it). If `pf8.AC2.sh` still reads a page wider than 390 px after that, its output names the next offending element; give it the same treatment inside the same directory and name each in the report.
+2. `gateway.cgroup.fixture.ts`: the `opal-data-assets` channel's `indexes` and one of its tools' `indexes` gain the real-length name above, so the checked-in fixture exercises it.
+3. ONE test in `gateway.test.tsx`: `an index list holding an unbroken real-length name scrolls inside its own box` (the `.gateway-indexes` rule holds `overflow-x: auto`; the fixture holds a name of 60 or more characters with no space).
+Criteria: AC1 the named test and `bun test src` 72 or more pass; AC2 the 390 px and 1280 px measurement. No third.
+
+## PF5.2 WHAT THIS CUT DOES NOT CLAIM
+
+The 390 px measurement is on the checked-in fixture plus a planted long name, not on the live page: the live look is Andrew's (call 21d9), and S1 item (iii) is graded by the CVO on the served body after this lands and reaches the host. The fix reaches the host only with the next mcportal bundle release (a new `mcportal_commit` in EC2_MANIFEST); nothing here deploys it.
