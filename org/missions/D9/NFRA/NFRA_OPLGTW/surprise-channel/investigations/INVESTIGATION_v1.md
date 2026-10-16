@@ -25100,3 +25100,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Question for this seat (registry owner), not answered here. Candidate answers, none taken: (a) the logical address carries the canonical scope and the variant elsewhere (e.g. a live/legacy word the grammar already holds, or a source word), so the aliases retire once the catalog and adapter re-key (a reviewed-code change, OG-cl-2's owner); (b) the grammar gains a variant slot, which is NAMING_SCHEMA.json law across four boxes; (c) keep the aliases as the logical-address carrier and move them out of legacy_addresses.json into a lookup-alias carrier the builder never emits as S3. Whatever is ruled, the alias rows' INERT standing depends on nobody passing their keys to legacy_address(); a reader census of those four keys belongs with the answer."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T18:22:30Z",
+  "id": "NFRA_OPLGTW-Z-S305",
+  "one_line": "OG-ap-28 Phase B: arm e4 reads FALSE and ap28.AC2 FAILs (arms true 6 of 7): the position rows of the 49F Black Diamond and SmartX adapters carry weight_unit 'fraction' but currency null with currency_basis source_absent -- the order's 'currency set' cannot be met by either vendor; the other vendors were not exercised.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN W/ap28_arms.py on i-07dccb1615503ac99 through the installed code after the deploy (W/ap28_arms.json, ssm command in the record): e12 true, e5 true, e6 true, e8 true, e9 true, e10 true, e4 FALSE. On the 49F Black Diamond holdings answer (34 position rows) weight_unit is 'fraction' and currency is null with currency_basis 'source_absent' on every row; on a SmartX holdings answer (the ap-23 harness path) weight_unit is 'fraction' and currency is null with basis 'source_absent' on every row.",
+      "READ app/client_adapter_bd49f.py:44-47 (UNREALIZED_COLUMNS and TXN_COLUMNS name no currency column) and :143-147 (_currency_keys reads row['currency'], else null with source_absent); RAN a column-name probe on the live unrealized table: 0 columns with 'curr' or 'ccy' in the name. So for this vendor the answer cannot carry a currency until its source does.",
+      "READ the other adapters: schwab has no resolve source in the gateway (resolve_account raises no_resolve_source), orion's weight_unit is null by design (OG-en-4), commonwealth's weight_unit is null; bdcottonwood sets weight_unit 'fraction' but I did not exercise it (no account-discovery path written in this phase)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-28 step 5, arm e4: 'a client position answer for a vendor whose adapter carries a unit has weight_unit in {fraction, percent} and currency set (orion's unit stays null: use another vendor)'; AC2: arms true 7 of 7.",
+  "world_is": "weight_unit is set where a weight is computable; currency is null with currency_basis source_absent for the two vendors exercised, by the OG-en-4 design ('never a default: a row that names no currency is never reported as USD'). The arm as worded cannot be true for them. Not a deploy trigger (C6): health 200, 27 of 27 tools, 65 env keys, tools/list 103 before and after. I did not redeploy.",
+  "notes": "For the COO to rule: (1) re-word e4 to what the code promises (weight_unit set, currency a code OR null with a currency_basis naming why) and re-run AC2; or (2) name a vendor whose source carries a currency (cottonwood Black Diamond?) and have me exercise it; or (3) cut a code cell to request a currency column where one exists. The other six arms are true. The order stays pending until then."
+}
+```
