@@ -21050,3 +21050,28 @@
   "notes": "Form only; the schema's location is for the channel owner to confirm."
 }
 ```
+
+## IRPT_ANLREQ-D2-S139 -- disposition of W225-S1: the fail op's writer wiring waits on G2's sha-free mark_hop_failure_keyed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S139",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T03:47:53Z",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W225-S1 (BLOCKING, ARMED): the draft store fail op cannot reach the hop_failure writer without composition_sha256; G2 adds a sha-free writer and a follow-up wiring cell lands after it merges.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-tf-71 composes the jobs port as DynamoGenerationStore, whose constructor requires composition_sha256 (ycharts/generate/durable_job.py:45-54); the fail event carries none and the draft-store role will hold UpdateItem only on irpt-jobs.",
+  "world_is": "G2 msg 9005 (AMENDMENT 1 to TO-AR-g-109): module function mark_hop_failure_keyed(client, tenant, job_id, hop, code, at, table) in durable_job.py, one update_item with ConditionExpression attribute_exists(job) AND attribute_not_exists(hop_failure), no read, same closed sets; it lands with the AR-g-109 merge. Until then the merged fail op answers UNAVAILABLE and writes nothing, and nothing is deployed, so the hazard is inert. Disarm: a wiring cell (AR-tf-74) swaps the jobs factory to the keyed writer after that merge, with the integration check against the real function; cut then, not before.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~G2 msg 9005 (inbox 2.0.0_SA_COO/~T2)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W225-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
