@@ -8295,3 +8295,29 @@ by dell1 or by this seat.
   "world_is": "Both met by the CTO's ruling and the issuer's check amendment, not by any weakening of a grade: AC2 now requires an asset_class and provenance on each planned row, AC3 requires each class to equal the map. D1-S42 (the E_18 repoint makes the old-list-only tickers live candidates) stays ARMED until the seed is applied and read and the 9 held-out rows are named seed_pending on the pair."
 }
 ```
+
+## MDPF_SECCLASS-D2-S1 -- the gics_sector writer is declared but not deployed (no schedule, no function, gics_sector on 0 rows)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D2-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T21:23Z",
+  "one_line": "The scheduled gics_sector writer of this project is not deployed: its schedule and its Lambda do not exist in AWS, so etf-classifications carries gics_sector on 0 rows, and the IRPT_DASHBD Performance tab's Sector panel has no per-security sector source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/mdpf-secclass/sector-writer/schedule.tf:35 declares mdpf-secclass-sector-writer-daily (Mon-Fri 10:30) and infra/aws/lambda/mdpf-secclass/sector-writer/lambda_function.py is the writer",
+      "live read 2026-10-16: scheduler list-schedules --name-prefix mdpf-secclass returns only mdpf-secclass-new-security-daily (ENABLED); lambda list-functions names containing secclass returns only mdpf-secclass-new-security-lambda (positive control: the new-security pair is listed)",
+      "research read of etf-classifications (11,375 rows): sector filled on 179 rows, gics_sector on 0 rows, industry on 1 row; the CTO ruling on the Sector panel is IRPT_DASHBD msg 9903 (A: worded-absent until a source exists)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The sector writer is declared in Terraform with a daily schedule, so gics_sector is filled on the classification table.",
+  "world_is": "Declared but not applied: no schedule, no function, gics_sector on 0 rows. Whether to apply it, and whether its source covers most of the held value, is this project's call; IRPT_DASHBD does not apply it and cuts no sector cell until a source covers at least 80 percent of value (the CTO's rule)."
+}
+```
