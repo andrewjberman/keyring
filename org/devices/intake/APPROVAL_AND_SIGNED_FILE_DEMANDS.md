@@ -42,6 +42,49 @@ examplepkg-1.2.3-py3-none-any.whl
 
 Dry run of one line: NONE. `intake_fetch.py resolve` checks the file before any socket, then requests release documents.
 
+### 1a. The npm form (`--ecosystem npm`, CT-cc-1)
+
+The npm limb takes one `.tgz` per approved line. The approval line is `name@version`, the scoped name written whole.
+
+- **fetch** (`intake_fetch.py` `npm_approval_gate` 137-148, `npm_line_pattern` 131-135): CASE-SENSITIVE search for `name@version`,
+  not preceded by a letter, digit, `.`, `_`, `-`, `/`, `@` or `~`, not followed by a letter, digit, `.`, `_`, `+`, `!`, `-` or `~`.
+  A bare `core@7.29.7` never matches the line `@babel/core@7.29.7`. The approval is required on every base, loopback too.
+- **held file name** (`npm_held_name` 125-128): the name with `@` removed and `/` written as `__`, a dash, the version, `.tgz`.
+  `@babel/core` 7.29.7 is held as `babel__core-7.29.7.tgz`. The check record and the pack carry this name.
+
+<!-- gate: intake_fetch.npm_approval_gate -->
+```text accepted
+examplepkg@1.2.3
+examplepkg@1.2.3  # the one line the CTO approved
+```
+
+<!-- gate: intake_fetch.npm_approval_gate -->
+```text refused
+Examplepkg@1.2.3
+examplepkg@1.2.4
+examplepkg@1.2.3.4
+examplepkg@1.2.3+build
+@examplescope/examplepkg@1.2.3
+examplepkg==1.2.3
+```
+
+<!-- gate: intake_fetch.npm_held_name -->
+```text accepted
+@examplescope/examplepkg@1.2.3
+```
+
+<!-- gate: intake_fetch.npm_held_name -->
+```text refused
+examplepkg
+@examplescope/examplepkg
+examplepkg/sub@1.2.3
+Examplepkg@1.2.3
+```
+
+The registry is read ONLY at `https://registry.npmjs.org/<name>/<version>` (a scoped name as `@babel%2Fcore`), then at that
+document's `dist.tarball`, which must be on `registry.npmjs.org` (`Fetch.run_npm`; `Policy.check` before each request).
+`--registry-base` is a loopback test override only.
+
 ## 2. The signed check-8 file
 
 - **Where:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/` or below (`DEFAULT_SIGNER_REL` 52, `check_8` 831-841). Never the
@@ -67,6 +110,30 @@ examplepkg-1.2.3-py3-none-any.whl is NOT check 8 SIGNED yet.
 ---
 # CTO check 8
 CHECK 8 SIGNED -- examplepkg-1.2.3-py3-none-any.whl
+```
+
+### 2a. The npm NATIVE and LIFECYCLE lines (`--ecosystem npm`, CT-cc-1)
+
+- **Where and names:** as section 2, with the `.tgz` file name in place of the wheel name. The batch id and the file name must
+  both appear.
+- **Own lines:** a tarball that lists a lifecycle script (`preinstall`, `install`, `postinstall`, `prepare`) needs a line
+  `LIFECYCLE <file name>: <reason>`; a tarball that names a native binary (a `.node`, `.exe`, `.dll`, `.so` or `.dylib`
+  member, or a package whose `os` or `cpu` is restricted) needs a line `NATIVE <file name>: <reason>`. Each is read by
+  `parse_npm_lines` (`intake_check.py` 1206-1218); check 8 reads failed, naming the missing line, when one is absent
+  (`check_8` 991-1004). An archive that cannot be read reads check 8 failed. A `WAIVE` line for check 1 or 2 still fails check 8.
+
+<!-- gate: intake_check.parse_npm_lines -->
+```text accepted
+NATIVE examplepkg-1.2.3.tgz: ships a synthetic win32 binary, signed by the CTO
+LIFECYCLE examplepkg-1.2.3.tgz: postinstall runs a synthetic setup script, signed by the CTO
+```
+
+<!-- gate: intake_check.parse_npm_lines -->
+```text refused
+NATIVE examplepkg-1.2.3.tgz:
+NATIVE other-1.2.3.tgz: a different file
+NATIVE examplepkg-1.2.3.tgz check 6: the form of a WAIVE line
+NATIVE examplepkg-1.2.3.tgz synthetic reason with no colon
 ```
 
 ## 3. The `WAIVE` line

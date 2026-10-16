@@ -85,12 +85,45 @@ def gate_parse_waivers(fn, text, tmp):
     return len(waivers) == 1
 
 
+# the npm form (CT-cc-1): one approval line name@version, one held file name, one NATIVE or LIFECYCLE line
+NPM_PINNED = "examplepkg@1.2.3"
+NPM_FILE = "examplepkg-1.2.3.tgz"
+
+
+def gate_npm_approval_gate(fn, text, tmp):
+    """intake_fetch.npm_approval_gate: the npm fetch reader. True when it raises nothing."""
+    try:
+        fn(str(_approval_file(tmp, text)), [NPM_PINNED])
+    except intake_fetch.Refuse:
+        return False
+    return True
+
+
+def gate_npm_held_name(fn, text, tmp):
+    """intake_fetch.npm_held_name on one name@version line: True when the line is a valid npm name and version and the held
+    file name is a .tgz with no @ and no / in it."""
+    name, sep, version = text.strip().rpartition("@")
+    if not sep or not (intake_fetch.NPM_NAME_RE.match(name) and intake_fetch.NPM_VERSION_RE.match(version)):
+        return False
+    held = fn(name, version)
+    return held.endswith(".tgz") and "@" not in held and "/" not in held
+
+
+def gate_npm_signed_line(fn, text, tmp):
+    """intake_check.parse_npm_lines for this npm file: True when exactly one NATIVE or LIFECYCLE reason is read."""
+    lines = fn(text, NPM_FILE)
+    return len(lines["NATIVE"]) + len(lines["LIFECYCLE"]) == 1
+
+
 # gate name -> (granularity, adapter). The adapter calls the real function; a name not listed here fails the page.
 GATES = {
     "intake_fetch.approval_gate": ("line", gate_approval_gate),
     "intake_check.check_2": ("line", gate_check_2),
     "intake_check.check_8": ("document", gate_check_8),
     "intake_check.parse_waivers": ("line", gate_parse_waivers),
+    "intake_fetch.npm_approval_gate": ("line", gate_npm_approval_gate),
+    "intake_fetch.npm_held_name": ("line", gate_npm_held_name),
+    "intake_check.parse_npm_lines": ("line", gate_npm_signed_line),
 }
 
 
