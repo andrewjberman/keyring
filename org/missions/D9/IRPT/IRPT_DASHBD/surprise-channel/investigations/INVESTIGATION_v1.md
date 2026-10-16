@@ -21904,6 +21904,53 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not a criterion failure. The stale text is cosmetic to the served bytes; it is recorded so the docstring and the test name can be corrected in a later pass the order allows."
 }
 ```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W420-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~420",
+  "surfaced_at": "2026-10-16T08:17:00Z",
+  "one_line": "No 49 Financial published series document carries the unreported-days pair, so the page prints no unreported-days sentence for any 49 Financial account; the gold census finds no absent trading day in either gold table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-c-29 step 2 counts the pair (unreported_trading_days with unreported_trading_days_basis) per published document. The series contract 0.3.0 writer that emits the pair is the source of FWD-10 cell (a) (decomposition sections 16 and 17), and the round-148 Cottonwood publish carried it.",
+  "world_is": "pair_present is 0 of 6949 49 Financial series documents (pair_absent 6949). The page prints no 'not reported by the source' sentence for any 49 Financial account (accounts_printing_unreported_sentence 0). The gold census finds 0 absent trading days over the full span of account_return_daily (571 partitions) and holdings_performance_daily (570 partitions). The round-148 Cottonwood publish carried the pair on 939 of 939 documents.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~419/TEST_READ_R148.json@8c1db7c3f3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/decompositions/IRPT_DASHBD_DECOMP_B-CW.md@8c1db7c3f3",
+      "portal/src/pages/InvestorReporting/dashboard/DashboardPerformance.tsx@34a6baf8657bb166676dc3b8c3eec97ee8d3e585"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure: DBC150-1-AC2 compares the page with these documents as they are. Recorded because the page cannot separate 'none missing' from 'not measured' for a 49 Financial account. The owner of the 49 Financial publish state is the next reader."
+}
+```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W420-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~420",
+  "surfaced_at": "2026-10-16T08:17:00Z",
+  "one_line": "The 49 Financial series prefix holds 4344 objects that are neither series nor manifest documents; the round-148 Cottonwood prefix held none. Their kind is not established.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-c-29 step 2 counts the objects under the published series prefix by kind (series, manifest, anything else). The round-148 precedent for the same prefix shape (decomposition section 17) held series and manifest documents only.",
+  "world_is": "objects_series 6949, objects_manifest 6949, objects_other 4344 under the 49 Financial series prefix. The read downloads series documents only, so the kind of the other objects is not established, and no key was printed. The round-148 Cottonwood prefix had objects_other 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~419/TEST_READ_R148.json@8c1db7c3f3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/decompositions/IRPT_DASHBD_DECOMP_B-CW.md@8c1db7c3f3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure: the count is recorded in the census record. Recorded so the owner of the 49 Financial publish can name what the other objects are."
+}
+```
 
 ## IRPT_DASHBD-D2-W1501-S1 -- two folders the round-127 producer and the class-daily test import were outside the sparse set, so both test modules failed at collection until each was added
 
@@ -22060,3 +22107,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The contract's Transfer Out | Transfer Out row carries flow_class_none EXTERNAL_OUT and the record's reason, which says the class is UNRESOLVED. Two statements in one row disagree. Whether the issuer rewrites the reason is for the issuer; no Cottonwood producer reads it in this round."
 }
 ```
+
+## IRPT_DASHBD-D2-S112 -- round 149 B-CW: the 49 Financial FWD-10 census and test read, worker 420's rows dispositioned
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S112",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T08:41:09Z",
+  "one_line": "Round 149 B-CW (DB-c-29, FWD-10 for 49 Financial): the gold tables miss no trading day, the 6,949 published series carry no unreported-days statement and every one reads PARTIAL_HISTORY, so the page prints Returns-from on all of them and cannot say 'none missing' from 'not measured'; worker 420's rows dispositioned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.15 and v0.16, FWD-10: a person can always tell where the data starts, which trading days the source did not report, and how current the data is; the standing order of work of the CTO's msg 8741 (Cottonwood, then 49 Financial).",
+  "world_is": "Merge 5379548cdb (worker 420). TEST READ, counts only (read at the worker's time; the issuer re-measured fresh): gold account_return_daily 571 partitions 2024-07-08 to 2026-10-14 and holdings_performance_daily 570 partitions 2024-07-09 to 2026-10-14, 0 absent trading days and 0 runs in each; 6,949 published series (6,949 manifests; 4,344 other objects of an unestablished kind, W420-S2), all parse and all are read by the page's reader (0 refused, 0 threw); none carries the unreported-days pair (0 non-empty lists, W420-S1) and none carries income_claim; income holds numbers in all 6,949 (0 coerced); history_scope is PARTIAL_HISTORY on all 6,949, including accounts whose first day equals the table start, so the 'Returns from <date>.' note prints on every 49 Financial account; 4,097 series start after the gold first day; as_of 2026-10-14 on 6,946 and earlier on three (2026-10-02, 2026-10-12, 2026-10-13); day-quality day totals MEASURED 2,578,713, LARGE_FLOW 44,505, FLOW_UNRECONCILED 6,139, NOT_MEASURABLE 57,492 (return_basis NOT_MEASURABLE 63,631 equals NOT_MEASURABLE plus FLOW_UNRECONCILED); a day-quality sentence is printed for 6,945 accounts and the excluded-days note for none. The page cannot tell 'no trading day is missing' from 'not measured' because the series carries no statement: the contract's own rule (the page says nothing, never guesses) holds. No identifier, key or value is recorded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~420/FWD10_49F_CENSUS_R149.json and FWD10_49F_CENSUS_R149.md; checks/r149/p150_bcw.py AC1 to AC3 PASS (issuer re-run, fresh S3 reads)",
+      "python .tools/proof-of-spec-check.py <instance> DBC150-1-AC1,DBC150-1-AC2,DBC150-1-AC3: VALID (rc=0); python .tools/round-close-check.py --project IRPT_DASHBD --round 149 --workstream B-CW: MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: whether the 49 Financial series should state its unreported days (the gold partitions let the publisher say 'none' from the calendar), and whether Returns-from on every 49 Financial account is the wanted reading. Not a build cell of this workstream (the series' producer is ~D2's)."
+}
+```
+
