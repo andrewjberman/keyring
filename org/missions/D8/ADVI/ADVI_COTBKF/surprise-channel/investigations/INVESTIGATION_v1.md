@@ -10241,3 +10241,29 @@ round.** Never edit an existing row.
   "notes": "The S3 objects were not read or head-checked by this worker."
 }
 ```
+
+## ADVI_COTBKF-D1-S16 -- the issuer dispositions D1-W189-S1: the order's paths block omits the order file; the issuer flipped the status
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S16",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T08:32:36Z",
+  "one_line": "the issuer dispositions D1-W189-S1: the order's <paths> block omits the order file, so the worker could not flip its status; the issuer re-ran the three criteria at HEAD and flipped it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cv-1.completion-report-fwd-1-to-9.md: the <proof_of_spec> text says the worker flips its own order (lane ANY) while the <paths> block lists the deliverables folder and the channel file only",
+      "issuer re-run at HEAD 808ff79bc5 after the drain: CB100cv1-AC1 'COMPLETION-REPORT measured=True rows=9 realized=3 not_realized=6'; AC2 'REPORT-SHAPE rows=9 ids_ok=True grades_ok=True artifacts_ok=True grade_read_ok=True acts_ok=True'; AC3 'ARTIFACTS exist=9 of 9'; proof-of-spec-check VALID rc=0"
+    ]
+  },
+  "spec_asserts": "TO-CB-cv-1 proof_of_spec: the worker flips its own order to complete when all three criteria PASS (the flip is inside its grant).",
+  "world_is": "The grant text and the paths block disagree for this order; the worker stopped at the flip and said so rather than flip outside its paths. Cut defect of the issuer; nothing else depends on it.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer flipped the status after re-running the criteria; cut orders from now name the order file in <paths> or leave the flip to the issuer."
+}
+```
