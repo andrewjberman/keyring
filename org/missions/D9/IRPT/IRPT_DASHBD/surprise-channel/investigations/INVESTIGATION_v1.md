@@ -20004,3 +20004,105 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the CTO: review of cand/dell2/irpt-fwd10-partial-history-sentence for the portal merge-forward."
 }
 ```
+
+## IRPT_DASHBD-D2-W318-S1 -- DB-i-18 test 3: one feed run cannot skip a middle day alone, so the skipped-day partitions come from three feed runs
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W318-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~318",
+  "surfaced_at": "2026-10-16T00:48:32Z",
+  "one_line": "The order's test 3 (a day the feed skipped for a household failure, read ABSENT for every account from the backfill window) cannot be produced by one feed run: a failing household skips EVERY day its accounts are held on, so over a window where those accounts are held on the neighbouring days too, the whole window is skipped. The test builds the skipped middle day from three feed runs (10-12 and 10-14 healthy, 10-13 run alone with the household failing). The feed's behaviour is as its day-complete tests describe; the order's single-run form does not exist.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@ed9233af0a: _complete_days(days, universe_by_day, ok_hh) returns the days whose every household of that day's universe is OK; a day's universe is the positions-held roster of its source day (load_universe), so a household holding accounts on a day makes that day incomplete.",
+      "data/inf/manual_api/test_scope_feed_day_complete.py@ed9233af0a: test_from_date_window_writes_only_complete_days takes household 5002 off the 10-13 positions so that day stays complete while 10-12 and 10-14 are skipped: the skip follows the positions, not one failing run.",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_real_shape.py@2e5b09d5fc: test_a_day_the_feed_skipped_for_a_failed_household_is_read_absent_for_every_account builds the middle skip from three feed runs; 7 of 7 tests pass."
+    ]
+  },
+  "spec_asserts": "TO-DB-i-18 test 3: a day the feed skipped because a household failed leaves its partition absent from the silver, and the wrapper reads that trading day ABSENT for every account, from the feed's backfill window in one run.",
+  "world_is": "A household's failure in one run skips every day in that run whose universe holds the household's accounts. A middle day is skipped alone in one run only when its household holds no account on the other days of that run, which then also removes those accounts from the other partitions. The test therefore uses three feed runs: 10-12 and 10-14 land from healthy runs, 10-13 is run alone with household 5002 failing. The wrapper then reads 10-13 ABSENT with NO_FEED_ROW for all five accounts, with 0 unaccounted. No code was changed."
+}
+```
+
+## IRPT_DASHBD-D2-W318-S2 -- the worktree carries no org/surprise_channel/ folder, so the row schema was read from the base checkout
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W318-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~318",
+  "surfaced_at": "2026-10-16T00:48:32Z",
+  "one_line": "The row schema the order and the surprise-row gate cite (org/surprise_channel/schemas/investigation_item.schema.json) is not in this worktree, so the schema was read from the base checkout, read only, and the row was written to the shape of the rows already in this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-IRPT_DASHBD-318: no org/surprise_channel/ directory at ed9233af0a (ls-check in this worktree); the schema exists in the base checkout as org/surprise_channel/schemas/investigation_item.schema.json",
+      "IRPT_DASHBD-D2-W316-S1 and IRPT_DASHBD-D2-W602-S4 in this file record the same absence in earlier worktrees"
+    ]
+  },
+  "spec_asserts": "TO-DB-i-18 and the surprise-row gate read the row schema from org/surprise_channel/schemas/ inside the worktree.",
+  "world_is": "The folder is not tracked in this worktree. The schema was read from the base checkout only; nothing was copied into the worktree. The gate's own check decides the row at commit."
+}
+```
+
+## IRPT_DASHBD-D2-W318-S3 -- the round-127 wrapper's module docstring says it refuses a pull-date mismatch, which the code no longer checks
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W318-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~318",
+  "surfaced_at": "2026-10-16T00:48:32Z",
+  "one_line": "The wrapper's module docstring lists, among its refusals, a partition whose rows name another pull date. The code checks only each row's day against its partition's day (the round-130 rule); a pull_date that differs is accepted. The docstring is stale, the code is the intended rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@ed9233af0a: module docstring names the refusal 'a partition whose rows name another pull date'; run() counts mismatched rows with row.get(\"day\") != part_day only",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_real_shape.py@2e5b09d5fc: test_a_later_pull_date_on_every_row_is_accepted_... accepts a later pull_date on every row, the behaviour the code gives"
+    ]
+  },
+  "spec_asserts": "The wrapper's module docstring: the run refuses, with a count and nothing written, a partition whose rows name another pull date.",
+  "world_is": "The code refuses on the day of a row against its partition only, and accepts any pull_date. The docstring was not updated by the round-130 change. No code or docstring was changed here. IRPT_DASHBD-W317-S1 (a stale docstring, recorded by the DB-i-17 drain) may name this same text; not checked."
+}
+```
+
+## IRPT_DASHBD-D2-W318-S4 -- the issuer's amendment 1 to TO-DB-i-18 (commit 4e13c27d91) is applied: DIM_IDS, a multi-day chain test, and a rows_present test that names NO_EOD_VALUE
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W318-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~318",
+  "surfaced_at": "2026-10-16T01:08:07Z",
+  "one_line": "The issuer's amendment 1 to TO-DB-i-18 is applied in the test file only: the DIM_IDS constant is the dimension frame's input; a ten-calendar-day feed run grades the chain on 8 trading days for account 7001; a rows_present test on the 3-day ended-series fixture asserts 1 and explains the NO_EOD_VALUE row. The seven earlier tests and their assertions are unchanged; 9 pass, and the three r131 criteria PASS on two runs each.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-18.scope-feed-wrapper-and-run-script-tests-on-the-feeds-own-writer-output.md@4e13c27d91: AMENDMENT 1 (two additions, the multi-day fixture and the DIM_IDS and NO_EOD_VALUE explanation)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_real_shape.py@8c1a16b129: DIM_IDS; _feed_multiday and test_a_series_account_present_on_all_eight_trading_days_of_a_ten_day_feed_run_chains_to_the_silver; test_rows_present_on_the_ended_series_fixture_is_one_not_the_two_returned_rows_because_one_has_no_end_value",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r131/p131_feedwriter.py@4e13c27d91: multiday_partitions and grade_multiday; the string checks for DIM_IDS, NO_EOD_VALUE and rows_present"
+    ]
+  },
+  "spec_asserts": "TO-DB-i-18 AMENDMENT 1: the feed-writer fixture carries a multi-day series so the chain is graded; the test file records its dimension input as DIM_IDS and explains rows_present against the RETURNED rows, naming NO_EOD_VALUE.",
+  "world_is": "Applied in the test file only; no feed, wrapper, run script, adapter or checker file was edited. The multi-day run gives 7001 PRESENT on all 8 trading days with carried_days summing to 10 and the chain within 1e-12 of the silver's factors. The 3-day fixture reads rows_present 1 (7004 on the pull day), and 7001 on 10-12 reads ABSENT NO_EOD_VALUE. The amendment's rule that the file names NO_EOD_VALUE and rows_present is met by the test text."
+}
+```
