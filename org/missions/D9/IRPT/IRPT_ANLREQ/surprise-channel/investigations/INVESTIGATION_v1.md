@@ -22645,3 +22645,50 @@
   "world_is": "The schema file is not in the worktree, so the contract could not be read at the cited path; the row gate .tools/surprise-row-gate.py is present and is run on the channel file at commit. Owner: 2.0.0_SA_COO~G2 for the worktree's sparse list. Not an engine defect; no product change."
 }
 ```
+
+## IRPT_ANLREQ-D2-W271-S2 -- TO-AR-g-144 keeps its RECORD FACE in the same file as its WORKER FACE; the whole-file read returned it, and no act was taken from it
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W271-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~271",
+    "surfaced_at": "2026-10-16T19:57:12Z",
+    "one_line": "TO-AR-g-144 keeps its RECORD FACE in the same file as its WORKER FACE; a Read of the whole file returned both, so the RECORD FACE text reached this worker's context. No act was taken from it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order directs the worker to read the file from its title through the closing proof_of_spec block and the REPORT line, and not to read anything under '## RECORD FACE'.",
+    "world_is": "The file has 104 lines and '## RECORD FACE' is at line 93, below the REPORT line, in the same file. A Read without offset or limit returns the whole file in one result, so the boundary is not enforced by the read itself. Every act taken followed the WORKER FACE and the scope record; nothing from the RECORD FACE was used.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-144.ycharts-price-tier-and-host-budget-binding.md:93 '## RECORD FACE' @1167fe7384 (last commit touching the order)",
+        "the first Read of that file in this session, with no offset or limit, returned lines 1 to 104 in one result"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W271-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~271",
+    "surfaced_at": "2026-10-16T19:57:12Z",
+    "one_line": "The commit gate's client-data-check printed WARN and did not check commit e50032bd47: the hashed account-id list is absent on this device. Absent is not empty, so the commit is unchecked for client account ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "safe-commit.sh runs the client-data-check over the staged set and the commit passes it before it lands.",
+    "world_is": "C:/Users/Test/.opal/account_id_hashes.txt is absent and OPAL_ACCOUNT_ID_HASHES is not set, so client-data-check printed 'WARN: client-data-check: hashed account-id list ABSENT' and passed the commit unchecked. The staged set is five code and test files; the only account-like value in them is the fixture enrolled_user_id 4242 that test_resident_installed.py already carries.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output for commit e50032bd47: WARN line 'client-data-check: hashed account-id list ABSENT' naming C:/Users/Test/.opal/account_id_hashes.txt",
+        "git show --stat e50032bd47: five files, 347 insertions and 8 deletions, all under infra/aws/lambda/investor-reporting/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
