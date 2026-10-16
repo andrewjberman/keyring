@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-14T03:37:57Z",
+ "written_at": "2026-10-16T15:18:17Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -3455,6 +3455,2268 @@
     "crossbox": null,
     "ruled_by": "cto",
     "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261014T054408Z-263d",
+   "project": "MDPF_SECCLASS",
+   "subject": "e97 disarm condition 4 (second fire reads 0 keys rewritten) cannot be literal: the 04:00Z fire brought 3 new dates and a second upstream AUA restatement. Read it on an unchanged-input QA re-run of C_06 (SC1) right after this chain, or wait for a quiet fire?",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/GAP_EQUALS_MOVE_E97_20261014T0155Z.txt",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T05:44:08Z",
+   "kind": "fork",
+   "context": "Second fire (04:00:46Z): client_performance rewritten 05:17:21Z with dates 10-10..12 new and window AUA restated again (+2.5M..3.0M on 8 dates); window slid, restated_through 09-25 -> 09-28; served total = current AUA at 0.00 on all 18 dates 09-25..10-12. A fire with new inputs rewrites keys by design, so 'idempotent' needs unchanged inputs. Gates D1-W83-S5's disarm, the e97 ledger close and dell2's DB-b-183.",
+   "rec": "QA re-run: right after this chain stops, SC1 runs C_06 alone once on the unchanged inputs (ad-hoc QA run, never production evidence), I read C06-ROLLING-REDERIVE relationships_rewritten=0 and the served objects' bytes unchanged (DELTA=0, so no never-widen hold needed). Why: it answers the condition today instead of waiting for a fire with no new date, and it holds dell2's release one fire at most.",
+   "scope": {
+    "measured_at": "2026-10-14T05:44:08Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T05:55:28Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261014T0552Z_XA-20261014T054803Z-7d27.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261014T054803Z-7d27"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261014T054803Z-7d27",
+    "at": "2026-10-14T05:48:03Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261014T055348Z-f376",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/amgt-sa-pe-basis-and-reasons",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "cand/dell1/amgt-sa-pe-basis-and-reasons",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T05:53:48Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/amgt-sa-pe-basis-and-reasons",
+    "purpose": "AMGT_RESAPP bm-1: the Security Analysis Model tab prints the price behind a historical P/E, gives every All-figures team-grid dash its reason and shows a withheld forward P/E's reason",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, GOOGL US, PBR US and ISP IM",
+    "head_sha": "4eb56d57d2683a55f5009d9f777015f975e7d414",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-14T05:53:48Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T06:22:06Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_PORTAL_CAND_PE_BASIS_AND_REASONS_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261014T111220Z-faa4",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/amgt-sa-pe-basis-and-reasons @84fd6461bb (re-register; f376 bound 4eb56d57d2)",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "cand/dell1/amgt-sa-pe-basis-and-reasons",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T11:12:20Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/amgt-sa-pe-basis-and-reasons",
+    "purpose": "AMGT_RESAPP bm-1: the Security Analysis Model tab prints the price behind a historical P/E, gives every All-figures team-grid dash its reason (the team sentence only on a team row) and shows a withheld forward P/E's reason",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, GOOGL US, PBR US and ISP IM",
+    "head_sha": "84fd6461bbf890508ded3a82f0fba344f382125c",
+    "commits": 3
+   },
+   "scope": {
+    "measured_at": "2026-10-14T11:12:20Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T11:13:57Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_PORTAL_CAND_PE_BASIS_AND_REASONS_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261014T113848Z-339a",
+   "project": "MDPF_SECCLASS",
+   "subject": "D1-W83-S5 disarm: leg Q read 0 keys rewritten, but one served object (views/mix_daily_summary.json) moved bytes by advisors key order only. Read XA-7d27's byte-identical DELTA=0 guard as parsed-content equality?",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/tier2_senior/0.7.0_AE_CloudOps~SC1/deliverables/E97_LEGQ_REPORT_20261014.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T11:38:48Z",
+   "kind": "fork",
+   "context": "XA-7d27 (laptop CTO) disarms D1-W83-S5 on relationships_rewritten=0 plus byte-identical served objects (DELTA=0). Leg Q: 0 rewritten, 15544/15544 keys, 18/18 total match; one ETag moved by key order (parsed JSON equal, negative control unequal); SC1 restored BEFORE bytes 11:27:24Z. Gates the disarm and dell2 DB-b-183.",
+   "rec": "YES: disarm on parsed-content equality. C_06 serializes that object in a different key order every run, so a byte test fails any run on unchanged inputs; content equality is the idempotence property the ruling tests. Follow-up: C_06 writes sort_keys so bytes become deterministic (own pair).",
+   "scope": {
+    "measured_at": "2026-10-14T11:38:48Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T12:17:53Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261014T1142Z_XA-20261014T113939Z-a304.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261014T113939Z-a304"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261014T113939Z-a304",
+    "at": "2026-10-14T11:39:39Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261014T141244Z-c822",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/sechist-frontier-label",
+   "asked_by": "2.0.0_SA_COO~H1",
+   "source": "cand/dell1/sechist-frontier-label",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T14:12:44Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/sechist-frontier-label",
+    "purpose": "MDPF_SECHIST SH-t-25: the Positioning page passes and shows a carried holding's frontier date (closed-market returns), display only; condition C1 of the SH-t-24 producer deploy",
+    "pages": [
+     "Positioning"
+    ],
+    "class": "client-facing",
+    "how": "cd portal && bun run dev:live --port 5174; /positioning, Performance view, books DIVZ and IDVZ once the producer serves returns_frontier; fixture src/pages/Positioning/__harness__/frontierFixture.json",
+    "head_sha": "c77f23624df0a400273da28063813930d7e63afb",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-14T14:12:44Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T18:44:05Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_183xZ_FIVE_CALLS_ANSWERED_AND_BD_ASOF_CITATION.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T14:13:35Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Client-facing portal approval (/positioning is a partner-firm page, firm_pages.json): CLAUDE.md Agent Autonomy -- a PROD push changing a client-facing page waits on Andrew's word"
+   }
+  },
+  {
+   "id": "dell1-20261014T145618Z-f6f8",
+   "project": "MDPF_CANON",
+   "subject": "CN-h-1 cannot commit: the naming gate refuses the NEW A4 literal portal/gold/mdpf/{firm}/account-distribution/ (one occurrence in dim_mdpf_aggregate_aua_timeseries.py). Grant an R20 declared exception for that one literal, or add the registry row?",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T14:56:18Z",
+   "kind": "fork",
+   "context": "Row MDPF_CANON-D1-W17-S3 (BLOCKING). The loader change is built and green (reader 8 of 8, seams 4 of 4, comparator 5 of 5) on worktree C:/dev/wk-canon-r7-17 but uncommitted; lib/opal_naming.py has no builder for the portal/gold/mdpf A-2 home (infra/logic/registry/scopes.json:316 'ruled non-canonical A-2'). Gates CN-h-1 and the S5 disarm; the CloudOps gold-package deploy waits on it.",
+   "rec": "R20 declared exception, one literal, one file, occurrences 1, PERMANENT until the A-2 home retires: the same shape the file already reads at :694 for aggregate-aua-timeseries; a worker must not reword the key to pass the gate.",
+   "scope": {
+    "measured_at": "2026-10-14T14:56:18Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "portal/src/lib/otherModelsAsOf.ts overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/ModelPortfolios.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/api/endpoints/aum.ts overlaps the write set of IRPT_BCKEND placed on dell2 (portal)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T15:07:38Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261014T1503Z_XA-20261014T145816Z-c328.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261014T145816Z-c328"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261014T145816Z-c328",
+    "at": "2026-10-14T14:58:16Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261014T152135Z-2fc4",
+   "project": "ADVI_FIRMBKTS",
+   "subject": "Inflection bucket policy (plan move M02): admit the 35 non-matching Allow roles by explicit ARN, or change the Deny pattern to role/inf-*? (explicit ARNs is the plan's proposal)",
+   "asked_by": "2.0.0_SA_COO~B1",
+   "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.json",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T15:21:35Z",
+   "kind": "fork",
+   "context": "Plan open question Q4 (merged 5118743acd). The fence on opal-data-inflection admits only 5 of the 40 roles that Allow opal-data-inf today (D1-W81-S1); the other 35 would be denied after the move. Gates M02 and so M05 onward (round 9 or later), NOT FB-l-5 act 3.",
+   "rec": "Explicit ARNs: a smaller blast radius, one reviewed list, no change to the Deny pattern's reach",
+   "scope": {
+    "measured_at": "2026-10-14T15:21:35Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/portal-auth"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of COMM_ASSIST placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T15:37:21Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261014T1532Z_XA-20261014T152700Z-54ff.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261014T152700Z-54ff"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261014T152700Z-54ff",
+    "at": "2026-10-14T15:27:00Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261014T153951Z-6e63",
+   "project": "MDPF_CANON",
+   "subject": "MDPF_CANON round 7: Model Portfolios AUA Trend grouping and Other Models 'as of' text (client-facing), candidate branch for approval",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "cand/dell1/mdpf-canon-aua-trend-groups-and-as-of",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T15:39:51Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-aua-trend-groups-and-as-of",
+    "purpose": "The AUA Trend groups custom models into one 'Custom Models' series and draws the strategy groups (ETF Strategies, ALT Strategies, Client Supervised and Unsupervised, Other AUA) in the Total Assets colours; the Other Models card shows 'as of <date>' when its dollars are carried from an earlier day. No served object changes.",
+    "pages": [
+     "Model Portfolios (/portfolios): AUA Trend tab",
+     "Other Models card"
+    ],
+    "class": "client-facing",
+    "how": "In the portal checkout on the branch run bun run dev:live --port 5174, sign in, open /portfolios, press Trend; the issuer's own look is in org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/ROUND7_DRAIN_END.md section 2 (screenshots stay local).",
+    "head_sha": "34cd12d2d041e225767c8c80176570d6921a011a",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-14T15:39:51Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T18:44:04Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_183xZ_FIVE_CALLS_ANSWERED_AND_BD_ASOF_CITATION.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T16:27:14Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Client-facing portal approval (/portfolios, class client-facing): CLAUDE.md Agent Autonomy -- a PROD push changing a client-facing page waits on Andrew's word"
+   }
+  },
+  {
+   "id": "dell1-20261014T184734Z-9e05",
+   "project": "POSN_ASTTAX",
+   "subject": "J359 producer file cannot land: naming gate refuses NEW literal platinum/satellites/registry.json (opal-data-cot); J359 has no project home. legacy_addresses row read by POSN_ASTTAX (the producer's own project, closed, site Z) with a provenance note in its ledger, or an R20 entry Andrew acknowledges?",
+   "asked_by": "2.0.0_SA_COO~J1",
+   "source": "org/tier1_exec/2.0.0_SA_COO~J1/deliverables/NEVER_WIDEN_J359_SATELLITE_CHARACTERISTICS_COO_HALF.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T18:47:34Z",
+   "kind": "fork",
+   "context": "Andrew-directed J359 (sleeve-rule satellite characteristics; pair signed @e1dfba9db8/@2b6f842af2). The deploy builds at origin efb3f6550f, unaffected; but until the file lands on box/dell1/CLOUD a rebuild from CLOUD regresses the function. The gate derives the committing project from staged org/missions paths.",
+   "rec": "legacy_addresses row (CRO-written) with reader POSN_ASTTAX, the producer's owning project (build_package cites POSN_ASTTAX.TO-V4-1); J1's landing commit carries one provenance note under POSN_ASTTAX/ledger/. No R20: the store predates the canon, which is legacy_addresses' stated purpose.",
+   "scope": {
+    "measured_at": "2026-10-14T18:47:34Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project POSN_ASTTAX is placed on sitez, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T19:00:33Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261014T1852Z_XA-20261014T184815Z-ad15.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261014T184815Z-ad15"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261014T184815Z-ad15",
+    "at": "2026-10-14T18:48:15Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261014T191603Z-de2b",
+   "project": "POSN_ASTTAX",
+   "subject": "J359 satellite factsheet: approve the portal push",
+   "asked_by": "2.0.0_SA_COO~J1",
+   "source": "org/tier1_exec/2.0.0_SA_COO~J1/deliverables/ANDREW_DIRECT_20261014_J359_PUSH_VIA_DT.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T19:16:03Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/satellite-factsheet-prod",
+    "purpose": "The satellite popup on Positioning reads as a factsheet: key figures, asset mix, allocation detail beside trailing returns (hypothetical, one bar per window), top holdings, constituents, from the data the page already holds. Requested by CW via Yang Liu (remote job J359).",
+    "pages": [
+     "Positioning (Satellites mode",
+     "factsheet popup)"
+    ],
+    "class": "client-facing",
+    "how": "Open localhost:5174 (live-data dev build of this branch), sign in with MFA, Positioning, Satellites, click a satellite name. Satellite 90 reads duration 1.92, beta 0.97 (the served data is live since 18:57Z).",
+    "head_sha": "5a4b7d1d38f01570426d9d2173387f1e4002fc2a",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-14T19:16:03Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project POSN_ASTTAX is placed on sitez, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T19:22:55Z",
+    "by": "2.0.0_SA_COO~J1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_191xZ_J359_SMOKE_OK_ADD_ASSET_CHIP_THEN_PROMOTE.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "withdrawn"
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T19:16:15Z",
+    "by": "2.0.0_SA_COO~J1",
+    "reason": "Client-facing page (CW sees the Satellites popup): only Andrew approves. His 5174 smoke and his DEV-versus-PROD scope word are not on record."
+   }
+  },
+  {
+   "id": "dell1-20261014T192307Z-de27",
+   "project": "POSN_ASTTAX",
+   "subject": "J359 satellite factsheet with asset chip: approve the push to PROD",
+   "asked_by": "2.0.0_SA_COO~J1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_191xZ_J359_SMOKE_OK_ADD_ASSET_CHIP_THEN_PROMOTE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T19:23:07Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/satellite-factsheet-prod",
+    "purpose": "The satellite popup on Positioning reads as a factsheet: key figures, asset mix, allocation detail beside trailing returns (hypothetical, one bar per window), top holdings with an asset-class chip, constituents, from the data the page already holds. Requested by CW via Yang Liu (remote job J359).",
+    "pages": [
+     "Positioning (Satellites mode",
+     "factsheet popup)"
+    ],
+    "class": "client-facing",
+    "how": "Open localhost:5174 (live-data dev build of this branch), sign in with MFA, Positioning, Satellites, click a satellite name. Satellite 90 reads duration 1.92, beta 0.97; the top-ten rows carry the class chip.",
+    "head_sha": "6e69a05e43774a140d28e6e6a5e21fcb27f55c27",
+    "commits": 3
+   },
+   "scope": {
+    "measured_at": "2026-10-14T19:23:07Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project POSN_ASTTAX is placed on sitez, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T19:27:00Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_192xZ_J359_SMOKE_PASSED_PUSH_IT.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T19:23:14Z",
+    "by": "2.0.0_SA_COO~J1",
+    "reason": "Client-facing page (CW sees the Satellites popup): only Andrew approves. He smokes the asset-chip build on 5174 first; his approval and the PROD push word follow."
+   }
+  },
+  {
+   "id": "dell1-20261014T193937Z-19ae",
+   "project": "MDPF_CANON",
+   "subject": "MDPF_CANON CN-i-2: Model Portfolios AUA Trend repair (client-facing), fresh approval row naming the changes from the head Andrew approved (34cd12d2)",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "cand/dell1/mdpf-canon-aua-trend-groups-repair",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T19:39:37Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-aua-trend-groups-repair",
+    "purpose": "The CVO graded the approved head 34cd12d2 NOT MET; this branch (PROD plus the same feature and the repair) changes four things from it: (1) Client Unsupervised moves from the Ultra-Short Term orange to lime, in the shared colour table, so the Total Assets breakdown's Client Unsupervised bar and dot repaint too; (2) the Trend tooltip draws no row for a series absent on the hovered date (no zero Client row); (3) the Trend states 'Per-model detail begins <date>; earlier model assets are in the Total and are not broken out' and draws no band for the earlier dates (PRD v2.18, the CTO's ruling); (4) a type field carrying the boundary date, no fetch. The tooltip fix was not rendered in the browser.",
+    "pages": [
+     "Model Portfolios (/portfolios): AUA Trend tab; Total Assets breakdown (Client Unsupervised colour)"
+    ],
+    "class": "client-facing",
+    "how": "In the portal checkout on the branch run bun run dev:live --port 5174, sign in, open /portfolios, press Trend; the issuer's read at head fd5433a3 is org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/CN_I_2_REPAIR_RENDER_20261014.md",
+    "head_sha": "fd5433a3a76cb8b2f05b986220b70925a9f12ed3",
+    "commits": 3
+   },
+   "scope": {
+    "measured_at": "2026-10-14T19:39:37Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T20:12:15Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_201xZ_PORTFOLIOS_SMOKE_TREND_FULL_HISTORY_COTTONWOOD_SPEC.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "declined"
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T19:40:19Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Client-facing portal approval (/portfolios Trend repair CN-i-2; also repaints Total Assets Client Unsupervised lime): CLAUDE.md Agent Autonomy -- a PROD push changing a client-facing page waits on Andrew's word"
+   }
+  },
+  {
+   "id": "dell1-20261014T202134Z-fbdf",
+   "project": "POSN_ASTTAX",
+   "subject": "J359 addendum 2: delete the retired-method footnotes",
+   "asked_by": "2.0.0_SA_COO~J1",
+   "source": "org/tier1_exec/4.0.0_SA_CRO/deliverables/J359_SATELLITE_FACTSHEET_EDITS_SPEC_20261014.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T20:21:34Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/satellite-returns-method",
+    "purpose": "Deletes the two sentences under Trailing Returns that described the retired holdings-backcast method (the hypothetical disclaimer and the exclusions footnote); the satellite trailing returns are now the models' realized returns blended with GLD, served by the producer since 20:15Z. No other frontend change.",
+    "pages": [
+     "Positioning (Satellites mode",
+     "factsheet popup)"
+    ],
+    "class": "client-facing",
+    "how": "After promote, open Positioning, Satellites, a satellite popup: Trailing Returns has the bars and no footnote under them. Satellite 40 reads YTD 3.01 and 1Y 4.95.",
+    "head_sha": "714f8e48c8517d1e14f7479693b8d8b5bbd5b538",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-14T20:21:34Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project POSN_ASTTAX is placed on sitez, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T20:51:33Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO~J1/deliverables/ANDREW_DIRECT_20261014_J359_ADDENDUM2_DELETION_GO.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T20:21:35Z",
+    "by": "2.0.0_SA_COO~J1",
+    "reason": "Client-facing page (CW sees the Satellites popup): only Andrew approves. CTO C5: the two-sentence deletion waits on his word after the served read, which is now read."
+   }
+  },
+  {
+   "id": "dell1-20261014T204755Z-df8f",
+   "project": "MDPF_CANON",
+   "subject": "MDPF per-firm leaves reachable by any login: /api/general/mdpf/* has no firm gate at the edge (row MDPF_CANON-D1-S27, ARMED)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [
+    "infra/aws/lambda-edge/auth-validator-edge",
+    "infra/aws/lambda-edge/public-data-router"
+   ],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T20:47:55Z",
+   "kind": "fork",
+   "context": "CVO row D1-S27: public-data-router rewrites /api/general/mdpf/* to platinum/mdpf/* behind the JWT alone; the page scopes the firm, the edge does not. A partner or demo login could fetch another firm's per-firm series by URL. Read from source; deployed edge bytes not compared.",
+   "rec": "Gate /api/general/mdpf/<firm>/ in auth-validator-edge to the claim's firm (internal passes all; demo and no-firm claims get global/ only), after a live negative-control request with a partner token confirms the gap on the deployed bytes.",
+   "scope": {
+    "measured_at": "2026-10-14T20:47:55Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/lambda-edge/auth-validator-edge",
+     "infra/aws/lambda-edge/public-data-router"
+    ],
+    "evidence": {
+     "paths": [
+      "portal/src/pages/ModelPortfolios.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "infra/aws/lambda-edge/auth-validator-edge overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/lambda-edge/auth-validator-edge)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T20:57:30Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/logs/2026-10-14/DELL1_self_drive_box_tick23.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261014T204823Z-c7cd"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261014T204823Z-c7cd",
+    "at": "2026-10-14T20:48:23Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261014T204814Z-c2b9",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/trsb-history-excel-download",
+   "asked_by": "4.0.0_SA_CRO~DELLX",
+   "source": "cand/dell1/trsb-history-excel-download",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T20:48:14Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/trsb-history-excel-download",
+    "purpose": "Trade Submission Download Excel works: client reads download_url (the field trade-dashboard-api returns) instead of the never-present presigned_url; History, Approvals, Execution tabs",
+    "pages": [
+     "Trade Submission"
+    ],
+    "class": "opal-internal",
+    "how": "Trade Submission > History > open any submission > Download Excel: FUND_Model_YYYYMMDD.xlsx downloads",
+    "head_sha": "040b152f41bf6b973e13d9317c65b08e3c166e69",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-14T20:48:14Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T20:49:13Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/4.0.0_SA_CRO~DELLX/deliverables/ANDREW_DIRECT_20261014_204xZ_TRSB_EXCEL_DOWNLOAD_FIX_GO.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261014T230556Z-a196",
+   "project": "MDPF_CANON",
+   "subject": "Global AUA Trend, full history (Variant 1) and the approved Model Portfolios edits",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-p-2.portal-variant1-trend-stitch-and-approved-edits.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T23:05:56Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-global-trend-variant1",
+    "purpose": "The Global AUA Trend over full history (Nov 2024 to the as-of): Client Supervised, ETF Strategies, ALT Strategies read from the served series, Custom Models, carried points marked; an internal session sees the per-model lines before 2026-05-15 stitched from the firm series, every other session sees one Models band; plus the approved edits (lime Client Unsupervised, the Other Models as-of line, the 49 Financial view).",
+    "pages": [
+     "/portfolios (Model Portfolios: Global Trend",
+     "firm views",
+     "Other Models card)"
+    ],
+    "class": "client-facing",
+    "how": "Run the portal on port 5174 from the branch, sign in, open Model Portfolios, choose Global (All) and press Trend; compare with PROD.",
+    "head_sha": "9f5bbbca624c52e91cc254a307619ea815fe2e8a",
+    "commits": 5
+   },
+   "scope": {
+    "measured_at": "2026-10-14T23:05:56Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T01:33:32Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261015_01xxZ_COO_D1_TREND_LOOKS_GOOD_CUSTOM_ROLLFORWARD_THEN_PROD.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "withdrawn"
+   }
+  },
+  {
+   "id": "dell1-20261015T013256Z-f411",
+   "project": "MDPF_CANON",
+   "subject": "Global AUA Trend, full history with Custom Models roll-forward, and the approved Model Portfolios edits (supersedes a196)",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261015_01xxZ_COO_D1_TREND_LOOKS_GOOD_CUSTOM_ROLLFORWARD_THEN_PROD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T01:32:56Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-global-trend-variant1-rf",
+    "purpose": "The Global AUA Trend over full history with Custom Models rolled forward (Andrew smoked it on 5174: it looks good, Custom Models needed roll-forwards): Client Supervised, ETF Strategies, ALT Strategies read from the served series, Custom Models with no gap from 2026-05-15, carried points marked; an internal session sees the per-model lines before 2026-05-15 stitched from the firm series, every other session sees one Models band; plus the approved edits (lime Client Unsupervised, the Other Models as-of line, the 49 Financial view).",
+    "pages": [
+     "/portfolios (Model Portfolios: Global Trend",
+     "firm views",
+     "Other Models card)"
+    ],
+    "class": "client-facing",
+    "how": "Run the portal on port 5174 from the branch, sign in, open Model Portfolios, choose Global (All) and press Trend; compare with PROD.",
+    "head_sha": "15f7610285f7719e837f3783fed51e03413a8671",
+    "commits": 6
+   },
+   "scope": {
+    "measured_at": "2026-10-15T01:32:56Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T01:33:31Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261015_01xxZ_COO_D1_TREND_LOOKS_GOOD_CUSTOM_ROLLFORWARD_THEN_PROD.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261015T014350Z-c397",
+   "project": "MDPF_CANON",
+   "subject": "DEV resolution of the approved Global AUA Trend (same content as f411)",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261015_01xxZ_COO_D1_TREND_LOOKS_GOOD_CUSTOM_ROLLFORWARD_THEN_PROD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T01:43:50Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-global-trend-variant1-rf-dev",
+    "purpose": "DEV resolution of the already approved Global AUA Trend candidate (row f411, head 15f7610285): origin/DEV plus the candidate's six product files, equal to the candidate by blob (portal-merge-forward refused the approved branch with a conflict because DEV holds the earlier declined copy of the same feature). Same content, same page, same Andrew record.",
+    "pages": [
+     "/portfolios (Model Portfolios: Global Trend",
+     "firm views",
+     "Other Models card)"
+    ],
+    "class": "client-facing",
+    "how": "Same as f411: run the portal on port 5174, sign in, Model Portfolios, Global (All), Trend.",
+    "head_sha": "85f1d324bdfa69438a03b197c5a20864d3bf7485",
+    "commits": 23,
+    "waiver": {
+     "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_WAIVER_DEV_OVERLAP_MDPF_TREND_RF_DEV_20261015.md",
+     "shas": [
+      "e578b378d332ad1505018be3801466dac7aeeade",
+      "bbad56e354e9091170fe8a94c02b03c824bc4aba",
+      "90d615c0873f6c74e49dcbd19f3fd7d276d86cef",
+      "66d221626ec3ca04b68485b95ec7998d0dd60264",
+      "b763674bb4d5e62e40e6dbec78f4d7dacc34ba06",
+      "9de7c7e3227c321d45c2b6d3d3ccf72590b20710",
+      "3db44fe0e9c3392e37cb39f4ef142fd3f22b3514",
+      "00f5c1b44cd257a63eacac0ec0cf15202ddf51cd",
+      "9e637fe51ebfa6322910cc032945a1e755e9ea13",
+      "1c5f9daeb887b138a3d67f7a84c4952b0b6ae162",
+      "7f6c698d429cffeb5990265ed35d20a46e6735e3",
+      "6f4e5f671f098ac157a6fa1fcabea10bcf80ad47",
+      "34cd12d2d041e225767c8c80176570d6921a011a",
+      "4f1004518604cac12f296c7c808d81475e903cec",
+      "406345bce120cdec5d9b7a0cef00bd7b80b680e9",
+      "97c66c93640b5853e2ec1dbd5d73765f2e888321",
+      "22795405240520ea0fb4f87f942b20c285190696",
+      "2deb4f1d864d8fa23cccbf9a11fb3266c88e1042",
+      "ab8ecc5662c9166bc4b3ff3d9ba370733ba4d3cf",
+      "514df1bbf04d91f88dad30f6336b8992228710a6",
+      "5e40e54119474b50702f71db979df861481615a4",
+      "24877b67b7a175bcfe73c779f69c0bf7c3c639c8"
+     ]
+    }
+   },
+   "scope": {
+    "measured_at": "2026-10-15T01:43:50Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T01:44:51Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261015_01xxZ_COO_D1_TREND_LOOKS_GOOD_CUSTOM_ROLLFORWARD_THEN_PROD.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261015T152025Z-494e",
+   "project": "MDPF_CANON",
+   "subject": "Cottonwood's Opal Muni Income (~$64M, 1 account): move from Other AUM to Custom Models?",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/4.0.0_SA_CRO/deliverables/MDPF_CANON_COTTONWOOD_AUM_TREND_UPGRADE_SPEC_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T15:20:25Z",
+   "kind": "fork",
+   "context": "CRO Cottonwood Trend spec @21caa664be: the Cottonwood slice routes Muni non-model per Andrew 2026-09-21 (build_cottonwood_mdpf_slice.py:933); Andrew 10-14 said 'muni is just a custom model' (Global SMA context). Gates the Cottonwood Trend addendum's Muni line.",
+   "rec": "(a) yes, Muni is a Custom model everywhere, matching Global; ~$64M moves Other->Custom at Cottonwood and Global, under a never-widen pair. One classification rule across views.",
+   "scope": {
+    "measured_at": "2026-10-15T15:20:25Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-assets"
+    ],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/opal-assets declares ${local.advi_49f_dispatch_name}-role, ${local.advi_49f_dispatch_name}-scoped, ${local.bd49f_convert_name}-daily (+51), also declared by root infra/aws/terraform/opal-assets named by NFRA_OPLGTW on sitez"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T15:27:40Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_152xZ_MUNI_IS_CUSTOM_MODELS_EVERYWHERE.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T15:20:40Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Two Andrew words conflict (09-21 Opal-named auto-classified models route non-model at Cottonwood; 10-14 'muni is just a custom model'); classification semantics are his. REC (a) yes."
+   }
+  },
+  {
+   "id": "dell1-20261015T160309Z-33fe",
+   "project": "MDPF_CANON",
+   "subject": "Global AUA Trend on PROD spikes to ~$3.09B (Total $1.77B) on 9 carried dates for non-internal Global viewers: fix now under a FAST lease, or wait for round 11?",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/MDPF/MDPF_CANON/surprise-channel/adjudications/ADJUDICATION_v17.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T16:03:09Z",
+   "kind": "fork",
+   "context": "CVO re-graded CN-p-2 AC4 NOT MET (row D1-S29): Variant 2 draws the carried Models band AND the five-model stack on 9 dates (2026-05-30..06-21). Live on PROD today for partner-firm Global sessions. The fix is one function (trendGrouping.ts Variant 2 drops the band after 2026-05-15); round 10 is mid-flight, so the normal path is a round-11 cell.",
+   "rec": "(a) arm a FAST lease for 2.0.0_SA_COO~D1 on portal trendGrouping.ts: it builds the one-line fix with a test over the real object (0 of 497 rows with both), you smoke it on 5174, PROD on your word today. (b) wait for round 11 after round 10 drains (~10-16 afternoon ET); the spikes stay on PROD until then. (c) roll PROD back: brings back the broken graph you replaced on 10-14. REC (a): the wrong figure is client-facing and the fix is small.",
+   "scope": {
+    "measured_at": "2026-10-15T16:03:09Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T16:23:41Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_162xZ_DEMO_GLOBAL_TREND_USES_VARIANT1_NEXT_PROMOTE.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T16:03:37Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "a FAST lease is on Andrew's word (/drive-mode) and the fix is a client-facing PROD push (CLAUDE.md Agent Autonomy)"
+   }
+  },
+  {
+   "id": "dell1-20261015T174959Z-99be",
+   "project": "MDPF_DEMQUE",
+   "subject": "Does 'accelerate' lift the non-trading-days-only rule for Cottonwood's two active-account Bloomberg history requests (B1 613 CUSIPs, failed-14)?",
+   "asked_by": "2.0.0_SA_COO~Q1",
+   "source": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t22.history-on-nontrading-days.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T17:49:59Z",
+   "kind": "fork",
+   "context": "Andrew's 10-13 rule: history draws only on weekends/holidays, so B1 finishes ~Nov 7. Andrew 10-15: 'I want to accelerate this project ... We need to pick up the pace'. Lifting the rule widens his word, so it is asked, not inferred.",
+   "rec": "(a) yes for B1 and failed-14 only: draw on trading days too, from the quota left after production pulls; finish well before Nov 7. (b) no: keep weekends only; B1 ~Nov 7. REC (a): production keeps its share and both requests are active accounts he wants priced.",
+   "scope": {
+    "measured_at": "2026-10-15T17:49:59Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_CTLPLN placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T19:30:43Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_193xZ_BBG_HISTORY_MAY_DRAW_ON_TRADING_DAYS.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T17:50:00Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "widens an Andrew rule (10-13 non-trading-days-only history draws); vendor quota"
+   }
+  },
+  {
+   "id": "dell1-20261015T184344Z-d3cc",
+   "project": "ADVI_COTBKF",
+   "subject": "Cottonwood matching: may an agent job read the restricted CRM zip (in memory, writing only link ids), or do you ask Cottonwood for an old-to-new account mapping file?",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/ADVI/ADVI_COTBKF/ledger/CTO_RULING_DELL1_UNPARK_ACCELERATE_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T18:43:44Z",
+   "kind": "fork",
+   "context": "You asked for an intermediary key from the CRM upload; it sits behind your C-RESTRICTED rule (403 to agents), so no agent has read its columns. 219 active accounts remain matchable; name/household/custodian rules recover part of them.",
+   "rec": "(a) name one read role for a single matching job under C-RESTRICTED: reads the zip in memory, writes only account-link ids, no PII out, logged; (b) you read it yourself and report its columns; (c) ask Cottonwood for a mapping file. REC (a), with (c) in parallel if you are already talking to them: the CRM is the only likely stable key (old/new numbers or tax ID) and (a) keeps every value inside the job.",
+   "scope": {
+    "measured_at": "2026-10-15T18:43:44Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T19:06:01Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/ADVI/ADVI_COTBKF/ledger/CTO_RULING_DELL1_UNPARK_ACCELERATE_20261015.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T18:43:45Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "a hold he set by name (C-RESTRICTED) and an outward request to a client"
+   }
+  },
+  {
+   "id": "dell1-20261015T194123Z-3adb",
+   "project": "ADVI_COTBKF",
+   "subject": "Active-account securities already priced from Yahoo in served Cottonwood returns: blank those days now, or keep them labelled interim until Bloomberg replaces each security?",
+   "asked_by": "2.0.0_SA_COO~C1",
+   "source": "org/missions/D8/ADVI/ADVI_COTBKF/ledger/CTO_RULING_DELL1_UNPARK_ACCELERATE_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T19:41:23Z",
+   "kind": "fork",
+   "context": "Your 'Active accounts should get BBG pricing exclusively' needs a per-security guard (prices are per security, shared by accounts). Applied now, Commonwealth-era days for those securities read UNPRICED in already-served returns until Bloomberg lands (~Nov 20 with trading-day pulls).",
+   "rec": "(a) swap: keep today's served values, labelled interim-Yahoo, and replace each security's points the day its Bloomberg series lands; nothing new is drawn from Yahoo for active names. (b) blank now: those days read UNPRICED until Bloomberg lands. REC (a): weeks of blank returns on client pages is the bigger harm, and the label keeps the claim honest.",
+   "scope": {
+    "measured_at": "2026-10-15T19:41:23Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/inf-pipeline named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T20:51:07Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_205xZ_CALLS_BCCC_3ADB_BBD5.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T19:41:24Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "the meaning of his 'BBG exclusively' word for already-served client returns"
+   }
+  },
+  {
+   "id": "dell1-20261015T201007Z-bbd5",
+   "project": "ETFS_RIVALS",
+   "subject": "ETFS_RIVALS parks after round 30 (your 10-13 word), but hazard D1-S16 stays ARMED until a round-31 fix: allow one fix-only round 31 before the park?",
+   "asked_by": "2.0.0_SA_COO~RV",
+   "source": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round30/D1_S16_DISARM_READS_RV.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T20:10:07Z",
+   "kind": "fork",
+   "context": "D1-S16: the daily corporate-actions job could write an inferred action into the gold store; today it is caught only by a person listing that folder twice a day and voiding any hit. The real fix (a precedence cell) is a round-31 cut, which your park word stops.",
+   "rec": "(a) yes: one fix-only round 31, the precedence cell alone, then park; the twice-daily reads end when it deploys. (b) no: park now; COO~RV stays seated to take the twice-daily reads with no end date. REC (a): a standing manual watch with no end date is the weaker guard and keeps a seat on a parked project.",
+   "scope": {
+    "measured_at": "2026-10-15T20:10:07Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/etfs-rivalfunds"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/ec2/opal-gateway/app/rivalfunds_view.py overlaps the write set of NFRA_MCPINDEX placed on sitez (infra/aws/ec2/opal-gateway/**)",
+      "infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py overlaps the write set of NFRA_MCPINDEX placed on sitez (infra/aws/ec2/opal-gateway/**)",
+      "infra/aws/ec2/opal-gateway/app/server.py overlaps the write set of NFRA_MCPINDEX placed on sitez (infra/aws/ec2/opal-gateway/**)",
+      "infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py overlaps the write set of NFRA_MCPINDEX placed on sitez (infra/aws/ec2/opal-gateway/**)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T20:51:08Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_205xZ_CALLS_BCCC_3ADB_BBD5.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T20:10:08Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "his own park word (ETFS_RIVALS after round 30, 10-13)"
+   }
+  },
+  {
+   "id": "dell1-20261015T203148Z-bccc",
+   "project": "ADVI_COTBKF",
+   "subject": "Did you upload the Cottonwood CRM zip (CRM_CottonwoodCapitalAdvisors.zip) into the restricted folder of opal-data-cottonwood? The matching job found nothing there.",
+   "asked_by": "2.0.0_SA_COO~C1",
+   "source": "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/ADVI_COTBKF_ROUND_88_DRAIN_END_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T20:31:48Z",
+   "kind": "act",
+   "context": "The one-job window ran 3:49-4:07 PM ET and was removed; its read returned 403, which S3 also returns for a file that does not exist. The bucket is AES256, so it is not a key permission. Commonwealth's delivery manifest lists only 4 of the 5 files.",
+   "rec": "(a) not uploaded: you land it (only you can, through the break-glass role); then one more one-job window, same limits. (b) uploaded: one more window that also allows a single existence check of that key, to tell missing from denied. REC: tell us which; (a) is the likelier case.",
+   "scope": {
+    "measured_at": "2026-10-15T20:31:48Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T20:51:05Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_205xZ_CALLS_BCCC_3ADB_BBD5.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T20:31:49Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "only Andrew lands the restricted CRM zip (C-RESTRICTED); a second window needs his word"
+   }
+  },
+  {
+   "id": "dell1-20261015T211047Z-f48a",
+   "project": "ADVI_COTBKF",
+   "subject": "Who confirms the 107 likely Cottonwood account matches: you, or a Cottonwood operator you name?",
+   "asked_by": "2.0.0_SA_COO~C1",
+   "source": "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~180/NEAR_MATCH_REVIEW_PACKET.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T21:10:47Z",
+   "kind": "fork",
+   "context": "The review packet lists 107 likely old-to-new account pairs to confirm (102 among the 219 active accounts still unmatched; 44 compete with another pair). No match is applied until a person confirms it. The packet holds ids and flags only; the names key sits on dell1 outside the repo.",
+   "rec": "(a) a Cottonwood operator you name confirms, from the packet plus the off-repo key, since they know their own clients; (b) you confirm yourself. REC (a): 107 judgment calls on someone else's client book are faster and safer with the people who know those clients.",
+   "scope": {
+    "measured_at": "2026-10-15T21:10:47Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T21:15:14Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_211xZ_F48A_COTTONWOOD_CONFIRMS_AFTER_MAX_AUTOMATION.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T21:10:49Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "naming a person outside Opal (a client's operator) is his"
+   }
+  },
+  {
+   "id": "dell1-20261015T212146Z-da0c",
+   "project": "MDPF_DEMQUE",
+   "subject": "Your 'increase limits on all our pull surfaces' meets your 9-30 'do not modify the existing daily etfs pull for Positioning': may the two Positioning ETF pulls (A2 holdings, A5 breakdown) raise their limits too?",
+   "asked_by": "2.0.0_SA_COO~Q1",
+   "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261015_21xxZ_RAISE_PULL_LIMITS_FLOOR_IS_NOT_A_CAP.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T21:21:46Z",
+   "kind": "fork",
+   "context": "Today's word reaches every Bloomberg pull; the 9-30 hold forbids changing the Positioning daily pull (additive changes only). Rival-funds (A3) and research price (A4) owners are relaying your word; the models pull (A1) has no named owner.",
+   "rec": "(a) keep the 9-30 hold: the Positioning pulls stay as they are; the history ramp, A3 and A4 rise. (b) lift it for limits only: A2/A5 may raise their row limits, nothing else in them changes. REC (a): the ramp and backfill are where the 10% gap is; the Positioning pulls feed a live client view you protected on purpose.",
+   "scope": {
+    "measured_at": "2026-10-15T21:21:46Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T23:35:37Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_233xZ_DA0C_POSITIONING_PULL_SLIGHT_INCREASE.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T21:21:47Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "two of his own words conflict (9-30 Positioning hold vs 10-15 raise all limits)"
+   }
+  },
+  {
+   "id": "dell1-20261015T221629Z-a333",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/amgt-sa-team-estimate-mark",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "cand/dell1/amgt-sa-team-estimate-mark",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T22:16:29Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/amgt-sa-team-estimate-mark",
+    "purpose": "AMGT_RESAPP bn-1: a Security Analysis Key Figures P/E cell filled from the research team's sheet, where the vendor ratio is withheld, prints a visible research team estimate mark",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, SHOP CN, PBR US and GOOGL US",
+    "head_sha": "bb56c53d12a506bf3441bf7e4b2efb197a9e752f",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-15T22:16:29Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T22:24:10Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_A333_TEAM_ESTIMATE_MARK_20261015.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261015T221638Z-5663",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/amgt-sa-team-estimate-mark",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "cand/dell1/amgt-sa-team-estimate-mark",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T22:16:38Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/amgt-sa-team-estimate-mark",
+    "purpose": "AMGT_RESAPP bn-1: a Security Analysis Key Figures P/E cell filled from the research team's sheet, where the vendor ratio is withheld, prints a visible research team estimate mark",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, SHOP CN, PBR US and GOOGL US",
+    "head_sha": "bb56c53d12a506bf3441bf7e4b2efb197a9e752f",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-15T22:16:38Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T22:17:20Z",
+    "by": "2.0.0_SA_COO~R1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/WITHDRAWN_DUPLICATE_APPROVAL_ROW_5663_20261015.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "withdrawn"
+   }
+  },
+  {
+   "id": "dell1-20261015T233836Z-7f8a",
+   "project": "AMGT_RESAPP",
+   "subject": "G4 (the LLM tier's batch tasks): cut as round-107 cell bn-6 now, hosted on dell1, or carry to the next round analysis? REC cut now",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CALL_G4_LLM_TIER_BATCH_TASKS_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T23:38:36Z",
+   "kind": "fork",
+   "context": "Andrew's activation gate is cleared (post-restart; MSTR~DELL1 msg 6068); no registration script exists for the four batches; the CTO's round-106 list omits G4; registering scheduled tasks is a WORLD act. Gates nothing else in the round.",
+   "rec": "Cut it now as bn-6 (a LOCAL code half: a registration script and an event-driven trading-day trigger, tasks created DISABLED), host dell1: the gate has waited on the restart and management and posture are a week or more behind; the apply is a later pair.",
+   "scope": {
+    "measured_at": "2026-10-15T23:38:36Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T23:39:54Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_RULING_G4_CUT_BN6_20261015.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261016T004131Z-9987",
+   "project": "ADVI_COTBKF",
+   "subject": "What is the exact name of the Cottonwood CRM zip you read in the console (the key under the restricted folder)? Name only.",
+   "asked_by": "2.0.0_SA_COO~C1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_205xZ_CALLS_BCCC_3ADB_BBD5.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T00:41:31Z",
+   "kind": "fork",
+   "context": "bccc answered: the zip WAS uploaded; the first window's head_object 403 was a wrong key, place or refusal. The second one-job window (round 95) runs on the exact key: it gates the new pair, the grant, the job and the withdrawal. The CTO is already carrying this ask in conversation.",
+   "rec": "Type the key as the console shows it (folder path and file name, no contents).",
+   "scope": {
+    "measured_at": "2026-10-16T00:41:31Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T01:48:14Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_013xZ_F086_9987_RELAYED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-16T00:47:35Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "only Andrew can read the restricted CRM prefix; he is reading it from the laptop"
+   }
+  },
+  {
+   "id": "dell1-20261016T013032Z-f086",
+   "project": "NONE",
+   "subject": "Where does the new M365 workflow activity spine project live: dell1, or the laptop fabric?",
+   "asked_by": "4.0.0_SA_CRO~XXX",
+   "source": "docs/briefs/m365-workflow-activity-spine-brief-20261016.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T01:30:32Z",
+   "kind": "fork",
+   "context": "You approved the brief on dell1 ('yes do it'). Your 10-14 word devotes dell1 'wholly to ADVI/MDPF work as well as any overflow AMGT work'; the spine is a new estate data plane beside NFRA_GLOBGRPH and the gateway (both off dell1).",
+   "rec": "(a) laptop fabric: it is infrastructure-class (NFRA), its neighbours live there, and dell1 stays on ADVI/MDPF/AMGT; I hand the brief to the laptop CTO for L2/L3. (b) dell1: I run L2/L3 here now and seat a COO lane. REC (a), unless you meant it as AMGT overflow.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-16T01:30:32Z"
+   },
+   "closed": {
+    "at": "2026-10-16T01:48:13Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_013xZ_F086_9987_RELAYED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-16T01:30:34Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "new project placement against his own 10-14 dell1 scope word"
+   }
+  },
+  {
+   "id": "dell1-20261016T013205Z-9365",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/amgt-sa-withheld-reasons",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "cand/dell1/amgt-sa-withheld-reasons",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T01:32:05Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/amgt-sa-withheld-reasons",
+    "purpose": "AMGT_RESAPP bo-1: every team-filled Key Figures P/E cell prints a research team estimate mark; What Changed no longer prints a withheld vendor ratio; a Key Figures table with no P/E row states the withhold reason once",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "cd portal && bun run dev:live --port 5174; /security-analysis, ZURN SW, 939 HK, ICT PM, 1299 HK, SHOP CN and PBR US",
+    "head_sha": "01e06415f17f5e2ea79b28548647142879cce340",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-16T01:32:05Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T02:35:44Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_9365_WITHHELD_REASONS_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261016T024933Z-eb02",
+   "project": "AMGT_RESAPP",
+   "subject": "May 2.0.0_SA_COO~R2 have ANTHROPIC_API_KEY in its shell so the issuer can run the AIFILL grounding pass live (one local run, then the 95-name re-run under the 150 USD ceiling)?",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round107_aifill_close/CALL_ANTHROPIC_KEY_FOR_THE_95_NAME_RERUN.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T02:49:33Z",
+   "kind": "fork",
+   "context": "ANTHROPIC_API_KEY is absent in this respawned session, so run.py BLOCKS before any model call. It gates the CTO's round-106 grade (re-run 95, revalidate, then the CVO's five-name read) and the first real sample of the grounding record. The S3 write sign-off is separate and not asked.",
+   "rec": "Yes: provision the key into this seat's launch environment, for the one local run first.",
+   "scope": {
+    "measured_at": "2026-10-16T02:49:33Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T03:08:02Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_RULING_EB02_ANTHROPIC_KEY_R2_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T025932Z-d7e2"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T025932Z-d7e2",
+    "at": "2026-10-16T02:59:32Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261016T041029Z-142a",
+   "project": "NFRA_WFSPINE",
+   "subject": "M365 spine: people you leave out -- drop their events at collection, or keep their raw events locked away and only hide them from every view?",
+   "asked_by": "3.0.0_SA_CVO",
+   "source": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_WFSPINE_v0.1_RATIFIED_TEXT_20261016.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T04:10:29Z",
+   "kind": "fork",
+   "context": "Your approved FWD-8 says people outside the population are absent everywhere. Opal's storage rule R9 says the raw layer keeps exactly what the source sent, and Microsoft's feed covers the whole tenant, so excluded people's raw events (file names, email subjects, client names) would sit in storage. CVO refused the PRD on this.",
+   "rec": "(a) drop them at collection: the collector discards events from anyone outside your list before anything is stored -- a deliberate exception to R9 that needs your acknowledgement; matches 'absent everywhere' and keeps the least personal data. (b) keep them raw: excluded people's raw events stored, readable only by a break-glass role, deleted after N days, never queryable; FWD-8 narrows to 'absent from every view'. REC (a): the spine exists to study your chosen people, and storing everyone else's subjects and client names buys nothing but risk.",
+   "scope": {
+    "measured_at": "2026-10-16T04:10:29Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T06:00:32Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_054xZ_SPINE_BECOMES_TCKT_MTADTA_OPS_EIGHT_DROP_AT_OUTSET_GLOBGRPH_ROLE_ONLY.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-16T05:27:55Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew-direct ~05:2xZ (laptop msg 109608): population narrows to operational teams on premises; 'on premises' has two readings (office staff vs office-IP activity) he has not chosen; design read WFSPINE_AUDIT_CONTENT_AND_PII_20261016.md @8413c1df38; PRD re-sign held with it"
+   }
+  },
+  {
+   "id": "dell1-20261016T050023Z-6847",
+   "project": "AMGT_RESAPP",
+   "subject": "G4 enable pair: the first fire of the filings batch -- the whole 171 names (about USD 119 to 137, no program stop exists) or a capped first tranche of 20 names then the cap lifted?",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107/G4_ENABLE_PAIR_MEASUREMENTS_20261016.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T05:00:23Z",
+   "kind": "fork",
+   "context": "Your ruling asks the enable pair to name a first-fire spend and a stop figure. llm_batch and the filings batch have no spend cap, so a stop is not a program limit. Filings 171 would-run at a recorded 0.61 to 0.80 USD a name (n=5). Gates the COO half of the G4 enable pair.",
+   "rec": "A capped first tranche: pass --limit 20 on the first fire (about USD 14), read the 20 stored usage.usd values, then lift the cap. Needs one argument in lib/research/llm_batch/tasks.py, a small cell; the next trading day's trigger carries the remaining names. Why: the stop becomes real and costs one extra day.",
+   "scope": {
+    "measured_at": "2026-10-16T05:00:23Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T05:47:34Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T0513Z_XA-20261016T050756Z-844a.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T050756Z-844a"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T050756Z-844a",
+    "at": "2026-10-16T05:07:56Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261016T082106Z-0017",
+   "project": "TCKT_MTADTA",
+   "subject": "Who is a member of the IAM group globgrph-trino-access-group (the only people who can read the M365 metadata through the door)?",
+   "asked_by": "2.0.0_SA_COO~S1",
+   "source": "org/missions/D7/TCKT/TCKT_MTADTA/decompositions/TCKT_MTADTA_DECOMP_R2.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T08:21:06Z",
+   "kind": "fork",
+   "context": "The round-2 apply creates the group empty (a member is an IAM act, not Terraform). Membership is the access control behind FWD-6 and FWD-8; PRD C-RESIDUAL (4) lists 'anyone added to the group' as a residual. Andrew needs it to read FWD-1 live and run the counts-only first-content read; the release seat is deliberately not a member.",
+   "rec": "His IAM user alone. He runs the day read and the first-content read; add nobody else, no seat and no agent user, until FWD-6 names an approved research seat.",
+   "scope": {
+    "measured_at": "2026-10-16T08:21:06Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/trino"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T09:07:36Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T0833Z_XA-20261016T082753Z-e70a.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T082753Z-e70a"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T082753Z-e70a",
+    "at": "2026-10-16T08:27:53Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261016T090558Z-d9cb",
+   "project": "TCKT_MTADTA",
+   "subject": "Your act: register the Microsoft 365 audit collector app and grant its one permission (ActivityFeed.Read) admin consent",
+   "asked_by": "2.0.0_SA_COO~S1",
+   "source": "org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/TCKT_MTADTA.TO-MD-r2.andrew_consent_card.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T09:05:58Z",
+   "kind": "act",
+   "context": "The door and the collector are live in AWS. The collector cannot read the Office 365 audit feed until you register the single-purpose app with your Graph token and consent as Cloud Application Administrator. The card holds the exact commands; no seat can do this step, and the real fires and your FWD-1 read wait on it.",
+   "rec": "Do it now: five commands on the card, about ten minutes. Check first that unified audit logging reads True.",
+   "scope": {
+    "measured_at": "2026-10-16T09:05:58Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T13:22:33Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D7/TCKT/TCKT_MTADTA/ledger/ANDREW_ACT_APP_CONSENT_DONE_20261016.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261016T090600Z-6601",
+   "project": "TCKT_MTADTA",
+   "subject": "Your IAM user Andrew_Berman holds two MFA devices, mfa/Andrew_Phone and mfa/Yang_Phone: is Yang's phone meant to unlock the door as you?",
+   "asked_by": "2.0.0_SA_COO~S1",
+   "source": "org/missions/D7/TCKT/TCKT_MTADTA/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T09:06:00Z",
+   "kind": "fork",
+   "context": "The door's MFA gate tests that some MFA device was used, not whose. A second device named for Yang on your user lets his phone satisfy the gate for any session of that user that has your AWS keys (row D1-S9). Nothing is reachable by the phone alone. Removing a device is an IAM act on your user and your word.",
+   "rec": "Remove mfa/Yang_Phone from Andrew_Berman unless you registered it on purpose; the door is meant to open for you alone.",
+   "scope": {
+    "measured_at": "2026-10-16T09:06:00Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T13:21:51Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_124xZ_DESKTOP_CONSENT_REMOVE_YANG_MFA_MATCH_LIST_LAPTOP_MAPPING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-16T09:07:37Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's own IAM identity and MFA devices: only he knows whether mfa/Yang_Phone on Andrew_Berman is intended, and removing it is an act on his login (self-drive cited act: his login or MFA). REC remove unless intended."
+   }
+  },
+  {
+   "id": "dell1-20261016T131944Z-6f4b",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/aifill-provenance",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "cand/dell1/aifill-provenance",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T13:19:44Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/aifill-provenance",
+    "purpose": "The About this data panel on the Security Analysis page reads the AI-fill input it renders: today it says nothing has been read from the web-search input for the name while blocks labelled From a web search render above it (CVO row C-S146 a). Two files, panel component and page wiring; AMGT_RESAPP AMGT-gr-7.",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "Open Security Analysis for a name with a kept AI-fill block (AMD_US_Equity mgmt_recent): the About this data panel lists the AI-fill input and no longer denies the web input. Acceptance check check_gr7_provenance.cjs reads AIFILL PROVENANCE: YES (11 of 11) in the candidate tree.",
+    "head_sha": "31337460fcf771e46ab239429446b2e857041caf",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-16T13:19:44Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T13:21:50Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_PORTAL_CAND_AIFILL_PROVENANCE_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261016T140659Z-5cf5",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/aifill-provenance-wording-v2",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "cand/dell1/aifill-provenance-wording-v2",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T14:06:59Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/aifill-provenance-wording-v2",
+    "purpose": "Reword the AI-written row of the About this data panel on the Security Analysis page: one web block reads '1 cites a web search made when it was written', more than one reads 'N cite web searches made when they were written', so the row no longer reads as a contradiction beside the stored-search line (CVO row C-S146 a; CTO ruling 6706). Stacked on gr-7's commit 31337460 (already on DEV, waived by the CTO); the branch's own commit is one file, +2 -1. AMGT_RESAPP AMGT-gx-1.",
+    "pages": [
+     "Security Analysis"
+    ],
+    "class": "opal-internal",
+    "how": "Open Security Analysis for AMD_US_Equity, Exec Management tab, open About this data: the AI-written row reads '1 cites a web search made when it was written'. Acceptance check check_gr7_wording.cjs reads AIFILL PROVENANCE: YES (12 of 12) in the candidate tree.",
+    "head_sha": "9e13d8e1e9337e14b06ef94d291bac7e7a6c5a7b",
+    "commits": 2,
+    "waiver": {
+     "ref": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_WAIVER_DEV_OVERLAP_31337460_GX1_WORDING_20261016.md",
+     "shas": [
+      "31337460fcf771e46ab239429446b2e857041caf"
+     ]
+    }
+   },
+   "scope": {
+    "measured_at": "2026-10-16T14:06:59Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T14:07:46Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_PORTAL_CAND_AIFILL_PROVENANCE_WORDING_V2_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261016T143036Z-c7de",
+   "project": "MDPF_CANON",
+   "subject": "MDPF_CANON CN-s-5 (demo on Variant 1): how does the demo tenant get the single-firm stitch the edge gate refuses it?",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "org/missions/D8/MDPF/MDPF_CANON/decompositions/MDPF_CANON_DECOMP.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T14:30:36Z",
+   "kind": "fork",
+   "context": "Andrew-direct 10-15: the demo Global Trend uses Variant 1, whose pre-05-15 history stitches the 49 Financial and Inflection per-firm leaves. The live edge gate (CN-q-1) admits demo to the global folder only, so on PROD both reads are 403 and the stitch is empty. CN-s-5 wires the page and is HELD from promote until ruled; CN-s-4 promotes alone. FWD-3 also bars a non-internal session from single-firm values. v11 ruling 3.",
+   "rec": "(A) admit demo on exactly the two leaves 49financial and inflection aggregate-aua-timeseries in mdpf_gate.mjs: smallest change, a WORLD edge deploy by CloudOps. Else (B) a producer-side stitch into a Global-scope field, no per-firm read (larger, a pair), or (C) demo draws Variant 1 without the stitch.",
+   "scope": {
+    "measured_at": "2026-10-16T14:30:36Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "portal/src/lib/cottonwoodTrend.ts overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/ModelPortfolios.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/lib/trendGrouping.ts overlaps the write set of IRPT_BCKEND placed on dell2 (portal)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T15:18:17Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T1443Z_XA-20261016T143752Z-6cad.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T143752Z-6cad"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T143752Z-6cad",
+    "at": "2026-10-16T14:37:52Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
    }
   }
  ]
