@@ -80,3 +80,18 @@ This addendum is the explicit word. The round-18 line therefore reads met for 28
   unrealized, transactions, allocations and fees.
 - prices, realized, assets and transactions_enriched have no adapter table, so they stay OUT under the original condition.
 - single_file is unchanged.
+
+### Ruling ~13:3xZ (COO~O msg 35023, OG-en-11 `BD49F_SERVED.json`): the key mismatch is closed on the CATALOG side
+
+- **Measured:** the four 49F tools answer `no_catalog_row` and read no bucket. The adapter looks them up with
+  `ctx.prefix("blackdiamond", "49f-live", "silver", <table>)`, and no catalog row resolves that key.
+- **Which rows:** the four tables are `unrealized`, `transactions`, `allocations` and `fees`. They are 4 of the 8 `opal-data-bd`
+  legacy rows ruled OUT above, so these are existing rows, not new ones.
+- **Ruled:** `2.0.0_SA_COO~MI` gives those four EXISTING rows the key the adapter resolves (segment `49f-live`, layer `silver`, bucket
+  `opal-data-bd`), and links their `read_tool` in the SAME edit. It is one catalog change and no adapter code. It rides the next batched
+  gateway release, and OG-en-11 is re-run on the served host.
+- **Why the catalog side:** OG-cl-2 reviewed the adapter's `-live` convention, and it is live. The catalog is the lookup contract,
+  so one data edit makes the lookup resolve and meets C-GROUP for the four rows together. The other side, an adapter re-key, would
+  change reviewed code to fit rows that carry no key at all.
+- `~MI` states the exact field shape against `ctx.prefix`. A catalog row must never be keyed in a way that makes another 49F tool
+  resolve a row it should not.
