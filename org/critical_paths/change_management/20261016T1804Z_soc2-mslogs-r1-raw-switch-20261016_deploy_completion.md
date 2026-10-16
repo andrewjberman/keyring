@@ -4,7 +4,7 @@
 **Deploy:** SOC2_MSLOGS round 1: in-place switch of the collector and door to raw bronze
 **Authored by:** 0.7.0_AE_CloudOps~SOC21
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
-**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+**Window:** 7.49h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
 
 ---
 
@@ -25,3 +25,4 @@
 - 20261016T182634Z LEG L2-subscription closed: start HTTP: Audit.AzureActiveDirectory 200, Exchange 400, SharePoint 400, General 400 (the three already enabled; body n
 - 20261016T230837Z LEGS L4-redeploy-7b, L5-fires-7b added by 0.7.0_AE_CloudOps~SOC21 (TO-SM-r1 item 7b, fire 4 timeout repair)
 - 20261016T231109Z LEG L4-redeploy-7b closed: safe-apply rc=0 Apply complete 0 added 1 changed 0 destroyed; collector LastModified 2026-10-16T23:10:36Z CodeSha256 ZWV
+- 20261016T234209Z WINDOW extended 4.0h -> 7.49h (to 2026-10-17T01:30Z) per 2.0.0_SA_COO~S1: code repair redeployed 2026-10-16T23:10:36Z (item 7b); two scheduled fires 23:31Z and 00:31Z are the acceptance; close after item 8 reads
