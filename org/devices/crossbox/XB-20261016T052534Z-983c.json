@@ -10,7 +10,7 @@
  "subject": "IRPT_ANLREQ: compute and fetch the Linux closure of yfinance==1.2.0 for the resident host (CTO msgs 9070, 9075)",
  "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/XB_YFINANCE_CLOSURE_REQUEST_20261016.md",
  "opened_at": "2026-10-16T05:25:34Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-16T05:29:36Z",
   "bus_message_id": "c57f8449-c64e-437f-8977-73dbce2cd6d2"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-16T09:31:49Z",
   "from_by": "0.0.0_AB_MSTR~DELL2",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-16T09:35:07Z",
+  "to_by": "2.0.0_SA_COO~C"
  }
 }

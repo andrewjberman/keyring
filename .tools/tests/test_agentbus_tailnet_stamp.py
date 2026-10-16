@@ -106,6 +106,33 @@ def test_send_to_an_alias_stamps_the_register_tailnet_name(stub):
     assert "to_tailnet={StringValue=%s," % TAILNET[owner] in attrs
 
 
+def test_send_to_an_inbox_carrying_sender_addresses_its_queue_and_stamps_its_tailnet(stub):
+    # Andrew-direct 2026-10-16 ~09:1xZ ("give muse the inbox sqs"): ms stays a `senders` row but carries an inbound_queue.
+    ms = [s for s in register["senders"] if s["name"] == "ms"][0]
+    assert ms.get("inbound_queue")
+    r = run(stub, ["send", "ms", "0.9.0_WK_TEST~1", "hello ms"], "sitez")
+    assert r.returncode == 0, r.stdout + r.stderr
+    sent = calls(stub, "send-message")
+    assert len(sent) == 1
+    assert arg_after(sent[0], "--queue-url").endswith("/" + ms["inbound_queue"])
+    assert arg_after(sent[0], "--message-group-id") == "opal-sqschat"
+    attrs = arg_after(sent[0], "--message-attributes")
+    assert "to_tailnet={StringValue=%s,DataType=String}" % ms["tailnet_name"] in attrs
+    assert "from_tailnet={StringValue=%s,DataType=String}" % TAILNET["sitez"] in attrs
+
+
+def test_an_inbox_carrying_sender_is_still_not_a_box(stub):
+    # the register's contract: a sender is never in devices[], so no box list or placement value sees it
+    names = subprocess.run([sys.executable, str(ROOT / "lib" / "devices.py"), "names"], capture_output=True, text=True,
+                           encoding="utf-8", cwd=str(ROOT), timeout=60).stdout.split()
+    placement = subprocess.run([sys.executable, str(ROOT / "lib" / "devices.py"), "placement"], capture_output=True,
+                               text=True, encoding="utf-8", cwd=str(ROOT), timeout=60).stdout.split()
+    assert sorted(names) == sorted(BOXES)
+    assert "ms" not in names and "ms" not in placement
+    r = run(stub, ["send", "nobody", "0.9.0_WK_TEST~1", "x"], "sitez")
+    assert r.returncode != 0 and calls(stub, "send-message") == []
+
+
 def test_send_from_an_unregistered_box_is_refused_and_sends_nothing(stub):
     r = run(stub, ["send", "laptop", "0.9.0_WK_TEST~1", "x"], "not-a-box")
     assert r.returncode != 0
