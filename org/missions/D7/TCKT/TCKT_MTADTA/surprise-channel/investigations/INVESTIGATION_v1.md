@@ -57,6 +57,50 @@
     "spec_asserts": "The collector reads the eight's Entra object ids once at collection and matches events by id as well as by UPN, with the app holding exactly one permission.",
     "world_is": "Reading a user's object id takes a Graph directory permission (User.Read.All or an equivalent) or the delegated token of a signed-in person; the app as specified holds neither. Audit records carry UPNs in the four named fields, so UPN matching works without it; an id-only record (a UserId that is a GUID) would be dropped as out of population.",
     "notes": "Round 1 builds UPN resolution only. Whether a GUID-only actor occurs in the feed is unread until the first real content lands (release act 4); if it does, the enrichment list takes either a one-time id lookup run by Andrew into population.json or a second permission by the CTO's ruling."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W2-S1",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~2",
+    "surfaced_at": "2026-10-16T07:06:00Z",
+    "one_line": "TO-MD-i1 says identity.tf is one of four files in the root infra/aws/terraform/trino/, but that directory is absent at HEAD of the worker branch and no sibling file of it is tracked; the three siblings belong to cells MD-h-1, MD-a-1 and MD-c-1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files infra/aws/terraform/trino returns no path at worktree HEAD c9971df7ca; the same query on the main checkout lists none either",
+        "org/missions/D7/TCKT/TCKT_MTADTA/decompositions/TCKT_MTADTA_DECOMP.md lines 41-49: trino/main.tf (MD-h-1), trino/access.tf (MD-a-1), trino/collector.tf (MD-c-1) and trino/identity.tf (MD-i-1) are the four files of the root, none yet merged",
+        "task order TCKT_MTADTA.TO-MD-i1 lines 61 and 89: 'one of four in the root infra/aws/terraform/trino/'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The Terraform root infra/aws/terraform/trino/ already carries its four files when the identity file is written, so the identity file joins an existing root.",
+    "world_is": "The root does not exist at HEAD; identity.tf is written as the first file of the directory in this worktree. Its check (r1_check_i1.py tf) passes on that file alone. Nothing was weakened; the three sibling files are not created here.",
+    "notes": "The sibling cells land their files at the round-1 drain. Whether the trino root is complete at merge time is for the drain's refuser and the L8 read, not for this cell."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W2-S2",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~2",
+    "surfaced_at": "2026-10-16T07:06:30Z",
+    "one_line": "The worker worktree is a sparse checkout that does not materialise org/surprise_channel/, so the row schema org/surprise_channel/schemas/investigation_item.schema.json that the surprise-row gate validates against is absent from the worker's tree although it is tracked at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C /c/tmp/wk-tckt-mtadta-2 config core.sparseCheckout = true; git sparse-checkout list does not include org/surprise_channel",
+        "git ls-files org/surprise_channel/schemas lists investigation_item.schema.json and remediation_row.schema.json; ls org/surprise_channel/ in the worktree reports no such directory",
+        "the main checkout C:/Dev/ajb_workspace holds the schema on disk"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every worker tree carries the surprise channel schema on disk, so a worker can validate its own row against it at commit.",
+    "world_is": "The schema is not on disk in this worker's worktree. The row written here was not validated against the schema by this worker; the gate is run at commit and its output is recorded in the report.",
+    "notes": "Nothing was changed in the sparse-checkout configuration. The fix belongs to the worktree provisioning owner (the sparse cone for worker worktrees)."
   }
 ]
 ```
