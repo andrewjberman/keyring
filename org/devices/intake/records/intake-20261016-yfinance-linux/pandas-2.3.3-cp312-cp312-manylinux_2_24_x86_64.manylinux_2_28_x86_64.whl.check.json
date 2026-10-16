@@ -67,12 +67,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 381.37 days old (min 14); 118 earlier releases (min 3)",
+        "summary": "release 381.41 days old (min 14); 118 earlier releases (min 3)",
         "this_release_at": "2025-09-29T23:16:53.287821Z",
         "first_release_at": "2009-12-25T23:58:31.560462Z",
         "release_count": 119,
         "earlier_releases": 118,
-        "age_days": 381.37,
+        "age_days": 381.41,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false
@@ -159,6 +159,10 @@
           "pandas/_libs/window/aggregations.cpython-312-x86_64-linux-gnu.so",
           "pandas/_libs/window/indexers.cpython-312-x86_64-linux-gnu.so"
         ],
+        "differ_after_crlf_normalisation": 1,
+        "compared_across_platforms": true,
+        "installed_platform": "win_amd64",
+        "held_platform": "manylinux_2_24_x86_64.manylinux_2_28_x86_64",
         "hooks_only_in_wheel": [],
         "hooks_also_in_installed_copy": [],
         "unsafe_member_names": []
@@ -214,17 +218,27 @@
       "name": "a person reads the result of 1 to 7 and signs the batch",
       "verdict": "passed",
       "evidence": {
-        "summary": "signature file names the batch and the file and carries the signing line",
+        "summary": "signature file names the batch and the file and carries the signing line; waives check 6 for this file",
         "signer": "1.0.0_SA_CTO",
         "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
-        "signature_file_sha256": "518350087889b46da2d2ee2616209ba8a0e31a7bc99762e246173ca34c3b6701",
-        "signature_file_git_author": "1.0.0_SA_CTO"
+        "signature_file_sha256": "f3a3b23123e33427a55a1d9c78b60d733eb099f32c2efad9aa49d5270412006f",
+        "signature_file_git_author": "1.0.0_SA_CTO",
+        "waivers": [
+          {
+            "check": 6,
+            "reason": "compared across platforms; the 1 differing .py file (__init__.py) differs only by the Windows-only delvewheel DLL-loader block"
+          }
+        ],
+        "ignored_waivers": []
       },
       "rules_out": "a tool's silent failure being read as a pass",
       "leaves": "what none of 1 to 7 can see"
     }
   ],
-  "verdict": "not_checked",
+  "verdict": "released-with-waiver",
+  "waived_checks": [
+    6
+  ],
   "checked_by": "0.9.0_WK_NFRA_CTLPLN~133",
-  "at": "2026-10-16T08:07:18Z"
+  "at": "2026-10-16T09:11:03Z"
 }
