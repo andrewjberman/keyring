@@ -24426,6 +24426,7 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
 ## IRPT_DASHBD-D2-W2202-S1 -- iam.tf still describes the write list as six gold tables after DB-f-2202 adds the transaction prefix
 
 ```json
@@ -24474,5 +24475,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "The issuer decides the disposition of the twelve. The new harness in test_transaction_emission.py patches every heavy stage, so it does not inherit the defect."
+}
+```
+
+## IRPT_DASHBD-D2-W249-S1 -- the order's branch name was a live local branch in a stale scratch worktree at the first act; a later measurement found it freed and the checkout succeeded
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W249-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~249",
+  "surfaced_at": "2026-10-16T21:39:35Z",
+  "one_line": "At the first act, cand/dell2/irpt-performance-holdings-panels existed as a LOCAL portal branch with three commits above 75a71ae3 (none on origin), checked out in worktree C:/dev/scratch-p180/portal whose directory held no .git file, so git checkout -B refused. A later measurement found the worktree entry and the ref gone, and the same checkout succeeded at 75a71ae3. Who removed them was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-313 WORKER FACE, first act: in the portal worktree, git checkout -B cand/dell2/irpt-performance-holdings-panels origin/cand/dell2/irpt-49f-performance-template-mount; the new branch name is exactly that. Checker p180 AC1 reads that name as the portal HEAD branch.",
+  "world_is": "First measurement (about 21:3x UTC): refs/heads/cand/dell2/irpt-performance-holdings-panels at 95701b3a07 with commits 2dd85585 and fea92ea7 below it, all above 75a71ae3; origin had no such ref (ls-remote returned only the template-mount ref); worktree list named C:/dev/scratch-p180/portal as its checkout, and that directory held only a node_modules link, no .git file. git checkout -B refused: already used by worktree. Second measurement (about 21:39 UTC): no worktree entry for scratch-p180 and no such ref; the same checkout -B created the branch at 75a71ae3. Object 95701b3a07 still exists (git cat-file -t: commit). The removal was not traced.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree list --porcelain at the first act: worktree C:/dev/scratch-p180/portal, branch refs/heads/cand/dell2/irpt-performance-holdings-panels, HEAD 95701b3a07421d9925fb1a69a4efa11d5b59e529",
+      "git -C C:/dev/scratch-p180/portal rev-parse: the branch resolved; git -C C:/dev/scratch-p180/portal/.git: No such file or directory",
+      "git ls-remote origin refs/heads/cand/dell2/irpt-performance-holdings-panels returned no line at both reads",
+      "git checkout -B output at the second measurement: Switched to a new branch 'cand/dell2/irpt-performance-holdings-panels' at 75a71ae39089baf9fdddcc34cd3075dea4b31701"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```
