@@ -78,7 +78,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-13.49f-units-currency-number
 - Round 39 E2 + E3, workstream ENRICH-R39-B (decomposition addendum R3-T.99). Risk WORLD by the L6 floor (a gateway infrastructure path); no deploy in this cell. Same worker queue as `OG-en-15` (same file): this order first, then `OG-en-15`. SPAWN waits on `OG-ev-2` (the allocation weight scale).
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>39</round>
 <workstream>ENRICH-R39-B</workstream>
 <slot>~126</slot>
