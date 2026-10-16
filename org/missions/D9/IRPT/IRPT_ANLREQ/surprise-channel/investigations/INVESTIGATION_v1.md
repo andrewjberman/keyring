@@ -22332,3 +22332,55 @@
   "world_is": "The suggestion is an LLM output (the resident's Kimi check) and was present twice and absent once for the same symbols under the same code, so the selection rule picked on a nondeterministic output; and when the planned Yes button was absent the driver pressed nothing for 780 s with no screenshot after Submit, so what the form showed is NOT read. The CTO's ruling (msg 9684): window 4 plans only deterministic branches, treats the suggestion as opportunistic and never selects on it, and the driver falls through whichever prompt the door shows and screenshots each round."
 }
 ```
+
+## IRPT_ANLREQ-D2-W166-S1 -- The run-3 record and the cell name a loop wait that the driver code cannot produce; the 780 s wait with 0 presses means the prompt read saw nothing
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W166-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~166",
+  "surfaced_at": "2026-10-16T17:37:00Z",
+  "one_line": "The run-3 record infers that the loop waited for a planned Yes (ALPPL) that the door did not offer; the driver code throws UNPLANNED-PROMPT at once for that case, so the measured 780 s wait with 0 presses means the prompt read (visible() on [data-slot=analysis-filing-hint] p) returned no prompt text for the whole wait. AR-y-372's fall-through is reached only where that read sees the prompt; whether the rendered finding with no suggestion is that element is NOT READ.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-372 cell context (order file, worker face): the driver reads a prompt from [data-slot=\"analysis-filing-hint\"] p text and planPrompt returns ok:false, so the loop throws, for a planned yes where the form offers no Yes; the fall-through and the diagnostics are the remedy for a prompt the form shows.",
+  "world_is": "RUN3_OUTCOME_20261016.md sections 1 and 3 (MEASURED): 0 of 3 pressed; the wait ended at 780 s (17:04:01Z) with ticket_id null, while the door had resolved ALPPL, APPL and ZQXWVK as TICKER_NOT_FOUND with the suggestion ABSENT from 16:53:41Z. In fwd1_driver.mjs at e96b60c3dc, answerAfterSubmit (lines 238 to 291) throws UNPLANNED-PROMPT at once for a visible prompt the plan cannot press, so the run did not reach a press or a throw: visible() returned no prompt text (or only NO_CHOICE_LINE) for the 780 s. The record's INFERRED mechanism (the loop waits for ALPPL Yes and does not skip) is contradicted by that code. The AQ2 step log that would show the line (org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_fwd1_r3/run/step_log.txt) is not in this worktree and was not read.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/fwd1run/RUN3_OUTCOME_20261016.md@e96b60c3dc (sections 1, 2 and 3: 0 of 3 pressed, 780 s, findings with suggestion ABSENT)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs@e96b60c3dc lines 217 to 226 (planPrompt returns ok:false for a yes the form does not offer) and 261 to 264 (the loop throws UNPLANNED-PROMPT)",
+      "worktree C:/dev/wk-irpt-anlreq-166 (branch wk-IRPT_ANLREQ-166): the same lines, unchanged before AR-y-372; the step log is absent from this worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W166-S2 -- AR-y-372 reads "at most 16 files in all" as the diagnostic PNGs only; the run own screenshots are not counted
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W166-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~166",
+  "surfaced_at": "2026-10-16T17:37:00Z",
+  "one_line": "The cell's 'at most 16 files in all' is read as the reading-only diagnostic PNGs (form-r and wait files), capped at DIAG_SHOTS_MAX 16; the run's own screenshots (signed-in, before-submit, one per poll) are unchanged and not counted, because a 20-minute poll run already writes more than 16 of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-372 step 2: write a PNG form-r<round>-<n>.png / wait-<nn>.png into the run output folder (at most 16 files in all).",
+  "world_is": "run() at e96b60c3dc writes signed-in and before-submit, and one poll-<n> per minute up to --poll-minutes (at most 60), into the run output folder through shot(); a literal 'in all' over the folder would cap those too, which the cell does not state for the signed screenshots. The reading applied is the diagnostic files only, and it is stated in the record FALL_THROUGH.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs@e96b60c3dc run() shot() and the poll loop (lines 325 to 331 and 404 to 417)",
+      "worktree C:/dev/wk-irpt-anlreq-166: DIAG_SHOTS_MAX = 16 counts only the diagnostic writes in answerAfterSubmit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
