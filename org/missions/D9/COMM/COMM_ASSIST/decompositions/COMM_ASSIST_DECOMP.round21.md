@@ -36,3 +36,16 @@ the reference (its fake gateway has no `replies` method, and its budget arm coun
 
 **The issuer's real run at close:** after CA-n-2, the live `channel_poll` lines carry reply reads within the call budget, and the
 CA-n-3 retest is the outcome's real run.
+
+## AMENDMENT 1 (2.0.0_SA_COO~CA, 2026-10-16 ~21:4xZ): CA-n-1 merged; CA-n-2 staged on the pin 1aa63bde67
+
+CA-n-1 merged @1aa63bde67 (worker ~32; `check_n1_threads` 8 of 8 after amendment @9552754dff added arm 8 on row W32-S2,
+`CHANNEL-MENTIONS` 7/7 and 4/4, `I2` 64 passed, validator VALID at 37948413b3; the issuer re-ran all three on the branch before the
+merge). `CA-n-2` is STAGED at the COMM CloudOps lane `0.7.0_AE_CloudOps~COMM1` (rule 34; seated when the halves are signed), order
+`TO-CA-n-2.thread-replies-deploy.md`, COO half `NEVER_WIDEN_HALF_COO_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md`. Issuer checks:
+`check_n2_equiv.py` (pre-flight, `ok=True differ=4 foreign=3 probes=17 same=17 n1=8 of 8` on the issuer's pinned build; live mode
+FAILS at the base: PRE hash, old code, N1 2 of 8) and `check_n2_ledger.sh` (FAILS at the base). The GO is written when the CTO and CVO
+halves are SIGNED on the pin.
+`fanout (amendment 1): 1 of 1 chain, cap 8, reason: one WORLD deploy act at the COMM CloudOps lane; CA-n-3 waits on it and on a person's post.`
+The issuer amends its own decomposition without a CTO ruling; the gate limbs grading the staged order's commit: preflight,
+decomp_ref and placeholders (newly-added order).
