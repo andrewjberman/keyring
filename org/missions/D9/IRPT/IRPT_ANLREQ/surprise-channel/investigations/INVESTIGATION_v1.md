@@ -21354,3 +21354,30 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W270-S4 -- The AC3 mutant named by the order (remove the clause-5 display guard) survives under AMENDMENT 2, because the call gate 
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T06:40:00Z",
+    "one_line": "The AC3 mutant named by the order (remove the clause-5 display guard) survives under AMENDMENT 2, because the call gate now makes that guard unreachable",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-v31 AC3 and proof controls.mutant: mutant_check.py removes the clause-5 guard (the failure then shows even when ticket.package is attached), and the mutant must FIRE (the mutated run must fail).",
+    "world_is": "AMENDMENT 2 makes no status call when ticket.package is set (useHopFailureWords: wanted = enabled && analysis_request && !package), so a package-attached ticket has no words for the display guard to pass. With the clause-5 guard removed the suite stays green: bun test 10 pass, 0 fail, and mutant_check.py prints MUTANT-SURVIVES. Removing the call gate's package condition instead fails 'makes no status call for a ticket whose package is attached' (9 pass, 1 fail). The order's AC3 names the display guard, so it cannot fire; which mutant it names is the issuer's decision, and the order was not widened.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx @f488e20a (useHopFailureWords: wanted = enabled && ticket_type === 'analysis_request' && !ticket.package; shownFailure: ticket.package ? null : words)",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~270/mutant_check.py @4a8897c268 (GUARD = return ticket.package ? null : words)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
