@@ -46,3 +46,11 @@ Checked before any delete: no target is a registered git worktree (`git worktree
   act, so the row stays OPEN for the send.
 - **a252: ANSWERED.** The template path went to `2.0.0_SA_COO~D2`. This seat could not read the PDF's text: no PDF reader is installed
   here, and none is installed for this. The file is 7,415,884 bytes, modified 2026-10-08, consistent with "sent last week".
+
+## 2106 closed (2026-10-16 ~01:3xZ)
+- **Done by the laptop box on Andrew's routing word** (~21:3xZ, "have MSTR recommend it for the laptop box to handle"). The laptop CTO's
+  ledger `irpt-r29-six-deletes-u7-20261016` closed SUPERSEDED at fd15f9ed24 (box/laptop, relayed by `0.0.0_AB_MSTR~DELL2`).
+- **This seat's own read-back at ~01:3xZ:**
+  - all 6 keys read 0 versions and 0 delete markers;
+  - the control prefix `irpt/49financial/state/original_holdings/` reads 19 versions, so the read is live and not empty for an access
+    reason.
