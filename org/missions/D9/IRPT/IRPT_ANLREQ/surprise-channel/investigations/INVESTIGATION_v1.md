@@ -21519,3 +21519,29 @@
   "notes": "Not a blocker for this cell: the order names SCAN_REL as the file list and the gate's pattern is unchanged by AMENDMENT 1. The rule the gate encodes (inequality is a refusal) disagrees with the record's classification of the != guards as ADMITS; the issuer should confirm which population the register gate is meant to grade."
 }
 ```
+
+## IRPT_ANLREQ-D2-W230-S6 -- (worker 0.9.0_WK_IRPT_ANLREQ~230, cell AR-tz-66) the register-removal mutant's premise fails once G4 names interactive_access.py
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~230",
+  "surfaced_at": "2026-10-16T06:10:00Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W230-S6",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The coverage mutant that removes register row G1 cannot fire at HEAD 12290ec19e: G4 also names infra/aws/lambda/investor-reporting/_scope/interactive_access.py, so the removal orphans no ADMITS file (base 0, mutant 0). The mutant now removes G6, the only row naming _scope/owner_reads.py.",
+  "spec_asserts": "TO-AR-tz-66 worker face item 4: a copy of the register text with a row removed returns a violation for the coverage check. The predecessor's mutant removed the G1 row and expected one new coverage violation naming interactive_access.py.",
+  "world_is": "R19_GLOBAL_ADMISSIONS_REGISTER.md at HEAD 12290ec19e names interactive_access.py in two rows: G1 (line 8, at :115) and G4 (line 11, at :131). Removing G1 leaves G4, so no ADMITS file loses its last row. Row G6 (line 13) is the only row naming _scope/owner_reads.py. The test file test_cross_firm_global_sites_widened.py test_cross_firm_mutant_register_row_removed_is_a_violation now removes G6 and expects one violation naming owner_reads.py; it PASSes with base 0 and mutant 1. The amendment's rows G4 to G11 were added after the predecessor wrote the mutant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_GLOBAL_ADMISSIONS_REGISTER.md at HEAD 12290ec19e: grep for interactive_access.py returns lines 8 (G1) and 11 (G4); grep for owner_reads.py returns line 13 (G6) only",
+      "infra/aws/lambda/ticket_center/tests/test_cross_firm_global_sites_widened.py test_cross_firm_mutant_register_row_removed_is_a_violation: run 14 passed in 16.48s, mutant D violation names infra/aws/lambda/investor-reporting/_scope/owner_reads.py"
+    ]
+  },
+  "notes": "Not a blocker: the criterion's coverage check is unchanged; only the mutant's choice of row moved to one whose removal orphans its file. The register is V2's and was not edited."
+}
+```
