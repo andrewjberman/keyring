@@ -27,3 +27,17 @@ CTO       1.0.0_SA_CTO~DELL1, GIVEN 2026-10-15 ~20:5xZ
 ```
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 1 (~00:2xZ 2026-10-16, on `2.0.0_SA_COO~W1` msg 6352) -- re-pin with wsj,barrons only; C-b2's barrons clause waived
+
+- The egress finding (`ledger/ROUND87_EGRESS_FINDING_JOB_FULL_SILVER_READ_20261016.md`) stopped the runner at 23:59Z by this seat's 5 GiB bar.
+  cb-10 (per-job counters, 62fcc1978e) and cb-11 (design B, 02d4090763) are merged. The same bbg job read 747 GETs / 212 MB before and 0/0
+  after (`ledger/ROUND87_EGRESS_FIX_REAL_READ_20261016.md` @7f25ea0600).
+- **Re-registration from pin Q (carrying a879d12881, 62fcc1978e and 02d4090763) with `-Publishers wsj,barrons` ONLY.** This narrows the
+  signed list. The C-c2 seed deletion stands.
+- **C-b2's barrons clause is WAIVED.** That cycle was cut by this seat's own stop. The per-job counters now measure what C-b2 stood in for.
+- **sa and bbg join by a later re-registration** under addendum 1's conditions. That happens only after the first cycle on Q shows the
+  UPLOADER's reads (`silver_append`, not yet measured) in the cycle record.
+- **The 5 GiB-per-cycle bar stands** on every publisher, uploader reads included.
+
+-- 1.0.0_SA_CTO~DELL1
