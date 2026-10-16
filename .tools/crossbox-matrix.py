@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import importlib.util
 import json
 import os
 import pathlib
@@ -36,8 +37,14 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "lib"))
 import devices  # noqa: E402
 
+# the ONE reader of the call files (CT-ba-1): a crossbox/2 call is read as the from-side file with its answer file
+_spec = importlib.util.spec_from_file_location("crossbox_call_reader_matrix", ROOT / ".tools" / "crossbox-call.py")
+CALLS = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(CALLS)
+
 FOLDER = "org/devices/crossbox"
 SCHEMA = "crossbox/1"
+SCHEMA2 = "crossbox/2"
 RANK = {"OPEN": 0, "ACKED": 1, "CLOSED-BOTH": 2}
 WORKTREE = "worktree"
 
@@ -57,16 +64,13 @@ def box_refs(root):
     return [r for r in refs if r == "origin/CLOUD" or r.startswith("origin/box/")]
 
 
-def parse(text):
-    """(record, None) or (None, reason). The crossbox/1 shape: the keys the matrix reads must be present and typed."""
-    try:
-        rec = json.loads(text)
-    except ValueError as exc:
-        return None, "not JSON (%s)" % exc
+def shape(rec):
+    """(record, None) or (None, reason). The record as the one reader folds it (crossbox/1, or crossbox/2 assembled): the keys
+    the matrix reads must be present and typed."""
     if not isinstance(rec, dict):
         return None, "not a JSON object"
-    if rec.get("schema") != SCHEMA:
-        return None, "schema is %r, not %r" % (rec.get("schema"), SCHEMA)
+    if rec.get("schema") not in (SCHEMA, SCHEMA2):
+        return None, "schema is %r, not %r or %r" % (rec.get("schema"), SCHEMA, SCHEMA2)
     for k in ("id", "from_device", "to_device"):
         if not isinstance(rec.get(k), str) or not rec[k]:
             return None, "key %s missing or not a string" % k
@@ -106,13 +110,20 @@ def read_sources(root, refs):
 def union(root, refs):
     """({id: {rec, refs}}, [unreadable (source, path, reason)]). One entry per id; the most advanced state wins."""
     files, bad = {}, []
+    by_source = {}   # source -> {file name: text}: each source's folder is folded by the one reader, call by call
     for source, path, text in read_sources(root, refs):
         if text is None:
             bad.append((source, path, "unreadable from this source"))
             continue
-        rec, why = parse(text)
+        by_source.setdefault(source, {})[path.rsplit("/", 1)[-1]] = text
+    entries = [(source, name, doc, err) for source, texts in by_source.items() for name, doc, err in CALLS.fold_texts(texts)]
+    for source, name, doc, err in entries:
+        if err is not None:
+            bad.append((source, FOLDER + "/" + name, err))
+            continue
+        rec, why = shape(doc)
         if rec is None:
-            bad.append((source, path, why))
+            bad.append((source, FOLDER + "/" + name, why))
             continue
         cur = files.get(rec["id"])
         if cur is None:

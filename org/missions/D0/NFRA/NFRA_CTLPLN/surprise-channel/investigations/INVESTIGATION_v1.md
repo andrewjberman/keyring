@@ -12795,3 +12795,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Filed for the reader of the suite's last line. Not fixed here: the skip is the suite's stated design (its docstring names it), and this cell does not widen its paths."
 }
 ```
+
+## NFRA_CTLPLN-W139-S3 -- tests/test_apply_who_and_crossbox.py copies crossbox-deploy-check.py into its fixture but not crossbox-call.py
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T13:05:34Z",
+  "one_line": "tests/test_apply_who_and_crossbox.py copies crossbox-deploy-check.py into its fixture but not crossbox-call.py, which the check now imports beside itself; the suite reads APPLY-GATES-TEST cases=51/100 ok=False after CT-ba-1 (base 100/100).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_apply_who_and_crossbox.py at the CT-ba-1 tip (worktree, with the crossbox-call.py layout change): 'FAIL case 15 ... FileNotFoundError: ... fx15\\.tools\\crossbox-call.py'; last line 'APPLY-GATES-TEST cases=51/100 ok=False' (exit 1)",
+      "the same suite at 833181d311 (base): 'APPLY-GATES-TEST cases=100/100 ok=True' (exit 0); COPIES list in the suite names .tools/crossbox-deploy-check.py and not .tools/crossbox-call.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The suite's fixture carries the tools the checks it runs need; each COPIES entry is a copy of a real tool, so a copied check runs with the tools it imports.",
+  "world_is": "crossbox-deploy-check.py now loads crossbox-call.py from its own folder (fold_dir), so the fixture needs .tools/crossbox-call.py in COPIES. That file is outside this cell's <paths>, so the suite is red at the merge until its owner adds it. The reader is not copied in, so no check in the fixture gets a verdict from a silent fallback.",
+  "notes": "Issuer: the fix is one COPIES line in .tools/tests/test_apply_who_and_crossbox.py (outside CT-ba-1's <paths>). Not fixed here: the suite is not in the write grant."
+}
+```
+
+## NFRA_CTLPLN-W139-S4 -- The comment at the crossbox case of .tools/git-hooks/mstr-ledger-check.sh says the folder holds only crossbox/
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T13:05:34Z",
+  "one_line": "The comment at the crossbox case of .tools/git-hooks/mstr-ledger-check.sh says the folder holds only crossbox/1 JSON; layout 2 (crossbox/2 and crossbox-answer/1 files) is now written there when the LAYOUT switch is committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/crossbox case of .tools/git-hooks/mstr-ledger-check.sh at 833181d311 (line 199): 'NARROW BY CONSTRUCTION: this directory holds only crossbox/1 JSON written by crossbox-call.py.'",
+      "the case pattern is org/devices/crossbox/*, which admits the answer files XB-<id>.<box>.json; the file is outside CT-ba-1's <paths> and was not edited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The comment in the crossbox case names the record shapes the folder holds.",
+  "world_is": "The case admits every file in the folder by pattern, so the answer files pass it as the from-side files do; only the comment is stale. The behaviour is correct; the text is not.",
+  "notes": "Not edited: the file is outside this cell's <paths>. The owner of the ledger check updates the comment when the LAYOUT switch is committed."
+}
+```

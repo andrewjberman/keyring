@@ -343,10 +343,17 @@ def dump_answer(ans: dict) -> str:
     return json.dumps({k: ans[k] for k in ANS_KEYS}, indent=1, ensure_ascii=True) + "\n"
 
 
+def refuse_unknown_schema(raw, where: str) -> None:
+    """The schema is read FIRST by the layout-aware loaders, so an unknown schema is named as one, not as a key."""
+    if isinstance(raw, dict) and raw.get("schema") not in (SCHEMA, SCHEMA2):
+        raise Refused("%s: schema is %r, this reader reads %r and %r" % (where, raw.get("schema"), SCHEMA, SCHEMA2))
+
+
 def load_call_text(text: str, where: str, answer_text=None) -> dict:
     """One call from its text: a crossbox/1 file is checked as before; a crossbox/2 from-side file is assembled with the
     answer text given (None: this copy holds no answer yet)."""
     raw = json.loads(text)
+    refuse_unknown_schema(raw, where)
     if isinstance(raw, dict) and raw.get("schema") == SCHEMA2:
         return assemble(raw, None if answer_text is None else json.loads(answer_text), where)
     return check_call(raw, where)
@@ -356,6 +363,7 @@ def load_call_path(path: Path, where: str) -> dict:
     """One call from its from-side (or crossbox/1) file on disk; a crossbox/2 file's answer file is read beside it."""
     text = path.read_text(encoding="utf-8")
     raw = json.loads(text)
+    refuse_unknown_schema(raw, where)
     if not (isinstance(raw, dict) and raw.get("schema") == SCHEMA2):
         return check_call(raw, where)
     check_from2(raw, where)
