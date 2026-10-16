@@ -21150,3 +21150,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. Recorded for the issuer; the checker file is outside this grant and was not edited."
 }
 ```
+
+## IRPT_DASHBD-D2-W419-S1 -- the published manifests carry no calendar_source while every series document carries the unreported-days pair
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W419-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~419",
+  "surfaced_at": "2026-10-16T07:24:29Z",
+  "one_line": "On the Cottonwood publish, none of the 939 manifests carries calendar_source, yet all 939 series documents carry the unreported-days pair; the contract says calendar_source is absent only when no derivation ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@1797e63a16, contract_version 0.3.1, manifest section, field calendar_source (line 231): it names the trading calendar that answered the unreported-day derivation and is 'Absent when no derivation ran'.",
+  "world_is": "TEST READ R148 (counts only, 2026-10-16T06:06:50Z): 939 of 939 manifests carry no calendar_source key (ABSENT); 939 of 939 series documents carry both unreported_trading_days and unreported_trading_days_basis, 917 of them with a non-empty list. The pair is the derivation's output, so the contract's absence condition does not hold for these accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@1797e63a16 (manifest calendar_source sentence, line 231)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~419/TEST_READ_R148.json (python_truth counts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The page reads only the series document and never reads calendar_source, so no screen changes because of this row at this read. The publisher is outside this grant and was not read. Recorded for the issuer."
+}
+```
+
+## IRPT_DASHBD-D2-W419-S2 -- the page's SERIES key lists name neither income_claim nor the later optional keys the contract names
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W419-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~419",
+  "surfaced_at": "2026-10-16T07:24:29Z",
+  "one_line": "The portal's seriesContract.ts at dd417a1055 mirrors contract 0.1.0 by its own header; the contract at 0.3.1 names income_claim as an optional series key, and the page's SERIES_OPTIONAL list does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal seriesContract.ts header (dd417a1055, lines 6-9): the key lists mirror org/standards/IRPT_DASHBD_SERIES_CONTRACT.json, and the pin test iv-e-124 fails when a key is added there and not here.",
+  "world_is": "The contract at 1797e63a16 is 0.3.1 and lists income_claim under series optional (line 56). The page's SERIES_OPTIONAL (lines 28-30) names class_value, class_weight, class_names, unreported_trading_days and unreported_trading_days_basis only. At this publish no document carried income_claim, and the page's reader read all 939 documents (read_ok 939, read_refused 0), so no read was affected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@1797e63a16 (series optional list, lines 50-56)",
+      "portal/src/pages/InvestorReporting/dashboard/seriesContract.ts@dd417a1055 (SERIES_OPTIONAL, lines 28-30)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~419/TEST_READ_R148.json (page counts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The pin test iv-e-124 was not run (outside this grant). The reader's unknown-key rule carries the key, so the drift is between the pin and the contract, not a read failure. Recorded for the issuer."
+}
+```
