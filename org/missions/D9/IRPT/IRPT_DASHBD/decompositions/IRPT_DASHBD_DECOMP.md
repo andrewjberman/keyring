@@ -2503,3 +2503,17 @@ The CTO ruled `account_return_daily.py:1355` (history_scope written as PARTIAL_H
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~236`); with `DB-b-292` (worker 235) two chains are live of the 4 the full item list will hold, cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; validated against reference 0.4.6 and 0.3.3 contracts built from the real 0.4.5 and 0.3.2 files (green) and 19 source, 22 series, 3 behaviour, 9 facts and 3 grant single-fault arms (all red)):** `checks/r149/p161_histscope_contracts.py` (DB161-1-AC1..AC3).
+
+## 155. ROUND 149, WORKSTREAM HSPROD (2026-10-16 ~10:1xZ, issuer 2.0.0_SA_COO~D2): the producers derive history_scope (item 2 of section 154)
+
+Item 2 of section 154 is cut as `DB-b-294`, its own workstream tag because the gate keys one issuance to a (round, workstream) and a second order cannot join an issued one. It changes the two producers that write `history_scope`, the 49 Financial `account_return_daily.py` and the Cottonwood Black Diamond adapter with its landing handler. The Inflection adapters are NOT changed: no series is published from them, so the constant they write reaches no page; a later round that publishes Inflection series owes their derivation.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `compute_range` derives per account against `min(bal_days)` (durable inception only) and writes the claim; `table_for` and `emit_day` carry the conditional column; the Cottonwood adapter derives from the floor-day partition (`derive_rows`, `derive`, `to_table`, `run_day`), the landing handler passes `FLOOR_DAY`; tests | DB-b-294 | FWD-10 | WORLD (`infra/` path) | none (it reads the claim's name and value from this section and section 154; `DB-b-293` declares them) | chain O |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) a caller that cannot name the floor (window-local inception, no balance days, an absent floor partition) keeps the old constant and writes NO claim, so a missing inference is never written as an inferred value; (b) the Cottonwood rule needs only the floor-day partition because a positive value on the floor day IS a first value day on the floor, and nothing is earlier in the source; (c) the Cottonwood landing refuses to overwrite a partition that already holds objects (DB-b-254), so correcting the 65 landed days needs a separate act (deleting the partitions is Andrew's, or the publisher derives for those days): the packet for the gold rebuild must state it; (d) no schema constant, no contract hash and no caller of `compute_range` changes.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~237`); with `DB-b-292` (235) and `DB-b-293` (236) three chains are live, cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the behaviour clauses validated against a scratch reference of the three edits (AC1 and AC2 green; the whole gold tests directory, 729 tests, and the landing handler's 16 tests green on it) and 14 single-fault mutants (all red)):** `checks/r149/p162_producers_scope.py` (DB162-1-AC1..AC3).
