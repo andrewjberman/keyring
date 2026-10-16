@@ -8483,3 +8483,51 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Filed as ADVI_FIRMBKTS-D1-W89-S2 for the id-form difference; the row content of S1 is unchanged except its id. Disarm: none (INERT). Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:46:00Z",
+  "one_line": "S3 Select (aws s3api select-object-content) is refused on gold/canonical/holdings_2026-10-16.parquet with MethodNotAllowed, so the holdings count for FB-p-6 was taken from a GET into scratch and counted locally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api select-object-content --bucket opal-data-inf --key gold/canonical/holdings_2026-10-16.parquet, three SQL variants run by 0.9.0_WK_ADVI_FIRMBKTS~89 on 2026-10-16 ~18:4xZ: each rc 254, 'MethodNotAllowed: The specified method is not allowed against this resource'",
+      "aws s3api get-object (read) of the same key into .scratch/k23/, 230808 bytes, rc 0; pyarrow row count of advisor_key: 12710 rows, 4 distinct values, 0 for the 23rd key's advisor"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 section 2 (bounds): read-only AWS reads through .tools/aws; the order names list-object-versions as the read and no other read method.",
+  "world_is": "The S3 Select read method is refused on this holdings parquet object (MethodNotAllowed), while a plain GET of the same object succeeds.",
+  "notes": "Disarm: none (INERT). The count used a GET into scratch, a read; no write verb was run. Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:46:00Z",
+  "one_line": "The holdings partition the advisor publisher read on 2026-10-16 (gold/canonical/holdings_2026-10-16.parquet) holds no rows for the 23rd key's advisor, so the publisher skipped that advisor's top_holdings.json while writing its book.json in the same run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-portal-advisor-publisher/lambda_function.py@ab8081bfdd lines 808-814 and 1171, 1200-1201: top_holdings.json is written only when _build_top_holdings over the holdings partition returns a non-None result",
+      "advisor publisher log 2026-10-16 13:30:50Z (Loading holdings: gold/canonical/holdings_2026-10-16.parquet) and 13:31:12Z (book.json 9291 bytes, summary.json 780 bytes, timeseries.json 165 bytes written for the advisor; no top_holdings line); holdings partition 12710 rows, 4 distinct advisor_key values, 0 rows for the advisor"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The advisor publisher writes each of its advisors' top_holdings.json from the canonical holdings partition (lambda_function.py 808-814 and 1200-1201); the TO's baseline records 19 advisor files written by the publisher and 1 (the 23rd key) not written by it.",
+  "world_is": "On 2026-10-16 the holdings partition the publisher read has 0 of 12710 rows for the 23rd key's advisor, while the same run wrote that advisor's book.json (9291 bytes); the partition's advisor_key carries 4 distinct values.",
+  "notes": "Why the partition carries no rows for this advisor was not read (the gold holdings builder is a separate writer). Disarm: none (INERT). Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```
