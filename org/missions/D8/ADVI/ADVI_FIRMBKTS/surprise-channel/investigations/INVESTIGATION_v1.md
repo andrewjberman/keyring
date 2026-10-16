@@ -8431,3 +8431,56 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Add to the Cottonwood plan's retire list with its consumer census (0 of 304 roles can read it). Its deletion is destructive and needs Andrew's confirmation at the moment it runs (CLAUDE.md Agent Autonomy); the retirement is a round-9 or later change under its own pair. Disarm: none (INERT)."
 }
 ```
+
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~90 (TO-FB-p-7, the triage of REMEDIATION_v4 group A)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W90-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~90",
+  "surfaced_at": "2026-10-16T18:30:00Z",
+  "one_line": "The round-3 CTO analysis routes the three tool rows (D1-W16-S1, D1-W16-S3, D1-W22-S3) to their tools' owner channels as one row each; no such owner-channel row exists in the repository, so the carrier the remedy names is absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ledger/ROUND_ANALYSIS.round3.md section 2, the paragraph on the three tool rows: W16-S1, W16-S3 and W22-S3 belong to the tools' owners; each goes to its owner's channel as one row.",
+  "world_is": "A search of every INVESTIGATION_v*.md and every .md under org/ for the tool names (comp-pipescript io, lambda_plane_consumers, opal_naming.py targets, E-series, under-reports) returns only ADVI_FIRMBKTS files (INVESTIGATION_v1.md, REMEDIATION_v4.md, ledger/ROUND_ANALYSIS.round3.md, PRODUCER_CENSUS.md of worker 16). No owner-channel row exists. At HEAD, comp-pipescript io D_04 --json reports writes 0 (the row recorded one printed write) and comp-pipescript io E_01 still returns Script not found. lib/opal_naming.py targets --help documents only --extra-target, and targets exits 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/ROUND_ANALYSIS.round3.md@4fb60ead6e (section 2, the tool rows paragraph)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md@4fb60ead6e (Grep over the investigations folder: no row names the tools' owners)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~90/TRIAGE_A.json (rows W16-S1, W16-S3, W22-S3 carried UNDETERMINED on this read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 1.0.0_SA_CTO~DELL1, to name the owner channel of comp-pipescript and of opal_naming.py targets and place the one row each, or to rule the rows carried in this channel. The triage of FB-p-7 carries the three rows UNDETERMINED until a carrier exists. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W90-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~90",
+  "surfaced_at": "2026-10-16T18:30:00Z",
+  "one_line": "The round-9 worker face of TO-FB-p-7 repeats the mechanism of D1-W16-S4 and D1-W17-S4: it orders the worker to flip the order's <status> to complete while the order file is outside the cell's <paths> write grant, so the worker cannot commit that flip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Open remedies D1-W16-S4 and D1-W17-S4: the round cut either names the order file in the worker's <paths> for the flip, or states that the issuer flips it; the round orders carry it.",
+  "world_is": "TO-FB-p-7 line 4 orders the worker to flip <status> to complete in the same commit as its proof instance. Its <paths> (lines 53-56) name the deliverables folder and the investigation file only. The same shape holds in TO-FB-f-8 (its face lines 67, 107, 169 and <paths> without the order file) and TO-FB-f-9 (face line 62). The face states no issuer-flips clause. The worker does not edit the order file: it is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-7.row-triage-a.md@4fb60ead6e (lines 4 and 53-56)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.md@4fb60ead6e (lines 67, 107, 169 and its <paths>)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.md@4fb60ead6e (line 62 and its <paths>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the issuer 2.0.0_SA_COO~B1, for the round-9 issuance: either the face names the order file in <paths> for the flip, or the face states that the issuer flips it (as FB-f-7 AMENDMENT 1 item 4 states for that order). Recurrence of the mechanism, filed as a new row because the open rows D1-W16-S4 and D1-W17-S4 cannot be edited here. Disarm: none (INERT)."
+}
+```
