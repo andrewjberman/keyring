@@ -19868,3 +19868,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The portal's vocabulary is eight values: the six plus Unclassified plus Other, with Other a grey bucket and a served holdings key. The gold class enum does not carry Other. The gap is not in the class table (which maps any table value outside the six to unclassified) but in the page's own type. No code was changed."
 }
 ```
+
+## IRPT_DASHBD-D2-W225-S1 -- TO-DB-b-278: the portal series-contract test (iv-e-124) fails once the contract reads 0.3.0
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W225-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~225",
+  "surfaced_at": "2026-10-16T00:40:26Z",
+  "one_line": "The portal's series-contract test iv-e-124 reads series.optional as three names; the 0.3.0 contract lists five (the two unreported-days fields are added). The test is red on the contract commit 2fd42fcb40. The portal file is outside this order's grant, so DB146-1-AC3 cannot be met as written and the order stops here.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the contract's sole writer); the owner of the portal page's series.optional list is not named in DB-b-278",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-124.series-contract.test.ts run from the worktree with bun test: exit 1, verdict line 'ARM(a): series.optional: page [class_names,class_value,class_weight] != contract [class_names,class_value,class_weight,unreported_trading_days,unreported_trading_days_basis]'; 0 pass, 1 fail",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json at commit 2fd42fcb40: contract_version 0.3.0; series.optional lists five names",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher.py run with python -I -m pytest: 13 passed, exit 0 (the publisher side is not affected)"
+    ]
+  },
+  "spec_asserts": "DB-b-278 criterion DB146-1-AC3 and the refusal clause: the publisher's tests and the portal's series-contract test still pass against the new contract; if either fails, record a BLOCKING row and stop (those files are not in the grant).",
+  "world_is": "The portal test fails at its ARM(a) parity arm, the only failure its verdict names. The publisher's 13 tests pass. The worker made no portal edit, wrote no facts record and did not flip the order. The reconciling edit (the page's optional list, or a contract revert) is the owner's decision; the branch carries the red test until then."
+}
+```
