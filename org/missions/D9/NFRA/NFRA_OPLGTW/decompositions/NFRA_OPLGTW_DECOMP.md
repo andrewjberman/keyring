@@ -2482,3 +2482,11 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-ac-1` | read-only census (`DescribeTable`, a bounded `Scan`: counts, key schema, attribute names, `classified_by` counts, the freshness field and its newest date, each with a claim word) and a spec of `mdpf_get_security_classification` with its ONE grant (read action on the table ARN, no write, no scan) and its refusal arms; no code, no IAM | `ETF_CLASS_CENSUS.json`, `ETF_CLASS_SPEC.md` under the worker's deliverables folder | WORLD | ~113 | none |
 
 **fanout:** 1 of 1 chains, cap 8. Disjoint from `OG-ap-23` (no code, no IAM). It is outside the 22:00Z line; the build cell and the grant order (`0.7.0_AE_CloudOps~ZS`, three halves) are cut from its spec.
+
+## ADDENDUM R3-T.82 (2.0.0_SA_COO~O, 2026-10-16 ~04:5xZ) -- round 37, workstream G2-CONFORM-4: the `etfs` name_rulings.json row cites the CTO ruling it rests on (CTO msg 34732)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cl-10` | append one sentence to the `evidence` of the `etfs` row naming `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPLGTW_CL7_NAMING_GATE_AND_MCPINDEX_AI_CLASSIFIED_20261016_Z.md`; nothing else changes | `infra/logic/registry/name_rulings.json` | WORLD | ~111 | `OG-cl-9` merged (80e59dd45e) |
+
+**fanout:** 1 of 1 chains, cap 8. One chain with `OG-cl-9` (the same row). It must merge before the `OG-ap-23` release commit is built if the applier's tree reads the file, but the row's text does not change any verdict: the gate reads `none_owed`.
