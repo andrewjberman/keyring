@@ -28235,3 +28235,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Pointer, not graded here: the worker also saw an overlay EV in dollars on PHP, HKD and CHF listings (31.68B, 110B, 335B) while the Model block says Figures in USD; unverified by the issuer. Candidates for the round-108 enrichment list: a Key Figures reason line for a withheld name with no P/E row, and a name for the What Changed line. The CVO and CTO read the shots at the re-grade; no change is proposed by the issuer."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S36",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-16T01:06:43Z",
+  "one_line": "round-close-check finds a proof instance only by the order's whole file stem, so a long order slug that makes the canonical path pass MAX_PATH (bn-1: 276 characters) can never read proof_ok; the round-107 close needed a CTO ruling (msg 6377).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "round-close-check.py proof_state: a proof lives at deliverables/<serial>/<order stem>.proof_of_spec.json; the lane gate admits a file only under the folder of its own serial.",
+  "world_is": "AMGT_RESAPP round 107: bn-1's order stem is 165 characters, so its canonical instance path is 276 characters at C:/dev/ajb_workspace (shortest possible serial folder gives at least 261); the checker reads proof_ok=5 proof_bad=1 and REFUSED. Renaming the order is refused by to-pipeline-gate (born terminal; a second issuance in the round; to_ref names the old file). bn-3, bn-4 and bn-6 fit. The CTO ruled the short-named instance stands (msg 6377).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project AMGT_RESAPP --round 107 (PROOFS proof_ok=5 proof_bad=1)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_CLOSE.round107.md",
+      ".tools/round-close-check.py lines 374-382 (proof_state)"
+    ]
+  },
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner 0.0.0_AB_MSTR (the checker is a .tools file). Candidate remedies, none applied here: accept an instance the order's own proof block names, or match by order id rather than whole stem. Round 108's orders carry short slugs so the next order does not meet it."
+}
+```
