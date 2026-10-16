@@ -2695,3 +2695,18 @@ Section 165's item 2, now due: `DB-b-303` (merge `d011411480`) changed the Cotto
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~244`), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green):** `checks/r149/p172_repin_after_reader.py` (DB172-1-AC1..AC3).
+
+## 167. ROUND 149, WORKSTREAM PORTALMOUNT (2026-10-16 ~17:3xZ, issuer 2.0.0_SA_COO~D2): the Performance tab's template view and its PDF export, for Andrew's smoke (CLIENT-FACING)
+
+The CTO's msg 9662: Andrew wants to smoke the template view in the Performance tab and its PDF export on `localhost:5174`. Measured by the CTO: the render candidate (`cand/dell2/irpt-49f-report-render-disclosure-placeholder` @`42a1539b183a`) builds `PerformanceReport`, `PerformanceReportDocument` and the synthetic fixture but mounts neither, changes no tab or export file, and is not in DEV or PROD. `~C2` owns the page files and agreed the write set (msg 17:01Z): the new `PerformanceTemplateView.tsx` and its test, ONE import and ONE mount in `ReportingTab.tsx`, edits to `export/Preview.tsx`, `render/PrintEntry.tsx`, `render/manifest.ts` (and `ExportButton.tsx` only if needed); NOT `DashboardPerformance.tsx`, `seriesContract.ts`, `coverageWords.ts`.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Cherry-pick the candidate (22 commits, 21 files, additive) onto current DEV on `cand/dell2/irpt-49f-performance-template-mount`; the new view (served report from the route, else under the Vite dev server only the synthetic fixture with a visible `SYNTHETIC PREVIEW` banner, never in a built tier); the tab mount; the export wiring | DB-b-307 | FWD-10 (and Andrew's smoke) | SERVED, client-facing | none | chain AA |
+| 2. The approval row (client-facing, for Andrew) and the report of the branch to the CTO | issuer act after the worker reports and the branch builds | Andrew's smoke | n/a | item 1 | after item 1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the fixture is kept out of a built tier by a DYNAMIC import under `import.meta.env.DEV`, and the checker proves it two ways: the source has no static import, and a PRODUCTION BUILD's output contains neither the banner words nor a distinctive fixture literal (the scan has a positive control); (b) the view's pure core (`resolveTemplate`, `PerformanceTemplateBody`) is split from the fetching component so the checker's probe can render each state with `renderToStaticMarkup` and no network; (c) the route `GET /api/scoped/investor-reporting/reporting/client/<id>/report` is the IB-pr-551 hop 3 route and does not exist yet, so until hops 2 to 4 are live the tab shows nothing in a built tier and the preview in dev: stated to Andrew in the approval row; (d) the cell does not touch the dev server on 5174 (another seat's), and nothing is pushed to DEV or PROD.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~246`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p175_portal_template_mount.py` (DBP175-1-AC1..AC3).
