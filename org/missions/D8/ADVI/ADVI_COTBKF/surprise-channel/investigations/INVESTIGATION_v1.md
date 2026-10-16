@@ -9873,3 +9873,111 @@ round.** Never edit an existing row.
   "dismissal_reason": "Disarmed by the disarm owner's read of the fix and its passing test at HEAD, before any zip was read; the CVO closes the remediation row."
 }
 ```
+
+## ADVI_COTBKF-D1-W186-S1 -- no row of the served or rebuilt FWD-3 tables carries a Yahoo-sourced price_source, so every use_class and porting_verdict label reads NOT_YAHOO and no account has a NOT_FOR_ACTIVE row
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W186-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~186",
+  "surfaced_at": "2026-10-16T05:40:58Z",
+  "one_line": "no row of the served or rebuilt FWD-3 tables carries a Yahoo-sourced price_source, so every use_class and porting_verdict label reads NOT_YAHOO and no account has a NOT_FOR_ACTIVE row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Dev/ajb_workspace/.scratch/cotbkf_r96_build/account_day_value.parquet (local build, run_commit 923f06e998ec, read 2026-10-16): price_source counts cottonwood-silver-canonical-prices 3,743,063; cash-at-par 1,363,843; etfs-bbg-testpull-ticker-history 4,262; cottonwood-gold-canonical-holdings 3,122; null 15,987,751; no yahoo_finance and no linear_interpolation value",
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py YAHOO_SOURCES = ['linear_interpolation', 'yahoo_finance'], read at call time; data/assets/scripts/silver/commonwealth_fwd3_serve.py yahoo_priced() (lines 320-333) marks a row Yahoo-priced only on those sources",
+      "served control (org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~186/SERVED_MOVE_MEASURED_RECORD.json): the price_source column of the served account_day_value equals the build row for row (21,102,041 rows, rows_differing 0), so the served table carries the same absence",
+      "the same record: use_class and porting_verdict NOT_YAHOO counts 1,691,729 / 21,102,041 / 82,593 across the three tables; account_day_value_accounts_not_for_active 0",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~165/NEVER_WIDEN_R83_PORTING_VERDICT_COO_HALF.md line 55: WIDE = yahoo_finance and linear_interpolation"
+    ]
+  },
+  "spec_asserts": "CB-cr-1 Why (ADVI_COTBKF.TO-CB-cr-1): the three served FWD-3 tables carry served Yahoo-priced days, and the use_class and porting_verdict labels separate them from the others under call 3adb (a)",
+  "world_is": "In the served and the rebuilt tables no row carries a Yahoo-sourced price_source, so the labels cannot separate any served day and the NOT_FOR_ACTIVE count is 0. Whether served days are Yahoo-priced under another attribution is not established by this read; no further trace was run (counts only).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W186-S2 -- the local FWD-3 --build does not finish inside the order's timeout 120 bound on this box; it was run under a 1500 s bound instead, and that departure is recorded here
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W186-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~186",
+  "surfaced_at": "2026-10-16T05:40:58Z",
+  "one_line": "the local FWD-3 --build does not finish inside the order's timeout 120 bound on this box; it was run under a 1500 s bound instead, and that departure is recorded here",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Dev/ajb_workspace/.scratch/cotbkf_r96_build.log: the builder prints nothing until it completes; the BUILD-RC=0 line was written after the build ended, several minutes after start (the 120 s bound would have ended it first)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~97/CONTROL_RECORD.json: the round-97 --build of the same builder is recorded at 376 s",
+      "ADVI_COTBKF.TO-CB-cr-1 item 2 and the worker bar (timeout 120 per invocation) do not name a bound for a build of this size"
+    ]
+  },
+  "spec_asserts": "the worker bar: each criterion's invocation runs under timeout 120, and a timeout is the recorded output (retried at most once)",
+  "world_is": "The one local --build of the three tables needs more than 120 s here. It ran under timeout 1500 in the background; no criterion was timed out, and the build's refusals and checks all printed their normal lines (BUILD-RC=0). The bound used is recorded in this row and in the worker report.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-S11 -- the issuer dispositions D1-W185-S1: route B delivered the Yahoo close cache and round 96 measured the served move
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S11",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T05:47:34Z",
+  "one_line": "the issuer dispositions ADVI_COTBKF-D1-W185-S1: the Yahoo close cache the as-traded basis reads (3,580 per-ticker files) arrived from dell2 on the CTO's route B and round 96's CB-cr-1 rebuilt and compared the three served tables with it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~186/SERVED_MOVE_MEASURED_RECORD.json at 26f2781a61: measured true; received 20,563 files and 4,478,568,892 bytes (equal to the dell2 manager's report, relayed by 0.0.0_AB_MSTR~DELL1 msg 6522); pre_existing_equal true in 3 of 3 tables, rows_differing 0 and max_abs_diff 0.0",
+      "AC1, AC2 and AC3 of ADVI_COTBKF.TO-CB-cr-1 PASS (proof instance VALID rc=0, worker ~186); round-close-check --round 96 reads MAY-CLOSE",
+      "org/missions/D8/ADVI/ADVI_COTBKF/ledger/CTO_RULING_DELL1_ROUTE_B_DELL2_RUN_DATA_20261016.md: the ruling that sent the data"
+    ]
+  },
+  "spec_asserts": "D1-W185-S1: the as-traded rebuild cannot run on dell1 because the Yahoo close cache is absent here and on S3.",
+  "world_is": "The cache is here (copied off git over the tailnet) and the rebuild ran: nothing about the cache blocks the served-move control any longer. The control result and the finding it surfaced (every label reads NOT_YAHOO) are in D1-W186-S1 and D1-S12.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Answered by route B: the cache arrived, round 96 ran the rebuild at the served settings and the served tables equal it on every pre-existing column."
+}
+```
+
+## ADVI_COTBKF-D1-S12 -- the as-traded price substitution keeps the store's source label, so the Yahoo rule behind use_class never marks a substituted day
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S12",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T05:47:34Z",
+  "one_line": "the as-traded re-grade replaced 1,049,193 price points on 911 tickers but the price file labels every row with a store source, so the label rule that keys on yahoo_finance/linear_interpolation reads NOT_YAHOO everywhere; whether the served days are Yahoo-priced is a call for the CTO",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/price_basis.json (off git, counts only): price_basis as_traded, substituted_tickers 911, points_replaced 1,049,193, days_rederived 477,980",
+      "r34/after/security_day_price.parquet column store (off git, counts only, 2,124,908 rows): cottonwood-silver-canonical-prices 2,032,848; cottonwood-gold-canonical-holdings 66,925; etfs-bbg-testpull-ticker-history 15,731; cash-at-par 9,383; rivalfunds-etfs-gold-security-market 21; no yahoo_finance and no linear_interpolation value",
+      "data/assets/scripts/silver/commonwealth_fwd3_serve.py line 722 (the as-traded basis records the --yahoo-cache directory it read) and lines 320-333 (yahoo_priced marks a row only on dv.YAHOO_SOURCES)",
+      "ADVI_COTBKF-D1-W186-S1 (the worker's count of NOT_YAHOO on 1,691,729 / 21,102,041 / 82,593 rows; reproduced by the issuer on the build: price_source null 15,987,751 rows, every one with a null close)"
+    ]
+  },
+  "spec_asserts": "Call 3adb (a) as cut in round 95: the served Yahoo-priced days for securities held in V2 stay, labelled interim-Yahoo; the labels separate them.",
+  "world_is": "The as-traded substitution takes its closes from the Yahoo cache but the price file keeps the store's label, so the served price_source never names Yahoo and the move would add two columns that read NOT_YAHOO on every row. Applied as built, a label of NOT_YAHOO on a day whose as-traded close came from the Yahoo cache would carry a claim the data does not support. Not established: which served days used a substituted point (the price file carries no flag for it).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
