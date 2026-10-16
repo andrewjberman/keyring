@@ -3025,3 +3025,56 @@ used as fixtures is a different read with a different denominator.
   "world_is": "The board's meeting block is mounted only for tickets whose status is not completed. A meeting_request that a coordinator confirmed and staff then completed shows its outcome on neither the open/in-progress tabs (it has left them) nor the Completed tab (the block is not mounted there). The data is stored (ticket.meeting.status, .time, .by); only the page omits it. Not yet decided whether completing a meeting ticket is the normal end of its life or whether the outcome must stay readable after it; that is the CTO's reading of FWD-11 for the round-N analysis."
 }
 ```
+
+## TCKT_VNEXT-D2-W49-S1 -- The whole-folder drain run of infra/aws/lambda/ticket_center/tests/ cannot be clean in this worktree: 8 modules fail collection and 11 tests fail, all reading paths this worktree does not carry, and the same counts occur on the unchanged base.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~49",
+  "surfaced_at": "2026-10-16T21:58:12Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-W49-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The whole-folder drain run of infra/aws/lambda/ticket_center/tests/ cannot be clean in this worktree: 8 modules fail collection and 11 tests fail, all reading paths this worktree does not carry, and the same counts occur on the unchanged base.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-tckt-vnext-49 @430b378b8f (base HEAD, before the lambda edit): timeout 120 python -m pytest C:/dev/wk-tckt-vnext-49/infra/aws/lambda/ticket_center/tests/ -q -p no:cacheprovider --color=no --continue-on-collection-errors -> 13 failed, 380 passed, 8 errors, rc=1; the 2 new same-member cases are among the 13, so the pre-existing count is 11 failed and 8 errors",
+      "after the uncommitted edit, same command -> 11 failed, 382 passed, 8 errors, rc=1: the failures are test_cross_firm_global_register.py (7) and test_cross_firm_global_sites_widened.py (4); no failure names attachment_open_ticket",
+      "collection errors (8): test_no_row_refuses, test_package_409_codes, test_package_env_firms, test_package_i5p_i7, test_package_principal, test_package_request_id, test_package_route, test_status_active end in FileNotFoundError; test_package_route reads org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json, which is absent from this worktree",
+      "test_cross_firm_global_sites_widened fails with 'scan finds 0 site(s), the record table says 2 -- re-classify this file in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED' for infra/aws/lambda/investor-reporting/_authz/enforce.py; that record and the scanned file are outside this order's grant"
+    ]
+  },
+  "spec_asserts": "TO-R20-LM step 4 (drain check): the whole ticket_center tests folder is run once and its counts are recorded in the record; the issuer re-runs it. The order states no expected folder outcome.",
+  "world_is": "In this worktree the folder run is not a clean drain. Eight modules cannot be collected and eleven tests fail, all in modules that read D9 IRPT deliverables or the investor-reporting classification record, neither of which this worktree carries. The same eleven failures and eight errors occur on the base before the edit, so none is caused by this order. Counts are recorded in R20_LM_RECORD.json."
+}
+```
+
+## TCKT_VNEXT-D2-W49-S2 -- The step-2 presign-from-requester-firm with the step-1 equality test removed does not fire on a ticket whose key sits under the answers firm, so the first same-member case carries a second sub-ticket whose key sits under the requester firm.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~49",
+  "surfaced_at": "2026-10-16T21:58:12Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-W49-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The step-2 presign-from-requester-firm with the step-1 equality test removed does not fire on a ticket whose key sits under the answers firm, so the first same-member case carries a second sub-ticket whose key sits under the requester firm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-tckt-vnext-49 @430b378b8f: attachment_open_ticket key-prefix check 'if not att[key].startswith(key_tpl.format(firm=firm)): return 404 carries no attachment' (lambda_function.py base line 2126); a base ticket with requester inflection, answers cottonwood and a cottonwood key returns 200 (the before-arm: the first case FAILS on base as the order expects)",
+      "with the presign member set to req_firm and the equality refusal removed (mutant copy in .scratch/mutant_R20LM), a ticket whose key sits under the answers prefix is refused by the key-prefix check: the sub-ticket-a case passes on the mutant",
+      "mutant_check.py run after the sub-ticket-b case was added: CONTROL rc=0 (5 passed); MUTANT rc=1 '1 failed, 4 passed'; pytest -rf names test_open_refuses_a_ticket_whose_requester_firm_differs_from_answers_firm; MUTANT-FIRES"
+    ]
+  },
+  "spec_asserts": "TO-R20-LM step 2 and AC2: the presign member is built from req_firm, and removing the step-1 equality refusal is a mutant the new test file catches (MUTANT-FIRES).",
+  "world_is": "With the presign built from req_firm, removing the equality refusal alone leaves the answers-prefix key refused by the existing key-prefix check with the same 404, so no test on that key fails on the mutant. The mutant fires only on a ticket whose key sits under the requester firm's prefix; the base answers-prefix case is what makes the before-arm fail. Both are kept: the first same-member case (one named test) carries sub-ticket a (answers-prefix key) and sub-ticket b (requester-prefix key). The mutant fires on sub-ticket b. The order's two expectations are met only with that second sub-ticket."
+}
+```
