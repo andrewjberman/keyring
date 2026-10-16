@@ -16,6 +16,10 @@ Issuer `2.0.0_SA_COO~F2`, 2026-10-16 ~22:5xZ. Gate key of the one cell: `<round>
 
 Three mechanical criteria (the checker `checks/r136/p136_apply.py` is the one the order carries; its fresh-read path was exercised against the world): `DBF136-4-AC1` (the record's head), `DBF136-4-AC2` (fresh live reads), `DBF136-4-AC3` (the events and the new prefix's counts). The criterion ids keep their round-136 names because the order carries them already. **Decisions (the issuer's):** (a) the order is a modification of an existing file, re-tagged, not a new order; (b) the first scheduled fire after the apply is READ by the issuer (the ledger's leg L7) and is the acceptance of the scheduled path, a stated wait on the CTO's own condition 6, not an unproven outcome of the cell; (c) the Cottonwood and Inflection cells are NOT cut this round (their dependencies are stated above). fanout: 1 of 1 chains, cap 4.
 
+| **AMENDMENT 1 (after the apply's STOP at Act 3):** the RE-PIN of the two stale members of the 49 Financial gold bundle (`lib/trading_calendar.py`, `infra/logic/registry/systems.json`) in the source-map entry, one cell, the cause of the STOP | `DB-f-2205` | FWD-5 | WORLD | none | R137-B |
+
+`DB-f-2205` (workstream `F2REPIN`, a second workstream with its own write surface, one source-map entry) answers the CTO's RULING on the Act 3 STOP (msg 9997, CTO half @ce7d758d3a): re-stage, not rollback. Two mechanical criteria (`DBF137-1-AC1` every staged member of the entry is current by CONTENT, `DBF137-1-AC2` the attribute closure over the pinned blobs; checker `checks/r136/p137_repin.py`, selftest 5 arms; both FAIL at base with the two stale pins and the missing function named). **The cause, owned:** the round-136 closure check graded import NAMES, not the members' content, and the cell DB-f-2203 added two members without re-checking the 21 it found; `p137_repin.py` closes that. After the cell merges, the issuer re-checks all 23 pins by content, builds the build-only hash (twice), sends it to the CTO for his ADDENDUM 1 (plan 0/1/0, code only) and countersigns it before IB2 resumes at its dry run. The order `DB-f-2204` stays the apply's order and is amended then (its steps 5 to 9 resume; its build and plan clauses read the addendum).
+
 **Four-postulate record.** (i) Domain: one function, one role policy, one new gold prefix, 26 day partitions at most. (ii) Same grain: a day partition per trading day. (iii) One intent: the table is written, nothing else, and nothing reads it. (iv) Not moved: the five other gold tables, the filled report, the published series, every read and list grant, the schedule.
 
 | criterion | invocation | base reading |
@@ -23,3 +27,5 @@ Three mechanical criteria (the checker `checks/r136/p136_apply.py` is the one th
 | DBF136-4-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r136/p136_apply.py . DBF136-4-AC1` | FAIL (no record) |
 | DBF136-4-AC2 | `python -I .../checks/r136/p136_apply.py . DBF136-4-AC2` | FAIL (no record) |
 | DBF136-4-AC3 | `python -I .../checks/r136/p136_apply.py . DBF136-4-AC3` | FAIL (no record) |
+| DBF137-1-AC1 | `python -I .../checks/r136/p137_repin.py . DBF137-1-AC1` | FAIL (two stale pins) |
+| DBF137-1-AC2 | `python -I .../checks/r136/p137_repin.py . DBF137-1-AC2` | FAIL (a missing attribute in a pinned blob) |
