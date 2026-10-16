@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~143</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C in the round-29 issuance, per the CTO's round-28 analysis (ROUND_ANALYSIS.round28.md @3894648aa3, msg 109677).</status_reason>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-143 @c1000e1948) and again in the main tree after merge 9a570bb671: CTbe1-AC1 GRADE-OF-RECORD arms=8/8 ok=True (the test was red at the base, 4/8); CTbe1-AC2 ROUND-CLOSE-SELFTEST cases=30/30 ok=True (the base printed the same); proof VALID; neighbouring suites green in the main tree: ROUND-CLOSE-DECOMP-ROUND 6/6, CLOSE-GATES-TEST 24/24, SEAT-RECORD 6 of 6. The change: grade_criterion collects every CVO-kind non-doer row that grades the criterion and returns the one with the latest surfaced_at (undated rows sort first, ties go to the later file and row, self-grades never compete); the real project's close line reads the same before and after. Real row shape the worker found: surfaced_at is minute-precision with a Z, adjudicates names surprise ids (never a grade row id), and no adjudication file carries a supersedes key, so that branch is inert on today's rows. W143-S1 (OBSERVATION, INERT): a grade of record of NOT MET reads GRADED and counts in graded=; whether a NOT MET grade should refuse the close is the CVO's rule, unchanged here. W143-S2: the sparse list lacked org/tier0. Not run: the site Z case itself (NFRA_OPLGTW round 37; its files are outside the worker's sparse tree): the planted pair reproduces its shape. The announcement to the four boxes goes through 0.0.0_AB_MSTR. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

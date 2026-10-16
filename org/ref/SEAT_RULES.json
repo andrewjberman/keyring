@@ -547,31 +547,62 @@
     "CLOUDOPS",
     "TIER2"
    ],
-   "rule": "A Dell seat is refused updates to ten protected Lambda functions (five are the edge functions) and refused iam:PassRole except on named roles; a deploy of one of those is a write-in to the laptop. The refusal is an IAM Deny in the Dell deploy policy; this row's probe reads the policy file (declared), it does not call AWS.",
+   "rule": "A Dell seat may update the Lambda functions it deploys (Andrew's 2026-10-13 ruling put both Dell agent users in the administrator group, and the earlier refusal of updates to ten protected functions is gone). The three IAM Denies that remain in the Dell deploy policy are the refusals: CloudTrail writes, S3 deletes on production data, and table and database deletes. Each probe reads the policy file (declared), it does not call AWS.",
    "holder": "GATE",
    "mechanism": {
     "path": "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
-    "entry": "DenyProtectedFunctions"
+    "entry": "DenyCloudTrailWrites"
    },
-   "probe": {
-    "label": "policy-declares-deny",
-    "tool": "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
-    "argv": [
-     "{PY}",
-     "{SELF}",
-     "_policy_deny",
-     "{ROOT}/infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
-     "DenyProtectedFunctions",
-     "lambda:UpdateFunctionCode"
-    ],
-    "stands_for_all_kinds": true,
-    "expect": "POLICY-DENY sid=DenyProtectedFunctions",
-    "expect_rc": 0
-   },
+   "probe": [
+    {
+     "label": "policy-declares-deny-cloudtrail-writes",
+     "tool": "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+     "argv": [
+      "{PY}",
+      "{SELF}",
+      "_policy_deny",
+      "{ROOT}/infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+      "DenyCloudTrailWrites",
+      "cloudtrail:DeleteTrail"
+     ],
+     "stands_for_all_kinds": true,
+     "expect": "POLICY-DENY sid=DenyCloudTrailWrites",
+     "expect_rc": 0
+    },
+    {
+     "label": "policy-declares-deny-s3-deletes-on-production-data",
+     "tool": "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+     "argv": [
+      "{PY}",
+      "{SELF}",
+      "_policy_deny",
+      "{ROOT}/infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+      "DenyS3DeletesOnProductionData",
+      "s3:DeleteObject*"
+     ],
+     "stands_for_all_kinds": true,
+     "expect": "POLICY-DENY sid=DenyS3DeletesOnProductionData",
+     "expect_rc": 0
+    },
+    {
+     "label": "policy-declares-deny-table-and-database-deletes",
+     "tool": "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+     "argv": [
+      "{PY}",
+      "{SELF}",
+      "_policy_deny",
+      "{ROOT}/infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+      "DenyTableAndDatabaseDeletes",
+      "dynamodb:DeleteTable"
+     ],
+     "stands_for_all_kinds": true,
+     "expect": "POLICY-DENY sid=DenyTableAndDatabaseDeletes",
+     "expect_rc": 0
+    }
+   ],
    "built_by": "existing",
-   "needs_andrew": true,
-   "question": "Do the Dells stay denied the ten protected functions and role passing (so those deploys are written in to the laptop), or is the denial narrowed? The Deny is declared in the policy file; whether it is applied live is not read from here.",
-   "source": "CT-s-2 order, BUILD 1: \"the routes this project denied the Dells to ten older pipeline roles\"; CTO half: \"NEWLY REFUSED: updates to ten of 233 Lambda functions\"."
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-13 ~16:5xZ, verbatim: \"Sure let's do rec b\" (rec b: join the admin group but keep three denies: no CloudTrail writes, no production S3 deletes, no table/database deletes); record org/tier1_exec/2.0.0_SA_COO~C/deliverables/ANDREW_DIRECT_20261013_165xZ_DELL_USERS_ADMIN_GROUP_KEEP_THREE_DENIES.md; commit 0a6e65f519 removed the other Denies."
   },
   {
    "id": "R-WORKFLOW-1",
@@ -1113,7 +1144,8 @@
      "--selftest"
     ],
     "stands_for_all_kinds": true,
-    "expect": "CROSSBOX-SELFTEST cases=[0-9]+/[0-9]+ ok=True"
+    "expect": "CROSSBOX-SELFTEST cases=[0-9]+/[0-9]+ ok=True",
+    "bound": 220
    },
    "built_by": "CT-s-6",
    "needs_andrew": false,
