@@ -53842,6 +53842,10 @@ REFUSED_20261008)
 2026-10-12T00:01:16Z OVERRIDE  0.7.0_AE_CloudOps~Z  6  (--author-override CLOUD_OPS_OR_ETL applied)
 2026-10-09T17:49:45Z SURPRISE-ROW-OVERRIDE  0.9.0_WK_IRPT_DASHBD~87  reason=worker 0.9.0_WK_IRPT_DASHBD~87 own row D2-W87-S1, committed by the issuer on the worker branch because client-data-check blocked the worker on pre-existing lines
 2026-10-09T17:50:58Z SURPRISE-ROW-OVERRIDE-HONOURED  0.9.0_WK_IRPT_DASHBD~87  reason=worker 0.9.0_WK_IRPT_DASHBD~87 own row D2-W87-S1, committed by the issuer on the worker branch because client-data-check blocked the worker on pre-existing lines  provenance=UNVERIFIED-BY-GATE
+2026-10-12T21:58:03Z PASS  2.0.0_SA_COO~V1  3  (all paths in-lane)
+2026-10-12T22:02:58Z PASS  2.0.0_SA_COO~V1  1  (all paths in-lane)
+2026-10-14T14:36:22Z OVERRIDE  2.0.0_SA_COO~V1  3  (--author-override TREE_COO applied)
+2026-10-14T19:06:40Z PASS  2.0.0_SA_COO~H1  2  (all paths in-lane) act=b6abb383e5c3 paths=2:data/etfs/scripts/gold/etf_positioning_gold.py|data/etfs/scripts/gold/etf_positioning_publisher.py
 2026-10-12T10:47:41Z PASS  0.7.0_AE_CloudOps~MP  2  (all paths in-lane)
 2026-10-12T10:47:47Z PASS  0.7.0_AE_CloudOps~MP  2  (all paths in-lane)
 2026-10-12T11:25:55Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane)
