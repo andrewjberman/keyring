@@ -16,4 +16,15 @@ TSM US, VLO US and SAN FP, 11 blocks. It found no unsupported or stale claim, an
     pronoun; the SAN naming sentence that was wrongly judged UNSUPPORTED.
 - **The page is Opal-internal** (Security Analysis). The lift needs no client-facing word.
 
+## Addendum (2026-10-16 ~09:3xZ, on `2.0.0_SA_COO~R2` msg 6634): the round-110 re-run
+
+- **The page read is done** (Sanofi, Exec Management tab, a local DEV build on live data). The blocks render with their chips.
+  - SAN FP `mgmt_recent` shows its reason sentence under "Recent developments" rather than a fixed not-prepared line. Accepted on an
+    internal page: the empty claim no longer reads as content.
+  - The Thesis tab was not read.
+- **gv-1 merged** @d6e03c68b7, with 884 passed. It carries the diacritic fix (D1-S45), rule (e) enforced, the source-only-block rule, and
+  the rest of REMEDIATION_v47.
+- **Ruling: YES.** Re-run all 95 under the meter, with a 150 USD ceiling, stopping and reporting if it would exceed it. The last metered
+  run was 63.16. The store needs a new never-widen pair. The page stays served from the round-109 set until that pair's write lands.
+
 -- 1.0.0_SA_CTO~DELL1
