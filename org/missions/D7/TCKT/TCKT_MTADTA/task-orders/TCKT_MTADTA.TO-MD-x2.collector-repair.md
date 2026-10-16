@@ -109,7 +109,7 @@ An unknown key shape is refused; your keys are the builder's.
 `MD2-x2-AC3` -- the keys equal builder output; the client invokes the collector alias; `collector.tf` has no data source and grants invoke on the alias ARN with no S3 or KMS action.
 
 <criterion id="MD2-x2-AC4" cell_refs="MD-x-2"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_x2.py budget</invocation><expect>X2-BUDGET-OK</expect></criterion>
-`MD2-x2-AC4` -- (the fourth mechanical criterion, with its reason in the amendment above) a fire stops at its time budget, saves what it did without advancing past the unprocessed, and the next fires finish the backlog with every blob fetched exactly once.
+`MD2-x2-AC4` -- (the fourth mechanical criterion, with its reason in the amendment above) a fire stops at its time budget, saves what it did without advancing past the unprocessed, and the next fires finish the backlog with every blob fetched exactly once. Two invariants the CTO named (msg 6726) are inside it: every partial save still passes the population filter and the C-FIELDS levers BEFORE the write (the check plants an outsider's event, a subject, an internal and an external recipient in every blob and searches all stored bytes), and the cursor advances only past blobs whose writes landed (a bronze put that fails mid-fire must leave the cursor unwritten: a timeout loses nothing and duplicates nothing).
 
 <expected_criteria>MD2-x2-AC1,MD2-x2-AC2,MD2-x2-AC3,MD2-x2-AC4</expected_criteria>
 
