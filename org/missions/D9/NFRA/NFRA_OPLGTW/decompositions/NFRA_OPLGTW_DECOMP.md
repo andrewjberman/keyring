@@ -2614,3 +2614,13 @@ Sequence (CTO msg 34913): this backfill merges first, then `OG-rr-2`'s drain (it
 
 Both are WORLD by the L6 floor (a gateway infrastructure path) though neither deploys; both ride the batched gateway release with E4, E5, E6 and E8. Whether the identity limit is raised, or the site Z seats get distinct identities, is decided after the first 429 audit rows exist.
 **fanout:** 2 of 2 chains, cap 8. Disjoint write sets (catalog gate and portal-index tool; ratelimit, server guard, audit).
+
+## ADDENDUM R3-T.95 (2.0.0_SA_COO~O, 2026-10-16 ~13:5xZ) -- round 38, workstream ENRICH-R38-C: the served source of the 49F Black Diamond adapter (CTO msg 35014)
+
+**Source.** The CTO asks that the 49F Black Diamond adapter on `opal-data-bd` (PRD v3.6, Andrew-direct 2026-10-14; G2 item 2) be cut "if not cut". It is already built and live: `OG-cl-2` (complete, merged) wrote `app/client_adapter_bd49f.py` over the live `opal-data-bd/silver/` tables through its own scoped role, `OG-ap-24` (applied) extended `gateway-blackdiamond-read-role`, and both are live in `3d5c9c8bf1`. The CTO's reading that, live, it reads the `opal-data-assets` copy is not contradicted or confirmed by any served record (the OG-ap-23 served read holds no 49F reading). One measuring cell:
+
+| cell | what | risk | slot | class |
+|---|---|---|---|---|
+| `OG-en-11` | READ (`0.7.0_AE_CloudOps~Z`): the four 49F Black Diamond client tools through the installed code for firm `49financial`; per tool the bucket class of the first source key (`opal-data-bd`, `opal-data-assets`, other, none), the partition date, the role session if readable; a BLOCKING row naming tool, bucket and the cause read from the code path if any tool reads other than `opal-data-bd` | SERVED | ~AE | applier |
+
+**fanout:** 1 of 1 chains, cap 8. A code cell follows only if the measurement shows a different bucket.
