@@ -25370,3 +25370,79 @@ name the one known failure instead of silently inheriting it.
   "notes": "Counts only. Bears on OG-en-13's span-of-partitions design."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T19:57:19Z",
+  "id": "NFRA_OPLGTW-Z-W126-S1",
+  "one_line": "tests/test_og_ch1.py fails 2 of 6 at HEAD 99f261e135 before any OG-en-13 edit: ac02 (a different adapter is already registered for this vendor) and ac04 (the repo roster file is not on this tree).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_og_ch1.py@99f261e135 (run alone under python -m pytest: 2 failed, 4 passed, identical before and after commit e59189ed21)",
+      "infra/aws/ec2/opal-gateway/tests/test_og_ch1.py@99f261e135 test_ogch1_ac04 raises AssertionError 'the repo roster file is not on this tree' from its own search for data/mdpf/config/partner_roster.json",
+      "test_ogch1_ac02 raises ValueError 'a different adapter is already registered for this vendor'"
+    ]
+  },
+  "spec_asserts": "The order lists tests/test_og_ch1.py among the existing tests it may update to the new truth; its premise is a gateway test set that is green at the base it is cut from.",
+  "world_is": "ch1 is red on this worktree before any change of this serial. Both failure signatures are independent of the OG-en-13 change: the registry collision and the missing roster file reproduce on the base commit. No change of this serial touches ch1.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Signatures and counts only. ch1 is left unchanged by this serial; no assertion weakened."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T19:57:19Z",
+  "id": "NFRA_OPLGTW-Z-W126-S2",
+  "one_line": "The order's precision rule names weights and money only, so unit_cost (holdings) and units (transactions) have no stated precision; they are served as JSON numbers, unrounded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-13.49f-units-currency-numbers-as-of.md section 1 'Numbers': weights (weight, account_allocation, cash_allocation) at 6 decimals; money (market_value, account_market_value, cash_market_value, amount) at 2 decimals; 'every figure as a JSON number, never a string'",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e59189ed21 get_holdings unit_cost is _num(); get_transactions units is _num()"
+    ]
+  },
+  "spec_asserts": "Every figure is served as a JSON number at the order's precision: weights at 6 decimals and money at 2 decimals, and the rule 'never a string' reaches every figure.",
+  "world_is": "unit_cost is a per-unit price and units a quantity. Neither is in the money or weight list, so neither has a stated precision. Both are parsed to float and served unrounded, so a per-unit price or a fractional quantity may carry more than 2 decimals.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A judgment the issuer should confirm or direct. The three named tests check the JSON number type of both fields, and the 2-decimal rule on money only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T19:57:19Z",
+  "id": "NFRA_OPLGTW-Z-W126-S3",
+  "one_line": "The order's as_of rule names holdings and allocation answers; the shared envelope serves the partition date for every undated answer, so resolve, transactions and fees change too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-13.49f-units-currency-numbers-as-of.md section 1 'as_of' (the gap names holdings and allocation answers; the fix reads 'where the answer's as_of is null because the caller gave none')",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e59189ed21 _envelope() is the one envelope of all five answers and now serves _as_of = _partition_date when the caller gave none"
+    ]
+  },
+  "spec_asserts": "as_of is set from the partition date where the answer's as_of is null because the caller gave none; holdings and allocation answers are the gap named.",
+  "world_is": "_envelope() is shared by resolve_account, get_holdings, get_transactions, get_allocation and get_fees, so the generic rule lands in all of them. A caller-supplied as_of and an absent answer are unchanged. The other adapters are untouched.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The generic reading is the one the fix sentence states; the issuer should confirm the scope. Tests check holdings and allocation only."
+}
+```
