@@ -45,3 +45,9 @@ to the page set, with tests naming each code (6 references). 3 files, as before.
 PROD-based head, with all 8 codes in `HOP_FAILURE_CODES`. The dev-overlap waiver of exactly 38 named commits is
 `CTO_RULING_DELL2_05CE_DEV_OVERLAP_WAIVER_TICKET_HOP_FAILURE_READ_DEV_20261016.md` (@03159120cf); XA-102b RULED; row 05ce CLOSED.
 **APPROVED for DEV only at bdeeaa88f359.** PROD stays with ac828834, after the overlapping features.
+
+## ADDENDUM -- 6099 (series mirror to contract 0.3.3) APPROVED, Opal-internal on measured bytes (2026-10-16 ~11:2xZ)
+
+`cand/dell2/irpt-series-mirror-contract-033` @831f974aa1: ONE file (`seriesContract.ts`, +10/-1) on the PROD tip, type-only (income_claim,
+history_scope_claim, history_scope_basis, calendar_source). Build-bytes record `DB_C30_BUILD_BYTES_R150.md`: dist identical to origin/PROD (88/88).
+Class Opal-internal under the msg-9136 rule. **APPROVED for DEV and PROD at 831f974aa1.**

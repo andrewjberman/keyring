@@ -22018,3 +22018,131 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W258-S1 -- the worktree's sparse checkout omits ycharts/ and ops/, so two of the three AR121-g-AC3 regress files cannot run in it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W258-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~258",
+  "surfaced_at": "2026-10-16T11:12:49Z",
+  "one_line": "AR121-g-AC3 (ar_g121_checks.py regress) runs test_kept_holding.py and ycharts/session/tests/test_resident_session_checker.py; in worktree wk-IRPT_ANLREQ-258 the sparse cone omits infra/aws/lambda/investor-reporting/ycharts and .../ops, so test_kept_holding has 1 failure (FileNotFoundError on ops/status.py) and the session checker path is absent (pytest rc=4). Not reconstructed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-121 AC3: the regress mode runs three test files one at a time (the order's test file, test_kept_holding.py, test_resident_session_checker.py) and expects AR-G121-REGRESS-OK. The worker face says the worktree is provisioned with infra/, docs/, data/, lib/, org/standards and the project folder.",
+  "world_is": "At c03ebfdb5c (box/dell2) and 8ef81d76e3 (wk-IRPT_ANLREQ-258) git sparse-checkout list reads .tools, infra/aws/lambda/investor-reporting/intake, infra/logic/registry, lib, org/devices. The directories infra/aws/lambda/investor-reporting/ycharts and .../ops are tracked at HEAD (git ls-tree) but absent on disk. Measured: regress -> AR-G121-REGRESS-FAIL test_kept_holding.py rc=1 (1 failed, 18 passed; FileNotFoundError on infra/aws/lambda/investor-reporting/ops/status.py) and test_resident_session_checker.py rc=4 (file or directory not found). The one failure is a missing file, not a yfinance assertion; the criterion cannot be measured as written in this worktree. The sparse set was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 580 python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g121_checks.py regress -> AR-G121-REGRESS-FAIL test_kept_holding.py: rc=1 ['1 failed, 18 passed']; test_resident_session_checker.py: rc=4 ['no tests ran']",
+      "python -m pytest -q infra/aws/lambda/investor-reporting/intake/tests/test_kept_holding.py -> FAILED ...test_the_three_words_are_the_same... FileNotFoundError ... investor-reporting/ops/status.py; 1 failed, 18 passed",
+      "git sparse-checkout list -> .tools, infra/aws/lambda/investor-reporting/intake, infra/logic/registry, lib, org/devices",
+      "git cat-file -e HEAD:infra/aws/lambda/investor-reporting/ops/status.py -> present (rc 0); git ls-tree --name-only HEAD infra/aws/lambda/investor-reporting/ lists ycharts and ops"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W258-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~258",
+  "surfaced_at": "2026-10-16T11:12:49Z",
+  "one_line": "ar_g121_checks.py scope takes its allowed set from OWN (three product files) and ISSUER (issuer prefixes); the worker's own deliverables folder, which the order's <paths> grants (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~258/), matches neither, so a worker's committed proof instance is reported as outside the write set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-121 AC3: the branch changes only the three product files, the worker's folder, the order and the channel file. The order's <paths> block grants the worker's deliverables folder.",
+  "world_is": "The scope() function in ar_g121_checks.py computes stray = names not in OWN and not startswith(ISSUER). ISSUER lists the decompositions, the issuer's checks folder, the task-orders folder, the tier1 folder and the channel file; no 0.9.0_WK_IRPT_ANLREQ~ deliverables prefix. So any worker proof instance committed to the worker's own deliverables folder reads as stray in scope and regress, whatever the worker changed. Predicted from the code at 8ef81d76e3; measured after the proof commit and reported in the worker report.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g121_checks.py: OWN = (CHECKER, TEST, FIXTURE); ISSUER = (decompositions/, deliverables/2.0.0_SA_COO~G2/checks/, task-orders/, org/tier1_exec/2.0.0_SA_COO~G2/, surprise-channel INVESTIGATION_v1.md); stray = [n for n in names if n not in OWN and not n.startswith(ISSUER)]",
+      "order <paths> line: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~258/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S146 -- disposition of IRPT_ANLREQ-D2-W258-S1 and IRPT_ANLREQ-D2-W258-S2: both were the issuer's, both fixed
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T11:24:04Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S146",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The worker read both right. W258-S1: the issuer provisioned the worktree sparse and the order's AC3 runs two test files outside the cone (ycharts/, ops/); the issuer widened the worktree's cone (git sparse-checkout add infra/aws/lambda/investor-reporting) and re-graded AC3 there. W258-S2: the issuer's scope arm in ar_g121_checks.py did not allow the worker's own deliverables folder, the order file or the channel file; the issuer fixed the checker (a worker prefix list). Re-run in the widened worktree with the fixed checker: build OK, guard OK, regress OK, scope OK. The branch was merged as b535f41cb8.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W258-S1 and -S2: the sparse cone and the scope arm were the issuer's omissions; fixed and re-graded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 258 report: AC1 PASS, AC2 PASS, AC3 FAIL (test_kept_holding.py 1 failed, test_resident_session_checker.py no tests ran), scope FAIL on its own folder",
+      "issuer re-run in C:/dev/wk-irpt-anlreq-258 after the cone widening, with the fixed checker: AR-G121-OK build, AR-G121-OK guard, AR-G121-REGRESS-OK, AR-G121-SCOPE-OK; drain merge b535f41cb8 (fast lane, 0 of 5 paths graded)"
+    ]
+  },
+  "spec_asserts": "The order's worktree and checks let the worker run every criterion it is graded on.",
+  "world_is": "The provisioner's default sparse checkout omits the ycharts and ops directories under investor-reporting, and the issuer's scope arm named no worker folder."
+}
+```
+
+## IRPT_ANLREQ-D2-W259-S1 -- the proof checker refuses a staged artifact's sha256 as its commit_or_etag, so the stage outputs cannot be listed as artifacts_produced
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W259-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~259",
+  "surfaced_at": "2026-10-16T11:49:10Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The proof-of-spec checker's artifact-resolution limb treats config_data rows as git refs, so the tarball, SHA256SUMS and four host scripts staged outside the repository (sha256 commit_or_etag) are refused; the order's commit-hash rule has no form for an unpublished stage output.",
+  "spec_asserts": "TO-AR-g-122 proof_of_spec: in artifacts_produced, name each file with the hash of the commit that holds it, never a placeholder (record first). The stage outputs (tarball, SHA256SUMS, four host scripts) are artifacts this order produces.",
+  "world_is": "The driver wrote the tarball, SHA256SUMS and four host scripts to C:/dev/irpt-release-r34g, outside the repository, and no commit holds them. Declaring them as config_data rows with their sha256 as commit_or_etag makes proof-of-spec-check.py exit rc=1 INVALID with six artifact-resolution violations (the tarball and the five staged files), since that limb accepts only a 7-40 hex commit-ish for a non-skipped kind. The committed record (a583fe2205) is the one artifact a commit holds; its artifact, SHA256SUMS and scripts keys carry the six hashes. The instance lists only the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check.py on org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~259/IRPT_ANLREQ.TO-AR-g-122.resident-release-r34d-checker-fix.proof_of_spec.json AR122-g-AC1,AR122-g-AC2 (first run, rc=1): VIOLATION: artifact-resolution: 'C:/dev/irpt-release-r34g/irpt-resident-0485393f3a-r34d.tar.gz' carries commit_or_etag '9a088a5c...78ab', which is neither PENDING-THIS-COMMIT nor a 7-40 hex commit-ish for a repo artifact; five further VIOLATION lines for the SHA256SUMS and the four scripts; INVALID (rc=1)",
+      "driver line: R34D-BUILD-OK 314 members, builds identical 314 of 314, changed 3 added 0 removed 0, scripts 4, tar 9a088a5cfdeecd84173ee85b82d93ecf2b6fdfa311d3aec982e7db7134cf78ab",
+      "stage folder listing: C:/dev/irpt-release-r34g holds irpt-resident-0485393f3a-r34d.tar.gz, irpt-resident-0485393f3a-r34d.package.SHA256SUMS and scripts/ (install_r34.sh, pre_read_r34.sh, resident_host_install_0485393f3a-r34d.sh, rollback_r34.sh); none is in git"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S147 -- disposition of IRPT_ANLREQ-D2-W259-S1: the proof checker admits only git refs as artifact references; the staged build files are hashed in the record
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T11:58:34Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S147",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The worker read the checker right: proof-of-spec-check resolves each artifact reference as a git ref, and the staged tarball, sums file and four scripts are held by no commit, so the order's clause 'name each file with the hash of the commit that holds it' cannot be met for them. The instance lists the committed record only, and the six staged hashes sit in the record and in compiler_tools. The issuer re-verified the build independently (ar_g122_checks.py verify on the worker's stage and record: AR-G122-OK, tar 9a088a5c...78ab equal to the issuer's own trial build) before merging (ab9e84fd35). Nothing else rests on the instance's artifact list. The clause is left for the next build order to drop.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W259-S1: staged build files are not git objects; their hashes are in the record, re-verified by the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 259 report: proof-of-spec-check rc=0 on an instance listing the committed record only; row W259-S1",
+      "issuer: ar_g122_checks.py verify C:/dev/irpt-release-r34g <record> 9a088a5c...78ab printed AR-G122-OK members=314 changed=3 added=0 removed=0; sha256sum of the staged tarball equals the record"
+    ]
+  },
+  "spec_asserts": "Every produced file is named in the proof instance with the hash of the commit that holds it.",
+  "world_is": "The build's output (tarball, sums, host scripts) lives in a stage folder outside the repository by design, so no commit holds it."
+}
+```

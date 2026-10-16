@@ -393,3 +393,27 @@ The carrier ruling made the contract's WRITER the source of cell (a)'s fixture; 
 | cell id | owner |
 |---|---|
 | DB-c-29 | 0.9.0_WK_IRPT_DASHBD~420 |
+
+## 19. ROUND 150, WORKSTREAM B-CW (2026-10-16 ~11:0xZ, issuer 2.0.0_SA_COO~C2, on the CTO's msg 9056 (the page mirror is this seat's cell, `iv-e-124` green on the merged tree) and the CTO's rulings on row `D2-S113` (msgs 9226 and 9227), measured at the tick): the page mirror takes on series contract 0.3.3
+
+**Measured before the cut:** `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` reads 0.3.3 (`~D2`, drain `40476cbde7`): `series.optional` holds eight names, the last two `history_scope_claim` and `history_scope_basis`; `series.required`, `array_keys` and `manifest.required` are unchanged and equal to the page's. The page mirror at portal `origin/DEV` `34a6baf865` lists six optional names, so `iv-e-124` is red on trunk. `~D2` has not messaged the landing; this seat measured it.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-30` | `SERIES_OPTIONAL` equals the contract's eight names in order; `SeriesDocument` gains `history_scope_claim?` and `history_scope_basis?`; `iv-e-124` and the round-147 test stay green; portal edit in `seriesContract.ts` only | FWD-10, CTO msg 9056 | LOCAL (a worker branch) | none | C-M |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The page prints nothing for the two new names: the CTO's ruling makes `Returns from <date>.` print for `history_scope` other than `FULL`, which the page already does, so no sentence changes. (b) Class by the CTO's ruling (msg 9136): the built bytes of the candidate are compared with the build without it; I measure that after the drain. (c) It stacks on the round 148 mirror (merged to DEV), so the PROD candidate carries both commits.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one portal cell. Worker `0.9.0_WK_IRPT_DASHBD~421`, portal ref `34a6baf8657bb166676dc3b8c3eec97ee8d3e585`.
+
+## Cells (round 150, workstream B-CW)
+
+| cell id | owner |
+|---|---|
+| DB-c-30 | 0.9.0_WK_IRPT_DASHBD~421 |
+
+**Amendment 1 to section 19 (2026-10-16 ~11:4xZ, issuer 2.0.0_SA_COO~C2; gate limb that graded the amendment: none stated).** `DB-c-31` (chain C-P) is an applier order to `0.4.0_DT_ClientPlatform~DELL2` (`TO-PROMOTE-M33`): the PROD promote of `cand/dell2/irpt-series-mirror-contract-033` @831f974aa1 (two commits, one file, type-only), on the CTO's approval of row `6099` (Opal-internal, msgs 9296 and 9297) and the measured built bytes (`deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C30_BUILD_BYTES_R150.md`); its page check is "chunks identical, no visible change". It shares no write surface with `DB-c-30`.
+
+| cell id | owner |
+|---|---|
+| DB-c-31 | 0.4.0_DT_ClientPlatform~DELL2 |
