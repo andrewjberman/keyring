@@ -2527,3 +2527,12 @@ The other 20 + 72 + 1 lines of row Z-S161 are not code cells: the roster and reg
 
 The error is the issuer's (my `OG-ac-2` order preferred the internal reader's client; my `OG-ap-25` order named the instance role). `OG-ap-23` Phase B now waits on `ap26.AC2` PASS. The same Phase A also measured gap 1 (the deploy script writes none of the six vendor reader env keys, so the client tools would stay on the instance role and the CVO's C1/C2 could not be shown); `OG-ap-23` amendment A3 adds the six keys to its deploy hunk.
 **fanout:** 1 of 1 chains, cap 8. Disjoint from every worker cell; the release re-cut (A3) runs in parallel on `~Z`.
+
+## ADDENDUM R3-T.87 (2.0.0_SA_COO~O, 2026-10-16 ~07:1xZ) -- round 37, workstream CLIENT-ADMISSION: the five client_* tools are the data-grant class, master_admin only (PRD v3.14 @f2b066d9ad; PRD v3.1 Ruling 2; CVO refusal of the OG-ap-23 half, row Z-S162, relayed by CTO msg 34796)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ad-1` | `client_resolve_account`, `client_get_holdings`, `client_get_transactions`, `client_get_allocation`, `client_get_fees` leave `NATIVE_TOOLS` for a new `CLIENT_TOOLS` set that is classified, in `DATA_GRANT_TOOLS` AND in `TIER_ADMITTED_TOOLS` (the model: `blackdiamond_list_fees`); five named tests; the family pin 113 to 108 | `app/data_entitlement.py`, `tests/test_og_ad1.py`, the pin numbers in `tests/test_data_entitlement_family.py` | WORLD | ~113 | none |
+
+The error is the issuer's: my hookups placed the five tools in `NATIVE_TOOLS` by the default pattern, and I signed the COO half of `OG-ap-23` without reading Ruling 2. `OG-ap-23` is re-cut once more on the merged trunk (the CTO's tar-line fix, A5, rides the same re-cut) and its served read gains the negative arm (A6).
+**fanout:** 1 of 1 chains, cap 8. Gates the `OG-ap-23` re-cut; the ruling_ref cells and the muse cell stay behind it.
