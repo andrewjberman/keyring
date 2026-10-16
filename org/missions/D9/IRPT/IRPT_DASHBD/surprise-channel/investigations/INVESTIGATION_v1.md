@@ -24425,3 +24425,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Dismissed because the grant was widened by the coordinator's ruling and the test now expects the intended format; row S7 itself is left as filed."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W2202-S1 -- iam.tf still describes the write list as six gold tables after DB-f-2202 adds the transaction prefix
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2202-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2202",
+  "surfaced_at": "2026-10-16T21:05:21Z",
+  "one_line": "iam.tf (a neighbour of the cell, read only, not in the grant) names the write list as six gold prefixes: its comment at line 90 says the sixth prefix joins, and the output description at line 175 lists six tables. After DB-f-2202 the list carries seven, with account_transaction last. Left as filed; iam.tf is byte-identical to the base by the order's bounds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf comment line 90 and output irpt_reporting_gold_write_arns description line 175 describe the write list as the six gold prefixes (returns, class, activity, realized lots, unrealized lots, filled_report_values).",
+  "world_is": "At be99bf5767 those words match the six-element list in locals.tf. After the DB-f-2202 edit in locals.tf the list has seven elements (account_transaction added last); the iam.tf words are stale by one table. The statement's resources and sid are unchanged, so the grant itself is correct; only the wording lags.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf@be99bf5767 lines 90 and 175 (the comment and the output description)",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf@be99bf5767 lines 106-113 (six-element irpt_rg_gold_write_arns before the edit); the worktree edit adds the seventh element"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
