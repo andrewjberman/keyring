@@ -13354,3 +13354,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not ruled here: whether a source change on a tie of surfaced_at is the intended reading. The rule as written takes the adjudication row. Decision owner: the issuer 2.0.0_SA_COO~C."
 }
 ```
+
+## NFRA_CTLPLN-W145-S1 -- a census-named reader outside this cell's grant reads the whole Lambda source map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T16:59:59Z",
+  "one_line": "A reader outside this cell's grant loads the whole Lambda source map and is classed OTHER by the re-run census: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p170_filled_reader.py (C-S102). The atomic set cannot close and the map cannot be deleted in this cell.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer): add that file to the grant of CT-ca-1, or re-cut the checker so it no longer reads the map; then the switch of that file and the deletion of the map land in the same cell",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show ca239c0486:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p170_filled_reader.py line 32: SOURCE_MAP = \"infra/aws/lambda/ci/lambda-source-map.json\"; line 98 reads the whole map as bytes and requires it byte-identical to the base",
+      "source_map_census.py at ca239c0486 (stage-1 script, default run, reads HEAD): SOURCEMAP-CENSUS files=2538 grep_files=2538 reconciled=True map_functions=240 classes=read_whole:175,read_one:0,write:6,test:21,doc:2335,other:1 ok=False; the one OTHER file is the p170 path above (run with an in-process classification, the same functions as the census)",
+      "the file is outside this worker's <paths> and was not edited; the worktree is sparse and does not hold the folder (read with git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 BUILD step 1: the re-run census reads other=0 ok=True at the cut; any file the re-run names as reading or writing the map that is not in the can-follow list JOINS the atomic set, and a joining file outside <paths> is a BLOCKING row and a stop on that file.",
+  "world_is": "p170 is a checks file of IRPT_DASHBD round 149 (2.0.0_SA_COO~D2). Its AC1 requires the whole map to be byte-identical to base. Deleting the map makes it fail loudly; switching the map to a folder changes its input. It is not in the cell's grant, so the cell stops on it: the three Terraform roots, the deploy path and the shared gates are switched in the branch, the map deletion is withheld, and the census of the branch reads other=1 until the grant is extended.",
+  "notes": "Not decided here: whether p170 is a live check (its round is open) or a closed-round record. The census class is OTHER because no line pattern settles it. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
