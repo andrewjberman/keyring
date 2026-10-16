@@ -1,4 +1,4 @@
-# TO NFRA_CTLPLN.TO-CT-ao-1 -- workstream OUTCOME round 25 (cell CT-ao-1): the absent-package arm, steps fetch and check -- the ONE approved tabulate wheel is fetched through the checked route and runs checks 1-7; check 8 (the CTO's signature) and the release wait (FWD-16)
+# TO NFRA_CTLPLN.TO-CT-ao-1 -- workstream OUTCOME round 17 (cell CT-ao-1): the absent-package arm, steps fetch and check -- the ONE approved tabulate wheel is fetched through the checked route and runs checks 1-7; check 8 (the CTO's signature) and the release wait (FWD-16)
 
 <to_id>NFRA_CTLPLN.TO-CT-ao-1</to_id>
 <project>NFRA_CTLPLN</project>
@@ -11,7 +11,7 @@
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
-<round>25</round>
+<round>17</round>
 <workstream>OUTCOME</workstream>
 
 **Directive:** D0 | **Fabric:** laptop | **Decomp cell:** `CT-ao-1` (`decompositions/NFRA_CTLPLN_DECOMP.round25.md`, amended) | **outcome_ref:** FWD-16 |
