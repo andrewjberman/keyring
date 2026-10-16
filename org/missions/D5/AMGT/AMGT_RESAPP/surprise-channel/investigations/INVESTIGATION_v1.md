@@ -28834,3 +28834,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The CVO closes its own adjudication rows; this row is this seat's disarm with evidence. Still ARMED with this seat as owner after this row: C-S132, C-S146 (a), C-S155."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S50",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T12:45:00Z",
+  "one_line": "W451-S1 half of C-S155 re-measured at HEAD: fetch_source reports an image, octet-stream or zip body as UNSUPPORTED with empty text; this seat disarms W451-S1. The W452-S1 half stays open: D1-S41 measured 1 of 23 CONTRADICTED sentences recording a null source and quote.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "AMGT_RESAPP-D1-W451-S1 (ARMED, owner this seat) and CVO row C-S155: fetch_source reports a 2xx image or octet-stream body as OK with binary-decoded text; W452-S1: a CONTRADICTED sentence records no source and no quote.",
+  "world_is": "Read 12:45Z 2026-10-16 by this seat at HEAD: lib.research.aifill.sources.fetch_source called with a transport returning HTTP 200 and content types image/png, application/octet-stream and application/zip over binary bytes returned status UNSUPPORTED, http_status 200, text empty, chars 0 for all three; the repo tests test_a_non_text_content_type_is_unsupported and test_text_xml_and_xhtml_content_types_are_still_read (the text control: text/plain, text/html, application/xhtml+xml, application/xml read as OK) both pass, 2 passed. D1-S38 recorded the same rung as in place since 229d0ed982 (merged f57f6e049a); this row re-measures it after the gu-1, gv-1 and gw-1 merges. NOT MEASURED: W452-S1 at HEAD (the last measurement is D1-S41: 22 of 23 CONTRADICTED sentences record the shown source and quote, 1 records null; this seat did not re-run it); C-S132; C-S146 (a), the page panel wording.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PYTHONPATH=. python (fetch_source with transport lambda returning (200, ctype, binary)) -> UNSUPPORTED/200/empty for image/png, application/octet-stream, application/zip",
+      "pytest lib/research/aifill/tests/test_sources.py -k 'non_text_content_type or still_read' -> 2 passed",
+      "INVESTIGATION_v1.md rows D1-S38 and D1-S41"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Still ARMED with this seat as owner after this row: C-S132, C-S146 (a), and the W452-S1 half of C-S155."
+}
+```

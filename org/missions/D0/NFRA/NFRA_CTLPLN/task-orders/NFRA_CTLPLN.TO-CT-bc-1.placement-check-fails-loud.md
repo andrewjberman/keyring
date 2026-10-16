@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~141</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C in the round-29 issuance, per the CTO's round-28 analysis (ROUND_ANALYSIS.round28.md @3894648aa3, msg 109677).</status_reason>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-141 @eaf87f8810) and again in the main tree after merge 430e2d1615: CTbc1-AC1 PLACEMENT-LOUD arms=7/7 ok=True; CTbc1-AC2 placement-check --self-test: 7/7 PASS; proof VALID; the real tool on the healthy main tree reads rc=0 with `register rows with a tree home: 30 | live projects read: 30 | match=True` and `FINDINGS: 0 unplaced/unreadable, 64 cross-box write overlap(s)` (the same as the base); test_open_calls 19/19 (it imports read_projects, unchanged). A mutant with the short-count check disabled reads 6/7 (arm b fails). One deviation from the order's wording, accepted: the expected set is the register rows' own `home` field under org/missions united with any tree home under ROOT (30 of 73 non-terminal rows), because an in-ROOT-only definition shrinks in a sparse tree and would have read 1 of 1 in the very case the row W137-S1 reported; recorded as W141-S1. W141-S2 (the worker cut lacked org/projects and infra/aws/lambda/ci: sparse-set note for later cuts of this class), W141-S3 (test_round19_register.py --fwd7 rewrites a tracked CT-ai-1 deliverable on each run; the worker restored it): OBSERVATION, INERT. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
