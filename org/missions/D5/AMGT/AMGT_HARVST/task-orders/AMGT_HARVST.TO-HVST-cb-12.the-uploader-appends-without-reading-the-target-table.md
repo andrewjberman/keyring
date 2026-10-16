@@ -22,6 +22,13 @@ comp-adversary: RUN at L5 -- the adversary is a change to `silver_append`'s DEFA
 The CTO ruled (msg 6388): "silver_append writes new part files and de-duplicates against the local state (dell1 is the single writer), never by reading the target table from S3."
 This cell adds an OPT-IN known-hash mode to `silver_append` and makes `HarvestUploader` use it with a local table. NOTHING that calls `silver_append` today without the new argument changes.
 
+## AMENDMENT 1 (issuer, 2026-10-16 ~02:3xZ; GOVERNS wherever the sections below differ; from the worker's first report, rows `D1-W148-S1`, `-S2`, `-S3`)
+
+- **(a) `written_hashes` is added ONLY in known mode.** In the default path (`known is None`) `silver_append` returns EXACTLY its three old keys, so no existing caller (`bright_data_serp`, `social/collect`, `filings`, `lusha`, `bloomberg`, `typed`, whose receipts may be JSON-dumped) sees a new key. This replaces the 'both modes' sentence in 1.a. Test (2) additionally asserts the default result's key set equals `{written_rows, skipped_unchanged, parts}`.
+- **(b) The wrapper returns the three old keys.** `_silver_append_retrying_object_name(..., known_db=...)` records the written hashes and then returns the result WITHOUT `written_hashes` (the run receipt is JSON-dumped and a key tuple can hold a date). This is the worker's deviation from 1.c's `return result`, ruled correct.
+- **(c) Ten existing tests are updated, and ONLY their instrument.** `test_ai5_batched_silver_append.py` and `test_at1_batched_listing_upload.py` record calls to `store.silver_latest` and assert they equal one-per-source-per-pass (for example `assert calls == [SOURCE]`): that was a PROXY for 'one `silver_append` per source per pass' (each append read the prefix once), and the retired read is exactly what this cell removes. In each of the ten failing tests: (i) change the recorder so it records calls to `store.silver_append` (wrap or replace it, keeping what it returned) and keep the same expected lists, so the batching property is still graded and the test's own mutant (the per-row grouping restored) still fails it; (ii) ADD an assertion that `store.silver_latest` was called ZERO times in the pass (the new contract). Keep every other assertion and every mutant arm in those two files as they are, and change no test that passes today. Report the ten test names, and for each tell whether its mutant still fails after your edit (run it).
+- **(d) Paths:** the two test files above are now named in `<paths>`. Nothing else is added.
+
 ## 1. THE BUILD (LOCAL, about 90 product lines)
 
 Work in your worktree. Change only the files named in `<paths>`.
@@ -47,6 +54,8 @@ lib/research/harvest/store.py
 lib/opal_data_harvest/uploads.py
 lib/opal_data_harvest/silver_known.py
 lib/opal_data_harvest/test_cb12_uploader_known_hashes.py
+lib/opal_data_harvest/test_ai5_batched_silver_append.py
+lib/opal_data_harvest/test_at1_batched_listing_upload.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~148/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
