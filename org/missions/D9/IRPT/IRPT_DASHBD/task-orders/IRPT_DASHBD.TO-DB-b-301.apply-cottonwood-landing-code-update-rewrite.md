@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~DB2</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,6 +14,9 @@
 <workstream>COTLANDAPPLY</workstream>
 
 **Directive:** D9 | **Fabric:** dell2 | **Ordered by:** the signed pair, COO half `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/NEVER_WIDEN_COTTONWOOD_LANDING_CODE_UPDATE_REWRITE_COO_HALF.md`, CTO half `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_COTTONWOOD_LANDING_CODE_UPDATE_REWRITE_CTO_HALF.md` (both at the packet `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/NEVER_WIDEN_PACKET_COTTONWOOD_LANDING_CODE_UPDATE_REWRITE.md`, sha256 `778009ecda403f17f2eb81163507e6ca9f1738dfa3417735bb6cf4b8e4d5aeaf`) | **Decomp cell:** `DB-b-301` (decomposition section 162) | **outcome_ref:** FWD-10 | **depends_on:** `DB-b-294`, `DB-b-296`, `DB-b-297` (merged) and both halves SIGNED. This surface is independent of `DB-b-300` (the 49 Financial gold pair); the applier orders the two as it sees fit, and neither waits on the other.
+
+
+**SUPERSEDED 2026-10-16 ~16:3xZ (issuer 2.0.0_SA_COO~D2).** This order was issued under packet sha256 `778009ecda40`, which the CTO's rulings (msg 9480 and msg 9487: one meaning of `history_scope`, the late-input days accepted) void: the adapter changes (`DB-b-303`, merged `d011411480`), the source-map entry is re-pinned and the packet is re-cut as revision 2 for the CTO to re-sign. The applier's work under this order stops where it stood: ledger `irpt-dashbd-cottonwood-landing-codeupdate-rewrite-20261016` opened (L1, L2 closed), a NEW artifact version `Amwu_BigtNXtPIwPXQIBPXmEFfKpg9RN` landed from the OLD build (unused, kept), a saved plan 0/1/0 NOT applied, no dry run, no rewrite event; the function, policy, schedule and gold are unchanged. The new order for revision 2 goes to the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2` (Andrew-direct rule 34, the CTO's msg of ~15:5xZ).
 
 ---
 
