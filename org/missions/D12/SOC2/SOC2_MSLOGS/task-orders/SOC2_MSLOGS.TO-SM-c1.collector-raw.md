@@ -2,10 +2,10 @@
 
 <to_id>SOC2_MSLOGS.TO-SM-c1</to_id>
 <project>SOC2_MSLOGS</project>
-<issued_to>0.9.0_WK_SOC2_MSLOGS~1</issued_to>
+<issued_to>0.9.0_WK_SOC2_MSLOGS~6</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -67,6 +67,30 @@ C-COVERAGE); the decomposition's rulings 2-6 and the COLLECTOR CONTRACT v3 are i
 Hard limits: ASCII only in code and comments; no new dependency (stdlib only; `gzip`, `json`, `datetime`, `zoneinfo`); no AWS or network call in tests; a log line names counts and codes only,
 never a record, an account, a file name or a key.
 
+### AMENDMENT 2 (2026-10-16 ~22:4xZ, issuer) -- THE DERIVE-TIME REPAIR; this order is RE-OPENED and re-seated to worker ~6
+
+The first cut of this order (worker ~1, merged at b2fef4b9b5) is the base of your worktree. Everything above stays; this section is added to it, and where it differs from the first cut it governs.
+
+
+The collector Lambda (`infra/aws/lambda/m365-metadata-collector/handler.py`, over `data/m365_metadata/scripts/collector/collect.py`) was released live on 2026-10-16 and its fire at 21:31Z hit the
+900-second Lambda limit (`Status: timeout`). The cause is measured: during the 7-day cold-start backlog, the fetch phase uses the whole budget (840 s, which the handler computes as the remaining time minus 60 s), derive_silver
+gets only the 45-second grace after it, and a single derive call took 30 to 70 s, so the last call started at about 884 s and the Lambda was killed mid-derive. Two more faults showed: derive went OLDEST day first, so the
+newest days (the ones an investigation reads) stayed on the old silver, and the cursor was written AFTER derive, so a kill in derive lost the whole fire's progress record. READ `collect.py` (the run_once
+function, its fetch loop near "Fetch and store until the budget is spent", the derive block near "derive_silver: the days that received a blob", and the cursor block at the end), `tests/test_collector.py`, and the check
+`org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_c1.py` (modes `derive_time` and `switch`, amended by the issuer to drive exactly these faults). Nothing here touches the live account.
+
+### THE REPAIR (build to it exactly)
+
+1. **Reserved derive share.** In the fetch loop, stop fetching when `elapsed >= budget_seconds - reserve` where `reserve = min(DERIVE_RESERVE_SECONDS, budget_seconds / 3)` and a new constant `DERIVE_RESERVE_SECONDS = 200`. A fetch stopped
+   this way sets `complete = False` as today. `budget_seconds=None` still means unbounded (no reserve).
+2. **Derive start guard.** The FIRST derive call of a fire always starts (progress is guaranteed; the reserve makes it safe). Every later derive call starts only if
+   `elapsed + 1.5 * est <= budget_seconds + DERIVE_GRACE_SECONDS` where `est` is the longest single derive call so far in this run (seconds, measured with the injected `clock` around each call). The days not started stay in `derive_pending`.
+3. **Newest day first.** The owed days (the cursor's `derive_pending`, the days that received a blob this fire, and the day before each) are derived in DESCENDING date order, each date once.
+4. **Cursor before derive.** After coverage is written and BEFORE the first derive call, write the cursor exactly as today but with `derive_pending` = every owed day (as `yyyy-mm-dd` strings). After the derive loop, write the cursor again with `derive_pending` = the days not derived (a failed derive stays pending). A recollect run still writes NO cursor.
+   The cursor's `seen`, `last_end` and `era` semantics do not change.
+5. Keep everything else of TO-SM-c1's contract (raw bytes, key grammar, already-stored, cold start, coverage fields, parse_recollect). Update the module docstring for the new order and the reserve. `handler.py` needs no change.
+6. Tests: extend `tests/test_collector.py` for the four rules (a slow-derive clock never passes the grace end; derive keeps a share with a backlog; descending order; the cursor is put before the first derive and again after; a small budget still fetches). ASCII only; stdlib only.
+
 ### ACCEPTANCE
 
 <criterion id="SM1-c1-AC1" cell_refs="SM-c-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_c1.py raw</invocation><expect>C1-RAW-OK</expect></criterion>
@@ -78,7 +102,10 @@ never a record, an account, a file name or a key.
 <criterion id="SM1-c1-AC3" cell_refs="SM-c-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_c1.py recollect</invocation><expect>C1-RECOLLECT-OK</expect></criterion>
 `SM1-c1-AC3` -- a window run lists only its window, leaves the cursor alone, reads four stored blobs as already_stored=4 with no gap, marks coverage recollect, and the handler's window rules refuse bad windows.
 
-<expected_criteria>SM1-c1-AC1,SM1-c1-AC2,SM1-c1-AC3</expected_criteria>
+<criterion id="SM1-c1-AC4" cell_refs="SM-c-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_c1.py derive_time</invocation><expect>C1-DERIVETIME-OK</expect></criterion>
+`SM1-c1-AC4` -- (a fourth mechanical criterion, with this reason: the live release measured the fault after the cut, AMENDMENT 2) with 40 s and 120 s derive calls and a 1200-blob backlog the fire ends by 885 s; at least three derives run under the backlog; the days go newest first; the cursor is put before the first derive; the final cursor lists exactly the undone days; a 90 s budget still fetches. `SM1-c1-AC2` (switch) now also asserts newest-first derive order.
+
+<expected_criteria>SM1-c1-AC1,SM1-c1-AC2,SM1-c1-AC3,SM1-c1-AC4</expected_criteria>
 
 Dry-run at the base 2026-10-16 ~17:0xZ: AC1 `C1-RAW-REFUSED missing ...raw_records.py`, AC2 `C1-SWITCH-REFUSED an old-era cursor must re-fetch the whole window: fetched 0 of 8; ...`, AC3
 `C1-RECOLLECT-REFUSED TypeError: run_once() got an unexpected keyword argument 'window'` -- each FAIL as expected. All three were driven GREEN against a throwaway reference outside the repository.
@@ -89,9 +116,9 @@ Run each from the repository (worktree) root.
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Everything else you READ and never edit. The deletions named above are inside the grant.
 - **LOCAL; NOTHING is called live.** No AWS call, no Management API call, no network, no Terraform. Synthetic values only in tests. Never read a stored bronze object.
 - `access.tf`, `collector.tf`, `silver_builder.py` and the door handler are other cells' files: never create or edit them.
-- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id `SOC2_MSLOGS-D1-W1-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at
+- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id `SOC2_MSLOGS-D1-W6-S<k>`, next free number, `surfaced_at` = `date -u +%FT%TZ` at
   filing, in the investigation file below), and do not weaken a check to pass it.
-- Commit only through `.tools/safe-commit.sh` with `--author "0.9.0_WK_SOC2_MSLOGS~1 <0.9.0_WK_SOC2_MSLOGS~1@opal.agent>"`, `-F` a message file you write with the Write tool, and `-- <paths>`.
+- Commit only through `.tools/safe-commit.sh` with `--author "0.9.0_WK_SOC2_MSLOGS~6 <0.9.0_WK_SOC2_MSLOGS~6@opal.agent>"`, `-F` a message file you write with the Write tool, and `-- <paths>`.
 
 <paths>
 data/m365_metadata/scripts/collector/raw_records.py
@@ -115,8 +142,8 @@ org/missions/D12/SOC2/SOC2_MSLOGS/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SM1-c1-AC1, SM1-c1-AC2, SM1-c1-AC3. Instance at `org/missions/D12/SOC2/SOC2_MSLOGS/deliverables/0.9.0_WK_SOC2_MSLOGS~1/SOC2_MSLOGS.TO-SM-c1.collector-raw.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> SM1-c1-AC1,SM1-c1-AC2,SM1-c1-AC3` BEFORE the flip.
+Criterion ids: SM1-c1-AC1, SM1-c1-AC2, SM1-c1-AC3, SM1-c1-AC4. Instance at `org/missions/D12/SOC2/SOC2_MSLOGS/deliverables/0.9.0_WK_SOC2_MSLOGS~6/SOC2_MSLOGS.TO-SM-c1.collector-raw.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> SM1-c1-AC1,SM1-c1-AC2,SM1-c1-AC3,SM1-c1-AC4` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the three check lines, the `pytest` summary line of your own tests (`python -m pytest data/m365_metadata/scripts/tests/test_collector.py data/m365_metadata/scripts/tests/test_app.py -q`),
