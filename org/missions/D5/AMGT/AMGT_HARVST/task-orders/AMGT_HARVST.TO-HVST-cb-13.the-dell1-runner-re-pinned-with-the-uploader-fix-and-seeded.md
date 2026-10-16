@@ -76,9 +76,11 @@ This order touches none of them (the runner writes `opal-data-harvest` harvest p
 - **Not covered, named:** `sa` and `bbg` (they join after this cell's R7 and the CTO's gate, a later order); a challenge repair in a minimised window; the vendor-side behaviour of the long Barron's jobs (a job that rejects dozens of candidates, 15 minutes or more).
 - **SENT 2026-10-16 ~03:2xZ (status pending):** the CTO had no objection to cb-14 as the answer to C-d3 (msg 6396; none received in the 50 minutes since my message 6397).
 
+- **COMPLETE 2026-10-16T05:22:21Z (issuer, 2.0.0_SA_COO~W1), WITH LIMITS:** SC1 report msg 6515 re-read: commit 314424bf21 in tree; proof VALID rc=0; task Running from pin ddd7dcdc38; seed rows_without_hash=0; R1-R5 TRUE at +3/+15, R7 0.0000 GiB. LIMIT: the C-d3 duplicate check read `parts_read=0` (VACUOUS) and R7's upload term covers 0 upload lines; no upload ran under the new pin. The uploader evidence is carried by HVST-cb-15 step 6b (C-a4', CTO msg 6513); row D1-S28 dispositioned by D1-S30.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>RUNNER-REPIN2</workstream>
 <slot>dell1</slot>
