@@ -57,6 +57,28 @@
     "spec_asserts": "The collector reads the eight's Entra object ids once at collection and matches events by id as well as by UPN, with the app holding exactly one permission.",
     "world_is": "Reading a user's object id takes a Graph directory permission (User.Read.All or an equivalent) or the delegated token of a signed-in person; the app as specified holds neither. Audit records carry UPNs in the four named fields, so UPN matching works without it; an id-only record (a UserId that is a GUID) would be dropped as out of population.",
     "notes": "Round 1 builds UPN resolution only. Whether a GUID-only actor occurs in the feed is unread until the first real content lands (release act 4); if it does, the enrichment list takes either a one-time id lookup run by Andrew into population.json or a second permission by the CTO's ruling."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W3-S1",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~3",
+    "surfaced_at": "2026-10-16T07:06:38Z",
+    "one_line": "The worktree is a sparse checkout whose cone excludes data/ and infra/aws/, so the order's granted paths under those roots and the two model files the order says to read are not present and cannot be written or committed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list (worktree /c/tmp/wk-tckt-mtadta-3, HEAD c9971df7ca) = .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_MTADTA, org/modules/graph, org/ref, org/standards, org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R1_CHECKS",
+        "printf of seven paths (data/m365_metadata/scripts/collector/filter.py, data/m365_metadata/scripts/population.json, infra/aws/lambda/m365-metadata-collector/handler.py, infra/aws/terraform/trino/collector.tf, infra/aws/lambda/transcripts-pull/build.sh, infra/aws/terraform/transcripts/pull.tf, org/missions/D7/TCKT/TCKT_MTADTA/surprise-channel/investigations/INVESTIGATION_v1.md) | git sparse-checkout check-rules: only the investigation file is admitted",
+        "ls data -> no such file; ls infra/aws -> no such file; git ls-tree -r --name-only HEAD infra/aws/lambda/transcripts-pull shows build.sh and handler.py exist at HEAD (out of cone, not checked out)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worktree carries every path the task order grants (data/m365_metadata/scripts/**, infra/aws/lambda/m365-metadata-collector/**, infra/aws/terraform/trino/collector.tf) and the model files it names to read (infra/aws/lambda/transcripts-pull/build.sh, infra/aws/terraform/transcripts/pull.tf).",
+    "world_is": "The worktree's sparse-checkout cone admits none of the granted code paths; only the investigation file among the seven tested paths is in the cone. The check invocations therefore run against a missing tree and print the REFUSED-missing line for guard, coverage and collect.",
+    "notes": "Stopped before any criterion was graded. No file was created under data/ or infra/, the sparse-checkout definition was not widened (widening it is rebuilding the tree the bar forbids), and no proof instance was written. The check invocations were run once each under timeout 120 and printed GUARD/COVERAGE/COLLECT-REFUSED missing (rc=1). Needs the lane gate or the issuer to put the cone to the grant before the order can run."
   }
 ]
 ```
