@@ -2923,3 +2923,27 @@ used as fixtures is a different read with a different denominator.
   "notes": "Filed for the issuer. AC1 and AC2 are measured as the order states. The fix (a sparse-checkout entry for that fixture, or a grant for it) is the issuer's decision; the worker does not decide which."
 }
 ```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W46-S4",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~46",
+ "surfaced_at": "2026-10-16T03:06:13Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "The whole-folder run of infra/aws/lambda/ticket_center/tests/ after AMENDMENT 1 reads 374 passed, 7 failed, 8 errors. The 8 errors are the known sparse-cone collection errors; the 7 failures are all in test_cross_firm_global_register.py, which reads infra/aws/lambda/investor-reporting/_scope/interactive_access.py at test time. That file is tracked at HEAD and absent from this sparse worktree.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "C:/dev/wk-tckt-vnext-46 @535b02a627: timeout 120 python -m pytest C:/dev/wk-tckt-vnext-46/infra/aws/lambda/ticket_center/tests/ -q -p no:cacheprovider --color=no --continue-on-collection-errors -> 7 failed, 374 passed, 8 errors, 59 subtests passed, rc=1 (output .scratch/folder_run.txt); 15 FAILED/ERROR lines, all test_cross_firm_global_register.py (7) or a collection error (8)",
+   "git ls-files -- infra/aws/lambda/investor-reporting/_scope/interactive_access.py lists the file at 535b02a627; test -e on the worktree path returns ABSENT (the sparse cone excludes infra/aws); the tracebacks end in FileNotFoundError on that worktree path",
+   "git diff HEAD -- infra/ touches only infra/aws/lambda/ticket_center/tests/test_analyst_intake_scoped.py; test_cross_firm_global_register.py is unmodified, so the failure is the sparse checkout, not the change"
+  ]
+ },
+ "spec_asserts": "TO-R19-L2 step 7 (AMENDMENT 1) and R19L2-AC1: after the stub fix, the whole ticket_center tests folder runs once as a drain check, and the only failures are the known sparse-cone collection errors.",
+ "world_is": "The folder run shows 7 failures in test_cross_firm_global_register.py beyond the 8 known collection errors. The module collects; its tests read the investor-reporting fixture named at its line 17, which is outside the sparse cone. Both the 8 errors and the 7 failures are sparse-cone effects; neither comes from this order's edit.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Filed by 0.9.0_WK_TCKT_VNEXT~46 under the order's counts rule. OBSERVATION, not BLOCKING: no file in the grant is touched by the failure, and the order's own criteria (the new file: 7 of 7; the mutant: fires) do not run that module. The fix (a sparse entry for the investor-reporting fixture, or a drain run where it is materialised) is the issuer's or integrator's decision. Hazard INERT: nothing is deployed, applied or called."
+}
+```
