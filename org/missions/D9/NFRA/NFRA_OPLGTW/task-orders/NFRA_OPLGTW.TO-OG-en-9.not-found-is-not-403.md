@@ -33,6 +33,8 @@ TESTS (new file `tests/test_og_en9.py`; read the nearest existing catalog-gate t
 - `test_ogen9_ac03`: the two arms are told apart on the same call shape: the same principal asking an un-rowed key and an entitled-denied key gets two different `http_status` values.
 If an existing test pins the old 403 on an unresolvable key, update it to the new truth with the smallest edit and name it; never weaken it.
 
+AMENDMENT A1 (issuer, 2026-10-16 ~13:2xZ, from your report rows Z-W123-S1 to S4; this text is part of your face): (a) The status mapping you traced is in `app/query_v0.py` lines 150-155 (`verdict = catalog_gate.gate(...)`, then `JSONResponse({"error": verdict.reason, "key": key}, status_code=403)` for EVERY false verdict) and the tool copies it (`integration.py:431`). `app/query_v0.py` and `tests/test_query_v0_tool.py` are now in your `<paths>` and are yours to edit. The pinning test is `tests/test_query_v0_tool.py::test_mx_q3_uncatalogued_key_refused` (lines 101-117): it asserts 403 on an off-catalog key; update it to the new truth (404, the "not found" wording, no `guard_denied`), the smallest edit, never weakened (every other assertion in it stays: zero fetches, the DENY audit lines, the bad-argument refusals). The three test files named in the paths that do not exist are ignored. (b) S4 ruled: the catalog gate's false verdicts are of two kinds and only ONE moves. NO CATALOG ROW for the key (the `off-catalog: no W5 row` verdict; read `catalog_gate.py` to separate it from the others by the verdict's own cause, not by matching text if the code carries a cause) answers `404` (a malformed key stays `400` as today) with an error that says "not found", still audited as a refusal. A key that HAS a row but the principal may not read (class or firm mismatch) stays `403` and its body must not say "not found". The entitlement chokepoint (`data_entitlement.route_denial` at `query_v0.py:124`, `guard_denied`, code `entitlement_denied`) is unchanged and stays 403. So the tests' "denied arm" is: (i) the chokepoint denial (an unprofiled non-admin on the route) and (ii) a resolved-row gate denial (a firm mismatch); both stay 403 and differ from the 404 in `http_status` and wording; neither is required to carry more than it carries today. Re-state your three tests accordingly: `test_ogen9_ac01` not-found arm (404, "not found" in words, zero fetches, audited), `test_ogen9_ac02` the two denied arms keep 403 and an entitled caller on a resolving key is served as before, `test_ogen9_ac03` the same caller gets different `http_status` for an un-rowed key (404) and a row-present-but-denied key (403). Your test file is committed red on your branch: make it green with this change.
+
 ## 2. BOUNDS
 
 - Write only the files in `<paths>`. No release, no deploy, no IAM, no registry or catalog change.
@@ -43,6 +45,8 @@ If an existing test pins the old 403 on an unresolvable key, update it to the ne
 
 <paths>
 infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py
+infra/aws/ec2/opal-gateway/app/query_v0.py
+infra/aws/ec2/opal-gateway/tests/test_query_v0_tool.py
 infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py
 infra/aws/ec2/opal-gateway/app/integrations/portal_index/__init__.py
 infra/aws/ec2/opal-gateway/tests/test_og_en9.py
@@ -58,7 +62,7 @@ You WRITE the two app files and `tests/test_og_en9.py` and, only to follow the n
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-en-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_named.sh tests/test_og_en9.py test_ogen9_ac01 test_ogen9_ac02 test_ogen9_ac03; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 3 of 3; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-en-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_wkbound.sh 0.9.0_WK_NFRA_OPLGTW~123 '^infra/aws/ec2/opal-gateway/(app/graphql_plumbing/catalog_gate\.py|app/integrations/portal_index/(integration|__init__)\.py|tests/(test_og_en9|test_og_cat1|test_graphql_catalog_gate|test_portal_index_integration)\.py)$'; echo "exit=$?"</invocation><expect>(?s)write-set bound for 0\.9\.0_WK_NFRA_OPLGTW~123: files touched [1-9]\d*; product files [1-9]\d*; outside the allowed set 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-en-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_wkbound.sh 0.9.0_WK_NFRA_OPLGTW~123 '^infra/aws/ec2/opal-gateway/(app/graphql_plumbing/catalog_gate\.py|app/query_v0\.py|app/integrations/portal_index/(integration|__init__)\.py|tests/(test_og_en9|test_og_cat1|test_graphql_catalog_gate|test_portal_index_integration|test_query_v0_tool)\.py)$'; echo "exit=$?"</invocation><expect>(?s)write-set bound for 0\.9\.0_WK_NFRA_OPLGTW~123: files touched [1-9]\d*; product files [1-9]\d*; outside the allowed set 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the three named tests pass: not-found is told apart from a denial. `AC2`: the commits of this serial touch only the catalog gate, its tool and the catalog tests.
