@@ -2886,3 +2886,28 @@
   "notes": "Not repaired: the status is the issuer's to set. Whether a worker writes its own status flip is a decision for the issuer (2.0.0_SA_COO~MP)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~35",
+  "surfaced_at": "2026-10-16T03:25:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-W35-S1",
+  "one_line": "MP-pf-5 AC1 as written has no working-directory anchor: the shell resets to the primary checkout between calls, so the literal invocation graded the primary tree and read RESULT: FAIL; the root-anchored run needs a cd the criterion does not name.",
+  "spec_asserts": "Face section 4: the AC1 invocation is the literal 'bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pf/checks/pf5.AC1.sh; echo exit=$?', run from the WORKSPACE worktree root C:/tmp/mp-pf-35.",
+  "world_is": "Two Bash calls in the worker session: call 1 'cd C:/tmp/mp-pf-35 && pwd' printed /c/tmp/mp-pf-35; call 2 (the literal invocation, nothing else) printed the working directory C:/Users/Opal Bloomberg/Desktop/ajb_workspace, the check printed 'mcportal/src/pages/gateway absent' and 'RESULT: FAIL', exit=1. The check takes its root from the current directory (_root.sh), so the literal grades whichever tree the shell sits in. The only root-anchored run was one call with the cd prefixed; proof-of-spec-check.py refuses that instance as invocation-alignment[AC1] (the recorded invocation differs from the criterion by the cd). Same class as NFRA_MCPORTAL-Z-W33-S7 (ARMED).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN the literal AC1 invocation in a call whose first act was a bare pwd: output 'C:/Users/Opal Bloomberg/Desktop/ajb_workspace', 'mcportal/src/pages/gateway absent', 'RESULT: FAIL', 'exit=1' (worker session, 2026-10-16T03:25:58Z)",
+      "RAN proof-of-spec-check.py on the instance with ids AC1: rc=1, 'VIOLATION: invocation-alignment[AC1]: the RECORDED invocation is NOT the criterion's invocation'"
+    ]
+  },
+  "notes": "Not repaired: the criterion text and pf5.AC1.sh are the issuer's (face section 2, bound 3). The worker records the invocation it ran, with the cd, so the instance is INVALID and the order stays open; the issuer decides whether the criterion or the check script carries the root."
+}
+```
