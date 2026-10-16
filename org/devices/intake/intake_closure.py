@@ -10,6 +10,13 @@ Verbs:
         where a line or a parent asks for them, to a fixed point. Saves the JSON; the LAST line is
         INTAKE-CLOSURE target=... lines=... closure=... ok=...
         --from-file re-prints the last line of a saved JSON (the bounded form).
+  closure --target cp312-linux_x86_64 --root <requirement line> [--host-pydeps <json>] [--out <json>]
+        The LINUX form (CPython 3.12.14 markers; the platform strings manylinux_2_5..2_34 x86_64 with the legacy aliases,
+        and any; a musllinux tag does not fit). --root is ONE requirement line that REPLACES the lines of requirements.txt
+        as the start. --host-pydeps <json> (schema intake-host-pydeps/1: {"dists": {"<normalised name>": "<version>"}})
+        classes every closure member the host already holds: HOST-SATISFIED when the host version meets every specifier any
+        parent puts on it (the member is omitted from to_fetch), HOST-CONFLICT otherwise (a STOP: the tool does not choose).
+        The last line gains host_satisfied=<n> host_conflicts=<n> to_fetch=<n> only when --host-pydeps is given.
   explain <name> [--from-file <json>]   the chain of parents that brings a package in.
   fetchlist [--from-file <closure json>] [--assessment <md>] [--out <json>] [--md <md>]
         The closure members whose installed copy is compiled for another Python only, with the exact wheel FILE NAME each
@@ -48,6 +55,8 @@ SCHEMA = "intake-closure/1"
 REQUIREMENTS_NAME = "requirements.txt"
 CLASSES = ("PURE", "FITS", "COMPILED-OTHER-PYTHON", "NO-METADATA", "UNKNOWN-NOT-INSTALLED")
 TARGET_FULL_VERSION = "3.14.7"
+LINUX_FULL_VERSION = "3.12.14"   # the linux target is CPython 3.12.14 on the requester's host (glibc 2.34)
+HOST_SCHEMA = "intake-host-pydeps/1"
 
 
 def _load_kw():
@@ -74,6 +83,11 @@ def make_target(label):
     if target["version"] == (3, 14):
         target["env"]["python_full_version"] = TARGET_FULL_VERSION
         target["env"]["implementation_version"] = TARGET_FULL_VERSION
+    elif platform == "linux_x86_64":
+        if target["version"] != (3, 12):
+            raise SystemExit("ERROR: the linux target is measured for cp312 only (CPython 3.12.14, glibc 2.34)")
+        target["env"]["python_full_version"] = LINUX_FULL_VERSION
+        target["env"]["implementation_version"] = LINUX_FULL_VERSION
     target["label"] = label
     return target
 
@@ -140,8 +154,9 @@ def classify_member(info, supported):
 
 # ---------------------------------------------------------------------------------------------------------------- closure
 
-def compute(req_lines, installed, target, supported):
+def compute(req_lines, installed, target, supported, start_name=REQUIREMENTS_NAME):
     """Pure core (the test drives it). req_lines [(lineno, text)]; installed = index from load_installed.
+    start_name is the parent label of the start lines (requirements.txt, or --root for the one-line form).
     Returns a dict: members (list), unparsed, not_applicable, fixed_point, passes, conflicts."""
     env = target["env"]
     members = {}
@@ -184,7 +199,7 @@ def compute(req_lines, installed, target, supported):
         m = touch(p["norm"], p["name"], p["extras"])
         m["line"] = text
         m["line_specifier"] = p["specifier"]
-        add_edge(m, REQUIREMENTS_NAME, p["specifier"], p["marker"], p["extras"])
+        add_edge(m, start_name, p["specifier"], p["marker"], p["extras"])
 
     passes = 0
     budget = 200 * (len(req_lines) + 50) + 100000
@@ -213,7 +228,7 @@ def compute(req_lines, installed, target, supported):
         entry = {"name": m["name"], "norm": norm, "kind": "line" if m["line"] is not None else "dependency",
                  "line": asc(m["line"]) if m["line"] is not None else None, "line_specifier": m["line_specifier"],
                  "requested_extras": sorted(m["extras"]), "parents": sorted({e["parent"] for e in m["edges"].values()
-                                                                            if e["parent"] != REQUIREMENTS_NAME}),
+                                                                            if e["parent"] != start_name}),
                  "edges": sorted(m["edges"].values(), key=lambda e: (e["parent"], e["specifier"], e["marker"] or "")),
                  "other_copies": m["other_copies"]}
         if pick is None:
@@ -271,10 +286,56 @@ def last_line(data):
             "unknown_not_installed=%d specifier_conflicts=%d fixed_point=%s ok=%s"
             % (data["target"]["label"], lines, len(members), added, c["PURE"], c["FITS"], needs,
                c["UNKNOWN-NOT-INSTALLED"], len(data["conflicts"]), bool(data["fixed_point"]), ok))
+    if data.get("host") is not None:
+        h = data["host"]
+        line += " host_satisfied=%d host_conflicts=%d to_fetch=%d" % (len(h["satisfied"]), len(h["conflicts"]),
+                                                                      len(h["to_fetch"]))
     return line, ok
 
 
 # ------------------------------------------------------------------------------------------------------------- the verbs
+
+def classify_host(members, host_dists):
+    """Class every closure member the host already holds: HOST-SATISFIED when the host version meets EVERY specifier any
+    parent puts on it, HOST-CONFLICT otherwise (an unreadable specifier counts as unmet). A member the host does not hold
+    gets host_class None. -> (satisfied [dict], conflicts [dict]); each member carries host_class."""
+    sat, confl = [], []
+    for m in members:
+        hv = host_dists.get(m["norm"])
+        if hv is None:
+            m["host_class"] = None
+            continue
+        unmet = [{"parent": e["parent"], "specifier": e["specifier"] or "any"}
+                 for e in m["edges"] if kw.satisfies(e["specifier"], hv) is not True]
+        rec = {"name": m["name"], "norm": m["norm"], "host_version": hv, "closure_version": m["version"],
+               "specifiers": sorted({e["specifier"] or "any" for e in m["edges"]})}
+        if unmet:
+            m["host_class"] = "HOST-CONFLICT"
+            rec["unmet_by"] = unmet
+            confl.append(rec)
+        else:
+            m["host_class"] = "HOST-SATISFIED"
+            sat.append(rec)
+    return sat, confl
+
+
+def host_block(path, members):
+    """Read a host pydeps file (schema intake-host-pydeps/1), class the members, -> the block saved as data["host"]."""
+    p = pathlib.Path(path)
+    raw = p.read_bytes()
+    hd = json.loads(raw.decode("utf-8"))
+    if hd.get("schema") != HOST_SCHEMA:
+        raise SystemExit("ERROR: --host-pydeps must carry schema %s" % HOST_SCHEMA)
+    dists = {canon(k): v for k, v in hd["dists"].items()}
+    if len(dists) != len(hd["dists"]):
+        raise SystemExit("ERROR: --host-pydeps has two names that normalise to one name")
+    sat, confl = classify_host(members, dists)
+    to_fetch = [m["name"] for m in members if m["host_class"] != "HOST-SATISFIED"]
+    return {"file": p.name, "sha256": hashlib.sha256(raw).hexdigest(), "host": hd.get("host"), "python": hd.get("python"),
+            "dists_read": len(dists), "satisfied": sat, "conflicts": confl, "to_fetch": to_fetch,
+            "to_fetch_rule": "closure minus HOST-SATISFIED; a HOST-CONFLICT member is kept in to_fetch and reported as a STOP",
+            "absent_on_host": hd.get("absent_on_host", [])}
+
 
 def cmd_closure(args):
     if args.from_file:
@@ -285,13 +346,29 @@ def cmd_closure(args):
         return 0 if ok else 1
     target = make_target(args.target)
     supported = kw.supported_tags(target)
-    req_path = pathlib.Path(args.requirements) if args.requirements else REPO / REQUIREMENTS_NAME
-    req_lines, options, physical = kw.read_requirement_lines(req_path)
+    if args.root and args.requirements:
+        raise SystemExit("ERROR: --root and --requirements are exclusive (--root replaces the lines of requirements.txt)")
+    if args.root:
+        root_text = kw.strip_comment(args.root)
+        if not root_text or "\n" in root_text or root_text.startswith("-") or not root_text.isascii():
+            raise SystemExit("ERROR: --root must be ONE ascii requirement line")
+        req_path = None
+        req_lines, options, physical = [(1, root_text)], [], 1
+        req_block = {"name": "<--root>", "form": "root", "physical_lines": 1, "installable_lines": 1, "option_lines": 0,
+                     "sha256": hashlib.sha256(root_text.encode("ascii")).hexdigest()}
+        start_name = "--root"
+    else:
+        req_path = pathlib.Path(args.requirements) if args.requirements else REPO / REQUIREMENTS_NAME
+        req_lines, options, physical = kw.read_requirement_lines(req_path)
+        req_block = {"name": req_path.name, "physical_lines": physical, "installable_lines": len(req_lines),
+                     "option_lines": len(options), "sha256": hashlib.sha256(req_path.read_bytes()).hexdigest()}
+        start_name = REQUIREMENTS_NAME
     site_dirs = [("<test-site:%d>" % i, pathlib.Path(d)) for i, d in enumerate(args.site_packages or [], 1)] \
         or default_site_dirs()
     installed, sources = load_installed(site_dirs)
-    res = compute(req_lines, installed, target, supported)
+    res = compute(req_lines, installed, target, supported, start_name)
     members = res["members"]
+    host = host_block(args.host_pydeps, members) if args.host_pydeps else None
     data = {
         "schema": SCHEMA,
         "claim": "measured: a read of the installed copies' METADATA on this machine; no request to any index was made; "
@@ -301,8 +378,7 @@ def cmd_closure(args):
                    "marker_environment": {k: v for k, v in sorted(target["env"].items()) if k != "extra" and v},
                    "tag_logic": "packaging.tags " + __import__("packaging").__version__, "supported_tag_count": len(supported)},
         "running_python": "%d.%d.%d" % sys.version_info[:3],
-        "requirements_file": {"name": req_path.name, "physical_lines": physical, "installable_lines": len(req_lines),
-                              "option_lines": len(options), "sha256": hashlib.sha256(req_path.read_bytes()).hexdigest()},
+        "requirements_file": req_block,
         "installed_sources": sources,
         "not_applicable_lines": res["not_applicable"],
         "unparsed": res["unparsed"],
@@ -313,9 +389,12 @@ def cmd_closure(args):
         "unknown_not_installed": [m["name"] for m in members if m["class"] == "UNKNOWN-NOT-INSTALLED"],
         "members": members,
     }
+    if host is not None:
+        data["host"] = host
     data["last_line"], ok = last_line(data)
+    print_full = target["env"]["python_full_version"] if target["platform"] == "linux_x86_64" else TARGET_FULL_VERSION
     print("Target %s: Python %s markers; %d supported tags; requirements: %d physical, %d installable, %d option lines"
-          % (target["label"], TARGET_FULL_VERSION, len(supported), physical, len(req_lines), len(options)))
+          % (target["label"], print_full, len(supported), physical, len(req_lines), len(options)))
     print("Installed sources: " + asc(json.dumps(sources)))
     print("%-28s %-14s %-5s %-23s %-5s %s" % ("member", "installed", "kind", "class", "depth", "parents"))
     for m in members:
@@ -327,6 +406,14 @@ def cmd_closure(args):
               % (asc(c["child"]), c["installed_version"], asc(c["parent"]), asc(c["specifier"])))
     for n in data["unknown_not_installed"]:
         print("UNKNOWN-NOT-INSTALLED " + asc(n))
+    if host is not None:
+        for r in host["satisfied"]:
+            print("HOST-SATISFIED %s closure=%s host=%s specifiers=%s"
+                  % (asc(r["name"]), r["closure_version"] or "-", r["host_version"], asc("; ".join(r["specifiers"]))))
+        for r in host["conflicts"]:
+            print("HOST-CONFLICT %s host=%s closure=%s unmet_by=%s STOP: the tool does not choose"
+                  % (asc(r["name"]), r["host_version"], r["closure_version"] or "-",
+                     asc("; ".join("%s %s" % (u["parent"], u["specifier"]) for u in r["unmet_by"]))))
     text = json.dumps(data, indent=1, sort_keys=True, ensure_ascii=True) + "\n"
     leaks = kw.scrub_check(text)
     if leaks:
@@ -565,6 +652,8 @@ def main(argv=None):
     c.add_argument("--site-packages", action="append")
     c.add_argument("--out")
     c.add_argument("--from-file")
+    c.add_argument("--root", help="one requirement line that replaces the lines of requirements.txt as the start")
+    c.add_argument("--host-pydeps", help="a host pydeps file (intake-host-pydeps/1): classes HOST-SATISFIED/HOST-CONFLICT")
     e = sub.add_parser("explain")
     e.add_argument("name")
     e.add_argument("--from-file")
