@@ -20228,3 +20228,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost: the next release of this batch needs one more grant cell first (internal reader: s3:GetObject and a prefix-confined s3:ListBucket on the three opal-data-etfs prefixes and on opal-data-mdpf mdpf/feeds/model_composition/); the four tools were never served, so no consumer loses anything by the rollback. Non-application: the 23 other tools. Not verified here: whether the grant should name the per-firm sub-prefixes of model_composition or the whole prefix; that is the grant author's read of the catalog row."
 }
 ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S165",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-16T08:48:09Z",
+    "one_line": "ap27.AC1.sh counts the condition key \"s3:prefix\" as an s3 ACTION, so it prints actions ['s3:GetObject','s3:ListBucket','s3:prefix'] and can never match the order's expect for a ListBucket statement confined by an s3:prefix condition.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap27.AC1.sh at the Phase A files printed: 'terraform: policies 2 (want 2); both on the internal reader True; actions ['s3:GetObject', 's3:ListBucket', 's3:prefix']; wildcard False (want False); bucket-root object arn False (want False)', then 'prefixes: ... True; ... True; list confined True' and 'plan: 2 to add, 0 to change, 0 to destroy True; ask has the three halves True', RESULT: FAIL. Every other figure is as the order expects.",
+        "The script gathers actions with re.findall(r'\"(s3:[A-Za-z*]+)\"', stripped). The ListBucket condition the order itself requires (a StringLike on s3:prefix) must be written with the quoted key \"s3:prefix\", which that pattern matches, so the list always carries 's3:prefix'. The order's <expect> requires actions \\['s3:GetObject', 's3:ListBucket'\\] exactly.",
+        "The same condition form is the live etfs_read_iam.tf (OG-ap-20), which the order tells this seat to copy. The .tf is as the order specifies: two policies on aws_iam_role.int_reader, GetObject and ListBucket only, ListBucket confined by s3:prefix, plan 2/0/0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order Phase A item 2: each policy has exactly two statements in the shape of etfs_read_iam.tf, with s3:ListBucket on the bucket ARN under an s3:prefix StringLike condition; AC1 expects actions ['s3:GetObject', 's3:ListBucket'].",
+    "world_is": "The shape the order requires cannot be written without the quoted key \"s3:prefix\", and the AC1 script reads that key as an action, so no honest .tf meeting the order can PASS AC1 as written. This seat did not bend the .tf to the script (an unquoted or computed key would be a contortion of the grant for a check's regex). The fix is the issuer's, in the check script only: take the actions from the Action = [...] lists, or drop 's3:prefix' from the set before comparing. Nothing in the world needs to change.",
+    "notes": "Same class as NFRA_OPLGTW-Z-S158 (a check script that could not emit the string its own expect requires). Cost of the fix: one line in a script the issuer owns. On the amendment this seat re-runs AC1 and reports; the Phase A files are unchanged."
+  }
+  ```
