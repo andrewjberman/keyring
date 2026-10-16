@@ -82,6 +82,7 @@ pf11.AC1 FAIL as expected (the named test absent in sources; `bun test src` 72 p
 The fix reaches the host only with a new mcportal bundle release; nothing in this order deploys. The status flip is the issuer's.
 
 <status>pending</status>
+<status>complete</status>
 <round>8</round>
 <workstream>PF</workstream>
 <slot>~40</slot>
