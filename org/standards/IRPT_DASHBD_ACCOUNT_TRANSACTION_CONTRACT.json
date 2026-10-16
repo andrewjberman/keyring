@@ -1,0 +1,2212 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~1301",
+  "authored_under": "IRPT_DASHBD.TO-DB-f-1301 (round 127, workstream ~F2, F-SHIP), cell DB-f-1301 of IRPT_DASHBD_DECOMP_R127_F.md, following the CTO round-124 analysis for F-SHIP (msg 9097) and the round-123 analysis (msg 9064, ruling 1).",
+  "table": "account_transaction",
+  "grain": "account x transaction line",
+  "partition": "date=YYYY-MM-DD",
+  "producer": "data/assets/scripts/gold/irpt_reporting/account_transaction.py",
+  "columns": [
+    {
+      "name": "firm",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The registry-derived firm scope this row belongs to; never a typed token.",
+      "claim": "inferred",
+      "method": "The firm scope of the custody entry the silver partition is read under, taken from the registry."
+    },
+    {
+      "name": "account_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The account key carried by the silver row. It is an identifier and is not reproduced in any report.",
+      "claim": "measured"
+    },
+    {
+      "name": "business_date",
+      "type": "date32[day]",
+      "nullable": false,
+      "meaning": "The silver partition's business date, the date= partition the row is written under.",
+      "claim": "measured"
+    },
+    {
+      "name": "trade_date",
+      "type": "date32[day]",
+      "nullable": true,
+      "meaning": "The trade_date column of fact_trn, which the lot source reads; null when the silver row carries none.",
+      "claim": "measured"
+    },
+    {
+      "name": "settle_date",
+      "type": "date32[day]",
+      "nullable": true,
+      "meaning": "The settlement date. No silver column supplies it (round-123 ground read), so the column is null.",
+      "claim": "absent"
+    },
+    {
+      "name": "action",
+      "type": "string",
+      "nullable": true,
+      "meaning": "The action word of the row: the txn_type's action through type_action. Null only when the code is not in the mapping.",
+      "claim": "inferred",
+      "method": "From txn_type through type_action (the type word to its action word)."
+    },
+    {
+      "name": "txn_type",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The ratified type word of the row, or the string UNMAPPED when the mapping holds the code as UNMAPPED or lacks it.",
+      "claim": "inferred",
+      "method": "From tran_srcde through source_mapping (the 49 Financial code to its ratified type word); UNMAPPED when the mapping holds the code as UNMAPPED or lacks it."
+    },
+    {
+      "name": "symbol",
+      "type": "string",
+      "nullable": true,
+      "meaning": "The security symbol, the ticker_symbol column; null on a row with no security.",
+      "claim": "measured"
+    },
+    {
+      "name": "asset_name",
+      "type": "string",
+      "nullable": true,
+      "meaning": "The security's name. No silver column supplies it, so the column is null.",
+      "claim": "absent"
+    },
+    {
+      "name": "units",
+      "type": "double",
+      "nullable": true,
+      "meaning": "The quantity column (quantity); null when the row carries none.",
+      "claim": "measured"
+    },
+    {
+      "name": "price",
+      "type": "double",
+      "nullable": true,
+      "meaning": "The price column; null when the row carries none.",
+      "claim": "measured"
+    },
+    {
+      "name": "amount",
+      "type": "double",
+      "nullable": false,
+      "meaning": "The custodian's gross money amount (gross_amount). On a cash row the sign is taken from debit_credit as account_return_daily.py takes it: CREDIT positive, DEBIT negative. On an in-kind row debit_credit is a position side and is not read as a cash sign.",
+      "claim": "measured"
+    },
+    {
+      "name": "fee",
+      "type": "double",
+      "nullable": true,
+      "meaning": "The fee column. The fee rail is unused by design, so no silver column supplies it and the column is null.",
+      "claim": "absent"
+    },
+    {
+      "name": "custodian",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The custodian of the row, the constant of the custody entry.",
+      "claim": "inferred",
+      "method": "The custodian constant of the custody entry the silver partition is read under, set once per entry in the registry."
+    },
+    {
+      "name": "flow_class",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The flow class of the row's tran_srcde: EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION or UNRESOLVED.",
+      "claim": "inferred",
+      "method": "Per tran_srcde through flow_class_rule over the CRO table's (partition, rule) pairs: one class when the code's CRO rows agree, UNRESOLVED when they disagree or the table does not hold the code. The silver-only codes and IRAWH and MCE are fixed in source_mapping."
+    },
+    {
+      "name": "source_txn_id",
+      "type": "string",
+      "nullable": true,
+      "meaning": "A per-transaction identifier. None is read: order_number is an order-level id and is not used, so the column is null.",
+      "claim": "absent"
+    },
+    {
+      "name": "coverage",
+      "type": "string",
+      "nullable": false,
+      "meaning": "How the row's code is covered by the mapping: MEASURED, CODE_NOT_IN_MAPPING or UNMAPPED_BY_TABLE.",
+      "claim": "inferred",
+      "method": "MEASURED when the code maps to a type word; CODE_NOT_IN_MAPPING when the mapping lacks the code; UNMAPPED_BY_TABLE when the mapping holds the code as UNMAPPED."
+    }
+  ],
+  "enums": {
+    "txn_type": [
+      "Deposit",
+      "Transfer in",
+      "Withdrawal",
+      "Transfer out",
+      "Buy",
+      "Sell",
+      "Dividend",
+      "Interest",
+      "Capital gain",
+      "Other income",
+      "Reinvestment",
+      "Tax withheld",
+      "Fee",
+      "Management fee",
+      "Trading expense",
+      "Fee credit",
+      "Corporate action",
+      "Journal",
+      "Account transfer",
+      "Adjustment",
+      "Return of capital"
+    ],
+    "action": [
+      "Contribution",
+      "Withdrawal",
+      "Trade",
+      "Income",
+      "Fee",
+      "Tax",
+      "Transfer",
+      "Adjustment"
+    ],
+    "flow_class": [
+      "EXTERNAL_IN",
+      "EXTERNAL_OUT",
+      "INCOME",
+      "FEE",
+      "INTERNAL",
+      "CORPORATE_ACTION",
+      "UNRESOLVED"
+    ],
+    "coverage": [
+      "MEASURED",
+      "CODE_NOT_IN_MAPPING",
+      "UNMAPPED_BY_TABLE"
+    ]
+  },
+  "type_action": {
+    "Deposit": "Contribution",
+    "Transfer in": "Transfer",
+    "Withdrawal": "Withdrawal",
+    "Transfer out": "Transfer",
+    "Buy": "Trade",
+    "Sell": "Trade",
+    "Dividend": "Income",
+    "Interest": "Income",
+    "Capital gain": "Income",
+    "Other income": "Income",
+    "Reinvestment": "Income",
+    "Tax withheld": "Tax",
+    "Fee": "Fee",
+    "Management fee": "Fee",
+    "Trading expense": "Fee",
+    "Fee credit": "Fee",
+    "Corporate action": "Adjustment",
+    "Journal": "Transfer",
+    "Account transfer": "Transfer",
+    "Adjustment": "Adjustment",
+    "Return of capital": "Adjustment"
+  },
+  "flow_class_rule": [
+    {
+      "partition": "CONDITIONAL-BY-COUNTERPARTY",
+      "rule": "acct-transfer",
+      "flow_class": "UNRESOLVED",
+      "reason": "An account transfer is internal only when its counterparty leg is matched, and the line does not carry the counterparty."
+    },
+    {
+      "partition": "CONDITIONAL-BY-COUNTERPARTY",
+      "rule": "journals",
+      "flow_class": "UNRESOLVED",
+      "reason": "A journal is internal or external by its counterparty, which the line does not carry."
+    },
+    {
+      "partition": "CONDITIONAL-BY-COUNTERPARTY",
+      "rule": "shares-delivered",
+      "flow_class": "UNRESOLVED",
+      "reason": "A share delivery is internal when its other leg sits in a sister account, and the line does not state which."
+    },
+    {
+      "partition": "EXTERNAL",
+      "rule": "checks-classified",
+      "flow_class": "UNRESOLVED",
+      "reason": "A classified check's direction is not stated by the rule, so it cannot be classed until a specimen is read."
+    },
+    {
+      "partition": "EXTERNAL",
+      "rule": "returned-deposits",
+      "flow_class": "UNRESOLVED",
+      "reason": "A returned deposit reverses a deposit whose direction the rule does not state, so the table does not settle its class."
+    },
+    {
+      "partition": "EXTERNAL-IN",
+      "rule": "deposits",
+      "flow_class": "EXTERNAL_IN",
+      "reason": "The partition is money entering the account from outside the firm."
+    },
+    {
+      "partition": "EXTERNAL-OUT",
+      "rule": "ira-withholding",
+      "flow_class": "EXTERNAL_OUT",
+      "reason": "The partition is money leaving the account to outside it, and an IRA withholding is paid out of the account."
+    },
+    {
+      "partition": "EXTERNAL-OUT",
+      "rule": "schwab-checks-out",
+      "flow_class": "EXTERNAL_OUT",
+      "reason": "A check paid out of the account leaves the account to a payee outside it."
+    },
+    {
+      "partition": "EXTERNAL-OUT",
+      "rule": "withdrawals",
+      "flow_class": "EXTERNAL_OUT",
+      "reason": "A withdrawal moves cash or securities from the account to outside the firm."
+    },
+    {
+      "partition": "FEE-ADMIN",
+      "rule": "adr-fee",
+      "flow_class": "FEE",
+      "reason": "An administrative fee charged to the account is a fee whatever its label."
+    },
+    {
+      "partition": "FEE-ADMIN",
+      "rule": "service-fees",
+      "flow_class": "FEE",
+      "reason": "A service fee charged to the account is a fee."
+    },
+    {
+      "partition": "FEE-MANAGEMENT",
+      "rule": "advisor-fee-explicit",
+      "flow_class": "FEE",
+      "reason": "An explicit advisor fee debited from the account is a management fee, which is a fee."
+    },
+    {
+      "partition": "FEE-MANAGEMENT",
+      "rule": "advisory-fee",
+      "flow_class": "FEE",
+      "reason": "An advisory fee debited from the account is a fee."
+    },
+    {
+      "partition": "FEE-MANAGEMENT-VERIFIED",
+      "rule": "advisor-fee-verified",
+      "flow_class": "FEE",
+      "reason": "A verified advisor fee is a fee against the fee record."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "alt-income",
+      "flow_class": "INCOME",
+      "reason": "Alternative income is income earned inside the account, read from the INTERNAL partition, which the return engine treats as inside the account."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "cash-in-lieu",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "A cash-in-lieu payment for a fractional share is a corporate action inside the account, read from the INTERNAL partition."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "corp-actions",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "A corporate action on a holding is an event inside the account, read from the INTERNAL partition."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "corp-actions-ic",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "A corporate action on an in-kind position is an event inside the account, read from the INTERNAL partition."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "corp-misc",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "A miscellaneous corporate action is an event inside the account, read from the INTERNAL partition."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "dividends",
+      "flow_class": "INCOME",
+      "reason": "A dividend is income earned by the account, read from the INTERNAL partition."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "foreign-tax",
+      "flow_class": "INTERNAL",
+      "reason": "A foreign tax withheld on income is taken inside the account, so it stays an INTERNAL movement."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "int-adj-fc",
+      "flow_class": "INCOME",
+      "reason": "An interest adjustment is income inside the account, read from the INTERNAL partition."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "interest",
+      "flow_class": "INCOME",
+      "reason": "Interest is income earned by the account, read from the INTERNAL partition."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "reinvest",
+      "flow_class": "INTERNAL",
+      "reason": "A reinvestment moves income back into the account, an INTERNAL movement."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "sweeps",
+      "flow_class": "INTERNAL",
+      "reason": "A sweep moves cash between the account's own holdings, an INTERNAL movement."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "trades",
+      "flow_class": "INTERNAL",
+      "reason": "A trade moves value between cash and a position inside the account, an INTERNAL movement."
+    },
+    {
+      "partition": "INTERNAL",
+      "rule": "withholding",
+      "flow_class": "INTERNAL",
+      "reason": "A withholding taken inside the account is an INTERNAL movement."
+    },
+    {
+      "partition": "UNRESOLVED",
+      "rule": "no-rule",
+      "flow_class": "UNRESOLVED",
+      "reason": "The table holds no rule for the line, so its class is the table's own unresolved state."
+    },
+    {
+      "partition": "UNRESOLVED-PENDING-SPECIMEN",
+      "rule": "lending-misc-ic",
+      "flow_class": "UNRESOLVED",
+      "reason": "A lending or miscellaneous in-kind line cannot be classed until a specimen shows its direction."
+    },
+    {
+      "partition": "UNRESOLVED-PENDING-SPECIMEN",
+      "rule": "misc-adj",
+      "flow_class": "UNRESOLVED",
+      "reason": "A miscellaneous adjustment's cash direction is not stated by the table, so it stays UNRESOLVED until a specimen is read."
+    }
+  ],
+  "source_mapping": [
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "$JNL",
+      "opal_type": "Account transfer",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "$TYPE",
+      "opal_type": "Journal",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "ABFEA",
+      "opal_type": "Management fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "ABFEE",
+      "opal_type": "Management fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "ADJ",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Two rows with two meanings: the FC row (rule misc-adj, FUNDS ADJUSTMENT) is a cash funds adjustment, and the IC row (rule corp-actions-ic, POSITION ADJ) is a security position adjustment. They take different words (Adjustment and Corporate action), so the table gives this code no single meaning."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "ADRF",
+      "opal_type": "Fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "ADRFA",
+      "opal_type": "Fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "AS1CR",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Rule misc-adj with a generic description (MISC ADJUSTMENT); the table does not say whether cash moves, and the Adjustment word is defined with no cash flow."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "AS1DR",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Rule checks-classified with the description SCHWAB CHECK; the same description is a deposit on one code and a paid check on another, and this row states neither direction, so no single word fits."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "AS1FE",
+      "opal_type": "Fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "ASG",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BILL",
+      "opal_type": "Management fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BKINA",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BKINT",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BKSWP",
+      "opal_type": "Journal",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BKTRF",
+      "opal_type": "Journal",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BRINA",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BRSWP",
+      "opal_type": "Journal",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BWBKI",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BWCAP",
+      "opal_type": "Tax withheld",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BWCRI",
+      "opal_type": "Tax withheld",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BWDIA",
+      "opal_type": "Tax withheld",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BWDIV",
+      "opal_type": "Tax withheld",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BWDYE",
+      "opal_type": "Tax withheld",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "BWSTG",
+      "opal_type": "Tax withheld",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CAPU",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CDINT",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CDMT",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CFR",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CFRAJ",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CFRYE",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CGC",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CHE",
+      "opal_type": "Withdrawal",
+      "flow_class": "EXTERNAL_OUT",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CHEA",
+      "opal_type": "Deposit",
+      "flow_class": "EXTERNAL_IN",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CHK",
+      "opal_type": "Withdrawal",
+      "flow_class": "EXTERNAL_OUT",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CIL",
+      "opal_type": "UNMAPPED",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "Rule cash-in-lieu; a cash payment for a fractional share. The table does not say whether a sale of the fraction or a corporate-action payment, so no single word fits."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CILA",
+      "opal_type": "UNMAPPED",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "Rule cash-in-lieu; a cash payment for a fractional share. The table does not say whether a sale of the fraction or a corporate-action payment, so no single word fits."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CLIQ",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CMR",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CSMR",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CVN",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "CYE",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DBS1B",
+      "opal_type": "Deposit",
+      "flow_class": "EXTERNAL_IN",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DDEFT",
+      "opal_type": "Deposit",
+      "flow_class": "EXTERNAL_IN",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DEL",
+      "opal_type": "Transfer out",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DFR",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DFRAJ",
+      "opal_type": "Dividend",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DFRYE",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DFYAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DIV",
+      "opal_type": "Dividend",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DIVAJ",
+      "opal_type": "Dividend",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPAJ",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Rule misc-adj with no description; the table does not say whether cash moves, and the Adjustment word is defined with no cash flow."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPCRS",
+      "opal_type": "Deposit",
+      "flow_class": "EXTERNAL_IN",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPCSC",
+      "opal_type": "Deposit",
+      "flow_class": "EXTERNAL_IN",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPCSH",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Rule misc-adj with no description; the table does not say whether cash moves, and the Adjustment word is defined with no cash flow."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPGVT",
+      "opal_type": "Deposit",
+      "flow_class": "EXTERNAL_IN",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPINS",
+      "opal_type": "Deposit",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPMOD",
+      "opal_type": "Deposit",
+      "flow_class": "EXTERNAL_IN",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPRET",
+      "opal_type": "Withdrawal",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DPWRF",
+      "opal_type": "Deposit",
+      "flow_class": "EXTERNAL_IN",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DRT",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DST",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DYAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "DYE",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "EXC",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "EXP",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "EXRT",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "EXWT",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "Silver-only code (not in the CRO table). The description carries the word MATURED, a security that matured. Corporate action names expiry as the issuer-side end of a holding, and a maturity is that end, so Corporate action."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "FCQ",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "FEE",
+      "opal_type": "Fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "FEEA",
+      "opal_type": "Fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "FS",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "FTP",
+      "opal_type": "Tax withheld",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "FTR",
+      "opal_type": "Tax withheld",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "GSPAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "GUP",
+      "opal_type": "Fee credit",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "INT",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "INTAJ",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "INTR",
+      "opal_type": "Fee",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "INTRA",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "IRAWH",
+      "opal_type": "Tax withheld",
+      "flow_class": "EXTERNAL_OUT",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "JNL",
+      "opal_type": "Journal",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "LIT",
+      "opal_type": "UNMAPPED",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "Rule corp-misc with the description Litigation; the table does not say whether a settlement is income, a return of cost or a correction, so no single word fits."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "MCE",
+      "opal_type": "Tax withheld",
+      "flow_class": "EXTERNAL_OUT",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "MEXC",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "MGFEA",
+      "opal_type": "Management fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "MGFEE",
+      "opal_type": "Management fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NC",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDFR",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDFRA",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDIV",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDIVA",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDR",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDRAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDST",
+      "opal_type": "Other income",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDSTA",
+      "opal_type": "Other income",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDV",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDVAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NDYE",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "NFRYE",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "ORG",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PDEF",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PDEFT",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Rules deposits and withdrawals under one description, MONEYLINK TRANSFER: one row is an inflow and one an outflow. The description does not give the direction, so the table gives this code no single meaning."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PDR",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PDRAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PDRTN",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Rules returned-deposits, deposits and withdrawals under one empty description: the rows run in both directions. The table gives this code no single meaning."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PDRYE",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PDV",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PDVAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PIL",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PILAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PILR",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PRIN",
+      "opal_type": "Return of capital",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "PRO",
+      "opal_type": "UNMAPPED",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "Rule corp-misc with the description CREDIT PRO and category Dividends and Interest. The description does not say whether the credit is income or a correction, so no single word fits."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "QDR",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "QDV",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "QDVAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RADJ",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Rule no-rule with no description; the table does not say whether cash moves, and the Adjustment word is defined with no cash flow."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RCR",
+      "opal_type": "Adjustment",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RDM",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RDMC",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RDPC",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": "Silver-only code (not in the CRO table). The description carries the words PARTIAL CALL, a bond partial redemption: the same issuer redemption event as the table's REDEMP/CONVERSION codes, so Corporate action."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "REC",
+      "opal_type": "Transfer in",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RFR",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RID",
+      "opal_type": "Reinvestment",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RIDA",
+      "opal_type": "Reinvestment",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "ROC",
+      "opal_type": "Return of capital",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "RS",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "S1C",
+      "opal_type": "Withdrawal",
+      "flow_class": "EXTERNAL_OUT",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "S1INA",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "S1INT",
+      "opal_type": "Interest",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SCFR",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SCFRA",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SCGYE",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SDIV",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SDVYE",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SFRYE",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SMFEE",
+      "opal_type": "Management fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SMR",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SND",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SNDYE",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SO",
+      "opal_type": "Corporate action",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SQD",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SQDAJ",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Silver-only code (not in the CRO table). The description carries an issuer name and no transaction word, and the AJ ending is not a basis for a meaning (the record decides on the description, never on a sub-code or a suffix), so the table and the silver give no single meaning here."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "STCG",
+      "opal_type": "Capital gain",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "STK",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "STOP",
+      "opal_type": "UNMAPPED",
+      "flow_class": "EXTERNAL_IN",
+      "reason": "Rule deposits with the description Stop Check Payment. A stop credits back a check that was paid, a reversal of an earlier withdrawal, not an inflow from outside; the rule and the description disagree and no single word fits."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "SUD",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "T/A",
+      "opal_type": "Account transfer",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "TOA",
+      "opal_type": "Account transfer",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "TPFEE",
+      "opal_type": "Management fee",
+      "flow_class": "FEE",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "TRADE",
+      "opal_type": "Adjustment",
+      "flow_class": "INTERNAL",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "TRM",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "TYP",
+      "opal_type": "Journal",
+      "flow_class": "UNRESOLVED",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "UDR",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "UDV",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "UDYAJ",
+      "opal_type": "Dividend",
+      "flow_class": "INCOME",
+      "reason": null
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "VOID",
+      "opal_type": "UNMAPPED",
+      "flow_class": "EXTERNAL_IN",
+      "reason": "Rule deposits with the description Voided Check. A voided check credits back a check that was paid, a reversal of an earlier withdrawal, not an inflow from outside; the rule and the description disagree and no single word fits."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "WLES",
+      "opal_type": "UNMAPPED",
+      "flow_class": "UNRESOLVED",
+      "reason": "Rule lending-misc-ic with no description; securities lending income and a lending return cannot be told apart from the table, so no single word fits."
+    },
+    {
+      "firm": "49financial",
+      "field": "tran_srcde",
+      "source_value": "WTEX",
+      "opal_type": "Corporate action",
+      "flow_class": "CORPORATE_ACTION",
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Cash Deposit",
+      "opal_type": "Deposit",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Transfer In",
+      "opal_type": "Transfer in",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Cash Withdrawal",
+      "opal_type": "Withdrawal",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Transfer Out",
+      "opal_type": "Transfer out",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Buy",
+      "opal_type": "Buy",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Sale",
+      "opal_type": "Sell",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Dividend Reinvestment",
+      "opal_type": "Reinvestment",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Journal",
+      "opal_type": "Journal",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Dividend",
+      "opal_type": "Dividend",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Interest",
+      "opal_type": "Interest",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Income",
+      "opal_type": "Other income",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Capital Gains",
+      "opal_type": "Capital gain",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Return of Capital",
+      "opal_type": "Return of capital",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Expense",
+      "opal_type": "Fee",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Management Fee",
+      "opal_type": "Management fee",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "cottonwood",
+      "field": "type",
+      "source_value": "Corporate Action",
+      "opal_type": "Corporate action",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Client Contribution",
+      "opal_type": "Deposit",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Employer Contribution",
+      "opal_type": "Deposit",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Rollover Contribution",
+      "opal_type": "Transfer in",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Merge In from Other Account",
+      "opal_type": "Transfer in",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "External Account Activity In",
+      "opal_type": "Transfer in",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Client Distribution",
+      "opal_type": "Withdrawal",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Cancel Account",
+      "opal_type": "Withdrawal",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Merge Out to Other Account",
+      "opal_type": "Transfer out",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "External Account Activity Out",
+      "opal_type": "Transfer out",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Buy Exchange",
+      "opal_type": "Buy",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Sell Exchange",
+      "opal_type": "Sell",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Income Reinvested",
+      "opal_type": "Reinvestment",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Starting Value",
+      "opal_type": "UNMAPPED",
+      "flow_class": null,
+      "reason": "Internal bucket, but the yaml calls it a synthetic per-position opening seed, not a transaction a client made."
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Merge In Exchange",
+      "opal_type": "Journal",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Merge Out Exchange",
+      "opal_type": "Journal",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Internal Account Journal In",
+      "opal_type": "Journal",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Internal Account Journal Out",
+      "opal_type": "Journal",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Decrease in Value",
+      "opal_type": "Adjustment",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Spin Off in",
+      "opal_type": "Corporate action",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Spin Off out",
+      "opal_type": "Corporate action",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Dividend Reinvested",
+      "opal_type": "Reinvestment",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Interest Reinvested",
+      "opal_type": "Reinvestment",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Return of Capital",
+      "opal_type": "Return of capital",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Return of Principal (Bonds)",
+      "opal_type": "Return of capital",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Dividend Paid from Cash",
+      "opal_type": "Dividend",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Income Paid",
+      "opal_type": "Other income",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Dividend to Cash",
+      "opal_type": "Dividend",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Management Fee",
+      "opal_type": "Management fee",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Long Term Gain to Cash",
+      "opal_type": "Capital gain",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Trading Expense",
+      "opal_type": "Trading expense",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Short Term Gain to Cash",
+      "opal_type": "Capital gain",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Interest Paid in Cash",
+      "opal_type": "Interest",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Federal Tax Withheld",
+      "opal_type": "Tax withheld",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Fee Credit",
+      "opal_type": "Fee credit",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "State Tax Withheld",
+      "opal_type": "Tax withheld",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Foreign Tax Withheld",
+      "opal_type": "Tax withheld",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Foreign Dividend Tax",
+      "opal_type": "Tax withheld",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Tax Credit",
+      "opal_type": "Tax withheld",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Interest Paid",
+      "opal_type": "Interest",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "ADR Fee",
+      "opal_type": "Fee",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Administrative Fee",
+      "opal_type": "Fee",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Administrative Fee Adjustment",
+      "opal_type": "Fee credit",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Wire Fee",
+      "opal_type": "Fee",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Stock Split",
+      "opal_type": "Corporate action",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Reverse Stock Split",
+      "opal_type": "Corporate action",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Expired-",
+      "opal_type": "Corporate action",
+      "flow_class": null,
+      "reason": null
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Remark",
+      "opal_type": "UNMAPPED",
+      "flow_class": null,
+      "reason": "Internal bucket, but the yaml says Remark is a position seed only where a ticker is present and a cash-shaped Remark fails loud to UNRESOLVED; its meaning depends on the row shape."
+    },
+    {
+      "firm": "inflection",
+      "field": "type",
+      "source_value": "Reversal",
+      "opal_type": "Adjustment",
+      "flow_class": null,
+      "reason": null
+    }
+  ],
+  "unmapped_display": "Unclassified",
+  "new_code_reason": "CODE_NOT_IN_MAPPING",
+  "firms_served": [
+    "49financial"
+  ],
+  "firms_pending": [
+    {
+      "firm": "cottonwood",
+      "reason": "No producer exists yet. Its ground read is round 126. Its 16 mapping rows are carried with a null flow_class."
+    },
+    {
+      "firm": "inflection",
+      "reason": "No producer exists yet. Its ground read is round 126. Its 48 mapping rows are carried with a null flow_class."
+    }
+  ],
+  "rule24_record": {
+    "ratified_words": "The ratified proposal org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1001/FWD5_WORDS_PROPOSAL_R124.json gives 21 type words with their actions, 8 action words and 224 mapping rows; its postulates are MECE, same grain, intent coherence and state coherence.",
+    "cvo_grades": "The CVO's grades are not read by this worker: the CVO deliverables are not materialized in this worktree. The order cites them through the CTO round-124 analysis.",
+    "cto_ratification": "1.0.0_SA_CTO~DELL2 message 9097 ratified the FWD-5 words: flow class per code from the CRO classification table; UNMAPPED shown as Other with its count; a code not in the mapping reads CODE_NOT_IN_MAPPING and is counted, never dropped.",
+    "analysis_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_124_20261016.md",
+    "round_123_ruling": "Message 9064, ruling 1: a field the producer computes carries inferred and a method, never absent."
+  },
+  "schema_hash": "8861518a4ef58baad75b8cf7f91e697fd197191a0fc18a64eb1384ace164d6b4",
+  "schema_hash_basis": "sha256 over the sorted 'name:type' lines of columns joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries (the same method as the account_class_daily and account_return_daily contracts).",
+  "served": false,
+  "served_note": "Nothing is written. No object of this table exists in any bucket. The release is a never-widen act that waits on this contract and on the producer (DB-f-1302), under a CTO and COO sign-off."
+}
