@@ -20780,3 +20780,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W417-S3 -- the proof instance at the mandated path is 260 characters and the proof checker cannot read it on this device
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T05:13:58Z",
+  "one_line": "the proof instance at the TO's mandated path is 260 characters, at the Windows MAX_PATH limit on dell2 (LongPathsEnabled=0), so proof-of-spec-check.py cannot open it: READ-ERROR rc=2; the content validates rc=0 from a scratch copy",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "os.path.abspath of the mandated instance path (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~417/IRPT_DASHBD.TO-DB-c-25.the-performance-tab-prints-the-trading-days-the-source-did-not-report-from-the-series-field-against-writer-made-fixtures.proof_of_spec.json) = 260 characters; os.path.exists on the plain path = False while listdir shows the file",
+      "winreg HKLM SYSTEM/CurrentControlSet/Control/FileSystem LongPathsEnabled = 0 on this device",
+      "python .tools/proof-of-spec-check.py <mandated path> DBC147-1-AC1,DBC147-1-AC2,DBC147-1-AC3 -> READ-ERROR (rc=2) [Errno 2]; the same from the deliverables folder with the relative file name -> READ-ERROR (rc=2); with the extended-length prefix the checker's own Path read also fails (rc=2)",
+      "sibling instance 0.9.0_WK_IRPT_DASHBD~416/IRPT_DASHBD.TO-DB-c-24...proof_of_spec.json is 237 characters and validates VALID rc=0 on this device",
+      "diagnostic only, not the verdict: a byte copy at .scratch/diag_instance.json (short path) validates VALID rc=0 with the same three ids"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 Proof: the instance at its mandated path is validated by python .tools/proof-of-spec-check.py, rc 0, before the status flips to complete.",
+  "world_is": "The mandated path is at the Windows path-length limit on this device, so the checker cannot read it under any spelling this worker could use without a route the order does not name (a shorter worktree root, a junction, a subst drive or a registry change). The three criteria PASS by output; the instance is committed with status pending, and the order stays open until the path can be read. A short-path copy validates rc=0 as a diagnostic only and is not the verdict."
+}
+```
+
