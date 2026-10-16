@@ -19445,3 +19445,30 @@ name the one known failure instead of silently inheriting it.
     "notes": "Cost of the sound form: one paginated API call per role instead of one state read. Non-application: reading a role's trust policy or its own attributes, which the role resource does own. Candidate mechanism for the owner, if wanted: the cloud-ops skill's IAM INSTRUMENT TRAPS section already holds comp-iam's and simulate-principal-policy's failure modes and is where this one belongs; this row is not a request for that edit, only the measurement it would cite."
   }
   ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S158",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-16T03:20:00Z",
+    "one_line": "ap24.AC2 cannot be graded PASS as written: its expect regex requires the field '; policy live yes', which ap24.AC2.sh never prints; the script also counts the pre-existing gateway-blackdiamond-read-role, not the new gateway-49f-blackdiamond-read-role.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run at 19b3257eb9: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap24.AC2.sh printed 'ledger CLOSED 1 of 1; sentinel at HEAD 0; roles live in IAM 6 of 6', RESULT: PASS, exit=0. The order's AC2 <expect> is '(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0; roles live in IAM 6 of 6;  policy live yes.*RESULT: PASS.*exit=0'. The script has no 'policy live' field, so the two cannot match.",
+        "proof-of-spec-check.py on the instance, with the true output, read: 'VIOLATION: acceptance[AC2]: status=PASS but output_evidence does NOT match expect'. The instance therefore records AC2 as FAIL, and the order's <status> is NOT flipped.",
+        "Separately, the script's six-role loop names gateway-blackdiamond-read-role (the live role present before this act, GR_BEFORE.json roles_present) and not gateway-49f-blackdiamond-read-role (the role A3 added), so the count would read 6 of 6 with the 49F role absent. This seat read the 49F role directly: get-role trust = opal-gateway-role only, one inline policy gateway-49f-blackdiamond-read-policy (sha256-16 ceb6ae001918528d), targeted re-plan No changes.",
+        "The act itself is complete and read back: 6 of 6 new roles live, 12-target re-plan No changes, ledger nfra-oplgtw-grants-ap24 CLOSED, live BD and Schwab policy hashes unchanged."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order Phase B item 7 / AC2: the roles are live in IAM, each read back, and the ledger is closed; AC2 expects the output field '; policy live yes' (GR_APPLIED.json _policy_live).",
+    "world_is": "The act is done and the state is as AC2 describes, but the check script the order points at cannot print the field its own expect requires, so no honest run can PASS AC2 as written; and its role list would not notice a missing 49F role. The fix is the issuer's, in the check script only: add 'policy live yes' (read _policy_live from W/GR_APPLIED.json, which this seat wrote as true) and name gateway-49f-blackdiamond-read-role in place of gateway-blackdiamond-read-role. Nothing in the world needs to change.",
+    "notes": "Per the order, a criterion this seat cannot meet as written is refused and filed BLOCKING, work continues. The instance is committed with AC2 FAIL and the true output; on the issuer's amendment this seat re-runs AC2 and the checker and flips the order if both PASS. Cost: one edit to a script the issuer owns."
+  }
+  ```
