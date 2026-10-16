@@ -27,3 +27,20 @@ refreshed (ruling 2 met). **No PRD addendum.**
 4. The 49 Financial release pair, after DB-b-300 closes (unchanged order).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 -- S6 ruled on the cash-move read (2026-10-16 ~16:4xZ)
+
+`~F2`'s read (`R135_INFLECTION_S6_CASH_MOVE.json`, 96 events, one snapshot, within 1 cent): custodial cash fell by about one leg's amount
+(X) on 75 events, about 0 on 18, other on 3, and about 2X on 0. Money left the account once per event, not twice.
+
+**RULED (supersedes round-131 ADDENDUM 2 and its row D2-S120):**
+1. **"Dividend Paid from Cash" is an EXTERNAL outflow:** the dividend paid out of the account to the client. Its flow class carries the
+   basis "measured cash move", which overrides the source taxonomy's Internal bucket for this description. The claim is `inferred`.
+2. **"Income Paid" is INTERNAL:** the same payout booked a second time on the income side, with zero effect, so it is never counted.
+3. **The income line ("Dividend to Cash" and the like) stays INCOME.** Read together: income in, then paid out. TWR counts the income as
+   return and the payout as an external flow, so a dividend paid out does not read as a loss.
+4. **Release criterion:** per event, exactly one leg is EXTERNAL and one INTERNAL, on 96 of 96. The cash-move agreement is printed as 75 of
+   96. The 21 others (18 at about 0, 3 other) are read again with a cash move one trading day either side. If fewer than 90 of 96 agree on
+   that wider read, the release stops and comes back here.
+5. **One drain:** the contract's mapping rows for the two descriptions, the producer and any mirror land together. The contract's
+   `s6_status` reads RULED_EXTERNAL_PAYOUT and cites this addendum.
