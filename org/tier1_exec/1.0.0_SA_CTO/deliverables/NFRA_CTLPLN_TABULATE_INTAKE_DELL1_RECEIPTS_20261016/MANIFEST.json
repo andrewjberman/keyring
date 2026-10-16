@@ -1,0 +1,17 @@
+{
+  "schema": "intake-manifest/1",
+  "batch": "intake-20261016-tabulate",
+  "created": "2026-10-16T03:36:31Z",
+  "files": [
+    {
+      "name": "tabulate-0.9.0-py3-none-any.whl",
+      "sha256": "024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f",
+      "size": 35252,
+      "check_record": "tabulate-0.9.0-py3-none-any.whl.check.json",
+      "check_record_sha256": "8178cfa9b6148528ebac81d54725ffbd061aca9b3168228dce4a94292b07add4",
+      "delivery": "tabulate-0.9.0-py3-none-any.whl.delivery.txt",
+      "delivery_sha256": "bc45f2c1d7df864386aea8bc3bb3d9adcf393d31dc7c24a1c70dfa524edfd7fd"
+    }
+  ],
+  "held_back": []
+}
