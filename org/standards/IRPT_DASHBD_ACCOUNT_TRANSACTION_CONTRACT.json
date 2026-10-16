@@ -1,10 +1,10 @@
 {
-  "contract_version": "0.2.0",
-  "supersedes": "0.1.0 (a draft, never ratified)",
+  "contract_version": "0.3.0",
+  "supersedes": "0.2.0 (graded: the CVO's J1 PASS 20 of 20 by natural key)",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
-  "authored_by": "0.9.0_WK_IRPT_DASHBD~1501",
-  "authored_under": "IRPT_DASHBD.TO-DB-f-1501 (round 129, workstream ~F2, F-SHIP), cell DB-f-1501 of IRPT_DASHBD_DECOMP_R129_F.md, following the CTO round-127 analysis for F-SHIP (msg 9162: 0.1.0 is a draft; 0.2.0 names the source column of every target per firm, the fee as a stated sum with its basis, and the rule-24 records).",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~1601",
+  "authored_under": "IRPT_DASHBD.TO-DB-f-1601 (round 130, workstream ~F2, F-SHIP), cell DB-f-1601 of IRPT_DASHBD_DECOMP_R130_F.md, following the CTO round-129 analysis for F-SHIP (msg 9211: source_txn_id's per-row claim with all-partition coverage per firm; the custodian and empty-to-null transforms stated; the Cottonwood producer) and the CTO's ruling msg 9192 item 4.",
   "table": "account_transaction",
   "grain": "account x transaction line",
   "partition": "date=YYYY-MM-DD",
@@ -29,7 +29,7 @@
       "name": "business_date",
       "type": "date32[day]",
       "nullable": false,
-      "meaning": "The silver partition's business date, the date= partition the row is written under.",
+      "meaning": "The business date of the row, the date= partition it is written under. 49 Financial: the silver partition's business date. Cottonwood: the adapter's performance day, the first NYSE trading day on or after the Trade Date (the adapter's window_day rule).",
       "claim": "measured"
     },
     {
@@ -43,7 +43,7 @@
       "name": "settle_date",
       "type": "date32[day]",
       "nullable": true,
-      "meaning": "The settlement date: the settlmnt_date column of the transaction table (round-128 ground read). The round-123 absent claim is void; the live schema carries the column. Null when the value is missing or unparsable.",
+      "meaning": "The settlement date: the settlmnt_date column of the transaction table (round-128 ground read); for Cottonwood the Settle Date column. Null when the value is missing or unparsable.",
       "claim": "measured"
     },
     {
@@ -66,35 +66,35 @@
       "name": "symbol",
       "type": "string",
       "nullable": true,
-      "meaning": "The security symbol, the ticker_symbol column; null on a row with no security.",
+      "meaning": "The security symbol, the ticker_symbol column (49 Financial) or the Symbol column (Cottonwood); null on a row with no security.",
       "claim": "measured"
     },
     {
       "name": "asset_name",
       "type": "string",
       "nullable": true,
-      "meaning": "The security's name. The live schema (140 columns) has no name column (round-128 ground read), so the column is null on every row.",
+      "meaning": "The security's name. The 49 Financial live schema (140 columns) has no name column (round-128 ground read), so the column is null on every 49 Financial row; Cottonwood reads its Asset Name column.",
       "claim": "absent"
     },
     {
       "name": "units",
       "type": "double",
       "nullable": true,
-      "meaning": "The quantity column, named as the units (round-128 ground read); null when the row carries none.",
+      "meaning": "The quantity column, named as the units (round-128 ground read); for Cottonwood the Units column. Null when the row carries none.",
       "claim": "measured"
     },
     {
       "name": "price",
       "type": "double",
       "nullable": true,
-      "meaning": "The price column (round-128 ground read); null when the row carries none.",
+      "meaning": "The price column (round-128 ground read); for Cottonwood the Price column. Null when the row carries none.",
       "claim": "measured"
     },
     {
       "name": "amount",
       "type": "double",
       "nullable": false,
-      "meaning": "The custodian's gross money amount (gross_amount). On a cash row the sign is taken from debit_credit as account_return_daily takes it: CREDIT positive, DEBIT negative. On an in-kind row debit_credit is a position side and is not read as a cash sign.",
+      "meaning": "The custodian's money amount. 49 Financial: gross_amount; on a cash row the sign is taken from debit_credit as account_return_daily takes it (CREDIT positive, DEBIT negative); on an in-kind row debit_credit is a position side and is not read as a cash sign. Cottonwood: the Market Value, signed by the External Flow word as the adapter does (+abs for Contribution, -abs for Withdrawal) and as booked otherwise.",
       "claim": "inferred",
       "method": "gross_amount, the money column the adapter declares (money_column). The sign is taken from debit_credit on cash rows: CREDIT positive, DEBIT negative (direction_map)."
     },
@@ -102,7 +102,7 @@
       "name": "fee",
       "type": "double",
       "nullable": true,
-      "meaning": "The stated sum, for 49 Financial, of the columns the contract's fee_basis names (commission, exchange_processing_fee, broker_service_fee, prime_broker_fee, trade_away_fee, redemption_fee, other_fee, step_in_fee, research_fee). A null column counts as nothing; a row whose named columns are all null has fee null, never zero.",
+      "meaning": "The stated sum, for each firm, of the columns the contract's fee_basis names (49 Financial: commission, exchange_processing_fee, broker_service_fee, prime_broker_fee, trade_away_fee, redemption_fee, other_fee, step_in_fee, research_fee; Cottonwood: Transaction Fee and Account Fee). A null column counts as nothing; a row whose named columns are all null has fee null, never zero.",
       "claim": "inferred",
       "method": "Per row, the sum of the fee-named columns listed in from_columns and of commission; null when every listed column is null. markupmarkdown is not summed (a price markup, not a fee charge) and exec_brok_comm is not summed (its meaning as a fee is not established from the census or the tracked records)."
     },
@@ -110,23 +110,23 @@
       "name": "custodian",
       "type": "string",
       "nullable": false,
-      "meaning": "The custodian of the row: the custody entry's constant (sources.json custodian). The round-128 ground read names custdian_id as the custodian identity column; the constant is what a person reads, and custdian_id is not read onto the row.",
+      "meaning": "The custodian of the row, lower-cased: the custody entry's constant (sources.json custodian) for 49 Financial, and Cottonwood's Custodian column for Cottonwood. The round-128 ground read names custdian_id as the custodian identity column for 49 Financial; the constant is what a person reads, and custdian_id is not read onto the row.",
       "claim": "inferred",
-      "method": "The custodian identity column of the row (custdian_id). Its values are not read by the census; the claim is inferred from the column name."
+      "method": "The custodian constant of the custody entry (49 Financial) or the Custodian column (Cottonwood), stripped and lower-cased by the producer; set once per entry in the registry."
     },
     {
       "name": "flow_class",
       "type": "string",
       "nullable": false,
-      "meaning": "The flow class of the row's tran_srcde code: EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION or UNRESOLVED.",
+      "meaning": "The flow class of the row's code: EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION or UNRESOLVED. 49 Financial: the tran_srcde code's class. Cottonwood: the External Flow word (Contribution EXTERNAL_IN, Withdrawal EXTERNAL_OUT) or the pair's class.",
       "claim": "inferred",
-      "method": "Per tran_srcde through flow_class_rule over the CRO table's (partition, rule) pairs: one class when the code's CRO rows agree, UNRESOLVED when they disagree or the table does not hold the code. The silver-only codes and IRAWH and MCE are fixed in source_mapping. The round-128 ground read names the key (tran_srcde, tr_cd, sb_cd); this contract keys on tran_srcde, the key source_mapping holds."
+      "method": "49 Financial: per tran_srcde through flow_class_rule over the CRO table's (partition, rule) pairs: one class when the code's CRO rows agree, UNRESOLVED when they disagree or the table does not hold the code. The silver-only codes and IRAWH and MCE are fixed in source_mapping. Cottonwood: cottonwood_mapping (the External Flow rule, then the pair's flow_class_none). The round-128 ground read names the 49 Financial key (tran_srcde, tr_cd, sb_cd); this contract keys on tran_srcde, the key source_mapping holds."
     },
     {
       "name": "source_txn_id",
       "type": "string",
       "nullable": true,
-      "meaning": "The per-transaction identifier: the cashiering_transaction_identifier column (round-128 ground read), read by name; null when the row carries none.",
+      "meaning": "The per-transaction identifier of the row, a PER-ROW CLAIM: present where the firm's source column (49 Financial cashiering_transaction_identifier; Cottonwood TransactionID) is non-null and non-blank, and absent (null) where it is not. It is never a universal key: source_txn_id_coverage states each firm's coverage over every partition with its denominator.",
       "claim": "inferred",
       "method": "The per-transaction cashiering identifier column, read by name; values not read."
     },
@@ -498,9 +498,136 @@
         "Transaction Fee",
         "Account Fee"
       ],
-      "rule": "The fee is the stated sum of Transaction Fee and Account Fee per line. A null column counts as nothing. A line whose two columns are both null has fee null, never zero. No producer exists yet (firms_pending)."
+      "rule": "The fee is the stated sum of Transaction Fee and Account Fee per line, read by the Cottonwood producer. A null column counts as nothing. A line whose two columns are both null has fee null, never zero."
     },
     "inflection": null
+  },
+  "transforms": [
+    {
+      "field": "custodian",
+      "firms": [
+        "49financial",
+        "cottonwood"
+      ],
+      "rule": "The producer strips the value and LOWER-CASES it: the 49 Financial custody constant and Cottonwood's Custodian column, so the word reads the same across firms. A value is lower-cased, never upper-cased or title-cased.",
+      "claim": "inferred",
+      "method": "The strip and lower-case calls in account_transaction.custodian() (49 Financial) and in the Cottonwood normaliser's custodian field; asserted by the offline tests of both modules on made-up custodians."
+    },
+    {
+      "field": "symbol",
+      "firms": [
+        "49financial",
+        "cottonwood"
+      ],
+      "rule": "The producer strips the text; an EMPTY or BLANK value becomes NULL, never the empty string. The 49 Financial symbol is ticker_symbol; the Cottonwood symbol is Symbol.",
+      "claim": "inferred",
+      "method": "The shared text helper of each module (strip, then empty or blank to None); asserted by the offline tests on an empty and a blank symbol."
+    },
+    {
+      "field": "asset_name",
+      "firms": [
+        "49financial",
+        "cottonwood"
+      ],
+      "rule": "The producer strips the text; an EMPTY or BLANK asset name becomes NULL. The 49 Financial column is null on every row (claim absent: the live schema has no name column); Cottonwood reads its Asset Name column.",
+      "claim": "inferred",
+      "method": "The same text helper as symbol; the 49 Financial producer sets None by construction, the Cottonwood producer reads the column."
+    },
+    {
+      "field": "source_txn_id",
+      "firms": [
+        "49financial",
+        "cottonwood"
+      ],
+      "rule": "The producer strips the text; an EMPTY or BLANK identifier becomes NULL. So a null source_txn_id is either a source identifier that was empty or blank, or one the source never carried; source_txn_id_coverage and the source column tell the two apart.",
+      "claim": "inferred",
+      "method": "The shared text helper of each module, read from cashiering_transaction_identifier (49 Financial) and TransactionID (Cottonwood); asserted by the offline tests on an empty and a missing identifier."
+    }
+  ],
+  "source_txn_id_coverage": {
+    "49financial": {
+      "chosen_column": "cashiering_transaction_identifier",
+      "per_row_claim": "A row's source_txn_id is PRESENT where the source column (cashiering_transaction_identifier) is non-null and non-blank, and ABSENT (null) where it is not. The column is NEVER a universal key: 214,587 of 3,349,750 rows (6.4061 percent) carry a value over all 572 partitions. 5,167 rows of the present ones share their value with another row of the same partition (229 partitions), so the identifier is not unique within every partition.",
+      "rows": 3349750,
+      "partitions_read": 572,
+      "all_partitions": true,
+      "columns": {
+        "cashiering_transaction_identifier": {
+          "present_in_schema": true,
+          "non_null": 214587,
+          "share_non_null": 0.064061,
+          "rows_in_values_repeated_within_a_partition": 5167,
+          "partitions_with_a_repeated_value": 229,
+          "unique_within_every_partition": false
+        },
+        "schwab_cashiering_unique_id": {
+          "present_in_schema": true,
+          "non_null": 430993,
+          "share_non_null": 0.128664,
+          "rows_in_values_repeated_within_a_partition": 8291,
+          "partitions_with_a_repeated_value": 523,
+          "unique_within_every_partition": false
+        },
+        "order_number": {
+          "present_in_schema": true,
+          "non_null": 653887,
+          "share_non_null": 0.195205,
+          "rows_in_values_repeated_within_a_partition": 2,
+          "partitions_with_a_repeated_value": 1,
+          "unique_within_every_partition": false
+        }
+      }
+    },
+    "cottonwood": {
+      "chosen_column": "TransactionID",
+      "per_row_claim": "A row's source_txn_id is PRESENT where the source column (TransactionID) is non-null and non-blank, and ABSENT (null) where it is not. The column is NEVER a universal key: 1,096,830 of 1,096,830 rows (100.0000 percent) carry a value over all 125 partitions. 3,870 rows of the present ones share their value with another row of the same partition (41 partitions), so TransactionID is not unique within every partition and is not a universal key.",
+      "rows": 1096830,
+      "partitions_read": 125,
+      "all_partitions": true,
+      "columns": {
+        "TransactionID": {
+          "present_in_schema": true,
+          "non_null": 1096830,
+          "share_non_null": 1.0,
+          "rows_in_values_repeated_within_a_partition": 3870,
+          "partitions_with_a_repeated_value": 41,
+          "unique_within_every_partition": false
+        }
+      }
+    },
+    "inflection": {
+      "chosen_column": "id",
+      "per_row_claim": "A row's source_txn_id is PRESENT where the source column (id) is non-null and non-blank, and ABSENT (null) where it is not. The column is NEVER a universal key: 218,054,352 of 218,054,352 rows (100.0000 percent) carry a value over all 154 partitions. No present row shares its value with another row of the same partition; the Inflection producer is pending (firms_pending), so this is the coverage read only.",
+      "rows": 218054352,
+      "partitions_read": 154,
+      "all_partitions": true,
+      "columns": {
+        "id": {
+          "present_in_schema": true,
+          "non_null": 218054352,
+          "share_non_null": 1.0,
+          "rows_in_values_repeated_within_a_partition": 0,
+          "partitions_with_a_repeated_value": 0,
+          "unique_within_every_partition": true
+        },
+        "orderId": {
+          "present_in_schema": true,
+          "non_null": 0,
+          "share_non_null": 0.0,
+          "rows_in_values_repeated_within_a_partition": 0,
+          "partitions_with_a_repeated_value": 0,
+          "unique_within_every_partition": true
+        },
+        "tradeOrderId": {
+          "present_in_schema": true,
+          "non_null": 0,
+          "share_non_null": 0.0,
+          "rows_in_values_repeated_within_a_partition": 0,
+          "partitions_with_a_repeated_value": 0,
+          "unique_within_every_partition": true
+        }
+      }
+    }
   },
   "enums": {
     "txn_type": [
@@ -2475,7 +2602,7 @@
       "Contribution": "EXTERNAL_IN",
       "Withdrawal": "EXTERNAL_OUT"
     },
-    "action_derivation": "A Cottonwood line whose vendor Action is None derives its action word from its (Transaction Type, Transaction Sub Type) pair through the type table (type_action), the same rule as a 49 Financial code with no action field.",
+    "action_derivation": "A Cottonwood line whose vendor Action is null or blank derives its action word from its (Transaction Type, Transaction Sub Type) pair through the type table (type_action), the same rule as a 49 Financial code with no action field. The live read finds no null Action in Cottonwood, so this is a stated fallback that no observed line uses; the Action values that the vendor does carry map through cottonwood_mapping.actions.",
     "type_pairs": [
       {
         "source_value": "Buy | Buy",
@@ -2673,7 +2800,7 @@
         "source_value": "Transfer Out | Transfer Out",
         "opal_type": "Transfer out",
         "flow_class_none": "EXTERNAL_OUT",
-        "reason": "Transfer Out type and sub type. By the CTO's round-128 ruling (msg 9175) the 25 lines whose Action is None derive their action word from the pair, and the pair's class for lines marked None is EXTERNAL_OUT; no line is dropped or left blank."
+        "reason": "Transfer Out type and sub type. The live read of round 130 finds no null Action in Cottonwood (87 values, none missing), so the lines that the round-128 analysis counted as lacking an Action are the lines whose External Flow is None. By the CTO's round-128 ruling (msg 9175) the pair's class for lines marked None is EXTERNAL_OUT; no line is dropped or left blank."
       }
     ],
     "actions": [
@@ -3117,16 +3244,13 @@
   "unmapped_display": "Unclassified",
   "new_code_reason": "CODE_NOT_IN_MAPPING",
   "firms_served": [
-    "49financial"
+    "49financial",
+    "cottonwood"
   ],
   "firms_pending": [
     {
-      "firm": "cottonwood",
-      "reason": "Words ratified in the round-128 analysis (msg 9175) at pair grain and carried in cottonwood_mapping, with Transfer Out | Transfer Out EXTERNAL_OUT by that ruling. Producer not yet built (its ground read is round 128, all 14 targets). No Cottonwood row is in source_mapping, which keeps 49 Financial and Inflection."
-    },
-    {
       "firm": "inflection",
-      "reason": "No producer exists yet. Its ground read is round 128: settle_date and fee are absent from its 36 columns. 47 of the 48 ratified descriptions are live in the census; the 48th is marked not_observed."
+      "reason": "No producer exists yet; the Inflection producer is the next drain (round 131), because it touches this contract again. Its ground read is round 128: settle_date and fee are absent from its 36 columns. 47 of the 48 ratified descriptions are live in the census; the 48th is marked not_observed. Its source_txn_id is the id column, read over every partition in round 130."
     }
   ],
   "rule24_records": {
@@ -3174,23 +3298,23 @@
       "partitions_read": 572,
       "objects_read": 572,
       "rows": 3349750,
-      "read_at_utc": "2026-10-16T07:45:31Z"
+      "read_at_utc": "2026-10-16T08:48:04Z"
     },
     "cottonwood": {
       "partitions_read": 125,
       "objects_read": 125,
       "rows": 1096830,
-      "read_at_utc": "2026-10-16T07:45:39Z"
+      "read_at_utc": "2026-10-16T08:48:12Z"
     },
     "inflection": {
       "partitions_read": 154,
       "objects_read": 154,
       "rows": 218054352,
-      "read_at_utc": "2026-10-16T07:45:55Z"
+      "read_at_utc": "2026-10-16T08:48:27Z"
     }
   },
   "schema_hash": "8861518a4ef58baad75b8cf7f91e697fd197191a0fc18a64eb1384ace164d6b4",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines of columns joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries (the same method as the account_class_daily and account_return_daily contracts).",
   "served": false,
-  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.2.0 supersedes the draft 0.1.0, which was never ratified. The release is a never-widen act that waits on this contract, on the producer and on the CVO's judgment at L9 (DBF129-1-J1), under a CTO and COO sign-off."
+  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.3.0 supersedes 0.2.0, which the CVO's J1 passed 20 of 20 by natural key. Cottonwood's producer is account_transaction_cottonwood.py and is not wired; the release is a never-widen act that waits on the producers, on the CVO's judgment at L9 (DBF130-1-J1), and on a CTO and COO sign-off."
 }
