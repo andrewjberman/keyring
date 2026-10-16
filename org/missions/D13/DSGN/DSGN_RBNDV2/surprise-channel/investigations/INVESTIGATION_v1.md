@@ -1698,3 +1698,5 @@
   }
 ]
 ```
+
+Note on DSGN_RBNDV2-W31-S1 (appended, row above unchanged): the issuer ruled (2.0.0_SA_COO~RB) that the RV-t-1 RankedRow change is correct, so rb-10-r1 arm (d) now allows the one RV-t-1 outline (portal commit 9b6f43f7); AC3 re-run reads 58 pass, 0 fail.
