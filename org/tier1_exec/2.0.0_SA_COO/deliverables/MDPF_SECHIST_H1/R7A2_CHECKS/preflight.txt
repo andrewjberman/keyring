@@ -1,0 +1,3 @@
+comp-schedule: DECLARED-NOT-APPLICABLE the schedule is unchanged; the daily 07:00 ET pull reads the constant, and the act adds no schedule, trigger or rule
+comp-iam: DECLARED-NOT-APPLICABLE no new boto3 call, no new grant; the run block already reads and writes the keys it writes today
+comp-adversary: RUN -- (the three checks dry-run at the base 2026-10-15 ~23:5xZ: r7a2_diff_check FAIL, r7a2_default_cap FAIL (BACKFILL_CAP=50 planned=50), r7a2_pull_tests PASS (13); the diff check's GREEN arm exercised in a throwaway repo (OK on a one-line commit, BAD with an extra file); BLIND: the live run on site Z, the ledger's spend on the day, any reader of the constant outside first-party source)
