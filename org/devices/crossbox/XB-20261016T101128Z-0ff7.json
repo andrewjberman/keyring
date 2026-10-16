@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261016T101128Z-0ff7",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "NFRA_CTLPLN round 28 FWD-23: write this box's seat list (seats.json) and name one graded piece of work",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_R28_FWD23_SEAT_LIST.md",
+ "opened_at": "2026-10-16T10:11:28Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
