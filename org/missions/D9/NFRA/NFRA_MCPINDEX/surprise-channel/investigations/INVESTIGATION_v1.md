@@ -9432,6 +9432,27 @@ carries none.
     "spec_asserts": "Each BLOCKING row asserts that an order or check as written could not be met by a correct build in the worker's sparse worktree.",
     "world_is": "All five were true and were the issuer's: the base dry-runs ran in the full tree and, for c24.AC3, stopped at 'no test file' without running pytest. Z-W49-S3 (fallback NYSE calendar answers the four freshness values), S4 (silver/transactions/ holds a non-dated _README.txt, counted in the object total), S5 (gen_silver_rows.py has no address source; the four live entries are not contract-generated, so no present row is affected, but a regeneration of an address-carrying entry would drop the field), S6 (the naming gate RAISES, not refuses, on the eight legacy prefix lines, which now equal the frozen copy's real address; no registry row is added for an existing pipeline), S7 (the hashed account-id list is absent on this device; the entries hold no account numbers) change no graded criterion.",
     "dismissal_reason": "S1, S2 (MX-c-24), S1 (MX-c-25), S1, S2 (MX-c-26): the defect was the issuer's, ruled in the amendment commits and re-graded PASS on the merged trees named above. S3 to S7 of MX-c-26: observations carried to the round-19 analysis, none standing. The issuer is disarm_owner of all ten. The base-dry-run lesson (run the whole criterion, including its pytest, in a SPARSE worktree before the cut) is the issuer's finding for the next cut."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T15:02:50Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The four live table entries carried firm: null (the face specified it); the emitter then emitted firm None and apply_group_map read the live group map firm 49financial as a conflict, leaving each row with no bucket. The line was removed under amendment A3 (commit 08da0565b2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer amendment A3 (coordinator message, MX-c-26 REOPENED): trial emit crashed; the four rows had no bucket after apply_group_map.",
+        "Commit 08da0565b2 deletes line 10 (firm: null) from each of workflows/atom_decomposition/catalog_entries/opal_data_bd_silver_{unrealized,transactions,allocations,fees}.yaml; one deletion per file.",
+        "c26.AC1 at 2026-10-16T14:59:58Z: DENOMINATOR emitter path: rows built 4; group map applied 4 of 4; conflicts 0; map errors 0; rows complete 4."
+      ]
+    },
+    "spec_asserts": "The face (item 1) asks for the four new entries with firm: null, a clean-row value, and for the live group map to set the firm.",
+    "world_is": "A firm: null line on a table row emits firm None, which the group-map application reads as a conflict with the map firm; the row is left without a bucket. The worker had not run the emit path before the commit, so the premise was not tested at commit time; the line is removed and the emitter path is now graded by AC1."
   }
 ]
 ```
