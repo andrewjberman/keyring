@@ -3091,3 +3091,54 @@
   "notes": "Not ARMED: no future normal operation harms through this row; it records that the control's premise does not hold after item 2."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T11:54:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S65",
+  "one_line": "Z-W38-S1 is DISARMED: the AC2 offender rule counted the Indexes paragraph that the fix makes scroll on purpose; the measure was the issuer's defect and is corrected (amendment 0cc50b3652).",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W38-S1. The worker built the fix correctly (the page no longer scrolls sideways) and refused to wrap the paragraph in a .gateway-scroll box (it would have failed an existing table-count assertion) or to edit that assertion: right on both counts. The check exempted only elements INSIDE a .gateway-scroll box, so a paragraph with overflow-x: auto read as an offender. _gw_measure.cjs now treats any element whose own computed overflow-x is auto or scroll, or that sits inside one, as a scroll box. Proof on both sides, run by the issuer: the base (mcportal 090b9cdc85) FAILS (long names at 390: scrollWidth=557, 16 offenders), the fix (c66ca82952) PASSES (390 of 390 and 0 offenders; 1280 of 1280 and 0; short control 390 of 390 and 0). The worker re-ran under the amended order: AC1 PASS, AC2 PASS, instance VALID (2f6787aff2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment commit 0cc50b3652 (trunk) and bf17bc7a5f (worker branch)",
+      "worker report: AC1 72 of 72 pass, AC2 PASS, proof-of-spec-check rc=0"
+    ]
+  },
+  "spec_asserts": "Z-W38-S1 asserted that the AC2 offender rule and the table-count assertion conflict, so the order cannot pass as written.",
+  "world_is": "True of the check as first written; corrected. The assertion at gateway.test.tsx line 383 is untouched and passes.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-8."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T11:54:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S66",
+  "one_line": "Z-W38-S2 is DISARMED: the short-name control read offenders=1 only because the fixture now carries the long name in the assets channel and the measure counted the scrolling paragraph; with the corrected measure it reads 0.",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W38-S2. Same cause as Z-W38-S1 (the paragraph with overflow-x: auto counted as an offender). The worker's fixture change is the order's step 2 and is correct; the corrected measure reads the short-name control at 390 px as scrollWidth=390, offenders=0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer run of pf8.AC2.sh against the worker tree c66ca82952 from /c/Users: short names at 390 (control): scrollWidth=390 innerWidth=390 offenders=0 ok=yes"
+    ]
+  },
+  "spec_asserts": "Z-W38-S2 asserted that the fixture change makes the AC2 short-name control read offenders=1.",
+  "world_is": "True under the first measure; 0 under the corrected one.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-8."
+}
+```

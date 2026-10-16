@@ -22682,3 +22682,266 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W238-S1 -- the order's pinned-test list omits a fourth test that pins publisher version 0.3.0
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W238-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~238",
+  "surfaced_at": "2026-10-16T10:02:50Z",
+  "one_line": "The order names three pinned tests, but a fourth test in the publisher test directory pins publisher version 0.3.0 and fails at 0.4.0; that file is outside the grant, so DB163-1-AC3 cannot pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Change ONLY the pinned version strings the 0.4.0 bump forces, in the three named tests (test_publisher_claim_calendar.py, test_publisher_unreported.py, and the Cottonwood test_handler.py if it pins the version); any other failure of an earlier test is a BLOCKING row and the worker stops. The publisher and Cottonwood test directories pass with at most 20 forced pin lines.",
+  "world_is": "reporting-publish/tests/test_handler_unreported.py lines 179-180 assert the manifest publisher_version and publisher.PUBLISHER_VERSION equal 0.3.0 (test UnreportedDaysOnTheFortyNinthFinancialPublisher::test_publisher_version_is_0_3_0). That file is not among the three named tests and not in the paths grant. After the 0.4.0 bump the directory run reads 1 failed, 145 passed (base: 129 passed). The file was not edited; the other cell edits are committed at 74651deb68.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_handler_unreported.py@8065d85982 lines 179-180 (pins 0.3.0)",
+      "pytest run of the reporting-publish and reporting-publish-cot test directories at 74651deb68: 1 failed, 145 passed; base 129 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W238-S2 -- the pinned-line clause counts a carried-in file copy as worker edits (223 read against a ceiling of 20)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W238-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~238",
+  "surfaced_at": "2026-10-16T10:14:45Z",
+  "one_line": "The checker's pinned-line clause counts the whole of test_handler_unreported.py (215 lines carried in by DB-b-292) as lines the worker changed, so DB163-1-AC3 reads 223 against a ceiling of 20; the worker's own pin edits are 12.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The forced version-pin lines are at most 20 (additions plus deletions, as git diff --numstat counts them against the worker's base), and the facts record pinned_test_lines equals the checker's recount.",
+  "world_is": "The checker's base is 43ef690262, the commit that first added the order. test_handler_unreported.py is absent there and was first added by carry commit 3bc1c80d41 (DB-b-292 file copy). numstat against the base reads 215 insertions, so the checker reads 223 (215 carried + 4 claim_calendar + 4 unreported + 0 cot). The worker's own edits to the four pinned tests are 12 lines (4 + 4 + 4 + 0 across the four files). AC1 and AC2 pass; the directory run reads 146 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_handler_unreported.py@3bc1c80d41 (first add; absent at 43ef690262)",
+      "DB163-1-AC3 output at 941111fa16: 'FAIL: the earlier tests may change by at most 20 lines (the version pins), read 223'",
+      "git diff --numstat 43ef690262 HEAD on test_handler_unreported.py: 215 insertions, 0 deletions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W239-S1 -- the order's step 3(b) call shape breaks the DB-b-294 spy test that AC3 requires green, so AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W239-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~239",
+  "surfaced_at": "2026-10-16T10:21:33Z",
+  "one_line": "Step 3(b) passes rewrite=rewrite to cbd.run_day on every call, and the carried DB-b-294 test test_the_landing_handler_passes_its_floor_day_and_a_landed_day_carries_the_claim replaces cbd.run_day with a spy that has no rewrite parameter, so the scheduled, day and days paths raise TypeError in that test; AC3 (the whole gold tests directory green) fails as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 3(b): _run(s3, reader, days, upload, rewrite=False) passes rewrite to cbd.run_day(..., floor_day=FLOOR_DAY, rewrite=rewrite), and the scheduled, day and days paths are unchanged. AC3: the whole gold tests directory passes (one known red deselected), and the grant is data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_rewrite.py plus the three code files.",
+  "world_is": "data/assets/scripts/gold/irpt_reporting/tests/test_history_scope_derivation.py at 2cde0789d0 (not in the grant) monkeypatches cbd.run_day with spy(reader, s3, day, upload=True, floor_day=None), which has no rewrite parameter. The literal call in _run at 2cde0789d0 raises TypeError in that test: 783 passed, 1 failed, 1 deselected. The production run_day accepts rewrite, so no production call fails; the break is the spy's fixed signature. Satisfying AC3 needs either the spy widened (a file outside the grant) or _run to omit the keyword on the non-rewrite paths (a call shape step 3(b) does not state). Neither was taken; the order is left open for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -m pytest on data/assets/scripts/gold/irpt_reporting/tests/test_history_scope_derivation.py -k test_the_landing_handler_passes_its_floor_day at 2cde0789d0: TypeError spy() got an unexpected keyword argument 'rewrite' (handler.py _run, the call to cbd.run_day)",
+      "checker p164_cot_rewrite.py check AC3 output at 2cde0789d0: FAIL: tests failed ... 783 passed, 1 failed, 1 deselected"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the DB-b-294 spy predates the rewrite keyword. The fix is a grant decision (widen the spy's signature in test_history_scope_derivation.py, or the order's 3(b) states the keyword is passed only when true). Not repaired by the worker."
+}
+```
+
+## IRPT_DASHBD-D2-W421-S1 -- the worktree is a sparse checkout that omits org/surprise_channel, so the row schema the order cites is not on disk
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W421-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~421",
+  "surfaced_at": "2026-10-16T11:08:04Z",
+  "one_line": "The worktree's git sparse-checkout list omits org/surprise_channel/, so org/surprise_channel/schemas/investigation_item.schema.json (the schema this channel's rows are written to) is tracked at HEAD but absent on disk; its 43 tracked files carry skip-worktree. The schema was read with git show at HEAD instead. No grant path was affected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names org/surprise_channel/schemas/investigation_item.schema.json as the schema each row is written against, and the worker reads it on disk in its own worktree.",
+  "world_is": "The worktree (branch wk-IRPT_DASHBD-421, HEAD bd95b6dec7) is a sparse checkout. git sparse-checkout list names .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/ref and org/standards; org/surprise_channel is not among them, and git ls-files -v marks its 43 tracked files S (skip-worktree), so the directory does not exist on disk. Every path in the order's grant is present on disk.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-dashbd-c421 at bd95b6dec7 (no org/surprise_channel pattern)",
+      "git ls-files -v org/surprise_channel reads S on 43 of 43 tracked files at bd95b6dec7",
+      "git show bd95b6dec7:org/surprise_channel/schemas/investigation_item.schema.json reads the schema (required: id, surfaced_by, surfaced_at, one_line, class, grounding, disposition)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W421-S2 -- the page mirror's header still cites contract 0.1.0 after the key lists took on 0.3.3
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W421-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~421",
+  "surfaced_at": "2026-10-16T11:08:04Z",
+  "one_line": "The header comment of dashboard/seriesContract.ts still says the file mirrors contract_version 0.1.0 (committed @b80543a03c). DB-c-30 changed the key lists to contract 0.3.3 and left the header as it was, because the order names only the list and the interface.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order states that the page mirror takes on series contract 0.3.3, with SERIES_OPTIONAL and SeriesDocument as the only edits in dashboard/seriesContract.ts.",
+  "world_is": "The header comment at the top of portal dashboard/seriesContract.ts (portal commit d82c6b0923, the worker's head) names contract_version 0.1.0 committed @b80543a03c and says the key lists below mirror that file. The file now lists the eight 0.3.3 optional names. The header was not edited in this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/seriesContract.ts@d82c6b0923 header comment naming contract_version 0.1.0 and committed @b80543a03c",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@bd95b6dec7 reads contract_version 0.3.3 with eight series.optional names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S115 -- round 150 B-CW: the 0.3.3 page mirror, worker 421's rows dispositioned, the PROD candidate byte-identical
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S115",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T11:24:07Z",
+  "one_line": "Round 150 B-CW (DB-c-30): the page mirror takes on series contract 0.3.3 (eight optional names); iv-e-124 green again; worker 421's rows dispositioned; the PROD candidate built byte-identical to origin/PROD (opal-internal).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 9056: the portal series mirror at the contract with iv-e-124 green on the merged tree; CTO msgs 9136 and 9144: class by the measured built bytes.",
+  "world_is": "Trunk contract 0.3.3 (drain 40476cbde7) added history_scope_claim and history_scope_basis to series.optional; the page mirror at portal DEV listed six, so iv-e-124 was red on trunk until merge b8bff882d4 (worker 421): SERIES_OPTIONAL is the eight names in order, SeriesDocument declares both as optional strings, DBC151-1-AC1 and AC2 PASS (issuer re-run), typecheck rc 0. W421-S1 (the sparse tree omits org/surprise_channel so the row schema was read by git show) and W421-S2 (the mirror header comment still cites contract 0.1.0) are INERT and accepted. The stacked PROD candidate cand/dell2/irpt-series-mirror-contract-033 @831f974aa1 (two commits, one file, +10 -1) builds byte-identical to origin/PROD 8012cd1afbaa (88 of 88 dist files; hash 8890552b43cca4fe both): class opal-internal, approval row dell2-20261016T112339Z-6099 OPEN for the CTO. ~D2 did not message the 0.3.3 landing; this seat measured it at the tick (a note, not a defect).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~421/BUILD_R150.json; checks/r150/p151_bcw.py AC1 and AC2 PASS (issuer re-run); proof-of-spec-check VALID rc=0",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C30_BUILD_BYTES_R150.md; round-close-check round 150: MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: approve row 6099 (opal-internal, byte-identical build); the round 150 packet."
+}
+```
+
+
+## IRPT_DASHBD-D2-S116 -- my drain merge 96a89eb451 dropped 10 other fabrics' files: a stale index committed after another seat's commit moved HEAD
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S116",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T11:35:49Z",
+  "one_line": "My drain merge 96a89eb451 (wk-IRPT_DASHBD-238) dropped 10 other fabrics' files: a conflicted merge held OPEN in the shared worktree for about seven minutes was committed from its stale index after another seat's commit moved HEAD; then I reset the index paths the verifier flagged instead of restoring them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2",
+  "spec_asserts": "CTO msg 9305 and MSTR msg 9306: a drain commit deletes nothing outside its own paths; any deletion outside them is a STOP; the CTO asks how the files were dropped, a conflict resolution or a checkout of the worker tree.",
+  "world_is": "Neither a conflict resolution nor a checkout of the worker tree. The merge of wk-IRPT_DASHBD-238 was opened by safe-merge at 2026-10-16T10:40:21Z and hit two conflicts (the append-only investigation file and one carried test file), which I resolved (union of the appended rows; the worker's version of the test). While it was open, 0.0.0_AB_MSTR~DELL2 committed box-sync 312daca454 into the SAME worktree (10:46:23Z). My `safe-merge --continue` committed at 10:47:04Z with first parent 312daca454 but with the index captured when the merge opened, so the merge commit's tree lacks the files that box-sync brought in. The tool said so at once (`index check 96a89eb451: 16 of 28 merged path(s) differ between the index and HEAD`, 'THE MERGE IS COMMITTED AND CARRIED, BUT THE INDEX DISAGREES WITH HEAD'), and I ran its first repair line (`git reset -q HEAD --` on those 16 paths) after checking only two of them, not the whole list against HEAD; that left 10 files present in the working tree and absent from HEAD, which `git diff --name-only --diff-filter=D 312daca454 96a89eb451` prints (counts: 10 files, other fabrics: NFRA_CTLPLN, AMGT_HARVST, AMGT_RESAPP, NFRA_OPLGTW, the sitez seats list, one drive log). The other five drain merges of this round (8806e382a4, 9c46b7d536, 55e3bfe49b, 8430b776e6, 4c9c1e7af6) delete 0 files against their first parents (the same command, run for each). No worker content was lost; the repair is the restore ruled in msg 9305.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --name-only --diff-filter=D 312daca454 96a89eb451 (10 paths); git show -s --format=%P 96a89eb451 (first parent 312daca454, committed 06:46:23 -0400, my merge 06:47:04 -0400)",
+      "git diff --name-only --diff-filter=D <first parent> <merge> for 8806e382a4, 9c46b7d536, 55e3bfe49b, 8430b776e6, 4c9c1e7af6: 0 each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Practice from here (CTO msg 9305): before EVERY drain commit run `git diff --stat <first-parent> HEAD -- . ':!<my owned paths>'`, and after a merge that stayed open across other seats' commits, compare `git diff --cached --name-status HEAD` with the expected paths; any deletion outside my paths is a STOP and is restored from the first parent, never reset away. A conflicted drain goes to a LINKED worktree of its own (the shared index is the hazard). The restore of the 10 files is 0.0.0_AB_MSTR~DELL2's under msg 9305; this row disarms when the 10 paths read present in HEAD."
+}
+```
+
+## IRPT_DASHBD-D2-W240-S1 -- the p165 form clause refuses the one unchanged 49F member whose packaged_as differs from its repo_path, so AC1 to AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W240-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~240",
+  "surfaced_at": "2026-10-16T11:16:20Z",
+  "one_line": "The p165 check_repin form clause requires packaged_as equal to repo_path for every staged member, but irpt-49f-reporting-gold-lambda has an unchanged member (infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py, packaged_as etf_classifications_dynamodb.py) at base and at HEAD, so AC1, AC2 and AC3 refuse the entry although the re-pin is complete.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2 of the cell: packaged_as and repo_path do not change, and every other member stays byte for byte. DB165-1-AC1: each entry differs from the base only in its stale members' pin and sha256. The checker's check_repin (the proven p158 clause) requires, for every staged member, packaged_as == repo_path == the base repo_path.",
+  "world_is": "At base 7459521a08 and at HEAD ebe2302322 the third staged member of irpt-49f-reporting-gold-lambda has packaged_as etf_classifications_dynamodb.py against repo_path infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py. Its sha256 matches HEAD, so it is not stale and is byte-identical to base. Across the three entries 1 of 48 members has this form. The 14 stale members are re-pinned and nothing else moved, yet the form clause refuses the entry. Satisfying the criteria needs the checker widened (outside the grant) or packaged_as changed (forbidden by step 2). Neither was taken; the order is left open for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I checks/r149/p165_repin_three.py . DB165-1-AC1 at ebe2302322: FAIL: irpt-49f-reporting-gold-lambda: member form: infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py (AC2 fails identically, the same check runs first)",
+      "read of staged_from in infra/aws/lambda/ci/lambda-source-map.json at base 7459521a08 and at HEAD ebe2302322: packaged_as differs from repo_path in 1 of 48 members (12 + 21 + 15), the same member in both"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the p165 form clause, copied from the p158 check_repin, assumes packaged_as equals repo_path for every member; the 49F etf member is the one exception and is unchanged by this order. Not repaired by the worker: the checker and packaged_as are outside the grant or fixed by step 2. The BUILD_ONLY runs of the three entries exited 0 and printed the base64 hashes recorded in the facts record; the build also printed UNENFORCED warnings for the publish entry's modules (no BUILD_MANIFEST.json), which this order does not mention."
+}
+```
+
+
+## IRPT_DASHBD-D2-W240-S2 -- the p165 import clause admits only pyarrow, but the 49F bundle also imports pandas that the shared layer holds, so AC2 and AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W240-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~240",
+  "surfaced_at": "2026-10-16T11:29:38Z",
+  "one_line": "The p165 import clause admits only pyarrow as a third-party import, but the 49F bundle also imports pandas (three staged members), which the shared layer irpt-performance-native-layer holds, so AC2 and AC3 refuse the entry although the build exits 0.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB165-1-AC2: the BUILD_ONLY package of each of the three entries holds exactly the entry's files with source-equal bytes, and its third-party imports are pyarrow plus the runtime's (the layer holds it). The checker's check_imports (p149) requires the third-party set, minus boto3 and botocore, to equal exactly {pyarrow}.",
+  "world_is": "The irpt-49f-reporting-gold-lambda staged members account_return_daily.py, account_class_daily.py and account_activity_lots.py import pandas, and the entry's _build_note says pandas and pyarrow come from irpt-performance-native-layer. A GET of that layer (version 1, 4319 entries) holds python/pandas/__init__.py and python/pyarrow/__init__.py. The clause refuses the entry on the pandas import, so AC2 and AC3 fail as written; the BUILD_ONLY runs exited 0 for all three entries. Neither the checker nor the entry was changed; the order is left open for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I checks/r149/p165_repin_three.py . DB165-1-AC2 at 376689568e (checker from f86d63befd): FAIL: the bundle's third-party imports (any statement, besides boto3/botocore) must be exactly pyarrow, read ['pandas', 'pyarrow']",
+      "p149 layer_names at layer irpt-performance-native-layer version 1 (GET only): 4319 entries; python/pandas/__init__.py held True; python/pyarrow/__init__.py held True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the p165 clause (inherited from the p149 check_imports) fixes the third-party set to pyarrow; the 49F entry's own _build_note states pandas comes from the same layer. Not repaired by the worker: the checker is outside the grant."
+}
+```
+
+## IRPT_DASHBD-D2-S117 -- extension of S116: the damage of merge 96a89eb451 is 16 paths (10 deleted, 6 reverted); its two genuine conflicts re-checked
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S117",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T11:56:09Z",
+  "one_line": "Extension of S116 (CTO msg 9315, MSTR msg 9313): merge 96a89eb451 damaged 16 paths, not 10 (10 deleted, 6 modified back to a stale version), by the same cause; the two genuine conflicts it resolved are re-checked and stand.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2",
+  "spec_asserts": "CTO msg 9315: the ruling extends to the 6 damaged files, restored to the blobs git merge-tree gives for 96a89eb451's own two parents; the 2 genuine conflicts stay with 2.0.0_SA_COO~D2, who resolves them against its own cells; the row on the cause covers the 16.",
+  "world_is": "The cause is S116's, one mechanism for all 16: the merge was committed from the index captured when it opened (10:40:21Z) after box-sync 312daca454 (10:46:23Z) had moved HEAD, so every path another seat changed in that window is either absent (10 files, added by box-sync or by peers) or at the older bytes (6 files modified, three of them at the worker's stale version); my index-only reset of the 16 flagged paths did not restore them. The two genuine conflicts (the only paths git merge-tree reports as conflicting for the two parents) are MINE and were resolved against my own cells: (1) INVESTIGATION_v1.md, append-only on both sides: the worker's branch is a strict prefix-extension of the merge base, so the result is the first parent's file plus the rows the worker's branch appended after the base; re-read at HEAD today, every row of workers 235 to 240 and S115 and S116 is present (checked by row id). (2) tests/test_handler_unreported.py, add/add: the first parent holds cell DB-b-292's file and the worker's branch holds the same file with its two publisher-version pin lines changed to 0.4.0 (cell DB-b-295, AMENDMENT 1); `git diff` of the two sides shows those two lines and nothing else, and the merge holds the worker's side (0.4.0 on both lines, read at 96a89eb451). Since 96a89eb451, the later merges (4c9c1e7af6, 7f54bece4e) delete 0 files against their first parents.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --name-only --diff-filter=D 312daca454 96a89eb451 (10); MSTR msg 9313 (the 6 modified against git merge-tree)",
+      "git diff :2: :3: on the two conflicted paths, printed in the drain session; row count by id at HEAD 7f54bece4e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 0.0.0_AB_MSTR~DELL2: the restore of the 6 to the merge-tree blobs, one lane per commit under the audited override. The two conflict calls need no change. This row disarms with S116 when the 16 paths read at their intended bytes in the repair tip."
+}
+```

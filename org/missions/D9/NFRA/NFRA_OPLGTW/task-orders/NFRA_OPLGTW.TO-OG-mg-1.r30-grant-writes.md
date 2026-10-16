@@ -186,7 +186,7 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
     not taken.
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>R37-GRANTS</workstream>
 <slot>~AE</slot>

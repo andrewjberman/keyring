@@ -2550,3 +2550,20 @@ The 65 landed Cottonwood gold days cannot take the derived `history_scope` becau
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~239`); with `DB-b-295` (238) two chains are live of the five cells of the drain, cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the behaviour clauses validated against a scratch reference of the edits (AC1 and AC2 green) and 11 single-fault mutants (all red)):** `checks/r149/p164_cot_rewrite.py` (DB164-1-AC1..AC3).
+
+## 158. ROUND 149, WORKSTREAM HSREPIN (2026-10-16 ~11:2xZ, issuer 2.0.0_SA_COO~D2): the source-map re-pin after the drain of cells 292 to 296
+
+Cells `DB-b-292` to `DB-b-296` are drained (merge commits `9c46b7d536` 293, `55e3bfe49b` 292, `8430b776e6` 294, `96a89eb451` 295, `4c9c1e7af6` 296); the fifteen criteria DB160-1 to DB164-1 were re-run by this seat on the landed tree and read PASS. The drain changed pinned members of three function entries, so those entries no longer equal what their pins say. The 49 Financial publish entry was already re-pinned inside `DB-b-292`.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Re-pin the stale staged members of `irpt-cot-reporting-publish-lambda`, `irpt-49f-reporting-gold-lambda` and `irpt-cot-account-return-daily-lambda`; the build-only package of each graded | DB-b-297 | FWD-10 | WORLD (one JSON file) | the drain | chain R |
+| 2. The WORLD packets, each a separate never-widen pair (the CTO signs): (a) the 49 Financial `reporting-publish` code update and the republish of the 6,949 series (no gold change needed for the unreported days; the history scope appears when the gold is rebuilt); (b) the 49 Financial `reporting-gold` code update and the `history_scope` rebuild of its 571 days (backfill mode re-emits the class, activity and lot tables for the same days: the packet states it); (c) the Cottonwood landing code update and the rewrite of the 65 landed days (the explicit rewrite event); (d) the Cottonwood publish code update and republish of the 939 series | NOT CUT: packets after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the three entries are one cell because the edit is one file and the clause is the same proven check applied three times; (b) the other stale IRPT entries (the performance adapter, the directory search, the ycharts and export entries and others) belong to other seats' projects and are NOT touched; (c) the census read of the 49 Financial gold (`reads/RD_GOLD49F_CENSUS_20261016.json`, counts only) shows 2,852 floor-start accounts, 4,097 first seen later and no account with mixed null and numeric income, so the publisher's refusal rule refuses none of the 6,949 and the packets can state a zero refusal expectation to be re-measured by the dry run.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~240`), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the entry clause is the proven `p158_repin.py` `check_repin` applied to each of the three entries):** `checks/r149/p165_repin_three.py` (DB165-1-AC1..AC3).
+
+**Note to section 154 (2026-10-16 ~11:3xZ, the CTO's ruling msg 9298 and ~C2's answer msg 9301):** the page-side MIRROR (reader) cell of series contract 0.3.3 is `DB-c-30` (`TO-DB-c-30.page-mirror-takes-on-series-contract-033`, merged @b8bff882d4, `portal dashboard/seriesContract.ts` only; its check iv-e-124 reads green on it; no line of 0.3.3 needs rewording for the page). `DB-b-293` and its drain are paired with it. **Standing rule from here:** every contract order of this decomposition names its `DB-c-NN` cell, and ~C2 is sent the changed `series.required`, `optional`, `array_keys` or manifest list BEFORE the cut so both cells land in the same round.

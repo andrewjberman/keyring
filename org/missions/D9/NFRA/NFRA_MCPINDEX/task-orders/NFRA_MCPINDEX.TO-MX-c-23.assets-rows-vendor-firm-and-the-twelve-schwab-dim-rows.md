@@ -162,3 +162,7 @@ Do these IN ORDER and nothing else:
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`.
 
 <status>issued</status>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-16 ~12:02Z) on A5; MX-c-23 COMPLETE.** Worker ~45 (haiku, high) placed the catalog re-measured after the daily publish and committed it in two commits (ef3f45f97f the catalog alone; dc35785161 the regraded and pinned instance with a5_evidence); the issuer verified from git, not the report: the catalog blob at ef3f45f97f is 16250301d6a90c16c4b81867bc00fed6ecd397a1 (md5 b72408cad06f2fbf8fb851a4be5485d9), one file in the catalog commit, the instance and four evidence files in the other, nothing else against the base. Drained by `safe-merge.sh` at 177d5244fc. Issuer re-run on the merged tree: c23.AC1-AC4 PASS, c21.AC1-AC2 PASS, r13.AC3 PASS against live AWS (depth 11 of 11, answer-time 17 of 17, anchors 2 of 2); proof-of-spec-check VALID. The catalog differs from the v2 one only in tool_index history_depth (11 tools), freshness (5 tools) and the built_at stamp: 0 of 280 rows change. Gate limb that graded this ruling: the flip-needs-a-VALID-instance limb of to-pipeline-gate, VALID.
+
+<status>complete</status>
