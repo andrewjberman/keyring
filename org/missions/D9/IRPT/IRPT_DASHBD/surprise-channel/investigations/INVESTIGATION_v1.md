@@ -21692,3 +21692,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The schema is absent at that path in this worktree, so it could not be read; the row follows the fields of the rows already in the file and passes the surprise-row gate at commit fa0edef3a2. Whether the gate's own schema matches those fields is not measured here."
 }
 ```
+
+## IRPT_DASHBD-D2-W233-S1 -- the order says the source rule carries the old code to replace, but the live rule text carries none, so the rule is left byte-identical
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W233-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~233",
+  "surfaced_at": "2026-10-16T07:37:51Z",
+  "one_line": "DB-b-289 step 2 says conditional_columns[0].rule has the old code replaced by the new one; the live rule text at the base carries no old code, so the replacement is a no-op and the rule stays byte-identical.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@d1ef2aafa7 has SOURCE_REPORTS_NO_INCOME at three lines only: conditional_columns[0].reason, rule24_record.v044 and the 0.4.3 supersedes entry; the rule string is not among them",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-289.income-reason-rename-both-contracts.md step 2 names the rule as carrying the old code"
+    ]
+  },
+  "spec_asserts": "Step 2 of TO-DB-b-289: in conditional_columns[0] the rule has the old code replaced by the new one and keeps every clause it has.",
+  "world_is": "The base rule text carries no old code and every clause the check names (income_received, the Black Diamond source, optional_columns, never, zero, reject). The worker kept the rule byte-identical, which satisfies the clause-keeping half and leaves the replacement half with nothing to replace. Whether the order meant a different string is not measured here."
+}
+```
