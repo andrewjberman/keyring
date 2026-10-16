@@ -25421,3 +25421,57 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   }
 ]
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T19:56:23Z",
+  "id": "NFRA_OPLGTW-Z-S315",
+  "one_line": "Round-39 disposition of worker row Z-W127-S1: CARRIED: tests/test_data_entitlement_guard.py::test_ogz1_ac08 fails at trunk independently of OG-en-14 (its route table ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W127-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-ap-28.md section 8 (the two carried failures)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED: tests/test_data_entitlement_guard.py::test_ogz1_ac08 fails at trunk independently of OG-en-14 (its route table lacks the /hx/teams and catch-all routes); the same test is carried by name since OG-ap-28 (fails identically at the live ref). Not in OG-en-14's paths. Carried to the round-39 enrichment list for the next release's take check.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED: tests/test_data_entitlement_guard.py::test_ogz1_ac08 fails at trunk independently of OG-en-14 (its route table lacks the /hx/teams and catch-all routes); the same test is carried by name since OG-ap-28 (fails identically at the live ref). Not in OG-en-14's paths. Carried to the round-39 enrichment list for the next release's take check."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T19:56:23Z",
+  "id": "NFRA_OPLGTW-Z-S316",
+  "one_line": "Round-39 disposition of worker row Z-W127-S2: OBSERVATION closed: the deny-record fake store is _FakeTable/_seed_deny in tests/test_email_deny.py, not in the two file",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W127-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 6510ce187f; tests/test_og_en14.py passes 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OBSERVATION closed: the deny-record fake store is _FakeTable/_seed_deny in tests/test_email_deny.py, not in the two files OG-en-14's face named; the worker imported it and the new tests pass (merged 6510ce187f). Issuer's pointer error, no defect in the code.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OBSERVATION closed: the deny-record fake store is _FakeTable/_seed_deny in tests/test_email_deny.py, not in the two files OG-en-14's face named; the worker imported it and the new tests pass (merged 6510ce187f). Issuer's pointer error, no defect in the code."
+}
+```
