@@ -10347,3 +10347,102 @@ round.** Never edit an existing row.
   "dismissal_reason": "S1: the issuer amended the check to match its own order and re-graded AC2. S2: the null verdicts are the five ABSENT months the project carries by design; the completion report and the CTO's grade can read them as such."
 }
 ```
+```json
+{
+  "id": "ADVI_COTBKF-D1-W191-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~191",
+  "surfaced_at": "2026-10-16T09:18:47Z",
+  "one_line": "TO CB-cx-1 names dv.universe_from_tx for each security's asset_type; that function returns asset_type as an empty string, so the asset-type split of the never-priced securities was read from the silver transactions Asset_Type column through the analysis module's universe reader (read-only list and get). Counts only; nothing written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py:114 at HEAD 7c3d99a3b9: uni.append(dict(cusip=cusip, asset_type=\"\", first_day=...) -- universe_from_tx leaves asset_type blank",
+      "round-99 transactions cache C:/Dev/ajb_workspace/.scratch/advi_cotbkf/cache/transactions.parquet carries columns Account_Number, Cusip, Symbol, Quantity, Trade_Date, Transaction_Type, Advisor_ID: no Asset_Type column",
+      "data/assets/scripts/analysis/commonwealth_price_census.py:381 read_universe reads Asset_Type from the silver transactions table; the run of cx1_record_build.py read that table once (read-only) and printed the asset-type counts by label only"
+    ]
+  },
+  "spec_asserts": "CB-cx-1 item 3(b): counts by asset_type 'from the universe', the universe read with dv.universe_from_tx for each security's asset_type and symbols.",
+  "world_is": "dv.universe_from_tx yields symbols but no asset_type (blank string for every security); the asset_type field exists only in the silver transactions table, which the round-99 cache does not hold. The worker read that column through the price census's own reader, read-only, and did not change any cache or code.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W191-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~191",
+  "surfaced_at": "2026-10-16T09:18:47Z",
+  "one_line": "CB-cx-1 item 3(d) asks how many never-priced and gap securities came back priced, if a committed record says. The committed request records list the cusips for Cottonwood, but no committed record carries a per-security outcome; the one ledger of actuals holds job-level cell counts only. Reported as not established.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_DEMQUE/requests/ZZ-ADVI_COTBKF-ACTIVE-BBG-01..27.json, MDPF_SECHIST-CARD-A-B1-OPTION-C.json and MDPF_SECHIST-CARD-A-COT-BBG-HISTORY.quote.json list cusips (counts in the record: union 3,059 distinct listed, 2,354 never-priced and 515 gap)",
+      "org/missions/D8/MDPF/MDPF_DEMQUE/ledger/BBG_ACTUALS.jsonl at HEAD 7c3d99a3b9: 5 rows, keys cells_drawn, cells_quoted, channel, date, drawer, job, label, outcome, page, vendor; no per-security or per-cusip field",
+      "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/QUEUE_QUALIFICATION_20261013.md section C reports drawn rows by security-date only for the TR comparison, not for the Cottonwood lists"
+    ]
+  },
+  "spec_asserts": "CB-cx-1 item 3(d): the overlap with the committed Bloomberg request record for Cottonwood, and how many of those came back priced 'if the record says'.",
+  "world_is": "The lists are committed and the overlap is counted; the per-security return of the draws is not carried by any committed record, so the came-back count cannot be measured here. The record that would carry it is the drawn-rows output of the queue per request id (the series writer's receipt), which is not in the tree.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W191-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~191",
+  "surfaced_at": "2026-10-16T09:18:47Z",
+  "one_line": "The valuation's price resolution and conflict rule, replayed on the round-99 store cache (no Yahoo substitution, no as-traded basis), prices 897 never-priced cusips and 1,720 cusips in all, against 822 cusips priced in the served table. The never-priced sub-split by ticker status is therefore a replay of the store rule, not the served valuation's account of each day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py:450 security_day_prices resolves each store in order and drops a conflicting security-day; the served table was valued on the as-traded basis (apply_price_basis, default price_basis as_traded, valuation line 1047) which the worker did not replay",
+      "record run at HEAD 7c3d99a3b9 (cx1_record_build.py): replay_priced_cusips 1,720; served_priced_cusips 822; never_priced_but_replay_priced 897; conflicts by store printed in the scratch counts",
+      "record not_established item 2 carries the same limit"
+    ]
+  },
+  "spec_asserts": "CB-cx-1 item 3(b): the never-priced securities split into no ticker, a ticker with no store row, a ticker key claimed by more than one security, or security-days dropped as conflicting inside the winning store.",
+  "world_is": "The served priced set and the store-rule priced set disagree on 897 never-priced cusips, so the 'resolved, no own conflict, still unpriced' group (815 securities) is a residual of the replay, not a measured fact about the served day. The as-traded basis that produced the served close is the reader that would settle it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## ADVI_COTBKF-D1-S18 -- the issuer dispositions D1-W191-S1..S3 and states the overlap limit of the UNGRADABLE-month census
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S18",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T09:27:04Z",
+  "one_line": "the issuer dispositions D1-W191-S1, S2 and S3 and states a limit of the census: the UNGRADABLE-month categories overlap, so the UNPRICED-first month count is an upper bound on what a vendor close could fill",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~191/BLANK_CENSUS_RECORD.json (worker ~191, merged @5a24f13060): UNGRADABLE months 78,622 split by blank-day clause (first reason: UNPRICED 74,791; NON_POSITIVE_BASE 1,173; FIRST_DAY 1,533; HELD 47; DVR_CLOSE_STEP 21; total 77,565) and by other clauses (no reported return 1,901; reported span not one month 2,865; no daily returns 116; reported rows disagree 15; not finite 8; total 4,905); 77,565 + 4,905 = 82,470, which exceeds 78,622 by 3,848, so a month's reason can join several clauses and the categories are not mutually exclusive",
+      "issuer re-run at HEAD 5a24f13060: CB102cx1-AC1 'BLANK-CENSUS measured=True days_blank=1584413 unreasoned_days=0 unreasoned_months=0 reasons=7 unpriced_cusips=4371'; AC2 'CENSUS-CROSS days_equal=True months_equal=True unreasoned_equal=True unpriced_equal=True'; AC3 'SERVED-UNCHANGED versions_equal=3 of 3'; proof-of-spec-check VALID rc=0; sub-totals add (types 3,791 / 7,492,099; ticker status 3,791 / 7,492,099; gap positions 8,481,300; days by reason 1,584,413)",
+      "cited rule lines read by the issuer: commonwealth_daily_returns.py lines 253, 258, 259, 267 (FLOW_UNVALUED, NON_POSITIVE_BASE, UNPRICED, FIRST_DAY); commonwealth_fwd3_serve.py line 97 (HELD_SOURCE_UNDER_REVIEW); commonwealth_monthly_grade.py line 122 (UNGRADABLE)"
+    ]
+  },
+  "spec_asserts": "D1-W191-S1: the order said universe_from_tx carries each security's asset_type; D1-W191-S2: the order expected a committed Bloomberg request record with per-security outcomes; D1-W191-S3: the store-rule replay prices 897 never-priced securities the served as-traded basis does not.",
+  "world_is": "S1 was the issuer's error in the order text (the universe leaves asset_type blank); the worker read the type from the silver transactions table, read-only, and said so. S2: no committed record carries a per-security Bloomberg outcome (BBG_ACTUALS.jsonl holds 5 job rows with cell counts only), so 'came back priced' stays not established; the request lists name 3,059 distinct securities, 2,354 of them never priced and 515 gap, in the committed Cottonwood lists. S3: the ticker-status split of the never-priced securities (no symbol 1,139; ticker with no store row 1,657; key claimed by more than one security 98; dropped as conflicting 82; resolved and still unpriced 815) is a replay on the round-99 cache and not the served as-traded basis, so its last two groups are approximate. Limit of the month census: the UNPRICED-first count (74,791) includes months that would stay ungradable after a fill because they also carry a reported-side clause (at most 3,848 months overlap, split not made), so a vendor close could make at most 74,791 and at least 70,943 of those months gradable, and only if it covers the securities.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S1 was the issuer's order text and the worker handled it; S2 and S3 are stated limits of the census, carried in the record's not_established and in the CTO message; nothing about a served value follows."
+}
+```

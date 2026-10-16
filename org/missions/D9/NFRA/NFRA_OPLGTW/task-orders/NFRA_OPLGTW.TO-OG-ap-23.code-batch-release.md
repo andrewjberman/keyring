@@ -80,7 +80,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-23.code-batch-release.proof_
 - Finish-by: Fri 2026-10-16 ~22:00Z (CTO GO msg 34552, PRD v3.12).
 - Pre-cut: ap23.AC1 and ap23.AC2 base FAIL as expected (ap23_release.json and CODE_SERVED.json absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>37</round>
 <workstream>CODE-BATCH</workstream>
 <slot>~AE</slot>
