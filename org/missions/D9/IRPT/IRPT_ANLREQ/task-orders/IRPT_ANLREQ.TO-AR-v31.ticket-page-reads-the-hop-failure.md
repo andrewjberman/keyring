@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~270</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -54,10 +54,12 @@ In `portal/src/pages/TicketCenter/AnalysisRequestParts.tsx` (read first: `Packag
 
 7. **AMENDMENT 1 (issuer, 2026-10-16; the contract is `IRPT_ANLREQ_DECOMP_R3_V.md`, section AMENDMENT 1, item 6).** Review of your first commits found that the failure block can never show for a ticket with NEITHER a draft NOR a package, which is where three of the five codes land (`READY_SIGNAL_SEND_FAILED`, `COMMENTARY_DRAFT_FAILED`, `COMMENTARY_DRAFT_REFUSED` happen before any draft exists). Two guards hide it: `AnalysisRequestParts.tsx` `if (!draft && !pkg) return null` in `AnalysisDraftAndPackage`, and `TicketCenter.tsx` rendering the row only when `(t.draft_commentary || t.package)` holds. Change both so that an `analysis_request` ticket with a `report_ref.request_id` reaches the read whether or not it has a draft, the failure shows while it has no package, and a ticket with neither a draft nor a package and no failure leaves NO blank row (no empty `<tr>`, no stray padding: look at what you render). The row condition in `TicketCenter.tsx` is now in your grant beyond the pass-through, for this one condition only. Add two tests to the same file, EXACTLY named `shows the failure on a ticket with neither a draft nor a package` and `leaves no blank row for a ticket with neither a draft nor a package and no failure`; the six existing tests keep passing unchanged. Then re-run `AR31-v-AC1`, `AC2` and `AC3`, update your record and the proof instance with the new results, validate, and flip the status to `complete` only when it prints VALID. Your first-session commits are inherited state.
 
+8. **AMENDMENT 2 (issuer, 2026-10-16; decomposition section AMENDMENT 2, item 7).** Reviewing your AMENDMENT-1 commits, the issuer ran your checks (8 of 8, `tsc`, the mutant: all as you reported) and found that `useHopFailureWords` makes the status call for a request whose package is attached, where clause 5 hides the answer, and `AnalysisPackageRow` is rendered for every ticket on the board. Change the read's `enabled` condition so that NO status call is made unless the ticket is an `analysis_request`, has a `report_ref.request_id`, and carries no package. `AnalysisDraftAndPackage`'s own use of the hook follows the same condition. Add two tests to the same file, EXACTLY named `makes no status call for a ticket whose package is attached` and `makes no status call for a ticket that is not an analysis request` (each asserts the call count is 0 through your `calls` spy); the eight existing tests keep passing unchanged. Re-run `AR31-v-AC1` (now ten names), `AC2` and `AC3`, update your record and instance, validate, and flip the status to `complete` only when it prints VALID. Your earlier commits are inherited state.
+
 ### ACCEPTANCE
 
 <criterion id="AR31-v-AC1" cell_refs="AR-v-31"><invocation>python C:/dev/wk-irpt-anlreq-270/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/AR_V_CHECKS/ar_v_checks.py v31-failure --portal C:/dev/wk-irpt-anlreq-270/portal</invocation><expect>^V31-FAILURE-OK</expect></criterion>
-`AR31-v-AC1`: the eight named tests exist and pass (the six of step 4 and the two of step 7).
+`AR31-v-AC1`: the ten named tests exist and pass (the six of step 4, the two of step 7 and the two of step 8).
 
 <criterion id="AR31-v-AC2" cell_refs="AR-v-31"><invocation>python C:/dev/wk-irpt-anlreq-270/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/AR_V_CHECKS/ar_v_checks.py portal-tsc --portal C:/dev/wk-irpt-anlreq-270/portal</invocation><expect>^PORTAL-TSC-OK</expect></criterion>
 `AR31-v-AC2`: the portal typechecks (`tsc -b`). Also run, once, the existing TicketCenter tests in the portal worktree (`bun test src/pages/TicketCenter`) and record the counts in your record (a drain check; the issuer re-runs it).
