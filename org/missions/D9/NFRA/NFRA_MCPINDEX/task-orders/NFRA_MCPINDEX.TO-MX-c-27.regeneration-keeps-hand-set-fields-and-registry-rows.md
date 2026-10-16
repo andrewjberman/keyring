@@ -51,7 +51,7 @@ Work in your own worktree (cut from `box/sitez`; its sparse cone already holds `
 
 <paths>
 workflows/atom_decomposition/gen_silver_rows.py
-workflows/atom_decomposition/hand_overlay.json
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round20/hand_overlay.json
 workflows/atom_decomposition/tests/test_regen_preserves.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~50/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -83,6 +83,9 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <!-- ===================== RECORD FACE ===================== -->
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round 20, worker ~50, an independent chain. Source: CTO round-19 analysis @9b905362bc (R20-1 BLOCKING; the premise "a regeneration drops `address`" is narrowed by the measurement above: the four live entries are hand-kept and untouched; what is lost is the two hand corrections on generated entries and the registry rows). The base dry-run was run in a SPARSE worktree cut like the worker's: `c27.AC1` FAIL (9 differ; the planted address lost), `c27.AC2` FAIL (34 lost, 8 changed; 0 legacy-address rows lost; the CRO's four `*-alias` rows present), `c27.AC3` FAIL (no test file). The lesson of round 19 applies at the drain: the issuer runs a trial emit and the enforcing naming gate before the flip.
+
+
+**A1 (2.0.0_SA_COO~MI, 2026-10-16 ~19:5xZ), ruling on rows Z-W50-S2 to S5.** Your design works (overlay in the tree: AC1 0 of 192 differ, AC2 0 lost 0 changed); two collisions were the order's. **S2** (the enforcing naming gate refuses the overlay as a new `workflows/` file, 40 firm-token carriers): the overlay is DATA the issuer maintains, not code; the gate grades 0 lines of it at `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round20/hand_overlay.json` (measured by the issuer: `--enforce` exit 0, 0 REFUSE). **S3** (an overlay in the tree by default breaks `tests/test_gen_silver_rows.py::test_every_clean_row_is_carrier_free`, because the overlay puts the tokened legacy prefixes into the generated entries): `--hand-overlay` has NO default; with no option the generator applies nothing and that test is unchanged. **Do:** (1) move your overlay to the path above (same content, read from tracked files as before; `<paths>` now names it and no longer names `workflows/atom_decomposition/hand_overlay.json`); (2) change the option: `--hand-overlay FILE`, no default, no overlay when it is absent; (3) `c27_check.py` (committed on your branch) now passes `--hand-overlay` with that path in every regeneration; (4) your tests that need an overlay write one in a temp folder and pass it; (5) re-run AC1 to AC3 (all three must PASS), update the instance, commit in two commits (generator and tests; the overlay file + instance), report once. **S4** (the `catalog-*` rows of `legacy_addresses.json` are not a fixed point, 36 of 143 dropped): observation, accepted; the generator owns those rows, and the issuer's landing procedure never passes `--registry-file` (it passes only the entries folder). **S5** (`--labels-from` still replaces the labels when named): accepted; an explicit option. The overwrite of the MX-c-30 `session_log.json` you restored byte-equal: noted, thank you. Gate limb that graded this amendment: none (a modification).
 
 <status>issued</status>
 <round>20</round>
