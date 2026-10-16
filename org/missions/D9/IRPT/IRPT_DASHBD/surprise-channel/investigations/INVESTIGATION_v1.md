@@ -24476,3 +24476,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The issuer decides the disposition of the twelve. The new harness in test_transaction_emission.py patches every heavy stage, so it does not inherit the defect."
 }
 ```
+
+## IRPT_DASHBD-D2-W250-S1 -- the Inflection test cannot follow the existing irpt-dashbd tests into PATH A markup: they render the template model
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W250-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~250",
+  "surfaced_at": "2026-10-16T22:39:26Z",
+  "one_line": "The order says the Inflection assertion follows the existing irpt-dashbd Inflection tests, which show the PATH A report markup; those tests render the template model PerformanceReport instead. The new test asserts Inflection's PATH A account reads and the tab root, not PATH A figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-314 worker face, step 3: the Inflection test asserts 'the PATH A report markup the tab renders for that client is still present, as the existing Inflection tests of __tests__/irpt-dashbd/ show'. Step 2: an Inflection client's PATH A performance must render exactly as before.",
+  "world_is": "The existing Inflection tests (report-render-r109, report-render-r110, report-render-r111, disclosure-placeholder) render the template model PerformanceReport or PerformanceReportDocument with firmId inflection. None renders the tab's PATH A body (data-slot reporting-body, reached only when an answered report is present), and no test in the directory asserts PATH A figures for Inflection. The new test asserts that Inflection's own account reads are still asked and that the tab root renders, with no template markup. 'Renders exactly as before' is not asserted by any test; it is NOT PROVEN.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/report-render-r110.test.tsx@75a71ae3 lines 38-45 (tabOf and exportOf render PerformanceReport and PerformanceReportDocument with firmId inflection)",
+      "portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx@355b3bf8 lines 882-919 (the reporting-body PATH A slot, rendered only when answer and report are present)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether a PATH A fixture test for Inflection is wanted; this cell did not add one."
+}
+```
