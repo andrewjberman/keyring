@@ -49,3 +49,21 @@ The other eight (a) rows are at cross-adjudication XA-20261016T024917Z-cdcc (cal
   the named tool ships and the row's `read_tool` is linked.
 - The 9 market-data rows (Pathfinder, TrueShares, Yahoo) go to the ETFS workstream's tool question. They are not client data
   and need no client tool.
+
+## Addendum ~13:2xZ -- the 9 49Financial `*_silver_legacy` rows (CVO~Z msg 35011, row Z-C-S62, ADJUDICATION_v13 @c5ba2988f4): RULED OUT, with reopen conditions
+
+The CVO is right. The ratified 91 listed only the three 49F insurance rows; the issuer's group-label reading does not reach these 9.
+This addendum is the explicit word. The round-18 line therefore reads met for 280 of 280: 188 with a live tool, 83 ratified OUT at ~06:4xZ, and these 9.
+
+| rows | store | reason | reopens when |
+|---|---|---|---|
+| allocations, assets, fees, prices, realized, transactions, transactions_enriched, unrealized (`49financial_*_silver_legacy`) | `opal-data-bd` | No client tool reads them yet. PRD v3.6 (Andrew-direct 10-14 ~18:3xZ) already sets the 49F BD adapter to read `opal-data-bd/silver/` through its own scoped role. That adapter is G2 order item 2, and it is unbuilt: the live `client_adapter_bd49f` reads the `opal-data-assets` copy, and OG-ap-24 accepted that as a named gap. | The v3.6 49F BD adapter ships with its role and never-widen halves. Its tools are linked as `read_tool` then. `assets` and `transactions_enriched` answer with their lag stated (v3.6 item 3). |
+| single_file (`49financial_single_file_silver_legacy`) | `opal-data-assets` | A legacy one-file export that no client tool reads, and that no consumer has asked for. | A named consumer asks for it, or the 49F target-layout migration (v3.6, R19) supersedes it. |
+
+- **Which store the client tools read** is not chosen here. It was set by Andrew's v3.6 word. Ruling these rows OUT records only that
+  v3.6's adapter does not exist yet; it does not re-point anything.
+- **`gap_owner: NFRA_OPLGTW`.** The v3.6 adapter is routed to `2.0.0_SA_COO~O` for round 38. If it is already cut, the reopen
+  condition names that order.
+- **The CVO's other carried items are endorsed for the issuer (`2.0.0_SA_COO~MI`) as round-19 enrichments:**
+  - issuer items 1-6, among them `opal_discover` echoing `bucket`, vendor and firm, and a rollback catalog that passes `r13.AC3`;
+  - clearing the gold book row's stale `open_items` (Z-C-S63).
