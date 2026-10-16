@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~134</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-134 @9794a0592e) and again in the main tree after merge 6f07651fdf: CTav1-AC1 WAIVER arms=20/20 ok=True; CTav1-AC2 INTAKE-CHECK-TEST cases=60/60 skipped=0 ok=True (base 56/57, red); CTav1-AC3 INTAKE-RECEIVE-TEST cases=36/36 ok=True (base 34/34); proof VALID; neighbouring suites green in the main tree (INTAKE-CLOSURE-TEST 10/10, INTAKE-FETCH-TEST 21/21); the branch changed 7 files, all inside the order's paths. The issuer's own adversarial probe of `compute_verdict` on hand-made records: clean -> checked; failed check 6 with no waiver -> not_checked; with a waiver for 6 -> released-with-waiver; with a waiver for 5 only -> not_checked; with an empty reason -> not_checked; failed check 1 or 2 even with a waiver for it -> not_checked; check 8 not passed or with no signer -> not_checked. Row W134-S1 (the stale suite case, fixed) and W134-S2 (`intake_receive.py` accepts a `checked` record without re-reading checks 1-7; branch unchanged) are OBSERVATION, INERT. The worker added `docs/briefs` to its sparse set because the check suite reads a brief there. The two mutant copies it made sit in its worktree's gitignored `.scratch` and go with the worktree. dell2 gets the changed `intake_receive.py` only through box-sync. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
