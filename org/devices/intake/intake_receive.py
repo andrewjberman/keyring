@@ -564,7 +564,7 @@ def npm_plan_members(tgz_path):
             members = tf.getmembers()
             root, reason = npm_package_root([(m.name, m.isdir()) for m in members])
             if reason:
-                return {"root": None, "files": [], "dirs": [], "package_json": None, "problems": [reason]}
+                return {"root": None, "files": [], "dirs": [], "package_json": None, "problems": ["no package root: " + reason]}
             for m in members:
                 shown = ascii_line(m.name, 120)
                 name = m.name.rstrip("/") if m.isdir() else m.name
