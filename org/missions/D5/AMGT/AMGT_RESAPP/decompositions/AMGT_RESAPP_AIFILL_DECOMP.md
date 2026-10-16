@@ -452,3 +452,17 @@ Source: the issuer's DEV page read of the gr-7 panel (AMD_US_Equity, DEV @fc174c
 **Check, dry-run at the base and proven satisfiable:** `deliverables/2.0.0_SA_COO~R2/round111_aifill_prep/checks/check_gr7_wording.cjs`, 12 arms (the 11 of `round106_aifill_prep/checks/check_gr7_provenance.cjs` with two web-count expectations changed, plus one arm for the singular). At the base (DEV @fc174c69): `AIFILL PROVENANCE: NO (9 of 12)`, the three wording arms failing. The issuer's reference edit in a scratch tree reads `AIFILL PROVENANCE: YES (12 of 12)` with `bun run typecheck` rc 0. The older gr-7 check reads NO (9 of 11) against the edit, so it is superseded and must not be used as a bar.
 
 **What this cell does not do:** the push of the branch, the approval row, the merge to DEV and the PROD promote (the issuer's acts); the stored-search line; any page other than Security Analysis; the AI fill documents.
+
+## 22. ADDENDUM 13 -- WORKSTREAM `PROMOTE`, ROUND 112: THE gr-7 PANEL ROW AND ITS WORDING GO TO PROD AS ONE CHOSEN SET (CTO msg 6735), 2026-10-16 ~14:1xZ
+
+Source: the CTO's ruling (msg 6735): merge the wording branch forward, read the AMD panel on DEV, then `/prod-deploy` both features as one chosen set with a receipt naming Security Analysis (Opal-internal), then ask the CVO for its PROD read. Done before this cut: both rows closed approved (`dell1-20261016T131944Z-6f4b`, `dell1-20261016T140659Z-5cf5`); both branches on origin/DEV (merge `d1f9ca29`, origin ancestry read); the AMD panel read on a rebuilt DEV (the AI row reads `1 cites a web search made when it was written`, the stored-search line unchanged).
+
+| id | cell | slot | class | risk | write set | serves | item |
+|---|---|---|---|---|---|---|---|
+| `AMGT-gx-2` | the promote: `portal-release-build.sh --features cand/dell1/aifill-provenance,cand/dell1/aifill-provenance-wording-v2`, `/prod-deploy`, the CI read and the receipt | `0.4.0_DT_ClientPlatform~H1` (a Tier-2 seat; a DT alone may push PROD in the portal repo) | seat | SERVED | PROD of `Opal-Capital/portal` by `/prod-deploy`; the DT's deliverables folder; the deploy ledger | FWD-41, CVO row C-S146 (a) | CTO 6735 |
+
+**Chain read:** M = 1, N = 1, cap 8. **Why a separate workstream and an order:** `/prod-deploy` Step 0 is DT-only and the push gate admits only a DT or the integrator in the portal repo; a Tier-2 seat hears an act only as a task order (LD-0529; the send was refused without one). The `to-pipeline-gate` allows one issuance per workstream and round: round 112 of `AIFILL` has `gx-1`, round 112 of `PROMOTE` is free (`bo-2` is `PROMOTE` round 108).
+
+**Measured at the cut (2026-10-16 ~14:1xZ):** the builder, run by the issuer, prints `RELEASE-CHECK features=2 first_parent_commits=2 unapproved=0`, both `PROMOTE-LIST` lines (class opal-internal, by 1.0.0_SA_CTO~DELL1), `PROMOTE-CLIENT-FACING count=0` and `RELEASE result=READY` (a local release branch `release/20261016T141236Z`, never pushed; the DT builds its own). PROD head `64f9dba1` (74 commits past gr-7's base `7db035e4`); the pair's two paths read `DIFFERS` against it.
+
+**What this cell does not do:** any DEV push; any page other than Security Analysis; the CVO's read (the issuer's next act after the DT reports).
