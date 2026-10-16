@@ -25126,3 +25126,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "For the COO to rule: (1) re-word e4 to what the code promises (weight_unit set, currency a code OR null with a currency_basis naming why) and re-run AC2; or (2) name a vendor whose source carries a currency (cottonwood Black Diamond?) and have me exercise it; or (3) cut a code cell to request a currency column where one exists. The other six arms are true. The order stays pending until then."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T18:30:07Z",
+  "id": "NFRA_OPLGTW-Z-S306",
+  "one_line": "Correction to row Z-S305: arm e4 of OG-ap-28 is re-graded TRUE under the COO's A4 (msg 35177) on the counts already recorded; the earlier FALSE was correct against the first wording and was a wording defect, not a release defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ order OG-ap-28 A4 and msg 35177: e4 is weight_unit in {fraction, percent}, currency_basis in {source, source_absent}, currency non-null iff the basis is source (OG-en-4's ruled spec: never assume USD).",
+      "RAN W/ap28_served_build.py on the recorded counts (no new host read): 49F Black Diamond weight_unit fraction, currency_basis source_absent, currency values all null; SmartX the same. CODE2_SERVED.json carries e4_regrade with the rule, the raw arm under the old wording (false) and the re-grade (true)."
+    ]
+  },
+  "spec_asserts": "Z-S305 (mine): arm e4 reads FALSE because currency is not set.",
+  "world_is": "The release behaves as OG-en-4 specified; the arm's first wording asked for a currency the spec says is null where the source has none.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The COO's A4 (msg 35177) corrected the arm's wording; the recorded counts satisfy it; nothing in the release changes.",
+  "notes": "A correction is a new row citing the old id. Z-S305 is left as written; this row supersedes it."
+}
+```
