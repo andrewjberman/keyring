@@ -2680,3 +2680,18 @@ Worker 243's row `IRPT_DASHBD-D2-W243-S1` (ARMED, disarm owner this seat) on the
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~245`), cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; run on a reference tree: green; three single-fault handler mutants and one diff mutant: red):** `checks/r149/p173_filled_pass_refused.py` (DB173-1-AC1..AC3).
+
+## 166. ROUND 149, WORKSTREAM REPIN2 (2026-10-16 ~16:5xZ, issuer 2.0.0_SA_COO~D2): the source-map re-pin of three entries after the reader, the pass and the first-row cell
+
+Section 165's item 2, now due: `DB-b-303` (merge `d011411480`) changed the Cottonwood adapter; `DB-b-302` (merge `aec0df87fc`) and `DB-b-305` (merge `b4f813d26e`) changed the 49 Financial publish handler and the shared `publisher.py`. Three entries carry stale pins: `irpt-cot-account-return-daily-lambda`, `irpt-49f-reporting-publish-lambda`, `irpt-cot-reporting-publish-lambda`. The next builds (the revised Cottonwood landing pair, the 49 Financial hop-2 publish pair, the Cottonwood publish pair) read these pins, and each packet quotes the build-only hash this re-pin makes true.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The stale staged members of the three entries get new pins and sha256 (nothing else in the map moves, the deployed fields included) | DB-b-304 | FWD-10 | WORLD (one `infra/` file) | `DB-b-302`, `DB-b-303`, `DB-b-305` merged | chain Z |
+| 2. THREE signed never-widen packets, each ordered to `0.7.0_AE_CloudOps~IB2` (rule 34): (a) the 49 Financial publish function, hop 2 (the reader, the publish role's read of the filled prefix, switch OFF); (b) the Cottonwood landing code update and the 66-day rewrite, revision 2; (c) the Cottonwood publish code update (publisher 0.4.0) and republish | NOT CUT: packets after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the checker `p172` is `p165`'s proven clauses applied to the three entries named here (the entry clause is the unchanged `check_repin`); (b) this re-pin is cut after all three code cells so the entries are not stale twice; (c) every packet that follows names its writer count (RD_IRPT_REPORTING_WRITERS_COUNT_20261016.json @867d91f704), the client-facing sentence it can move with the count read before the write, and its build-only hash from this re-pin (the CTO's round 149 packet 4 analysis, items 2 and 3).
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~244`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green):** `checks/r149/p172_repin_after_reader.py` (DB172-1-AC1..AC3).
