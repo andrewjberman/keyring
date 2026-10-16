@@ -12,7 +12,8 @@
   value graded", ADDENDUM v0.4).
 - **C-METHOD.** Modified Dietz is the window cross-check, "a window figure, never a day state and never a substitute for a daily return".
 - **Agreement.** FWD-10's ACCEPT, C-HONESTY, C-GUARD and C-METHOD now agree: no fallback state exists at day grain. This seat's sweep of
-  the ENDPOINT and CONTRACTS for "fallback" finds only C-METHOD's restated window wording.
+  the ENDPOINT and CONTRACTS (PRD lines 26-258 at @4fd78cac82) for "fallback" finds no occurrence. (Corrected after the stamp: the first
+  wording of this line said one restated occurrence remained; there is none.)
 
 **Not graded here (outside the half).** ADDENDUM v0.16 item 4 assigns two owners. The unreported-days fields in the series contract go to
 `~D2`, the sole writer. The first Cottonwood series publish goes to `~S2`, under its own never-widen pair. That is new served output, and
