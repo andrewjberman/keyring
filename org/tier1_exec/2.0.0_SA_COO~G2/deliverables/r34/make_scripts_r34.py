@@ -104,7 +104,7 @@ if R34["ycharts-host/ycharts_session.js"] != LIB or R34["ycharts-host/run-ychart
 PKG_COUNT = len(n34) - 1  # the package's own sums list every member but SHA256SUMS itself
 WORKER = R34["ycharts/generate/resident_worker.py"]
 WORKER32 = R32["ycharts/generate/resident_worker.py"]
-LEDGER_R31, LEDGER_OLD, LEDGER_NEW = "irpt-resident-r31-20261014", "irpt-resident-r32-20261015", "irpt-resident-r34-20261016"
+LEDGER_R31, LEDGER_OLD, LEDGER_NEW = "irpt-resident-r31-20261014", "irpt-resident-r32-20261015", "irpt-resident-r34b-20261016"
 checks_lines = ['check "%s" %s' % (n, R34[n]) for n in CHECKED]
 
 

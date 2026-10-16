@@ -77,7 +77,7 @@ text = """# Never-widen sign-off packet -- r34: the resident r32 -> r34 at pin %
 
 **For:** `1.0.0_SA_CTO` (CTO half). **Author and operator:** `2.0.0_SA_COO~G2`, 2026-10-16. **Applier:** a CloudOps seat named by the CTO.
 **Authority:** CTO msgs 8907 and 8971 (C-HOP-FAILURE: the resident writers of `hop_failure`, folded into this release), CTO msg 8968 (the door's yfinance checker, folded into this release; ruling on `~Y2` msg 8965, row `IRPT_ANLREQ-D2-W165-S2`), CTO msgs 8693, 8711, 8714, 8723 (the swap: an UNRESOLVED holding is replaced in the Opal producer by a class-matched, Yahoo-priced security from a
-dated pool), msg 8863 ("r34 is next"), PRD v0.19 (C-SWAP steps 1 and 2; step 3, the classifier, is its own cell after run 3). **Ledger:** `irpt-resident-r34-20261016`.
+dated pool), msg 8863 ("r34 is next"), PRD v0.19 (C-SWAP steps 1 and 2; step 3, the classifier, is its own cell after run 3). **Ledger:** `irpt-resident-r34b-20261016`.
 **One move:** D1, the install of one new root on the resident host. No IAM, Lambda, queue, table or schema moves. **Two new Yahoo call paths:** the door's checker asks Yahoo for one month of history per symbol YCharts omits (section 2c), and the swap pass asks Yahoo
 (through the `yfinance` library, whose presence on the host V2 reads) for monthly history of pool candidates; section 2b states the calls per holding and their bound. `opal_pricing` stays OFF.
 
