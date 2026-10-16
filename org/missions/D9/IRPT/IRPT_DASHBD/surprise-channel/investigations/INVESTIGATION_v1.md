@@ -23395,3 +23395,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S125 -- TO-DB-b-300 residuals: a pinned file fails fmt -check, one account's PARTIAL label comes from silver, and the stamp wrapper's CHANGELOG commit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S125",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T15:09:53Z",
+  "one_line": "TO-DB-b-300 residuals, none blocking: (1) terraform fmt -check reads rc 3 on infra/aws/terraform/investor-reporting/reporting-gold/locals.tf, a file the signed packet pins by hash 1063ebb77489 (not rewritten); (2) the producer labels ONE account PARTIAL_HISTORY although its first gold row is 2026-10-09 (positive value, five rows, no gap), because its first_seen comes from the silver balance partitions, which the gold cannot show, so the gold-based count of floor-start accounts (2850) differs from the PARTIAL rows (2851); (3) the stamp wrapper again committed a CHANGELOG.json addition outside the grant (restored in a new commit, S121 class).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 4: 'If fmt -check fails on a pinned file, record it as a row and do not edit the file'; the amended step 7 (CTO addendum 1): partial equals before.floor_start_with_row computed from the first gold row; the grant is the paths block.",
+  "world_is": "MEASURED: fmt -check prints locals.tf, rc 3, in the root the plan graded 0/2/0 (the file is covered by the packet's pin); the one PARTIAL account is identified by hash only, in the record's 2850 and 2851; the wrapper's commit 604a097ad6 carried 1662 CHANGELOG lines, restored in 1aa27c6976 (net zero). The issuer ruled the 2850 and 2851 (msg 9496) and changed the checker to explain that account.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check -recursive on infra/aws/terraform/investor-reporting/reporting-gold: prints locals.tf, rc 3; locals.tf sha256 first 12 hex 1063ebb77489 equals the packet's pin",
+      "account_return_daily.py _history_scope(first_day, source_floor) with first_seen from first_data_dates over the custodian's balance partitions (the producer), versus the gold's first partition per account (2850 floor-start accounts, 2851 PARTIAL rows)",
+      "git show --stat 604a097ad6 and 1aa27c6976 on wk-IRPT_DASHBD-DB2-b300"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action owed by the applier; the three are left for their owners (the fmt deviation to the root's next pair, the labelling to the producer's owner, the wrapper to the tool's owner)."
+}
+```

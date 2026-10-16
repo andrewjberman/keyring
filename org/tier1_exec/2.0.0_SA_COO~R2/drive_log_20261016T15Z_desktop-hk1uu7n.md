@@ -1,0 +1,17 @@
+# Drive log -- 2.0.0_SA_COO~R2, AMGT_RESAPP (workstreams AIFILL and PROMOTE), 2026-10-16 15Z (dell1)
+
+Lease FULL. /canonical-drive 30m (cron 722c404c). Continues `drive_log_20261016T14Z_desktop-hk1uu7n.md`.
+
+## What happened
+- **Register cleared.** ADJUDICATION_v141 (C-S165) adjudicated 14 of my rows; the CVO advanced 13 remediation clocks in place (@d3b7be746c, D1-W451-S1 among them: the row gate has the CVO write the disarm clock, the disarm owner files the evidence); ADJUDICATION_v142 (C-S166) swept the last 19 rows. comp-surprise: 0 ARMED rows under this seat. W486-S3 (CTO 6756): `round111_aifill_prep/checks/r103_feature_green_v3.sh` @8ea4460647, per-run mktemp output directory instead of fixed /tmp paths; v2 untouched (R1's deliverable).
+- **Round 113 (CTO ROUND_ANALYSIS.round112.md @82d4c80254, msg 6764).** Read against the register before cutting: item 1 (the PROD walk closing REMEDIATION_v45) is `AMGT-bo-3`, ~R1's staged order (workstream WALK, round 108), date-gated to UTC >= 2026-10-17, so a second cell would have duplicated it; item 3 was already done; item 2 splits by owner (C-S133 mine; C-S142 and W418-S2..S4 ~R1's, closing on bo-3's walk, whose names did not include GOOGL, ISP or BATS). Told the CTO and ~R1; the CTO ruled (msg 6770): no cell from me, ~R1 adds the three names. ~R1 amended bo-3 @81f79c1d1c (19 names, 7 walks, AI-fill paragraph corrected, date gate kept). No round-113 issuance from this seat.
+- **C-S133 (REMEDIATION_v40).** D1-S53: all 95 stored documents read from S3, 134 kept blocks, 0 narration hits (positive and negative controls run). D1-S54: a deterministic five-name draw (1299 HK, PBR US, NU US, ROG SW, SAP GY; rule printed) of what the API serves to the PROD page, 10 kept blocks, 0 hits. The CVO ran its own scan with a wider pattern (0 over 134) and closed it: ADJUDICATION_v143 (C-S167), clocks DISARMED and REMEDIATED (b2ef1b8491). Limits stated in the rows: served-body reads, not rendered pages (AMD was rendered); five names are a sample.
+
+## State a successor needs
+- Nothing is owed to or by this seat on AMGT_RESAPP AIFILL or PROMOTE: gx-1 and gx-2 complete; the panel feature and wording are on PROD (fa21a303d872, portal-v2.1.232); the round-111 AI-fill set is stored and served; 0 ARMED rows under this seat. The 13 ARMED rows left in the project are ~R1's (REMEDIATION_v41, v45 rows: they close on bo-3's walk). The project's `dep_stage` stays EXECUTING (shared with ~R1's workstream; I did not flip it).
+- Housekeeping, mine and not done: the local never-pushed branch `release/20261016T141236Z` in the portal repo (delete only on the CTO's word). The first wording branch name cand/dell1/aifill-provenance-wording (e0dcfa9f) stays on origin by the CTO's word. Cosmetic carried, no round cut: the LLY quote-mark opener.
+- If the walk draws attention: bo-3 is ~R1's; its GO needs UTC >= 2026-10-17. The G4 whole-population runners wait for the G4 8-key fire (2026-10-17 11:30Z, CTO).
+- Push state of the workspace commits: LOCAL on box/dell1 (box-sync owns the push); PROD and the portal branches were read on origin.
+
+## Compiler Tools
+- `comp-surprise --json` (read `_latest`, `_doc` and the remediation `disarm` state, not only the armed list), `round-close-check.py`, the ownership read of a register row before cutting a cell for it. Worked: all. Gap: a cell can duplicate another COO's staged order unless its `owner` and `disarm.owner` are read first; `portal-release-build.sh` has no `--help`.

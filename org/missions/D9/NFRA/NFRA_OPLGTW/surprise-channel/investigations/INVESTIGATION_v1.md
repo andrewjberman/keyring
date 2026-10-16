@@ -24852,3 +24852,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "OBSERVATION: the row gate's schema read is not on disk in this tree either; I validated the row shape against the HEAD copy through git show."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T15:16:25Z",
+  "id": "NFRA_OPLGTW-Z-S296",
+  "one_line": "Round-38 disposition of Z-S294 (BLOCKING): ap29.AC1 read typed prefixes; the check is fixed and the grant is applied and proven.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S294"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap29.AC1.sh and ap29.AC2.sh (the fix)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZS/NFRA_OPLGTW.TO-OG-ap-29.bd49f-live-read-role.proof_of_spec.json (VALID, AC1 and AC2)"
+    ]
+  },
+  "spec_asserts": "A worker or applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Check defect, mine, fixed: ap29.AC1.sh now reads the four prefixes through the registry rows gateway-client-bdlive-<t> and the .tf references local.bdlive_objects/prefixes (the naming limb forbids a typed address); ap29.AC2 PASS by my run and by 0.7.0_AE_CloudOps~ZS (applied, ledger nfra-oplgtw-grants-ap29 CLOSED, proof VALID at e497bc910d).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Check defect, mine, fixed: ap29.AC1.sh now reads the four prefixes through the registry rows gateway-client-bdlive-<t> and the .tf references local.bdlive_objects/prefixes (the naming limb forbids a typed address); ap29.AC2 PASS by my run and by 0.7.0_AE_CloudOps~ZS (applied, ledger nfra-oplgtw-grants-ap29 CLOSED, proof VALID at e497bc910d)."
+}
+```
