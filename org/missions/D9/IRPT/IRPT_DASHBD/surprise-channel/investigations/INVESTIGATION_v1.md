@@ -20832,3 +20832,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. The registry_row_exists field records false with the probe's denominator; the zero is not evidence of a refusal either way."
 }
 ```
+
+## IRPT_DASHBD-D2-S108 -- TO-DB-b-283: the criteria checker p151_pubapply.py has two defects that fail DBC151-2-AC1 and DBC151-3-AC1 on a correct record and a correct world
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S108",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T05:25:00Z",
+  "one_line": "TO-DB-b-283 is applied and its record written, but the issuer's checker p151_pubapply.py fails DBC151-2-AC1 and DBC151-3-AC1 on two defects of its own: (1) DIGIT_OK_KEYS lacks packet_sha256, so the 64-hex gates.packet_sha256 the order requires trips the 8-digit-run rule (p143 listed it); (2) live() samples the directory token account=<id> as the account, so check_sample compares manifest account_id (the bare id) with account=<id> and hashes the token. With both patched in scratch copies, all three criteria PASS on the unchanged record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I checks/r147/p151_pubapply.py . DBC151-2-AC1 and DBC151-3-AC1: 'FAIL: a run of 8 or more digits outside the exempt fields: [226258136, 84753371]'; the only field holding both runs is gates.packet_sha256 (the packet's sha256 0c9b495ce2f7...); the checker compares that field for equality (check_head) so the record cannot carry another form; DIGIT_OK_KEYS (line 52) holds sha256 and packet_blob but not packet_sha256",
+      "scratch copy with 'packet_sha256' added to DIGIT_OK_KEYS: DBC151-2-AC1 PASS; DBC151-3-AC1 FAIL 'sample 8c1d0c79b8b6: manifest size, version or account'",
+      "live() line 240: accts = sorted(k[len(PREFIX):].split('/')[0] ...) yields 'account=<id>' (the key layout is irpt/cottonwood/platinum/reporting/account=<id>/series.json.gz); check_sample line 260 requires m['account_id'] == a, but the manifest holds the bare id (publisher.build_manifest: 'account_id': str(account_id); my own read of all 11 accounts: manifest account_id equals the id), and line 257 hashes the token, so the expected sampled_hash12 would be of account=<id>; the order defines the canary's account_hash12 as the sha256 of the id",
+      "second scratch copy with the digit key exempt and 'account=' stripped from the sampled token: DBC151-3-AC1 PASS on the unchanged COT_PUBLISH_APPLY_RECORD.json (1878 objects, ten samples with id hashes, REPORT line equal to the dry run, ledger open); neither scratch copy is committed"
+    ]
+  },
+  "spec_asserts": "Order criteria DBC151-2-AC1 and DBC151-3-AC1: FRESH live reads by the checker; ten sampled accounts validate and carry a matching manifest; 'sampled_hash12 (the 12-hex sha256 prefixes of ten accounts chosen by sorted position)'.",
+  "world_is": "The world meets the packet: function, role policy, artifact, no schedule, 1878 objects, ten samples valid. The record is written to the order's exact schema. The checker as committed cannot pass any record that holds the required packet_sha256 value, and cannot pass a sample whose manifest holds the bare id. The order's status stays pending and no proof-of-spec instance is written until the issuer amends p151 (the b-272 path); sampled_hash12 in the record is the hash of the id, as the canary's account_hash12 is."
+}
+```
