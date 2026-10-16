@@ -9614,6 +9614,117 @@ carries none.
     "spec_asserts": "MX-c-27's face asserted that a tracked overlay file under workflows/ could be applied by default and committed under the enforcing gate.",
     "world_is": "The enforcing gate refuses a new workflows/ file carrying firm tokens, and a default overlay contaminates the carrier-free rows the generator tests assert. Data the issuer maintains belongs in the issuer's deliverables folder, applied only when named.",
     "dismissal_reason": "S2 and S3 were the order's design and are fixed and re-graded; S1, S4 and S5 change no graded criterion. The issuer is disarm_owner of all five. Lesson carried to the round-20 analysis: a new file under workflows/ that carries data with firm tokens meets the enforcing gate; run naming-gate --enforce on the planned file at the cut."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-16T20:20:25Z",
+    "one_line": "MX-c-39 step 1 places depth_kind right after a depth spec's method line; the mdpf_get_aggregate_aua depth spec has no method line, so depth_kind: series_start was placed as the spec's last line, after its field line.",
+    "spec_asserts": "Order section 1, step 1: every depth spec dict naming a row and a field where the field is total.series_start or as_of_first gains the line depth_kind: series_start (right after its method line).",
+    "world_is": "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc: the mdpf_get_aggregate_aua depth spec (lines 294-306) names row mp.03.aggregate-aua-timeseries, scope global and field as_of_first and has no method key; depth_kind is its line 306. The three other series specs (gateway_query_catalog mp.01 and mp.03 at lines 152-165, mdpf_get_aum_metrics mp.01 at lines 307-320) each carry method body-field and take the line after it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc lines 294-306 (mdpf_get_aggregate_aua: depth spec with row, scope, field and no method line; depth_kind at line 306)",
+        "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc lines 152-165 and 307-320 (the three other series specs, each with method body-field and depth_kind on the next line)",
+        "c39.AC2 at 1071edbdbc: kind differs from its member spec 0 of 39 measured history_depth claims; series_start claims 6, the anchor, so the mdpf_get_aggregate_aua spec is graded as declared"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S133",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T20:32:38Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W53-S3"
+    ],
+    "dismissal_reason": "Placement only: YAML mapping order carries no meaning and the emitter and c39.AC2 read the depth spec as a mapping; the spec is graded as declared (39 of 39 claims carry the declared kind, 6 series_start). The issuer is disarm_owner.",
+  "one_line": "ISSUER DISPOSITION of worker ~53's MX-c-39 row: the mdpf_get_aggregate_aua depth spec has no method line, so depth_kind: series_start sits after its field line; accepted, graded as declared.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-39's face placed depth_kind right after a spec's method line and assumed every series spec has one.",
+    "world_is": "members.yaml has no method key on the mdpf_get_aggregate_aua depth spec; the key order of a YAML mapping carries no meaning, and the emitter and c39.AC2 read the spec as a mapping.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-c-39 merged at 8906f5fb80 (7 files, 0 foreign); c39.AC1 PASS (80 passed, 17 new) and c39.AC2 PASS (39 of 39 claims carry the kind their spec declares, 6 series_start) in the worker tree and re-run by the issuer on the merged tree; the atom_decomposition suite 363 passed; ruff clean.",
+        "trial emit round21/emit_final.sh: r21.AC1, r21.AC2, c23.AC4, c21.AC2 and r13.AC3 PASS on the candidate (md5 b014f6379707e9071cb73b3a94516182), not landed."
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W52-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-16T20:20:06Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_gen_silver_rows.py@4e9017ac2f IntegrationTests.setUpClass runs gen.main with --registry-file on a copy of infra/logic/registry/legacy_addresses.json and no --allow-registry-drop. Measured in the worktree at 4e9017ac2f: the same invocation returns rc=2 with 36 REGISTRY-DROP lines and an ERROR line naming 36 rows. Two of its tests fail: test_contract_ids_are_hashed_and_registry_holds_one_entry_per_row (FileNotFoundError on the fork file, which the refused run did not write) and test_rc_zero_and_180_files_with_unique_names (2 != 0).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round21/checks/c29.AC3.sh measured at 4e9017ac2f: pytest rc=1, 2 failed, 58 passed (60 tests: 51 existing in the two named files and 9 new). Criterion AC3 expects rc=0 over test_registry_drop_guard.py, test_gen_silver_rows.py and test_regen_preserves.py.",
+        "c29.AC1 run 1 at 4e9017ac2f: exit 2, REGISTRY-DROP rows printed 36. The tracked legacy file holds 143 catalog-* rows; the generator produces 107."
+      ]
+    },
+    "spec_asserts": "MX-c-29 (order section 1) requires a regeneration that would drop a registry row to refuse, and a run that drops nothing to behave as today. AC3 of the order expects pytest rc=0 on tests/test_gen_silver_rows.py, whose integration tests run the generator over the tracked registry with no allow file.",
+    "world_is": "Both cannot hold at once on the tracked registry: any run without --allow-registry-drop over the tracked legacy file is refused with 36 drops, so the two integration tests exit 2. tests/test_gen_silver_rows.py is outside the order's paths, so the worker did not edit it and did not add an allow file to it. AC3 is recorded FAIL; the choice between an allow list in that test, a regenerated registry and a scoped test belongs to the issuer.",
+    "one_line": "AC3 of MX-c-29 is FAIL: two IntegrationTests in tests/test_gen_silver_rows.py run the generator with no allow file against the tracked registry, which the new guard refuses (36 drops); that test file is outside the order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W52-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-16T20:20:06Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls org/surprise_channel and ls org/surprise_channel/schemas in the worktree at 4e9017ac2f each return 'No such file or directory'; the comp-find search for *investigation*schema* under org/surprise_channel was denied twice by the rail (pipe form) and did not run.",
+        "The worktree is a sparse cone (workflows, lib, .tools, infra/aws/ec2, infra/logic and the project folder); org/surprise_channel is outside it. The order's section 3 and the surprise-channel rule name org/surprise_channel/schemas/investigation_item.schema.json as the row's schema."
+      ]
+    },
+    "spec_asserts": "The surprise-channel rule names org/surprise_channel/schemas/investigation_item.schema.json as the schema every investigation row must satisfy, and the order's section 3 directs the row to it.",
+    "world_is": "That schema file is not in this worker's worktree, so the rows in this file were written to the field list the existing rows carry, with the commit-time gate (.tools/surprise-row-gate.py) as the only validator the worker could run. Not validated against the schema text.",
+    "one_line": "The investigation_item schema named by the surprise-channel rule is absent from the sparse worktree, so the worker's rows could not be checked against it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S134",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T20:45:31Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W52-S3",
+      "NFRA_MCPINDEX-Z-W52-S4"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~52's two MX-c-29 rows: S3 (BLOCKING) was the order's omission of the integration-test fixture from its paths, ruled in A1 and re-graded PASS; S4 is an accepted sparse-cone environment note.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "S3: two IntegrationTests of test_gen_silver_rows.py ran the generator on the 180-row round-14 fixture against a copy of the tracked registry, so the new guard rightly refused the 36 other catalog-* rows; A1 (e48fe1117d) granted the test file and the re-seated worker passes an allow file in setUpClass only (a1e42d21dc); c29.AC1, AC2, AC3 PASS on the merged tree 28d19f4834 (60 tests, 9 new). S4: the investigation_item schema is absent from a sparse cone; the rows were graded by the commit gate on trunk. The issuer is disarm_owner of both.",
+    "spec_asserts": "MX-c-29's face bounded the change to gen_silver_rows.py and the new test file and asserted the existing generator tests would pass unchanged.",
+    "world_is": "The pinned round-14 fixture makes 180 rows against the tracked registry's 143 catalog-* rows, so a guarded regeneration of it drops 36; the fixture predates the guard.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer re-run on the merged tree 28d19f4834: c29.AC1 PASS (36 REGISTRY-DROP rows printed, 36 really dropped with the allow file, one key withheld refuses naming exactly that key), c29.AC2 PASS (the planted catalog-planted-row-c29 refused alone), c29.AC3 PASS (60 passed, 9 new); the atom_decomposition suite 372 passed; ruff clean; the proof instance VALID inside the worker tree."
+      ]
+    }
   }
 ]
 ```
