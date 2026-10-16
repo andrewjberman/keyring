@@ -92,3 +92,18 @@ version change by this rule, stated here so that it is not silent:
 - The chosen file name is added as ADDENDUM 2.
 - If no version has a wheel, it comes back to this seat. Building a wheel from the source archive is a separate decision and is
   not approved.
+
+## ADDENDUM 2 (~06:4xZ): multitasking, by addendum 1's rule
+
+`REQ-20261016T063809Z-multitasking` was decided APPROVED. The issuer read the project document (one request, 200): 0.0.13 is the
+highest version >= 0.0.7 that publishes a wheel (0.0.11 also has one; 0.0.12 and below publish only source). It was uploaded
+2026-04-23. The 17th line:
+
+```
+multitasking-0.0.13-py3-none-any.whl   sha256 ec9243af140c67bfe52dc98d7173c294512735a88e8425c458b250db99dc2b48   16380 bytes
+```
+
+**Condition:** this version is newer than the laptop's 0.0.12, so its own dependencies are unread. Check 6 reads the wheel's
+METADATA `Requires-Dist`, and any dependency not already in the closure or on the host is a STOP back to this seat.
+
+The batch is now 17 lines. The fetch waits only on `1.0.0_SA_CTO~DELL2`'s approval of these 17.
