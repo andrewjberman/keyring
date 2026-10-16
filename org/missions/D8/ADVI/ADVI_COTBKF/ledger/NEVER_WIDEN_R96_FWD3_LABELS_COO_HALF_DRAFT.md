@@ -1,7 +1,7 @@
 # NEVER-WIDEN -- COO half -- DRAFT, UNSIGNED -- ADVI_COTBKF round 96: two label columns on the three served FWD-3 tables
 
 **Signer (to sign):** `2.0.0_SA_COO~C1` (dell1). **Counterpart:** `1.0.0_SA_CTO~DELL1` (owed). **Applier:** a CloudOps seat, to be named at signing (`0.7.0_AE_CloudOps~CB1` seated this project's round 88).
-**State: DRAFT. Nothing is applied, minted or served by this draft.** The fixed sections 1, 2 and 5 are measured now; sections 3 and 4 wait on round 96's control record (the served-move rebuild needs dell2's run data, CTO msg 6467).
+**State: DRAFT, HELD. Nothing is applied, minted or served by this draft.** The fixed sections 1, 2 and 5 are measured now; sections 3 and 4 wait on round 96's control record (the served-move rebuild needs dell2's run data, CTO msg 6467).
 
 ## 1. The act and its blast radius (measured 2026-10-16 ~03:4xZ, read-only)
 
@@ -29,7 +29,13 @@ For each key, copy the prior VersionId above back as the current version: `s3api
 - **Branch B, the control reads a difference on any table.** NOT SIGNED. The difference is a finding for the CTO and nothing is written.
 - **Either way the act writes labels only.** The `interim` policy moves no value (builder docstring; round 89 record). `--yahoo-active-policy blank` is never applied (call `3adb` (a); the builder refuses it under `--apply`).
 
-## 4. Counts (empty: filled from the round-96 control record)
+## 4. Counts
+
+From `deliverables/0.9.0_WK_ADVI_COTBKF~186/SERVED_MOVE_MEASURED_RECORD.json` @26f2781a61 (round 96, CB-cr-1; received run data 20,563 files, 4,478,568,892 bytes):
+
+- **Control: Branch A.** `pre_existing_equal` true in 3 of 3 tables: `daily_returns` 1,691,729 rows, `account_day_value` 21,102,041, `month_grades` 82,593; 0 rows differ, `max_abs_diff` 0.0. `run_commit`: served `6f70d5cc01bb`, built `923f06e998ec`, one value on every row of each.
+- **Added columns:** `use_class` and `porting_verdict`, in that order, last in each table. Every row of all three tables reads `NOT_YAHOO`; `NOT_FOR_ACTIVE` accounts 0.
+- **HOLD: not signed.** The labels separate nothing: the served `price_source` never names Yahoo (row D1-W186-S1), though the as-traded basis substituted 1,049,193 points on 911 tickers from the Yahoo cache and kept the store's label (row D1-S12). Applied as built, the move adds two columns reading `NOT_YAHOO` over days that may be Yahoo-priced. Waits on the CTO's ruling (msg to `1.0.0_SA_CTO~DELL1`, 2026-10-16).
 
 ## 5. Conditions
 
