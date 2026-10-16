@@ -20630,3 +20630,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost of the miss: the criterion could never pass on this store, for any principal. Fix is two lines in mg1.AC2.sh (TypeDeserializer on the scope; read dates.calendar_months). A revoke is available under the same role if the halves want the writes undone anyway."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~122",
+  "surfaced_at": "2026-10-16T12:01:03Z",
+  "id": "NFRA_OPLGTW-Z-W122-S1",
+  "one_line": "OG-ts-1 criterion (a) names the registry as app/tools.py, but 5 of the 14 still-present gp1 read_tools (etfs_get_positioning, mdpf_get_aum_metrics, mdpf_get_account_distribution, mdpf_get_aggregate_aua, mdpf_get_model_benchmarks) are defined only under app/integrations/portal_index/, not in app/tools.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ts-1.tests-follow-the-v2-catalog.md section 1 item 1: (a) is 'a read_tool that names a registered tool (app/tools.py)'.",
+      "GREP app/tools.py (worktree C:/tmp/wk-oplgtw-122, HEAD 0cc50b3652) for the five names: 0 occurrences; tools.py line 70 names 'integration (app/integrations)' as a registration path.",
+      "GREP app/integrations/portal_index/integration.py: def mdpf_get_aum_metrics (line 456), mdpf_get_account_distribution (463), mdpf_get_aggregate_aua (468), mdpf_get_model_benchmarks (473), etfs_get_positioning (492); the existing ac01 COVERED check uses a def search over app/ and finds all five.",
+      "RAN python test_og_gp1.py and test_og_gf1.py after the rewrite (13 passed incl. the two ac01 pins and the two controls); the pin counts (a) 14 and (b) 18 for gp1 with the def search over app/**/*.py, and 6 and 9 for gf1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ts-1 section 1 (a): a classified key present in the catalog with a read_tool that names a registered tool, the registry named as app/tools.py.",
+  "world_is": "The five read_tools are registered through the integration path (app/integrations/portal_index/integration.py), which app/tools.py mentions only as a category at line 70. The pin therefore tests registration as a def named in app/ (the standard the existing COVERED check already uses); a literal app/tools.py text check would have placed these five in neither (a) nor (b) and failed the pin.",
+  "notes": "No test or catalog change follows from this row; the pin keeps the def-in-app/ standard. Whether the integration path should be named in the order's parenthetical is the issuer's call (disarm_owner not required: INERT)."
+}
+```
