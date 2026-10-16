@@ -9453,6 +9453,27 @@ carries none.
     },
     "spec_asserts": "The face (item 1) asks for the four new entries with firm: null, a clean-row value, and for the live group map to set the firm.",
     "world_is": "A firm: null line on a table row emits firm None, which the group-map application reads as a conflict with the map firm; the row is left without a bucket. The worker had not run the emit path before the commit, so the premise was not tested at commit time; the line is removed and the emitter path is now graded by AC1."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T15:18:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The fork registry rows of the eight legacy contracts restored the live bucket opal-data-bd and the live flat key_template, so the loader refused the frozen-copy group map (8 conflicts). Amendment A4 moved the eight rows to the frozen copy (commit 68cfc1d1ef).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer amendment A4 (order file, MX-c-26): the trial emit after the A3 merge was refused, 8 errors, group map bucket opal-data-assets would move the row bucket opal-data-bd.",
+        "Before the edit, infra/logic/registry/catalog_fork_keys.json rows c-971931790dc6, c-a14c8a96ed2d, c-bcb135da3897, c-3337de310b4a, c-d8a200d181a1, c-7ab7e7195cf4, c-9702a0209e11 and c-33f8ae6563b5 carried restore.bucket opal-data-bd and a live key_template (silver/<t>/<d>.parquet; silver/transactions_enriched/date=<d>/data.parquet).",
+        "Commit 68cfc1d1ef: sixteen changed lines, two per row; the frozen layout checked against eight real listing lines (listings/frozen_registry_check.txt, 2026-10-16T15:11:58Z to 15:12:13Z)."
+      ]
+    },
+    "spec_asserts": "The order bounds (item 1) and the face name the group map as the only bucket source for the four new live rows, and do not list the fork registry as a surface for the eight legacy rows.",
+    "world_is": "The fork registry join restores bucket and key_template for every table row by hashed contract id, so the eight legacy rows took the live bucket and layout from the registry, not from their entries. The worker did not run the loader path before A3; the registry edit is limited to those eight rows, and c26.AC2 now grades the loader path."
   }
 ]
 ```
