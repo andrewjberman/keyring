@@ -22961,3 +22961,128 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W172-S4 -- AR-y-380 names the users-table name and the partner-table name as the ones in sitting_r33.py, but the users-table name is set in sitting_r28.py and reached through base.USERS
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W172-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-16T21:52:02Z",
+  "one_line": "AR-y-380 says the users-table name, the key shape and the partner-table name are the ones in sitting_r33.py. sitting_r33.py spells only the partner table out (opal-partner-<firm>); the users table is base.USERS from sitting_r28.py, which sitting_r33.py imports. The name was read from sitting_r28.py:34 with certainty, so no BLOCKING row was needed and the helper cites both files beside the constant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-380 mint paragraph: 'The users-table name, the key shape and the partner-table name are the ones in sitting_r33.py (read them there; if a name cannot be read there with certainty, file a BLOCKING row instead of guessing).'",
+  "world_is": "sitting_r33.py:191 spells the partner table as 'opal-partner-' + firm; sitting_r33.py:184-188 give the users and partner key shapes. The users table is base.USERS: sitting_r33.py:29-30 imports sitting_r28.py, and sitting_r28.py:34 sets USERS = 'opal-users-v2'. The name is therefore read, with certainty, from sitting_r28.py:34 and not from sitting_r33.py itself.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r33/sitting_r33.py:29-30,184-191 (read in the main workspace, read only)",
+      "C:/dev/ajb_workspace/org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r28/sitting_r28.py:32,34 (read in the main workspace, read only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W172-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-16T21:52:02Z",
+  "one_line": "AR-y-380 names createdBy 0.7.0_AE_CloudOps~IB2 for both window-5 rows, but the release-33 helper it reads writes 0.7.0_AE_CloudOps~AQ2. The helper uses the order's value; the window-5 rows therefore carry IB2 unless the issuer says otherwise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-380 mint paragraph: the users row and the partner row carry createdBy 0.7.0_AE_CloudOps~IB2 (the order's stated value), and the cell says the constants are read from sitting_r33.py.",
+  "world_is": "sitting_r33.py:286 and sitting_r33.py:302 write createdBy '0.7.0_AE_CloudOps~AQ2' on the release-33 users and partner rows. fwd1_advisor.py CREATED_BY is the order's value, not a value taken from sitting_r33.py. The difference is a provenance stamp only: _advisor_owner in infra/aws/lambda/investor-reporting/_authz/served.py (HEAD, lines 1085-1104) reads email, firmId, status and advisorKey, never createdBy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r33/sitting_r33.py:286,302 (read in the main workspace, read only)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1085-1104 @HEAD (git show HEAD:<path>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S159 -- disposition of S134 (DISARMED) and W275-S1: the FWD-5 live sitting 2 read firm B refused 7 of 7 with a working control
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S159",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T22:41:15Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-S134 (the places where the ticket service or the report side ADMITS): DISARMED on the CTO's reading of the second live sitting (msg 9955): firm B (cottonwood, allowedFirmIds cottonwood) was refused on every made call for the one synthetic 49financial ticket, the control (opal-capital, allowedFirmIds 49financial) read ALLOWED on ticket-read and ticket-list and served bodies on original-upload and opal-report, and both principals were removed; also disposes of W275-S1 (the one edited control test): ACCEPTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD FWD-5 (prd/IRPT_ANLREQ_PRD.md:65-68): another firm never sees the request, the package or the commentary; S134 stayed armed until a seat-driven exercise (CTO Move 2, msg 8742) showed the fence live with a working positive control (laptop CTO ruling XA-20261016T191116Z-4c60, CTO msg 9804).",
+  "world_is": "Order IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-s2-ib2 (IB2, complete 3f1992ceb1; instance c09e0d4555 VALID; reports org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/). Firm-B run: ticket-read 403, form-as-filled 403, ticket-list 200 without the ticket id, and original-upload, opal-report, report-pdf, commentary-pdf answered ok false FIRM_BINDING with the lengths 430/410/420/442 (served.py:1234-1236, before any route code): REFUSED 7, LEAK 0, UNREACHED 0, EXCLUDED 2, exit 0. Control: ticket-read 200 (1550 B), ticket-list 200 (42778 B, carries the ticket id), original-upload 200 (1961 B) and opal-report 200 (60114 B) served bodies (no envelope: graded UNREACHED by the strict parse, ALLOWED in substance per the CTO), report-pdf and commentary-pdf NOT_FOUND (no PDF exists; the control passed the tenant guard), form-as-filled 404. The checks: absent OK (both principals removed), control OK, report OK, fence OK. The first sitting (S156/S157) was a driver defect, not an exposure. W275-S1: test_fwd5_control_all_allowed_exits_zero had four report-side fakes answering ok-true envelopes after the grading change; its intent is kept. NOT done: the driver does not yet treat a 2xx JSON without ok as ALLOWED in control mode (the CTO's named enrichment); the fence on report-pdf and commentary-pdf rests on the control reaching the owner read, not on a served PDF.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/fwd5_run_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/fwd5_control_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-s2-ib2.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-16T22:15:02Z",
+  "one_line": "The firm list the Ticket Center reads for a staff filer cannot tell a profile that lists the firm from a profile that does not narrow the firms at all, so the AR-y-378 field would be asked of both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "AR-y-378 step 1: the advisor login email field applies ONLY when the signed-in filer's profile lists the selected firm; for any other filer the form and the upload request are byte-identical (no field, no advisor_email key).",
+  "world_is": "The only list the form reads for staff is the served Global context READY set (portal TicketCenter.tsx:104-121 at fcbf2bce). The server narrows an internal caller only when its users row carries a non-empty allowedFirmIds: a selection outside that list is refused FIRM_BINDING (served.py:1249-1260), which the Global context returns as UNAVAILABLE (directory/entry.py:414-456). An absent attribute or an empty list is UNCHANGED (served.py:1179-1193), so every firm is READY. The portal session carries no allowedFirmIds (AuthContext claims hold firmId and userType only). So an unrestricted staff filer and a listed one present the same list. The door demands an advisor only when the tenant is in the actor's allowedFirmIds (served.py:1063-1083); a present advisor_email switches the owner to the named advisor (served.py:1085-1104), so the field would change the owner for an unrestricted filer the door never required it of. Read from the code; not exercised against the live door.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src/pages/TicketCenter/TicketCenter.tsx:104-121 at fcbf2bce (loadAllowedFirms: READY firms for internal)",
+      "portal src/contexts/AuthContext.tsx:786-802 at fcbf2bce (isInternal, isDev read claims firmId and userType only)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1154-1193 and 1249-1260 at HEAD 9f1e81226a (_internal_allowed_firms; caller_refused)",
+      "infra/aws/lambda/investor-reporting/directory/entry.py:414-456 at HEAD 9f1e81226a (global_context, UNAVAILABLE on a refused member)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1063-1104 at HEAD 9f1e81226a (_create_owner, _advisor_owner)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Dormant in fact: the candidate branch cand/dell2/anlreq-advisor-login-email is LOCAL at 9355392a and is not pushed. ARMED for the merge-forward: the applicability rule (a listed firm versus an unrestricted profile) must be ruled before .tools/portal-merge-forward.sh runs on an approved row."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-16T22:15:02Z",
+  "one_line": "AR-y-378 step 4 asks that a refused upload show its code under the failure line, for every filer; AC4J asks that any other filer's form stay byte-identical. The candidate follows step 4, so a refused upload for a filer the field does not apply to shows the code too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-378 step 4: when the upload is refused the form shows the refusal's own message or closed code under the failure line. AC4J: any other filer's request and form are byte-identical to today.",
+  "world_is": "The two sentences cannot both hold for a refused upload from a filer the field does not apply to: the request bytes are unchanged for that filer, but the failure state gains one line. The candidate (commit 9355392a, TicketCenter.tsx refusal prop) shows the code for every refused upload, as step 4 is written. The CVO grades the AC4J reading at L9.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit 9355392a on cand/dell2/anlreq-advisor-login-email: src/pages/TicketCenter/TicketCenter.tsx and AnalysisRequestParts.tsx (UploadFindings refusal line)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-378.ticket-form-asks-the-advisor-login-email.md (step 4 and AC4J)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Display only: no request changes for a filer the field does not apply to. Either reading is one line in TicketCenter.tsx; the CVO picks at L9."
+}
+```
