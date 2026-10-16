@@ -5,7 +5,7 @@
 <to_id>AMGT_HARVST.TO-HVST-cb-9.the-dell1-runner-re-registered-from-the-cb-8-head-with-four-publishers</to_id>
 <decomp_ref>
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
-<owned_cells>HVST-cb-7,HVST-cb-9</owned_cells>
+<owned_cells>HVST-cb-9</owned_cells>
 </decomp_ref>
 <issued_to>0.7.0_AE_CloudOps~SC1</issued_to>
 <issued_by>2.0.0_SA_COO~W1</issued_by>
@@ -20,6 +20,17 @@ comp-adversary: RUN at L5 -- the adversary is a stop that cuts a live cycle, a p
 
 The dell1 runner (registered by `HVST-cb-2`, from pin `C:\dev\wk-harvest-runner-pin-47c623dcf8`) runs `wsj` and `barrons`, with a seeded `<runtime>\secrets\` holding two copied `.dpapi` files (cb-2 amendment 1). `HVST-cb-8` (merged `a879d12881`) makes a profile-store publisher start a job without any saved bundle, and the CTO bound the seeded copies to be deleted when it lands. Andrew moved `sa` and `bbg` to dell1 too, and their local proofs are in (`ledger/ROUND87_LOCAL_PROOFS_20261015.md`).
 This cell does ONE re-registration: new pin **Q**, publishers `wsj,barrons,sa,bbg`, the seeded copies deleted after the first job proves `browser_profile`, and nothing else.
+
+## AMENDMENT 1 (issuer, 2026-10-16 ~00:3xZ; CTO msgs 6344 and 6353; GOVERNS wherever sections 1 and 2 below differ)
+
+The first dell1 cycle showed that every collector job re-read the whole silver `article` prefix (about 29.6 GiB per `wsj` cycle), and the CTO stopped the runner at 00:01:34Z by its stop file. `HVST-cb-10` (per-process GET counters) and `HVST-cb-11` (a job's bound from local state, no silver S3 read) are merged. The CTO ruled: re-register `wsj` and `barrons` ONLY; `sa` and `bbg` join (a later order, `HVST-cb-7`) only after the first cycle on the new pin has recorded the UPLOADER's silver reads; the 5 GiB-per-cycle bar includes the uploader's reads. So, for this order:
+- **`<publishers>` is `wsj,barrons`. `sa` and `bbg` are NOT started by this order.** The order's title and file name keep "four-publishers" because a file name does not change; the cell owned is `HVST-cb-9` only.
+- **Q must also carry** `62fcc1978e` (cb-10) and `02d4090763` (cb-11), as well as `a879d12881`, `e6649b1250`, `d0c48b3946` and `39ae28559b`. Check each with `git merge-base --is-ancestor <c> Q`; the negative control is the reverse for `02d4090763`.
+- **Start condition 1.c is replaced:** only the `wsj` cycle record `20261015T203204Z` (`completed: true`, written by the previous pin) must exist; print it. The `barrons` clause is WAIVED by the CTO (its cycle was cut by the stop file, record `20261015T234451Z`, `stopped_by_operator`).
+- **Start condition 1.d lists the `wsj` and `barrons` prefixes only** (same method). **1.e is WITHDRAWN** (no `sa`). **1.f becomes:** the runner is NOT running (it was stopped at 00:01:34Z): a census over ALL processes finds no `cycle_runner` and no `backfill_driver` process (positive control), and `Get-ScheduledTask` reads `Ready`. If a runner process IS running: DO NOT START, file a row.
+- **Step 3 (the stop) is already done:** `<stop>` EXISTS now. Do not wait for a record. Read that the last `barrons` cycle record is `stopped_by_operator`, then DELETE `<stop>` and read `Test-Path` False before the registration. Everything else in step 3 is skipped.
+- **New read R7 (the bar):** at +15 minutes and again at the first `.cycle.json` of EITHER publisher, read `<runtime>\s3_get_ledger.jsonl` (lines whose `ended_at` is after T0): per `command` (`run`, `upload-harvest`) the line count, the sum of `get_count` and of `get_bytes`, and the average bytes per line; project a 242-pair cycle as (average `run` bytes per job + average `upload-harvest` bytes per upload x uploads per job) x 242 and print it in GiB. **If either projection exceeds 5 GiB: create `<stop>`, wait for the cycle record, do NOT re-register, and tell the issuer at once.** `cycle.json` also carries `s3_jobs_lines`, `s3_get_count_jobs`, `s3_get_bytes_jobs`: print them.
+- **Proof criterion AC1 is replaced** (below). AC2 and AC3 stand; `cb9_seed_removed.out` still needs `token_source=browser_profile` read from a run record of the new pass (C-c2).
 
 ## 1. START CONDITIONS (all read at the start, not assumed; any false: DO NOT START, file one row, and the issuer reads it)
 
@@ -55,12 +66,12 @@ org/critical_paths/change_management/
 ## PROOF OF SPEC (each invocation LITERAL, on dell1)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="HVST-cb-9"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.Arguments"</invocation><expect>--publishers (wsj barrons sa bbg|wsj barrons bbg)</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-cb-7,HVST-cb-9"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb9_seed_removed.out</invocation><expect>(?s)token_source=browser_profile.*Test-Path.*False</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-cb-9"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.WorkingDirectory"</invocation><expect>(?s)\A(?!.*47c623dcf8).*wk-harvest-runner-pin-[0-9a-f]{10}</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-cb-9"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb9_seed_removed.out</invocation><expect>(?s)token_source=browser_profile.*Test-Path.*False</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-cb-9"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb9_windows.out</invocation><expect>(?s)NOT_MINIMISED=0.*NOT_MINIMISED=0</expect></criterion>
 </proof_of_spec>
 
-- The checker reads `<expect>` as a regular expression. AC1 is a scheduler read on dell1; at the base it reads `--publishers wsj barrons`, so it FAILS as expected; AC2's and AC3's files do not exist. `cb9_seed_removed.out` must carry the literal text `token_source=browser_profile` (the run record's value) and a `Test-Path` line reading False. `cb9_windows.out` must carry a `NOT_MINIMISED=<n>` line per read.
+- The checker reads `<expect>` as a regular expression. AC1 is a scheduler read on dell1 (AMENDED: the working directory must be a runner pin that is NOT the old `47c623dcf8`); at the base it reads the old pin, so it FAILS as expected; AC2's and AC3's files do not exist. `cb9_seed_removed.out` must carry the literal text `token_source=browser_profile` (the run record's value) and a `Test-Path` line reading False. `cb9_windows.out` must carry a `NOT_MINIMISED=<n>` line per read.
 - INSTANCE NAMED EXACTLY `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/AMGT_HARVST.TO-HVST-cb-9.the-dell1-runner-re-registered-from-the-cb-8-head-with-four-publishers.proof_of_spec.json` with `to_id` `AMGT_HARVST.TO-HVST-cb-9.the-dell1-runner-re-registered-from-the-cb-8-head-with-four-publishers` and `decomp_ref.to_ref` the path of THIS order file.
 - **THE CHANNEL FILE HAS MIXED LINE ENDINGS.** Append a row by BYTES and check the diff reads N insertions and 0 deletions.
 - Commit with `.tools/safe-commit.sh`. Do not edit this order file: the issuer flips its status.
@@ -75,13 +86,13 @@ This order touches none of them.
 
 **ISSUER NOTES:**
 - Authority: CTO addendum 2 (msg 6234); Andrew-direct 2026-10-15 ~16:3xZ; the CTO's bound on the seeded copies (msg 6216).
-- **STAGED, not sent:** waits on 1.c (the first complete `wsj` and `barrons` cycles with the E2 line). The first wsj cycle began 20:32Z; its length is organic (about 242 pairs per publisher). The issuer reads the cycle records and sends this order on the GO of that read; the executor then reads 1.c itself.
+- **SENT 2026-10-16 ~00:4xZ under AMENDMENT 1 (status pending).** Before the amendment it waited on 1.c (the first complete `wsj` and `barrons` cycles with the E2 line). The first wsj cycle began 20:32Z; its length is organic (about 242 pairs per publisher). The issuer reads the cycle records and sends this order on the GO of that read; the executor then reads 1.c itself.
 - **The real-job proof of `HVST-cb-8` is step 5** (the first pass after the re-pin with the seed to be deleted): not a separate job, because the production runner holds the publisher profiles and a second Chrome on one would collide with it. The CTO's half rules the same.
 - **Not covered, named:** `sa`'s expiry (a person's sign-in); a challenge repair in a minimised window; `ft` (Andrew's session, not yet provided).
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>87</round>
 <workstream>RUNNER-REREGISTER</workstream>
 <slot>dell1</slot>
