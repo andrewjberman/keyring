@@ -57,7 +57,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-16.en14-tests-order-independ
 - Round 39 repair, workstream ENRICH-R39-B. Found at the drain: `test_ogen14_ac03` passes alone and in the worker's own run and fails after `test_og_en4.py` or `test_og_en12.py` (the full-suite order). Risk WORLD by the L6 floor (a gateway infrastructure path); tests only.
 - Pre-cut: `en16.AC1` base FAIL as expected (forward order: 10 passed, 1 failed; reverse: 11 passed, 0 failed); `AC2` base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>39</round>
 <workstream>ENRICH-R39-R</workstream>
 <slot>~128</slot>
