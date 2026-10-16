@@ -645,7 +645,7 @@ def case_check_8_signature_rules(env):
     assert verdicts(record)[8] == "failed"
     # a file that does not exist
     record, _ = env.check(w.name, signed=str(env.signer_dir / "absent.txt"))
-    assert verdicts(record)[8] == "failed"
+    assert verdicts(record)[8] == "awaiting"
     # a file with the right text but OUTSIDE the required directory
     outside = env.tmp / "outside.txt"
     outside.write_text(SIGNER_TEXT % (BATCH, w.name), encoding="ascii")
@@ -1139,8 +1139,52 @@ def case_real_security_center_and_on_access_read_on_tiny_synthetic_wheel():
         shutil.rmtree(str(tmp), ignore_errors=True)
 
 
+# ------------------------------------------------- CT-av-1 (round 27): a named WAIVE line carries a failed check 3 to 7
+@with_env
+def case_waiver_line_releases_a_failed_check_6_and_keeps_the_failure(env):
+    w = env.add_wheel(py_bytes=b"VALUE = 2  # differs from the installed fixture\n")
+    text = SIGNER_TEXT % (BATCH, w.name) + "WAIVE %s check 6: synthetic cross-platform difference\n" % w.name
+    record, line = env.check(w.name, signed=env.sign(w.name, text=text))
+    assert verdicts(record)[6] == "failed" and record["verdict"] == "released-with-waiver", line
+    assert record["waived_checks"] == [6] and "c6=failed" in line and line.endswith("verdict=released-with-waiver"), line
+    rc, msg = release(env, w.name)
+    assert rc == 0, msg
+    deliv = (env.cfg.release(BATCH) / (w.name + ".delivery.txt")).read_text(encoding="ascii")
+    assert "WAIVED BY THE SIGNED CHECK 8 FILE" in deliv and "synthetic cross-platform difference" in deliv
+
+
+@with_env
+def case_waiver_for_check_1_is_refused_and_check_8_fails(env):
+    w = env.add_wheel()
+    data = bytearray(w.read_bytes())
+    data[len(data) // 2] ^= 0xFF
+    w.write_bytes(bytes(data))
+    text = SIGNER_TEXT % (BATCH, w.name) + "WAIVE %s check 1: synthetic\n" % w.name
+    record, _ = env.check(w.name, signed=env.sign(w.name, text=text))
+    assert verdicts(record)[1] == "failed" and verdicts(record)[8] == "failed", verdicts(record)
+    assert "can never be waived" in record["checks"][7]["evidence"]["summary"] and record["verdict"] == "not_checked"
+    assert release(env, w.name)[0] == 1
+
+
+@with_env
+def case_check_6_records_the_cross_platform_comparison_and_the_crlf_count(env):
+    # the installed copy is tagged win_amd64 (its own WHEEL file) and the held wheel is a manylinux one
+    (env.site / ("%s-%s.dist-info" % (ic.SYN_NAME, ic.SYN_VERSION)) / "WHEEL").write_text(
+        "Wheel-Version: 1.0\nRoot-Is-Purelib: false\nTag: cp312-cp312-win_amd64\n", encoding="ascii")
+    (env.site / ic.SYN_NAME / "__init__.py").write_bytes(b"VALUE = 1\r\n")
+    w = env.add_wheel(tags=("cp312", "cp312", "manylinux_2_17_x86_64"), py_bytes=b"VALUE = 1\n")
+    record, _ = env.check(w.name)
+    ev = record["checks"][5]["evidence"]
+    assert record["checks"][5]["verdict"] == "failed", "the verdict of check 6 does not change"
+    assert ev["compared_across_platforms"] is True and ev["installed_platform"] == "win_amd64", ev
+    assert ev["held_platform"] == "manylinux_2_17_x86_64" and ev["py_differing_count"] == 1, ev
+    assert ev["differ_after_crlf_normalisation"] == 0, ev
+
+
 CASES = [
     case_clean_signed_checked_and_releases, case_unsigned_not_checked_and_release_refuses, case_flipped_byte_fails_check_1,
+    case_waiver_line_releases_a_failed_check_6_and_keeps_the_failure, case_waiver_for_check_1_is_refused_and_check_8_fails,
+    case_check_6_records_the_cross_platform_comparison_and_the_crlf_count,
     case_differing_py_fails_check_6_and_is_listed,
     case_added_pth_fails_check_6, case_other_hooks_fail_and_known_hook_is_not_a_failure,
     case_release_two_days_old_fails_check_4_default_passes_with_flag,
