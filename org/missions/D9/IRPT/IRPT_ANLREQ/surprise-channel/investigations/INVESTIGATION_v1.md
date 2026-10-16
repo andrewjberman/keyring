@@ -21271,3 +21271,32 @@
 }
 ```
 
+
+---
+
+## IRPT_ANLREQ-D2-S143 -- resident r34 V2 FAIL: yfinance is not installed on the resident host
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S143",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-16T04:48:57Z",
+  "one_line": "Resident r34 V2 FAIL: the yfinance library is not installed on the resident host (import raises ModuleNotFoundError, the door checker raises CheckerUnavailable); the install is in place and running, the ledger is left OPEN, zero Yahoo calls were made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2 (deliver the library to the host under its own pair, or order scripts/rollback_r34.sh; the CTO named this case as a STOP in msg 9040)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-APPLY-R34B step 6 and the CTO's added STOP (msg 9040): V2's YfinanceChecker read of SPY must read KEPT; a missing library, an import error or any other state is a STOP before the ledger closes; the packet's section 2c: a missing library raises CheckerUnavailable and the resolver reads every symbol of the batch as CHECK_FAILED.",
+  "world_is": "MEASURED 2026-10-16 04:44Z to 04:46Z (record org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r34/A_AFTER_R34B.txt, SSM 4b2df4da-cb6e-467e-a8d8-482d22983763 and probe 68d8c900-56e1-4e2e-b62a-07aacfb100c4): through the resident's interpreter /usr/bin/python3.12 as ec2-user with the install's sys.path and /opt/investor-reporting-ycharts/pydeps appended, `import yfinance` raised ModuleNotFoundError and YfinanceChecker().check(['SPY']) raised CheckerUnavailable; the yf.download call was not made; no Yahoo call was made. A read-only probe: yfinance is not found on python3.12's default path for ec2-user or root, nor with the pydeps appended; the 52-entry pydeps holds no directory named yfinance, pandas, numpy, requests, curl_cffi, peewee, lxml, multitasking, frozendict or platformdirs; no site-packages yfinance directory in four usual locations; neither the r32 nor the r34 root holds one. V1 is otherwise green (running root r34 active, 10 of 10 members MATCH, sums 313 of 313, census 8 changed 4 added 0 removed, pool pinned, pricing off, producer list unchanged) and swap_pass.load_pool loads the shipped pool (4419 rows, held, not stale). INFERRED FROM THE PACKET, NOT EXERCISED: while the library is absent the door's checker makes every symbol it would check read TICKER_CHECK_FAILED (REPLACE_FILE only) where r32 filed TICKER_NOT_FOUND with Replace and No offered, and the swap's Yahoo history fetch cannot run so an UNRESOLVED holding is left out with the not-analysed disclosure. NOT READ: whether any other interpreter on the host holds the library, how the existing price_adapter_yfinance module is meant to find it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r34/ssm_v2_out.txt and ssm_probe_out.txt",
+      "infra/aws/lambda/investor-reporting/intake/yfinance_check.py (default_history imports yfinance lazily and raises CheckerUnavailable without it), at the r34 build in C:/dev/irpt-release-r34c/x34"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The root stays installed and running; nothing was rolled back (the rollback script is the issuer's to order). Standing: INERT (no safety or data hazard): uploads that reach the checker read the CHECK_FAILED branch (a degraded answer, never a wrong one) until the library is present or r34 is rolled back; the issuer ends that by either route."
+}
+```
