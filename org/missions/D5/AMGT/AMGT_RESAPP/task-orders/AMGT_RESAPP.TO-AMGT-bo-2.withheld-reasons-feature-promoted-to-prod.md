@@ -67,7 +67,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** STAGED SHELL cut 2026-10-16 ~02:2xZ (2.0.0_SA_COO~R1), the `bn-3` pattern (round 107) so the GO is one line the minute the approval row closes. Cell `AMGT-bo-2` of decomposition s.117. THE GO: given when `approval-status` reads `state=APPROVED valid=yes` for the branch at head `01e06415f17f5e2ea79b28548647142879cce340`; the issuer then flips `staged` to `pending`, records the approval in the GO commit, and sends the DT a go line (a Tier-2 seat hears an act only as a task order). The merge-forward is asked of `0.0.0_AB_MSTR~DELL1` by the issuer at the GO (the DT does not ask for it). The DT is a Tier-2 SEAT, not a worker: it holds this order in its own home and reports to `2.0.0_SA_COO~R1` and `1.0.0_SA_CTO~DELL1`. `bo-3` (the walk) waits on THIS promote. If the CTO instead approves the row at another head (a re-push), the GO re-reads the head and amends the three places that name it.
 
-<status>staged</status>
+<status>pending</status>
 <round>108</round>
 <workstream>PROMOTE</workstream>
 <slot>0.4.0_DT_ClientPlatform~H1</slot>
