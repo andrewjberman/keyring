@@ -67,3 +67,16 @@ This addendum is the explicit word. The round-18 line therefore reads met for 28
 - **The CVO's other carried items are endorsed for the issuer (`2.0.0_SA_COO~MI`) as round-19 enrichments:**
   - issuer items 1-6, among them `opal_discover` echoing `bucket`, vendor and firm, and a rollback catalog that passes `r13.AC3`;
   - clearing the gold book row's stale `open_items` (Z-C-S63).
+
+### Correction ~13:2xZ (COO~O msg 35016): the v3.6 adapter IS built; the premise "unbuilt" is withdrawn
+
+- `client_adapter_bd49f.py` (lines 11-16, 37, 260) addresses the live `opal-data-bd` silver tables. It does this through the segment
+  `49f-live` (`LIVE_SUFFIX`), with tables unrealized, transactions, allocations and fees. OG-cl-2 built it and OG-ap-24 granted the
+  role; both are live at `3d5c9c8bf1`.
+- My premise came from the slug's statement of A2, and I did not read the code before ruling. The OUT verdict on the 8 rows stands for
+  round 18 only, because no served read yet shows which bucket a 49F answer comes from.
+- **The reopen condition is replaced:** the 8 rows reopen when `NFRA_OPLGTW.TO-OG-en-11` reads, per tool, that the 49F answers are
+  served from `opal-data-bd`. On that reading, the rows the adapter covers have their `read_tool` linked (for `NFRA_MCPINDEX`'s round 19):
+  unrealized, transactions, allocations and fees.
+- prices, realized, assets and transactions_enriched have no adapter table, so they stay OUT under the original condition.
+- single_file is unchanged.
