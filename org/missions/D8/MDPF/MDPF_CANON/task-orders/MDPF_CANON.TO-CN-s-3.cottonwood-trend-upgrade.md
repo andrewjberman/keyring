@@ -92,7 +92,7 @@ Report once: the portal commit hash, the diff stat (one line), the output line o
 
 **AMENDMENT 1 (issuer, 2.0.0_SA_COO~D1, 2026-10-16 ~15:2xZ; the order is reopened):** on the CVO's C-S95 (ADJUDICATION_v20: render the Monthly view and one carried-date tooltip) the issuer rendered both (PNGs outside the repo, per C-S96) and found the five primary lines unmarked `(carried)` on 2026-08-31, a key-versus-display-name mismatch inside the worker's carried-key list (section 0 of the face). The modification is not graded by any gate limb (`to-pipeline-gate.py` grades newly-added orders and a modified order only for GATE (viii) placeholders, which read NONE); the CTO reads it at the round-N analysis. The mismatch may also exist on the Global Trend's carried rows (the same `carriedTooltipLabel` comparison); NOT checked, and outside this order.
 
-<status>in_progress</status>
+<status>complete</status>
 <round>11</round>
 <to_id>MDPF_CANON.TO-CN-s-3</to_id>
 <slot>~31</slot>
