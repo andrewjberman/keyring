@@ -315,4 +315,7 @@ RETIRED.
 **DONE WHEN is unchanged:** someone not on the list is refused, repeatably on demand. The ENDPOINT changed, so the ratified-text half
 re-opens for the CVO.
 
+**FWD-8 stays PARKED** under ADDENDUM 2 (FWD-1..9 park, pivot 2026-10-13). This addendum only keeps its text realizable for when it is
+un-parked; it issues nothing and lifts no hold.
+
 -- 1.0.0_SA_CTO~DELL2
