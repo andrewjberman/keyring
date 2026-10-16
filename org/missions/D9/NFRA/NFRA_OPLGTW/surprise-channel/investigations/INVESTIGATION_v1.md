@@ -20630,3 +20630,103 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost of the miss: the criterion could never pass on this store, for any principal. Fix is two lines in mg1.AC2.sh (TypeDeserializer on the scope; read dates.calendar_months). A revoke is available under the same role if the halves want the writes undone anyway."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~119",
+  "surfaced_at": "2026-10-16T11:55:39Z",
+  "id": "NFRA_OPLGTW-Z-W119-S1",
+  "one_line": "The task order's <paths> names infra/aws/ec2/opal-gateway/tests/test_og_nw3.py, which is not in the tree; no OG-nw-3 test file exists, so there was nothing to update in it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-5.news-coverage-floor.md section 3 (<paths>) lists tests/test_og_nw3.py beside nw1 and nw2.",
+      "TREE: infra/aws/ec2/opal-gateway/tests at e08686be6a lists test_og_nw1.py, test_og_nw2.py and test_og_gt8.py as the news tests; no nw3 file (ls of the worktree, 2026-10-16 11:55Z)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 3 names test_og_nw3.py as one of the existing news tests the cell may update 'only to follow the new truth'.",
+  "world_is": "The file is absent at the cut base, so no existing test pins an empty answer's key set and none was updated. I did not create it: the cell writes only the news tests that exist. The AC2 write-set regex admits nw[0-9]+, so the grant is not the blocker.",
+  "notes": "INERT: no criterion depends on nw3. Whether the path is a stale name or a file that another round has not yet committed is the issuer's to check."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~119",
+  "surfaced_at": "2026-10-16T11:55:39Z",
+  "id": "NFRA_OPLGTW-Z-W119-S2",
+  "one_line": "The cell asks for a coverage_floor on every empty answer of the news tools, but only news_search_articles takes a date window; news_trending_topics and news_keyword_intelligence have no from/to window for the floor's window field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO: NFRA_OPLGTW.TO-OG-en-5.news-coverage-floor.md section 1 THE FIX: 'where a tool of that file returns an empty result (read news_search_articles, _search_core, news_trending_topics, news_keyword_intelligence and _serve)'; the floor's first field is window [from ISO date, to ISO date].",
+      "CODE: infra/aws/ec2/opal-gateway/app/news_typed.py:346-400 news_trending_topics takes date and days, no from/to; :415-459 news_keyword_intelligence takes keyword and date, no window (at e08686be6a)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The floor applies to every empty answer of the tools in app/news_typed.py, with a window of two dates.",
+  "world_is": "The floor is added to news_search_articles only, the one tool whose answer has a date window. The two siblings have an absent_reason on an empty answer but no window to put in the floor, and the cell's tests name news_search_articles alone.",
+  "notes": "INERT: nothing deploys in this cell. Whether the siblings get a floor with a different window shape (for example the requested date) is the issuer's call."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~119",
+  "surfaced_at": "2026-10-16T11:55:39Z",
+  "id": "NFRA_OPLGTW-Z-W119-S3",
+  "one_line": "The floor's sentence 'no articles in window W, newest article at T' is written for every empty answer, but a filter that matches nothing (text, source or sentiment) over a window that holds rows is also an empty answer, so the sentence is inaccurate for that case.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/news_typed.py:330-334 at e08686be6a: absent_reason 'no article matched the window and filters' is set whenever core['returned'] is empty, whatever the cause.",
+      "CODE: news_typed.py _search_core per_day counts (:275) are taken before the filters apply (:294), so a window can hold rows while every row fails the filter."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The message is exactly 'no articles in window <from>..<to>, newest article at <T>' on an EMPTY answer.",
+  "world_is": "I implemented the sentence verbatim and keyed the floor on an empty returned list, as the cell's absent_reason condition does. A filter miss in a window with articles therefore reads 'no articles in window'. The denominator (per_day_counts, items_by_count) beside the floor shows the rows, so no number is hidden, but the sentence is not true for that case.",
+  "notes": "INERT: the floor is informational and nothing consumes it as a gate yet. The issuer may want the floor keyed on zero rows in the window (sum of per_day_counts) rather than zero returned rows, or a second sentence for a filter miss; that is a spec choice, not made here."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~119",
+  "surfaced_at": "2026-10-16T11:55:39Z",
+  "id": "NFRA_OPLGTW-Z-W119-S4",
+  "one_line": "The cell's 'never raise' rule for a failing _newest_day forced the freshness call in news_search_articles to be guarded too, so a NON-empty answer whose newest-day read fails now returns with a lag_absent_reason where HEAD raised.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE at e08686be6a: news_typed.py:321 fresh = _freshness('articles', _newest_day(table, 'article_date')) was unguarded; a raise propagated out of news_search_articles.",
+      "TEST: tests/test_og_en5.py test_ogen5_ac03 monkeypatches _newest_day to raise and expects the empty answer to return with floor_absent_reason and the non-empty answer to return too (RUN: 3 of 3 passed at the worktree, 2026-10-16)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A failing _newest_day gives the floor a floor_absent_reason and the answer still returns (never raise); the change is named as code only and no other tool changes.",
+  "world_is": "One guarded read (_newest_or_reason) now feeds both the freshness block and the floor, so the freshness block of a non-empty answer carries lag_absent_reason 'the newest-day read failed (<class>)' on that failure, instead of an exception. The unguarded HEAD path is not reachable from a non-empty answer any more. On a failed read the floor's message says 'unknown', not 'none', so a failure is never read as an empty table; the cell did not name that word.",
+  "notes": "INERT on the healthy path: the non-empty answer is byte-equal to HEAD (test_ogen5_ac02 golden 8ca222c30e...). Whether a failing newest read should raise for a non-empty answer, as before, is the issuer's call."
+}
+```
