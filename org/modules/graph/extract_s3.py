@@ -567,22 +567,21 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
     # Cached in module-private global to avoid re-parse per Lambda file.
     global _lambda_source_map_cache
     if _lambda_source_map_cache is None:
-        _lambda_source_map_cache = {}
-        sm_file = workspace_root / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
-        if sm_file.exists():
-            try:
-                import json as _json
-                sm_data = _json.loads(sm_file.read_text(encoding="utf-8"))
-                if isinstance(sm_data.get("functions"), dict):
-                    sm_data = sm_data["functions"]
-                for fn_name, entry in sm_data.items():
-                    if isinstance(entry, dict):
-                        src = entry.get("source_dir") or entry.get("source")
-                        if src:
-                            src_norm = src.replace("\\", "/").rstrip("/")
-                            _lambda_source_map_cache[src_norm] = fn_name
-            except Exception:
-                pass  # malformed source-map; alias resolution skipped
+        # CT-ca-1 (NFRA_CTLPLN round 30): the function map is one <name>.json per function. A missing or empty folder RAISES,
+        # and the cache stays unset so the next call raises again (the old reader skipped alias resolution silently).
+        fn_dir = workspace_root / "infra" / "aws" / "lambda" / "ci" / "function-map"
+        if not fn_dir.is_dir() or not any(fn_dir.glob("*.json")):
+            raise FileNotFoundError("function-map folder missing or empty: %s" % fn_dir)
+        import json as _json
+        sm_data = {p.stem: _json.loads(p.read_text(encoding="utf-8")) for p in sorted(fn_dir.glob("*.json"))}
+        cache = {}
+        for fn_name, entry in sm_data.items():
+            if isinstance(entry, dict):
+                src = entry.get("source_dir") or entry.get("source")
+                if src:
+                    src_norm = src.replace("\\", "/").rstrip("/")
+                    cache[src_norm] = fn_name
+        _lambda_source_map_cache = cache
 
     if lambda_dir.exists():
         for py_file in lambda_dir.rglob("*.py"):
@@ -693,7 +692,7 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
             # READS_S3/WRITES_S3 edges to make comp-trace + comp-blast
             # cross-stack traversal Lambda-aware.
             #
-            # AC-VAL-Y.5 alias resolution: lambda-source-map.json maps the
+            # AC-VAL-Y.5 alias resolution: the Lambda function map maps the
             # TF-canonical function name (e.g. opal-market-overview-tiered-
             # generator) to source_dir; we lookup the TF-canonical via the
             # source_dir of this py_file and ALSO add edges under the
