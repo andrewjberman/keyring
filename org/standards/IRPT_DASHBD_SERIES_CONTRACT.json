@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.3.1",
+  "contract_version": "0.3.2",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -15,6 +15,11 @@
       "contract_version": "0.3.0",
       "sha256": "09e98980902dba9f9e0bc21936efd5a1cc482b1f683ea4abb468e8cf6559f4af",
       "note": "the bytes of 0.3.0 before income_claim, the const mark on unreported_trading_days_basis and calendar_source were added (TO-DB-b-285, round 148); the series section keeps its required, array_keys and shape unchanged from them"
+    },
+    {
+      "contract_version": "0.3.1",
+      "sha256": "f8c6777c20f5d139281aced95c901109b27573a153ab56f6a6ecdb8074f4d2d3",
+      "note": "the bytes of 0.3.1 before the income_claim reason was renamed to RETURN_METHOD_DOES_NOT_SEPARATE_INCOME (TO-DB-b-289, round 149); the series section keeps its required, array_keys and shape unchanged from them"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -161,10 +166,10 @@
       },
       "income_claim": {
         "kind": "scalar string",
-        "source": "the source table contract's income_claim column (0.4.4, cell DB-b-284), carried unchanged; that column is declared by that amendment, not by the 0.4.3 source file this contract was cut against",
+        "source": "the source table contract's income_claim column (0.4.5, cell DB-b-289; declared by cell DB-b-284 at 0.4.4), carried unchanged; that column is declared by that amendment, not by the 0.4.3 source file this contract was cut against",
         "fixed_value": "absent",
-        "fixed_reason": "SOURCE_REPORTS_NO_INCOME",
-        "sentence": "Present exactly when every income entry is null: the source reports no income for the series, so the claim is absent and says so; a null is never read as zero, filled or carried, and the income array is never summed as zero."
+        "fixed_reason": "RETURN_METHOD_DOES_NOT_SEPARATE_INCOME",
+        "sentence": "Present exactly when every income entry is null: the return method does not separate income (the source carries it), so the claim is absent and says so; a null is never read as zero, filled or carried, and the income array is never summed as zero."
       }
     }
   },
@@ -176,9 +181,9 @@
     "absent_means": "no statement is made: the page says nothing about unreported days and never guesses"
   },
   "income_claim_rule": {
-    "present_when": "every income entry of the series is null (the source reports no income for it)",
+    "present_when": "every income entry of the series is null (the return method does not separate income; the source carries it)",
     "value": "absent",
-    "reason": "SOURCE_REPORTS_NO_INCOME",
+    "reason": "RETURN_METHOD_DOES_NOT_SEPARATE_INCOME",
     "absent_means": "no statement is made about income: the page says nothing about it and never reads it as zero"
   },
   "manifest": {

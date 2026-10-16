@@ -375,3 +375,21 @@ The carrier ruling made the contract's WRITER the source of cell (a)'s fixture; 
 | cell id | owner |
 |---|---|
 | DB-c-28 | 0.4.0_DT_ClientPlatform~DELL2 |
+
+## 18. ROUND 149, WORKSTREAM B-CW (2026-10-16 ~08:2xZ, issuer 2.0.0_SA_COO~C2, on the standing order of work of the CTO's msg 8741 (Cottonwood first, then 49 Financial and Inflection) now that the Cottonwood FWD-10 cells (a), (b) and (c) are built, merged and promoted): FWD-10 for 49 Financial, the coverage census and the labelled test read of the published series through the page
+
+**Measured before the cut (counts only, this seat's own one-off reads):** 49 Financial gold `account_return_daily` holds 571 date partitions from 2024-07-08 to 2026-10-14 and `holdings_performance_daily` 570 from 2024-07-09 to 2026-10-14, with no absent trading day in either; 49 Financial has no `account_dim` and no `filled_report_values` in gold. The published series prefix `irpt/49financial/platinum/reporting/` holds 6,949 accounts' `series.json.gz` and `manifest.json` and 4,344 `summary.json`; every series carries `history_scope` `PARTIAL_HISTORY`, none carries the unreported-days pair (the 49 Financial source makes no such statement, so the page says nothing about unreported days for it, by the contract's own rule), 6,946 of 6,949 end on 2026-10-14, and the day-quality day totals are MEASURED 2,578,713, NOT_MEASURABLE 57,492, FLOW_UNRECONCILED 6,139 and LARGE_FLOW 44,505. These are the issuer's first reads; the worker's record is the census and the checker re-measures it.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-29` | the 49 Financial FWD-10 census: the two gold tables' first and last day, absent trading days and runs; and the labelled TEST READ of every published 49 Financial series through the page's own `readSeries` and `performanceView` (documents, refusals, the notes the page prints); read-only S3; counts only; no portal edit | FWD-10 | LOCAL | none | C-F |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One cell, one worker: the gold census and the page read share the one record and the one checker; it reuses the round-148 harness (`page_read_r148.ts`, `read_publish_r148.py`) by copying. (b) The census records counts and dates only: a 49 Financial account id is a client identifier and never appears in a record, a note or a row. (c) It is read-only: it changes no 49 Financial pipeline, no series and no page; the series' producer is `~D2`'s (workstream B-49F). (d) Inflection has no data yet and is not in this cell. (e) A finding the census may surface (for example the 3 accounts whose series ends before 2026-10-14, or every series reading `PARTIAL_HISTORY`) goes to the CTO in the packet, not into a build cell.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one read-only census and page read. Worker `0.9.0_WK_IRPT_DASHBD~420`, portal ref `34a6baf8657bb166676dc3b8c3eec97ee8d3e585` (portal DEV, the round-148 merge).
+
+## Cells (round 149, workstream B-CW)
+
+| cell id | owner |
+|---|---|
+| DB-c-29 | 0.9.0_WK_IRPT_DASHBD~420 |

@@ -2438,3 +2438,19 @@ The writer cell is `DB-b-287` (publisher 0.3.0 and the Cottonwood handler), alre
 **fanout:** 1 of 1 chains, cap 8 (worker `0.9.0_WK_IRPT_DASHBD~233`); with `DB-b-287` and `DB-b-288` three workers are live.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; validated against references built from the real 0.4.4 and 0.3.1 contracts (green) and 35 single-fault arms (all red)):** `checks/r148/p157_reasonrename.py` (DB157-1-AC1..AC3).
+
+## 151. ROUND 149, WORKSTREAM PUBWRITE (2026-10-16 ~08:3xZ, issuer 2.0.0_SA_COO~D2): the writer and the rename are drained; the publish entry's pins are stale; the pair is next
+
+The writer cell (`DB-b-287`) and the reason rename (`DB-b-289`) landed in ONE drain `ff6c0633a7` (the CTO's one-drain rule). The drain changed pinned members of the publish function's source-map entry, so the entry no longer equals what its pins say.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Re-pin the stale staged members of `irpt-cot-reporting-publish-lambda` (the publisher, the series contract, two registry files other seats edited) in `lambda-source-map.json`; nothing else in the map moves; the build-only package and its unpacked handler graded | DB-b-290 | FWD-10 (S104) | WORLD (one JSON file) | the drain | chain K |
+| 2. The pair: a never-widen packet for ONE applier act: build and upload the new bundle (a new artifact version), ONE `safe-apply` (the function's code hash changes; the daily schedule's 3 resources are added DISABLED: plan 3 add / 1 change / 0 destroy), a dry run, a one-account republish and the full republish of the 939 series (branch E of the signed publish pair covers the republish: same prefix, same keys; the code update and the schedule are new acts), then the read-back that S104 needs (a served Cottonwood series shows `income_claim` and the renamed reason) | NOT CUT: the packet and the applier order follow item 1 | FWD-10 | WORLD | item 1 | later |
+| 3. Enabling the schedule | NOT CUT: the CTO's separate word | FWD-10 | WORLD | item 2 | held |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the re-pin is its own small WORLD-floor cell, not an applier act, because the pins are repo facts a worker can write and a checker can grade, and the applier's order stays to the signed acts; (b) the class producer (`DB-b-286`) and the gold handler's date are NOT part of this pair: they bundle into the 49 Financial `reporting-gold` function, a separate code-update pair; (c) the republish rewrites 939 series and 939 manifests with the same keys, never a delete.
+
+**fanout:** 1 of 1 chains, cap 8 (worker `0.9.0_WK_IRPT_DASHBD~234`).
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the re-pin clause validated against a real re-pin computed from git (green) and 10 single-fault arms (red)):** `checks/r148/p158_repin.py` (DB158-1-AC1..AC3).
