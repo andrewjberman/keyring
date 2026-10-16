@@ -11,8 +11,9 @@ and records whether the file and the copy are still present and unchanged.
 Verbs:
   check   --batch <id> --file <file name> [--approved-by <path>] [--signed-by <path>]
           [--min-release-age-days 14] [--min-earlier-releases 3] [--scan-wait-seconds 20]
-  release --batch <id> --file <file name>
-  pack    --batch <id> --out <dir> [--released-only]
+          [--ecosystem pypi|npm] [--lockfile <bun.lock>]   (npm: the CT-cc-1 limb; a missing --lockfile is a refusal)
+  release --batch <id> --file <file name> [--ecosystem pypi|npm]
+  pack    --batch <id> --out <dir> [--released-only] [--ecosystem pypi|npm]
   selftest-unsigned
   selftest-av   (reads the REAL Security Center, prints one INTAKE-AV line, writes no file)
 
@@ -30,6 +31,7 @@ A failed check 3 to 7 is carried to release only by a WAIVE line in the signed c
 from __future__ import annotations
 
 import argparse
+import base64
 import configparser
 import csv
 import datetime
@@ -39,14 +41,17 @@ import itertools
 import json
 import os
 import pathlib
+import posixpath
 import re
 import shutil
 import site
 import subprocess
 import sys
+import tarfile
 import tempfile
 import time
 import zipfile
+import zlib
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 DEFAULT_SIGNER_REL = "org/tier1_exec/1.0.0_SA_CTO/deliverables"
@@ -983,6 +988,20 @@ def check_8(ctx):
         return rec("failed", "the signature file waives check %s for this file: checks 1 and 2 (the digest and the identity "
                    "of the file) can never be waived" % ", ".join(str(w["check"]) for w in refused),
                    signer=None, path=None, waivers=waivers, refused_waivers=refused, ignored_waivers=ignored)
+    npm_extra = {}
+    if ctx.get("ecosystem") == "npm":
+        # CT-cc-1: a tarball that lists a lifecycle script or names a native binary needs ITS OWN line in this file
+        err, required = npm_required_lines(ctx)
+        if err:
+            return rec("failed", "check 8 cannot know which lines this tarball needs: %s" % err, signer=None, path=None)
+        have = parse_npm_lines(text, ctx["file_name"])
+        absent = [k for k in required if not have[k]]
+        if absent:
+            need = "; ".join("`%s <file name>: <reason>`" % k for k in absent)
+            return rec("failed", "the signature file has no line for this file that the archive requires (it lists a lifecycle "
+                       "script or names a native binary): missing %s" % need,
+                       signer=None, path=None, npm_required=required, npm_lines={k: len(v) for k, v in have.items()})
+        npm_extra = {"npm_required": required, "npm_lines": {k: len(v) for k, v in have.items()}}
     if cfg.signer_dir is None:
         rel = rp.relative_to(REPO_ROOT.resolve()).as_posix()
         parts = rel.split("/")
@@ -997,9 +1016,338 @@ def check_8(ctx):
         summary += "; waives check %s for this file" % ", ".join(str(w["check"]) for w in waivers)
     return rec("passed", summary, signer=signer, path=rel,
                signature_file_sha256=sha256_bytes(rp.read_bytes()), signature_file_git_author=author,
-               waivers=waivers, ignored_waivers=ignored)
+               waivers=waivers, ignored_waivers=ignored, **npm_extra)
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# the npm limb (CT-cc-1; the CTO ruling of 2026-10-16). Each check takes the place of the wheel check it replaces, with the
+# same record shape and verdict vocabulary. A tarball is read IN MEMORY (tarfile, mode r:gz); nothing is extracted to disk
+# and no lifecycle script is run. Checks 1 and 2 are never waivable (WAIVABLE_CHECKS is unchanged).
+# ---------------------------------------------------------------------------------------------------------------------
+NPM_EXT = ".tgz"
+NPM_EXPANDED_CAP = 200 * 1024 * 1024        # the declared sizes of the members, summed: over this is a tarball bomb
+NPM_MEMBER_CAP = 20000                      # over this many members is a tarball bomb
+NPM_PKG_JSON_CAP = 5 * 1024 * 1024          # package/package.json is read whole only below this size
+NPM_LIFECYCLE_KEYS = ("preinstall", "install", "postinstall", "prepare")
+NPM_NATIVE_SUFFIXES = (".node", ".exe", ".dll", ".so", ".dylib")
+NPM_NAME_RE = re.compile(r"^(?:@[a-z0-9][a-z0-9._-]*/)?[a-z0-9][a-z0-9._-]*$")
+NPM_VERSION_RE = re.compile(r"^[0-9A-Za-z][0-9A-Za-z.+-]*$")
+NPM_LINE_RE = re.compile(r"^(NATIVE|LIFECYCLE) (\S+): (.*)$")   # the check-8 lines an npm tarball needs
+
+
+def npm_held_name(name, version):
+    """The held file name (page section 1a), taken from intake_fetch.npm_held_name by path, never copied."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    import intake_fetch  # noqa: E402  (stdlib-only module beside this file)
+    return intake_fetch.npm_held_name(name, version)
+
+
+def _file_digest(path, algo):
+    h = hashlib.new(algo)
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h
+
+
+def npm_strip_trailing_commas(text):
+    """bun writes its text lockfile as JSON with trailing commas. Each comma followed (after whitespace) by a closing brace or
+    bracket is dropped, outside strings only; nothing else changes."""
+    out, in_str, esc, i, n = [], False, False, 0, len(text)
+    while i < n:
+        ch = text[i]
+        if in_str:
+            out.append(ch)
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            i += 1
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch == ",":
+            j = i + 1
+            while j < n and text[j] in " \t\r\n":
+                j += 1
+            if j < n and text[j] in "}]":
+                i += 1
+                continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
+def load_bun_lock(path):
+    """The bun TEXT lockfile as a dict with a packages object. Raises ValueError or OSError when it is not one."""
+    with open(path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    data = json.loads(npm_strip_trailing_commas(text))
+    if not isinstance(data, dict) or not isinstance(data.get("packages"), dict):
+        raise ValueError("the lockfile has no packages object")
+    return data
+
+
+def lock_integrities(lock, ident):
+    """The distinct integrity strings of the packages entries whose first element is ident (name@version). An entry is
+    [ident, registry, {deps}, integrity]; a missing fourth element reads as None."""
+    found = []
+    for _key, val in lock["packages"].items():
+        if isinstance(val, list) and val and val[0] == ident:
+            integ = val[3] if len(val) > 3 and isinstance(val[3], str) else None
+            if integ not in found:
+                found.append(integ)
+    return found
+
+
+def _unsafe_member(name):
+    if not name or name.startswith("/") or "\\" in name or re.match(r"^[A-Za-z]:", name) is not None:
+        return True
+    return ".." in name.split("/")
+
+
+def _link_escapes(base_dir, target):
+    t = str(target).replace("\\", "/")
+    if not t or t.startswith("/") or re.match(r"^[A-Za-z]:", t) is not None:
+        return True
+    joined = posixpath.normpath(posixpath.join(base_dir, t))
+    return joined == ".." or joined.startswith("../") or joined.startswith("/")
+
+
+def npm_listing(path):
+    """Read the tarball's members IN MEMORY. Returns the listing dict; error is None or a reason (not gzip, a bomb, empty)."""
+    out = {"members": 0, "expanded_bytes": 0, "unsafe": [], "error": None, "package_json": None,
+           "package_json_error": None, "lifecycle": [], "lifecycle_commands": {}, "native_members": [], "restricted": None}
+    try:
+        with tarfile.open(str(path), "r:gz") as tf:
+            for m in tf:
+                out["members"] += 1
+                if out["members"] > NPM_MEMBER_CAP:
+                    out["error"] = "more than %d members: refused as a tarball bomb" % NPM_MEMBER_CAP
+                    break
+                out["expanded_bytes"] += max(int(m.size), 0)
+                if out["expanded_bytes"] > NPM_EXPANDED_CAP:
+                    out["error"] = "more than %d bytes expanded: refused as a tarball bomb" % NPM_EXPANDED_CAP
+                    break
+                name = m.name
+                if m.issym() or m.islnk():
+                    base_dir = posixpath.dirname(name) if m.issym() else ""
+                    if _unsafe_member(name) or _link_escapes(base_dir, m.linkname):
+                        out["unsafe"].append(name)
+                elif not (m.isreg() or m.isdir()) or _unsafe_member(name):
+                    out["unsafe"].append(name)
+                elif m.isreg():
+                    if name.lower().endswith(NPM_NATIVE_SUFFIXES):
+                        out["native_members"].append(name)
+                    if name == "package/package.json":
+                        if m.size > NPM_PKG_JSON_CAP:
+                            out["package_json_error"] = "package/package.json is larger than %d bytes" % NPM_PKG_JSON_CAP
+                        else:
+                            _npm_package_json(tf.extractfile(m).read(), out)
+        if out["members"] == 0 and out["error"] is None:
+            out["error"] = "the archive holds no members"
+    except (tarfile.TarError, OSError, EOFError, zlib.error, ValueError) as exc:
+        out["error"] = "not a readable gzip tar (%s)" % type(exc).__name__
+    return out
+
+
+def _npm_package_json(data, out):
+    try:
+        pkg = json.loads(data.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError):
+        out["package_json_error"] = "package/package.json is not readable JSON"
+        return
+    if not isinstance(pkg, dict):
+        out["package_json_error"] = "package/package.json is not a JSON object"
+        return
+    out["package_json"] = pkg
+    scripts = pkg.get("scripts") if isinstance(pkg.get("scripts"), dict) else {}
+    for key in NPM_LIFECYCLE_KEYS:
+        if key in scripts:
+            out["lifecycle"].append(key)
+            out["lifecycle_commands"][key] = ascii_clean(str(scripts[key]))[:200]
+    restr = {k: pkg[k] for k in ("os", "cpu") if isinstance(pkg.get(k), list) and pkg.get(k)}
+    if restr:
+        out["restricted"] = restr
+
+
+def npm_named_native(listing):
+    """The native binaries the record NAMES: every native member, and the package itself when its os or cpu is restricted."""
+    named = sorted(set(listing["native_members"]))
+    if listing["restricted"]:
+        named.append("package/package.json os/cpu restriction: %s" % ", ".join(sorted(listing["restricted"])))
+    return named
+
+
+def _npm_listing(ctx):
+    if "_npm_listing" not in ctx:
+        ctx["_npm_listing"] = npm_listing(ctx["path"])
+    return ctx["_npm_listing"]
+
+
+def npm_required_lines(ctx):
+    """(error or None, the check-8 line kinds this tarball needs). An archive that cannot be read gives an error: the lines it
+    would need cannot be known, so check 8 reads failed rather than passed."""
+    listing = _npm_listing(ctx)
+    if listing["error"]:
+        return listing["error"], []
+    need = []
+    if listing["lifecycle"]:
+        need.append("LIFECYCLE")
+    if npm_named_native(listing):
+        need.append("NATIVE")
+    return None, need
+
+
+def parse_npm_lines(text, file_name):
+    """The NATIVE and LIFECYCLE lines that name THIS file: {'NATIVE': [reason...], 'LIFECYCLE': [reason...]}. A line reads, after
+    the markdown stripping of parse_waivers, `NATIVE <file name>: <reason>`; an empty reason is not a line."""
+    out = {"NATIVE": [], "LIFECYCLE": []}
+    for line in text.splitlines():
+        lead = line.lstrip(" \t*`_#>-").rstrip()
+        m = NPM_LINE_RE.match(lead)
+        if m is None or m.group(2) != file_name:
+            continue
+        reason = (m.group(3) or "").strip().rstrip("*`_").strip()
+        if reason:
+            out[m.group(1)].append(reason)
+    return out
+
+
+def check_1_npm(ctx):
+    """digest: the tarball's sha512 equals the registry document's dist.integrity AND the lockfile's integrity for name@version
+    (two independent sources). dist.shasum (sha1) is compared as well when the registry publishes one."""
+    fr, path = ctx["fetch"], ctx["path"]
+    if fr.get("outcome") != "held":
+        return rec("failed", "fetch record outcome is %r, not 'held'" % fr.get("outcome"))
+    pub = fr.get("published") or {}
+    req = fr.get("requested") or {}
+    reg = pub.get("integrity")
+    if not isinstance(reg, str) or not reg.startswith("sha512-"):
+        return rec("failed", "the fetch record holds no sha512 dist.integrity from the registry document")
+    if not ctx.get("lockfile"):
+        return rec("failed", "no --lockfile given: npm refuses to check a tarball against one source alone (a refusal, never a skip)")
+    ident = "%s@%s" % (req.get("name", ""), req.get("version", ""))
+    try:
+        lock = load_bun_lock(ctx["lockfile"])
+    except (OSError, ValueError) as exc:
+        return rec("failed", "the lockfile is unreadable: %s: %s" % (type(exc).__name__, exc))
+    found = lock_integrities(lock, ident)
+    got = "sha512-" + base64.b64encode(_file_digest(path, "sha512").digest()).decode("ascii")
+    sha256 = _file_digest(path, "sha256").hexdigest()
+    sha1 = _file_digest(path, "sha1").hexdigest()
+    shasum = pub.get("shasum")
+    detail = {"computed_sha512": got, "registry_integrity": reg, "lockfile": os.path.basename(ctx["lockfile"]),
+              "lockfile_ident": ident, "lockfile_entries": len(found), "lockfile_integrity": found[0] if len(found) == 1 else None,
+              "computed_sha256": sha256, "computed_sha1": sha1, "registry_shasum": shasum,
+              "record_held_sha256_matches_disk": str(fr.get("held_sha256", "")).lower() == sha256.lower()}
+    problems = []
+    if got != reg:
+        problems.append("disk sha512 differs from the registry document's dist.integrity")
+    if len(found) != 1 or found[0] is None:
+        problems.append("the lockfile holds %d integrity entr%s for %s" % (len(found), "y" if len(found) == 1 else "ies", ident))
+    elif found[0] != got:
+        problems.append("disk sha512 differs from the lockfile's integrity for %s" % ident)
+    if isinstance(shasum, str) and shasum.lower() != sha1:
+        problems.append("disk sha1 differs from the registry document's dist.shasum")
+    if problems:
+        return rec("failed", "; ".join(problems), problems=problems, **detail)
+    return rec("passed", "re-read from disk now: sha512 equals the registry document's dist.integrity AND the lockfile's "
+               "integrity for %s" % ident, **detail)
+
+
+def check_2_npm(ctx):
+    """identity: the file name is the held name of the request, package/package.json names the requested name and version,
+    and the approved list has the exact line name@version."""
+    fr, file_name = ctx["fetch"], ctx["file_name"]
+    req = fr.get("requested") or {}
+    name, version = req.get("name", ""), req.get("version", "")
+    problems = []
+    if not (isinstance(name, str) and NPM_NAME_RE.match(name)):
+        problems.append("requested name %r is not an npm package name" % (name,))
+    if not (isinstance(version, str) and NPM_VERSION_RE.match(version)):
+        problems.append("requested version %r is not an npm version" % (version,))
+    want_file = npm_held_name(str(name), str(version))
+    if req.get("file_name") != file_name:
+        problems.append("requested file_name %r != %r" % (req.get("file_name"), file_name))
+    if file_name != want_file:
+        problems.append("file name %r is not the held name %r" % (file_name, want_file))
+    listing = _npm_listing(ctx)
+    pkg = listing["package_json"]
+    if listing["error"]:
+        problems.append("the archive cannot be read: %s" % listing["error"])
+    elif pkg is None:
+        problems.append("package/package.json is absent or unreadable (%s)" % (listing["package_json_error"] or "absent"))
+    else:
+        if pkg.get("name") != name:
+            problems.append("package.json name %r != requested %r" % (pkg.get("name"), name))
+        if pkg.get("version") != version:
+            problems.append("package.json version %r != requested %r" % (pkg.get("version"), version))
+    ident = "%s@%s" % (name, version)
+    approved = ctx.get("approved_by")
+    on_list = False
+    if not approved:
+        problems.append("no approved list given (--approved-by); the approval line was not checked")
+    else:
+        try:
+            with open(approved, "r", encoding="utf-8", errors="replace") as fh:
+                for line in fh:
+                    line = line.split("#", 1)[0].strip()
+                    nm, sep, ver = line.rpartition("@")
+                    if sep and nm and nm == name and ver == version:
+                        on_list = True
+        except OSError as exc:
+            problems.append("approved list unreadable: %s" % exc)
+        if not on_list and not any(p.startswith("approved list unreadable") for p in problems):
+            problems.append("no line of the approved list reads %s" % ident)
+    detail = {"requested_name": name, "requested_version": version, "ident": ident, "file_name_expected": want_file,
+              "package_json_name": pkg.get("name") if pkg else None, "package_json_version": pkg.get("version") if pkg else None,
+              "approved_line_sought": ident, "approved_list": os.path.basename(approved) if approved else None,
+              "on_approved_list": on_list}
+    if problems:
+        return rec("failed", "; ".join(problems), problems=problems, **detail)
+    return rec("passed", "file name, package/package.json and the approved list all say %s" % ident, **detail)
+
+
+def check_3_npm(ctx):
+    reason = ("npm tarball: check 3 reads the Python site-packages of this machine, and this route installs no npm package "
+              "into them")
+    return rec("not_applicable", reason, reason=reason)
+
+
+def check_4_npm(ctx):
+    """release age: the route reads the version document only (registry.npmjs.org/<name>/<version>), which carries no publish
+    time and no release count. The check cannot pass without a source, so it reads failed; a WAIVE line may carry it."""
+    reason = ("no release age can be read: the npm route fetches the version document only, which carries no publish time and "
+              "no release count; a CTO ruling must name the source before this check can pass")
+    return rec("failed", reason, reason=reason, release_age_source="none under the ruled fetch set")
+
+
+def check_6_npm(ctx):
+    """the archive listed, never installed: unsafe member names and links, a bomb, a non-gzip file FAIL. Lifecycle scripts and
+    native binaries are LISTED here; check 8 then needs a NATIVE or LIFECYCLE line for each file that carries one."""
+    listing = _npm_listing(ctx)
+    named = npm_named_native(listing)
+    lifecycle = [{"name": k, "command": listing["lifecycle_commands"].get(k, "")} for k in listing["lifecycle"]]
+    detail = {"members": listing["members"], "expanded_bytes": listing["expanded_bytes"],
+              "unsafe_member_names": listing["unsafe"], "archive_error": listing["error"],
+              "lifecycle_scripts": lifecycle, "native_binaries": named, "restricted": listing["restricted"],
+              "package_json_error": listing["package_json_error"], "executed": False}
+    if listing["error"]:
+        return rec("failed", "the archive cannot be read: %s" % listing["error"], **detail)
+    if listing["unsafe"]:
+        return rec("failed", "unsafe member name(s) or link(s) leaving the package: %s" % "; ".join(cap(listing["unsafe"])), **detail)
+    scripts = ", ".join("%s (listed, not run)" % k for k in listing["lifecycle"]) or "none"
+    return rec("passed", "%d members, %d bytes expanded, read in memory and never extracted; no unsafe member name or link; "
+               "lifecycle script(s): %s; native binary(ies) named: %s" % (
+                   listing["members"], listing["expanded_bytes"], scripts, "; ".join(named) or "none"), **detail)
+
+
+NPM_CHECKS = [check_1_npm, check_2_npm, check_3_npm, check_4_npm, check_5, check_6_npm, check_7, check_8]
 CHECKS = [check_1, check_2, check_3, check_4, check_5, check_6, check_7, check_8]
 
 
@@ -1070,18 +1418,18 @@ def held_path_ok(fetch, batch, file_name):
 
 
 def run_check(cfg, batch, file_name, approved_by=None, signed_by=None, min_age=14.0, min_earlier=3, out=None,
-              scan_wait=DEFAULT_SCAN_WAIT, wait_hook=None):
+              scan_wait=DEFAULT_SCAN_WAIT, wait_hook=None, ecosystem="pypi", lockfile=None):
     out = out or sys.stdout
     path = cfg.holding(batch) / file_name
     fetch, fpath = read_fetch_record(cfg, batch, file_name)
     ctx = {"cfg": cfg, "batch": batch, "file_name": file_name, "path": path, "fetch": fetch or {},
            "approved_by": approved_by, "signed_by": signed_by, "min_age": min_age, "min_earlier": min_earlier,
-           "scan_wait": scan_wait, "wait_hook": wait_hook}
+           "scan_wait": scan_wait, "wait_hook": wait_hook, "ecosystem": ecosystem, "lockfile": lockfile}
     held_sha = None
     checks = []
     print("INTAKE-CHECK thresholds: min_release_age_days=%s min_earlier_releases=%s scan_wait_seconds=%s" % (
         min_age, min_earlier, scan_wait), file=out)
-    for fn, row in zip(CHECKS, CHECK_TABLE):
+    for fn, row in zip(NPM_CHECKS if ecosystem == "npm" else CHECKS, CHECK_TABLE):
         if fetch is None:
             verdict, ev = rec("failed", "no fetch record <%s.fetch.json> found for this file" % file_name)
         elif not path.is_file():
@@ -1111,6 +1459,8 @@ def run_check(cfg, batch, file_name, approved_by=None, signed_by=None, min_age=1
     record = {"schema": "intake-check/1", "batch": batch, "file_name": file_name, "held_sha256": held_sha,
               "checks": checks, "verdict": verdict, "waived_checks": carried,
               "checked_by": os.environ.get("OPAL_AGENT_SERIAL", "unknown"), "at": stamp()}
+    if ecosystem == "npm":
+        record["ecosystem"] = "npm"
     write_json_atomic(cfg.records_dir(batch) / (file_name + ".check.json"), record)
     line = "INTAKE-CHECK batch=%s file=%s %s verdict=%s" % (
         batch, file_name, " ".join("c%d=%s" % (c["n"], c["verdict"]) for c in checks), record["verdict"])
@@ -1161,11 +1511,15 @@ def record_is_checked(record, batch, file_name):
     return True, ""
 
 
-def run_release(cfg, batch, file_name, out=None):
+def run_release(cfg, batch, file_name, out=None, ecosystem="pypi"):
     out = out or sys.stdout
     if is_scan_copy(file_name):
         print("INTAKE-RELEASE REFUSED batch=%s file=%s reason=a %s file is a check-7 scan copy, never a held or released file" % (
             batch, file_name, SCAN_COPY_SUFFIX), file=out)
+        return 1
+    if ecosystem == "npm" and not file_name.endswith(NPM_EXT):
+        print("INTAKE-RELEASE REFUSED batch=%s file=%s reason=an npm batch releases %s files only" % (
+            batch, file_name, NPM_EXT), file=out)
         return 1
     record, why = load_check_record(cfg, batch, file_name)
     if record is None:
@@ -1224,7 +1578,7 @@ def held_back_entry(cfg, batch, name, why):
     return row
 
 
-def run_pack(cfg, batch, outdir, out=None, released_only=False):
+def run_pack(cfg, batch, outdir, out=None, released_only=False, ecosystem="pypi"):
     """Refusal rules: (a) any file left in holding/<batch>/ refuses the batch, because a held file is one not yet checked and
     released (or one that failed), and a carrier must never receive a batch that is not whole; (b) every file in
     release/<batch>/ (other than its <name>.delivery.txt) must have a check record that re-derives 'checked', whose
@@ -1247,6 +1601,9 @@ def run_pack(cfg, batch, outdir, out=None, released_only=False):
     for f in files:
         if is_scan_copy(f.name):
             problems.append("%s: a check-7 scan copy is never a released file" % f.name)
+            continue
+        if ecosystem == "npm" and not f.name.endswith(NPM_EXT):
+            problems.append("%s: an npm batch packs %s files only" % (f.name, NPM_EXT))
             continue
         record, why = load_check_record(cfg, batch, f.name)
         if record is None:
@@ -1446,13 +1803,17 @@ def main(argv=None):
     c.add_argument("--min-release-age-days", type=float, default=14)
     c.add_argument("--min-earlier-releases", type=int, default=3)
     c.add_argument("--scan-wait-seconds", type=int, default=DEFAULT_SCAN_WAIT)
+    c.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi")
+    c.add_argument("--lockfile", default=None, help="npm: the bun text lockfile; a missing one refuses the npm check")
     r = sub.add_parser("release")
     r.add_argument("--batch", required=True)
     r.add_argument("--file", required=True)
+    r.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi")
     p = sub.add_parser("pack")
     p.add_argument("--batch", required=True)
     p.add_argument("--out", required=True)
     p.add_argument("--released-only", action="store_true", dest="released_only")
+    p.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi")
     sub.add_parser("selftest-unsigned")
     sub.add_parser("selftest-av")
     a = ap.parse_args(argv)
@@ -1469,12 +1830,16 @@ def main(argv=None):
         if a.scan_wait_seconds < 0:
             print("INTAKE-CHECK REFUSED reason=--scan-wait-seconds must not be negative")
             return 1
+        if a.ecosystem == "npm" and not a.lockfile:
+            print("INTAKE-CHECK REFUSED batch=%s file=%s reason=--ecosystem npm needs --lockfile <bun.lock>; a missing "
+                  "lockfile is a refusal, never a skip" % (a.batch, a.file))
+            return 1
         run_check(cfg, a.batch, a.file, a.approved_by, a.signed_by, a.min_release_age_days, a.min_earlier_releases,
-                  scan_wait=a.scan_wait_seconds)
+                  scan_wait=a.scan_wait_seconds, ecosystem=a.ecosystem, lockfile=a.lockfile)
         return 0
     if a.verb == "release":
-        return run_release(cfg, a.batch, a.file)
-    return run_pack(cfg, a.batch, a.out, released_only=a.released_only)
+        return run_release(cfg, a.batch, a.file, ecosystem=a.ecosystem)
+    return run_pack(cfg, a.batch, a.out, released_only=a.released_only, ecosystem=a.ecosystem)
 
 
 if __name__ == "__main__":

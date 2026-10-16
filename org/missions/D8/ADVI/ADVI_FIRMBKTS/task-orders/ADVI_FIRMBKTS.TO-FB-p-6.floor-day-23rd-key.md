@@ -70,7 +70,7 @@ Commit the record FIRST, your rows and the proof instance second. Report once: t
 
 **ISSUER NOTES:** Round 9 item 4 (CTO analysis @bc6444b8e2, section 1). The CTO accepted C4 and sent this to round 9 "to be named rather than assumed". **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-16 ~18:5xZ):** the first worker (`~89`) measured that the key drew a version at 12:52:32Z the same day, from the daily gold step, and stopped on a BLOCKING row (D1-W89-S1) as the face told it to. The defect was the issuer's wording ("floor day" for "the publisher's run window"), not the worker's. The face, the record shape and the grader's `key23` mode are amended to the publisher's window; the AC1 invocation is unchanged. The same worker continues on this face; its rows stand and the issuer dispositions S1 as answered by this amendment.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <workstream>KEY23</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-p-6</to_id>
