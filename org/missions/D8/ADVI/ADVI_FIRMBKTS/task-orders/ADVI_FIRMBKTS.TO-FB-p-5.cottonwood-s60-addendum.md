@@ -72,7 +72,7 @@ Commit the record FIRST, your rows and the proof instance second. Report once: t
 
 **ISSUER NOTES:** Round 9 item 3 (CTO analysis @bc6444b8e2, section 3 on S60). The delete of the secret is Andrew's act and appears in the round-9 packet's list of acts only he can perform. S59 (Cottonwood silver `account_attributes`) is routed to `2.0.0_SA_COO~C1` by the CTO and is not in this order.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <workstream>S60</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-p-5</to_id>

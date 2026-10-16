@@ -10626,3 +10626,28 @@ round.** Never edit an existing row.
   "world_is": "On the last valued day, 101 of the 115 Commonwealth accounts in the packet hold no positive security line, only cash; the sheet takes the top holdings from the last earlier day that holds one, and 9 of the 118 pairs have no such day and show a blank."
 }
 ```
+
+## ADVI_COTBKF-D1-W195-S1 -- the 2026-10-15 bronze pull holds 122 multi-row accounts against 1 in the stale silver partition, so the first-row book rule decides their dimension book
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W195-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~195",
+  "surfaced_at": "2026-10-16T18:14:58Z",
+  "one_line": "the 2026-10-15 bronze pull holds 122 multi-row accounts against 1 in the stale silver partition, so the first-row book rule decides their dimension book",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only copies of silver/account_attributes/2026-08-19.parquet and forwardfill_v2/account_attributes/ACCOUNT_ATTRIBUTES_DAILY_2026-10-15.xlsx; counts from org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~195/measure_account_attributes_drift.py@3c72ee60639c2b2589aa99472b77b522e626b3b2",
+      "A_00 rule read at data/cot/scripts/gold/A_00.accounts_dimension.py:432 (keep first) and silver row order at data/cot/scripts/silver/cot_silver_merge.py:489 and :498, at base 1e8d53cb83"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A_00.accounts_dimension.py:376-384 says the silver keeps an account assigned to two books as two rows and the dimension keeps the first row's book; cot_silver_merge.py:130-136 cites one such account measured on 2026-08-19.",
+  "world_is": "on the 2026-10-15 bronze pull 122 accounts hold more than one row against 1 in the stale 2026-08-19 partition, and none of the 122 disagrees on a flag; once the step lands, the dimension portfolio_group for those accounts is the first bronze row book."
+}
+```
