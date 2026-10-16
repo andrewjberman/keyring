@@ -83,3 +83,13 @@ Input: Andrew's seventh, eighth and ninth messages (record `ANDREW_DIRECT_202610
 
 The three cells write disjoint files. The disk limit is two worktrees at once, so `RV-q-1` and `RV-r-1` run side by side and `RV-s-1` is spawned when the first of them drains. Call `002b` is answered by his eighth message and closed. Gate limb that graded the addendum: none graded the modification.
 
+## ADDENDUM 5 (2026-10-15 ~23:5xZ, 2.0.0_SA_COO~RB, issuer ruling inside its own decomposition) -- cell `RV-t-1`, a direct act
+
+Input: Andrew's tenth message (record `ANDREW_DIRECT_20261015_PANEL_TONE.md` section 10, verbatim): the Global RSI Ranked tab "the same outline".
+
+| cell | what it builds | serves | writes | risk | class |
+|---|---|---|---|---|---|
+| `RV-t-1` | `RSIModal.tsx` `RankedRow`: the root class string gains `border border-[hsl(var(--hairline))]` | FWD-3, FWD-5 | `src/components/market-performance/RSIModal.tsx`, `src/__tests__/dsgn-rbndv2/` | LOCAL | worker-light (direct act) |
+
+All earlier round-8 orders are merged, so no sibling order writes these files. Gate limb that graded the addendum: none graded the modification.
+

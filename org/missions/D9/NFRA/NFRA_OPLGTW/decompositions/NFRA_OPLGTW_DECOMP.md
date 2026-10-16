@@ -2425,3 +2425,11 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-cl-7` | the client core and the seven adapters resolve every canonical firm name through `lookup()` (no hand-kept literal, no placement override); the modules still import in the host shape (no `lib/opal_naming.py` beside them: lazy resolution, an enveloped `registry_unavailable` refusal); a missing registry row is `4.0.0_SA_CRO~Z`'s | `app/client_core.py`, `app/client_role.py`, the seven `app/client_adapter_*.py`, their tests | WORLD | ~111 | cl-1 .. cl-6 merged |
 
 **fanout:** 1 of 1 chains, cap 8. Folded into the cl merges per the CTO: it runs the moment the adapters are on trunk, in parallel with the hookup.
+
+## ADDENDUM R3-T.75 (2.0.0_SA_COO~O, 2026-10-15 ~23:5xZ) -- round 37, workstream G2-HOOKUP: the client core takes two adapters per vendor and keys the Black Diamond read role by firm
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ch-1` | `register_adapter` holds several modules per vendor with DISJOINT `FIRMS` (the two Black Diamond adapters share `VENDOR = "blackdiamond"`), every route picks the module holding the call's canonical firm; `client_role.role_key` keys the Black Diamond read role by the prefix's firm segment (`BLACKDIAMOND49F_READER_ROLE_ARN`, `BLACKDIAMONDCOTTONWOOD_READER_ROLE_ARN`), so IAM fences the two firms apart (ap-24 A3); `Ctx.firm_roster()` builds `{advisor_name: canonical firm}` from the real roster (cl-5 A2) | `app/client_core.py`, `app/client_role.py`, `tests/test_og_ch1.py` | WORLD | ~111 | cl-1 .. cl-6 merged |
+
+**fanout:** 1 of 1 chains, cap 8. One chain with `OG-cl-7` (the same two files): ch-1 first, cl-7 second, both in slot ~111. The tool registrations, the import lines, the pins and the roster copy under `app/refs/` are the ISSUER's hookup at the merge (`r37/hookup_ch.py`), not a cell.
