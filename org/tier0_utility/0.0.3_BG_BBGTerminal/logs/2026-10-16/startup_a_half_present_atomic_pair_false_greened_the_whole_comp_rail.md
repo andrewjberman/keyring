@@ -152,6 +152,59 @@ on-cadence, not late. **Nothing I own is stale, and the field that says otherwis
 different question** -- the aggregate has no `freshness_basis`, so its verdict and the daily
 pipeline's health are not the same claim.
 
+## 7. The Teams watch expired at 1770 s, and proving the gap empty took TWO polls, not one
+
+`timeout 1770` fired as designed (exit **124**, not a crash); orphan census **0** python rows, so
+nothing survived the reap. Re-armed, pid 15620, receipt read: `identity=517aa5ee-...`, `channels=1`.
+
+**The arm receipt carried the ambiguity:** `cursor=2026-10-15T20:10:39.653Z` -- **identical to the
+previous arm**, so the 30-minute watch advanced it zero. The output file explains why it might not
+have been quiet by choice: the pinned token **expired at cycle 1** (pin HELD, re-selected
+successfully -- the engine's designed recovery, working), then a transient
+`WinError 10054 connection forcibly closed`. **A quiet watch and a deaf watch produce the same
+unchanged cursor**, and the cursor cannot separate them.
+
+**Resolved by independent poll rather than by assuming either reading** -- and it needed **two**
+calls, which is the part worth keeping:
+
+| surface | instrument | result |
+|---|---|---|
+| DM + group chats | `poll_addressed_teams_messages since=20:10:39Z` | **0** |
+| Opal Client Tickets channel | `read_channel_messages` (ids from `channels.json`) | **`@odata.count: 2`**, both 2026-08-20 own-account sends -- nothing since |
+
+**The trap: `poll_addressed_teams_messages` does NOT cover channels.** Its own contract says
+*"v1 covers DM + group chats; channel @-mentions are a fast-follow"* -- while the watch I armed
+covers **1 channel**. So its `count: 0` is a complete answer for two of the three watched surfaces
+and **silent about the client-facing one**. Reading that 0 alone as "nothing arrived" would have been
+right today and wrong by exactly one surface, and the surface it omits is the one that matters most.
+**The gap is empty on BOTH halves, measured separately.** No backlog sweep owed.
+
+### Window 2 (02:2x-02:5xZ) and the pattern that only two windows could show
+
+Expired 124 as designed, orphan census **0**, re-armed pid 14492. **Cursor advanced to
+`2026-10-16T02:49:43.214Z`** -- exactly the last message served -- so the watch processed both
+`[TEAMS]` events correctly and the output carried **exactly 2**, nothing missed mid-window. Tail
+re-measured anyway on both surfaces (**0** DM/group since 02:49:43Z; channel still `@odata.count: 2`,
+both 08-20): no gap.
+
+**The pattern, which one window could not have shown:** `pinned token expired -- quiet retry, pin
+HELD (cycle 1)` appears in **BOTH** windows, and **`cycle 1` is the FIRST poll after arming**. So the
+token on disk is **already expired at every arm**; the engine re-selects and recovers, which is why
+the watch works at all. Two consequences worth having in writing:
+
+1. **Every arm opens with a failed poll**, and the recovery line is **stderr-only** -- so from inside
+   the session a healthy arm and a degraded one are indistinguishable, which is the same
+   stdout-receipt-vs-banner hazard the skill already names, one layer down.
+2. **Window 2 ended on an expiry with NO re-select line after it** before `timeout` fired, so the
+   last recorded state was degraded. That is exactly why the tail was re-measured rather than
+   inferred from the advanced cursor -- **a cursor advances on messages, so it says nothing about the
+   health of the silence after the last one.**
+
+**Not re-filed: this is the Graph TTL item already standing in the OWED list as another seat's.** The
+`cycle 1` / 2-of-2 measurement sharpens it and belongs in the record, not in an inbox (CLAUDE.md rule
+31: FYIs and corroborations go to the record). Subsequent 30-minute re-arms are routine and get no
+further entry unless the shape changes.
+
 ## Compiler Tools
 
 | tool | result | read |
@@ -170,7 +223,17 @@ pipeline's health are not the same claim.
 - **Mine, dated:** read the **10-16 11:00Z** fire result and report. Unattended success would be the
   first since 10-04; failure yields R7's trace naming the foreground thief. **The fire now grades the
   settle loop alone**, per the 02:25:50Z ruling -- a cleaner test than it would have been.
-- **Awaiting:** MSTR~Z on whether `python3` belongs in `provision-path-shims.sh`'s named set.
+- **CLOSED 02:34:09Z, msg 34661 (acked):** `0.0.0_AB_MSTR~Z` added the `python3` pair as
+  `provision-path-shims.sh`'s **third** named non-comp entry at `a9147c39fb` (+34/-2), interpreter
+  `py.exe -3` with **no user path baked** -- a better form than my restored shim, which bakes
+  Python311. He did not re-run the full script, so my `~/bin/python3` stays live until the next
+  re-provision rewrites it. **Verified his equivalence claim rather than accepting it:** `py -3` on
+  this box resolves to **3.11.9 / Python311**, the same interpreter mine picks. That check was worth
+  running -- `py -3` selects the highest REGISTERED Python 3, and if it had resolved to Python314
+  (measured gutted on 09-28) the re-provision would have silently repointed the shim at a
+  known-broken interpreter. It does not. This same session's three files are committed at
+  `1d9aaa3abb` (287 insertions); both commits **LOCAL** on `box/sitez`, origin read at `569e4bb77e`
+  via `ls-remote`, carried by the next box pass.
 - **Carried on his word, unchanged:** 3 Teams items plus Alyssa's detail; the 22:26Z screenshot
   unviewed by choice; Graph TTL; Z6 R5 under COO~ZB; two serving-path fixes with CTO~Z. COMM_ASSIST
   r14 E1 test email remains NOT-ATTEMPTED-BY-POLICY.

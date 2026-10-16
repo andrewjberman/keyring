@@ -101,6 +101,141 @@
     "spec_asserts": "Every worker tree carries the surprise channel schema on disk, so a worker can validate its own row against it at commit.",
     "world_is": "The schema is not on disk in this worker's worktree. The row written here was not validated against the schema by this worker; the gate is run at commit and its output is recorded in the report.",
     "notes": "Nothing was changed in the sparse-checkout configuration. The fix belongs to the worktree provisioning owner (the sparse cone for worker worktrees)."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W4-S1",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~4",
+    "surfaced_at": "2026-10-16T07:05:03Z",
+    "one_line": "Worktree /c/tmp/wk-tckt-mtadta-4 is sparse-checked-out without infra/ and data/, so the TO-MD-s1 write paths (infra/aws/lambda/globgrph-trino-access/ and data/m365_metadata/scripts/) are absent and both acceptance checks refuse as missing files before any code runs.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list at worktree /c/tmp/wk-tckt-mtadta-4 (branch wk-TCKT_MTADTA-4) prints 9 cone entries: .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_MTADTA, org/modules/graph, org/ref, org/standards, org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R1_CHECKS; neither infra/aws nor data is a cone entry",
+        "ls -d infra/aws/lambda and ls data in the worktree: both 'No such file or directory'; git ls-files infra/aws/lambda lists 7434 tracked paths at HEAD, so the tree exists in the repository and not in this checkout",
+        "git ls-files data/m365_metadata returns 0 and git ls-files | grep trino-access returns 0 at HEAD: the globgrph-trino-access folder and the m365 scripts folder are new paths of this round, not tracked files left out",
+        "r1_check_s1.py silver run at the worktree root under timeout 120: 'SILVER-REFUSED missing C:\\tmp\\wk-tckt-mtadta-4\\infra\\aws\\lambda\\globgrph-trino-access\\silver_builder.py' rc=1; r1_check_s1.py readday: 'READDAY-REFUSED missing C:\\tmp\\wk-tckt-mtadta-4\\data\\m365_metadata\\scripts\\silver\\read_day.py' rc=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worktree carries the paths the task order names (its <paths> grant sits inside a checkout that holds the Lambda's folder and the data scripts folder), so the order is executable as written.",
+    "world_is": "The worktree is a sparse checkout whose cone omits infra/aws and data. The worker was not permitted to widen the cone or rebuild the tree to make the order executable, so both silver files are unbuilt and AC1 and AC2 are FAIL (recorded, not weakened).",
+    "notes": "Filed under the refusal clause; nothing was created, edited or committed under infra/ or data/. The cone change (git sparse-checkout add infra/aws/lambda data/m365_metadata) is the owner's call: the COO or the integrator decides whether the worktree is reseated. The HEAD of the mission tree is not in question. Round-1 siblings MD-a-1 (globgrph-trino-access handler) would sit in the same folder and meet the same cone."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W3-S1",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~3",
+    "surfaced_at": "2026-10-16T07:06:38Z",
+    "one_line": "The worktree is a sparse checkout whose cone excludes data/ and infra/aws/, so the order's granted paths under those roots and the two model files the order says to read are not present and cannot be written or committed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list (worktree /c/tmp/wk-tckt-mtadta-3, HEAD c9971df7ca) = .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_MTADTA, org/modules/graph, org/ref, org/standards, org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R1_CHECKS",
+        "printf of seven paths (data/m365_metadata/scripts/collector/filter.py, data/m365_metadata/scripts/population.json, infra/aws/lambda/m365-metadata-collector/handler.py, infra/aws/terraform/trino/collector.tf, infra/aws/lambda/transcripts-pull/build.sh, infra/aws/terraform/transcripts/pull.tf, org/missions/D7/TCKT/TCKT_MTADTA/surprise-channel/investigations/INVESTIGATION_v1.md) | git sparse-checkout check-rules: only the investigation file is admitted",
+        "ls data -> no such file; ls infra/aws -> no such file; git ls-tree -r --name-only HEAD infra/aws/lambda/transcripts-pull shows build.sh and handler.py exist at HEAD (out of cone, not checked out)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worktree carries every path the task order grants (data/m365_metadata/scripts/**, infra/aws/lambda/m365-metadata-collector/**, infra/aws/terraform/trino/collector.tf) and the model files it names to read (infra/aws/lambda/transcripts-pull/build.sh, infra/aws/terraform/transcripts/pull.tf).",
+    "world_is": "The worktree's sparse-checkout cone admits none of the granted code paths; only the investigation file among the seven tested paths is in the cone. The check invocations therefore run against a missing tree and print the REFUSED-missing line for guard, coverage and collect.",
+    "notes": "Stopped before any criterion was graded. No file was created under data/ or infra/, the sparse-checkout definition was not widened (widening it is rebuilding the tree the bar forbids), and no proof instance was written. The check invocations were run once each under timeout 120 and printed GUARD/COVERAGE/COLLECT-REFUSED missing (rc=1). Needs the lane gate or the issuer to put the cone to the grant before the order can run."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W3-S2",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~3",
+    "surfaced_at": "2026-10-16T07:40:00Z",
+    "one_line": "The order names lib/opal_naming for every collector key and name, but the builder refuses system m365-metadata (not a systems.json key), so the keys and names are written as literal strings with the named call in a comment, and the door's get_state reply shape is assumed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~S1 (issuer: the registry-row cell must land m365-metadata and the trino scope, then the literal prefixes in collect.py and the names in collector.tf and handler.py are replaced by builder output in the same change)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python: lib/opal_naming.address('m365-metadata','trino','bronze','audit_events','date=20261015', object=...) -> ValueError: source 'm365-metadata' is not a systems.json key (worktree HEAD c9971df7ca, lib/opal_naming.py:2515)",
+        "python: lib/opal_naming.name('m365-metadata','trino','collector','lambda') -> ValueError: system 'm365-metadata' is not a systems.json key (lib/opal_naming.py:2700)",
+        "python: lib/opal_naming.name('globgrph', None, 'trino-access', 'lambda') -> globgrph-trino-access-lambda (resolves; used as the door name)",
+        "data/m365_metadata/scripts/collector/collect.py module docstring and the key constants; infra/aws/terraform/trino/collector.tf header; infra/aws/lambda/m365-metadata-collector/handler.py header"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every S3 address is lib/opal_naming.address() output and every resource name is name() output; a builder refusal is a missing registry row to add, never a hand-typed workaround.",
+    "world_is": "The builder refuses the m365-metadata system, so the collector's bronze, state and gold prefixes and its Lambda, role, rule and log names are literal strings that reproduce the order's intended addresses. The Lambda zip cannot import lib/opal_naming, so a runtime address() call is not possible there either. The door's get_state reply is assumed to be {body_b64: str|null}; the far-side cell has not stated it.",
+    "notes": "Followed the order's own fallback (build the same prefix, comment the call). Left armed: if the registry rows land with different tokens, the literal prefixes drift from the canon and the collector writes to addresses the builder would not produce. Disarm by replacing the literals with builder output once the rows exist, and confirm the door reply shape with the access-door cell."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W3-S3",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~3",
+    "surfaced_at": "2026-10-16T07:40:00Z",
+    "one_line": "The coverage key is one object per day (date=YYYY-MM-DD/coverage.json, object name fixed by the order), but every hourly fire writes it, so each fire overwrites the day's coverage and an earlier fire's GAP is replaced by the next fire's record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~S1 (issuer: decide a per-fire or cumulative coverage object; the order fixes the key as coverage.json under date=, and the door's get_state cannot read gold, so a cumulative record needs a second read path)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_MTADTA/task-orders/TCKT_MTADTA.TO-MD-c1.collector.md worker face COVERAGE: put(\"gold\", <key under .../gold/collection_coverage/date=YYYY-MM-DD/ with object 'coverage.json'>) per fire and per content type",
+        "data/m365_metadata/scripts/collector/collect.py (run_once coverage loop): one put per Eastern day per fire, body holds the three content-type records; the key carries no fire or content-type segment",
+        "data/m365_metadata/scripts/collector/access_client.py: get_state reads the state dataset only, so the gold object cannot be read back by the collector"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every fire writes a coverage record per day and content type, and a gap in any fire stays visible in the day's coverage.",
+    "world_is": "The key has no fire segment, so the last hourly fire of a day replaces the day's coverage object. A GAP recorded by an earlier fire is erased by a later fire that lists and fetches cleanly. The per-fire counts are the fire's own, not the day's.",
+    "notes": "Implemented exactly as the order states (one object per day, body carrying the three content types). The erasure is a property of the fixed key, not of the code path, and the code cannot repair it inside the order's grant. Decision needed before any reader trusts a day's coverage object."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W3-S4",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~3",
+    "surfaced_at": "2026-10-16T07:40:00Z",
+    "one_line": "The order asks the cursor's seen list to be trimmed to the last 7 days, but seen holds bare blob ids and the source's list_content returns ids with no time, so the 7-day trim cannot be computed from the cursor.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_MTADTA/task-orders/TCKT_MTADTA.TO-MD-c1.collector.md worker face Cursor: seen is {content_type: [blob id, ...]}, trimmed to the last 7 days",
+        "org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R1_CHECKS/r1_check_c1.py Source.list_content returns ids only",
+        "data/m365_metadata/scripts/collector/collect.py cursor block: seen = listed in this fire minus failed, bounded by the overlap listing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cursor's seen list is trimmed to the last 7 days so it stays bounded.",
+    "world_is": "seen is set to the blobs this fire listed, minus the failed ones. Every fire lists the window from the last cursor minus one hour, so a blob that a later fire can list again is always in the seen list it was written with; the list is bounded by one overlap window, not by seven days. Dedupe is correct by construction for that listing; the 7-day bound is not applied.",
+    "notes": "The duplicate-fetch guarantee holds (the second fire fetches nothing, per the check). A cold start with no cursor lists 7 days in one fire, so the first seen list is 7 days of ids before it shrinks."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W3-S5",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~3",
+    "surfaced_at": "2026-10-16T07:40:00Z",
+    "one_line": "The order asks for a coverage record per day, but the listing returns blob ids with no time, so a fire's listed, fetched and dropped counts cannot be split by day; they are attributed to the window's end day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_MTADTA/task-orders/TCKT_MTADTA.TO-MD-c1.collector.md worker face THE DOOR and SOURCE: list_content(content_type, start, end) -> list[blob id]; fetch(content_type, blob) -> list[dict]",
+        "data/m365_metadata/scripts/collector/collect.py coverage block: listed, fetched and dropped set on the end day only; events counted per Eastern creation day"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A coverage record per Eastern day and content type reports what the fire listed and fetched for that day.",
+    "world_is": "Earlier days touched by the window carry their events but zero listed and fetched, so a fetch failure on an earlier day is reported on the end day instead.",
+    "notes": "Chosen because the fixed interface cannot carry a per-blob time. The interface would need to return the blob's content time for per-day attribution."
   }
 ]
 ```
