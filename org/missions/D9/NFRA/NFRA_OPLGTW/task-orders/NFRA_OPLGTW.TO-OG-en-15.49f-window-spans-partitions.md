@@ -80,7 +80,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-15.49f-window-spans-partitio
 
 - A2 (issuer, 2026-10-16 ~19:5xZ, `OG-ev-2` A1 result, rows Z-S313 and Z-S314): the applier counted the repeated `transaction_id` groups of the newest partition: 2727 groups, byte-identical 0, with distinct rows 2727 (14359 rows, 2954 distinct ids). The adapter's `seen`-on-`transaction_id` rule therefore undercounts a client's transactions (it keeps one line of each transaction). This cell now fixes that with exact-duplicate removal, a correctness repair inside the E1 window cell. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>staged</status>
+<status>complete</status>
 <round>39</round>
 <workstream>ENRICH-R39-B</workstream>
 <slot>~126</slot>
