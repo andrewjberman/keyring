@@ -1,0 +1,30 @@
+{
+  "schema": "intake-install/1",
+  "device": "dell1",
+  "file_name": "tabulate-0.9.0-py3-none-any.whl",
+  "received_sha256": "024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f",
+  "install": {
+    "command": [
+      "C:\\Users\\Test\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+      "-m",
+      "pip",
+      "install",
+      "--no-index",
+      "--no-deps",
+      "--target",
+      "C:\\dev\\_intake_tabulate_20261016\\SCRATCH_TARGET",
+      "C:\\dev\\_intake_tabulate_20261016\\PACK2\\tabulate-0.9.0-py3-none-any.whl"
+    ],
+    "rc": 0,
+    "target_form": "target",
+    "interpreter": "C:\\Users\\Test\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "target": "C:\\dev\\_intake_tabulate_20261016\\SCRATCH_TARGET"
+  },
+  "last_line": "Successfully installed tabulate-0.9.0",
+  "at": "2026-10-16T03:53:43Z",
+  "pip_log": {
+    "file": "tabulate-0.9.0-py3-none-any.whl.install-pip.dell1.log",
+    "sha256": "cd6e3557971e21b2afc28a299825b27017981f20f5cb02572ddfae921ef56cb9",
+    "bytes": 676
+  }
+}

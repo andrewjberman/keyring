@@ -20814,3 +20814,264 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S138 -- DISARMS IRPT_ANLREQ-D2-W165-S2: the yfinance checker gap is ruled (CTO msg 8969); ~G2 wires it, FWD-1 run 3 is held until that release
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S138",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-16T03:00:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W165-S2 (C-SWAP step 2's yfinance checker is not wired in the HEAD door): the CTO verified it and ruled that ~G2 cuts one cell wiring the checker into every session the door builds, folded into r34 if its D1 has not started and otherwise released as r35; this seat holds FWD-1 run 3 until that release is applied, so the unknown-ticker branches test what PRD v0.19 says.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W165-S2: security_resolution.py:304 runs the checker only when one is passed (default None, line 204; resident_session.py:145-146 passes none), so a symbol yfinance knows and YCharts omits is filed TICKER_NOT_FOUND with Replace and No offered.",
+  "world_is": "CTO ruling 1.0.0_SA_CTO~DELL2 msg 8969 (answering this seat's msg 8966): the CTO verified that across investor-reporting YfinanceChecker is constructed only in tests and that neither r33's nor r34's changed members wire it. Ruled: (1) 2.0.0_SA_COO~G2 cuts one cell wiring the checker into every session the door builds (resident_session.py and any Lambda path), acceptance a yfinance-known symbol that YCharts omits is KEPT and never offered Replace or No; (2) if r34's D1 has not started the cell folds into r34 and is re-packeted for the CTO's re-sign, otherwise it ships as r35; (3) this seat holds FWD-1 run 3 until that release. NOT read: whether ~G2 has accepted the cell, the release vehicle chosen, or the deployed Lambda.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 8969 (inbox read and acked by this seat)",
+      "worker row IRPT_ANLREQ-D2-W165-S2 (merged 2ba8b8e5af)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The gap is ruled and owned by ~G2's engine lane; run 3 is held behind its release, so the hazard of testing the branches against a door that mis-files known symbols cannot reach a run.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W165-S2."
+}
+```
+
+## IRPT_ANLREQ-D2-W226-S1 -- the order asks to keep CRLF endings; INVESTIGATION_v1.md carries no CR byte, so the row is appended in LF
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W226-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~226",
+  "surfaced_at": "2026-10-16T03:22:00Z",
+  "one_line": "TO-AR-tf-72 says to append with the file's existing CRLF line endings preserved; INVESTIGATION_v1.md has no CR byte",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-72 (org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-tf-72.commentary-lambda-calls-fail-op.md, the worker preamble) instructs: append to the surprise channel with the file's existing CRLF line endings preserved, binary append only.",
+  "world_is": "surprise-channel/investigations/INVESTIGATION_v1.md has zero CR bytes at HEAD cd692a3b94 and in worktree C:/dev/wk-irpt-anlreq-226; every existing row ends in LF. This row is appended in LF with a binary append, so the file stays uniform and no CRLF is introduced.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md@cd692a3b94: git show HEAD:<path> | tr -cd CR | wc -c = 0",
+      "same file in worktree wk-IRPT_ANLREQ-226: tr -cd CR | wc -c = 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The append is a binary append that matches the file's actual line endings."
+}
+```
+
+## IRPT_ANLREQ-D2-W226-S2 -- the worktree is sparse: three tracked infra paths the commentary tests read are absent on disk, so three existing tests fail with FileNotFoundError
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W226-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~226",
+  "surfaced_at": "2026-10-16T03:22:00Z",
+  "one_line": "Worktree wk-IRPT_ANLREQ-226 has core.sparseCheckout=true; infra/aws/terraform/transcripts and infra/aws/lambda/transcripts-pull are tracked at HEAD but absent on disk",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker preamble's TREE-OK check (org and .tools present) passes, and the order's acceptance is the R46 checker over the cell's own test file.",
+  "world_is": "git config core.sparseCheckout is true in C:/dev/wk-irpt-anlreq-226. git ls-files lists 11 files under infra/aws/terraform/transcripts and 3 under infra/aws/lambda/transcripts-pull, and neither folder exists on disk. Three existing tests read those paths and fail with FileNotFoundError: test_commentary_ready_queue.py::test_tf_subscribes_lambda_to_ready_queue, test_commentary_composition_port.py::test_tf_commentary_ready_queue_send_grant_and_receive_policy, test_commentary_composition_port.py::test_build_packages_keys_module. The other 28 neighbouring commentary tests pass, and the new file passes 11 of 11. Not caused by this cell and not repaired here (outside the grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files infra/aws/terraform/transcripts and infra/aws/lambda/transcripts-pull at cd692a3b94: 11 and 3 paths",
+      "pytest over data/transcripts/scripts/tests/test_commentary_{lambda,ready_queue,composition_port,ticket_client,entry}.py in wk-IRPT_ANLREQ-226: 3 failed, 28 passed, all three FileNotFoundError"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worktree sparse-checkout setting belongs to the worktree owner; this cell does not change it."
+}
+```
+
+## IRPT_ANLREQ-D2-W227-S1 -- The channel file carries LF line endings, not the CRLF TO-AR-tf-73 names; the row is appended with the file's own LF endings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W227-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~227",
+  "surfaced_at": "2026-10-16T03:21:26Z",
+  "one_line": "the channel file carries LF line endings, not the CRLF TO-AR-tf-73 names; the row is appended with the file's own LF endings",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-73 WORKER FACE, the commit paragraph: append to the surprise channel with the file's existing CRLF line endings preserved, binary append only.",
+  "world_is": "INVESTIGATION_v1.md at worktree HEAD 6efa66552c has 0 CR bytes (tr -cd with the CR escape counts 0) across 20843 lines; the last bytes are LF (od -c). The append writes LF to match the file. No existing line was rewritten.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree HEAD 6efa66552c: CR byte count 0 on org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md",
+      "wc -lc: 20843 lines, 1600441 bytes; od -c of the final 1500 bytes shows newline only, no carriage return"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Raised by 0.9.0_WK_IRPT_ANLREQ~227 while executing TO-AR-tf-73. The premise on line endings is off; no other part of the order is affected."
+}
+```
+
+## IRPT_ANLREQ-D2-W227-S2 -- The worktree is a sparse checkout: org/surprise_channel/ is tracked at HEAD but absent on disk, so the row schema is read from HEAD
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W227-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~227",
+  "surfaced_at": "2026-10-16T03:21:26Z",
+  "one_line": "the worktree is a sparse checkout: org/surprise_channel/ is tracked at HEAD but absent on disk, so the row schema is read from HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The surprise-channel rule cites the row schema as org/surprise_channel/schemas/investigation_item.schema.json, which a worker reads on disk to shape its row.",
+  "world_is": "In worktree C:/dev/wk-irpt-anlreq-227, core.sparseCheckout is true. git ls-files lists 43 files under org/surprise_channel, yet ls reports no such directory. The schema (10462 bytes) was read with git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json into the worker's scratch folder; nothing was materialised on disk.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config core.sparseCheckout reads true in worktree wk-IRPT_ANLREQ-227",
+      "git ls-files org/surprise_channel counts 43 tracked paths; ls org/surprise_channel reports no such directory",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json rc=0, 10462 bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Raised by 0.9.0_WK_IRPT_ANLREQ~227 while executing TO-AR-tf-73. The channel file itself is present on disk and was appended in place."
+}
+```
+
+## IRPT_ANLREQ-D2-W225-S1 -- The live jobs factory cannot be built: DynamoGenerationStore needs composition_sha256 at construction, the ...
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W225-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~225",
+  "surfaced_at": "2026-10-16T03:25:00Z",
+  "one_line": "The live jobs factory cannot be built: DynamoGenerationStore needs composition_sha256 at construction, the fail event carries none, and mark_hop_failure is not at HEAD (TO-AR-g-109 unmerged)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~T2",
+  "spec_asserts": "TO-AR-tf-71 WORKER FACE item (3): compose_ports() adds 'jobs' built as DynamoGenerationStore(client=clients['dynamodb'], tenant=<resolved tenant>, request_id=<id>), and the writer is DynamoGenerationStore.mark_hop_failure(job_id, hop, code, at).",
+  "world_is": "DynamoGenerationStore.__init__ (infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py@cd692a3b94 lines 45-46) takes keyword-only composition_sha256 with no default, and line 49 refuses any value that is not 64 hex with LeaseRefused. The fail event carries tenant, request_id, hop and code only. The file has no mark_hop_failure method (read in full at cd692a3b94). The shipped reports/commentary_draft_store.py therefore wires _hop_failure_jobs, which raises DraftStoreRefused UNAVAILABLE before any read of the job row or write; lambda_handler routes the fail op to it, so the op is live the moment AR-tf-72 calls it and answers UNAVAILABLE until this row is dispositioned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show cd692a3b94:infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py lines 44-49 (constructor and sha refusal)",
+      "git show cd692a3b94:infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py lines 1-292 read in full: no mark_hop_failure",
+      "reports/commentary_draft_store.py at the worker branch, _hop_failure_jobs (uncommitted until the cell commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 2.0.0_SA_COO~T2: decide the composition_sha256 source for the fail op and the TO-AR-g-109 merge; the stub is replaced by the wired factory then. Until then the fail op never records a hop_failure, so AR-tf-72's caller sees UNAVAILABLE on every fail."
+}
+```
+
+## IRPT_ANLREQ-D2-W225-S2 -- The spec's injected jobs port is a per-request factory jobs(tenant, request_id), not one object composed once
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W225-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~225",
+  "surfaced_at": "2026-10-16T03:25:00Z",
+  "one_line": "The spec's injected jobs port is a per-request factory jobs(tenant, request_id), not one object composed once",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-71 WORKER FACE item (3): the write goes through an injected jobs port with the method mark_hop_failure(job_id, hop, code, at), and compose_ports() adds 'jobs'.",
+  "world_is": "DynamoGenerationStore binds one tenant and one request_id at construction (infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py@cd692a3b94 lines 45-46 and 54), and store() resolves the tenant per request. A single composed object cannot carry the resolved tenant. store() and handle() therefore take jobs as a factory jobs(tenant, request_id) that returns the port, and compose_ports returns that factory under 'jobs' with the clock under 'clock'. The port's method signature is as specified.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/commentary_draft_store.py at the worker branch: store(), _hop_failure(), compose_ports() (uncommitted until the cell commit)",
+      "reports/tests/test_hop_failure_fail_op.py at the worker branch: Jobs and JobPort fakes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Design departure recorded for the issuer's read. put and get_ref are unchanged; handle() and store() gained keyword defaults jobs=None and clock=None, so existing callers keep their signature."
+}
+```
+
+## IRPT_ANLREQ-D2-W225-S3 -- The surprise channel file uses LF line endings, not the CRLF the launch instruction names
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W225-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~225",
+  "surfaced_at": "2026-10-16T03:25:00Z",
+  "one_line": "The surprise channel file uses LF line endings, not the CRLF the launch instruction names",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker launch instruction: append to the surprise channel with the file's existing CRLF line endings preserved, binary append only.",
+  "world_is": "INVESTIGATION_v1.md at cd692a3b94 is i/lf w/lf in git ls-files --eol and holds no carriage-return bytes (grep -c for CR returns 0). The worker appended these rows as LF lines, which is the file's existing ending; the file was not rewritten.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files --eol org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md at cd692a3b94: i/lf w/lf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Preserved the file's own LF endings; the CRLF premise is for the issuer to correct."
+}
+```
+
+## IRPT_ANLREQ-D2-W225-S4 -- The surprise-channel schema the order cites is absent from this worktree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W225-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~225",
+  "surfaced_at": "2026-10-16T03:25:00Z",
+  "one_line": "The surprise-channel schema the order cites is absent from this worktree",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: rows follow org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "The directory org/surprise_channel/ does not exist in the worktree at cd692a3b94 (a Glob over it returned that the directory does not exist). The rows were shaped on the existing rows of INVESTIGATION_v1.md (the same keys, the class and hazard_standing vocabulary already in use, and disarm_owner on ARMED).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob org/surprise_channel/**/investigation_item.schema.json at the worktree root: directory does not exist"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; the schema's location is for the channel owner to confirm."
+}
+```
+
+## IRPT_ANLREQ-D2-S139 -- disposition of W225-S1: the fail op's writer wiring waits on G2's sha-free mark_hop_failure_keyed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S139",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T03:47:53Z",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W225-S1 (BLOCKING, ARMED): the draft store fail op cannot reach the hop_failure writer without composition_sha256; G2 adds a sha-free writer and a follow-up wiring cell lands after it merges.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-tf-71 composes the jobs port as DynamoGenerationStore, whose constructor requires composition_sha256 (ycharts/generate/durable_job.py:45-54); the fail event carries none and the draft-store role will hold UpdateItem only on irpt-jobs.",
+  "world_is": "G2 msg 9005 (AMENDMENT 1 to TO-AR-g-109): module function mark_hop_failure_keyed(client, tenant, job_id, hop, code, at, table) in durable_job.py, one update_item with ConditionExpression attribute_exists(job) AND attribute_not_exists(hop_failure), no read, same closed sets; it lands with the AR-g-109 merge. Until then the merged fail op answers UNAVAILABLE and writes nothing, and nothing is deployed, so the hazard is inert. Disarm: a wiring cell (AR-tf-74) swaps the jobs factory to the keyed writer after that merge, with the integration check against the real function; cut then, not before.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~G2 msg 9005 (inbox 2.0.0_SA_COO/~T2)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W225-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -3,6 +3,7 @@ infra/aws/lambda/investor-reporting/intake/portfolio.py
 infra/aws/lambda/investor-reporting/intake/security_resolution.py
 infra/aws/lambda/investor-reporting/intake/template_reader.py
 infra/aws/lambda/investor-reporting/intake/uploads.py
+infra/aws/lambda/investor-reporting/intake/yfinance_check.py
 infra/aws/lambda/investor-reporting/ops/entry.py
 infra/aws/lambda/investor-reporting/ops/owned_report.py
 infra/aws/lambda/investor-reporting/ops/pdf_link.py
@@ -32,3 +33,4 @@ infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py
 infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py
 infra/aws/lambda/investor-reporting/ycharts/research/tr_level.py
 infra/aws/lambda/investor-reporting/ycharts/research/yahoo_history_days.py
+infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py

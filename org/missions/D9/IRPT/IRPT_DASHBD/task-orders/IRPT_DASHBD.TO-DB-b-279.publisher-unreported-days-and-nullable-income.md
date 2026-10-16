@@ -17,6 +17,8 @@
 
 **Risk class WORLD** is the floor of the paths below (an `infra/` path), not a statement that anything is deployed: one python module and one new test file; no AWS, no deploy, no push. Nothing is served: the module is read by the 49 Financial function today and by the Cottonwood function (cell `DB-b-280`) later, and neither is changed to run it by this order.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~03:5xZ, on the end-of-chain re-run; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** your test `test_validator_rejects_the_pair_when_the_contract_does_not_name_it` read the repo contract, which named no unreported-days field only while the contract was 0.2.0; the branch now carries 0.3.0 (merge 6e56bb47d3) and the test fails (`DB147-1-AC3`: 1 failed, 28 passed). That is a defect of the order's test spec, not of your publisher. The order is re-opened for ONE edit, in your test file only: build the contract for that test as a deep copy of the loaded contract with the two unreported-days names removed from `series.optional`, so the test no longer depends on the repo contract's version. Then re-run `DB147-1-AC3`, refresh the proof instance if it records the AC3 line, and leave the status complete.
+
 ---
 
 ## WORKER FACE

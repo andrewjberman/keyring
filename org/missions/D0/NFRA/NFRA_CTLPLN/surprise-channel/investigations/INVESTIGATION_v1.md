@@ -12222,3 +12222,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Disarm owner 0.0.0_AB_MSTR is this worker's reading of the box infrastructure role, not a ruling. The worker did not create, move or read the list; no client data was reviewed by hand."
 }
 ```
+
+## NFRA_CTLPLN-W128-S1 -- the tabulate check record read check 8 awaiting, so the cell's premise that it already names the CTO's signed file did not hold; the check verb was re-run with the signature
+
+```json
+{
+  "id": "NFRA_CTLPLN-W128-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~128",
+  "surfaced_at": "2026-10-16T03:44:23Z",
+  "one_line": "The check record for tabulate-0.9.0-py3-none-any.whl read check 8 awaiting with no signer or path, so the release verb would refuse; the check verb was re-run with --approved-by and --signed-by (the same re-run the duckdb batch made), and the record then read checked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CT-ao-2 BUILD step 1: the check record already names the CTO's signed check-8 file, so the release reads it and moves the one file without editing the record by hand.",
+  "world_is": "At the base commit ce28147b01 the record reads verdict not_checked, check 8 awaiting, evidence path null. Re-running intake_check.py check with --approved-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_TABULATE_20261016.md and --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_TABULATE_20261016.md wrote checks 1-8 passed and verdict checked (commit 1f63ed3c84, path named in check 8). The release then moved the one file to the release folder with check 8 signed. No record was edited by hand.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/records/intake-20261016-tabulate/tabulate-0.9.0-py3-none-any.whl.check.json@ce28147b01 (verdict not_checked; check 8 awaiting; path None)",
+      "org/devices/intake/records/intake-20261016-tabulate/tabulate-0.9.0-py3-none-any.whl.check.json@1f63ed3c84 (verdict checked; check 8 passed; path org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_TABULATE_20261016.md)",
+      "org/devices/intake/intake_check.py@ce28147b01 (run_release refuses when check 8 reads awaiting)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Precedent: the duckdb batch's check record was re-run the same way (commit 6dfadc6c66 on 0.9.0_WK_NFRA_CTLPLN~122). The re-run rewrites checks 1-7 at the re-run time; checked_by is now this worker. OWNER of the decision that the cell's premise is stale: 2.0.0_SA_COO~C (the issuer), not this worker."
+}
+```
