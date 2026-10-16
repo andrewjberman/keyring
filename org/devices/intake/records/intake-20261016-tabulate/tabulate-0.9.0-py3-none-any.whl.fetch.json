@@ -1,0 +1,77 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-tabulate",
+  "requested": {
+    "name": "tabulate",
+    "version": "0.9.0",
+    "python_tag": "py3",
+    "abi_tag": "none",
+    "platform_tag": "any",
+    "file_name": "tabulate-0.9.0-py3-none-any.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [
+    {
+      "url": "https://pypi.org/pypi/tabulate/0.9.0/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 37684,
+      "at": "2026-10-16T03:08:46Z"
+    },
+    {
+      "url": "https://pypi.org/pypi/tabulate/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 74120,
+      "at": "2026-10-16T03:08:46Z"
+    },
+    {
+      "url": "https://pypi.org/integrity/tabulate/0.9.0/tabulate-0.9.0-py3-none-any.whl/provenance",
+      "method": "GET",
+      "status": 404,
+      "bytes": 73,
+      "at": "2026-10-16T03:08:46Z"
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/40/44/4a5f08c96eb108af5cb50b41f76142f0afa346dfa99d5296fe7202a11854/tabulate-0.9.0-py3-none-any.whl",
+      "method": "GET",
+      "status": 200,
+      "bytes": 35252,
+      "at": "2026-10-16T03:08:47Z"
+    }
+  ],
+  "published": {
+    "sha256": "024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f",
+    "size": 35252,
+    "upload_time": "2022-10-06T17:21:44.262497Z",
+    "yanked": false,
+    "requires_python": ">=3.7"
+  },
+  "project": {
+    "release_count": 28,
+    "first_release_at": "2013-03-08T18:06:40.167283Z",
+    "this_release_at": "2022-10-06T17:21:44.262497Z"
+  },
+  "attestation": "absent",
+  "attestation_url": "https://pypi.org/integrity/tabulate/0.9.0/tabulate-0.9.0-py3-none-any.whl/provenance",
+  "held_path": "holding/intake-20261016-tabulate/tabulate-0.9.0-py3-none-any.whl",
+  "held_sha256": "024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f",
+  "held_bytes": 35252,
+  "outcome": "held",
+  "reason": "digest and size equal the published values",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~127",
+  "device": "laptop",
+  "at": "2026-10-16T03:08:46Z",
+  "approval": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_TABULATE_20261016.md",
+    "sha256": "565dfa5a59754704095dd0592fdb684f3b1f6724799276c08ec79c7214e6f1b4",
+    "matched": true
+  },
+  "release_files": [
+    "tabulate-0.9.0-py3-none-any.whl",
+    "tabulate-0.9.0.tar.gz"
+  ],
+  "index_file_name": "tabulate-0.9.0-py3-none-any.whl",
+  "received_sha256": "024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f",
+  "received_bytes": 35252
+}
