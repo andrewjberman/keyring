@@ -19868,3 +19868,60 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The portal's vocabulary is eight values: the six plus Unclassified plus Other, with Other a grey bucket and a served holdings key. The gold class enum does not carry Other. The gap is not in the class table (which maps any table value outside the six to unclassified) but in the page's own type. No code was changed."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S102",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-16T00:43:39Z",
+  "one_line": "FWD-3 hops 2-6 (the class-daily gold producer, the series class keys, their publish, the route member, the portal section) have owners by the CTO's round-119 ruling (the producer ~F2, the series contract and publish ~D2, the OBJECTS member ~S2, the portal ~F2); and the ruling's premise that the producer is NEW meets a table that already has a producer and an applied release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "CTO ROUND-119 ANALYSIS F-SHIP (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md) ruling 1: ~F2 owns a NEW gold table account_class_daily and a new producer module with its own Terraform root (classes sum to the account on every day, by test; the classification is a dated read, claim held); ruling 2: ~D2 adds the class keys to the series contract and publishes them. CLAUDE.md section 5: never stand up a duplicate output path.",
+  "world_is": "The table account_class_daily already has a contract (org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json 0.1.0), a producer (data/assets/scripts/gold/irpt_reporting/account_class_daily.py, which reads etf-classifications by GetItem at line 195) and tests, both halves of its never-widen release are signed, and the R37 apply is recorded CLOSED (ledger entry irpt-dashbd-r37-activity-lot-release-apply) with class rows logged landed for 2026-10-07 and 2026-10-08 (records ~55/R37_FIRST_FIRE_LOG_TAIL.txt and ~63/R41_BACKFILL_LOG_TAIL.txt; read by worker 601, claim measured from records, not a live read). The reporting-gold handler emits it beside account_return_daily (infra/aws/lambda/investor-reporting/reporting-gold/handler.py). Whether that emission still runs daily is unmeasured (no live read). A second writer of the same table address would be a duplicate output path. The open question for the CTO, not decided by this seat: is the ruled producer (a) the existing module moved out of the reporting-gold function into its own module and root (one writer, no duplicate), (b) an extension of the existing producer, or (c) a different table. Until ruled, this seat cuts only reads against the question (the producer's gap to the acceptance: classes sum to the account on every day, the dated classification read) and the FWD-5 work, and no write to the class table.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~601/RD_FWD3_THREAD_R119.json (gold_table, producer)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json (served_note, producer)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md (rulings 1 and 2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED with owner ~F2 as the CTO asked (FWD-3 hops 2-6: ~F2 the producer, ~D2 the publish, ~S2 the route member, ~F2 the portal). The question above is queued as a call for the box CTO (open-calls). The class-window model and section (round 119, portal 7fa808c9) and ~D2's series class keys are unaffected by its answer."
+}
+```
+
+
+## IRPT_DASHBD-D2-S103 -- FWD-5 has no contract or producer; ~F2 is the sole writer by ruling: the carrier row
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S103",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-16T00:43:39Z",
+  "one_line": "FWD-5 (transactions browse, filter, sort, export) has no contract and no producer; by the CTO's round-119 ruling ~F2 is the sole writer of the new IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json and of its per-firm producer from the custody transaction silver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "CTO ROUND-119 ANALYSIS F-SHIP ruling 3: ~F2 writes a NEW contract file IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json (sole writer) and its producer, from the custody transaction silver per firm; any enum carries its rule-24 record and the cross-firm fence applies (per-firm prefixes only). PRD FWD-5 and surface row S11 (gold account_transaction and its paged platinum files).",
+  "world_is": "No contract under org/standards/ names account_transaction and no producer writes it (record 0.9.0_WK_IRPT_DASHBD~603/RD_FWD5_THREAD_R119.json: 0 hits in 121 files). Sources exist per firm (49 Financial silver fact_trn, Cottonwood fact_transactions, an Inflection bronze pull); Opal's own words for the custodian's action and type (the PRD's ACCEPT) are defined in no file read (worker row W603-S2), and the flow map has 4 values against the brief's 7. The six hops from the custodian to the portal section: custodian sources (UNOWNED), the contract and builder (~F2), the apply (~DB2), the paged publisher and the route `which` (~D2's reporting-publish function and ~S2's route, by ruling addendum 2), the portal client and the section (~F2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~603/RD_FWD5_THREAD_R119.json",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md (ruling 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED with owner ~F2 as the CTO asked. Next acts of this seat: a per-firm census of the custodian action and type codes and a proposed Opal vocabulary with its four-postulate record (the taxonomy law), then the contract."
+}
+```
