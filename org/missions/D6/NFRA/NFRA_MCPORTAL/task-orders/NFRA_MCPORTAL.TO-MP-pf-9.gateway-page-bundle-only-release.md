@@ -7,7 +7,7 @@
 <owned_cells>MP-pf-9</owned_cells>
 </decomp_ref>
 <to_id>NFRA_MCPORTAL.TO-MP-pf-9</to_id>
-<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MQ</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -36,11 +36,11 @@ In order:
    - **Resolve, do not deploy:** `MCPORTAL_RESOLVE_ONLY=1 bash infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` from the release tree prints `MCPORTAL-RESOLVED: <dir> @c66ca82952...`. Any other commit, or an error, STOPS.
    - **Tests:** run `tests/test_admin*.py tests/test_owner_gate.py` on the release tree: 0 failed, except a test whose failure is `FileNotFoundError` on a repo path outside `infra/aws/ec2/opal-gateway/` whose `git ls-tree` reads 0 at the live base and 1 at HEAD, and which passes at HEAD (a release tree's `org/` is frozen at the chain's vintage, row Z-S45); list each in the ASK. Any other failure STOPS.
    - Run `ops/bun_cache_precheck.py bun.lock` against the c66ca82952 lockfile. A miss STOPS: no package is fetched.
-2. **The ASK and the pair.** Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_MP-pf-9.md` with: the blast radius (the dashboard bundle's `index.html` and two assets swap; `routes.json` is unchanged; no gateway code, no tool added or removed); what it may never touch (the MCP tool surface, IAM, any store write); the census, the tests and the rollback (step 3); the read-backs AC1 and AC2.
+2. **The ASK and the pair.** Write `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NEVER_WIDEN_ASK_MP-pf-9.md` with: the blast radius (the dashboard bundle's `index.html` and two assets swap; `routes.json` is unchanged; no gateway code, no tool added or removed); what it may never touch (the MCP tool surface, IAM, any store write); the census, the tests and the rollback (step 3); the read-backs AC1 and AC2.
    Commit it, then send ONE message to BOTH `1.0.0_SA_CTO~Z` and `2.0.0_SA_COO~MP` naming the ASK path and commit and asking each for its half. WAIT for both halves at HEAD of `box/sitez` (`deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MP-pf-9_<date>.md`, `deliverables/2.0.0_SA_COO~MP/NEVER_WIDEN_HALF_COO_MP-pf-9_<date>.md`), each citing your ASK by path. A refused half STOPS the act.
 3. **Rollback, proven before the act.** The live bundle is the build of mcportal `090b9cdc85`: rebuild it from a clean detached worktree WITHOUT uploading and compare `index.html`, `routes.json`, `assets/index-pbBdUBWu.css` and `assets/index-DzjZpju-.js` by sha256 with the host's `dashboard/` (read-only over SSM); the issuer's own read at ~12:2xZ found all four equal (index.html a0ee33db..., routes e6d4a9ac..., css cd4abedd..., js 52466cff...). Negative control: the same members of the c66ca82952 build differ in `index.html` and the CSS. Name the command that re-deploys the previous pin (the manifest edit back to `090b9cdc85` and the same deploy). Record the seconds of the release's own pull-and-restart in step 4 as the rollback bound. If the rollback cannot be shown: STOP, no deploy, a BLOCKING row.
 4. **NEVER-2 ledger, on your branch, in this order.**
-   - `python .tools/deploy_ledger.py open ...` with slug `nfra-mcportal-pf-bundle-release`. Legs: bundle build, release build and upload, SSM pull and restart, manifest record. Write the census, the test results and this order's path to `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~Z/MP-pf-9_PRE_ACT_RECORD.md` and put ONE pointer line to it in the entry.
+   - `python .tools/deploy_ledger.py open ...` with slug `nfra-mcportal-pf-bundle-release`. Legs: bundle build, release build and upload, SSM pull and restart, manifest record. Write the census, the test results and this order's path to `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/MP-pf-9_PRE_ACT_RECORD.md` and put ONE pointer line to it in the entry.
    - Commit the entry AND its sentinel `org/critical_paths/.open_deploys/nfra-mcportal-pf-bundle-release.json`.
    - ACT from the release tree with ITS scripts: `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`. Its stale-base guard must read the live ref unchanged at both reads. If another release has opened since the GO, STOP and say so.
    - Immediately after the restart, poll `/health`. If it is not 200 within 90 seconds, run the named rollback AT ONCE, close the entry as rolled back, and stop.
@@ -60,7 +60,7 @@ In order:
 infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/*nfra-mcportal-pf-bundle-release*
 org/critical_paths/.open_deploys/nfra-mcportal-pf-bundle-release.json
-org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~Z/**
+org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/**
 org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/**
 </paths>
 
@@ -77,7 +77,7 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/I
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~Z/NFRA_MCPORTAL.TO-MP-pf-9.gateway-page-bundle-only-release.proof_of_spec.json`.
+Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/NFRA_MCPORTAL.TO-MP-pf-9.gateway-page-bundle-only-release.proof_of_spec.json`.
 Report once, to `2.0.0_SA_COO~MP`, with:
 - the census;
 - the before/after tool counts;

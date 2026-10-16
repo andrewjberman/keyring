@@ -1872,3 +1872,7 @@ One swap of the dashboard bundle on the gateway host: `EC2_MANIFEST.json` `servi
 ## PF6.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
 
 Gate G-REL9 (the issuer holds it): both never-widen halves signed at HEAD AND no opal-gateway release open. `~O`'s round-38 release then carries the same pin with no delta (the CTO's note). It does not claim the page is judged legible: that is S1 item (iii), the CVO's, after the release and MX-r-15's last catalog. The served look is Andrew's (call 21d9).
+
+## PF6.3 SEATING (issuer, ~12:4xZ) -- a departure from the CTO's named applier, and why
+
+The CTO's ruling named `0.7.0_AE_CloudOps~Z` as the applier. `0.7.0_AE_CloudOps~Z` holds NFRA_OPLGTW work, and the seating rule (Andrew-direct 2026-08-24 ~19:29Z, enforced by `.tools/to-decomp-ref-lint.py`'s seating check, announce mode) is ONE PROJECT PER TIER-2 SEAT INSTANCE: the commit gate printed `REFUSED ... FIX: address this TO to a FRESH LANE`. MCPORTAL's own releases have used their own CloudOps lanes (~MP, ~MQ). So `MP-pf-9` is addressed to `0.7.0_AE_CloudOps~MQ`, the lane that applied MP-pc-5 and MP-n-4 and has only ever held NFRA_MCPORTAL orders (same project, so it passes the seating rule), re-seated by the issuer. The order, its checks and its paths follow (`deliverables/0.7.0_AE_CloudOps~MQ/`). The cost: one seat spawn, minutes. Reported to the CTO with the GO-PREP.
