@@ -2387,3 +2387,19 @@ The CTO ruled four things for this seat. Two are contract cells (cut now, parall
 **fanout:** 2 of 2 chains, cap 8 (chain E worker `0.9.0_WK_IRPT_DASHBD~228` on DB-b-284; chain F worker `0.9.0_WK_IRPT_DASHBD~229` on DB-b-285; disjoint files). The publish apply (`DB-b-283`, workstream PUBLISH) runs in parallel with the AE.
 
 **Checkers (dry-run at the base before the cut; all six criteria FAIL as expected; self-tests green):** `checks/r148/p152_contract044.py` (DB152-1-AC1..AC3; a reference 0.4.4 built from the real 0.4.3 contract green, 17 single-fault arms red) and `checks/r148/p153_series031.py` (DB153-1-AC1..AC3; a reference 0.3.1 built from the real 0.3.0 contract green, 23 single-fault arms red).
+
+## 148. ROUND 148, WORKSTREAM CLASS (2026-10-16 ~06:3xZ, issuer 2.0.0_SA_COO~D2, on the CTO's F-SHIP round-119 ERRATUM and ADDENDUM 1 (msgs 8827, 8918) and `~F2`'s measured gap record `RD_FWD3_PRODUCER_GAP_R120.json`): the class producer's dated classification read and the sum-to-account test
+
+The CTO kept the ONE existing class producer (no new one, no move) and gave this seat two additions to it. A fresh read (recorded `RD_CLASS_PREFIX_LIVE_READ_20261016.json`, `75a5435402`): the class prefix is non-empty for 49 Financial (6 date partitions to 2026-10-14) and EMPTY for Cottonwood and Inflection, all listings successful, so the emission has not stopped; if it ever has, the restore is this seat's pair.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The class table's GetItem read is DATED (an injected clock, the oldest read date over the identifiers used) and the day's manifest carries `class_source.as_of` and `claim: held`; the class contract 0.1.1 says so; the handler passes the date at its one call site; a NEW test file proves the classes sum to the account (account value given independently, a sub-cent residual) and is killed-proof against four mutants of `class_contribution` | DB-b-286 | FWD-3 (hops 2 to 6: the producer side) | WORLD (files only) | none | chain G |
+| 2. The deployed 49 Financial `reporting-gold` function writes the date (a code update of the function bundling this module) | NOT CUT: a code-update pair, after item 1 | FWD-3 | WORLD | item 1 | later |
+| 3. Enabling the class emission for Cottonwood and Inflection | NOT CUT: it is `~F2`'s reader/tab surface plus a per-firm producer root decision the CTO has not ruled; the prefixes are empty by measurement | FWD-3 | WORLD | the CTO's word | held |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the date is the date the GetItem was READ (a property of the read, stamped per identifier), not the run's business day; a warm Lambda that cached an item yesterday therefore reports yesterday, truthfully; (b) the day's `as_of` is the OLDEST over the identifiers the day used, so a reader never sees a newer date than its oldest input; (c) the claim is `held` (a read taken at run time and held, as the swap snapshot's is), but the two read paths are separate and the contract says so; (d) the mutation clause of the checker runs the worker's tests on a copy of the repo with each fault injected, because the acceptance "classes sum to the account by test" is only as good as the test's power to fail; (e) workstream tag `CLASS` because the gate keys one issuance to a round and workstream and this cell's surface is disjoint from the contract cells'.
+
+**fanout:** 1 of 1 chains, cap 8 (worker `0.9.0_WK_IRPT_DASHBD~230`); the contract cells of round 148 are drained (`eb5705f56f`, `e530c16e09`).
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; validated against a scratch reference module, handler and contract (green) and seven single-fault mutants of the module (all red), and the mutation clause against a scratch reference test file that kills all four mutants):** `checks/r148/p154_classdated.py` (DB154-1-AC1..AC3).
