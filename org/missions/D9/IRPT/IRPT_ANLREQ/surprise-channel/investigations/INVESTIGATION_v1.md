@@ -20841,3 +20841,56 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W165-S2."
 }
 ```
+
+## IRPT_ANLREQ-D2-W227-S1 -- The channel file carries LF line endings, not the CRLF TO-AR-tf-73 names; the row is appended with the file's own LF endings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W227-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~227",
+  "surfaced_at": "2026-10-16T03:21:26Z",
+  "one_line": "the channel file carries LF line endings, not the CRLF TO-AR-tf-73 names; the row is appended with the file's own LF endings",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-73 WORKER FACE, the commit paragraph: append to the surprise channel with the file's existing CRLF line endings preserved, binary append only.",
+  "world_is": "INVESTIGATION_v1.md at worktree HEAD 6efa66552c has 0 CR bytes (tr -cd with the CR escape counts 0) across 20843 lines; the last bytes are LF (od -c). The append writes LF to match the file. No existing line was rewritten.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree HEAD 6efa66552c: CR byte count 0 on org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md",
+      "wc -lc: 20843 lines, 1600441 bytes; od -c of the final 1500 bytes shows newline only, no carriage return"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Raised by 0.9.0_WK_IRPT_ANLREQ~227 while executing TO-AR-tf-73. The premise on line endings is off; no other part of the order is affected."
+}
+```
+
+## IRPT_ANLREQ-D2-W227-S2 -- The worktree is a sparse checkout: org/surprise_channel/ is tracked at HEAD but absent on disk, so the row schema is read from HEAD
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W227-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~227",
+  "surfaced_at": "2026-10-16T03:21:26Z",
+  "one_line": "the worktree is a sparse checkout: org/surprise_channel/ is tracked at HEAD but absent on disk, so the row schema is read from HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The surprise-channel rule cites the row schema as org/surprise_channel/schemas/investigation_item.schema.json, which a worker reads on disk to shape its row.",
+  "world_is": "In worktree C:/dev/wk-irpt-anlreq-227, core.sparseCheckout is true. git ls-files lists 43 files under org/surprise_channel, yet ls reports no such directory. The schema (10462 bytes) was read with git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json into the worker's scratch folder; nothing was materialised on disk.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config core.sparseCheckout reads true in worktree wk-IRPT_ANLREQ-227",
+      "git ls-files org/surprise_channel counts 43 tracked paths; ls org/surprise_channel reports no such directory",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json rc=0, 10462 bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Raised by 0.9.0_WK_IRPT_ANLREQ~227 while executing TO-AR-tf-73. The channel file itself is present on disk and was appended in place."
+}
+```
