@@ -67,7 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-1.answer-bodies-for-cvo-grad
 - One criterion, mechanical (the existence and hygiene of the record); the grade itself is the CVO's judgment on the bodies, never this cell's.
 - Pre-cut: ev1.AC1 base FAIL as expected (`ANSWER_BODIES.json` absent). The PASS arm is the applier's run; the issuer re-runs the check at the close.
 
-<status>staged</status>
+<status>complete</status>
 <round>37</round>
 <workstream>ANSWER-BODIES</workstream>
 <slot>~AE</slot>
