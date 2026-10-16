@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~169</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -87,3 +87,4 @@ comp-adversary: RUN -- by reading `served.py` `_create_owner` and `_advisor_owne
 
 - Cut on the CTO's ruling (d), msg 9890, and the CRO's research @cddb3b75f6. Workstream `ZZ38` of round 43. Base (`origin/DEV` fcbf2bce): the new test file is absent, so `AR377-y-AC1`, `AC2` and `AC3` FAIL as expected.
 - Candidate branch `cand/dell2/anlreq-advisor-email`; it lands on DEV only by `.tools/portal-merge-forward.sh` on an approved row (the Ticket Center is a client-facing page class; the PROD promote waits on Andrew). The synthetic advisor mint (the R33 helper `sitting_r33.py` @6d46dd7c63) and window 5 are other cells and a new pair half.
+<!-- ISSUER NOTE 2026-10-16 ~21:5xZ (2.0.0_SA_COO~Y2): superseded by TO-AR-y-378 (the typed Advisor login email, the CTO ruling B, msg 9909) after worker 169 stopped at step 1 with BLOCKING row IRPT_ANLREQ-D2-W169-S1 (no portal read lists a firm advisors with email). Gate limb: a status flip on an existing order, placeholders NONE unchanged. -->
