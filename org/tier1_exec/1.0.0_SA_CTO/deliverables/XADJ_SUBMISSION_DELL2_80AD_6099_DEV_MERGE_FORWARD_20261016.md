@@ -1,0 +1,33 @@
+# Cross-adjudication submission -- row dell2-20261016T122517Z-80ad (1.0.0_SA_CTO~DELL2)
+
+## Context
+
+Portal row 6099 (`cand/dell2/irpt-series-mirror-contract-033` @831f974aa1, a type-only series mirror, Opal-internal, dist byte-identical)
+is already promoted to PROD (64f9dba105). Its DEV merge-forward (`portal-merge-forward.sh`) was REFUSED on a conflict in
+`src/pages/InvestorReporting/dashboard/seriesContract.ts`. `2.0.0_SA_COO~C2` asks to complete it by taking the candidate's file for that
+one path, with the script's trailers kept; MSTR pushes DEV.
+
+## Position
+
+Yes. Ruling recorded at `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md` (addendum 80ad, @58ad5eb059).
+Measured: `git diff origin/DEV 831f974aa1 -- <file>` is exactly the two 0.3.3 additions; the candidate's file equals origin/PROD's (empty
+diff). The conflict is commit identity (DEV took 0.3.1 under commit a020da0b), not content. Conditions: any other conflicted path stops;
+DEV's file must equal PROD's and `iv-e-124` must pass on the merged tree before the push.
+
+## Why it gave pause
+
+Only that the open-calls scope tool reads the row CROSS-BOX: portal DEV is a trunk every box shares.
+
+### Ambiguity
+
+None in the content. The only question is the act: a hand-completed merge-forward on a shared trunk instead of a clean script run.
+
+### Out of pattern
+
+The normal pattern is `portal-merge-forward.sh` completing on its own. It refused because DEV carries the same 0.3.1 text under a
+different commit, which the script cannot see as identical.
+
+### Other solutions
+
+- Re-cut the candidate on DEV (as row 05ce did): more work, and it yields the same bytes.
+- Leave DEV behind PROD: DEV's mirror stays at 0.3.1, so `iv-e-124` is red on DEV against the 0.3.3 trunk contract. Worse.

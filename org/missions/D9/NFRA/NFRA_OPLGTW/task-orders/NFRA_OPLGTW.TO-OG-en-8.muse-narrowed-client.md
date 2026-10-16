@@ -77,7 +77,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-8.muse-narrowed-client.proof
 - Risk WORLD by the L6 floor (a gateway infrastructure path); the entitlement code is admission-sensitive, so the issuer reads the diff before the drain and the CVO reads the narrowing at the ask.
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38</workstream>
 <slot>~121</slot>
