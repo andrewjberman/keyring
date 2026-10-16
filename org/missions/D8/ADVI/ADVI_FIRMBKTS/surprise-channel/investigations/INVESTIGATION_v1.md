@@ -8761,3 +8761,180 @@ Rows are appended after the earlier rows; each is one fenced json object.
   }
 ]
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~86 (FB-p-3, inflection plan questions Q1 to Q15)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The plan's R5 says the Door 6 marker gold/meta/pipeline-complete.json has one consumer, inf-portal-publisher, through a bucket S3 notification entry; live, opal-data-inf carries no Lambda notification that targets inf-portal-publisher, and the marker's only EventBridge rule is mdpf-feeder-accelerator.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.md@31ff5a4067 section 3 row R5 and section 4 open question Q7 (the plan's claim, read as committed)",
+      "aws s3api get-bucket-notification-configuration on opal-data-inf, 2026-10-16: LambdaFunctionConfigurations 1 (inf-silver-aggregator, silver/_silver_complete/ and .json), EventBridgeConfiguration present; no Lambda entry names inf-portal-publisher",
+      "aws events list-rules, 156 rules listed: 1 rule whose EventPattern names the marker key (mdpf-feeder-accelerator, ENABLED); aws events list-targets-by-rule on it: 1 target (mdpf-feeder-trigger)",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py@31ff5a4067 line 5 docstring still says the publisher is triggered by S3 ObjectCreated on the marker key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLAN_INFLECTION.md section 3 row R5 (and the publisher docstring) state that the marker's one consumer is inf-portal-publisher through its S3 bucket notification entry; section 2 counts 2 bucket notification entries on opal-data-inf.",
+  "world_is": "Live on 2026-10-16 the bucket notification names one Lambda entry (inf-silver-aggregator) plus an EventBridge configuration; no bucket notification reaches inf-portal-publisher. The marker's only EventBridge consumer is mdpf-feeder-accelerator, targeting mdpf-feeder-trigger. The consumer map that the M03 and M04 moves rest on is not the live one.",
+  "notes": "Recorded in the Q7 answer of PLAN_INFLECTION_Q01_15.json (0.9.0_WK_ADVI_FIRMBKTS~86, commit a6c41087f1). The plan rows to correct are R5 and the M03 and M04 consumer notes. Nothing is moved or disarmed here, and the marker delete stays Andrew's word (DEC-17). Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The plan's live denominators have drifted since its 2026-10-14 read: the default scheduler group now lists 40 schedules (plan 33) and Lambda list-functions now returns 244 functions (plan 237); the 12-function portal-role count is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PLAN_INFLECTION.md@31ff5a4067 section 6 denominators: scheduler_default_group_schedules_live 33; lambda_functions_listed_live 237; iam and eventbridge figures unchanged where re-read",
+      "aws scheduler list-schedules --group-name default, 2026-10-16: 40 listed; aws scheduler get-schedule read on each of the 40",
+      "aws lambda list-functions, 2026-10-16: 244 listed; client-side role match on opal-portal-lambda-role: 12 (plan 12)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLAN_INFLECTION.md section 6 gives the live denominators the moves were sized against: 33 default-group schedules and 237 listed Lambda functions.",
+  "world_is": "On 2026-10-16 the default group lists 40 schedules and the account lists 244 Lambda functions. Any move sized on the 33 and 237 counts needs a re-count before it is cut.",
+  "notes": "Not a move. The FB-p-3 answers carry the 2026-10-16 counts and say so. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The FB-p-3 worker face says to flip the order's <status> to complete in the proof commit, but the face carries no <status> element, and the order file is outside this order's <paths>; the flip is not made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-3.inflection-plan-questions.md@31ff5a4067 line 4 names the <status> flip; a head of the worker face (lines 1 to 67) holds no <status> element (grep returned no match)",
+      "the same file's section 3 <paths> lists the record folder and this channel file only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face's first line says to flip this order's <status> to complete in the same commit as the proof instance, only when AC1 passes.",
+  "world_is": "The order carries no <status> element to flip, and the order file is not in the write grant, so the flip cannot be made by this worker.",
+  "notes": "The proof instance is committed with AC1 as its verdict. The status flip is left to the issuer. Disarm: none (INERT)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~89 (TO ADVI_FIRMBKTS.TO-FB-p-6, floor-day 23rd key: premise false, step 4)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:16:36Z",
+  "one_line": "FB-p-6 premise false: the 23rd named key inflection_wealth_management/top_holdings.json DID draw a version on 2026-10-16 (12:52:32Z, gold step INF_D_02b, before the publisher's 13:30Z run), so no KEY23 record is written (TO step 4); AC1 reads FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions --bucket opal-data-inf --prefix <each of the 23 keys from ACT3_BASELINE_VERSIONS.json>, run by 0.9.0_WK_ADVI_FIRMBKTS~89 on 2026-10-16 after 18:00Z: 23 of 23 rc=0, counted client-side on Key and LastModified; the 23rd key newest version MBHVZkmm4l.2TsHVoJjabw2dUNggRXT8 LastModified 2026-10-16T12:52:32Z IsLatest True Size 1787; all 23 keys have at least one version dated 2026-10-16",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ACT3_BASELINE_VERSIONS.json@ab8081bfdd: the 23rd key baseline VersionId ys6JKj05riUJlrqjXami_YVb7hqiRCgw last_modified 2026-10-15T12:52:33Z, recorded_at 2026-10-15T13:11:26Z (the baseline predates the floor day; the live latest is the newer MBHV version)",
+      "data/inf/scripts/gold/INF_D_02b.top_holdings.py@ab8081bfdd lines 333-361: under --upload the gold step writes platinum/advisors/{advisor_key}/top_holdings.json for every advisor key, empty documents included (lines 336-343 and 358-361)",
+      "infra/aws/lambda/inf-portal-advisor-publisher/lambda_function.py@ab8081bfdd lines 810-814 and 1200-1201: _build_top_holdings returns None on empty holdings and the advisor publisher writes top_holdings.json only when the result is not None",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py@ab8081bfdd lines 877-882 and 1067-1069: the firm publisher writes the three snapshot keys; the 20 advisor keys fan out to the advisor publisher (comment at line 1029)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 (task-orders/ADVI_FIRMBKTS.TO-FB-p-6.floor-day-23rd-key.md, section 1 and step 1): the 23rd named key drew no new version on the 2026-10-16 floor day, so exactly one key has no version dated 2026-10-16 and its record KEY23.json can be written on that premise.",
+  "world_is": "The premise is false. All 23 named keys have at least one version dated 2026-10-16. The 23rd key, platinum/advisors/inflection_wealth_management/top_holdings.json, has a version dated 2026-10-16T12:52:32Z written by the gold step INF_D_02b before the publisher's 13:30:48Z run, and one version on each of 2026-10-12 to 2026-10-16. The publisher wrote no 2026-10-16 version of this key; the other 22 named keys each drew a publisher version at 13:30:48Z to 13:31:13Z.",
+  "notes": "Step 4 applied: no KEY23.json written (the order says do not force the record). Its writer claim holds: INF_D_02b writes the key daily under --upload, and the advisor publisher writes it only when _build_top_holdings is not None (lines 810-814 and 1200-1201). Its 'drew none' premise does not hold. Not read: why the advisor publisher skipped this key at 13:31 on 2026-10-16. Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "one_line": "The order names the worker row id form <CODE>-W<n>-S<k>; the row gate refuses a bare worker id on fabric dell1 and requires the coordinate, so ADVI_FIRMBKTS-W89-S1 was renamed to ADVI_FIRMBKTS-D1-W89-S1 before commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/surprise-row-gate.py as run by .tools/safe-commit.sh on 0.9.0_WK_ADVI_FIRMBKTS~89, 2026-10-16 ~18:20Z: BLOCKED on ADVI_FIRMBKTS-W89-S1 -- fabric='dell1' but the id carries no coordinate; a dell1 row is written <CODE>-D1-S<n> (worker <CODE>-D1-W<n>-S<k>); commit aborted, nothing staged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 section 5 and the worker face: a worker's surprise row is minted as <CODE>-W<n>-S<k>, with the allocator coordinate W<n> and no fabric coordinate.",
+  "world_is": "On fabric dell1 the commit-time row gate refuses a bare worker id and requires the fabric coordinate: <CODE>-D1-W<n>-S<k>.",
+  "notes": "Filed as ADVI_FIRMBKTS-D1-W89-S2 for the id-form difference; the row content of S1 is unchanged except its id. Disarm: none (INERT). Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:46:00Z",
+  "one_line": "S3 Select (aws s3api select-object-content) is refused on gold/canonical/holdings_2026-10-16.parquet with MethodNotAllowed, so the holdings count for FB-p-6 was taken from a GET into scratch and counted locally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api select-object-content --bucket opal-data-inf --key gold/canonical/holdings_2026-10-16.parquet, three SQL variants run by 0.9.0_WK_ADVI_FIRMBKTS~89 on 2026-10-16 ~18:4xZ: each rc 254, 'MethodNotAllowed: The specified method is not allowed against this resource'",
+      "aws s3api get-object (read) of the same key into .scratch/k23/, 230808 bytes, rc 0; pyarrow row count of advisor_key: 12710 rows, 4 distinct values, 0 for the 23rd key's advisor"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 section 2 (bounds): read-only AWS reads through .tools/aws; the order names list-object-versions as the read and no other read method.",
+  "world_is": "The S3 Select read method is refused on this holdings parquet object (MethodNotAllowed), while a plain GET of the same object succeeds.",
+  "notes": "Disarm: none (INERT). The count used a GET into scratch, a read; no write verb was run. Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:46:00Z",
+  "one_line": "The holdings partition the advisor publisher read on 2026-10-16 (gold/canonical/holdings_2026-10-16.parquet) holds no rows for the 23rd key's advisor, so the publisher skipped that advisor's top_holdings.json while writing its book.json in the same run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-portal-advisor-publisher/lambda_function.py@ab8081bfdd lines 808-814 and 1171, 1200-1201: top_holdings.json is written only when _build_top_holdings over the holdings partition returns a non-None result",
+      "advisor publisher log 2026-10-16 13:30:50Z (Loading holdings: gold/canonical/holdings_2026-10-16.parquet) and 13:31:12Z (book.json 9291 bytes, summary.json 780 bytes, timeseries.json 165 bytes written for the advisor; no top_holdings line); holdings partition 12710 rows, 4 distinct advisor_key values, 0 rows for the advisor"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The advisor publisher writes each of its advisors' top_holdings.json from the canonical holdings partition (lambda_function.py 808-814 and 1200-1201); the TO's baseline records 19 advisor files written by the publisher and 1 (the 23rd key) not written by it.",
+  "world_is": "On 2026-10-16 the holdings partition the publisher read has 0 of 12710 rows for the 23rd key's advisor, while the same run wrote that advisor's book.json (9291 bytes); the partition's advisor_key carries 4 distinct values.",
+  "notes": "Why the partition carries no rows for this advisor was not read (the gold holdings builder is a separate writer). Disarm: none (INERT). Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```

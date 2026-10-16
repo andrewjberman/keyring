@@ -72,7 +72,7 @@ Commit the record FIRST, your rows and the proof instance second. Report once: t
 
 **ISSUER NOTES:** Round 9 item 5 (CTO analysis @bc6444b8e2). The "84 OPEN rows not moved for 2 or more rounds" are, by the instrument, the OPEN remediation rows of `REMEDIATION_v1..v6` (4 + 2 + 5 + 33 + 30 + 10); group A is `v4`, B is `v5`, C is `v1`, `v2`, `v3` and `v6`. The issuer reads the three proposals, rules RE_OWN and CARRY inside its own decomposition, and sends the MET and DISMISS proposals to `3.0.0_SA_CVO`, who writes the clocks.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <workstream>TRIAGE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-p-7</to_id>
