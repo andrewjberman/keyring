@@ -20757,6 +20757,82 @@ name the one known failure instead of silently inheriting it.
 }
 ```
 
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~120",
+  "surfaced_at": "2026-10-16T11:54:52Z",
+  "id": "NFRA_OPLGTW-Z-W120-S1",
+  "one_line": "The order names tests/test_og_hv1.py and tests/test_og_gt4.py as the nearest existing chatter tests; neither exercises harvest_get_chatter. The chatter tests are tests/test_og_gt2.py and tests/test_og_gt9.py, both outside <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_og_hv1.py:1-40 @wk-NFRA_OPLGTW-120 (base e08686be6a) -- harvest_read tests (SERVED_PREFIXES, harvest_list, harvest_read); no harvest_press import.",
+      "infra/aws/ec2/opal-gateway/tests/test_og_gt4.py:1-30 @wk-NFRA_OPLGTW-120 (base e08686be6a) -- harvest_research tests; no harvest_press import.",
+      "infra/aws/ec2/opal-gateway/tests/test_og_gt2.py:21,193-219 @wk-NFRA_OPLGTW-120 -- imports harvest_press as h and calls h.harvest_get_chatter; its AC1-AC2 assert named keys, not the full key set."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1 points to tests/test_og_hv1.py or tests/test_og_gt4.py as the fixture style for the chatter tests, and section 4 lists them among the existing chatter tests to update if they pin the key set.",
+  "world_is": "Neither listed file calls harvest_get_chatter or pins its key set, so no existing test needed a change and none was changed. The fixture style was taken from tests/test_og_gt2.py (outside <paths>, read only). The new tests are in tests/test_og_en6.py, and gt2 and gt9 still pass (9 of 9) with the change.",
+  "notes": "Left to the issuer: whether the next order should name test_og_gt2.py as the chatter fixture reference. No product behaviour depends on the choice."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~120",
+  "surfaced_at": "2026-10-16T11:54:52Z",
+  "id": "NFRA_OPLGTW-Z-W120-S2",
+  "one_line": "The order says to patch the module's _today-style clock as the existing tests do, but harvest_press.py has no clock, and harvest_identity._behind takes a LastModified string and reads now() inside _t1, so it cannot be reused on a date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/harvest_identity.py:124-140 @wk-NFRA_OPLGTW-120 (base e08686be6a) -- _t1(cal) calls datetime.now directly; _behind(last_modified, t1, cal) parses a '%Y-%m-%dT%H:%M:%SZ' string.",
+      "infra/aws/ec2/opal-gateway/tests/test_admin_fabric_overlap.py:276 -- the existing seam pattern: monkeypatch.setattr(mod, \"_now\", lambda: ...)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1 says to patch the module's _today-style clock the way the existing tests do, and to import or mirror harvest_identity._behind and the t1 computation.",
+  "world_is": "harvest_press.py had no clock, so the change adds a _now() seam (aware UTC) and the test patches h._now. The calendar locator is imported from harvest_identity (_calendar). The lag is computed by a new _chatter_lag over a date, mirroring the t1 and trading_days_behind call; _behind itself was not reused, because it takes a LastModified string.",
+  "notes": "Behaviour is as the order states: the lag is in trading days against T-1, the Monday case gives 0 for a Friday chatter, and no calendar-day arithmetic is used."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~120",
+  "surfaced_at": "2026-10-16T12:13:02Z",
+  "id": "NFRA_OPLGTW-Z-W120-S3",
+  "one_line": "Section 5 of this order flips its own <status> tag on the order file, which is not in the order's <paths>; the same grant gap as NFRA_OPLGTW-Z-W117-S1, met again on the en-6 order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-6.chatter-lag-in-trading-days.md section 3 lists six surfaces; the order file itself is not one of them. Line 70 carries the single <status>staged</status> tag.",
+      "Section 5 of the same order: flip the ONE <status> tag to complete only if both criteria PASS; the closing commit carries the instance, the deliverables and the flip together."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "<paths> is the write grant for this order (section 3); the <status> flip in section 5 is part of the procedure and is made on the order file.",
+  "world_is": "The flip touches the order file, outside <paths>. It is made in the closing commit with the instance and the deliverables, and the lane gate result of that commit is stated in the report.",
+  "notes": "Class to carry, as NFRA_OPLGTW-Z-W117-S1 states: an order whose procedure flips its own status names that file in <paths>."
+}
+```
+
   ```json
   {
     "id": "NFRA_OPLGTW-Z-S175",
