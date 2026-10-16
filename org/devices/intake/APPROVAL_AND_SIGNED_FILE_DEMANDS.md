@@ -85,6 +85,19 @@ The registry is read ONLY at `https://registry.npmjs.org/<name>/<version>` (a sc
 document's `dist.tarball`, which must be on `registry.npmjs.org` (`Fetch.run_npm`; `Policy.check` before each request).
 `--registry-base` is a loopback test override only.
 
+### 1b. The npm packument (check 4, `--ecosystem npm`, CT-cc-2)
+
+The fetch reads the packument too: `https://registry.npmjs.org/<name>` on the same host, a scoped name quoted as `@babel%2Fcore`,
+after the version document and before the tarball. Check 4 takes its facts from it, and no WAIVE line is involved.
+
+- **fetch** (`intake_fetch.py` `Fetch.read_packument`, line 577): refused, with no tarball request, when the packument is
+  unreadable, has no `versions[<version>]`, has no `time[<version>]` that states a zone, or has a
+  `versions[<version>].dist.integrity` that differs from the version document's `dist.integrity` (a registry that tells two
+  stories).
+- **check 4** (`intake_check.py` `check_4_npm`, line 1322): the publish time is `time[<version>]`; the earlier releases are the
+  packument's other versions. It applies the PyPI rule of check 4 unchanged (`--min-age`, default 14 days; `--min-earlier`,
+  default 3) and writes the same evidence fields, with `release_age_source` naming the packument.
+
 ## 2. The signed check-8 file
 
 - **Where:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/` or below (`DEFAULT_SIGNER_REL` 52, `check_8` 831-841). Never the
@@ -174,6 +187,25 @@ WAIVE examplepkg-1.2.3-py3-none-any.whl check 9: out of range
 8. verify: `intake_receive.py verify --from <pack>`
 9. send: no tool verb; the pack goes to the receiving box, where `intake_receive.py prove` then `install --target <new dir>`
 
+### 4a. The npm install verb (CT-cc-2)
+
+For an npm pack the receiving box runs `intake_receive.py install --ecosystem npm --pack <pack> --lockfile <bun.lock> --target <bun cache dir> [--by SEAT] [--receipt-dir DIR]`
+in place of step 9. It places each verified `.tgz` as the unpacked folder `<name>@<version>@@@1`, the layout that
+`infra/aws/ec2/opal-gateway/ops/bun_cache_precheck.py` reads.
+
+- **Refusal first:** the pack must verify exactly as `verify` does (`intake_receive.py` `verify_pack`). The member plan
+  (`intake_receive.py` `npm_plan_members`, line 514) refuses a `..` or absolute member, a link of any kind, a name outside
+  `package/`, a member over 64 MiB, or an expanded total over 256 MiB. A refusal is for the WHOLE install: when any tarball is
+  not cleared, or any destination exists and is not present, nothing is written to the target.
+- **Placement:** each tarball is unpacked (`_npm_unpack_into`, line 570) into a hidden sibling folder, then renamed into place
+  (`_npm_place`, line 642), so a half-unpacked folder is never visible under its final name. A scoped name keeps its slash as a
+  folder: `@limbprobe/core@7.29.7@@@1/`. A destination already present is left untouched and reported `already`; an existing
+  destination that is not present (empty, no manifest, version mismatch) is refused, never overwritten.
+- **Present:** the rule is the precheck script's own, loaded by path (`load_precheck`, line 501). The last line reads
+  `INTAKE-NPM-INSTALL tarballs=<k> unpacked=<u> already=<a> refused=<r> present=<p>/<k> ok=<True|False>`.
+- **Nothing runs:** no lifecycle script, no `bun`, no package manager, no socket. The receipt (`install-npm.<device>.<stamp>.json`,
+  in `--receipt-dir` or beside the pack) records each package's outcome and the sha256 of its `package.json`.
+
 ## 5. The dry-run commands
 
 | tool | verb | reads | writes |
@@ -181,6 +213,7 @@ WAIVE examplepkg-1.2.3-py3-none-any.whl check 9: out of range
 | `intake_check.py` | `selftest-unsigned` | a synthetic wheel in a temporary folder | nothing |
 | `intake_check.py` | `selftest-av` | the Security Center antivirus list | nothing |
 | `intake_receive.py` | `selftest-unchecked` | a synthetic pack in a temporary folder | nothing |
+| `intake_receive.py` | `verify --from <pack> --ecosystem npm --lockfile <bun.lock>` | a verified npm pack and its bun text lockfile | nothing |
 | `intake_receive.py` | `install --from <pack> --target <new dir> --dry-run` | a verified pack | nothing |
 | `intake_request.py` | `status --name N --version V` | request records, `requirements.txt` | nothing |
 | `intake_fetch.py` | `list --batch B` | records and the holding folder | nothing |
