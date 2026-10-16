@@ -23288,3 +23288,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W1901-S3 -- TO-DB-f-1901: row S2 (the Cottonwood test's literal 0.4.1 pin) is resolved by the issuer's amendment f7d784393c; the one assertion is changed, the file grant is named, and the regression and the criterion pass again
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1901-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1901",
+  "surfaced_at": "2026-10-16T14:03:29Z",
+  "one_line": "Row IRPT_DASHBD-D2-W1901-S2 is resolved by the issuer's amendment f7d784393c: the grant now names the Cottonwood test file, and its line 86 literal pin is replaced by a comparison with the contract's version and a floor of 0.4.1. S2 itself is not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat f7d784393c: the order file only, 4 insertions and 2 deletions; the amendment text names the file and the replacement assertions; the order is reopened to status pending",
+      "git diff of test_account_transaction_cottonwood.py: 2 insertions, 1 deletion; line 86 'assert WORDS[contract_version] == CONTRACT[contract_version] == 0.4.1' is now two assertions, the comparison and the tuple floor (0, 4, 1); no other line changed",
+      "python -I -m pytest on that file: 52 passed in 1.01s (rc 0), against the 51 required; p132_dates.py DBF132-1-AC2 PASS (rc 0); p132_inflection.py DBF132-1-AC3 PASS (rc 0); p133_contract.py DBF133-1-AC1 PASS (rc 0)"
+    ]
+  },
+  "spec_asserts": "Amended order DB-f-1901 step 3: change line 86 so it no longer pins a literal version, with the two named assertions; touch nothing else in that file; the Cottonwood test file must pass with at least 51 tests; then re-run DBF133-1-AC1 and the two regression commands of step 4.",
+  "world_is": "The step is done as written: one line became the two named assertions, the file passes 52 of 52, and both regression checks and the criterion print PASS. Row S2 remains as filed (ARMED in its own text); this row records its resolution.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
