@@ -44,8 +44,8 @@ RES = "aws_cloudwatch_event_target.guarded"
 NOW_LIVE = "2026-10-08T05:00:00Z"
 NOW_AFTER = "2026-10-08T07:00:00Z"
 COPIES = [".tools/safe-apply.sh", ".tools/safe-deploy.sh", ".tools/apply-who-check.py", ".tools/crossbox-deploy-check.py",
-          ".tools/placement-check.py", ".tools/lib/resolve-actor.sh", "lib/devices.py", "org/devices/DEVICES.json",
-          ".tools/seat-gates-dry-pass.py"]
+          ".tools/crossbox-call.py", ".tools/placement-check.py", ".tools/lib/resolve-actor.sh", "lib/devices.py",
+          "org/devices/DEVICES.json", ".tools/seat-gates-dry-pass.py"]
 SWITCHES = ["apply-who.safe-apply", "apply-who.safe-deploy", "crossbox.safe-apply", "crossbox.safe-deploy"]
 # A stub of .tools/safe_deploy_core.py: the real function names the helper imports, a tiny rule, and a main() that only prints.
 STUB_CORE = (
