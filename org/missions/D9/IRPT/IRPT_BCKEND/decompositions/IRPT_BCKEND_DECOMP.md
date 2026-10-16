@@ -4553,3 +4553,15 @@ Check IB245-1 (`deliverables/2.0.0_SA_COO~P2/checks/r245/p245_cells.py`), dry-ru
 | `IB-pr-614` | APPLY the role grant (plan 1/0/0), battery before and after, one recovery invoke | FWD-21 | WORLD | none (both halves signed) | PM2-b |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2); this is the completion of the open IB-pr-612 change.
+
+## 241. ROUND 5, WORKSTREAM ~PM (the on-demand read that closes L6 of the IB-pr-521 ledger; 2026-10-16 ~17:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO ruling (A), msg 9653)
+
+Ledger `irpt-export-receipt-repin-20261013` (IB-pr-521, the export receipt re-pin) was OPEN 64 hours past its 6-hour window with L6 waiting on "a person's after-read": one NEW export readable on DEV and the pre-existing receipt still reading. The export function had 0 invocations since the apply (my CloudWatch read), so no person was going to supply it soon. The CTO ruled that the read, not the reader, was what he named, and that a seat drives it now (no FWD is a wait). One SERVED order to `0.7.0_AE_CloudOps~IB2` (rule 34): mint ONE transient staff-only user by the signed helper (the XA-20261016T160537Z-f98b shape: staff role only, no firm entitlement row, role set printed, removal read back ABSENT), read one pre-existing receipt, request ONE new DEV export through the portal route as the page calls it, no client emailed, read its status, remove the user. I close L6 and the ledger on the record.
+
+Check IB246-1 (`deliverables/2.0.0_SA_COO~P2/checks/r246/p246_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control246.py`) passes the three positives and each of 19 negatives fails its own arm (0 unexpected). Rounds 2 to 4 of ~PM already carry an issuance (IB-pr-612, IB-pr-613, IB-pr-614), so this takes round 5.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-615` | DRIVE one DEV export under a transient staff user, read the new status and the old receipt, remove the user | FWD-21 | SERVED | none (ruling msg 9653) | PM5-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).

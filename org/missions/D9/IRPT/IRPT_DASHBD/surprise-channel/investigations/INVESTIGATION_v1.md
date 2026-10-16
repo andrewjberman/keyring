@@ -23586,3 +23586,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disposition owed by 2.0.0_SA_COO~D2 with the CTO: leave it for the revised order's upload to supersede (REC), or restore the previous bytes as the current version by a copy over the key (no delete; the CTO's word). The AE applier of the revised order should read the key's current version before its upload."
 }
 ```
+
+## IRPT_DASHBD-D2-S128 -- the drained hop-2 reader's mapping (client to relationship id to sha256) matches 0 of 4,012 households: the real join is through the account ids, minted
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S128",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T16:59:08Z",
+  "one_line": "Measured against the real filled_report_values partition (2026-10-15, 4,694,024 rows, 4,012 household refs) and the real 49 Financial directory (4,776 clients, each one entry, 4,246 with a relationship_id): sha256 of the directory's relationship_id equals NONE of the 4,012 household refs, so the reader drained in DB-b-302 (merge aec0df87fc) would return NotYetAvailable for every client. The accounts join instead: the table's account row keys are raw custodial ids (10 characters), the directory's account_ids are minted opaque ids (28 characters); minting each table account with the handler's own ids.opaque_account makes all 6,616 table accounts equal directory account ids, and 4,012 clients reach exactly one household, 764 reach none, none reaches two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "set intersection of sha256(str(relationship_id)) over the 4,246 directory clients that carry one with the 4,012 distinct household_ref values of the 2026-10-15 partition: 0 (table refs not in the directory 4,012; directory refs not in the table 4,246)",
+      "member_id account.last4 rows, row_key vs directory ids.account_ids: raw intersection 0 (shapes 10 and 28 characters); after ids.opaque_account(49financial, raw) on the 6,616 table accounts (0 mint failures): intersection 6,616 of the directory's 7,732 distinct account ids",
+      "clients by number of households reached through the minted account ids: 0 households 764, 1 household 4,012, 2 or more 0"
+    ]
+  },
+  "spec_asserts": "The issuer's rule on DB-b-302 and its message to the CTO: client id to the directory entry's relationship_id to sha256 hex to household_ref; the id-space match was unmeasured until hop 1's first write.",
+  "world_is": "The id spaces do not match through the relationship id. The measured join is account based and exact. Hop 2 is OFF, so no client is affected; the reader is re-cut (a new cell) before any deploy pair carries it, with a per-pass cache because the partition holds 4.7 million rows and a per-client scan would not finish."
+}
+```
