@@ -5,6 +5,7 @@ and name resolution to raise so a stray socket would fail the case loudly.
 
 Last line: INTAKE-FETCH-TEST cases=<k>/<n> ok=<True|False>
 """
+import contextlib
 import hashlib
 import io
 import json
@@ -562,12 +563,69 @@ def case_record_is_ascii_and_rewrites_safe():
         idx.stop()
 
 
+def _resolve_closure(e, members):
+    path = os.path.join(e.dir, "closure.json")
+    with open(path, "w", encoding="ascii") as fh:
+        json.dump({"schema": "intake-closure/1", "target": {"label": "cp312-linux_x86_64"}, "members": members}, fh)
+    return path
+
+
+def case_resolve_names_one_file():
+    """The resolve verb (round 27) names ONE file: the manylinux_2_28 wheel over the 2_17 one and the win_amd64 one."""
+    idx = Index()
+    try:
+        body28 = make_wheel("28")
+        idx.add("demo_pkg-1.0-cp312-cp312-win_amd64.whl", make_wheel("w"))
+        idx.add("demo_pkg-1.0-cp312-cp312-manylinux_2_17_x86_64.whl", make_wheel("17"))
+        idx.add("demo_pkg-1.0-cp312-cp312-manylinux_2_28_x86_64.whl", body28)
+        with Env() as e:
+            closure = _resolve_closure(e, [{"name": "demo-pkg", "version": "1.0", "host_class": None}])
+            ap = os.path.join(e.dir, "approval.md")
+            with open(ap, "w", encoding="ascii") as fh:
+                fh.write("batch\ndemo-pkg==1.0\n")
+            out = os.path.join(e.dir, "resolve.json")
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = T.main(["resolve", "--closure", closure, "--target", "cp312-linux_x86_64", "--approved-by", ap,
+                             "--index-base", idx.base, "--out", out])
+            doc = json.load(open(out, encoding="ascii"))
+            row = doc["rows"][0]
+            assert rc == 0 and buf.getvalue().splitlines()[-1].startswith("INTAKE-RESOLVE target=cp312-linux_x86_64 "
+                                                                          "members=1 chosen=1 no_wheel=0 requests=1 ok=True"), buf.getvalue()
+            assert row["outcome"] == "CHOSEN" and row["file_name"] == "demo_pkg-1.0-cp312-cp312-manylinux_2_28_x86_64.whl", row
+            assert row["sha256"] == hashlib.sha256(body28).hexdigest() and row["size"] == len(body28), row
+            assert idx.requests == ["/pypi/demo-pkg/1.0/json"], idx.requests
+            assert e.holding() == [] and os.path.isfile(out[:-5] + ".md")
+    finally:
+        idx.stop()
+
+
+def case_resolve_approval_gate_zero_requests():
+    """resolve refuses before ANY socket when the approval file lacks the exact name==version of a member."""
+    idx = Index()
+    try:
+        idx.add("demo_pkg-1.0-cp312-cp312-manylinux_2_28_x86_64.whl", make_wheel("28"))
+        with Env() as e:
+            closure = _resolve_closure(e, [{"name": "demo-pkg", "version": "1.0", "host_class": None}])
+            ap = os.path.join(e.dir, "approval.md")
+            with open(ap, "w", encoding="ascii") as fh:
+                fh.write("batch\ndemo-pkg==1.0.1\n")  # the near miss is not the exact line
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = T.main(["resolve", "--closure", closure, "--target", "cp312-linux_x86_64", "--approved-by", ap,
+                             "--index-base", idx.base])
+            assert rc == 2 and "REFUSED" in buf.getvalue() and "demo-pkg==1.0" in buf.getvalue(), buf.getvalue()
+            assert idx.requests == [], idx.requests
+    finally:
+        idx.stop()
+
+
 CASES = [
     case_happy, case_missing_file, case_digest_mismatch, case_size_mismatch_and_overrun, case_other_host_url,
     case_wrong_segment_url, case_redirect_other_host, case_redirect_same_host_followed, case_redirect_hop_cap,
     case_attestation_absent, case_linux_name, case_index_spelling, case_yanked, case_connection_error_one_retry,
     case_public_without_approval_zero_sockets, case_public_host_rule, case_list_reads_batch, case_cli_last_line,
-    case_record_is_ascii_and_rewrites_safe,
+    case_record_is_ascii_and_rewrites_safe, case_resolve_names_one_file, case_resolve_approval_gate_zero_requests,
 ]
 
 

@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~131</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-131 @5010135b2e) and again in the main tree after merge 12a02b633b: CTas1-AC1 RESOLVE arms=9/9 ok=True; CTas1-AC2 INTAKE-FETCH-TEST cases=21/21 ok=True (base 19/19); CTas1-AC3 INTAKE-CLOSURE-TEST cases=10/10 ok=True (base 10/10); proof VALID; the earlier CT-ar-1 test still reads LINUX-CLOSURE arms=7/7 ok=True; the branch changed 5 files, all inside the order's paths. Row W130-S2 CLOSED by the command `python org/devices/intake/intake_closure.py fetchlist --from-file org/devices/intake/closure_cp312_linux_x86_64_yfinance.json`, which now exits 2 with `fetchlist: this closure targets cp312-linux_x86_64; use intake_fetch.py resolve to name its files` and writes no file (issuer re-run); `build_fetchlist()` itself is unchanged, the CLI refuses before it. The worker made NO request to the real index (a dry run against closed loopback port 127.0.0.1:9 showed the gate accepted all 17 lines and failed at connect). Beyond the spec the verb adds the reasons REQUIRES-PYTHON-UNMET, NO-DIGEST and NO-FILES, and without a host file prints host_conflicts=UNREAD. No row filed. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

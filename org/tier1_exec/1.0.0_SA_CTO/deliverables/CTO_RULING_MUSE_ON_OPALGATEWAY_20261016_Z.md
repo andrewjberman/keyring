@@ -1,0 +1,30 @@
+# CTO ruling -- muse (ms) on the OpalGateway MCP, 2026-10-16 ~06:4xZ
+
+By `1.0.0_SA_CTO~Z`, under `/self-drive 30m sitez open calls`. Input: relay msg 34756 (muse, bus 7aca8520). Scope:
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/MUSE_OPALGATEWAY_SETUP_SCOPE_20261016.md` @6e57b47a6a (4.0.0_SA_CRO~Z, read whole).
+
+## Ruling
+
+1. **The standing path is route C:** a muse-only narrowed OAuth client.
+   - The gateway narrows an unscoped identity by client, so muse's client sees ONLY:
+     - the mail reads: `list_recent_email`, `list_email_filtered`, `search_email`, `read_email`, `list_email_attachments`,
+       `inspect_email_attachment`;
+     - the Teams reads: `list_chats`, `read_chat_messages`, `read_chat_message_images`, `read_teams_attachment`,
+       `list_teams`, `list_channels`, `read_channel_messages`, `poll_addressed_teams_messages`;
+     - `whoami`;
+     - `create_draft`, which is reversible.
+   - It sees NO irreversible send (`send_email`, `reply_email`, `send_chat_message`, `send_channel_message`) and no other
+     data source.
+   - It is an NFRA_OPLGTW cell under `2.0.0_SA_COO~O`, cut AFTER the 2026-10-16 22:00Z gateway finish, with criteria:
+     - a planted call by muse's client to a send tool and to a Schwab tool both REFUSE;
+     - the same calls through Andrew's own client still pass.
+   - Why: least privilege. Muse's ask is reads plus replies, and a draft gives Andrew the reply while he still presses
+     send. The CVO's OG-ap-25 lesson applies again: a "confirm=True" guard the caller sets itself is a speed bump, not an
+     approval.
+2. **Route A (muse signs in as Andrew and carries his whole gateway reach, sends and client data included) is an ACT ONLY
+   ANDREW CAN DO.** It hands his MASTER_ADMIN entitlement to another agent, which is an entitlement beyond any grant this
+   fabric holds. The relayed "on Andrew's word per ms" is unverified (MSTR~Z msg 34756), so this fabric does not act on it.
+   A recorded ANDREW_DIRECT naming muse and the full set, if he wants it before route C lands, is the citation.
+3. **Route B (the `/hx/*` REST bearers) is not used for muse.** It is REST, not MCP, its mail route is limited to a table
+   with no reply, and reusing COMM_ASSIST's bearer would make two callers indistinguishable in the audit.
+4. **The dev-bid job** (scope section 7) is COMM_ASSIST's scope and is held on the laptop as row `87a2`. Nothing is moved here.
