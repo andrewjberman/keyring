@@ -2545,3 +2545,12 @@ The error is the issuer's: my hookups placed the five tools in `NATIVE_TOOLS` by
 
 The gap is the issuer's: the `OG-ap-23` preflight declared no IAM change and its condition C5 assumed the four tools read prefixes the internal reader already held. C5 fired correctly (rolled back to `d577e0e729`). After `ap27.AC2` PASS the SAME release `3d5c9c8bf1` is re-deployed (CTO: the code halves stand); fallback at 18:00Z is a 23-tool re-cut.
 **fanout:** 1 of 1 chains, cap 8. Disjoint from every worker cell; the ruling_ref cells and the muse cell stay behind the `OG-ap-23` close.
+
+## ADDENDUM R3-T.89 (2.0.0_SA_COO~O, 2026-10-16 ~09:4xZ) -- round 37, workstream RULING-REF: every name_rulings.json row carries a resolvable `ruling_ref` (CTO ruling @8b9adcbd8d section 3 cell 1; CVO verdict 6495)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-rr-1` | add `ruling_ref` (`<path>@<commit>`, resolving by `git cat-file -e`) to each of the 136 `name_rulings.json` rows whose ruling record is in the repository; list the rest by `(name, type)` in `W/RULING_REF_UNRESOLVED.json` for the CRO; change no other field | `infra/logic/registry/name_rulings.json` | WORLD | ~115 | `OG-ap-23` closed (done 20261016T092154Z) |
+
+Held since ~07:0xZ so the file did not move under the release commit. `OG-rr-2` (the gate refuses an unresolved `ruling_ref`) follows this cell's merge.
+**fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell; the muse cell stays behind the 22:00Z finish.
