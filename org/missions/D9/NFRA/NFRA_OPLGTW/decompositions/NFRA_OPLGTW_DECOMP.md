@@ -2703,3 +2703,16 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 **fanout:** 1 of 1 chains, cap 8 (the release is one act; the builds are done).
 
 **Held, not in this release.** NFRA_MCPINDEX R20-1 (`gen_silver_rows` keeps `address`) gates any catalog regeneration, and this release changes no catalog. The 429 limit choice (OG-en-10 audit rows) is not made here. Allocation `weight_unit` ships `null` with `not_established` (row Z-S313); the question carries to round 40.
+
+## ADDENDUM R3-T.102 (2.0.0_SA_COO~O, 2026-10-16 ~23:0xZ) -- round 40, workstream ENRICH-R40-W1: the 49F window (CTO ruling @0a15d90223; CVO v37)
+
+**Source.** CVO v37 (msg 35285): `OG-ap-31` live, the owner guard condition MET, `OG-ap-28` AC3 MET, `OG-ap-31` AC3 PARTIAL (a 13-month request reads the newest 60 of 334 transaction and 60 of 395 fee partitions, about two months, and `window_partial` says so). The CTO's round-40 ruling W1: measure first on the host, then a concurrent full read if the p95 is inside the request budget, else a continuation cursor; never a silent truncation, never a monthly source (a new pipeline, rule 30 / R19), never narrowing up front. `round-close-check.py --round 39`: MAY-CLOSE (7 orders, 7 complete, `OG-ap-31` AC3 graded).
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ev-3` | MEASURE the full 13-month read of `transactions` (~334 files) and `fees` (~395) on the host through the installed adapter's read path at concurrency 16, 5 runs each: p50, p95, bytes; verdict `inside` if the worst p95 is 30 s or less (half the 60 s ALB idle timeout, the issuer's reading), else `outside` | `W/WINDOW_MEASURE.json` | SERVED | `~NFRA1` | applier |
+| `OG-en-17` | CODE: the branch the verdict names: `concurrent` (cap 400, `ThreadPoolExecutor(16)`) or `cursor` (60-partition pages, `next_cursor` = the day before the oldest partition read, passed back as `to_date`); never a silent truncation | `app/client_adapter_bd49f.py`, tests | WORLD | `~129` | worker |
+
+**Edge.** `OG-ev-3` precedes `OG-en-17` (the verdict). **fanout:** 1 of 2 chains started, cap 8 (the measure now; the worker is spawned on its verdict). The change rides the next batched gateway release together with MI's re-emitted catalog (frozen blob `3d47a95791` is stale after `MX-c-24`'s six lines, MI row Z-S136) and `NFRA_MCPINDEX` R20-1.
+
+**Carried, not cells.** The allocation weight scale (Z-S313), the roster for the browser exemption (Z-S322/Z-S325), the 429 limit choice (Z-S177: no 429 rows yet), the owner's browser run for `OG-ap-30`.
