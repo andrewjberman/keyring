@@ -12550,3 +12550,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The four curl_cffi, numpy, pandas, websockets waivers stay on their records as issued. The residual names are numpy/__init__.py and pandas/__init__.py."
 }
 ```
+
+## NFRA_CTLPLN-W135-S3 -- the ruled empty-line padding rule clears numpy/__init__.py but leaves one empty line of pandas/__init__.py, so REAL4 reads 3 of 4
+
+```json
+{
+  "id": "NFRA_CTLPLN-W135-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~135",
+  "surfaced_at": "2026-10-16T10:57:33Z",
+  "one_line": "CT-aw-1 amendment 1 (CTO msg 109671, W135-S2): with the block removed together with up to 4 empty lines directly before and after it, numpy/__init__.py now compares equal, but pandas/__init__.py still differs by ONE empty line (wheel line 2). --real4 reads REAL4 passed=3/4 ok=False. The rule was not widened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round28_check6_platform.py --real4 at 0577033587 (read only): 'REAL4 curl_cffi check6=passed compared_across_platforms=True residual=0 metadata=0'; 'REAL4 numpy check6=passed compared_across_platforms=True residual=0 metadata=1'; 'REAL4 pandas check6=failed compared_across_platforms=True residual=1 metadata=0'; 'REAL4 websockets check6=passed compared_across_platforms=True residual=0 metadata=0'; 'REAL4 passed=3/4 ok=False'",
+      "read-only census (.scratch/diag_pandas.py at 0577033587) on C:/opal-intake/release/intake-20261016-yfinance-linux/pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl member pandas/__init__.py against the laptop installed pandas/__init__.py: installed copy has 2 empty lines directly before the delvewheel block and 1 directly after; wheel has 28 empty lines in the file; after _platform_normalise the wheel has 368 lines, the installed side 367, first differing line index 1: wheel '' (empty), installed 'import os'",
+      "the same census for numpy-2.4.2 numpy/__init__.py: installed copy 2 empty lines before the block and 1 after, wheel has no empty line at that place; after _platform_normalise both sides are 943 lines and equal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-aw-1 AMENDMENT 1, W135-S2 ruling (CTO msg 109671): the block is removed together with up to 4 empty lines directly before it and up to 4 directly after it, then compared exactly; the real numpy/__init__.py and pandas/__init__.py compare equal with no waiver (CTaw1-AC2, REAL4 passed=4/4).",
+  "world_is": "The ruled padding removal clears numpy/__init__.py. It does not clear pandas/__init__.py: its wheel keeps one empty line directly after 'from __future__ import annotations' (wheel line 2), at the seam where the installed copy holds the block's padding (2 empty lines before, 1 after). Removing all three padding lines leaves the wheel one empty line longer than the installed side. The residual is exactly one empty line, wheel line 2. The worker did not keep a padding line (that would widen the ruled rule) and did not touch the four waiver records or anything under C:/opal-intake/.",
+  "notes": "Clearing needs a CTO ruling on how a wheel-side empty line at the padding seam is treated (the rule as ruled removes the full padding run; the real pandas file needs one of its padding lines kept). The arms h to k of .tools/tests/test_round28_check6_platform.py (12/12 at 0577033587) pin the ruled behaviour, so a change to the seam rule must re-grade them. The W135-S2 row stays as filed."
+}
+```
