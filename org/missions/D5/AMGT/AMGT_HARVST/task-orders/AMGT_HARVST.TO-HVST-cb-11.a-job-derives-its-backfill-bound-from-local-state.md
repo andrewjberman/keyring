@@ -80,10 +80,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Direct act: ONE cell, LOCAL, about 50 product lines; no L2, L4-R or L8-L10.
 - Slot ~147, worktree `C:/dev/wk-harvst-147`, branch `wk-AMGT_HARVST-147`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts`.
 
+**COMPLETE 2026-10-16 ~00:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~147` (worker-light, haiku, high), branch `wk-AMGT_HARVST-147`, build `40db997c81`, head `0617390fcd`, then this seat's one-character repair: the worker's diff carried an unrelated edit in `worker.py` (`job_id =dt.datetime...`, a deleted space, outside the cell); restored byte for byte, `git diff --stat` for `worker.py` now reads only the cell's lines. Diff read by this seat: `harvest_grammar.py` (+14/-?: `_NOT_GIVEN` sentinel and `local_watermark`; the S3 path unchanged when the keyword is not given), `worker.py` (`_local_watermark`, `_note_local_watermark` (never backward, unparseable ignored), the call site now `local_watermark=` with no client, one `_note_local_watermark` call after a STORED article only).
+- **AC1 PASS:** `13 passed` (worker; this seat re-ran). **AC2 PASS:** `125 passed, 4 subtests passed` (worker; this seat re-ran). Proof instance VALID rc 0 (re-run here). Full suite per the worker `872 passed, 1 failed (sparse import), 3 skipped`, base `859 passed, 1 failed`.
+- **Report item c:** `published` is an ISO-8601 string with `Z` or an offset for `wsj`, `barrons`, `sa` and `bbg` (code and recorded fixtures); no parser was guessed.
+- **Row `D1-W147-S1`** (ARMED, my disarm): a pair with no local mark is bounded at the floor, and a pair whose candidates are ALL already held never writes a mark, so its jobs re-page to the floor each cycle. The floor is the last completed cycle's start date, so the re-paging is bounded to about one cycle of dates and costs listing requests, not silver reads; dispositioned by the issuer's row after the merge; carried, not fixed.
+- **What this does NOT prove:** the S3 reads of a REAL job fall to near zero. That is the issuer's real read after both merges (`cb10_job_get_probe.py`, bbg, BA: before 747 GETs / 212,043,826 bytes).
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>EGRESS-FIX</workstream>
 <slot>dell1</slot>
