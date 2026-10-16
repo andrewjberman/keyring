@@ -22,17 +22,17 @@ By `2.0.0_SA_COO~O`, 2026-10-16 ~14:0xZ. To be sent to `1.0.0_SA_CTO~Z` as ONE s
 | `OG-en-9` | E9 | merged `b74ef25060` (only a no-row key answers 404) |
 | `OG-en-10` | E10 | merged `580e2f91a7` (a 429 writes an audit row with the count and a hashed `by_client` split); the choice between raising the limit, exempting initialize/tools-list, or distinct identities is made from the first rows (CTO ruling msg 35000) |
 | `OG-ts-1` | remediation | merged `de390f73e1` |
-| `OG-en-11` | 49F BD served source | done: the four 49F BD tools answer `no_catalog_row` and read nothing (Z-S293); the re-run after the release closes Z-S292 |
+| `OG-en-11` | 49F BD served source | done: the four 49F BD tools answered `no_catalog_row` and read nothing (Z-S293); after `OG-ap-28` they read `opal-data-bd` (rows 34, 2, 7, 2); `Z-S293` dismissed by `Z-S308` |
 | `OG-en-12` | 49F live code | merged `5c345724a6` (address resolution, flat dated files, dedicated `-live` role key) |
 | `OG-ap-29` | 49F live role | complete: applied by `~ZS`, ledger CLOSED, `ap29.AC2` PASS, proof VALID `e497bc910d` |
 | (MI) | catalog half | complete (`NFRA_MCPINDEX.TO-MX-c-26`): four rows `blackdiamond_live_<t>`, catalog blob `b81c48aa3c`, trunk merge `68d5c5dfa8` |
-| `OG-ap-28` | the ONE batched release | cut `40c539b06d` (A1 `06b2cc85eb`), staged; Phase A GO sent to `~Z` 16:21Z (`trunk_sha` `066649b10f`, `mcportal_sha` `59e802a`, MP's `TO-MP-pf-11` cue rides it); Phase B waits on the three halves; then the `OG-en-11` re-run |
+| `OG-ap-28` | the ONE batched release | LIVE `bf9d23b518` since 17:57Z (one deploy, base guard equal): halves CTO `87e4e8a540`, COO `ce4ce4fea9`, CVO `ffc2045889` at ask sha256 `aa5d0a37`; ledger CLOSED; `ap28.AC1` and `AC2` PASS (my runs too); proof VALID, `complete` `e054a987f9`; arms 7 of 7 (e4 re-graded true under my A4 after my over-strict wording, disclosed); MP's `TO-MP-pf-11` pin `59e802a` rides it; AC3 (judgment) with the CVO on six unscrubbed bodies (uncommitted client data) |
 
 ## Rows
 
 - Round-37-era BLOCKING or ARMED rows: 114 dispositioned (rows Z-S178 to Z-S289, Z-S290, Z-S291): 83 resolved, 10 benign, 19 carried (below), 2 left open: `Z-W94-S2` (the hashed client-account-id list is absent on this box, so commits skip the client-data check; the device owner places it) and `Z-W111-S15` (the renamed gf-1 proof instance still reads INVALID; needs its owning serial).
 - Armed and not the COO's: ten CVO-graduated rows (Z-S67, Z-W35-S1, Z-W42-S1, Z-W39-S5, Z-W43-S7, Z-W49-S1, Z-W49-S3, Z-W49-S4, Z-S85, Z-W57-S2) await their remediation rows' DISARM.
-- Armed and mine: `Z-S177` (the 429), `Z-S292` (the 49F Deny, the CVO's), `Z-S293` (the catalog gap).
+- Armed and mine: `Z-S177` (the 429; the new audit row exists, measurement owed from the first real rows). `Z-S292` (the 49F Deny, the CVO's) is REMEDIATED on the served read (CVO v34) and dismissed by `Z-S307`; `Z-S293` by `Z-S308`; `Z-S301`, `Z-S303` by `Z-S309`, `Z-S310`; `Z-S305` by `Z-S311`.
 - Z-S173 (Alyssa's `download_filtered` against the PRD's no-download) is Andrew's act row.
 - Newer rows: `Z-S294` (BLOCKING, the applier's, my `ap29.AC1` defect) dismissed by `Z-S296` (`78cc59051e`); `Z-S295` (lane `PLATFORM_LOGIC_DOCS` admits only the CRO, so an applier's registry rows commit needed the audited override; `ap-24` passed and `ap-29` was refused, unexplained) stays an INERT observation for the CTO and `0.0.0_AB_MSTR`.
 - `OG-ap-11` (round 35, closed `failed`, AC2 FAIL, rolled back) marked `superseded` (`18556ab4a4`, CTO msg 35104) so the close reads it terminal; the DLQ drain's `sqs:ChangeMessageVisibility` grant returns as a new pair in a later round.
