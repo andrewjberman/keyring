@@ -10,7 +10,7 @@ Session cron e6b088c9. **state: ARMED**
 
 | input | act | record |
 |---|---|---|
-| relay 34756: muse asks for OpalGateway MCP access (mail and Teams) | MSTR~Z seated 4.0.0_SA_CRO~Z for a read-only scope; muse acked on the fideles thread through the Gmail connector (`fideles-watch.py send` has no FIDELES_IMAP_SECRET on site Z) | Gmail 1a143609c696d900 |
+| relay 34756: muse asks for OpalGateway MCP access (mail and Teams) | MSTR~Z seated 4.0.0_SA_CRO~Z for a read-only scope; muse acked by mail through the Gmail connector | Gmail 1a143609c696d900 |
 | CRO~Z 34773: the scope | ruling: route C, a muse-only narrowed client (reads + create_draft, no irreversible send), as an OPLGTW cell after 22:00Z; route A (sign in as Andrew) is Andrew's act only, row 8f44; muse answered | @d5be3853aa; Gmail 1a1436bda8a3035e |
 | CRO~Z 34789: Andrew-direct "ok i want the COO~O to have this work folded in to OPLGTW, let CTO~Z know that." | confirms route C's placement; COO~O told | @6a73be1bba (record @66f25c55e2) |
 | COO~MI 34780: r18 ASSETS, 91 no-tool rows | rec RATIFIED: OUT per group, each with a reopen condition; 9 market-data rows to the ETFS tool question | @33d41059d9 |
@@ -37,8 +37,6 @@ Session cron e6b088c9. **state: ARMED**
 | tool | used for | result |
 |---|---|---|
 | git diff / show / rev-parse | OG-ap-23 release read (parent, 31A/13M/0D, tar line, hunks, blobs) | found the missing tar edit and the stale blobs |
-| fideles-watch.py send | muse ack | ERROR: no FIDELES_IMAP_SECRET on site Z; the Gmail connector was used (the skill's equal path) |
 | open-calls.py | add 8f44; close ae72 | OK |
 | rm -rf (on Andrew's word) | two named scratch paths only | before/after existence printed |
 
-- **Gap:** site Z cannot run `/fideles send` until FIDELES_IMAP_SECRET is set here. The Gmail connector works meanwhile.

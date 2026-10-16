@@ -28886,3 +28886,106 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Still ARMED with this seat as owner after this row: C-S132 (needs the CVO's judgment, or a census this seat cannot grade because it did the work) and C-S146 (a) (needs the page looked at). The CVO closes its own adjudication rows."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W486-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~486",
+  "surfaced_at": "2026-10-16T13:43:33Z",
+  "one_line": "AC2 cannot print FEATURE GREEN YES: the feature branch's lint step exits 1 on two TicketCenter test files that the branch does not touch and that base DEV already carries.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Task order AC2 (section 4): r103_feature_green_v2.sh prints R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, ...) for the feature branch cand/dell1/aifill-provenance-wording at e0dcfa9fa4 against base fc174c69.",
+  "world_is": "The run printed 'typecheck rc 0 | lint rc 1 | harness 24 of 27 pass | base 21 of 27 | regressions 0' and 'R103 FEATURE GREEN: NO'. The lint output (script line 22 writes it to /tmp/r103_lint.txt; ANSI-stripped copy at C:/dev/wk-resapp-486/.scratch/lint_plain.txt) holds 2 errors and 374 warnings: no-control-regex at src/pages/TicketCenter/__tests__/filing-decision-tree.test.tsx:299 and no-regex-spaces at src/pages/TicketCenter/__tests__/filing-hint.test.tsx:190. Neither file is in the branch: git diff --quiet fc174c69 HEAD -- src/pages/TicketCenter returned 0. The failure is inherited from base DEV fc174c69, and the only other fix path is an edit to another page, which the task order forbids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-486/.scratch/ac2.txt: 'R103 FEATURE GREEN: NO (typecheck rc 0, lint rc 1, harness 24 of 27 pass, base 21 of 27, regressions 0)' and exit=1",
+      "C:/dev/wk-resapp-486/.scratch/lint_plain.txt lines 737-741 and the summary line '✖ 376 problems (2 errors, 374 warnings)'",
+      "git -C C:/dev/wk-resapp-486/portal diff --quiet fc174c69 HEAD -- src/pages/TicketCenter, rc=0 (unchanged vs base)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed at the head e0dcfa9fa45d3ade5f8dc2ef20b41b7b9444fbec of cand/dell1/aifill-provenance-wording. The branch's own change passes AC1 (12 of 12) and typecheck (rc 0). The two lint errors belong to the owner of the TicketCenter tests and must be cleared on DEV before any FEATURE GREEN YES can be printed for a feature cut from it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W486-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~486",
+  "surfaced_at": "2026-10-16T13:43:33Z",
+  "one_line": "The commit gate checked 0 of 1 file on the portal commit: it reads only .py, .sh, .tf and org/projects/*.json, so a .tsx change is committed with no mechanical gate check.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Task order section 1 step 4 and section 5: the one source change is committed via safe-commit.sh with the author line, and the commit is the gated act.",
+  "world_is": "safe-commit printed '[commit-gate] WARN: commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED' and 'not graded: 1 .tsx' for src/pages/SecurityAnalysis/components/InputProvenance.tsx, commit e0dcfa9fa45d3ade5f8dc2ef20b41b7b9444fbec. The gate's own text says it reads only .py / .sh / .tf / org/projects/*.json. The commit therefore carries no mechanical gate check; its only checks are AC1 (check_gr7_wording.cjs, 12 of 12) and the typecheck inside AC2 (rc 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at the commit of e0dcfa9fa4: '[commit-gate] WARN: commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED.'",
+      "C:/dev/wk-resapp-486/.scratch/ac1.txt tail: 'AIFILL PROVENANCE: YES (12 of 12)' and exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Every frontend commit through safe-commit meets the same gap, so a future .tsx change is unchecked by the commit path until a gate covers that suffix. This row names the gap; it proposes no gate."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W486-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~486",
+  "surfaced_at": "2026-10-16T13:43:33Z",
+  "one_line": "The feature-green harness writes its lint output to the fixed path /tmp/r103_lint.txt, which every run on the host shares.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Task order AC2: r103_feature_green_v2.sh run in the worker's own worktree prints the verdict for that worktree's branch.",
+  "world_is": "The script (round103_prep/checks/r103_feature_green_v2.sh line 22) runs 'bun run lint >/tmp/r103_lint.txt' and reads the lint result from that one fixed path. Any concurrent run by another seat or worker overwrites it, so the lint half of its verdict is not tied to the worktree it was run in. This run read the file it wrote (the summary line of 2 errors matches the file's content), but nothing in the script ties the file to this run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-486/org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_feature_green_v2.sh line 22: '\"$BUN\" run lint >/tmp/r103_lint.txt 2>&1; LI=$?'",
+      "C:/dev/wk-resapp-486/.scratch/ac2.txt: lint rc 1 printed by this run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Per-run output under the worktree's .scratch/ would tie the lint result to its run; the script's owner decides the fix."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S52",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T13:53:00Z",
+  "one_line": "D1-W486-S1 DISARMED: AC2 of AMGT-gx-1 was an unmeetable criterion of the issuer's own cut (it needed lint rc 0 for the whole portal, and portal DEV fc174c69 already fails lint with two errors in TicketCenter test files); the issuer amended the criterion. W486-S2 and W486-S3 are noted, not defects of this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "D1-W486-S1 (worker ~486, BLOCKING ARMED, disarm owner this seat): AC2 cannot print R103 FEATURE GREEN YES because lint exits 1 on two TicketCenter test files the branch does not touch; the order stays open until the gap is cleared.",
+  "world_is": "Read 13:53Z 2026-10-16 by this seat: r103_feature_green_v2.sh re-run on the worker's portal tree (C:/dev/wk-resapp-486/portal, base fc174c69) prints typecheck rc 0, lint rc 1, harness 24 of 27 pass, base 21 of 27, regressions 0: none, pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs; the two lint errors are filing-decision-tree.test.tsx:299 (no-control-regex) and filing-hint.test.tsx:190 (no-regex-spaces), both last changed by 0.9.0_WK_IRPT_ANLREQ~161 @e58c64ad on DEV; filing-hint.test.tsx is not at PROD 7db035e4; the branch diff against fc174c69 is one file (InputProvenance.tsx, +2/-1). The check script grades harness against the base but lint absolutely, so no branch cut from this DEV could reach YES; it is the same class of fault the script's own header names for v1. The issuer amended AC2 in the order and the instance to the check's own line (typecheck rc 0, regressions 0: none, T = U), proof-of-spec-check VALID rc=0. W486-S2: the commit gate checked 0 of 1 file for a .tsx commit; CLAUDE.md rule 14 binds .py edits, so this is the gate's stated reach, recorded and not changed. W486-S3: r103_feature_green_v2.sh writes lint output to the fixed path /tmp/r103_lint.txt, so two concurrent runs overwrite each other; this seat ran it alone after the worker finished; the script belongs to 2.0.0_SA_COO~R1's deliverables and is not edited here. NOT MEASURED: lint at a clean base tree (the argument that the two errors are DEV's own rests on the branch diff being the one file and on the two files' commit history, not on a lint run at fc174c69).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r103_feature_green_v2.sh C:/dev/wk-resapp-486/portal fc174c69 -> typecheck rc 0 | lint rc 1 | harness 24 of 27 pass | base 21 of 27 | regressions 0: none (issuer re-run, ~2 minutes)",
+      "git -C C:/dev/wk-resapp-486/portal diff --stat fc174c69 e0dcfa9f -> 1 file, 2 insertions, 1 deletion",
+      "git log -1 fc174c69 -- src/pages/TicketCenter/__tests__/filing-decision-tree.test.tsx and filing-hint.test.tsx -> e58c64ad 0.9.0_WK_IRPT_ANLREQ~161; git cat-file -e 7db035e4:filing-hint.test.tsx -> absent",
+      "proof-of-spec-check.py on the amended instance -> VALID (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worker's rows D1-W486-S1, S2 and S3 stay as filed (append-only); this row is the issuer's disposition of all three. Portal DEV carries two lint errors that belong to the IRPT_ANLREQ feature (an observation for that feature's owner, not a block on this cell)."
+}
+```

@@ -22146,3 +22146,29 @@
   "world_is": "The build's output (tarball, sums, host scripts) lives in a stage folder outside the repository by design, so no commit holds it."
 }
 ```
+
+## IRPT_ANLREQ-D2-S148 -- disposition of IRPT_ANLREQ-D2-W262-S1: the sparse cone omitted docs/ (the issuer's provisioning, again); the worker is re-seated
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T14:43:23Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S148",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The worker read it right and did well to stop: its worktree was provisioned sparse without docs/, so the two regress files could not even be collected (the same class of omission as W258-S1, which I had named and should have carried into every later provisioning: the cone for a cell whose AC3 runs the repo's tests needs docs/). The issuer ran the cell's tests in a FULL scratch checkout of the worker's commit and found a real defect the worker could not see: 10 of its new tests fail because the real assembly calls the heartbeat (VisibilityTimeout 900) before the RETRY branch sets the back-off, so the recorded list is [900, delay], not [delay]. The product change is right (the issuer's build and guard arms pass on it). Ruling: the order is re-seated to worker 263 on a FULL checkout created from the tip of the 262 branch, with the exact test fix written into the order (assert the last recorded visibility). The old proof instance (AC3 FAIL) stays in worker 262's folder and is superseded by 263's.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W262-S1: the cone omitted docs/; the tests also needed a fix; re-seated as worker 263 on a full checkout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 262 report: build OK, guard OK, regress FAIL (collection: docs/contracts/investor-reporting/v1/AnalysisReport.schema.json absent)",
+      "issuer: full scratch checkout of 175596f205: ar_g129 build OK and guard OK; pytest test_resolve_upload.py 10 failed, 21 passed, e.g. 'queue.timeouts == [900, 150] vs [150]'"
+    ]
+  },
+  "spec_asserts": "The worker's worktree carries every file the cell's criteria read.",
+  "world_is": "wk-provision.sh provisions a sparse cone; the repo's own tests read docs/contracts and other trees outside it."
+}
+```

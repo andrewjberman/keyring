@@ -34,6 +34,15 @@ bus_message_id}, closed {from_at, from_by, to_at, to_by}. Each box writes only i
 bus id inside ack, closed.from_*; the receiving box: ack.at/by, closed.to_*), and `merge` folds the other copy in, so
 the two copies reach CLOSED-BOTH by git carrying the file and never by one box writing the other's.
 
+LAYOUT 2 (schema crossbox/2; CT-ba-1, NFRA_CTLPLN round 29, the CTO's ruling 1 @round-28 analysis): the two sides of a call
+write two FILES, so a from-side write and an answer write never share a file and cannot conflict in box-sync. The
+from-side file XB-<id>.json carries the from-side fields only (no state: derived): sent, ack_bus_message_id (the bus id of
+the answer), closed_from, and closed_to_issuer (written only by the issuing box's withdraw or supersede). Each answering
+box writes XB-<id>.<box>.json, schema crossbox-answer/1: ack and closed_to. The reader assembles the two into the crossbox/1
+shape (load_call_path, assemble), so every reader of a call sees one record. The layout is chosen by the committed text
+file org/devices/crossbox/LAYOUT (first line 2) at `open`; a crossbox/1 call keeps the single file and every writer on it
+behaves as before. `merge` on a crossbox/2 call writes nothing: each side already wrote its own file.
+
 The box is this checkout (--root, default: the repository this script lives in) and its device is AGENTBUS_DEVICE resolved
 through lib/devices.py (--device overrides it: tests only). Exit codes: 0 done, 2 usage, 3 REFUSED, 5 PULL-FIRST.
 """
@@ -57,12 +66,22 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 TOOL_ROOT = HERE.parent
 SCHEMA = "crossbox/1"
+SCHEMA2 = "crossbox/2"
+SCHEMA_ANS = "crossbox-answer/1"
 REL_DIR = "org/devices/crossbox"
+LAYOUT_FILE = "LAYOUT"
 KEYS = ["schema", "id", "kind", "call_id", "from_device", "to_device", "from_serial", "to_serial", "subject", "body_path",
         "opened_at", "state", "sent", "ack", "closed"]
+FROM2_KEYS = ["schema", "id", "kind", "call_id", "from_device", "to_device", "from_serial", "to_serial", "subject", "body_path",
+              "opened_at", "sent", "ack_bus_message_id", "closed_from", "closed_to_issuer"]
+ANS_KEYS = ["schema", "id", "box", "ack", "closed_to"]
+ANS_ACK_KEYS = ["at", "by"]
+PAIR_KEYS = ["at", "by"]
 SENT_KEYS = ["at", "bus_message_id"]
 ACK_KEYS = ["at", "by", "bus_message_id"]
 CLOSED_KEYS = ["from_at", "from_by", "to_at", "to_by"]
+BOX_RE = re.compile(r"[a-z0-9][a-z0-9_-]*")
+ANSWER_RE = re.compile(r"(XB-\d{8}T\d{6}Z-[0-9a-f]{4})\.([a-z0-9][a-z0-9_-]*)\.json")
 KINDS = ("CALL", "ORDER")
 STATES = ("OPEN", "ACKED", "CLOSED-BOTH")
 TIERS = ("tier0_exec", "tier0_utility", "tier1_exec", "tier2_senior", "tier3_junior")   # inbox-watch.sh and server.py TIER_DIRS
@@ -161,8 +180,8 @@ def check_call(doc, where: str) -> dict:
     missing = [k for k in KEYS if k not in doc]
     if missing:
         raise Refused("%s: missing key(s) %s" % (where, ", ".join(missing)))
-    if doc["schema"] != SCHEMA:
-        raise Refused("%s: schema is %r, this reader reads %r" % (where, doc["schema"], SCHEMA))
+    if doc["schema"] not in (SCHEMA, SCHEMA2):
+        raise Refused("%s: schema is %r, this reader reads %r and %r" % (where, doc["schema"], SCHEMA, SCHEMA2))
     if not (isinstance(doc["id"], str) and ID_RE.fullmatch(doc["id"])):
         raise Refused("%s: id %r is not an XB-<UTC>-<4 hex> id" % (where, doc["id"]))
     if doc["kind"] not in KINDS:
@@ -208,6 +227,192 @@ def fmt_line(doc: dict, commit: str) -> str:
         doc["id"], doc["kind"], doc["to_serial"], doc["subject"], REL_DIR, doc["id"], commit)
 
 
+# ---------------------------------------------------------------- layout 2: one writer per side (CT-ba-1)
+
+def layout_switch(root) -> bool:
+    """True when the committed text file org/devices/crossbox/LAYOUT exists and its first line is 2. Absent, `open` writes
+    crossbox/1 exactly as before."""
+    path = Path(root) / REL_DIR / LAYOUT_FILE
+    if not path.is_file():
+        return False
+    lines = path.read_text(encoding="utf-8").splitlines()
+    return bool(lines) and lines[0].strip() == "2"
+
+
+def answer_name(call_id: str, box: str) -> str:
+    return "%s.%s.json" % (call_id, box)
+
+
+def _pair(value, keys, where: str, name: str) -> None:
+    """A {at, by} block: exactly these keys, each null or a non-empty string."""
+    if not isinstance(value, dict) or sorted(value) != sorted(keys):
+        raise Refused("%s: %s must be an object with exactly the keys %s" % (where, name, ", ".join(keys)))
+    for key in keys:
+        if value[key] is not None and not (isinstance(value[key], str) and value[key]):
+            raise Refused("%s: %s.%s must be null or a non-empty string" % (where, name, key))
+
+
+def check_from2(doc, where: str) -> dict:
+    """The from-side file of a crossbox/2 call. A key this reader does not know is REFUSED."""
+    if not isinstance(doc, dict):
+        raise Refused("%s: top level is not an object" % where)
+    unknown = sorted(set(doc) - set(FROM2_KEYS))
+    if unknown:
+        raise Refused("%s: unknown key(s) %s (readers refuse a key they do not know)" % (where, ", ".join(unknown)))
+    missing = [k for k in FROM2_KEYS if k not in doc]
+    if missing:
+        raise Refused("%s: missing key(s) %s" % (where, ", ".join(missing)))
+    if doc["schema"] != SCHEMA2:
+        raise Refused("%s: schema is %r, the crossbox/2 from-side reader reads %r" % (where, doc["schema"], SCHEMA2))
+    if not (isinstance(doc["id"], str) and ID_RE.fullmatch(doc["id"])):
+        raise Refused("%s: id %r is not an XB-<UTC>-<4 hex> id" % (where, doc["id"]))
+    if doc["kind"] not in KINDS:
+        raise Refused("%s: kind %r is not one of %s" % (where, doc["kind"], "/".join(KINDS)))
+    if doc["call_id"] is not None and not (isinstance(doc["call_id"], str) and CALLID_RE.fullmatch(doc["call_id"])):
+        raise Refused("%s: call_id must be null or a plain id" % where)
+    for key in ("from_device", "to_device", "subject", "body_path", "opened_at"):
+        if not (isinstance(doc[key], str) and doc[key]):
+            raise Refused("%s: %s must be a non-empty string" % (where, key))
+    for key in ("from_serial", "to_serial"):
+        if not (isinstance(doc[key], str) and SERIAL_RE.fullmatch(doc[key])):
+            raise Refused("%s: %s %r is not a serial" % (where, key, doc[key]))
+    _pair(doc["sent"], SENT_KEYS, where, "sent")
+    if doc["ack_bus_message_id"] is not None and not (isinstance(doc["ack_bus_message_id"], str) and BUSID_RE.fullmatch(doc["ack_bus_message_id"])):
+        raise Refused("%s: ack_bus_message_id must be null or a bus message id" % where)
+    _pair(doc["closed_from"], PAIR_KEYS, where, "closed_from")
+    _pair(doc["closed_to_issuer"], PAIR_KEYS, where, "closed_to_issuer")
+    check_ascii(json.dumps(doc), where)
+    return doc
+
+
+def check_answer(doc, where: str) -> dict:
+    """An answer file XB-<id>.<box>.json (crossbox-answer/1)."""
+    if not isinstance(doc, dict):
+        raise Refused("%s: top level is not an object" % where)
+    unknown = sorted(set(doc) - set(ANS_KEYS))
+    if unknown:
+        raise Refused("%s: unknown key(s) %s (readers refuse a key they do not know)" % (where, ", ".join(unknown)))
+    missing = [k for k in ANS_KEYS if k not in doc]
+    if missing:
+        raise Refused("%s: missing key(s) %s" % (where, ", ".join(missing)))
+    if doc["schema"] != SCHEMA_ANS:
+        raise Refused("%s: schema is %r, the answer reader reads %r" % (where, doc["schema"], SCHEMA_ANS))
+    if not (isinstance(doc["id"], str) and ID_RE.fullmatch(doc["id"])):
+        raise Refused("%s: id %r is not an XB-<UTC>-<4 hex> id" % (where, doc["id"]))
+    if not (isinstance(doc["box"], str) and BOX_RE.fullmatch(doc["box"])):
+        raise Refused("%s: box %r is not a device name" % (where, doc["box"]))
+    if doc["ack"] is not None and not (isinstance(doc["ack"], dict) and sorted(doc["ack"]) == sorted(ANS_ACK_KEYS)
+                                       and all(isinstance(doc["ack"][k], str) and doc["ack"][k] for k in ANS_ACK_KEYS)):
+        raise Refused("%s: ack must be null or an object with at and by" % where)
+    _pair(doc["closed_to"], PAIR_KEYS, where, "closed_to")
+    check_ascii(json.dumps(doc), where)
+    return doc
+
+
+def assemble(raw: dict, ans, where: str) -> dict:
+    """The crossbox/1 shape of a crossbox/2 call: the from-side file (raw) and its answer file (ans, or None when this copy
+    has none yet). ack is the answer's ack with the from-side bus id; closed.to_* is the answer's closed_to, or the issuing
+    box's closed_to_issuer when the answer has not closed. state is derived, as derive_state does for crossbox/1."""
+    check_from2(raw, where)
+    if ans is not None:
+        check_answer(ans, where + " (answer)")
+        if ans["id"] != raw["id"] or ans["box"] != raw["to_device"]:
+            raise Refused("%s: its answer file names %s on %s; this call is answered by %s" % (
+                where, ans["id"], ans["box"], raw["to_device"]))
+    ack = None
+    if ans is not None and ans["ack"]:
+        ack = {"at": ans["ack"]["at"], "by": ans["ack"]["by"], "bus_message_id": raw["ack_bus_message_id"]}
+    to_pair = ans["closed_to"] if (ans is not None and ans["closed_to"]["at"]) else raw["closed_to_issuer"]
+    doc = {"schema": raw["schema"], "id": raw["id"], "kind": raw["kind"], "call_id": raw["call_id"],
+           "from_device": raw["from_device"], "to_device": raw["to_device"], "from_serial": raw["from_serial"],
+           "to_serial": raw["to_serial"], "subject": raw["subject"], "body_path": raw["body_path"],
+           "opened_at": raw["opened_at"], "state": "OPEN", "sent": dict(raw["sent"]), "ack": ack,
+           "closed": {"from_at": raw["closed_from"]["at"], "from_by": raw["closed_from"]["by"],
+                      "to_at": to_pair["at"], "to_by": to_pair["by"]}}
+    doc["state"] = derive_state(doc)
+    return check_call(doc, where)
+
+
+def dump2_from(raw: dict) -> str:
+    check_from2(raw, "from-side file %s" % raw.get("id"))
+    return json.dumps({k: raw[k] for k in FROM2_KEYS}, indent=1, ensure_ascii=True) + "\n"
+
+
+def dump_answer(ans: dict) -> str:
+    check_answer(ans, "answer file %s" % ans.get("id"))
+    return json.dumps({k: ans[k] for k in ANS_KEYS}, indent=1, ensure_ascii=True) + "\n"
+
+
+def refuse_unknown_schema(raw, where: str) -> None:
+    """The schema is read FIRST by the layout-aware loaders, so an unknown schema is named as one, not as a key."""
+    if isinstance(raw, dict) and raw.get("schema") not in (SCHEMA, SCHEMA2):
+        raise Refused("%s: schema is %r, this reader reads %r and %r" % (where, raw.get("schema"), SCHEMA, SCHEMA2))
+
+
+def load_call_text(text: str, where: str, answer_text=None) -> dict:
+    """One call from its text: a crossbox/1 file is checked as before; a crossbox/2 from-side file is assembled with the
+    answer text given (None: this copy holds no answer yet)."""
+    raw = json.loads(text)
+    refuse_unknown_schema(raw, where)
+    if isinstance(raw, dict) and raw.get("schema") == SCHEMA2:
+        return assemble(raw, None if answer_text is None else json.loads(answer_text), where)
+    return check_call(raw, where)
+
+
+def load_call_path(path: Path, where: str) -> dict:
+    """One call from its from-side (or crossbox/1) file on disk; a crossbox/2 file's answer file is read beside it."""
+    text = path.read_text(encoding="utf-8")
+    raw = json.loads(text)
+    refuse_unknown_schema(raw, where)
+    if not (isinstance(raw, dict) and raw.get("schema") == SCHEMA2):
+        return check_call(raw, where)
+    check_from2(raw, where)
+    apath = path.with_name(answer_name(raw["id"], raw["to_device"]))
+    return load_call_text(text, where, apath.read_text(encoding="utf-8") if apath.is_file() else None)
+
+
+def fold_texts(texts: dict) -> list:
+    """Every call in one folder, given {file name: text}: one (name, record, error) per call, sorted by name. A crossbox/2
+    from-side file is assembled with the answer file named for its to_device; a crossbox/1 record is returned as parsed (the
+    consumers read it as they always did). An answer file that no from-side file claims is an error entry, never ignored."""
+    out, claimed = [], set()
+    for name in sorted(texts):
+        if ANSWER_RE.fullmatch(name) or not name.endswith(".json"):
+            continue
+        try:
+            raw = json.loads(texts[name])
+            if isinstance(raw, dict) and raw.get("schema") == SCHEMA2:
+                check_from2(raw, name)
+                an = answer_name(raw["id"], raw["to_device"])
+                if an in texts:
+                    claimed.add(an)
+                out.append((name, load_call_text(texts[name], name, texts.get(an)), None))
+            else:
+                out.append((name, raw, None))
+        except ValueError as exc:
+            out.append((name, None, "%s: %s" % (type(exc).__name__, exc)))
+        except Refused as exc:
+            out.append((name, None, str(exc)))
+    for name in sorted(texts):
+        if ANSWER_RE.fullmatch(name) and name not in claimed:
+            out.append((name, None, "an answer file that no from-side file of its box claims (the from-side file is absent or names another box)"))
+    return sorted(out, key=lambda e: e[0])
+
+
+def fold_dir(cdir) -> list:
+    """fold_texts over the *.json files of one folder (an absent folder holds no calls)."""
+    cdir = Path(cdir)
+    if not cdir.is_dir():
+        return []
+    texts, errs = {}, []
+    for p in sorted(cdir.glob("*.json")):
+        try:
+            texts[p.name] = p.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            errs.append((p.name, None, "unreadable (%s: %s)" % (type(exc).__name__, exc)))
+    return sorted(fold_texts(texts) + errs, key=lambda e: e[0])
+
+
 # ---------------------------------------------------------------- the box
 
 class Box:
@@ -243,18 +448,42 @@ class Box:
         return out.strip() if rc == 0 else ""
 
     def read(self, call_id: str) -> dict:
+        """The call in the crossbox/1 shape, whichever layout its files are in (the one reader)."""
         if not ID_RE.fullmatch(call_id or ""):
             raise Refused("%r is not a cross-box id" % call_id)
         path = self.path(call_id)
         if not path.is_file():
             raise Refused("no cross-box file %s in this tree (pull the commit that holds it first)" % self.rel(call_id))
         try:
-            return check_call(json.loads(path.read_text(encoding="utf-8")), self.rel(call_id))
+            return load_call_path(path, self.rel(call_id))
         except ValueError as exc:
             raise Refused("%s is not JSON (%s)" % (self.rel(call_id), exc))
 
     def save(self, doc: dict) -> None:
         write_text(self.path(doc["id"]), dump(doc))
+
+    # -- layout 2: each side's own file
+    def layout2(self, call_id: str) -> bool:
+        """True when this call's from-side file is crossbox/2. The one reader runs first, so an unreadable call refuses here."""
+        self.read(call_id)
+        return json.loads(self.path(call_id).read_text(encoding="utf-8")).get("schema") == SCHEMA2
+
+    def from_raw(self, call_id: str) -> dict:
+        """The from-side file of a crossbox/2 call as written (checked by check_from2)."""
+        return check_from2(json.loads(self.path(call_id).read_text(encoding="utf-8")), self.rel(call_id))
+
+    def answer_raw(self, call_id: str, box: str):
+        """This box's answer file for the call as written, or None when it has not written one yet."""
+        path = self.root / REL_DIR / answer_name(call_id, box)
+        if not path.is_file():
+            return None
+        return check_answer(json.loads(path.read_text(encoding="utf-8")), "%s/%s" % (REL_DIR, answer_name(call_id, box)))
+
+    def save_from2(self, raw: dict) -> None:
+        write_text(self.path(raw["id"]), dump2_from(raw))
+
+    def save_answer(self, ans: dict) -> None:
+        write_text(self.root / REL_DIR / answer_name(ans["id"], ans["box"]), dump_answer(ans))
 
     def need_box(self, doc: dict, key: str, what: str) -> None:
         if doc[key] != self.device:
@@ -297,7 +526,15 @@ class Box:
         check_call(doc, "new file")
         if self.path(doc["id"]).exists():
             raise Refused("%s already exists" % self.rel(doc["id"]))
-        self.save(doc)
+        if layout_switch(self.root):
+            # layout 2: the from-side file only, with the from-side fields (state is derived by the reader, never stored)
+            doc = {"schema": SCHEMA2, "id": doc["id"], "kind": kind, "call_id": call_id, "from_device": self.device,
+                   "to_device": target, "from_serial": from_serial, "to_serial": to_serial, "subject": subject, "body_path": rel,
+                   "opened_at": doc["opened_at"], "sent": {"at": None, "bus_message_id": None}, "ack_bus_message_id": None,
+                   "closed_from": {"at": None, "by": None}, "closed_to_issuer": {"at": None, "by": None}}
+            self.save_from2(doc)
+        else:
+            self.save(doc)
         return ["OPENED %s (%s, %s -> %s)" % (doc["id"], kind, self.device, target),
                 fmt_line(doc, "UNCOMMITTED"),
                 "NEXT: commit %s (with the body already committed), then `python .tools/crossbox-call.py line --id %s` prints the "
@@ -402,9 +639,9 @@ class Box:
             cmd = [gb, (TOOL_ROOT / ".tools" / "agentbus-sqs.sh").as_posix(), "send"]
         lines, sent_n, held_n, failed_n, seen = [], 0, 0, 0, 0
         cdir = self.root / REL_DIR
-        for path in sorted(cdir.glob("*.json")) if cdir.is_dir() else []:
+        for path in [p for p in sorted(cdir.glob("*.json")) if not ANSWER_RE.fullmatch(p.name)] if cdir.is_dir() else []:
             try:
-                doc = check_call(json.loads(path.read_text(encoding="utf-8")), path.name)
+                doc = load_call_path(path, path.name)
             except (ValueError, Refused) as exc:
                 lines.append("SKIP %s unreadable: %s" % (path.name, exc))
                 continue
@@ -448,8 +685,13 @@ class Box:
             raise Refused("--bus-message-id %r is not a bus message id" % bus_message_id)
         if doc["sent"]["bus_message_id"]:
             raise Refused("%s already records bus message %s as sent" % (call_id, doc["sent"]["bus_message_id"]))
-        doc["sent"] = {"at": at or stamp(now_dt()), "bus_message_id": bus_message_id}
-        self.save(doc)
+        if self.layout2(call_id):
+            raw = self.from_raw(call_id)
+            raw["sent"] = {"at": at or stamp(now_dt()), "bus_message_id": bus_message_id}
+            self.save_from2(raw)
+        else:
+            doc["sent"] = {"at": at or stamp(now_dt()), "bus_message_id": bus_message_id}
+            self.save(doc)
         return ["SENT %s recorded (bus message %s). Sent is not read: status stays SENT, NOT ACKED until the reply line is recorded." % (
             call_id, bus_message_id)]
 
@@ -488,7 +730,7 @@ class Box:
         if rc != 0:
             raise Refused("file %s does not exist at commit %s: the line does not match what the sender committed (tampered or wrong commit)" % (rel, commit))
         try:
-            doc = check_call(json.loads(blob), "%s@%s" % (rel, commit))
+            doc = load_call_text(blob, "%s@%s" % (rel, commit))
         except ValueError as exc:
             raise Refused("%s@%s is not JSON (%s)" % (rel, commit, exc))
         for field, got, want in (("id", call_id, doc["id"]), ("kind", kind, doc["kind"]), ("to-serial", to_serial, doc["to_serial"]),
@@ -561,10 +803,19 @@ class Box:
         want = doc["to_serial"]
         if by != want and ("~" in want or base_of(by) != want):
             raise Refused("--by %s is not the named seat %s; the named seat acknowledges" % (by, want))
-        if not doc["ack"]:
-            doc["ack"] = {"at": at or stamp(now_dt()), "by": by, "bus_message_id": None}
-            self.save(doc)
-        ack = doc["ack"]
+        if self.layout2(call_id):
+            # layout 2: this box's own answer file; the from-side file is not touched
+            ans = self.answer_raw(call_id, self.device) or {"schema": SCHEMA_ANS, "id": call_id, "box": self.device, "ack": None,
+                                                           "closed_to": {"at": None, "by": None}}
+            if not ans["ack"]:
+                ans["ack"] = {"at": at or stamp(now_dt()), "by": by}
+                self.save_answer(ans)
+            ack = {"at": ans["ack"]["at"], "by": ans["ack"]["by"]}
+        else:
+            if not doc["ack"]:
+                doc["ack"] = {"at": at or stamp(now_dt()), "by": by, "bus_message_id": None}
+                self.save(doc)
+            ack = doc["ack"]
         return ["ACKED %s at %s by %s on the receiving box. Put this reply line on the bus to the sending box:" % (
             call_id, ack["at"], ack["by"]), "CROSSBOX-ACK %s READ by %s at %s" % (call_id, ack["by"], ack["at"])]
 
@@ -579,6 +830,15 @@ class Box:
         by, when = m.group(2), m.group(3)
         if base_of(by) != base_of(doc["to_serial"]):
             raise Refused("the reply is by %s, not by the named seat %s" % (by, doc["to_serial"]))
+        if self.layout2(call_id):
+            # layout 2: the bus id of the reply goes into the from-side file; the answer's own ack stays in its file
+            raw = self.from_raw(call_id)
+            if raw["ack_bus_message_id"] and raw["ack_bus_message_id"] != bus_message_id:
+                raise Refused("a different reply bus message %s is already recorded" % raw["ack_bus_message_id"])
+            raw["ack_bus_message_id"] = bus_message_id
+            self.save_from2(raw)
+            shown = doc["ack"] or {"at": when, "by": by}
+            return ["ACK recorded for %s: read by %s at %s (reply bus message %s)" % (call_id, shown["by"], shown["at"], bus_message_id)]
         ack = doc["ack"] or {"at": when, "by": by, "bus_message_id": None}
         if ack["bus_message_id"] and ack["bus_message_id"] != bus_message_id:
             raise Refused("a different reply bus message %s is already recorded" % ack["bus_message_id"])
@@ -599,6 +859,20 @@ class Box:
             raise Refused("%s is not acknowledged yet (no ack recorded in this copy); a call closes after the other side has read it" % call_id)
         if doc["closed"]["%s_at" % side]:
             raise Refused("the %s side is already closed (%s)" % (side, doc["closed"]["%s_at" % side]))
+        if self.layout2(call_id):
+            # layout 2: the from side writes the from-side file; the to side writes its own answer file
+            stamped = {"at": at or stamp(now_dt()), "by": by}
+            if side == "from":
+                raw = self.from_raw(call_id)
+                raw["closed_from"] = stamped
+                self.save_from2(raw)
+            else:
+                ans = self.answer_raw(call_id, self.device)
+                if ans is None:
+                    raise Refused("%s has no answer file of this box (%s); the to side closes where it acknowledged" % (call_id, answer_name(call_id, self.device)))
+                ans["closed_to"] = stamped
+                self.save_answer(ans)
+            return self.status(call_id)
         doc["closed"]["%s_at" % side] = at or stamp(now_dt())
         doc["closed"]["%s_by" % side] = by
         self.save(doc)
@@ -627,8 +901,14 @@ class Box:
         if not ok:
             raise Refused("--ruling %s %s; the other box reads the ruling by pulling it. Commit it first." % (rel, why))
         when = at or stamp(now_dt())
-        doc["closed"] = {"from_at": when, "from_by": by, "to_at": when, "to_by": by}
-        self.save(doc)
+        if self.layout2(call_id):
+            # the issuing box's act: both closed sides go in the from-side file (no answer file exists: nothing was read)
+            raw = self.from_raw(call_id)
+            raw["closed_from"], raw["closed_to_issuer"] = {"at": when, "by": by}, {"at": when, "by": by}
+            self.save_from2(raw)
+        else:
+            doc["closed"] = {"from_at": when, "from_by": by, "to_at": when, "to_by": by}
+            self.save(doc)
         return self.status(call_id) + ["WITHDRAWN %s by %s on ruling %s; the named seat %s never read it" % (call_id, by, rel, doc["to_serial"])]
 
     SUPERSEDED_MARK = "superseded-by "
@@ -694,8 +974,15 @@ class Box:
             raise Refused("the body of %s at %s (%s) differs from the body of %s at %s (%s): not the same call" % (
                 call_id, blobs[call_id][0], blobs[call_id][1][:10], successor_id, blobs[successor_id][0], blobs[successor_id][1][:10]))
         when = at or stamp(now_dt())
-        doc["closed"] = {"from_at": when, "from_by": by, "to_at": when, "to_by": self.SUPERSEDED_MARK + successor_id}
-        self.save(doc)
+        if self.layout2(call_id):
+            # the sending box's act: the from-side file carries both closed sides (the marker is the issuing box's to_by)
+            raw = self.from_raw(call_id)
+            raw["closed_from"] = {"at": when, "by": by}
+            raw["closed_to_issuer"] = {"at": when, "by": self.SUPERSEDED_MARK + successor_id}
+            self.save_from2(raw)
+        else:
+            doc["closed"] = {"from_at": when, "from_by": by, "to_at": when, "to_by": self.SUPERSEDED_MARK + successor_id}
+            self.save(doc)
         return self.status(call_id) + ["SUPERSEDED %s by %s on ruling %s: the same body (blob %s) reached %s under %s, acked by %s at %s" % (
             call_id, by, rel, blobs[call_id][1][:10], doc["to_device"], successor_id, succ["ack"]["by"], succ["ack"]["at"])]
 
@@ -730,24 +1017,35 @@ class Box:
 
     def listing(self, only_open: bool = False) -> list:
         lines, shown, total = [], 0, 0
-        for path in sorted((self.root / REL_DIR).glob("*.json")) if (self.root / REL_DIR).is_dir() else []:
+        names = sorted((self.root / REL_DIR).glob("*.json")) if (self.root / REL_DIR).is_dir() else []
+        claimed = set()   # the answer files a readable from-side file of its box claims
+        for path in [p for p in names if not ANSWER_RE.fullmatch(p.name)]:
             total += 1
             try:
-                doc = check_call(json.loads(path.read_text(encoding="utf-8")), path.name)
+                doc = load_call_path(path, path.name)
             except (ValueError, Refused) as exc:
                 lines.append("UNREADABLE %s: %s" % (path.name, exc))
                 shown += 1
                 continue
+            if doc["schema"] == SCHEMA2:
+                claimed.add(answer_name(doc["id"], doc["to_device"]))
             if only_open and derive_state(doc) == "CLOSED-BOTH":
                 continue
             shown += 1
             lines.append("%s %s %s %s -> %s to %s opened %s" % (doc["id"], derive_state(doc), doc["kind"], doc["from_device"],
                                                                  doc["to_device"], doc["to_serial"], age_text(doc["opened_at"])))
+        for path in [p for p in names if ANSWER_RE.fullmatch(p.name) and p.name not in claimed]:
+            total += 1
+            shown += 1
+            lines.append("UNREADABLE %s: an answer file that no readable from-side file of its box claims" % path.name)
         lines.append("CROSSBOX-LIST files=%d shown=%d root=%s" % (total, shown, self.root))
         return lines
 
     def merge(self, call_id: str, ref: str) -> list:
         mine = self.read(call_id)
+        if self.layout2(call_id):
+            # layout 2: every side already wrote its own file, so there is nothing to fold (a git merge carries both)
+            return ["CROSSBOX-MERGE %s NOTHING-TO-FOLD (layout 2: each side writes its own file)" % call_id]
         rc, blob, err = git(self.root, "show", "%s:%s" % (ref, self.rel(call_id)))
         if rc != 0:
             raise Refused("no %s at %s in this tree (%s)" % (self.rel(call_id), ref, err.strip()[:120]))

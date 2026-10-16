@@ -24448,3 +24448,285 @@ name the one known failure instead of silently inheriting it.
   "dismissal_reason": "OG-en-4 A1 accepts orion's weight_unit null (its 0-100 scale is not established) as the honest answer, claiming no unit; carried to the enrichment list as: verify orion's weight scale against a real row, then name its unit. No false unit ships."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S292",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T13:35Z",
+    "one_line": "49F Black Diamond holdings and transactions cannot be served: client_adapter_bd49f reads the live opal-data-bd silver (<segment>-live) through role key blackdiamond49f (client_role.role_key strips '-live'), i.e. gateway-49f-blackdiamond-read-role, whose OG-ap-24 policy explicitly denies every opal-data-bd key -- simulate reads explicitDeny on opal-data-bd/silver/unrealized and /transactions, allowed on its own opal-data-assets prefix.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "PRD v3.6 (Andrew-direct): 49F Black Diamond reads opal-data-bd; OG-ap-24 granted the blackdiamond49f role only opal-data-assets blackdiamond/49f/silver/{dim_account_xref, fact_bd_allocation} (ask section 2: 'The 49F role no longer reaches the live opal-data-bd silver').",
+    "world_is": "Live release 38fe44d5cb: client_adapter_bd49f.py:11-12 (holdings = live silver/unrealized of opal-data-bd; transactions = live silver/transactions), :37 LIVE_SUFFIX '-live', :252 _live_prefix -> ctx.prefix(VENDOR, segment+'-live', ...); client_core.py:253 key = client_role.role_key(vendor, segment); client_role.py:37-44 strips '-live' so blackdiamond/49f-live -> blackdiamond49f -> BLACKDIAMOND49F_READER_ROLE_ARN = gateway-49f-blackdiamond-read-role. iam simulate-principal-policy on that role, this seat ~13:3xZ: s3:GetObject opal-data-bd/silver/unrealized/date=2026-10-15/part.parquet explicitDeny; opal-data-bd/silver/transactions/... explicitDeny; control opal-data-assets/blackdiamond/49f/silver/dim_account_xref/... allowed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 38fe44d5cb:infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py:11-12,37,252",
+        "git show 38fe44d5cb:infra/aws/ec2/opal-gateway/app/client_core.py:242-254; client_role.py:26,37-52",
+        "iam simulate-principal-policy gateway-49f-blackdiamond-read-role, three keys, one per call, this seat ~13:3xZ 2026-10-16",
+        "infra/aws/terraform/opal-gateway/client_vendor_roles_iam.tf (the blackdiamond49f policy: explicit Deny outside its two prefixes)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not exercised on the host yet (no served 49F BD holdings read on record: OG-ev-1's 49F body is SmartX). Remedy is a never-widen act or a code act, the issuer's to cut: grant the blackdiamond49f role read on the opal-data-bd live silver prefixes the adapter names (a new ask, all three halves), or route the -live segment to a role that already reads opal-data-bd (e.g. the live gateway-blackdiamond-read-role, if its grant covers them). It gates OG-en-11 and the CTO's round-19 reopen of the four 49F legacy rows. This seat's OG-ap-24 half checked the grant against the registry rows, not against the adapter's reads; that is how the mismatch passed."
+  }
+  ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T13:28:11Z",
+  "id": "NFRA_OPLGTW-Z-S293",
+  "one_line": "OG-en-11: none of the four 49F Black Diamond client tools reads any bucket on the live host -- holdings, transactions, allocation and fees each answer absent_reason no_catalog_row, because the DATA_CATALOG has no blackdiamond/49f-live/silver row for unrealized, transactions, allocations or fees.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN W/en11_run.py (host program W/en11_host.py) on i-07dccb1615503ac99 through the installed registered tools as a master_admin stand-in, firm 49financial, one Black Diamond account the resolver returned (the resolver found 2 candidates for the last4): all four tools returned absent_reason no_catalog_row, 0 source keys, 0 rows; no S3 client was created. W/BD49F_SERVED.json, en11.AC1 PASS.",
+      "READ app/client_adapter_bd49f.py:259-260 and the four call sites (:310, :361, :416, :471): each tool builds its prefix with _live_prefix -> ctx.prefix(VENDOR, '49f-live', 'silver', table), and app/client_core.py:242-247 raises CoreRefusal no_catalog_row unless a catalog row carries exactly that prefix.",
+      "READ app/refs/DATA_CATALOG.yaml: the only blackdiamond/49f rows are dim_account_xref, dim_advisor_fee_role, fact_bd_allocation and fact_taxsma_report, all bucket opal-data-assets; no '49f-live' string exists in that file. tests/test_og_cl2.py:129-132 plants the four 49f-live tables in a fake context, which is why the build cell's tests passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v3.6 / CTO msg 35014: the 49F Black Diamond adapter reads the live opal-data-bd silver tables; the CTO reads that, live, it reads the opal-data-assets copy.",
+  "world_is": "Live, the four tools read neither: they refuse at the catalog lookup and answer empty with absent_reason no_catalog_row. Only client_resolve_account (not one of the four) reads, and it reads the opal-data-assets copy of dim_account_xref. Cause established from the code path and the repository catalog; the host's runtime catalog was not read directly, but its answer (no_catalog_row on all four) agrees. Nothing was changed.",
+  "notes": "A code/catalog cell follows (not cut here): add DATA_CATALOG rows for blackdiamond/49f-live/silver/{unrealized,transactions,allocations,fees} on the opal-data-bd bucket (and widen gateway-blackdiamond-read-role only as OG-ap-24 signed). The adapter's own tests cannot see this class: they plant the catalog."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W124-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~124",
+  "surfaced_at": "2026-10-16T13:00:43Z",
+  "one_line": "The OG-en-10 surfaces name tests/test_rate_limit.py and tests/test_server_guard.py as existing tests to update; neither exists at the base, so no test pinned the old 429 and none was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/ listing in worktree at 060e0ba6e2: test_ratelimit.py, test_data_entitlement_guard.py, test_deploy_base_guard.py, test_auth_hardening.py; no test_rate_limit.py and no test_server_guard.py",
+      "infra/aws/ec2/opal-gateway/tests/test_ratelimit.py:60@060e0ba6e2: the only enforce_identity assertion (fail-open), kept unchanged",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en10.py (new, this cell): the three named tests drive the real GuardMiddleware refusal branch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell's <paths> name tests/test_rate_limit.py and tests/test_server_guard.py as the existing rate-limit and guard tests to update where they pin a refusal that writes no audit row.",
+  "world_is": "Neither file is in the worktree at 060e0ba6e2, and no existing test pins an identity 429 with no audit row. The new behaviour is covered by tests/test_og_en10.py, which drives the GuardMiddleware refusal branch directly with a stubbed bearer.",
+  "notes": "Owner to decide whether the two named paths should be struck from the cell's surfaces or created by a later cell. No criterion of this cell depends on them: AC2 bounds the write set by regex, and the regex admits them but does not require them."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W124-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~124",
+  "surfaced_at": "2026-10-16T13:00:43Z",
+  "one_line": "OG-en-10 AC02 asks that a burst inside 10 s write ONE row carrying a suppressed count; the synchronous limiter path has no timer, so the burst's folded count is written on the principal's NEXT row, and a burst with no later refusal leaves it unwritten.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/ratelimit.py record_identity_refusal (worktree, this cell): the first refusal of each 10 s span writes a row with suppressed 0; later refusals in the span increment a per-principal count, written as suppressed on that principal's next row",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en10.py test_ogen10_ac02: a burst of five refusals writes one row with suppressed 0; a refusal 11 s later writes a second row with suppressed 4",
+      "infra/aws/ec2/opal-gateway/app/ratelimit.py: no background task or timer exists in the limiter (single in-process worker, prune-on-access)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A burst of refusals inside 10 s writes ONE row carrying a suppressed count (not one row per refusal); a refusal after the 10 s span writes a new row.",
+  "world_is": "Built as the leading-edge form: the burst's first refusal is the one row (suppressed 0), and the folded count is carried by the next row for that principal. A flush-at-window-end form needs a timer the limiter does not have, and a deferred write would lose the first refusal's count if no later refusal arrived. The count_in_window of the first refusal of every span is therefore always written.",
+  "notes": "Instrument trap for any read of suppressed: a principal whose last burst had no later refusal shows no suppressed count for it in the lake. Any reading of the folded refusals must count the 429 responses or the rows, never the suppressed field alone. Remedy, the cell's owner: accept the leading-edge form or name a timer."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:56:00Z",
+  "one_line": "OG-en-9's fix site is outside its write grant: the 403 for an un-rowed key is set in app/query_v0.py:155, not in the catalog gate, the tool or its HTTP shaping, so AC1's status arm cannot pass inside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/query_v0.py:150-155 @060e0ba6e2 -- verdict = catalog_gate.gate(_catalog(), key, pclass, pfirm); if not verdict: return JSONResponse({'error': verdict.reason, 'key': key}, status_code=403).",
+      "CODE: infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py:431 @060e0ba6e2 -- query_catalog copies resp.status_code into http_status on a non-200 route answer; it sets no status of its own.",
+      "CODE: infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py:86-89 @060e0ba6e2 -- row is None returns GateVerdict(False, 'off-catalog: no W5 row ...') and carries no status code.",
+      "RUN: cd infra/aws/ec2/opal-gateway && python -m pytest tests/test_og_en9.py -q -p no:cacheprovider (worktree, 2026-10-16): test_ogen9_ac01 fails at tests/test_og_en9.py:90 with 'assert 403 == 404' on the tool's http_status for json/not/in/the/catalog.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-9's WHERE names catalog_gate.py (about line 88), integration.py (about line 431) and 'the code that maps a gate verdict to a status', and its <paths> grant writes to those files only.",
+  "world_is": "catalog_gate.py returns a verdict with no status; the status is set in query_v0.py:155, which the grant does not name. integration.py:431 only copies the upstream status. An un-rowed key therefore cannot answer 404 without an edit outside the grant. The worker did not edit query_v0.py.",
+  "notes": "Disarm: the COO widens the grant to app/query_v0.py (and the test in S2) or re-cuts OG-en-9 with that path, then the fix lands in the batched gateway release with E4, E5, E6, E8 and E10."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:56:30Z",
+  "one_line": "An existing test pins the old 403 for an un-rowed key, and the file is outside OG-en-9's grant: tests/test_query_v0_tool.py:107 asserts the route and the tool both answer 403.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_query_v0_tool.py:101-108 @060e0ba6e2 -- test_mx_q3_uncatalogued_key_refused asserts status == 403 and out['http_status'] == 403 and out['error'] == body['error'] for OFF_CATALOG = 'json/not/in/the/catalog.json'.",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_query_v0_tool.py:3-5 @060e0ba6e2 -- the module docstring states the tool is the route's own handler, so the tool's answer equals the route's.",
+      "GRANT: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md section 3 <paths> -- test_query_v0_tool.py is not listed; the three listed catalog tests do not exist (see S3)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-9 says: if an existing test pins the old 403 on an unresolvable key, update it to the new truth with the smallest edit and name it.",
+  "world_is": "The pinning test is outside the grant, and any change to the no-row status on the route or on the tool breaks its line 107 (or 108, the tool and route equality). The instruction cannot be executed inside <paths>, and the worker did not weaken the test.",
+  "notes": "INERT while unreleased. Disarm with S1: the grant that admits query_v0.py must also admit this test, and the two change together."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:57:00Z",
+  "one_line": "Three test files named in OG-en-9's <paths> do not exist in the repository at HEAD: tests/test_graphql_catalog_gate.py, tests/test_portal_index_integration.py and tests/test_og_cat1.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git ls-files | grep -E 'test_graphql_catalog_gate|test_portal_index_integration|test_og_cat1' from C:/tmp/wk-oplgtw-123 at HEAD 060e0ba6e2 returned no path (rc=1).",
+      "GRANT: NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md section 3 <paths> lines 49-51 name those three files; the cell says 'only to follow the new truth, the existing catalog tests listed'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-9 lists three existing catalog-gate test files as the tests to follow the new truth.",
+  "world_is": "None of the three exists at HEAD. The catalog-gate test that pins the no-row answer is tests/test_query_v0_tool.py (see S2), which the grant does not list. No file was created under the three names.",
+  "notes": "OBSERVATION: the absence does not block a criterion by itself; it changes which file the COO should name for the S2 edit."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:57:30Z",
+  "one_line": "The premise 'a key that resolves but the principal may not read keeps 403 with the entitlement shape' is false today: a catalog-gate refusal of a resolved key carries no guard_denied and no code.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/query_v0.py:150-155 @060e0ba6e2 -- every gate refusal (firm scope, verdict_class, allowlist, unknown principal) returns {'error', 'key'} at 403; guard_denied is set only by data_entitlement._denial (app/data_entitlement.py:674-675 @060e0ba6e2).",
+      "RUN: tests/test_og_en9.py:116 (worktree, 2026-10-16) -- for principal 49financial on json/benchmarks/model_portfolio_timeseries.json the tool answered {'error': \"firm scope: row firm='opal-internal' is not visible to firm principal '49financial' ...\", 'key': ..., 'http_status': 403}: no guard_denied, no code.",
+      "RUN: the same test file's chokepoint arm (data_entitlement denial switched on) passes: guard_denied True and code entitlement_denied on the tool, and 403 with the same shape on the route."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-9 says a key that resolves but the principal may not read keeps 403 with the entitlement shape (guard_denied, code entitlement_denied), and it treats that shape as the authorization class.",
+  "world_is": "Only the data_entitlement chokepoint carries the shape. The catalog gate's own refusals of a resolved key, which are authorization refusals in substance, answer 403 with no class marker, so a caller cannot tell them from a not-found answer by shape. The fix for this arm is in query_v0.py (see S1), which the grant does not list.",
+  "notes": "INERT: the status code is already 403 for these refusals, so no admission decision is wrong; what is missing is the shape the cell's rule names. Disarm with S1."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:58:00Z",
+  "one_line": "The worker worktree is a sparse checkout: org/surprise_channel/schemas/ is absent from disk although investigation_item.schema.json is tracked, so the row gate's schema read in this tree fails.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git config --get core.sparseCheckout returned true in C:/tmp/wk-oplgtw-123; git ls-files -v shows 'S' (skip-worktree) on org/surprise_channel/schemas/investigation_item.schema.json and remediation_row.schema.json at HEAD 060e0ba6e2.",
+      "RUN: ls org/surprise_channel/schemas/ from the worktree returned 'No such file or directory'; git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json reads the schema."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker worktree carries the paths its order names and the surprise schema the row gate validates against.",
+  "world_is": "In this sparse worktree the schema is skip-worktree and not on disk. The worker validated the row shape against the HEAD copy through git show. The worktree was not rebuilt or extracted.",
+  "notes": "OBSERVATION: the gate may need the schema from the base checkout or from HEAD; the worker did not change the sparse-checkout configuration."
+}
+```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S294",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-16T14:15:42Z",
+    "one_line": "ap29.AC1.sh requires the four silver/<table>/ prefixes as literals in the .tf, but the commit-time naming limb refuses a typed S3 address; a .tf that passes the naming limb (addresses read from the registry rows) cannot pass AC1 as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First draft of blackdiamond_live_reader_iam.tf wrote the four prefixes as literals ('arn:aws:s3:::opal-data-bd/silver/<t>/*' and 'silver/<t>/*'), as the order's step 2 and the AC1 script imply. safe-commit's naming limb REFUSED it (LGIC_ENFORCE DEC-6): 'arn:aws:s3:::opal-data-bd/silver/unrealized/* -> lookup(49financial)' and 'silver/unrealized/* -> {source}/{scope}/silver/unrealized/* ... NEW and OUT-OF-PATTERN as S3Key: REFUSE', 15 addresses graded, 0 admitted. The same refusal repeated after the four registry rows were committed at HEAD (bd93455796): the gate admits an address only when the .tf reads it from the registry rows, as client_vendor_roles_iam.tf does.",
+        "The .tf was therefore rewritten to derive every S3 address from the four registry rows (jsondecode(file(legacy_addresses.json)), '${r.bucket}/${r.template}*'); the naming limb then passes it. ap29.AC1.sh reads the .tf text and requires ('opal-data-bd/silver/%s/' % t) in the file and the quoted '\"silver/%s/' string for each table; a registry-derived .tf holds neither, so AC1 prints 'the four silver tables in GetObject resources False; in ListBucket s3:prefix values False' and RESULT: FAIL. Every other AC1 figure is as the order expects (roles 1, policies 1, trust True, put/delete/star none, wildcard False, bucket-root False, other bucket False, plan 2 to add 0 to change 0 to destroy True, ask three halves True).",
+        "The plan itself carries all four prefixes in both the GetObject resources and the ListBucket s3:prefix values (W/BDLIVE_PLAN.txt shows silver/<t>/* for each of the four tables), so the grant is what the order specifies; only the check's way of reading it is out of step with the naming limb."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order Phase A item 2: policy on arn:aws:s3:::opal-data-bd/silver/<t>/* for the four tables, and the builder-refusal rule 'a missing registry row to add under infra/logic/registry/, never a hand-typed workaround'; AC1 expects 'prefixes: the four silver tables in GetObject resources True; in ListBucket s3:prefix values True'.",
+    "world_is": "The two requirements cannot both hold in one file: the naming limb forbids a typed S3 address, and AC1 reads typed addresses. This seat did not game AC1 (a trailing comment that merely contains the strings would satisfy the regex and mean nothing). The fix is the issuer's, in ap29.AC1.sh only: resolve the four prefixes through the registry rows the .tf names (or read them from W/BDLIVE_PLAN.txt, which holds the evaluated policy). Nothing in the world needs to change.",
+    "notes": "Same class as Z-S158 and Z-S165 (a check script out of step with what the order's own rules let the file say). Also recorded: the registry commit bd93455796 needed the audited lane override GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS, because the lane infra/logic/** admits only the CRO lanes; the same act (the ap-24 rows, 4de28d210d) passed the lane gate at 00:23Z, and this seat did not find which clause admitted it then. A repeat override for a standing action is, by that lane's own description, a coverage gap to close."
+  }
+  ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T14:25:43Z",
+  "id": "NFRA_OPLGTW-Z-S295",
+  "one_line": "Lane PLATFORM_LOGIC_DOCS (infra/logic/**) admits only the CRO lanes, so an applier's order that names infra/logic/registry/ in its paths still cannot commit its registry rows without the audited GIT_COMMIT_AUTHOR_OVERRIDE; ap-24's identical commit passed at 00:23Z and ap-29's was refused at ~14:10Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~ZS msg 35049 (ap-29 Phase A): the registry rows commit bd93455796 needed GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS, recorded in the override audit at 14:10Z; the applier could not find why ap-24's identical commit passed at 00:23Z.",
+      "CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; this order's <paths> names infra/logic/registry/; the lane description names the CRO lanes as the permitted agents."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A cell whose <paths> names infra/logic/registry/ can commit the registry rows that the standing naming rule tells it to add, without an override.",
+  "world_is": "The lane and the rule disagree for any applier or worker that must add a registry row: the rule sends it to the registry, the lane admits only the CRO. The override is audited and was used once, with the rows read-only attributions on pairs the catalog already carries. The inconsistency between ap-24 (passed) and ap-29 (refused) is unexplained (a lane config change between the two, or a difference in the author serial, are the two readings to measure).",
+  "notes": "Owner of the decision: the lane config belongs to 0.0.0_AB_MSTR (the CTO for the rule). The issuer's act: record it and carry it in the L10 slug. Not blocking ap-29: the override is the audited escape and the rows are signed over in the ask."
+}
+```

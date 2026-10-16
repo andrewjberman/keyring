@@ -434,3 +434,35 @@ Source: the CTO's round-111 scope, not blocking (msg 6644): (1) fix the 9 token-
 **Check, dry-run at the base and proven satisfiable:** `deliverables/2.0.0_SA_COO~R2/round111_aifill_prep/checks/check_gw1_round111.py`, 14 arms. At the base: `AIFILL GW-1 ARMS: NO (5 of 17)` (the passing arms are controls). The issuer's reference edit in a sparse scratch tree (7 source files, +134 lines, -14): 17 of 17, ruff clean, ASCII, the 845 existing aifill tests pass unchanged, and the earlier checks still read YES (GU-1 20 of 20, GV-1 12 of 12; the GV-1 control "a bio in its own words is kept" was amended to a bio with content the pack does not carry, because a paraphrase is now a restatement).
 
 **What this cell does not do:** the retry of the 12 failed blocks, the re-check of the stored set and their store write (the issuer's acts after the merge, each metered where a model runs and under its own never-widen pair); the HELD to CLEARED re-stamp.
+
+## 21. ADDENDUM 12 -- ROUND 112 OF WORKSTREAM `AIFILL`: THE gr-7 WORDING (CTO msg 6706), 2026-10-16 ~13:3xZ
+
+Source: the issuer's DEV page read of the gr-7 panel (AMD_US_Equity, DEV @fc174c69, live served data) and the CTO's ruling (msg 6706): the AI-written row's count "1 from a web search" sits beside the unchanged line "web search results stored for this name -- nothing has been read from this input for this name yet" and reads as a contradiction; reword the AI row's count as "1 cites a web search made when it was written" and leave the stored-search line as is.
+
+| id | cell | slot | class | risk | write set | serves | item |
+|---|---|---|---|---|---|---|---|
+| `AMGT-gx-1` | the web part of the AI row in `aiFillStatus`: one WEB_SEARCH block reads `1 cites a web search made when it was written`; N above one reads `N cite web searches made when they were written`; the Opal part and every other row are unchanged | ~486 | worker | LOCAL | `portal/src/pages/SecurityAnalysis/components/InputProvenance.tsx` (one file) on a new feature branch `cand/dell1/aifill-provenance-wording` cut from DEV | FWD-41, CVO row C-S146 (a) | CTO 6706 |
+
+**Why round 112:** round 111 already has its one issuance (`AMGT-gw-1`, closed); `to-pipeline-gate` refuses a second order into a round that has one, so this cell opens the next round of the workstream.
+
+**Chain read:** M = 1, N = 1, cap 8. **Plural is the issuer's reading of the CTO's singular wording:** most names carry two to four web blocks, so a count line that only handled one would print "3 cites"; the plural form is the same sentence with the verb and noun in agreement. Stated to the CTO with the cut. **Why a new branch:** `.tools/open-calls.py add --kind approval` refuses a branch that carries commits already on DEV, and gr-7's commit is on DEV (fc174c69); a follow-up commit on `cand/dell1/aifill-provenance` cannot be registered. The new branch carries one commit and one file.
+
+**FOUR-POSTULATE RECORD (rule 24): no value enum, key set or schema is authored.** The row text is presentation of served counts only (C-PRESENTATION-ONLY); no served value is computed or rewritten.
+
+**Check, dry-run at the base and proven satisfiable:** `deliverables/2.0.0_SA_COO~R2/round111_aifill_prep/checks/check_gr7_wording.cjs`, 12 arms (the 11 of `round106_aifill_prep/checks/check_gr7_provenance.cjs` with two web-count expectations changed, plus one arm for the singular). At the base (DEV @fc174c69): `AIFILL PROVENANCE: NO (9 of 12)`, the three wording arms failing. The issuer's reference edit in a scratch tree reads `AIFILL PROVENANCE: YES (12 of 12)` with `bun run typecheck` rc 0. The older gr-7 check reads NO (9 of 11) against the edit, so it is superseded and must not be used as a bar.
+
+**What this cell does not do:** the push of the branch, the approval row, the merge to DEV and the PROD promote (the issuer's acts); the stored-search line; any page other than Security Analysis; the AI fill documents.
+
+## 22. ADDENDUM 13 -- WORKSTREAM `PROMOTE`, ROUND 112: THE gr-7 PANEL ROW AND ITS WORDING GO TO PROD AS ONE CHOSEN SET (CTO msg 6735), 2026-10-16 ~14:1xZ
+
+Source: the CTO's ruling (msg 6735): merge the wording branch forward, read the AMD panel on DEV, then `/prod-deploy` both features as one chosen set with a receipt naming Security Analysis (Opal-internal), then ask the CVO for its PROD read. Done before this cut: both rows closed approved (`dell1-20261016T131944Z-6f4b`, `dell1-20261016T140659Z-5cf5`); both branches on origin/DEV (merge `d1f9ca29`, origin ancestry read); the AMD panel read on a rebuilt DEV (the AI row reads `1 cites a web search made when it was written`, the stored-search line unchanged).
+
+| id | cell | slot | class | risk | write set | serves | item |
+|---|---|---|---|---|---|---|---|
+| `AMGT-gx-2` | the promote: `portal-release-build.sh --features cand/dell1/aifill-provenance,cand/dell1/aifill-provenance-wording-v2`, `/prod-deploy`, the CI read and the receipt | `0.4.0_DT_ClientPlatform~H1` (a Tier-2 seat; a DT alone may push PROD in the portal repo) | seat | SERVED | PROD of `Opal-Capital/portal` by `/prod-deploy`; the DT's deliverables folder; the deploy ledger | FWD-41, CVO row C-S146 (a) | CTO 6735 |
+
+**Chain read:** M = 1, N = 1, cap 8. **Why a separate workstream and an order:** `/prod-deploy` Step 0 is DT-only and the push gate admits only a DT or the integrator in the portal repo; a Tier-2 seat hears an act only as a task order (LD-0529; the send was refused without one). The `to-pipeline-gate` allows one issuance per workstream and round: round 112 of `AIFILL` has `gx-1`, round 112 of `PROMOTE` is free (`bo-2` is `PROMOTE` round 108).
+
+**Measured at the cut (2026-10-16 ~14:1xZ):** the builder, run by the issuer, prints `RELEASE-CHECK features=2 first_parent_commits=2 unapproved=0`, both `PROMOTE-LIST` lines (class opal-internal, by 1.0.0_SA_CTO~DELL1), `PROMOTE-CLIENT-FACING count=0` and `RELEASE result=READY` (a local release branch `release/20261016T141236Z`, never pushed; the DT builds its own). PROD head `64f9dba1` (74 commits past gr-7's base `7db035e4`); the pair's two paths read `DIFFERS` against it.
+
+**What this cell does not do:** any DEV push; any page other than Security Analysis; the CVO's read (the issuer's next act after the DT reports).

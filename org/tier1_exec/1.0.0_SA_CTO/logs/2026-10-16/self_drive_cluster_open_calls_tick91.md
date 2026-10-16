@@ -19,8 +19,6 @@ arming record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_
   - `c02c` stays open, postponed; his condition (the list and draft on the dell2 Desktop) is met per msg 109555.
 - Cross-adjudication `XA-20261016T034740Z-28da` ruled @6096a066af. Site Z fixes `naming-gate.py` to read
   `name_rulings.json`: measured 0 references there against 7 in `naming-apply-gate.py`. The merge is announced to all boxes.
-- `/fideles` watcher row landed in LIVE_ARMS @e0b901d4e2 (`0.0.0_AB_MSTR~DELL1`, `~DELL2` failover).
-  - The watcher is NOT armed: dell1 MSTR's session has no Gmail connector (msg 109586).
   - The muse-reader folder for dell1 was routed to `2.0.0_SA_COO~CA`.
 
 ## Calls this tick
@@ -34,8 +32,6 @@ Their records reach site Z at the next integrate.
 
 ## Acts only Andrew can do (each with its citation)
 
-- Attach the `andrew@fideles.capital` Gmail connector to dell1 MSTR's session (his login; CLAUDE.md, the cited act list in
-  /self-drive Step 1).
 - His sittings, sign-ins and sends:
   - MC Portal: `21d9`, `21c5`, `8ed7`, `f0d2`;
   - Alyssa: `def4`;

@@ -41140,3 +41140,87 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~N2"
 }
 ```
+
+## IRPT_BCKEND-D2-S222 -- Hop 2 cannot write a filled report even after hop 1 exists: read_filled_report_gold in reporting-publish/handler.py is a
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S222",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-16T13:59:09Z",
+  "one_line": "Hop 2 cannot write a filled report even after hop 1 exists: read_filled_report_gold in reporting-publish/handler.py is a stub that raises NotYetAvailable, and the live 49F publish function (CodeSha SX0x..., 13:04Z) already carries it with the pass switched off.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~S2",
+  "spec_asserts": "CTO half of the IB-pr-551 pair, ruling 2: hop 2 reads hop 1's gold table for the newest complete date and composes platinum filled_report.json per client. CTO PO6/PS6 analysis (~PS round 6): no new build cell; the deploy legs wait on hop 1's first cloud write.",
+  "world_is": "Measured 2026-10-16 ~14:00Z at HEAD. infra/aws/lambda/investor-reporting/reporting-publish/handler.py lines 487-498: read_filled_report_gold(firm, client_id) is 'NOT BUILT yet: it raises NotYetAvailable', and tests/test_filled_report_publish.py:197 asserts that it raises. run_filled_report records every client as not_available and writes nothing. Live irpt-49f-reporting-publish-lambda CodeSha256 SX0xYFZsxH4q6psJM56yAee9wRb6vrVUN4VrTV1ouU8= (LastModified 13:04Z, 1024 MB, 300 s, Environment null), put there by ~D2's TO-DB-b-298 (publisher 0.4.0), so the stub is deployed with FILLED_REPORT_PASS unset. Consequence: when hop 1 first writes filled_report_values, the IB-pr-551 hop 2 deploy (switch on) still produces no platinum filled_report.json until a reader is built. That reader is a change to handler.py, which the CTO's addendum 2 gives to ~D2 (ask, never cut by this seat). Whether the 'no new build cell' reading in PO6/PS6 knew of the stub is not read here. Disarms when: a committed reader that composes the document from the gold table exists in handler.py and the CTO's reading is amended, or the CTO rules the stub deliberate and names the cell that replaces it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py:487-498 and :513-518 at HEAD",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_filled_report_publish.py:169 and :197-198",
+      "aws lambda get-function-configuration irpt-49f-reporting-publish-lambda 2026-10-16 (CodeSha256 SX0x..., Environment null)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_PO6_PS6_20261015.md section ~PS round 6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Raised as an ask to 2.0.0_SA_COO~D2 and a decision note to 1.0.0_SA_CTO~DELL2. No file of ~D2 is touched by this seat."
+}
+```
+
+## IRPT_BCKEND-D2-S223 -- Disposition of IRPT_BCKEND-D2-S222: the CTO ruled the hop 2 reader stub deliberate and named the cell that replaces it; 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S223",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-16T14:06:55Z",
+  "one_line": "Disposition of IRPT_BCKEND-D2-S222: the CTO ruled the hop 2 reader stub deliberate and named the cell that replaces it; S222 disarms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_BCKEND-D2-S222 disarms when a committed reader exists in handler.py or the CTO rules the stub deliberate and names the cell that replaces it.",
+  "world_is": "CTO msg 9438 (2026-10-16 14:05Z), relayed here verbatim in substance: the stub was deliberate (IB-pr-553, df2468cbc8, raises NotYetAvailable rather than return a zero); it is no longer deliberate once hop 1's first write lands. ~D2 cuts ONE cell on reporting-publish/handler.py: read_filled_report_gold composes the client's document from filled_report_values under the filled-report contract, tests on present, absent and refused, the NotYetAvailable test flips, one drain with any contract touch. The filled-report switch stays OFF; turning it on is its own pair, signed after the reader is deployed and hop 1's write is read. ~D2 (msg 9437) confirmed it cuts no cell until the ruling, and now holds it. Effect on this seat: no hop 2 deploy leg in the IB-pr-551 packet now; its remaining deploy legs are hop 3 (the route on reporting-read) and hop 4 (the export server), still gated on hop 1's first write (CTO half, condition 3). The platinum filled_report.json first exercise needs the reader deployed and the switch pair signed, in that order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 9438 in the inbox of 2.0.0_SA_COO~S2 (read/20261016T140513Z_1.0.0_SA_CTO_DELL2__DECISION__hop_2_reader__the_stub_was_de.md)",
+      "2.0.0_SA_COO~D2 msg 9437",
+      "IRPT_BCKEND-D2-S222"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The stub is deliberate, not a defect: IB-pr-553 raises NotYetAvailable rather than return a zero while hop 1's gold does not exist. The CTO (msg 9438) named the replacing cell, one ~D2 reader on reporting-publish/handler.py, and kept the filled-report switch OFF until its own pair, so S222 has no remaining hazard at this seat.",
+  "notes": "Append-only: S222 is not edited. The reader cell and the switch pair are ~D2's and the CTO's; this seat owes the hop 3 and hop 4 deploys after hop 1's first write."
+}
+```
+
+## IRPT_BCKEND-D2-S224 -- S218's 49F AccessDenied is fixed by the IB-pr-614 grant and read clean on the recovery invoke; the organic Mon
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S224",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-16T14:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S218 (IB2's row on the same 49F scheduled-run failure as my S217, already resolved by D2-S220; I am S218's disarm_owner). The cause S218 asked about is read and fixed: the denied call was the split-adjust transactions read; the role irpt-49f-holdings-performance-role now carries list (prefix-conditioned) and get on schwab/08335338/silver/fact_trn/ (IB-pr-614, one safe-apply of a 1-change plan; the live policy read by me; criteria IB245-1 AC1 to AC3 re-run PASS); the recovery invoke returned 200 with no FunctionError, one day written, the manifest split_adjust declared, CloudWatch Errors 0. S218's own statement that the issuer 'did not trace the call site' is closed by the CTO-ruled fix working on exactly that read. Branch B of Act 1 was cancelled by the CTO (msg 9350). What stays open and is NOT claimed: the first ORGANIC scheduled 49F fire on the new grant is Monday 2026-10-19 11:30Z; I grade it before the Act 2 close.",
+  "one_line": "S218's 49F AccessDenied is fixed by the IB-pr-614 grant and read clean on the recovery invoke; the organic Monday fire is the remaining proof.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam get-role-policy irpt-49f-holdings-performance-role, read by 2.0.0_SA_COO~P2 2026-10-16 ~12:3xZ: both read statements carry the fact_trn prefix",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB245-1_iam_record.json @5e34e9cf9c; IB243-1 record @aa5a3b847b",
+      "IRPT_BCKEND-D2-S220 (the sibling resolving row for S217)"
+    ]
+  },
+  "spec_asserts": "The 49F first scheduled run completes with the manifest declaring split_adjust (IB-pr-612 step 9).",
+  "world_is": "The run that failed is recovered by one invoke on the fixed role; the scheduled fire on the new grant is Monday."
+}
+```

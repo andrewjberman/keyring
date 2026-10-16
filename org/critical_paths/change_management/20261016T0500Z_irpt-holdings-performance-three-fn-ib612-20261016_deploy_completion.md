@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-16T05:00:00.996440+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261016T140937Z
 **Deploy:** IRPT_BCKEND TO-IB-pr-612 (AMENDMENT 1): move the THREE holdings-performance functions (49F, INF, COT: one shared artifact key) from CodeSha256 o9UugRAV.. to the signed candidate LiDXhN74.. by one Terraform plan of 3 changes; Branch B = S3 version MP3woT7ipkN4N3hcclPj3.LFigL3MEqO of investor-reporting/irpt-holdings-performance-lambda.zip
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -19,7 +19,7 @@
 | irpt-cot-holdings-performance-lambda | tf-lambda | module.irpt_holdings_performance_cot.aws_lambda_function.this | same safe-apply on the same saved plan; live CodeSha256 equals the built digest | same safe-apply, same saved plan; live CodeSha256 LiDXhN74TsATYhoQKzs+Oy1qtNn3hDJxxjkLa0ZlfLg= equals the built digest; LastModified 2026-10-16T05:15:36Z | CLOSED 20261016T053125Z |
 | L4 | verify | after-read: each CodeSha256 equals built, re-plan 0, exactly the two members differ, deployed handler date line | the reads | re-plan: No changes (rc=0); deployed zip of each of the three vs the pre-apply zip: 14 members, exactly holdings_performance.py and sources.json differ; deployed handler.py line 109 holds the manual-date path event.get(date) | CLOSED 20261016T053126Z |
 | L5 | verify | health proof at least 10 minutes after the apply, per function: Invocations, Errors, Throttles, log group Traceback, Task timed out, ERROR | window, counts | health proof 11.5 minutes after the apply, window 2026-10-16T05:15:36Z to 05:27:41Z, per function: Invocations 0, Errors 0, Throttles 0, log group Traceback 0, Task timed out 0, ERROR 0, START lines 0 = Invocations 0; no scheduled fire fell in the window, so the zero is not a run proof | CLOSED 20261016T053126Z |
-| L6 | verify | first scheduled runs: 49F split_adjust declared and counts; each sibling DELTA = 0 (non-writing replay, only the split_adjust key added) | per-function reads |  | OPEN |
+| L6 | verify | first scheduled runs: 49F split_adjust declared and counts; each sibling DELTA = 0 (non-writing replay, only the split_adjust key added) | per-function reads | Read by 2.0.0_SA_COO~P2 14:1xZ, not from the record alone: IB243-1 AC1 to AC3 re-run PASS, proof instance VALID rc 0; CloudWatch for 12:00Z to 14:30Z: Cottonwood 1 invocation 0 errors, Inflection 1 invocation 0 errors; all three CodeSha256 read LiDXhN74. 49F: the 11:30Z scheduled run failed AccessDenied (row D2-S217, cause: the role lacked the transactions prefix), fixed by IB-pr-614 (policy read, criteria IB245-1 PASS) and recovered by ONE invoke with the schedule input (one day, manifest split_adjust declared, 0 errors); its first ORGANIC scheduled read is Monday 2026-10-19 11:30Z, stated open, not claimed. Both siblings DELTA = 0 per IB2 (layer-matched non-writing replay, row for row, manifest differs only by split_adjust), evidence IB243-1 sibling files, commit aa5a3b847b. | CLOSED 20261016T140937Z |
 | irpt-holdings-performance-lambda | tf-lambda | module.irpt_holdings_performance.aws_lambda_function.this | TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served | ONE safe-apply on the saved plan: Apply complete! Resources: 0 added, 3 changed, 0 destroyed. rc=0; LastModified 2026-10-16T05:15:36Z; live CodeSha256 LiDXhN74TsATYhoQKzs+Oy1qtNn3hDJxxjkLa0ZlfLg= equals the built digest | CLOSED 20261016T053125Z |
 
 ## Log
@@ -33,3 +33,5 @@
 - 20261016T053125Z LEG irpt-cot-holdings-performance-lambda closed: same safe-apply, same saved plan; live CodeSha256 LiDXhN74TsATYhoQKzs+Oy1qtNn3hDJxxjkLa0ZlfLg= equals the built digest; 
 - 20261016T053126Z LEG L4 closed: re-plan: No changes (rc=0); deployed zip of each of the three vs the pre-apply zip: 14 members, exactly holdings_perform
 - 20261016T053126Z LEG L5 closed: health proof 11.5 minutes after the apply, window 2026-10-16T05:15:36Z to 05:27:41Z, per function: Invocations 0, Errors
+- 20261016T140937Z LEG L6 closed: Read by 2.0.0_SA_COO~P2 14:1xZ, not from the record alone: IB243-1 AC1 to AC3 re-run PASS, proof instance VALID rc 0; Cl
+- 20261016T140937Z CLOSED -- all 9 legs proven

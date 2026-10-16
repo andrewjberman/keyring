@@ -377,6 +377,11 @@ def fold_crossbox(base, ours, theirs):
     b, o, t = recs
     if not (isinstance(o, dict) and isinstance(t, dict)) or (b is not None and not isinstance(b, dict)):
         return None, 'a side is not a record object'
+    for side in (b, o, t):
+        # CT-ba-1 layout 2: a crossbox/2 from-side file or a crossbox-answer/1 file is never folded by this rule (it is not a
+        # record of this shape, and by construction no two boxes write one of them); a conflict on one is HOLD for a human
+        if isinstance(side, dict) and side.get('schema', 'crossbox/1') != 'crossbox/1':
+            return None, 'a %s file is not a crossbox/1 record: layout 2 files are written one per side and are never folded here: HOLD' % side.get('schema')
     if not o.get('id') or o.get('id') != t.get('id') or (b is not None and b.get('id') != o.get('id')):
         return None, 'the sides are not the same record id'
     merged = dict(o)

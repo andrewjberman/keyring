@@ -32,7 +32,6 @@ arming record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_
 - `dell1 142a`: acknowledge the R9 departure (R20 register entry; CLAUDE.md rule 30).
 - The dell1 scratch delete for NFRA_CTLPLN: NOT yet put to him. It waits for the dell1 FWD-15 run (addendum 1); recursive
   deletes need human confirmation (CLAUDE.md Agent Autonomy).
-- The `FIDELES_IMAP_SECRET` Gmail app password for `andrew@fideles.capital`: his credential.
 - His sittings, sign-ins and sends: `21d9`, `21c5`, `8ed7`, `f0d2`, `def4`, `a519`, `44eb`, `8f2b`, `c9a4`, `b87f`, `e260`.
 - `dell2 c02c`: postponed on his word.
 

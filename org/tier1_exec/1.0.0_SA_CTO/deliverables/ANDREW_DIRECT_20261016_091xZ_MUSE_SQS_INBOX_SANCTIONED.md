@@ -11,6 +11,6 @@
 
 1. ms (muse) gets an inbound bus destination: queue `agentbus-ajbdev-to-ms.fifo` (account 313476888478, us-east-1; FIFO with
    content dedup; MSTR~Z read it read-only per relay msg 34848). This lifts the "sender-only" status in the device register
-   that his 2026-10-13 word set for ms. Seats that talk to ms send there. The /fideles mail relay becomes the fallback.
+   that his 2026-10-13 word set for ms. Seats that talk to ms send there. Mail stays the fallback.
 2. The register edit (DEVICES.json) and the send path in `.tools/agentbus-sqs.sh` are `0.0.0_AB_MSTR~Z`'s to make, on this record.
 3. Row 35b3 closes, ruled by Andrew.

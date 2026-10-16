@@ -88,6 +88,11 @@ Report once, to `2.0.0_SA_COO~MP`, with:
 - every commit hash;
 - any row.
 
+## 6. AMENDMENT A2 (the issuer's, after the act) -- the LANDING on box/sitez, which is yours to commit
+
+`rel-nfra-mcportal-pf` was cut on the live-base lineage and cannot be merged to `box/sitez` (24 conflicting paths of gateway code the trunk has moved since). The issuer prepared the landing in the worktree `C:/tmp/mp-pf-land` (branch `land-mp-pf9`, cut from `box/sitez` HEAD): the `opal-gateway` block of `infra/aws/ec2/EC2_MANIFEST.json` with every field taken from your release EXCEPT `file_checksums` (kept from the trunk: your release block's values do not match the gateway files at `38fe44d5cb`, the trunk's match 10 of 10), your completion entry, and your `MP-pf-9_PRE_ACT_RECORD.md`. These are all inside your `<paths>`; the issuer's lane may not commit them.
+Do this: `cd C:/tmp/mp-pf-land`, then `bash .tools/safe-commit.sh --author "0.7.0_AE_CloudOps~MQ <0.7.0_AE_CloudOps~MQ@opal.agent>" -F <the issuer's message file, org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pf/.commitmsg_land_pf9.txt> -- infra/aws/ec2/EC2_MANIFEST.json org/critical_paths/change_management/20261016T1316Z_nfra-mcportal-pf-bundle-release_deploy_completion.md org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MQ/MP-pf-9_PRE_ACT_RECORD.md`, and report the hash. If the commit gate asks for a file the tree lacks, add its folder to the tree's sparse set. Do not merge or push.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** cut STAGED at the PF round-6 issuance (decomposition v16) on the CTO's ruling msg 34980 (b). The MP-pc-5 shape with every lesson baked in (the sparse list on stdin, the release-tree test rule, `infra/logic/registry`), minus the gateway cherry-picks and the route hookup: this release moves one manifest pin. The SSM read at ~12:2xZ (a local build of the deployed 090b9cdc85 equals the host's dashboard byte for byte on all four members) is what makes AC2 a comparison of deployed bytes with build input.
@@ -95,6 +100,7 @@ Checks dry-run at the base (run from /c/Users): pf9.AC1 FAIL as expected (no ent
 The graded read at 390 and 1280 px is the issuer's real run after the release (the served body, rendered through the deployed CSS, measured), not a criterion here. ~O's round-38 release then carries the same pin with no delta (CTO). Gate G-REL9, holder the issuer.
 
 <status>staged</status>
+<status>complete</status>
 <round>6</round>
 <workstream>PF</workstream>
 <fabric>site-z</fabric>

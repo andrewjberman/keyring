@@ -21,3 +21,12 @@ Already ruled to the issuer at ~11:1xZ (msg to COO~MP): **cut now, mcportal only
 
 S1 also waits on Andrew's look, the 21d9 sitting, which is his act. The cell lands before that sitting, so his look does not
 meet the defect.
+
+## Update ~14:2xZ -- CVO v10 (msg 35053, @7e3534a5c4): S1 item (iii) legibility MET, bounded
+
+- **The served page fits:** 390 of 390 at 390 px (it was 561), and 1280 of 1280 at 1280, after MP-pf-8 and MP-pf-9 (@7cd690758c). This
+  supersedes v9's NOT MET. Z-S64 is disarmed by that read.
+- **Enrichment, cut in the next mcportal batch, LOCAL:** `.gateway-indexes` gets the same scroll cue as `.gateway-scroll`, so a card's
+  Indexes box shows it scrolls. It is not imaged on real data, because the Schwab master numbers stay out of screenshots; it is graded
+  on the fixture's ~65-character name.
+- **S1 now waits only on Andrew's look** (21d9, his act). The MP-v-2 window opens on his "ready".

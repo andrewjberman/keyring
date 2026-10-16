@@ -2612,3 +2612,24 @@ The CTO signed his half of the packet (sha256 `d2c27ac2bdc5`) at @89ca7c661c, al
 **fanout:** 1 of 1 chains for this cell (the AE applier, not a worker subagent), cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 42 red arms plus two head arms and the fire-window rule):** `checks/r149/p168_gold49f_apply.py` (DBC168-1-AC1, -2-AC1, -3-AC1).
+
+## 162. ROUND 149, WORKSTREAM COTLANDAPPLY (2026-10-16 ~14:2xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed Cottonwood landing pair (code update and the rewrite of the 66 landed gold days)
+
+The CTO signed his half of the packet (sha256 `778009ecda40`) at @ae495e5ee7, all three questions accepted (one packet; the 3 held days stay unlanded; the dry run first), with four conditions: per-event PARTIAL, FULL and floor-day counts and a stop on any FULL to PARTIAL flip; the Cottonwood republish its own pair with a before-write flip count; the version count and key list read on ALL 3,325 history days; Acts 2 to 4 outside 12:05Z to 12:45Z.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The apply: ledger first, build-only hash, new bundle version, plan 0 add / 1 change / 0 destroy, ONE `safe-apply`, a 25-day dry run, four rewrite events over the 66 landed days (around the 3 held days), the whole-prefix after-read | DB-b-301 | FWD-10 | WORLD | `DB-b-294`, `DB-b-296`, `DB-b-297` merged and both halves SIGNED | chain V |
+| 2. The Cottonwood publish pair (publisher 0.4.0 code update and republish), with the before-write flip count | NOT CUT: packet after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the four ranges are computed from the calendar and the live partitions (66 landed trading days in four ranges of 25, 3, 24 and 14 days); the handler refuses a range holding an unlanded day, so the ranges are cut around the three held days (row S122); (b) the checker proves "value columns identical" by comparing each day's current version with its OLDEST version in the versioned bucket, so the claim is a measurement of the world and not of the applier's record; (c) the checker recomputes the PARTIAL set from the floor day's silver partition with the adapter's own `day_values`, and the history days' key list and version ids from a full LIST of versions; (d) the dry run is cut as step 6 and must pass before any write; a peak above 80 percent of 1,024 MB stops the pair with no resize (the CTO's rule from the gold pair, applied here); (e) the order does not wait on `DB-b-300`: the two surfaces are disjoint.
+
+**fanout:** 1 of 1 chains for this cell (the AE applier, not a worker subagent), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 45 red arms plus two head arms):** `checks/r149/p169_cot_landing_apply.py` (DBC169-1-AC1, -2-AC1, -3-AC1).
+
+## 161a. AMENDMENT to section 161 (2026-10-16 ~14:5xZ, issuer 2.0.0_SA_COO~D2): the order DB-b-300 and its checker p168 restated to the CTO's ADDENDUM 1
+
+The AE stopped DB-b-300 after Act 4 on three clauses; two were this issuer's errors and one was a premise of the CTO's, all ruled in ADDENDUM 1 of the CTO half (@62b4e74971, msg 9462). Amended in this commit: step 7 (the floor count is the FIRST ROW rule, the producer's; the value condition is `market_value_eod` and `external_flow` identical, every other column the producer's output on current inputs, with `changed_columns` recorded and limited to the six late-input columns; the day's previous VersionId recorded), step 8 (the served series read PARTIAL_HISTORY; STOP only on FULL to PARTIAL or a floor-account flip; the 4,100 PARTIAL to FULL flips are the correction) and the text of DBC168-3-AC1. The checker `p168` carries the same change (49 red arms plus two head arms; the live clause now compares the day with its previous version and recomputes the PARTIAL set by the first-row rule). No criterion id changed; the amendment is the issuer's own and no gate limb is expected to grade it beyond GATE (viii) on the modified order, which declares `<placeholders>NONE</placeholders>`.
+
+**Cause, stated:** the issuer wrote "every value column identical" without diffing the old and new bundles or considering inputs that arrive after a day's first write, and assumed the served series read FULL without reading one.

@@ -12984,3 +12984,241 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not repaired here: the suite and server.py are outside this cell's write grant. The owner of org/mcp/server.py or of test_crossbox_call.py decides which side moved. The worker's report names the suite's whole last line."
 }
 ```
+
+## NFRA_CTLPLN-W140-S1 -- the order states the map is 7577 lines; at HEAD it is 7572 lines
+
+```json
+{
+  "id": "NFRA_CTLPLN-W140-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~140",
+  "surfaced_at": "2026-10-16T13:02:52Z",
+  "one_line": "The order states the map is 7577 lines; at HEAD 833181d311 it is 7572 lines (439287 bytes, 240 function entries). The census measures bytes and entries, not lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 833181d311:infra/aws/lambda/ci/lambda-source-map.json | wc -l -> 7572 (read at the cut)",
+      "git show 833181d311:infra/aws/lambda/ci/lambda-source-map.json | wc -c -> 439287 (the census bytes figure)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-bb-1 WORKER FACE, THE CELL: 'infra/aws/lambda/ci/lambda-source-map.json (7577 lines)'.",
+  "world_is": "The committed map at 833181d311 has 7572 lines, 439287 bytes and 240 function entries. No criterion of the cell depends on the line count.",
+  "notes": "Recorded so the issuer's line figure is not carried into the migration cells."
+}
+```
+
+## NFRA_CTLPLN-W140-S2 -- four live readers return a clean result or skip when the map file is missing
+
+```json
+{
+  "id": "NFRA_CTLPLN-W140-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~140",
+  "surfaced_at": "2026-10-16T13:02:52Z",
+  "one_line": "Four live readers of the map return a clean result or skip when the file is missing, so a removal would not fail them loudly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/naming-gate.py at 833181d311 lines 1296-1304 (_source_map_names): names = set() when git show HEAD:<map> returns non-zero",
+      "org/modules/graph/extract_iam.py at 833181d311 lines 2606-2613: return [] when the file does not exist",
+      "org/modules/graph/extract_s3.py at 833181d311 lines 571-572: the scan is skipped when the file does not exist",
+      ".tools/parity-gates.sh at 833181d311 line 124: warn and return from P9 when the file does not exist"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-bb-1 BUILD 4(d): the proposal must name the consumers that must change in the same commit so that nothing reads a missing file. The order does not say what a reader does when the file is absent.",
+  "world_is": "Four live readers degrade without an error when the map is absent: the naming gate's citation set becomes empty, extract_iam returns no Lambda profiles, extract_s3 skips the Lambda sources, and parity P9 warns and returns.",
+  "notes": "No current harm. All four are in the atomic set of PROPOSED_LAYOUT_AND_MIGRATION.md section (d) and must fail loudly in the split commit."
+}
+```
+
+## NFRA_CTLPLN-W140-S3 -- a closed-round battery writes the whole real map; a re-run after the split would re-create the aggregate file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W140-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~140",
+  "surfaced_at": "2026-10-16T13:02:52Z",
+  "one_line": "A closed-round battery writes the whole real map (save_source_map, mode 'w'); a re-run after the split would re-create the aggregate file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/battery_ib_rtf_1.py at 833181d311 lines 115-117: open(SOURCE_MAP, 'w') and json.dump(sm, f) of the whole map",
+      "the same file line 450 prints 'declaration(s) written to' after part_c calls the writer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-bb-1 BUILD 1: classify every consumer that names the map, including writers, and list each writer's effect.",
+  "world_is": "battery_ib_rtf_1.py is a writer of the whole real map. It is a closed-round deliverable, and no path this cell read runs it.",
+  "notes": "Retire or pin the file in the split (PROPOSED_LAYOUT_AND_MIGRATION.md section (e))."
+}
+```
+
+## NFRA_CTLPLN-W140-S4 -- estate_report_runner runs git checkout of the map path into a repo directory before it reads the map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W140-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~140",
+  "surfaced_at": "2026-10-16T13:02:52Z",
+  "one_line": "estate_report_runner.py runs `git checkout REPO_BRANCH -- <map path>` into a repo directory before it reads the map, so a reader writes the working tree it reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/estate-report-runner/estate_report_runner.py at 833181d311 lines 869-874: subprocess git checkout of the map path (check=True), then json.load of the same path",
+      "lines 875-878 of the same file: the except branch disables the hop and logs a WARN"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-bb-1 BUILD 1: classify every consumer that names the map. The order does not ask for read-side side effects.",
+  "world_is": "The reader restores the map file in its repo directory before reading it. A removed path makes the checkout fail, and the hop is disabled with a WARN.",
+  "notes": "The checkout target changes from a file to a folder in the split (PROPOSED_LAYOUT_AND_MIGRATION.md section (d), can-follow with its WARN)."
+}
+```
+
+## NFRA_CTLPLN-W140-S5 -- the top-level _last_deploy_recorded key is still changed after the commit that says recorders stop writing it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W140-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~140",
+  "surfaced_at": "2026-10-16T13:02:52Z",
+  "one_line": "The top-level _last_deploy_recorded key is still changed by map-editing commits after 2c2da743a1 said recorders stop writing it, and one closed-round check asserts the key is absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2c2da743a1 (2026-10-09 09:34 -0400, 0.7.0_AE_CloudOps~RA1): 'the recorders stop writing the source map's top-level _last_deploy_recorded'",
+      "git log -S'2026-10-09T14:36:00Z' -- infra/aws/lambda/ci/lambda-source-map.json at 833181d311 lists 7edc69c702 (2026-10-12) and 65eb443109 (2026-10-09) as commits that change that value",
+      "HEAD 833181d311 carries the key at line 7571 with the value 2026-10-09T14:36:00Z",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round85_prep/checks/r85_sourcemap.py at 833181d311 line 26 sets KEY and line 51 asserts the key is absent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-bb-1 BUILD 1: classify every consumer and every writer; the cell lists each past edit of the deploy script and where its data now lives.",
+  "world_is": "The top-level key is still changed by map-editing commits after the commit that says it stops, and a closed-round check asserts its absence.",
+  "notes": "The writer of the stamp per commit was not traced here; the diffs of 7edc69c702 and 65eb443109 were not read. The split decides whether the key moves (PROPOSED_LAYOUT_AND_MIGRATION.md section (a))."
+}
+```
+
+## NFRA_CTLPLN-W139-S1 -- The base tests/test_crossbox_call.py is RED (CROSSBOX-TEST cases=69/70 ok=False): its case 'writer and watcher
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T12:27:13Z",
+  "one_line": "The base tests/test_crossbox_call.py is RED (CROSSBOX-TEST cases=69/70 ok=False): its case 'writer and watcher comparison' cuts the writer's text in org/mcp/server.py at the marker 'msg_path.write_text(msg_content', which no longer exists in the file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_crossbox_call.py at 833181d311 with org/mcp added to the worktree sparse set: 'FAIL writer and watcher comparison ran  -- ValueError: substring not found' then 'CROSSBOX-TEST cases=69/70 ok=False' (exit 1)",
+      "org/mcp/server.py@833181d311 line 2107: '_tmp_path.write_text(msg_content, encoding=\"utf-8\")'; grep for 'msg_path.write_text(msg_content' returns no line; the Msg-ID stamp sits at server.py lines 2101-2105 between the literal and the write"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "tests/test_crossbox_call.py case 'writer and watcher comparison': the writer's msg_content literal is cut from server.py at 'msg_path.write_text(msg_content' and must carry the header fields To, Date, Subject in this order, with the broker's '# Message from' line first.",
+  "world_is": "The end marker is stale: the publish is now '_tmp_path.write_text(msg_content' and a Msg-ID stamp (comment '# D0_TIGHTENING T1: stamp the broker row id into the FILE') sits between the literal and the publish. The case raised ValueError. Repaired in the case only: the end marker is now '# D0_TIGHTENING T1: stamp the broker row id into the FILE', which ends the literal before the stamp. The seven checks then pass: CROSSBOX-TEST cases=76/76 ok=True.",
+  "notes": "Filed under the cell CT-ba-1 (task order NFRA_CTLPLN.TO-CT-ba-1). No other existing case of the suite was changed. The suite was red at the base, so this is an OBSERVATION of the base state, not a fault of this cell's change."
+}
+```
+
+## NFRA_CTLPLN-W139-S2 -- In a worktree whose sparse set lacks org/mcp, tests/test_crossbox_call.py reads GREEN (cases=70/70 ok=True) be
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T12:27:13Z",
+  "one_line": "In a worktree whose sparse set lacks org/mcp, tests/test_crossbox_call.py reads GREEN (cases=70/70 ok=True) because its writer-and-watcher case SKIPs seven checks; the red base appears only with org/mcp present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_crossbox_call.py at 833181d311 in the worktree as provisioned (org/mcp absent from the sparse set): 'skip writer and watcher comparison (7 checks) -- SKIPPED -- SKIP: org/mcp is not in this worktree's sparse set', 'CROSSBOX-TEST-SKIP n=1', 'CROSSBOX-TEST cases=70/70 ok=True' (exit 0)",
+      "the same suite after 'git sparse-checkout add org/mcp': 'CROSSBOX-TEST cases=69/70 ok=False' at 833181d311 (exit 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "tests/test_crossbox_call.py prints a SKIP for a case that cannot run in a sparse worktree, and the last line counts only the cases that ran.",
+  "world_is": "The skip counts as ok, so the last line of a sparse worktree reads ok=True while seven checks did not run. Only the SKIP line names them. A green last line from a sparse worktree therefore carries a skipped case the count does not show.",
+  "notes": "Filed for the reader of the suite's last line. Not fixed here: the skip is the suite's stated design (its docstring names it), and this cell does not widen its paths."
+}
+```
+
+## NFRA_CTLPLN-W139-S3 -- tests/test_apply_who_and_crossbox.py copies crossbox-deploy-check.py into its fixture but not crossbox-call.py
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T13:05:34Z",
+  "one_line": "tests/test_apply_who_and_crossbox.py copies crossbox-deploy-check.py into its fixture but not crossbox-call.py, which the check now imports beside itself; the suite reads APPLY-GATES-TEST cases=51/100 ok=False after CT-ba-1 (base 100/100).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_apply_who_and_crossbox.py at the CT-ba-1 tip (worktree, with the crossbox-call.py layout change): 'FAIL case 15 ... FileNotFoundError: ... fx15\\.tools\\crossbox-call.py'; last line 'APPLY-GATES-TEST cases=51/100 ok=False' (exit 1)",
+      "the same suite at 833181d311 (base): 'APPLY-GATES-TEST cases=100/100 ok=True' (exit 0); COPIES list in the suite names .tools/crossbox-deploy-check.py and not .tools/crossbox-call.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The suite's fixture carries the tools the checks it runs need; each COPIES entry is a copy of a real tool, so a copied check runs with the tools it imports.",
+  "world_is": "crossbox-deploy-check.py now loads crossbox-call.py from its own folder (fold_dir), so the fixture needs .tools/crossbox-call.py in COPIES. That file is outside this cell's <paths>, so the suite is red at the merge until its owner adds it. The reader is not copied in, so no check in the fixture gets a verdict from a silent fallback.",
+  "notes": "Issuer: the fix is one COPIES line in .tools/tests/test_apply_who_and_crossbox.py (outside CT-ba-1's <paths>). Not fixed here: the suite is not in the write grant."
+}
+```
+
+## NFRA_CTLPLN-W139-S4 -- The comment at the crossbox case of .tools/git-hooks/mstr-ledger-check.sh says the folder holds only crossbox/
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T13:05:34Z",
+  "one_line": "The comment at the crossbox case of .tools/git-hooks/mstr-ledger-check.sh says the folder holds only crossbox/1 JSON; layout 2 (crossbox/2 and crossbox-answer/1 files) is now written there when the LAYOUT switch is committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/crossbox case of .tools/git-hooks/mstr-ledger-check.sh at 833181d311 (line 199): 'NARROW BY CONSTRUCTION: this directory holds only crossbox/1 JSON written by crossbox-call.py.'",
+      "the case pattern is org/devices/crossbox/*, which admits the answer files XB-<id>.<box>.json; the file is outside CT-ba-1's <paths> and was not edited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The comment in the crossbox case names the record shapes the folder holds.",
+  "world_is": "The case admits every file in the folder by pattern, so the answer files pass it as the from-side files do; only the comment is stale. The behaviour is correct; the text is not.",
+  "notes": "Not edited: the file is outside this cell's <paths>. The owner of the ledger check updates the comment when the LAYOUT switch is committed."
+}
+```
