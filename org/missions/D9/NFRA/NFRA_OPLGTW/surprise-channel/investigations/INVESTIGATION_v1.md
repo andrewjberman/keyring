@@ -20308,3 +20308,79 @@ name the one known failure instead of silently inheriting it.
   "notes": "The standing Z-S164 row is not edited; this row cites it. Class to carry: a release preflight names every bucket and prefix its tools read and compares each to the role's statements before declaring no IAM change."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~115",
+  "surfaced_at": "2026-10-16T09:55:12Z",
+  "id": "NFRA_OPLGTW-Z-W115-S1",
+  "one_line": "Premise: 111 of 136 name_rulings rows cite no committed ruling-type record; they cite measured code, registry or card files, an Andrew-direct message, or nothing. 25 rows resolve to a ruling record and carry ruling_ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/name_rulings.json at 0d332b1e76 (worktree): 25 ruling_ref keys, each verified by git cat-file -e on the cited commit; rr1.AC1 RESULT PASS (rows 136; resolves 25; listed unresolved 111; neither 0; in both 0).",
+      "W/RULING_REF_UNRESOLVED.json lists the 111 rows with evidence_cites and why.",
+      "Record kinds counted as ruling records: ruling files (CTO_RULING_*, ROOT_MAP_ROUND10_RULINGS/LANDED), key_rulings.json rows, a COO precondition record, the CRO ruling file named by the row. Code (.tf, .py), systems.json, root_map.json, remediations.json, the card NOT_JUDGED_R13.json and W/ outputs were not counted."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each name_rulings row's evidence cites the ruling record it rests on (a ruling file, task order, surprise-row file or adjudication file), so a ruling_ref can resolve for every row (OG-rr-1 section 1 step 1).",
+  "world_is": "Most rows cite where a name was measured in code or registry (path:line), the LGIC card NOT_JUDGED_R13.json that the row corrects, or an Andrew-direct message; none of those is a ruling record. The CRO rules the 111 listed rows. Judgment calls to confirm: (a) rows 127-128 name the CTO SMS ruling in the owner field, not the evidence; (b) row 110 cites 'Ruling R10-2' by number, resolved to ROOT_MAP_ROUND10_RULINGS; (c) row 129 uses its COO precondition record; (d) rows 130-133 cite W/CL7_AFTER.txt, which is not committed, and the CL7 ruling is not named in their text; (e) row 91 cites a scope ticklist absent from the repository.",
+  "notes": "The rows were not edited beyond ruling_ref. Rows 127 and 128 carry an AWS account id in the name field; it is in the committed row and was copied unchanged into the unresolved list (the name is the join key), not reproduced in any report."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~115",
+  "surfaced_at": "2026-10-16T09:55:12Z",
+  "id": "NFRA_OPLGTW-Z-W115-S2",
+  "one_line": "Pin mismatch in the order: section 1 says rows from the CTO ruling @d97ea3ae82 cite the CL7 ruling file; the header and the file's own history give @8b9adcbd8d; no row text carries a sha.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 --format=%H -- org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPLGTW_CL7_NAMING_GATE_AND_MCPINDEX_AI_CLASSIFIED_20261016_Z.md returned 8b9adcbd8d28f70659662a6212d97994e3ef1914; the commit subject is a ruling commit by 1.0.0_SA_CTO~Z.",
+      "grep of name_rulings.json: d97ea3ae82 hits 0; 8b9adcbd8d hits 2 (rows 134 and 135, the two rows that cite the CL7 file)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rows from the CTO ruling @d97ea3ae82 cite org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPLGTW_CL7_NAMING_GATE_AND_MCPINDEX_AI_CLASSIFIED_20261016_Z.md (order section 1 step 1).",
+  "world_is": "Rows 134 and 135 cite the file by path with no sha. The file's latest commit is 8b9adcbd8d, the commit the order header names; d97ea3ae82 is a real commit that carries no ruling_ref. The cell used the latest commit that carries the file, as its method states, so the ref is 8b9adcbd8d.",
+  "notes": "No change was needed to the cell's output. The order's two pins should be reconciled by the issuer when it reads the round."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~115",
+  "surfaced_at": "2026-10-16T09:55:12Z",
+  "id": "NFRA_OPLGTW-Z-W115-S3",
+  "one_line": "Path grant: the order's <paths> lists two surfaces, yet section 5 and the closing procedure flip the order's own <status> tag, a file outside <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rr-1.ruling-ref-backfill.md is not listed under <paths> in section 3 of the order.",
+      "Section 5 of the same order says to flip the ONE <status> tag to complete if both criteria PASS; the closing procedure says flip and commit instance, deliverables and flip together."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "<paths> is the write grant for this order (section 3 lists infra/logic/registry/name_rulings.json and the investigation file); the flip in section 5 is part of the procedure.",
+  "world_is": "The status flip touches the order file, which is outside <paths>. It was made in the same commit as the instance and the deliverables, as the procedure states, and the commit's own lane gate result is recorded in the report.",
+  "notes": "If the lane gate refuses the order-file path, the flip is not landed and the order stays staged; the report carries that as the outcome."
+}
+```
