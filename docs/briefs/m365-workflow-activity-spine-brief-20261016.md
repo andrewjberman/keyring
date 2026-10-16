@@ -1,5 +1,8 @@
 # M365 workflow activity spine -- every employee's Microsoft 365 actions as one timeline (L1 brief, NEW)
 
+> **SUPERSEDED 2026-10-16** by `docs/briefs/tckt-mtadta-ticket-center-metadata-brief-20261016.md` (TCKT_MTADTA, midstream refactor on
+> Andrew-direct @0092da40fe and @5dfb4237f5). Kept unchanged below; the NFRA_WFSPINE PRD cites it at @441e9ca92f.
+
 **Author:** `4.0.0_SA_CRO~XXX` (dell1). **For:** `1.0.0_SA_CTO`, `/endpoint --forward` at L2.
 **Asked by:** Andrew, Claude Code terminal on dell1, 2026-10-16 ~01:2xZ, VERBATIM, after the research below:
 "yes do it" (to "Want me to write the `/brief-create` for the spine now?"). His founding request (2026-10-15
