@@ -23422,3 +23422,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "No action owed by the applier; the three are left for their owners (the fmt deviation to the root's next pair, the labelling to the producer's owner, the wrapper to the tool's owner)."
 }
 ```
+
+## IRPT_DASHBD-D2-W2001-S1 -- test_account_class_daily.py cannot be collected in this sparse worktree (ModuleNotFoundError: etf_classifications_dynamodb), before and after this order's edits
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2001-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2001",
+  "surfaced_at": "2026-10-16T15:38:08Z",
+  "one_line": "Order step 5 runs tests/test_account_class_daily.py and it does not collect in this worktree: ModuleNotFoundError for etf_classifications_dynamodb, imported at account_class_daily.py line 65. The module is tracked at infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py, a folder outside every materialized folder of this sparse worktree. The failure is identical at the base before any edit and after this order's commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: 'Run tests/test_account_class_daily.py and lib/tests/test_trading_calendar.py once (both must still pass).'",
+  "world_is": "MEASURED: pytest on data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py prints 'Interrupted: 1 error during collection' and 'ModuleNotFoundError: No module named etf_classifications_dynamodb' (raised at account_class_daily.py line 65), first run before any edit and again at HEAD d1ea0bb8e8. git ls-files lists the module at infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py and two yang_pipeline copies; the order's materialized folders do not include infra/aws/lambda. lib/tests/test_trading_calendar.py passes 27 of 27.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py at the base: collection error ModuleNotFoundError etf_classifications_dynamodb (account_class_daily.py:65)",
+      "git ls-files -- '*etf_classifications_dynamodb*' lists infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py (tracked, outside the sparse set)",
+      "pytest lib/tests/test_trading_calendar.py: 27 passed (the calendar count the order requires is at least 26)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken: the module sits outside this order's grant and the order names no route to it. Whether the class-daily test should run in a worktree that does not materialise infra/aws/lambda is the owner's call."
+}
+```
+
+## IRPT_DASHBD-D2-W2001-S2 -- the surprise-row schema is not materialised in this worktree; the row form was read from HEAD
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2001-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2001",
+  "surfaced_at": "2026-10-16T15:38:08Z",
+  "one_line": "The worker face points the investigation rows at org/surprise_channel/schemas/investigation_item.schema.json, but org/surprise_channel is not a materialised folder of this sparse worktree and the order does not name it among the folders to materialise. The worker read the schema from the HEAD object with git show and did not change the sparse set; the row form follows that file's text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face: each row is 'per org/surprise_channel/schemas/investigation_item.schema.json'; the materialised folders are listed as org/standards, lib, data/assets/scripts/gold/irpt_reporting, data/assets/scripts/lib, data/inf, infra/logic and org/tier1_exec/4.0.0_SA_CRO/deliverables.",
+  "world_is": "MEASURED: ls org/surprise_channel in the worktree: 'No such file or directory'; git ls-tree HEAD org/surprise_channel/schemas lists investigation_item.schema.json and remediation_row.schema.json; git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json read at this order's start, its enum for class is OBSERVATION and BLOCKING.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls C:/dev/wk-irpt-dashbd-2001/org/surprise_channel returns 'No such file or directory' at the order's start",
+      "git ls-tree -r --name-only HEAD org/surprise_channel/schemas lists the two schema files",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json, first 4000 bytes read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken. Materialising the channel folder is outside the order's named folders, so the worker did not run git sparse-checkout add for it."
+}
+```
