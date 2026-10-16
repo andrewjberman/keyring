@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-15T23:30:52.056858+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261016T011845Z
 **Deploy:** NFRA_OPLGTW OG-ap-21 Phase B: the person reader, the news and invoke role moves and harvest_get_published_analysis -- release d577e0e7297b3ecba183023d8374855a93f148a7 onto live base c4c106aea1cc47d15f81397208226bd9b292c9dc, all three halves signed (CTO 378438988e, COO c9c5cb0e07, CVO bee4c81023) against ask sha256 862a1de9a7c6, GO msg 34606
 **Authored by:** 0.7.0_AE_CloudOps~Z
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -28,3 +28,4 @@
 - 20261016T005911Z LEG destroy-old closed: DESTROYED BY NAME, AFTER the served read proved a news tool answers through the internal reader (the CVO's condition). D
 - 20261016T011419Z LEG served-read closed: W/P21_SERVED.json, written by one SSM call running the harness on i-07dccb1615503ac99 under /opt/opal-gateway/.venv/bin/
 - 20261016T011540Z LEG standing-clauses closed: LANDED ON THE SHARED TREE, which is the plane that matters: the deploy wrapper's own manifest commit 19240fb288 sits on 
+- 20261016T011845Z CLOSED -- all 6 legs proven
