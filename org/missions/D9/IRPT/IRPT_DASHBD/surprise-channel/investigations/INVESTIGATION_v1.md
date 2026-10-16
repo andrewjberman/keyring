@@ -19533,3 +19533,52 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the CTO's round-146 analysis: the build side is the coverage reader that returns the window's absent trading days, the sentences for the missing coverage members, the on-screen window-clipping sentence, and the label/test correction; the endpoint wording (fallback, news data) is his."
 }
 ```
+
+## IRPT_DASHBD-D2-W317-S1 -- the wrapper's module docstring still describes the round-125 partition rule
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W317-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~317",
+  "surfaced_at": "2026-10-15T23:55:19Z",
+  "one_line": "The wrapper's module docstring still says a partition whose rows name another pull date is refused. The partition check now compares each row's day with its partition's date. The order says nothing else in the file changes, so the docstring was left as it was.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The wrapper's module docstring (lines 3 to 10 of inflection_scope_feed_run.py) describes the partition check as refusing a partition whose rows name another pull date.",
+  "world_is": "After TO-DB-i-17 the check compares each row's day with the partition's date (the partition check in run()). The docstring at line 7 still describes the superseded round-125 rule. Nothing in the code or the tests reads the docstring.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@ed1819a0e069a7f227057c1f00ff694d430cea2e line 7 (docstring) and line 115 (the day comparison, after this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W317-S2 -- a partition whose rows carry differing or null pull dates is accepted, and the rule does not say so
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W317-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~317",
+  "surfaced_at": "2026-10-15T23:55:19Z",
+  "one_line": "The corrected partition rule checks only each row's day against its partition. It does not check that the rows of one partition share one pull date, and it does not check that pull_date is present. The cell accepts a pull_date that differs from the partition; it does not say what to do with rows that disagree with each other or with a null pull_date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell DB-i-17: a silver partition date=<d> is refused when any of its rows has a day other than <d>; a pull_date that differs from the partition is accepted.",
+  "world_is": "The wrapper accepts a partition whose rows carry different pull_date values from one another, and a partition whose rows carry a null pull_date. Both pass the day check. The real feed stamps one pull date on every row of one pull, and write_day never overwrites a day, so a mixed partition needs a hand assembly; no test covers the mixed or null case.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@ed1819a0e069a7f227057c1f00ff694d430cea2e lines 110-119 (the partition loop, before this order)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@ed1819a0e069a7f227057c1f00ff694d430cea2e lines 443-453 (write_day skips an existing key) and lines 551 and 767 (one pull_date per envelope)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
