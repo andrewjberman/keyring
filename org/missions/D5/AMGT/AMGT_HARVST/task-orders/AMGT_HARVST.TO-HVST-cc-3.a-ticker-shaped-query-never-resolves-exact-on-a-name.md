@@ -66,9 +66,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~152, worktree `C:/dev/wk-harvst-152`, branch `wk-AMGT_HARVST-152`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts` and `infra/aws/ec2/opal-gateway`.
 - **SENT:** with the round-88 issuance.
 
+**COMPLETE 2026-10-16T15:52:32Z (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~152` (worker-light, haiku, high), branch `wk-AMGT_HARVST-152`, fix `5c7e701162`, head `1a0383a2d6`. Diff read by this seat: `harvest_identity.py` (+5): `TICKER_SHAPE = [A-Z]{1,5}([.-][A-Z]{1,2})?` (fullmatch on the raw query, so a space, `&`, digit or lowercase letter is not ticker-shaped) and, after the `named` list, a ticker-shaped query with name hits returns `_candidates(named, "name", index)` with the reason "no ticker matches %r; these companies have a name that starts with it" and never `exact`; every other path unchanged.
+- **AC1 PASS:** `6 passed` (worker x3; this seat re-ran). **AC2 PASS:** `16 passed` (worker; re-run here). Proof instance VALID rc 0 (re-run here). The mutant arm (`TICKER_SHAPE` disabled) makes PG answer `exact` PCG again and arm 1 fails as asserted.
+- **Row** `D1-W152-S1` (the standing-rules file `.claude/agents/worker-light.md` is outside the sparse cone): INERT. The worker also noted `org/git-author-override-audit.dell1.log` modified in its worktree; it did not commit it.
+- **What this does NOT prove:** the served tool. The code is merged, not deployed; the served read of `PG` and `PCG` is `HVST-cc-7`.
+
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>S29-RESOLVE</workstream>
 <slot>dell1</slot>
