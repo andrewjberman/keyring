@@ -44,6 +44,10 @@ messages you when he has acted.
 4. **Start the three subscriptions.** Obtain a Management API token with the app credential (a client-credentials call to the tenant's token endpoint, scope `https://manage.office.com/.default`), keep it in the process
    environment only, and run `python data/m365_metadata/scripts/app/start_subscriptions.py --apply` with `M365_TENANT_ID` and `M365_ACCESS_TOKEN` set. Print HTTP statuses only. Write the UTC time in ISO form to
    `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/subs_started_at.txt` and commit it. The Entra sign-in feed `Audit.AzureActiveDirectory` is NOT subscribed (PRD C-FIELDS (a)).
+5a. **AMENDED 2026-10-16 ~13:5xZ -- the first live fire timed out (row D1-S12).** The 13:31Z fire, and its two retries, hit the 300-second limit (`Status: timeout`); the cause is a 7-day cold-start backlog fetched one blob at a time with nothing saved before the limit. `TO-MD-x2` is reopened with a time budget,
+   parallel fetch and `timeout = 900`. The issuer messages you when that repair is MERGED. Then: `bash infra/aws/lambda/m365-metadata-collector/build.sh`; `terraform plan` must show an in-place update of the collector function only (code hash and timeout), nothing destroyed or replaced; one
+   `bash .tools/safe-apply.sh ... apply <plan>` under a ledger entry of its own; and write the UTC time of that apply, ISO form, to `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/fires_since.txt` and commit it. The earlier failed invocations then do not count against AC3. You write no code in the collector.
+   Do NOT invoke the collector by hand for the criterion; the scheduled fires are the acceptance. A fire after the repair may stop early with `complete=False` while the 7-day backlog is worked off (it saves what it did); that is not a failure. Report the log line each fire prints (counts only).
 5. **Two scheduled fires.** The collector fires hourly on its own clock. Do NOT invoke it by hand for the criterion (an ad-hoc run is QA only; the scheduled fire is the acceptance). Wait for two fires after the start time
    (about two hours), then run the three checks from the repository root. **The first content may take up to 12 hours to appear (the vendor's word); the criteria below do not need content, only two clean fires.**
 6. **The admin GetObject probe (the CTO's FWD-8 criterion, deferred from MD-r-1).** Once the first clean fire has written the cursor, run `r2_check_r1.py getobject` from the repository root: an admin `GetObject` on the EXISTING
@@ -59,8 +63,8 @@ messages you when he has acted.
 <criterion id="MD2-r2-AC2" cell_refs="MD-r-2"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_r2.py subs</invocation><expect>R2-SUBS-OK</expect></criterion>
 `MD2-r2-AC2` -- the Management API lists exactly the three subscriptions enabled: `Audit.Exchange`, `Audit.General`, `Audit.SharePoint`.
 
-<criterion id="MD2-r2-AC3" cell_refs="MD-r-2"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_r2.py fires org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/subs_started_at.txt</invocation><expect>R2-FIRES-OK</expect></criterion>
-`MD2-r2-AC3` -- at least two scheduled collector invocations since the subscriptions started, and no function error since then.
+<criterion id="MD2-r2-AC3" cell_refs="MD-r-2"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_r2.py fires org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/fires_since.txt</invocation><expect>R2-FIRES-OK</expect></criterion>
+`MD2-r2-AC3` -- at least two scheduled collector invocations since the time in `fires_since.txt` (the redeploy of item 5a), none of them a timeout or an error.
 
 <criterion id="MD2-r2-AC4" cell_refs="MD-r-2" judgment="true"/>
 `MD2-r2-AC4` -- JUDGMENT, graded by the CVO at L9, never by you: Andrew names one of the eight and a trading day and reads that person's Microsoft 365 day in order from collection that is actually running, and recognises it as that person's day (PRD FWD-1). You do not run, grade or claim this one.
@@ -86,6 +90,8 @@ Dry-run at the base 2026-10-16 ~08:5xZ: AC1 `R2-APP-REFUSED the credential secre
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/subs_started_at.txt
+org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/fires_since.txt
+infra/aws/terraform/trino/collector.tf
 org/missions/D7/TCKT/TCKT_MTADTA/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -98,6 +104,9 @@ org/missions/D7/TCKT/TCKT_MTADTA/surprise-channel/investigations/INVESTIGATION_v
 Criterion ids: MD2-r2-AC1, MD2-r2-AC2, MD2-r2-AC3, MD2-r2-AC4, MD2-r2-AC5. Instance at `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/TCKT_MTADTA.TO-MD-r2.identity-and-fires.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> MD2-r2-AC1,MD2-r2-AC2,MD2-r2-AC3,MD2-r2-AC4,MD2-r2-AC5` BEFORE the flip. AC1-AC3 and AC5 mechanical; AC4 judgment (UNVERIFIABLE-BY-INSTRUMENT, graded by the CVO).
 </proof_of_spec>
+
+**PER-STEP LINES (AMENDED 2026-10-16 ~13:2xZ, Andrew's ask relayed by the CTO, msg 6698):** send `2.0.0_SA_COO~S1` ONE line by the broker as each of these lands, never a value: (1) the `r2_check_r2.py app` result; (2) the subject key written (yes/no, length only);
+(3) each of the three subscription starts with its HTTP status, or the API's refusal VERBATIM (the unified audit-log check was never run, so a refusal is the measure; send it once and make no retry loop); (4) each of the two fires as it reads clean. The issuer relays them.
 
 **REPORT:** the commands Andrew runs (as in item 2); the three check lines; the subscription HTTP statuses; the start time; every refusal and denial verbatim. No secret, tenant or client value.
 

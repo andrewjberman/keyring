@@ -660,6 +660,77 @@
     "spec_asserts": "CTO ruling 6605 / TO-MD-r1 item 7b: the door is reachable by Andrew_Berman alone, with his MFA device.",
     "world_is": "The MFA condition tests that some device was used, not whose. A second enabled device named for another person on the same user lets that person's phone satisfy the gate for any session of this user. It still needs the user's AWS credentials, so nothing is reachable by the device alone. The device name is the only evidence of whose phone it is; ownership is not established here.",
     "notes": "Nothing changed. If the second device is not Andrew's, removing it is an IAM act on his user and is his word."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S10",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+    "surfaced_at": "2026-10-16T13:30:00Z",
+    "one_line": "The consent URL printed by register_app.py fails with AADSTS1003031 because the script never sets requiredResourceAccess on the app, although the ActivityFeed.Read role is assigned.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (cut the register_app.py fix as an order; the consent grant itself is made); this seat only surfaces",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "laptop 1.0.0_SA_CTO msg 109686, relayed by 0.0.0_AB_MSTR on bus 23afd49c at 13:20Z: Andrew ran register_app.py --apply on the laptop at 13:16Z; read afterwards: one app, ActivityFeed.Read role assigned, 1 client secret, api-credentials holds 1 version (value not read)",
+        "the same message: the consent URL fails with AADSTS1003031 because the script never sets requiredResourceAccess",
+        "this seat measured none of this; it read no Microsoft or AWS state and did not open the script"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Card step 5 (TCKT_MTADTA.TO-MD-r2.andrew_consent_card.md): Andrew opens the printed consent URL and grants consent.",
+    "world_is": "As reported by the laptop CTO, the printed consent URL is not usable (AADSTS1003031), yet the laptop CTO reports the role assigned and the grant made; how consent was reached is not stated in the relay. Also reported: card step 1 (the unified audit-log check, Get-AdminAuditLogConfig) was not run because Andrew holds no Exchange role; someone who does still owes it.",
+    "notes": "Nothing changed by this seat. The client id is in a Taildrop file in dell1 Downloads and is not recorded here."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S11",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-16T13:46:05Z",
+    "one_line": "The collector's first scheduled fire, 13:31:22Z, ran to the 300 s timeout and was retried twice; the fires check printed R2-FIRES-OK on it because it greps only errorMessage and Traceback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (the issuer: who repairs the collector's hang and the fires check)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/m365-metadata-trino-collector-lambda: START 13:31:22Z, REPORT Duration 300000.00 ms Status: timeout; same request id START 13:37:21Z, REPORT Duration 300000.00 ms Status: timeout; no application log line in either",
+        "/aws/lambda/globgrph-trino-access-lambda: op=get_state outcome=absent at 13:31:27Z, 13:37:24Z and 13:44:38Z, each about 2 s, so the door answered and the hang follows the cursor read in handler.py",
+        "CloudWatch AWS/Lambda Errors for the collector, 13:00Z hour: Sum 2.0; Invocations 2.0 (door 3.0)",
+        "org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_r2.py lines 99-105: counts REPORT lines, greps '?errorMessage ?Traceback'; printed R2-FIRES-OK invocations_since_start=2 function_errors=0 at 13:43:48Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-r2 AC3: at least two scheduled collector invocations since the subscriptions started, and no function error since then.",
+    "world_is": "One scheduled fire exists, and it timed out; Lambda's two async retries are the second and third START lines, so the 2 counted invocations are one failed fire, not two scheduled fires. The check cannot tell a timeout from a success. Where the collector waits for 300 s is not established here: the Management API listing or the token call (source_client.py) are the calls after the cursor read, and neither logs.",
+    "notes": "No hand invoke, no retry, no code change. The next scheduled fire at about 14:31Z is expected to fail the same way and would be a second failed fire, not evidence for AC3. Disabling the rule is a Terraform change to collector.tf, outside this order's grant."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S12",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-16T13:49:30Z",
+    "one_line": "The first scheduled fire of the collector timed out at 300 s and was retried from zero twice: a cold start fetches the whole 7-day backlog one blob at a time and writes nothing before the limit; and the fires check read OK on it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (this order's issuer: TO-MD-x2 reopened with a time budget; TM1 reapplies collector.tf)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/m365-metadata-trino-collector-lambda 13:31Z to 13:44Z: three REPORT lines Status: timeout, Duration 300000 ms, Max Memory Used 104-108 MB, no application log line",
+        "0.7.0_AE_CloudOps~TM1 msg 6722 (door answered each time: op=get_state outcome=absent, about 2 s)",
+        "the issuer's read-only listing timings with the app credential (no event body read): one 24-hour window of one content type lists 9 to 87 blobs in 0.2 to 1.8 s, so the listing is not the slow part",
+        "r2_check_r2.py fires read R2-FIRES-OK on two timed-out invocations because it grepped errorMessage and Traceback only; fixed to count Status: timeout and Task timed out"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Two scheduled fires land cleanly within the Lambda limit; a fire that cannot finish leaves the work it did.",
+    "world_is": "With no cursor the fire lists seven days of blobs and fetches them sequentially before writing bronze or the cursor; the fetch total exceeds 300 s, so a timeout loses everything and each retry starts over. The tenant's unified audit feed holds content for all seven days (so audit logging is on: the earlier unrun check is answered by this read). The fires check counted REPORT lines and greps for errorMessage/Traceback, which a timeout never writes.",
+    "notes": "Repair: a time budget with save-as-you-go and parallel fetch (TO-MD-x2 reopened, criterion AC4), timeout 900 in collector.tf, one counts-only log line per fire. The seat then rebuilds the zip and applies the in-place update (TO-MD-r2). Attempts 2 and 3 of fire 1 spent the same 300 s each; the 14:31Z and later scheduled fires fail the same way until the repair lands."
   }
 ]
 ```

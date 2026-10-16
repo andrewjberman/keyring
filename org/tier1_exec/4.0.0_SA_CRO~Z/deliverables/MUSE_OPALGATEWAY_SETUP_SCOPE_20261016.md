@@ -91,8 +91,7 @@ If Andrew wants muse below his full set, route C is the answer, and it is a cell
   bids are approved from muse through the dell2 folder with a muse-origin proof. Moving that onto the gateway is a
   COMM_ASSIST scope call for the CTO. The muse/Kimi question is already held as laptop row `87a2` (record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_204xZ_MUSE_SENDER_AND_COO_LIVE_ARMS.md`).
-- muse has no inbound bus queue (DEVICES.json `senders`, role sender-only). Its answer goes by the `[to-muse]` mail relay,
-  now `/fideles` (`org/tier1_exec/2.0.0_SA_COO~CA/ANDREW_DIRECT_20261016_034xZ_FIDELES_SKILL_DELL1_MSTR_OWNS_MUSE_MAIL_WATCHER.md`).
+- muse has no inbound bus queue (DEVICES.json `senders`, role sender-only). Its answer goes by the `[to-muse]` mail relay.
   This seat sends nothing to muse; replying is the CTO's call per the relay.
 - Not measured: the live gateway's served tool list and tier roster (`MASTER_ADMIN_PRINCIPALS` is deploy-time env, not
   read here). The claims in sections 2-4 are from source at HEAD, not from the running host.

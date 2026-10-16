@@ -18,15 +18,9 @@ The round-20 analysis un-parks on the first of `8f2b`, `44eb`, `e435`; `e435` la
 `decompositions/COMM_ASSIST_DECOMP.round20.md` needs muse's three pieces AND call 44eb (one real Teams item and one real mail
 each reaching Andrew as a muse alert), and neither is met. No other cell serves an ungraded FWD without a person's act.
 
-## Off-project work this hour (Andrew-direct at this terminal)
-
-`/fideles` skill + `.tools/fideles-watch.py` (commits 01a931b97d, 90a3659746, 1d9d6ff94b); record
-`ANDREW_DIRECT_20261016_034xZ_FIDELES_SKILL_DELL1_MSTR_OWNS_MUSE_MAIL_WATCHER.md`; muse-folder note for dell1 sent to
-0.0.0_AB_MSTR. Blocked on Andrew: the Gmail app password for andrew@fideles.capital.
-
 ## Compiler Tools
 
-- `comp-find` (fideles|goldengate census, 340 hits / 262,722 files; MuseReaderRefresh, 33 hits): worked; one call was denied by
+- `comp-find` (MuseReaderRefresh census, 33 hits): worked; one call was denied by
   the rail for a pipe after the census and re-run bare.
 - `drive-mode.py read`, `open-calls.py list|mode get`, `unblock.py tick`: worked.
 - Gap: none new.
