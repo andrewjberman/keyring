@@ -21176,3 +21176,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. DBF127-1-AC1 and AC2 PASS. The grades are not invented; the rule24_record says so. Recorded for the issuer."
 }
 ```
+
+## IRPT_DASHBD-D2-W1301-S2 -- the naming gate refuses the mapping data file as a hand-kept carrier of firm literals (WARN only)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1301-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1301",
+  "surfaced_at": "2026-10-16T06:11:35Z",
+  "one_line": "The naming gate refuses the mapping data file rows that carry the firm literals as hand-kept carriers (224 REFUSE verdicts, WARN only, not blocking); the order requires the file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1301 step 6: transaction_words.json is written by a script from the contract and carries the 224 source_mapping rows with their firm literal, as the producer data file.",
+  "world_is": ".tools/naming-gate reports 224 REFUSE verdicts on data/assets/scripts/gold/irpt_reporting/transaction_words.json (new hand-kept carrier of 49financial, cottonwood and inflection, read through lookup()); its live-read leg failed (CensusError, rc=2), and the verdicts are WARN (NAMING_GATE_ENFORCE unset). The commit landed. Enforcement would refuse the file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/transaction_words.json@227196a9ed",
+      "commit 227196a9ed (safe-commit gate output, naming-gate section)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. DBF127-1-AC2 checks the file against the contract and PASSES. The naming gate is the lane the issuer and the CTO own; no gate was edited or bypassed here. Recorded for the issuer before any enforcement flip."
+}
+```
