@@ -57,6 +57,94 @@
     "spec_asserts": "The collector reads the eight's Entra object ids once at collection and matches events by id as well as by UPN, with the app holding exactly one permission.",
     "world_is": "Reading a user's object id takes a Graph directory permission (User.Read.All or an equivalent) or the delegated token of a signed-in person; the app as specified holds neither. Audit records carry UPNs in the four named fields, so UPN matching works without it; an id-only record (a UserId that is a GUID) would be dropped as out of population.",
     "notes": "Round 1 builds UPN resolution only. Whether a GUID-only actor occurs in the feed is unread until the first real content lands (release act 4); if it does, the enrichment list takes either a one-time id lookup run by Andrew into population.json or a second permission by the CTO's ruling."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S1",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:14:07Z",
+    "one_line": "TO-MD-h1 names infra/aws/terraform/transcripts/main.tf as the template to model on, but this worktree is a sparse checkout that does not materialise that directory; the template was read from HEAD with git show.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in C:/tmp/wk-tckt-mtadta-1 (core.sparseCheckout true) names no infra/aws/terraform/transcripts and no infra/aws/terraform/trino entry; ls of infra/aws/terraform/ shows .gitignore, ROLLBACK_PROCEDURE.md, modules/ and tombstones.json only",
+        "git ls-files infra/aws/terraform/transcripts lists main.tf at HEAD c9971df7ca; git show HEAD:infra/aws/terraform/transcripts/main.tf read at lines 1-135, plus its aws_kms_alias, aws_s3_bucket and public-access-block blocks",
+        "git add -n infra/aws/terraform/trino/main.tf in the same worktree: rc=0, the new file is addable under the sparse set"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-h1 BUILD step 7: model infra/aws/terraform/trino/main.tf on infra/aws/terraform/transcripts/main.tf lines 1-135 (read them), in the worktree the order names.",
+    "world_is": "The template path is absent from the worktree and present only at HEAD. It was read with git show, not by extracting or rebuilding the tree. The new file was written under infra/aws/terraform/trino/, which is not in the sparse list either.",
+    "notes": "No tree was rebuilt. The worktree's sparse list is the cause; the template content is unchanged and was modelled from HEAD. The commit of the new file is measured at its commit and reported in the worker report."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S2",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:14:07Z",
+    "one_line": "TO-MD-h1 asks for the portal targets to be committed on the portal nested branch, but the portal rule requires a cand/<box>/<slug> branch cut from the last PROD release and registered for approval; the portal commit is withheld and the regenerated files stay uncommitted in the nested checkout.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal rev-parse --abbrev-ref HEAD prints wk-TCKT_MTADTA-1-portal at 39dab87f (a DEV merge); git -C portal rev-parse origin/PROD prints ab2c4365",
+        "portal/CONTRIBUTING-BOXES.md steps 1-4: build on cand/<box>/<slug> cut from the last PROD release, push under that name, register with open-calls.py add --kind approval; a box never pushes DEV",
+        "python lib/opal_naming.py generate --out . rewrote three portal targets: firmDisplayNames (registry hash line only), vendorDisplayNames (hash line plus two VENDOR_DISPLAY_NAMES rows for m365-metadata), firmAccess.ts (identical to the blob bar CRLF, the working copy being CRLF under autocrlf)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-h1 WORKER FACE step 5: if portal/ files change and the worktree carries a portal checkout, commit them inside portal/ on its nested branch and name that commit.",
+    "world_is": "The nested portal branch is a DEV-cut line, and the portal change rule (CONTRIBUTING-BOXES steps 1-4) routes any portal change through a cand/<box>/<slug> branch from PROD with an approval registration. The order and the rule disagree; the rule governs a portal change, so the commit was not made.",
+    "notes": "Owed by the issuer 2.0.0_SA_COO~S1 and the portal owner: either a cand/dell1/<slug> branch cut from origin/PROD carrying the generated VENDOR_DISPLAY_NAMES rows, or a ruling that generator output is exempt. Criteria AC1 passes on disk; nothing was pushed."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S3",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:14:07Z",
+    "one_line": "TO-MD-h1 gives the Lambda role's exception type as 'group' for globgrph-trino-access-group, but root_map.json exceptions carry node types (IAM_ROLE, LAMBDA, IAM_POLICY); the group's node type is IAM_GROUP.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/root_map.json exceptions: Counter over the file gives IAM_POLICY 84, IAM_ROLE 38, LAMBDA 29 and no GROUP type",
+        "org/standards/NAMING_SCHEMA.json v1.13 kind.by_type maps IAM_GROUP to kind group; lib/opal_naming_rootmap.py load_map accepts any non-empty string as an exception type",
+        "root_map.json roots.trino.exceptions[0] written with type IAM_GROUP; python lib/opal_naming.py validate rc=0 after the edit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-h1 BUILD step 3: add the exception globgrph-trino-access-group with type group.",
+    "world_is": "The file's exception types are node types, and the node type that carries the kind group is IAM_GROUP. The literal word group is a kind, not a type in this file.",
+    "notes": "The worker wrote IAM_GROUP, the file's own vocabulary. The issuer should confirm before the MD-a-1 order reads the entry."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S4",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:14:07Z",
+    "one_line": "TO-MD-h1 points to section 4 of infra/logic/06_CONFORMANCE_LEDGER.md as the R20 entry schema, but that section is the shared serving bucket; the schema is 02_DOCTRINE.md section 4 and the entries are ledger section 6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/06_CONFORMANCE_LEDGER.md line 111: '## §4. THE SHARED SERVING BUCKET -- opal-data-portal-v2'",
+        "infra/logic/02_DOCTRINE.md line 599: '## §4. THE EXCEPTION REGISTER -- its schema (its ENTRIES live in 06_CONFORMANCE_LEDGER.md §6)'",
+        "infra/logic/06_CONFORMANCE_LEDGER.md section 6 table: rows X1 to X17 before the edit; the new row X18 was added after X17 with the schema's columns"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-h1 BUILD step 6: read section 4 (the entry schema) and section 6 (the register) of infra/logic/06_CONFORMANCE_LEDGER.md, then add one R20 entry.",
+    "world_is": "The entry schema is in infra/logic/02_DOCTRINE.md section 4; the ledger's section 4 is a different plane. The entry was written to the ledger's section 6 register table, the carrier the doctrine names.",
+    "notes": "The entry follows the doctrine schema (pipeline, axis, departure, why, acknowledged, kind, state). Registered as X18."
   }
 ]
 ```
