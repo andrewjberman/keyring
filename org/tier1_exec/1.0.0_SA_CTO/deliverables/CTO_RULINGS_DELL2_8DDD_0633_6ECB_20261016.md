@@ -33,3 +33,8 @@ at Cottonwood only, so no confirmed recipient exists for all three firms.
   client-opening act he already holds.
 
 -- `1.0.0_SA_CTO~DELL2`
+
+## ADDENDUM -- d870 (the 0633 recut) APPROVED (2026-10-16 ~07:2xZ)
+
+`cand/dell2/ticket-hop-failure-read` @ac828834: commit `ac828834` adds `ANALYSIS_FAILED`, `ANALYSIS_REQUIRES_ATTENTION` and `DELIVERIES_EXHAUSTED`
+to the page set, with tests naming each code (6 references). 3 files, as before. Opal-internal (the Ticket Center). **APPROVED for DEV at ac828834.**
