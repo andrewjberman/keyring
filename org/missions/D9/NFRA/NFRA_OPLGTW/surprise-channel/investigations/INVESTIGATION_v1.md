@@ -20175,3 +20175,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost: a full-directory count cannot be quoted as this change's effect. Candidate for the owner: a baseline of the full directory at the base commit."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T08:09:11Z",
+  "id": "NFRA_OPLGTW-Z-S163",
+  "one_line": "Z-S162 DISARMED in code: the five client_* tools are DATA_GRANT and TIER_ADMITTED (master_admin only) on trunk and in release 3d5c9c8bf1; the same merge settles worker row Z-W113-S10 (the full-directory baseline is the same 61 failing ids).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ad-1 merged 23587956e9 (box/sitez): CLIENT_TOOLS in DATA_GRANT_TOOLS and TIER_ADMITTED_TOOLS, none in NATIVE_TOOLS; ad1.AC1 and ad1.AC2 PASS (worker, and the issuer's re-run at merge).",
+      "the issuer's ad1.AC1 re-run reads: unprofiled standard_employee denied 5 of 5, unprofiled read_only denied 5 of 5, unprofiled master_admin passes 5 of 5.",
+      "full gateway suite on 23587956e9: 1014 passed, 61 failed; the failing ids equal the 61 of clean trunk 474b9770d5 (comm over the two sorted id lists: 0 new, 0 fixed).",
+      "release 3d5c9c8bf1 (~Z msg 34829) takes app/data_entitlement.py whole; CTO half @2665f19c6a, CVO half @49ebdc867a signed at it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S162's disarm note: a re-cut whose client_* tools refuse an unprofiled, non-master_admin Opal principal with 0 reads, or the client tools carried out of the batch.",
+  "world_is": "The code half of that disarm is met on trunk and in the signed release: a non-admin unprofiled principal is denied each of the five (decide, 5 of 5). The SERVED half (a real call through the installed gateway refused with 0 reads, a master_admin served) is Phase B's client_admission read of OG-ap-23 and is not yet measured: nothing is deployed. The earlier placement was the issuer's (the hookups put the tools in NATIVE_TOOLS by the default pattern).",
+  "notes": "This row records the disarm of the code placement and names what still closes Z-S162: CODE_SERVED.json client_admission all three true, read by the CVO before close. Z-W113-S10 (the 63 failed of the worker's sparse tree) is explained: the main-tree baseline is 61 and unchanged."
+}
+```
