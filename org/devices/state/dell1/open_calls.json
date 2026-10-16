@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-16T15:57:40Z",
+ "written_at": "2026-10-16T16:19:54Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -5791,7 +5791,7 @@
    "source": "org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/TCKT_MTADTA.TO-MD-r2.andrew_consent_card.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-16T15:46:56Z",
    "kind": "act",
    "context": "Two clean scheduled fires have landed bronze and silver for 2026-10-09 to 10-16. No seat can read stored data by design; only your MFA session can. This read is the round's exercised outcome and the CVO grades it. Commands: the card's last section, then read_day.py --person <upn> --date <day> and first_content.py --date <day>.",
@@ -5812,7 +5812,151 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-16T16:17:32Z",
+    "by": "2.0.0_SA_COO~S1",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO~S1/ANDREW_DIRECT_20261016_1559Z_REFRAME_M365_LOGS_AS_SOC2_COMPROMISE_EXPOSURE_MACRO_SOC2_MSLOGS.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261016T155819Z-e8af",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/mdpf-canon-v2-band-repair",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "cand/dell1/mdpf-canon-v2-band-repair",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T15:58:19Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-v2-band-repair",
+    "purpose": "MDPF_CANON CN-s-4: on the Variant 2 Trend, the Models band is never carried forward on or after a date where the band label is absent (one condition in trendGrouping.ts); one commit, cut from PROD fa21a303",
+    "pages": [
+     "ModelPortfolios (Global Trend",
+     "Variant 2)"
+    ],
+    "class": "client-facing",
+    "how": "bun run dev:live --port 5174, Global view, Trend Variant 2 Monthly; hover the carried-date bars: the Models band does not draw a carried value. Checks: r11_cn_s_4.py pure 6 of 6, real 5 of 5, typecheck 0",
+    "head_sha": "62b3dd53461cae63327f0258a1c2f693098e7463",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-16T15:58:19Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T16:19:42Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_162xZ_ALL_RECS_APPROVED_SOC2_MSLOGS_ENDPOINT_RAW_ALL_ACCOUNTS_DEV_APPROVALS_NAMING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261016T160708Z-c39d",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/mdpf-canon-cottonwood-trend-upgrade",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "cand/dell1/mdpf-canon-cottonwood-trend-upgrade",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T16:07:08Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-cottonwood-trend-upgrade",
+    "purpose": "MDPF_CANON CN-s-3: the Cottonwood AUM Trend starts at its first measured total (2026-06-09), fills Other AUM on every date with a total, and carries the 12 absent model-leg dates with their measured Total, marked carried; new cottonwoodTrend.ts plus the page wiring; the five carried primary lines now carry their display names (tooltip marks them carried); reads through the paired provenance accessor. Three commits cut from PROD fa21a303",
+    "pages": [
+     "ModelPortfolios (Cottonwood view",
+     "AUM Trend)"
+    ],
+    "class": "client-facing",
+    "how": "bun run dev:live --port 5174, Cottonwood firm, AUM Trend Monthly: the window starts 2026-06-09; hover 2026-08-31, every leg reads (carried). Checks: r11_cn_s_3.py pure 7 of 7, provenance guard exit 0, typecheck 0; CVO v21 graded the render MET",
+    "head_sha": "1510cd7a8573a00282e66ec1a9b97c9e7f24a3c7",
+    "commits": 3
+   },
+   "scope": {
+    "measured_at": "2026-10-16T16:07:08Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T16:19:53Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_162xZ_ALL_RECS_APPROVED_SOC2_MSLOGS_ENDPOINT_RAW_ALL_ACCOUNTS_DEV_APPROVALS_NAMING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261016T161045Z-fb18",
+   "project": "NONE",
+   "subject": "SOC2_MSLOGS: confirm the 9 DONE WHEN lines (and with them all-accounts raw collection, the SOC2 / SOC2_MSLOGS naming)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_SOC2_MSLOGS_20261016.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T16:10:45Z",
+   "kind": "fork",
+   "context": "CRO brief @0113e9f438 from Andrew's 15:59Z reframe; endpoint @8d3109cc66. L2 is Andrew's confirmation; nothing is built until it lands.",
+   "rec": "Yes: the outcomes are the brief's O1-O9, every one provable by a drill or a read, and his reframe words already name the population and raw bronze.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-16T16:10:45Z"
+   },
+   "closed": {
+    "at": "2026-10-16T16:19:54Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_162xZ_ALL_RECS_APPROVED_SOC2_MSLOGS_ENDPOINT_RAW_ALL_ACCOUNTS_DEV_APPROVALS_NAMING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   }
  ]
 }
