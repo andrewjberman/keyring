@@ -102,8 +102,8 @@ committed output of the AQ2 read of the `etf-classifications` table (`dcdc6cb3d1
 
 **Artifacts** (staged outside the repository; nothing uploaded):
 - Tar `%(tar_name)s`: sha256 `%(tar_sha)s`, %(tar_bytes)s bytes, %(members)d members.
-- Package sums `irpt-resident-0485393f3a-r34.package.SHA256SUMS`: sha256 `%(sums_sha)s`.
-- Host install script `resident_host_install_0485393f3a-r34.sh`: sha256 `%(host_sha)s`; `install_r34.sh` `%(install_sha)s`; `pre_read_r34.sh` `%(pre_sha)s`; `rollback_r34.sh` `%(rb_sha)s`.
+- Package sums `irpt-resident-0485393f3a-r34c.package.SHA256SUMS`: sha256 `%(sums_sha)s`.
+- Host install script `resident_host_install_0485393f3a-r34c.sh`: sha256 `%(host_sha)s`; `install_r34.sh` `%(install_sha)s`; `pre_read_r34.sh` `%(pre_sha)s`; `rollback_r34.sh` `%(rb_sha)s`.
 - The capture library and wrapper are unchanged.
 
 ## 2. Blast radius, by branch (read from the code at the pin)
@@ -163,10 +163,10 @@ Source: `durable_job.py` (`mark_hop_failure`, `mark_hop_failure_keyed`, `HOP_FAI
 
 ## 3. Apply protocol, in this order
 
-1. Both halves at HEAD naming this file's blob, AND the library delivery closed: `yfinance` 1.2.0 and its Linux cp312 closure installed in the host's `pydeps` under its own pair (the first attempt of this release, the same plan, was installed and ROLLED BACK at V2 because the library was absent; CTO msgs 9066, 9070, 9075). Without the library V2 stops the install again.
-2. Before-read: `pre_read_r34.sh` (fail-closed: the running root must be `0485393f3a-r32`, exit 40; the r34 root absent; the library and wrapper unmoved; every changed member at its r32 value, every added member ABSENT; the queue 0/0).
+1. Both halves at HEAD naming this file's blob, AND the library delivery closed: `yfinance` 1.2.0 and its Linux cp312 closure installed in the host's `pydeps` under its own pair (the first attempt of this release was installed as root `0485393f3a-r34` and ROLLED BACK at V2 because the library was absent; that root, its receipt copy and its three S3 objects are KEPT on purpose, so THIS release has its own names: root `0485393f3a-r34c` and keys `...-r34c.*`; CTO msgs 9066, 9070, 9075, 9114). Without the library V2 stops the install again.
+2. Before-read: `pre_read_r34.sh` (fail-closed: the running root must be `0485393f3a-r32`, exit 40; the r34c root absent (the first attempt's r34 root may exist and is not touched); the library and wrapper unmoved; every changed member at its r32 value, every added member ABSENT; the queue 0/0).
 3. D1: upload the tar, the sums file and the host script to the keys the install script names (each key must read 404 first; record the S3 versions); `install_r34.sh` fetches the host script and the sums BY KEY and refuses unless their sha256 equal `WANT` / `WANTSUM` (exits 31 and 33, dry-run: unchanged copy rc 0, one byte changed rc 31 and 33); it then runs the host script, which stages the tar, checks %(nchecks)d members, keeps the r32 root and library, installs, polls, and ROLLS BACK ITSELF to r32 on a failed start.
-4. V1: running root `0485393f3a-r34`; every changed or added member at its built value; the package sums %(sums_lines)d of %(sums_lines)d OK; the imports (`swap_pass`, `yahoo_history_days`, `opal_producer`); the pool file's sha256 equals the binding; queue 0/0; no sign-in in the journal.
+4. V1: running root `0485393f3a-r34c`; every changed or added member at its built value; the package sums %(sums_lines)d of %(sums_lines)d OK; the imports (`swap_pass`, `yahoo_history_days`, `opal_producer`); the pool file's sha256 equals the binding; queue 0/0; no sign-in in the journal.
 5. V3 (read-only): `simulate-principal-policy` for the resident host's role, action `dynamodb:UpdateItem` on the `irpt-jobs` table ARN: expect allowed (the hop_failure writers need it); print the decision. A denial is a STOP before the ledger closes.
 6. V2: ONE `yf.download` call for ONE ticker and ONE `YfinanceChecker().check(["SPY"])` call (expect KEPT) through the resident's interpreter (read-only, no job, no queue message); and `swap_pass.load_pool` on the shipped pool with today's date prints the pool date, claim, row count and stale flag.
 7. The ledger closes at V2 and V3.
@@ -190,7 +190,7 @@ Source: `durable_job.py` (`mark_hop_failure`, `mark_hop_failure_keyed`, `HOP_FAI
 
 ## COO half -- 2.0.0_SA_COO~G2
 
-SIGNED, 2026-10-16, on this packet's bytes at the commit that carries it. The write set is: one new root directory on the resident host (`/opt/irpt-resident/0485393f3a-r34`); the receipt
+SIGNED, 2026-10-16, on this packet's bytes at the commit that carries it. The write set is: one new root directory on the resident host (`/opt/irpt-resident/0485393f3a-r34c`); the receipt
 and its r32 copy; the unit's ExecStart; the kept library copy. The blast radius is section 2 and 2b; the rollback is section 4.
 
 ## CTO half -- 1.0.0_SA_CTO
@@ -203,7 +203,7 @@ and its r32 copy; the unit's ExecStart; the kept library copy. The blast radius 
     "batches_max": batches_max, "batches_all": batches_all, "chunk": CHUNK, "stale": stale,
     "stale_date": (__import__("datetime").date.fromisoformat(sw["pool_as_of"]) + __import__("datetime").timedelta(days=stale)).isoformat(),
     "tar_name": os.path.basename(art["path"]), "tar_sha": art["sha256"], "tar_bytes": "{:,}".format(art["bytes"]), "sums_sha": art["sha256sums_file"]["sha256"],
-    "host_sha": scripts["resident_host_install_0485393f3a-r34.sh"]["sha256"], "install_sha": scripts["install_r34.sh"]["sha256"],
+    "host_sha": scripts["resident_host_install_0485393f3a-r34c.sh"]["sha256"], "install_sha": scripts["install_r34.sh"]["sha256"],
     "pre_sha": scripts["pre_read_r34.sh"]["sha256"], "rb_sha": scripts["rollback_r34.sh"]["sha256"], "nchecks": len(delta["changed"]) + len(delta["added"]),
     "sums_lines": art["sha256sums_file"]["lines"]}
 if any(ord(c) > 127 for c in text):
