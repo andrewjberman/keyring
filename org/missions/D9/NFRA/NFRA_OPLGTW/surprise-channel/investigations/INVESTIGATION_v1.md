@@ -21103,3 +21103,129 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost of the proposed instrument: three keys of audit per refusal, folded to one row per identity per 10 s; it rides the batched round-38 gateway release (no separate deploy). Until then the 429 is a seat-side retry (Retry-After is sent). Disarm: OG-en-10 landed live and a read of its rows, then the limit decision recorded as a ruling."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:56:00Z",
+  "one_line": "OG-en-9's fix site is outside its write grant: the 403 for an un-rowed key is set in app/query_v0.py:155, not in the catalog gate, the tool or its HTTP shaping, so AC1's status arm cannot pass inside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/query_v0.py:150-155 @060e0ba6e2 -- verdict = catalog_gate.gate(_catalog(), key, pclass, pfirm); if not verdict: return JSONResponse({'error': verdict.reason, 'key': key}, status_code=403).",
+      "CODE: infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py:431 @060e0ba6e2 -- query_catalog copies resp.status_code into http_status on a non-200 route answer; it sets no status of its own.",
+      "CODE: infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py:86-89 @060e0ba6e2 -- row is None returns GateVerdict(False, 'off-catalog: no W5 row ...') and carries no status code.",
+      "RUN: cd infra/aws/ec2/opal-gateway && python -m pytest tests/test_og_en9.py -q -p no:cacheprovider (worktree, 2026-10-16): test_ogen9_ac01 fails at tests/test_og_en9.py:90 with 'assert 403 == 404' on the tool's http_status for json/not/in/the/catalog.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-9's WHERE names catalog_gate.py (about line 88), integration.py (about line 431) and 'the code that maps a gate verdict to a status', and its <paths> grant writes to those files only.",
+  "world_is": "catalog_gate.py returns a verdict with no status; the status is set in query_v0.py:155, which the grant does not name. integration.py:431 only copies the upstream status. An un-rowed key therefore cannot answer 404 without an edit outside the grant. The worker did not edit query_v0.py.",
+  "notes": "Disarm: the COO widens the grant to app/query_v0.py (and the test in S2) or re-cuts OG-en-9 with that path, then the fix lands in the batched gateway release with E4, E5, E6, E8 and E10."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:56:30Z",
+  "one_line": "An existing test pins the old 403 for an un-rowed key, and the file is outside OG-en-9's grant: tests/test_query_v0_tool.py:107 asserts the route and the tool both answer 403.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_query_v0_tool.py:101-108 @060e0ba6e2 -- test_mx_q3_uncatalogued_key_refused asserts status == 403 and out['http_status'] == 403 and out['error'] == body['error'] for OFF_CATALOG = 'json/not/in/the/catalog.json'.",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_query_v0_tool.py:3-5 @060e0ba6e2 -- the module docstring states the tool is the route's own handler, so the tool's answer equals the route's.",
+      "GRANT: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md section 3 <paths> -- test_query_v0_tool.py is not listed; the three listed catalog tests do not exist (see S3)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-9 says: if an existing test pins the old 403 on an unresolvable key, update it to the new truth with the smallest edit and name it.",
+  "world_is": "The pinning test is outside the grant, and any change to the no-row status on the route or on the tool breaks its line 107 (or 108, the tool and route equality). The instruction cannot be executed inside <paths>, and the worker did not weaken the test.",
+  "notes": "INERT while unreleased. Disarm with S1: the grant that admits query_v0.py must also admit this test, and the two change together."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:57:00Z",
+  "one_line": "Three test files named in OG-en-9's <paths> do not exist in the repository at HEAD: tests/test_graphql_catalog_gate.py, tests/test_portal_index_integration.py and tests/test_og_cat1.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git ls-files | grep -E 'test_graphql_catalog_gate|test_portal_index_integration|test_og_cat1' from C:/tmp/wk-oplgtw-123 at HEAD 060e0ba6e2 returned no path (rc=1).",
+      "GRANT: NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md section 3 <paths> lines 49-51 name those three files; the cell says 'only to follow the new truth, the existing catalog tests listed'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-9 lists three existing catalog-gate test files as the tests to follow the new truth.",
+  "world_is": "None of the three exists at HEAD. The catalog-gate test that pins the no-row answer is tests/test_query_v0_tool.py (see S2), which the grant does not list. No file was created under the three names.",
+  "notes": "OBSERVATION: the absence does not block a criterion by itself; it changes which file the COO should name for the S2 edit."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:57:30Z",
+  "one_line": "The premise 'a key that resolves but the principal may not read keeps 403 with the entitlement shape' is false today: a catalog-gate refusal of a resolved key carries no guard_denied and no code.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/query_v0.py:150-155 @060e0ba6e2 -- every gate refusal (firm scope, verdict_class, allowlist, unknown principal) returns {'error', 'key'} at 403; guard_denied is set only by data_entitlement._denial (app/data_entitlement.py:674-675 @060e0ba6e2).",
+      "RUN: tests/test_og_en9.py:116 (worktree, 2026-10-16) -- for principal 49financial on json/benchmarks/model_portfolio_timeseries.json the tool answered {'error': \"firm scope: row firm='opal-internal' is not visible to firm principal '49financial' ...\", 'key': ..., 'http_status': 403}: no guard_denied, no code.",
+      "RUN: the same test file's chokepoint arm (data_entitlement denial switched on) passes: guard_denied True and code entitlement_denied on the tool, and 403 with the same shape on the route."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-9 says a key that resolves but the principal may not read keeps 403 with the entitlement shape (guard_denied, code entitlement_denied), and it treats that shape as the authorization class.",
+  "world_is": "Only the data_entitlement chokepoint carries the shape. The catalog gate's own refusals of a resolved key, which are authorization refusals in substance, answer 403 with no class marker, so a caller cannot tell them from a not-found answer by shape. The fix for this arm is in query_v0.py (see S1), which the grant does not list.",
+  "notes": "INERT: the status code is already 403 for these refusals, so no admission decision is wrong; what is missing is the shape the cell's rule names. Disarm with S1."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W123-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~123",
+  "surfaced_at": "2026-10-16T12:58:00Z",
+  "one_line": "The worker worktree is a sparse checkout: org/surprise_channel/schemas/ is absent from disk although investigation_item.schema.json is tracked, so the row gate's schema read in this tree fails.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git config --get core.sparseCheckout returned true in C:/tmp/wk-oplgtw-123; git ls-files -v shows 'S' (skip-worktree) on org/surprise_channel/schemas/investigation_item.schema.json and remediation_row.schema.json at HEAD 060e0ba6e2.",
+      "RUN: ls org/surprise_channel/schemas/ from the worktree returned 'No such file or directory'; git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json reads the schema."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker worktree carries the paths its order names and the surprise schema the row gate validates against.",
+  "world_is": "In this sparse worktree the schema is skip-worktree and not on disk. The worker validated the row shape against the HEAD copy through git show. The worktree was not rebuilt or extracted.",
+  "notes": "OBSERVATION: the gate may need the schema from the base checkout or from HEAD; the worker did not change the sparse-checkout configuration."
+}
+```
