@@ -12494,3 +12494,59 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Check 8 now passes for all 17 (BLOCKING W133-S1 cleared by the CTO's file block at 0f1ce30022). The four refused records read check 8 passed with the signed path; their verdict is not_checked because of check 6. Dell2 CTO's PROCEED (11f0240cd4) was received; the Taildrop was not sent because the 52-file pack does not exist."
 }
 ```
+
+## NFRA_CTLPLN-W135-S1 -- the existing check-6 case pins the base cross-platform verdict that the ruled rule reverses
+
+```json
+{
+  "id": "NFRA_CTLPLN-W135-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~135",
+  "surfaced_at": "2026-10-16T10:36:52Z",
+  "one_line": "CT-aw-1: the existing suite case case_check_6_records_the_cross_platform_comparison_and_the_crlf_count asserts check 6 'failed' for a cross-platform CRLF-only difference; the ruled platform rule (TO arm a) reads that same pair as passed. The suite reads 59/60 with the rule in place; the order forbids changing an existing case.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_check.py@7d4aef5b93 lines 1170-1181 (case_check_6_records_the_cross_platform_comparison_and_the_crlf_count): installed WHEEL Tag win_amd64, held manylinux_2_17_x86_64, installed __init__.py 'VALUE = 1' with CRLF, wheel 'VALUE = 1' with LF; asserts record checks[5] verdict == 'failed'",
+      "org/devices/intake/intake_check.py@8144b24967 check_6: the same pair is cross-platform, CRLF-normalised equal, so it is listed in platform_normalised_equal and check 6 reads passed",
+      "python org/devices/intake/test_intake_check.py in the worktree at 8144b24967: INTAKE-CHECK-TEST cases=59/60 skipped=0 ok=False; the only FAIL is case_check_6_records_the_cross_platform_comparison_and_the_crlf_count",
+      "the order's build step 6 says 'change no existing case', and its arm (a) says a cross-platform CRLF-only difference is passed: both cannot hold at once"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-aw-1 build step 6: add only the cases the change needs; change no existing case. CTaw1-AC3: the check tool's own suite passes with the new cases added (base 60/60).",
+  "world_is": "The case pins the base verdict for the exact pair the ruled rule reverses, so the rule and the unchanged case cannot both pass. The worker did not edit the case and did not weaken the rule. The new arms live in .tools/tests/test_round28_check6_platform.py (8/8 at dc48c3b47f). Clearing needs the issuer or the CTO: move that case's expectation to passed (a deliberate edit), or narrow the rule.",
+  "notes": "Found while running the existing suite after the rule landed. The base suite read 60/60 only after a sparse-checkout add of org/tier1_exec/1.0.0_SA_CTO/deliverables and docs/briefs (the worker's worktree lacked them); that add is not a finding of this row."
+}
+```
+
+## NFRA_CTLPLN-W135-S2 -- the ruled rule clears CRLF and the delvewheel block but not the blank lines the block leaves, so 2 of 4 real wheels stay failed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W135-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~135",
+  "surfaced_at": "2026-10-16T10:36:52Z",
+  "one_line": "CT-aw-1 real arm: 2 of 4 yfinance wheels pass check 6 on the ruled rule. numpy/__init__.py and pandas/__init__.py still differ after the platform rule, by empty lines the installed copy keeps around its delvewheel block (numpy 3 lines, pandas 2 lines). curl_cffi and websockets pass. The rule was not widened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round28_check6_platform.py --real4 at dc48c3b47f (read only): 'REAL4 curl_cffi check6=passed ... residual=0 metadata=0'; 'REAL4 numpy check6=failed compared_across_platforms=True residual=1 metadata=1'; 'REAL4 pandas check6=failed compared_across_platforms=True residual=1 metadata=0'; 'REAL4 websockets check6=passed ... residual=0 metadata=0'; 'REAL4 passed=2/4 ok=False'",
+      "C:/opal-intake/release/intake-20261016-yfinance-linux/numpy-2.4.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl member numpy/__init__.py against C:/Users/AndrewBerman/AppData/Local/Programs/Python/Python312/Lib/site-packages/numpy/__init__.py: after _platform_normalise on both sides the installed side has 3 extra empty lines after wheel line 87; the installed raw file holds 2 delvewheel markers, the wheel holds 0",
+      "the same comparison for pandas-2.3.3 pandas/__init__.py: after normalisation the installed side has 2 extra empty lines at line 2; installed raw holds 2 delvewheel markers",
+      "org/devices/intake/intake_check.py@8144b24967 _platform_normalise removes only the lines from the start marker through the end marker; it does not remove empty lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-aw-1 CTaw1-AC2 and build step 5: the four real yfinance wheels pass check 6 on the new rule with no waiver (expected 4 of 4). If one does not, report its residual files and file a row; do not widen the rule.",
+  "world_is": "Two of the four residual files differ only by empty lines around the delvewheel block, which the ruled normalisation keeps. Clearing needs a CTO ruling on whether empty-line-only residue is a platform difference (a rule change). The worker did not change the rule, did not touch the four waiver records, and wrote nothing under C:/opal-intake/.",
+  "notes": "The four curl_cffi, numpy, pandas, websockets waivers stay on their records as issued. The residual names are numpy/__init__.py and pandas/__init__.py."
+}
+```
