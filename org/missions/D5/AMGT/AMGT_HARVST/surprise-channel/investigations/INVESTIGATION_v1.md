@@ -35,6 +35,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
 ```json
   [
     {
+        "id": "AMGT_HARVST-D1-W152-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~152",
+        "surfaced_at": "2026-10-16T15:41:09Z",
+        "one_line": "The standing-rules file .claude/agents/worker-light.md, which the worker face names as the first read, is absent from this worktree; the standing rules were taken from the worker's own context and the cell proceeded.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "The worker face of HVST-cc-3 says: Read .claude/agents/worker-light.md first for your standing rules (identity, commit, surprise rows, scratch, never).",
+        "world_is": "At worktree C:/dev/wk-harvst-152 (branch wk-AMGT_HARVST-152, base 4516893b3b) the path .claude/agents/ does not exist: ls -la and the Read tool both fail. git sparse-checkout list carries .tools, infra/aws/ec2/opal-gateway, lib, org/... and no .claude entry. Nothing in the cell depended on the file; the cell's edits and offline tests ran as specified.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "C:/dev/wk-harvst-152 @4516893b3b: ls -la .claude/agents -> No such file or directory",
+                "C:/dev/wk-harvst-152 @4516893b3b: git sparse-checkout list (no .claude entry)",
+                "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-3.a-ticker-shaped-query-never-resolves-exact-on-a-name.md (worker face, first act)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
       "id": "AMGT_HARVST-Z-S1",
       "project": "AMGT_HARVST",
       "fabric": "site-z",
