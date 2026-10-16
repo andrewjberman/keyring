@@ -9636,6 +9636,30 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S133",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T20:32:38Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W53-S3"
+    ],
+    "dismissal_reason": "Placement only: YAML mapping order carries no meaning and the emitter and c39.AC2 read the depth spec as a mapping; the spec is graded as declared (39 of 39 claims carry the declared kind, 6 series_start). The issuer is disarm_owner.",
+  "one_line": "ISSUER DISPOSITION of worker ~53's MX-c-39 row: the mdpf_get_aggregate_aua depth spec has no method line, so depth_kind: series_start sits after its field line; accepted, graded as declared.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-39's face placed depth_kind right after a spec's method line and assumed every series spec has one.",
+    "world_is": "members.yaml has no method key on the mdpf_get_aggregate_aua depth spec; the key order of a YAML mapping carries no meaning, and the emitter and c39.AC2 read the spec as a mapping.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-c-39 merged at 8906f5fb80 (7 files, 0 foreign); c39.AC1 PASS (80 passed, 17 new) and c39.AC2 PASS (39 of 39 claims carry the kind their spec declares, 6 series_start) in the worker tree and re-run by the issuer on the merged tree; the atom_decomposition suite 363 passed; ruff clean.",
+        "trial emit round21/emit_final.sh: r21.AC1, r21.AC2, c23.AC4, c21.AC2 and r13.AC3 PASS on the candidate (md5 b014f6379707e9071cb73b3a94516182), not landed."
+      ]
+    }
   }
 ]
 ```
