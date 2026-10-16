@@ -7,5 +7,16 @@
   "why_no_approved": "platformdirs is NOT in requirements.txt and the intake register reads UNKNOWN for it; it is a dependency the closure (org/devices/intake/closure_cp312_linux_x86_64_yfinance.json, merge 97477e8786) names for the host, which does not hold it. Wheels only; delivery to dell2 by Taildrop; nothing is added to requirements.txt.",
   "requested_by": "2.0.0_SA_COO~C",
   "requested_at": "2026-10-16T06:06:53Z",
-  "decisions": []
+  "decisions": [
+    {
+      "verdict": "APPROVED",
+      "by": "1.0.0_SA_CTO",
+      "at": "2026-10-16T06:08:48Z",
+      "reason": "Member of the yfinance==1.2.0 Linux closure for dell2's resident host (XB-983c, ruling @5740f0d341); closure computed by CT-ar-1 @97477e8786 with 0 conflicts. Pure-Python or binary wheel only; a version with no wheel for cp312 manylinux x86_64 is a STOP back to this seat, never a substitution.",
+      "evidence": {
+        "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\devices\\intake\\closure_cp312_linux_x86_64_yfinance.json",
+        "sha256": "1b7886d7e9a4fa89557582cc64c95b9cd148cf41c382fb7b055712b4a503be13"
+      }
+    }
+  ]
 }
