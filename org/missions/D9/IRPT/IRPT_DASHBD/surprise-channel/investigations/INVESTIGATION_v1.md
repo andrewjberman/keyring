@@ -19181,3 +19181,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "org/ and .tools/ are present and the branch is wk-IRPT_DASHBD-601, so the first test passes; the sparse checkout excludes data/ and infra/aws/ from this worktree, so steps 1-4 have no readable source here and the criterion DBF119-2-AC1 fails at base with no record. Per the bar this is a BLOCKING stop: nothing was rebuilt, extracted, reconstructed or sparse-widened, and no record was written. The cloud-side question (whether account_class_daily was applied to gold) is not answered here either way; it is absent and needs the owner's live read."
 }
 ```
+
+## IRPT_DASHBD-D2-W601-S2 -- TO-DB-f-601: the contract's served flag and the publisher's round-1 note still say the class table does not exist, but the R37 apply landed it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W601-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~601",
+  "surfaced_at": "2026-10-15T23:58:15Z",
+  "one_line": "The TO premise (and two standing texts) say account_class_daily has no object in any bucket: the contract reads served false with the note 'No object of this table exists in any bucket' (org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json line 157), and the publisher docstring says the class keys are absent because the table does not exist in round 1 (reporting-publish/publisher.py lines 5-6). The R37 apply's own records show the table landed, so those texts are stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json line 157 reads served false; served_note reads 'No object of this table exists in any bucket'",
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py lines 5-6: class keys ABSENT because account_class_daily does not exist in round 1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~55/R37_FIRST_FIRE_LOG_TAIL.txt line 7 logs '2026-10-07 class rows=25019 LANDED'; the R37 deploy-completion ledger entry is CLOSED",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~63/R41_BACKFILL_LOG_TAIL.txt line 7 logs '2026-10-08 class rows=25057 LANDED'"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-601 premise and step 1: the prepared release's contract note says no object of the table exists in any bucket, and the publisher's comment says the class keys are absent because the table did not exist in round 1.",
+  "world_is": "The class table has been applied and has landed for at least two days per the R37 first-fire and R41 backfill records. The contract's served flag and served note and the publisher's round-1 docstring were not updated after the apply. The publisher code still writes no class keys, which is a separate fact (the FWD-3 route change), not a stale-text issue. No edit was made to either text; the owner of the contract (2.0.0_SA_COO~D2) can decide the update."
+}
+```
+
+## IRPT_DASHBD-D2-W601-S3 -- TO-DB-f-601: the portal's asset-class type carries an eighth class, Other, that the gold class enum does not hold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W601-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~601",
+  "surfaced_at": "2026-10-15T23:58:15Z",
+  "one_line": "The portal's HoldingAssetClass type and colour map carry Other as a class of its own (portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts lines 30, 42, 58, 75), while the gold account_class_daily enum has seven values (cash, fixed_income, equity, structured, alternatives, commodities, unclassified) and no other. A page reading the gold class document would meet a class key outside its own type unless the mapping is decided.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts line 30 (type includes 'Other'), line 42 (Other colour), line 58 (Other rank), line 75 (served key other maps to Other)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json enums.asset_class: seven values, no other"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-601 step 5 and step 6 premise: the portal holds an asset-class vocabulary and order of six classes then Unclassified (Andrew's order).",
+  "world_is": "The portal's vocabulary is eight values: the six plus Unclassified plus Other, with Other a grey bucket and a served holdings key. The gold class enum does not carry Other. The gap is not in the class table (which maps any table value outside the six to unclassified) but in the page's own type. No code was changed."
+}
+```
