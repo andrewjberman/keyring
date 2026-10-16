@@ -7952,3 +7952,27 @@ by dell1 or by this seat.
   "world_is": "Met on those three clauses. Not shown: the cause of the 10-10..10-13 content move (a data change on re-derived dates, FDRXX transfer read at FIRE_READ_20261014_2300Z.md; not graded here); the chain's stop instant (unmeasured); three advisor files (abby_horton, erick_webb, sydney_cobb) carry no D_03 write since the ship and are absent from the served summary."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W96-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~96",
+  "surfaced_at": "2026-10-16T03:44:50Z",
+  "one_line": "SC-e-106 premise does not hold: seed-etf-classifications.py reads no Bloomberg GICS data and no Schwab master; its only class source is the hardcoded dict module _shared/etf_classification.py, which holds no row for HPI, CUBE, GLPI or PCEF.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py@d63495282e lines 14-31 and 80-88: the only class inputs are the names imported from _shared/etf_classification.py; the file has no S3, Bloomberg or Schwab read",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification.py@395989cf9e (git show HEAD blob, 1542 lines): quoted-ticker match for HPI, CUBE, GLPI, PCEF = none; no CUSIP key; the Bloomberg reference is a hand-entered GICS industry-group string at lines 1288-1312",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~96/FOUR_TICKER_SEED_EVIDENCE.json: source_rows empty and proposed_row null for all four tickers"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e106 worker face, step 1: the rules of the seed script infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py read the Bloomberg GICS data and the Schwab master first; every source it reads for a class is listed in the record, in the order it tries them.",
+  "world_is": "seed-etf-classifications.py reads one module (_shared/etf_classification.py, imported) and one DynamoDB table (the merge pre-read of etf-classifications). It reads no S3 object, no Bloomberg file and no Schwab master. The module is hardcoded dict literals (header: Last updated 2026-01-19). It holds no row for HPI, CUBE, GLPI or PCEF and no key for their CUSIPs (41013W108, 229663109, 36467J108, 46138E404). So the only class source the seed script reads is the module, and it yields no source row for any of the four tickers; proposed_row is null for each, nothing guessed."
+}
+```
