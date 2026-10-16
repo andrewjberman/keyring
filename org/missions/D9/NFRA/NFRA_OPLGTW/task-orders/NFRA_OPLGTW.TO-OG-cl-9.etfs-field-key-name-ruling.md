@@ -59,7 +59,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cl-9.etfs-field-key-name-ruling
 - Whether the commit-time gate READS the row is the cross-adjudication XA-20261016T034740Z-28da; this cell lands the row regardless.
 - Pre-cut: cl9.AC1 base FAIL as expected (0 etfs rows).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G2-CONFORM-3</workstream>
 <slot>~111</slot>
