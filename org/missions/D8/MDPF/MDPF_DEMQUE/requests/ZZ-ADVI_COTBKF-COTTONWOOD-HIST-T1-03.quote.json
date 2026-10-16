@@ -1,0 +1,18 @@
+{
+ "allowance_gap": null,
+ "allowance_today": 0,
+ "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py)",
+ "cells": {
+  "bloomberg_history": 11334
+ },
+ "cells_remaining": 11334,
+ "claims": {
+  "ceiling": "measured",
+  "reserve": "held"
+ },
+ "finish_date": "2026-10-18",
+ "finish_date_claim": "measured",
+ "label": "full-request quote",
+ "page": "client performance (Cottonwood), first resolve-rate tranche of the 4,371 unpriced (CTO ruling 20261016)",
+ "request_id": "ADVI_COTBKF-COTTONWOOD-HIST-T1-03"
+}
