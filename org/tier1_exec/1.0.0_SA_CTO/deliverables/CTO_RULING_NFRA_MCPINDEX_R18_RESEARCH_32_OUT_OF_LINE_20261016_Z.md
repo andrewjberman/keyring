@@ -80,3 +80,71 @@ This addendum is the explicit word. The round-18 line therefore reads met for 28
   unrealized, transactions, allocations and fees.
 - prices, realized, assets and transactions_enriched have no adapter table, so they stay OUT under the original condition.
 - single_file is unchanged.
+
+### Ruling ~13:3xZ (COO~O msg 35023, OG-en-11 `BD49F_SERVED.json`): the key mismatch is closed on the CATALOG side
+
+- **Measured:** the four 49F tools answer `no_catalog_row` and read no bucket. The adapter looks them up with
+  `ctx.prefix("blackdiamond", "49f-live", "silver", <table>)`, and no catalog row resolves that key.
+- **Which rows:** the four tables are `unrealized`, `transactions`, `allocations` and `fees`. They are 4 of the 8 `opal-data-bd`
+  legacy rows ruled OUT above, so these are existing rows, not new ones.
+- **Ruled:** `2.0.0_SA_COO~MI` gives those four EXISTING rows the key the adapter resolves (segment `49f-live`, layer `silver`, bucket
+  `opal-data-bd`), and links their `read_tool` in the SAME edit. It is one catalog change and no adapter code. It rides the next batched
+  gateway release, and OG-en-11 is re-run on the served host.
+- **Why the catalog side:** OG-cl-2 reviewed the adapter's `-live` convention, and it is live. The catalog is the lookup contract,
+  so one data edit makes the lookup resolve and meets C-GROUP for the four rows together. The other side, an adapter re-key, would
+  change reviewed code to fit rows that carry no key at all.
+- `~MI` states the exact field shape against `ctx.prefix`. A catalog row must never be keyed in a way that makes another 49F tool
+  resolve a row it should not.
+
+### Amendment ~13:3xZ (COO~MI msg 35027): (a) RULED -- an `address` lookup field; the row's `prefix` stays the true S3 path
+
+- **Why the ~13:3xZ ruling cannot serve as cut:** `Ctx.prefix` returns the row's `prefix`, and `typed_scope.list_keys` uses that
+  string verbatim as the S3 Prefix (`client_core.py:242`, `typed_scope.py:79`). `s3://opal-data-bd/blackdiamond/49f-live/` is empty,
+  so re-keying the prefix would make the row resolve, list nothing, and state a false S3 path.
+- **Ruled (a):** the four rows gain `address: blackdiamond/49f-live/silver/<table>/`, and their `prefix` stays `silver/<table>/`.
+  `Ctx.prefix` matches the request against `address` where a row carries one, and returns the row's real `prefix`.
+- **Owners:** `2.0.0_SA_COO~MI` owns the catalog field. `2.0.0_SA_COO~O` owns the code, about 5 lines in NFRA_OPLGTW.
+- **Conditions:**
+  - an `address` is unique across the catalog, and no `address` equals another row's `prefix`;
+  - the read goes to the row's own `bucket` (`opal-data-bd`), never to the default bucket;
+  - a test proves a hit returns the real prefix and bucket, that a request in another firm's segment does not resolve, and that rows
+    without `address` resolve exactly as before.
+- **(b) is refused.** An adapter that builds its own path bypasses the catalog: the lookup contract, and the fence that reads it,
+  would no longer see that read.
+
+### Ruling ~13:4xZ (CVO~Z msg 35029, row NFRA_OPLGTW-Z-S292 BLOCKING): `-live` routes to its OWN role scoped to the four opal-data-bd prefixes
+
+- **Measured by the CVO:**
+  - `role_key` drops `-live`, so the four 49F live reads assume the `blackdiamond49f` role.
+  - That role carries an explicit Deny on `opal-data-bd`, and simulate reads explicitDeny on `unrealized` and `transactions`.
+  - Once the catalog gap is closed, every read would be refused.
+- **Where the Deny came from:** my A2 ruling (msg 34134), which held the client tools to `opal-data-assets`. Andrew's v3.6 word
+  (10-14 ~18:3xZ) came later and admits 49F BD from `opal-data-bd`. v3.6 item 2 already fixes the shape: "a role scoped to
+  `opal-data-bd/silver/`, with its own never-widen ask (never the global internal reader)". The Deny was correct under A2; v3.6
+  overtook it, and no cell carried that through to IAM.
+- **Ruled:** `-live` routes to a DEDICATED read role. It is GetObject and ListBucket, read-only, on exactly
+  `opal-data-bd/silver/{unrealized,transactions,allocations,fees}/`, and assumable only by the gateway.
+  - The `blackdiamond49f` role keeps its explicit Deny on `opal-data-bd`, so the per-firm assets role can never reach bd.
+  - The grant is a never-widen act with all three halves. The ask names the four prefixes as a literal list.
+  - The `role_key` change and the test are `2.0.0_SA_COO~O`'s cell: a `-live` table assumes the new role, and a non-live table
+    still assumes `blackdiamond49f`.
+- **Refused:** narrowing the existing role's Deny. One role would then reach two buckets, and the fence would rest on a Deny's
+  exception list.
+- **Order:** the IAM grant and the code ride the SAME batched release as `~MI`'s `address` field. OG-en-11 is re-run on the served
+  host, and Z-S292 closes on that run. The CVO's "my OG-ap-24 half missed it" is noted; my own A2 is the origin.
+
+### Ruling ~13:4xZ (COO~MI msg 35036): REC RATIFIED -- four NEW live rows; the 8 legacy rows re-bucketed to the frozen copy they describe
+
+- **Measured by COO~MI:** the 8 `49financial_*_silver_legacy` rows say `opal-data-bd`, but their contract, producer and `open_items`
+  describe the FROZEN copy in `opal-data-assets` (`blackdiamond/49financial/silver_legacy/<t>/`, newest 2026-08-24). The live bd tables
+  are current: fees to 10-14, transactions to 10-16.
+- **Ruled:** one catalog row per physical table, and each row states the data it actually points at.
+  - **Four NEW live rows:**
+    - `bucket: opal-data-bd`, `prefix: silver/<t>/` for unrealized, transactions, allocations and fees;
+    - the `address` field (ruling ~13:3xZ (a)) and the `read_tool`;
+    - freshness measured on the live table.
+  - **The 8 legacy rows are re-bucketed** to `opal-data-assets`, at their real frozen prefix, and stay OUT. The reason is their own
+    `open_items`: frozen, do not build a tool on it.
+- **Refused:** rewriting the 4 rows in place, which would erase the frozen copy's row while that copy still exists.
+- This supersedes "the 4 rows reopen" above: the four OUT rows stay OUT, and the live data enters as new rows. The Z-S292 role
+  ruling and the single-release order stand.

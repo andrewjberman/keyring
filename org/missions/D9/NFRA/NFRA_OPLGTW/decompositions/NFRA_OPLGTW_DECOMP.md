@@ -2624,3 +2624,16 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-en-11` | READ (`0.7.0_AE_CloudOps~Z`): the four 49F Black Diamond client tools through the installed code for firm `49financial`; per tool the bucket class of the first source key (`opal-data-bd`, `opal-data-assets`, other, none), the partition date, the role session if readable; a BLOCKING row naming tool, bucket and the cause read from the code path if any tool reads other than `opal-data-bd` | SERVED | ~AE | applier |
 
 **fanout:** 1 of 1 chains, cap 8. A code cell follows only if the measurement shows a different bucket.
+
+## ADDENDUM R3-T.96 (2.0.0_SA_COO~O, 2026-10-16 ~14:0xZ) -- round 38, workstream ENRICH-R38-D: the 49F Black Diamond live tables (CTO rulings @ed33f552ae, @8b2865e461, @96ea4ac3da; rows Z-S292, Z-S293)
+
+**Source.** `OG-en-11`'s served read (BD49F_SERVED.json): the four 49F BD client tools answer `no_catalog_row` and read nothing. The CTO's rulings: the catalog gets four NEW live rows (`opal-data-bd`, `silver/<t>/`, an `address` field, `read_tool`; NFRA_MCPINDEX's half); the code resolves a row by its `address` and reads the row's real prefix in its own bucket (a); the live tables route to a DEDICATED read role (never-widen, three halves), `gateway-49f-blackdiamond-read-role` keeping its Deny; one batched release. MI's measurement (msg 35037): the live files are FLAT dated files (`silver/fees/2026-10-14.parquet`), not `date=YYYY-MM-DD/` folders, so the partition logic must accept both.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-en-12` | CODE: `Ctx` resolves a row by `address` and reads the real prefix in the row's bucket; `role_key` sends `-live` to `blackdiamond49flive` (env `BLACKDIAMOND49FLIVE_READER_ROLE_ARN`, refuses closed when unset, never a fallback); the partition logic accepts the flat `<date>.parquet` form beside `date=<d>/` | `app/client_core.py`, `app/client_role.py`, the 49F adapter only if needed, tests | WORLD | ~125 | worker |
+| `OG-ap-29` | GRANT: ONE new role and ONE policy, read-only on exactly `opal-data-bd/silver/{unrealized,transactions,allocations,fees}/`, trust only the instance role; ask for three halves; applied BEFORE the release | `blackdiamond_live_reader_iam.tf`, the ledger | WORLD | ~ZS | applier |
+| (MI's half) | four NEW catalog rows with `address`, `read_tool`, measured freshness; the 8 legacy rows re-bucketed and still OUT | `DATA_CATALOG.yaml` | -- | MI | seat |
+| (release) | the ONE batched gateway release: E4, E5, E6, E8, E9, E10 and `OG-en-12`, the catalog edit, the `BLACKDIAMOND49FLIVE_READER_ROLE_ARN` env key in the deploy hunk, `mcportal_commit` `c66ca82952`; then the `OG-en-11` re-run closes Z-S292 | -- | WORLD | ~Z | applier |
+
+**fanout:** 1 of 1 worker chain plus 1 applier, cap 8 (the release cell is cut after the builds, the role and the catalog half are in).
