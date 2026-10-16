@@ -591,6 +591,29 @@
     "spec_asserts": "TO-MD-r1 item 3 / PRD C-FIELDS (d): office_ips holds the addresses of Opal's office egress when the estate holds an authoritative list; never an invented address.",
     "world_is": "The estate holds no authoritative current list. One address in a 10-month-old unimplemented design doc is a plan, not a measurement, and Andrew's recorded word is that no stable addresses exist. office_ips is left empty, so the egress label reads remote for every address.",
     "notes": "Nothing invented. If Andrew names the office egress addresses, the list goes into population.json office_ips in a later order."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S7",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-16T08:45:44Z",
+    "one_line": "An IAM administrator (and the dell agent users) can invoke the access door's aliases, because the group policy and the resource permission only grant and nothing denies; the MFA gate of call 0017 binds only the group's own grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~TM1 under TO-MD-r1 item 7 (the CTO ruled the fix, msg 6614; the issuer surfaces and gates MD-r-2 on the probe)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_MTADTA/deliverables/2.0.0_SA_COO~S1/R2_FINDING_ADMIN_INVOKE_20261016.md (measured: the box IAM user, in no group, invoked the member and collector aliases, StatusCode 200; the door answered op-not-served)",
+        "aws iam simulate-principal-policy for the same user and s3:GetObject against the live bucket policy -> explicitDeny (S3 is sound); a get-object on a missing key answered NoSuchKey",
+        "org/missions/D7/TCKT/TCKT_MTADTA/ledger/CTO_RULING_R2_ADMIN_INVOKE_20261016.md: (a) an MFA-absent Deny on each alias's resource policy, (d) an identity-side Deny if (a) does not bind"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Only the group's members (MFA-gated) and the collector role can invoke the door; a non-member's invoke is refused.",
+    "world_is": "Same-account IAM allows an invoke when any identity policy or the resource policy allows and nothing explicitly denies. The box user, administrators and the laptop agents' user hold lambda:InvokeFunction in their own policies, so they invoke without MFA and reach get_day on the member alias. The bucket policy's explicit Deny does bind them for S3.",
+    "notes": "Disarmed when the probe in TO-MD-r1 item 7d reads AccessDenied for the box identity on both aliases and the collector role still passes its carve-out. MD-r-2 (the consent and the real fires) stays staged until then. Nothing real is stored yet. Correction: the commit 2eefc8d50e message calls this row D1-S6; D1-S6 is the CloudOps seat's office-egress row, and this is D1-S7."
   }
 ]
 ```

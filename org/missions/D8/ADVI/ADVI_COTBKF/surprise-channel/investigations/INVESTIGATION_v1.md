@@ -10267,3 +10267,56 @@ round.** Never edit an existing row.
   "dismissal_reason": "The issuer flipped the status after re-running the criteria; cut orders from now name the order file in <paths> or leave the flip to the issuer."
 }
 ```
+
+## ADVI_COTBKF-D1-W190-S1 -- the FWD-3 strung-equals count is defined two ways (order item 3(a) vs issuer recompute)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W190-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~190",
+  "surfaced_at": "2026-10-16T08:46:34Z",
+  "one_line": "The FWD-3 exercise's strung-equals-served count has two definitions: the order's item 3(a) counts both-absent months as equal (85 of 85), the issuer's recompute counts present-and-equal only (83), so AC2 reads strung_equal=False.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cw-1.fwd3-one-account-exercise.md @fe0d5fb005 (worker face item 3(a): 'equal within 0.000001 percentage points, or both absent'; record key strung_equals_served_computed)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cw1_fwd3_recompute.py @6ab75c75cc (the eq counter increments only when both the strung and the served value are present and equal)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~190/FWD3_EXERCISE_RECORD.json (strung_equals_served_computed=85; the issuer recompute prints 83 for the same account)"
+    ]
+  },
+  "spec_asserts": "TO-CB-cw-1 item 3(a): a month counts toward strung-equals-served when the strung return equals the served computed_pct within 0.000001 percentage points, or both are absent; AC2 expects the issuer's recompute to agree with the record on this count.",
+  "world_is": "For the one account read, 83 months are present and equal, and 2 months are both absent (both blank-day months, served computed_pct null). The two definitions give 83 and 85. The worker recorded the order's definition (85) and did not adjust to the script, so AC2 reads strung_equal=False and the order is not flipped. The count definition needs a ruling from the issuer or the CTO.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts only; no account id, name or value in this row."
+}
+```
+
+## ADVI_COTBKF-D1-W190-S2 -- 5 served month rows carry a null verdict outside the population verdict counts
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W190-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~190",
+  "surfaced_at": "2026-10-16T08:46:34Z",
+  "one_line": "The served month_grades table holds 5 month rows whose verdict is null (neither MATCH, DIFF nor UNGRADABLE); the population counts in the order and in the issuer's recompute do not account for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/commonwealth/cottonwood/silver/month_grades/date=2026-06-23/part-00000.parquet at VersionId nkTE.F82uFSboXr9PEamIENCwFL9cwcC (read by 0.9.0_WK_ADVI_COTBKF~190: 82,593 rows, verdict null on 5 rows)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~190/FWD3_EXERCISE_RECORD.json (population: months 82,593 = match 3,678 + diff 288 + ungradable 78,622 + 5 null)"
+    ]
+  },
+  "spec_asserts": "TO-CB-cw-1 item 5 and the issuer's population block treat the month_grades verdict as one of MATCH, DIFF or UNGRADABLE, so that the verdict counts sum to the months total.",
+  "world_is": "5 of 82,593 served month rows carry a null verdict and are outside the population verdict counts (3,678 + 288 + 78,622 = 82,588). The account read has none of them. No grade is assigned here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts only; no account id, name or value in this row."
+}
+```
