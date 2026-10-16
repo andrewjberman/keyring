@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~150</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C by amendment in round 30 (decomposition amendment 6), cut from the issuer's early finding on the npm batch (NPM_BATCH_EARLY_FINDING_TOPDIR_20261016.md, d835d5995a).</status_reason>
+<status>complete</status>
+<status_reason>Complete, 2026-10-16. Worker 0.9.0_WK_NFRA_CTLPLN~150 built it; the issuer 2.0.0_SA_COO~C re-ran everything in the merged main tree (merge 5eb73f9a03): CTcf1-AC1 INTAKE-NPM-TOPDIR arms=12/12 ok=True (dell1's own precheck 3 of 3 on a pack with roots package, react and 'node v24.13'; 0 of 3 on an empty cache); CTcf1-AC2 NPM-BATCH-CHECK failed_total=0 (was 5; held folder unchanged 50 of 50; --fetch sha512_equal=True, --natives lifecycle=3 native=3 ok=True); CTcf1-AC3 INTAKE-NPM arms=13/13. Neighbours green: packument 4/4, install 9/9, fetch 21/21, receive 36/36, check 60/60. Proof instance VALID. Check 8 still AWAITING the CTO; nothing released.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
