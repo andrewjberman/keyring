@@ -19991,3 +19991,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W214-S1 -- the AR-ty-51 acceptance checker is tracked at HEAD but outside this worktree's sparse cone, so AR51-ty-AC1 cannot run here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W214-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~214",
+  "surfaced_at": "2026-10-16T01:00:00Z",
+  "one_line": "The AR-ty-51 acceptance checker org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py is tracked at HEAD but outside this worktree's sparse cone, so the AR51-ty-AC1 invocation cannot run here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-ty-51 AC1 runs from the worktree root: python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 8 infra/aws/lambda/investor-reporting/reports/tests/test_cross_firm_report_reads.py, expecting R46-TESTS-OK. The checker is the grader of the test file.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-214, branch wk-IRPT_ANLREQ-214, HEAD 9d0664b2ff. git sparse-checkout list names .tools, data/transcripts/scripts, docs/contracts, infra/aws/lambda/investor-reporting, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/ref and org/standards; org/tier1_exec is not in the cone. git ls-tree HEAD lists the checker as blob 417fffb48cfda08eb898835e2465fd38780daa9e, but the file is absent on disk. The checker was not copied, widened or reconstructed. The test file passes 10 of 10 under pytest on its own; the checker's R46-TESTS-OK verdict is not obtained in this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in worktree C:/dev/wk-irpt-anlreq-214 (read 2026-10-16T01:00Z) omits org/tier1_exec",
+      "git ls-tree HEAD org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/ returns 100644 blob 417fffb48cfda08eb898835e2465fd38780daa9e r46_checks.py",
+      "ls of org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/ in the worktree returns No such file or directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
