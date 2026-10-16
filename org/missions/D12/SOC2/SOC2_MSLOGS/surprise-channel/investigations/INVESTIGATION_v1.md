@@ -46,6 +46,27 @@ Lane `ANY`. A worker's row is `SOC2_MSLOGS-D1-W<n>-S<k>`; `<n>` is the slot. **A
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W2-S3",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~2",
+    "surfaced_at": "2026-10-16T17:35:23Z",
+    "one_line": "The naming gate refuses two S3 prefixes that the door hand-types for the bronze audit_records partition (handler.py lines 55 and 77); the door package cannot import lib/opal_naming at runtime.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~S1: a naming registry row for the audit_records partition, or an R20 register entry that Andrew acknowledges, before the naming gate enforces",
+    "spec_asserts": "CLAUDE.md rule 30: every S3 address is lib/opal_naming.py address() output; a builder refusal is a missing registry row to add, never a hand-typed workaround.",
+    "world_is": "build.sh ships handler.py and silver_builder.py only, so the Lambda cannot import lib/opal_naming; the prefixes are hand-typed as at HEAD. The naming gate on commit e70208bfe7 graded handler.py:55 and :77 as NEW and OUT-OF-PATTERN S3Key (REFUSE), in the WARN window, so not blocking; its live read failed (CensusError, comp-find aws BLOCKED).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for e70208bfe7: [naming-gate] NAMING REFUSE handler.py:55 bronze/audit_records/date=%s/ and handler.py:77 bronze/audit_records/date=\\d{8}/; WARN window: 2 REFUSE verdict(s) did not block",
+        "infra/aws/lambda/globgrph-trino-access/build.sh@09a7732aab: copies handler.py and silver_builder.py into the package and asserts those two files only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
