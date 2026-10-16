@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-14T11:57:57Z",
+ "written_at": "2026-10-15T14:54:53Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -2120,6 +2120,39 @@
     }
    },
    "closed": null
+  },
+  {
+   "id": "sitez-20261015T112146Z-f6f4",
+   "project": "NONE",
+   "subject": "OPAL_BBGTML: sign the Bloomberg Terminal in at site Z -- the 11:00Z unattended sign-in failed again (focus lost at submit); served Bloomberg data is 2 trading days behind",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPAL_BBGTML_FOCUS_DEFECT_OWNER_20261015_Z.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T11:21:46Z",
+   "kind": "act",
+   "context": "The 11:00Z pull exited rc=50: the unattended sign-in aborted on window focus at ZERO Bloomberg attempts, even with fix R3 in place. A human sign-in is the only immediate unblock. It is confirmed by dapi_check.py. The defect trace goes to COO~ZB.",
+   "rec": "",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-15T11:21:46Z"
+   },
+   "closed": {
+    "at": "2026-10-15T14:54:53Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/logs/2026-10-15/ctoZ_self_drive_sitez_open_calls_tick41.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   }
  ]
 }
