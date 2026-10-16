@@ -9763,3 +9763,58 @@ round.** Never edit an existing row.
   "dismissal_reason": "Five inert observations answered or carried by named records; D1-S7 corrected so the armed set is not double-counted."
 }
 ```
+
+## ADVI_COTBKF-D1-W185-S1 -- the Yahoo close cache that the as-traded basis reads is absent on dell1 and in S3, so the re-grade cannot be provisioned (stop at CB-cq-1 item 1)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W185-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~185",
+  "surfaced_at": "2026-10-16T03:31:20Z",
+  "one_line": "the Yahoo close cache that the served as-traded basis reads (--yahoo-cache, 3580 per-ticker files) is absent on dell1 and in S3, so the run data cannot be provisioned; no build, control or added-column count was produced",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py@91f3058570 lines 256-258 and 345-376: the as-traded basis reads the Yahoo close cache from --yahoo-cache with no default path; a substitute-class ticker with no file reads None, or raises when the directory is absent",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~60/price_basis_census.csv@91f3058570: 2158 tickers in the substitute classes (dividend_adjusted 2079, mixed 79), so the cache is read by the served chain",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~106/PRICE_CACHE_PIN.json@91f3058570: yahoo_cache 3580 files, sha256 5b4bb7db3acde4b18f15b22bde58e3d4a27c1e690c5c601f7684bcf62e0cf3cb (the worker's copy, not the original)",
+      "data/assets/scripts/silver/commonwealth_price_basis_census.py@91f3058570 line 81 and lines 218-232: the cache is written by a yfinance pass into <root>/.scratch/advi_cotbkf/yahoo_census, a vendor call that the cell does not permit",
+      "observed 2026-10-16 on this box: no advi_cotbkf scratch under C:/dev/ajb_workspace/.scratch or under the worktree .scratch; no advi_cotbkf or w106 directory under /c/dev/*/.scratch or /c/tmp/*/.scratch; aws s3 ls of s3://opal-data-assets/yahoo/global/ lists bronze/ and silver/ only, and those list demand_ledger/ and price_history/"
+    ]
+  },
+  "spec_asserts": "CB-cq-1 item 1: the run data is provisioned from S3 read-only, and a step that needs a file held only by another box is a STOP with measured false, never a substitute.",
+  "world_is": "The Yahoo close cache is local-only. The records place it under the building box's scratch and no second copy was found here or in S3. An empty or partial directory would silently change the as-traded values, so none was made. The served build cannot be re-run on dell1 until the cache is placed here from its holder.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W185-S2 -- the served objects were last written 2026-10-09T12:41Z, after the round-82 build the records name as served; the served run_commit and hold list are unconfirmed
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W185-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~185",
+  "surfaced_at": "2026-10-16T03:31:20Z",
+  "one_line": "the three served FWD-3 objects were last written 2026-10-09T12:41:01-03Z, after the local round-82 build (run_commit 728d223ddc) that the records give as the served content; the served run_commit and hold list are unconfirmed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object (read-only) on commonwealth/cottonwood/silver/{daily_returns,account_day_value,month_grades}/date=2026-06-23/part-00000.parquet in opal-data-assets: LastModified 2026-10-09T12:41:01Z, 12:41:02Z, 12:41:03Z; VersionId w9j5YeV1LnNIakNlRTBX6jW1.SDHqmJR, qIWjLLwCIh_Gx6IblSgyaint2tfJ37pr, QI5Ks8vQwGTwnc9ekyh.DOsyN8PKN3PB",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~165/NEVER_WIDEN_R83_PORTING_VERDICT_COO_HALF.md@91f3058570 lines 24-26: the served content is read as the round-82 build, run_commit 728d223ddc, measured with the code and not S3",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.7.0_AE_CloudOps~CB2/fwd3_astraded_remint.md@91f3058570: a guarded apply of the held build at run_commit 6f70d5cc01bb, one put per key, 988 holding-days BLANK under the three-CUSIP hold list",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~107/REMINT_FACTS.json@91f3058570 line 1212: the round-68 builds were made without --hold-cusips; that note is not reconciled with the hold list the cell gives as served"
+    ]
+  },
+  "spec_asserts": "CB-cq-1 basis: the served build is run_commit 728d223ddc with cash leg method_r28, price basis as_traded, and the hold list 05613L3H2,95000U2D4,651639AX4.",
+  "world_is": "The served objects were written at 12:41Z on 2026-10-09 by three consecutive puts, which fits the CB-ah-3 guarded apply of the held build at 6f70d5cc01bb and not the 728d223 build. The served run_commit was not read here (the cell stops before the control), so the record's served_run_commit stays null. The control must read the served run_commit column before the served build is named.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
