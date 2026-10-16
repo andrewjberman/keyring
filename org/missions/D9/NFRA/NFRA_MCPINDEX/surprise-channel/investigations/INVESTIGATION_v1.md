@@ -9094,6 +9094,29 @@ carries none.
       "spec_asserts": "Each target asserts that an order's text or a worker's sparse worktree differs from what the order's step or control said (planted-arm count 8 vs 12; status flip outside <paths>; step-2 command without --read-links; step-0 pytest control on a sparse cone; the naming gate's K7 list absent in a sparse cone; the portal gitlink modified at worktree open; two unnamed count pins).",
       "world_is": "None of the 13 left a criterion unmet or a file wrong. The order-text defects (the 8 arms, the missing --read-links in MX-c-31 step 2, the 214 pin in MX-c-38 step 2, the step-0 control that cannot pass on a sparse cone, the status flip outside <paths>) are the issuer's drafting; they are recorded here for the round-18 analysis as one finding: an order's step-2 command and step-0 control are dry-run in a SPARSE worktree at the cut, not only at the base.",
       "dismissal_reason": "Form and environment observations, all INERT: the criteria they touch were met and re-graded on the merged tree (evidence above); the five order-text defects are the issuer's and are carried to the round-18 analysis as one drafting finding, not a standing hazard. The issuer is disarm_owner of Z-W52-S1, S2 and W56/W57; the others name none and are dismissed here by the project's issuer for RESEARCH."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MI",
+    "surfaced_at": "2026-10-16T10:15:04Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-S126",
+    "one_line": "The gateway deploy script stages app/refs/scopes.json from the deploy tree, and the host serves scopes.json blob dde73e4bd0 while the live ref's own tree holds d0f83d17db: a deploy-only commit of the A1 catalog blob alone, applied from its own tree, would move the host's registry copy backwards.",
+    "spec_asserts": "MX-r-15 A1: the release ships exactly one file, DATA_CATALOG.yaml at blob cf7616c08e, and nothing else.",
+    "world_is": "deploy-to-ec2.sh lines 255-264 copy data/mdpf/config/partner_roster.json and infra/logic/registry/scopes.json from WORKSPACE_ROOT (the script's own tree) into the artifact as app/refs/*.json; app/client_core.py:148 reads app/refs/scopes.json as the client tools' registry fallback. Host byte census at ~10:05Z against the tree at live 3d5c9c8bf1: 140 of 141 files identical; app/refs/scopes.json differs (host sha256 ff44bda4db6e48ed = trunk 739786b974 blob dde73e4bd0; live tree blob d0f83d17db). partner_roster.json is equal. Commit A (0b93d16d47, the A1 blob alone) would stage d0f83d17db: host changed set 2 files. Commit B (0cb4a87bcb, the catalog plus scopes.json at dde73e4bd0) leaves the host's changed set at the catalog alone. Which tree the OG-ap-23 apply ran from was not established.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "probes_r15/host_vs_cut_r15_PRECUT.txt: variant A DIFFER 2 (DATA_CATALOG.yaml, scopes.json) EXPECTED CHANGED SET MATCH; variant B DIFFER 1 (DATA_CATALOG.yaml) MATCH.",
+        "probes_r15/live_ref_by_hash_PRECUT.txt: 141 common, 140 byte-identical, DIFFER 1 app/refs/scopes.json, cut-only 0, host-only 0 (SSM 37703725-95fd-45d1-8462-775caf260c1d).",
+        "git rev-parse 3d5c9c8bf1:infra/logic/registry/scopes.json = d0f83d17db...; git rev-parse 739786b974:infra/logic/registry/scopes.json = dde73e4bd0...; sha256 of the latter begins ff44bda4db6e48ed, the host's value."
+      ]
+    },
+    "notes": "INERT while nothing is applied: PHASE B waits on the issuer's A2, which pins A or B. It becomes a live hazard only if PHASE B runs on commit A without a ruling. Deliverable: deliverables/0.7.0_AE_CloudOps~MI/ANNOUNCE_MX-r-15.md section 0."
   }
 ]
 ```
