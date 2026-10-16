@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN FWD-15: commit dell1's own duckdb receipts and held output on box/dell1",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_DELL1_COMMIT_DUCKDB_RECEIPTS.md",
  "opened_at": "2026-10-16T00:22:33Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-16T00:28:50Z",
   "bus_message_id": "ceae8864-0a13-4d59-bb6f-a4bacbd9b91c"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-16T01:42:46Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": "b1f18c8b-0c43-4d17-9013-dc58e9855ab2"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

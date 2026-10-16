@@ -1,0 +1,17 @@
+DELIVERY STATEMENT -- what was checked before this file was sent, and what was not
+batch: intake-20261015-duckdb
+file: duckdb-1.5.0-cp314-cp314-win_amd64.whl
+sha256: 11ae50aaeda2145b50294ee0247e4f11fb9448b3cc3d2aea1cfc456637dfb977
+overall: checked
+
+1. sha256 equals the digest the index publishes -- passed -- LEAVES: anything the real project published
+2. name, version and tags are exactly the approved line -- passed -- LEAVES: a wrong approval
+3. the version is one this machine already runs -- passed -- LEAVES: a build for Python 3.14 that differs from the 3.12 build of the same version
+4. the release's age and the project's earlier releases -- passed -- LEAVES: an old compromise not yet found
+5. build attestation present or absent -- passed -- LEAVES: where absent: nothing; many projects publish none
+6. the archive opened and listed, never installed -- passed -- LEAVES: code inside the compiled files
+7. Windows' own malware scan of the file -- passed -- LEAVES: anything new or targeted
+   LIMIT OF CHECK 7: No test-virus file was planted as a control, because it would raise the managed product's alarm; so this check shows that an enabled, current product did not remove or alter the file within the wait, and does not show that the product inspected it.
+8. a person reads the result of 1 to 7 and signs the batch -- passed -- LEAVES: what none of 1 to 7 can see
+
+What no check here rules out: a compiled file that the real project's own compromised release process published. Checks 3 and 4 shrink that case by taking only versions that have been public and in use for a while. They do not close it.
