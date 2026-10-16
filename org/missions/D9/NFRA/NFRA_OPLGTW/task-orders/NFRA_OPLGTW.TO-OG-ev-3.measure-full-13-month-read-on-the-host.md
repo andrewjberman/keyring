@@ -62,7 +62,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-3.measure-full-13-month-read
 
 - A1 (issuer, 2026-10-16 ~23:3xZ, `~NFRA1`'s OG-ev-3 report and rows Z-S327 and Z-S328): the measurement read OUTSIDE by a wide margin (transactions: one complete full-window run of 239.9 s, 334 of 334 files, about 318 MB; fees: 396 of 396 files, five runs of 145.7 to 147.2 s, p95 147.2 s; threshold 30 s). The applier stopped further transactions runs at its own 80 percent memory guard (81.6 percent at 190 files, no swap), which is the right call on a shared host, and `ev3.AC1` as first written refused the record for two defects of MINE: it demanded five runs of every table (a further run could not change an outside verdict when the fastest run is 8 times the threshold), and its digit-run limb counted the legitimate nine-digit `bytes` integer as a leak. `ev3.AC1` is corrected, with the evidence: fewer than five runs (at least one) are accepted ONLY when the verdict is `outside` and the fastest recorded run is above 30 s; integer `bytes` values are excluded from the digit-run scan. Dry-run: the amended check passes the real record, and its controls (one run with the fastest below 30 s; an inside verdict on three runs; a nine-digit run outside `bytes`) fail. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>staged</status>
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-W1</workstream>
 <slot>~AE</slot>
