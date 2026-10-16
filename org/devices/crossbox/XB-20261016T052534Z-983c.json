@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261016T052534Z-983c",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~G2",
+ "to_serial": "2.0.0_SA_COO~C",
+ "subject": "IRPT_ANLREQ: compute and fetch the Linux closure of yfinance==1.2.0 for the resident host (CTO msgs 9070, 9075)",
+ "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/XB_YFINANCE_CLOSURE_REQUEST_20261016.md",
+ "opened_at": "2026-10-16T05:25:34Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
