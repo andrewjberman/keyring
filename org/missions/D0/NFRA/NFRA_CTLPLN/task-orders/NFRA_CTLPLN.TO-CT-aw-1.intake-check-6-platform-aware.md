@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~135</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C in the round-28 issuance, per the CTO's round-27 analysis ruling 3 (ROUND_ANALYSIS.round27.md @22207d353b, msg 109661).</status_reason>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after three seatings of slot ~135 on branch wk-NFRA_CTLPLN-135 (final HEAD 67458aef7e), its own re-run in the worker tree, and again in the main tree after merge 528891b0b7: CTaw1-AC1 CHECK6-PLATFORM arms=14/14 ok=True; CTaw1-AC2 REAL4 passed=4/4 ok=True (curl_cffi, numpy, pandas, websockets, read only, no waiver; numpy via the one listed build-metadata file); CTaw1-AC3 INTAKE-CHECK-TEST cases=60/60 skipped=0 ok=True; proof VALID. Neighbouring suites at the merge: INTAKE-RECEIVE-TEST 36/36, INTAKE-CLOSURE-TEST 10/10, INTAKE-FETCH-TEST 21/21; `.tools/tests/test_round27_waiver.py` read WAIVER arms=19/20 (its arm g1 pinned the old verdict): cut as CT-az-1. Two rulings shaped the rule: W135-S1 (the issuer withdrew `change no existing case` for the one stale case in test_intake_check.py) and, by the CTO, W135-S2 (msg 109671: block with up to 4 adjacent empty lines) then W135-S3 (msg 109673: collapse the blank run on BOTH sides at the one seam). W135-S4 OBSERVATION: the wheel side has no before/after split at the seam, so the cell takes up to 4 empty lines from the run's start and up to 4 from its end; a wheel run of 5 to 8 empty lines is fully collapsed; no real file takes that path. The four existing waivers stay on their records as issued; nothing under C:/opal-intake/ was written. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
