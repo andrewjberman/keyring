@@ -18,3 +18,10 @@
 - New this session: `seed22.py` (built by workers), `seed22_legg_read.py`, `e107_seeded_check.py`, `e108_shipped_check.py`, `w93s2_old_list_only_candidates.py`; `comp-find` for the old-list census (page and denominator read); one rail denial (a raw grep over a glob).
 - Gaps: no instrument reads a chain's stop instant (EC2 StateTransitionReason carries no time); the cottonwood run log of B_01b is not read anywhere.
 - Correction: two runtime tick lines before 04:57Z were timestamped ahead of `date -u`; the lines in this log use measured times.
+
+## Addendum 15:50Z-17:20Z (measured this session)
+- 15:52Z CTO msg 6818 and 15:55Z MSTR~DELL1 msg 6827 (both acked): CLAUDE.md rule 34 (Andrew-direct ~15:4xZ), CloudOps one lane per macro per box; the MDPF lane on dell1 is 0.7.0_AE_CloudOps~DELL1 (~SC1 holds AMGT only).
+- Staged ship order TO-SC-e108b re-addressed from ~SC1 to ~DELL1 @0adc09ef75. Still staged, no GO. The signed pair halves cite the earlier ~SC1 path; the order's objective says so.
+- L8 R27 draft updated to name the ~DELL1 lane @2422bc1877 (draft still NOT SENT).
+- Runner i-01003b035d2988dfb read stopped (last launch 12:45:16Z) at 14:49Z, 15:19Z, 15:49Z, 16:19Z, 16:49Z and 17:19Z. Inbox empty at each read.
+- Waiting: leg G of the seed after the 23:00Z fire (read from ~01:45Z 10-17 with seed22_legg_read.py --pre-version-id 3BY8Etw3LetRaRFcOofjaAT98PSfp4Z3), then the E_18 ship GO after a same-shell re-read of runner state, trigger-pending and the 90-minute clearance; else ship after the 04:00Z chain.
