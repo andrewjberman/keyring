@@ -1,0 +1,7 @@
+FWD45-DISPOSITION ok=True live=24 rows=24 missing=[] extra=[] bad=[] decisions=True
+E25-REAL ok=True error=None date=2026-10-13 want_date=2026-10-13 total=2024173839.81 classes_served=['alternatives', 'cash', 'commodities', 'equity', 'fixed_income', 'other', 'structured', 'unclassified'] of_nonzero=7
+FIRMMIX-RECORD ok=True writer_ok=True census=8 rows=8 missing=[] extra=[] decision=NO-ORDER-DEPENDENT-READER consistent=True
+FOURTICKER ok=True problems=[]
+[32m[32m[1m4 passed[0m[32m in 1.12s[0m[0m
+PYCOMPILE-OK
+trunk e8d8b06ec8 2026-10-16T04:03:51Z; files of this round changed under data/infra/lib since the issuance base: E_25.aua_decomposition_audit.py, tests/test_e25_firm_key_r26.py (the other paths in the range are other seats' merges)
