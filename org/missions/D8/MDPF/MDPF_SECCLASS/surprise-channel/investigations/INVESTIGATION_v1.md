@@ -8185,3 +8185,28 @@ by dell1 or by this seat.
   "world_is": "Today the 22 are classified by no canonical row; the repoint changes who classifies them from nobody to the GICS/Schwab path or unresolved. The issuer's recommendation (migrate before delete: a signed pair seeding the 22 canonical rows from the old list by conditional put, then the repoint) is in the record. Disarm: the round-27 order names the 22 tickers, the source rule and the pair, and the CVO grades the class folding."
 }
 ```
+
+## MDPF_SECCLASS-D1-W98-S1 -- the sparse worktree cannot show the sibling gold suites green
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W98-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~98",
+  "surfaced_at": "2026-10-16T04:45:58Z",
+  "one_line": "The drain's third check (sibling gold suites stay green) cannot pass in this sparse worktree for reasons outside SC-e-108: 7 of 203 collected tests in data/black_diamond/scripts/gold/tests fail or error on absent paths (test_lambda_seam_parity: 6 errors, infra/aws/lambda/exec-summary-generator/served_seam.py is outside the sparse checkout; test_schwab_trn_nna_gold: 1 failure, convert_schwab_trn_to_nna_silver is not materialised). The converter is tracked at HEAD, so the sparse checkout, not the repo, is the cause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/tests full folder run at worktree HEAD 479867946b plus SC-e-108 edits: 196 passed, 1 failed, 6 errors (denominator 203); the E_18-adjacent and classifier suites test_etf_classifier_deployed_resolution, test_thread_trace and test_etf_classifier_canonical: 22 of 22 passed",
+      "git sparse-checkout list: .tools, data/black_diamond/scripts/gold, infra/aws/lambda/v2_portal/_shared, infra/logic/registry, lib; git ls-files | grep convert_schwab_trn_to_nna_silver: 1 path tracked at HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Sibling gold test suites stay green: the drain adds this as a third verification of order MDPF_SECCLASS.TO-SC-e108.",
+  "world_is": "Measured in this worktree: the seven failing or erroring tests read paths the sparse checkout omits. None of them imports E_18 or gold_dispatch.sh. Their status on a full checkout is not measured here; the drain should run them there."
+}
+```
