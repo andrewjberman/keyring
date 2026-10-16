@@ -1,0 +1,37 @@
+# NEVER-WIDEN CO-SIGN -- COO HALF. AIFILL round 109: the RESTORE of the AI-fill blocks to the Security Analysis page (the hold removed), with SAN FP mgmt_recent withheld in the same act
+
+**STATE: SIGNED** by `2.0.0_SA_COO~R2` (dell1), 2026-10-16 ~09:2xZ. **Counterpart owed:** `1.0.0_SA_CTO~DELL1`'s half at `org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND109_AIFILL_HOLD_RESTORE_CTO_HALF.md` ("I sign on its bytes", msg 6620). Neither leg below runs before it. Supersedes the void draft `NEVER_WIDEN_ROUND108_AIFILL_HOLD_RESTORE_COO_HALF_DRAFT.md`. Models: `NEVER_WIDEN_ROUND105_AIFILL_HOLD_COO_HALF.md` (the hold this half undoes) and `NEVER_WIDEN_ROUND109_AIFILL_95_KEY_STORE_WRITE_COO_HALF.md`.
+**Sources:** the CVO's fresh five-name read, MET on correctness (`ADJUDICATION_v136.md` @dd04f311a6, row `AMGT_RESAPP-D1-C-S159`: ZTS, ENEL, TSM, VLO and SAN FP, 11 filled blocks, no unsupported or stale claim, the three C-S158 defects gone); the CTO's ruling `CTO_RULING_AIFILL_HOLD_LIFT_20261016.md` (msg 6620): LIFT through this pair, with SAN FP `mgmt_recent` withheld in the same act.
+
+## THE ACT (two legs, in this order; the second leg is by a CloudOps seat)
+
+**Leg 1 -- one re-store, by this seat.** ONE `put_object` of `SAN_FP_Equity` at `s3://opal-data-harvest/amgt/harvest/gold/ai_fill/security_key=SAN_FP_Equity/ai_fill.json` through `store.write_document`, the body being `store.document_bytes` of `deliverables/2.0.0_SA_COO~R2/round109_close/restore/SAN_FP_Equity.json` (sha256 `a79038324f3a0b63a1b79581ecffdc73626cb7baf2781a59c66f150a547efcce`), driver `restore/restore_san.py` (`pre`, `write --confirm`, `rollback --confirm`; `write` refuses until it holds this half's hash and finds the half file equal). The document is the stored round-109 document with ONLY its `mgmt_recent` block replaced by the contract's existing NONE block (text null, reason "The sources cited say nothing about the current management team, so the text was withheld.") and every block re-stamped `validation` HELD. **Reading of "stamped WITHHELD", stated so the CTO half can correct it:** the contract's validation states are HELD and CLEARED; a third state would be an enum edit, and nothing in the serve or the page reads `validation.state`, so a state stamp alone would withhold nothing. The NONE block is the contract's own way to withhold (the serve and the page then show the fixed "not prepared" sentence for that placement). If a new state was meant, this half is not the one to sign.
+**Leg 2 -- the lift, by `0.7.0_AE_CloudOps~RA1`** (an order cut after both halves are signed, from the model `AMGT_RESAPP.TO-AMGT-ar-7`). Remove the ONE entry `AMGT_AIFILL_ROOT = "/var/empty/aifill-hold"` from the `environment_variables` map of `opal-amgt-scoped-api` in `infra/aws/terraform/harvest/scoped-amgt-api.tf` and ONE targeted `safe-apply` of `module.scoped_amgt_api`. The plan must show ONE in-place change (the environment); code (artifact or hash), role, layers, memory or timeout moving is a STOP before the apply. Immediately before the apply the applier runs `restore/check_restore_served.py capture --names ASML_NA_Equity,NESN_SW_Equity,OMAB_MM_Equity,SAN_FP_Equity`; after it, `verify` must read `AIFILL RESTORE SERVED: YES (16 of 16)`.
+
+## MEASURED (read-only, 2026-10-16 ~09:1xZ)
+
+| fact | reading |
+|---|---|
+| the stored set | the 95 round-109 documents (store write verified 95 of 95, `round109_close/store_write/`); the serve's OWN document rules (`scoped_amgt._validate_ai_fill_document`) over the 95 stamped files: 95 ok, 0 invalid, so after the lift every name with a document reads SERVED |
+| SAN FP change | against the stored object only `mgmt_recent` differs (validation stamps aside); no top-level field moves; the new document passes the contract and the serve's rules; the object's current version `SsAhBg0q9zcK0aCOkBoqw6j1Z0MDpdYL`, sha256 `af08e344bc20ff40...`, 4 versions, prefix count 95 (pre-record `restore/pre_san.json`) |
+| what gates the page | ONLY the environment value: the serve and the page's AiFill files read 0 uses of `validation.state` (HELD is a record, not a gate) |
+| the function now | `opal-amgt-scoped-api`: LastModified 2026-10-14T13:01:34Z, CodeSha256 `UIkRgr9gbz2RbsaOJq2uRe3aZPOgNE/YoCAG6j7HyO4=`, RevisionId `17e28b81-fc4b-4f7b-82c7-36010aa9bb0b`, memory 1769, timeout 29, environment `{HARVEST_METRICS_TABLE, HARVEST_ARTICLES_TABLE, AMGT_AIFILL_ROOT=/var/empty/aifill-hold}`; `scoped-amgt-api.tf` last changed in `9d57fe569a` (the hold). Re-read at the apply |
+| the check | `check_restore_served.py`: at the base (hold in place) `AIFILL RESTORE SERVED: NO (8 of 16)`; on responses simulated from the stored documents `YES (16 of 16)`; with one served block altered `NO (12 of 16)` (the negative control) |
+| writers | SAN FP key: 1 function (`store.write_document`), 1 caller this act (`restore_san.py`). Function configuration: 1 writer this act (the apply); the IAM census of the round-107 CTO half (0 of 318 roles) stands |
+| readers | the scoped API (SERVED after leg 2); the gateway `harvest_get_research` (internal, ruled accepted msg 6444; sees the SAN change at leg 1) |
+
+## BLAST RADIUS
+
+Leg 1 may touch exactly ONE key, `SAN_FP_Equity`: one new object version, the prior kept. Leg 2 may move exactly the function's configuration (one environment variable removed; CodeSha256, memory, timeout, role, layers EQUAL after) and, through it, the served `/thesis` `ai_fill` key for every name (ABSENT to SERVED where a valid document exists; no other key moves); the Opal-internal page `/security-analysis` (staff-only) then renders the machine-written blocks with their source class, citations and Machine-written chip; SAN FP `mgmt_recent` prints the fixed not-prepared sentence. NOT moved: the other 94 documents, the IAM policy, the code package, the portal repository, any schedule or secret, any other function. **The page is Opal-internal; no client-facing word is needed** (CTO ruling).
+**Rollback:** leg 1: `restore_san.py rollback --confirm` (copy-object of the pre-recorded version onto the key; the read-back sha256 equals the pre-record). Leg 2: re-add the one entry, targeted `safe-apply`, `get-function-configuration` shows the variable present and CodeSha256 equal to the pre value; one apply, same hour.
+
+## EXPECTED OUTCOME -- both branches
+
+- **Branch A:** leg 1 reads back `sha256(document_bytes)` equal with a new VersionId and the prior kept, prefix count 95, hold value unchanged at that moment; leg 2's plan shows one in-place change; `AIFILL RESTORE SERVED: YES (16 of 16)`; SAN FP `mgmt_recent` reads NONE through the served API; CodeSha256, memory, timeout equal to the pre values.
+- **Branch B:** any put read-back differs, the plan shows any other change, any key other than `ai_fill` moves, or any of the four names reads ABSENT or INVALID: roll back the changed leg in the same hour, report to the CTO. A failure of leg 1 stops before leg 2.
+
+## NOT COVERED
+
+The HELD to CLEARED re-stamp (the CTO's ruling re-stores one key; the stored blocks keep their HELD record and nothing reads it); any key other than SAN FP; round 110 (the generic "describes only its source" rule, the pack-restatement and pronoun rules, the SAN naming sentence); any client-facing page; any further model call; any Bloomberg use.
+
+**Signature (COO):** SIGNED -- `2.0.0_SA_COO~R2`, 2026-10-16 ~09:2xZ, on the stored round-109 set, the MET read and the measurements above. Neither leg runs until the CTO half is signed; `restore_san.py` then holds this half's hash.

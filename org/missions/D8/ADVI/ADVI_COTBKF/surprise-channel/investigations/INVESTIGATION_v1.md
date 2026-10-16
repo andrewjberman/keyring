@@ -10320,3 +10320,30 @@ round.** Never edit an existing row.
   "notes": "Counts only; no account id, name or value in this row."
 }
 ```
+
+## ADVI_COTBKF-D1-S17 -- the issuer dispositions D1-W190-S1 and S2: the recompute script matched to its own order; the five null verdicts are the ABSENT months
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S17",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T08:52:38Z",
+  "one_line": "the issuer dispositions D1-W190-S1 and D1-W190-S2: the recompute script disagreed with its own order on a both-absent month (script amended); the five null-verdict month_grades rows are the ABSENT months by design",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cw-1.fwd3-one-account-exercise.md item 3(a): the served computed_pct is compared 'equal within 0.000001 percentage points, or both absent'; the issuer's cw1_fwd3_recompute.py counted present-and-equal months only (83); the worker's record counts the 2 both-absent months as equal (85) and adjusted nothing to the script",
+      "cw1_fwd3_recompute.py amended @10da3df0bc (one branch: strung None and served computed_pct NaN counts as equal); re-run: strung_equals_served=85 matches_reported=82 differ=0 ungradable=3 and FWD3-CROSS all True on the worker's record; days, months, matched, differing, ungradable and population were equal before the amendment too",
+      "served month_grades at VersionId nkTE.F82uFSboXr9PEamIENCwFL9cwcC (issuer read, counts only): 5 rows carry a null verdict; all 5 carry reason REGRESSED_UNDER_AS_TRADED and a null computed_pct; this equals the 5 ABSENT months in the round-97 build manifest (absent_months 5, absent_reason REGRESSED_UNDER_AS_TRADED)"
+    ]
+  },
+  "spec_asserts": "D1-W190-S1: the order and the issuer's check define strung-equals-served differently (85 vs 83). D1-W190-S2: 5 served month_grades rows carry a null verdict and sit outside the population verdict counts.",
+  "world_is": "S1 was the issuer's script, not the data and not the worker: the order text predates the worker's run and the worker followed it. S2 is by design: an account-month that matched under the before build and differs under the after build reads ABSENT in all three tables, with no value, no return and no verdict, reason REGRESSED_UNDER_AS_TRADED (builder docstring), so the population counts 3,678 + 288 + 78,622 = 82,588 plus 5 ABSENT = 82,593. Nothing about a served value follows from either.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S1: the issuer amended the check to match its own order and re-graded AC2. S2: the null verdicts are the five ABSENT months the project carries by design; the completion report and the CTO's grade can read them as such."
+}
+```
