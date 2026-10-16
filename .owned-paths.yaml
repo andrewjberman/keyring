@@ -904,6 +904,15 @@ lanes:
       - 4.0.0_SA_CRO~D
     description: "The D14 Platform Logic foundation folder (infra/logic/**) -- DOCUMENTS ONLY: a README, ORDER_OF_OPERATIONS, the estate census, the doctrine and the analysis that feed the pipeline canon. WHY A NARROWER ENTRY UNDER infra/ RATHER THAN A DIFFERENT HOME: Andrew named the path himself (2026-09-12 ~18:0xZ, VERBATIM 'Persist this group of artifacts in a folder in ajb_workspace/infra/logic'), and a seat re-siting a folder he named in order to dodge a lane would be solving the gate's problem by editing his sentence. THE LANE RULE'S REASON DOES NOT REACH IT: infra/** is CLOUD_OPS_OR_ETL because in this estate infra/ has meant DEPLOYABLE infrastructure -- Terraform, Lambda source, EC2 -- and an AE owns what gets applied to the account. infra/logic/ holds no Terraform, no Lambda source, and nothing safe-apply will ever touch, so this is not an exception carved into the AE lane; it is the lane being told where its own boundary is. Architectural basis given independently by 1.0.0_SA_CTO (msg-id 96245), which recommended a NAMED lane over ANY_EXEC precisely so a folder carrying the canon's doctrine has a named writer. infra/aws/** and every other infra path are UNTOUCHED -- longest-match-wins, same carve pattern as the two doc paths already carved above this rule. WHY IT WAS LANDED AT ALL, since it is not a blocker: 4.0.0_SA_CRO hit the refusal, declined to self-override, and asked (96241); Andrew then authorized the audited escape for this purpose ('No you can override for this purpose' / 'It can be documented in the overrides') and the folder landed at 845abef6c9 under it. But a /loop committing there every 10 minutes turns a SINGULAR audited escape into a de-facto lane -- 4.0.0_SA_CRO~D said so itself before asking. THIS FILE'S OWN DOCTRINE GOVERNS THAT CASE AND ANDREW RULED IT: see the ANY_EXEC_OR_AE description -- 'A repeat override for a STANDING role-authorized action = a coverage gap to close' and 'Andrew ruled ENUMERATE over bless-the-override'. The YANG_PIPELINE_DEPLOY, DATA_REFRESH_DEPLOY and PUBLIC_DATA_ROUTER_DEPLOY entries are the same shape; the last of those was grantor-landed BEFORE the commits so its record carried zero overrides. This one carries exactly one, and stops there. SCOPE HELD DELIBERATELY NARROW: 4.0.0_SA_CRO and its laptop tilde lanes only. NOT 1.0.0_SA_CTO -- it gave the arch input and explicitly did not ask for write access, and a grant nobody requested is a widening. NOT ~Y/~Z -- those are the Codex and site-Z conventions and this is a LAPTOP-placed directive (D14, Andrew-ruled). A CRO lane that appears later is REFUSED until enumerated, which is the correct failure direction for an allow-list. SoD: GRANTOR is 0.0.0_AB_MSTR, GRANTEE is 4.0.0_SA_CRO -- the grantee did not commit its own grant, on this file's own ANY_EXEC_OR_AE lane, exactly as the CRO_WORKSPACE and CVO_WORKSPACE precedents did. Added 2026-09-12 by 0.0.0_AB_MSTR on 4.0.0_SA_CRO~D request 96241, CTO arch input 96245, D14 minted ff4dfaf23e."
 
+  NAME_RULINGS_REGISTRY:
+    permitted_agents:
+      - 4.0.0_SA_CRO
+      - 4.0.0_SA_CRO~A
+      - 4.0.0_SA_CRO~B
+      - 4.0.0_SA_CRO~C
+      - 4.0.0_SA_CRO~D
+    description: "Exact-file lane for infra/logic/registry/name_rulings.json, which naming-gate.py now reads. Taken out of the DOCUMENTS ONLY lane PLATFORM_LOGIC_DOCS by 1.0.0_SA_CTO~DELL1 act 1 on CVO verdict 6495 (record org/missions/D14/LGIC/LGIC_ENFORCE/ledger/CTO_AFTER_THE_FACT_REVIEW_NAMING_GATE_NAME_RULINGS_20261016.md). Permitted agents are the PLATFORM_LOGIC_DOCS list unchanged, so the file's incumbent writers keep their access (the longest-match override replaces the broader lane); workers write through their order paths. Landed by 0.0.0_AB_MSTR~DELL1 as grantor."
+
   KRN_WORKSPACE:
     permitted_agents:
       - 1.7.0_SA_KRN
@@ -1369,6 +1378,9 @@ paths:
   "infra/logic/registry/reporting_policies.json":
     lane: IRPT_COMPLETION_REGISTRY
     note: "CTO exact-file grant IRPT-M-REGISTRY-01; IRPT-only member scope requires explicit equality proof and naming-owner review."
+  "infra/logic/registry/name_rulings.json":
+    lane: NAME_RULINGS_REGISTRY
+    note: "CTO act 1 on CVO verdict 6495: exact-file lane, same writers as PLATFORM_LOGIC_DOCS; naming-gate.py reads this file."
 
   # Bounded IRPT completion grants; source commits only, no deploy authority.
   "infra/aws/lambda/investor-reporting/reports/**":
