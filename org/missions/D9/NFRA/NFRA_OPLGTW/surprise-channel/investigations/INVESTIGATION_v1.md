@@ -20604,3 +20604,29 @@ name the one known failure instead of silently inheriting it.
     "notes": "For 1.0.0_SA_CTO~Z to rule: enforce the no-download on Alyssa's grant (drop download_filtered from her operations via the one writer), or record that Andrew's 'no downloads needed yet' was a statement of need, not a prohibition, and strike it from the PRD's Unchanged lists. Low hazard (one internal user; downloads go through the ticket transport), so not ARMED. It does not bear on OG-mg-1's R1/R2, which mirror Andrew."
   }
   ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T11:28:14Z",
+  "id": "NFRA_OPLGTW-Z-S174",
+  "one_line": "OG-mg-1 mg1.AC2.sh cannot pass against the live store's shape: it reads calendar_months at the scope's top level and compares typed DynamoDB maps, but the stored scope keeps calendar_months inside dates, so it grades FAIL (andrew active+13mo: no, bbg scope == andrew scope: no) while a direct typed read-back shows both writes correct.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN deliverables/2.0.0_SA_COO~O/r37/checks/mg1.AC2.sh after the ledger CLOSED (8e44440e66): status CLOSED=yes; sentinel at HEAD=no; andrew active+13mo: no; bbg active: yes; bbg scope == andrew scope: no; alyssa unchanged: yes; RESULT: FAIL.",
+      "READ the stored scope: the data_entitlement scope attribute is a DynamoDB M whose keys are accounts, columns, datasets, dates, masters, operations, portal_channels; the script's val() returns the typed map and ga.get('calendar_months') on it is None (measured: top-level calendar_months None). The same read of Alyssa's revision-4 grant, which the order calls already 13 months, would grade 'no' too.",
+      "READ W/MG1_READBACK.json (deserialized, strongly consistent, 1723 items): andrew and bbg each active restricted revision 1, grant revision 1, dates.calendar_months 13, 4 operations; R2 scope equals R1 scope by whole-object equality; R1 vs Alyssa changes no top-level key; Alyssa's 9 items hash b93cd3cbf990 before and after."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-mg-1 AC2 expects 'andrew active+13mo: yes; bbg active: yes; bbg scope == andrew scope: yes; alyssa unchanged: yes'; A3 itself states the window lives in dates {mode: rolling_complete_window, calendar_months: 13}.",
+  "world_is": "Both records are written and read back correct, so I did NOT revoke (the order says revoke on a FAIL, but this FAIL is the instrument's, and a revoke would undo a correct, signed act). The check needs the scope deserialized and calendar_months read from scope.dates; it is the issuer's file, so I left it unedited. The proof instance is written with AC2 reported as the check's literal FAIL plus the direct read-back, and the order status stays pending until the issuer amends the check.",
+  "notes": "Cost of the miss: the criterion could never pass on this store, for any principal. Fix is two lines in mg1.AC2.sh (TypeDeserializer on the scope; read dates.calendar_months). A revoke is available under the same role if the halves want the writes undone anyway."
+}
+```
