@@ -1,0 +1,84 @@
+# TO IRPT_BCKEND.TO-IB-pr-613 -- APPLY the signed 49 Financial split-adjusted price-return pair, ACT 2: restate the 47 split days (2024-07-09 to 2026-09-03) by invoking `irpt-holdings-performance-lambda` with `{"date": "<D>"}` once per day, in ascending order, outside the scheduled fire window, comparing each new key with its prior version row by row (STAGED: starts only on the issuer's GO, after IB-pr-612 and its first scheduled run are read)
+
+<to_id>IRPT_BCKEND.TO-IB-pr-613</to_id>
+<project>IRPT_BCKEND</project>
+<issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
+<issued_by>2.0.0_SA_COO~P2</issued_by>
+<issued_date>2026-10-16</issued_date>
+<status>staged</status>
+<direct_act>false</direct_act>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>3</round>
+<workstream>~PM</workstream>
+
+**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** the signed pair: COO half `deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_49F_SPLIT_ADJUST_PAIR_COO_HALF.md` (sha256 `8f645588ab1079c35d22002f786c49d2b78dea27ae4e453ac2afb44bf6b9d6e5`; Act 2 is its sections 1, 3, 4 and 5), ADDENDUM 1 (blob `f0cec424f485aa3fc34a1670a3cf9eab558e42f0`) and ADDENDUM 2 (blob `47e819dd938e0d295e6658057a5be7e165836b47`: Act 2 stays 49 Financial only, section 5 condition 3: the siblings are never invoked), and the CTO halves `deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_49F_SPLIT_ADJUST_PAIR_CTO_HALF.md` (conditions 1 to 6; read them all), `..._ADDENDUM_1_CTO_HALF.md` and `NEVER_WIDEN_49F_SPLIT_ADJUST_ADDENDUM_2_CTO_HALF.md` | **Decomp cell:** `IB-pr-613` (decomposition section 239) | **outcome_ref:** FWD-21
+
+**STAGED.** This order is `staged`: you do NOT begin on reading it. The issuer flips it to `pending` and sends a GO that cites this order when ALL of these read true: IB-pr-612 is `complete` with its first scheduled run read (`manifest_split_adjust_declared` true, `run_ok` true, each sibling's DELTA = 0), IB-pr-612's ledger is CLOSED by the issuer, and the 49 Financial function reads CodeSha256 `LiDXhN74...`. Until then it is an inert record so the next tick can start without a re-cut.
+
+---
+
+## WORKER FACE
+
+**Cell `IB-pr-613` (inlined).** Act 1 (IB-pr-612) moved the code. Act 2 re-runs the 47 dated partitions of the READ so the STORED returns of the split days are the adjusted ones; **it changes served history: 1,291 of 266,455 account-days run over those days change (0.48 percent)**, 985 of them on 2026-04-21. Without it only a FUTURE split day is adjusted. The 47 days and their per-day counts are the signed delta record `deliverables/0.9.0_WK_IRPT_BCKEND~423/IB218-2_split_delta.json` (`per_day`: `day`, `account_days_changed`, `account_days_holding_a_split_security`, `securities_ratio_absent`; type none of them: read the record) and the READ `deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json`; the model for the row comparison is the delta harness `deliverables/0.9.0_WK_IRPT_BCKEND~423/ib218_2_split_delta.py` (copy it into your record folder and adapt; do not edit it). **Writers on the 47 keys during Act 2: 2** (the manual date path, and the scheduled fire, whose catch-up writes only days after the newest landed partition (`handler.py` lines 121 to 125, row S297), so it cannot reach a historical key); they cannot collide, and you run outside the scheduled fire window anyway. The producer's manual path is `handler.py` line 109 (`if event.get("date"): return [str(event["date"])]`) and the script's `--date`. **Paths you post are `file:///` absolute URIs or markdown links to them, with the repo-relative form for another box (CLAUDE.md rule 33).** No account id, holding name or value goes in any record: counts and version ids only.
+
+**Do, in this order. A STOP is reported to the issuer and writes nothing further.**
+
+1. **Gates, read only.** (a) `sha256sum` of the pair's COO half equals `8f645588ab10...`, `git hash-object` of ADDENDUM 1 equals `f0cec424f485...` and of ADDENDUM 2 equals `47e819dd9382...`; all three CTO halves read SIGNED at those bytes. (b) The issuer's GO cites this order, and IB-pr-612's record shows its first scheduled run read as above; record `gates.act_1`. (c) **One change at a time:** no ledger under `org/critical_paths/change_management/` naming the function or the root `holdings-performance` reads OPEN, no `.open_deploys` marker at any live worktree names them with an open trunk ledger (print `worktrees_read` and `marker_files_read`), and **IB-pr-612's ledger reads CLOSED**; the CVO's rule (msg 8750) binds: no other apply on the root while this order's ledger is open. (d) `get-function-configuration` CodeSha256 of `irpt-holdings-performance-lambda` equals `LiDXhN74TsATYhoQKzs+Oy1qtNn3hDJxxjkLa0ZlfLg=`. (e) **The handler's date line (CTO condition 1):** re-read the DEPLOYED zip's `handler.py` for the line of `handler.py` 109 BEFORE the first invoke; its absence is a STOP. Record the producer's `--date` parameter present at source (`holdings_performance.py` line 1446 at the pin). (f) **The day list:** read the 47 days from the signed delta record; print the list's sha256 and the record's; a date outside the 47 is a STOP at any point.
+2. **The window (CTO condition 2).** Read the function's schedule (EventBridge rule and target, read only) and run the invokes only so that every invoke starts and ends at least 30 minutes clear of a scheduled fire on either side (the per-day row comparison must read one writer). A run of 47 invokes may span windows: stop between days, never mid-day, and resume in the next window; record the minimum clear minutes before and after any fire (`window.minutes_clear_before_fire_min`, `..._after_fire_min`, both 30 or more).
+3. **Open the NEVER-2 ledger entry** (`python .tools/deploy_ledger.py open ...`) under `org/critical_paths/change_management/` BEFORE the first invoke, naming the function and the 47 served keys by their day and table only (the key addresses are the producer's `opal_naming.address()` output, read from its write path, never typed), and this order; commit its `.open_deploys` sentinel at once.
+4. **Act 2, one day at a time, ascending, from the first of the 47.** For each day D: (i) **record the prior version id of the day's key BEFORE the write** (`s3api list-object-versions`, the IsLatest version; if the key has no version, STOP: the day was never landed); (ii) invoke `aws lambda invoke --function-name irpt-holdings-performance-lambda --invocation-type RequestResponse` with the payload **`{"date": "<D>"}` and nothing else (no `source` key, no other event key)**; a `FunctionError`, a timeout (the function's timeout is 300 s) or a non-2xx is a STOP; (iii) read the key back (the new IsLatest version id must differ from the prior); (iv) **compare the new version with the prior version row by row** (both read by VersionId into scratch OUTSIDE the repository; counts only in the record): only the rows of accounts that held a split security at t-1 may differ (`other_rows_changed` 0, `changed_only_split_holders` true), and the changed count must equal that day's `account_days_changed` in the signed record (**2026-04-21 reads 985**; the typed 920 of the CTO's ruling is superseded by the CTO half condition 4); (v) any disagreement STOPS the run: no further invoke; report the day, the counts and both version ids; Branch B is then the issuer's call per key. The sibling functions are NEVER invoked.
+5. **After the 47 (counts only).** The served manifests of the 47 days name the ratio-absent split securities by security and day (CTO condition 3): record `totals.ratio_absent_named_total` as the count of named entries you read across the 47 manifests; it must equal the signed record's `securities_ratio_absent` summed over the days. `totals.days_run` 47, `totals.account_days_changed` 1291, `totals.invokes` 47.
+6. **Branch B, per key (only on a trigger: a stopped day whose key was written, or the issuer's word).** Each key's recorded prior version is restored as a NEW current version by `copy-object` of that VersionId over the same key (no delete; **a version delete is Andrew's act**); read back that the restored key equals the prior version's content hash; set `rollback_performed` true and report at once.
+7. **Do NOT close the ledger entry**; the issuer closes it. **Write the record** `deliverables/0.7.0_AE_CloudOps~IB2/IB244-1_act2_record.json`:
+`{"gates":{"pair_sha256":"8f645588ab1079c35d22002f786c49d2b78dea27ae4e453ac2afb44bf6b9d6e5","addendum_blob":"f0cec424f485aa3fc34a1670a3cf9eab558e42f0","addendum_2_blob":"47e819dd938e0d295e6658057a5be7e165836b47","both_halves_signed":true,"act_1":{"order_complete":true,"first_scheduled_run_read":true,"manifest_split_adjust_declared":true},"function_code_sha256":"LiDXhN74TsATYhoQKzs+Oy1qtNn3hDJxxjkLa0ZlfLg=","one_change_at_a_time":true,"act_1_ledger_closed":true,"deployed_handler_date_line_present":true,"producer_date_parameter_present":true,"days_equal_signed_record":true,"delta_record_sha256":"<sha256 of IB218-2_split_delta.json>"},"stopped_at":null,"days":[{"day":"<D>","prior_version_id":"..","new_version_id":"..","rows_changed":<n>,"rows_changed_expected":<n from the record>,"other_rows_changed":0,"changed_only_split_holders":true,"comparison_ok":true}, ... 47 entries, ascending],"totals":{"days_run":47,"account_days_changed":1291,"invokes":47,"ratio_absent_named_total":<n>},"event_keys_sent":["date"],"window":{"minutes_clear_before_fire_min":<n>,"minutes_clear_after_fire_min":<n>},"siblings_invoked":0,"rollback_performed":false,"counters":{"lambda_invokes":47,"version_deletes":0,"iam_changes":0,"schedule_changes":0,"artifact_uploads":0,"other_keys_written":0,"markers_closed":0}}`. The record carries no account id, holding name, value or instance id.
+8. **Run the three criteria below from the repository root** (once the record is complete), record each output and exit code verbatim in `IB244-1_criteria_output.txt`, write the proof instance named under proof_of_spec and validate it with `python .tools/proof-of-spec-check.py <instance>`, and commit with explicit paths. Report once, under 150 words; report each STOP at once.
+
+**Criteria (run each under `timeout 120` from the repository root, record the output and exit code verbatim):**
+
+<criterion id="IB244-1-AC1" cell_refs="IB-pr-613"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r244/p244_cells.py" . IB244-1-AC1</invocation><expect>IB244-1-AC1 PASS</expect></criterion>
+<criterion id="IB244-1-AC2" cell_refs="IB-pr-613"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r244/p244_cells.py" . IB244-1-AC2</invocation><expect>IB244-1-AC2 PASS</expect></criterion>
+<criterion id="IB244-1-AC3" cell_refs="IB-pr-613"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r244/p244_cells.py" . IB244-1-AC3</invocation><expect>IB244-1-AC3 PASS</expect></criterion>
+
+<expected_criteria>IB244-1-AC1, IB244-1-AC2, IB244-1-AC3</expected_criteria>
+
+What the checks grade: AC1 the pair's and addenda bytes, all CTO halves SIGNED, Act 1 landed with its first scheduled run read, the function at the signed candidate, one change at a time with Act 1's ledger closed, the deployed handler's date line, the day list equal to the signed record's 47 days; AC2 the 47 days in ascending order, each with its prior version recorded, a new version, only split-holding accounts changed, the changed count equal to the signed per-day count (985 on 2026-04-21), no stop; AC3 the totals (47 days, 1,291 changed account-days, the ratio-absent names), the event keys (`date` only), the window (30 minutes or more clear of a fire both sides), the siblings never invoked, no rollback, the counters. Do not edit the checks.
+
+## BOUNDS
+
+- **Grant:** `lambda:InvokeFunction` on `irpt-holdings-performance-lambda` ONLY, 47 invokes in all; reads of the function's schedule, configuration and the 47 day keys' versions; the 47 day keys written ONLY by those invokes (the producer's own write path; you write no key yourself); read-only copies of two versions of a key into scratch outside the repository for the comparison; Branch B's `copy-object` over the same key only on a trigger; the ledger entry and its sentinel; your record folder. **NO invoke of either sibling; NO event key other than `date`; NO date outside the 47; NO artifact upload, Terraform apply, IAM, schedule, role, layer or environment change; NO deletion of an object or a version (Andrew's act); no marker closed; no backfill of any other date; no run during a scheduled fire window.**
+- **Refusal clause:** STOP and report, writing nothing further, on any of: a byte of the pair or addenda that differs; a CTO half not signed; Act 1 not landed and read, or its ledger OPEN; an open ledger or marker on the function or the root; a CodeSha256 other than `LiDXhN74...`; the deployed handler lacking the date line; a day outside the 47; no prior version for a day; a `FunctionError`, timeout or non-2xx; a new key equal to the prior version; a row changed that is not a split holder's; a changed count that differs from the signed per-day count; a window closer than 30 minutes to a fire. A bound in a CTO half is raised only by a CTO half.
+- **Row ids** are the next free `IRPT_BCKEND-D2-S<k>` that the row gate accepts; file a row for anything odd and keep working. **Report once, under 150 words.**
+
+<paths>
+org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/
+org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-613.apply-split-adjust-act-2.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md</decomp_doc> section 239 (round 3, workstream ~PM), cell `IB-pr-613`.
+<owned_cells>IB-pr-613</owned_cells>
+</decomp_ref>
+
+<proof_of_spec>
+Criterion ids: IB244-1-AC1, IB244-1-AC2, IB244-1-AC3. The instance goes at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IRPT_BCKEND.TO-IB-pr-613.apply-split-adjust-act-2.proof_of_spec.json` (the file stem of THIS order plus `.proof_of_spec.json`; round-close-check looks for exactly that name).
+Record in it the order's own relative invocation for each criterion. Validate it with `python .tools/proof-of-spec-check.py <instance>` BEFORE the flip to complete.
+</proof_of_spec>
+
+---
+
+## RECORD FACE
+
+<preflight>
+comp-blast: RUN -- the 47 dated gold keys of the 49 Financial `holdings_performance_daily` (one per split day) are the only property moved; ONE writer per key at a time (the producer through the manual date path; the scheduled catch-up cannot reach a historical key, row S297); 1,291 account-days change; the rollback per key is the recorded prior version restored as a new current version; the pair carries the blast radius, both branches and the stop rule.
+comp-iam: DECLARED-NOT-APPLICABLE -- reason: no permission is changed; the invoke uses the seat's existing identity (first simulate `lambda:InvokeFunction` on the function for your principal).
+comp-routes: DECLARED-NOT-APPLICABLE -- no route is touched.
+comp-schedule: DECLARED-NOT-APPLICABLE -- reason: the schedule is READ (its fire times), never created or changed.
+comp-cache: DECLARED-NOT-APPLICABLE -- no CloudFront or cache surface is touched.
+comp-adversary: RUN -- p244_cells.py IB244-1 dry-run at base on dell2 2026-10-16 ~05:3xZ: AC1, AC2, AC3 FAIL (no record). Positive control (control244.py) in temp roots the run created itself (the real COO halves and the real delta record copied, stub CTO halves, a synthetic record of 47 days; removed): all three PASS; the negatives each fail their own arm (Act 1 not read, Act 1 order or ledger open, the function not at the candidate, the handler line absent, a day list that differs, a delta-record hash that differs, a wrong addendum blob, a run stopped midway, a day missing or out of order or outside the 47, a prior version missing, a write that did not move the key, a count that differs from the record, other rows changed, a non-split-holder changed, a failed comparison, 2026-04-21 typed 920, wrong totals, wrong ratio-absent names, a source override in the event, a window too close on either side, a sibling invoked, a rollback, a version deleted, a wrong invoke count, an altered pair, an unsigned CTO half). NOT measured by me: the live function, whether the row comparison reproduces the delta record's per-day counts on the stored keys (the delta record was measured by a harness, not on stored keys), the fire times, other seats' windows.
+lane: the paths block IS the grant; seat `0.7.0_AE_CloudOps~IB2` (dell2). Class WORLD. STAGED: not issued for work until the GO.
+</preflight>

@@ -125,11 +125,11 @@ def main():
     if a != b:
         bad("build_a and build_b differ: %s" % sorted(set(a) ^ set(b) or [n for n in a if a[n] != b.get(n)])[:5])
     # 3. pack once, stage the sums beside it
-    tar_path = out + "/irpt-resident-0485393f3a-r34.tar.gz"
+    tar_path = out + "/irpt-resident-0485393f3a-r34c.tar.gz"
     pack = run([sys.executable, "-I", os.path.join(REPO, R34, "pack_r34.py"), out + "/build_a", tar_path, "pax", "gzip", "dotslash"])
     if pack.returncode != 0:
         bad("packer rc %d: %s" % (pack.returncode, pack.stderr[-200:]))
-    sums_path = out + "/irpt-resident-0485393f3a-r34.package.SHA256SUMS"
+    sums_path = out + "/irpt-resident-0485393f3a-r34c.package.SHA256SUMS"
     shutil.copy(out + "/build_a/SHA256SUMS", sums_path)
     x34 = out + "/x34"
     tarfile.open(tar_path).extractall(x34)
@@ -153,7 +153,7 @@ def main():
     if gen.returncode != 0:
         bad("script generator rc %d: %s" % (gen.returncode, (gen.stdout + gen.stderr)[-300:]))
     scripts = []
-    for name in ("pre_read_r34.sh", "install_r34.sh", "rollback_r34.sh", "resident_host_install_0485393f3a-r34.sh"):
+    for name in ("pre_read_r34.sh", "install_r34.sh", "rollback_r34.sh", "resident_host_install_0485393f3a-r34c.sh"):
         path = "%s/%s" % (scripts_dir, name)
         data = open(path, "rb").read()
         syntax = run(["bash", "-n", path])
@@ -172,7 +172,7 @@ def main():
     scratch = out + "/gate_scratch"
     os.makedirs(scratch)
     host_ok = "%s/host_ok.sh" % scratch
-    shutil.copy("%s/resident_host_install_0485393f3a-r34.sh" % scripts_dir, host_ok)
+    shutil.copy("%s/resident_host_install_0485393f3a-r34c.sh" % scripts_dir, host_ok)
     sums_ok = "%s/sums_ok" % scratch
     shutil.copy(sums_path, sums_ok)
     host_bad, sums_bad = "%s/host_bad.sh" % scratch, "%s/sums_bad" % scratch
