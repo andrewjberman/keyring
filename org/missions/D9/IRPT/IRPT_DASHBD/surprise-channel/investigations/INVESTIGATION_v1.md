@@ -23927,3 +23927,159 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W246-S1 -- the checker resolves the portal from a RELATIVE repo root "." and reads the branch as empty, so AC1 FAILS as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:49:28Z",
+  "one_line": "The order's invocation `python -I <checker> . DBP175-1-AC1` (and AC2, AC3 the same way) fails before any clause is graded: with the relative root '.', the checker's portal() returns the relative path 'portal' and git() runs `git -C portal ...` with cwd=portal, so git resolves portal/portal, the branch read is empty and the first clause prints 'the portal branch must be named cand/dell2/<slug>, it is '. The same checker with the absolute root C:/dev/wk-irpt-dashbd-246 prints DBP175-1-AC1 PASS and DBP175-1-AC2 PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's criteria DBP175-1-AC1, AC2 and AC3 each name the invocation `python -I \"<checker>\" . <id>`, expected to print '<id> PASS' at the workspace root.",
+  "world_is": "Checker lines 44-52 (portal(root) = Path(root)/'portal'; git(p, ...) = run(['git','-C',str(p)]+..., cwd=p)) break for a relative root: the cwd and the -C argument both name 'portal', so the -C target is portal/portal. Measured: AC1 with '.' -> 'FAIL: the portal branch must be named cand/dell2/<slug>, it is' and 'DBP175-1-AC1 FAIL' (rc=1). AC1 with the absolute root -> 'DBP175-1-AC1 PASS' (rc=0). AC2 with the absolute root -> 'DBP175-1-AC2 PASS' (rc=0). The clause logic itself was not found wrong; the root handling is. The checker was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checker p175_portal_template_mount.py lines 44-52 (portal, git) at org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/ in the worktree",
+      "measured output of the relative-root run and the absolute-root runs, recorded in this row's world_is (verbatim lines above)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "BLOCKING on the order as written: the as-written AC1 result is FAIL. The absolute-root runs are reported beside it as a measurement, not a repair. The issuer owns the checker; a relative-root fix there would clear the defect."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S2 -- the export button's document has no path to the tab's state: Preview and PrintDocument accept a template state that nothing passes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:49:28Z",
+  "one_line": "Order step 5 requires the dev smoke's export button to produce PerformanceReportDocument from the same state as the tab (served report, else the DEV fixture). The mount that carries that state to the export button is outside this order's grant, so the export button still prints the bundle's PerformanceDocument on the live route.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: the Performance export gets PerformanceReportDocument behind the export button; in the dev smoke the export button must produce the document from the same state as the tab; the lane lists export/Preview.tsx, render/PrintEntry.tsx, render/manifest.ts and export/ExportButton.tsx only if needed.",
+  "world_is": "Built in this order: manifest.ts registers TEMPLATE_PERFORMANCE_DOCUMENT; Preview.tsx takes an optional `template` prop and PrintEntry.tsx's PrintDocument takes an optional `template` prop, and each renders PerformanceReportDocument for a live or preview state on a performance bundle. Nothing passes `template`: the Export mount (index.tsx, which receives the tab's onExportTarget) and the print route's bundle carry no FilledReport, and index.tsx is not in the grant. The tab's template state lives only inside PerformanceTemplateView. So the template document is reachable only from a caller that passes a state, and the live export path is unwired.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "export/Preview.tsx Preview props (optional template, default null) and its ready branch, at the portal worktree commit 14443687",
+      "render/PrintEntry.tsx PrintDocument signature (bundle, template = null), at commit 14443687",
+      "tabs/reporting/ReportingTab.tsx onExportTarget prop is the only link from the tab to the export mount; index.tsx is not in the order's <paths>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The template document is registered and tested as reachable (manifest and PrintDocument test); the export mount that would pass the state is the missing edit. Not repaired here: the order's refusal clause names a candidate file that must change as a BLOCKING row, not an edit."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S3 -- the served template read sends the bare route with no selected_tenant, unlike every sibling scoped read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:49:28Z",
+  "one_line": "The template view reads GET /api/scoped/investor-reporting/reporting/client/<client id>/report with no selected_tenant query. The sibling reads in dashboard/reportingRead.ts (reportingReadPath, reportingSummaryPath) add ?selected_tenant=<registry tenant> when the tenant is known.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 3 names the route GET /api/scoped/investor-reporting/reporting/client/<client id>/report, with no query string.",
+  "world_is": "The route is built by the IB-pr-551 hops and does not exist yet, so no tenant contract for it is measured. If it requires selected_tenant, the live read refuses and the view falls back to the dev fixture (dev) or to nothing (built tier). The tab's scope.registryTenant is not threaded into the view.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dashboard/reportingRead.ts reportingSummaryPath and reportingReadPath append selected_tenant when set, at commit fcbf2bce (DEV) as carried into the portal branch",
+      "PerformanceTemplateView.tsx clientReportPath builds the bare route, at commit 14443687"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left as the order names it. The issuer decides whether the served route takes selected_tenant when IB-pr-551 lands."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S4 -- the firm and client ids sit at scope.scope.firmId and scope.scope.clientId on the ResolvedScope prop, not at scope.firmId
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:49:28Z",
+  "one_line": "The order says scope.firmId and the client id are already in the Performance tab's context. On the tab's ResolvedScope prop they are at scope.scope.firmId and scope.scope.clientId (ContractEnvelope.scope), and the mount reads them there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order summary and step 4: the scope.firmId and the client id are already in that tab's context, so the mount needs no new global.",
+  "world_is": "contracts/index.ts: ResolvedScope extends ContractEnvelope, whose scope is ContractScope {tenant, scopeFingerprint, firmId, clientId, relationshipId, accountIds}. ReportingTab's scope prop is that ResolvedScope; the mount passes scope?.scope.clientId and scope?.scope.firmId. Both are typed OpaqueId | null. The tab reads the client id from header.selection.scope.clientId elsewhere; the mount does not use that path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contracts/index.ts ContractScope (firmId, clientId) and ContractEnvelope.scope, read at the worktree",
+      "tabs/reporting/ReportingTab.tsx mount line after the dashboard block, at commit 14443687"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action. The premise's wording differs from the type; the ids are the same values."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S5 -- narrows S1: with the relative root only AC1 fails as written; AC2 and AC3 PASS as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:55:25Z",
+  "one_line": "Correction scope for IRPT_DASHBD-D2-W246-S1 (not edited): run exactly as written, with the relative root '.', DBP175-1-AC2 and DBP175-1-AC3 PASS; only DBP175-1-AC1 fails, because its git -C calls resolve against portal/portal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S1 states that the order's invocation with the relative root fails AC1, AC2 and AC3.",
+  "world_is": "Measured as written, from the workspace root: `python -I <checker> . DBP175-1-AC2` printed 'DBP175-1-AC2 PASS' (rc 0), and `python -I <checker> . DBP175-1-AC3` printed 'DBP175-1-AC3 PASS' (rc 0; the irpt-dashbd suite, the typecheck and the production build with the banner and fixture scan). `python -I <checker> . DBP175-1-AC1` printed 'FAIL: the portal branch must be named cand/dell2/<slug>, it is' and 'DBP175-1-AC1 FAIL' (rc 1). Only the three git-based clauses of AC1 depend on the root spelling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "as-written runs at the worktree: AC2 and AC3 logs read 'PASS' with rc 0; AC1 log reads 'FAIL' with rc 1",
+      "checker lines 44-52 (portal, git) and lines 61-62 and 72-73 (candidate_files and the branch read) at the checker path in the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S1 stays as filed. The as-written verdict for the order is: AC1 FAIL, AC2 PASS, AC3 PASS."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S6 -- the shared template state is per page load: the print route in its own window reads null and prints the bundle document
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T18:34:43Z",
+  "one_line": "templateState.ts is one module-level variable in one page load. Preview (the export preview on the reporting page) reads the tab's published state; the print route (render/PrintEntry.tsx opened in its own window) is a separate page load, so its PrintDocument reads null and prints the bundle's own PerformanceDocument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1 (b): PrintEntry.tsx or Preview.tsx reads readTemplateState() to produce PerformanceReportDocument from the SAME state as the tab.",
+  "world_is": "Preview on the reporting page shares the tab's module instance and sees the published state. The print page is opened by URL in its own window and imports its own module instance, so readTemplateState() there is always null. Consequence: the print window never shows the template document; the in-page preview does. Measured by the mounted-tab test (publish, unmount clear) and the PrintDocument test (null reads the bundle document); the cross-window case was not run in a browser.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/reporting/templateState.ts at commit 32a7ff5d (module-level variable, no storage)",
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx PrintDocument reads readTemplateState() at commit 32a7ff5d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action in this order. The issuer decides whether the print route should carry the tab's state (a URL or storage read) or stay on the bundle document; the export button's in-page preview is covered."
+}
+```
