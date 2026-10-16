@@ -9659,5 +9659,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "W146-S1 resolved by the worker; W146-S2 inert by design (ledger is authoritative); W147-S1 is a named, bounded cost of the CTO's design B (listing requests to the floor, no silver reads), carried and not fixed."
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S25",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T00:50:00Z",
+     "one_line": "HVST-cb-9: step 5's gate could never pass while the seed existed (the issuer ruled it its own error, Amendment 2); and the +15 read of R7 projects 0 GiB only because no upload has run, so the uploader's silver reads are not yet measured.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO HVST-cb-9 step 5 (before Amendment 2): delete the seeded copies only after a run record of the new pass reads token_source=browser_profile; otherwise take Branch F. Amendment 1 R7: project a 242-pair cycle from the s3_get_ledger.jsonl per command (run, upload-harvest) and stop if either projection exceeds 5 GiB.",
+     "world_is": "sessions.py:93-103 at pin 3c1e8bcdb1 returns a saved session file first, and returns browser_profile (lines 113-121) only when no stored bundle exists. The first 4 run records of the new pass (T0 2026-10-16T00:31:23Z) read token_source=saved_session_file:...\\runtime\\secrets\\wsj.dpapi. The issuer ruled (msg 6358, Amendment 2): delete first, then read. Deleted 2026-10-16T00:37:46Z; the jobs starting after it (records 20261016T003751Z, 003806Z, 003821Z, 003836Z, 003852Z) read token_source=browser_profile with status no_new_articles and request_attempts=1; 0 REFUSAL, 0 sign_in_refused, 0 error lines since. Branch F not taken, the copies not restored. R7 at +15 (cb9_reads.out, 2026-10-16T00:46:36Z): 60 ledger lines after T0, all command=run, get_count 0 and get_bytes 0; 0 upload-harvest lines, because all 60 jobs ended no_new_articles and nothing was uploaded; so the projection (average run bytes + average upload bytes x uploads per job) x 242 reads 0 GiB, but its upload term is 0 x 0 and the uploader's silver reads were NOT exercised. The wsj cycle reached job 60 of 242; barrons has not started; no cycle.json of the new pass exists yet, so s3_jobs_lines and s3_get_*_jobs are not printed. The +3 read was taken at T0+5:27 (late, labelled), not at +3:00.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/opal_data_harvest/sessions.py lines 93-103 and 113-121 at pin 3c1e8bcdb1",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb9_seed_removed.out (hashes before, deletion time, 7 run records with token_source, Test-Path False, log read 0 errors)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb9_reads.out (+3 and +15 reads including R7)",
+       "the order's Amendment 2 @e64b874e3b and the issuer's msg 6358"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
