@@ -13118,3 +13118,56 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The writer of the stamp per commit was not traced here; the diffs of 7edc69c702 and 65eb443109 were not read. The split decides whether the key moves (PROPOSED_LAYOUT_AND_MIGRATION.md section (a))."
 }
 ```
+
+## NFRA_CTLPLN-W144-S1 -- The CT-bf-1 rule (an INVESTIGATION row grades only through a grades entry with a verdict)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W144-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~144",
+  "surfaced_at": "2026-10-16T14:17:21Z",
+  "one_line": "The CT-bf-1 rule (an INVESTIGATION row grades only through a grades entry with a verdict) reads 50 ADVI_COTBKF judgment grades as UNGRADED: the CVO wrote them as prose in investigation rows. The sweep flips 27 ADVI_COTBKF ROUND-CLOSE verdicts from MAY-CLOSE to REFUSED. The order's stop condition; not widened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~144/SWEEP_BEFORE.txt @749ad4afa5 (232 runs, pre-change)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~144/SWEEP_AFTER.txt (post-change, same 232 runs)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md @41f01e24e9 lines 2099-2118: row ADVI_COTBKF-D2-S30 by 3.0.0_SA_CVO, one_line 'L9 CB19s1-AC3 MET ...', no grades key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-bf-1 (issuer 2.0.0_SA_COO~C, round 29): an INVESTIGATION-file row counts as a grade only through a grades entry that names the criterion with a verdict; its prose mention does not grade. Stop condition: if the sweep shows a project whose CVO graded only by prose in an investigation row, do not widen the rule; file a row naming each and stop.",
+  "world_is": "The sweep shows that condition. 50 ADVI_COTBKF judgment lines move GRADED -> UNGRADED (named in notes), and 27 ROUND-CLOSE verdicts move MAY-CLOSE -> REFUSED. Seven more lines keep their verdict but move to another source (named in notes). The rule is not widened, and the branch carries the rule as specified.",
+  "notes": "DECISION NEEDED FROM THE ISSUER (2.0.0_SA_COO~C): keep the rule and ask the CVO to re-grade these as grades entries, or widen the rule (out of this cell's scope). The 50 flips, all ADVI_COTBKF, as 'round N TO order criterion (was investigation row ID)': round 19 TO-CB-s-1 CB19s1-AC3 (was ADVI_COTBKF-D2-S30); round 21 TO-CB-u-1 CB21u1-AC3 (was ADVI_COTBKF-D2-S32); round 22 TO-CB-v-1 CB22v1-AC3 (was ADVI_COTBKF-D2-S34); round 23 TO-CB-w-1 CB23w1-AC3 (was ADVI_COTBKF-D2-S35); round 24 TO-CB-x-1 CB24x1-AC4 (was ADVI_COTBKF-D2-S36); round 25 TO-CB-y-1 CB25y1-AC3 (was ADVI_COTBKF-D2-S37); round 25 TO-CB-y-2 CB25y2-AC3 (was ADVI_COTBKF-D2-S37); round 26 TO-CB-z-1 CB26z1-AC3 (was ADVI_COTBKF-D2-S38); round 26 TO-CB-z-3 CB26z3-AC2 (was ADVI_COTBKF-D2-S38); round 27 TO-CB-aa-1 CB27aa1-AC3 (was ADVI_COTBKF-D2-S40); round 27 TO-CB-aa-2 CB27aa2-AC3 (was ADVI_COTBKF-D2-S40); round 27 TO-CB-aa-3 CB27aa3-AC3 (was ADVI_COTBKF-D2-S40); round 28 TO-CB-ab-1 CB28ab1-AC3 (was ADVI_COTBKF-D2-S41); round 28 TO-CB-ab-3 CB28ab3-AC3 (was ADVI_COTBKF-D2-S41); round 29 TO-CB-ac-2 CB29ac2-AC2 (was ADVI_COTBKF-D2-S44); round 30 TO-CB-ad-1 CB30ad1-AC2 (was ADVI_COTBKF-D2-S46); round 32 TO-CB-af-1 CB32af1-AC2 (was ADVI_COTBKF-D2-S47); round 33 TO-CB-ag-1 CB33ag1-AC2 (was ADVI_COTBKF-D2-S49); round 34 TO-CB-ah-1 CB34ah1-AC2 (was ADVI_COTBKF-D2-S58); round 34 TO-CB-ah-2 CB34ah2-AC3 (was ADVI_COTBKF-D2-S58); round 35 TO-CB-ai-1 CB35ai1-AC2 (was ADVI_COTBKF-D2-S51); round 36 TO-CB-aj-1 CB36aj1-AC2 (was ADVI_COTBKF-D2-S64); round 37 TO-CB-ak-1 CB37ak1-AC2 (was ADVI_COTBKF-D2-S61); round 39 TO-CB-am-1 CB39am1-AC2 (was ADVI_COTBKF-D2-S64); round 40 TO-CB-an-1 CB40an1-AC2 (was ADVI_COTBKF-D2-S65); round 42 TO-CB-ap-1 CB42ap1-AC2 (was ADVI_COTBKF-D2-S68); round 43 TO-CB-aq-1 CB43aq1-AC2 (was ADVI_COTBKF-D2-S66); round 45 TO-CB-as-1 CB45as1-AC2 (was ADVI_COTBKF-D2-S69); round 46 TO-CB-at-1 CB46at1-AC2 (was ADVI_COTBKF-D2-S70); round 50 TO-CB-ax-1 CB50ax1-AC2 (was ADVI_COTBKF-D2-S76); round 51 TO-CB-ay-1 CB51ay1-AC2 (was ADVI_COTBKF-D2-S76); round 52 TO-CB-az-1 CB52az1-AC2 (was ADVI_COTBKF-D2-S76); round 57 TO-CB-be-1 CB57be1-AC2 (was ADVI_COTBKF-D2-S86); round 62 TO-CB-bj-1 CB62bj1-AC3 (was ADVI_COTBKF-D2-S106); round 64 TO-CB-bl-1 CB64bl1-AC2 (was ADVI_COTBKF-D2-S109); round 64 TO-CB-bl-3 CB64bl3-AC2 (was ADVI_COTBKF-D2-S109); round 65 TO-CB-bm-1 CB65bm1-AC2 (was ADVI_COTBKF-D2-S114); round 65 TO-CB-bm-2 CB65bm2-AC3 (was ADVI_COTBKF-D2-S114); round 67 TO-CB-bo-2 CB67bo2-AC2 (was ADVI_COTBKF-D2-S116); round 68 TO-CB-bp-3 CB68bp3-AC2 (was ADVI_COTBKF-D2-S117); round 68 TO-CB-bp-4 CB68bp4-AC2 (was ADVI_COTBKF-D2-S117); round 68 TO-CB-bp-5 CB68bp5-AC2 (was ADVI_COTBKF-D2-S117); round 69 TO-CB-bq-3 CB69bq3-AC2 (was ADVI_COTBKF-D2-S119); round 69 TO-CB-bq-4 CB69bq4-AC2 (was ADVI_COTBKF-D2-S119); round 73 TO-CB-bu-1 CB73bu1-AC2 (was ADVI_COTBKF-D2-S124); round 73 TO-CB-bu-2 CB73bu2-AC3 (was ADVI_COTBKF-D2-S124); round 77 TO-CB-by-1 CB77by1-AC2 (was ADVI_COTBKF-D2-S130); round 77 TO-CB-by-3 CB77by3-AC2 (was ADVI_COTBKF-D2-S130); round 78 TO-CB-bz-1 CB78bz1-AC2 (was ADVI_COTBKF-D2-S132); round 78 TO-CB-bz-2 CB78bz2-AC2 (was ADVI_COTBKF-D2-S132). The source-only changes (GRADED both before and after): ADVI_COTBKF round 12 TO-CB-l-1 CB12l1-AC3: investigation ADVI_COTBKF-D2-S24 -> adjudication ADVI_COTBKF-C-S17 (verdict unchanged); ADVI_COTBKF round 38 TO-CB-al-1 CB38al1-AC2: adjudication ADVI_COTBKF-C-S46 -> adjudication ADVI_COTBKF-C-S46 (verdict unchanged); ADVI_COTBKF round 53 TO-CB-ba-1 CB53ba1-AC2: investigation ADVI_COTBKF-D2-S81 -> adjudication ADVI_COTBKF-C-S44 (verdict unchanged); ADVI_COTBKF round 61 TO-CB-bi-1 CB61bi1-AC2: adjudication ADVI_COTBKF-C-S46 -> adjudication ADVI_COTBKF-C-S46 (verdict unchanged); ADVI_COTBKF round 61 TO-CB-bi-2 CB61bi2-AC2: investigation ADVI_COTBKF-D2-S102 -> adjudication ADVI_COTBKF-C-S46 (verdict unchanged); ADVI_COTBKF round 66 TO-CB-bn-1 CB66bn1-AC2: investigation ADVI_COTBKF-D2-S115 -> adjudication ADVI_COTBKF-C-S50 (verdict unchanged); ADVI_COTBKF round 71 TO-CB-bs-1 CB71bs1-AC2: investigation ADVI_COTBKF-D2-S122 -> adjudication ADVI_COTBKF-C-S55 (verdict unchanged). The ADVI ROUND-CLOSE lines that change: 36 (27 MAY-CLOSE -> REFUSED, 11 REFUSED -> REFUSED with a lower graded count). Full lines: SWEEP_BEFORE.txt and SWEEP_AFTER.txt in the deliverables folder named above."
+}
+```
+
+## NFRA_CTLPLN-W144-S2 -- The CT-bf-1 rule also reads 2 ETFS_RIVALS judgment grades as UNGRADED: a CVO prose grade i
+
+```json
+{
+  "id": "NFRA_CTLPLN-W144-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~144",
+  "surfaced_at": "2026-10-16T14:17:21Z",
+  "one_line": "The CT-bf-1 rule also reads 2 ETFS_RIVALS judgment grades as UNGRADED: a CVO prose grade in investigation row ETFS_RIVALS-Z-S47 (verdict PASS) that the sweep reads as a mention only.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~144/SWEEP_BEFORE.txt @749ad4afa5 (ETFS_RIVALS rounds 8 and 9)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~144/SWEEP_AFTER.txt (ETFS_RIVALS rounds 8 and 9 after the rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-bf-1 (issuer 2.0.0_SA_COO~C, round 29): an INVESTIGATION-file row counts as a grade only through a grades entry that names the criterion with a verdict; its prose mention does not grade. Stop condition: if the sweep shows a project whose CVO graded only by prose in an investigation row, do not widen the rule; file a row naming each and stop.",
+  "world_is": "Two ETFS_RIVALS judgment grades (round 8 TO-RIV-fc-1 J1; round 9 TO-RIV-ln-1 J1) read GRADED from investigation row ETFS_RIVALS-Z-S47 before the rule and UNGRADED after it. The ETFS_RIVALS ROUND-CLOSE counts move from graded=1 to graded=0 in both rounds.",
+  "notes": "The same stop condition as NFRA_CTLPLN-W144-S1, for ETFS_RIVALS. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
