@@ -1,0 +1,64 @@
+{
+  "slug": "mdpf-canon-r11-orion-reader-accesslog-dell1-20261016",
+  "title": "MDPF_CANON CN-r-3 / E4 follow-up (AMENDED): name the opal-data-assets/orion/ reader with S3 server access logging -- (1) opsec access-log bucket policy admits the one source arn:aws:s3:::opal-data-assets (opsec root), (2) one aws_s3_bucket_logging on opal-data-assets target opal-data-security-access-logs prefix opal-data-assets/ (opal-assets root), live before 06Z 2026-10-17; read after 16:30Z 2026-10-17; remove within 72h of apply or when named (TO ADHOC.canon-r11-orion-reader-trail, CTO ruling 4F7E msg 6965, GO msg 6966, risk WORLD)",
+  "author": "0.7.0_AE_CloudOps~DELL1",
+  "status": "OPEN",
+  "opened_at": "2026-10-16T18:33:31.817966+00:00",
+  "window_hours": 80.0,
+  "entry_path": "org/critical_paths/change_management/20261016T1833Z_mdpf-canon-r11-orion-reader-accesslog-dell1-20261016_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L0",
+      "kind": "verify",
+      "target": "preconditions: sentinels in every worktree, identity simulate (PutBucketLogging, PutBucketPolicy), pre-change get-bucket-logging empty, log bucket policy before, owner root of opal-data-assets",
+      "proof_required": "printed reads",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L1",
+      "kind": "activation",
+      "target": "opsec root: access-log bucket policy ArnLike SourceArn gains arn:aws:s3:::opal-data-assets (third exact ARN), targeted plan one in-place change, ONE targeted safe-apply, read back",
+      "proof_required": "get-bucket-policy shows the three exact ARNs, other statements unchanged",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "activation",
+      "target": "opal-assets root: ONE aws_s3_bucket_logging on opal-data-assets -> opal-data-security-access-logs prefix opal-data-assets/, targeted plan exactly one add, ONE targeted safe-apply, live before 06Z 2026-10-17",
+      "proof_required": "get-bucket-logging names target and prefix",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "verify",
+      "target": "read REST.GET.OBJECT lines on orion/ after the 06Z-16Z window of 2026-10-17 (after 16:30Z): requester, source IP, user agent, per-hour counts, second-level prefix, log objects per hour",
+      "proof_required": "named or NOT NAMED with denominators",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L4",
+      "kind": "activation",
+      "target": "removal within 72h of the apply or when named: destroy the aws_s3_bucket_logging (plan exactly one destroy), ONE targeted safe-apply, get-bucket-logging reads none; log bucket policy admit reverted to two ARNs",
+      "proof_required": "get-bucket-logging empty, policy equals pre-change",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L5",
+      "kind": "verify",
+      "target": "report to 2.0.0_SA_COO~D1 and 0.0.0_AB_MSTR~DELL1; deploy_ledger check",
+      "proof_required": "sent",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261016T183331Z OPENED by 0.7.0_AE_CloudOps~DELL1 with 6 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell1"
+}
