@@ -28989,3 +28989,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The worker's rows D1-W486-S1, S2 and S3 stay as filed (append-only); this row is the issuer's disposition of all three. Portal DEV carries two lint errors that belong to the IRPT_ANLREQ feature (an observation for that feature's owner, not a block on this cell)."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S53",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T14:59:00Z",
+  "one_line": "C-S133 (REMEDIATION_v40) re-read at HEAD: no model narration text in any of the 95 stored AI-fill documents (0 hits over 134 kept blocks), and AMD's mgmt_team_view, the block the row named, is now withheld; the first half of its close condition is met. The second half (this seat's five-name PROD read) is not met by this seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "REMEDIATION_v40, D1-C-S133 (owner and disarm owner this seat): the builder keeps only the answer text and the validator refuses narration; close when a scan of every stored document finds no narration text, and this seat's five-name PROD read finds none. CTO round-112 analysis (ROUND_ANALYSIS.round112.md item 2): re-read C-S133 at HEAD and say which close condition it now meets.",
+  "world_is": "Read 14:59Z 2026-10-16 by this seat: all 95 AI-fill documents read back from S3 (95 of 95); 134 kept text blocks scanned with a regex for narration openers (I'll, I will, I'm going to, Let me, I need to, I should, Here is/are/'s, Based on my/the search/research, Sure, Certainly, Okay, Now I, First I, Looking at) at the start of the text or after a sentence end: 0 hits. Controls run first: the C-S133 original string 'I'll research AMD's management track record from public sources.Dr Lisa Su has been ...' is flagged, a clean two-sentence text is not. 341 blocks carry no text (withheld). AMD_US_Equity mgmt_team_view is withheld ('None of the model's statements could be confirmed in a source that answered'); the AMD PROD bundle render read earlier today (mgmt_recent block: 'On the Q2 2026 call Su guided to data centre sales doubling in 2027 ...') shows no narration. NOT MEASURED: a five-name PROD page read by this seat (one name, AMD, was rendered; the CVO's v136 and v138 five-name reads cover ten other names and do not record a narration check); the regex catches the listed openers only, not narration phrased another way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 get_object over all 95 keys via lib.research.aifill.store.address_for -> 95 of 95; kept blocks 134; narration hits 0; withheld blocks 341",
+      "regex controls printed before the verdict (C-S133 string flagged True, clean text not flagged True)",
+      "REMEDIATION_v40.md row AMGT_RESAPP-D1-C-S133; ROUND_ANALYSIS.round112.md item 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CVO writes the remediation clock (R-15); this row is the disarm owner's evidence. Half of the close condition is met by measurement; the other half is the CVO's to accept from its own reads or to ask this seat to read."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S54",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T15:02:00Z",
+  "one_line": "C-S133 (REMEDIATION_v40) second half read: a deterministic five-name draw (1299 HK, PBR US, NU US, ROG SW, SAP GY) of what the scoped API serves to the PROD page carries 0 narration text over 10 kept blocks; with D1-S53 (0 hits over all 95 stored documents) both halves of the close condition read met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "REMEDIATION_v40, D1-C-S133: close when a scan of every stored document finds no narration text, and this seat's five-name PROD read finds none. D1-S53 filed the first half; the CTO ruled (msg 6770) that C-S133 closes once the condition reads met.",
+  "world_is": "Read 15:02Z 2026-10-16 by this seat. Draw rule (printed before the read): the 95 keys ordered ascending by sha256('2026-10-16 C-S133 ' + key); the first five whose served ai_fill is SERVED with at least one kept text block (7 names examined to find five). For each, the live opal-amgt-scoped-api thesis response (the body the PROD page fetches) was read and every kept block scanned with the D1-S53 regex (controls run in that read: the C-S133 original string flagged, clean text not): 1299_HK_Equity 3 kept blocks 0 hits, PBR_US_Equity 1 kept 0, NU_US_Equity 1 kept 0, ROG_SW_Equity 3 kept 0, SAP_GY_Equity 2 kept 0; total 10 kept blocks, 0 narration hits. The AI-fill documents were generated 2026-10-16T09:37Z to 10:01Z. NOT MEASURED: a rendered PROD page for these five names (the served body is what the page prints, but no page was looked at by this seat except AMD, earlier); narration phrased outside the regex's listed openers; the 5 names are a sample of 95.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 lambda invoke opal-amgt-scoped-api GET /api/scoped/amgt/security/<key>/thesis for the five drawn keys, status 200, ai_fill.status SERVED, kept blocks 3, 1, 1, 3, 2; narration hits 0 each",
+      "draw: sha256('2026-10-16 C-S133 ' + key) ascending, first five with kept text; 7 names examined",
+      "D1-S53 (the stored-set scan and the regex controls)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "With D1-S53 this is the disarm owner's evidence for the CVO's clock on REMEDIATION_v40 C-S133 (R-15: the CVO writes it)."
+}
+```
