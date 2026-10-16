@@ -2,7 +2,7 @@
 
 Issuer `2.0.0_SA_COO~F2`, 2026-10-16 ~02:3xZ. Gate key: `<round>121</round><workstream>~F2</workstream>`. Workstream label beside the round: **F-SHIP, round 121**.
 
-**Answers:** the CTO's open-call ruling 3596 (msg 8826, item 3: `~F2` builds only the reader and the tab) and the round-120 packet's proposed enrichment item 2 (`L8_PACKET_R120_F.md`). The CTO's analysis of the round-120 packet has not arrived; this cell depends on nothing in it. The vocabulary ruling the packet's item 1 asks for (FWD-5) is not in this round: no FWD-5 write is cut until Opal's action and type words are ruled.
+**Answers:** the CTO's open-call ruling 3596 (msg 8826, item 3: `~F2` builds only the reader and the tab). The CTO's round-120 analysis for F-SHIP (msg 8917) arrived AFTER this cut and names two further cells for "round 121": the FWD-5 words proposal and the `AssetClassSection` mount. The gate (ONE ISSUER PER ROUND, `to-pipeline-gate.py` GATE x) refuses a second order in a round that has an issuance, so those two cells are cut in the NEXT issuance (round 122): the mount after `DB-f-801` lands (it stacks on the reader's branch), and the words proposal in the same issuance. This is the cost of cutting before reading the analysis: the words cell, which depends on nothing, starts one drain later than it could have.
 
 ## What was measured at the cut
 
