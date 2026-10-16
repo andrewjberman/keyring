@@ -14179,3 +14179,85 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "45 of the 50 tarballs carry package/package.json and pass check 2. Five carry it under their own folder: bun/, estree/, 'node v24.13/', react-dom/, react/. check 2 reads absent for each and fails it; check 2 is never waivable, so those five cannot reach checked on this batch. Nothing was waived, repaired or re-run; the five are findings for the CTO (NPM_BATCH_FACTS.md, failed-checks section)."
 }
 ```
+
+## NFRA_CTLPLN-W145-S17 -- the drain census on the merged branch names a reader that landed on box/laptop after the base: IRPT_DASHBD ~D2 checks/r149/p172_repin_after_reader.py reads the retired single map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:06:44Z",
+  "one_line": "AMENDMENT 2 step 3 re-ran the read-only census on the merged branch at HEAD 7411f90fd2: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p172_repin_after_reader.py reads the retired single map and is classed OTHER (census other=2 ok=False). The file is outside this cell's grant and was not edited. Per the order, this cell stops here.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer): add this file to the grant of CT-ca-1, or re-cut its checker so it reads the function-map folder through lib/opal_lambda_map.py; the map deletion is committed on the branch at 7411f90fd2 and must not reach box/laptop while this reader names the map",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p172_repin_after_reader.py (HEAD 7411f90fd2): line 30 SOURCE_MAP_REL = infra/aws/lambda/ci/lambda-source-map.json; line 153 reads the map at base by git show; line 154 reads the map from the working tree by read_text and fails once the map is gone",
+      "source_map_census.py (default, read-only; its git grep runs over HEAD) at HEAD 7411f90fd2: SOURCEMAP-CENSUS files=2512 grep_files=2512 reconciled=True map_functions=240 classes=read_whole:153,read_one:0,write:0,test:2,doc:2355,other:2 ok=False; CENSUS-OTHER-FILES names p172 and p136_sourcemap.py (row NFRA_CTLPLN-W145-S18)",
+      "first appearance on box/laptop: commit 0f91454ded (issuance IRPT_DASHBD round 149 workstream FILLEDPASS); absent at ca239c0486 (the base of the first seating), present at 651de9c2e4 and f0c0e87682"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 AMENDMENT 2 step 3: if the census names a NEW reader that landed on box/laptop since the base, file a BLOCKING row naming it and STOP; the issuer adds the file to the grant.",
+  "world_is": "p172 is a checks file of IRPT_DASHBD round 149 (2.0.0_SA_COO~D2). It reads the whole single map by path, once at base and once from the working tree. With the map deleted on the branch it fails loudly; with the map present it keeps reading the single file. The census at the pre-merge HEAD (565dbb146c) did not see it because the census greps HEAD and this file reached HEAD only with the merge commit.",
+  "notes": "Not decided here: whether p172 is a live check (its round is open) or a closed-round record, and whether it should read the folder the way p170 was changed under amendment 1 (W145-S1). Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S18 -- the drain census on the merged branch names a second reader that landed on box/laptop after the base: IRPT_DASHBD ~F2 checks/r136/p136_sourcemap.py requires the retired single map to be a file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S18",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:06:44Z",
+  "one_line": "The same merged-branch census run names org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r136/p136_sourcemap.py as a reader of the retired single map (classed OTHER). It is outside this cell's grant, its folder is outside the sparse worktree, and it was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer): add this file to the grant of CT-ca-1, or re-cut its checker to read the function-map folder; the map deletion on branch 7411f90fd2 must not reach box/laptop while this reader names the map",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r136/p136_sourcemap.py (HEAD 7411f90fd2, 171 lines): line 19 SOURCE_MAP = infra/aws/lambda/ci/lambda-source-map.json; lines 83-84 need Path(root, SOURCE_MAP).is_file(); line 117 reads the map bytes and requires ASCII",
+      "source_map_census.py at HEAD 7411f90fd2: other:2 ok=False, CENSUS-OTHER-FILES lists this path (row NFRA_CTLPLN-W145-S17 names the second file)",
+      "first appearance on box/laptop: commit be99bf5767 (issuance IRPT_DASHBD round 136 workstream ~F2); absent at ca239c0486, present at 651de9c2e4 and f0c0e87682; the worktree is sparse and does not hold this folder (read with git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 AMENDMENT 2 step 3: if the census names a NEW reader that landed on box/laptop since the base, file a BLOCKING row naming it and STOP; the issuer adds the file to the grant.",
+  "world_is": "p136 is a checks file of IRPT_DASHBD round 136 (2.0.0_SA_COO~F2). It requires the single map to exist as a file and that it stay ASCII. With the map deleted on the branch its check fails; with the map present it passes. It is the second of the two readers the census names.",
+  "notes": "Not decided here: whether p136 is a live check or a closed-round record, and whether the issuer prefers to re-pin the check to the folder. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S19 -- the read-only census greps HEAD, so a run made before the merge commit cannot see readers the merge brings in
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S19",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:06:44Z",
+  "one_line": "The first census run of this seating, made with the merge of box/laptop open and not yet committed (HEAD 565dbb146c), reported census other=0. The rerun after the merge commit (HEAD 7411f90fd2) reports other=2. The census is a git grep over HEAD, so an uncommitted merge is invisible to it; the zero was an instrument fact, not an absence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~140/source_map_census.py: line 162 git grep -l -z -F -e NEEDLE HEAD; line 201 git ls-tree -r --name-only HEAD FOLDER_REL; line 318 git grep -c over HEAD for *.tf",
+      "first census run (HEAD 565dbb146c, merge open): other=0 with the box/laptop file list already in the index; rerun after the merge commit (HEAD 7411f90fd2): other=2 naming p172_repin_after_reader.py and p136_sourcemap.py (rows NFRA_CTLPLN-W145-S17 and S18)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 BUILD step 1 and AMENDMENT 2 step 3: the census is run read-only on the cut and on the merged state, and a zero that could hide a merged-in reader is not a pass.",
+  "world_is": "A census zero taken on a branch with an open or uncommitted merge is measured against the pre-merge HEAD. The drain check must run after the merge commit lands on the branch, and the census verdict must be read with the HEAD it measured.",
+  "notes": "Not decided here: whether the census should accept a worktree mode. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
