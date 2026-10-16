@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell2",
- "written_at": "2026-10-15T20:00:13Z",
+ "written_at": "2026-10-16T12:56:58Z",
  "written_by": "1.0.0_SA_CTO~DELL2",
  "rows": [
   {
@@ -2263,7 +2263,7 @@
    "source": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/DB_b_205_DISCLOSURE_TEMPLATE_READ_20261014.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-14T12:32:27Z",
    "kind": "act",
    "context": "The default performance report (O3) prints 'incomplete without the accompanying disclosure page' on every page; the CTO made that page a release gate (round-105 analysis). Cell 4 searched the repo, OneDrive and mailbox previews and found no 49F disclosure text; the repo template's disclosure_text slot is empty.",
@@ -2291,7 +2291,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-15T20:39:32Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_203xZ_A252_TEMPLATE_C02C_DRAFT_TO_DESKTOP_DELETES_2106_53CB_D8AE_APPROVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell2-20261014T134418Z-2106",
@@ -2301,7 +2308,7 @@
    "source": "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/OBJECTS_WRITTEN_R29.txt",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-14T13:44:18Z",
    "kind": "act",
    "context": "Release 29's signed CTO half: the lane deletes nothing and this seat registers the delete for Andrew. All synthetic files, no client data; cottonwood wrote nothing. Dell principals are denied deletes (DenyS3DeletesOnProductionData), so it runs off-Dell like c449 (ORDER to the laptop CloudOps seat).",
@@ -2328,7 +2335,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-16T01:36:06Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_203xZ_A252_TEMPLATE_C02C_DRAFT_TO_DESKTOP_DELETES_2106_53CB_D8AE_APPROVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell2-20261014T135021Z-c8c3",
@@ -2766,7 +2780,7 @@
    "source": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_197_P_DRAIN_END_20261015.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-15T01:41:38Z",
    "kind": "act",
    "context": "Recursive deletion needs Andrew's word (CLAUDE.md Agent Autonomy); all eight directories are outside the repository, hold worker scratch for rounds 192-197 (some with client-derived bundle extracts), and gate nothing; the project's records are committed",
@@ -2822,7 +2836,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-15T20:39:30Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_203xZ_A252_TEMPLATE_C02C_DRAFT_TO_DESKTOP_DELETES_2106_53CB_D8AE_APPROVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell2-20261015T021756Z-0ab9",
@@ -2992,7 +3013,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_5982_IRPT_ANLREQ_THROWAWAY_FOLDERS_ON_D503_20261015.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-15T05:02:00Z",
    "kind": "act",
    "context": "Part 3 of call 5982 (Y2's ~20 GB cleanup); merged worktrees go under the standing word, these plain folders do not; nothing waits on them",
@@ -3019,7 +3040,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-15T20:39:31Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_203xZ_A252_TEMPLATE_C02C_DRAFT_TO_DESKTOP_DELETES_2106_53CB_D8AE_APPROVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell2-20261015T053232Z-f50a",
@@ -3222,6 +3250,1489 @@
     "at": "2026-10-15T19:59:06Z",
     "by": "0.0.0_AB_MSTR~DELL2",
     "reason": "HOLD for Andrew: cutting the wrapper before the feed's first data would lift his own word that the adapter waits on the feed (1.0.0_SA_CTO msg 109501, relayed by the laptop manager)"
+   }
+  },
+  {
+   "id": "dell2-20261015T201345Z-b238",
+   "project": "IRPT_ANLREQ",
+   "subject": "Which series are the Opal Overview's benchmark and risk-free rate? (beta, alpha, Sharpe, Sortino; nothing else waits)",
+   "asked_by": "2.0.0_SA_COO~G2",
+   "source": "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/CALL_BENCHMARK_AND_RISK_FREE_SERIES_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T20:13:45Z",
+   "kind": "fork",
+   "context": "The priced Opal producer values every figure that needs only the portfolio's series. Beta, alpha, Sharpe, Sortino and the benchmark chart also need a benchmark and a risk-free level series that nothing supplies; they read INPUT_MISSING in words. The map names ^SPXTR (YCharts-only); PRD C-PRICES names no source. Gates only those five elements; not r32, not FWD-1.",
+   "rec": "A: SPY as benchmark and BIL as risk-free, each priced through the same C-PRICES chain (estate, Yahoo, YCharts). One mechanism, a source claim on each, no new vendor call. The cost is SPY standing in for the index.",
+   "scope": {
+    "measured_at": "2026-10-15T20:13:45Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_producer_for_ticket.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r32_source.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T20:29:09Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_ANLREQ_FOUR_LANES_END_TO_END_20261015.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261015T202053Z-b961"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261015T202053Z-b961",
+    "at": "2026-10-15T20:20:53Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261015T201404Z-08fd",
+   "project": "IRPT_ANLREQ",
+   "subject": "Which series are the Opal Overview's benchmark and risk-free rate? (beta, alpha, Sharpe, Sortino; nothing else waits)",
+   "asked_by": "2.0.0_SA_COO~G2",
+   "source": "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/CALL_BENCHMARK_AND_RISK_FREE_SERIES_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T20:14:04Z",
+   "kind": "fork",
+   "context": "The priced Opal producer values every figure that needs only the portfolio's series. Beta, alpha, Sharpe, Sortino and the benchmark chart also need a benchmark and a risk-free level series that nothing supplies; they read INPUT_MISSING in words. The map names ^SPXTR (YCharts-only); PRD C-PRICES names no source. Gates only those five elements; not r32, not FWD-1.",
+   "rec": "A: SPY as benchmark and BIL as risk-free, each priced through the same C-PRICES chain (estate, Yahoo, YCharts). One mechanism, a source claim on each, no new vendor call. The cost is SPY standing in for the index.",
+   "scope": {
+    "measured_at": "2026-10-15T20:14:04Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_producer_for_ticket.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r32_source.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T20:29:11Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_ANLREQ_FOUR_LANES_END_TO_END_20261015.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261015T202054Z-1c92"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261015T202054Z-1c92",
+    "at": "2026-10-15T20:20:54Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261015T203043Z-4608",
+   "project": "IRPT_BCKEND",
+   "subject": "Stop the inf gold runner i-0ed5afded2ebd4ed4 (left running after IB-pr-600's read)?",
+   "asked_by": "2.0.0_SA_COO~P2",
+   "source": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T20:30:43Z",
+   "kind": "fork",
+   "context": "Started once at 19:53:40Z for the feed IAM exists() read; the watchdog did not stop it 33 min after (IB2 msg 8633). CTO ruling 8597: the stop is Andrew's act. Cost only; the feed chain at 11:32Z starts it anyway.",
+   "rec": "Yes: stop it once (the next chain restarts it). It is stopping EC2, which needs the human word.",
+   "scope": {
+    "measured_at": "2026-10-15T20:30:43Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/export",
+     "infra/aws/terraform/investor-reporting",
+     "infra/aws/terraform/investor-reporting/api",
+     "infra/aws/terraform/investor-reporting/directory",
+     "infra/aws/terraform/investor-reporting/performance",
+     "infra/aws/terraform/investor-reporting/ycharts",
+     "infra/aws/terraform/investor-reporting/narrative",
+     "infra/aws/terraform/investor-reporting/ops",
+     "infra/aws/terraform/investor-reporting/holdings",
+     "infra/aws/terraform/mdpf-pipeline",
+     "infra/aws/terraform/shared-infra",
+     "infra/aws/terraform/modules/opal_name",
+     "infra/aws/terraform/portal-auth",
+     "infra/aws/terraform/investor-reporting/core"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by ADVI_COTBKF on dell1",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by ADVI_FIRMBKTS on dell1",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by ADVI_COTBKF on dell1",
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by ADVI_FIRMBKTS on dell1"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      ".tools/safe-deploy.sh is on the shared branch (.tools)",
+      ".tools/tests is on the shared branch (.tools)",
+      ".tools/bundles is on the shared branch (.tools)",
+      ".tools/ds-precommit-check.py is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T21:42:30Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_213xZ_90EF_PLACEHOLDER_2106_TO_LAPTOP_4608_STOP_J4_CHECKING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T20:40:41Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": "Stopping EC2 i-0ed5afded2ebd4ed4 needs Andrew's confirmation (CLAUDE.md Agent Autonomy: stopping EC2); the watchdog did not fire; cost only, the 11:32Z chain uses it anyway"
+   }
+  },
+  {
+   "id": "dell2-20261015T210545Z-90ef",
+   "project": "IRPT_DASHBD",
+   "subject": "Point to the 49 Financial report's accompanying disclosure page (a separate file): the template 17752262.pdf says on 19 pages 'This report is incomplete without the accompanying disclosure page' but holds none",
+   "asked_by": "2.0.0_SA_COO~D2",
+   "source": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/reads/RD_49F_TEMPLATE_DISCLOSURE_READ_A252.json",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T21:05:45Z",
+   "kind": "act",
+   "context": "a252 answered with the template; ~D2's read @91c13e5a12 finds 32 pages, no disclosure page. Downloads holds no other candidate (read 21:0xZ). Gates the 49F disclosure composition only.",
+   "rec": "Name the file's path or its sender and day; only Andrew knows where 49 Financial's disclosure page lives",
+   "scope": {
+    "measured_at": "2026-10-15T21:05:45Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/holdings-performance"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T21:42:32Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_213xZ_90EF_PLACEHOLDER_2106_TO_LAPTOP_4608_STOP_J4_CHECKING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell2-20261015T211904Z-4255",
+   "project": "IRPT_DASHBD",
+   "subject": "B-IN: cut the series-ended cause read now (LOCAL read of saved Scope bodies against Opal's positions silver, no vendor call): is Orion's series stale for an account Opal still holds? (yes/no)",
+   "asked_by": "2.0.0_SA_COO~I2",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_122_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T21:19:04Z",
+   "kind": "fork",
+   "context": "Round-122 analysis item 3 left the cause read to ~I2 at the next B-IN round; rounds 123 to 125 took other analyses, so it is uncut. It uses the saved round-122 bodies and the granted GET-only positions reader; it is independent of worker ~312's four files and of the feed. Feed row D2-S91 (disarm owner ~P2) waits on the same fact.",
+   "rec": "yes: cut it as round 126 after round 125 lands green (LOCAL, no vendor call, counts and verdict words only)",
+   "scope": {
+    "measured_at": "2026-10-15T21:19:04Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/holdings-performance"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T21:42:34Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_122_20261015.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261015T213049Z-226a"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261015T213049Z-226a",
+    "at": "2026-10-15T21:30:49Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261015T223117Z-5df4",
+   "project": "IRPT_DASHBD",
+   "subject": "B-IN: build the first-real-row RUN script now (feed silver via the GET-only reader -> run() into a private local directory, with the startValue(t+1) vs endValue(t) measure), tested on fixtures, to run the day the feed's first silver lands? (yes/no)",
+   "asked_by": "2.0.0_SA_COO~I2",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_118_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T22:31:17Z",
+   "kind": "fork",
+   "context": "Rounds 123-127 left the module green on contract 0.4.2 on fixtures. ADDENDUM 6 item 2 owes a measurement on the first real rows (does Orion startValue(t+1) equal endValue(t); print count and max difference). The feed's first data waits on IB-pr-596 (~P2). The run script can be built and fixture-tested now, so the real run is a same-day act, not a new round after the data lands. It reads only and writes only a private local directory; no S3 landing, no vendor call.",
+   "rec": "yes: cut it now as round 128, LOCAL, fixtures only; the real run itself stays on the feed's first silver",
+   "scope": {
+    "measured_at": "2026-10-15T22:31:17Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/holdings-performance"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T22:49:41Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_127_20261015.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261015T224027Z-4035"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261015T224027Z-4035",
+    "at": "2026-10-15T22:40:27Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261015T232746Z-a00f",
+   "project": "IRPT_ANLREQ",
+   "subject": "Approve the Ticket Center decision tree (Yes / Replace / No) for PROD after resident release r33",
+   "asked_by": "2.0.0_SA_COO~Y2",
+   "source": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~162/r41/NOTICE_CANDIDATE.json",
+   "orders": [
+    "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-363.filing-decision-tree-yes-replace-no.md",
+    "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-364.decision-tree-gate-on-code-not-name-proxy.md",
+    "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-365.ticket-form-shows-not-covered-notice.md"
+   ],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T23:27:46Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/anlreq-filing-notice",
+    "purpose": "PRD v0.19 (Andrew's tree): for an unknown ticker the form asks Did you mean X? with Yes, Replace, No (Replace takes a typed ticker the door re-checks; No files it and says Opal Staff will manage the replacement); a real but unpriceable holding gets no prompt and the door's own notice is shown. Supersedes the Use/Keep hint (469b). No proxy wording anywhere.",
+    "pages": [
+     "Ticket Center (Analysis Request form)"
+    ],
+    "class": "opal-internal",
+    "how": "bun test src/pages/TicketCenter on the branch (148 pass); needs the dev build with resident release r33 live to see the door's words; not promotable before r33.",
+    "head_sha": "7af732ee11f14e92403b2f6b2711558cba7f8d53",
+    "commits": 3
+   },
+   "scope": {
+    "measured_at": "2026-10-15T23:27:46Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T23:37:08Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_DELL2_a00f_ANLREQ_FILING_DECISION_TREE_CANDIDATE_20261015.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T001759Z-7686",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell2/irpt-49f-report-render-disclosure-placeholder",
+   "asked_by": "2.0.0_SA_COO~D2",
+   "source": "cand/dell2/irpt-49f-report-render-disclosure-placeholder",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T00:17:59Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/irpt-49f-report-render-disclosure-placeholder",
+    "purpose": "The 49 Financial default performance report: the Performance tab and its export document rendered from the filled report (rounds 103 to 111 of IRPT_DASHBD) plus a final Disclosures page that reads the visible placeholder 'Disclosure page pending' while no firm text is supplied (Andrew, row 90ef: placeholder for now); the custody client report's unfilled disclosure slot reads it too. Nothing authors disclosure language.",
+    "pages": [
+     "InvestorReporting performance report",
+     "InvestorReporting export document",
+     "InvestorReporting client report"
+    ],
+    "class": "client-facing",
+    "how": "Read org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/reads/RD_DISCLOSURE_RENDER_R145.json (the render of this branch: 21 sheets, the last is Disclosures with the placeholder once, Page 21 of 21, a 21-page PDF) and the checks p144_placeholder.py and p145_render.py, which read this branch by commit 42a1539b.",
+    "head_sha": "42a1539b183adf19efd4ded2ead8642f48ddb3d0",
+    "commits": 22
+   },
+   "scope": {
+    "measured_at": "2026-10-16T00:17:59Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell2"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T01:53:50Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_DELL2_7686_49F_DISCLOSURE_PLACEHOLDER_AND_C02C_DESKTOP_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T004700Z-3596",
+   "project": "IRPT_DASHBD",
+   "subject": "The CTO's FWD-3 ruling makes ~F2 owner of a NEW account_class_daily producer in its own module and Terraform root, but the table already has a producer inside the reporting-gold function and an applied release (class rows landed 2026-10-07 and 08): move the existing producer out, extend it, or a different table?",
+   "asked_by": "2.0.0_SA_COO~F2",
+   "source": "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T00:47:00Z",
+   "kind": "fork",
+   "context": "Row D2-S102. A second writer of the same table address is a duplicate output path (CLAUDE.md section 5). The existing producer: data/assets/scripts/gold/irpt_reporting/account_class_daily.py (reads etf-classifications by GetItem), emitted by reporting-gold/handler.py; R37 apply CLOSED; class rows logged landed 2026-10-07 and 08. Whether the emission still runs daily is unmeasured. Gates this seat's FWD-3 producer cells.",
+   "rec": "(a) Move the existing module out of the reporting-gold function into ~F2's own module and root with one writer and no duplicate, then add the sum-to-account test and the dated classification read the ruling asks for; the live emission is read first (a read-only listing of the class prefix by ~D2 or the applier) so the move is measured, not assumed.",
+   "scope": {
+    "measured_at": "2026-10-16T00:47:00Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/holdings-performance"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T01:10:42Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T005259Z-f629"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T005259Z-f629",
+    "at": "2026-10-16T00:52:59Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T014453Z-dbfb",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell2/irpt-fwd10-partial-history-sentence",
+   "asked_by": "2.0.0_SA_COO~C2",
+   "source": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/R146_BCW_DRAIN_END.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T01:44:53Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/irpt-fwd10-partial-history-sentence",
+    "purpose": "IRPT_DASHBD FWD-10 (PRD v0.15 and v0.16): the Performance tab's partial-history note reads 'Returns from <Month D, YYYY>.' (for example 'Returns from July 10, 2026.') and states no cause, because the cause of the start is not established; a bun test pins that no fallback sentence exists on the tab. One commit, three portal files (DashboardPerformance.tsx, one new test, one assertion moved in iv-e-125). CTO technical review passed (msg 8855). Cut from origin/PROD, 0 DEV overlap.",
+    "pages": [
+     "Investor Reporting performance tab (dashboard)"
+    ],
+    "class": "client-facing",
+    "how": "git -C portal diff origin/PROD...cand/dell2/irpt-fwd10-partial-history-sentence; run the portal dev server on port 5174, open an Investor Reporting account whose history starts after the series (a partial history) and read the note under the Performance headline",
+    "head_sha": "9e0bcb6003df6464d87b15d8632f6f85e2b1bed0",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-16T01:44:53Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell2"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T03:43:55Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_034xZ_40FA_DBFB_APPROVED_C02C_POSTPONED_RELAY_DELL2.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T020139Z-d4ea",
+   "project": "IRPT_DASHBD",
+   "subject": "Worker model limit: haiku weekly limit hit (429, resets Oct 21 2am ET); amend MP-20261010 for the window, or hold",
+   "asked_by": "2.0.0_SA_COO~D2",
+   "source": "org/ref/MODEL_POLICY.json",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T02:01:39Z",
+   "kind": "act",
+   "context": "2.0.0_SA_COO~D2 msg 8864: worker ~226 died on its first call. MODEL_POLICY MP-20261010 (Andrew-direct) fixes workers to haiku; every dell2 worker stalls until the reset.",
+   "rec": "CTO ruled HOLD (no model swap; sonnet workers would draw the budget the COO and MSTR seats run on). Only Andrew can amend his model policy or raise the account limit.",
+   "scope": {
+    "measured_at": "2026-10-16T02:01:39Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting",
+     "infra/aws/terraform/investor-reporting/holdings-performance"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_unreported.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reporting-publish-cot overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/terraform/investor-reporting/reporting-publish-iso overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/terraform)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_MCPORTAL placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T02:06:29Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/mcp/inbox/1.0.0_SA_CTO/~DELL2/read/20261016T020516Z_0.0.0_AB_MSTR_DELL2_Re_8866__429_is_account-wide__the_accoun.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell2-20261016T024308Z-40fa",
+   "project": "IRPT_ANLREQ",
+   "subject": "Approve for PROD the Investor Reporting prospect composer with no price date: prices are the T-1 close (after resident release r33)",
+   "asked_by": "2.0.0_SA_COO~Y2",
+   "source": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~158/r41/ASOF_CANDIDATE.json",
+   "orders": [
+    "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-360.prospect-composer-no-price-date-t1.md",
+    "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-361.prospect-header-asof-t1.md"
+   ],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T02:43:08Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/anlreq-no-price-date-t1-asof",
+    "purpose": "Your word 'no date selection for prices, T-1 is the correct terminology': the prospect composer loses its price-date input and says 'Prices are the T-1 close.'; it sends no price date; the header card states the as-of 'T-1 close' instead of 'not supplied'. Two commits on current PROD e0e69da7; the diff against origin/PROD is exactly 3 files (the composer, its new test, one re-pinned test).",
+    "pages": [
+     "Investor Reporting > Analysis tab (prospect composer and the prospect header card)"
+    ],
+    "class": "client-facing",
+    "how": "bun test on src/pages/InvestorReporting/tabs/analysis/tests/prospect-no-price-date.test.tsx and the s55 wiring test (8 pass); typecheck clean. Needs resident release r33 live first: until then the live door still requires a price date for a file with a Shares column.",
+    "head_sha": "83993e17965a15da496fd20ca809867c1d3df2c2",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-16T02:43:08Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T03:43:54Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_034xZ_40FA_DBFB_APPROVED_C02C_POSTPONED_RELAY_DELL2.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T030312Z-2d0b",
+   "project": "IRPT_DASHBD",
+   "subject": "B-IN live read cell after the IB-pr-596 fire: your msg 8916 says 'all three firms', but the Scope feed is Inflection-only (source orion, scope inflection). Cut it for Inflection only? (yes/no, or name the other two feeds)",
+   "asked_by": "2.0.0_SA_COO~I2",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_131_20261016.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T03:03:12Z",
+   "kind": "fork",
+   "context": "Round-131 analysis: ONE live read cell for all three firms, rows counted against the feed's own manifest. The feed script I read (pull_inflection_scope_account_returns.py) writes one firm's table; I know no Cottonwood or 49 Financial Scope feed. Without your word I cut it for Inflection and report that the other two firms have no Scope feed to read.",
+   "rec": "yes: Inflection only; if Cottonwood and 49 Financial have a feed I am not aware of, name its table and I add it as a second arm",
+   "scope": {
+    "measured_at": "2026-10-16T03:03:12Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting",
+     "infra/aws/terraform/investor-reporting/holdings-performance"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_unreported.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reporting-publish-cot overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/terraform/investor-reporting/reporting-publish-iso overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/terraform)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_MCPORTAL placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T03:49:38Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T0312Z_XA-20261016T030949Z-4604.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T030949Z-4604"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T030949Z-4604",
+    "at": "2026-10-16T03:09:49Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T030409Z-7039",
+   "project": "IRPT_ANLREQ",
+   "subject": "Re-approve the Ticket Center decision tree at its brought-forward head (a00f condition 1)",
+   "asked_by": "2.0.0_SA_COO~Y2",
+   "source": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~162/r41/NOTICE_CANDIDATE.json",
+   "orders": [
+    "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-363.filing-decision-tree-yes-replace-no.md"
+   ],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T03:04:09Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/anlreq-filing-notice",
+    "purpose": "Same three commits as a00f, cherry-picked onto current origin/PROD e0e69da7 so the two-dot diff is exactly the 7 TicketCenter files; head 0ba0cb13.",
+    "pages": [
+     "Ticket Center (Analysis Request form)"
+    ],
+    "class": "opal-internal",
+    "how": "bun test src/pages/TicketCenter (148 pass); typecheck clean",
+    "head_sha": "0ba0cb13558246f2b980a702e47de3d34f3def68",
+    "commits": 3
+   },
+   "scope": {
+    "measured_at": "2026-10-16T03:04:09Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T03:08:19Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_DELL2_7039_TICKET_DECISION_TREE_BROUGHT_FORWARD_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T040640Z-ea59",
+   "project": "IRPT_ANLREQ",
+   "subject": "Release-33 sitting: leave the partner-advisor arms D2/D4 parked, and read the priceDate arms by the log count?",
+   "asked_by": "2.0.0_SA_COO~Y2",
+   "source": "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r33/DOOR_TRACE_R33.txt",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T04:06:40Z",
+   "kind": "fork",
+   "context": "AQ2 ran TO-EXERCISE-R33 on live r33: D1 and D3 as expected, D2 (partner analyses own input) INVALID_INPUT again, D4 NOT_FOUND not NOT_AUTHORIZED. The priceDate arms: log count 0/1/1 as expected for none/sent/malformed, but P1 and P1M ended RESOLVING (sent once). PRD addendum v0.6 item 4 parks the partner UI path off the FWD-1 critical path.",
+   "rec": "Leave D2/D4 parked (no cell; the finding stays in the record) and accept the priceDate arms on the log count (0/1/1); no second sitting. The criterion R33E-AC1 stays a recorded FAIL, not edited.",
+   "scope": {
+    "measured_at": "2026-10-16T04:06:40Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_MCPORTAL placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_OPLGTW placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/investor-reporting/intake/firm_registry.json overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T04:27:33Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T0412Z_XA-20261016T040953Z-01fa.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T040953Z-01fa"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T040953Z-01fa",
+    "at": "2026-10-16T04:09:53Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T050429Z-c116",
+   "project": "IRPT_ANLREQ",
+   "subject": "Run 3's unknown-ticker branches need a live probe after r34 V2: a small pair, or an order under the R34B pair?",
+   "asked_by": "2.0.0_SA_COO~Y2",
+   "source": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~165/r41/RUN3_TICKER_BRANCHES.json",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T05:04:29Z",
+   "kind": "fork",
+   "context": "Run 3 must exercise the unknown-ticker branches (CTO addendum 4), but whether a typo gets a door suggestion is a live Kimi reply checked by a live securities read, and the wired yfinance checker may KEEP a symbol it knows. Source cannot settle A1/A2 (worker 165). The probe: one minted internal viewer, a one-row-plus-SPY CSV per candidate, finding code, suggestion present or not, and actions only; NEEDS_CORRECTION stores nothing. It runs after r34's V2 is green.",
+   "rec": "A small never-widen pair (COO half from this seat, CTO half yours), because the probe mints a user and posts to the door; then one AQ2 read order. Run 3's csv and decisions are cut from its result and pair addendum 3 names them.",
+   "scope": {
+    "measured_at": "2026-10-16T05:04:29Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/ticket_center/tests/test_cross_firm_global_sites_widened.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)",
+      "portal/src/pages/TicketCenter/__tests__/hop-failure-read.test.tsx overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)",
+      "portal/src/pages/TicketCenter/__tests__/commentary-package.test.tsx overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)",
+      "portal/src/pages/TicketCenter/__tests__/package-open.test.tsx overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T05:27:03Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T0513Z_XA-20261016T051004Z-d5bd.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T051004Z-d5bd"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T051004Z-d5bd",
+    "at": "2026-10-16T05:10:04Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T055011Z-92c0",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell2/irpt-fwd10-unreported-days-sentence",
+   "asked_by": "2.0.0_SA_COO~C2",
+   "source": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/R147_BCW_DRAIN_END.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T05:50:11Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/irpt-fwd10-unreported-days-sentence",
+    "purpose": "IRPT_DASHBD FWD-10: the Performance tab says which trading days the source did not report, for the window shown (N trading days not reported by the source: dates), read from the served series list and never computed; the page's series mirror takes on contract 0.3.0 (five optional names, income may be null).",
+    "pages": [
+     "Investor Reporting performance tab (dashboard)"
+    ],
+    "class": "client-facing",
+    "how": "Open the Investor Reporting dashboard Performance tab on a series that carries unreported_trading_days; the fixtures under src/pages/InvestorReporting/__tests__/irpt-dashbd/fixtures show the shapes. No Cottonwood series is published yet, so a live account does not show the sentence; bun test src/pages/InvestorReporting/__tests__/irpt-dashbd/fwd10-unreported-days.test.tsx passes 8 of 8.",
+    "head_sha": "9c24c7bdac5775d18a66460748adbb694d2b1f98",
+    "commits": 4
+   },
+   "scope": {
+    "measured_at": "2026-10-16T05:50:11Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell2"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T06:28:19Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_062xZ_APPROVE_92C0_DELETE_BOTH_SCRATCH_FOLDERS.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T060733Z-d33f",
+   "project": "TCKT_VNEXT",
+   "subject": "Combined ticket release: the client ack and pickup notices to requesters stop until firm contacts are set; supply the contacts in the same apply, or does the stop need Andrew's promote word?",
+   "asked_by": "2.0.0_SA_COO~V2",
+   "source": "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_REL/R18_R19_COMBINED_REL_PAIR.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T06:07:33Z",
+   "kind": "fork",
+   "context": "The combined R18+R19 ticket release (gated on the laptop bucket apply, target Oct 20) ships CLIENT_NOTICE_CONTACT_MAP empty, so the ack and pickup notices to requesters stop (today they go to the address the request body names; the live function has no switch). ADDENDUM 7 says a client-facing route among items 1 to 3 waits on Andrew's promote word. Gates the release apply (pair section 7).",
+   "rec": "Supply the firm contacts in the same apply (one main.tf row, no code; the open input is owned by 1.0.0_SA_CTO~DELL2) so no notice is lost and no promote word is needed. If the contacts are not ready, the CTO rules whether the stop needs Andrew's word. Why: the stop is avoidable, and a lost notice is the only client-visible effect.",
+   "scope": {
+    "measured_at": "2026-10-16T06:07:33Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T06:10:43Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_TCKT_VNEXT_CLIENT_NOTICE_MAP_EMPTY_AT_RELEASE_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell2-20261016T064045Z-0633",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell2/ticket-hop-failure-read",
+   "asked_by": "2.0.0_SA_COO~V2",
+   "source": "cand/dell2/ticket-hop-failure-read",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T06:40:45Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/ticket-hop-failure-read",
+    "purpose": "The Ticket Center board shows, under an analysis-request ticket, the words of a failed hop of the request (the status route's own words) while no package is attached. One status read when the ticket is shown and one on Refresh; no write, no new route, no new colour. IRPT_ANLREQ FWD-4, C-HOP-FAILURE v0.21, CTO ruling msg 8908 (Opal-internal).",
+    "pages": [
+     "Ticket Center board (AnalysisRequestParts",
+     "TicketCenter): the staff view only"
+    ],
+    "class": "opal-internal",
+    "how": "Sign in as an Opal staff login on portal DEV, open the Ticket Center, open an analysis_request ticket whose request failed at a hop: the failure's words show under the ticket; a ticket with a package attached shows none. A partner-firm login never reaches it: its view returns before the board (TicketCenter.tsx, the partner branch).",
+    "head_sha": "e564a543882dd7240594f7759d560e47c4e06dcc",
+    "commits": 4
+   },
+   "scope": {
+    "measured_at": "2026-10-16T06:40:45Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell2"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T06:59:18Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "declined"
+   }
+  },
+  {
+   "id": "dell2-20261016T065320Z-6ecb",
+   "project": "TCKT_VNEXT",
+   "subject": "Who names each client firm's ticket-notice contact? The firm registry holds only a domain and no CRM is cataloged: Andrew names one per firm, derive from the users table, or a role mailbox?",
+   "asked_by": "2.0.0_SA_COO~V2",
+   "source": "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_REL/CLIENT_NOTICE_CONTACT_SOURCES.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T06:53:20Z",
+   "kind": "fork",
+   "context": "CTO ruling msg 9120 owes one contact per enabled client firm (49financial, inflection, cottonwood) before the Ticket Center opens to clients, from the registry or CRM. Measured: the registry has a firm email_domain and no person; the catalog has no CRM source; the users table has 13, 8 and 9 active people, one admin (cottonwood). Not release-blocking (the map ships empty); gates the client opening.",
+   "rec": "Andrew names one notice contact per client firm (three names) at or before the client opening; the issuer then writes the per-firm row in its own cell under a pair. Why: it is the only option that yields a confirmed recipient for all three firms; the users-table admin exists only at cottonwood, and a role mailbox invents an address no one confirmed.",
+   "scope": {
+    "measured_at": "2026-10-16T06:53:20Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T06:59:20Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell2-20261016T065548Z-8ddd",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell2/irpt-series-mirror-contract-031",
+   "asked_by": "2.0.0_SA_COO~C2",
+   "source": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C26_BUILD_BYTES_R148.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T06:55:48Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/irpt-series-mirror-contract-031",
+    "purpose": "IRPT_DASHBD: the portal's series mirror takes on series contract 0.3.1 (the sixth optional name income_claim, the manifest's optional calendar_source), so the pin test iv-e-124 is green against the trunk contract. Type-only: the built dist is byte-identical to the build without it (88 of 88 files, 63 of 63 JS and CSS chunks; chunk-set hash 8890552b43cca4fe; positive control moves 44). Class opal-internal on the CTO's ruling msgs 9136 and 9144.",
+    "pages": [
+     "none changed: a type-only series mirror (the Investor Reporting dashboard's emitted bytes are identical)"
+    ],
+    "class": "opal-internal",
+    "how": "Compare: build origin/PROD plus this commit against origin/PROD plus the 92c0 head; the record is org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C26_BUILD_BYTES_R148.md @6151ed7f01. bun test iv-e-124 and fwd10-unreported-days: 9 pass; typecheck rc 0.",
+    "head_sha": "a020da0bff1f043fb8dd58060e818f5290e307ab",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-16T06:55:48Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell2"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T06:59:17Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T071559Z-d870",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell2/ticket-hop-failure-read",
+   "asked_by": "2.0.0_SA_COO~V2",
+   "source": "cand/dell2/ticket-hop-failure-read",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T07:15:59Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/ticket-hop-failure-read",
+    "purpose": "RE-REGISTRATION after the CTO declined row 0633 at head e564a543 (the code set lacked the generator codes). The Ticket Center board shows, under an analysis-request ticket, the words of a failed step of the request while no package is attached: the five silent hops AND now the generator's own failures (ANALYSIS_FAILED, ANALYSIS_REQUIRES_ATTENTION, DELIVERIES_EXHAUSTED), one test per code. One status read when the ticket is shown and one on Refresh, none for a finished request; no write, no new route, no new colour. IRPT_ANLREQ FWD-4, C-HOP-FAILURE v0.21.",
+    "pages": [
+     "Ticket Center board (AnalysisRequestParts",
+     "TicketCenter): the staff view only"
+    ],
+    "class": "opal-internal",
+    "how": "Sign in as an Opal staff login on portal DEV, open the Ticket Center, open an analysis_request ticket whose request failed (a hop or the generator): the failure's words show under the ticket; a ticket with a package attached shows none. A partner-firm login never reaches it: its view returns before the board (TicketCenter.tsx, the partner branch). Measured on the PROD-based branch: diff vs PROD is 3 files, tsc 0, TicketCenter suite 141 pass 0 fail, cell check OK pass=13.",
+    "head_sha": "ac828834e433d873fd118bd5d3d3e45d362cbd55",
+    "commits": 5
+   },
+   "scope": {
+    "measured_at": "2026-10-16T07:15:59Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell2"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T07:24:05Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T073506Z-05ce",
+   "project": "IRPT_ANLREQ",
+   "subject": "The approved ticket-page candidate (ac828834) does not merge into DEV: waive the dev-overlap for a DEV-based re-cut (A), or hold the PROD-based head until the overlapping features reach PROD (B)?",
+   "asked_by": "2.0.0_SA_COO~V2",
+   "source": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/R3_V_DEV_MERGE_CONFLICT.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T07:35:06Z",
+   "kind": "fork",
+   "context": "d870 is approved but portal-merge-forward refuses: a genuine conflict in AnalysisRequestParts.tsx and TicketCenter.tsx with five unreleased DEV commits (AR-y-365, AR-y-363, AR-y-332, round 18's meeting and trade candidate). The merge parents must be DEV and the approved tip, so only a new head clears it. A DEV-based re-cut applies cleanly (tsc 0, 196 pass 0 fail, cell check 13/13) but the registration check refuses it (dev-overlap 38/43) without a waiver. Gates the page's landing on DEV, so FWD-4's live run.",
+   "rec": "A with the waiver, and the promote list ordered with the four overlapping features first. Why: FWD-4's run needs the page on DEV when the r34 resident writers and the commentary writer land, and the overlapping features' promotion is not under this seat's control; the PROD-based head stays on origin, so B remains open at no cost.",
+   "scope": {
+    "measured_at": "2026-10-16T07:35:06Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_MCPORTAL placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_OPLGTW placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/investor-reporting/intake/firm_registry.json overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T07:56:48Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T0742Z_XA-20261016T073942Z-102b.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T073942Z-102b"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T073942Z-102b",
+    "at": "2026-10-16T07:39:42Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T075042Z-a06e",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell2/ticket-hop-failure-read-dev",
+   "asked_by": "2.0.0_SA_COO~V2",
+   "source": "cand/dell2/ticket-hop-failure-read-dev",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T07:50:42Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/ticket-hop-failure-read-dev",
+    "purpose": "The DEV-based form of the approved ticket-page hop-failure read (CTO ruling on row 05ce, option A, for DEV only; the PROD-based head ac828834 stays on origin for the PROD promote). The Ticket Center board shows, under an analysis-request ticket, the words of a failed step of the request while no package is attached: the five silent hops and the generator's own failures (ANALYSIS_FAILED, ANALYSIS_REQUIRES_ATTENTION, DELIVERIES_EXHAUSTED). One status read when the ticket is shown and one on Refresh, none for a finished request; no write, no route, no colour. IRPT_ANLREQ FWD-4, C-HOP-FAILURE v0.21.",
+    "pages": [
+     "Ticket Center board (AnalysisRequestParts",
+     "TicketCenter): the staff view only"
+    ],
+    "class": "opal-internal",
+    "how": "Sign in as an Opal staff login on portal DEV, open the Ticket Center, open an analysis_request ticket whose request failed (a hop or the generator): the failure's words show; a ticket with a package attached shows none. A partner-firm login never reaches it (its view returns before the board). Measured on this head over DEV 34a6baf8: tsc 0, TicketCenter suite 196 pass 0 fail, cell check OK pass=13.",
+    "head_sha": "bdeeaa88f3596a761b85dd66fd377f850e390bde",
+    "commits": 43,
+    "waiver": {
+     "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_05CE_DEV_OVERLAP_WAIVER_TICKET_HOP_FAILURE_READ_DEV_20261016.md",
+     "shas": [
+      "34a6baf8657bb166676dc3b8c3eec97ee8d3e585",
+      "a020da0bff1f043fb8dd58060e818f5290e307ab",
+      "03f92d82c23fc270e1115c15989e7637f430e16d",
+      "f7eb6b1459037d22cbc019d1be36767b106f3421",
+      "39dab87f3b0c846db4354abda527f1c18825796d",
+      "9e0bcb6003df6464d87b15d8632f6f85e2b1bed0",
+      "0ba0cb13558246f2b980a702e47de3d34f3def68",
+      "e58c64ad7996261b184b4f99c5a6bbd47b76f07a",
+      "9b20efde91269e8b89fada01e1670a41402078a1",
+      "d6fd06842f85e21f448b82309d95c92cd593bada",
+      "ee278065576ea771f60291190f5b2307d73d3087",
+      "ad7c100b5cca9020f18a2957112361f4b9083272",
+      "e0b033253b973fcc19779a3783bc4979c14c65a0",
+      "85f1d324bdfa69438a03b197c5a20864d3bf7485",
+      "e578b378d332ad1505018be3801466dac7aeeade",
+      "bbad56e354e9091170fe8a94c02b03c824bc4aba",
+      "90d615c0873f6c74e49dcbd19f3fd7d276d86cef",
+      "66d221626ec3ca04b68485b95ec7998d0dd60264",
+      "c05e3ddaa1ce97ecb98fe26d5f592dd01fbf0e2a",
+      "12c164a0732db6b040df78a0a5d820e9fb220a96",
+      "a17932990a377161ce94c69375f2639348542eb1",
+      "284e54d27206025ef7bfc3d7b3bf7f276c1bc52a",
+      "b763674bb4d5e62e40e6dbec78f4d7dacc34ba06",
+      "9de7c7e3227c321d45c2b6d3d3ccf72590b20710",
+      "3db44fe0e9c3392e37cb39f4ef142fd3f22b3514",
+      "00f5c1b44cd257a63eacac0ec0cf15202ddf51cd",
+      "9e637fe51ebfa6322910cc032945a1e755e9ea13",
+      "1c5f9daeb887b138a3d67f7a84c4952b0b6ae162",
+      "7f6c698d429cffeb5990265ed35d20a46e6735e3",
+      "34cd12d2d041e225767c8c80176570d6921a011a",
+      "4f1004518604cac12f296c7c808d81475e903cec",
+      "97c66c93640b5853e2ec1dbd5d73765f2e888321",
+      "22795405240520ea0fb4f87f942b20c285190696",
+      "2deb4f1d864d8fa23cccbf9a11fb3266c88e1042",
+      "ab8ecc5662c9166bc4b3ff3d9ba370733ba4d3cf",
+      "514df1bbf04d91f88dad30f6336b8992228710a6",
+      "5e40e54119474b50702f71db979df861481615a4",
+      "24877b67b7a175bcfe73c779f69c0bf7c3c639c8"
+     ]
+    }
+   },
+   "scope": {
+    "measured_at": "2026-10-16T07:50:42Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell2"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T07:57:39Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T095852Z-e6ef",
+   "project": "IRPT_DASHBD",
+   "subject": "How do the 65 landed Cottonwood gold days get the derived history_scope: (a) delete and re-land, (b) the publisher derives, or (c) a signed explicit rewrite path? REC (c)",
+   "asked_by": "2.0.0_SA_COO~D2",
+   "source": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/OPEN_CALL_COTTONWOOD_GOLD_HISTORY_SCOPE_CORRECTION_ROUTE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T09:58:52Z",
+   "kind": "fork",
+   "context": "The Cottonwood landing refuses to overwrite a landed day; cell DB-b-294 derives the scope for new days only; gates the Cottonwood part of the history_scope work (landing code update, gold correction, republish); the 49 Financial side does not wait",
+   "rec": "(c): an explicit rewrite event like the 49 Financial backfill; deletes nothing, bucket versioned, rule stays in the producer",
+   "scope": {
+    "measured_at": "2026-10-16T09:58:52Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/holdings-performance"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_handler_unreported.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_MCPORTAL placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T10:27:17Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T1003Z_XA-20261016T100029Z-3b66.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T100029Z-3b66"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T100029Z-3b66",
+    "at": "2026-10-16T10:00:29Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T105058Z-dc59",
+   "project": "IRPT_ANLREQ",
+   "subject": "Delete (or keep) the synthetic test objects in the 49financial intake store: 5 run-3 probe CSVs + 8 from the R33 sitting (more if the re-probe runs)",
+   "asked_by": "2.0.0_SA_COO~Y2",
+   "source": "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_fwd1_r3/OBJECTS_WRITTEN_FWD1_R3.txt",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-16T10:50:58Z",
+   "kind": "act",
+   "context": "FWD-1 run 3 probe (AQ2 record 51686af530, OBJECTS_WRITTEN_FWD1_R3.txt) stored 5 synthetic one-row-plus-SPY CSVs (intake 301 -> 306 versions); the R33 sitting stored 8. Synthetic data only, no client figures. Kept as evidence under the run-3 pair; deleting S3 objects is Andrew's act.",
+   "rec": "Keep until FWD-1 run 3 is graded, then delete the listed keys and VersionIds in one act (never a prefix wildcard). Nothing depends on deleting them now.",
+   "scope": {
+    "measured_at": "2026-10-16T10:50:58Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_MCPORTAL placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_OPLGTW placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/investor-reporting/intake/firm_registry.json overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "dell2-20261016T112339Z-6099",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell2/irpt-series-mirror-contract-033",
+   "asked_by": "2.0.0_SA_COO~C2",
+   "source": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C30_BUILD_BYTES_R150.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T11:23:39Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell2",
+    "branch": "cand/dell2/irpt-series-mirror-contract-033",
+    "purpose": "IRPT_DASHBD: the portal's series mirror takes on series contract 0.3.1 and 0.3.3 (the optional names income_claim, history_scope_claim and history_scope_basis; the manifest's calendar_source), two commits on the PROD tip, so the pin test iv-e-124 is green against the trunk contract. Type-only: the built dist is byte-identical to origin/PROD's (88 of 88 files, 63 of 63 JS and CSS chunks; chunk-set hash 8890552b43cca4fe on both). Class opal-internal on the CTO's ruling msgs 9136 and 9144.",
+    "pages": [
+     "none changed: a type-only series mirror (the Investor Reporting dashboard's emitted bytes are identical)"
+    ],
+    "class": "opal-internal",
+    "how": "Compare: build origin/PROD against this branch; the record is org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C30_BUILD_BYTES_R150.md. bun test iv-e-124 and fwd10-unreported-days: 9 pass; typecheck rc 0.",
+    "head_sha": "831f974aa1d4b3df061af3a29337917c154eda01",
+    "commits": 2
+   },
+   "scope": {
+    "measured_at": "2026-10-16T11:23:39Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell2"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T11:28:04Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell2-20261016T122517Z-80ad",
+   "project": "IRPT_DASHBD",
+   "subject": "Portal DEV merge-forward of 6099 (cand/dell2/irpt-series-mirror-contract-033 @831f974aa1) REFUSED on a benign conflict in seriesContract.ts: may the COO complete it taking the candidate's file for that one path (script trailers kept, MSTR pushes)? yes/no",
+   "asked_by": "2.0.0_SA_COO~C2",
+   "source": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/R150_BCW_DRAIN_END.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T12:25:17Z",
+   "kind": "fork",
+   "context": "DEV already carries the 0.3.1 mirror (my 8ddd merge, a020da0b); the PROD-based candidate re-cuts it plus the 0.3.3 lines, so the SERIES_OPTIONAL line differs on both sides; DEV's file equals the candidate's minus the five 0.3.3 lines (measured). PROD already has the change (64f9dba10528). Gates: iv-e-124 stays red on DEV and the W225 disarm until DEV carries it.",
+   "rec": "yes: the resolution is mechanical (take the candidate's seriesContract.ts), the content equals what you approved at 831f974aa1; then MSTR pushes DEV and I run iv-e-124 on origin/DEV and disarm W225.",
+   "scope": {
+    "measured_at": "2026-10-16T12:25:17Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/holdings-performance"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of TCKT_MTADTA placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T12:56:58Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T1236Z_XA-20261016T122825Z-7f7d.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T122825Z-7f7d"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T122825Z-7f7d",
+    "at": "2026-10-16T12:28:25Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
    }
   }
  ]
