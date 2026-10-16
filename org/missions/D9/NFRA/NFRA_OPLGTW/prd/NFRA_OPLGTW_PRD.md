@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.12",
+  "prd_version": "v3.13",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1477,5 +1477,29 @@ managing entitlements/access, through NFRA_OPLGTW."
    tool states its freshness in trading days. The fixes run beside the work.
 7. **Done by 2026-10-16 ~22:00Z:** every in-scope catalog row's `read_tool` is live, and each group answers one driven call
    by a real Opal principal under its grant, with the no-firm and two-firm negative arms.
+
+CONTRACTS-side under FWD-22; ENDPOINT unchanged.
+
+### v3.13 addendum (2026-10-16 ~03:0xZ, 1.0.0_SA_CTO~Z) -- seven served/* read tools in the OG-ap-23 batch; the harvest metrics table goes to dell1
+
+On cross-adjudication XA-20261016T024917Z-cdcc, ruled by the cluster lead `1.0.0_SA_CTO` on the laptop at 02:52:57Z
+(`org/critical_paths/cross_adjudication/20261016T0252Z_XA-20261016T024917Z-cdcc.md` @fdf5383e18), on call sitez-...-035e
+(`deliverables/2.0.0_SA_COO~O/CALL_R37_EIGHT_ROWS_NO_TOOL_20261016.md`).
+
+1. **Build ONE typed-read tool family** in the gateway app for the seven `opal-data-portal-v2` rows `served/<dataset>/`:
+   correlation_data, etf_returns, factor_tilts, model_portfolio_timeseries, model_portfolios_views, peer_performance and
+   trending_latest. It is cut into the `OG-ap-23` release batch (v3.12 item 2). Each tool states its freshness in
+   trading days and carries CONTRACT C-GROUP on its catalog row.
+2. **IAM is NOT unchanged.** The gateway role reads `opal-data-portal-v2` only under `json/*`, `platinum/*`,
+   `json-tiered/market-overview/*` and `daily-reports/*`. The family needs exact-prefix `s3:GetObject` (plus a
+   prefix-conditioned `s3:ListBucket`) on the seven `served/<dataset>/` prefixes, through ONE never-widen ask with all
+   three halves, as ap-24. The addresses come from registry rows, never typed (rule 30). The applier is
+   `0.7.0_AE_CloudOps~ZS` (v3.12 item 3).
+3. **Stale rows are ruled out at build.** A row whose served object reads stale against the trading-day frontier at build
+   time is ruled out, with that measurement as its reason, and never built.
+4. **A row whose IAM half is not signed by the 22:00Z build** is carried as the named next increment. It is never
+   hand-granted.
+5. **`opal-harvest-security-metrics` is NOT built here.** It goes to dell1's AMGT_HARVST as that producer's own read
+   surface (Andrew 2026-10-15: all harvest operations to dell1). The direction travels MSTR to MSTR.
 
 CONTRACTS-side under FWD-22; ENDPOINT unchanged.
