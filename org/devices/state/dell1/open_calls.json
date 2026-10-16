@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-16T15:50:01Z",
+ "written_at": "2026-10-16T15:57:40Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -5727,7 +5727,7 @@
    "source": "org/tier1_exec/2.0.0_SA_COO~R2/drive_log_20261016T15Z_desktop-hk1uu7n.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-16T15:45:19Z",
    "kind": "fork",
    "context": "R2 ran portal-release-build.sh --features on the two approved Security Analysis branches to measure the pair before cutting the promote order (READY, unapproved 0). It left a local release branch in the portal repo, never pushed, not in PROD; the DT built its own release (release/20261016T141737Z) and promoted fa21a303d872. Nothing depends on it.",
@@ -5767,7 +5767,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-16T15:57:40Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_RULING_F992_DELETE_LOCAL_RELEASE_DRY_RUN_REF_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T155000Z-f050"
+   },
    "escalation": {
     "to": "xadj",
     "ref": "XA-20261016T155000Z-f050",
