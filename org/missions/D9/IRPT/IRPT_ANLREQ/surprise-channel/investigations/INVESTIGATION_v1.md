@@ -20841,3 +20841,55 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W165-S2."
 }
 ```
+
+## IRPT_ANLREQ-D2-W226-S1 -- the order asks to keep CRLF endings; INVESTIGATION_v1.md carries no CR byte, so the row is appended in LF
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W226-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~226",
+  "surfaced_at": "2026-10-16T03:22:00Z",
+  "one_line": "TO-AR-tf-72 says to append with the file's existing CRLF line endings preserved; INVESTIGATION_v1.md has no CR byte",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-72 (org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-tf-72.commentary-lambda-calls-fail-op.md, the worker preamble) instructs: append to the surprise channel with the file's existing CRLF line endings preserved, binary append only.",
+  "world_is": "surprise-channel/investigations/INVESTIGATION_v1.md has zero CR bytes at HEAD cd692a3b94 and in worktree C:/dev/wk-irpt-anlreq-226; every existing row ends in LF. This row is appended in LF with a binary append, so the file stays uniform and no CRLF is introduced.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md@cd692a3b94: git show HEAD:<path> | tr -cd CR | wc -c = 0",
+      "same file in worktree wk-IRPT_ANLREQ-226: tr -cd CR | wc -c = 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The append is a binary append that matches the file's actual line endings."
+}
+```
+
+## IRPT_ANLREQ-D2-W226-S2 -- the worktree is sparse: three tracked infra paths the commentary tests read are absent on disk, so three existing tests fail with FileNotFoundError
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W226-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~226",
+  "surfaced_at": "2026-10-16T03:22:00Z",
+  "one_line": "Worktree wk-IRPT_ANLREQ-226 has core.sparseCheckout=true; infra/aws/terraform/transcripts and infra/aws/lambda/transcripts-pull are tracked at HEAD but absent on disk",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker preamble's TREE-OK check (org and .tools present) passes, and the order's acceptance is the R46 checker over the cell's own test file.",
+  "world_is": "git config core.sparseCheckout is true in C:/dev/wk-irpt-anlreq-226. git ls-files lists 11 files under infra/aws/terraform/transcripts and 3 under infra/aws/lambda/transcripts-pull, and neither folder exists on disk. Three existing tests read those paths and fail with FileNotFoundError: test_commentary_ready_queue.py::test_tf_subscribes_lambda_to_ready_queue, test_commentary_composition_port.py::test_tf_commentary_ready_queue_send_grant_and_receive_policy, test_commentary_composition_port.py::test_build_packages_keys_module. The other 28 neighbouring commentary tests pass, and the new file passes 11 of 11. Not caused by this cell and not repaired here (outside the grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files infra/aws/terraform/transcripts and infra/aws/lambda/transcripts-pull at cd692a3b94: 11 and 3 paths",
+      "pytest over data/transcripts/scripts/tests/test_commentary_{lambda,ready_queue,composition_port,ticket_client,entry}.py in wk-IRPT_ANLREQ-226: 3 failed, 28 passed, all three FileNotFoundError"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worktree sparse-checkout setting belongs to the worktree owner; this cell does not change it."
+}
+```
