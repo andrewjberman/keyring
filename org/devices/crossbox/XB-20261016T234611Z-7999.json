@@ -11,8 +11,8 @@
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_NPM_PACK_SENT_DELL1.md",
  "opened_at": "2026-10-16T23:46:11Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-16T23:48:09Z",
+  "bus_message_id": "300520c1-527b-4443-bb7c-17a567583d38"
  },
  "ack_bus_message_id": null,
  "closed_from": {
