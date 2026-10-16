@@ -62,6 +62,25 @@ in the account-side files. The best available route is account -> STMT/CLNT name
 account-registration file (account number with owner SSN or TaxID), or an Orion/CRM account-to-household link export.
 Ask Cottonwood for either.
 
+## Addendum ~02:1xZ: Andrew asked "is there anything else in here that can be used as a key?"
+
+Second pass, same instrument, counts only:
+
+- **CRM activity notes are the best route.** `Activities` has 109,883 lines. The free text mentions 52 of the 83
+  portfolio account numbers, and each line's `regardingid` names a CRM household (97 mentions) or contact (12 mentions);
+  17 mentions name something else. 51 accounts resolve to a household this way: 50 to a single household, and 1 to
+  several (the majority is taken).
+- **Insurance policy numbers:** 5 of the 91 `Manualinsurance.PolicyNumber` values equal a portfolio account number, and
+  those rows carry `HHID`. None of the 5 overlaps the activity route.
+- **The routes agree.** On the 20 accounts that both the activity route and the name route resolve, 20 of 20 land on the
+  same household.
+- **Union of the three routes (activity, name, insurance): 63 of 83 accounts reach a CRM household; 20 do not.**
+  The remaining 20 by shape: 11 `AAA999999`, 5 `A9A999999`, 5 11-digit, 3 `999999AAA`, 2 `A9999999`, 1 `AA999999999`.
+- **Not keys:** the CRM custom fields (Electronic Delivery, Preferred Contact Method, Net Worth, Referred by, FinaMetrica
+  Score, Golf); the NCSD `Folder` (15 values, equal to no account suffix); the transaction notes (generic
+  transaction text); the archive `ReadMe.txt` (it confirms that the folders are rep codes under the primary PlanID).
+- **Handling:** 86 activity lines carry SSN-shaped text. Any copy of `Activities` must be treated as sensitive.
+
 Instrument: `python -I` over `zipfile`, in memory, with scripts in this session's scratchpad (not committed). The
 S3 copy under `s3://opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/` stays unread from the laptop:
 `Andrew_Berman` gets 403 on HEAD and an explicit bucket-policy deny on ListBucket (read 2026-10-16 ~01:4xZ).
