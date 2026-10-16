@@ -26,3 +26,9 @@
 - **Thread live: n** for these rounds: nothing was deployed, minted or uploaded. The first live reading is IB-pr-605's after-read.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-16 ~04:3xZ)
+
+Rounds 6 and 8 are re-graded MAY-CLOSE (CVO msgs 9051, 9052), on pure renames (R100) b9b0615637 and fc80699050. **All six ~PL rounds may
+close.** The CVO notes that the override audit line carries no reason field, so the ruling id lives in the commit message only. That is
+recorded, not acted on here.
