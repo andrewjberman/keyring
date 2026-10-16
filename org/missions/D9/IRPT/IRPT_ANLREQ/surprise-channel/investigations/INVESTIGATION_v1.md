@@ -22853,3 +22853,31 @@
   "world_is": "Four of the seven made calls (the artifact download and report routes) answered 200 to a principal whose scope names only cottonwood; only the ticket body, the form-as-filled route and the ticket list withheld the ticket. The data read is synthetic. The control proves the routes are live and the fence is what differs. Which layer should fence these four routes is the CTO's call (S134 stays ARMED)."
 }
 ```
+
+## IRPT_ANLREQ-D2-S156 -- FWD-5 live run: the cottonwood principal read 200 on four report-side routes for a 49financial request; the driver grades it LEAK, the bodies were not kept
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S156",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T21:21:03Z",
+  "one_line": "The FWD-5 live sitting (IB2, 21:13Z, order IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-ib2) read ticket-read 403, form-as-filled 403 and a ticket-list 200 without the ticket id for the cottonwood principal, but 200 on original-upload, opal-report, report-pdf and commentary-pdf for 49financial's request, with body lengths equal to the entitled control's (434, 414, 424, 446): a possible cross-firm exposure of Opal-signed links, not yet classified.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "PRD FWD-5: another firm never sees the request, the package or the commentary; owned_report.py serves the artifact routes as Opal-signed links under the principal's firm, and served.py:1234-1236 refuses a selected tenant that differs from the verified firm unless the caller is internal.",
+  "world_is": "Read from the sitting's reports (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5/, route names, statuses and lengths only): run principal (firm cottonwood, allowedFirmIds cottonwood) exit 1: REFUSED 3, LEAK 4, UNREACHED 0; control (firm opal-capital, allowedFirmIds 49financial) exit 0: ALLOWED 6, DENIED 1 (form-as-filled 404). The driver grades ANY 2xx on these routes a LEAK (fwd5_driver.py:193-196) and never keeps a body, so whether the four 200s carried a signed link (owned_report.py:379 returns a download_route url, sha256 and byte_length, about the lengths seen) or an identity-independent envelope is UNREAD. One more read, made by the issuer: the irpt-status log group shows 8 invocations in 21:05-21:16Z (25 events: START, END, REPORT, one INIT) with no application line (no INTERNAL-CALLER-CLASS, no error line); this fits four routes by two identities and does not by itself prove the principal was admitted, since refusals may not print. The CTO (msg 9900) treats it as a real exposure until classified, traces the routes, and ruled no re-run and no new principal meanwhile. Both principals were removed (R56-ABSENT-OK); no ticket, request or job was written; FWD-5 is NOT graded and S134 stays armed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5/fwd5_run_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5/fwd5_control_report.json",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1234",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:379"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
