@@ -26,6 +26,13 @@ productivity correctly." then "in govern loop too". Record
 Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each box's first slot only: laptop `:00`, `~Z`
 `:06`, `~DELL1` `:12`, `~DELL2` `:18`.
 
+**30m from 2026-10-16 ~02:4xZ for `/self-drive` and `/canonical-drive`** (`/govern` is not named and stays 60m). Andrew-direct,
+relayed by `0.0.0_AB_MSTR~DELL2` msg 8926, VERBATIM: "ON, all CTO COO agents should now be on 30m loops for /self-drive {Each CTO
+adjudicates their box activities} /canonical-drive {the project the COO is assigned}, respectively". Record
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261016_024xZ_KEEP_DRIVING_ON_30M_SELF_DRIVE_CANONICAL_DRIVE.md` @def0cd29c2
+(origin/box/laptop). Class DIRECTED, chooser Andrew. This line supersedes the 60m above for those two loops on every box. The dell2 rows are
+landed by 1.0.0_SA_CTO~DELL2; each other box's CTO lands its own.
+
 ## Holds
 
 - `2.0.0_SA_COO` (base): D2 off until Andrew lifts it.
@@ -142,6 +149,25 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
     - `2.0.0_SA_COO~G2` also holds IRPT_ANLREQ WORKSTREAM G (the resident release 4: AR-g-21 to AR-g-23), under its existing
       `/canonical-drive` 60m loop, CHOSEN. Ruled by 1.0.0_SA_CTO~DELL2 ~06:1xZ on `2.0.0_SA_COO~G2` msg 4247: the lane issued that
       workstream before the crash, and its write surface is disjoint from `2.0.0_SA_COO~Y2`'s. No new seat. Same stop.
+    - **DELL2 COO SET AT 30m, ADDED 2026-10-16 ~02:4xZ by 1.0.0_SA_CTO~DELL2** on the 30m word above. Each seat runs `/canonical-drive 30m`
+      over the scope the parallelization ruling gives it
+      (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_PARALLELIZE_WORKSTREAM_ASSIGNMENTS_20261015.md` @1a39b02d2e, on
+      Andrew's "lets do that", record `ANDREW_DIRECT_20261015_231xZ_PARALLELIZE_IRPT_SUITE_GO.md`). This row supersedes the 60m cadence
+      of every dell2 COO row above; their scopes stand where this row does not restate them. Eleven seats:
+      - `2.0.0_SA_COO~Y2`: IRPT_ANLREQ (FWD-1 thread, interim driver);
+      - `2.0.0_SA_COO~G2`: IRPT_ANLREQ workstream G (engine, brand, releases);
+      - `2.0.0_SA_COO~T2`: IRPT_ANLREQ workstream TX (FWD-4/5);
+      - `2.0.0_SA_COO~V2`: TCKT_VNEXT (FWD-10/11);
+      - `2.0.0_SA_COO~P2`: IRPT_BCKEND holdings;
+      - `2.0.0_SA_COO~N2`: IRPT_BCKEND Inflection feeds;
+      - `2.0.0_SA_COO~S2`: IRPT_BCKEND export, routes and serve path;
+      - `2.0.0_SA_COO~D2`: IRPT_DASHBD B-49F plus the contract (and DSGN_IRPTV1, as above);
+      - `2.0.0_SA_COO~C2`: IRPT_DASHBD B-CW Cottonwood;
+      - `2.0.0_SA_COO~I2`: IRPT_DASHBD B-IN Inflection;
+      - `2.0.0_SA_COO~F2`: IRPT_DASHBD F-SHIP.
+      `1.0.0_SA_CTO~DELL2` `/self-drive 30m` over the dell2 box (arming record
+      `ANDREW_DIRECT_20261015_020xZ_SELF_DRIVE_DELL2_BOX_KEEP_DRIVING_ON.md`, cadence change @9bfb404220). Stop: the scope's outcomes
+      REALIZED, HELD-AT-STOP, or his stand-down.
     - Not seated: `2.0.0_SA_COO~B2` ADVI_BILLING and `2.0.0_SA_COO~O2` NFRA_OPSWKF (both WAITING in `sequence-check` on Andrew's inputs).
   - No row: the Microsoft Defender CPU sampling Monitor (record section 5). He asked that seat to "keep an eye"; it is a watch, not a loop.
 
@@ -164,7 +190,12 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
     stand-down.
   - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
     2.0.0_SA_COO~D.
-- `2.0.0_SA_COO~O` (NFRA_OPLGTW), `~MI` and `~MI2` (NFRA_MCPINDEX), `~MP` (NFRA_MCPORTAL): `/canonical-drive <own project> 60m`,
+- `1.0.0_SA_CTO~Z` `/self-drive 30m` over every open call on site Z, DIRECTED, chooser Andrew (~02:4xZ 2026-10-16, relayed by
+  `0.0.0_AB_MSTR~Z` msg 34667, VERBATIM: "ON, all CTO COO agents should now be on 30m loops for /self-drive {Each CTO adjudicates
+  their box activities} /canonical-drive {the project the COO is assigned}, respectively"). Arming record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_024xZ_SELF_DRIVE_30M_SITEZ_BOX_OPEN_CALLS.md`. Stop: his
+  stand-down. Landed by 1.0.0_SA_CTO~Z. The same word takes the site Z COO row below to 30m.
+- `2.0.0_SA_COO~O` (NFRA_OPLGTW), `~MI` and `~MI2` (NFRA_MCPINDEX), `~MP` (NFRA_MCPORTAL): `/canonical-drive <own project>` (60m, now 30m per the row above),
   DIRECTED, chooser Andrew. ~02:0xZ 2026-10-16 at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: "time to get back on the mission, we need
   the MCPINDEX OPLGTW MCPORTAL COO teams backonline and moving". Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_020xZ_MCPINDEX_OPLGTW_MCPORTAL_COO_TEAMS_BACK_ONLINE.md`. Seated by
