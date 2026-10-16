@@ -4182,3 +4182,5 @@ The cluster lead ruled that the seven `served/*` rows of OG-ap-23 are site Z's t
 | **Question 1 (to answer at the next analysis)** | WHO CALLS IT: site Z's gateway cannot call dell1 code, so likely an S3 or Lambda reader. |
 | **Question 2** | Does the caller need a never-widen IAM read grant (GetItem and Query on the table) for the gateway role? |
 | **Owner / condition** | `2.0.0_SA_COO~W1`; un-parks at the CTO's next round analysis that names the caller. |
+
+- **Update to section 116 (03:02Z, CTO msg 6442, from site Z's CTO msg 34683):** the read surface is an AGENT read surface built on dell1 as this project's own, so Question 1 is ANSWERED (the callers are agents on dell1, not the site Z gateway) and Question 2 is MOOT (no gateway IAM grant is in scope). Its shape: a typed reader module beside `scoped_amgt.py`'s readers, invokable from a dell1 seat shell. Still a named increment after the runner cells (CTO option A stands); still NOT a round-87 cell.
