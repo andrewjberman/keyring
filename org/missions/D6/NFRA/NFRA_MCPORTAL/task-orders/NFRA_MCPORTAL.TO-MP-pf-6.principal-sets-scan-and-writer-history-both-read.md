@@ -84,6 +84,7 @@ so AC2 grades the MEASUREMENT (both denominators at least 1, one SSM read that s
 Checks dry-run at the base: pf6.AC1 FAIL as expected (test file absent); pf6.AC2 FAIL as expected (run file absent); `pf6.run.sh`'s probe read at ~03:2xZ: scan_n 1, history_n 1, history_items 1, history_pages 1, unparsed 0.
 
 <status>pending</status>
+<status>complete</status>
 <round>3</round>
 <workstream>PF</workstream>
 <slot>~36</slot>
