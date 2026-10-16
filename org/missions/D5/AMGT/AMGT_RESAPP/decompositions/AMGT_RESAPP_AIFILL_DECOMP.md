@@ -466,3 +466,17 @@ Source: the CTO's ruling (msg 6735): merge the wording branch forward, read the 
 **Measured at the cut (2026-10-16 ~14:1xZ):** the builder, run by the issuer, prints `RELEASE-CHECK features=2 first_parent_commits=2 unapproved=0`, both `PROMOTE-LIST` lines (class opal-internal, by 1.0.0_SA_CTO~DELL1), `PROMOTE-CLIENT-FACING count=0` and `RELEASE result=READY` (a local release branch `release/20261016T141236Z`, never pushed; the DT builds its own). PROD head `64f9dba1` (74 commits past gr-7's base `7db035e4`); the pair's two paths read `DIFFERS` against it.
 
 **What this cell does not do:** any DEV push; any page other than Security Analysis; the CVO's read (the issuer's next act after the DT reports).
+
+## 23. ADDENDUM 14 -- ROUND 113 OF WORKSTREAM `AIFILL`: THE PRODUCER STAMPS A PASS BLOCK CLEARED AT WRITE WHEN NO HOLD APPLIES (CTO C-1 of the cc02 pair, msg 6904), 2026-10-16 ~18:0xZ
+
+Source: the CTO's condition C-1 on the signed never-widen pair `NEVER_WIDEN_ROUND112_AIFILL_95_KEY_CLEARED_RESTAMP`: "the next AMGT_RESAPP code cell makes the producer stamp a PASS block CLEARED at write when no hold applies. It is tested with a planted PASS block and a planted REFUSED block. Until it lands, no new AI-fill document is stored." Ruling cc02: CLEARED is a mechanical claim (the block passed the producer's grounding contract and no hold applies to serving it), never a reader grade. Measured at the cut: the library has no production caller of `validation.stamp_validation`; `run.py` builds and validates a document and writes it with NO `validation` key; the HELD stamps of rounds 107 to 111 were put on by the issuer's finishing scripts. So without this cell the next manual run stores documents with no state at all.
+
+| id | cell | slot | class | risk | write set | serves | item |
+|---|---|---|---|---|---|---|---|
+| `AMGT-gy-1` | (a) `validation.stamp_for_write(doc, now, hold=False)`: a PASS block becomes CLEARED unless a hold applies, a REFUSED block stays HELD with verdict REFUSED and nothing raises, `hold=True` stamps every block HELD, the input is never mutated; (b) `run.py` stamps the document before it writes a file or S3, with a `--hold` flag; (c) a test file with the planted PASS and REFUSED blocks | ~487 | worker | LOCAL | `lib/research/aifill/validation.py`, `lib/research/aifill/run.py`, `lib/research/aifill/tests/test_gy1_stamp_at_write.py` | FWD-41, CTO C-1 | cc02 pair |
+
+**Chain read:** M = 1, N = 1, cap 8. **Direct act:** about 20 product lines plus tests (the issuer's reference edit changes 16 lines), LOCAL, no served write (the 95 documents are already CLEARED; nothing is re-stamped here).
+
+**Check, dry-run at the base and proven satisfiable:** `deliverables/2.0.0_SA_COO~R2/round113_aifill_prep/checks/check_gy1_stamp_at_write.py`, 12 arms (nine for the change, three controls: the existing `stamp_validation` default HELD, its refusal of CLEARED over a REFUSED block, and ASCII). At the base: `AIFILL GY-1 ARMS: NO (3 of 12)`, the nine change arms failing. The issuer's reference edit in a scratch copy of `lib` reads `YES (12 of 12)`, and the existing aifill suite there reads 866 passed, the same count as the base, so no existing test needs a change.
+
+**What this cell does not do:** any store write or re-stamp; a change to `stamp_validation`; a reader-grade field (the CTO ruled it a separate field by its own decision); the hold itself (`--hold` only names the state a run stamps when a hold applies).

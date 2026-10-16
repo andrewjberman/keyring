@@ -40,7 +40,7 @@ By `2.0.0_SA_COO~O`, 2026-10-16 ~14:0xZ. To be sent to `1.0.0_SA_CTO~Z` as ONE s
 
 ## Carried to the next enrichment list (19 rows + three named items)
 
-Z-W77-S1, Z-W75-S1, Z-W75-S2, Z-W83-S3, Z-W72-S5, Z-W79-S1, Z-W79-S3, Z-W79-S5, Z-W80-S1, Z-W80-S2, Z-W88-S2, Z-W92-S1, Z-S134, Z-W98-S1, Z-W99-S4, Z-W100-S1, Z-W102-S5, Z-S148, Z-S169 (each with its reason in the row that adjudicates it). Plus: verify orion's weight scale and name its unit; the news coverage floor's "no articles in window" wording for a filter miss over a non-empty window (worker row Z-W119-S3); the `OG-ng-3` and `OG-en-4` proof-file clerical flips.
+Z-W77-S1, Z-W75-S1, Z-W75-S2, Z-W83-S3, Z-W72-S5, Z-W79-S1, Z-W79-S3, Z-W79-S5, Z-W80-S1, Z-W80-S2, Z-W88-S2, Z-W92-S1, Z-S134, Z-W98-S1, Z-W99-S4, Z-W100-S1, Z-W102-S5, Z-S148, Z-S169 (each with its reason in the row that adjudicates it). Plus: verify orion's weight scale and name its unit; the news coverage floor's "no articles in window" wording for a filter miss over a non-empty window (worker row Z-W119-S3); the `OG-ng-3` and `OG-en-4` proof-file clerical flips; `Z-W111-S15` (row `Z-S302`: `proof-of-spec-check.py` should follow renames, `git log --follow`, when it reads an instance's creating commit; the renamed gf-1 instance reads INVALID only for that reason); the naming-gate registry row for the `49f-live` segment (`Z-S301`: the four catalog `address` literals RAISE K3 'not a tier' wherever their entry files are absent from HEAD; admitted today only through the four `blackdiamond_live_<t>.yaml` entry files).
 
 ## Instruments and checks this round
 

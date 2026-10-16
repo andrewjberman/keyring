@@ -25019,3 +25019,58 @@ name the one known failure instead of silently inheriting it.
   "notes": "Two separate causes, neither mine to change: (1) the two registry files are new to the live ref and must be at HEAD for the exemption to read them -- either the release carries them (the COO amends ap28.AC1's ALLOW; they are not shipped, the tar excludes infra) or the gate's registry source changes; (2) the 4 new live literals fail the tier grammar even with the registry present -- a registry row that holds each exact literal as a whole string (the REGISTRY-HELD route that admitted the 8 legacy ones), a grammar/registry fix to accept the 49f-live segment, or a different emitted prefix from 2.0.0_SA_COO~MI. I did not override the gate, edit the catalog or edit the registry."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T17:01:46Z",
+  "id": "NFRA_OPLGTW-Z-S302",
+  "one_line": "Round-38 disposition (CARRIED) of Z-W111-S15: the renamed gf-1 instance reads INVALID because the checker takes the rename commit as its creating commit; carried as a checker repair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S15"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md row NFRA_OPLGTW-Z-W111-S15 (worker 0.9.0_WK_NFRA_OPLGTW~111): rename commit 21c41f4851, original instance commit 72096aefa4",
+      "lane TREE_DELIVERABLES: deliverables/<serial>/ is written by that serial alone"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Issuer decision (CARRIED): the gf-1 instance reads INVALID only because proof-of-spec-check takes the instance's creating commit from the path history, which starts at the rename commit 21c41f4851; the four PENDING-THIS-COMMIT artifact rows predate it. Re-pinning them would change content the order keeps unchanged, and the lane gives that instance to its owning worker serial alone, so no row is re-pinned. Nothing live depends on it (the release carries the gf-1 code and its tests, which pass). Carried to the round-38 enrichment list (named in the L10 slug) as a checker repair: follow renames (git log --follow) when reading an instance's creating commit.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer decision (CARRIED): the gf-1 instance reads INVALID only because proof-of-spec-check takes the instance's creating commit from the path history, which starts at the rename commit 21c41f4851; the four PENDING-THIS-COMMIT artifact rows predate it. Re-pinning them would change content the order keeps unchanged, and the lane gives that instance to its owning worker serial alone, so no row is re-pinned. Nothing live depends on it (the release carries the gf-1 code and its tests, which pass). Carried to the round-38 enrichment list (named in the L10 slug) as a checker repair: follow renames (git log --follow) when reading an instance's creating commit."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T17:07:09Z",
+  "id": "NFRA_OPLGTW-Z-S303",
+  "one_line": "OG-ap-28 A2 Phase A STOP, second cause: the prelude's four blackdiamond_live_<t>.yaml entry files cannot be committed under the ENFORCE naming gate (12 REFUSE: they are NEW to the tree), so the release commit still RAISES on the four 49f-live catalog literals (K3, '49f-live' is not a tier). Registry prelude committed; entry-file prelude and release commit refused. Cites Z-S301.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN prelude commit 1 of 2 on rel-nfra-oplgtw-batch2 (the two registry files, byte-equal to trunk 066649b10f, GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS): exit 0, commit 46be947ba9.",
+      "RAN the entry-file prelude (the four workflows/atom_decomposition/catalog_entries/blackdiamond_live_{unrealized,transactions,allocations,fees}.yaml, byte-equal to trunk) under the same override, both as one commit with the registry (the A2 form) and as a second commit after it: LGIC_ENFORCE DEC-6 REFUSE, 12 graded, exit 1. Per file: line 2 silver/<table>/ (S3Key, NEW and OUT-OF-PATTERN, -> {source}/{scope}/silver/<table>/), line 3 blackdiamond/49f-live/silver/<table>/ (S3Key, -> lookup('49financial')), line 48 49financial (hand-kept carrier). 4 files x 3 = 12.",
+      "RAN the release commit on top of prelude 1 only, GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL: CATALOG-EXEMPT admitted=12 refused=4 new_via_registry=8 registry_head=46be947ba955; the 4 REFUSE are DATA_CATALOG.yaml:3372, :3437, :3503, :3570 blackdiamond/49f-live/silver/{allocations,fees,transactions,unrealized}/ (S3Key), 'RAISE as S3Key: rule or registry defect, not a refusal: K3: 49f-live is not a tier (V7)'. Exit 1.",
+      "READ git show e717bd2fb2 --stat: MI's trunk commit that gave these files their current names is a pure rename (0 changed lines), graded against content already committed in the WARN window, which is why MI measured 0 REFUSE there. At the live ref the files do not exist, so any add is NEW."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-28 A2 step 2: the six prelude files are committed byte-equal to trunk, then the release commit 'must exit 0, no REFUSE'; if a literal still blocks, STOP with the exact lines.",
+  "world_is": "Prelude 1 of 2 is committed on the release branch (46be947ba9); the entry-file prelude and the release commit are refused by the gate, which I did not override. No release_sha, ask or AC1 run exists. The branch and probe are local.",
+  "notes": "Options for the ruling, none taken by me: (1) bring the four entry files in as existing content (a cherry-pick or merge of MI's trunk commits) so the gate grades them EXISTING/WARN as it did on trunk -- an audited route round the NEW-literal refusal, the CTO's to name; (2) a registry row holding the 49f-live segment (the K3 tier defect) and the three literal forms as whole strings, so the gate admits them REGISTRY-HELD; (3) the CTO/CRO durable fix to the tier grammar first. The release is otherwise ready: re-cut, take, deploy hunk, pin and 167 of 169 tests."
+}
+```
