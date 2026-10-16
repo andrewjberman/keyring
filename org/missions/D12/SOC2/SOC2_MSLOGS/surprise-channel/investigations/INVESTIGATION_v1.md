@@ -267,6 +267,29 @@ Worker rows of the round-1 cells, appended and never edited. Rows `SOC2_MSLOGS-D
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-S1",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~SOC21",
+    "surfaced_at": "2026-10-16T18:08:20Z",
+    "one_line": "terraform plan on the trino root fails with a dependency cycle at HEAD, so TO-SM-r1 item 4 cannot produce a plan; nothing was applied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (the issuer): re-cut the access.tf amendment so the door does not reference aws_lambda_function.collector by resource attribute; the AE re-runs item 4 on the amended tree",
+    "spec_asserts": "TO-SM-r1 item 4 and check A1-TF-OK: the merged trino root plans as in-place updates only (door role policy gains the invoke of the collector; door env gains COLLECTOR_FUNCTION).",
+    "world_is": "terraform -chdir=infra/aws/terraform/trino plan at HEAD 1b2ef4b55f stops before any plan with: Cycle: aws_iam_role_policy.access, aws_lambda_function.access, aws_lambda_alias.collector, aws_iam_policy.collector, aws_iam_role_policy_attachment.collector, aws_lambda_function.collector. The edges: access.tf:151 (role policy access Resource = aws_lambda_function.collector.arn) and access.tf:182 (door env COLLECTOR_FUNCTION = aws_lambda_function.collector.function_name) make the door depend on the collector function; collector.tf:50 (policy collector Resource = aws_lambda_alias.collector.arn, an alias of the DOOR function) and collector.tf:86 (collector depends_on its policy attachment) make the collector function depend on the door function. A1-TF-OK printed OK because that check does not run terraform plan. The apply (L1) did not run; the live account is unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan output at HEAD 1b2ef4b55f, first error line quoted in world_is (run by 0.7.0_AE_CloudOps~SOC21 2026-10-16, init succeeded first)",
+        "infra/aws/terraform/trino/access.tf lines 151 and 182 and collector.tf lines 50 and 86, read at HEAD",
+        "org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_a1.py tf printed A1-TF-OK in this session",
+   "id note: the order prescribed SOC2_MSLOGS-D1-WSOC21-S<k>; surprise-row-gate refuses that id (grammar <CODE>-(Z-)?(W<n>-|C-)?S<k>), so the row carries SOC2_MSLOGS-D1-S1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
