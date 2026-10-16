@@ -9747,6 +9747,29 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S135",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T21:38:25Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W53-S4"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~53's A1 row: the placing worktree's sparse cone was narrower than the order stated; the issuer provisioned it without the cone additions.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "The defect was the issuer's: wk-provision.sh was run without --sparse-add, so app/refs only was materialized and c39.AC1 and p21.AC1 could not run. The worker rightly refused to widen the cone. The issuer widened it (workflows, lib, .tools, infra/aws/ec2, infra/logic), re-ran both criteria PASS, and a second seat committed the catalog (7b5d6724c7) and the proof (3560f950be). Lesson: run the provisioning line the round's other workers used, and run the order's criteria in the fresh tree before the spawn.",
+    "spec_asserts": "MX-c-39 A1 asserted the worktree's sparse cone already held workflows, lib, .tools, infra/aws/ec2 and infra/logic.",
+    "world_is": "The tree provisioned with `wk-provision.sh provision NFRA_MCPINDEX 53 --path C:/tmp/wk-mx21-53b --order ...` and no --sparse-add held only app/refs of the gateway; the stated cone needed --sparse-add.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report: c39.AC1 1 failed (test_c_group DeclaredBucketSource, 15 bucket-source files absent), p21.AC1 test files 0; after the widening c39.AC1 80 passed and p21.AC1 PASS in the same tree; merged at 0e4490e678."
+      ]
+    }
   }
 ]
 ```
