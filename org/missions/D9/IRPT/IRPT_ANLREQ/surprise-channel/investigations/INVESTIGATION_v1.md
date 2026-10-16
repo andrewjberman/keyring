@@ -23034,3 +23034,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-16T22:15:02Z",
+  "one_line": "The firm list the Ticket Center reads for a staff filer cannot tell a profile that lists the firm from a profile that does not narrow the firms at all, so the AR-y-378 field would be asked of both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "AR-y-378 step 1: the advisor login email field applies ONLY when the signed-in filer's profile lists the selected firm; for any other filer the form and the upload request are byte-identical (no field, no advisor_email key).",
+  "world_is": "The only list the form reads for staff is the served Global context READY set (portal TicketCenter.tsx:104-121 at fcbf2bce). The server narrows an internal caller only when its users row carries a non-empty allowedFirmIds: a selection outside that list is refused FIRM_BINDING (served.py:1249-1260), which the Global context returns as UNAVAILABLE (directory/entry.py:414-456). An absent attribute or an empty list is UNCHANGED (served.py:1179-1193), so every firm is READY. The portal session carries no allowedFirmIds (AuthContext claims hold firmId and userType only). So an unrestricted staff filer and a listed one present the same list. The door demands an advisor only when the tenant is in the actor's allowedFirmIds (served.py:1063-1083); a present advisor_email switches the owner to the named advisor (served.py:1085-1104), so the field would change the owner for an unrestricted filer the door never required it of. Read from the code; not exercised against the live door.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src/pages/TicketCenter/TicketCenter.tsx:104-121 at fcbf2bce (loadAllowedFirms: READY firms for internal)",
+      "portal src/contexts/AuthContext.tsx:786-802 at fcbf2bce (isInternal, isDev read claims firmId and userType only)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1154-1193 and 1249-1260 at HEAD 9f1e81226a (_internal_allowed_firms; caller_refused)",
+      "infra/aws/lambda/investor-reporting/directory/entry.py:414-456 at HEAD 9f1e81226a (global_context, UNAVAILABLE on a refused member)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1063-1104 at HEAD 9f1e81226a (_create_owner, _advisor_owner)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Dormant in fact: the candidate branch cand/dell2/anlreq-advisor-login-email is LOCAL at 9355392a and is not pushed. ARMED for the merge-forward: the applicability rule (a listed firm versus an unrestricted profile) must be ruled before .tools/portal-merge-forward.sh runs on an approved row."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-16T22:15:02Z",
+  "one_line": "AR-y-378 step 4 asks that a refused upload show its code under the failure line, for every filer; AC4J asks that any other filer's form stay byte-identical. The candidate follows step 4, so a refused upload for a filer the field does not apply to shows the code too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-378 step 4: when the upload is refused the form shows the refusal's own message or closed code under the failure line. AC4J: any other filer's request and form are byte-identical to today.",
+  "world_is": "The two sentences cannot both hold for a refused upload from a filer the field does not apply to: the request bytes are unchanged for that filer, but the failure state gains one line. The candidate (commit 9355392a, TicketCenter.tsx refusal prop) shows the code for every refused upload, as step 4 is written. The CVO grades the AC4J reading at L9.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit 9355392a on cand/dell2/anlreq-advisor-login-email: src/pages/TicketCenter/TicketCenter.tsx and AnalysisRequestParts.tsx (UploadFindings refusal line)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-378.ticket-form-asks-the-advisor-login-email.md (step 4 and AC4J)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Display only: no request changes for a filer the field does not apply to. Either reading is one line in TicketCenter.tsx; the CVO picks at L9."
+}
+```
