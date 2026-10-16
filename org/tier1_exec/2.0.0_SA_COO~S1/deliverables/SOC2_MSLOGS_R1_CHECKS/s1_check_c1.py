@@ -3,6 +3,7 @@
   python s1_check_c1.py raw       -> C1-RAW-OK       (every account, four feeds, byte-for-byte bronze, no filter left)
   python s1_check_c1.py switch    -> C1-SWITCH-OK    (an old-era cursor re-fetches the 7 days; already stored is not a gap; derive is budgeted)
   python s1_check_c1.py recollect -> C1-RECOLLECT-OK (a window run leaves the cursor alone; the handler's window rules)
+  python s1_check_c1.py derive_time -> C1-DERIVETIME-OK (a fire never runs past its Lambda limit; derive keeps a reserved share, newest day first)
 
 Synthetic values only. The collector API this file drives is fixed in the order's worker face.
 """
@@ -72,11 +73,13 @@ class Access:
         self.preseed = set(preseed)
         self.derived = []
         self.puts = []
+        self.events = []
         self.clock = clock
         self.derive_cost = derive_cost
 
     def put(self, dataset, key, body):
         self.puts.append((dataset, key))
+        self.events.append(("put", dataset))
         if dataset == "bronze" and (key in self.objs.get("bronze", {}) or key in self.preseed):
             return {"ok": False, "already_stored": True, "error": "exists"}
         self.objs.setdefault(dataset, {})[key] = body
@@ -87,6 +90,7 @@ class Access:
 
     def derive_silver(self, date):
         self.derived.append(date)
+        self.events.append(("derive", date, None if self.clock is None else self.clock.t))
         if self.clock is not None:
             self.clock.t += self.derive_cost
         return {"ok": True, "rows": 0}
@@ -227,8 +231,8 @@ def switch():
     clock.t = 0.0
     f1 = run.run_once(Source(one), acc3, {}, NOW, cursor=None, clock=clock, budget_seconds=20, max_workers=1)
     pending = f1["cursor"].get("derive_pending")
-    if sorted(set(acc3.derived)) != sorted(acc3.derived) or acc3.derived != sorted(acc3.derived):
-        bad.append("derive dates must be called once each in ascending order: %r" % (acc3.derived,))
+    if sorted(set(acc3.derived)) != sorted(acc3.derived) or acc3.derived != sorted(acc3.derived, reverse=True):
+        bad.append("derive dates must be called once each, newest day first: %r" % (acc3.derived,))
     if not acc3.derived or not isinstance(pending, list) or not pending:
         bad.append("a fire out of derive time must carry derive_pending in the cursor (derived %r, pending %r)" % (acc3.derived, pending))
     want_days = {"2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15"}
@@ -244,6 +248,73 @@ def switch():
         print("C1-SWITCH-REFUSED " + "; ".join(bad))
         return 1
     print("C1-SWITCH-OK")
+    return 0
+
+
+class TimedSource(Source):
+    """A source whose every fetch costs fetch_cost seconds on the injected clock."""
+
+    def __init__(self, blobs, clock, fetch_cost=1.0):
+        super().__init__(blobs)
+        self.clock = clock
+        self.fetch_cost = fetch_cost
+
+    def fetch_raw(self, ct, blob_id):
+        self.clock.t += self.fetch_cost
+        return super().fetch_raw(ct, blob_id)
+
+
+def many_blobs(n, days=("2026-10-10", "2026-10-11", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15")):
+    lst = []
+    for i in range(n):
+        d = days[i % len(days)]
+        lst.append((cid("Audit.General", i + 1), "%sT%02d:00:00.000Z" % (d, 14 + (i // len(days)) % 8), raw_blob("u%d@opalinvest.com" % i, 1)))
+    return {"Audit.General": lst}
+
+
+def derive_time():
+    """A fire must end inside its Lambda limit (900 s; budget 840 as the handler passes) even when derive calls are slow, derive must keep
+    a reserved share while a backlog is being fetched, the newest day goes first, and the cursor is saved BEFORE derive begins."""
+    run = mod("collect")
+    bad = []
+    LIMIT_END = 885.0   # the handler's budget (840) plus the 45 s grace: nothing may run past it
+
+    clock = Clock()
+    acc = Access(clock=clock, derive_cost=40.0)
+    out = run.run_once(TimedSource(many_blobs(1200), clock), acc, {}, NOW, cursor=None, clock=clock, budget_seconds=840, max_workers=1)
+    if clock.t > LIMIT_END:
+        bad.append("a fire with 40 s derives ended at %.0f s, past %.0f" % (clock.t, LIMIT_END))
+    if len(acc.derived) < 3:
+        bad.append("a fire with a fetch backlog ran only %d derive calls (derive needs a reserved share)" % len(acc.derived))
+    if acc.derived != sorted(acc.derived, reverse=True):
+        bad.append("derive must go newest day first: %r" % (acc.derived,))
+    puts_before = [e for e in acc.events[:next((i for i, e in enumerate(acc.events) if e[0] == "derive"), len(acc.events))] if e[0] == "put"]
+    if ("put", "state") not in puts_before:
+        bad.append("the cursor must be saved BEFORE the first derive call, so a timeout in derive loses nothing")
+    pend = out["cursor"].get("derive_pending")
+    if not isinstance(pend, list) or set(pend) & set(acc.derived):
+        bad.append("the final cursor must list exactly the days not derived: pending %r, derived %r" % (pend, acc.derived))
+    state_docs = [json.loads(b) for k, b in acc.objs.get("state", {}).items()]
+    if not state_docs:
+        bad.append("no cursor was written")
+
+    clock2 = Clock()
+    acc2 = Access(clock=clock2, derive_cost=120.0)
+    run.run_once(TimedSource(many_blobs(1200), clock2), acc2, {}, NOW, cursor=None, clock=clock2, budget_seconds=840, max_workers=1)
+    if clock2.t > LIMIT_END:
+        bad.append("a fire with 120 s derives ended at %.0f s, past %.0f" % (clock2.t, LIMIT_END))
+    if not acc2.derived:
+        bad.append("a fire must make progress on derive even when each call is slow")
+
+    clock3 = Clock()
+    acc3 = Access(clock=clock3, derive_cost=1.0)
+    out3 = run.run_once(TimedSource(many_blobs(5), clock3), acc3, {}, NOW, cursor=None, clock=clock3, budget_seconds=90, max_workers=1)
+    if out3["fetched"] < 1:
+        bad.append("a small budget must still fetch (the derive reserve is a share of the budget, never all of it)")
+    if bad:
+        print("C1-DERIVETIME-REFUSED " + "; ".join(bad))
+        return 1
+    print("C1-DERIVETIME-OK end=%.0f derives=%d" % (clock.t, len(acc.derived)))
     return 0
 
 
@@ -301,7 +372,7 @@ def recollect():
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else ""
-    fn = {"raw": raw, "switch": switch, "recollect": recollect}.get(mode)
+    fn = {"raw": raw, "switch": switch, "recollect": recollect, "derive_time": derive_time}.get(mode)
     try:
         sys.exit(fn() if fn else 2)
     except FileNotFoundError as e:
