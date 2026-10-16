@@ -9031,6 +9031,31 @@ carries none.
     },
     "spec_asserts": "MX-d-6 act 1: a firm-scoped silver row is servable only to the principal kinds the gate admits for that rule.",
     "world_is": "Since MX-r-14 the gate admits a firm principal on row firm == principal firm, and a row without a firm field is admitted to no firm principal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S124",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T04:27Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-S92: the mislabelled artifacts are repaired and every release since carries a correct label. Read 2026-10-16 ~04:3xZ from s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/: opal-gateway-1e32562729.tar.gz is 518165 B, ETag b96315a523842ec46579b146c450faa9 (the base's own bytes, restored 2026-10-10T21:24Z, git-ref 1e32562729...); opal-gateway-d3c31e972e.tar.gz exists (525792 B, git-ref d3c31e972e8c6fdb26dda98a1d9ff55ced0ced89, 2026-10-10T21:49Z); opal-gateway-latest.tar.gz and opal-gateway-d577e0e729.tar.gz are the same object (743050 B, ETag 2da7109c134be5f94956d5421dfcc8a7, git-ref d577e0e729...). Z-W29-S1: a caution for an emit run inside a worktree; since MX-c-20 A1 the issuer emits at the workspace root with the default census and workers only place the file. The emit of 2026-10-16 (default census) writes 0 lines containing ../ajb_workspace.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S92",
+      "NFRA_MCPINDEX-Z-W29-S1"
+    ],
+    "one_line": "DISARMS Z-S92 (MX-r-9 PHASE B mislabelled its artifacts; the rollback key was overwritten) and Z-W29-S1 (a worktree emit with the main-tree census path rewrites 32 census_ref lines). Both measured on the live artifacts and on today's emit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api head-object on opal-gateway-latest, -d577e0e729, -1e32562729 and -d3c31e972e.tar.gz under ec2/opal-gateway/ in opal-313476888478-lambda-artifacts, us-east-1, 2026-10-16 ~04:3xZ",
+        "grep -c '../ajb_workspace' on the 2026-10-16 emit (default census): 0 and on the tracked DATA_CATALOG.yaml: 0"
+      ]
+    },
+    "spec_asserts": "Z-S92: the artifact keys carry the git-ref of the commit they hold, and the signed rollback key is preserved. Z-W29-S1: an emit leaves every row outside needs: unchanged.",
+    "world_is": "The rollback key holds the base's bytes again, the d3c31e972e artifact exists under its own ref, and -latest matches the live commit d577e0e729. The default-census emit changes no census_ref path."
   }
 ]
 ```
