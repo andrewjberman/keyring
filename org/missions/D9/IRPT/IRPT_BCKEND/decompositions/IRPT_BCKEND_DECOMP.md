@@ -4501,3 +4501,15 @@ Check IB241-1 (`deliverables/2.0.0_SA_COO~P2/checks/r241/p241_cells.py`, the r23
 | `IB-pr-610` | READ the 49financial addendum candidate v3: signed transplant plus the current D spans, build only, tests, compare with live | FWD-21 | SERVED | IB-pr-609 (drained) | PL8-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one bundle build; one worker (slot ~446) starts now.
+
+## 237. ROUND 2, WORKSTREAM ~PQ (the APPLY of the holdings EXEMPTION ADDENDUM 1; 2026-10-16 ~01:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both halves signed: COO half revision 3 blob `5d162efd37`, CTO half `..._ADDENDUM_1_R3_CTO_HALF.md`, msg 8830)
+
+The addendum pair is signed on candidate `61537d6d` (IB-pr-610, merged @65650cbbbd; every exempted account carries exactly one of `smartx_map_present`, `smartx_map_absent`, `unread`). One WORLD order to `0.7.0_AE_CloudOps~IB2`: the gates, the digest gate against the exemption pair's bundle `d2eaf305` (exactly `holdings_snapshot.py` and `SHA256SUMS` change), the re-measure with the SAME node set in two arms, the ledger, the mint between fires, the business date stated before the fire, the first fire's after-read with one evidence value per account. It starts only after IB-pr-605 is done (its ledger CLOSED and its first-fire after-read written), because the live bundle must read `d2eaf305` and the CVO's per-artifact rule (msg 8750) puts both applies on one bundle in sequence; IB-pr-605 waits in turn on IB-pr-549's ledger (its after-read is the 2026-10-16 14:15Z fire).
+
+Check IB242-1 (`deliverables/2.0.0_SA_COO~P2/checks/r242/p242_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control242.py`) passes the three positives and twenty-four negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-611` | APPLY the addendum: gates, digest gate, re-measure, one mint, first fire, evidence after-read | FWD-21 | WORLD | IB-pr-605 done | PQ2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
