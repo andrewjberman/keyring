@@ -2677,3 +2677,27 @@ used as fixtures is a different read with a different denominator.
  "notes": "Filed by the worker on TO-R18-TR3 (AMENDMENT 1 record). The order is left pending and its source is NOT committed: the working-tree edits to infra/aws/terraform/ticket-center/main.tf, the TR3 checkers, R18_TR3_RECORD.json and the instance are uncommitted in the worktree. No bypass of the naming gate was attempted. The TR2 meeting change and the TR1 record are unaffected."
 }
 ```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W46-S1",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~46",
+ "surfaced_at": "2026-10-16T01:42:24Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "TO-R19-L2 cannot start: the worktree carries org/ and .tools/ but not infra/aws, because its sparse-checkout cone omits infra/. The order's source and tests (infra/aws/lambda/ticket_center/) are absent on disk, so no cell is built and no acceptance criterion runs.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "C:/dev/wk-tckt-vnext-46 @HEAD b84a2ca293: git config core.sparseCheckout = true; git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_VNEXT, org/modules/graph, org/ref, org/standards (infra/aws is not in the cone)",
+   "C:/dev/wk-tckt-vnext-46 @HEAD b84a2ca293: ls infra shows README.md, launch_agents_powershell.ps1, logic/ only; ls infra/aws -> No such file or directory",
+   "git ls-tree HEAD -- infra/aws/lambda/ticket_center @b84a2ca293 lists lambda_function.py and tests/ (conftest.py, test_list_scoped_firm.py and others): the path exists in the commit and is excluded from the checkout; git ls-files -- infra/aws = 9277 entries; git ls-files -v -- infra: 9503 skip-worktree (S) and 34 index (H)"
+  ]
+ },
+ "spec_asserts": "TO.TO-R19-L2 WORKER FACE and <paths>: the worktree carries infra/aws/lambda/ticket_center/lambda_function.py and infra/aws/lambda/ticket_center/tests/ as the write grant, and the cell is built and tested there (TREE-OK check: org/ and .tools/ present).",
+ "world_is": "The worktree carries org/ and .tools/ but not infra/aws. The granted source and tests are not materialised in the worktree, so the cell cannot be built, the new test file cannot be written in place, and mutant_check.py has no lambda_function.py to copy. Per the order's BLOCKING rule the tree was not rebuilt, extracted or reconstructed and the sparse cone was not widened. No source or test was changed. R19L2-AC1 and R19L2-AC2 are recorded FAIL (not run); R19L2-AC3J is a judgment row.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "The order stays pending and is not flipped. Disarm is not needed (INERT). The fix is the issuer's or integrator's: widen this worktree's sparse cone to infra/aws/lambda/ticket_center, or re-provision the worktree from a checkout that carries it. Filed by the worker under the BLOCKING stop rule of its WORKER FACE."
+}
+```
