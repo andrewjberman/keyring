@@ -97,12 +97,13 @@ def fires(since_file=None):
         print("R2-FIRES-REFUSED no collector log group yet")
         return 1
     reports = [e["message"] for e in json.loads(out).get("events", [])]
-    rc, out, err = aws("logs", "filter-log-events", "--log-group-name", LOG_GROUP, "--start-time", ms, "--filter-pattern", "?errorMessage ?Traceback", "--limit", "5")
+    bad_reports = [r for r in reports if "Status: timeout" in r or "Status: error" in r]
+    rc, out, err = aws("logs", "filter-log-events", "--log-group-name", LOG_GROUP, "--start-time", ms, "--filter-pattern", "?errorMessage ?Traceback ?\"Task timed out\"", "--limit", "5")
     errs = len(json.loads(out).get("events", [])) if rc == 0 else -1
-    if len(reports) < 2 or errs != 0:
-        print("R2-FIRES-REFUSED invocations_since_start=%d function_errors=%d" % (len(reports), errs))
+    if len(reports) < 2 or errs != 0 or bad_reports:
+        print("R2-FIRES-REFUSED invocations_since_start=%d timed_out_or_errored_reports=%d function_error_lines=%d" % (len(reports), len(bad_reports), errs))
         return 1
-    print("R2-FIRES-OK invocations_since_start=%d function_errors=0" % len(reports))
+    print("R2-FIRES-OK invocations_since_start=%d function_errors=0 timeouts=0" % len(reports))
     return 0
 
 

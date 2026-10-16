@@ -3170,3 +3170,81 @@
   "notes": "Ask of the issuer, one line: rule that these 6 are a known pre-existing class for this release (amend the order's test rule and name them), or re-cut the criterion. Nothing is repaired by this seat (BOUNDS 3). On the ruling I resume at step 2 on live base 38fe44d5cb, or on whatever the manifest reads at the GO."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S68",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-16T13:39:21Z",
+  "one_line": "MP-pf-9's sparse-checkout list omits /data/mdpf/config/, so the release tree's first deploy run was REFUSED before any upload ('data/mdpf/config/partner_roster.json is missing from the repo'); adding the path and re-running worked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run 2026-10-16T13:19Z: 'ERROR: REFUSED (no upload): data/mdpf/config/partner_roster.json is missing from the repo at /c/tmp/mp-pf-rel -- the artifact would ship without it.' rc=1, 32 s; S3 opal-gateway-latest.tar.gz unchanged (git-ref 38fe44d5cb, 12:18:44Z) and the versioned d14445961d key absent afterwards.",
+      "deploy-to-ec2.sh at the live base stages lib/opal_naming.py, data/mdpf/config/partner_roster.json and infra/logic/registry/scopes.json into the artifact (lines 255-263 of that vintage); the order's sparse list covers the parents of the first and third paths but not /data/mdpf/config/.",
+      "the file exists at the live base (git ls-tree 38fe44d5cb data/mdpf/config/partner_roster.json = 1). md5 of the three staged files in the release tree equals the host's installed copies (3d309b26..., 2af41e5f..., 9dd54497...), read over SSM before the re-run, so adding the path moved no byte."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO MP-pf-9 step 1: 'If you go sparse, use a NO-CONE pattern list ... The list: /.tools/ /org/ /lib/ /infra/logic/ /infra/aws/terraform/ /infra/aws/lambda/ci/ /infra/aws/lambda/mcportal/ /infra/aws/ec2/ /data/transcripts/scripts/teams/' plus the 12 root blobs, and says a full checkout also works.",
+  "world_is": "The list is one path short for the deploy script as it stands at 38fe44d5cb: the act refuses until /data/mdpf/config/ is in the cone. No upload and no restart had happened, so the refusal cost one re-run and nothing else.",
+  "notes": "Ask of the issuer: add /data/mdpf/config/ to the sparse list in the next release order's template. This seat added it to its own checkout only; the commit, the census and the signed blast radius did not change."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S69",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-16T13:39:21Z",
+  "one_line": "A release tree cannot commit under the tree-local naming gate: safe-commit.sh inside the tree refuses with 'NAMING ERROR ... KeyError: interval_form' because the tree's lib/opal_naming.py and org/standards/NAMING_SCHEMA.json are from different vintages; deploy-to-ec2.sh's own manifest commit fails the same way after a landed deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "release tree cut on 38fe44d5cb: org/standards/NAMING_SCHEMA.json is v1.12 (cadence keys: values, event_form, event_token_regex); lib/opal_naming.py at the same commit reads schema['cadence']['interval_form'] (line 1906). The main tree's schema is v1.17 and carries interval_form.",
+      "the manifest commit that deploy-to-ec2.sh runs after a landed deploy was refused for that reason at 13:24Z ('ERROR: Manifest safe-commit failed ... The deploy LANDED -- record manually'); the deploy itself had completed (SSM eb89810b-21a5-4e21-acfc-b16a98791ea1 Success).",
+      "running the TRUNK's .tools/safe-commit.sh from inside the release tree commits cleanly (NAMING-GATE: PASS 0 graded), used for every release-branch commit of this order: 3cc7017f1f, d14445961d, bddaf03886, 864f262ffc, f829a3eaa8."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO MP-pf-9 and CLAUDE.md 14a: commits go through .tools/safe-commit.sh; the order expects the wrapper's manifest record to be corrected, not re-done by hand.",
+  "world_is": "In a release tree cut from a trunk commit older than the naming schema's last bump, the gate is unusable from inside the tree, so a landed deploy ends with the manifest record uncommitted until the applier commits it by hand.",
+  "notes": "No gate was skipped or overridden: the trunk's gate ran against the same diff. Ask of the issuer: say in the next release order that commits run via the trunk's safe-commit.sh from the tree, or decide that the gate's tree-local vintage is the CTO's to fix (the earlier MP-pc-5 and MP-n-4 releases did not hit it)."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T13:42:37Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S70",
+  "one_line": "Z-S67 is DISARMED: the six stale AssertionError tests it named are repaired on box/sitez (MP-pf-10, drain e6d9142077); the release it stopped (MP-pf-9) proceeded at the issuer's A1 ruling.",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-S67. Its premise held (6 tests failed at the live base for a reason outside the release); the issuer excused them for MP-pf-9 only (A1 66a4be01d8) and cut their repair as MP-pf-10. The five FileNotFoundError tests were never stale tests: they read repo paths absent from the release tree's frozen vintage and pass at HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer run of pf10.AC1.sh at box/sitez HEAD (70cb2d0c57) from /c/Users: breakdown named tests PASSED 2 of 2, people named tests PASSED 4 of 4, both files 0 failed, RESULT: PASS",
+      "issuer run of pf3.AC2.sh against the worker tree 24b766e751: admin suite 116 passed, failed=0, seam test failures=0"
+    ]
+  },
+  "spec_asserts": "Z-S67 asserted that six AssertionError tests in the admin suite fail identically at the live base and at box/sitez HEAD.",
+  "world_is": "True when filed (6 failed, 110 passed); at 70cb2d0c57 the two files read 43 passed, 0 failed.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-10. The channel file's existing bytes are untouched (the base is a strict byte prefix of this version)."
+}
+```
