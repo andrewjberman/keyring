@@ -19869,6 +19869,7 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
 ## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
 
 ```json
@@ -20104,5 +20105,113 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "spec_asserts": "TO-DB-i-18 AMENDMENT 1: the feed-writer fixture carries a multi-day series so the chain is graded; the test file records its dimension input as DIM_IDS and explains rows_present against the RETURNED rows, naming NO_EOD_VALUE.",
   "world_is": "Applied in the test file only; no feed, wrapper, run script, adapter or checker file was edited. The multi-day run gives 7001 PRESENT on all 8 trading days with carried_days summing to 10 and the chain within 1e-12 of the silver's factors. The 3-day fixture reads rows_present 1 (7004 on the pull day), and 7001 on 10-12 reads ABSENT NO_EOD_VALUE. The amendment's rule that the file names NO_EOD_VALUE and rows_present is met by the test text."
+}
+```
+
+## IRPT_DASHBD-D2-W702-S1 -- the ruled same-path premise does not hold: the producer reads by key and undated, the swap snapshot is a dated scan export
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W702-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~702",
+  "surfaced_at": "2026-10-16T01:08:17Z",
+  "one_line": "The ruled premise that the class producer reads etf-classifications through the same path as the swap snapshot (a dated read, claim held) does not hold: the producer reads one GetItem per ticker at run time with no as-of date; the swap snapshot is a file dated by an operator-supplied as-of, labelled held, built from a whole-table scan export.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ROUND-119 ANALYSIS F-SHIP ruling 1 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md): the classification is a dated read of etf-classifications, claim held, through the same path as the swap snapshot (TO IRPT_DASHBD.TO-DB-f-702 steps 4 and 5).",
+  "world_is": "At 9dbdc229e3 the producer (data/assets/scripts/gold/irpt_reporting/account_class_daily.py, ClassTable.get lines 158-172, GetItem at line 164, asset_class only at line 169) reads the table at run time with no as-of date and no held claim. The swap snapshot (infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py lines 59-91 and 22, 71-77; build_swap_pool.py lines 3-8 and 91-106) is a file whose pool_as_of is the operator's --as-of, whose claim is held, and whose rows come from an aws dynamodb scan export. Two read paths: one by key and undated, one by scan and dated. Measured in RD_FWD3_PRODUCER_GAP_R120.json (classification_read, swap_snapshot_read); no live object read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~702/RD_FWD3_PRODUCER_GAP_R120.json",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@9dbdc229e3",
+      "infra/aws/lambda/investor-reporting/ycharts/research/build_swap_pool.py@9dbdc229e3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a hazard for this seat (no write, no deploy). The CTO's answer to row IRPT_DASHBD-D2-S102 decides whether a dated read is a change to the producer; this cell measured the gap only."
+}
+```
+
+
+## IRPT_DASHBD-D2-W702-S2 -- the coverage member CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT also carries unreadable values
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W702-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~702",
+  "surfaced_at": "2026-10-16T01:08:17Z",
+  "one_line": "An unreadable position value or a missing custodian cash line is written with the coverage member CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT, the same member a tie failure carries, so the coverage column does not separate the two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The contract's coverage enum (org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json, enums.coverage and method.sum_check) names CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT for a day whose class values do not tie to the account value within half a cent.",
+  "world_is": "At 9dbdc229e3 raw_class_values returns None for an unreadable position value or a missing cash line (data/assets/scripts/gold/irpt_reporting/account_class_daily.py lines 416-423), and _class_day sets the contribution coverage to CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT when mv_t or mv_p is None (lines 503-504), where no earlier coverage member applies. Measured from code; no live rows read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@9dbdc229e3",
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json@9dbdc229e3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A labelling question for the producer's owner. This cell changes nothing and reads no live row."
+}
+```
+
+
+## IRPT_DASHBD-D2-W702-S3 -- the sum-to-account acceptance is covered by test for the identity and the null path only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W702-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~702",
+  "surfaced_at": "2026-10-16T01:08:17Z",
+  "one_line": "The producer's tests assert that class contributions sum to the account's return on synthetic days and that a day missing the tie is null; no test runs the class-to-account tie against the live account value on a real account-day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ROUND-119 ANALYSIS F-SHIP ruling 1 acceptance: the classes sum to the account on every day, by test (TO IRPT_DASHBD.TO-DB-f-702 step 3).",
+  "world_is": "At 9dbdc229e3 the tests (data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py lines 131-160 and 174-184) are offline and synthetic (file line 4); the identity test builds the account value as the class sum (line 136). The tie itself is enforced at run time (account_class_daily.py lines 223-231). The acceptance is covered by test for the identity and the null path, not for every day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py@9dbdc229e3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~702/RD_FWD3_PRODUCER_GAP_R120.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The gap between the acceptance wording and the test scope is for the seat that adds the sum-to-account test. No test was run and none was changed."
+}
+```
+
+
+## IRPT_DASHBD-D2-W702-S4 -- row S102 cites the GetItem at line 195; at 9dbdc229e3 the GetItem is at line 164
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W702-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~702",
+  "surfaced_at": "2026-10-16T01:08:17Z",
+  "one_line": "Row IRPT_DASHBD-D2-S102 cites the producer's GetItem at line 195 of account_class_daily.py; at this HEAD the GetItem is at line 164, and line 195 is the table.get call inside classify_identifier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-S102 world_is: 'reads etf-classifications by GetItem at line 195' (account_class_daily.py).",
+  "world_is": "At 9dbdc229e3 data/assets/scripts/gold/irpt_reporting/account_class_daily.py line 164 holds the get_item call on the etf-classifications table (ClassTable.get); line 195 holds table.get(ident) inside classify_identifier. The citation in S102 does not name the read's line at this HEAD. Measured by reading the lines; the row itself is not edited (append-only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@9dbdc229e3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Citation drift only. The owner of the producer may re-cite; nothing is changed by this cell."
 }
 ```
