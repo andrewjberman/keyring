@@ -29015,3 +29015,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The CVO writes the remediation clock (R-15); this row is the disarm owner's evidence. Half of the close condition is met by measurement; the other half is the CVO's to accept from its own reads or to ask this seat to read."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S54",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T15:02:00Z",
+  "one_line": "C-S133 (REMEDIATION_v40) second half read: a deterministic five-name draw (1299 HK, PBR US, NU US, ROG SW, SAP GY) of what the scoped API serves to the PROD page carries 0 narration text over 10 kept blocks; with D1-S53 (0 hits over all 95 stored documents) both halves of the close condition read met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "REMEDIATION_v40, D1-C-S133: close when a scan of every stored document finds no narration text, and this seat's five-name PROD read finds none. D1-S53 filed the first half; the CTO ruled (msg 6770) that C-S133 closes once the condition reads met.",
+  "world_is": "Read 15:02Z 2026-10-16 by this seat. Draw rule (printed before the read): the 95 keys ordered ascending by sha256('2026-10-16 C-S133 ' + key); the first five whose served ai_fill is SERVED with at least one kept text block (7 names examined to find five). For each, the live opal-amgt-scoped-api thesis response (the body the PROD page fetches) was read and every kept block scanned with the D1-S53 regex (controls run in that read: the C-S133 original string flagged, clean text not): 1299_HK_Equity 3 kept blocks 0 hits, PBR_US_Equity 1 kept 0, NU_US_Equity 1 kept 0, ROG_SW_Equity 3 kept 0, SAP_GY_Equity 2 kept 0; total 10 kept blocks, 0 narration hits. The AI-fill documents were generated 2026-10-16T09:37Z to 10:01Z. NOT MEASURED: a rendered PROD page for these five names (the served body is what the page prints, but no page was looked at by this seat except AMD, earlier); narration phrased outside the regex's listed openers; the 5 names are a sample of 95.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 lambda invoke opal-amgt-scoped-api GET /api/scoped/amgt/security/<key>/thesis for the five drawn keys, status 200, ai_fill.status SERVED, kept blocks 3, 1, 1, 3, 2; narration hits 0 each",
+      "draw: sha256('2026-10-16 C-S133 ' + key) ascending, first five with kept text; 7 names examined",
+      "D1-S53 (the stored-set scan and the regex controls)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "With D1-S53 this is the disarm owner's evidence for the CVO's clock on REMEDIATION_v40 C-S133 (R-15: the CVO writes it)."
+}
+```
