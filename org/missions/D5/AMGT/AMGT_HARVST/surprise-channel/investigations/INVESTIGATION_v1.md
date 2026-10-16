@@ -9750,5 +9750,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S26",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-16T02:30:00Z",
+     "one_line": "The three worker rows of HVST-cb-12 (D1-W148-S1, -S2, -S3) are resolved by the issuer's amendment 1: the ten read-count tests moved to the new contract, the wrapper returns three keys, and written_hashes exists only in known mode.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-12: silver_append has an opt-in known-hash mode; the default path is unchanged for every other caller; AC2 reads 110 passed.",
+     "world_is": "W148-S1 (ARMED): ten tests in test_ai5_batched_silver_append.py and test_at1_batched_listing_upload.py asserted one silver_latest call per source per pass, a proxy for one silver_append per source per pass; AMENDMENT 1 (a3e951675b) changed only their recorder to count silver_append calls (same expected lists) and added LATEST_READS == [], and the worker ran each test's own mutant: all ten still fail. W148-S2: the wrapper returns the three old keys because written_hashes holds raw key values (a date is not JSON) and the run receipt is JSON-dumped. W148-S3 (ARMED): written_hashes is now returned ONLY in known mode, so the direct callers (bright_data_serp, social/collect, filings, lusha, bloomberg, typed) see no new key. Merged c1df06b1ef. On the main tree: lib/opal_data_harvest 887 passed, 1 failed (the known test_bn1 CRLF), 3 skipped; lib/research harvest, corpus and management tests all pass.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-12.the-uploader-appends-without-reading-the-target-table.md AMENDMENT 1 and COMPLETE note @c1df06b1ef",
+       "lib/research/harvest/store.py silver_append at c1df06b1ef (written_hashes only when known is not None)"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W148-S1",
+      "AMGT_HARVST-D1-W148-S2",
+      "AMGT_HARVST-D1-W148-S3"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "Resolved by amendment 1 and the merge c1df06b1ef; S2 is a ruled deviation, not a defect."
+    }
 ]
 ```
