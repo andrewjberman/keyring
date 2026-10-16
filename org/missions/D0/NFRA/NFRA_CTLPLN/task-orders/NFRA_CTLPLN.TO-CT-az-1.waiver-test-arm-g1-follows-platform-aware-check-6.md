@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~138</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C after merge 528891b0b7 of CT-aw-1 left `python .tools/tests/test_round27_waiver.py` at `WAIVER arms=19/20 ok=False`.</status_reason>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-138 @ec16072890) and again in the main tree after merge 6d323036c3: CTaz1-AC1 WAIVER arms=20/20 ok=True (base 19/20); proof VALID; the diff is the one arm (verdict assertion failed -> passed plus one assertion on platform_normalised_equal), nothing else. The worker's mutant (platform rule disabled in a scratch copy) reads 19/20 with arm g1 the only FAIL. All intake suites green in the main tree: INTAKE-CHECK-TEST 60/60, INTAKE-RECEIVE-TEST 36/36, INTAKE-CLOSURE-TEST 10/10, INTAKE-FETCH-TEST 21/21, CHECK6-PLATFORM 14/14, INTAKE-PAGE 26 of 26 examples. No rows. LOCAL until MSTR pushes.</status_reason>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
