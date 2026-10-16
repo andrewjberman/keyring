@@ -2469,3 +2469,19 @@ The writer, the rename, the schedule files and the re-pin are drained (`edf7999e
 **fanout:** 1 of 1 chains, cap 8 (the AE applier `0.7.0_AE_CloudOps~DB2`, not a worker subagent).
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 35 red arms):** `checks/r148/p159_pubapply2.py` (DBC159-1-AC1..AC3).
+
+## 153. ROUND 149, WORKSTREAM PUB49F (2026-10-16 ~09:0xZ, issuer 2.0.0_SA_COO~D2): the 49 Financial publisher states its unreported days (CTO ruling msg 9224)
+
+The CTO ruled that the 49 Financial series STATE their unreported trading days, an explicit empty list where the gold holds no absent trading day, with the basis and `calendar_source`; it lands in one drain with any contract touch, then a republish of the 6,949 series under a NEW 49 Financial publish pair (the CTO signs). The series contract 0.3.2 already lists the pair and the manifest's `calendar_source` as optional, so this cell touches no contract.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The 49 Financial handler passes the gold's partition dates and the calendar to `publisher.build_series` and the calendar's name to `build_manifest`; its tests; the source-map entry gains `lib/trading_calendar.py` as a pinned member and stale pins move | DB-b-292 | FWD-10 | WORLD (infra paths) | none | chain M |
+| 2. History scope derived per account (CTO ruling msg 9226: first value day vs source floor, `history_scope_claim` inferred): the producer, both contracts, the publisher | NOT CUT YET: designed next, in the SAME drain as item 1 | FWD-10 | WORLD | item 1 (the publisher file) | later |
+| 3. The 49 Financial publish pair: a never-widen packet (code update plus republish of the 6,949 series, dry run first, canary, shards), then an AE apply order | NOT CUT: after the drain | FWD-10 | WORLD | items 1 and 2 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the lambda path keeps `contract=None` (no validation call), as today; the checker validates against the contract in the behaviour clause, so the series are graded and the lambda path is not widened; (b) the account-level refusal rule of publisher 0.3.0 (income null on some days and a number on others) now applies to 49 Financial: the applier's dry run counts refusals and a refused account keeps its prior objects, so it is a measured stop condition of the packet, not a cell; (c) the entry's other staged pins are re-pinned in the same cell because the build refuses a stale pin.
+
+**fanout:** 1 of 1 chains, cap 8 (worker `0.9.0_WK_IRPT_DASHBD~235`); item 2 is a second chain after its design.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the behaviour clause validated against a scratch reference handler built by the issuer (green) and 5 injected faults (all red), the entry clause by 10 red arms plus ancestry):** `checks/r149/p160_pub49f.py` (DB160-1-AC1..AC3).
