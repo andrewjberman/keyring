@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-16T07:53:23.936651+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261016T090401Z
 **Deploy:** IRPT_ANLREQ TO-APPLY-t54 (AR-tf-76): FWD-4 commentary hop, three artifacts one at a time at HEAD 8da0127c5b: G the inline policy of irpt-commentary-draft-store-role gains S6 and S7; D the draft-store zip (commentary_draft_store.py changed, durable_job.py added; BUILD_ONLY twice, digest recorded before deploy); C the SURGICAL commentary zip (lambda_handler.py replaced); P the driven proof on the synthetic row REQ-d47252fe74634d0c5cdd8067, restored; COO packet blob 8dcbccc512, CTO half msg 9181
 **Authored by:** 0.7.0_AE_CloudOps~AQ2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -13,15 +13,18 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | G | verify | irpt-commentary-draft-store-role inline policy S6 and S7 (draft-store root, one resource in place) | simulate battery, plan 0/1/0, safe-apply, re-plan No changes, Sids S1 to S7 | validate Success; unscoped plan read 2 changes (the policy and the Lambda whose 3 attributes are only known-after-apply because the S3 artifact data source is read during apply); SCOPED plan -target the policy: 0 add 1 change 0 destroy, attribute policy only, equal to the simulated document; simulate battery 10 rows + 2 controls OK; safe-apply 0 added 1 changed 0 destroyed; re-plan No changes; Sids S6 S7 S1 to S5 read live | CLOSED 20261016T082516Z |
-| P | verify | driven proof on synthetic row REQ-d47252fe74634d0c5cdd8067 plus two negative arms, restored | the answers, the row before and after, the restore read ABSENT |  | OPEN |
+| P | verify | driven proof on synthetic row REQ-d47252fe74634d0c5cdd8067 plus two negative arms, restored | the answers, the row before and after, the restore read ABSENT | driven proof on the synthetic row REQ-d47252fe74634d0c5cdd8067 (tenant 49financial, state READY): invoke 1 hop_failure_written true, invoke 2 false, hop_failure {hop COMMENTARY, code COMMENTARY_DRAFT_REFUSED, at 2026-10-16T08:53:33Z}, state and every other attribute unchanged; tenant inflection REFUSED/UNAVAILABLE and the row unchanged; arm A (24-zero id) no row created, key ABSENT after, accepted as corrected by the issuer (amendment 2: store() resolves the requests record first so the answer is REFUSED/UNAVAILABLE); restore by conditional REMOVE, item sha256 equals the precondition | CLOSED 20261016T090401Z |
 | irpt-commentary-draft-store-lambda | tf-lambda | module.irpt_commentary_draft_store.aws_lambda_function.this | TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served | BUILD_ONLY twice byte-identical RizVjaXiTEhiTAZxJ1mUCGBv6p78N5N0PtzjE3dfAqI= recorded in the ledger before the deploy; member diff vs live: commentary_draft_store.py changed, durable_job.py added; one upload VersionId 0alBeYtamoL7JpslE4VGeHa4eUbCX7Lf read back byte-identical; scoped plan 0/1/0 (last_modified, s3_object_version, source_code_hash); safe-apply 0 added 1 changed 0 destroyed; re-plan No changes; live CodeSha256 equals the recorded digest, memory 512 timeout 29 unchanged | CLOSED 20261016T084627Z |
-| outlook-global-commentary-draft-lambda | tf-lambda | aws_lambda_function.commentary | TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served |  | OPEN |
+| outlook-global-commentary-draft-lambda | tf-lambda | aws_lambda_function.commentary | TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served | SURGICAL zip I/6mirBTU5+JPCUUx6Xrmd1bn1vGAjvZTL75LhOm3HY= recorded in the ledger before the deploy, 3 proofs hold (1 of 1 member equal to pin, 92 names same order and 1 differs, clean import of lambda_handler drafter entry); targeted plan -target aws_lambda_function.commentary 0 add 1 change 0 destroy (source_code_hash hUZY39qN -> I/6mirBT, last_modified); safe-apply 0 added 1 changed 0 destroyed; targeted re-plan No changes; live CodeSha256 equals the surgical digest; both pull functions still hUZY39qN with every field equal to the precondition; memory 512 timeout 300 env names 8 and the mapping (1 Enabled) unchanged | CLOSED 20261016T085319Z |
 
 ## Log
 
 - 20261016T075323Z OPENED by 0.7.0_AE_CloudOps~AQ2 with 4 leg(s)
 - 20261016T082516Z LEG G closed: validate Success; unscoped plan read 2 changes (the policy and the Lambda whose 3 attributes are only known-after-apply 
 - 20261016T084627Z LEG irpt-commentary-draft-store-lambda closed: BUILD_ONLY twice byte-identical RizVjaXiTEhiTAZxJ1mUCGBv6p78N5N0PtzjE3dfAqI= recorded in the ledger before the deploy; m
+- 20261016T085319Z LEG outlook-global-commentary-draft-lambda closed: SURGICAL zip I/6mirBTU5+JPCUUx6Xrmd1bn1vGAjvZTL75LhOm3HY= recorded in the ledger before the deploy, 3 proofs hold (1 of 
+- 20261016T090401Z LEG P closed: driven proof on the synthetic row REQ-d47252fe74634d0c5cdd8067 (tenant 49financial, state READY): invoke 1 hop_failure_w
+- 20261016T090401Z CLOSED -- all 4 legs proven
 
 ## Carried notes (hand-written lines kept across re-renders)
 
