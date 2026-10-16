@@ -17,6 +17,8 @@
 
 **Risk class WORLD** is the floor of the paths below (an `infra/` path), not a statement that anything is deployed: python files only; no AWS, no deploy, no push, no invoke. The handler is NEW SERVED OUTPUT when it is run by the applier under a never-widen pair; this order runs nothing and writes nothing outside the repo.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~02:5xZ, on worker row IRPT_DASHBD-D2-W226-S2; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** (1) Your branch now CONTAINS the series contract 0.3.0: the issuer merged `wk-IRPT_DASHBD-225` into `wk-IRPT_DASHBD-226` (merge commit 6e56bb47d3), so `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` on your branch reads 0.3.0 and names `unreported_trading_days` and `unreported_trading_days_basis` in `series.optional`. You still edit NO contract file; `DB147-2-AC1` runs against that 0.3.0 file as written, with no re-pointing. (2) Your row W226-S2 is ruled by this: the order's base lacked the contract the handler's guard reads, a defect of the issuer's order. Resume from your committed handler; write the test file, the facts record and the proof instance, and flip the status to complete last.
+
 ---
 
 ## WORKER FACE
