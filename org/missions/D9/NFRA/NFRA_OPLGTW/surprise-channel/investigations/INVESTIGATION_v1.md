@@ -20384,3 +20384,53 @@ name the one known failure instead of silently inheriting it.
   "notes": "If the lane gate refuses the order-file path, the flip is not landed and the order stays staged; the report carries that as the outcome."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~116",
+  "surfaced_at": "2026-10-16T10:31:54Z",
+  "id": "NFRA_OPLGTW-Z-W116-S1",
+  "one_line": "The ruling refuses a PRESENT ruling_ref that does not resolve and an ADDED row with no ruling_ref; it does not say what happens when a ref is removed from a row that carries one at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rr-2.gate-checks-ruling-ref.md section 1 (a) and (b): exactly two refusals, nothing else.",
+      ".tools/naming-gate.py ruling_ref_refusals (worktree branch wk-NFRA_OPLGTW-116, base 20063a578b): a staged row that is not an added row and has no ruling_ref falls through with no refusal, whatever its HEAD copy carried."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Two refusals are added: a present ruling_ref must resolve; a row added by the commit must carry a resolving ruling_ref. A legacy row (present at HEAD, no ruling_ref) is not refused.",
+  "world_is": "The limb is silent on a row that carried a ruling_ref at HEAD and carries none in the staged file. It is not an added row, so it is not refused, and the order names no refusal for removal. The implementation follows the order and adds nothing for removal.",
+  "notes": "Left to the issuer: whether a removed ref is a third refusal (out of this cell's scope) or is covered by another limb. No name's grade moves either way (rr2.AC2 moved 0)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~116",
+  "surfaced_at": "2026-10-16T10:31:54Z",
+  "id": "NFRA_OPLGTW-Z-W116-S2",
+  "one_line": "The ruling says PRESENT and a path@commit string, without saying whether an explicit null ruling_ref counts as present or whether the commit must be a full 40-hex hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rr-2.gate-checks-ruling-ref.md section 1 STATE: a ruling_ref is a repo-relative path @ 40-hex commit.",
+      ".tools/naming-gate.py ruling_ref_resolves (worktree): key presence decides PRESENT, so ruling_ref null is refused under (a) as not a path@commit string; a commit that is not 40 lowercase hex is refused under (a) before git is asked."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A ruling_ref that is PRESENT on a row must RESOLVE, and a present ref that is not a path@commit string makes the gate REFUSE.",
+  "world_is": "The implementation reads key presence as PRESENT, and reads a path@commit string as one whose commit is 40 lowercase hex (the STATE definition). Both readings are interpretations the order does not spell out. The 25 current refs all resolve (25 of 25 by git cat-file -e), so neither reading moves the current file's grade.",
+  "notes": "Recorded for the issuer to confirm or amend. Verdict: no name's grade moved (rr2.AC2)."
+}
+```
