@@ -48,3 +48,19 @@ What each owed outcome now has, for the CVO to grade:
    act.
 2. The scratch delete on dell1, if Andrew says yes (ruling 1). It is one act by dell1's seats, not a cell.
 3. FWD-14 after Andrew's sitting (`c9a4`, `b87f`). Nothing else is reachable by a seat this round.
+
+## ADDENDUM 1 (~04:3xZ): on the CVO's L10 slug, `ADJUDICATION_v29.md` @6b85624313 (msg 109593)
+
+- **Grades:** FWD-16 REALIZED (C-S82). FWD-17 REALIZED (C-S83). FWD-15 stays ADVANCED, one act short (C-S81).
+- **Tally:** REALIZED 7 (1, 3, 5, 16, 17, 24, 28); ADVANCED 17; PARKED 1 (9); MOVED 3 (13, 20, 26); denominator 28.
+- **FWD-15's missing act is accepted as the CVO states it.** The DONE WHEN names ONE package taken the whole way AND the lane's
+  work then runs. Tabulate reached dell1 with receipts, but no dell1 work ran on it beyond `prove`'s import.
+- **Section 3 (round-26 enrichment list) is REPLACED by:**
+  1. **ONE cell, dell1.** A dell1 lane (`1.0.0_SA_CTO~DELL1` names it) imports tabulate ONLY from
+     `C:\dev\_intake_tabulate_20261016\SCRATCH_TARGET` (`PYTHONPATH` set to it, otherwise isolated), renders the one read-only
+     table and commits the output plus `tabulate.__file__` on `box/dell1`.
+     - Pass: the table prints, and `__file__` sits under `SCRATCH_TARGET`.
+     - Cross-box act, asked through `0.0.0_AB_MSTR` as a crossbox call; dell1 is asked no outside site.
+  2. **Ruling 1 is RE-ORDERED.** The scratch delete is put to Andrew only AFTER cell 1's output is committed. Deleting first
+     would force the install to be repeated.
+  3. FWD-14 after Andrew's sitting (`c9a4`, `b87f`).

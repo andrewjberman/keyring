@@ -86,6 +86,7 @@ Checks dry-run at the base: pf7.AC1 FAIL as expected (test file absent); pf7.AC2
 The status flip is the issuer's.
 
 <status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>PF</workstream>
 <slot>~37</slot>
