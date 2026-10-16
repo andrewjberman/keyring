@@ -19658,3 +19658,134 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The Cottonwood reader is a report reader; the transaction rows are read by the Black Diamond adapter for the return, which keeps the Transaction Type words and the external flow, and the Inflection transaction history pull is a bronze REST pull (data/inf/manual_api/pull_inflection_transactions_rest.py). The served transaction columns for Cottonwood therefore have no existing adapter that emits Opal's words."
 }
 ```
+
+## IRPT_DASHBD-D2-W602-S1 -- the portal worktree branch is wk-IRPT_DASHBD-602-portal, not the cand/<box>/<slug> name that CONTRIBUTING-BOXES.md step 1 gives a feature
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "The order names the portal branch wk-IRPT_DASHBD-602-portal (cut from origin/PROD e0e69da7). portal/CONTRIBUTING-BOXES.md step 1 names a feature branch cand/<box>/<slug>, and the approval register keys on that name. The worktree was built on the order's name; nothing was renamed, pushed or registered by this worker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/CONTRIBUTING-BOXES.md step 1 (git -C portal worktree add <path> -b cand/<box>/<slug> <last PROD release>) read at e0e69da7766d87719571d7e6c0ccf59bf65fcae9",
+      "task order IRPT_DASHBD.TO-DB-f-602 WORKER FACE: portal branch wk-IRPT_DASHBD-602-portal cut from origin/PROD e0e69da7766d87719571d7e6c0ccf59bf65fcae9",
+      "portal commit 7fa808c949fbe5d9c9d4ea1aea3aa3006be7d2e8 is on branch wk-IRPT_DASHBD-602-portal (git -C portal log -1)"
+    ]
+  },
+  "spec_asserts": "WORKER FACE: the portal feature branch is wk-IRPT_DASHBD-602-portal, cut from origin/PROD @e0e69da7; the issuer registers it for approval.",
+  "world_is": "CONTRIBUTING-BOXES.md names the feature branch cand/<box>/<slug>, and open-calls.py add --branch keys the registration on that name. The order's branch name does not match the rule. Not acted on: the name is the issuer's to ratify or change.",
+  "notes": "No effect on the acceptance rows: DBF119-1-AC1 to AC3 are mechanical and pass on this branch."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S2 -- the spec names no NOT_MEASURED reason for a row the contract does not describe; the model gives its own reason CLASS_RETURN_NOT_SERVED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "Step 2 of the cell gives the reason as the first non-MEASURED coverage value met, or WINDOW_NOT_COVERED. A row the contract does not describe (coverage MEASURED with a null class_return_daily, a coverage value outside the enum, or an asset_class outside class_enum) has no such reason. classWindowModel.ts reads it as not measured with its own reason CLASS_RETURN_NOT_SERVED and client-safe words. The contract is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json: class_return_daily is null whenever coverage is not MEASURED; enums.coverage has six members and no unknown-value member",
+      "portal/src/pages/InvestorReporting/tabs/reporting/classes/classWindowModel.ts@7fa808c9 defines CLASS_RETURN_NOT_SERVED and unmeasuredOf()"
+    ]
+  },
+  "spec_asserts": "Step 2: a day is measured only when every row has coverage MEASURED and a non-null class_return_daily; otherwise the reason is the first non-MEASURED coverage value met, or WINDOW_NOT_COVERED.",
+  "world_is": "The contract does not say what a MEASURED row with a null return means, and the spec names no reason for it. The model's reason is a choice the spec left open; a reviewer may name another reason. The choice is stated in the model's header.",
+  "notes": "Same reason covers a coverage value outside the enum and an asset_class outside class_enum."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S3 -- the spec is silent on an empty window and on an accountValues list with no row at a mix date; the model reads both as stated in its code
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "Step 2 names WINDOW_NOT_COVERED for missing mix-date rows but not for an inverted or empty window (start not before end). Step 3 names the value check but not an accountValues list with no row at a mix date. classWindowModel.ts reads the first as WINDOW_NOT_COVERED and the second as a mismatch (CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT). Both readings are the model's choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/reporting/classes/classWindowModel.ts@7fa808c9 buildClassWindowModel: the guard `if (!(start < end) || startRows === undefined || endRows === undefined)`",
+      "portal/src/pages/InvestorReporting/tabs/reporting/classes/classWindowModel.ts@7fa808c9 buildClassWindowModel: `atStart !== undefined && atEnd !== undefined && ...` before the value check"
+    ]
+  },
+  "spec_asserts": "Step 2: window must have rows on both mix dates, else WINDOW_NOT_COVERED. Step 3: with accountValues, a mix date that does not sum gives CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT.",
+  "world_is": "The spec does not say what an inverted window (start not before end) returns, nor what a missing accountValues row at a mix date returns. The model returns WINDOW_NOT_COVERED and CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT, so nothing prints on either.",
+  "notes": "Both readings fail closed (nothing prints); neither is exercised by a served path yet."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S4 -- the worktree carries no org/surprise_channel/ folder, so the investigation item schema the order names was read from the main checkout
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "The order says rows follow org/surprise_channel/schemas/investigation_item.schema.json. That path is absent in the worktree C:/dev/wk-irpt-dashbd-602 (no org/surprise_channel/ folder at fcc5e13f03, the worktree's HEAD at start). The schema was read read-only from C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json. This row follows the shape of the rows already in this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls org/surprise_channel/ run in C:/dev/wk-irpt-dashbd-602 at fcc5e13f03: No such file or directory",
+      "C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json read (main checkout, read only)"
+    ]
+  },
+  "spec_asserts": "WORKER FACE / BOUNDS: rows are written per org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "The schema is not carried in this worktree. The worker read it from the main checkout and wrote nothing outside the grant.",
+  "notes": "The row gate runs on the worktree's own tree; if it needs the schema there, the commit refuses and the order stays open."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S5 -- bun run lint exits 1 on the whole portal at the PROD base: one error in src/pages/TicketCenter/__tests__/filing-hint.test.tsx (no-regex-spaces), outside this grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "The gate reads 'bun run lint (0 errors each)'. Repo-wide lint returns 1 error and 359 warnings (360 problems), all outside this grant. The error is in src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 147 (no-regex-spaces, two literal spaces in a regex). That file is unchanged from the base. The four new files lint with 0 findings (eslint on those paths, rc 0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run lint in C:/dev/wk-irpt-dashbd-602/portal at 7fa808c9: '360 problems (1 error, 359 warnings)', rc 1",
+      "git show e0e69da7766d87719571d7e6c0ccf59bf65fcae9:src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 147 holds the same regex with the two-space run"
+    ]
+  },
+  "spec_asserts": "WORKER FACE step 5: bun run typecheck and bun run lint (0 errors each) from the portal worktree.",
+  "world_is": "The repo-wide lint cannot reach 0 errors because of a file the grant does not name and this cell did not touch. Typecheck is rc 0. The lint on the cell's own paths is clean.",
+  "notes": "Not repaired: the file is outside the grant."
+}
+```
