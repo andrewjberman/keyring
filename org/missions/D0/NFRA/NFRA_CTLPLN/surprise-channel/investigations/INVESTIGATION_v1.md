@@ -13171,3 +13171,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The same stop condition as NFRA_CTLPLN-W144-S1, for ETFS_RIVALS. Decision owner: the issuer 2.0.0_SA_COO~C."
 }
 ```
+
+## NFRA_CTLPLN-W144-S3 -- The head-anchored rule (AMENDMENT 1) still flips 7 real grades to UNGRADED and 3 ROUND-CLOSE verdicts
+
+```json
+{
+  "id": "NFRA_CTLPLN-W144-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~144",
+  "surfaced_at": "2026-10-16T14:46:09Z",
+  "one_line": "The head-anchored rule (AMENDMENT 1: an investigation row's prose grade counts only when the criterion starts within the first 80 characters of its one_line) still flips 7 real CVO grades to UNGRADED and 3 ROUND-CLOSE verdicts from MAY-CLOSE to REFUSED. The order's stop condition; the 80-character head is not widened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~144/SWEEP_BEFORE.txt @749ad4afa5 (CT-be-1 checker, 232 runs)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~144/SWEEP_AFTER.txt (head-anchored rule, same 232 runs; the rule is committed @b71565bc7e)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~144/SWEEP_REPORT.md (the seven rows, each with the first 120 characters of its one_line)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md rows ADVI_COTBKF-D2-S41, -S58, -S64, -S76 (read at the worktree HEAD b71565bc7e)",
+      "org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md row ETFS_RIVALS-Z-S47 (grade in spec_asserts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-bf-1 AMENDMENT 1 (issuer 2.0.0_SA_COO~C, round 29): a prose grade in an INVESTIGATION row counts only when the criterion's first character is among the first 80 characters of the one_line and a verdict word follows it; a deeper mention does not grade. Stop condition: zero GRADED->UNGRADED lines and zero ROUND-CLOSE verdict changes in the 9 real projects; if any real grade still flips, list each with its row id and the first 120 characters of its one_line, file a row, and STOP; do not widen the 80-character head.",
+  "world_is": "The sweep shows the condition still holds: 7 judgment lines move GRADED -> UNGRADED (ADVI_COTBKF 5, ETFS_RIVALS 2), 1 line changes source with its verdict unchanged, and 3 ROUND-CLOSE verdicts move MAY-CLOSE -> REFUSED (ADVI_COTBKF rounds 39, 51, 52). In the ADVI rows the head of the one_line names another criterion of the same round and the grade for the named order is later in the row (characters 217 to 476); in the ETFS row the grade sits in spec_asserts.",
+  "notes": "The seven flips, as 'round N TO order criterion (row ID): first 120 characters of one_line'. (1) round 28 TO-CB-ab-3 CB28ab3-AC3 (ADVI_COTBKF-D2-S41): \"L9 round 28: CB28ab1-AC3 NOT MET as written ('decided ... before the run' fails for one rule), but the post-run continui\". (2) round 34 TO-CB-ah-2 CB34ah2-AC3 (ADVI_COTBKF-D2-S58): \"L9 round 34: CB34ah1-AC2 MET -- rule commit e6544ecdfe (07:04 ET) precedes output 33b729fc1b (07:06); the class cross_fi\". (3) round 39 TO-CB-am-1 CB39am1-AC2 (ADVI_COTBKF-D2-S64): \"L9 rounds 36 and 39: CB36aj1-AC2 MET -- other_rows_identical=True and the verify reads 38/38; the bond and diff rule com\". (4) round 51 TO-CB-ay-1 CB51ay1-AC2 and (5) round 52 TO-CB-az-1 CB52az1-AC2 (ADVI_COTBKF-D2-S76): \"L9 rounds 50-52: CB50ax1-AC2 MET (served writer and B_00 equal the repo bytes, no opal_naming import, own firm and 4 key\". (6) round 8 TO-RIV-fc-1 J1 and (7) round 9 TO-RIV-ln-1 J1 (ETFS_RIVALS-Z-S47): \"The first organic full-day page (2026-10-06, batch ai-2026-10-06-517fd371, 13 of 13 funds updated) renders with holding \"; this one_line has no criterion token, and the grade sits in spec_asserts. Verdict changes: ADVI_COTBKF rounds 39, 51, 52 (MAY-CLOSE -> REFUSED). Other ROUND-CLOSE changes: ADVI_COTBKF rounds 28 and 34 (graded 2 -> 1), ETFS_RIVALS rounds 8 and 9 (graded 1 -> 0). Source change, verdict unchanged: ADVI_COTBKF round 12 TO-CB-l-1 CB12l1-AC3 (investigation ADVI_COTBKF-D2-S24 -> adjudication ADVI_COTBKF-C-S17, NOT MET both). Decision owner: the issuer 2.0.0_SA_COO~C (re-grade these as grades entries or as a head grade, or decide the head boundary for multi-criterion rows; the rule was not widened)."
+}
+```
