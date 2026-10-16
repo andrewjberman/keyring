@@ -21076,3 +21076,30 @@ name the one known failure instead of silently inheriting it.
     }
   ]
   ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:34:43Z",
+  "id": "NFRA_OPLGTW-Z-S177",
+  "one_line": "The gateway's per-identity limiter answers 429 rate_limited scope=identity to the site Z interactive seats (CTO ~12:2xZ, CVO ~10:0xZ, both on one shared Opal identity), and writes no audit row, so the count that tripped it is unread.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/config.py:393-399 (read by the issuer): RATE_LIMIT_ENABLED default on; RL_MCP_IDENTITY_LIMIT 120 requests per RL_MCP_IDENTITY_WINDOW 60 s per identity; RL_IP_GLOBAL_LIMIT 300 per 60 s; RL_IP_AUTH_LIMIT 20 per 60 s; tunable by environment variable.",
+      "app/server.py:171-181: GuardMiddleware calls ratelimit.enforce_identity(principal.key) for every /mcp POST of a valid bearer and answers 429 {error: rate_limited, scope: identity} with Retry-After; no audit write on that branch.",
+      "app/ratelimit.py: an in-process sliding-window LOG (single uvicorn worker, memory only), so the per-identity count is lost on a restart and never exported.",
+      "CTO msg 34991: the audit lake read 11:00Z onward holds 873 records, 588 ok calls and 1 denied by one shared Opal identity (andrew's identity 284), and NO 429 row. 588 audited tool calls in about 80 minutes is about 7 a minute, far below 120 a minute: the limiter counts every /mcp POST (initialize, tools/list, notifications as well as tool calls) and every seat on the shared identity adds to one window, so the audit under-reads what the limiter saw."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A rate limit that refuses a legitimate interactive seat leaves a record that names the identity, the count and the window, so the limit can be set from evidence.",
+  "world_is": "The limit is 120 per 60 s per identity and the site Z seats (CTO, CVO, COO, the Bloomberg terminal seat, the muse client's mail watch where it shares the identity) draw on one window; a burst from several seats inside a minute can pass 120 while each seat's own use is small. No record shows the count. The fix is named, not guessed: OG-en-10 makes the 429 write an audit row (limit, window, count_in_window, retry) so the number is read from the first refusals; then the choice is between raising RL_MCP_IDENTITY_LIMIT (an environment value on the host, a restart through the applier seat, no code) and giving each seat its own identity (a larger change). Raising it first, blind, would trade the interactive seats' cutoff for a weaker throttle on a valid-but-abusive token (the limiter's stated purpose) with no measurement of either.",
+  "notes": "Cost of the proposed instrument: three keys of audit per refusal, folded to one row per identity per 10 s; it rides the batched round-38 gateway release (no separate deploy). Until then the 429 is a seat-side retry (Retry-After is sent). Disarm: OG-en-10 landed live and a read of its rows, then the limit decision recorded as a ruling."
+}
+```
