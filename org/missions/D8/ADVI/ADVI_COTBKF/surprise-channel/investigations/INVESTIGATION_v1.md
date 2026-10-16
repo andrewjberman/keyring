@@ -9845,3 +9845,31 @@ round.** Never edit an existing row.
   "dismissal_reason": "Answered by a measured read of the served objects (run_commit 6f70d5cc01bb); the 728d223ddc figure was copied into my own order from the round-83 draft and is corrected in the next face."
 }
 ```
+
+## ADVI_COTBKF-D1-S10 -- the disarm owner reads the C-S3 fix at the merged pin and disarms D1-C-S3
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S10",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T04:17:01Z",
+  "one_line": "the disarm owner reads the C-S3 fix and its test at the merged pin and disarms ADVI_COTBKF-D1-C-S3: the CRM job's run record carries per-member column counts and role names, never header text",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/cotbkf_crm_match_job.py at HEAD, read in full for the touched functions: first_line_is_header (lines 267-281) is true only when every non-empty first-line cell is a short label whose words are all in HEADER_VOCAB, and false when in doubt; scan_zip (lines 300-340) records header_columns as {columns, roles (counts), first_line_is_header} and SKIPS a member whose first line is not a header; _write_record (lines 601-606) refuses with RECORD_CARRIES_MEMBER_TEXT and writes nothing when any record string of 4 or more characters matches a cell hashed into the in-memory canary set",
+      "python -m pytest data/assets/scripts/silver/tests/test_cotbkf_crm_match_job.py at HEAD (this session): 25 passed in 1.38s, the six record-safety tests of merge e6853800f3 among them",
+      "merge e6853800f3 (worker ~179, TO-CB-cl-1): proof VALID; the five existing tests unchanged"
+    ]
+  },
+  "spec_asserts": "REMEDIATION_v52 row D1-C-S3: close when the disarm owner reads the fix and its test at the merged pin, before the job reads a landed zip.",
+  "world_is": "The fix is merged and its test passes at HEAD, and no zip has been read since: the CRM job read nothing in round 88 (403) and the second window was ruled not needed (CTO msg 6389). The hazard (a member's first line copied verbatim into a committed record) cannot recur through this code path: a headerless member is skipped and counted, and a record string matching member text is refused before the write. Residual, stated: the canary covers the first 200 data cells of each member and cells of 4 or more characters, so a value outside that set is not caught; the record carries no cell by construction, which is the primary control.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the disarm owner's read of the fix and its passing test at HEAD, before any zip was read; the CVO closes the remediation row."
+}
+```

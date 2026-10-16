@@ -19869,6 +19869,7 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
 ## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
 
 ```json
@@ -20727,3 +20728,134 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W901-S1 -- the round-120 record's 14-column list is the account-return read set only: the lots producer also reads fact_trn trade_date, order_number and net_amount outside it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W901-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~901",
+  "surfaced_at": "2026-10-16T04:11:48Z",
+  "one_line": "RD_FWD5_FIELDS_R120.json says its 14 columns are the declared set the code reads (transaction_columns); account_activity_lots.py closing_trades also reads fact_trn trade_date, order_number, quantity and net_amount through lot_spec, outside that set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-901 step 1 takes the 14 columns the code reads from the round-120 record (RD_FWD5_FIELDS_R120.json), whose claim is that they are the declared set the code reads (transaction_columns, account_return_daily.py lines 510-532).",
+  "world_is": "transaction_columns is the account-return read set only. account_activity_lots.py closing_trades (line 272, spec traded at line 293) reads the fact_trn closing-trade columns order_number, cusip, quantity, net_amount and trade_date, declared at sources.json lines 115-116 and read through lot_spec. trade_date is therefore read by code and absent from the 14-column list. The worker measured trade_date as the source for the trade_date target (sources.json line 116) and did not alter the round-120 record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py@ef2e1b0ecc87",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@ef2e1b0ecc87",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@ef2e1b0ecc87"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The round-120 list is correct for the account-return producer; the lots producer's fact_trn read is a second read set the list does not name. For the contract-and-producer cell: the account_transaction source map should cite both read sets."
+}
+```
+
+## IRPT_DASHBD-D2-W901-S2 -- the four-word claim set has no value for a DERIVED target, and the criterion binds a null source to claim absent, so a derived column reads as a missing one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W901-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~901",
+  "surfaced_at": "2026-10-16T04:11:48Z",
+  "one_line": "The record's claim set (measured, inferred, held, absent) cannot say DERIVED: flow_class, coverage and custodian have no source column, and the checker forces any null source to claim absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-901 step 1: flow_class and coverage are derived and custodian is the firm constant; step 6: every claim is one of measured, inferred, held, absent, and absent means no column supplies the value. The checker DBF123-1-AC1 requires a null source to carry claim absent.",
+  "world_is": "Three of the 14 targets (flow_class, coverage, custodian) are supplied by no single column but by a derivation or a constant, and the only available value for them with a null source is absent. A reader of absent_count (7 of 14) cannot tell a derived column from a column the silver lacks. The worker recorded absent with the derivation or constant named in words for each, and flagged the form here rather than inventing a fifth word.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r123/p123_ground.py@ef2e1b0ecc87",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@ef2e1b0ecc87"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. For the contract cell: a derived-target value (or a claim for a constant) needs a ruling on the vocabulary before the contract carries flow_class and coverage."
+}
+```
+
+## IRPT_DASHBD-D2-W901-S3 -- the brief's seven flow classes are not the producer's five finals: INCOME and CORPORATE_ACTION are not final classes, and EXTERNAL does not split into IN and OUT in the code
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W901-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~901",
+  "surfaced_at": "2026-10-16T04:11:48Z",
+  "one_line": "The brief's flow_class list (EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION, UNRESOLVED) does not match the producer's FINAL_BY_PARTITION set (INTERNAL, FEE-MANAGEMENT, FEE-ADMIN, EXTERNAL, UNRESOLVED).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78: account_transaction carries flow_class with seven values, EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION, UNRESOLVED.",
+  "world_is": "account_return_daily.py FINAL_BY_PARTITION (line 230) maps the classification partition to five finals: INTERNAL, FEE-MANAGEMENT, FEE-ADMIN, EXTERNAL, UNRESOLVED. The EXTERNAL-IN and EXTERNAL-OUT partitions both map to EXTERNAL, so the IN and OUT split is not in the code; INCOME is recognised from the category column on cash receipt (comment at line 243), and CORPORATE_ACTION is not a final class in any file read. The brief's seven values and the code's five do not share one vocabulary, so flow_class cannot be derived by a one-to-one copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@ef2e1b0ecc87",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md@ef2e1b0ecc87"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The vocabulary is for the contract ratification (round 122 words); the ground read records the mismatch only."
+}
+```
+
+## IRPT_DASHBD-D2-W901-S4 -- the naming builder accepts account_transaction with no registry row, and no registry file names any gold table, so a missing row cannot be seen as a refusal
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W901-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~901",
+  "surfaced_at": "2026-10-16T04:11:48Z",
+  "one_line": "opal_naming.address returns an s3 uri for account_transaction (rc 0) and infra/logic/registry holds no row for it; the same registry probe is also zero for the emitted account_class_daily, so the registry does not name gold tables at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 4 (LGIC): every S3 address is opal_naming.address() output, and a builder REFUSAL is a missing registry row to add (infra/logic/registry/); the ground read step 4 asks whether the registry holds a row for account_transaction.",
+  "world_is": "The builder returned s3://opal-data-49financial/irpt/49financial/gold/account_transaction/date=2000-01-03 with rc 0, so no refusal fired. comp-find over infra/logic/registry (17 files) gives 0 hits for account_transaction and 0 for account_class_daily. The refusal path therefore does not key on gold table names here, and a missing row for the new table would not surface as a refusal at the builder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@ef2e1b0ecc87",
+      "infra/logic/registry/resources.json@ef2e1b0ecc87"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The registry_row_exists field records false with the probe's denominator; the zero is not evidence of a refusal either way."
+}
+```
+
+## IRPT_DASHBD-D2-S108 -- TO-DB-b-283: the criteria checker p151_pubapply.py has two defects that fail DBC151-2-AC1 and DBC151-3-AC1 on a correct record and a correct world
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S108",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T05:25:00Z",
+  "one_line": "TO-DB-b-283 is applied and its record written, but the issuer's checker p151_pubapply.py fails DBC151-2-AC1 and DBC151-3-AC1 on two defects of its own: (1) DIGIT_OK_KEYS lacks packet_sha256, so the 64-hex gates.packet_sha256 the order requires trips the 8-digit-run rule (p143 listed it); (2) live() samples the directory token account=<id> as the account, so check_sample compares manifest account_id (the bare id) with account=<id> and hashes the token. With both patched in scratch copies, all three criteria PASS on the unchanged record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I checks/r147/p151_pubapply.py . DBC151-2-AC1 and DBC151-3-AC1: 'FAIL: a run of 8 or more digits outside the exempt fields: [226258136, 84753371]'; the only field holding both runs is gates.packet_sha256 (the packet's sha256 0c9b495ce2f7...); the checker compares that field for equality (check_head) so the record cannot carry another form; DIGIT_OK_KEYS (line 52) holds sha256 and packet_blob but not packet_sha256",
+      "scratch copy with 'packet_sha256' added to DIGIT_OK_KEYS: DBC151-2-AC1 PASS; DBC151-3-AC1 FAIL 'sample 8c1d0c79b8b6: manifest size, version or account'",
+      "live() line 240: accts = sorted(k[len(PREFIX):].split('/')[0] ...) yields 'account=<id>' (the key layout is irpt/cottonwood/platinum/reporting/account=<id>/series.json.gz); check_sample line 260 requires m['account_id'] == a, but the manifest holds the bare id (publisher.build_manifest: 'account_id': str(account_id); my own read of all 11 accounts: manifest account_id equals the id), and line 257 hashes the token, so the expected sampled_hash12 would be of account=<id>; the order defines the canary's account_hash12 as the sha256 of the id",
+      "second scratch copy with the digit key exempt and 'account=' stripped from the sampled token: DBC151-3-AC1 PASS on the unchanged COT_PUBLISH_APPLY_RECORD.json (1878 objects, ten samples with id hashes, REPORT line equal to the dry run, ledger open); neither scratch copy is committed"
+    ]
+  },
+  "spec_asserts": "Order criteria DBC151-2-AC1 and DBC151-3-AC1: FRESH live reads by the checker; ten sampled accounts validate and carry a matching manifest; 'sampled_hash12 (the 12-hex sha256 prefixes of ten accounts chosen by sorted position)'.",
+  "world_is": "The world meets the packet: function, role policy, artifact, no schedule, 1878 objects, ten samples valid. The record is written to the order's exact schema. The checker as committed cannot pass any record that holds the required packet_sha256 value, and cannot pass a sample whose manifest holds the bare id. The order's status stays pending and no proof-of-spec instance is written until the issuer amends p151 (the b-272 path); sampled_hash12 in the record is the hash of the id, as the canary's account_hash12 is."
+}
+```

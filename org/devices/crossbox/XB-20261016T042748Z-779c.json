@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261016T042748Z-779c",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "NFRA_CTLPLN round 26: a dell1 lane imports tabulate only from SCRATCH_TARGET, renders the table, commits it",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_R26_DELL1_RUN_ON_SCRATCH.md",
+ "opened_at": "2026-10-16T04:27:48Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-16T04:30:19Z",
+  "bus_message_id": "b92b9789-56e9-46b8-a6df-77f897bf874f"
+ },
+ "ack": {
+  "at": "2026-10-16T04:32:26Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": "abf19eb1-ba74-46a1-af53-474227921d82"
+ },
+ "closed": {
+  "from_at": "2026-10-16T04:57:24Z",
+  "from_by": "2.0.0_SA_COO~C",
+  "to_at": null,
+  "to_by": null
+ }
+}

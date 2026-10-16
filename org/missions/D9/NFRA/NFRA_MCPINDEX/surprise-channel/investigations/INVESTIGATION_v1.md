@@ -9031,6 +9031,69 @@ carries none.
     },
     "spec_asserts": "MX-d-6 act 1: a firm-scoped silver row is servable only to the principal kinds the gate admits for that rule.",
     "world_is": "Since MX-r-14 the gate admits a firm principal on row firm == principal firm, and a row without a firm field is admitted to no firm principal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S124",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T04:27Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-S92: the mislabelled artifacts are repaired and every release since carries a correct label. Read 2026-10-16 ~04:3xZ from s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/: opal-gateway-1e32562729.tar.gz is 518165 B, ETag b96315a523842ec46579b146c450faa9 (the base's own bytes, restored 2026-10-10T21:24Z, git-ref 1e32562729...); opal-gateway-d3c31e972e.tar.gz exists (525792 B, git-ref d3c31e972e8c6fdb26dda98a1d9ff55ced0ced89, 2026-10-10T21:49Z); opal-gateway-latest.tar.gz and opal-gateway-d577e0e729.tar.gz are the same object (743050 B, ETag 2da7109c134be5f94956d5421dfcc8a7, git-ref d577e0e729...). Z-W29-S1: a caution for an emit run inside a worktree; since MX-c-20 A1 the issuer emits at the workspace root with the default census and workers only place the file. The emit of 2026-10-16 (default census) writes 0 lines containing ../ajb_workspace.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S92",
+      "NFRA_MCPINDEX-Z-W29-S1"
+    ],
+    "one_line": "DISARMS Z-S92 (MX-r-9 PHASE B mislabelled its artifacts; the rollback key was overwritten) and Z-W29-S1 (a worktree emit with the main-tree census path rewrites 32 census_ref lines). Both measured on the live artifacts and on today's emit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api head-object on opal-gateway-latest, -d577e0e729, -1e32562729 and -d3c31e972e.tar.gz under ec2/opal-gateway/ in opal-313476888478-lambda-artifacts, us-east-1, 2026-10-16 ~04:3xZ",
+        "grep -c '../ajb_workspace' on the 2026-10-16 emit (default census): 0 and on the tracked DATA_CATALOG.yaml: 0"
+      ]
+    },
+    "spec_asserts": "Z-S92: the artifact keys carry the git-ref of the commit they hold, and the signed rollback key is preserved. Z-W29-S1: an emit leaves every row outside needs: unchanged.",
+    "world_is": "The rollback key holds the base's bytes again, the d3c31e972e artifact exists under its own ref, and -latest matches the live commit d577e0e729. The default-census emit changes no census_ref path."
+  },
+  {
+      "id": "NFRA_MCPINDEX-Z-S125",
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~MI2",
+      "surfaced_at": "2026-10-16T04:55:37Z",
+      "disposition": "DISMISSED_WITH_REASON",
+      "adjudicates": [
+          "NFRA_MCPINDEX-Z-W50-S1",
+          "NFRA_MCPINDEX-Z-W52-S1",
+          "NFRA_MCPINDEX-Z-W52-S2",
+          "NFRA_MCPINDEX-Z-W53-S1",
+          "NFRA_MCPINDEX-Z-W53-S2",
+          "NFRA_MCPINDEX-Z-W54-S1",
+          "NFRA_MCPINDEX-Z-W55-S1",
+          "NFRA_MCPINDEX-Z-W55-S2",
+          "NFRA_MCPINDEX-Z-W56-S1",
+          "NFRA_MCPINDEX-Z-W56-S2",
+          "NFRA_MCPINDEX-Z-W56-S3",
+          "NFRA_MCPINDEX-Z-W57-S1",
+          "NFRA_MCPINDEX-Z-W57-S2"
+      ],
+      "one_line": "ISSUER DISPOSITION of the 13 round-18 RESEARCH worker rows (workers ~50, ~52 to ~57): each is a form or worker-environment observation on an order's text or a sparse worktree; every graded criterion they touch is met and re-graded on the merged tree.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "MX-c-30, -31, -34, -35, -36, -37 and -38 each end <status>complete</status> in their order files at HEAD (read 2026-10-16 ~05:0xZ): the flips Z-W53-S2 and Z-W55-S2 say the lane could not make were landed by the issuer (23b89ba47f for -34..-37).",
+              "c31.AC1, AC2, AC3 and c38.AC1, AC2 PASS on the merged tree at 623dc1f9ae; the atom_decomposition suite reads 311 passed on the shared tree, which holds the gateway tree the five sparse-worktree failures of Z-W56-S2 and Z-W57-S1 could not read.",
+              "plant_ct.py runs 12 arms and prints PLANTED 12 of 12 (the face said 8: Z-W52-S2, Z-W53-S1, Z-W55-S1).",
+              "Issuer sample of 16 curated tag sets (4 per slice map of ~52, ~53, ~54, ~55): each is plain words, none states a fact the row does not carry (Z-W52-S1, Z-W54-S1); the drain check c30.DRAIN reads 0 inferred rows on the trial catalog C:/tmp/mi-trial/DATA_CATALOG.623dc1f9ae.yaml (md5 a7c127a97ca44dc25ffdf65d3e3992d6)."
+          ]
+      },
+      "spec_asserts": "Each target asserts that an order's text or a worker's sparse worktree differs from what the order's step or control said (planted-arm count 8 vs 12; status flip outside <paths>; step-2 command without --read-links; step-0 pytest control on a sparse cone; the naming gate's K7 list absent in a sparse cone; the portal gitlink modified at worktree open; two unnamed count pins).",
+      "world_is": "None of the 13 left a criterion unmet or a file wrong. The order-text defects (the 8 arms, the missing --read-links in MX-c-31 step 2, the 214 pin in MX-c-38 step 2, the step-0 control that cannot pass on a sparse cone, the status flip outside <paths>) are the issuer's drafting; they are recorded here for the round-18 analysis as one finding: an order's step-2 command and step-0 control are dry-run in a SPARSE worktree at the cut, not only at the base.",
+      "dismissal_reason": "Form and environment observations, all INERT: the criteria they touch were met and re-graded on the merged tree (evidence above); the five order-text defects are the issuer's and are carried to the round-18 analysis as one drafting finding, not a standing hazard. The issuer is disarm_owner of Z-W52-S1, S2 and W56/W57; the others name none and are dismissed here by the project's issuer for RESEARCH."
   }
 ]
 ```

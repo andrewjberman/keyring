@@ -2370,3 +2370,20 @@ Chains B and C of section 145 are drained (`220c9c63f3`, `d12e8f62d2`); the neve
 **fanout:** 1 of 1 chains, cap 8: one AE applier (`0.7.0_AE_CloudOps~DB2`), serial by design.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected (no record); self-test green: a green record and 31 red arms):** `checks/r147/p151_pubapply.py` (DBC151-1-AC1, DBC151-2-AC1, DBC151-3-AC1).
+
+## 147. ROUND 148, WORKSTREAM CONTRACT (2026-10-16 ~05:3xZ, issuer 2.0.0_SA_COO~D2, on the CTO's ROUND-146 and ROUND-147 ANALYSES (msgs 9057 and 9060): the income claim, the const basis, the manifest's calendar source)
+
+The CTO ruled four things for this seat. Two are contract cells (cut now, parallel, disjoint files); one is already built (a read); one is a handler change that must wait for the publish apply.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. SOURCE contract 0.4.4: optional column `income_claim` = `absent`, reason `SOURCE_REPORTS_NO_INCOME`, required exactly where income_received is null for the Black Diamond-computed source; `schema_hash` unchanged, `schema_hash_with_optional` recomputed; rule-24 `v044` (one value, no other state); token census recounted at the base | DB-b-284 | FWD-10 (S104) | LOCAL | none | chain E |
+| 2. SERIES contract 0.3.1: `income_claim` carried to the series (present exactly when every `income` entry is null), `unreported_trading_days_basis` marked `const` with a one-line rule-24 note (the CTO's r146 term), manifest optional `calendar_source` | DB-b-285 | FWD-10 | LOCAL | none (names agreed with item 1) | chain F |
+| 3. The fallback calendar fails closed past 2027-12-31 | NO CELL: already built; a read: `reads/RD_CALENDAR_FAIL_CLOSED_READ_R148.json` (2027-12-31 answers; 2028-01-03 and 2028-06-01 raise `CalendarCoverageError`; the existing test passes; `calendar_source()` exists) | FWD-10 | LOCAL | none | read |
+| 4. The producer writes `income_claim`; the publisher and handler carry it and write `calendar_source` into the manifest; the report-build handler writes `calendar_source` too; a republish | NOT CUT: they change deployed code (the publish apply `DB-b-283` is pinned to the current build hash) and the written history; each is a code-update pair (and the 65-day history a rewrite pair), batched after items 1 and 2 and after `DB-b-283` | FWD-10 | WORLD | items 1 and 2; `DB-b-283` | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the series contract's next version is 0.3.1 (a patch: optional additions), so the class object (`~F2`'s) keeps 0.4.0 as a later minor; (b) the claim's single value is `absent` with a fixed reason code, mirroring Orion's `flow_claim`, and the series states a null income exactly with the claim; (c) the page's mirror target moves from 0.3.0 to 0.3.1 (`~C2` is told: their reader cell builds against the 0.3.1 file once it is merged, and `iv-e-124` is theirs); (d) S104 disarms when the contract carries the claim and one served Cottonwood series shows it, which needs item 4 and a republish, so S104 stays open; (e) the publish apply goes ahead on the current build as the CTO ruled: the series carries income as null, never 0.0.
+
+**fanout:** 2 of 2 chains, cap 8 (chain E worker `0.9.0_WK_IRPT_DASHBD~228` on DB-b-284; chain F worker `0.9.0_WK_IRPT_DASHBD~229` on DB-b-285; disjoint files). The publish apply (`DB-b-283`, workstream PUBLISH) runs in parallel with the AE.
+
+**Checkers (dry-run at the base before the cut; all six criteria FAIL as expected; self-tests green):** `checks/r148/p152_contract044.py` (DB152-1-AC1..AC3; a reference 0.4.4 built from the real 0.4.3 contract green, 17 single-fault arms red) and `checks/r148/p153_series031.py` (DB153-1-AC1..AC3; a reference 0.3.1 built from the real 0.3.0 contract green, 23 single-fault arms red).

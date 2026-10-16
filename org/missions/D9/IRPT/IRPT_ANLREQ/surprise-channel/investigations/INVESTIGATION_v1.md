@@ -21163,6 +21163,7 @@
 }
 ```
 
+---
 
 ## IRPT_ANLREQ-D2-S142 -- disposition of IRPT_ANLREQ-D2-W252-S1: the record folder precondition was the issuer's omission
 
@@ -21187,5 +21188,197 @@
   },
   "spec_asserts": "The order tells the worker every precondition of the driver's run.",
   "world_is": "r34_build.py opens the record path for writing without creating its parent; the stage was built before the failure, so the stage folder was left non-empty."
+}
+```
+
+## IRPT_ANLREQ-D2-W228-S1 -- The live factory imports the keyed writer as the flat module durable_job, not ycharts.generate.durable_job as the order states
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W228-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~228",
+  "surfaced_at": "2026-10-16T04:34:42Z",
+  "one_line": "The order says import mark_hop_failure_keyed from ycharts.generate.durable_job; the factory imports it as durable_job after _extend_path(), the same module name _lease_refused already reads, so the writer's LeaseRefused and the op's catch are one class.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-74 DO (1): the factory imports mark_hop_failure_keyed lazily from ycharts.generate.durable_job, following the module's path pattern.",
+  "world_is": "commentary_draft_store.py _lease_refused (base dccd7a3cdc) imports `from durable_job import LeaseRefused` after _extend_path() puts ycharts/generate on sys.path. The name ycharts.generate.durable_job needs investor-reporting/ on sys.path, which _extend_path does not add. Two import names load two module objects with two LeaseRefused classes, and the writer's refusal would then escape the op's `except refused` mapping. The factory therefore uses the flat name. The new test file's own sys.path insert hides a failure of the _extend_path import guard, so that guard is not exercised by the tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py _lease_refused and _live_jobs_factory at 337f92b74a plus this cell's edit",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py:56 mark_hop_failure_keyed at dccd7a3cdc"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W228-S2 -- The source-map entry irpt-commentary-draft-store-lambda does not package ycharts/generate/durable_job.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W228-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~228",
+  "surfaced_at": "2026-10-16T04:34:42Z",
+  "one_line": "The live fail path imports durable_job.py, which the draft-store entry neither lists in files[] nor stages in staged_from[]; a deploy from this source would fail on the fail path. The map was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-74 REPORT (4): report whether the source-map entry irpt-commentary-draft-store-lambda packages durable_job.py with the function's other members; if it does not, file an OBSERVATION row naming the entry and the missing member, and do not edit the map.",
+  "world_is": "lambda-source-map.json entry irpt-commentary-draft-store-lambda (line 7142 at dccd7a3cdc): files[] and staged_from[] carry commentary_draft_store.py, repository.py, retention.py, composition.py, acceptance.py, submission.py, keys.py, lib/opal_naming.py and the registry JSON files; ycharts/generate/durable_job.py appears in neither list. The durable_job.py rows at lines 4063, 4658, 5387 and 5544 belong to other entries. build-and-upload.sh stages staged_from[] members flat and runs import-closure-check.py at line 547; that check was not run here, so whether it refuses this build is unverified. Nothing is deployed by this order, so the hazard is inert until that function is built and deployed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json entry irpt-commentary-draft-store-lambda at dccd7a3cdc (lines 7142 to 7266)",
+      "infra/aws/lambda/ci/build-and-upload.sh staged_from materialization and import-closure-check call at dccd7a3cdc"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W228-S3 -- The source-level disarm of IRPT_ANLREQ-D2-W225-S1 is not the integration check the disarm names
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W228-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~228",
+  "surfaced_at": "2026-10-16T04:34:42Z",
+  "one_line": "This cell swaps the jobs factory to the keyed writer in source; the integration check against the real function (the disarm condition of IRPT_ANLREQ-D2-S139) was not run, because this order makes no AWS call and deploys nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~T2",
+  "spec_asserts": "IRPT_ANLREQ-D2-S139 disarm: a wiring cell swaps the jobs factory to the keyed writer after the AR-g-109 merge, with the integration check against the real function; cut then, not before.",
+  "world_is": "The swap is in source at this cell's commit (fakes only, 12 cases green). The integration check against the real function is not run. IRPT_ANLREQ-D2-W225-S1 therefore stays ARMED until the issuer runs that check before any deploy of irpt-commentary-draft-store-lambda; the packaging gap of IRPT_ANLREQ-D2-W228-S2 belongs to that check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_ANLREQ-D2-S139 (disarm text)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W225-S1 (ARMED)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+---
+
+## IRPT_ANLREQ-D2-S143 -- resident r34 V2 FAIL: yfinance is not installed on the resident host
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S143",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-16T04:48:57Z",
+  "one_line": "Resident r34 V2 FAIL: the yfinance library is not installed on the resident host (import raises ModuleNotFoundError, the door checker raises CheckerUnavailable); the install is in place and running, the ledger is left OPEN, zero Yahoo calls were made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2 (deliver the library to the host under its own pair, or order scripts/rollback_r34.sh; the CTO named this case as a STOP in msg 9040)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-APPLY-R34B step 6 and the CTO's added STOP (msg 9040): V2's YfinanceChecker read of SPY must read KEPT; a missing library, an import error or any other state is a STOP before the ledger closes; the packet's section 2c: a missing library raises CheckerUnavailable and the resolver reads every symbol of the batch as CHECK_FAILED.",
+  "world_is": "MEASURED 2026-10-16 04:44Z to 04:46Z (record org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r34/A_AFTER_R34B.txt, SSM 4b2df4da-cb6e-467e-a8d8-482d22983763 and probe 68d8c900-56e1-4e2e-b62a-07aacfb100c4): through the resident's interpreter /usr/bin/python3.12 as ec2-user with the install's sys.path and /opt/investor-reporting-ycharts/pydeps appended, `import yfinance` raised ModuleNotFoundError and YfinanceChecker().check(['SPY']) raised CheckerUnavailable; the yf.download call was not made; no Yahoo call was made. A read-only probe: yfinance is not found on python3.12's default path for ec2-user or root, nor with the pydeps appended; the 52-entry pydeps holds no directory named yfinance, pandas, numpy, requests, curl_cffi, peewee, lxml, multitasking, frozendict or platformdirs; no site-packages yfinance directory in four usual locations; neither the r32 nor the r34 root holds one. V1 is otherwise green (running root r34 active, 10 of 10 members MATCH, sums 313 of 313, census 8 changed 4 added 0 removed, pool pinned, pricing off, producer list unchanged) and swap_pass.load_pool loads the shipped pool (4419 rows, held, not stale). INFERRED FROM THE PACKET, NOT EXERCISED: while the library is absent the door's checker makes every symbol it would check read TICKER_CHECK_FAILED (REPLACE_FILE only) where r32 filed TICKER_NOT_FOUND with Replace and No offered, and the swap's Yahoo history fetch cannot run so an UNRESOLVED holding is left out with the not-analysed disclosure. NOT READ: whether any other interpreter on the host holds the library, how the existing price_adapter_yfinance module is meant to find it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r34/ssm_v2_out.txt and ssm_probe_out.txt",
+      "infra/aws/lambda/investor-reporting/intake/yfinance_check.py (default_history imports yfinance lazily and raises CheckerUnavailable without it), at the r34 build in C:/dev/irpt-release-r34c/x34"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The root stays installed and running; nothing was rolled back (the rollback script is the issuer's to order). Standing: INERT (no safety or data hazard): uploads that reach the checker read the CHECK_FAILED branch (a degraded answer, never a wrong one) until the library is present or r34 is rolled back; the issuer ends that by either route."
+}
+```
+
+## IRPT_ANLREQ-D2-W229-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~229, cell AR-tz-65) the TO-AR-tz-65 paths block is spliced
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~229",
+  "surfaced_at": "2026-10-16T04:47:32Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W229-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The <paths> line of TO-AR-tz-65 splices the r45 check invocation into the surprise-channel path; the worker used the channel file and deliverables folder the block names.",
+  "spec_asserts": "TO-AR-tz-65 <paths> is the write grant: the surprise channel investigations file and the worker deliverables folder. The line reads 'org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/r45_checks.py rec org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md 15ESTIGATION_v1.md'.",
+  "world_is": "The block is one line at order line 52 with the checker invocation inserted into the channel path and the file name cut to 'ESTIGATION_v1.md'. The channel file exists at org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (glob at worktree HEAD 927be44c0a). The worker took the write grant as the deliverables folder plus that file, read the checker in place, and edited no source or test.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-tz-65.fwd5-opal-global-sites-classified.md line 52 (the spliced <paths> line)",
+      "Glob of org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/* in the worktree returned INVESTIGATION_v1.md",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/r45_checks.py exists and printed R45-REC-OK rows=40 on the record"
+    ]
+  },
+  "notes": "Row minted by the worker under its own coordinate. The issuer may want the paths line re-issued clean; the worker did not amend the order."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W229-S2 -- (worker 0.9.0_WK_IRPT_ANLREQ~229, cell AR-tz-65) the row schema the order cites is absent from the worktree
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~229",
+  "surfaced_at": "2026-10-16T04:47:32Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W229-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "org/surprise_channel/schemas/investigation_item.schema.json is not in the worktree, so the row was written to the field set of the existing rows.",
+  "spec_asserts": "The worker appends rows per org/surprise_channel/schemas/investigation_item.schema.json (TO-AR-tz-65 surprise instructions and the channel rules).",
+  "world_is": "At HEAD 927be44c0a the worktree has no org/surprise_channel/ folder: ls of org/ shows none, and a Glob for investigation_item.schema.json under org/ returns no file. The row was written as a JSON object with the fields the channel's existing rows carry (project, fabric, surfaced_by, surfaced_at, class, id, disposition, hazard_standing, one_line, spec_asserts, world_is, grounding, notes). No schema validation was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of the worktree org/ at HEAD 927be44c0a: no surprise_channel entry",
+      "Glob org/**/investigation_item.schema.json in the worktree: no files",
+      "INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W252-S1 cites the same schema path"
+    ]
+  },
+  "notes": "Surfaced for the issuer to confirm the schema location at the cited path or a replacement. Not a blocker for AR-tz-65: the record and the acceptance check do not depend on the channel row schema."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W229-S3 -- (worker 0.9.0_WK_IRPT_ANLREQ~229, cell AR-tz-65) the cell's premise count does not reproduce at HEAD
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~229",
+  "surfaced_at": "2026-10-16T04:47:32Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W229-S3",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell premise (the OPAL_GLOBAL test at 21 sites in 12 non-test files) measures 23 == sites in 13 files, or 40 comparison sites in 21 files, at HEAD 927be44c0a.",
+  "spec_asserts": "Cell AR-tz-65 states that the global-admissions test appears at 21 sites in 12 non-test files under infra/aws/lambda, round-47 snapshot (TO-AR-tz-65 worker face, line 25).",
+  "world_is": "Native Grep over infra/aws/lambda at HEAD 927be44c0a, tests/ folders excluded: 23 lines with the == form in 13 non-test files, and 40 comparison lines (23 ==, 14 != or not in, 3 in) in 21 files. The classified record OPAL_GLOBAL_SITES_CLASSIFIED.md carries all 40 with verdicts (10 ADMITS, 1 REFUSES-TESTED, 29 NOT-APPLICABLE).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md, DENOMINATOR line and counts section",
+      "Grep over the worktree infra/aws/lambda, pattern for OPAL_GLOBAL with ==, != or in on the same line, glob !**/tests/**: 40 hits"
+    ]
+  },
+  "notes": "The 8 ADMITS sites outside the register are listed in the record; they are findings for 2.0.0_SA_COO~V2 and were not fixed here."
 }
 ```

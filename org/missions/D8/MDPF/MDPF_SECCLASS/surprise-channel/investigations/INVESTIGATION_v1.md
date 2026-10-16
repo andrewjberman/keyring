@@ -8134,3 +8134,107 @@ by dell1 or by this seat.
   "world_is": "Record AC1 ran ok=True with census=8 rows=8 missing=[] extra=[] after the prose-only treatment. Found by a bare-token search (\\bmix_summary\\b and quoted mix_summary over data/ infra/ lib/ at HEAD) and by reading every consumer of getPlatinumFirmMixSummary in portal src (ClientsTab.tsx, AuthContext.tsx). All census-missed readers have verdict no; none is order-dependent."
 }
 ```
+
+## MDPF_SECCLASS-D1-S41 -- D1-W93-S2 disarms on its measurement, and its stated consequence is corrected: E_18 skips every pair whose key
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S41",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-16T04:35Z",
+  "one_line": "D1-W93-S2 disarms on its measurement, and its stated consequence is corrected: E_18 skips every pair whose key is in the old list (E_18:247, known = the old list's keys, E_18:215), so a candidate that reaches plan_rows is never in the old list and the lookup at E_18:291 always returns None; removing the lookup changes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R26_CHECKS/W93S2_MEASUREMENT_AND_PACKET_CORRECTION_20261016.md: w93s2_old_list_only_candidates.py output (22 tickers in the old list and not in etf-classifications, $413,341.59 on the 2026-10-09 lots; no real ticker in neither table)",
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:215,247,276 at HEAD (git grep read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D1-W93-S2: removing E_18's lookup stops canonical rows for tickers whose only class source is the old list, unmeasured.",
+  "world_is": "Measured: zero such tickers can reach the lookup, because the known-set skip precedes it. The consequence the disposition record states for the lookup is wrong; the real one belongs to repointing the known set (D1-S42)."
+}
+```
+
+## MDPF_SECCLASS-D1-S42 -- 22 tickers ($413,341.59 on the 2026-10-09 lots, including HPI, CUBE, GLPI and PCEF) are in the old list bd-sec
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S42",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-16T04:35Z",
+  "one_line": "22 tickers ($413,341.59 on the 2026-10-09 lots, including HPI, CUBE, GLPI and PCEF) are in the old list bd-securities and not in etf-classifications, so the page classifier has no canonical row for them; repointing E_18's known set (round-27 item 2) makes all 22 live candidates the same night, with no old-list class source once the lookup is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R26_CHECKS/W93S2_MEASUREMENT_AND_PACKET_CORRECTION_20261016.md: the 22-ticker table; get_item on bd-securities for the four: all classified by an outside model (gpt-4o-mini or gpt-5.4-mini), PCEF fixed_income with sub_asset_class needs_review at confidence 0.5",
+      "CLAUDE.md section 5: never move served output without never-widen sign-off naming the blast radius"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-5: before the old copy is deleted, every figure that moved when its last users were switched was listed before and read after; FWD-4/FWD-5 repoint of E_18's known set is round-27 item 2 of FWD45_B01B_E18_DISPOSITION.md.",
+  "world_is": "Today the 22 are classified by no canonical row; the repoint changes who classifies them from nobody to the GICS/Schwab path or unresolved. The issuer's recommendation (migrate before delete: a signed pair seeding the 22 canonical rows from the old list by conditional put, then the repoint) is in the record. Disarm: the round-27 order names the 22 tickers, the source rule and the pair, and the CVO grades the class folding."
+}
+```
+
+## MDPF_SECCLASS-D1-W97-S1 -- the R27 seed22 plan, built on the shared plan_rows as ordered, plans 4 of the 22 old-list tickers ($15,777.17) and leaves 18 ($397,564.42, incl. KAMIX and HPI) unresolved, because their old-list sub-classes are not canonical vocabulary members and the module does not fold
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W97-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~97",
+  "surfaced_at": "2026-10-16T04:43:01Z",
+  "one_line": "The R27 seed22 plan, built on the shared plan_rows as ordered, plans 4 of the 22 old-list tickers ($15,777.17: AEMGX, CEMVX, FBCVX, FIADX) and leaves 18 ($397,564.42, incl. KAMIX $92,153.26 and HPI $51,050.86) unresolved: their old-list sub-classes (Investment Grade, Structured Notes, Commodities, Real Estate, Volatility) and the needs_review sub-class on PCEF are not direct canonical vocabulary members, and plan_rows does not fold.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~97/SEED22_PLAN.json @479867946b (plan run 2026-10-16, read-only): planned=4 unresolved=18 seed_pending=0 dollars=413341.59",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py @479867946b: _direct_match (line 375) and plan_rows (line 492); the module's own rule is that a value matching only through a fold is left unresolved",
+      "live etf-classifications scan (read-only, 11362 rows): fixed_income subs carry no Investment Grade; alternatives carries no Structured Notes, Commodities or Volatility; equity carries no Real Estate"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-26 analysis (msg 6482) and TO-SC-e107: the old-list classes are ACCEPTED as source rows, and the seed is the plan_rows call made once for the 22 tickers, so every seeded canonical row carries source_table bd-securities and its old last_updated.",
+  "world_is": "plan_rows plans 4 of the 22 and leaves 18 unresolved, because a source row is accepted only when its (asset_class, sub_asset_class) is already a canonical vocabulary member (no fold). The 22-row seed the CTO ruled cannot be produced by plan_rows as built; a pair cut on the plan writes 4 rows. Either the CTO rules a class mapping for the 18 or the vocabulary gains the sub-classes. The worker did not fold them.",
+  "notes": "Filed by the R27 SC-e-107 worker. The plan and the apply are built as ordered and both criteria pass; the plan file is the 4-planned, 18-unresolved result, not a 22-planned one. Disarm: 2.0.0_SA_COO~M1 takes the 18 to the CTO before any pair is cut, and the pair names the planned rows as written. Hazard if left alone: round-27 item 2 (the E_18 repoint) would leave $397,564.42 of the $413,341.59 with no canonical row."
+}
+```
+
+## MDPF_SECCLASS-D1-W98-S1 -- the sparse worktree cannot show the sibling gold suites green
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W98-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~98",
+  "surfaced_at": "2026-10-16T04:45:58Z",
+  "one_line": "The drain's third check (sibling gold suites stay green) cannot pass in this sparse worktree for reasons outside SC-e-108: 7 of 203 collected tests in data/black_diamond/scripts/gold/tests fail or error on absent paths (test_lambda_seam_parity: 6 errors, infra/aws/lambda/exec-summary-generator/served_seam.py is outside the sparse checkout; test_schwab_trn_nna_gold: 1 failure, convert_schwab_trn_to_nna_silver is not materialised). The converter is tracked at HEAD, so the sparse checkout, not the repo, is the cause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/tests full folder run at worktree HEAD 479867946b plus SC-e-108 edits: 196 passed, 1 failed, 6 errors (denominator 203); the E_18-adjacent and classifier suites test_etf_classifier_deployed_resolution, test_thread_trace and test_etf_classifier_canonical: 22 of 22 passed",
+      "git sparse-checkout list: .tools, data/black_diamond/scripts/gold, infra/aws/lambda/v2_portal/_shared, infra/logic/registry, lib; git ls-files | grep convert_schwab_trn_to_nna_silver: 1 path tracked at HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Sibling gold test suites stay green: the drain adds this as a third verification of order MDPF_SECCLASS.TO-SC-e108.",
+  "world_is": "Measured in this worktree: the seven failing or erroring tests read paths the sparse checkout omits. None of them imports E_18 or gold_dispatch.sh. Their status on a full checkout is not measured here; the drain should run them there."
+}
+```
