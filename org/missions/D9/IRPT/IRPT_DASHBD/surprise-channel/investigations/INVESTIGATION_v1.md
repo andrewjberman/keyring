@@ -24161,3 +24161,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The issuer decides whether a fresh print window should also carry the client id on its URL (a route change, outside this order) or keep the bundle's report as the source."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W246-S10 -- disposition of S7: the grant was widened by one test file and the two pinned strings were changed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T20:16:51Z",
+  "one_line": "Disposition of IRPT_DASHBD-D2-W246-S7 (BLOCKING, left as filed): the coordinator widened the grant by one file, dsgn-irptv1/iv-t-2.headline.test.ts (order AMENDMENT 2026-10-16); its lines 88 and 89 now expect the formatted strings $9,143,207.18 and $9,821,455.63. The test passes at portal commit b16965e5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "S7: the dsgn-irptv1 IV2-AC1 test pins the raw money strings and fails by the intended dollar format; the file was outside the grant.",
+  "world_is": "After the amendment: iv-t-2.headline.test.ts passes (1 pass, 0 fail); the irpt-dashbd folder passes (162 pass, 0 fail, 21 files); typecheck rc 0. The one-firm test in performance-tab-global-and-firm.test.tsx was also restated on the reachable state (portal commit 75a71ae3), with no product file changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit b16965e5 (headline test lines 88-89) and 75a71ae3 (one-firm test), pushed to origin cand/dell2/irpt-49f-performance-template-mount (ls-remote read 75a71ae3)",
+      "order amendment at the trunk commit eddc17e627 (AMENDMENT 2026-10-16 row S7)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The coordinator widened the grant by one test file (order AMENDMENT 2026-10-16); the test now expects the intended formatted money, and the one-firm test is restated; row S7 is left as filed.",
+  "notes": "Dismissed because the grant was widened by the coordinator's ruling and the test now expects the intended format; row S7 itself is left as filed."
+}
+```
