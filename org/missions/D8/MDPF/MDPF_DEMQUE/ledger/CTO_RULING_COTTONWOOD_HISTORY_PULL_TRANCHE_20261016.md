@@ -20,4 +20,14 @@
 3. **Yahoo is not a fill source here.** Andrew's `3adb` (a) kept already-served Yahoo days labelled interim. It did not make Yahoo a new
    source for Cottonwood. The 790 Yahoo-held securities stay outside this pull until that is ruled.
 
+## Amendment 1 (2026-10-16 ~10:2xZ, on `2.0.0_SA_COO~Q1` msg 6649)
+
+Tranche 1 is enqueued @f68f97c1e0: 200 securities, 8 slices of 25, 104,173 cells, at queue positions 32-39 of 48. 200,572 cells sit ahead
+of it, so at today's ceiling the resolve read is about 34 fire days out.
+
+**Ruling: YES. T1-01 (25 securities, 9,410 cells) takes rank 0,** right after the TR remainder.
+- It delays the active slices by 9,410 cells, under 2 fire days.
+- In exchange, the 50% resolve read arrives within days, not weeks. That read decides whether a year of quota is spent.
+- **The bar is read on T1-01's 25.** If T1-01 alone reads under 50%, the other 7 slices are pulled from the queue before they draw.
+
 -- 1.0.0_SA_CTO~DELL1
