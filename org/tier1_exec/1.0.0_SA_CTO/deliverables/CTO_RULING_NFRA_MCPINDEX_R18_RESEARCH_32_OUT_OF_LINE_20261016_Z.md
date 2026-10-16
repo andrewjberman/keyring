@@ -38,3 +38,14 @@ The other eight (a) rows are at cross-adjudication XA-20261016T024917Z-cdcc (cal
 |---|---|---|
 | `opal_data_portal_v2_served_model_portfolios_views` | 93 trading days stale; NFRA_OPLGTW rules it out at build (PRD v3.13 item 3) | its producer writes inside the trading-day frontier |
 | `dynamodb_dynamodb_opal_harvest_security_metrics` | routed to dell1 AMGT_HARVST (XA-20261016T024917Z-cdcc); not a site Z tool | the AMGT_HARVST tool ships, and its read_tool is linked then |
+
+## Addendum ~06:4xZ -- ASSETS: the 91 rows no client_* tool reads (COO~MI msg 34780, @74e243fe48): REC RATIFIED for all 10 groups
+
+- All 91 rows stay in the catalog and are ruled OUT of the 22:00Z line. Each carries the reason "no client tool is built to read
+  this table", `gap_owner: NFRA_OPLGTW`, and a reopen condition naming the tool that would read it:
+  - `client_get_lots`, `client_get_performance`, `client_get_insurance` or `client_get_profile`, as named in `client_tool_map.json`;
+  - for the Schwab fact_* rows, the MX-c-23/MX-r-15 Schwab fact gap.
+- As with every exclusion in this ruling, the `gap_owner` field does NOT meet the line. The row reads OUT, with its reason, until
+  the named tool ships and the row's `read_tool` is linked.
+- The 9 market-data rows (Pathfinder, TrueShares, Yahoo) go to the ETFS workstream's tool question. They are not client data
+  and need no client tool.

@@ -20073,3 +20073,30 @@ name the one known failure instead of silently inheriting it.
     "notes": "Measured, not inferred: AC1 cannot read PASS as written while this line stands. The three named lines are clean in the AFTER output."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S162",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T06:55Z",
+    "one_line": "The five client_* tools are admitted as NATIVE_TOOLS ('legacy: Opal principals only'), not the DATA-GRANT class PRD v3.1 Ruling 2 requires; with the OG-ap-23 release's six reader keys, every Opal principal could read any of three firms' client holdings, transactions, allocation and fees, bypassing the blackdiamond_list_fees tier gate and the schwab_* entitlement. CVO half of OG-ap-23 REFUSED.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "NFRA_OPLGTW_PRD.md:1144-1146 (v3.1 Ruling 2, ratified): every client_* tool goes in DATA_GRANT_TOOLS, never NATIVE_TOOLS; a principal reads a firm only with that firm's data grant; being an Opal user is not enough for client data. v3.12 item 7: each group answers a real Opal principal under its grant.",
+    "world_is": "Release 56c0f8ce1d app/data_entitlement.py:158-162 puts client_resolve_account, client_get_holdings, client_get_transactions, client_get_allocation, client_get_fees in NATIVE_TOOLS; DATA_GRANT_TOOLS (:205) and TIER_ADMITTED_TOOLS (:209) hold none of them; decide() (:694-698) passes an unprofiled principal on them; client_core.py:66,342 admits by typed_scope.admit_scope, which checks only _is_opal_user (typed_scope.py:70). No per-firm grant check exists in the client path. TO-OG-cl-1..6: 0 of 6 name DATA_GRANT or NATIVE_TOOLS, so the ruling never reached the decomposition. Not deployed: the live ref is d577e0e729 and Phase B needs all three halves.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/og-rel-code @56c0f8ce1d: infra/aws/ec2/opal-gateway/app/data_entitlement.py:105-209, :669-698; client_core.py:9,66,342; typed_scope.py:56-76",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:1144-1146, :1478-1479",
+        "deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-ap-23.md sections 0 and 3 (not dormant; client data to Opal principals)",
+        "deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_OG-ap-23_20261016.md (the refusal)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: a re-cut whose client_* tools refuse an unprofiled, non-master_admin Opal principal with 0 reads (the DATA_GRANT_TOOLS move alone does not, decide() :685-698), or the client tools carried out of the batch; or Andrew re-rules Ruling 2. The design of a per-firm grant shape is the CTO's. The same NATIVE placement sits on trunk (box/sitez), so any later release carrying these tools with the reader keys inherits it."
+  }
+  ```
