@@ -2420,3 +2420,21 @@ Series contract 0.3.1 and source contract 0.4.4 are drained. Two cells, disjoint
 **fanout:** 2 of 2 chains, cap 8 (workers `0.9.0_WK_IRPT_DASHBD~231` and `~232`); with chain G (`DB-b-286`, worker 230) three workers are live.
 
 **Checkers (dry-run at the base before the cut; all six criteria FAIL as expected; self-tests green):** `checks/r148/p155_claimcal.py` (DB155-1-AC1..AC3; a scratch reference publisher 0.3.0 and handler on a fake S3 green, 13 single-fault mutants red) and `checks/r148/p156_pubschedule.py` (DB156-1-AC1..AC3; a reference block appended to the real root green, 14 single-fault arms red, the real naming gate probed on the three names: 3 CONFORMANT).
+
+## 150. ROUND 149, WORKSTREAM CONTRACT (2026-10-16 ~08:0xZ, issuer 2.0.0_SA_COO~D2, on the CTO's ROUNDS 147P/148 ANALYSIS (msg 9158 @5daaee121d): the writer and the republish next; the income reason renamed; the one-drain rule restated)
+
+The CTO ruled (A) that the contracts of round 148 landed without their writer, so the 939 series served at 04:59Z fail series contract 0.3.1's own rule (`income_claim` required when income is all null): round 149's ONE cell is the writer change, in ONE drain with any further contract touch, then a republish of the 939 series under the signed publish pair's branch E (same prefix, same keys); and (B) that the reason `SOURCE_REPORTS_NO_INCOME` is FALSE (Cottonwood's transaction silver carries non-zero Income on 343,256 of 1,096,830 rows; the Black Diamond-computed RETURN METHOD does not separate it) and is renamed `RETURN_METHOD_DOES_NOT_SEPARATE_INCOME` before any series carries it. **For later rounds a contract cell with no writer cell in the same drain is REFUSED AT THE CUT** (the issuer's rule from here).
+
+The writer cell is `DB-b-287` (publisher 0.3.0 and the Cottonwood handler), already cut and with worker 231 in round 148 (workstream PUBWRITE, section 149). This round adds the one contract touch:
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Rename the reason in BOTH contracts: source contract 0.4.5 (the conditional column's reason, meaning, rule; rule-24 `v045`) and series contract 0.3.2 (the `income_claim` field's fixed_reason, source and sentence; the claim rule's `present_when` and `reason`); both schema hashes unchanged; the old code stays only in history | DB-b-289 | FWD-10 (S104) | LOCAL | none | chain J |
+| 2. THE DRAIN: `DB-b-287` and `DB-b-289` merged together (this seat HOLDS both branches until both are verified), with the schedule cell `DB-b-288` and the class cell already drained or drained beside them | the issuer's act | FWD-10 | LOCAL | items 1 and `DB-b-287` | the drain |
+| 3. The pair: the code update of `irpt-cot-reporting-publish-lambda` (a new artifact version), the schedule's 3 resources (created DISABLED), and the republish of the 939 series (branch E of the signed pair covers the republish; the code update and the schedule are new acts and get a packet) | NOT CUT: a never-widen packet and an applier order after the drain | FWD-10 | WORLD | item 2 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the rename is its own order (two contract files, one worker), not an amendment of `DB-b-284` or `DB-b-285`, because those are merged and a reader of history must see the reason as it WAS; the old code stays in `rule24_record.v044` and the earlier `supersedes` entries by design, and the checker's `check_live` looks only at the live parts; (b) `DB-b-287`'s worker never writes the reason (the publisher writes `income_claim` = `absent` only; the reason lives in the contracts), so the rename cannot disagree with the writer; (c) S104 stays held until a served series shows the claim under the renamed reason, which needs the pair of item 3; (d) the ledger for the apply is CLOSED (`6650d1aac6`); the republish and the code update open their own.
+
+**fanout:** 1 of 1 chains, cap 8 (worker `0.9.0_WK_IRPT_DASHBD~233`); with `DB-b-287` and `DB-b-288` three workers are live.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; validated against references built from the real 0.4.4 and 0.3.1 contracts (green) and 35 single-fault arms (all red)):** `checks/r148/p157_reasonrename.py` (DB157-1-AC1..AC3).
