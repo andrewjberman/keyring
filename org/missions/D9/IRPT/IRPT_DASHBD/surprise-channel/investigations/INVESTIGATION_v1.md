@@ -19868,3 +19868,79 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The portal's vocabulary is eight values: the six plus Unclassified plus Other, with Other a grey bucket and a served holdings key. The gold class enum does not carry Other. The gap is not in the class table (which maps any table value outside the six to unclassified) but in the page's own type. No code was changed."
 }
 ```
+
+## IRPT_DASHBD-D2-W318-S1 -- DB-i-18 test 3: one feed run cannot skip a middle day alone, so the skipped-day partitions come from three feed runs
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W318-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~318",
+  "surfaced_at": "2026-10-16T00:48:32Z",
+  "one_line": "The order's test 3 (a day the feed skipped for a household failure, read ABSENT for every account from the backfill window) cannot be produced by one feed run: a failing household skips EVERY day its accounts are held on, so over a window where those accounts are held on the neighbouring days too, the whole window is skipped. The test builds the skipped middle day from three feed runs (10-12 and 10-14 healthy, 10-13 run alone with the household failing). The feed's behaviour is as its day-complete tests describe; the order's single-run form does not exist.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@ed9233af0a: _complete_days(days, universe_by_day, ok_hh) returns the days whose every household of that day's universe is OK; a day's universe is the positions-held roster of its source day (load_universe), so a household holding accounts on a day makes that day incomplete.",
+      "data/inf/manual_api/test_scope_feed_day_complete.py@ed9233af0a: test_from_date_window_writes_only_complete_days takes household 5002 off the 10-13 positions so that day stays complete while 10-12 and 10-14 are skipped: the skip follows the positions, not one failing run.",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_real_shape.py@2e5b09d5fc: test_a_day_the_feed_skipped_for_a_failed_household_is_read_absent_for_every_account builds the middle skip from three feed runs; 7 of 7 tests pass."
+    ]
+  },
+  "spec_asserts": "TO-DB-i-18 test 3: a day the feed skipped because a household failed leaves its partition absent from the silver, and the wrapper reads that trading day ABSENT for every account, from the feed's backfill window in one run.",
+  "world_is": "A household's failure in one run skips every day in that run whose universe holds the household's accounts. A middle day is skipped alone in one run only when its household holds no account on the other days of that run, which then also removes those accounts from the other partitions. The test therefore uses three feed runs: 10-12 and 10-14 land from healthy runs, 10-13 is run alone with household 5002 failing. The wrapper then reads 10-13 ABSENT with NO_FEED_ROW for all five accounts, with 0 unaccounted. No code was changed."
+}
+```
+
+## IRPT_DASHBD-D2-W318-S2 -- the worktree carries no org/surprise_channel/ folder, so the row schema was read from the base checkout
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W318-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~318",
+  "surfaced_at": "2026-10-16T00:48:32Z",
+  "one_line": "The row schema the order and the surprise-row gate cite (org/surprise_channel/schemas/investigation_item.schema.json) is not in this worktree, so the schema was read from the base checkout, read only, and the row was written to the shape of the rows already in this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-IRPT_DASHBD-318: no org/surprise_channel/ directory at ed9233af0a (ls-check in this worktree); the schema exists in the base checkout as org/surprise_channel/schemas/investigation_item.schema.json",
+      "IRPT_DASHBD-D2-W316-S1 and IRPT_DASHBD-D2-W602-S4 in this file record the same absence in earlier worktrees"
+    ]
+  },
+  "spec_asserts": "TO-DB-i-18 and the surprise-row gate read the row schema from org/surprise_channel/schemas/ inside the worktree.",
+  "world_is": "The folder is not tracked in this worktree. The schema was read from the base checkout only; nothing was copied into the worktree. The gate's own check decides the row at commit."
+}
+```
+
+## IRPT_DASHBD-D2-W318-S3 -- the round-127 wrapper's module docstring says it refuses a pull-date mismatch, which the code no longer checks
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W318-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~318",
+  "surfaced_at": "2026-10-16T00:48:32Z",
+  "one_line": "The wrapper's module docstring lists, among its refusals, a partition whose rows name another pull date. The code checks only each row's day against its partition's day (the round-130 rule); a pull_date that differs is accepted. The docstring is stale, the code is the intended rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@ed9233af0a: module docstring names the refusal 'a partition whose rows name another pull date'; run() counts mismatched rows with row.get(\"day\") != part_day only",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_real_shape.py@2e5b09d5fc: test_a_later_pull_date_on_every_row_is_accepted_... accepts a later pull_date on every row, the behaviour the code gives"
+    ]
+  },
+  "spec_asserts": "The wrapper's module docstring: the run refuses, with a count and nothing written, a partition whose rows name another pull date.",
+  "world_is": "The code refuses on the day of a row against its partition only, and accepts any pull_date. The docstring was not updated by the round-130 change. No code or docstring was changed here. IRPT_DASHBD-W317-S1 (a stale docstring, recorded by the DB-i-17 drain) may name this same text; not checked."
+}
+```
