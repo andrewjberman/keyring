@@ -22332,3 +22332,30 @@
   "world_is": "The suggestion is an LLM output (the resident's Kimi check) and was present twice and absent once for the same symbols under the same code, so the selection rule picked on a nondeterministic output; and when the planned Yes button was absent the driver pressed nothing for 780 s with no screenshot after Submit, so what the form showed is NOT read. The CTO's ruling (msg 9684): window 4 plans only deterministic branches, treats the suggestion as opportunistic and never selects on it, and the driver falls through whichever prompt the door shows and screenshots each round."
 }
 ```
+
+## IRPT_ANLREQ-D2-W271-S1 -- AR-tz-69: the required scope line broke two existing exact-match stdout assertions, which I relaxed to the first line
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W271-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~271",
+  "surfaced_at": "2026-10-16T17:58:06Z",
+  "one_line": "AR-tz-69 makes the green mint print a second line, MINT-SCOPE allowedFirmIds=<ids> entitlement_rows=0, but two existing tests (test_cross_firm_mint_two_emails_give_two_keys and test_cross_firm_mint_readback_ok_when_shape_matches) asserted the whole green stdout as the exact string MINT-OK READBACK-OK. I changed only those two assertions to check the first line; their expected READBACK-OK text is unchanged and no other existing test was touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-tz-69 says keep every existing test green, and the worker face names only the fake's query and cmd_remove as untouchable. The order does not name the two exact-match assertions it would break.",
+  "world_is": "test_cross_firm_mint.py:75 and :145 at base f3e0d5b8d1 compared out.strip() to MINT-OK READBACK-OK. With the scope line printed on green, that whole-stdout comparison is false, so both now compare splitlines()[0]. cmd_remove and FakeDDB.query are unchanged. Worktree pytest: 25 passed. A grep of the ~219 deliverables folder finds no reader of the green stdout outside the test file; a reader elsewhere in the repo was not checked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/test_cross_firm_mint.py:75 and :145 @f3e0d5b8d1 (base; the exact-match asserts)",
+      "same file, worktree branch wk-IRPT_ANLREQ-271-portal: lines 75 and 145 now compare splitlines()[0]; the scope tests start near line 205"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
