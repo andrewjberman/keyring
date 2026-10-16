@@ -24,7 +24,7 @@ want, with the data date stated, figures with units, and nothing merged across f
 **Readability defects an analyst meets (observations; the next enrichment cell):**
 1. The allocation `market_value_profile` serves figures as long strings: allocations to 24 decimal places, market values to
    6. The profile also repeats identical rows.
-2. A holdings weight serves in scientific notation (`3.0331523858786694e-05`), and market values carry 14 significant
+2. A holdings weight serves in scientific notation (a 17-significant-digit value of order 1e-05), and market values carry 14 significant
    digits.
 3. Holdings and allocation answer `as_of: null` beside a real `partition_date`. The date is there, but the field a reader
    looks at first is empty.
