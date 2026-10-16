@@ -10276,5 +10276,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S35",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T17:00:06Z",
+     "one_line": "HVST-cc-7 cannot start as signed: the live opal-gateway commit d14445961d (and its base 38fe44d5cb) is not in dell1's object store and no ref on origin points to it, so the release cannot be cut on it.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-7 step 0: cut a release branch from the live deployed commit read from EC2_MANIFEST.json and the instance; git diff <live commit>..<release branch> lists exactly the six paths. Both halves (COO a84dbdc1e7, CTO msg 6895) bind that cut.",
+     "world_is": "EC2_MANIFEST.json at HEAD names services.opal-gateway.deployed_commit d14445961dd6d04275ca8186372a4df4c4fcc5cc (13:24:05Z, 0.7.0_AE_CloudOps~MQ) and previous_deployed_commit 38fe44d5cb8d37b6007fb7e5fa47a25316e01054; the S3 live ref (git-ref metadata on opal-313476888478-lambda-artifacts ec2/opal-gateway/opal-gateway-latest.tar.gz, LastModified 13:23:35Z) is the same d14445961dd6d04275ca8186372a4df4c4fcc5cc, so manifest and artifact plane AGREE. But git cat-file -t on both hashes answers 'could not get object info' on dell1, git ls-remote origin (1931 refs) lists no ref at d14445961d, and no rel-*pf* branch or /c/tmp release tree exists here: the release commits were made in the MQ lane's own worktree (C:/tmp/mp-pf-rel, LOCAL, per its log mq_pf9_bundle_only_gateway_release.md) on another device and never pushed. The deployed bytes are retrievable (s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/opal-gateway-d14445961d.tar.gz, 883434 bytes; previous opal-gateway-38fe44d5cb.tar.gz), the commit is not. Nothing was built, uploaded or deployed; ledger harvst-cc7-gateway-s29-20261016 is OPEN with no leg run.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway at HEAD",
+       "org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-10-16/mq_pf9_bundle_only_gateway_release.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_before.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
