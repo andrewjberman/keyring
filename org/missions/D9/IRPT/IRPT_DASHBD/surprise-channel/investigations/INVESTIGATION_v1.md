@@ -23476,3 +23476,86 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "No action taken. Materialising the channel folder is outside the order's named folders, so the worker did not run git sparse-checkout add for it."
 }
 ```
+
+## IRPT_DASHBD-D2-S126 -- S116 and S117 disarmed by their disarm owner: all 16 paths read at their intended bytes at HEAD
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S126",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL2",
+  "surfaced_at": "2026-10-16T16:06:30Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-S116 and IRPT_DASHBD-D2-S117 by their disarm owner: all 16 paths that merge 96a89eb451 dropped (10) or reverted (6) read at their intended bytes at HEAD; 8 equal the merge-tree blob of that merge's own two parents, 8 carry only later edits by their owning seats, each of which builds on the restored bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_DASHBD-D2-S116",
+    "IRPT_DASHBD-D2-S117"
+  ],
+  "spec_asserts": "CTO msgs 9304, 9314 and 9581: restore the 16 to the merge-tree blobs, one lane per commit under the audited override; where HEAD equals the merge-tree blob disarm; where it differs, restore. S117 notes: this row disarms with S116 when the 16 paths read at their intended bytes.",
+  "world_is": "Read at HEAD 2026-10-16T16:06:30Z: 16 of 16 paths present; 8 EQUAL to the git merge-tree blob (tree ba65fead37) of 96a89eb451's parents; 8 differ only because their owners edited them afterwards (1 to 5 commits each since 312daca454), and for each the parent blob of the first later edit equals the restored blob, so no later edit re-reverted anything. Restored by 7 audited commits (78de21831a, 27f988e66f, 0dc6ca910d, 7ea7a4bf2d, d82a6a2b96, 47c9d15c75, b55de57d3c) and by 2.0.0_SA_COO~D2 for the two task orders (08e613ad9c). Restoring the 8 to the merge-tree blobs would have undone their owners' later work, so none was restored again.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-tree --write-tree 96a89eb451^1 96a89eb451^2 -> tree ba65fead3781749fe67bd857286d15eaa620363d (two conflicted paths, both D2's)",
+      "per path: git rev-parse HEAD:<path> against ba65fead37:<path>: 8 equal, 8 differ; for each of the 8, git rev-parse <first later commit>^:<path> equals the merge-tree blob",
+      "git diff --name-only --diff-filter=D 312daca454 <repair tip 562bf59cec>: 0 before CLOUD was taken; origin/box/dell2 582155d0b7 merged into CLOUD bc7d19309f by the integrator, tree check dropped 0"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S116 and S117 are disarmed by their disarm owner: the 16 paths read at intended bytes. The two genuine conflicts of 96a89eb451 stay with 2.0.0_SA_COO~D2."
+}
+```
+
+## IRPT_DASHBD-D2-W243-S1 -- run_filled_report catches only NotYetAvailable around the reader, so a refused household ends the pass
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W243-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~243",
+  "surfaced_at": "2026-10-16T15:28:44Z",
+  "one_line": "run_filled_report catches only NotYetAvailable around the reader call, so a PublishRefused raised by read_filled_report_gold for one household would end the whole pass once the switch is turned on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-302 WORKER FACE steps 2 and 3: the reader raises publisher.PublishRefused for a household that cannot be composed, and run_filled_report stays byte for byte (its refused count covers a document the publisher refuses, and a reader refusal is not named by the order).",
+  "world_is": "In handler.py run_filled_report wraps only reader(firm, cid) in try/except NotYetAvailable; the PublishRefused branch wraps only publisher.publish_filled_report. A PublishRefused from the reader therefore escapes run_filled_report and no client after it is processed. The three refused cases in test_filled_report_reader.py call read_filled_report_gold directly, so no test exercises the pass with a refused household. The switch is off, so nothing runs yet. Not repaired here: the pass is outside this order's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py run_filled_report at base 2cbe7bbcac43013a4fde53c3a73e70f4913827ba: try: document = reader(firm, cid) then except NotYetAvailable: continue",
+      "test_filled_report_reader.py: test_refused_household_with_a_duplicated_household_grain_member_raises_publish_refused calls h.read_filled_report_gold directly (pytest 35 passed, the four refusal shapes included)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The fix belongs to the issuer's switch cell: catch publisher.PublishRefused around the reader call and count it under refused, then test the pass with one refused household."
+}
+```
+
+## IRPT_DASHBD-D2-W243-S2 -- the locals.tf comment above the read list still says two prefixes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W243-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~243",
+  "surfaced_at": "2026-10-16T15:28:44Z",
+  "one_line": "locals.tf keeps the comment 'READ grant: the two gold prefixes (returns, method)' above irpt_rp_gold_read_prefixes, which now holds three entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-302 step 4: locals.tf takes two added lines and nothing else (the checker refuses any removed or changed line, comments included), so the comment was left as it stood.",
+  "world_is": "After the cell, irpt_rp_gold_read_prefixes lists three prefixes (returns, method, filled_report_values) under a comment that still reads 'the two gold prefixes' and 'the same two prefixes'. The comment is wrong and harmless: the list and the object arns are built from the list. The correction is a comment-only edit for the cell that owns locals.tf next.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-publish/locals.tf comment line above irpt_rp_gold_read_prefixes, unchanged by this cell (git diff shows two added lines only)",
+      "AC1 of the issuer checker p170 compares removed and changed lines of locals.tf, so the comment edit was refused by the order's own bound"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
