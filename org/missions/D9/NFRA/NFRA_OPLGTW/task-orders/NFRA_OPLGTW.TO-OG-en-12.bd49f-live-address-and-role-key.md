@@ -37,6 +37,8 @@ TESTS (new file `tests/test_og_en12.py`; read `tests/test_og_cl2.py` and `tests/
 - `test_ogen12_ac05`: the flat layout: with listed keys `silver/fees/2026-10-14.parquet`, `silver/fees/2026-10-13.parquet` and `silver/unrealized_gain_loss.parquet` under the fixture, `list_partitions` returns the two dates (newest first as today), ignores the non-dated file without raising, and a read of a date uses exactly the listed key; a folder-form fixture (`date=2026-10-14/part.parquet`) still lists and reads as before.
 If an existing test pins the old `role_key` for a `-live` segment, update it to the new truth with the smallest edit and name it; never weaken it.
 
+AMENDMENT A1 (issuer, 2026-10-16 ~14:2xZ, from your report row Z-W125-S1; this text is part of your face): `tests/test_og_ch1.py` is now in your `<paths>` and is yours to edit. Line 170 of `test_ogch1_ac03` pins `client_role.role_key("blackdiamond", "49f-live") == "blackdiamond49f"` (the comment says "the live tables (A1, S2)"); that was the old truth and the CTO's ruling @8b2865e461 replaces it: update that ONE assertion to `"blackdiamond49flive"` (keep its comment's reference and add that the live tables now route to the dedicated live key, OG-en-12), the smallest edit, nothing else in the file weakened. Re-run `tests/test_og_ch1.py` and the other client tests and print the result. Your row S4 is accepted: ascending is the code's existing order and stays (the order's "newest first" was my misreading). The order says "four" named tests in one place and lists five: five is right. Re-run both criteria, rewrite your instance from THESE runs, flip the status only if both PASS, commit, report once.
+
 ## 2. BOUNDS
 
 - Write only the files in `<paths>`. No release, no deploy, no IAM, no catalog or registry change (the `address` rows are NFRA_MCPINDEX's file; the role is `OG-ap-29`).
@@ -58,6 +60,7 @@ infra/aws/ec2/opal-gateway/tests/test_og_cl5.py
 infra/aws/ec2/opal-gateway/tests/test_og_cl6.py
 infra/aws/ec2/opal-gateway/tests/test_og_cl7.py
 infra/aws/ec2/opal-gateway/tests/test_client_role.py
+infra/aws/ec2/opal-gateway/tests/test_og_ch1.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -67,7 +70,7 @@ You WRITE `app/client_core.py`, `app/client_role.py`, `tests/test_og_en12.py` an
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-en-12"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_named.sh tests/test_og_en12.py test_ogen12_ac01 test_ogen12_ac02 test_ogen12_ac03 test_ogen12_ac04 test_ogen12_ac05; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 5 of 5; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-en-12"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_wkbound.sh 0.9.0_WK_NFRA_OPLGTW~125 '^infra/aws/ec2/opal-gateway/(app/client_(core|role|adapter_bd49f)\.py|tests/(test_og_(en12|cl[0-9]+)|test_client_role)\.py)$'; echo "exit=$?"</invocation><expect>(?s)write-set bound for 0\.9\.0_WK_NFRA_OPLGTW~125: files touched [1-9]\d*; product files [1-9]\d*; outside the allowed set 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-en-12"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/_wkbound.sh 0.9.0_WK_NFRA_OPLGTW~125 '^infra/aws/ec2/opal-gateway/(app/client_(core|role|adapter_bd49f)\.py|tests/(test_og_(en12|cl[0-9]+|ch[0-9]+)|test_client_role)\.py)$'; echo "exit=$?"</invocation><expect>(?s)write-set bound for 0\.9\.0_WK_NFRA_OPLGTW~125: files touched [1-9]\d*; product files [1-9]\d*; outside the allowed set 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the four named tests pass: address resolution with the real prefix on the row's bucket, the dedicated -live role key that refuses closed, and parity for every other vendor. `AC2`: the commits of this serial touch only the client core, the role key, the 49F adapter and the client tests.

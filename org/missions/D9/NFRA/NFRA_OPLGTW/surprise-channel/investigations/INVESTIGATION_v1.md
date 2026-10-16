@@ -24679,3 +24679,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "OBSERVATION: the gate may need the schema from the base checkout or from HEAD; the worker did not change the sparse-checkout configuration."
 }
 ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S294",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-16T14:15:42Z",
+    "one_line": "ap29.AC1.sh requires the four silver/<table>/ prefixes as literals in the .tf, but the commit-time naming limb refuses a typed S3 address; a .tf that passes the naming limb (addresses read from the registry rows) cannot pass AC1 as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First draft of blackdiamond_live_reader_iam.tf wrote the four prefixes as literals ('arn:aws:s3:::opal-data-bd/silver/<t>/*' and 'silver/<t>/*'), as the order's step 2 and the AC1 script imply. safe-commit's naming limb REFUSED it (LGIC_ENFORCE DEC-6): 'arn:aws:s3:::opal-data-bd/silver/unrealized/* -> lookup(49financial)' and 'silver/unrealized/* -> {source}/{scope}/silver/unrealized/* ... NEW and OUT-OF-PATTERN as S3Key: REFUSE', 15 addresses graded, 0 admitted. The same refusal repeated after the four registry rows were committed at HEAD (bd93455796): the gate admits an address only when the .tf reads it from the registry rows, as client_vendor_roles_iam.tf does.",
+        "The .tf was therefore rewritten to derive every S3 address from the four registry rows (jsondecode(file(legacy_addresses.json)), '${r.bucket}/${r.template}*'); the naming limb then passes it. ap29.AC1.sh reads the .tf text and requires ('opal-data-bd/silver/%s/' % t) in the file and the quoted '\"silver/%s/' string for each table; a registry-derived .tf holds neither, so AC1 prints 'the four silver tables in GetObject resources False; in ListBucket s3:prefix values False' and RESULT: FAIL. Every other AC1 figure is as the order expects (roles 1, policies 1, trust True, put/delete/star none, wildcard False, bucket-root False, other bucket False, plan 2 to add 0 to change 0 to destroy True, ask three halves True).",
+        "The plan itself carries all four prefixes in both the GetObject resources and the ListBucket s3:prefix values (W/BDLIVE_PLAN.txt shows silver/<t>/* for each of the four tables), so the grant is what the order specifies; only the check's way of reading it is out of step with the naming limb."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order Phase A item 2: policy on arn:aws:s3:::opal-data-bd/silver/<t>/* for the four tables, and the builder-refusal rule 'a missing registry row to add under infra/logic/registry/, never a hand-typed workaround'; AC1 expects 'prefixes: the four silver tables in GetObject resources True; in ListBucket s3:prefix values True'.",
+    "world_is": "The two requirements cannot both hold in one file: the naming limb forbids a typed S3 address, and AC1 reads typed addresses. This seat did not game AC1 (a trailing comment that merely contains the strings would satisfy the regex and mean nothing). The fix is the issuer's, in ap29.AC1.sh only: resolve the four prefixes through the registry rows the .tf names (or read them from W/BDLIVE_PLAN.txt, which holds the evaluated policy). Nothing in the world needs to change.",
+    "notes": "Same class as Z-S158 and Z-S165 (a check script out of step with what the order's own rules let the file say). Also recorded: the registry commit bd93455796 needed the audited lane override GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS, because the lane infra/logic/** admits only the CRO lanes; the same act (the ap-24 rows, 4de28d210d) passed the lane gate at 00:23Z, and this seat did not find which clause admitted it then. A repeat override for a standing action is, by that lane's own description, a coverage gap to close."
+  }
+  ```

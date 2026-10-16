@@ -3248,3 +3248,57 @@
   "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-10. The channel file's existing bytes are untouched (the base is a strict byte prefix of this version)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T14:15:39Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S71",
+  "one_line": "Z-S64 is DISARMED: the fix is on the host and the served body no longer scrolls the page sideways at 390 px.",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-S64 (BLOCKING). Its stated condition was that it stays open until the fix is on the host. MP-pf-9 put mcportal c66ca82952 on the host (the sha256 of the host's index.html, routes.json and both assets equal a build of it) and the issuer's real run of the served body through it reads scrollWidth 390 of 390 at 390 px and 1280 of 1280 at 1280 px, 0 offenders at both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pf9.AC2.sh (SSM 92387a6f, Success): host bundle == build of c66ca82952: yes; /health=200; no-identity / and /gateway 401",
+      "pf9.AC1.sh at box/sitez 7cd690758c: pin c66ca82952, deployed d14445961d, previous 38fe44d5cb, gateway files changed between them 0, ledger entry present and sentinel gone: PASS",
+      "pf9.real.sh at 14:08:44Z (the served body of that read: 14 channels, 127 tools, 47 holders redacted): served body at 390: scrollWidth=390 innerWidth=390 offenders=0 ok=yes; at 1280: scrollWidth=1280 innerWidth=1280 offenders=0 ok=yes",
+      "two clean images read before keeping: deliverables/2.0.0_SA_COO~MP/pf/evidence_pf9_served_d14445961d/served_390_top.png and served_1280_top.png"
+    ]
+  },
+  "spec_asserts": "Z-S64 asserted that the served Gateway page scrolls sideways at 390 px (scrollWidth 561 of 390).",
+  "world_is": "True at 090b9cdc85; at c66ca82952 on the host the same served body reads 390 of 390. The legibility grade (S1 item iii) is the CVO's, and Andrew's own look is call 21d9; neither is claimed here.",
+  "notes": "Filed by the issuer, the disarm_owner of record, at the close of MP-pf-9."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T14:15:39Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S72",
+  "one_line": "Z-S68 and Z-S69 are DISARMED: both are INERT observations of the release procedure, carried into the next release order's template (decomposition PF6.4).",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-S68 (the release tree's sparse list lacked /data/mdpf/config/, so the first deploy run was refused before any upload) and NFRA_MCPORTAL-Z-S69 (a release tree cut on an older trunk cannot run the tree-local naming gate; the applier commits with the trunk's safe-commit.sh from the tree). Neither blocked or changed the act; the issuer rules them into the template and into A2 (the landing is the applier's commit).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~MQ's rows Z-S68 and Z-S69 (13:39:21Z) and its close report MP-pf-9_CLOSE_REPORT.md: the first run was refused with no upload (S3 latest unchanged); the landed deploy was SSM eb89810b, Success",
+      "the release branch could not be merged whole: 24 paths conflicted on the trunk's later gateway code (merge aborted, nothing lost); the landing 34fc561439 carries the three release artifacts and is drained at 7cd690758c"
+    ]
+  },
+  "spec_asserts": "Z-S68 and Z-S69 asserted that the order's sparse list and commit instructions were one path and one step short for a release tree cut on an older trunk.",
+  "world_is": "True; the template now says so (PF6.4).",
+  "notes": "Filed by the issuer, the disarm_owner of record, at the close of MP-pf-9."
+}
+```
