@@ -20023,3 +20023,53 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost: every release that stages these two data files hits this. Candidate rulings for the registry owner: none_owed rows for the roster tokens or an exempt context for app/refs/*.json, a row for (bloomberg_profile, INSTANCE_PROFILE), and a lookup() read or a row for the two mdpf lines in portal_served.py. I did not override the gate and will not: the only escape in the order is the lane override. Non-application: the 10 client lines (RULED), tools.py, destructive_ops.py, data_entitlement.py, integration.py and the pin tests grade without a REFUSE."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S15",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T05:13:44Z",
+    "one_line": "After the gf-1 rename, proof-of-spec-check reads the renamed gf-1 instance INVALID: four artifact rows marked PENDING-THIS-COMMIT predate the rename commit, which the checker takes as the instance's creating commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/proof-of-spec-check.py on deliverables/0.9.0_WK_NFRA_OPLGTW~110/NFRA_OPLGTW.TO-OG-gf-1.gf-wave-b-remainder.proof_of_spec.json with AC1,AC2 under the gf-1 order: VIOLATION artifact-resolution for etfs_silver.py, test_og_gf1.py, CLASSIFICATION.json and probe_built.py, each PENDING-THIS-COMMIT but PREDATES the instance's commit 21c41f4851 (scratch: .scratch/rc1/val_gf1.log).",
+        "RAN python .tools/round-close-check.py --project NFRA_OPLGTW --round 37 after the rename and the gf-1 AC1 row update: no PROOF-BAD line for TO-OG-gf-1; the round-close read does not include the artifact-resolution limb."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-rc-1 item 1: the rename of the gf-1 proof instance keeps its content unchanged, and the checker read the instance VALID under --governing-order the gf-1 order.",
+    "world_is": "The checker takes the instance's commit from the path's history, which starts at the rename commit 21c41f4851 and not at 72096aefa4 where the classified-remainder instance was written. The four artifact rows are pinned PENDING-THIS-COMMIT and so read as predating it. Re-pinning them would change content the order keeps unchanged, so no row was re-pinned here. The gf-1 AC1 row itself was re-run and updated to its observed PASS in a separate commit.",
+    "notes": "Decision for the issuer: follow the path history (--follow) in the checker, or re-pin the four rows to 72096aefa4 in a record of their own."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S16",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T05:35:40Z",
+    "one_line": "The full-add naming gate over the 17 release modules still REFUSEs one line outside OG-ng-3's three: admin_gateway_breakdown.py:164 types the legacy bucket alias opal-data-bd in SEGMENTED_BUCKETS.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of the 17 release modules of ng3.AC1.sh> --enforce at trunk 647c5b2786 with the three OG-ng-3 fixes applied (W/NG3_AFTER.txt): NAMING REFUSE infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py:164 opal-data-bd -> opal-data-49financial, 'NEW and ALIAS as S3_BUCKET: REFUSE; hand-kept carrier of bd'.",
+        "READ infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py:164 (SEGMENTED_BUCKETS = (opal-data-assets, opal-data-bd)) and infra/logic/registry/scopes.json, the 49financial row alias opal-data-bd: bucket alias, lookup false, provisioned, graded ALIAS of opal-data-49financial."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ng-3 section 1 and AC1: the release modules graded whole print no REFUSE after the three named fixes (portal_served.py lines 125 and 126, etfs_silver.py line 313 through one row); fix exactly these three, no more.",
+    "world_is": "admin_gateway_breakdown.py is one of the 17 modules the release takes whole, and it types the legacy bucket alias opal-data-bd, which the registry holds as an alias of the 49financial bucket. It is outside the order's surfaces and not one of its three lines, so it was not changed, and no name_rulings row was added for it (the order allows one row only). The owner of the module (its last commit is NFRA_MCPORTAL MP-pf-3) or the CTO has to rule on the alias.",
+    "notes": "Measured, not inferred: AC1 cannot read PASS as written while this line stands. The three named lines are clean in the AFTER output."
+  }
+  ```
