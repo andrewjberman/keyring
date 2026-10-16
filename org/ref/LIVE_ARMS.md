@@ -158,6 +158,11 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
     stand-down.
   - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
     2.0.0_SA_COO~D.
+- `2.0.0_SA_COO~O` (NFRA_OPLGTW), `~MI` and `~MI2` (NFRA_MCPINDEX), `~MP` (NFRA_MCPORTAL): `/canonical-drive <own project> 60m`,
+  DIRECTED, chooser Andrew. ~02:0xZ 2026-10-16 at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: "time to get back on the mission, we need
+  the MCPINDEX OPLGTW MCPORTAL COO teams backonline and moving". Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_020xZ_MCPINDEX_OPLGTW_MCPORTAL_COO_TEAMS_BACK_ONLINE.md`. Seated by
+  `0.0.0_AB_MSTR~Z`. Stop: the project closes, HELD-AT-STOP, or his stand-down. Landed by 1.0.0_SA_CTO~Z.
 - ~~`1.0.0_SA_CTO~O` `/self-drive 30m`~~ STRUCK 2026-10-09 ~07:4xZ by `1.0.0_SA_CTO~Z`: Andrew-direct "we don't need CTO~O
   anymore, you just lead the fabric here" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_074xZ_CTO_O_RETIRED_CTO_Z_LEADS_SITEZ_FABRIC.md`).
   The COO half below is not touched by that word. Original row: `1.0.0_SA_CTO~O` `/self-drive 30m` over NFRA_OPLGTW, NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with

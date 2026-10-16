@@ -19869,6 +19869,7 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
 ## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
 
 ```json
@@ -20104,5 +20105,308 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "spec_asserts": "TO-DB-i-18 AMENDMENT 1: the feed-writer fixture carries a multi-day series so the chain is graded; the test file records its dimension input as DIM_IDS and explains rows_present against the RETURNED rows, naming NO_EOD_VALUE.",
   "world_is": "Applied in the test file only; no feed, wrapper, run script, adapter or checker file was edited. The multi-day run gives 7001 PRESENT on all 8 trading days with carried_days summing to 10 and the chain within 1e-12 of the silver's factors. The 3-day fixture reads rows_present 1 (7004 on the pull day), and 7001 on 10-12 reads ABSENT NO_EOD_VALUE. The amendment's rule that the file names NO_EOD_VALUE and rows_present is met by the test text."
+}
+```
+
+## IRPT_DASHBD-D2-W702-S1 -- the ruled same-path premise does not hold: the producer reads by key and undated, the swap snapshot is a dated scan export
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W702-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~702",
+  "surfaced_at": "2026-10-16T01:08:17Z",
+  "one_line": "The ruled premise that the class producer reads etf-classifications through the same path as the swap snapshot (a dated read, claim held) does not hold: the producer reads one GetItem per ticker at run time with no as-of date; the swap snapshot is a file dated by an operator-supplied as-of, labelled held, built from a whole-table scan export.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ROUND-119 ANALYSIS F-SHIP ruling 1 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md): the classification is a dated read of etf-classifications, claim held, through the same path as the swap snapshot (TO IRPT_DASHBD.TO-DB-f-702 steps 4 and 5).",
+  "world_is": "At 9dbdc229e3 the producer (data/assets/scripts/gold/irpt_reporting/account_class_daily.py, ClassTable.get lines 158-172, GetItem at line 164, asset_class only at line 169) reads the table at run time with no as-of date and no held claim. The swap snapshot (infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py lines 59-91 and 22, 71-77; build_swap_pool.py lines 3-8 and 91-106) is a file whose pool_as_of is the operator's --as-of, whose claim is held, and whose rows come from an aws dynamodb scan export. Two read paths: one by key and undated, one by scan and dated. Measured in RD_FWD3_PRODUCER_GAP_R120.json (classification_read, swap_snapshot_read); no live object read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~702/RD_FWD3_PRODUCER_GAP_R120.json",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@9dbdc229e3",
+      "infra/aws/lambda/investor-reporting/ycharts/research/build_swap_pool.py@9dbdc229e3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a hazard for this seat (no write, no deploy). The CTO's answer to row IRPT_DASHBD-D2-S102 decides whether a dated read is a change to the producer; this cell measured the gap only."
+}
+```
+
+
+## IRPT_DASHBD-D2-W702-S2 -- the coverage member CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT also carries unreadable values
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W702-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~702",
+  "surfaced_at": "2026-10-16T01:08:17Z",
+  "one_line": "An unreadable position value or a missing custodian cash line is written with the coverage member CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT, the same member a tie failure carries, so the coverage column does not separate the two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The contract's coverage enum (org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json, enums.coverage and method.sum_check) names CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT for a day whose class values do not tie to the account value within half a cent.",
+  "world_is": "At 9dbdc229e3 raw_class_values returns None for an unreadable position value or a missing cash line (data/assets/scripts/gold/irpt_reporting/account_class_daily.py lines 416-423), and _class_day sets the contribution coverage to CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT when mv_t or mv_p is None (lines 503-504), where no earlier coverage member applies. Measured from code; no live rows read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@9dbdc229e3",
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json@9dbdc229e3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A labelling question for the producer's owner. This cell changes nothing and reads no live row."
+}
+```
+
+
+## IRPT_DASHBD-D2-W702-S3 -- the sum-to-account acceptance is covered by test for the identity and the null path only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W702-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~702",
+  "surfaced_at": "2026-10-16T01:08:17Z",
+  "one_line": "The producer's tests assert that class contributions sum to the account's return on synthetic days and that a day missing the tie is null; no test runs the class-to-account tie against the live account value on a real account-day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ROUND-119 ANALYSIS F-SHIP ruling 1 acceptance: the classes sum to the account on every day, by test (TO IRPT_DASHBD.TO-DB-f-702 step 3).",
+  "world_is": "At 9dbdc229e3 the tests (data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py lines 131-160 and 174-184) are offline and synthetic (file line 4); the identity test builds the account value as the class sum (line 136). The tie itself is enforced at run time (account_class_daily.py lines 223-231). The acceptance is covered by test for the identity and the null path, not for every day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py@9dbdc229e3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~702/RD_FWD3_PRODUCER_GAP_R120.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The gap between the acceptance wording and the test scope is for the seat that adds the sum-to-account test. No test was run and none was changed."
+}
+```
+
+
+## IRPT_DASHBD-D2-W702-S4 -- row S102 cites the GetItem at line 195; at 9dbdc229e3 the GetItem is at line 164
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W702-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~702",
+  "surfaced_at": "2026-10-16T01:08:17Z",
+  "one_line": "Row IRPT_DASHBD-D2-S102 cites the producer's GetItem at line 195 of account_class_daily.py; at this HEAD the GetItem is at line 164, and line 195 is the table.get call inside classify_identifier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-S102 world_is: 'reads etf-classifications by GetItem at line 195' (account_class_daily.py).",
+  "world_is": "At 9dbdc229e3 data/assets/scripts/gold/irpt_reporting/account_class_daily.py line 164 holds the get_item call on the etf-classifications table (ClassTable.get); line 195 holds table.get(ident) inside classify_identifier. The citation in S102 does not name the read's line at this HEAD. Measured by reading the lines; the row itself is not edited (append-only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@9dbdc229e3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Citation drift only. The owner of the producer may re-cite; nothing is changed by this cell."
+}
+```
+
+## IRPT_DASHBD-D2-W701-S1 -- the register brief named for the fact_trn columns and the flow classes names neither
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "TO-DB-f-701 names the register brief as the holder of the 49 Financial fact_trn columns and of the transaction flow classes; at HEAD that brief holds neither, and the columns and the seven flow classes sit in code and in the reporting dashboard backend brief.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/briefs/irpt-holdings-basis-silver-inventory-brief-20260928.md (grep for trn, transaction and flow at the worktree HEAD: no fact_trn column name and no transaction flow class)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json lines 44 to 96 (the declared transaction columns)",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78 (flow_class, seven values)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-f-701 steps 1 and 4 name docs/briefs/irpt-holdings-basis-silver-inventory-brief-20260928.md as the record of the fact_trn column list and of the brief's transaction flow classes.",
+  "world_is": "The register brief holds no fact_trn column name and names no transaction flow class. The columns are declared in sources.json and read by account_return_daily.py (transaction_columns, lines 510 to 532). The seven flow_class values are at docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78. The WORKER FACE was run against the named sources; the record cites the true locations.",
+  "notes": "Cell DB-f-701 answered by RD_FWD5_FIELDS_R120.json (brief_flow_classes file and line 78)."
+}
+```
+
+
+## IRPT_DASHBD-D2-W701-S2 -- the flow map of four values is not located as a list; the 49 Financial, ledger and Orion counts differ
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "The earlier read's flow map of four values is not found as a list in the files read: the 49 Financial final classes are five, the ledger classes named by the reporting brief are five, and the Orion bucket set is four.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 230 to 242 (FINAL_BY_PARTITION: five final values)",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (four buckets: NNA, Internal, Return, CorporateAction)",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 62 (the flow ledger classes, five values)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round's first read counted seven flow classes in the brief against four in a flow map.",
+  "world_is": "The seven are at the reporting dashboard backend brief line 78. The four-value set is not a list of transaction flow classes in any file read: the Orion taxonomy has four buckets; the 49 Financial final classes in FINAL_BY_PARTITION have five values; the flow ledger named at brief line 62 has five. The count of the flow map cannot be confirmed from the files read and is left to the contract cell.",
+  "notes": "No value is guessed. RD_FWD5_FIELDS_R120.json records the seven with its line."
+}
+```
+
+
+## IRPT_DASHBD-D2-W701-S3 -- no file defines Opal's action or type words, and no firm's code names an action field
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "The FWD-5 ACCEPT wants action and type in Opal's own words, but no file defines those words and no firm's code carries a field named action, so the mapping of each firm's fields to them is a ruling the contract cell needs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~701/RD_FWD5_FIELDS_R120.json (opal_vocab_home, claim absent, and the three firms' vocabulary_where)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md line 292 (names the Opal action and type vocabulary without listing it)",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78 (action and txn_type named as Opal closed enums without values)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-5 ACCEPT: date, asset, action, type, symbol, units, price, amount and custodian are shown in Opal's own words for the action and type, not the custodian's codes; any enum carries its taxonomy-law record.",
+  "world_is": "Opal's action and type words are defined in no file read (words searched over org/standards, docs and portal/src, with denominators in the record). The code names no action field: 49 Financial reads tr_cd, sb_cd and tran_srcde; Cottonwood reads Transaction Type and External Flow; Inflection reads transTypeId and transactionDescription with a bucket per type in the Orion taxonomy. The contract cell must take the vocabulary through its rule-24 record; this read proposes none.",
+  "notes": "A value-enum proposal arrives with its four-postulate record and a token census; none was written here."
+}
+```
+
+
+## IRPT_DASHBD-D2-W701-S4 -- Orion type count: the brief says 47 type ids; the taxonomy holds 48 descriptions keyed by text, and the repo names four numeric ids
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "The brief's count of 47 Orion type ids does not match the 48 type_desc entries of the Orion taxonomy, which key by description text, and the numeric id map was not found in the files read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 60 (47 type ids)",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (48 type_desc entries, each with a bucket)",
+      "data/inf/manual_api/pull_inflection_transactions_rest.py lines 38 and 99 (four numeric transTypeId values named; the field)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The reporting dashboard backend brief says the Inflection transactions carry 47 type ids.",
+  "world_is": "The Orion taxonomy holds 48 entries (distinct type_desc text, bucket NNA 9, Internal 19, Return 17, CorporateAction 3). The pull file names four numeric ids in its docstring. The mapping from numeric transTypeId to description is not in the files read, so the id count cannot be confirmed here.",
+  "notes": "The type_codes list in RD_FWD5_FIELDS_R120.json carries the 48 descriptions as the repo holds them."
+}
+```
+
+
+## IRPT_DASHBD-D2-W701-S5 -- the classification table sat outside the worker cone; one folder added by sparse checkout
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "The 49 Financial code table named by sources.json lies under the CRO deliverables folder, which the worktree's sparse cone did not carry; the worker added that one folder with git sparse-checkout add and read the schema file from HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/sources.json line 98 (classification_table path)",
+      "git sparse-checkout list at the worktree (fifteen folders; org/tier1_exec was absent)",
+      "org/surprise_channel/schemas/investigation_item.schema.json read with git show at HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-f-701 WORKER FACE: data/, infra/aws/lambda/investor-reporting/, docs/briefs/ and org/critical_paths/ are materialized; the path a missing folder needs is added by git sparse-checkout add.",
+  "world_is": "The code table is named at a path outside those four folders. The worker ran git sparse-checkout add for org/tier1_exec/4.0.0_SA_CRO/deliverables only. No tracked file changed and no file was edited outside the grant.",
+  "notes": "The materialized set now also carries that one CRO deliverables folder in the worktree."
+}
+```
+
+
+## IRPT_DASHBD-D2-S106 -- disarm condition for S102 (FWD-3 class keys through the route)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S106",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-16T02:03:00Z",
+  "one_line": "Disarm condition for IRPT_DASHBD-D2-S102, as the CTO's rounds 116-118 analysis asks: S102 disarms when a served series carries the class keys through the route, from the EXISTING producer (the CTO ruled in call 3596 that no new producer is built), with ~D2 publishing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "CTO analysis for F-SHIP rounds 116-118 (msg 8839) and call 3596 (msg 8826): the existing account_class_daily producer stays the one producer; ~D2 adds the sum-to-account test and the dated classification read (held, as_of) and publishes the class object; ~F2 builds only the reader and the tab.",
+  "world_is": "Round 120 measured the gap (record 0.9.0_WK_IRPT_DASHBD~702/RD_FWD3_PRODUCER_GAP_R120.json): classification read is one GetItem per ticker, undated (account_class_daily.py line 164); the sum test covers the identity and null path only; the swap snapshot is dated by an operator --as-of from a scan export, so the same-path premise does not hold. ~D2 names the object class_series.json.gz and the contract section class_object v0.4.0 (msg 8846); ~S2 cuts the OBJECTS member after the v0.4.0 file is committed (msg 8848). Nothing is served yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~702/RD_FWD3_PRODUCER_GAP_R120.json",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUNDS_116_117_118_20261016.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S102 stays ARMED until the condition holds. ~F2's own part (the reader and the mount of AssetClassSection) is cut in round 121, against route key which=class_series. DISARMS WHEN: S102 disarms when a GET of the reporting route with which=class_series returns the class object for a sample account, carrying class_names, coverage, market_value_eod and class_return_daily, from the existing producer; the disarm is read from that response, not from a seat's report."
+}
+```
+
+
+## IRPT_DASHBD-D2-S107 -- disarm condition for S103 (FWD-5 contract and producer)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S107",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-16T02:03:00Z",
+  "one_line": "Disarm condition for IRPT_DASHBD-D2-S103, as the CTO's rounds 116-118 analysis asks: S103 disarms when the transaction contract and the per-firm producer land with their L9.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "CTO analysis for F-SHIP rounds 116-118 (msg 8839): ~F2 is the sole writer of IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json and its per-firm producer; any enum carries its rule-24 record; CTO msg 8826 adds: search for an existing contract or producer first and print the denominator.",
+  "world_is": "Round 120 read (record 0.9.0_WK_IRPT_DASHBD~701/RD_FWD5_FIELDS_R120.json): 49 Financial 14 columns, 3 action codes (tr_cd), 15 type codes (sb_cd); Cottonwood 5 columns, 0 action codes, 16 type codes; Inflection 11 columns, 0 action codes, 48 type codes; the backend brief names 7 flow classes and says action and txn_type are Opal closed enums without listing their values; no file defines Opal's words for action and type (search denominators in the record). No existing transaction contract or producer was found.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~701/RD_FWD5_FIELDS_R120.json",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUNDS_116_117_118_20261016.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S103 stays ARMED until the condition holds. Next acts of this seat: the rule-24 record (four postulates plus a word-boundary token census) for Opal's action and type enums over this denominator, then the contract, then the per-firm producer. DISARMS WHEN: S103 disarms when IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json and the per-firm producer are committed and the CVO has graded the cell that landed them (L9)."
 }
 ```
