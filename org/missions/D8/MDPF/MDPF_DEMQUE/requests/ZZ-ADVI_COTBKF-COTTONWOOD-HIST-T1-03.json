@@ -1,4 +1,5 @@
 {
+ "surface": "B",
  "channel": "history",
  "fields": [
   "PX_LAST"
