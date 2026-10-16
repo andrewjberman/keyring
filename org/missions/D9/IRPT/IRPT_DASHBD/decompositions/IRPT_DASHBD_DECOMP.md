@@ -2534,3 +2534,19 @@ Item 3 of section 154 is cut as `DB-b-295`, its own workstream tag (one issuance
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~238`); with `DB-b-294` (237) two chains are live of the 4 cells of the drain, cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the behaviour clauses validated against a scratch reference of the edits on the 0.4.6 and 0.3.3 contracts (AC1 and AC2 green) and 11 single-fault mutants (all red)):** `checks/r149/p163_publisher_pair.py` (DB163-1-AC1..AC3).
+
+## 157. ROUND 149, WORKSTREAM HSRW (2026-10-16 ~10:5xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood landing's explicit rewrite event (CTO ruling on fork e6ef, msg 9264, route (c))
+
+The 65 landed Cottonwood gold days cannot take the derived `history_scope` because the landing refuses to overwrite a landed day. The CTO accepted route (c): "an explicit rewrite event, capped at MAX_BACKFILL_DAYS and limited to already-landed days, mirroring the 49 Financial backfill; the versioned bucket keeps prior versions and nothing is deleted; the scheduled path keeps its no-overwrite guard. Cut the code cell, then write the never-widen pair for the 65 days." The row closes on cross-adjudication XA-20261016T100029Z-3b66; that does not hold the cell.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `write_day(..., rewrite)` and `run_day(..., rewrite)` in the adapter; `landed_days`, `_run(..., rewrite)`, `_rewrite` and the event in the landing handler; tests | DB-b-296 | FWD-10 | WORLD (`infra/` path) | `DB-b-294` (the adapter and handler files it edits; carried into the worker's tree as file copies) | chain Q |
+| 2. THE DRAIN: `DB-b-292`, `DB-b-293`, `DB-b-294`, `DB-b-295` and `DB-b-296` merged together | the issuer's act | FWD-10 | LOCAL | item 1 and the four others | the drain |
+| 3. The Cottonwood never-widen pair for the 65 days: the landing function's code update (a new artifact version, ONE safe-apply by code attributes only), then the rewrite events in chunks of at most 25 days with a read-back each, the prior versions kept | NOT CUT: a packet after the drain and the re-pin | FWD-10 | WORLD | item 2 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) a rewrite requires the day to be landed AND the derived table (the claim column), so a rewrite can never write the old constant back; (b) every refusal comes before any write, and the whole event is refused when ANY named day is not landed, never half-run; (c) the event's days are the trading days of the range, so a weekend or holiday in it is not a day to rewrite; (d) the shared `landed_days` helper keeps the scheduled path's `newest_landed_day` answer byte for byte.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~239`); with `DB-b-295` (238) two chains are live of the five cells of the drain, cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the behaviour clauses validated against a scratch reference of the edits (AC1 and AC2 green) and 11 single-fault mutants (all red)):** `checks/r149/p164_cot_rewrite.py` (DB164-1-AC1..AC3).
