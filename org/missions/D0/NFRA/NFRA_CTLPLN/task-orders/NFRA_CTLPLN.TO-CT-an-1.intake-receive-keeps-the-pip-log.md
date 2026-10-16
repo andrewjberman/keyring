@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~126</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the main tree after merge 79ee07a0b7 (worker branch wk-NFRA_CTLPLN-126 @74aeadbbab): CTan1-AC1 PIP-LOG arms=7/7 ok=True; CTan1-AC2 INTAKE-RECEIVE-TEST cases=34/34 ok=True (base 32/32); diff paths inside the order; proof instance VALID. Row W126-S1 OBSERVATION, ARMED, adjudicated by MSTR msg 109561 as the ruled WARN-only state (not a defect). LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

@@ -16,10 +16,11 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 |---|---|---|---|
 | `AR-g-104` | the AQ2 apply order for r33 (two code releases, one env var, one inline policy) and its after-reads | the applier's `deliverables/irpt_anlreq_r33/`, the ledgers, the map record | WORLD (a deploy under a signed pair) |
 | `AR-g-107` | the r34 resident tarball, four host scripts and the build record `RESIDENT_R34_BUILD.json` in a stage folder outside the repo | the worker's `deliverables` folder, the order, the channel file | WORLD (floor of an infrastructure path; nothing installed, no host touched, no AWS call) |
+| `AR-g-108` | the AQ2 apply order for the r34 resident (install, census, one-ticker Yahoo read), cut after both halves of the r34 pair were signed (CTO msg 8904); it starts only after both r33 ledgers close | the applier's `deliverables/irpt_anlreq_r34/`, the ledger | WORLD (a deploy under a signed pair) |
 
 ## Edges and chains
 
-- TWO independent chains. `AR-g-104` depends on the signed pair (done). `AR-g-107` depends on `AR-g-98`, `AR-g-101` and `AR-g-106` (all merged) and feeds the r34 packet; the r34 apply order depends on the r34 pair.
+- THREE cells, TWO independent chains and one gated edge: `AR-g-108` depends on `AR-g-104` closing (CTO condition 1) and on `AR-g-107` (merged). `AR-g-104` depends on the signed pair (done). `AR-g-107` depends on `AR-g-98`, `AR-g-101` and `AR-g-106` (all merged) and feeds the r34 packet; the r34 apply order depends on the r34 pair.
 
 ## Four-postulate record
 
