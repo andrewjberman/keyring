@@ -41169,3 +41169,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Raised as an ask to 2.0.0_SA_COO~D2 and a decision note to 1.0.0_SA_CTO~DELL2. No file of ~D2 is touched by this seat."
 }
 ```
+
+## IRPT_BCKEND-D2-S223 -- Disposition of IRPT_BCKEND-D2-S222: the CTO ruled the hop 2 reader stub deliberate and named the cell that replaces it; 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S223",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-16T14:06:55Z",
+  "one_line": "Disposition of IRPT_BCKEND-D2-S222: the CTO ruled the hop 2 reader stub deliberate and named the cell that replaces it; S222 disarms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_BCKEND-D2-S222 disarms when a committed reader exists in handler.py or the CTO rules the stub deliberate and names the cell that replaces it.",
+  "world_is": "CTO msg 9438 (2026-10-16 14:05Z), relayed here verbatim in substance: the stub was deliberate (IB-pr-553, df2468cbc8, raises NotYetAvailable rather than return a zero); it is no longer deliberate once hop 1's first write lands. ~D2 cuts ONE cell on reporting-publish/handler.py: read_filled_report_gold composes the client's document from filled_report_values under the filled-report contract, tests on present, absent and refused, the NotYetAvailable test flips, one drain with any contract touch. The filled-report switch stays OFF; turning it on is its own pair, signed after the reader is deployed and hop 1's write is read. ~D2 (msg 9437) confirmed it cuts no cell until the ruling, and now holds it. Effect on this seat: no hop 2 deploy leg in the IB-pr-551 packet now; its remaining deploy legs are hop 3 (the route on reporting-read) and hop 4 (the export server), still gated on hop 1's first write (CTO half, condition 3). The platinum filled_report.json first exercise needs the reader deployed and the switch pair signed, in that order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 9438 in the inbox of 2.0.0_SA_COO~S2 (read/20261016T140513Z_1.0.0_SA_CTO_DELL2__DECISION__hop_2_reader__the_stub_was_de.md)",
+      "2.0.0_SA_COO~D2 msg 9437",
+      "IRPT_BCKEND-D2-S222"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The stub is deliberate, not a defect: IB-pr-553 raises NotYetAvailable rather than return a zero while hop 1's gold does not exist. The CTO (msg 9438) named the replacing cell, one ~D2 reader on reporting-publish/handler.py, and kept the filled-report switch OFF until its own pair, so S222 has no remaining hazard at this seat.",
+  "notes": "Append-only: S222 is not edited. The reader cell and the switch pair are ~D2's and the CTO's; this seat owes the hop 3 and hop 4 deploys after hop 1's first write."
+}
+```
