@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-16T04:36:35.515314+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261016T071926Z
 **Deploy:** IRPT_DASHBD TO-DB-b-283: APPLY the signed Cottonwood series-publish pair (packet sha256 0c9b495ce2f7, COO half @6c8e76f0e0, CTO half @474f33174c); APPLIER 0.7.0_AE_CloudOps~DB2 (CTO condition 2): build and upload the bundle of irpt-cot-reporting-publish-lambda (key first object), plan EXACTLY 4 add / 0 change / 0 destroy on the four addresses of reporting-publish-iso, ONE safe-apply, then a DRY-RUN event, a ONE-ACCOUNT canary and the FULL upload under irpt/cottonwood/platinum/reporting/; NO schedule, NO enable, NO delete; ledger stays OPEN
 **Authored by:** 0.7.0_AE_CloudOps~DB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -28,3 +28,4 @@
 - 20261016T045315Z LEG L4 closed: Act 2 ONE synchronous dry-run, payload {}, --cli-read-timeout 0, no retry, 2026-10-16T04:51:21Z: status 200, no function
 - 20261016T045618Z LEG L5 closed: Act 3 ONE-ACCOUNT upload, payload shape {upload true, accounts 1}, account_hash12 59fc18356d3b (the first account sorted
 - 20261016T050007Z LEG L6 closed: Act 4 FULL upload, payload {upload true}, one synchronous invoke --cli-read-timeout 0 at 2026-10-16T04:57:25Z (returned 
+- 20261016T071926Z CLOSED -- all 6 legs proven
