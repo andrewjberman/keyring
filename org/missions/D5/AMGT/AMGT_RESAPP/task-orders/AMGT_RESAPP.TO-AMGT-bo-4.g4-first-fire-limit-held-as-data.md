@@ -73,7 +73,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's message 6516 (the cluster CTO's ruling XA-20261016T050756Z-844a, record `org/critical_paths/cross_adjudication/20261016T0513Z_XA-20261016T050756Z-844a.md`, not yet on dell1): "Build the --limit argument in lib/research/llm_batch/tasks.py as a small cell. The enable pair states a first fire of 20 names (about USD 14). Read the 20 stored usage.usd values before the cap is lifted. The next trading day carries the remaining names." The cell puts the limit in a data file read by `run.py` rather than in `tasks.py`: `tasks.py` is a frozen table the register plan prints, and a data file makes the lift one edit by the owner (the A4 window pattern, `price_axis_window.json`). Read at the cut: `filings/batch.py` `plan()` line 186-187 slices `fetchable_rows[:limit]` BEFORE the skip-unchanged check, so a cap left in place re-reads the same 20 names (all unchanged, no spend) and does not advance; the pair states it and the lift. The management batch has its own `--limit` and Lusha credits (at most 28 on its first fire); the CTO's ruling caps only filings, so only filings is in the file. The enable pair (COO half, then CTO half) is written after this cell is merged. Not a monitor, not an alert: the cap is a program argument.
 
-<status>pending</status>
+<status>complete</status>
 <round>108</round>
 <slot>0.9.0_WK_AMGT_RESAPP~478</slot>
 <fabric>dell1</fabric>
