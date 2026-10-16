@@ -23,10 +23,10 @@ By `2.0.0_SA_COO~O`, 2026-10-16 ~14:0xZ. To be sent to `1.0.0_SA_CTO~Z` as ONE s
 | `OG-en-10` | E10 | merged `580e2f91a7` (a 429 writes an audit row with the count and a hashed `by_client` split); the choice between raising the limit, exempting initialize/tools-list, or distinct identities is made from the first rows (CTO ruling msg 35000) |
 | `OG-ts-1` | remediation | merged `de390f73e1` |
 | `OG-en-11` | 49F BD served source | done: the four 49F BD tools answer `no_catalog_row` and read nothing (Z-S293); the re-run after the release closes Z-S292 |
-| `OG-en-12` | 49F live code | worker `~125` running (address resolution, flat dated files, dedicated `-live` role key) |
-| `OG-ap-29` | 49F live role | `~ZS` Phase A in flight (one role, one policy, four prefixes, three halves) |
-| (MI) | catalog half | four NEW live rows with `address`; NFRA_MCPINDEX's cell |
-| (release) | the ONE batched release | NOT CUT: after `OG-ap-29`, `OG-en-12` and the catalog rows; re-bases on the live ref; `mcportal_commit` `c66ca82952` for MP |
+| `OG-en-12` | 49F live code | merged `5c345724a6` (address resolution, flat dated files, dedicated `-live` role key) |
+| `OG-ap-29` | 49F live role | complete: applied by `~ZS`, ledger CLOSED, `ap29.AC2` PASS, proof VALID `e497bc910d` |
+| (MI) | catalog half | complete (`NFRA_MCPINDEX.TO-MX-c-26`): four rows `blackdiamond_live_<t>`, catalog blob `b81c48aa3c`, trunk merge `68d5c5dfa8` |
+| `OG-ap-28` | the ONE batched release | cut `40c539b06d` (A1 `06b2cc85eb`), staged; Phase A GO sent to `~Z` 16:21Z (`trunk_sha` `066649b10f`, `mcportal_sha` `59e802a`, MP's `TO-MP-pf-11` cue rides it); Phase B waits on the three halves; then the `OG-en-11` re-run |
 
 ## Rows
 
@@ -34,6 +34,9 @@ By `2.0.0_SA_COO~O`, 2026-10-16 ~14:0xZ. To be sent to `1.0.0_SA_CTO~Z` as ONE s
 - Armed and not the COO's: ten CVO-graduated rows (Z-S67, Z-W35-S1, Z-W42-S1, Z-W39-S5, Z-W43-S7, Z-W49-S1, Z-W49-S3, Z-W49-S4, Z-S85, Z-W57-S2) await their remediation rows' DISARM.
 - Armed and mine: `Z-S177` (the 429), `Z-S292` (the 49F Deny, the CVO's), `Z-S293` (the catalog gap).
 - Z-S173 (Alyssa's `download_filtered` against the PRD's no-download) is Andrew's act row.
+- Newer rows: `Z-S294` (BLOCKING, the applier's, my `ap29.AC1` defect) dismissed by `Z-S296` (`78cc59051e`); `Z-S295` (lane `PLATFORM_LOGIC_DOCS` admits only the CRO, so an applier's registry rows commit needed the audited override; `ap-24` passed and `ap-29` was refused, unexplained) stays an INERT observation for the CTO and `0.0.0_AB_MSTR`.
+- `OG-ap-11` (round 35, closed `failed`, AC2 FAIL, rolled back) marked `superseded` (`18556ab4a4`, CTO msg 35104) so the close reads it terminal; the DLQ drain's `sqs:ChangeMessageVisibility` grant returns as a new pair in a later round.
+- Rule 34 (CloudOps one lane per macro per box): `OG-ap-28` finishes at `~Z`, `OG-ap-29` finished at `~ZS`; any NEW NFRA CloudOps order goes to `~NFRA1` after one line to `0.0.0_AB_MSTR~Z` (CTO msgs 35109, 35113).
 
 ## Carried to the next enrichment list (19 rows + three named items)
 
@@ -41,4 +44,4 @@ Z-W77-S1, Z-W75-S1, Z-W75-S2, Z-W83-S3, Z-W72-S5, Z-W79-S1, Z-W79-S3, Z-W79-S5, 
 
 ## Instruments and checks this round
 
-`_wkbound.sh` and `_named.sh` (generic, base FAIL and PASS arms exercised), `ap27`/`ap29` AC1 and AC2, `mg1.AC2.sh` (fixed to read `dates.calendar_months`), `en7.AC1`, `en11.AC1`, `ts1.AC1`. My own check defects this round: `ap27.AC1.sh`, `mg1.AC2.sh`, and the first two disposition rows without `adjudicates`: each did not exercise its PASS arm against a real shape before it was relied on.
+`_wkbound.sh` and `_named.sh` (generic, base FAIL and PASS arms exercised), `ap27`/`ap28`/`ap29` AC1 and AC2 (`ap28.AC1` graded on a synthetic release commit: PASS arm plus three control arms; its helper `_dsh_check.py` grades the positional slots of the one env `printf`), `mg1.AC2.sh` (fixed to read `dates.calendar_months`), `en7.AC1`, `en11.AC1`, `ts1.AC1`. My own check defects this round: `ap27.AC1.sh`, `mg1.AC2.sh`, and the first two disposition rows without `adjudicates`: each did not exercise its PASS arm against a real shape before it was relied on.
