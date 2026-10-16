@@ -20385,3 +20385,8 @@
 2026-10-15T23:37:22Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~Z  host=OPAL_BLOOMBERG  sessions=14  session_pids=521  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=61  msys_joined=35  ms=1601
 2026-10-16T00:27:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~Z  host=OPAL_BLOOMBERG  sessions=14  session_pids=503  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=49  msys_joined=27  ms=1345
 2026-10-16T01:17:21.833347+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~O pid=20888 reason='to=0.7.0_AE_CloudOps~ZS' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~O -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-16T01:30:59Z DEREGISTER caller=2.0.0_SA_COO~MI2 requested=2.0.0_SA_COO~MI2 resolved=2.0.0_SA_COO~MI2 liveness=removed broker=removed pollers_killed=1
+2026-10-16T01:39:49Z DEREGISTER caller=2.0.0_SA_COO~O requested=2.0.0_SA_COO~O resolved=2.0.0_SA_COO~O liveness=removed broker=removed pollers_killed=1
+2026-10-16T01:50:10.481739+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.3_BG_BBGTerminal pid=33468
+2026-10-16T01:50:45.775553+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=35068
+2026-10-16T01:51:07.604108+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~Z pid=37556
