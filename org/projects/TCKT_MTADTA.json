@@ -4,7 +4,7 @@
  "directive": "D7",
  "macro_code": "TCKT",
  "fabric": "dell1",
- "dep_stage": "EXECUTING",
+ "dep_stage": "ROUND_CLOSE",
  "status": "active",
  "name": "Ticket Center metadata: the eight operations team members' Microsoft 365 activity, read as sequences, to find the workflows Ticket Center should absorb",
  "generated_from": "org/missions/D7/TCKT/TCKT_MTADTA/project.json",
