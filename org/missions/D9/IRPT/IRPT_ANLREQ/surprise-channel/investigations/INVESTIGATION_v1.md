@@ -22068,3 +22068,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S146 -- disposition of IRPT_ANLREQ-D2-W258-S1 and IRPT_ANLREQ-D2-W258-S2: both were the issuer's, both fixed
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T11:24:04Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S146",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The worker read both right. W258-S1: the issuer provisioned the worktree sparse and the order's AC3 runs two test files outside the cone (ycharts/, ops/); the issuer widened the worktree's cone (git sparse-checkout add infra/aws/lambda/investor-reporting) and re-graded AC3 there. W258-S2: the issuer's scope arm in ar_g121_checks.py did not allow the worker's own deliverables folder, the order file or the channel file; the issuer fixed the checker (a worker prefix list). Re-run in the widened worktree with the fixed checker: build OK, guard OK, regress OK, scope OK. The branch was merged as b535f41cb8.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W258-S1 and -S2: the sparse cone and the scope arm were the issuer's omissions; fixed and re-graded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 258 report: AC1 PASS, AC2 PASS, AC3 FAIL (test_kept_holding.py 1 failed, test_resident_session_checker.py no tests ran), scope FAIL on its own folder",
+      "issuer re-run in C:/dev/wk-irpt-anlreq-258 after the cone widening, with the fixed checker: AR-G121-OK build, AR-G121-OK guard, AR-G121-REGRESS-OK, AR-G121-SCOPE-OK; drain merge b535f41cb8 (fast lane, 0 of 5 paths graded)"
+    ]
+  },
+  "spec_asserts": "The order's worktree and checks let the worker run every criterion it is graded on.",
+  "world_is": "The provisioner's default sparse checkout omits the ycharts and ops directories under investor-reporting, and the issuer's scope arm named no worker folder."
+}
+```
