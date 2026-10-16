@@ -22366,3 +22366,145 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W235-S1 -- two existing union tests break on the new keyword call to _publish_one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:11:12Z",
+  "one_line": "The handler's run() now calls _publish_one with present_dates and calendar_source keywords (TO-DB-b-292 requires it), which breaks two existing tests in test_publisher_account_union.py: their _publish_one stubs take six positional arguments and accept no keyword. That file is outside this order's grant, so it is filed here and not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the issuer: the two stubs in the union test file must accept present_dates and calendar_source, or an order that names that file must)",
+  "spec_asserts": "TO-DB-b-292 edits handler.py only within its grant and states that nothing else in the file changes; it names no other test of the reporting-publish folder, and its criteria run the new test file and the checker.",
+  "world_is": "Measured at 23571f5675 (the artifact commit): pytest over the reporting-publish tests folder gives 2 failed and 113 passed. Both failures are UnionTests in infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py (test_named_accounts_still_override_the_union and test_run_publishes_the_union_not_the_newest_partition), each a TypeError raised at the handler's run() pool.map lambda, because the stubs (lines 59 and 71 of that file) are lambda s3, firm, a, rows, up, c and take no present_dates keyword. The new file test_handler_unreported.py passes 10 of 10.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py lines 59 and 71 (the _publish_one stubs with six positional parameters)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py at 23571f5675, the run() pool.map call carrying present_dates and calendar_source",
+      "pytest over the reporting-publish tests folder at 23571f5675: 2 failed, 113 passed (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker: the stub file is outside the grant and the order says never widen. The row stays ARMED until the issuer's update lands."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S2 -- DB160-1-AC2 cannot pass as written: the unpacked step needs the contract, the fixed file list does not package it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:11:12Z",
+  "one_line": "DB160-1-AC2 FAILS at its unpacked-handler step: the behaviour clause reads org/standards/IRPT_DASHBD_SERIES_CONTRACT.json from the unpacked root, but the entry's files list, which the same criterion fixes as the base list plus lib/trading_calendar.py, does not package that contract. The build-only, import and package steps pass; no route in the grant packages it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AC2: the BUILD_ONLY package holds exactly the entry's files with every member byte-equal to its source, and the handler UNPACKED from it passes AC1's behaviour; the entry's files are the base list plus lib/trading_calendar.py and nothing else (the checker's entry clause refuses any other added member).",
+  "world_is": "Measured: DB160-1-AC2 run from the worktree at 23571f5675 exits rc 1 with 'FAIL: the unpacked handler failed the behaviour clause ... FileNotFoundError ... org/standards/IRPT_DASHBD_SERIES_CONTRACT.json'. The checker's check_behaviour reads (root / CONTRACT_REL) from the unpacked directory; the package holds only the entry's 17 files, and the contract is not one of them. The deployed handler does not read the contract (lambda_handler passes no contract to run()), so no served state depends on this member; the failure is in the proof's clause, not in the bundle.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json entry irpt-49f-reporting-publish-lambda, files list (base 16 members plus lib/trading_calendar.py)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py check_behaviour (root / CONTRACT_REL) and check_entry (files equal the base list plus the calendar)",
+      "DB160-1-AC2 output at 23571f5675: rc 1, the unpacked-step FileNotFoundError on the series contract path (counts and names only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer decides the route: the unpacked step reads the contract from the repo, or an order that names the contract adds it to the entry. Not repaired here; DB160-1-AC2 stays FAIL and the order stays open."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S3 -- the Lambda path publishes with no contract argument, so the deployed run skips the contract check
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:11:12Z",
+  "one_line": "lambda_handler calls run() without a contract, so _publish_one's validate_against_contract step is skipped on the Lambda path; main() loads the contract only from a repo path the package does not carry. Pre-existing at the base commit. A republish under the 49 Financial pair would reach S3 unvalidated against the series contract in the deployed function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the 49 Financial publisher's owner: the Lambda path's contract argument and its packaging must be decided before any republish under the pair)",
+  "spec_asserts": "TO-DB-b-292 and its checker assert that the handler's series validate against the series contract (AC1: validation against the series contract).",
+  "world_is": "Read of infra/aws/lambda/investor-reporting/reporting-publish/handler.py at 23571f5675 and at the base commit bc709d6a5a: lambda_handler's run(...) call passes no contract, so the default None applies and _publish_one skips validate_against_contract. main() reads the contract only when org/standards/IRPT_DASHBD_SERIES_CONTRACT.json exists beside the handler's root, and the package does not carry that file. AC1 passes the contract explicitly, so the check does not exercise the deployed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py lambda_handler run() call (no contract argument) and _publish_one contract guard, at 23571f5675",
+      "the same call and guard at the base commit bc709d6a5a (unchanged by this order)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py check_behaviour, which passes contract explicitly"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observed, not changed: this order does not touch the Lambda entry path. The issuer decides whether the deployed run carries the contract before the republish."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S4 -- AC2 still fails after the checker fix: the unpacked step looks the contract up under a relative root
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:30:33Z",
+  "one_line": "DB160-1-AC2 still exits rc 1 after the amended checker is in the tree: the unpacked step reads the series contract from a relative path, because run() passes str(root) with root = '.' as contract_root to the --unpacked subprocess, which runs in the unpacked directory. This is a checker defect; the fix (an absolute root) is in the issuer's file, not this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1 (issuer ruling, order commit 3115d34): S2 is a defect of the issuer's checker; the unpacked step of AC2 now grades the unpacked handler against the REPO's series contract, so AC2 is expected to PASS once the checker is fixed.",
+  "world_is": "Measured at 3115d34 with the S1 stub edit in the worktree: python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py . DB160-1-AC2 gives rc 1 and 'FAIL: the unpacked handler failed the behaviour clause: UNPACKED FAIL: [Errno 2] No such file or directory: org\\\\standards\\\\IRPT_DASHBD_SERIES_CONTRACT.json' (no drive prefix, so the path is relative). The checker reads Path(contract_root or root) at line 144; the subprocess call at line 330 passes str(root), and root is Path(sys.argv[1]) = '.', which the subprocess resolves against its own cwd (the unpacked directory). The AC1 run passes at the same commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py line 144 (contract read from Path(contract_root or root)) and line 330 (subprocess call passes str(root))",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py --unpacked branch (around line 433) passes sys.argv[3] as contract_root",
+      "DB160-1-AC2 output at 3115d34 plus the S1 stub edit in the worktree: rc 1, the UNPACKED FAIL line (counts and names only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired here: the checker is the issuer's file and outside the grant. The one-line fix is an absolute root in run(), for the issuer to decide."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S5 -- the ruled stub names dates and source do not match the keywords the handler passes, so the union tests still fail
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:30:33Z",
+  "one_line": "The ruled signature lambda s3, firm, a, rows, up, c, dates=None, source=None does not accept the keywords the handler passes (present_dates and calendar_source), so the two union tests still raise TypeError: 2 failed, 113 passed on the whole reporting-publish tests folder. The stub edit is applied in the worktree and not committed; the names need the issuer's ruling.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the issuer: the stub parameter names must match the handler's keyword names, present_dates and calendar_source, or the handler's call must change by an order that names it)",
+  "spec_asserts": "AMENDMENT 1 (order commit 3115d34): change ONLY the signatures of the two stubs (lines 59 and 71) to lambda s3, firm, a, rows, up, c, dates=None, source=None, and AC3 requires the whole reporting-publish tests directory to pass.",
+  "world_is": "Measured with the ruled text applied to lines 59 and 71 of infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py: pytest over the reporting-publish tests folder gives 2 failed and 113 passed; both failures are TypeError at infra/aws/lambda/investor-reporting/reporting-publish/handler.py line 253 (got an unexpected keyword argument 'present_dates'). The handler's run() (lines 253 and 254) passes present_dates= and calendar_source= by keyword; a one-line probe of the ruled lambda raises the same TypeError.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py lines 59 and 71 (the ruled signatures, uncommitted in the worktree)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py lines 253 and 254 (the keyword call to _publish_one)",
+      "pytest over the reporting-publish tests folder at 3115d34 with the ruled text: 2 failed, 113 passed (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here: the ruled text is applied as written, and a different parameter name would be a change to the ruling. The issuer decides the names."
+}
+```
+
