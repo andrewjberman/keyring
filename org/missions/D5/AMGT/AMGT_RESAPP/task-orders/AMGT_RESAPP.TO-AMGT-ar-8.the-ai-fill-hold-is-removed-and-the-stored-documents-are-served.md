@@ -76,7 +76,7 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 
 **ISSUER NOTES:** STAGED until the seat is live and the GO goes out; both halves of the pair are signed (COO @247b2f6a4f, sha256 `d4281bce...0e05`; CTO half msg 6624) and leg 1 (the SAN FP re-store) read back at @c7c8c8b7be, so nothing stands before this leg. The GO is the broker message with this path. This is the undoing of `AMGT-ar-7` and takes the same shape reversed. ROLLBACK: re-add the entry, one targeted `safe-apply`. Round 110 (the generic described-source rule, the pack-restatement and pronoun rules, the SAN naming sentence) is NOT in this order.
 
-<status>staged</status>
+<status>complete</status>
 <round>109</round>
 <workstream>AIFILLHOLD</workstream>
 <slot>0.7.0_AE_CloudOps~RA1</slot>
