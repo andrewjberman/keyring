@@ -59,12 +59,13 @@ batches_all = sum(math.ceil(n / CHUNK) for n in sizes.values())
 art, scripts = rec["artifact"], {s["name"]: s for s in rec["scripts"]}
 sw = rec["swap_pool"]
 R33_PIN = "927337a741f40a83e7daa9e09154436a813b05dd"
-for member, repo_path in (("intake/portfolio.py", "infra/aws/lambda/investor-reporting/intake/portfolio.py"),
-                          ("intake/uploads.py", "infra/aws/lambda/investor-reporting/intake/uploads.py"),
-                          ("ops/status.py", "infra/aws/lambda/investor-reporting/ops/status.py")):
-    at_r33 = subprocess.run(["git", "show", "%s:%s" % (R33_PIN, repo_path)], capture_output=True, cwd=REPO, check=True).stdout
-    if at_r33 != open(tmp + "/x34/" + member, "rb").read():
-        raise SystemExit("REFUSE: %s in the tarball is not the blob the r33 pin released" % member)
+R35L_PIN = "90b69dcb12cdfedc786966ab33d034bf14229396"  # the irpt-status failure-code release (r35L): the Lambda's status.py is this blob
+for member, repo_path, ref in (("intake/portfolio.py", "infra/aws/lambda/investor-reporting/intake/portfolio.py", R33_PIN),
+                               ("intake/uploads.py", "infra/aws/lambda/investor-reporting/intake/uploads.py", R33_PIN),
+                               ("ops/status.py", "infra/aws/lambda/investor-reporting/ops/status.py", R35L_PIN)):
+    at_ref = subprocess.run(["git", "show", "%s:%s" % (ref, repo_path)], capture_output=True, cwd=REPO, check=True).stdout
+    if at_ref != open(tmp + "/x34/" + member, "rb").read():
+        raise SystemExit("REFUSE: %s in the tarball is not the blob the Lambda release (%s) carries" % (member, ref[:10]))
 
 
 def live(name):
@@ -116,7 +117,7 @@ committed output of the AQ2 read of the `etf-classifications` table (`dcdc6cb3d1
 | a swap | -- | one `SWAP` disclosure per row, ahead of every other disclosure; `run_doc.swaps` names the pool vintage and holds NO amount; `settings.swap` carries pool date, claim, stale flag, swapped and left-out counts |
 | a pool older than %(stale)d days at the run date | -- | the swap still runs; each disclosure says the pool is older than %(stale)d days (this pool turns stale after %(stale_date)s) |
 | a damaged, absent or altered pool file | -- | EVERY Opal job refuses (`PINNED_FILE_ABSENT` / `PINNED_FILE_DIFFERS` / a `POOL_*` code); the file is pinned by sha256 in the bindings and in the package sums |
-| the door tree (`intake/portfolio.py`, `intake/uploads.py`, `ops/status.py`) | r32 bytes | the r33 bytes the r33 pair releases to the Lambdas (the same blobs, checked against the r33 pin); the resident's static walk reaches `portfolio.py` and `uploads.py`, not `status.py` |
+| the door tree (`intake/portfolio.py`, `intake/uploads.py`, `ops/status.py`) | r32 bytes | the bytes the Lambdas carry (`portfolio.py` and `uploads.py` at the r33 pin, `status.py` at the r35L pin: the same blobs, checked by the generator); the resident's static walk reaches `portfolio.py` and `uploads.py`, not `status.py` |
 | a symbol YCharts omits and the registry does not resolve (the door, every upload) | filed TICKER_NOT_FOUND with Replace and No offered | sent to the yfinance checker in ONE batch: KEPT when yfinance returns rows with a finite positive last close (no Replace or No; priced from yfinance), NOT_KEPT stays NOT_FOUND, a failed or pushed-back check reads UNAVAILABLE `YFINANCE_CHECK_FAILED`, never absence; a missing `yfinance` library reads as a failed check |
 | a ready-signal send that fails (the commentary step is not told the analysis is ready) | a journal line only; the job stays READY | the same line, plus ONE write on that job's row: `hop_failure` = `{hop READY_SIGNAL, code READY_SIGNAL_SEND_FAILED, at}` (set-once: a second failure is a no-op) |
 | a commentary-ready message the packager refuses or fails on | refusal logged and message deleted, or the error raised and the message retried | the same, plus ONE set-once write `hop_failure` = `{hop PACKAGER, code PACKAGER_REFUSED or PACKAGER_FAILED, at}`; the packager's own error is re-raised unchanged and a failing write is swallowed and journalled |
@@ -162,7 +163,7 @@ Source: `durable_job.py` (`mark_hop_failure`, `mark_hop_failure_keyed`, `HOP_FAI
 
 ## 3. Apply protocol, in this order
 
-1. Both halves at HEAD naming this file's blob.
+1. Both halves at HEAD naming this file's blob, AND the library delivery closed: `yfinance` 1.2.0 and its Linux cp312 closure installed in the host's `pydeps` under its own pair (the first attempt of this release, the same plan, was installed and ROLLED BACK at V2 because the library was absent; CTO msgs 9066, 9070, 9075). Without the library V2 stops the install again.
 2. Before-read: `pre_read_r34.sh` (fail-closed: the running root must be `0485393f3a-r32`, exit 40; the r34 root absent; the library and wrapper unmoved; every changed member at its r32 value, every added member ABSENT; the queue 0/0).
 3. D1: upload the tar, the sums file and the host script to the keys the install script names (each key must read 404 first; record the S3 versions); `install_r34.sh` fetches the host script and the sums BY KEY and refuses unless their sha256 equal `WANT` / `WANTSUM` (exits 31 and 33, dry-run: unchanged copy rc 0, one byte changed rc 31 and 33); it then runs the host script, which stages the tar, checks %(nchecks)d members, keeps the r32 root and library, installs, polls, and ROLLS BACK ITSELF to r32 on a failed start.
 4. V1: running root `0485393f3a-r34`; every changed or added member at its built value; the package sums %(sums_lines)d of %(sums_lines)d OK; the imports (`swap_pass`, `yahoo_history_days`, `opal_producer`); the pool file's sha256 equals the binding; queue 0/0; no sign-in in the journal.
