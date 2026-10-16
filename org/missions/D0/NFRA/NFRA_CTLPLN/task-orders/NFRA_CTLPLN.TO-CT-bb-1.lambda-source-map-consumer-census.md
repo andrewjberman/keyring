@@ -1,6 +1,6 @@
 # TO NFRA_CTLPLN.TO-CT-bb-1.lambda-source-map-consumer-census -- workstream OUTCOME round 27 (cell CT-bb-1): lambda-source-map.json: the consumer census and the per-function layout proposal (stage 1 of the split), and who edited record-terraform-deploy.sh (FWD-7)
 
-<to_id>NFRA_CTLPLN.TO-CT-bb-1.lambda-source-map-consumer-census</to_id>
+<to_id>NFRA_CTLPLN.TO-CT-bb-1</to_id>
 <project>NFRA_CTLPLN</project>
 <issued_to>0.9.0_WK_NFRA_CTLPLN~140</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>

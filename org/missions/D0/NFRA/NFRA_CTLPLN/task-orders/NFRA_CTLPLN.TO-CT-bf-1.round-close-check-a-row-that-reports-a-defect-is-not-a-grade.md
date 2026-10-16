@@ -1,6 +1,6 @@
 # TO NFRA_CTLPLN.TO-CT-bf-1.round-close-check-a-row-that-reports-a-defect-is-not-a-grade -- workstream OUTCOME round 29 (cell CT-bf-1): round-close-check.py counts as a grade only a row that GRADES: a row that quotes the checker's old verdict while reporting its defect is not the grade of record (site Z follow-up to XB-20261016T121809Z-95c2)
 
-<to_id>NFRA_CTLPLN.TO-CT-bf-1.round-close-check-a-row-that-reports-a-defect-is-not-a-grade</to_id>
+<to_id>NFRA_CTLPLN.TO-CT-bf-1</to_id>
 <project>NFRA_CTLPLN</project>
 <issued_to>0.9.0_WK_NFRA_CTLPLN~144</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
