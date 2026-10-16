@@ -6,6 +6,7 @@
 
   hoplog     R55-HOPLOG   the driven refusal (TO-APPLY-t55 leg A): the commentary function's log group holds the line
                 `HOP-FAILURE-REPORTED request_id=REQ-d47252fe74634d0c5cdd8067 hop=COMMENTARY code=COMMENTARY_DRAFT_REFUSED written=true`
+  hoplog2    R55-HOPLOG2  the SECOND driven refusal (TO-APPLY-t56 leg A): the same line is now in the log twice (t55's event stays; t56 adds one)
   hopabsent  R55-HOPABSENT the synthetic job row REQ-d47252fe74634d0c5cdd8067 (tenant 49financial) carries NO hop_failure (the restored state; a control that passes at the base and after leg B)
 
 Read-only: one policy read and three configuration reads (ap1), one log filter (hoplog), one get-item (hopabsent). Prints R55-<ARM>-OK or -FAIL <reason>.
@@ -80,7 +81,7 @@ HOP_LOG_GROUP = "/aws/lambda/outlook-global-commentary-draft-lambda"
 HOP_LINE = "HOP-FAILURE-REPORTED request_id=REQ-d47252fe74634d0c5cdd8067 hop=COMMENTARY code=COMMENTARY_DRAFT_REFUSED written=true"
 
 
-def hoplog():
+def hoplog(need=1):
     rc, so, _ = aws("logs", "filter-log-events", "--log-group-name", HOP_LOG_GROUP, "--filter-pattern", '"%s"' % HOP_LINE, "--output", "json")
     if rc != 0:
         return False, "log read failed rc=%d" % rc
@@ -88,7 +89,7 @@ def hoplog():
         n = len(json.loads(so).get("events") or [])
     except ValueError:
         return False, "log read unparseable"
-    return (n >= 1), "events_with_line=%d" % n
+    return (n >= need), "events_with_line=%d need=%d" % (n, need)
 
 
 def hopabsent():
@@ -132,9 +133,9 @@ def self_test():
 if __name__ == "__main__":
     if len(sys.argv) == 2 and sys.argv[1] == "--self-test":
         sys.exit(self_test())
-    arms = {"ap1": ("AP1", main), "hoplog": ("HOPLOG", hoplog), "hopabsent": ("HOPABSENT", hopabsent)}
+    arms = {"ap1": ("AP1", main), "hoplog": ("HOPLOG", hoplog), "hoplog2": ("HOPLOG2", lambda: hoplog(2)), "hopabsent": ("HOPABSENT", hopabsent)}
     if len(sys.argv) != 2 or sys.argv[1] not in arms:
-        print("usage: r55_checks.py ap1|hoplog|hopabsent | --self-test")
+        print("usage: r55_checks.py ap1|hoplog|hoplog2|hopabsent | --self-test")
         sys.exit(2)
     name, fn = arms[sys.argv[1]]
     ok, why = fn()
