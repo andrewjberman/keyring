@@ -19869,7 +19869,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
 
 ```json
@@ -19950,5 +19949,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W416-S1 -- TO-DB-c-24: the sparse cone leaves the portal suite's contract paths unmaterialized, so the full InvestorReporting run fails 68 tests identically at base and head
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W416-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~416",
+  "surfaced_at": "2026-10-16T00:50:34Z",
+  "one_line": "The worktree wk-IRPT_DASHBD-416 is a sparse cone (portal/src/pages/InvestorReporting and org/standards). Suite files that read docs/contracts/investor-reporting and infra/aws/lambda/investor-reporting/_contracts fail with ENOENT. The full run bun test src/pages/InvestorReporting gives 68 fail and 27 errors at base e578b378 and at head 8f560680, with the same 44 unique failing names, so the cell adds no failure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal head 8f560680a0e38390aaa1634549bc8eda21f7eec9: bun test src/pages/InvestorReporting ran 1108 tests across 402 files, 68 fail, 27 errors",
+      "base run at e578b378d332ad1505018be3801466dac7aeeade (base DashboardPerformance.tsx and iv-e-125 restored, new test moved aside): 1102 tests across 401 files, 68 fail, 27 errors; the two sets of 44 unique failing names are identical",
+      "load errors read: ENOENT open 'C:\\dev\\wk-IRPT_DASHBD-416\\docs\\contracts\\investor-reporting\\v1\\routes.json' and ENOENT open 'C:\\dev\\wk-IRPT_DASHBD-416\\infra\\aws\\lambda\\investor-reporting\\_contracts\\AnalysisReport.v2.schema.json'"
+    ]
+  },
+  "spec_asserts": "TO-DB-c-24 step 6: from the portal worktree the failing-test names after bun test src/pages/InvestorReporting are a subset of the names before.",
+  "world_is": "The subset holds with equality: no name fails after that did not fail at base. The folder is not green in this sparse cone for reasons outside DB-c-24, because paths under docs/ and infra/aws/ are not materialized. The cone was not changed and nothing was widened."
 }
 ```
