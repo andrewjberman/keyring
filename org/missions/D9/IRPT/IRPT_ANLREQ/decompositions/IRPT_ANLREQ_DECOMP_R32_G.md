@@ -15,10 +15,11 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 | cell | what is produced | write set | risk |
 |---|---|---|---|
 | `AR-g-115` | the `irpt-status` zip in a stage folder outside the repo and the record `R35L_BUILD.json` | the worker's folder, the order, the channel file | WORLD (floor of an infrastructure path; nothing deployed, no AWS call) |
+| `AR-g-117` | the AQ2 apply order for the irpt-status failure-code release (code only, scoped plan 0/1/0), cut after both halves of the r35L pair were signed (CTO msg 9106) | the applier's `deliverables/irpt_anlreq_r35l/`, the ledger, the map record | WORLD (a deploy under a signed pair) |
 
 ## Edges and chains
 
-- ONE chain. Depends on `AR-g-111` and `AR-g-113` (merged). Feeds the r35 packet.
+- ONE chain. `AR-g-115` depends on `AR-g-111` and `AR-g-113` (merged) and feeds the r35L packet; `AR-g-117` (the apply) depends on the signed pair and on `AR-g-115` merged (`ac2ce8a2d7`).
 
 ## Four-postulate record
 

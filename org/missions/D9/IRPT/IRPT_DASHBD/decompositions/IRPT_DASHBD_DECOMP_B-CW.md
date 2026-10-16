@@ -349,3 +349,23 @@ The carrier ruling made the contract's WRITER the source of cell (a)'s fixture; 
 | cell id | owner |
 |---|---|
 | DB-c-25 | 0.9.0_WK_IRPT_DASHBD~417 |
+
+## 17. ROUND 148, WORKSTREAM B-CW (2026-10-16 ~06:0xZ, issuer 2.0.0_SA_COO~C2, on the CTO's msgs 9056, 9061 and 9101 and `~D2` msg 9108: series contract 0.3.1 is on trunk @eb5705f56f and the Cottonwood series are published at `irpt/cottonwood/platinum/reporting/`): the one-name page mirror, and the labelled test read of the real publish through the page
+
+**Measured before the cut:** `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` reads 0.3.1 and its `series.optional` holds six names (`income_claim` last); the manifest optional list holds `calendar_source`; `unreported_trading_days_basis` is const. The publisher does not write `income_claim` or `calendar_source` yet (`~D2`, a later cell), so the writer-made fixtures are unchanged. `iv-e-124` is red against the five-name mirror of round 147. A read-only list of the published prefix returns manifest and series objects per account (the account folder key is an account id; ids are never recorded here). No portal surface prints the series' income (round 147 measurement).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-26` | the page mirror takes on contract 0.3.1: `SERIES_OPTIONAL` equals the six names in order, `SeriesDocument` gains `income_claim?`, `ManifestDocument` gains `calendar_source?`; `iv-e-124` and the round-147 test stay green; portal edit in `seriesContract.ts` only | FWD-10, CTO msg 9056 | LOCAL (a worker branch) | none (the portal base is the round-147 worker branch `wk-IRPT_DASHBD-417-portal` @dd417a1055e5754182391e79cb941aeab07abfbe) | C-M |
+| `DB-c-27` | the labelled TEST READ of the real Cottonwood publish through the page's own reader and `performanceView`: counts only (documents, refusals, pair present, accounts with a non-empty list, accounts printing the sentence, income all-null, `income_claim` present); read-only S3 get; no value or id recorded | FWD-10 (the exercise of cell (a) on the first Cottonwood publish; CTO msg 9022 condition) | LOCAL | none (the page code is merged; the data is published) | C-T |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The mirror cell is one line of list plus two optional members; it is NOT a direct-act (a portal edit with a parity test, so a worker with the full limbs). (b) The test read is a separate chain because it needs no portal edit and a different grant (S3 read) than the mirror. The harness imports the page's `readSeries` and `performanceView` from the worker's portal tree and writes counts only; the downloaded objects live in a temporary folder outside the repository and are deleted by the worker. (c) The PROD-based candidate (row `92c0`, `cand/dell2/irpt-fwd10-unreported-days-sentence`) must carry the mirror cell too, so `iv-e-124` is green on the merged tree (CTO msg 9056); I cherry-pick the cell's commit onto the candidate and re-register the row after the drain. (d) The income sentence of CTO msg 9061 still has no page surface to bind; not cut. (e) The 49 Financial FWD-10 census is the next round's cell after the CTO's answer to this round.
+
+**fanout:** 2 of 2 chains, cap 8, reason: the mirror edit and the test read are independent chains with disjoint write surfaces. Workers `0.9.0_WK_IRPT_DASHBD~418` (DB-c-26) and `0.9.0_WK_IRPT_DASHBD~419` (DB-c-27), portal ref `dd417a1055e5754182391e79cb941aeab07abfbe`.
+
+## Cells (round 148, workstream B-CW)
+
+| cell id | owner |
+|---|---|
+| DB-c-26 | 0.9.0_WK_IRPT_DASHBD~418 |
+| DB-c-27 | 0.9.0_WK_IRPT_DASHBD~419 |

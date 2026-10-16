@@ -117,7 +117,7 @@ def entries(names, table, indent="  "):
 
 # ---------------------------------------------------------------- host script
 host = load("resident_host_install_0485393f3a-r31.sh")
-host = rep(host, "NEW=0485393f3a-r31\nOLD=0485393f3a-r29\n", "NEW=0485393f3a-r34\nOLD=0485393f3a-r32\n")
+host = rep(host, "NEW=0485393f3a-r31\nOLD=0485393f3a-r29\n", "NEW=0485393f3a-r34c\nOLD=0485393f3a-r32\n")
 host = rep(host, "WANT_TAR=22193944345ce2dd52d2b732ce0ac8d569aa2359958601686239b7e1da8e6021", "WANT_TAR=" + TAR_SHA)
 host = rep(host, '"ledger": "' + LEDGER_R31 + '"', '"ledger": "' + LEDGER_NEW + '"')
 lines = host.split("\n")
@@ -129,7 +129,7 @@ if any(not lines[i].startswith('check "') for i in range(first_check, last_check
     refuse("the member checks are not one block")
 lines = lines[:first_check] + checks_lines + lines[last_check + 1:]
 HOST_HEADER = [
-    "# Ledger %s: resident root 0485393f3a-r32 -> 0485393f3a-r34 (the r32 member set with the trunk blobs of the %d package members that the merged cells of" % (LEDGER_NEW, len(PKG_DIFF)),
+    "# Ledger %s: resident root 0485393f3a-r32 -> 0485393f3a-r34c (the r32 member set with the trunk blobs of the %d package members that the merged cells of" % (LEDGER_NEW, len(PKG_DIFF)),
     "# IRPT_ANLREQ workstream ~G (AR-g-95, AR-g-96, AR-g-98, AR-g-99, AR-g-100 and AR-g-101) change, the %d members they add, the package sums and the bindings replaced; base pin 0485393f3a)," % len(ONLY34),
     "# and the 0485393f3a-r32 root and its library stay on the host for rollback.",
     "# Copy of the r31 script with NEW, OLD, WANT_TAR, the member checks (one per differing or added member, equal to the extracted r34 tarball), the ledger and this header changed;",
@@ -137,7 +137,7 @@ HOST_HEADER = [
 ]
 head_end = next(i for i, ln in enumerate(lines) if ln.startswith("NEW="))
 host_text = "\n".join(["set -uo pipefail"] + HOST_HEADER + lines[head_end:])
-HOST_NAME = "resident_host_install_0485393f3a-r34.sh"
+HOST_NAME = "resident_host_install_0485393f3a-r34c.sh"
 host_path = write(HOST_NAME, host_text)
 HOST_SHA = sha_file(host_path)
 quoted = [ln for ln in host_text.split("\n") if ln.startswith('check "')]
@@ -146,7 +146,7 @@ if len(quoted) != len(CHECKED):
 
 # ---------------------------------------------------------------- install
 ins = load("install_r31.sh")
-ins = rep(ins, "NEW=0485393f3a-r31\nOLD=0485393f3a-r29\n", "NEW=0485393f3a-r34\nOLD=0485393f3a-r32\n")
+ins = rep(ins, "NEW=0485393f3a-r31\nOLD=0485393f3a-r29\n", "NEW=0485393f3a-r34c\nOLD=0485393f3a-r32\n")
 ins = rep_line(ins, "WANT=", ["WANT=" + HOST_SHA])
 ins = rep_line(ins, "WANTSUM=", ["WANTSUM=" + SUMS_SHA])
 ins = rep(ins, 'echo "R31 guard: running root', 'echo "R34 guard: running root')
@@ -198,7 +198,7 @@ write("install_r34.sh", ins_text)
 
 # ---------------------------------------------------------------- pre-read
 pre = load("pre_read_r31.sh")
-pre = rep(pre, "OLD=0485393f3a-r29\nNEW=0485393f3a-r31\n", "OLD=0485393f3a-r32\nNEW=0485393f3a-r34\n")
+pre = rep(pre, "OLD=0485393f3a-r29\nNEW=0485393f3a-r31\n", "OLD=0485393f3a-r32\nNEW=0485393f3a-r34c\n")
 pl = pre.split("\n")
 s = next(i for i, ln in enumerate(pl) if ln.startswith('echo "P1 members that release 31 changes'))
 e = next(i for i in range(s, len(pl)) if pl[i] == "done")
@@ -231,7 +231,7 @@ write("pre_read_r34.sh", "\n".join(PRE_HEADER + pre.split("\n")[pstart:]))
 
 # ---------------------------------------------------------------- rollback
 rb = load("rollback_r31.sh")
-rb = rep(rb, "NEW=0485393f3a-r31\nOLD=0485393f3a-r29\n", "NEW=0485393f3a-r34\nOLD=0485393f3a-r32\n")
+rb = rep(rb, "NEW=0485393f3a-r31\nOLD=0485393f3a-r29\n", "NEW=0485393f3a-r34c\nOLD=0485393f3a-r32\n")
 rl = rb.split("\n")
 s = next(i for i, ln in enumerate(rl) if ln.startswith('echo "X1 members that release 31 changes'))
 e = next(i for i in range(s, len(rl)) if rl[i] == "done")
