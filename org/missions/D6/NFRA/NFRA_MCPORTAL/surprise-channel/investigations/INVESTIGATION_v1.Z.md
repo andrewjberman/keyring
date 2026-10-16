@@ -2937,3 +2937,28 @@
   "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-5."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~37",
+  "surfaced_at": "2026-10-16T04:07:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-W37-S1",
+  "one_line": "safe-commit.sh warned that the hashed client account-id list is absent on this box, so commit ee65a69a0b was not checked for client account ids; the commit landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit ee65a69a0b on wk-NFRA_MCPORTAL-37: safe-commit output `WARN: client-data-check: hashed account-id list ABSENT at ... .opal/account_id_hashes.txt -- this commit was NOT checked for client account ids`",
+      "the captured gate output is at .scratch/r3_w37/commit1.log in worktree C:/tmp/mp-pf-37; the commit's staged set was four deliverable files (digests and counts only)"
+    ]
+  },
+  "spec_asserts": "MP-pf-7 section 1 says commit with .tools/safe-commit.sh; the worker rules say each commit passes the commit gate, and the client-data check runs over the staged set.",
+  "world_is": "The client-data check printed WARN: the hashed account-id list is absent at the default path under the user profile (absent is not empty), so the check could not run and the commit was not checked for client account ids. Until the list is placed, every commit on this box carries the same blind spot.",
+  "notes": "The order names no owner for the list; the disarm owner is the issuer of record for this order, per the surprise-channel rule. No account id was printed or committed by this order: the committed content is 12-hex digests and counts."
+}
+```
