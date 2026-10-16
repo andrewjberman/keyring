@@ -11,6 +11,17 @@ What happens is everything should be in the trino audit bucket, and it does trac
 identifying common patterns and establishing if a suspicious one appears. Silver is just formatted bronze in parquet for query, gold is
 effectively pattern baselines."* and *"its fairly cosmetic + cleaning up TCKT_MTADTA references"*.
 
+> **AMENDMENT 1 (2026-10-16 ~16:1xZ, Andrew at this terminal, verbatim):** *"Yeah we dont need to see the body of an email and stuff
+> like that, this is metadata focused/analytics focused, do not need anything further. this is just a remediation strategy so we have
+> something to prove that we have internal security"* (record
+> `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261016_1612Z_SOC2_MSLOGS_METADATA_ONLY_PROOF_OF_INTERNAL_SECURITY.md`).
+> What it changes below: content is OUT (Part II, Part III item 7); the outcome set is CAPPED at the thread plus O1-O9; the purpose is
+> a remediation strategy plus proof of internal security, so O8 and O9 are why the project exists and O1-O4 are the strategy.
+> Follow-ons, verbatim: *"yeah like get the raw audit pull, dont redact it unnecessarily"* and *"but this application/log system as I
+> understand does not ahve anything that sensitive"*. Raw bronze (F3) is now his word, not only the REC: the C-FIELDS redaction levers
+> are retired. Fact beside it (the PII read): the records carry no body or file content, but do carry IPs, addresses, some mail
+> subjects and file names; they are stored as Microsoft records them and protected by the door and the key (F1), not by redaction.
+
 ---
 
 ## PART 0 -- How the blind constraint was honoured, and where it bent
@@ -46,7 +57,8 @@ recognises it as that account's real activity. (The thread.)
 
 ### O2 -- Know the exposure: what was seen and what left
 For that window the responder gets the list of mail items and documents the account opened, downloaded or synced, and every outside
-party who received mail, a forward, a share link or a file from it -- the list remediation acts on (recall, revoke, notify).
+party who received mail, a forward, a share link or a file from it -- the list remediation acts on (recall, revoke, notify). The list
+is built from audit metadata (which item, when, by whom, to whom); nobody reads what the items say (Amendment 1).
 
 ### O3 -- Establish the duration of a compromise
 The responder can tell when the takeover began and when it stopped: the first sign-in or action that is not the person's own, and
@@ -93,6 +105,8 @@ residual-access statement.
 - **Microsoft 365 itself** -- licences, the tenant's audit setting, and Purview's own audit search (the source of truth inside the tenant).
 
 **Leaves:**
+- **Content (Amendment 1):** no email body, Teams message text or document content is read or stored, now or later. TCKT_MTADTA's
+  content outcome (FWD-10, C-CONTENT) does not carry over. Nothing is added beyond the outcomes in Part I.
 - **TCKT_VNEXT and Ticket Center:** no relationship remains. The workflow outcomes (hand-offs, recurring workflows, timing, Ticket
   Center candidates, document reads for workflows) are out, per "scrub all ticket center frameworks".
 - **TCKT_MTADTA as a name:** whether it is renamed and re-homed, or closed and superseded by a new SOC2 project that inherits its
@@ -110,8 +124,12 @@ residual-access statement.
    ordinary travel or a normal busy day are noise; flags that miss a pattern he would call suspicious are misses.
 4. **The copy is evidence.** Bronze is what Microsoft sent; anything above it can be rebuilt from it, and nothing in bronze is altered.
 5. **No workflow vocabulary.** A reader of the schema and contracts finds no Ticket Center term.
-6. **Protection grows with content.** Storing everyone's raw activity raises the stakes of a stolen login; the access statement stays
-   honest about what remains reachable.
+6. **Protection grows with coverage.** Storing everyone's raw activity metadata raises the stakes of a stolen login; the access
+   statement stays honest about what remains reachable.
+7. **Metadata, never content (Amendment 1).** Every answer is built from who did what to which item, when and from where; a reader
+   never sees what an email or document says.
+8. **It exists to prove internal security (Amendment 1).** It succeeds when Andrew can hand an auditor the evidence and walk a
+   suspected takeover to a remediation list, not when it surfaces insight about how people work.
 
 ---
 
