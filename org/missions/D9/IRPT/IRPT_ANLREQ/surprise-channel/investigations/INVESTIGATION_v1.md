@@ -22250,3 +22250,32 @@
   "world_is": "On this box the hashed account-id list is absent and OPAL_ACCOUNT_ID_HASHES is unset, so the check reports ABSENT and the commit is recorded as not checked; the commit gate passed on its other checks."
 }
 ```
+
+## IRPT_ANLREQ-D2-S149 -- FWD-1 window 2's ticket TCK-20261015-944c84f8 never received its report_ref: the filing's step 4 (record the issued request id on the ticket) did not land, and the cause is NOT read.
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-16T17:05:00Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S149",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "FWD-1 window 2's ticket TCK-20261015-944c84f8 never received its report_ref: the filing's step 4 (record the issued request id on the ticket) did not land, and the cause is NOT read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-tickets get-item TCK-20261015-944c84f8 read 2026-10-16 ~15:2xZ by the issuer: item keys answers, assignee, attachment, category, claimed_at, claimed_by, client_updates, created_at, created_by, description, events, first_response_at, linked_submission_id, priority, reopened_count, requester, routing, schema_version, source, status, tags, ticket_id, ticket_type, time_to_claim_s, title: NO report_ref key; created_by fwd1-staff-r41a@opal.invalid; source ticketcenter:i1",
+      "portal/src/pages/TicketCenter/analysisRequest.ts on origin/DEV: lines 575-600 (step 4 recordStep writes the issued request id back through recordTicketReport) and 646 (canRetryAnalysis: an I1 ticket with no report_ref offers Retry); the ticket row showed 'Retry analysis request' in sitting 1's screenshot ar_v32_page.png",
+      "infra/aws/lambda/ticket_center/lambda_function.py lines 1716-1751: report_ticket admits the assignee or the ticket's creator (not the assignee) once, on a non-completed analysis_request with an attachment and no report_ref",
+      "ycharts/generate/acceptance.py: the request was ACCEPTED at 17:00:37Z (accepted_at 1792083637), so step 3 succeeded; the ticket carries no report_recorded event (one created event only)",
+      "/aws/lambda/opal-ticket-api filter-log-events 2026-10-15T17:00:25Z to 17:02:30Z read 2026-10-16: 28 events, REPORT lines and one WE_DL_UNCONFIGURED; no per-route line, so a refused or absent POST /report cannot be told apart",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/run_fwd1_r2/driver_step_log.txt: STEP-4B 'from the Submit click the driver only reads', so the page's own 'Record:' step line was never captured"
+    ]
+  },
+  "spec_asserts": "The I1 filing sequence (analysisRequest.ts stepLines / recordStep): after the analysis post issues a request id, step 4 writes it to the ticket as report_ref before any packager runs; the CTO's msg 9637 reads it as a product fault.",
+  "world_is": "In FWD-1 window 2 the request was accepted but the ticket never got report_ref, so the Ticket Center's hop-failure read (which takes the request id from ticket.report_ref.request_id) made no status call for it. WHY step 4 did not land is NOT read: either POST /report was never sent or it was refused, and neither the service log nor the driver's record can tell which. Candidates, not measured: the creator route's conditions (the actor must equal created_by and the ticket have an attachment and no report_ref); the page's step 4 not reached after step 3; a transient failure. The instrument that would read it is the page's own step lines (a future filing under a driver that captures them) or per-route logging; neither was on."
+}
+```
