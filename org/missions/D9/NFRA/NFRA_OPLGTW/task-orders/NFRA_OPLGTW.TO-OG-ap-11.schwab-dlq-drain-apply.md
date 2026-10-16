@@ -142,7 +142,9 @@ build after it lands. Evidence: `W/AP11_GRADE.json`.
 - Pre-cut: ap11.AC1 FAIL as expected (no ledger, no record files; live read OK). ap11.AC2 FAIL as expected (grade
   absent).
 
-<status>failed</status>
+- A3 (issuer, 2026-10-16 ~16:0xZ, CTO msg 35104): the order closed `failed` in round 35 (AC2 FAIL, rolled back) and `failed` reads open to `round-close-check.py` (its terminal words are complete, superseded, cancelled, withdrawn, retired, parked). The missing `sqs:ChangeMessageVisibility` grant the drain needed is not re-asked here; the DLQ drain returns as a new pair in a later round. Marked `superseded` so the round-38 close reads it terminal. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>superseded</status>
 <round>35</round>
 <workstream>APPLY-R35</workstream>
 <slot>~AE</slot>
