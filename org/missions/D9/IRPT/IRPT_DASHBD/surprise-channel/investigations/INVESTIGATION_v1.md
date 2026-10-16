@@ -20992,3 +20992,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-S109 -- round 147 B-CW: the unreported-days sentence and the 0.3.0 page mirror built, worker 417's rows dispositioned, rows W225-S1 and S2 disarmed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S109",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T05:38:08Z",
+  "one_line": "Round 147 B-CW (DB-c-25, FWD-10 cell a): the Performance tab names the trading days the source did not report from the served list, and the page mirror takes on series contract 0.3.0; worker 417's rows S1 to S3 dispositioned and the iv-e-124 hazard of rows W225-S1 and W225-S2 disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.15 and v0.16, FWD-10 (a): the unreported-days sentence for any window that holds one, read from the series, never computed in the portal; CTO msg 9056: the portal series mirror at contract 0.3.0 with iv-e-124 green on the merged tree.",
+  "world_is": "Merge 82263efa13 (worker 417): AC1 to AC3 PASS re-run by the issuer on the worker tree; typecheck rc 0 re-run; portal diff 6 files all in grant; iv-e-124 passes against the trunk contract (0.3.0) and the five-name SERIES_OPTIONAL. W417-S1 (2 lint errors in TicketCenter tests outside the grant) and S2 (no full-folder base) are INERT and accepted. W417-S3 (proof instance path 260 characters in the worker tree) is RESOLVED: the same instance reads at 233 characters from the main checkout and proof-of-spec-check returns VALID rc=0 there; the cause was the worker worktree root being 6 characters longer. W225-S1 and W225-S2 (iv-e-124 red against the five-name contract) are DISARMED by this merge: the page now lists the five names. Contract 0.3.1 (income_claim, ~D2 msg 9076) is not yet on trunk; when it lands the page mirror needs one more optional name and the fixtures regenerate, which is round 148's cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~417/BUILD_R147.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r147/p147_bcw.py (AC1, AC2, AC3 PASS, issuer re-run); portal commits c70cc766, e371c40c, 33525f2d, dd417a10 on wk-IRPT_DASHBD-417-portal",
+      "python .tools/proof-of-spec-check.py <instance> DBC147-1-AC1,DBC147-1-AC2,DBC147-1-AC3 from the main checkout: VALID (rc=0); python .tools/round-close-check.py --project IRPT_DASHBD --round 147 --workstream B-CW: MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: review of the DB-c-25 portal change for a PROD-based candidate (cherry-pick of c70cc766, e371c40c, 33525f2d, dd417a10; the sentence uses dateWords, present on PROD)."
+}
+```
+
