@@ -1,15 +1,18 @@
 # Andrew-direct, 2026-10-16 ~15:5xZ (11:5x AM ET), the `2.0.0_SA_COO~S1` terminal on dell1 -- the Microsoft 365 audit logs, reframed
 
-Three messages, in this order. VERBATIM:
+Five messages, in this order. VERBATIM:
 
 1. "Yeah here is how i want to play this. we actually reframe this whole thing about audit monitoring for suspicious behavior. the premise is if any opal user is hacked, we want to be able to know the exposure; what was seen, what the duration period was, its really about disaster recovery/remediation. I want this all under a new macro called SOC2_MSLOGS. We should scrub all ticket center frameworks from this schema. What happens is everything should be in the trino audit bucket, and it does track activity, but the premise is not for workflows, its for identifying common patterns and establishing if a suspicious one appears. Silver is just formatted bronze in parquet for query, gold is effectively pattern baselines."
 2. "Relay this over to CRO on this box"
 3. "HAve them handle how to restructure this accordingly, its fairly cosmetic + cleaning up TCKT_MTADTA references"
+4. "then CRO can handle the brief for this, and have it sent to CTO on this box and handled on this bxo"
+5. "basically theyll bring it back to you once that plan is locked in and you will be the one driving it"
 
 ## What the issuer did (record, not adjudication)
 
-- Recorded this file (message 3 added ~16:0xZ); relayed it to `4.0.0_SA_CRO~DELL1` (the CRO on this box, live) and named the record to `1.0.0_SA_CTO~DELL1` in one line, as org/XXX.md requires.
+- Recorded this file (messages 3 to 5 added ~16:0xZ); relayed it to `4.0.0_SA_CRO~DELL1` (the CRO on this box, live) and named the record to `1.0.0_SA_CTO~DELL1` in one line, as org/XXX.md requires.
 - Changed NOTHING in the project: no order cut, no stage flipped, no resource touched. Scope is not the issuer's to take (surface, do not adjudicate).
+- ROUTING (messages 4 and 5): the CRO on this box writes the brief and sends it to the CTO on this box (dell1), who handles it on this box; both bring the locked plan back to `2.0.0_SA_COO~S1`, who drives it. Until then the issuer cuts nothing for it.
 - Held: no round-3 cut for TCKT_MTADTA until the CTO and CRO have this. "Them" is read as the CRO and the CTO (the brief and the endpoint, placement and macro); the issuer builds nothing on this until they say what the restructure is.
 - Andrew calls the restructure "fairly cosmetic + cleaning up TCKT_MTADTA references". The four differences below are facts about the built system that the CRO and CTO decide whether his word covers; the issuer does not rule on that.
 
