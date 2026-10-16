@@ -107,3 +107,57 @@ entitlement rather than mine, so it is a different question and not a gap in thi
   new ask: the serving path works, so the denial costs this seat far less than the records implied.
 - Unchanged: 3 Teams items on Andrew's word plus Alyssa's detail; TTL fix his; Z6 R5 draining under
   COO~ZB; `bg-concierge-gate.sh` unwired with CTO~Z.
+
+---
+
+## ⛔ PAUSE 2026-10-14T02:10:39Z -- THE "unclosed denominator" ABOVE IS NOW SUSPENDED, NOT PENDING
+
+`0.0.0_AB_MSTR~Z` msg 33914, broadcast on `1.0.0_SA_CTO~Z`'s ask (msg 33908), acked: **no `ycharts_*`
+gateway tool calls and no YCharts walks until dell1's 02:24Z probe reads 200.** The shared YCharts
+session tripped the WAF at ~02:09Z (gateway freshness 200 -> 202) after 39 "Human Verification" 405s
+from a dell1 research walk. If the probe still reads 202, recovery needs a PERSON in a headed browser
+-- an agent never solves that challenge -- and the credential write is NFRA_OPLGTW's.
+
+**This directly intersects this log's own Gap paragraph**, which named *"the five remaining `ycharts_*`
+tools"* as a denominator I had not closed. **That item is hereby SUSPENDED, not pending.** Closing it
+would mean five `ycharts_*` calls, which is precisely what the pause forbids -- and a successor reading
+"gap: not closed" as an invitation would walk into it. The gap re-opens only when the probe reads 200.
+
+**My own `ycharts_freshness` call is NOT a contributor, and I am recording why before anyone has to
+ask.** It ran at ~00:2xZ, **about 1h45m before the 02:09Z trip**, and it returned
+`guard_denied: true, code: identity_scope_denied` -- the gateway refused it at the identity-scope layer,
+so **no outbound YCharts request was made at all.** Two independent reasons, either sufficient: wrong
+time, and no egress. A seat-level `ycharts_*` call does appear in this window's logs under my identity;
+this paragraph is the answer to that, held in the record rather than sent as an FYI.
+
+**Nothing else of mine touches YCharts.** The serving path exercised above is `opal-data-portal-v2` via
+`portal_lookup.py`, and the allowlist's own activation note says *"ycharts NOT covered: staged/held
+pending Andrew's word"* -- so this seat has never had a live YCharts entitlement to lose.
+
+## PAUSE LIFTED 02:26:35Z -- and the suspended item is CLOSED AS NOT WORTH MEASURING, not resumed
+
+`0.0.0_AB_MSTR~Z` msg 33927, acked: the 02:23Z probe reads **200**, the session **self-recovered** --
+no person, no act, no token write, and IRPT's separate session bundle was never touched. The pause is
+lifted for site Z seats. (The dell1 walk stays STOPPED pending a pacing rule that halts on 405 and
+202, row MDPF_DEMQUE-D1-S16 -- not mine.)
+
+**My suspension said the gap re-opens when the probe reads 200. It reads 200. I am still not closing
+it, and the reason is the speed governor rather than the pause.** CLAUDE.md section 2: *"when the next
+check would not change what you do, STOP."* Five more `ycharts_*` calls would not change one act of
+mine:
+
+- **ycharts is not an entitlement this seat serves from.** `BUCKET_ALLOWLIST.yaml`'s own activation
+  note: *"ycharts NOT covered: staged/held pending Andrew's word."* There is no query class I would
+  route to it, so its reachability informs nothing I do.
+- **The rule is already measured as uniform.** 8 tools across 3 distinct `integration` values
+  (`opal_discover`, `portal_index`, `ycharts`) returned one identical reason and code. A 9th through
+  13th `ycharts` call confirms a rule, it does not test one.
+- **And the asymmetry runs the wrong way.** My non-contribution argument rests on the guard denying
+  the call before egress -- which I measured ONCE, at 00:2xZ. If the allowlist were widened in the
+  interim, the call WOULD egress, and it would egress at a shared session that recovered four minutes
+  ago. **Low information against a non-zero chance of re-tripping a just-healed shared dependency.**
+
+**So the denominator stays open with a stated reason, which is not the same as open by neglect.** The
+honest figure remains: **8 of 8 exercised and denied, at least 8 total, denominator deliberately not
+closed.** If ycharts is ever activated for this seat, closing it becomes worth the calls and the item
+re-opens on that change, not on a probe reading 200.
