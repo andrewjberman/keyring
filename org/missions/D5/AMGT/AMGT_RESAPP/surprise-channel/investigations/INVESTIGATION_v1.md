@@ -28085,3 +28085,99 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "A reader sees a team figure with no source on PBR US 2025 and with one on 2026E and 2027E. Whether every team-filled Key Figures P/E cell should carry the mark (keyed on the cell being team-filled, not on a served withhold) is a reading of the ruling for the CTO and the CVO's re-grade at the bn-4 walk; no change is proposed here."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W475-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~475",
+  "surfaced_at": "2026-10-15T23:52:36Z",
+  "one_line": "The filings --plan-only stdout puts the token WOULD-RUN on its closing PLAN-ONLY summary line as well as on each per-name line, so a count of every line containing WOULD-RUN reads one more than the names; the trigger counts only the per-name lines, by their WOULD-RUN: prefix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/batch.py@b40682fb87 lines 603-604 print one 'WOULD-RUN: <key> accession ...' line per name; lines 607-609 print 'PLAN-ONLY: ... %d SKIP-UNCHANGED, %d WOULD-RUN, %d UNRESOLVED-SOURCE.'",
+      "lib/research/llm_batch/tests/test_inputs.py test_t5_would_run_counts_only_per_name_lines_not_the_summary_token: two per-name lines plus one summary line count 2; pytest reads 19 passed, exit 0"
+    ]
+  },
+  "spec_asserts": "Order section 1, change item 3: inputs.would_run(runner) returns the count of lines containing WOULD-RUN.",
+  "world_is": "The batch's --plan-only stdout always ends with a PLAN-ONLY summary line that contains the token WOULD-RUN. A literal line-contains count therefore reads the per-name count plus one, and reads 1 when there are no names to run. The implementation counts lines whose stripped text starts with WOULD-RUN: instead.",
+  "notes": "Worker-side resolution only, in lib/research/llm_batch/inputs.py. The filings module is not edited. The reading of the trigger rests with 2.0.0_SA_COO~R1."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W475-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~475",
+  "surfaced_at": "2026-10-15T23:52:36Z",
+  "one_line": "The order names the management batch's input as the filing ANALYSIS objects under filings/v1/; the management batch reads the objects under that prefix as <digits>.source.json, so the prefix is right but the object kind the order names is not the one read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/management/batch.py@b40682fb87 lines 28-31: the census lists filings/v1/<key>/ and classes the objects by <digits>.source.json (an accession) versus UNRESOLVED-SOURCE.source.json",
+      "lib/research/filings/batch.py@b40682fb87 plan_only_check docstring (lines 450-463) and main() help (lines 503-506): the filings analysis object is filings/v1/<key>/<accession>.analysis.json"
+    ]
+  },
+  "spec_asserts": "Order section 1, change item 1, management input: 'the filing analysis objects it reads (filings/v1/)'.",
+  "world_is": "The prefix filings/v1/ (roster.FILINGS_PREFIX, roster.py:99) is correct. The objects the management batch reads under it are the .source.json objects, and the filings analysis objects are .analysis.json. The newest-input rule over the prefix therefore fires on either kind of object, not on the analysis objects alone.",
+  "notes": "No edit: the prefix is the cited constant. For the CTO to rule: whether the 'new roster' trigger should key on the .source.json objects alone."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W475-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~475",
+  "surfaced_at": "2026-10-15T23:52:36Z",
+  "one_line": "Drafting and posture are not covered by the llm_batch table: drafting's run_drafting takes two required directories with no whole-population entry, and posture's judge takes one --security-key per run, so neither can be registered as a task today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/drafting/run_drafting.py@b40682fb87 lines 47-49: --coverage-items-dir (required) and --out-dir (required); no population argument",
+      "lib/research/posture/judge.py@b40682fb87 lines 643-647: --security-key (required, one name) with --as-of, --dry-run or --write-pool"
+    ]
+  },
+  "spec_asserts": "Order section 1, NOT COVERED by this cell: drafting has no whole-population entry and posture takes ONE --security-key; file ONE observation row saying so.",
+  "world_is": "The two modules take the arguments above as read at the base. The llm_batch TASKS table holds filings, management and scores only, as the CTO ruled. Neither drafting nor posture is registered.",
+  "notes": "No edit. Owner of the decision on the two modules' whole-population entries: 2.0.0_SA_COO~R1."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W475-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~475",
+  "surfaced_at": "2026-10-15T23:52:36Z",
+  "one_line": "This worktree is a sparse checkout: org/surprise_channel/ (which holds the surprise schemas the worker rules name) is in HEAD but absent from the working tree, so the row schema cannot be read here; the order's own <paths> are present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-resapp-475 config core.sparseCheckout reads true; ls org/surprise_channel reads 'No such file or directory'",
+      "git -C C:/dev/wk-resapp-475 ls-tree -r --name-only HEAD org/surprise_channel lists 43 files, including org/surprise_channel/schemas/investigation_item.schema.json"
+    ]
+  },
+  "spec_asserts": "Worker rules: a surprise row is appended per org/surprise_channel/schemas/investigation_item.schema.json; the first act checks the worktree carries the paths the order names.",
+  "world_is": "The schema folder is not materialised in this worktree, so the row was written in the form of the rows already in the channel file, and was not checked against the schema. The order's <paths> (lib/research/llm_batch/, the deliverables folder and the investigation file) are present or creatable.",
+  "notes": "Not reconstructed or extracted: the schema was not copied from the base checkout and the sparse configuration was not changed. Owner of the worktree materialisation: 2.0.0_SA_COO~R1."
+}
+```
