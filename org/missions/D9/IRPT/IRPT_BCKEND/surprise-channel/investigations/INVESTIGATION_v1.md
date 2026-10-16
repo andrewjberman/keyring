@@ -40775,3 +40775,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W445-S1 -- The commit gate printed that the client-account-id check did not run on commit 2103035fb8 (IB-pr-609); this worker grepped its own added lines and found no long digit run and no non-ASCII byte.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W445-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~445",
+  "surfaced_at": "2026-10-16T00:07:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed WARN client-data-check: the hashed account-id list is absent at the default user path, so commit 2103035fb8 was not checked for client account ids; the same warning recurs on this device across workers.",
+  "spec_asserts": "The commit gate checks each commit for client account ids (safe-commit client-data-check); the order's Client data rule says no real account id in any tracked file and tests use synthetic ids.",
+  "world_is": "The list is absent on this device, so the check printed WARN and did not grade commit 2103035fb8. This worker's added lines in holdings_snapshot.py and the new test file hold no long digit run and no non-ASCII byte (git diff 40850a4f7d HEAD, grep); the test ids are synthetic (1001 to 1003 and the ten-digit custody ids used at base).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 2103035fb8 in worktree C:/dev/wk-IRPT_BCKEND-445: WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git diff 40850a4f7d HEAD -- data/assets/scripts/gold/investor_reporting: the added lines of the two files carry 0 long digit runs"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W445-S2 -- The order names the unsuffixed channel file as the carrier; the one-writer gate reads that file as the laptop's and asks a dell2 write to go to a per-box file.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W445-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~445",
+  "surfaced_at": "2026-10-16T00:07:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed one-writer WARN: INVESTIGATION_v1.md is the laptop's unsuffixed file, written from dell2; the gate names a per-box file INVESTIGATION_v1.dell2.md (WARN until C-QUEUE); the commit passed with 0 blocked.",
+  "spec_asserts": "The order's channel rule names org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the one file each row is appended to, and the worker face names no per-box file.",
+  "world_is": "The one-writer gate grades the same path as the laptop's unsuffixed file and says a box write belongs in <stem>.<box>.<ext>; on box dell2 that is INVESTIGATION_v1.dell2.md. The gate reported OK: 1 append-only path graded on box dell2, 0 blocked, for commit 4a3149d202, so the row landed in the named file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 4a3149d202 in worktree C:/dev/wk-IRPT_BCKEND-445: [one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-609.smartx-evidence-absent.md worker face, Channel rows: append each row as its own block at the END of INVESTIGATION_v1.md"
+    ]
+  }
+}
+```
