@@ -10,6 +10,14 @@ fetch is refused before any request or fails midway.
   fetch --batch B --name N --version V --python-tag T --abi-tag T --platform-tag T
         [--index-base URL] [--approved-by PATH]
   list  --batch B
+  resolve --closure <closure json> --target cp312-linux_x86_64 --approved-by PATH [--index-base URL]
+        [--host-pydeps <json>] [--out <json>]
+        Names ONE exact wheel file per closure member that the host does not already satisfy, from the index's
+        release document (one GET per member: <base>/pypi/<name>/<version>/json). It downloads nothing and never
+        picks a source archive; a member with no fitting wheel is NO-WHEEL with its reason. Before ANY socket the
+        approval file must contain the exact name==version of every member to resolve. Prints the STOP lines of the
+        index-side re-check (NEW-MEMBER, SPECIFIER-MISMATCH, HOST-CONFLICT) and the last line
+        INTAKE-RESOLVE target=... members=... chosen=... no_wheel=... requests=... ok=... (see RESOLVE below).
 
 The default index base is the public index. Against it the tool refuses to run unless
 --approved-by names an existing file whose text contains the exact `name==version`; that
@@ -472,6 +480,407 @@ class Fetch:
         return self.rec
 
 
+# ---------------------------------------------------------------- resolve (round 27, CT-as-1)
+# Names ONE exact wheel file per closure member from the index's release document. Downloads nothing,
+# installs nothing, never picks a source archive. Its request machinery is Fetch's (Policy, get_json,
+# redirect and size limits): class Resolve inherits Fetch.get / get_json / _one_request unchanged.
+
+RESOLVE_SCHEMA = "intake-resolve/1"
+CLOSURE_SCHEMA = "intake-closure/1"
+HOST_SCHEMA = "intake-host-pydeps/1"
+RESOLVE_TARGET = "cp312-linux_x86_64"
+RESOLVE_FULL_VERSION = "3.12.14"  # the requester's CPython (intake_closure.LINUX_FULL_VERSION)
+KW_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "kit_python_wheels.py"))
+_MANY_RE = re.compile(r"^manylinux_(\d+)_(\d+)_[A-Za-z0-9_]+$")
+_LEGACY_GLIBC = (("manylinux2014", (2, 17)), ("manylinux2010", (2, 12)), ("manylinux1", (2, 5)))
+
+
+def ascii_text(value):
+    return str(value).encode("ascii", "replace").decode("ascii")
+
+
+def load_kw():
+    """org/devices/kit_python_wheels.py (tags, markers, specifiers), loaded by path as intake_closure.py does."""
+    mod = sys.modules.get("kit_python_wheels")
+    if mod is None:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("kit_python_wheels", KW_PATH)
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules["kit_python_wheels"] = mod
+        spec.loader.exec_module(mod)
+    if not mod.HAVE_PACKAGING:
+        raise Refuse("the packaging library is not installed here")
+    return mod
+
+
+def glibc_of(platform):
+    """(major, minor) of a manylinux platform tag, legacy aliases included; None for any other tag."""
+    m = _MANY_RE.match(platform)
+    if m:
+        return (int(m.group(1)), int(m.group(2)))
+    for label, level in _LEGACY_GLIBC:
+        if platform == label or platform.startswith(label + "_"):
+            return level
+    return None
+
+
+def wheel_tag_of(file_name):
+    """(distribution name, compressed tag string) of a wheel file name; None for anything that is not a wheel."""
+    if not file_name.endswith(".whl"):
+        return None
+    parts = file_name[:-4].split("-")
+    if len(parts) < 5:
+        return None
+    return parts[0], "-".join(parts[-3:])
+
+
+def expand_tags(kw, tag):
+    return ["%s-%s-%s" % (t.interpreter, t.abi, t.platform) for t in kw.ptags.parse_tag(tag)]
+
+
+def usable_digest(entry):
+    digests = entry.get("digests") if isinstance(entry.get("digests"), dict) else {}
+    sha, size = digests.get("sha256"), entry.get("size")
+    if not (isinstance(sha, str) and _SHA_RE.match(sha)) or not isinstance(size, int) or isinstance(size, bool):
+        return None
+    return sha, size
+
+
+def choose_file(kw, entries, name, supported, py_full):
+    """ONE file for a member, from the release document's urls. Pure: no request. Rule order: (1) a pure
+    py3-none-any wheel; (2) a cp312-cp312 or cp312-abi3 manylinux wheel; (3) any other fitting wheel. Within a
+    rule the highest glibc level (<= 2.34 for this target) wins, then the lexicographically smallest file name.
+    A yanked wheel, or one whose requires_python the target does not meet, is never chosen."""
+    fitting, other, sdists = [], [], []
+    for e in entries:
+        fn = e.get("filename")
+        if not isinstance(fn, str):
+            continue
+        wt = wheel_tag_of(fn)
+        if wt is None:
+            sdists.append(fn)
+            continue
+        dist, tag = wt
+        if norm_dist(dist) != norm_dist(name):
+            continue  # a file of another distribution in this release document is not this member's
+        fits = kw.tag_fits(tag, supported)
+        if not fits:
+            other.append((fn, expand_tags(kw, tag)))
+            continue
+        rp = e.get("requires_python")
+        py_ok = (not rp) or kw.satisfies(rp, py_full) is True
+        pure = any(p == "any" and a == "none" for (_i, a, p) in fits)
+        cp = any(i == "cp312" and a in ("cp312", "abi3") and glibc_of(p) is not None for (i, a, p) in fits)
+        levels = [glibc_of(p) for (_i, _a, p) in fits if glibc_of(p) is not None]
+        level = max(levels) if levels else (0, 0)
+        group = 0 if pure else (1 if cp else 2)
+        fitting.append({"fn": fn, "entry": e, "tags": expand_tags(kw, tag), "py_ok": py_ok,
+                        "yanked": bool(e.get("yanked")), "group": group, "level": level,
+                        "key": (group, -level[0], -level[1], fn)})
+    eligible = sorted([f for f in fitting if not f["yanked"] and f["py_ok"]], key=lambda f: f["key"])
+    out = {"file_name": None, "sha256": None, "size": None, "upload_time": None, "requires_python": None,
+           "tags": [], "other_fitting_files": [], "reason": None, "detail": None}
+    if eligible and usable_digest(eligible[0]["entry"]) is None:
+        out.update({"outcome": "NO-WHEEL", "reason": "NO-DIGEST",
+                    "detail": "the index publishes no usable sha256 and size for %s" % eligible[0]["fn"]})
+        return out
+    if eligible:
+        ch = eligible[0]
+        e = ch["entry"]
+        sha, size = usable_digest(e)
+        rule = {0: "rule 1: pure py3-none-any", 1: "rule 2: cp312 manylinux glibc %d.%d" % ch["level"],
+                2: "rule 3: other fitting tag, glibc %d.%d" % ch["level"]}[ch["group"]]
+        out.update({"outcome": "CHOSEN", "reason": rule, "file_name": ch["fn"], "sha256": sha, "size": size,
+                    "upload_time": e.get("upload_time_iso_8601"), "requires_python": e.get("requires_python"),
+                    "tags": ch["tags"], "other_fitting_files": [f["fn"] for f in eligible[1:]]})
+        return out
+    out["outcome"] = "NO-WHEEL"
+    if fitting:
+        if all(f["yanked"] for f in fitting):
+            out.update({"reason": "YANKED", "detail": "every fitting wheel is yanked: %s" % ", ".join(
+                sorted(f["fn"] for f in fitting))})
+        else:
+            out.update({"reason": "REQUIRES-PYTHON-UNMET", "detail": "fitting wheels whose requires_python the target "
+                        "does not meet: %s" % ", ".join(sorted(f["fn"] for f in fitting if not f["py_ok"]))})
+        out["tags"] = sorted({t for f in fitting for t in f["tags"]})
+    elif other:
+        out.update({"reason": "OTHER-PLATFORM-ONLY", "detail": "wheels exist and none fits %s: %s" % (
+            RESOLVE_TARGET, ", ".join(sorted(fn for fn, _t in other)))})
+        out["tags"] = sorted({t for _fn, ts in other for t in ts})
+    elif sdists:
+        out.update({"reason": "SDIST-ONLY", "detail": "only a source archive is published: %s" % ", ".join(sorted(sdists))})
+    else:
+        out.update({"reason": "NO-FILES", "detail": "the release document lists no files"})
+    return out
+
+
+def marker_applies(kw, req, env):
+    """A requires_dist line is followed when its marker is true for the target with NO extra. Lines whose marker
+    names an extra are not followed (as intake_closure does). -> (applies bool, note or None)."""
+    if req.marker is None:
+        return True, None
+    if "extra" in str(req.marker):
+        return False, "extra-only"
+    try:
+        return bool(req.marker.evaluate(dict(env))), None
+    except (kw.UndefinedComparison, kw.UndefinedEnvironmentName, kw.InvalidMarker, TypeError, ValueError):
+        return False, "unreadable-marker"
+
+
+def approval_gate(path, lines):
+    """Before ANY socket: the approval file must exist and contain the exact name==version of every line."""
+    if not path or not os.path.isfile(path):
+        raise Refuse("approval file does not exist: %s" % ascii_text(os.path.basename(path or "-")))
+    with open(path, "rb") as fh:
+        raw = fh.read()
+    text = raw.decode("utf-8", "replace")
+    missing = [ln for ln in lines if not re.search(r"(?<![A-Za-z0-9._-])%s(?![A-Za-z0-9._+!])" % re.escape(ln), text)]
+    if missing:
+        raise Refuse("approval file %s lacks %d of %d exact line(s): %s" % (
+            ascii_text(os.path.basename(path)), len(missing), len(lines), ", ".join(missing)))
+    return {"file": os.path.basename(path), "sha256": hashlib.sha256(raw).hexdigest(), "lines_matched": len(lines)}
+
+
+class Resolve(Fetch):
+    """Release documents only. Inherits Fetch.get, get_json and _one_request (the same Policy and limits); no file
+    is ever requested by this class."""
+
+    def __init__(self, base):
+        self.a = None
+        self.base = base.rstrip("/")
+        self.policy = Policy(self.base)
+        self.file_name = None
+        self.index_file_name = None
+        self.part = None
+        self.sha_seen = None
+        self.size_seen = None
+        self.rec = {"requests": []}
+
+    def release_doc(self, name, version):
+        q = urllib.parse.quote
+        return self.get_json("%s/pypi/%s/%s/json" % (self.base, q(name), q(version)))
+
+
+def read_host(path, kw):
+    with open(path, "rb") as fh:
+        raw = fh.read()
+    hd = json.loads(raw.decode("utf-8"))
+    if hd.get("schema") != HOST_SCHEMA:
+        raise Refuse("--host-pydeps must carry schema %s" % HOST_SCHEMA)
+    dists = {kw.canonicalize_name(k): v for k, v in (hd.get("dists") or {}).items()}
+    return {"file": os.path.basename(path), "sha256": hashlib.sha256(raw).hexdigest(), "dists": dists}
+
+
+def recheck(kw, rows, docs, members, host, env):
+    """The index-side re-check (the CTO's ask, msg 109620). Reads ONLY the CHOSEN releases' requires_dist. Every
+    line it prints is a STOP or an OK for the CTO to read; nothing here chooses or edits a member."""
+    canon = kw.canonicalize_name
+    closure_norms = {canon(m["name"]) for m in members}
+    nowheel = {r["norm"] for r in rows if r["outcome"] != "CHOSEN"}
+    chosen = {r["norm"]: r for r in rows if r["outcome"] == "CHOSEN"}
+    lines = {"NEW-MEMBER": [], "SPECIFIER-MISMATCH": [], "HOST-CONFLICT": [], "HOST-OK": [], "NO-METADATA": []}
+    host_specs = {}
+    unreadable = []
+    for norm in sorted(chosen):
+        row = chosen[norm]
+        rd = (docs[norm].get("info") or {}).get("requires_dist")
+        if not isinstance(rd, list):
+            lines["NO-METADATA"].append("NO-METADATA %s==%s requires_dist absent from the release document"
+                                        % (row["name"], row["version"]))
+            continue
+        for text in rd:
+            try:
+                req = kw.Requirement(text)
+            except (kw.InvalidRequirement, ValueError):
+                unreadable.append("%s: %s" % (row["name"], ascii_text(text)))
+                continue
+            applies, _note = marker_applies(kw, req, env)
+            if not applies:
+                continue
+            rn, spec = canon(req.name), str(req.specifier)
+            if rn not in closure_norms:
+                lines["NEW-MEMBER"].append("NEW-MEMBER %s required by %s %s" % (req.name, row["name"], spec or "any"))
+            elif rn in nowheel:
+                continue
+            elif rn in chosen:
+                cv = chosen[rn]["version"]
+                ok = kw.satisfies(spec, cv)
+                if ok is False:
+                    lines["SPECIFIER-MISMATCH"].append("SPECIFIER-MISMATCH %s %s unmet by %s %s"
+                                                       % (req.name, cv, row["name"], spec or "any"))
+                elif ok is None:
+                    unreadable.append("%s: specifier %r" % (row["name"], spec))
+            else:
+                host_specs.setdefault(rn, []).append((row["name"], spec))
+    host_conflicts = None
+    if host is not None:
+        host_conflicts = 0
+        for m in sorted(members, key=lambda x: x["name"]):
+            if m.get("host_class") != "HOST-SATISFIED":
+                continue
+            rn = canon(m["name"])
+            hv = host["dists"].get(rn)
+            specs = host_specs.get(rn, [])
+            if hv is None:
+                lines["HOST-CONFLICT"].append("HOST-CONFLICT %s host absent, but the closure marks it HOST-SATISFIED "
+                                              "STOP" % m["name"])
+                continue
+            unmet = [(p, s) for (p, s) in specs if kw.satisfies(s, hv) is not True]
+            for p, s in unmet:
+                lines["HOST-CONFLICT"].append("HOST-CONFLICT %s host %s unmet by %s %s STOP" % (m["name"], hv, p, s or "any"))
+            if not unmet:
+                met = "; ".join("%s %s" % (p, s or "any") for p, s in specs) or "none-from-chosen-parents"
+                lines["HOST-OK"].append("HOST-OK %s host %s meets %s" % (m["name"], hv, met))
+        host_conflicts = len(lines["HOST-CONFLICT"])
+    return {"lines": lines, "unreadable": unreadable, "host_conflicts": host_conflicts}
+
+
+def run_resolve(a, state):
+    """The verb's sequence. state["res"] carries the Resolve object so a request count survives a failure."""
+    if a.target != RESOLVE_TARGET:
+        raise Refuse("resolve measures %s only; got %s" % (RESOLVE_TARGET, a.target))
+    try:
+        with open(a.closure, "rb") as fh:
+            data = json.loads(fh.read().decode("utf-8"))
+    except (OSError, ValueError) as e:
+        raise Refuse("closure file unreadable: %s" % ascii_text(e))
+    if data.get("schema") != CLOSURE_SCHEMA:
+        raise Refuse("closure file must carry schema %s" % CLOSURE_SCHEMA)
+    label = (data.get("target") or {}).get("label")
+    if label != a.target:
+        raise Refuse("closure targets %s, not %s" % (label, a.target))
+    members = data.get("members") or []
+    todo = sorted([m for m in members if m.get("host_class") != "HOST-SATISFIED"], key=lambda m: m["name"])
+    base = (a.index_base or PUBLIC_BASE).rstrip("/")
+    policy = Policy(base)
+    if not policy.loopback:
+        parsed = urllib.parse.urlparse(base)
+        if parsed.scheme != "https" or parsed.hostname != "pypi.org" or _port(parsed) != 443:
+            raise Refuse("index base %s is not the public index" % base)
+    approval = approval_gate(a.approved_by, ["%s==%s" % (m["name"], m["version"]) for m in todo])
+    kw = load_kw()
+    target = kw.parse_target("cp312", "linux_x86_64")
+    target["env"]["python_full_version"] = RESOLVE_FULL_VERSION
+    target["env"]["implementation_version"] = RESOLVE_FULL_VERSION
+    supported = kw.supported_tags(target)
+    host = read_host(a.host_pydeps, kw) if a.host_pydeps else None
+    res = Resolve(base)
+    state["res"] = res
+    rows, docs = [], {}
+    for m in todo:
+        norm = kw.canonicalize_name(m["name"])
+        status, doc = res.release_doc(m["name"], m["version"])
+        row = {"name": m["name"], "norm": norm, "version": m["version"], "closure_class": m.get("class"),
+               "closure_host_class": m.get("host_class"), "release_status": status}
+        if status == 404:
+            row.update({"outcome": "NO-WHEEL", "reason": "NO-RELEASE", "file_name": None, "sha256": None, "size": None,
+                        "upload_time": None, "requires_python": None, "tags": [], "other_fitting_files": [],
+                        "detail": "no such release on the index (HTTP 404)"})
+        else:
+            if status != 200 or not isinstance(doc.get("urls"), list):
+                raise Fail("release document answered HTTP %s for %s" % (status, m["name"]))
+            docs[norm] = doc
+            row.update(choose_file(kw, doc["urls"], m["name"], supported, RESOLVE_FULL_VERSION))
+        rows.append(row)
+    rows.sort(key=lambda r: (r["name"].lower(), r["name"], r["version"]))
+    rc = recheck(kw, rows, docs, members, host, target["env"])
+    return {"approval": approval, "rows": rows, "recheck": rc, "host": None if host is None else
+            {"file": host["file"], "sha256": host["sha256"]}, "base": base, "members": todo,
+            "closure_members": len(members), "closure_file": os.path.basename(a.closure), "target": a.target}
+
+
+def resolve_doc(run, requests, last):
+    return {"schema": RESOLVE_SCHEMA, "target": run["target"], "closure_file": run["closure_file"],
+            "closure_members": run["closure_members"], "index_base": run["base"],
+            "approved_by": run["approval"], "host_pydeps": run["host"],
+            "claim": "measured: one release document per member, read from the index named above; no file was "
+                     "downloaded, nothing installed; the re-check reads the CHOSEN releases only",
+            "members": len(run["members"]),
+            "rows": run["rows"], "recheck": run["recheck"]["lines"], "unreadable_requires_dist": run["recheck"]["unreadable"],
+            "requests": [{"url": r["url"], "status": r.get("status"), "bytes": r.get("bytes", 0)} for r in requests],
+            "last_line": last}
+
+
+def resolve_md(doc):
+    out = []
+    w = out.append
+    w("# Intake resolve: one exact wheel file per closure member")
+    w("")
+    w("Written by `org/devices/intake/intake_fetch.py resolve` (schema %s). Target %s; closure `%s`; index base `%s`."
+      % (doc["schema"], doc["target"], doc["closure_file"], doc["index_base"]))
+    w("")
+    w("Nothing was downloaded and nothing was installed. Each row is the index's own published file name, digest and size.")
+    w("")
+    w("`%s`" % doc["last_line"])
+    w("")
+    w("| # | Member | Version | Outcome | File name | sha256 | Size | Reason |")
+    w("|---|---|---|---|---|---|---|---|")
+    for i, r in enumerate(doc["rows"], 1):
+        w("| %d | %s | %s | %s | %s | %s | %s | %s |" % (
+            i, r["name"], r["version"], r["outcome"], r["file_name"] or "-", r["sha256"] or "-",
+            r["size"] if r["size"] is not None else "-", r["reason"] or "-"))
+    w("")
+    w("## Re-check lines (STOP and OK lines for the CTO; nothing here is fixed by the tool)")
+    w("")
+    for key in ("NEW-MEMBER", "SPECIFIER-MISMATCH", "HOST-CONFLICT", "HOST-OK", "NO-METADATA"):
+        for ln in doc["recheck"][key]:
+            w("- %s" % ln)
+    w("")
+    return "\n".join(out) + "\n"
+
+
+def cmd_resolve(a):
+    state = {}
+    try:
+        run = run_resolve(a, state)
+    except Refuse as e:
+        print("REFUSED: %s" % ascii_text(e))
+        print("INTAKE-RESOLVE target=%s members=0 chosen=0 no_wheel=0 requests=0 ok=False" % a.target)
+        return 2
+    except Fail as e:
+        res = state.get("res")
+        n = len(res.rec["requests"]) if res else 0
+        print("FAILED: %s" % ascii_text(e))
+        print("INTAKE-RESOLVE target=%s members=0 chosen=0 no_wheel=0 requests=%d ok=False" % (a.target, n))
+        return 1
+    rows, rc = run["rows"], run["recheck"]
+    for r in rows:
+        if r["outcome"] == "CHOSEN":
+            print("CHOSEN %s==%s %s [%s]" % (r["name"], r["version"], r["file_name"], r["reason"]))
+        else:
+            print("NO-WHEEL %s==%s %s %s" % (r["name"], r["version"], r["reason"], ascii_text(r["detail"] or "")))
+    for key in ("NEW-MEMBER", "SPECIFIER-MISMATCH", "HOST-CONFLICT", "HOST-OK", "NO-METADATA"):
+        for ln in rc["lines"][key]:
+            print(ascii_text(ln))
+    for ln in rc["unreadable"]:
+        print("UNREADABLE requires_dist %s" % ascii_text(ln))
+    chosen = sum(1 for r in rows if r["outcome"] == "CHOSEN")
+    no_wheel = len(rows) - chosen
+    new_n = len(rc["lines"]["NEW-MEMBER"])
+    mism_n = len(rc["lines"]["SPECIFIER-MISMATCH"])
+    host_n = rc["host_conflicts"]
+    requests = state["res"].rec["requests"]
+    ok = no_wheel == 0 and new_n == 0 and mism_n == 0 and (host_n is None or host_n == 0)
+    last = ("INTAKE-RESOLVE target=%s members=%d chosen=%d no_wheel=%d requests=%d ok=%s new_members=%d "
+            "specifier_mismatches=%d host_conflicts=%s" % (
+                a.target, len(run["members"]), chosen, no_wheel, len(requests), ok, new_n, mism_n,
+                "UNREAD" if host_n is None else host_n))
+    print(last)
+    if a.out:
+        doc = resolve_doc(run, requests, last)
+        doc["ok"] = ok
+        text = json.dumps(doc, indent=1, sort_keys=True, ensure_ascii=True) + "\n"
+        with open(a.out, "w", encoding="ascii", newline="\n") as fh:
+            fh.write(text)
+        print("Wrote %s (%d bytes)" % (os.path.basename(a.out), len(text)))
+        if a.out.endswith(".json"):
+            md_path = a.out[:-len(".json")] + ".md"
+            with open(md_path, "w", encoding="ascii", newline="\n") as fh:
+                fh.write(resolve_md(doc))
+            print("Wrote %s" % os.path.basename(md_path))
+    return 0 if ok else 1
+
+
 # ---------------------------------------------------------------- records
 
 def _load(path):
@@ -576,6 +985,14 @@ def main(argv=None):
     ls = sub.add_parser("list", help="what the holding folder and the records hold for a batch")
     ls.add_argument("--batch", required=True)
     ls.set_defaults(fn=cmd_list)
+    rs = sub.add_parser("resolve", help="name ONE exact wheel file per closure member (no download)")
+    rs.add_argument("--closure", required=True, help="an intake-closure/1 JSON (the closure tool's saved file)")
+    rs.add_argument("--target", required=True, help="cp312-linux_x86_64")
+    rs.add_argument("--approved-by", required=True, help="approval file naming the exact name==version of every member")
+    rs.add_argument("--index-base", default=None)
+    rs.add_argument("--host-pydeps", default=None, help="intake-host-pydeps/1 file: the re-check reads it")
+    rs.add_argument("--out", default=None, help="JSON output (a .md table is written beside it)")
+    rs.set_defaults(fn=cmd_resolve)
     a = ap.parse_args(argv)
     return a.fn(a)
 
