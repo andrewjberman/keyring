@@ -8431,3 +8431,79 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Add to the Cottonwood plan's retire list with its consumer census (0 of 304 roles can read it). Its deletion is destructive and needs Andrew's confirmation at the moment it runs (CLAUDE.md Agent Autonomy); the retirement is a round-9 or later change under its own pair. Disarm: none (INERT)."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~88 (FB-p-5, the Cottonwood S60 addendum)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W88-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~88",
+  "surfaced_at": "2026-10-16T18:05:00Z",
+  "one_line": "The CRO census cited by row D1-S60 is tracked at HEAD but absent from the sparse worktree on disk (org/tier1_exec is not materialized); it was read from its commit with git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/P3_COTTONWOOD_BACKEND_CENSUS_AND_PORTFOLIO_GROUP_20261014.md@1b7cad0123 (git ls-tree --name-only HEAD lists the path at ab8081bfdd; ls of org/tier1_exec in worktree C:/dev/wk-firmbkts-r9-88 fails; git config core.sparseCheckout = true)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker reads the census its order cites from its own worktree at the cited path.",
+  "world_is": "The worktree is a sparse checkout that does not materialize org/tier1_exec; the file is tracked in the index at HEAD but absent on disk. git show 1b7cad0123:<path> returns the full census (18812 bytes; the Q-C table reads 0 of 304 roles).",
+  "notes": "No fix made here. The census figures were read from the commit and the 304 role figure was carried, not re-measured, as recorded in COTTONWOOD_PLAN_ADDENDUM_S60.json. Disarm: none (INERT)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~88 (FB-p-5, the Cottonwood S60 addendum)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W88-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~88",
+  "surfaced_at": "2026-10-16T18:05:00Z",
+  "one_line": "The worker face of FB-p-5 asks the worker to flip the order's status to complete, but the task-order file is not in the order's write grant (<paths>), so the flip cannot be committed by this worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-5.cottonwood-s60-addendum.md@ab8081bfdd (worker face line 4 asks the status flip; <paths> lines 53-56 name only the deliverables folder and INVESTIGATION_v1.md)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Flip this order's status to complete in the same commit as the proof instance, when AC1 passes.",
+  "world_is": "AC1 passes (ADDENDUM: OK consumers=0 delete=andrew, rc=0), but the task-order file is outside the <paths> write grant, so the status flip is not committed by 0.9.0_WK_ADVI_FIRMBKTS~88. The proof instance is committed without the flip.",
+  "notes": "Left for the issuer to flip at merge, or for a grant to name the task-order file. No override taken. Disarm: none (INERT)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~91 (FB-p-8, row triage group B)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W91-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~91",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Triage group B: ADVI_FIRMBKTS-D1-C-S34 and D1-C-S37 have no investigation row in INVESTIGATION_v1.md; their rows sit in ADJUDICATION_v5.md, so the order's step-1 premise did not hold for those two ids.",
+  "spec_asserts": "TO-FB-p-8 section 1, step 1: read the investigation row of the same id in INVESTIGATION_v1.md for each id in the triage list.",
+  "world_is": "A quoted-id grep of INVESTIGATION_v1.md at worktree HEAD 4fb60ead6e finds 28 of the 30 listed ids; ADVI_FIRMBKTS-D1-C-S34 and ADVI_FIRMBKTS-D1-C-S37 are absent. Both are adjudication rows in adjudications/ADJUDICATION_v5.md (lines 257 and 362, filed by 3.0.0_SA_CVO), and their remediation rows in REMEDIATION_v5.md cite those adjudication rows as evidence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of INVESTIGATION_v1.md for the quoted ids ADVI_FIRMBKTS-D1-C-S34 and ADVI_FIRMBKTS-D1-C-S37 at worktree HEAD 4fb60ead6e: 0 matches; the other 28 listed ids each match",
+      "Grep of ADJUDICATION_v5.md for the same two quoted ids at worktree HEAD 4fb60ead6e: line 257 (C-S34) and line 362 (C-S37)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The triage read each of the two rows from ADJUDICATION_v5.md and recorded its carrier (C-S21 for C-S34; TO-FB-h-5 for C-S37). No channel row was edited. Disarm: none (INERT)."
+}
+```
