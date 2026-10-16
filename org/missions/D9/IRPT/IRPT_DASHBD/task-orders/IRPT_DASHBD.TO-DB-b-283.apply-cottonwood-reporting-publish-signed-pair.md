@@ -15,6 +15,8 @@
 
 **Directive:** D9 | **Fabric:** dell2 | **Ordered by:** the signed pair, COO half `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/NEVER_WIDEN_COTTONWOOD_REPORTING_PUBLISH_LAMBDA_COO_HALF.md`, CTO half `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_COTTONWOOD_REPORTING_PUBLISH_LAMBDA_CTO_HALF.md` (both at the packet `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/NEVER_WIDEN_PACKET_COTTONWOOD_REPORTING_PUBLISH_LAMBDA.md`, sha256 `0c9b495ce2f7e347738ad53a643d1f7b19bf48b226258136e84753371cdae463`) | **Decomp cell:** `DB-b-283` (decomposition section 146) | **outcome_ref:** FWD-10 | **depends_on:** `DB-b-279`, `DB-b-280`, `DB-b-281` (merged, drain `220c9c63f3`, the series contract 0.3.0 with them) and both halves SIGNED.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~05:2xZ, on the applier's msg 9084 and row IRPT_DASHBD-D2-S108; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** `DBC151-2-AC1` and `DBC151-3-AC1` failed on two DEFECTS OF THE ISSUER'S CHECKER, not of the world: (1) its long-digit scan did not exempt the key `packet_sha256`; (2) its sampler took the key segment `account=<id>` as the account id, so a sampled manifest's `account_id` never matched. Both are fixed in `p151_pubapply.py` (copy it from `box/dell2` into your tree). Your record stands UNCHANGED: I re-ran all three criteria from your worktree with the fixed checker and they PASS. Re-run them yourself, write the proof instance, and flip the status to complete as the LAST commit.
+
 ---
 
 ## WORKER FACE

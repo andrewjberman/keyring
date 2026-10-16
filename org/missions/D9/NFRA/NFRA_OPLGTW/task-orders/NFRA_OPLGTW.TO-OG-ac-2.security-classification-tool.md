@@ -90,7 +90,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ac-2.security-classification-to
 - Census facts to know: 11,362 items, hash key `ticker`, `last_updated` (newest 2026-10-08 in a 200-item sample); the contract's 3,507-row figure (2026-10-07) is stale (row Z-W113-S5).
 - Pre-cut: ac2.AC1 and ac2.AC2 base FAIL as expected (module, tests and probe absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>CLASS-INCREMENT-2</workstream>
 <slot>~113</slot>
