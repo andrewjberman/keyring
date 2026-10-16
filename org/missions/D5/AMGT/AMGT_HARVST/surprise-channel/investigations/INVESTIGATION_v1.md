@@ -10125,6 +10125,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
-  }
+    },
+    {
+     "id": "AMGT_HARVST-D1-S33",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-16T16:09:58Z",
+     "one_line": "Library filing error for 4.0.0_SA_CRO~DELL1: two files of a Kimberly-Clark de Mexico (KIMBERA MM) Q2 2026 earnings update sit in the library folder Kimberly Clark KMB, so the harvest filed them under KMB_US_Equity.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "A research report is filed under the security it is about (D1-S29 defect 2; CTO ERRATUM 2 on the round-87 analysis).",
+     "world_is": "Silver research-report rows fbd50086c4065785 (.docx) and 1a3b56044db679a5 (.pdf) carry source_relpath Kimberly Clark KMB/Kimberly Clark Mexico Q2 2026 Earnings Update.* under security_key KMB_US_Equity, fund IDVZ, period 2026-Q2 (measure.out of worker 0.9.0_WK_AMGT_HARVST~151 @42a6ff937c, 355 rows, 94 securities). KIMBERA MM is not in the 243-security harvest universe. HVST-cc-2 serves a named exclusion for both until the files are moved at the source. The fix is the library folder, a human act for the CRO; the harvest ingest cannot tell, because a stored row carries no ticker or header text.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round87.md ERRATUM 2",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-2.a-research-report-attaches-to-the-security-it-is-about.md"
+      ]
+     },
+     "disarm_owner": "4.0.0_SA_CRO~DELL1",
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
