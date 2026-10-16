@@ -22237,3 +22237,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-W1601-S5 -- the naming gate REFUSEs this commit's literal carriers of the cottonwood key in its WARN window; its live census cannot run here
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1601-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1601",
+  "surfaced_at": "2026-10-16T09:20:00Z",
+  "one_line": "The commit gate's naming limb printed 4 REFUSE verdicts on this commit's carriers of the literal 'cottonwood' (WARN window, not blocking), and its live census could not run on this box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A carrier of the registry key 'cottonwood' reads it through lookup('cottonwood'), and the naming gate's live census runs at commit.",
+  "world_is": "At commit 85d81d74bd the naming limb printed NAMING-GATE: WARN 4 graded with 4 REFUSE verdicts, among them transaction_words.json line 1764 (cottonwood_mapping), each 'hand-kept carrier of cottonwood outside every permitted context'; its live read printed LIVE-READ-FAILED: CensusError (comp-find [aws] blocked: the served-graph client). The verdicts are WARN here because the gate's ENFORCE switch is off; under enforcement the commit would be refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh output for commit 85d81d74bd (the [naming-gate] lines: NAMING REFUSE x4, WARN window 4 REFUSE verdict(s) did not block)",
+      "data/assets/scripts/gold/irpt_reporting/transaction_words.json@85d81d74bd line 1764 (cottonwood_mapping key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the 0.2.0 contract already carried the literal in its firm and fee_basis keys; whether the carriers should read the key through the registry is a later round's choice."
+}
+```
+
