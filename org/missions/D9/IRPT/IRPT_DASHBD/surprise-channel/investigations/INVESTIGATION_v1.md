@@ -23235,3 +23235,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The wrapper's CHANGELOG write is a standing out-of-grant carrier (S89, S96, S99 and now a committed one); what stops it differs by firm entry, so the guard is accidental. The count and partition differences are explained and inside the order's bounds."
 }
 ```
+
+## IRPT_DASHBD-D2-S122 -- three NYSE trading days inside the Cottonwood landed range have no gold partition (2026-08-19, 2026-09-24, 2026-09-25)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S122",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T13:33:10Z",
+  "one_line": "Reading the Cottonwood landing gold prefix for the rewrite packet: 66 date= partitions from 2026-07-10 to 2026-10-15 against 69 NYSE trading days in that range; the three missing days are 2026-08-19, 2026-09-24 and 2026-09-25. The silver fact_allocations table holds a partition for each of the three; fact_transactions holds none. The handler's owed-days rule starts at the day after the newest landed partition, so no scheduled fire will ever fill them, and a rewrite event refuses a range holding a day that is not landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list_objects_v2 Delimiter / on opal-data-cottonwood irpt/cottonwood/gold/account_return_daily/ (paginated client-side): 3391 date= partitions, 66 of them from 2026-07-10 on; lib/trading_calendar.py trading_days_between(2026-07-10, 2026-10-15) = 69 days, 3 not in the listing, no listed day outside the calendar",
+      "list_objects_v2 Delimiter / on opal-data-assets blackdiamond/cottonwood/silver/fact_allocations/ (146 partitions) holds date=2026-08-19, date=2026-09-24 and date=2026-09-25; fact_transactions/ (126 partitions) holds none of the three",
+      "CloudWatch log group of irpt-cot-account-return-daily-lambda holds 3 streams (created 2026-10-15); no line names any of the three days"
+    ]
+  },
+  "spec_asserts": "Handler docstring: no day key runs the trading days after the newest landed partition through T-1; _rewrite: a rewrite changes landed days only (a not-landed trading day in the range is a ValueError). The 2026-10-15 landing pair's catch-up named days up to the newest silver partition.",
+  "world_is": "Three trading days are absent from a gold table the page may read as a daily series, and the code has no path that fills them. Whether the adapter holds a day with no transactions partition, or the catch-up events skipped them, is not read. The rewrite packet therefore rewrites the 66 landed days in ranges that avoid the three; filling the three is a separate question for the CTO."
+}
+```
+
+## IRPT_DASHBD-D2-S123 -- the hop-2 publisher's validator refuses the filled document the producer writes: window_status is one word there, an object of four words in the contract and the table
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S123",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T14:15:18Z",
+  "one_line": "While specifying the hop-2 reader (CTO msg 9439): publisher.validate_filled_report (IB-pr-553) requires each account entry's window_status to be ONE of MEASURED, NOT_SPANNED, BREAK, but the contract's window_status_rule defines it per window (qtd, ytd, last_12_months, since_inception) and filled_report_values.py writes and reads back an object of those four keys. Run on a producer-shaped document the validator raises PublishRefused 'an account entry carries an unknown window_status', so run_filled_report would count every client as refused and write nothing, whatever the reader returns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python run in this tree: publisher.validate_filled_report on {household:{accounts:[{window_status:{qtd,ytd,last_12_months,since_inception: MEASURED}}]}, values:{}} raises PublishRefused: an account entry carries an unknown window_status",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json document.filled_report: account_entry_fields [account_id, last4, first_data_date, window_status], window_status_values [MEASURED, NOT_SPANNED, BREAK], window_status_rule 'for each of the four windows ...'",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py: build_document sets window_status to the per-window STATUS[a] dict (line 714); to_rows writes one row per window (account.window_status.<w>); _one_document reads them back as that dict",
+      "publisher.py FILLED_WINDOW_STATUS check at validate_filled_report: entry['window_status'] not in FILLED_WINDOW_STATUS"
+    ]
+  },
+  "spec_asserts": "Contract: the filled report's account entry carries window_status per window with the three words. IB-pr-553: validate_filled_report refuses a document that is not the contract's shape.",
+  "world_is": "The validator accepts a shape the producer never writes and refuses the shape it does write. Hop 2 is OFF and wrote nothing, so no client is affected yet; the defect would show as refused for every client once the switch is on. The reader cell (DB-b-302) carries the validator's fix inside the same FILLED-REPORT-A block so the drain, the re-pin and the deploy pair are one."
+}
+```
