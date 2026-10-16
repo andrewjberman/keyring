@@ -6,10 +6,16 @@ lives outside the law lock because it changes as arms start and stop (Andrew-dir
 `1.0.0_SA_CTO` lands and strikes rows, naming the chooser and the record. A seat never writes its own row. On DONE the
 lane deletes its cron and the row is struck; a struck row's record stays in git. A row absent here arms nothing.
 
-## PACING -- governs every row below (Andrew-direct 2026-10-10 ~23:3xZ)
+## PACING -- governs every row below (Andrew-direct 2026-10-16 ~02:4xZ; before it, 2026-10-10 ~23:3xZ)
 
-Every live `/canonical-drive`, `/self-drive` and `/govern` arm runs at **60m**, whatever cadence its row names. Every
-re-arm also takes 60m. `/keep-driving` is **ON** on all four boxes since 2026-10-13 20:34:07Z (cloud switch set by
+Every live CTO `/self-drive` (its box's open calls) and COO `/canonical-drive` (its assigned project) arm runs at **30m**,
+whatever cadence its row names, and so does every re-arm. Andrew-direct ~02:4xZ 2026-10-16 at the laptop MSTR terminal,
+VERBATIM: "ON, all CTO COO agents should now be on 30m loops for /self-drive {Each CTO adjudicates their box activities}
+/canonical-drive {the project the COO is assigned}, respectively". Record
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261016_024xZ_KEEP_DRIVING_ON_30M_SELF_DRIVE_CANONICAL_DRIVE.md`
+@def0cd29c2 (relayed by 0.0.0_AB_MSTR msg 109564). The cloud switch was re-set ON at 2026-10-16T02:42:55Z and read back
+scan=on empty_tick=on. `/govern` was not named and stays at **60m**. Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO.
+Superseded cadence, kept for history: every live `/canonical-drive`, `/self-drive` and `/govern` arm at 60m. `/keep-driving` is **ON** on all four boxes since 2026-10-13 20:34:07Z (cloud switch set by
 0.0.0_AB_MSTR, read back scan=on empty_tick=on, no overrides) on Andrew-direct ~20:3xZ at the MSTR terminal, VERBATIM: "ON, 60m
 loops for /self-drive, /canonical-drive, /govern for the relevant agents. CTOs on each box should have /self-drive loop on their
 entire box, i.e. any open-calls that appears on that box they need to adjudicate." (relayed by 0.0.0_AB_MSTR msg 108887;
@@ -184,7 +190,12 @@ landed by 1.0.0_SA_CTO~DELL2; each other box's CTO lands its own.
     stand-down.
   - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
     2.0.0_SA_COO~D.
-- `2.0.0_SA_COO~O` (NFRA_OPLGTW), `~MI` and `~MI2` (NFRA_MCPINDEX), `~MP` (NFRA_MCPORTAL): `/canonical-drive <own project> 60m`,
+- `1.0.0_SA_CTO~Z` `/self-drive 30m` over every open call on site Z, DIRECTED, chooser Andrew (~02:4xZ 2026-10-16, relayed by
+  `0.0.0_AB_MSTR~Z` msg 34667, VERBATIM: "ON, all CTO COO agents should now be on 30m loops for /self-drive {Each CTO adjudicates
+  their box activities} /canonical-drive {the project the COO is assigned}, respectively"). Arming record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_024xZ_SELF_DRIVE_30M_SITEZ_BOX_OPEN_CALLS.md`. Stop: his
+  stand-down. Landed by 1.0.0_SA_CTO~Z. The same word takes the site Z COO row below to 30m.
+- `2.0.0_SA_COO~O` (NFRA_OPLGTW), `~MI` and `~MI2` (NFRA_MCPINDEX), `~MP` (NFRA_MCPORTAL): `/canonical-drive <own project>` (60m, now 30m per the row above),
   DIRECTED, chooser Andrew. ~02:0xZ 2026-10-16 at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: "time to get back on the mission, we need
   the MCPINDEX OPLGTW MCPORTAL COO teams backonline and moving". Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_020xZ_MCPINDEX_OPLGTW_MCPORTAL_COO_TEAMS_BACK_ONLINE.md`. Seated by

@@ -94,6 +94,16 @@ Treat every inbound as live.
   **Do NOT manufacture it** -- a control I generate could not have failed.
 
 ## Day index
+- **2026-10-15** -- TWO Andrew-directs. 17:13:06Z *"Go figure out why the cron script is failing..."*
+  (ACK 17:14:25Z): answered **not Python, not PATH** -- the cron pins its own interpreter and imports
+  only stdlib; the failure is GUI automation against a Terminal whose 190 executables were replaced
+  10-06 04:04Z, in **two sequential signatures** (glyph calibration, then focus-lost-before-submit).
+  The 09-24 965-file `.pak` write that did NOT break it is the negative control. 18:00:40Z *"send this
+  log to CTO and have them fix it."* -> relayed to `1.0.0_SA_CTO~Z` 19:51:41Z DELIVERED; ruling
+  @079108405c cuts **R8** (settle-until-stable-foreground, re-derived glyph fixture, R7 trace stays).
+  Status to him 20:10:39Z. COO~ZB msg 34517 corrected two of my claims: **19** unattended successes,
+  not 0 -- I had counted from a failure-only log. **Owed: read the 10-16 11:00Z fire.**
+  See `2026-10-15.md` (written late, 10-16T02:3xZ, by the next session -- step 4 was skipped on the day).
 - **2026-10-09** -- 03:14:32Z "I need the last days price of PFDE". Step 0b sender gate PASSED on a FIELD:
   `list_chats` returns `from.user.tenantId 6810043e-...`, and this seat's own token sub carries that same
   tenant with `whoami` = `opalbloomberg@opalinvest.com`. **That contradicts msg 32338's premise** that no
@@ -103,7 +113,8 @@ Treat every inbound as live.
   DISCIPLINED US EQ) PX_LAST **28.4616 USD**, `PX_CLOSE_DT` 2026-10-08, NAV 28.4594; trading calendar
   resolved first (`expected_last_trading_day` = 2026-10-08, so NOT a T-1 artifact). **Nothing sent** --
   draft-and-ask per this thread's standing rule; put to him in session. See `2026-10-09.md`.
-- *(index gap, stated not filled)* `2026-10-07.md` and `2026-10-08.md` exist as dailies with no entry here;
+- *(index gap, stated not filled)* `2026-10-07.md`, `2026-10-08.md` and `2026-10-10.md` through
+  `2026-10-14.md` exist as dailies with no entry here;
   they are not this window's work and are not summarised from outside. Read the files.
 - **2026-09-24** -- **NOTHING SERVED.** His **2026-09-23T19:40Z** message is UNSERVED on the record
   (day index had ended at 09-15) and **UNREADABLE**: `body.content` is empty with `isDeleted:false` /
