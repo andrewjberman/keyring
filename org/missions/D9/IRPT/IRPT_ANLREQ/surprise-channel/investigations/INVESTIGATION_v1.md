@@ -22410,3 +22410,57 @@
   "world_is": "core.sparseCheckout is true in this worktree and infra/ is not materialized: the lambda file and org/surprise_channel/schemas/ are tracked in the index but absent from disk. The order's grant paths (org/ and .tools/ and the one helper file) are on disk, so the cell's edit and the checkers were unaffected; the reader's text was taken from git show at HEAD and not from a file in the worktree."
 }
 ```
+
+## IRPT_ANLREQ-D2-W270-S5 -- The commit gate's client-data check printed WARN and did not run on commit 2b2bce7deb: the hashed account-id list is absent on this device
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T19:01:54Z",
+    "one_line": "The commit gate's client-data check printed WARN and did not run on commit 2b2bce7deb: the hashed account-id list is absent on this device",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order commits the code and tests through .tools/safe-commit.sh and treats a commit that passes the gates it runs as checked.",
+    "world_is": "safe-commit.sh printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids. The commit landed as 2b2bce7deb. A listing of C:/Users/Test/.opal/ run at filing shows only _set_aside_20261011/. The staged diff is one product file and one test file written in this session.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/wk-irpt-anlreq-270 commit 2b2bce7deb: safe-commit.sh output, client-data-check WARN line",
+        "listing of C:/Users/Test/.opal/ at filing lists only _set_aside_20261011/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W270-S6 -- The risk-reflex HOLD on resident_worker.py cites a deploy record that the sparse worktree does not hold on disk; the record is readable only from the HEAD blob
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S6",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T19:01:54Z",
+    "one_line": "The risk-reflex HOLD on resident_worker.py cites a deploy record that the sparse worktree does not hold on disk; the record is readable only from the HEAD blob",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order grants paths in this worktree and says to read them there.",
+    "world_is": "The pre-commit risk-reflex printed HOLD on resident_worker.py and cited org/critical_paths/change_management/20260927T0551Z_irpt-resident-waf-refresh-20260927_deploy_completion.md:4. That record is tracked at HEAD and its Status is CLOSED (nothing stranded, closed 20260927T055524Z). It is not on disk in C:/dev/wk-irpt-anlreq-270 because core.sparseCheckout is true; it was read with git show HEAD:<path>. The commit went through. This order deploys nothing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config --get core.sparseCheckout prints true in C:/dev/wk-irpt-anlreq-270",
+        "git show HEAD:org/critical_paths/change_management/20260927T0551Z_irpt-resident-waf-refresh-20260927_deploy_completion.md (Status: CLOSED, line 2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
