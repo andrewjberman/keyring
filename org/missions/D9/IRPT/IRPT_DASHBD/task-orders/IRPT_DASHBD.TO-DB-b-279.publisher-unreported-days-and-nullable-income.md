@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~226</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -16,6 +16,8 @@
 **Directive:** D9 | **Fabric:** dell2 | **Workstream:** B-49F + contract, round 147 | **Ordered by:** 1.0.0_SA_CTO~DELL2, org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md ADDENDUM v0.16 item 4 and the CTO boundary ruling msg 8803 ("~D2 owns handler.py, publisher.py, the publish tf root and the sources entry. The first Cottonwood series publish is ~D2's cell, under its own pair and in one drain with the contract field.") | **Decomp cell:** `DB-b-279` (decomposition section 145).
 
 **Risk class WORLD** is the floor of the paths below (an `infra/` path), not a statement that anything is deployed: one python module and one new test file; no AWS, no deploy, no push. Nothing is served: the module is read by the 49 Financial function today and by the Cottonwood function (cell `DB-b-280`) later, and neither is changed to run it by this order.
+
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~03:5xZ, on the end-of-chain re-run; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** your test `test_validator_rejects_the_pair_when_the_contract_does_not_name_it` read the repo contract, which named no unreported-days field only while the contract was 0.2.0; the branch now carries 0.3.0 (merge 6e56bb47d3) and the test fails (`DB147-1-AC3`: 1 failed, 28 passed). That is a defect of the order's test spec, not of your publisher. The order is re-opened for ONE edit, in your test file only: build the contract for that test as a deep copy of the loaded contract with the two unreported-days names removed from `series.optional`, so the test no longer depends on the repo contract's version. Then re-run `DB147-1-AC3`, refresh the proof instance if it records the AC3 line, and leave the status complete.
 
 ---
 
