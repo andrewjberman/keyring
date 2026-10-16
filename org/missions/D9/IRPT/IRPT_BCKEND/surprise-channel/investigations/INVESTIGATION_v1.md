@@ -41224,3 +41224,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The run that failed is recovered by one invoke on the fixed role; the scheduled fire on the new grant is Monday."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S225",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-16T15:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-613 Act 2 hit two undocumented conditions on day 1, both ruled and resolved: the producer refuses a date-only event (three sources declared) and the stored 49F history is schema 1.1 so every restated key moves to schema 1.2; all 47 days then restated clean.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "function log 2026-10-16 14:19:50Z: REFUSED: 3 sources are declared in sources.json (schwab_08335338, orion, blackdiamond_z09), so --source is required; day key's latest version unchanged; ruled by ADDENDUM 3 (payload names source read from the schedule)",
+      "day 1 (2024-07-09): prior L3bSeGLu.. schema 1.1 19 columns, new 6oF_12Xb.. schema 1.2 20 columns (span_trading_days added), daily_return changed on 11 rows = signed 11; the table was already mixed (10 scheduled days at 1.2, 560 at 1.1); ruled by the CTO's rule A after a reader census (no reader pins a column count or schema_version)",
+      "IB244-1_act2_record.json: 47 of 47 days comparison_ok, 1291 changed = signed 1291, 0 other rows changed, 13 named ratio-absent entries = signed 13"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-613 as cut: the event is {\"date\": D} alone, and only the rows of split-holding accounts differ from the prior version (other_rows_changed 0).",
+  "world_is": "The event must also carry source because three sources are declared (the order was amended), and every row of a restated day also differs in schema_version and gains span_trading_days because the stored history predates two producer schema steps. Neither touches the split-adjusted value: daily_return moved only on the split holders. The 47 keys now read schema 1.2; the day keys outside the 47 and outside the 10 scheduled days stay at 1.1 (560 keys read 1.1 before Act 2 and 46 of them were restated after the day-1 read), so the table is mixed by day. A reader that needs one schema across days is not served by this table either before or after Act 2. The restated keys' prior versions remain as the Branch B targets; nothing was deleted.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
