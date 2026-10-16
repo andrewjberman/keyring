@@ -59,3 +59,12 @@ Each row moves in one triage cell, and no row is left unmoved:
 The fan-out is the issuer's (default cap 8). Items 1 and 2 share the resolver and may run as one cell.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ERRATUM 1 (2026-10-16 ~15:1xZ, on `2.0.0_SA_COO~W1`'s read of 15:16Z)
+
+Two premises above did not hold. Both of W1's RECs are accepted.
+- **PG.** Procter & Gamble is not in the 243-security harvest universe; a live resolve returns status none for both forms. The test is
+  re-cut as: a ticker-shaped query that matches no ticker slot never returns `exact` on a name match. "PG" returns none or candidates,
+  and PG&E still resolves by its own ticker. Adding P&G to the universe is a separate decision and is not this cell.
+- **W132-S4** measured rule R31, which addendum 7 (msg 2438) retired and left unmerged, so it degrades nothing at base. It closes as moot
+  on that ruling, with no cell. Round 88 item 3 is struck.
