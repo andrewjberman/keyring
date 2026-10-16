@@ -19965,3 +19965,29 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W201-S1 -- the proof gate needs a decomp_ref the TO worker face does not name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W201-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~201",
+  "surfaced_at": "2026-10-16T00:16:05Z",
+  "one_line": "The TO-AR-g-102 worker face does not name the decomp_ref the proof gate requires: the to-pipeline gate refused the flip commit until the instance carried decomp_ref {doc, vintage_commit, to_ref} copied from the TO <decomp_ref> block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The TO-AR-g-102 proof clause lists the instance fields to fill (to_id, invocation, output_evidence, the artifact commits, the flip) and does not mention decomp_ref.",
+  "world_is": "to-pipeline-gate.py refused the flip commit (rc=1, 2 violations): the governing TO carries <decomp_ref> at its lines 92-95, so the instance MUST carry a decomp_ref object. The fix was one object, doc org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R24_G.md, vintage_commit d98ff72fdf (last commit of that decomp), to_ref the TO path. The flip commit then passed at 7b1c6c60ce; proof-of-spec-check rc=0 on both rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-102.release33-lambda-source-rows-and-ticket-grant.md lines 92-95 at d98ff72fdf: the <decomp_ref> block names the decomp doc and owned cell AR-g-102",
+      "safe-commit refusal of the first flip attempt (bbd92e94c0 parent): to-pipeline-gate REFUSED, instance VIOLATION decomp_ref",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~201/IRPT_ANLREQ.TO-AR-g-102.release33-lambda-source-rows-and-ticket-grant.proof_of_spec.json at 7b1c6c60ce carries the decomp_ref object"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
