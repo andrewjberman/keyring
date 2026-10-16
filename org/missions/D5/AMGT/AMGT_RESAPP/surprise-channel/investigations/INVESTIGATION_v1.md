@@ -28677,3 +28677,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recurrence in a second worktree of the observation the sparse checkout hygiene row of this file records. Recorded against W484 so the row gate's schema read is not assumed satisfied by this worktree."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S46",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T11:09:00Z",
+  "one_line": "C-S160 and D1-S45 DISARMED: the round-111 documents (gw-1 @08a3b6df06, 37 changed keys stored) read MET on the CVO's fresh five-new-name read (ADJUDICATION_v138, row C-S162); no source-describing block, no pack restatement, no unnamed opener on the drawn names, and the AZN, ISRG and ZTS bios are withheld.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "D1-S45 (this seat, ARMED): close when the CVO's fresh read of the re-made set finds the pronoun-opening, source-describing and pack-restating bio classes of C-S160 gone; the page keeps serving the round-110 set until the new write.",
+  "world_is": "Read 2026-10-16T11:09Z. gw-1 merged @08a3b6df06 (drain 905 passed; checks 17 of 17, 12 of 12, 20 of 20). Store write under the round-111 pair: 37 of 37 keys read back equal by a separate S3 read, the other 58 unchanged, function configuration unchanged, served API 16 of 16 (record @ea2a601225). CVO v138 (row C-S162): 11 blocks on 8316 JP, GSK LN, IMB LN, ICICIBC IN, IBE SM, correctness holds, one clause unverifiable (HTTP 403 to the CVO: ICICI Kochhar), quality classes none, kept bios open on the person's name. Carried, minor, INERT: LLY bio opens with a stray quote mark; IMB mgmt_recent opens on a surname. NOT MEASURED: the Security Analysis page rendering the blocks (the served API and stored documents were read; no page was looked at by this seat); the 58 eligible names beyond the five drawn; D1-S41 and D1-S42 are not touched by this row and stay OBSERVATION.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADJUDICATION_v138.md (row C-S162), CVO relay msg 6664",
+      "round111_close/store_write/verify_readback.json -> 37 of 37 ok; 58 other keys equal the round-110 documents",
+      "check_restore_served.py verify -> AIFILL RESTORE SERVED: YES (16 of 16)",
+      "git log -1 ea2a601225 (store record), 4a7128dcd9 (gw-1 close)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CVO's row C-S160 closes by the CVO's own read; this row records this seat's disarm of D1-S45. The LLY quote-mark opener is the only carried item; the CTO said the next round is only that fix, at the COO's discretion, metered."
+}
+```
