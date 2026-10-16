@@ -12,6 +12,10 @@
 
 No order is cut at the issuance.
 
+## Amendments
+
+1. **`CT-ap-1` cut, 2026-10-16 ~04:3xZ, as a CROSSBOX CALL and not a laptop task order.** Dependency cleared: the CVO's `ADJUDICATION_v29.md` @6b85624313 graded FWD-16 and FWD-17 REALIZED and FWD-15 ADVANCED, one act short (C-S81); the CTO's round-25 addendum 1 @69d2a8dc22 REPLACES the enrichment list with ONE dell1 cell: a dell1 lane imports `tabulate` only from `SCRATCH_TARGET`, renders the one read-only table and commits the output and `tabulate.__file__` on `box/dell1`; "ask dell1 for it as a crossbox call". The act runs on dell1 under dell1's seats, so no laptop worker is spawned and no order file is added; the call body is `deliverables/2.0.0_SA_COO~C/XB_JOURNEY_R26_DELL1_RUN_ON_SCRATCH.md`. Risk class `LOCAL` on dell1 (read-only, no network, no install). **Gate limb that graded the amendment:** none (no task order is added or modified). Ruling 1 of round 25 is re-ordered by the CTO: the scratch delete goes to Andrew only after the output is committed.
+
 ## Driven by the issuer in this round (not cells)
 
 1. **The CVO's read.** The L8 packets of rounds 24 and 25 are at `3.0.0_SA_CVO~L` (live; its summary read "awaiting NFRA_CTLPLN r24 L8"); the issuer nudged once with both paths and hashes (this tick). No READ ack yet; a second silent tick goes to `0.0.0_AB_MSTR` as `[STUCK]`.
