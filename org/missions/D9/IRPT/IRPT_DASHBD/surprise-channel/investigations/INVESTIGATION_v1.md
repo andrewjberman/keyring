@@ -19977,3 +19977,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The subset holds with equality: no name fails after that did not fail at base. The folder is not green in this sparse cone for reasons outside DB-c-24, because paths under docs/ and infra/aws/ are not materialized. The cone was not changed and nothing was widened."
 }
 ```
+
+## IRPT_DASHBD-D2-S105 -- round 146 B-CW: the partial-history sentence and the fallback pin built (portal candidate branch), worker 416's row dispositioned
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S105",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T01:28:33Z",
+  "one_line": "Round 146 B-CW (DB-c-24, FWD-10 cells b and c): the Performance tab's partial-history note now states where the data starts and no cause; no fallback sentence exists and a test pins it; worker 416's row W416-S1 dispositioned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.15 and v0.16, FWD-10: the partial-history sentence states where the data starts and no cause; no fallback footnote exists.",
+  "world_is": "Merge 7002545138; portal commit 8f560680a0e38390aaa1634549bc8eda21f7eec9 on wk-IRPT_DASHBD-416-portal and on cand/dell2/irpt-fwd10-partial-history-sentence (one commit ahead of DEV e578b378d332); DBC146 1/2 PASS (3 of 6 new tests fail against the base source); typecheck rc 0; the three relevant test files 8 pass 0 fail on this seat's re-run; the folder-wide suite fails the same 44 test names at base and head (W416-S1: the sparse worktree does not materialize the contract files that suite reads), accepted as a worktree property with the subset gate as the control. Cell (a) held for the contract writer's fixture. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~416/BUILD_R146.json",
+      "portal repo commit 8f560680a0e3 (git -C portal show)",
+      "checks/r146/p146_bcw.py; merge 7002545138; round-close-check round 146 MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: review of cand/dell2/irpt-fwd10-partial-history-sentence for the portal merge-forward."
+}
+```
