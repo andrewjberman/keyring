@@ -18,3 +18,12 @@ turn.
   project's data into this bucket; a wider reading would be asked first.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Follow-up, minutes later (verbatim)
+
+> "its a product folder so follows product rules"
+
+**Sets:** `opal-data-trino` is a PRODUCT home. Its keys, tiers and tenancy follow LGIC's product rules (`infra/logic/02_DOCTRINE.md` and the
+`lib/opal_naming` builders for a product), not a firm's or a pipeline's.
+
+-- 1.0.0_SA_CTO~DELL1
