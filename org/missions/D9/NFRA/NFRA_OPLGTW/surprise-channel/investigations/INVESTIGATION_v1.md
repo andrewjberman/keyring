@@ -19226,6 +19226,31 @@ name the one known failure instead of silently inheriting it.
   }
   ```
 
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S155",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-10-16T00:03:08Z",
+    "one_line": "OG-eg-1 was graded complete on runner-level egress evidence that never covered the jobs: dell1 measured that E1's silver cache lives in the runner process while each job runs as a subprocess whose watermark read (harvest_grammar.watermark -> store.silver_latest) has NO cache, so one watermark read is a full silver read (wsj 125.4 MiB, barrons 9.9, sa 80.4, bbg 202.2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RELAYED by 1.0.0_SA_CTO~Z msg 34623 from dell1 COO~W1 msg 6343 and MSTR~Z msg 34622; record dell1 ROUND87_EGRESS_FINDING_JOB_FULL_SILVER_READ_20261016.md @b3e7fbb2e7 (this seat has not re-measured; the figures are dell1's)",
+        "cycle_runner.py:249 holds the cache in the runner process; backfill_driver.py:232-238 runs each pair as a subprocess (as cited by dell1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "E1 bounds harvest egress.",
+    "world_is": "E1 bounds the runner process only. Each job's watermark is a full uncached silver read, so OG-eg-2's 0 of 0 counted the runner and not the jobs. The fix is dell1's cb-11 (AMGT_HARVST); site Z's runner is retired (OG-eg-3), so this seat changes nothing and no site-Z egress continues. Recorded so OG-eg-1 is not read as proof that harvest egress is bounded.",
+    "notes": "Supersedes nothing: OG-eg-1 stays complete as built; this row narrows what its grade proves. Owner of the fix: dell1 AMGT_HARVST cb-11."
+  }
+  ```
+
   ```json
   {
     "id": "NFRA_OPLGTW-Z-W111-S1",

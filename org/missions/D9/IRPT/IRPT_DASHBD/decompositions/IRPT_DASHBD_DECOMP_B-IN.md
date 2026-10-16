@@ -202,6 +202,18 @@ The CTO ruled that the first-real-row RUN script is built now, on fixtures, so t
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a script and its tests); worker `0.9.0_WK_IRPT_DASHBD~316` (`DB-i-16`).
 
+## 16. ROUND 130, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the issuer's own defect found at the round-129 drain; no CTO analysis)
+
+At the round-129 drain I read the feed script to check what the run script would meet on real silver. The feed (`pull_inflection_scope_account_returns.py`) writes ONE silver partition per calendar DAY (`write_day(s3, day, ...)`, `date=<day>`) and stamps EVERY row of a pull with the PULL date, so a backfill or a multi-day scheduled pull has rows whose `pull_date` is later than their partition. Round 125's wrapper refuses a partition when a row's `pull_date` differs from the partition (worker row W311-S5, which I worded and the CTO accepted from my batch, msg 8654), so on the first real run it would refuse every such partition. A fixture shaped like the real feed reproduces it: 48 rows refused. The error is mine (I specified the rule from a worker row's one-line description without reading the feed's partition semantics).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-17` | The wrapper's partition-key rule corrected: a partition `date=<d>` is refused (count, nothing written) when a row's `day` is not <d>; a differing `pull_date` is accepted; one test added for the backfill shape | FWD-2 | LOCAL (a one-condition edit and its tests; nothing wired, served or deployed) | `DB-i-14` (merged) | I-Q |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The issuer rules everything inside its own decomposition, so this is cut without a CTO ruling and reported in the next packet for him to read at the analysis. (b) A direct act: one cell, a one-condition edit, LOCAL. (c) The round-127 checker's partition arm (`checks/r127/`) encoded the old rule; `checks/r130/` replaces that arm and adds the backfill-shaped acceptance arm, and supersedes r127 for this order's criteria; r127 is not edited. (d) The round-129 run script (`DB-i-16`) is unaffected: its fixtures key partitions by day and its `run_real` passes the partitions to `run()` unchanged. (e) The first real run must not be attempted before this merges.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent direct-act cell with a disjoint write set (the wrapper and its test file); worker `0.9.0_WK_IRPT_DASHBD~317` (`DB-i-17`).
+
 ## Cells
 
 | cell id | owner |
@@ -222,3 +234,4 @@ The CTO ruled that the first-real-row RUN script is built now, on fixtures, so t
 | DB-i-14 | 0.9.0_WK_IRPT_DASHBD~314 |
 | DB-i-15 | 0.9.0_WK_IRPT_DASHBD~315 |
 | DB-i-16 | 0.9.0_WK_IRPT_DASHBD~316 |
+| DB-i-17 | 0.9.0_WK_IRPT_DASHBD~317 |

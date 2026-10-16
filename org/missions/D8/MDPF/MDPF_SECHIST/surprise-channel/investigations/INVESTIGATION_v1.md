@@ -659,3 +659,79 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## MDPF_SECHIST-D1-S9 -- direct-act-order.py mints an order with no <risk> element, so the L6 gate's risk limb refuses every mint it makes
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S9",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-15T23:49:11Z",
+  "one_line": "`.tools/direct-act-order.py mint` has no --risk argument and emits no <proof_of_spec> block, and its record face carries status, direct_act, slot and fabric only, so `.tools/to-pipeline-gate.py` GATE (xii) and the proof-of-spec commit gate refuse the order it just minted; and its decomposition check is a substring while the gate wants a first-column table cell id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python .tools/direct-act-order.py mint --code MDPF_SECHIST --slot 25 --cell A2-cap-62 ... (no --dry-run) -> REFUSED: minted order failed the L6 gate; deleted. Violations: 'a NEW tree task order carries NO <risk> element on its own line' and 'owned_cells names cell A2-cap-62, which is not a cell of .../MDPF_SECHIST_DECOMP.md (2 cell ids read from the ...)'; the same call with --dry-run printed the order and reported no refusal",
+      ".tools/direct-act-order.py L262-266 record face lines: status, direct_act, slot, fabric; no risk; L377 `if args.cell not in decomp_text` (a substring test) against to-pipeline-gate.py _declared_cells (L437), which reads first-column table ids"
+    ]
+  },
+  "spec_asserts": "direct-act-order.py's docstring: it REFUSES to leave behind an order the L6 gate would itself refuse, so a mint that completes is gate-clean.",
+  "world_is": "The tool deletes its own output at the real mint, which is the stated guard, but the --dry-run path does not run the gate, so a clean dry run is not a clean mint. Workaround taken by this seat for the A2 order: the order text is the minter's own dry-run output plus ONE line `<risk>WORLD</risk>` in the record face and a `<proof_of_spec>` block in the worker face (the commit gate named its absence), and the cell is declared as a table row in the base decomposition; the order then passes the gate at commit. Not changed: the tool (a .tools file, not this seat's lane). Remedy for its owner: a --risk argument written into the record face, a <proof_of_spec> block, and the cell check made to read the table first column.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## MDPF_SECHIST-W25-S1 -- A2-AC1 cannot pass inside the one-commit instruction
+
+```json
+{
+  "id": "MDPF_SECHIST-W25-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~25",
+  "surfaced_at": "2026-10-15T23:59:29Z",
+  "one_line": "The order asks for ONE commit holding the edited file, the proof instance and the status flip, and asks that the flip follow only a PASS of A2-AC1; A2-AC1 diffs HEAD~1..HEAD, so it can pass only after that commit exists. Resolved by committing the code alone (fd448b14d2, where A2-AC1 reads A2-DIFF-OK paths=1); the instance and the flip follow in a second commit, so the one-commit instruction is not met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --short HEAD -> fd448b14d2 (code commit: 1 file, 1 insertion, 1 deletion; safe-commit msg-verify MATCH)",
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R7A2_CHECKS/r7a2_diff_check.py at fd448b14d2 -> A2-DIFF-OK paths=1 rc=0; the script docstring reads 'Compares HEAD~1 to HEAD (the worker makes ONE commit)'",
+      "org/missions/D8/MDPF/MDPF_SECHIST/task-orders/MDPF_SECHIST.TO-A2-cap-62.a2-backfill-cap-50-to.md: 'make ONE commit ... (the file, your proof_of_spec instance and this order's status flip)' and 'run AC1 last, after the commit'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A2-AC1 compares HEAD~1 to HEAD; the worker makes ONE commit holding the file, the proof instance and the status flip; the flip happens only when every criterion PASSES.",
+  "world_is": "A single commit cannot satisfy both clauses: AC1 is observable only after the commit that would carry the flip. The code commit is fd448b14d2 and AC1 passes there; the instance and flip are committed separately and the proof cites fd448b14d2 as the AC1 commit. After that second commit HEAD~1..HEAD is the flip commit, so a re-run of AC1 at the new HEAD reads 'target not changed'. No history was rewritten."
+}
+```
+
+## MDPF_SECHIST-W25-S2 -- safe-commit client-data check ABSENT on this box, not run for fd448b14d2
+
+```json
+{
+  "id": "MDPF_SECHIST-W25-S2",
+  "project": "MDPF_SECHIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~25",
+  "surfaced_at": "2026-10-15T23:59:29Z",
+  "one_line": "The commit gate's client-data check could not run: the hashed account-id list is absent at C:\\Users\\Test\\.opal\\account_id_hashes.txt, so commit fd448b14d2 was not checked for client account ids (a WARN, not a refusal).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for fd448b14d2: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).'",
+      "git show --stat fd448b14d2: one file, integrations/bloomberg/pipeline/etf_daily_pull.py, one changed line (BACKFILL_CAP 50 to 62); no account identifier is in the diff"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-commit's client-data-check examines the staged commit for client account ids, so a commit it accepts has been checked.",
+  "world_is": "On this box the check's input list is absent, so the check reported ABSENT (not empty) and did not verify fd448b14d2. The diff carries one integer constant and no account identifiers, so the gap is a box capability gap, not a content finding."
+}
+```

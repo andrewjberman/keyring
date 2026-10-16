@@ -4477,3 +4477,15 @@ Check IB239-1 (`deliverables/2.0.0_SA_COO~P2/checks/r239/p239_cells.py`, the r23
 | `IB-pr-608` | READ the 49financial addendum candidate v2: signed transplant plus the current D spans, build only, tests, compare with live | FWD-21 | SERVED | IB-pr-607 (drained) | PL6-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one bundle build; one worker (slot ~444) starts now.
+
+## 235. ROUND 7, WORKSTREAM ~PL (every exempted account carries exactly one of three SmartX evidence values; 2026-10-16 ~00:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half's revision note, msg 8774)
+
+The CTO answered the open question on revision 2 of the addendum's COO half: "a missing key reads the same as 'not checked'", so a read that SUCCEEDS and does not show the account must write `"evidence": "smartx_map_absent"` instead of no key; every exempted account of the 49 Financial reader carries exactly one of `smartx_map_present`, `smartx_map_absent`, `unread` (with a reason category), and Branch A reads exactly one value per account. Candidate `75c6902d` (IB-pr-608) writes no key in that third case and is VOID for the apply. One LOCAL build cell changes the listing hook's D span and the tests; the candidate is then rebuilt (a later read cell) and the COO half re-stated again; the CTO signs the new blob the turn it arrives.
+
+Check IB240-1 (`deliverables/2.0.0_SA_COO~P2/checks/r240/p240_cells.py`), dry-run at the base: AC1 to AC3 all FAIL (AC2 refuses to grade until the two new tests exist); the control (`control240.py`) passes the three positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-609` | the listing hook writes `smartx_map_absent` when the obtained map does not show the account; tests | FWD-21 | LOCAL | IB-pr-607 (drained) | PL7-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~445) starts now.
