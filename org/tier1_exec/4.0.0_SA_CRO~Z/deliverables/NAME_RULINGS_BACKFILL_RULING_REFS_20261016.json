@@ -1,0 +1,682 @@
+{
+ "_about": {
+  "what": "ruling_ref per name_rulings.json row listed in RULING_REF_UNRESOLVED.json (111 rows), for 2.0.0_SA_COO~O to backfill.",
+  "by": "4.0.0_SA_CRO~Z, registry owner lane, for 1.0.0_SA_CTO~Z msg 34907",
+  "record": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc",
+  "counts": {
+   "existing_record": 31,
+   "ruled_in_record": 79,
+   "not_ruled": 1,
+   "total": 111
+  },
+  "not_ruled": "ruling_ref null: write NO ruling_ref for that row; the record says why."
+ },
+ "rows": [
+  {
+   "name": "opal-data-ycharts",
+   "type": "S3_BUCKET",
+   "disposition": "NOT RULED",
+   "ruling_ref": null
+  },
+  {
+   "name": "opal-data-news-v2",
+   "type": "S3_BUCKET",
+   "disposition": "R-Z2",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "calculated-group",
+   "type": "IAM_GROUP",
+   "disposition": "R-Z4",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "astn/kimi/api-key",
+   "type": "SECRET",
+   "disposition": "R-Z3",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/events/inf-gold-dispatch-release-audit",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-700am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-845am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-1100am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-100pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-345pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-400pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-500pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-600pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-745pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-900pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-1100pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-100am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-300am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-api-500am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-rss-9am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-rss-12pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-rss-3pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-rss-6pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-rss-9pm",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-rss-1am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-rss-4am",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-trending-analysis-daily",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z5",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-ingestion-lambda-role",
+   "type": "IAM_ROLE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "NewsIngestionPolicy",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-news-lambda-role",
+   "type": "IAM_ROLE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-dashboard-processor-role",
+   "type": "IAM_ROLE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-dashboard-policy",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-sentiment-lambda-role",
+   "type": "IAM_ROLE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-sentiment-permissions",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "semantic-news-lambda-role",
+   "type": "IAM_ROLE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "semantic-news-permissions",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-trending-deps",
+   "type": "LAMBDA_LAYER",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-ingestion-scheduler",
+   "type": "LAMBDA",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-trending-analysis",
+   "type": "LAMBDA",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-news-layer3-curation",
+   "type": "LAMBDA",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "news-semantic-clustering",
+   "type": "LAMBDA",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "semantic-news-layer3-curation",
+   "type": "LAMBDA",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-news-ai-sentiment",
+   "type": "LAMBDA",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/lambda/news-ingestion-scheduler",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/lambda/news-trending-analysis",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/lambda/opal-news-layer3-curation",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/lambda/news-semantic-clustering",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/lambda/semantic-news-layer3-curation",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/lambda/opal-news-ai-sentiment",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-news-secrets-read",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "finbert-scoring-post-ingestion",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z5",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-data-news-av",
+   "type": "S3_BUCKET",
+   "disposition": "R-Z2",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-data-smartx-v2",
+   "type": "S3_BUCKET",
+   "disposition": "R-Z7",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-data-smartx",
+   "type": "S3_BUCKET",
+   "disposition": "R-Z7",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "portal-origin-verify-secret",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "cache-control-injector",
+   "type": "LAMBDA",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/lambda/cache-control-injector",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "security-sweep-comprehensive",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "security-sweep-dedicated-role",
+   "type": "IAM_ROLE",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "SecuritySweepComprehensive",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "security-sweep-comprehensive",
+   "type": "LAMBDA",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/lambda/security-sweep-comprehensive",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "portal-time-machine-invoke-downstream",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/aws/vendedlogs/pipes/opal-globgrph-projection-worker",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z6",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-data-pm",
+   "type": "S3_BUCKET",
+   "disposition": "R-Z2",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "opal-data-portfolio",
+   "type": "S3_BUCKET",
+   "disposition": "R-Z2",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "/opal/github-actions-runner",
+   "type": "LOG_GROUP",
+   "disposition": "R-Z6",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "ycharts-session-capture-schedule",
+   "type": "EVENT_RULE",
+   "disposition": "R-Z5",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "irpt-intake-poll",
+   "type": "SCHEDULE",
+   "disposition": "R-Z5",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "trade-security-identifiers",
+   "type": "DYNAMODB_TABLE",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-users",
+   "type": "DYNAMODB_TABLE",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "opal-trade-submissions",
+   "type": "DYNAMODB_TABLE",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-submission-lambda-role",
+   "type": "IAM_ROLE",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-submission-policy",
+   "type": "IAM_POLICY",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-auth-handler",
+   "type": "LAMBDA",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-authorizer",
+   "type": "LAMBDA",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-dashboard-api",
+   "type": "LAMBDA",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-identifier-cache",
+   "type": "LAMBDA",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-parquet-batch-export",
+   "type": "LAMBDA",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-submission-handler",
+   "type": "LAMBDA",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-workflow-handler",
+   "type": "LAMBDA",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "/aws/lambda/trade-auth-handler",
+   "type": "LOG_GROUP",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "/aws/lambda/trade-authorizer",
+   "type": "LOG_GROUP",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "/aws/lambda/trade-dashboard-api",
+   "type": "LOG_GROUP",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "/aws/lambda/trade-identifier-cache",
+   "type": "LOG_GROUP",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "/aws/lambda/trade-parquet-batch-export",
+   "type": "LOG_GROUP",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "/aws/lambda/trade-submission-handler",
+   "type": "LOG_GROUP",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "/aws/lambda/trade-workflow-handler",
+   "type": "LOG_GROUP",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "opal-data-trade-submissions",
+   "type": "S3_BUCKET",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-pipeline-ses-bounces",
+   "type": "SNS_TOPIC",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "trade-pipeline-ses-complaints",
+   "type": "SNS_TOPIC",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "opal-data-imo",
+   "type": "S3_BUCKET",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "opal-data-security",
+   "type": "S3_BUCKET",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "opal-data-security-access-logs",
+   "type": "S3_BUCKET",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "opal-data-security",
+   "type": "S3_BUCKET_POLICY",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "opal-data-security-access-logs",
+   "type": "S3_BUCKET_POLICY",
+   "disposition": "R9 (existing)",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/REGISTRY_ROUND9_RULINGS_20261009.md@cc85ec34f5c1a1555f6e8895a864b69f043e8f4e"
+  },
+  {
+   "name": "F49ServedAndSourceRead",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "NewsSemanticClusteringAccess",
+   "type": "IAM_POLICY",
+   "disposition": "R-Z1",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "unknown-topic",
+   "type": "SNS_TOPIC",
+   "disposition": "R-Z4",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "unknown-alarm",
+   "type": "CW_ALARM",
+   "disposition": "R-Z4",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "test-alarm",
+   "type": "CW_ALARM",
+   "disposition": "R-Z4",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "config/yahoo_safe_tickers.txt",
+   "type": "S3Key",
+   "disposition": "R-Z8",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "platinum/advisors/{*}/positions.json",
+   "type": "S3Key",
+   "disposition": "R-Z8",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "platinum/clients/{*}/concentration.json",
+   "type": "S3Key",
+   "disposition": "R-Z8",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "platinum/clients/{*}/mix_timeseries.json",
+   "type": "S3Key",
+   "disposition": "R-Z8",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "platinum/clients/{*}/summary.json",
+   "type": "S3Key",
+   "disposition": "R-Z8",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "platinum/clients/{*}/views.json",
+   "type": "S3Key",
+   "disposition": "R-Z8",
+   "ruling_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/NAME_RULINGS_BACKFILL_RULINGS_20261016.md@61a1df5f8d293bb704f29e81fb75ac243947b5bc"
+  },
+  {
+   "name": "bd_account_id",
+   "type": "hand-kept carrier",
+   "disposition": "CTO ruling s.1 (existing)",
+   "ruling_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPLGTW_CL7_NAMING_GATE_AND_MCPINDEX_AI_CLASSIFIED_20261016_Z.md@d97ea3ae82822d870d238ea80750e92b7878d912"
+  },
+  {
+   "name": "bd_account_number",
+   "type": "hand-kept carrier",
+   "disposition": "CTO ruling s.1 (existing)",
+   "ruling_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPLGTW_CL7_NAMING_GATE_AND_MCPINDEX_AI_CLASSIFIED_20261016_Z.md@d97ea3ae82822d870d238ea80750e92b7878d912"
+  },
+  {
+   "name": "fact_bd_allocation",
+   "type": "hand-kept carrier",
+   "disposition": "CTO ruling s.1 (existing)",
+   "ruling_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPLGTW_CL7_NAMING_GATE_AND_MCPINDEX_AI_CLASSIFIED_20261016_Z.md@d97ea3ae82822d870d238ea80750e92b7878d912"
+  },
+  {
+   "name": "market_value_profile",
+   "type": "INSTANCE_PROFILE",
+   "disposition": "CTO ruling s.1 (existing)",
+   "ruling_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPLGTW_CL7_NAMING_GATE_AND_MCPINDEX_AI_CLASSIFIED_20261016_Z.md@d97ea3ae82822d870d238ea80750e92b7878d912"
+  }
+ ]
+}
