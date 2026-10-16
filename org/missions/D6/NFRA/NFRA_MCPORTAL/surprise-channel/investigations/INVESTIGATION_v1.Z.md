@@ -2911,3 +2911,29 @@
   "notes": "Not repaired: the criterion text and pf5.AC1.sh are the issuer's (face section 2, bound 3). The worker records the invocation it ran, with the cd, so the instance is INVALID and the order stays open; the issuer decides whether the criterion or the check script carries the root."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T03:37:23Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S61",
+  "one_line": "Z-W35-S1 is DISARMED: the AC1 invocation now names its own cd (amendment d4d4311f15, on the worker branch at e70ad4d292), and the instance re-run under it is VALID.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W35-S1. The worker was right and the order was wrong: pf5.AC1.sh takes its root from the shell's cwd and a worker's shell resets to the primary checkout between calls, so the literal invocation graded the wrong tree. This is the second time in a day (Z-W33-S7 read it as a worker slip, Z-S60); the pattern is the issuer's, not the worker's. Repair: the criterion's invocation carries `cd C:/tmp/mp-pf-35 &&` (amendment commit d4d4311f15, no check script, expectation or path changed); the worker re-ran under it and the instance is VALID (worker commit d86d8c3f57, proof-of-spec-check.py rc=0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment d4d4311f15 on box/sitez and e70ad4d292 on wk-NFRA_MCPORTAL-35: the AC1 invocation text now begins `cd C:/tmp/mp-pf-35 &&`",
+      "worker report: AC1 PASS 71 of 71, fail 0, instance VALID rc=0, recorded invocation byte-equal to the criterion text"
+    ]
+  },
+  "spec_asserts": "Z-W35-S1 asserted that MP-pf-5 AC1 as written has no working-directory anchor, so the literal invocation read RESULT: FAIL from the primary checkout.",
+  "world_is": "True. Amended: the invocation anchors its own directory. The lesson for every later cell: a check that derives its root from cwd goes in the order with its `cd` written in the invocation.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-5."
+}
+```

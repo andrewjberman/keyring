@@ -85,6 +85,7 @@ absent, so AC1 FAILs as expected. One criterion, so no fourth. The 390 px screen
 The cue shows on the live page only after the mcportal bundle reaches the host (OG-ap-23).
 
 <status>pending</status>
+<status>complete</status>
 <round>3</round>
 <workstream>PF</workstream>
 <slot>~35</slot>

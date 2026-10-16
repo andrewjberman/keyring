@@ -84,6 +84,7 @@ THE SERVED ARM (item ii) is NOT a worker criterion: `pf4.served.sh` is the issue
 rides that run. S1 is NOT REALIZED until then. Risk is WORLD because the gate floors any `infra/` path at WORLD (a first cut at SERVED was refused); the worker's own work is offline tests.
 
 <status>pending</status>
+<status>complete</status>
 <round>3</round>
 <workstream>PF</workstream>
 <slot>~34</slot>
