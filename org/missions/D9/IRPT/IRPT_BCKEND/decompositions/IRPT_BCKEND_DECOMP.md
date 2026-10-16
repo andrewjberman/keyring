@@ -4489,3 +4489,15 @@ Check IB240-1 (`deliverables/2.0.0_SA_COO~P2/checks/r240/p240_cells.py`), dry-ru
 | `IB-pr-609` | the listing hook writes `smartx_map_absent` when the obtained map does not show the account; tests | FWD-21 | LOCAL | IB-pr-607 (drained) | PL7-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~445) starts now.
+
+## 236. ROUND 8, WORKSTREAM ~PL (the 49 Financial ADDENDUM 1 candidate rebuilt on the three-value evidence; 2026-10-16 ~00:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IB-pr-609 drained and the CTO half's revision note, msg 8774)
+
+IB-pr-609 is drained @1ff5e87e40 (IB240-1 AC1 to AC3 re-run PASS in the worker tree, instance VALID, 80 tests pass over the six files, three `ABSENT-AT-SOURCE-D` spans; every exempted account of the 49 Financial reader now carries exactly one of `smartx_map_present`, `smartx_map_absent`, `unread` with a reason; HEAD's file with the spans stripped equals the file at `e2700915d2`). The candidates built before it (IB-pr-606, `32d6dfcb`; IB-pr-608, `75c6902d`) are VOID for any apply. This round cuts the READ cell that rebuilds the 49financial candidate from IB-pr-595's signed transplant files plus the CURRENT D spans, BUILD ONLY, a NEW digest; the addendum pair's COO half is then re-stated on it (revision 3) and the CTO signs the new blob the turn it arrives.
+
+Check IB241-1 (`deliverables/2.0.0_SA_COO~P2/checks/r241/p241_cells.py`, the r239 check with the slot, ids and paths moved to this order), dry-run at the base: AC1 to AC3 all FAIL; the control (`control241.py`) passes the three positives and sixteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-610` | READ the 49financial addendum candidate v3: signed transplant plus the current D spans, build only, tests, compare with live | FWD-21 | SERVED | IB-pr-609 (drained) | PL8-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one bundle build; one worker (slot ~446) starts now.
