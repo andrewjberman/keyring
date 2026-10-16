@@ -5,7 +5,7 @@
                 the pre-act hUZY39qN nor the pull functions' (which still run hUZY39qN: the surgical zip reached the commentary function only).
 
   hoplog     R55-HOPLOG   the driven refusal (TO-APPLY-t55 leg A): the commentary function's log group holds the line
-                `HOP-FAILURE-REPORTED request_id=REQ-d47252fe74634d0c5cdd8067 hop=COMMENTARY code=COMMENTARY_DRAFT_REFUSED written=True`
+                `HOP-FAILURE-REPORTED request_id=REQ-d47252fe74634d0c5cdd8067 hop=COMMENTARY code=COMMENTARY_DRAFT_REFUSED written=true`
   hopabsent  R55-HOPABSENT the synthetic job row REQ-d47252fe74634d0c5cdd8067 (tenant 49financial) carries NO hop_failure (the restored state; a control that passes at the base and after leg B)
 
 Read-only: one policy read and three configuration reads (ap1), one log filter (hoplog), one get-item (hopabsent). Prints R55-<ARM>-OK or -FAIL <reason>.
@@ -77,7 +77,7 @@ def main():
 
 ROW_KEY = '{"tenant":{"S":"49financial"},"job":{"S":"REQ-d47252fe74634d0c5cdd8067"}}'
 HOP_LOG_GROUP = "/aws/lambda/outlook-global-commentary-draft-lambda"
-HOP_LINE = "HOP-FAILURE-REPORTED request_id=REQ-d47252fe74634d0c5cdd8067 hop=COMMENTARY code=COMMENTARY_DRAFT_REFUSED written=True"
+HOP_LINE = "HOP-FAILURE-REPORTED request_id=REQ-d47252fe74634d0c5cdd8067 hop=COMMENTARY code=COMMENTARY_DRAFT_REFUSED written=true"
 
 
 def hoplog():
