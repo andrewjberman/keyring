@@ -142,10 +142,13 @@
       "tailnet_name": "ms",
       "tailnet_claim": "held",
       "tailnet_source": "Muse (Z), the operator agent, by Andrew at the 1.0.0_SA_CTO terminal 2026-10-13 ~20:4xZ: it stamps agentbus messages from_tailnet=ms",
-      "role": "sender-only",
-      "role_text": "Muse, Andrew's operator agent on the tailnet: SENDS agentbus messages, never consumes; no inbound queue, no box, no placement, no seats.",
+      "role": "sender-with-inbox",
+      "role_text": "Muse, Andrew's operator agent on the tailnet: SENDS agentbus messages and, since Andrew-direct 2026-10-16 ~09:1xZ, RECEIVES them on its own inbound queue (inbound_queue below), which a bus send may address. Still no box, no placement, no seats, and it never consumes through a Claude Code watcher: it polls the queue itself.",
       "role_claim": "held",
-      "role_source": "Andrew-direct 2026-10-13 ~20:4xZ (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_204xZ_MUSE_SENDER_AND_COO_LIVE_ARMS.md)"
+      "role_source": "Andrew-direct 2026-10-16 ~09:1xZ, VERBATIM \"I'm here, give muse the inbox sqs\" (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_091xZ_MUSE_SQS_INBOX_SANCTIONED.md @bfe0b15980); this lifts the sender-only status set by Andrew-direct 2026-10-13 ~20:4xZ (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_204xZ_MUSE_SENDER_AND_COO_LIVE_ARMS.md)",
+      "inbound_queue": "agentbus-ajbdev-to-ms.fifo",
+      "inbound_queue_claim": "measured",
+      "inbound_queue_source": "aws sqs get-queue-attributes read-only by 0.0.0_AB_MSTR~Z 2026-10-16 ~08:3xZ (acct 313476888478, us-east-1): FIFO true, ContentBasedDeduplication true, SqsManagedSseEnabled true, retention 345600s, visibility 30s, depth 0; the queue is ms's own, created by ms, not by infra/aws/terraform/nfra-ctlpln-agentbus/; ms reports it polls every 90s and deletes each message after handling (bus 8f33ab71)"
     },
     {
       "name": "ldo-001",
@@ -158,6 +161,6 @@
       "role_source": "Andrew-direct 2026-10-13 ~22:3xZ via 0.0.0_AB_MSTR msg 108966 (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_223xZ_COMM_ASSIST_SENDER_STAMP_AND_J290.md)"
     }
   ],
-  "senders_contract": "A sender is a tailnet name the agentbus consumers ACCEPT as from_tailnet (lib/devices.py held_tailnet_names) without being a box: it is never in devices[], so no box list, placement value, queue lookup, SSH or crossbox sweep sees it.",
+  "senders_contract": "A sender is a tailnet name the agentbus consumers ACCEPT as from_tailnet (lib/devices.py held_tailnet_names) without being a box: it is never in devices[], so no box list, placement value, queue lookup, SSH or crossbox sweep sees it. A sender that carries an `inbound_queue` is also a bus DESTINATION: lib/devices.py inbound_queue() and tailnet_of() resolve it, so `agentbus-sqs.sh send <name>` can address it; it still does not appear in names(), placement or the declared device set.",
   "tailnet": "Every box carries its tailnet (Tailscale) name and address. The tailnet name is the cross-box identifier (Andrew-direct 2026-10-07): it rides every bus message beside the sender's serial, and every NEW per-box resource name (queue, IAM user, policy) takes it. Three boxes' register names equal their tailnet names; the laptop's is cloud-local, carried as an alias."
 }
