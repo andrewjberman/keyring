@@ -1,7 +1,7 @@
 """MDPF_DEMQUE round 9, DQ-t-73 criterion AC2 (read-only, no network): the real bbg_allowance.json carries the 2.5M-cell daily budget.
 BUDGT-OK when: budgets.daily_total is 2,500,000; surfaces A..E are 350,000 / 1,500,000 / 400,000 / 100,000 / 150,000 and sum to the total;
 budgets.e_request_cap is 5,000; every figure carries a claim of held or inferred; unit_weight is inferred; release_rule sends A, C, D and E to B with A
-first claim; ramp_steps lists the seven steps; and NOTHING served moved: history.ceiling is 5858 measured, bql.ceiling 2920000 measured.
+first claim; ramp_steps lists the seven steps; owners names A1 D1, A2 H1, A3 RV, A4 R1, A5 H1 (claim held, CTO msg 6849); and NOTHING served moved: history.ceiling is 5858 measured, bql.ceiling 2920000 measured.
 Else BUDGT-BAD <why>. Run from the worktree root."""
 from __future__ import annotations
 
@@ -47,6 +47,10 @@ def main() -> int:
         return bad("release_rule is %r" % (r,))
     if (b.get("ramp_steps") or {}).get("values") != STEPS:
         return bad("ramp_steps.values is %r" % ((b.get("ramp_steps") or {}).get("values"),))
+    ow = b.get("owners") or {}
+    want_ow = {"A1": "2.0.0_SA_COO~D1", "A2": "2.0.0_SA_COO~H1", "A3": "2.0.0_SA_COO~RV", "A4": "2.0.0_SA_COO~R1", "A5": "2.0.0_SA_COO~H1"}
+    if {k: ow.get(k) for k in want_ow} != want_ow or ow.get("claim") != "held":
+        return bad("owners are %r (claim %r), not %r held" % ({k: ow.get(k) for k in want_ow}, ow.get("claim"), want_ow))
     h = (a.get("history") or {}).get("ceiling") or {}
     if h.get("value") != 5858 or h.get("claim") != "measured":
         return bad("history.ceiling moved: %r" % (h,))

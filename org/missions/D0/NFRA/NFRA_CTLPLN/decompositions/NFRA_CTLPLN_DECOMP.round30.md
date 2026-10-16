@@ -1,0 +1,33 @@
+# NFRA_CTLPLN decomposition -- round 30: the lambda-source-map atomic split (stage 2), and the small batch (issuer 2.0.0_SA_COO~C; cut 2026-10-16)
+
+**Status: ISSUED in one issuance. FROZEN at the cut.** (A cell cut later in the round, once its dependency clears, is an AMENDMENT of this document stating its gate limb, as in rounds 22 and 24-29.)
+
+**Input.** `ledger/ROUND_ANALYSIS.round29.md` (1.0.0_SA_CTO) @ae11f384bd sections 2-3 and msg 109721; the CVO's `ADJUDICATION_v33.md` @27da2ba104; the issuer's `deliverables/2.0.0_SA_COO~C/L8_PACKET_ROUND29.md` @1f141a032b. **PRD:** v0.31. **Coverage entering the round (CTO table):** REALIZED 1, 3, 5, 8, 15, 16, 17, 18, 19, 23, 24, 25, 28 (13); ADVANCED 2, 4, 6, 7, 10, 11, 12, 14, 21, 22, 27 (11); PARKED 9; MOVED 13, 20, 26.
+
+## Cells
+
+| cell | what | serves | risk | issued to |
+|---|---|---|---|---|
+| `CT-ca-1` | **`lambda-source-map.json` stage 2: ONE atomic cell, ONE commit.** The consumer census is re-run at the cut (read-only mode added; `other=0`; any reader it names joins the set: C-S102), the 240 function files are generated from the map at the cell's base (240 of 240 equal), every atomic-set member switches (three Terraform `locals.tf` roots by `fileset`, the deploy path, the two gates, the four silent readers made to fail loud, the writers), `_last_deploy_recorded` is dropped, `battery_ib_rtf_1.py` is retired, the map is deleted, and `.owned-paths.yaml` gets exactly two lines (the grant re-pointed to `function-map/**`; `record-terraform-deploy.sh` owned by `0.7.0_AE_CloudOps` alone). The Terraform check is a PLAN (never an apply) on the three roots, run by the issuer before the merge. | FWD-7, FWD-8 (CTO round-29 rulings 1-3) | WORLD (the gate infers WORLD from the infrastructure paths: the deploy path and three production Terraform roots read the map; no apply, deploy or AWS call by the cell) | `0.9.0_WK_NFRA_CTLPLN~145` |
+| `CT-cb-1` | **The small batch.** `not_met=<n>` beside `graded=` on the ROUND-CLOSE line (C-S103), arm (f) of the crossbox split test compares `crossbox/1` files only (C-S104; it reads 12/13 at HEAD), and the SWEEP BEFORE MERGE clause in `org/ref/TASK_ORDER_PROTOCOL.md`. | the round-close checker, FWD-8's test, the L6 order template (CTO round-29 rulings 4, 5, 7) | LOCAL (a read-only checker, a test, a doc clause) | `0.9.0_WK_NFRA_CTLPLN~146` |
+
+## Driven by the issuer in this round (not cells)
+
+1. **The Terraform plans on the three roots, before `CT-ca-1` merges (CTO ruling 1, "the check").** Read-only `terraform plan` on `infra/aws/terraform/investor-reporting/{account-return-daily,reporting-gold-iso,reporting-publish-iso}` at the base and on the cell's branch; the resource-change summaries must be IDENTICAL (zero resource diffs from the change); never an apply. If a plan cannot run on this box (credentials, backend, a provider), the issuer says so and the CTO decides before the merge.
+2. **The drain re-check for `CT-ca-1`:** the map is byte-unchanged between the cell's base and the merge target (`git diff <BASE>..HEAD -- infra/aws/lambda/ci/lambda-source-map.json` empty); if a Lambda deploy merged mid-cell the cell regenerates before it merges.
+3. **After `CT-ca-1` merges:** the "can follow" cell (the other readers named in the proposal's section (d): `org/modules/graph/lambdamap_cli.py`, `comp_closure.py`, `extract_lambda_routes.py`, `rcg/bin/lexicon.py`, `rcg/bin/mark.py`, `estate_report_runner.py`, and the closed-round deliverables as the census names them) is cut by amendment; and the first real Lambda deploy after the merge is the live proof of the BLIND (a reader outside the repository), read by the issuer (CTO ruling 3).
+4. **FWD-11, 4, 12, 22** are the CVO's reads (CTO rulings 6 and 8): no act here. FWD-11 is graded this round on the laptop's overnight reboot record; only a NOT MET grade leads to a deliberate reboot, which waits on Andrew's word that his 2026-10-14 hold is spent.
+5. **Row `NFRA_CTLPLN-W89-S3`** (the lgic fence's Allow-append; remedy owner this seat): CLOSED on the CTO's read-back (msg 109726): applied by `0.7.0_AE_CloudOps~TF` in `ADVI_FIRMBKTS.TO-FB-n-1` (apply `b156a4a2b4`, code line `e411130091`); the record `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~TF/TRADEFORM_FENCE_RECORD.json` (read by this seat): 3 Allows added on `opal-data-inflection`, 1 on `opal-data-cottonwood`, 0 on `opal-data-49financial`, `post_apply_plan: No changes`, ledger closed.
+
+## Held and carried
+
+- **Held for a later round:** FWD-10 and FWD-21(a) (each needs its box CTO's word and a quiet window). **Andrew's acts:** FWD-2, FWD-6, FWD-14 (`b87f`), FWD-27.
+- **Carried with an OWNER and the CONDITION that un-parks each:** as in the round-24 to 29 decompositions, less `W89-S3` (closed above): `W8-S7`, `S9103`, `S9120`, `W12-S1`, `Z-S3` (before 2027-12-01), `S9125` (dell1, before 2026-12-31), `S9119`, `S9128`, `W121-S3`/`S4`.
+
+## Rule 24
+
+**Domain:** the CTO's round-29 section 3 enrichment list (items 1, 3, 4 cut; item 2 sequenced after item 1's merge; item 5 the CVO's; 6 and 7 held) against FWD-7, FWD-8 and the round-close checker. **Same grain; one intent; disjoint write surface:** `CT-ca-1` writes the map's folder, its consumers, its tests, the census script and `.owned-paths.yaml`; `CT-cb-1` writes `round-close-check.py`, the crossbox split test, the consumers of the ROUND-CLOSE line it must keep working, and one clause of `TASK_ORDER_PROTOCOL.md`; no file is in both (`CT-ca-1` names no ROUND-CLOSE consumer and `CT-cb-1` names no map reader). **State coherence:** nothing in this round deploys, pushes, applies or calls AWS from a cell; `CT-ca-1` is merged as ONE commit after the issuer's plans read no resource diff; the three kept Dell Denies, the placement tool and the checker's rules are untouched by it.
+
+## Dependency chains and fan-out
+
+Two chains, no edge: (1) the source-map split (the cell, the plans and the drain re-check, then the can-follow cell); (2) the small batch. `fanout: 2 of 2 chains, cap 8, reason: two cells with disjoint write sets and no data dependency; the can-follow cell waits on chain 1's merge and is cut by amendment.`
