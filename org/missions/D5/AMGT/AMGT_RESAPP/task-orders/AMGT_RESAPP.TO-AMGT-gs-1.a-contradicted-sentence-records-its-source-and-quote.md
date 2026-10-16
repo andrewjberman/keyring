@@ -79,7 +79,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** DIRECT-ACT: one cell, about 15 product lines in `grounding.py` plus tests, LOCAL; it runs no L2, no L4-R and no L8-L10 and its close is the issuer's one real run (the aifill suite plus the api serve test at the merged head, and `lib.research.aifill.revalidate` re-run over the 95 stored documents, unchanged at 95 of 95 refused). Proven satisfiable by the issuer's reference edit in a scratch copy (11 of 11); that edit breaks exactly one existing test, the one named above, which this order grants. The CTO's alternative reading of the row ("or the CTO rules null the contract", item (g)) is not taken; if the CTO later rules null, reverting is the one `_judge` branch and one assertion. The row's close: this seat reads the rule at the merged pin, then disarms `AMGT_RESAPP-D1-W452-S1` by a channel row.
 
-<status>pending</status>
+<status>complete -- 2026-10-16 by the issuer (2.0.0_SA_COO~R2): worker ~481 merged at b44008b3cd (build df2528dce8); instance VALID rc=0, re-run by the issuer in the worker tree: AC1 AIFILL GS-1 ARMS: YES (11 of 11), AC2 57 passed. Drain check at the merged head: aifill suite plus api serve test 823 passed, ruff clean. Real run: revalidate over the 95 stored documents unchanged, checked 95 passed 0 refused 95 (deliverables/2.0.0_SA_COO~R2/round107_aifill_close/REVALIDATE_REAL_RUN_20261016.json). Row W481-S1 (a punctuation-only quote of 12 or more characters would match the empty string; the worker applied the SUPPORTED path's non-empty guard) is an OBSERVATION, accepted, no act.</status>
 <round>107</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~481</slot>

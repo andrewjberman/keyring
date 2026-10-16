@@ -9682,5 +9682,73 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W148-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~148",
+      "surfaced_at": "2026-10-16T02:07:00Z",
+      "one_line": "AC2 expects 110 passed; 10 tests in test_ai5_batched_silver_append.py and test_at1_batched_listing_upload.py pin the once-per-source silver prefix read, which known_db mode removes by design",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~W1",
+      "spec_asserts": "HVST-cb-12 proof AC2: the 110-test set reads 110 passed at the base count; a test outside the cell that fails after the change is reported by name and reason. HVST-cb-12 1.c: in known_db mode the HarvestUploader reads no silver part from S3.",
+      "world_is": "After a14134ea40 the AC2 set reads 100 passed, 10 failed. All 10 are read-count assertions that stop at their first line: test_ai5_batched_silver_append.py lines 143, 151, 161, 181 and test_at1_batched_listing_upload.py lines 295, 306, 327, 363, 380, 393. Each expects one silver_latest prefix read per source and gets an empty list, because the read is removed by design. The 10 cannot pass unless HarvestUploader reverts to the S3 read. Full lib/opal_data_harvest: 877 passed, 11 failed (these 10 plus the known sparse test_one_writer_for_both_channels). lib/research/harvest: 509 passed, 2 failed (test_m1_move, test_m2_move), the base counts.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_ai5_batched_silver_append.py assertions at lines 143, 151, 161, 181 (base 18b728a307, read at a14134ea40)",
+          "lib/opal_data_harvest/test_at1_batched_listing_upload.py assertions at lines 295, 306, 327, 363, 380, 393 (base 18b728a307, read at a14134ea40)",
+          "lib/opal_data_harvest/uploads.py HarvestUploader known_db call sites at a14134ea40"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W148-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~148",
+      "surfaced_at": "2026-10-16T02:07:00Z",
+      "one_line": "The cell's wrapper return of silver_append would put written_hashes (raw key values, a date) into the run receipt, which json-dumps it; the wrapper returns the three keys instead",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cb-12 1.c: every attempt calls silver_append(known=known); ONLY AFTER a call returns, call silver_known.note and return result.",
+      "world_is": "HarvestUploader.run writes each uploaded item's silver dict into last-harvest-upload.json through atomic_json (json.dumps). silver_append's written_hashes holds (record_key_tuple, hash) and a listing_hit key carries a date, so the receipt write raised TypeError: Object of type date is not JSON serializable on the first run of test_at1. Deviation at a14134ea40: the wrapper returns result minus written_hashes in both modes; note() still receives written_hashes before the return.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/uploads.py HarvestUploader.run receipt write atomic_json(self.root / 'last-harvest-upload.json', receipt) (base 18b728a307)",
+          "lib/opal_data_harvest/storage.py:15 json.dumps of the receipt value (base 18b728a307)",
+          "pytest run before the strip: test_no_column_the_per_page_path_kept_is_lost_across_pages raised TypeError at the receipt write"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W148-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~148",
+      "surfaced_at": "2026-10-16T02:07:00Z",
+      "one_line": "Direct silver_append callers now receive written_hashes; whether their results reach a JSON writer is unverified, and written_hashes is not JSON-safe for a date key",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~W1",
+      "spec_asserts": "HVST-cb-12 1.a: the default path fills written_hashes too, so callers see one shape.",
+      "world_is": "At a14134ea40 direct callers of silver_append receive the new key and place their return in an output: bright_data_serp.py lines 157-163 (out['silver']), social/collect.py lines 948 and 1221 ('silver': harvest_silver_result), filings.py line 244 (receipts[source]), lusha.py line 159, bloomberg.py line 300, corpus/typed.py line 678. Not verified: whether each output reaches a json dump. A date key in written_hashes raises TypeError at such a dump, as it did in the uploader receipt.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "lib/research/harvest/bright_data_serp.py lines 157-163 at a14134ea40",
+          "lib/research/social/collect.py lines 948 and 1221 at a14134ea40",
+          "lib/research/harvest/filings.py line 244 and lib/research/harvest/lusha.py line 159 at a14134ea40"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

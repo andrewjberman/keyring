@@ -28340,3 +28340,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Corrects D1-S33 and msg 6144 on W451-S1 only. The no-header edge is carried, not built here: the CTO's round-107 list item 3 named the rung, which exists; whether a magic-byte rung for a typeless body is wanted is the CTO's call and I recommend NO (inert, as measured). W452-S1 is a real open build and is cut as its own order."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W481-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~481",
+  "surfaced_at": "2026-10-16T02:11:59Z",
+  "one_line": "AMGT-gs-1 order states the CONTRADICTED quote rule as a bare substring test of the normalised quote; a quote of 12 or more characters that normalises to nothing (punctuation only) passes that test, so I added the same non-empty guard the SUPPORTED path carries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-gs-1 change 2: return the CONTRADICTED source and quote only when the quote is a str of at least MIN_QUOTE characters and _norm(quote) is a substring of norm_full[k - 1]; and the order requires the same mechanical check a SUPPORTED quote gets.",
+  "world_is": "The SUPPORTED branch of _judge at lib/research/aifill/grounding.py (line 180 at 18c2a2607a) rejects an empty normalised quote with 'if not nq or nq not in'; the empty string is a substring of every text, so the literal CONTRADICTED condition would record a punctuation-only quote as verified. The module now reads 'if nq and nq in norm_full[k - 1]' on the CONTRADICTED branch (line 170). Stated intent and literal condition differ only on this input.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/grounding.py line 180 at 18c2a2607a: 'if not nq or nq not in norm_full[k - 1]:' (SUPPORTED branch)",
+      "lib/research/aifill/tests/test_grounding_contradicted.py test_a_punctuation_only_quote_of_twelve_or_more_characters_records_none: quote of 16 exclamation marks records source None and quote None",
+      "same file lands on the same pattern as surprise AMGT_RESAPP-D1-W452-S2 (gr-3 observation on the SUPPORTED branch)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observation only: no served output changes, and the CONTRADICTED record is never a supporting source. Carried so the CTO can rule whether the order's literal condition should name the non-empty guard."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S39",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T02:18:00Z",
+  "one_line": "W452-S1 DISARMED: a CONTRADICTED sentence now records the list index of the shown source and a quote checked against that source's full text (AMGT-gs-1, merged b44008b3cd); the contradicted sentence stays dropped. W481-S1 ruled an OBSERVATION, no act.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W452-S1 (ARMED in REMEDIATION_v44): a CONTRADICTED sentence is recorded with source null and quote null, so the record does not name the source that contradicted it; remedy: the record carries the contradicting source index and quote; close when this seat reads that rule at the merged pin.",
+  "world_is": "At merged head b44008b3cd, lib/research/aifill/grounding.py _judge returns, for a CONTRADICTED row whose label names a shown source and whose quote (12 or more characters, with a non-empty normal form) is in that source's normalised full text, source = usable[k-1]['index'] (the list index) and the quote; any other CONTRADICTED row keeps source null and quote null; the verdict stays CONTRADICTED and the sentence stays out of the block text. SYSTEM asks for both. Read by this seat in the worker diff and at HEAD. check_gs1_contradicted.py: AIFILL GS-1 ARMS: YES (11 of 11) (base 8 of 11). test_grounding.py plus the new test_grounding_contradicted.py: 57 passed. Drain at the merged head: aifill suite plus api serve test 823 passed (813 before, 10 new), ruff clean. revalidate over the 95 stored documents unchanged: checked 95, passed 0, refused 95 (the stored documents carry no record). NOT MEASURED: a real model reply naming a contradicting source; the stub replies prove the mechanism, and the first live grounding run after the hold's re-read will be the real sample. W481-S1: a punctuation-only quote would match the empty string; the worker added the same non-empty guard the SUPPORTED path has; INERT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 18c2a2607a 06ff4c4f3c -- lib/research/aifill/grounding.py (read in full, 9 added lines)",
+      "PYTHONPATH=. python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round107_aifill_prep/checks/check_gs1_contradicted.py -> AIFILL GS-1 ARMS: YES (11 of 11), re-run by this seat in the worker tree",
+      "python -m pytest lib/research/aifill lib/research/api/tests/test_ai_fill_serve.py at the merged head -> 823 passed; ruff check lib/research/aifill -> All checks passed",
+      "deliverables/2.0.0_SA_COO~R2/round107_aifill_close/REVALIDATE_REAL_RUN_20261016.json (checked 95, passed 0, refused 95, missing 0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CTO's alternative reading of W452-S1 (rule null the contract, round-107 item (g)) was not taken and none was ruled; reverting is the one _judge branch and one assertion. Closes D1-S38's open line: W451-S1 needs no cell."
+}
+```
