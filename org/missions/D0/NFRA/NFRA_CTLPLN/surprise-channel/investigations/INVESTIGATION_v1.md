@@ -12823,3 +12823,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Recorded for the CTO and the issuer. Not fixed here: the suite is outside this order's paths. The worktree is now clean of this change; the file was not committed."
 }
 ```
+
+## NFRA_CTLPLN-W143-S1 -- round-close-check counts a grade of record of NOT MET as GRADED, so a judgment criterion whose record says NOT MET does not hold the close
+
+```json
+{
+  "id": "NFRA_CTLPLN-W143-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~143",
+  "surfaced_at": "2026-10-16T12:47:08Z",
+  "one_line": "round-close-check reads a grade of record of NOT MET as GRADED: the criterion counts in graded=, and the verdict is set only by ungraded and self-graded counts, so the close can read MAY-CLOSE over a criterion whose record says NOT MET. The tool's own BLIND line says it sees that a grade exists, not what it says; the cross-box call said the tool 'credits NOT MET'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round29_grade_of_record.py at 3b09f3ec39: arm (b) older MET then newer NOT MET -> JUDGMENT TO-1 AC3 -> GRADED (adjudication row TEST_PROJ-C-S2 by 3.0.0_SA_CVO (verdict NOT MET)); GRADE-OF-RECORD arms=8/8 ok=True",
+      ".tools/round-close-check.py at 3b09f3ec39, check(): ok = rv[\"state\"] == \"present\" and n_u == 0 and n_s == 0 and bad_proofs == 0; a GRADED state increments n_g with no test of its verdict"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "XB-20261016T121809Z-95c2 (site Z): grade_criterion must take the grade of record so that a criterion reads as the record's verdict; the call names the failure as the checker crediting NOT MET from the first row. The worker face bounds the cell to the grade of record and keeps the return shape.",
+  "world_is": "A grade of record NOT MET reads GRADED with '(verdict NOT MET)' and counts in graded=. Changing that is a rule about what the close accepts, which the cell did not name, so it was left as it is; the CVO decides whether a NOT MET record should count as ungraded.",
+  "notes": "Not changed by CT-be-1. The verdict rule is the CVO's to set; the test arm (b) pins the reading of the record, not the close rule."
+}
+```
+
+## NFRA_CTLPLN-W143-S2 -- the worktree's sparse checkout omits org/tier0, so test_round_close_and_research reads 23/24 until org/tier0 is added (research-owed.py --selftest needs org/tier0/STAKES_MATRIX.md)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W143-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~143",
+  "surfaced_at": "2026-10-16T12:47:08Z",
+  "one_line": "The sparse checkout that wk-provision cut for this worker omits org/tier0; the neighbouring suite test_round_close_and_research then reads CLOSE-GATES-TEST cases=23/24 ok=False, because research-owed.py --selftest cannot open org/tier0/STAKES_MATRIX.md. The worker added org/tier0 to its own sparse list and the suite reads 24/24.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round_close_and_research.py in the worktree before git sparse-checkout add org/tier0: CLOSE-GATES-TEST cases=23/24 ok=False; FAIL research-owed.py --selftest, ERROR: [Errno 2] No such file or directory ... org\\tier0\\STAKES_MATRIX.md",
+      "git sparse-checkout add org/tier0 (rc=0), then python .tools/tests/test_round_close_and_research.py: CLOSE-GATES-TEST cases=24/24 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face's sparse checkout holds .tools/, lib/, the project folder, org/modules/graph/, org/devices/, infra/logic/registry/, org/standards/ and the order's paths; a folder the run needs and the sparse list lacks is added with git sparse-checkout add and named in the report.",
+  "world_is": "org/tier0 was absent from the sparse list at the cut, and a neighbouring suite that imports round-close-check reads 23/24 with that folder missing. The failing case is research-owed.py, not the checker, and it printed an ERROR rather than a short result. Whether the provisioner should carry org/tier0 for a round-close suite is the owner's call.",
+  "notes": "Named in the worker report. The cell did not change research-owed.py or the suite; the sparse list in this worktree was widened by one folder."
+}
+```
