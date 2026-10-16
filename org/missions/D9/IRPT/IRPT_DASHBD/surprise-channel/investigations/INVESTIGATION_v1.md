@@ -19925,3 +19925,143 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "ARMED with owner ~F2 as the CTO asked. Next acts of this seat: a per-firm census of the custodian action and type codes and a proposed Opal vocabulary with its four-postulate record (the taxonomy law), then the contract."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W701-S1 -- the register brief named for the fact_trn columns and the flow classes names neither
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "TO-DB-f-701 names the register brief as the holder of the 49 Financial fact_trn columns and of the transaction flow classes; at HEAD that brief holds neither, and the columns and the seven flow classes sit in code and in the reporting dashboard backend brief.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/briefs/irpt-holdings-basis-silver-inventory-brief-20260928.md (grep for trn, transaction and flow at the worktree HEAD: no fact_trn column name and no transaction flow class)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json lines 44 to 96 (the declared transaction columns)",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78 (flow_class, seven values)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-f-701 steps 1 and 4 name docs/briefs/irpt-holdings-basis-silver-inventory-brief-20260928.md as the record of the fact_trn column list and of the brief's transaction flow classes.",
+  "world_is": "The register brief holds no fact_trn column name and names no transaction flow class. The columns are declared in sources.json and read by account_return_daily.py (transaction_columns, lines 510 to 532). The seven flow_class values are at docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78. The WORKER FACE was run against the named sources; the record cites the true locations.",
+  "notes": "Cell DB-f-701 answered by RD_FWD5_FIELDS_R120.json (brief_flow_classes file and line 78)."
+}
+```
+
+
+## IRPT_DASHBD-D2-W701-S2 -- the flow map of four values is not located as a list; the 49 Financial, ledger and Orion counts differ
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "The earlier read's flow map of four values is not found as a list in the files read: the 49 Financial final classes are five, the ledger classes named by the reporting brief are five, and the Orion bucket set is four.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 230 to 242 (FINAL_BY_PARTITION: five final values)",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (four buckets: NNA, Internal, Return, CorporateAction)",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 62 (the flow ledger classes, five values)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round's first read counted seven flow classes in the brief against four in a flow map.",
+  "world_is": "The seven are at the reporting dashboard backend brief line 78. The four-value set is not a list of transaction flow classes in any file read: the Orion taxonomy has four buckets; the 49 Financial final classes in FINAL_BY_PARTITION have five values; the flow ledger named at brief line 62 has five. The count of the flow map cannot be confirmed from the files read and is left to the contract cell.",
+  "notes": "No value is guessed. RD_FWD5_FIELDS_R120.json records the seven with its line."
+}
+```
+
+
+## IRPT_DASHBD-D2-W701-S3 -- no file defines Opal's action or type words, and no firm's code names an action field
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "The FWD-5 ACCEPT wants action and type in Opal's own words, but no file defines those words and no firm's code carries a field named action, so the mapping of each firm's fields to them is a ruling the contract cell needs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~701/RD_FWD5_FIELDS_R120.json (opal_vocab_home, claim absent, and the three firms' vocabulary_where)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md line 292 (names the Opal action and type vocabulary without listing it)",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78 (action and txn_type named as Opal closed enums without values)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-5 ACCEPT: date, asset, action, type, symbol, units, price, amount and custodian are shown in Opal's own words for the action and type, not the custodian's codes; any enum carries its taxonomy-law record.",
+  "world_is": "Opal's action and type words are defined in no file read (words searched over org/standards, docs and portal/src, with denominators in the record). The code names no action field: 49 Financial reads tr_cd, sb_cd and tran_srcde; Cottonwood reads Transaction Type and External Flow; Inflection reads transTypeId and transactionDescription with a bucket per type in the Orion taxonomy. The contract cell must take the vocabulary through its rule-24 record; this read proposes none.",
+  "notes": "A value-enum proposal arrives with its four-postulate record and a token census; none was written here."
+}
+```
+
+
+## IRPT_DASHBD-D2-W701-S4 -- Orion type count: the brief says 47 type ids; the taxonomy holds 48 descriptions keyed by text, and the repo names four numeric ids
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "The brief's count of 47 Orion type ids does not match the 48 type_desc entries of the Orion taxonomy, which key by description text, and the numeric id map was not found in the files read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md line 60 (47 type ids)",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (48 type_desc entries, each with a bucket)",
+      "data/inf/manual_api/pull_inflection_transactions_rest.py lines 38 and 99 (four numeric transTypeId values named; the field)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The reporting dashboard backend brief says the Inflection transactions carry 47 type ids.",
+  "world_is": "The Orion taxonomy holds 48 entries (distinct type_desc text, bucket NNA 9, Internal 19, Return 17, CorporateAction 3). The pull file names four numeric ids in its docstring. The mapping from numeric transTypeId to description is not in the files read, so the id count cannot be confirmed here.",
+  "notes": "The type_codes list in RD_FWD5_FIELDS_R120.json carries the 48 descriptions as the repo holds them."
+}
+```
+
+
+## IRPT_DASHBD-D2-W701-S5 -- the classification table sat outside the worker cone; one folder added by sparse checkout
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W701-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~701",
+  "surfaced_at": "2026-10-16T01:29:12Z",
+  "one_line": "The 49 Financial code table named by sources.json lies under the CRO deliverables folder, which the worktree's sparse cone did not carry; the worker added that one folder with git sparse-checkout add and read the schema file from HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/sources.json line 98 (classification_table path)",
+      "git sparse-checkout list at the worktree (fifteen folders; org/tier1_exec was absent)",
+      "org/surprise_channel/schemas/investigation_item.schema.json read with git show at HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-f-701 WORKER FACE: data/, infra/aws/lambda/investor-reporting/, docs/briefs/ and org/critical_paths/ are materialized; the path a missing folder needs is added by git sparse-checkout add.",
+  "world_is": "The code table is named at a path outside those four folders. The worker ran git sparse-checkout add for org/tier1_exec/4.0.0_SA_CRO/deliverables only. No tracked file changed and no file was edited outside the grant.",
+  "notes": "The materialized set now also carries that one CRO deliverables folder in the worktree."
+}
+```
