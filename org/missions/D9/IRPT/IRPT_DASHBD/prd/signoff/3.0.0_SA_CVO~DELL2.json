@@ -1,12 +1,12 @@
 {
   "prd": "IRPT_DASHBD_PRD.md",
-  "prd_version": "v0.16",
-  "prd_pin": "72ffcc4be2cefc6bcc3a0c7b7899afb89f4fc9a1",
+  "prd_version": "v0.17",
+  "prd_pin": "4fd78cac820b8519800200771fe01b927417b0c7",
   "half": "ratified-text",
-  "half_hash": "34a194ce9c4c1ab19112fb1047d3e0262be6a896f3b0923e5b86e92bec3d0176",
+  "half_hash": "6e1a4d87c9d5a7e5d3cc93bc2fd899641a45899fb2a2ee14f54a351d10fc3201",
   "endpoint_hash": "ea7a349071d47df1aa7a64fdde92a3b67e8dc36afef3083a3b1988523db8561c",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_PRD_v0.16_RATIFIED_TEXT_REVIEW_20261016.md@e5e0284304",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_PRD_v0.17_RATIFIED_TEXT_REVIEW_20261016.md@5de75f8f47",
   "signed_by": "3.0.0_SA_CVO~DELL2",
-  "signed_at": "2026-10-16T00:21:48Z"
+  "signed_at": "2026-10-16T00:34:57Z"
 }
