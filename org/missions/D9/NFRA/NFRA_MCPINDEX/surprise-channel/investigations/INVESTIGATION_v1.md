@@ -9188,6 +9188,150 @@ carries none.
     "spec_asserts": "MX-r-15 A1 and A3 asserted that the depth claims hold until the ~13:30Z daily publish, and that a deploy-only commit of the catalog blob alone ships exactly one file.",
     "world_is": "The daily publish ran before 11:35Z and the yield-curve object re-stamps near 23:01Z, so a depth claim is a point-in-time read; v3 was re-measured after the publish and graded against live AWS before it shipped. The deploy tree's scopes.json is the file the host already serves under commit B.",
     "dismissal_reason": "Z-S126: ruled B at MX-r-15 A2 and applied; the host serves the registry copy it served before. Z-S127 and Z-S128: the stale-measurement class is cured for this release by v2 and v3 and carried to the round-18 analysis as the enrichment 'stop pinning depth claims that age with each publish'; emit_final.sh now grades the candidate with r13.AC3 against live AWS first. The issuer is disarm_owner of all three."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T14:18:19Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-c-26 AC1 cannot pass as written: its FROZEN clause forbids any open item containing FROZEN on the live rows, while the face's required open item text for every live row contains the word FROZEN (the frozen-copy item).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO face item 1, open_items list: 'the FROZEN copy of the same name is opal_data_assets_silver_49financial_<t>_silver_legacy in opal-data-assets: do not read it' (required text, exactly these items).",
+        "C:/tmp/wk-mx19-49/org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round19/checks/c26_check.py ac1(): the live-row test is `not any(\"FROZEN\" in str(x) for x in (e.get(\"open_items\") or []))`.",
+        "Measured at 2026-10-16T14:18:19Z: c26.AC1.sh RESULT FAIL; the four live entries each carry 1 FROZEN item and pass prefix, address, read_tool, retired, gap_owner; freshness and group-map sub-checks ok."
+      ]
+    },
+    "spec_asserts": "The face requires the live rows' open_items to contain the frozen-copy item with the word FROZEN, and c26_check.py ac1 requires no open item containing FROZEN on those rows.",
+    "world_is": "Both are literal and cannot hold together. The face's text was written as the spec; the grader's clause refuses it. Worker ~49 kept the face's text and reports AC1 FAIL. A lowercase 'frozen' would satisfy the literal grader but rewords the exact text, so it was not used. Issuer to rule the text or the clause.",
+    "notes": "Filed by worker ~49 for the issuer's ruling; the order stays open on AC1 and AC3 until then."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T14:18:19Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-c-26 AC3's pytest line cannot pass in this worktree: tests/test_c_group.py::DeclaredBucketSource::test_every_declaration_in_the_committed_members_file_proves_its_source needs the gateway's app/ bucket-source files, which amendment A1 (cone + app/refs only) does not materialize.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured at 2026-10-16T14:18:19Z in the worktree after amendment A1: `python -m pytest -q -p no:cacheprovider tests/test_address_field.py tests/test_c_group.py tests/test_silver_table_grain.py` -> 1 failed, 54 passed; the failure: 'tool_index: copy_site_file_to_s3 -- bucket_source app/integrations/advi_billing/site_to_s3.py:168 is not a file under infra/aws/ec2/opal-gateway'.",
+        "git sparse-checkout list at 2026-10-16T14:18:19Z: .tools, infra/aws/ec2/opal-gateway/app/refs, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows.",
+        "Before the amendment the same line failed 2 tests (test_a_pending_tool_declared_in_the_buckets_list_is_read and this one); amendment A1 cleared the first."
+      ]
+    },
+    "spec_asserts": "The face's step 0 control and AC3 require tests/test_c_group.py to pass, with the sparse set limited to workflows, lib, .tools and the amended app/refs cone.",
+    "world_is": "The test resolves bucket_source paths under infra/aws/ec2/opal-gateway/ and the sparse cone does not hold the app/ tree those paths name. Worker ~49 did not widen the cone further (the order and A1 bound it). AC3 reports FAIL with this measurement. Issuer to amend the cone or the AC3 line.",
+    "notes": "validate_catalog_v02.py runs rc 0 with no FAIL line under the amended cone (measured the same session), so the failure is the one test above."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T14:18:19Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The trading calendar on this box has no pandas_market_calendars; lib/trading_calendar answers from its hardcoded NYSE fallback and prints a WARN on every run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured 2026-10-16T14:18:19Z: `python .scratch/count_listings.py` and c26.AC1.sh both print 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027'."
+      ]
+    },
+    "spec_asserts": "The freshness block takes trading_days_behind_t1 from lib.trading_calendar as the trading-day frontier.",
+    "world_is": "The value came from the fallback calendar, which covers 2010-2027. The four values (5, 0, 5, 2) match the fallback's answer on the measured dates; no pandas-backed run was made."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T14:18:19Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The live silver/transactions/ prefix holds a non-dated _README.txt (53 bytes) that the face's open items do not name; the new row's object count includes it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~49/listings/silver_transactions.txt: 'silver/transactions/_README.txt' 53 bytes, LastModified 2026-01-08 19:38:00 (local EDT); 1931 lines = 1930 dated + 1 non-dated."
+      ]
+    },
+    "spec_asserts": "The face lists one non-dated item, for unrealized only (unrealized_gain_loss.parquet), and says transactions has exactly the three face items.",
+    "world_is": "silver/transactions/ also holds a non-dated _README.txt. The row carries the face's three items unchanged and records objects 1931 (including it) and dated_parts 1930 in the listing summary."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T14:18:19Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "gen_silver_rows.py builds its entries from CRO contracts through a TOP_KEYS allowlist that has no address key, so the face's conditional change to it was not made; a regeneration of an address-carrying entry would drop the field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mx19-49/workflows/atom_decomposition/gen_silver_rows.py: main() writes `clean` from build_full()/apply_firm() for each CRO contract entity; TOP_KEYS at lines 121-123 lists no `address`; no address map input exists.",
+        "C:/tmp/wk-mx19-49/workflows/atom_decomposition/emit_catalog_v02.py: silver_catalog_row() carries SILVER_TABLE_OPTIONAL_FIELDS, which now holds `address`."
+      ]
+    },
+    "spec_asserts": "The face says to carry address to the emitted row 'wherever firm is carried ... and gen_silver_rows.py if it builds table rows from entries'.",
+    "world_is": "gen_silver_rows.py builds entries from contracts, not from entries, and has no address source, so it was left unchanged. The emitter's row builder carries the field. The four live entries are not contract-generated, so no present row is affected."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T14:28:58Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The naming gate RAISES on the eight legacy prefix lines the face changed to blackdiamond/49financial/silver_legacy/<t>/ ('silver_legacy' is not a tier; '49financial' is a hand-kept carrier outside every permitted context). The gate calls a RAISE a rule or registry defect, not a refusal; the commit landed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Commit 0d0063a308 safe-commit log (deliverables/0.9.0_WK_NFRA_MCPINDEX~49/commit_ii.log): '[naming-gate] NAMING RAISE ... opal_data_assets_silver_49financial_allocations_silver_legacy.yaml:2 blackdiamond/49financial/silver_legacy/allocations/ -> (rule or registry defect)'; 8 RAISE lines in total.",
+        "The same log: '[naming-gate] NAMING CONFORMANT ... opal_data_bd_silver_allocations.yaml:2 silver/allocations/' (the four new live rows graded conformant as the registered legacy address)."
+      ]
+    },
+    "spec_asserts": "The face says the naming gate refuses a NEW hand-kept firm or product token; the legacy prefix values are mandated by the face and the CTO ruling (msg 35038).",
+    "world_is": "The gate does not refuse the eight legacy prefix changes, but it raises on each of them as a registry defect, and it reads the new live rows against the legacy address registry. Worker ~49 wrote the prefix as the face specifies and did not add a registry row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W49-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~49",
+    "surfaced_at": "2026-10-16T14:28:58Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The client-data check could not run on this device: the hashed account-id list is absent, so the commits in this order were not checked for client account ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Commits 87e9436d63 and 0d0063a308 safe-commit logs: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'.",
+        "The committed entries carry the column name account_id and no account numbers; the listings are counts and dates only."
+      ]
+    },
+    "spec_asserts": "The commit gate checks each commit for client account ids when the hashed list is present.",
+    "world_is": "The hashed list is not at the expected path on this box, so the check printed WARN and passed. The order's content was reviewed by hand for account numbers instead."
   }
 ]
 ```
