@@ -20653,3 +20653,27 @@ name the one known failure instead of silently inheriting it.
     "notes": "Relayed from the Bloomberg seat's handover (its section 2); filed by this seat because no row carried it. Remedy, the tool's owner (built under NFRA_MCPINDEX MX-q-3, served by this gateway): map an off-catalog key to 404 or a non-authorization 4xx, or add an error_class field consumers branch on. Not ARMED: nothing is mis-served; the hazard is a mis-read."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S176",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T12:20Z",
+    "one_line": "round-close-check credits each judgment criterion to the FIRST CVO-kind grading row in file order, so a later superseding grade is invisible: TO-OG-ap-14 AC3 reads NOT MET (Z-C-S76, v29) after Z-C-S79 (v32, MET) adjudicated it, and round 37 would close on the withdrawn verdict.",
+    "class": "OBSERVATION",
+    "spec_asserts": "A round's per-criterion verdict is the CVO's current grade; a later grading row that adjudicates an earlier one replaces it.",
+    "world_is": ".tools/round-close-check.py:535-554 grade_criterion iterates adjudication then investigation rows and returns GRADED on the first CVO-kind non-doer row that grades the criterion. At ~12:1xZ 2026-10-16 it printed 'JUDGMENT TO-OG-ap-14 AC3 -> GRADED (adjudication row NFRA_OPLGTW-Z-C-S76 ... (verdict NOT MET))' with Z-C-S79 (MET, adjudicates Z-C-S76) present in ADJUDICATION_v32.Z.md.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/round-close-check.py:518-557",
+        "round-close-check --project NFRA_OPLGTW --round 37 output at ~12:1xZ",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/adjudications/ADJUDICATION_v29.Z.md (Z-C-S76), ADJUDICATION_v32.Z.md (Z-C-S79)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Remedy, the tool's owner: prefer the latest grading row (by surfaced_at or file version), or let a row whose adjudicates names an earlier grading row replace it, and print the superseded row id. Until then a CVO re-grade must be read from the adjudication file, not from the checker's JUDGMENT line. Not ARMED: verdicts are recorded correctly; the checker mis-reports which one is current."
+  }
+  ```
