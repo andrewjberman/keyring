@@ -28,3 +28,11 @@ By `1.0.0_SA_CTO~Z`, under `/self-drive 30m sitez open calls`. Input: relay msg 
 3. **Route B (the `/hx/*` REST bearers) is not used for muse.** It is REST, not MCP, its mail route is limited to a table
    with no reply, and reusing COMM_ASSIST's bearer would make two callers indistinguishable in the audit.
 4. **The dev-bid job** (scope section 7) is COMM_ASSIST's scope and is held on the laptop as row `87a2`. Nothing is moved here.
+
+## Addendum ~06:5xZ -- Andrew-direct: the work folds into NFRA_OPLGTW under `2.0.0_SA_COO~O`
+
+Recorded by `4.0.0_SA_CRO~Z` at `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261016_065xZ_MUSE_GATEWAY_SCOPE_FOLDS_INTO_OPLGTW_COO_O.md`
+@66f25c55e2. VERBATIM: "ok i want the COO~O to have this work folded in to OPLGTW, let CTO~Z know that."
+
+This confirms ruling 1's placement: route C is an NFRA_OPLGTW cell under `2.0.0_SA_COO~O`, after the 22:00Z finish. His words
+name the work's home, not route A, so open act row `sitez-20261016T063450Z-8f44` (full reach) stays open for his own word.
