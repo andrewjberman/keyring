@@ -129,7 +129,8 @@ declared_devices() {
 # Every message carries the sender's and the recipient's TAILNET NAME (register field `tailnet_name`, the
 # MagicDNS name), as SQS message attributes AND in the body envelope beside the serial. The names are read
 # from the device register through lib/devices.py (OPAL_DEVICE_REGISTER honoured) and never typed here.
-#   _tailnet of <label>   -> the tailnet name of the box a name or alias resolves to (rc 2 unknown/none)
+#   _tailnet of <label>   -> the tailnet name of the box a name or alias resolves to, else of an inbox-carrying sender such as
+#                            ms (a `senders` row with an inbound_queue is a bus destination, never a box) (rc 2 unknown/none)
 #   _tailnet all          -> every tailnet name the register holds (boxes, then sender-only `senders`), one per line
 # Fail-closed like _devices: no python or an unreadable register is rc 3, never a built-in list.
 _tailnet() {
@@ -150,11 +151,10 @@ except devices.RegisterError as exc:
 if mode == "all":
     print("\n".join(devices.held_tailnet_names(reg)))
     sys.exit(0)
-canon = devices.resolve(sys.argv[3], reg)
-for d in devices.devices(reg):
-    if d["name"] == canon and d.get("tailnet_name"):
-        print(d["tailnet_name"])
-        sys.exit(0)
+tn = devices.tailnet_of(sys.argv[3], reg)
+if tn:
+    print(tn)
+    sys.exit(0)
 sys.exit(2)
 ' "$_root" "$@" | tr -d '\r'
             return "${PIPESTATUS[0]}"
