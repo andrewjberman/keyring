@@ -22332,3 +22332,55 @@
   "world_is": "The suggestion is an LLM output (the resident's Kimi check) and was present twice and absent once for the same symbols under the same code, so the selection rule picked on a nondeterministic output; and when the planned Yes button was absent the driver pressed nothing for 780 s with no screenshot after Submit, so what the form showed is NOT read. The CTO's ruling (msg 9684): window 4 plans only deterministic branches, treats the suggestion as opportunistic and never selects on it, and the driver falls through whichever prompt the door shows and screenshots each round."
 }
 ```
+
+## IRPT_ANLREQ-D2-W268-S1 -- the pinned overview map's source is absent from this sparse worktree, so its ticker template was readable only at HEAD
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~268",
+  "surfaced_at": "2026-10-16T17:50:49Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W268-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree's sparse checkout omits org/missions/D9/IRPT/IRPT_YCDGEN, so the pinned overview map (the holdings and id template of the Opal producer) is absent from the worktree though HEAD holds it; the scope record cites no line of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config core.sparseCheckout = true and git sparse-checkout list in C:/dev/wk-irpt-anlreq-268 (IRPT: only org/missions/D9/IRPT/IRPT_ANLREQ/ is listed)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json: git ls-files -s lists it (100644 da312a9b...) and git cat-file -e HEAD: succeeds; ls reports no such directory in the worktree",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:45 names it as OPAL_MAP_SRC (read at cb45dec9ff)"
+    ]
+  },
+  "spec_asserts": "The cell reads the resident's pricing path and the Opal producer's map from the worktree's own paths, so every source the scope record cites is present in the worktree.",
+  "world_is": "The pinned overview map source lies outside the sparse checkout, so the worker read it only through git show of HEAD (blob sha256 21a8f6d6...) and cited no line of it. Owner: 2.0.0_SA_COO~G2 (the issuer that provisioned the worktree's sparse list). Not an engine defect; no product change. Clears when a later cell's worktree carries org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/ or the cell cites the map at HEAD by design."
+}
+```
+
+## IRPT_ANLREQ-D2-W268-S2 -- the surprise-channel schema the order names is absent from this worktree, so the row was shaped from the channel's own rows
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~268",
+  "surfaced_at": "2026-10-16T17:50:49Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W268-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names org/surprise_channel/schemas/investigation_item.schema.json as the row contract, but org/surprise_channel is not in this worktree, so this row follows the fields of the channel's existing rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls org/surprise_channel in C:/dev/wk-irpt-anlreq-268: no such file or directory (the sparse list does not include org/surprise_channel)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md: existing rows S149 to S151 carry the fields used here",
+      "the order's BOUNDS section and its row-gate step name .tools/surprise-row-gate.py, present in the worktree"
+    ]
+  },
+  "spec_asserts": "A worker shapes each surprise row to org/surprise_channel/schemas/investigation_item.schema.json, which the order names as the contract.",
+  "world_is": "The schema file is not in the worktree, so the contract could not be read at the cited path; the row gate .tools/surprise-row-gate.py is present and is run on the channel file at commit. Owner: 2.0.0_SA_COO~G2 for the worktree's sparse list. Not an engine defect; no product change."
+}
+```
