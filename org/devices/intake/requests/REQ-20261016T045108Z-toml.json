@@ -7,5 +7,16 @@
   "why_no_approved": "toml is NOT in requirements.txt and the intake register reads UNKNOWN for it; a pure-Python wheel (py2.py3-none-any, no dependencies). Nothing is added to requirements.txt; nothing is installed on the laptop; the lane does not touch the package until a decision exists.",
   "requested_by": "2.0.0_SA_COO~C",
   "requested_at": "2026-10-16T04:51:08Z",
-  "decisions": []
+  "decisions": [
+    {
+      "verdict": "REFUSED",
+      "by": "1.0.0_SA_CTO",
+      "at": "2026-10-16T05:05:35Z",
+      "reason": "FWD-19 test act (round-26 analysis ruling 2): the lane's waiting state was read in all three places first (@3f367473c0); nothing in the estate needs toml, so the lane loses this one piece of work as the clause says. Refusal is the arm exercised.",
+      "evidence": {
+        "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\missions\\D0\\NFRA\\NFRA_CTLPLN\\deliverables\\2.0.0_SA_COO~C\\FWD19_LANE_WAIT_READS_20261016.md",
+        "sha256": "f020dea6756003ddde6890f7958f1252c93c2b0199ddb2fab26ae3182976604c"
+      }
+    }
+  ]
 }
