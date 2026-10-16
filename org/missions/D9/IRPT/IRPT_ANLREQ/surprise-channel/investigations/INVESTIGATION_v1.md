@@ -22018,3 +22018,53 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W258-S1 -- the worktree's sparse checkout omits ycharts/ and ops/, so two of the three AR121-g-AC3 regress files cannot run in it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W258-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~258",
+  "surfaced_at": "2026-10-16T11:12:49Z",
+  "one_line": "AR121-g-AC3 (ar_g121_checks.py regress) runs test_kept_holding.py and ycharts/session/tests/test_resident_session_checker.py; in worktree wk-IRPT_ANLREQ-258 the sparse cone omits infra/aws/lambda/investor-reporting/ycharts and .../ops, so test_kept_holding has 1 failure (FileNotFoundError on ops/status.py) and the session checker path is absent (pytest rc=4). Not reconstructed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-121 AC3: the regress mode runs three test files one at a time (the order's test file, test_kept_holding.py, test_resident_session_checker.py) and expects AR-G121-REGRESS-OK. The worker face says the worktree is provisioned with infra/, docs/, data/, lib/, org/standards and the project folder.",
+  "world_is": "At c03ebfdb5c (box/dell2) and 8ef81d76e3 (wk-IRPT_ANLREQ-258) git sparse-checkout list reads .tools, infra/aws/lambda/investor-reporting/intake, infra/logic/registry, lib, org/devices. The directories infra/aws/lambda/investor-reporting/ycharts and .../ops are tracked at HEAD (git ls-tree) but absent on disk. Measured: regress -> AR-G121-REGRESS-FAIL test_kept_holding.py rc=1 (1 failed, 18 passed; FileNotFoundError on infra/aws/lambda/investor-reporting/ops/status.py) and test_resident_session_checker.py rc=4 (file or directory not found). The one failure is a missing file, not a yfinance assertion; the criterion cannot be measured as written in this worktree. The sparse set was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 580 python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g121_checks.py regress -> AR-G121-REGRESS-FAIL test_kept_holding.py: rc=1 ['1 failed, 18 passed']; test_resident_session_checker.py: rc=4 ['no tests ran']",
+      "python -m pytest -q infra/aws/lambda/investor-reporting/intake/tests/test_kept_holding.py -> FAILED ...test_the_three_words_are_the_same... FileNotFoundError ... investor-reporting/ops/status.py; 1 failed, 18 passed",
+      "git sparse-checkout list -> .tools, infra/aws/lambda/investor-reporting/intake, infra/logic/registry, lib, org/devices",
+      "git cat-file -e HEAD:infra/aws/lambda/investor-reporting/ops/status.py -> present (rc 0); git ls-tree --name-only HEAD infra/aws/lambda/investor-reporting/ lists ycharts and ops"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W258-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~258",
+  "surfaced_at": "2026-10-16T11:12:49Z",
+  "one_line": "ar_g121_checks.py scope takes its allowed set from OWN (three product files) and ISSUER (issuer prefixes); the worker's own deliverables folder, which the order's <paths> grants (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~258/), matches neither, so a worker's committed proof instance is reported as outside the write set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-121 AC3: the branch changes only the three product files, the worker's folder, the order and the channel file. The order's <paths> block grants the worker's deliverables folder.",
+  "world_is": "The scope() function in ar_g121_checks.py computes stray = names not in OWN and not startswith(ISSUER). ISSUER lists the decompositions, the issuer's checks folder, the task-orders folder, the tier1 folder and the channel file; no 0.9.0_WK_IRPT_ANLREQ~ deliverables prefix. So any worker proof instance committed to the worker's own deliverables folder reads as stray in scope and regress, whatever the worker changed. Predicted from the code at 8ef81d76e3; measured after the proof commit and reported in the worker report.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g121_checks.py: OWN = (CHECKER, TEST, FIXTURE); ISSUER = (decompositions/, deliverables/2.0.0_SA_COO~G2/checks/, task-orders/, org/tier1_exec/2.0.0_SA_COO~G2/, surprise-channel INVESTIGATION_v1.md); stray = [n for n in names if n not in OWN and not n.startswith(ISSUER)]",
+      "order <paths> line: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~258/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
