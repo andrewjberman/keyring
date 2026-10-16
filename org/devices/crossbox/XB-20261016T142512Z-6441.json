@@ -11,10 +11,10 @@
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_LAYOUT2_SMOKE_CALL_DELL1.md",
  "opened_at": "2026-10-16T14:25:12Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-16T14:29:46Z",
+  "bus_message_id": "798e85fc-ef87-46f3-af1b-32b0c7a45b8a"
  },
- "ack_bus_message_id": null,
+ "ack_bus_message_id": "bcc423b6-ced5-4d87-aea5-818abfef17f7",
  "closed_from": {
   "at": null,
   "by": null
