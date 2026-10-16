@@ -3302,3 +3302,41 @@
   "notes": "Filed by the issuer, the disarm_owner of record, at the close of MP-pf-9."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T16:32:21Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S73",
+  "adjudicates": [
+    "NFRA_MCPORTAL-Z-W31-S1",
+    "NFRA_MCPORTAL-Z-W31-S2",
+    "NFRA_MCPORTAL-Z-W31-S3",
+    "NFRA_MCPORTAL-Z-W32-S2",
+    "NFRA_MCPORTAL-Z-W33-S7",
+    "NFRA_MCPORTAL-Z-W38-S1",
+    "NFRA_MCPORTAL-Z-S64",
+    "NFRA_MCPORTAL-Z-S67"
+  ],
+  "one_line": "The issuer closes eight rows it owns, each with its resolution; the earlier disarm rows named their targets in prose only, so comp-surprise still read them OPEN and ARMED.",
+  "dismissal_reason": "Z-W31-S1: admin_people.py now takes its placement from bd._group_ids_for_tools (its lines 14-15 and 87-89), no copy. Z-W31-S2 and Z-W31-S3: the landed catalog declares a source for every tool (the served page reads 0 tools declare no source) and tests/test_admin_people.py::test_person_holdings_equal_breakdown_holders passes (admin suite 116 passed, 0 failed, seam 0). Z-W32-S2: a worker now receives the worker face only, in its prompt; the record face never travels. Z-W33-S7: _root.sh derives the root from its own file's location (pc/checks and round5/checks) and orders carry a cd to the worker tree. Z-W38-S1: the issuer amended the offender definition (A1, a scroll box is not an offender) and pf8.AC2 reads 0 offenders at 390 and 1280. Z-S64: the fix is on the host (disarmed by Z-S71). Z-S67: the six tests are repaired (disarmed by Z-S70).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/admin_people.py lines 14-15 and 87-89 read at box/sitez HEAD (the shared placement rule)",
+      "pf3.AC2.sh in the MP-pf-10 worker tree and pf10.AC1.sh at trunk HEAD, run by the issuer: admin suite 116 passed, failed=0, seam test failures=0",
+      "pf9.real.sh on the served body of 14:08:44Z: 14 channels, 127 tools, 0 tools declare no source; 390 px scrollWidth=390 offenders=0; 1280 px scrollWidth=1280 offenders=0",
+      "pf9.AC1.sh and pf9.AC2.sh at box/sitez HEAD: PASS"
+    ]
+  },
+  "spec_asserts": "Z-S61, Z-S62, Z-S65, Z-S66, Z-S70, Z-S71 and Z-S72 each asserted that a named row is disarmed.",
+  "world_is": "True in prose; mechanically the target stayed OPEN and ARMED until a row named it in adjudicates (.tools/comp-surprise.py reads only that field and a remediation row). Z-W28-S1 (the REFUSED status of the person-access writer, MP-pd-4's contract) and Z-W32-S1 (portal/DESIGN.md absent in the PE-2 worker worktree; the page's style conformance never graded) are NOT closed here: PD is held by the CTO and the style grade was not made.",
+  "notes": "Filed by the issuer, the disarm_owner of record. Carried open on purpose: Z-W28-S1 and Z-W32-S1, with the reasons in world_is. Z-S10 (OBSERVATION, no disposition field) is not a worker row of this seat's round and is left to its owner."
+}
+```
