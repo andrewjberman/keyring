@@ -22,13 +22,15 @@ import subprocess
 import sys
 import tempfile
 
-REPORT_PATH = "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5/fwd5_run_report.json"
+REPORT_PATH = "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/fwd5_run_report.json"
 GO = "IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-ib2"
 EMAIL = "fwd5-cottonwood-r60@opal.invalid"
 EMAIL_CONTROL = "fwd5-control-r60@opal.invalid"
 CONTROL_PATH = REPORT_PATH.replace("fwd5_run_report.json", "fwd5_control_report.json")
 TABLE = "opal-users-v2"
-CALL_KEYS = {"route", "method", "status", "verdict", "body_len", "reason"}
+CALL_KEYS = {"route", "method", "status", "verdict", "body_len", "reason", "code"}
+REPORT_SIDE = ("original-upload", "opal-report", "report-pdf", "commentary-pdf")
+FENCE_CODES = ("FIRM_BINDING", "NOT_AUTHORIZED")
 FORBIDDEN = ("bearer", "password", "accesstoken", "refresh", "@opal.invalid", "set-cookie")
 AWS = [sys.executable, "-c", "import subprocess,sys;sys.exit(subprocess.call(['bash','.tools/aws']+sys.argv[1:]))"]
 
@@ -59,6 +61,9 @@ def evaluate(text):
     for c in calls:
         if not isinstance(c, dict) or set(c) != CALL_KEYS:
             return False, "a call row has keys outside the closed set"
+    for c in calls:
+        if c.get("route") in REPORT_SIDE and c.get("verdict") == "REFUSED" and c.get("code") not in FENCE_CODES:
+            return False, "report-side route %s is REFUSED with code %r, not a fence code" % (c.get("route"), c.get("code"))
     counts = {v: sum(1 for c in calls if c.get("verdict") == v) for v in ("REFUSED", "LEAK", "UNREACHED", "EXCLUDED")}
     if counts != {"REFUSED": 7, "LEAK": 0, "UNREACHED": 0, "EXCLUDED": 2}:
         return False, "counts are %s, not 7/0/0/2" % counts
@@ -191,10 +196,10 @@ def absent_one(EMAIL):
 
 def _green():
     names = ["ticket-read", "ticket-list", "form-as-filled", "original-upload", "opal-report", "report-pdf", "commentary-pdf"]
-    calls = [{"route": n, "method": "GET", "status": 404, "verdict": "REFUSED", "body_len": 0, "reason": ""}
-             for n in names]
-    calls += [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded"}
-              for i in range(2)]
+    calls = [{"route": n, "method": "GET", "status": 404, "verdict": "REFUSED", "body_len": 0, "reason": "",
+              "code": "FIRM_BINDING" if n in REPORT_SIDE else ""} for n in names]
+    calls += [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded",
+               "code": ""} for i in range(2)]
     return {"schema": "fwd5_run_report/1", "go": GO, "principal_digest": "abcdef012345", "firm_a": "cottonwood",
             "firm_b": "49financial", "sign_in": "signed in", "calls": calls, "guard_refused": [],
             "counts": {"REFUSED": 7, "LEAK": 0, "UNREACHED": 0, "EXCLUDED": 2}, "rc": 0}
@@ -203,9 +208,9 @@ def _green():
 def _green_control():
     names = ["ticket-read", "ticket-list", "form-as-filled", "original-upload", "opal-report", "report-pdf", "commentary-pdf"]
     calls = [{"route": n, "method": "GET", "status": 200 if i < 2 else 404, "verdict": "ALLOWED" if i < 2 else "DENIED",
-              "body_len": 5, "reason": ""} for i, n in enumerate(names)]
-    calls += [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded"}
-              for i in range(2)]
+              "body_len": 5, "reason": "", "code": ""} for i, n in enumerate(names)]
+    calls += [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded",
+               "code": ""} for i in range(2)]
     return {"schema": "fwd5_control_report/1", "mode": "control", "go": GO, "principal_digest": "abcdef012345",
             "firm_a": "opal-capital", "firm_b": "49financial", "sign_in": "signed in", "calls": calls, "guard_refused": [],
             "counts": {"ALLOWED": 2, "DENIED": 5, "UNREACHED": 0, "EXCLUDED": 2}, "rc": 0}
@@ -230,6 +235,7 @@ def self_test():
         d["counts"] = {"REFUSED": 6, "LEAK": 0, "UNREACHED": 1, "EXCLUDED": 2}
         d["rc"] = 2
 
+    mut("a CONTRACT_VERSION refusal graded REFUSED", lambda d: d["calls"][3].update(code="CONTRACT_VERSION"))
     mut("a LEAK", leak)
     mut("an UNREACHED", unreached)
     mut("wrong firms", lambda d: d.update(firm_a="49financial", firm_b="cottonwood"))
@@ -262,7 +268,7 @@ def self_test():
     if not okf or badf:
         print("R56-SELFTEST-FAIL fence")
         return 1
-    print("R56-SELFTEST-OK green plus six mutants refused; control green plus four mutants; fence both ways")
+    print("R56-SELFTEST-OK green plus seven mutants refused; control green plus four mutants; fence both ways")
     return 0
 
 
