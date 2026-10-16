@@ -9860,5 +9860,33 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S27",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-16T03:20:00Z",
+     "one_line": "The four worker rows of HVST-cb-14 (D1-W149-S1 to S4) are dispositioned: S1 is carried into the re-pin order as a rule (the check window opens after the seed); S2 to S4 were notes. The real seed dry run for barrons read 209 and 2,228 keys, 0 rows without a hash.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-14: the known-hash lookup matches date keys; seed and check give C-d3 its evidence.",
+     "world_is": "W149-S1 (ARMED, my disarm): a `check --since` earlier than the seed counts seeded parts as duplicates; the order for the re-pin (HVST-cb-13 step 5 and 6) opens the window at the T0 written AFTER the seed, so the rule is part of the act. W149-S2: the cb-12 test form used get, len and set where the order said dict(...) of encoded texts. W149-S3: the cb-14 schema is outside the sparse cone and was read from the HEAD blob. W149-S4: a naming-gate WARN on a snapshot table-name string in the test; did not block. Merged 4d2a3e2187. Main tree: lib/opal_data_harvest 896 passed, 1 failed (the known test_bn1 CRLF), 3 skipped; research harvest, corpus and management all pass. Issuer's real dry run at 03:0xZ against the live bucket (read-only): SEED source=barrons table=article keys_seeded=209 s3_gets=65 s3_bytes=10746505; table=listing_hit keys_seeded=2228 s3_gets=245 s3_bytes=3603032; rows_without_hash=0, keys_already_local=0.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-14.the-known-hash-lookup-matches-and-is-seeded-once.md COMPLETE note @4d2a3e2187",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-13.the-dell1-runner-re-pinned-with-the-uploader-fix-and-seeded.md steps 4 to 6"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W149-S1",
+      "AMGT_HARVST-D1-W149-S2",
+      "AMGT_HARVST-D1-W149-S3",
+      "AMGT_HARVST-D1-W149-S4"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "S1 is carried as a rule into the cb-13 order; S2 to S4 are notes with no action."
+    }
 ]
 ```
