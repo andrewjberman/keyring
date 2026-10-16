@@ -2565,3 +2565,5 @@ Cells `DB-b-292` to `DB-b-296` are drained (merge commits `9c46b7d536` 293, `55e
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~240`), cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the entry clause is the proven `p158_repin.py` `check_repin` applied to each of the three entries):** `checks/r149/p165_repin_three.py` (DB165-1-AC1..AC3).
+
+**Note to section 154 (2026-10-16 ~11:3xZ, the CTO's ruling msg 9298 and ~C2's answer msg 9301):** the page-side MIRROR (reader) cell of series contract 0.3.3 is `DB-c-30` (`TO-DB-c-30.page-mirror-takes-on-series-contract-033`, merged @b8bff882d4, `portal dashboard/seriesContract.ts` only; its check iv-e-124 reads green on it; no line of 0.3.3 needs rewording for the page). `DB-b-293` and its drain are paired with it. **Standing rule from here:** every contract order of this decomposition names its `DB-c-NN` cell, and ~C2 is sent the changed `series.required`, `optional`, `array_keys` or manifest list BEFORE the cut so both cells land in the same round.
