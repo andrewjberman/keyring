@@ -6,7 +6,7 @@ which carries the return_* windows and, since the SH-t-24 apply, return_frontier
   python r6_week_read.py <as_of> [<as_of> ...]
 Per as_of and per book holding SALXX (or FXFXX) prints one row:  as_of book ticker STATE windows frontier
   STATE = VALUE   every window that the history can compute is a number and 1D is a number
-          CARRIED return_frontier is set (the last vendor day's value, labeled)
+          CARRIED return_frontier is set AND differs from the as_of (the last vendor day's value, labeled); a frontier equal to the as_of is VALUE
           BLANK   1D is null (the day shows no value: the case the DONE WHEN forbids unless the NEXT run fills it)
 Last line: WEEK-READ <n> as_of day(s): VALUE=<a> CARRIED=<b> BLANK=<c> ABSENT=<d>   (ABSENT = no gold partition for that as_of)
 """
@@ -44,8 +44,8 @@ def main(days):
             wins = {w: r.get("return_" + w) for w in WINDOWS}
             if pd.isna(wins["1D"]):
                 state = "BLANK"
-            elif fr is not None and not pd.isna(fr):
-                state = "CARRIED"
+            elif fr is not None and not pd.isna(fr) and str(fr)[:10] != d:
+                state = "CARRIED"                  # a frontier equal to the as_of is a reading ON the day: a VALUE, not a carry
             else:
                 state = "VALUE"
             tally[state] += 1
