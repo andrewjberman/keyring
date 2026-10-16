@@ -8876,6 +8876,94 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S122",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T02:38Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-W45-S6 and Z-W45-S7 came from the sparse worker worktree, which has no portal/src/api; the issuer's tree has it. At the workspace root the emitter ran with all five group maps (173 of 173 applied, unused 0, 100 served tools) and the atom_decomposition suite passed 282 of 282. Z-W45-S8 is the intended MX-c-30 scope drop: the two removed rows are the platinum/advi/49financial/ prefixes in scope_exclusions.json, and c23.AC2 reads removed 2, unexpected new rows 0.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W45-S6",
+      "NFRA_MCPINDEX-Z-W45-S7",
+      "NFRA_MCPINDEX-Z-W45-S8"
+    ],
+    "one_line": "DISARMS Z-W45-S6 (the emitter cannot run in the worker's worktree) and Z-W45-S7, and dismisses Z-W45-S8. The issuer ran the emitter at the workspace root; c23.AC1-AC4 PASS on the regenerated catalog (226 table rows, 1386 pairs, 96 newly visible, cross-firm leaks 0, serves wrong 0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py at the workspace root, 2026-10-16: HARVEST ROWS 78, TOOL INDEX N=100 a=11 b=77 c=12, GROUP-MAP rows applied 173 of 173, unused 0",
+        "c23.AC1 to AC4 and c21.AC1 to AC3 re-run PASS by the issuer; python -m pytest workflows/atom_decomposition/tests: 282 passed"
+      ]
+    },
+    "spec_asserts": "MX-c-23 step 3: the catalog regenerates in the worktree with HARVEST ROWS, SILVER and TOOL INDEX lines and no EMIT REFUSED line.",
+    "world_is": "The worker's sparse worktree lacks portal/src/api, so the emitter refuses there; the issuer's tree emits cleanly. The first issuer emit refused once on OG-ap-21's new tool harvest_get_published_analysis (no tool_index entry, then no bucket); both were added by the issuer (an issuer act, pending_members.yaml and the members.yaml buckets list)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W56-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~56",
+    "surfaced_at": "2026-10-16T02:36:31Z",
+    "one_line": "The order's step-2 regeneration command omits --read-links: run exactly as written it printed 'read-links applied: 0 of 0' and reverted the six live-now rows against HEAD; re-run with the links file added it printed 'read-links applied: 6 of 27' and no row file differs from HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-MX-c-31 section 1 step 2 (order copy in the shared tree, lines 40-42): the regeneration command with the 99-tool list must write 214 rows and print 'read-links applied: 6 of 27'; the command shown has no --read-links argument.",
+    "world_is": "Run as written, at fdf950da08 plus the rule change: 214 rows written, 'read-links applied: 0 of 0', and six row files changed against HEAD (read_tool null, tools [], gap_owner NFRA_OPLGTW). Re-run with '--read-links org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/read_links.json' added: 214 rows, 'read-links applied: 6 of 27', git diff against HEAD empty for every catalog_entries row. The first run's output is in the worktree at .scratch/gen_run_nolinks.txt (not committed).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-31.read-links-for-27-research-rows.md section 1 step 2 (shared-tree amended copy, lines 40-42; the worktree copy at fdf950da08 is the older text)",
+        "workflows/atom_decomposition/gen_silver_rows.py@fdf950da08 load_read_links(None) returns an empty dict, so the printed count is 0 of 0 when --read-links is absent",
+        "workflows/atom_decomposition/gen_silver_rows.py@fdf950da08 main() prints 'read-links applied: %d of %d' with len(read_links) as the second number"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W56-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~56",
+    "surfaced_at": "2026-10-16T02:36:31Z",
+    "one_line": "The step-0 control does not pass before any edit: the atom_decomposition suite reads 5 failed and 295 passed in this worktree, because the sparse checkout omits the gateway tree those tests read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-MX-c-31 section 1 step 0: python -m pytest -q -p no:cacheprovider workflows/atom_decomposition/tests passes before you start (a control).",
+    "world_is": "At fdf950da08 plus the OPLGTW ~109/~110 sparse add, before any edit: 295 passed, 5 failed. The five: test_c_group DeclaredBucketSource (2 tests; 'is not a file under infra/aws/ec2/opal-gateway', harvest_read.py:26); test_tool_index_and_harvest EmittedCatalogTests (2 tests; FileNotFoundError on infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml); test_merged_definition test_condition_helpers_census_and_accessors (census file ARTIFACT_CENSUS_MACRO.yaml absent). After the rule change the same five fail and 298 passed (the 21 read-links tests replace 18). The worktree has no infra/aws/ec2 entry in its sparse checkout, and the order allows no sparse change for it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_c_group.py@fdf950da08 DeclaredBucketSource asserts the declared tools are files under infra/aws/ec2/opal-gateway",
+        "workflows/atom_decomposition/tests/test_tool_index_and_harvest.py@fdf950da08 EmittedCatalogTests reads infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml",
+        "worktree wk-NFRA_MCPINDEX-56 sparse-checkout list at fdf950da08 (git sparse-checkout list): no infra/aws/ec2 entry; full-suite output kept at .scratch/full_suite_post.txt (not committed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W56-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~56",
+    "surfaced_at": "2026-10-16T02:36:31Z",
+    "one_line": "The worktree opens with the portal gitlink already modified (' M portal'); this seat did not touch it and does not stage or commit it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-MX-c-31 section 3: the write surface is the named <paths> only; a commit names its paths and nothing else.",
+    "world_is": "git status --short in wk-NFRA_MCPINDEX-56 before any edit of this seat printed ' M portal'. Every commit of this seat names its own paths to safe-commit.sh, so the portal gitlink is not in any of them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git status --short in the worktree C:/tmp/mi2-wk56 at HEAD fdf950da08, run at the start of this seat: ' M portal'",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-31.read-links-for-27-research-rows.md section 3 <paths> (the grant names no portal path)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

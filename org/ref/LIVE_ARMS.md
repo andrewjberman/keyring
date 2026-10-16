@@ -190,7 +190,12 @@ landed by 1.0.0_SA_CTO~DELL2; each other box's CTO lands its own.
     stand-down.
   - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
     2.0.0_SA_COO~D.
-- `2.0.0_SA_COO~O` (NFRA_OPLGTW), `~MI` and `~MI2` (NFRA_MCPINDEX), `~MP` (NFRA_MCPORTAL): `/canonical-drive <own project> 60m`,
+- `1.0.0_SA_CTO~Z` `/self-drive 30m` over every open call on site Z, DIRECTED, chooser Andrew (~02:4xZ 2026-10-16, relayed by
+  `0.0.0_AB_MSTR~Z` msg 34667, VERBATIM: "ON, all CTO COO agents should now be on 30m loops for /self-drive {Each CTO adjudicates
+  their box activities} /canonical-drive {the project the COO is assigned}, respectively"). Arming record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_024xZ_SELF_DRIVE_30M_SITEZ_BOX_OPEN_CALLS.md`. Stop: his
+  stand-down. Landed by 1.0.0_SA_CTO~Z. The same word takes the site Z COO row below to 30m.
+- `2.0.0_SA_COO~O` (NFRA_OPLGTW), `~MI` and `~MI2` (NFRA_MCPINDEX), `~MP` (NFRA_MCPORTAL): `/canonical-drive <own project>` (60m, now 30m per the row above),
   DIRECTED, chooser Andrew. ~02:0xZ 2026-10-16 at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: "time to get back on the mission, we need
   the MCPINDEX OPLGTW MCPORTAL COO teams backonline and moving". Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_020xZ_MCPINDEX_OPLGTW_MCPORTAL_COO_TEAMS_BACK_ONLINE.md`. Seated by
