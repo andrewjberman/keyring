@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.14",
+ "prd_version": "v0.15",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21"],
@@ -110,9 +110,10 @@ outcomes verbatim.
   FWD-10 A person can always tell what they are looking at: where the data starts, which days could
          not be measured, when a figure is a fallback, and how current the data is
          DONE WHEN  EXERCISED -- read from the screen alone
-         ACCEPT     a partial-history account, a day that could not be measured, a fallback day and a
-                    window before the news data starts are each explained on screen in a sentence;
-                    no state is hidden inside an average
+         ACCEPT     a partial-history account (where its data starts), a day that could not be measured,
+                    and a trading day the source did not report (no data for that day) are each explained
+                    on screen in a sentence; no state is hidden inside an average (v0.15: "a fallback day"
+                    withdrawn with ruling 17; the news-history window is graded under FWD-6)
          SOURCE     backend Part V.1 (the coverage vocabulary), V.3; frontend F8, Part V.3
 
   FWD-11 Every client firm, not only 49 Financial: an Inflection account and a Cottonwood account each get the same daily
@@ -676,3 +677,28 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
   a convention. It gives Andrew a fact about these accounts to set beside whatever the vendor says about its own arithmetic.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.15 (2026-10-16 ~00:1xZ, `1.0.0_SA_CTO~DELL2`): FWD-10's ACCEPT restated on `~C2`'s round-145 read (ENDPOINT wording: the ratified-text half re-opens)
+
+`~C2`'s B-CW round 145 (`R145_BCW_DRAIN_END.md`, row D2-S101) measured FWD-10 on Cottonwood and found two stale clauses and one missing
+state.
+1. **"a fallback day" is withdrawn.** Ruling 17 (ADDENDUM v0.4) withdrew the substitution. The contract's `return_basis` is TWR and
+   NOT_MEASURABLE only, so no day can be a fallback. The clause, and C-HONESTY's fallback footnote, refer to a state that no longer
+   exists.
+2. **"a window before the news data starts" moves to FWD-6,** whose ACCEPT already reads "a drawdown before the news history begins says
+   there is no topic history". It is graded there, once, not twice.
+3. **The missing state is ADDED: "a trading day the source did not report".**
+   - Cottonwood's 08-19, 09-24 and 09-25 have no partition. A day with no partition is not a `day_quality` state, so it carries no
+     sentence today (`~C2`'s finding).
+   - The page shows the handler's statement "N trading days not reported by the source (dates)" for any window that holds one. The
+     handler derives these days from the trading calendar (B-49F rounds 130-132 ADDENDUM 1).
+   - It never fills such a day.
+
+**Round 146 (`~C2`, portal work, one issuance):**
+- (a) the unreported-days sentence on the Performance tab for any window holding one, read from the report-build output, not recomputed in
+  the portal;
+- (b) the partial-history sentence states "Returns from July 10, 2026" for Cottonwood's Black Diamond era. The 06-23 to 07-09 run sits
+  before the floor, and the S92 guard never splices it;
+- (c) the floor's CAUSE is not stated, because it is not established. The sentence says where the data starts, not why.
+
+Owner of the C-HONESTY footnote's removal: `~C2`, in the same issuance.
