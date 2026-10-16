@@ -66,7 +66,7 @@ _SHA_RE = re.compile(r"^[0-9a-f]{64}$")
 NPM_PUBLIC_BASE = "https://registry.npmjs.org"
 NPM_PUBLIC_HOSTS = ("registry.npmjs.org",)
 NPM_TARBALL_CAP = 200 * 1024 * 1024
-NPM_NAME_RE = re.compile(r"^(?:@[a-z0-9][a-z0-9._~-]*/)?[a-z0-9][a-z0-9._~-]*$")
+NPM_NAME_RE = re.compile(r"^(?:@[a-z0-9][a-z0-9._-]*/)?[a-z0-9][a-z0-9._-]*$")
 NPM_VERSION_RE = re.compile(r"^[0-9A-Za-z][0-9A-Za-z.+-]*$")
 
 
@@ -502,16 +502,17 @@ class Fetch:
         """Approval line first (no socket on a refusal), then the version document, then its dist.tarball on the
         registry host only, then ONE .tgz held unchecked. The checks in intake_check.py read it next."""
         a = self.a
-        if a.index_base:
-            raise Refuse("--ecosystem npm takes --registry-base, not --index-base")
-        if a.registry_base and not is_loopback_base(a.registry_base):
-            raise Refuse("--registry-base is for a loopback test registry only; the public registry is %s" % NPM_PUBLIC_BASE)
+        # the name is checked first, so every refusal below is recorded under the package's own held name
         if not (isinstance(a.name, str) and NPM_NAME_RE.match(a.name)):
             raise Refuse("invalid npm package name: %s" % ascii_text(a.name)[:80])
         if not NPM_VERSION_RE.match(a.version or ""):
             raise Refuse("invalid npm version: %s" % ascii_text(a.version)[:80])
         self.file_name = npm_held_name(a.name, a.version)
         self.rec["requested"]["file_name"] = self.file_name
+        if a.index_base:
+            raise Refuse("--ecosystem npm takes --registry-base, not --index-base")
+        if a.registry_base and not is_loopback_base(a.registry_base):
+            raise Refuse("--registry-base is for a loopback test registry only; the public registry is %s" % NPM_PUBLIC_BASE)
         line = "%s@%s" % (a.name, a.version)
         if not a.approved_by:
             raise Refuse("npm fetch needs --approved-by <file> naming the exact line %s" % line)
