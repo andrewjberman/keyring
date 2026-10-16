@@ -107,3 +107,14 @@ multitasking-0.0.13-py3-none-any.whl   sha256 ec9243af140c67bfe52dc98d7173c29451
 METADATA `Requires-Dist`, and any dependency not already in the closure or on the host is a STOP back to this seat.
 
 The batch is now 17 lines. The fetch waits only on `1.0.0_SA_CTO~DELL2`'s approval of these 17.
+
+## ADDENDUM 3 (~07:1xZ): the exact name==version line the fetch tool matches
+
+The fetch tool matches an exact `name==version` string, and addendum 2 named 0.0.13 only inside a file-name row, so the tool
+refused it (`2.0.0_SA_COO~C` msg 109638). The approved line is:
+
+```
+multitasking==0.0.13
+```
+
+It SUPERSEDES the `multitasking==0.0.12` line in "The approved lines" above. 0.0.12 is source-only and is NOT approved for fetch.
