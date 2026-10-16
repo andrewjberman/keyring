@@ -21692,3 +21692,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The schema is absent at that path in this worktree, so it could not be read; the row follows the fields of the rows already in the file and passes the surprise-row gate at commit fa0edef3a2. Whether the gate's own schema matches those fields is not measured here."
 }
 ```
+
+## IRPT_DASHBD-D2-W232-S1 -- the worker face names local.irpt_pub_firm as the scope; the root defines no such local, so the appended HCL takes local.irpt_iso_firm
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W232-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~232",
+  "surfaced_at": "2026-10-16T07:17:52Z",
+  "one_line": "The face's new opal_name modules name scope = local.irpt_pub_firm, a local the publish root does not define. locals.tf stays byte-identical (a grant rule), so the appended HCL in iam.tf and schedule.tf takes scope = local.irpt_iso_firm, the scope every other module in the root already takes. No criterion names the local.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face step 2 (TO-DB-b-288): the two new opal_name modules and the schedule's opal_name module take scope = local.irpt_pub_firm.",
+  "world_is": "A grep of the publish root at base finds no irpt_pub_firm anywhere in infra/aws/terraform/investor-reporting/ (zero hits). The root's firm local is irpt_iso_firm in locals.tf, which the face also forbids editing, so the face's literal text would give Terraform an undefined local. The HCL written uses irpt_iso_firm, which derives the same firm the root's other opal_name modules derive. The checker takes the scope from the landing facts record, not from the HCL, so the criteria do not test that the two locals hold the same value; that equality is unmeasured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-publish-iso/locals.tf@fbbaf7758e",
+      "infra/aws/terraform/investor-reporting/reporting-publish-iso/lambda.tf@fbbaf7758e",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-288.publish-daily-schedule-created-disabled.md@52586aaad3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DB156-1-AC1 PASS on the written HCL. The COO or the CTO may rule whether the face's local name was meant as a new local, which would be a locals.tf edit outside this grant."
+}
+```
