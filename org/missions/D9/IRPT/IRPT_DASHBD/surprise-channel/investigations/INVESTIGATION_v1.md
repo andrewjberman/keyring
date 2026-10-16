@@ -19506,3 +19506,422 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-90.method-source-words.test.tsx:34 asserts the face includes the retired label. In MethodAndSources.tsx the label is composed from RETURN_METHOD_WORDS (line 33) and FEE_BASIS_WORDS (line 37); the literal stands only in the comment at line 25 and in that test."
 }
 ```
+
+## IRPT_DASHBD-D2-S101 -- FWD-10 for Cottonwood (round 145 B-CW): the facts measured, what the page says today, and the dispositions of workers 414 and 415
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S101",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T00:07:30Z",
+  "one_line": "FWD-10 for Cottonwood, round 145 B-CW (DB-c-22 census, DB-c-23 page read): the three named facts are measured; the page explains a partial-history account and a not-measurable day, but a trading day with no partition at all, a fallback day and a window before news data have no sentence on the on-screen path; the PRD's fallback clause is stale after ruling 17; issuer's dispositions on the workers' rows W414-S1, S2 and W415-S1 to S6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD FWD-10 ACCEPT: a partial-history account, a day that could not be measured, a fallback day and a window before the news data starts are each explained on screen in a sentence; no state is hidden inside an average (C-HONESTY).",
+  "world_is": "Measured and recounted by the checker from fresh S3 reads (merges 656f1392ba and a04e8b1e80; DBC145 1/2 PASS on the worker trees): Cottonwood filled_report_values 65 partitions 2026-07-10 to 2026-10-14 with 3 absent trading days (2026-08-19, 2026-09-24, 2026-09-25); account_return_daily 3390 partitions from 2013-04-03 with 15 absent trading days in 3 runs including the 12-day run 2026-06-23 to 2026-07-09; holdings_performance_daily 88 partitions, none absent; the floor is 2026-07-10; Black Diamond fact_allocations has 33 of 145 partitions that read 0 rows (22 on non-trading days, 11 on trading days 2026-06-22 to 2026-07-09), a candidate explanation for the floor but not an established one (the rule that starts the gold series was not read); 835 accounts hold on the floor day and 166 accounts of the newest partition have no floor-day row (the partial-history case), 1004 in account_dim; account_return_daily day_quality on the newest partition: MEASURED 827, NOT_MEASURABLE 37. The page (read from code): a partial-history account is EXPLAINED (dashboard note when history_scope is not FULL, DashboardPerformance.tsx:147); a not-measurable day is EXPLAINED (a count and sentence per state, :141-146, and a tooltip at :160); a fallback day is NOT_REACHED (ruling 17 withdrew the substitution, so the PRD's fallback clause in FWD-10 ACCEPT and C-HONESTY is stale); a window before news data is NOT_REACHED on the on-screen tab (the sentence prints only in the export document, PerformanceDocument.tsx:198); only 3 of 8 coverage members have a dashboard sentence (PARTIAL_HISTORY, FLOW_UNRECONCILED, SOURCE_LAG; MISSING_HISTORY in the export only; FULL, NO_LOTS, UNCLASSIFIED_HOLDINGS, FEE_RAIL_UNUSED none); the Cottonwood account_dim adapter assigns coverage (FULL, UNCLASSIFIED_HOLDINGS, PARTIAL_HISTORY) but the page does not read it; the text Time-weighted, net of fees is still in MethodAndSources.tsx line 25 (a comment; the rendered label is composed from lines 33 and 37) and holdings_gold.py now reads TIME_WEIGHTED/GROSS at line 306 (the PRD cites :259 NET). NOT visible on any path read: a trading day with NO partition at all (the 3 absent days and the 12-day run) is not a day_quality state, so no sentence counts it. Dispositions (all INERT, accepted as observations): W414-S1 (three starts, not one floor) and S2 (the silver empties do not alone explain the floor) are carried into the round-146 questions; W415-S1 (PRD cites holdings_gold.py:259 NET, file has :306 GROSS), S2 (news data names a state different from the account-history start), S3 (the fallback clause is stale) are PRD wording questions for the CTO; W415-S4 (the on-screen report path shows no coverage or day-quality sentence), S5 (the accounts table prints a producer reason code on its face) and S6 (the iv-e-90 test pins the label C-LABEL retires) are build-cell candidates. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/COTTONWOOD_COVERAGE_CENSUS_R145.json and ~415/COTTONWOOD_SCREEN_COVERAGE_READ_R145.json (with their notes)",
+      "checks/r145/p145_bcw.py (a fresh S3 recount and a re-read of every cited line)",
+      "merges 656f1392ba and a04e8b1e80; round-close-check round 145 B-CW MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO's round-146 analysis: the build side is the coverage reader that returns the window's absent trading days, the sentences for the missing coverage members, the on-screen window-clipping sentence, and the label/test correction; the endpoint wording (fallback, news data) is his."
+}
+```
+
+## IRPT_DASHBD-D2-W317-S1 -- the wrapper's module docstring still describes the round-125 partition rule
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W317-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~317",
+  "surfaced_at": "2026-10-15T23:55:19Z",
+  "one_line": "The wrapper's module docstring still says a partition whose rows name another pull date is refused. The partition check now compares each row's day with its partition's date. The order says nothing else in the file changes, so the docstring was left as it was.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The wrapper's module docstring (lines 3 to 10 of inflection_scope_feed_run.py) describes the partition check as refusing a partition whose rows name another pull date.",
+  "world_is": "After TO-DB-i-17 the check compares each row's day with the partition's date (the partition check in run()). The docstring at line 7 still describes the superseded round-125 rule. Nothing in the code or the tests reads the docstring.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@ed1819a0e069a7f227057c1f00ff694d430cea2e line 7 (docstring) and line 115 (the day comparison, after this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W317-S2 -- a partition whose rows carry differing or null pull dates is accepted, and the rule does not say so
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W317-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~317",
+  "surfaced_at": "2026-10-15T23:55:19Z",
+  "one_line": "The corrected partition rule checks only each row's day against its partition. It does not check that the rows of one partition share one pull date, and it does not check that pull_date is present. The cell accepts a pull_date that differs from the partition; it does not say what to do with rows that disagree with each other or with a null pull_date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell DB-i-17: a silver partition date=<d> is refused when any of its rows has a day other than <d>; a pull_date that differs from the partition is accepted.",
+  "world_is": "The wrapper accepts a partition whose rows carry different pull_date values from one another, and a partition whose rows carry a null pull_date. Both pass the day check. The real feed stamps one pull date on every row of one pull, and write_day never overwrites a day, so a mixed partition needs a hand assembly; no test covers the mixed or null case.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@ed1819a0e069a7f227057c1f00ff694d430cea2e lines 110-119 (the partition loop, before this order)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@ed1819a0e069a7f227057c1f00ff694d430cea2e lines 443-453 (write_day skips an existing key) and lines 551 and 767 (one pull_date per envelope)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W603-S1 -- the worktree's sparse cone omitted the data and docs paths the cell names at the first read, and a later cone carried them, set by no command of this worker
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W603-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~603",
+  "surfaced_at": "2026-10-15T23:51:18Z",
+  "one_line": "At the first read the worktree's sparse-checkout cone (.tools, lib, org/standards, org/missions/D9/IRPT/IRPT_DASHBD and five more) did not carry data/ or docs/, which the cell names as its read sources; the sparse file was rewritten later in the session to a cone that carries data/assets/scripts/gold/irpt_reporting, data/inf, docs/briefs, infra and org/critical_paths. No command of this worker wrote the sparse file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at about 23:24Z (first read of the cell's named paths): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/ref, org/standards; ls of data/ returned no such directory; git ls-files data still listed 2042 tracked paths (index entries, skip-worktree)",
+      "the worktree's sparse file at .git/worktrees/wk-irpt-dashbd-603/info/sparse-checkout carries mtime 2026-10-15T23:44:24Z (19:44:24 local); the same listing at 23:50Z names data/assets/scripts/gold/irpt_reporting, data/inf, docs/briefs, infra/aws/lambda/investor-reporting, infra/aws/terraform/investor-reporting, org/critical_paths beside the earlier set; git status on data and docs is clean against HEAD fcc5e13f03",
+      "the reflog of the worktree's HEAD shows no commit move (fcc5e13f03), so the widening is a sparse-set change, not a checkout of another commit"
+    ]
+  },
+  "spec_asserts": "The cell (TO IRPT_DASHBD.TO-DB-f-603, WORKER FACE step 1 to 3) reads org/standards, data/assets/scripts/gold/irpt_reporting, data/inf/manual_api, docs/briefs and the portal from the worker's own worktree; the first act checks that org/ and .tools/ exist and stops only if they do not.",
+  "world_is": "Org and tools were present at the first act, so the first act passed; data/ and docs/ were absent from the disk at the first read and were read at that point from HEAD by git show, without rebuilding or extracting the tree. The widened cone reaches beyond the grant (the write grant is the deliverables folder, the investigation file and the order); the checker p119_fwd3.py cites worktree bytes with Path(root)/file, so a producer citation under data/ could only bind while the cone carried data/. The grant is unchanged by this worker."
+}
+```
+
+## IRPT_DASHBD-D2-W603-S2 -- the brief's Opal closed enums for action and txn_type are defined in no file read at HEAD, and the 49 Financial flow-class map uses four values where the brief's flow_class uses seven
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W603-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~603",
+  "surfaced_at": "2026-10-15T23:51:18Z",
+  "one_line": "The reporting dashboard backend brief's account_transaction row (docs/briefs, its line 78) names Opal closed enums for action and txn_type and a seven-value flow_class, but no file read at HEAD defines the action or txn_type values; the 49 Financial flow-class map in perfrp_contract.py (line 283) carries four different values (EXTERNAL, INTERNAL, FEE-MANAGEMENT, FEE-ADMIN).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78: account_transaction, Opal-normalised trade_date, settle_date, action and txn_type (Opal closed enums), symbol, asset_name, units, price, amount, fee, custodian, flow_class (EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION, UNRESOLVED), source_txn_id, coverage",
+      "git grep at HEAD for txn_type and flow_class under data/assets/scripts, lib, org/standards, infra and portal/src: hits only in perfrp_contract.py (FLOW_CLASS_MAP at line 283, four keys) and in infra/aws/lambda/bd_transaction_consolidator (a Black Diamond column name, not an Opal enum) and in a vendored hive_metastore layer"
+    ]
+  },
+  "spec_asserts": "The PRD (IRPT_DASHBD_PRD.md line 292) and the FWD-5 cell ask for account_transaction 'with the Opal action and type vocabulary'; the brief names the enums as closed.",
+  "world_is": "No definition of the Opal action or txn_type value set exists in the files read; the custodian codes live in the 49 Financial classification table (sb_cd, tr_cd, tran_srcde with a partition column) and in the Cottonwood adapter's TYPE_CLASS (sixteen Black Diamond Transaction Type words). The two flow vocabularies disagree (four 49F keys against seven brief values), so a served flow_class needs a ruling before a builder can map to it. The ruling owner is not named in the files read."
+}
+```
+
+## IRPT_DASHBD-D2-W603-S3 -- the Cottonwood report reader the cell names holds no transaction read; the Black Diamond transaction read is in the adapter for return and flow
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W603-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~603",
+  "surfaced_at": "2026-10-15T23:51:18Z",
+  "one_line": "The cell names adapters/cottonwood_report_reader.py as a Cottonwood transactions source; that file holds no transaction token at HEAD, and the Cottonwood transaction read is adapters/cottonwood_bd_account_return_daily.py, which reads the fact_transactions silver for the return and the external flow.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep -n -i transaction at HEAD over data/assets/scripts/gold/irpt_reporting: no line in adapters/cottonwood_report_reader.py",
+      "git show HEAD:data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py line 79: ALLOWED_TABLES = (fact_allocations, fact_transactions)"
+    ]
+  },
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-f-603 step 2 names Cottonwood's transactions pull and the Cottonwood reader as the custodian transaction sources.",
+  "world_is": "The Cottonwood reader is a report reader; the transaction rows are read by the Black Diamond adapter for the return, which keeps the Transaction Type words and the external flow, and the Inflection transaction history pull is a bronze REST pull (data/inf/manual_api/pull_inflection_transactions_rest.py). The served transaction columns for Cottonwood therefore have no existing adapter that emits Opal's words."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S1 -- the portal worktree branch is wk-IRPT_DASHBD-602-portal, not the cand/<box>/<slug> name that CONTRIBUTING-BOXES.md step 1 gives a feature
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "The order names the portal branch wk-IRPT_DASHBD-602-portal (cut from origin/PROD e0e69da7). portal/CONTRIBUTING-BOXES.md step 1 names a feature branch cand/<box>/<slug>, and the approval register keys on that name. The worktree was built on the order's name; nothing was renamed, pushed or registered by this worker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/CONTRIBUTING-BOXES.md step 1 (git -C portal worktree add <path> -b cand/<box>/<slug> <last PROD release>) read at e0e69da7766d87719571d7e6c0ccf59bf65fcae9",
+      "task order IRPT_DASHBD.TO-DB-f-602 WORKER FACE: portal branch wk-IRPT_DASHBD-602-portal cut from origin/PROD e0e69da7766d87719571d7e6c0ccf59bf65fcae9",
+      "portal commit 7fa808c949fbe5d9c9d4ea1aea3aa3006be7d2e8 is on branch wk-IRPT_DASHBD-602-portal (git -C portal log -1)"
+    ]
+  },
+  "spec_asserts": "WORKER FACE: the portal feature branch is wk-IRPT_DASHBD-602-portal, cut from origin/PROD @e0e69da7; the issuer registers it for approval.",
+  "world_is": "CONTRIBUTING-BOXES.md names the feature branch cand/<box>/<slug>, and open-calls.py add --branch keys the registration on that name. The order's branch name does not match the rule. Not acted on: the name is the issuer's to ratify or change.",
+  "notes": "No effect on the acceptance rows: DBF119-1-AC1 to AC3 are mechanical and pass on this branch."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S2 -- the spec names no NOT_MEASURED reason for a row the contract does not describe; the model gives its own reason CLASS_RETURN_NOT_SERVED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "Step 2 of the cell gives the reason as the first non-MEASURED coverage value met, or WINDOW_NOT_COVERED. A row the contract does not describe (coverage MEASURED with a null class_return_daily, a coverage value outside the enum, or an asset_class outside class_enum) has no such reason. classWindowModel.ts reads it as not measured with its own reason CLASS_RETURN_NOT_SERVED and client-safe words. The contract is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json: class_return_daily is null whenever coverage is not MEASURED; enums.coverage has six members and no unknown-value member",
+      "portal/src/pages/InvestorReporting/tabs/reporting/classes/classWindowModel.ts@7fa808c9 defines CLASS_RETURN_NOT_SERVED and unmeasuredOf()"
+    ]
+  },
+  "spec_asserts": "Step 2: a day is measured only when every row has coverage MEASURED and a non-null class_return_daily; otherwise the reason is the first non-MEASURED coverage value met, or WINDOW_NOT_COVERED.",
+  "world_is": "The contract does not say what a MEASURED row with a null return means, and the spec names no reason for it. The model's reason is a choice the spec left open; a reviewer may name another reason. The choice is stated in the model's header.",
+  "notes": "Same reason covers a coverage value outside the enum and an asset_class outside class_enum."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S3 -- the spec is silent on an empty window and on an accountValues list with no row at a mix date; the model reads both as stated in its code
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "Step 2 names WINDOW_NOT_COVERED for missing mix-date rows but not for an inverted or empty window (start not before end). Step 3 names the value check but not an accountValues list with no row at a mix date. classWindowModel.ts reads the first as WINDOW_NOT_COVERED and the second as a mismatch (CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT). Both readings are the model's choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/reporting/classes/classWindowModel.ts@7fa808c9 buildClassWindowModel: the guard `if (!(start < end) || startRows === undefined || endRows === undefined)`",
+      "portal/src/pages/InvestorReporting/tabs/reporting/classes/classWindowModel.ts@7fa808c9 buildClassWindowModel: `atStart !== undefined && atEnd !== undefined && ...` before the value check"
+    ]
+  },
+  "spec_asserts": "Step 2: window must have rows on both mix dates, else WINDOW_NOT_COVERED. Step 3: with accountValues, a mix date that does not sum gives CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT.",
+  "world_is": "The spec does not say what an inverted window (start not before end) returns, nor what a missing accountValues row at a mix date returns. The model returns WINDOW_NOT_COVERED and CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT, so nothing prints on either.",
+  "notes": "Both readings fail closed (nothing prints); neither is exercised by a served path yet."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S4 -- the worktree carries no org/surprise_channel/ folder, so the investigation item schema the order names was read from the main checkout
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "The order says rows follow org/surprise_channel/schemas/investigation_item.schema.json. That path is absent in the worktree C:/dev/wk-irpt-dashbd-602 (no org/surprise_channel/ folder at fcc5e13f03, the worktree's HEAD at start). The schema was read read-only from C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json. This row follows the shape of the rows already in this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls org/surprise_channel/ run in C:/dev/wk-irpt-dashbd-602 at fcc5e13f03: No such file or directory",
+      "C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json read (main checkout, read only)"
+    ]
+  },
+  "spec_asserts": "WORKER FACE / BOUNDS: rows are written per org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "The schema is not carried in this worktree. The worker read it from the main checkout and wrote nothing outside the grant.",
+  "notes": "The row gate runs on the worktree's own tree; if it needs the schema there, the commit refuses and the order stays open."
+}
+```
+
+## IRPT_DASHBD-D2-W602-S5 -- bun run lint exits 1 on the whole portal at the PROD base: one error in src/pages/TicketCenter/__tests__/filing-hint.test.tsx (no-regex-spaces), outside this grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W602-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~602",
+  "surfaced_at": "2026-10-16T00:02:22Z",
+  "one_line": "The gate reads 'bun run lint (0 errors each)'. Repo-wide lint returns 1 error and 359 warnings (360 problems), all outside this grant. The error is in src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 147 (no-regex-spaces, two literal spaces in a regex). That file is unchanged from the base. The four new files lint with 0 findings (eslint on those paths, rc 0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run lint in C:/dev/wk-irpt-dashbd-602/portal at 7fa808c9: '360 problems (1 error, 359 warnings)', rc 1",
+      "git show e0e69da7766d87719571d7e6c0ccf59bf65fcae9:src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 147 holds the same regex with the two-space run"
+    ]
+  },
+  "spec_asserts": "WORKER FACE step 5: bun run typecheck and bun run lint (0 errors each) from the portal worktree.",
+  "world_is": "The repo-wide lint cannot reach 0 errors because of a file the grant does not name and this cell did not touch. Typecheck is rc 0. The lint on the cell's own paths is clean.",
+  "notes": "Not repaired: the file is outside the grant."
+}
+```
+
+## IRPT_DASHBD-D2-W601-S1 -- TO-DB-f-601: the gold, producer, publisher, handler and route files the cell reads are sparse-excluded from this worktree, so the FWD-3 thread read cannot be made as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W601-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~601",
+  "surfaced_at": "2026-10-15T23:34:24Z",
+  "one_line": "The worktree wk-IRPT_DASHBD-601 carries the org/ and .tools/ paths and the portal source, but not the code the cell reads: every path under data/ (2042 tracked files) and infra/aws/ (9264 tracked files) is in the index with the skip-worktree flag and is not materialized on disk, so the producer, the reporting-gold handler, the publisher, the reporting entry and the series reads of DB-f-601 steps 1-4 cannot be opened in this tree. The same holds for org/surprise_channel/ (the investigation item schema is tracked but absent).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -v data/assets/scripts/gold/irpt_reporting/account_class_daily.py prints S (skip-worktree); git ls-files -v infra/aws | grep -c '^S ' prints 9264 of 9264 tracked infra/aws paths; git ls-files -v data | grep -c '^S ' prints 2042 of 2042 tracked data paths",
+      "git sparse-checkout list (worktree wk-IRPT_DASHBD-601, HEAD fcc5e13f03) lists .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/ref, org/standards; test -d data prints no and ls infra/aws/lambda prints cannot access",
+      "ls org/surprise_channel prints cannot access; git ls-files org/surprise_channel/schemas/investigation_item.schema.json lists the file as tracked",
+      "p119_fwd3.py run at worktree root: 'reason: missing record ... RD_FWD3_THREAD_R119.json' and 'DBF119-2-AC1 FAIL' rc=1 (the checker reads no code file; the record was not written because the cell's source reads are absent)"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-601 Bash bar: the worktree must carry the paths the task order names (org/ and .tools/ tested); the cell reads the producer data/assets/scripts/gold/irpt_reporting/account_class_daily.py, the publisher and handler under infra/aws/lambda/investor-reporting/ and reporting/entry.py 'from their code and records' (cell steps 1-4), and the BOUNDS say the read is a read of repository files.",
+  "world_is": "org/ and .tools/ are present and the branch is wk-IRPT_DASHBD-601, so the first test passes; the sparse checkout excludes data/ and infra/aws/ from this worktree, so steps 1-4 have no readable source here and the criterion DBF119-2-AC1 fails at base with no record. Per the bar this is a BLOCKING stop: nothing was rebuilt, extracted, reconstructed or sparse-widened, and no record was written. The cloud-side question (whether account_class_daily was applied to gold) is not answered here either way; it is absent and needs the owner's live read."
+}
+```
+
+## IRPT_DASHBD-D2-W601-S2 -- TO-DB-f-601: the contract's served flag and the publisher's round-1 note still say the class table does not exist, but the R37 apply landed it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W601-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~601",
+  "surfaced_at": "2026-10-15T23:58:15Z",
+  "one_line": "The TO premise (and two standing texts) say account_class_daily has no object in any bucket: the contract reads served false with the note 'No object of this table exists in any bucket' (org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json line 157), and the publisher docstring says the class keys are absent because the table does not exist in round 1 (reporting-publish/publisher.py lines 5-6). The R37 apply's own records show the table landed, so those texts are stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json line 157 reads served false; served_note reads 'No object of this table exists in any bucket'",
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py lines 5-6: class keys ABSENT because account_class_daily does not exist in round 1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~55/R37_FIRST_FIRE_LOG_TAIL.txt line 7 logs '2026-10-07 class rows=25019 LANDED'; the R37 deploy-completion ledger entry is CLOSED",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~63/R41_BACKFILL_LOG_TAIL.txt line 7 logs '2026-10-08 class rows=25057 LANDED'"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-601 premise and step 1: the prepared release's contract note says no object of the table exists in any bucket, and the publisher's comment says the class keys are absent because the table did not exist in round 1.",
+  "world_is": "The class table has been applied and has landed for at least two days per the R37 first-fire and R41 backfill records. The contract's served flag and served note and the publisher's round-1 docstring were not updated after the apply. The publisher code still writes no class keys, which is a separate fact (the FWD-3 route change), not a stale-text issue. No edit was made to either text; the owner of the contract (2.0.0_SA_COO~D2) can decide the update."
+}
+```
+
+## IRPT_DASHBD-D2-W601-S3 -- TO-DB-f-601: the portal's asset-class type carries an eighth class, Other, that the gold class enum does not hold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W601-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~601",
+  "surfaced_at": "2026-10-15T23:58:15Z",
+  "one_line": "The portal's HoldingAssetClass type and colour map carry Other as a class of its own (portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts lines 30, 42, 58, 75), while the gold account_class_daily enum has seven values (cash, fixed_income, equity, structured, alternatives, commodities, unclassified) and no other. A page reading the gold class document would meet a class key outside its own type unless the mapping is decided.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts line 30 (type includes 'Other'), line 42 (Other colour), line 58 (Other rank), line 75 (served key other maps to Other)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json enums.asset_class: seven values, no other"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-601 step 5 and step 6 premise: the portal holds an asset-class vocabulary and order of six classes then Unclassified (Andrew's order).",
+  "world_is": "The portal's vocabulary is eight values: the six plus Unclassified plus Other, with Other a grey bucket and a served holdings key. The gold class enum does not carry Other. The gap is not in the class table (which maps any table value outside the six to unclassified) but in the page's own type. No code was changed."
+}
+```
+
+
+## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S102",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-16T00:43:39Z",
+  "one_line": "FWD-3 hops 2-6 (the class-daily gold producer, the series class keys, their publish, the route member, the portal section) have owners by the CTO's round-119 ruling (the producer ~F2, the series contract and publish ~D2, the OBJECTS member ~S2, the portal ~F2); and the ruling's premise that the producer is NEW meets a table that already has a producer and an applied release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "CTO ROUND-119 ANALYSIS F-SHIP (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md) ruling 1: ~F2 owns a NEW gold table account_class_daily and a new producer module with its own Terraform root (classes sum to the account on every day, by test; the classification is a dated read, claim held); ruling 2: ~D2 adds the class keys to the series contract and publishes them. CLAUDE.md section 5: never stand up a duplicate output path.",
+  "world_is": "The table account_class_daily already has a contract (org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json 0.1.0), a producer (data/assets/scripts/gold/irpt_reporting/account_class_daily.py, which reads etf-classifications by GetItem at line 195) and tests, both halves of its never-widen release are signed, and the R37 apply is recorded CLOSED (ledger entry irpt-dashbd-r37-activity-lot-release-apply) with class rows logged landed for 2026-10-07 and 2026-10-08 (records ~55/R37_FIRST_FIRE_LOG_TAIL.txt and ~63/R41_BACKFILL_LOG_TAIL.txt; read by worker 601, claim measured from records, not a live read). The reporting-gold handler emits it beside account_return_daily (infra/aws/lambda/investor-reporting/reporting-gold/handler.py). Whether that emission still runs daily is unmeasured (no live read). A second writer of the same table address would be a duplicate output path. The open question for the CTO, not decided by this seat: is the ruled producer (a) the existing module moved out of the reporting-gold function into its own module and root (one writer, no duplicate), (b) an extension of the existing producer, or (c) a different table. Until ruled, this seat cuts only reads against the question (the producer's gap to the acceptance: classes sum to the account on every day, the dated classification read) and the FWD-5 work, and no write to the class table.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~601/RD_FWD3_THREAD_R119.json (gold_table, producer)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json (served_note, producer)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md (rulings 1 and 2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED with owner ~F2 as the CTO asked (FWD-3 hops 2-6: ~F2 the producer, ~D2 the publish, ~S2 the route member, ~F2 the portal). The question above is queued as a call for the box CTO (open-calls). The class-window model and section (round 119, portal 7fa808c9) and ~D2's series class keys are unaffected by its answer."
+}
+```
+
+
+## IRPT_DASHBD-D2-S103 -- FWD-5 has no contract or producer; ~F2 is the sole writer by ruling: the carrier row
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S103",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-16T00:43:39Z",
+  "one_line": "FWD-5 (transactions browse, filter, sort, export) has no contract and no producer; by the CTO's round-119 ruling ~F2 is the sole writer of the new IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json and of its per-firm producer from the custody transaction silver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "CTO ROUND-119 ANALYSIS F-SHIP ruling 3: ~F2 writes a NEW contract file IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json (sole writer) and its producer, from the custody transaction silver per firm; any enum carries its rule-24 record and the cross-firm fence applies (per-firm prefixes only). PRD FWD-5 and surface row S11 (gold account_transaction and its paged platinum files).",
+  "world_is": "No contract under org/standards/ names account_transaction and no producer writes it (record 0.9.0_WK_IRPT_DASHBD~603/RD_FWD5_THREAD_R119.json: 0 hits in 121 files). Sources exist per firm (49 Financial silver fact_trn, Cottonwood fact_transactions, an Inflection bronze pull); Opal's own words for the custodian's action and type (the PRD's ACCEPT) are defined in no file read (worker row W603-S2), and the flow map has 4 values against the brief's 7. The six hops from the custodian to the portal section: custodian sources (UNOWNED), the contract and builder (~F2), the apply (~DB2), the paged publisher and the route `which` (~D2's reporting-publish function and ~S2's route, by ruling addendum 2), the portal client and the section (~F2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~603/RD_FWD5_THREAD_R119.json",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md (ruling 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED with owner ~F2 as the CTO asked. Next acts of this seat: a per-firm census of the custodian action and type codes and a proposed Opal vocabulary with its four-postulate record (the taxonomy law), then the contract."
+}
+```

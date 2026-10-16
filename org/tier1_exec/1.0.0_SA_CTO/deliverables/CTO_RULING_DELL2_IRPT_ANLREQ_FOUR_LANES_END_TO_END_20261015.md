@@ -154,3 +154,22 @@ holdings have no class and no pool, and the swap returns NO_REPLACEMENT.
 3. **(c) is refused:** classification rows curated by an agent are hand-typed values with no measured claim. That is my 49F ruling's
    "never by hand-typed rows". If Andrew's staff supply classes, that is a human input, which enters through the registry's own writer
    with its claim (`staff_classified`), not through the snapshot builder.
+
+## ADDENDUM 7 (~01:0xZ): the four cross-firm admissions in the ticket service (row IRPT_ANLREQ-D2-S134, `~T2` round 46)
+
+`~T2`'s FWD-5 read found four places where the ticket service admits another firm. Ruled one by one. **Owner: `2.0.0_SA_COO~V2`**
+(TCKT_VNEXT, the ticket service's project). `~T2`'s FWD-5 cross-firm tests are the acceptance, run red before and green after.
+1. **The notice recipient comes from the request body: a DEFECT, fixed.** A caller must never choose where a firm's notice goes. The
+   recipient is derived server-side from the ticket's own firm's configured contacts. A body value is ignored and logged.
+2. **The `svc-analyst-intake` list is unscoped: SCOPE it.** The service principal lists only the firms whose requests it processes, from
+   an explicit list in config.
+3. **An internal profile with no `allowedFirmIds`: FAIL CLOSED.** A missing list means NO firm, never all firms. Opal staff who file for any
+   firm (J7) carry the explicit global marker in item 4.
+4. **The two `OPAL_GLOBAL` admissions STAND by design**, for Opal staff only (the ticket center is `requireInternal`, J7). Each is named in a
+   short register (route, principal, reason) in TCKT_VNEXT's deliverables, so no global admission is implicit.
+
+Items 1 to 3 are code changes in the ticket service. They go through its normal pair when they deploy. A client-facing route among them
+waits on Andrew's promote word. Row S134 disarms when `~T2`'s FWD-5 tests read green on all four.
+
+**Fan-out note for `~T2`:** round 46 issued 7 workers. The dell2 CPU budget is 4 per issuance (the parallelize ruling, ADDENDUM 1). It is
+not recut; the next issuance keeps to 4.

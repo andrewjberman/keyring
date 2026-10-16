@@ -19915,3 +19915,131 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W212-S1 -- the investigation row schema the worker face names is absent from this worktree, as IRPT_ANLREQ-D2-W161-S2 already records
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W212-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~212",
+  "surfaced_at": "2026-10-16T00:01:00Z",
+  "one_line": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row schema; that path does not exist in the worktree at base b1ad686188, so the row could not be checked against it. The row was shaped on the existing rows of this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face says a surprise row is validated against org/surprise_channel/schemas/investigation_item.schema.json, and the legacy flat path is org/surprise_channel/<CODE>/INVESTIGATION_v{N}.md.",
+  "world_is": "Neither path is in this worktree: org/surprise_channel does not exist, and a Glob for **/investigation_item.schema.json under org/ returned no file. The gate .tools/surprise-row-gate.py is present at its path; its schema switch was not run in this cell. This is the same absence IRPT_ANLREQ-D2-W161-S2 records for another worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob C:/dev/wk-irpt-anlreq-212/org for **/investigation_item.schema.json: No files found (this worker, 2026-10-15)",
+      "ls -d org/surprise_channel in C:/dev/wk-irpt-anlreq-212: No such file or directory",
+      "INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W161-S2 records the same absence in another worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+  "id": "IRPT_ANLREQ-D2-W212-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~212",
+  "surfaced_at": "2026-10-16T00:01:30Z",
+  "one_line": "The portal's ticket client says the CloudFront /api/scoped/tickets routes are not yet applied and calls 4xx at the edge; the repository's edge configuration carries both ticket behaviors at the base commit. Live application was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/src/api/endpoints/tickets.ts:7-8 says the CloudFront /api/scoped/tickets* behaviors land via portal-auth on a CTO apply, and until then calls 4xx at the edge.",
+  "world_is": "At base b1ad686188 infra/aws/terraform/portal-auth/cloudfront-distribution.tf:540 defines the /api/scoped/tickets/* behavior and :559 the /api/scoped/tickets behavior, both to APIGateway-portal with the auth viewer-request function; infra/aws/terraform/ticket-center/main.tf:6-7 says the behavior is in portal-auth. Whether they are applied on DEV is not read in this cell (no AWS read), so the comment and the repository disagree about the edge state.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/tickets.ts:7-8 (the comment text, this worktree)",
+      "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:540 and :559 (the two ordered_cache_behavior blocks, this worktree)",
+      "infra/aws/terraform/ticket-center/main.tf:6-7 (the behavior is named as living in portal-auth)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W201-S1 -- the proof gate needs a decomp_ref the TO worker face does not name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W201-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~201",
+  "surfaced_at": "2026-10-16T00:16:05Z",
+  "one_line": "The TO-AR-g-102 worker face does not name the decomp_ref the proof gate requires: the to-pipeline gate refused the flip commit until the instance carried decomp_ref {doc, vintage_commit, to_ref} copied from the TO <decomp_ref> block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The TO-AR-g-102 proof clause lists the instance fields to fill (to_id, invocation, output_evidence, the artifact commits, the flip) and does not mention decomp_ref.",
+  "world_is": "to-pipeline-gate.py refused the flip commit (rc=1, 2 violations): the governing TO carries <decomp_ref> at its lines 92-95, so the instance MUST carry a decomp_ref object. The fix was one object, doc org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R24_G.md, vintage_commit d98ff72fdf (last commit of that decomp), to_ref the TO path. The flip commit then passed at 7b1c6c60ce; proof-of-spec-check rc=0 on both rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-102.release33-lambda-source-rows-and-ticket-grant.md lines 92-95 at d98ff72fdf: the <decomp_ref> block names the decomp doc and owned cell AR-g-102",
+      "safe-commit refusal of the first flip attempt (bbd92e94c0 parent): to-pipeline-gate REFUSED, instance VIOLATION decomp_ref",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~201/IRPT_ANLREQ.TO-AR-g-102.release33-lambda-source-rows-and-ticket-grant.proof_of_spec.json at 7b1c6c60ce carries the decomp_ref object"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S133 -- disposition of IRPT_ANLREQ-D2-W201-S1: the proof clause omitted decomp_ref; fixed for later orders
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T00:49:47Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S133",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The worker read it right: the proof gate requires a decomp_ref in the proof instance, and the issuer's orders did not say so in their proof-of-spec clause. The omission is the issuer's; it is fixed for every order cut after this one (AR-g-101 names it) and the worker's own fix (copying the order's decomp_ref block) is the correct one.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W201-S1: the proof instance needs a decomp_ref; the order template now says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 201's row W201-S1 and its commit b5a80f31b9 (the instance carries decomp_ref copied from the order's block)",
+      "AR-g-102 merged @927337a741 and verified: release-census irpt-ycharts-generate --pin HEAD prints changed_members=8 (five re-pinned, two native, one added)"
+    ]
+  },
+  "spec_asserts": "The proof-of-spec clause of an order tells the worker everything its proof instance must carry (/dispatch Step 2).",
+  "world_is": "The clause named to_id, invocations, artifacts_produced and evidence, not decomp_ref; the gate refused the flip commit until it was added."
+}
+```
+
+## IRPT_ANLREQ-D2-S134 -- the ticket service and the report side admit another firm in four places the round-45 FWD-5 maps found
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S134",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T00:52:48Z",
+  "one_line": "FWD-5 round-45 maps find four places where the ticket service or the report side ADMITS by design or by omission: the pickup and ack notice recipient, the svc-analyst-intake list, an internal PROFILE row with no allowedFirmIds, and two OPAL_GLOBAL admissions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD FWD-5 (prd/IRPT_ANLREQ_PRD.md:65-68): another firm never sees the request, the package or the commentary; the ticket service fences a caller by the firm on its profile.",
+  "world_is": "Read at HEAD in round 45 (records deliverables 0.9.0_WK_IRPT_ANLREQ~210 and ~212 and ~211): (1) ticket_center/lambda_function.py:1191 sends the pickup and ack notice to requester.email taken from the CREATE body (:1373) with no tie to the ticket's firm; (2) :433 lists every firm's stored rows to svc-analyst-intake, pinned by test_list_scoped_firm.py:240; (3) :419 an internal PROFILE row with no allowedFirmIds admits every firm (test_no_row_refuses.py:104), so the FWD-1 synthetic principal cannot serve a cross-firm negative test and round 46 builds a scoped mint (AR-ty-56); (4) resident_installed.py:248 and _scope/interactive_access.py:115 admit OPAL_GLOBAL by documented design. Not changed by round 46: a change of who the service admits is a design decision for the ticket-service owner and the CTO, not a test.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~210/FWD5_TICKET_SERVICE_FENCE_MAP.md (rows ADMITS, checked by r45_checks.py rec)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~212/FWD5_FRONT_DOOR_AND_PORTAL_MAP.md (internal PROFILE row, mint helper readback)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~211/FWD5_REPORT_SIDE_BINDING_MAP.md (rows 13 and 36)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
