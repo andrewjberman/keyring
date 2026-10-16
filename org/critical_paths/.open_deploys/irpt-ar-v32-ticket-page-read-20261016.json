@@ -1,0 +1,40 @@
+{
+  "slug": "irpt-ar-v32-ticket-page-read-20261016",
+  "title": "IRPT_ANLREQ TO-RUN-AR-v32 (AR-v-32): a minted synthetic staff user (fwd1-staff-r41b@opal.invalid, one users row, removed in the same order) signs in on the REUSED dev server http://localhost:5174 (portal DEV dc057891b0), opens the Ticket Center ticket TCK-20261015-944c84f8 and reads what the page shows while the t55 hop failure COMMENTARY_DRAFT_REFUSED stands on the job row; one screenshot, at most two status reads (open, Refresh); no write to the job row or ticket; pair COO half blob 5b694ac0e2, CTO half 6902bc6b4b (msg 9544); the t55 failure stays for ~T2's leg B",
+  "author": "0.7.0_AE_CloudOps~AQ2",
+  "status": "OPEN",
+  "opened_at": "2026-10-16T15:56:57.407811+00:00",
+  "window_hours": 4.0,
+  "entry_path": "org/critical_paths/change_management/20261016T1556Z_irpt-ar-v32-ticket-page-read-20261016_deploy_completion.md",
+  "legs": [
+    {
+      "id": "M",
+      "kind": "verify",
+      "target": "one users row fwd1-staff-r41b@opal.invalid minted by the signed helper (password on stdin, in memory only)",
+      "proof_required": "MINT-OK READBACK-OK",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "P",
+      "kind": "verify",
+      "target": "the Ticket Center page read on http://localhost:5174 and one screenshot",
+      "proof_required": "status route answer, words shown, page intact, canvas, screenshot",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "R",
+      "kind": "verify",
+      "target": "the minted user removed",
+      "proof_required": "users_row=ABSENT consistent=YES by the helper's ABSENT lines",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261016T155657Z OPENED by 0.7.0_AE_CloudOps~AQ2 with 3 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}

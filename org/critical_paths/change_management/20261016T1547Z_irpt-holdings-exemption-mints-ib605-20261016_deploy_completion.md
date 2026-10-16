@@ -12,10 +12,11 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | s3-prefix | the three bundle keys irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz (opal-data-49financial, opal-data-cottonwood, opal-data-inflection): mint each FROM its own scratch pin worktree with safe-deploy.sh --mint-bundle, BUNDLE MINTED with MATCH, new version id, landed sha256 equals the built digest | each firm's head-object, new VersionId, landed==built |  | OPEN |
+| L1 | s3-prefix | the three bundle keys irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz (opal-data-49financial, opal-data-cottonwood, opal-data-inflection): mint each FROM its own scratch pin worktree with safe-deploy.sh --mint-bundle, BUNDLE MINTED with MATCH, new version id, landed sha256 equals the built digest | each firm's head-object, new VersionId, landed==built | 3 mints from their own scratch pin worktrees (branches scratch/ib605-49f, -cot, -inf; pins b1d354cfc9 and 5fad7eaaa8 plus the two transplanted files), each BUNDLE MINTED, landed sha256 equals the built digest: 49financial 5eOkwoqs..(from) -> L8BoCbQW.. 15:51:08Z (d2eaf305), cottonwood VmEyGROJ.. -> ToQF59yX.. 15:53:5xZ (bc2e8f54), inflection SngSJHRb.. -> HPZQkHG4.. 15:55:1xZ (bc2e8f54); digest gate: exactly holdings_snapshot.py, publication.py and SHA256SUMS differ, allow_older_date 0, 49F CUSIP 12 and 12, six drifted members equal live; re-measure accepted by the CTO msg 9538: 49F 2 listed accounts amount 0, Cottonwood and Inflection nothing to list; Cottonwood anchor U6IpoTrX admitted by the issuer msg 9493 | CLOSED 20261016T155655Z |
 | L2 | verify | each minted firm's first scheduled fire after the mints (Monday 2026-10-19 14:15Z): current/manifest.json and SSM status, STAMPED_T_MINUS_1 with a T-1 partition under it, or HELD_NO_NEW_PUBLICATION with the absent partition named and the frontier unchanged | manifest read and SSM status per firm |  | OPEN |
 | L3 | verify | the exemption's after-read: 49financial published or refused and its listed count (2 expected, amount 0, one evidence value per exempted account), Cottonwood listed count and no closed name in the manifest, Inflection listed count | counts per firm |  | OPEN |
 
 ## Log
 
 - 20261016T154748Z OPENED by 0.7.0_AE_CloudOps~IB2 with 3 leg(s)
+- 20261016T155655Z LEG L1 closed: 3 mints from their own scratch pin worktrees (branches scratch/ib605-49f, -cot, -inf; pins b1d354cfc9 and 5fad7eaaa8 plu
