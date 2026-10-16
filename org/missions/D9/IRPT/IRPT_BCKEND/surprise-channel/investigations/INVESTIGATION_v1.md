@@ -41034,3 +41034,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Mine: the pair's blast radius omitted the function's own role. The fix is an IAM change under its own never-widen pair, or Branch B."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S218",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-16T11:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "IB-pr-612 first scheduled 49F run FAILED: the new split-adjust code lists opal-data-assets, which irpt-49f-holdings-performance-role has no s3:ListBucket grant for; 3 invocations, 3 errors since the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch AWS/Lambda for irpt-holdings-performance-lambda, 2026-10-16T05:15:36Z to 11:46Z (60 s periods): Invocations 3, Errors 3, Throttles 0; the log group holds 3 START lines, all RequestId 666ad20a (one fire plus two retries)",
+      "log group /aws/lambda/irpt-holdings-performance-lambda: [ERROR] AccessDenied ... ListObjectsV2 ... irpt-49f-holdings-performance-role ... not authorized to perform s3:ListBucket on arn:aws:s3:::opal-data-assets because no identity-based policy allows the s3:ListBucket action; traceback holdings_performance.py main() pool.map(one, days), handler.py line 150",
+      "2.0.0_SA_COO~P2 msg 9317 reports the same read from its own side"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-612 AMENDMENT 1 step 9: the 49F first scheduled run completes (run_ok true) with the manifest declaring split_adjust; ADDENDUM 2 and the pair assert the release needs no IAM change (bounds: NO IAM change).",
+  "world_is": "The first scheduled 49F fire after the apply (11:30Z) failed on all three attempts with AccessDenied s3:ListBucket on opal-data-assets. The ListObjectsV2 on opal-data-assets is, per the issuer's reading (msg 9317), the new split-adjust transactions read (I did not trace the call site); the role's policy grants object reads on the silver dim_position and dim_balance prefixes only (iam.tf outputs: read_arns schwab/08335338/silver/dim_position/* and dim_balance/*) and no ListBucket on that bucket for the transactions read. So 49F's scheduled production run for 2026-10-16 produced nothing; the pre-apply code ran clean. Nothing was rolled back by me: the issuer reports the CTO is ruling between a forward IAM pair and Branch B (prior version MP3woT7ipkN4N3hcclPj3.LFigL3MEqO made newest by copy-object, one safe-apply returning all three). The next 49F fire is Monday 2026-10-19 11:30Z and fails the same way until one of the two lands. The siblings' first runs (Cottonwood 12:15Z, Inflection 14:00Z) are not yet read; their declarations carry no split_adjust, so the transactions read should not run for them.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
