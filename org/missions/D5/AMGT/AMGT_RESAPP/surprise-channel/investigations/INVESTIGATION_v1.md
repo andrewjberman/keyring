@@ -28392,3 +28392,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The CTO's alternative reading of W452-S1 (rule null the contract, round-107 item (g)) was not taken and none was ruled; reverting is the one _judge branch and one assertion. Closes D1-S38's open line: W451-S1 needs no cell."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S40",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T03:02:00Z",
+  "one_line": "A second reader of the stored AI-fill documents bypasses the hold: the Opal gateway's harvest_get_research reads amgt/harvest/gold/ai_fill/ straight from S3 and returns the held, ungrounded round-105 blocks today (ASML_NA_Equity read live), so the hold on opal-amgt-scoped-api does not cover it and a 95-key store write would reach it at once.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "The CTO's ruling 2 of 2026-10-14 (CTO_RULING_FWD41_FIVE_NAME_READ_NOT_MET_20261014.md) took the AI-fill blocks off the PROD page until a re-read passes; the hold is the environment value AMGT_AIFILL_ROOT on opal-amgt-scoped-api, and my own CALL file and D1-S33 treated that hold as what keeps the stored documents from being read.",
+  "world_is": "Live read 2026-10-16T03:0xZ: opal-amgt-scoped-api AMGT_AIFILL_ROOT = /var/empty/aifill-hold (the hold is in place). In the same minutes the gateway tool harvest_get_research(security_key=ASML_NA_Equity, fields=[ai_fill]) returned ai_fill_key amgt/harvest/gold/ai_fill/security_key=ASML_NA_Equity/ai_fill.json, ai_fill_generated_at 2026-10-14T03:07:55Z and five blocks, two with text (mgmt_bio, mgmt_recent) and three NONE with reasons. The code path is infra/aws/ec2/opal-gateway/app/harvest_research.py lines 47 and 259-268 (P_AI_FILL, list_keys, the object read), a direct S3 read that does not go through the scoped API. Stored: 95 objects under the prefix, every one named ai_fill.json (aws s3 ls --recursive, 95 lines), bucket opal-data-harvest versioning Enabled. NOT MEASURED: who reads the gateway tool (its users), whether the gateway is meant to show held blocks to them, and the other 94 names' text (one name read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration opal-amgt-scoped-api -> AMGT_AIFILL_ROOT /var/empty/aifill-hold",
+      "mcp harvest_get_research ASML_NA_Equity fields ai_fill -> ai_fill_blocks with mgmt_bio and mgmt_recent text, ai_fill_generated_at 2026-10-14T03:07:55Z",
+      "infra/aws/ec2/opal-gateway/app/harvest_research.py lines 47, 259-268 (read with the Grep tool)",
+      "aws s3 ls s3://opal-data-harvest/amgt/harvest/gold/ai_fill/ --recursive: 95 lines, all ai_fill.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not acted on. The remedy is the CTO's to rule: extend the hold to the gateway reader, or accept the gateway as an internal reader of held blocks. The 95-key store write's never-widen pair names this reader either way (draft: ledger/NEVER_WIDEN_ROUND107_AIFILL_95_KEY_STORE_WRITE_COO_HALF_DRAFT.md). The hold sentence in CALL_ANTHROPIC_KEY_FOR_THE_95_NAME_RERUN.md ('no page reads these documents') is true of the served API and wrong as a claim about every reader."
+}
+```

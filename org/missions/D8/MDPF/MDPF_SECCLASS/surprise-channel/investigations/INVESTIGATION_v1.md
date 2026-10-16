@@ -7926,3 +7926,29 @@ by dell1 or by this seat.
   "world_is": "E_25 is wrong on the key name, not on order: it sorts the dates itself (E_25:142) and reads one day's values by key. Whether E_25 still runs in the scheduled gold chain was not measured in this order."
 }
 ```
+
+## MDPF_SECCLASS-D1-S40 -- D1-W92-S2 disarms on leg G of the SC-e-102 sorted-keys ship (first scheduled fire after it)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S40",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-16T03:15Z",
+  "one_line": "D1-W92-S2 disarms on leg G of the SC-e-102 sorted-keys ship: the first scheduled fire after the ship (launch 2026-10-15T23:00:11Z) moved the D_03 families' bytes once with content equal on every date outside 10-10..10-13, and D1-W92-S3's last-digit float concern did not occur (D_04 composition total equals its same-order recompute pre and post, diff 0.000000).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R25_CHECKS/LEGG_E102_READ_20261016.md: r25_legg_read.py read against E102_LEGP_20261014.json (122 keys): firm 2293 of 2297 dates canonical-equal, 49 of 56 moved advisor files equal whole and 7 differ only on 10-10..10-13, sorted bytes on mix_daily_summary, firm_mix_views_daily (+alias) and 56 of 56 moved advisor files",
+      "same file: LEGG-D04 pre and post ok=True, served 2024173838.39 and 2024164661.27 equal their same-order recompute",
+      "e102_shipped_check.py re-run at the read: E102-SHIPPED ok=True mds_sorted=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NEVER_WIDEN_COO_HALF_SECCLASS_C06_SORTED_KEYS_20261014.md item 4: leg G on the first scheduled fire after the ship: canonical-JSON equality on dates the fire did not re-derive, key order sorted in every written object, D_04's composition total within $0.000001 of a same-order recompute.",
+  "world_is": "Met on those three clauses. Not shown: the cause of the 10-10..10-13 content move (a data change on re-derived dates, FDRXX transfer read at FIRE_READ_20261014_2300Z.md; not graded here); the chain's stop instant (unmeasured); three advisor files (abby_horton, erick_webb, sydney_cobb) carry no D_03 write since the ship and are absent from the served summary."
+}
+```
