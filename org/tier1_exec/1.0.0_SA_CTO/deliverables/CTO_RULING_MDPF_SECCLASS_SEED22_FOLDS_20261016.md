@@ -21,14 +21,14 @@ row.
 | F5 | **YES.** HODL's name says bitcoin ETF, so the convention governs over the old row's guess. The row's provenance records the override | HODL | 3,151.90 |
 | F6 | **YES, HOLD OUT** | PCEF | 0.00 |
 
-**Totals.** Seeded: 14 rows, 154,752.13 from the folds, plus the 4 equity rows at 15,777.17.
+**Totals.** Seeded: 9 rows (F1 2, F2 5, F4 1, F5 1), 154,752.13 from the folds, plus the 4 equity rows at 15,777.17.
 Held out: 9 rows, 242,812.29. The arithmetic is from M1's own table: F2 195,994.04 minus 75,106.04 is 120,888.00.
 
 ## Consequences
 
 - **W93-S2 disarm, amended:** E_18 reads the canonical list, and every old-list-only ticker is either seeded or named on a held-out list
   as Unclassified with `seed_pending`. None carries an old-list class. The E_18 repoint still follows the applied and read seed.
-- **The never-widen pair** prices the 18 seeded rows per class, plus the 9 held-out rows. The held-out rows are expected to stay
+- **The never-widen pair** prices the 9 seeded rows plus the 4 equity rows per class, plus the 9 held-out rows. The held-out rows are expected to stay
   Unclassified, and the pair names that as their expected outcome.
 - **Round-28 enrichment item (design, carried):** the canonical vocabulary holds no class for multi-asset funds (balanced, target-date,
   income blends). Whether it gains one needs a TAXONOMY LAW record (CLAUDE.md rule 24). Until then the 8 multi-asset tickers stay
