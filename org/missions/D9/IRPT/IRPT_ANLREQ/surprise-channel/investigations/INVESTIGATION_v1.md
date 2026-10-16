@@ -20518,3 +20518,29 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W163-S1, IRPT_ANLREQ-D2-W163-S2 and IRPT_ANLREQ-D2-W163-S3."
 }
 ```
+
+## IRPT_ANLREQ-D2-W223-S1 -- AR-tz-63 test (5), a non-list allowedFirmIds refused malformed, is a control at base, not a red test
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W223-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~223",
+  "surfaced_at": "2026-10-16T02:16:10Z",
+  "one_line": "The cell names test (5) a non-list allowedFirmIds as RED at base. At base the scope reader already refuses every non-list non-null value with 403 firm scope malformed, so test (5) passes today as a control. The other five red tests (1, 2, 3, 4 and the unmarked-row half of 6) fail on the behaviour, and the checker's red gate is met at 5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-tz-63 worker face, test (5): a non-list allowedFirmIds is refused 403 firm scope malformed (RED). Test (6) is red through its unmarked-row half; its marker-row half passes today.",
+  "world_is": "At base 6df6c60552 lambda_function.py lines 418-426: val = got.get('allowedFirmIds'); None returns no scope; a list returns its set or no scope when empty; every other value falls through to _resp(403, {'error': 'firm scope malformed'}). Run from C:/dev/wk-irpt-anlreq-223: python -m pytest -q infra/aws/lambda/ticket_center/tests/test_cross_firm_profile_scope.py gives 5 failed, 2 passed (tests 1, 2, 3, 4 and 6 fail on their 200 answer; tests 5 and 7 pass). The test file keeps test (5) as the contract states it; it is a control and not a red twin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-223/infra/aws/lambda/ticket_center/lambda_function.py:418-426 (read at HEAD 6df6c60552)",
+      "pytest run of infra/aws/lambda/ticket_center/tests/test_cross_firm_profile_scope.py: 5 failed, 2 passed in 0.88s",
+      "r46_checks.py red 4 on the same file: R46-RED-OK red=5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
