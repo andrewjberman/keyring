@@ -11,8 +11,8 @@
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_NPM_CACHE_LAYOUT_QUESTION_DELL1.md",
  "opened_at": "2026-10-16T17:58:19Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-16T18:20:41Z",
+  "bus_message_id": "a11fc37f-9491-4744-8bed-87fb18c3663f"
  },
  "ack_bus_message_id": null,
  "closed_from": {
