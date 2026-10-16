@@ -61,7 +61,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rr-1.ruling-ref-backfill.proof_
 - Pre-cut: rr1.AC1 base FAIL as expected (`RULING_REF_UNRESOLVED.json` absent); rr1.AC2 base PASS as expected (a bound check: nothing has changed yet). The AC1 PASS arm was not exercised before the cut (the check reads fixed repo paths); the worker's run is its first PASS-arm run, and the issuer re-runs it in the main tree at the drain (a sparse tree has misled a gate-reading check once today).
 - `OG-rr-2` (the gate refuses a row whose `ruling_ref` does not resolve; planted rows; full-add re-grade moves 0) is cut only after this merges.
 
-<status>staged</status>
+<status>complete</status>
 <round>37</round>
 <workstream>RULING-REF</workstream>
 <slot>~115</slot>
