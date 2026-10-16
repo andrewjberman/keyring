@@ -8,6 +8,7 @@
 <status>pending</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
+<proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>98</round>
