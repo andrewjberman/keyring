@@ -1,0 +1,13 @@
+{
+  "prd": "TCKT_MTADTA_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "315f7a19af7406898f06b555bef84eaa9a299330",
+  "half": "ratified-text",
+  "half_hash": "2d09b07719a4bdbcd75250afccc452c85b6c7da35145e85f73bfba571fda3481",
+  "endpoint_hash": "9f4eaf1cf0975193f83073ae2a3faa9be37dfb54776bed932a030d5f8045452c",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_TCKT_MTADTA_v0.1_RATIFIED_TEXT_20261016.md@c6a0aa8499",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-16T06:35:10Z",
+  "reason": "C-FIELDS (c) reduces only external addresses; an internal colleague outside the eight is stored verbatim as a recipient or sharee, against FWD-7"
+}
