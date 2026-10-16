@@ -659,3 +659,28 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## MDPF_SECHIST-D1-S9 -- direct-act-order.py mints an order with no <risk> element, so the L6 gate's risk limb refuses every mint it makes
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S9",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-15T23:49:11Z",
+  "one_line": "`.tools/direct-act-order.py mint` has no --risk argument and emits no <proof_of_spec> block, and its record face carries status, direct_act, slot and fabric only, so `.tools/to-pipeline-gate.py` GATE (xii) and the proof-of-spec commit gate refuse the order it just minted; and its decomposition check is a substring while the gate wants a first-column table cell id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python .tools/direct-act-order.py mint --code MDPF_SECHIST --slot 25 --cell A2-cap-62 ... (no --dry-run) -> REFUSED: minted order failed the L6 gate; deleted. Violations: 'a NEW tree task order carries NO <risk> element on its own line' and 'owned_cells names cell A2-cap-62, which is not a cell of .../MDPF_SECHIST_DECOMP.md (2 cell ids read from the ...)'; the same call with --dry-run printed the order and reported no refusal",
+      ".tools/direct-act-order.py L262-266 record face lines: status, direct_act, slot, fabric; no risk; L377 `if args.cell not in decomp_text` (a substring test) against to-pipeline-gate.py _declared_cells (L437), which reads first-column table ids"
+    ]
+  },
+  "spec_asserts": "direct-act-order.py's docstring: it REFUSES to leave behind an order the L6 gate would itself refuse, so a mint that completes is gate-clean.",
+  "world_is": "The tool deletes its own output at the real mint, which is the stated guard, but the --dry-run path does not run the gate, so a clean dry run is not a clean mint. Workaround taken by this seat for the A2 order: the order text is the minter's own dry-run output plus ONE line `<risk>WORLD</risk>` in the record face and a `<proof_of_spec>` block in the worker face (the commit gate named its absence), and the cell is declared as a table row in the base decomposition; the order then passes the gate at commit. Not changed: the tool (a .tools file, not this seat's lane). Remedy for its owner: a --risk argument written into the record face, a <proof_of_spec> block, and the cell check made to read the table first column.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

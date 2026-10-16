@@ -39,9 +39,9 @@ Author: `3.0.0_SA_CVO~L`, 2026-10-15 ~13:4xZ, at the round-19 close. Graduated i
   "remedy": "P2. A round-20 cell has intake_fetch.py write the device key, and the reader attributes older records by their fetched_by serial's box. Done when downloads --device laptop counts the two real 20261008 records.",
   "owner": "2.0.0_SA_COO~C",
   "round": "v24",
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~C", "round": "v24"},
-  "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~C", "at": null},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~C", "round": "v24"},
+  "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~C", "at": "2026-10-15T23:46Z"},
+  "closed": true
  }
 ]
 ```
