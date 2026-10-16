@@ -9188,6 +9188,28 @@ carries none.
     "spec_asserts": "MX-r-15 A1 and A3 asserted that the depth claims hold until the ~13:30Z daily publish, and that a deploy-only commit of the catalog blob alone ships exactly one file.",
     "world_is": "The daily publish ran before 11:35Z and the yield-curve object re-stamps near 23:01Z, so a depth claim is a point-in-time read; v3 was re-measured after the publish and graded against live AWS before it shipped. The deploy tree's scopes.json is the file the host already serves under commit B.",
     "dismissal_reason": "Z-S126: ruled B at MX-r-15 A2 and applied; the host serves the registry copy it served before. Z-S127 and Z-S128: the stale-measurement class is cured for this release by v2 and v3 and carried to the round-18 analysis as the enrichment 'stop pinning depth claims that age with each publish'; emit_final.sh now grades the candidate with r13.AC3 against live AWS first. The issuer is disarm_owner of all three."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W48-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~48",
+    "surfaced_at": "2026-10-16T14:05:15Z",
+    "one_line": "MX-c-25 AC2 cannot pass as written in this worktree: validate_catalog_v02.py exits 1 after printing the gold book OK line, a FileNotFoundError on infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml, which the sparse cone omits.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-25 section 4 AC2 (c25.AC2.sh): validate_catalog_v02.py exits 0 with no FAIL line and prints the gold book OK line. The face allows one sparse change, 'git sparse-checkout add workflows', and names no infra/aws/ec2/opal-gateway path.",
+    "world_is": "Measured at commit 0761bf4c0e: c25.AC2.sh prints 'DENOMINATOR validator rc 1; gold book OK lines 1; FAIL lines 0' then 'RESULT: FAIL', exit=1. The traceback is validate_catalog_v02.py line 87 (io.open of STAGED) -> FileNotFoundError on /tmp-style path .../wk-mx19-48/infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml. That file is in HEAD and at 0afc0f3a19 (same blob) and absent from this worktree; git sparse-checkout list is .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows. The crash reads a different file from the gold book entry; AC1 PASSES at the same commit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/validate_catalog_v02.py@0761bf4c0e (STAGED path line 30; io.open line 87)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@0afc0f3a19 (blob 16250301d6a90c16c4b81867bc00fed6ecd397a1; git ls-tree read; absent from the worktree)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~48/ (the proof instance, carrying the AC2 output)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
