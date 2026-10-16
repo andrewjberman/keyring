@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~270</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -58,10 +58,12 @@ In `portal/src/pages/TicketCenter/AnalysisRequestParts.tsx` (read first: `Packag
 
 9. **AMENDMENT 3 (issuer, 2026-10-16; rules your row `IRPT_ANLREQ-D2-W270-S4`).** You are right: after AMENDMENT 2 a package-attached ticket is never read, so removing the clause-5 display guard changes nothing observable and the old mutant of `AR31-v-AC3` cannot fire. The mutant is now the one you measured as your control: remove the package condition from the call gate, and the run must fail on `makes no status call for a ticket whose package is attached`. Rewrite `mutant_check.py` to that mutant (same restore discipline: sha256 recorded, restored in a `finally` block, verified), keep your measured control's evidence in the record, re-run `AR31-v-AC3` (it must print `MUTANT-FIRES`), re-run `AC1` and `AC2`, update the proof instance, validate, and flip the status to `complete` only when it prints VALID. The display guard stays in the source: it covers the one render between a ticket gaining a package and the read clearing its words. Row S4 is dispositioned by this amendment.
 
+10. **AMENDMENT 4 (issuer, 2026-10-16; decomposition section AMENDMENT 4, item 8; on the CTO's DECLINE of the portal candidate).** The status route answers a GENERATOR failure with the code `ANALYSIS_FAILED` or `ANALYSIS_REQUIRES_ATTENTION` (the phase's own code, `ops/owned_status.py`) and the generate step's words in the same `NONE` action, and a stored detail code `DELIVERIES_EXHAUSTED` selects those words (`ops/status.py`). Your code set holds only the five hop codes, so a generator failure shows nothing. Add `ANALYSIS_FAILED`, `ANALYSIS_REQUIRES_ATTENTION` and `DELIVERIES_EXHAUSTED` to the set (update the comment above it: it is no longer only the hop codes, and say that the third selects words and is held against a producer that exposes it), and add three tests to the same file, EXACTLY named `shows the generator's words for ANALYSIS_FAILED`, `shows the generator's words for ANALYSIS_REQUIRES_ATTENTION` and `shows the generator's words for DELIVERIES_EXHAUSTED` (each: a ticket with no package, an envelope carrying that code and a last `NONE` action with words, and the words show). Nothing else changes: the call gate, clause 5 and the quiet cases stay as they are, and the thirteen tests of AC1 are the ten existing plus these three. Make the portal change as ONE new commit on top of your portal branch (do not amend earlier commits): the issuer applies that single commit to the PROD-based candidate. Re-run `AR31-v-AC1`, `AC2` and `AC3`, update your record and the proof instance, validate, and flip the status to `complete` only when it prints VALID.
+
 ### ACCEPTANCE
 
 <criterion id="AR31-v-AC1" cell_refs="AR-v-31"><invocation>python C:/dev/wk-irpt-anlreq-270/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/AR_V_CHECKS/ar_v_checks.py v31-failure --portal C:/dev/wk-irpt-anlreq-270/portal</invocation><expect>^V31-FAILURE-OK</expect></criterion>
-`AR31-v-AC1`: the ten named tests exist and pass (the six of step 4, the two of step 7 and the two of step 8).
+`AR31-v-AC1`: the thirteen named tests exist and pass (the six of step 4, the two of step 7, the two of step 8 and the three of step 10).
 
 <criterion id="AR31-v-AC2" cell_refs="AR-v-31"><invocation>python C:/dev/wk-irpt-anlreq-270/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/AR_V_CHECKS/ar_v_checks.py portal-tsc --portal C:/dev/wk-irpt-anlreq-270/portal</invocation><expect>^PORTAL-TSC-OK</expect></criterion>
 `AR31-v-AC2`: the portal typechecks (`tsc -b`). Also run, once, the existing TicketCenter tests in the portal worktree (`bun test src/pages/TicketCenter`) and record the counts in your record (a drain check; the issuer re-runs it).
