@@ -41,7 +41,10 @@ criterion (with a verdict word, under --strict-grades or in a header), not what 
 order is the issuer's to close, not this tool's to read).
 
 LAST line (always):
-  ROUND-CLOSE project=<CODE> device=<d> reviewer=<present|ABSENT|UNREAD> orders=<n> judgment=<j> graded=<g> ungraded=<u> self_graded=<s> verdict=<MAY-CLOSE|REFUSED>
+  ROUND-CLOSE project=<CODE> device=<d> reviewer=<present|ABSENT|UNREAD> orders=<n> judgment=<j> graded=<g> not_met=<k> ungraded=<u> self_graded=<s> verdict=<MAY-CLOSE|REFUSED>
+  not_met=<k> counts, among the GRADED judgment criteria, those whose grade of record reads NOT MET (the verdict word the
+  grade of record already carries, read by the same reading). It is information for the round analysis: it changes no
+  verdict (NFRA_CTLPLN round 30, CT-cb-1; the CVO's ruling C-S103: a NOT MET grade does not refuse a round close).
 --staged: every repository file the check reads for the project (task orders, proof instances, adjudication and
 investigation files, project.json) comes from the index git resolves (GIT_INDEX_FILE, GIT_DIR), enumerated with
 `git ls-files` and read with `git cat-file --batch`; a file absent from the index is absent even if the working tree has
@@ -570,7 +573,8 @@ def grade_of_record(cands: list) -> tuple:
 
 
 def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, kind_of, strict: bool = False) -> tuple:
-    """(state GRADED|SELF|UNGRADED, detail). Adjudication-file rows: a doer is a self-grade, a CVO-kind non-doer a grade.
+    """(state GRADED|SELF|UNGRADED, detail, word): word is the verdict word of the grade of record ('' when none is read).
+    Adjudication-file rows: a doer is a self-grade, a CVO-kind non-doer a grade.
     Investigation-file rows: only a CVO-kind author counts (a doer's own surprise rows name criteria all the time and are
     not grades); a CVO-kind doer is a self-grade.
     A header-only grade (a `_prose` pseudo-row) and every row under strict=True needs a VERDICT word after the criterion
@@ -628,14 +632,18 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
         inv_c = [c for c in cands if c[2][0] == "investigation"]
         pool = adj_c or inv_c
         (source, row, who, via), _n = grade_of_record(pool)
+        # NFRA_CTLPLN round 30 (CT-cb-1): the verdict word of the grade of record, read by the SAME two readings the candidate
+        # test above uses (a `grades` entry, else the verdict after the criterion). It feeds not_met= only; the detail is unchanged.
+        word = structured_grade(row, crit_id, order_pat) or verdict_after(
+            row_text(row), pat, order_pat, max(40, len(order["id"]) + 16))
         n = len(cands)
         detail = "%s row %s by %s%s" % (source, row.get("id", "?"), who, via)
         if n > 1:
             detail += "; grade of record among %d CVO-kind rows (latest surfaced_at wins)" % n
-        return "GRADED", detail
+        return "GRADED", detail, word
     if self_hit:
-        return "SELF", self_hit
-    return "UNGRADED", "no CVO-kind row names it"
+        return "SELF", self_hit, ""
+    return "UNGRADED", "no CVO-kind row names it", ""
 
 
 # ---------------------------------------------------------------- the whole check
@@ -665,10 +673,10 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
     who = ", ".join("%s%s" % (s, " (macro reviewer for %s)" % macro if m else "") for s, m in rv["who"]) or "none"
     lines.append("REVIEWER-ON-BOX device=%s state=%s reviewer seat(s)=%s" % (device, rv["state"], who))
     lines.append("  source: %s; %s" % (rv["source"], rv["note"]))
-    n_orders = n_j = n_g = n_s = 0
+    n_orders = n_j = n_g = n_s = n_nm = 0
     if reviewer_only:
         verdict = "MAY-CLOSE" if rv["state"] == "present" else "REFUSED"
-        return lines, "ROUND-CLOSE project=- device=%s reviewer=%s orders=0 judgment=0 graded=0 ungraded=0 self_graded=0 verdict=%s" % (
+        return lines, "ROUND-CLOSE project=- device=%s reviewer=%s orders=0 judgment=0 graded=0 not_met=0 ungraded=0 self_graded=0 verdict=%s" % (
             device, rv["state"], verdict)
     orders = read_orders(src, proj_dir, rnd, ws)
     # IRPT_BCKEND-D2-S76 (2026-10-12): an untagged seat-folder order (no <round>) is counted in every round's
@@ -722,7 +730,7 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
             if not c["judgment"]:
                 continue
             n_j += 1
-            state, why = grade_criterion(c["id"], o, adj_all, inv_all, kind_of, strict=strict_grades)
+            state, why, word = grade_criterion(c["id"], o, adj_all, inv_all, kind_of, strict=strict_grades)
             s_state = state if strict_grades else grade_criterion(c["id"], o, adj_all, inv_all, kind_of, strict=True)[0]
             strict_n += s_state == "GRADED"
             if state == "GRADED" and s_state != "GRADED":
@@ -730,6 +738,8 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
                 why += " -- BARE MENTION: no verdict word after the criterion"
             if state == "GRADED":
                 n_g += 1
+                if word.replace("_", " ") == "NOT MET":
+                    n_nm += 1
             if state == "SELF":
                 n_s += 1
             lines.append("  JUDGMENT %s %s -> %s (%s)" % (o["id"].split(".")[-1], c["id"], state, why))
@@ -742,8 +752,8 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
                      "graded_with_a_verdict_word=%d bare_mention=%d of judgment=%d" % (strict_n, bare, n_j))
     n_u = n_j - n_g
     ok = rv["state"] == "present" and n_u == 0 and n_s == 0 and bad_proofs == 0
-    return lines, "ROUND-CLOSE project=%s device=%s reviewer=%s orders=%d judgment=%d graded=%d ungraded=%d self_graded=%d verdict=%s" % (
-        code, device, rv["state"], n_orders, n_j, n_g, n_u, n_s, "MAY-CLOSE" if ok else "REFUSED")
+    return lines, "ROUND-CLOSE project=%s device=%s reviewer=%s orders=%d judgment=%d graded=%d not_met=%d ungraded=%d self_graded=%d verdict=%s" % (
+        code, device, rv["state"], n_orders, n_j, n_g, n_nm, n_u, n_s, "MAY-CLOSE" if ok else "REFUSED")
 
 
 def make_kind_of(root: str):
