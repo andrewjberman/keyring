@@ -9818,3 +9818,30 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-S9 -- the issuer dispositions D1-W185-S2: the served run_commit is 6f70d5cc01bb (the held build), not 728d223ddc
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S9",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T03:44:35Z",
+  "one_line": "the issuer dispositions D1-W185-S2: the served run_commit is 6f70d5cc01bb2e196266799a657be6d0b2dc8a16 (the CB-ah-3 held build), read from the served daily_returns and month_grades objects; the round-83 draft's 728d223ddc is not the served build",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served objects read 2026-10-16 by the issuer (get_object, column read, counts only): daily_returns 1,691,729 rows and month_grades 82,593 rows, each with the single run_commit value 6f70d5cc01bb2e196266799a657be6d0b2dc8a16; columns of both tables carry no use_class and no porting_verdict",
+      "head-object of the three keys, same read: LastModified 2026-10-09T12:41:01Z / 12:41:02Z / 12:41:03Z; VersionIds w9j5YeV1LnNIakNlRTBX6jW1.SDHqmJR, qIWjLLwCIh_Gx6IblSgyaint2tfJ37pr, QI5Ks8vQwGTwnc9ekyh.DOsyN8PKN3PB; bucket versioning Enabled",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md section 3: the build applied is the issuer's local build at run_commit 6f70d5cc01bb with --hold-cusips 05613L3H2,95000U2D4,651639AX4, which answers the hold-list doubt of W185-S2"
+    ]
+  },
+  "spec_asserts": "CB-cq-1 basis (my order): the served build is run_commit 728d223ddc, copied from the round-83 draft.",
+  "world_is": "The served build is the held build at 6f70d5cc01bb; my order's figure came from the round-83 draft, which read a later local rebuild as the served content. The control is unchanged in kind: the rebuild must equal the served tables on every pre-existing column with the hold list on. Round 96's face names 6f70d5cc01bb as the served run_commit.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Answered by a measured read of the served objects (run_commit 6f70d5cc01bb); the 728d223ddc figure was copied into my own order from the round-83 draft and is corrected in the next face."
+}
+```
