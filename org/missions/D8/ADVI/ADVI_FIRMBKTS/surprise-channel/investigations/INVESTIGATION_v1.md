@@ -8431,3 +8431,82 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Add to the Cottonwood plan's retire list with its consumer census (0 of 304 roles can read it). Its deletion is destructive and needs Andrew's confirmation at the moment it runs (CLAUDE.md Agent Autonomy); the retirement is a round-9 or later change under its own pair. Disarm: none (INERT)."
 }
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~87 (TO FB-p-4, round 9, plan entries 16 to 30; CTO analysis @bc6444b8e2)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W87-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~87",
+    "surfaced_at": "2026-10-16T18:22:00Z",
+    "one_line": "FB-p-4 (round 9, plan entry 23): INF-FN-37 irpt-49f-reporting-read-lambda reads its 49financial key through a directory-bucket map that points at opal-data-bd, not at a 49financial bucket as the plan note and the serving row say.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name irpt-49f-reporting-read-lambda (read only, 2026-10-16 ~18:1xZ): environment IRPT_DIRECTORY_BUCKET_MAP has one entry, the 49financial key, pointing at opal-data-bd; IRPT_EVIDENCE_BUCKET points at opal-data-ycharts",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json@ab8081bfdd (row INF-FN-37, consumer_note 'IRPT function; no legacy grant or map entry (new bucket only)')",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~87/PLAN_INFLECTION_NOMOVE_16_30.json@ab8081bfdd (entry n=23, verdict CONTRADICTED)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PLAN_INFLECTION.json open_questions entry 23 (deliverables ~81) says the function 'reads 49financial' and is NO-MOVE; the serving inventory row INF-FN-37 says 'new bucket only' with no map entry.",
+    "world_is": "The function's directory-bucket map sends the 49financial key to opal-data-bd, the Black Diamond bucket. It names no opal-data-inf, so the no-move verdict holds, but the description of its reads is wrong.",
+    "notes": "A plan correction for the issuer: the wording of entry 23 and the INF-FN-37 serving row. This worker changed nothing outside its record. Disarm: none (INERT)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W87-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~87",
+    "surfaced_at": "2026-10-16T18:22:00Z",
+    "one_line": "FB-p-4 (round 9, plan entry 23): INF-FN-38 irpt-holdings-refresh-lambda's bundle map sends three firm keys to three different buckets, not all three to opal-data-inflection as the plan note says.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name irpt-holdings-refresh-lambda (read only, 2026-10-16 ~18:1xZ): environment IRPT_HOLDINGS_BUNDLE_MAP has 3 entries: the 49financial key to opal-data-49financial, the cottonwood key to opal-data-cottonwood, the inflection key to opal-data-inflection; no opal-data-inf reference",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json@ab8081bfdd (row INF-FN-38, consumer_note 'IRPT function; no legacy grant or map entry (new bucket only)')",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~87/PLAN_INFLECTION_NOMOVE_16_30.json@ab8081bfdd (entry n=23, verdict CONTRADICTED)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PLAN_INFLECTION.json open_questions entry 23 (deliverables ~81) says the bundle map sends the 49financial, cottonwood and inflection keys to opal-data-inflection; the serving row INF-FN-38 says 'new bucket only'.",
+    "world_is": "The bundle map sends the 49financial key to opal-data-49financial, the cottonwood key to opal-data-cottonwood, and only the inflection key to opal-data-inflection. No entry names opal-data-inf, so the no-move verdict holds, but the mapping description is wrong.",
+    "notes": "A plan correction for the issuer: the wording of entry 23 and the INF-FN-38 serving row. This worker changed nothing outside its record. Disarm: none (INERT)."
+  }
+]
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~87 (TO FB-p-4, the status flip)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W87-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~87",
+    "surfaced_at": "2026-10-16T18:30:00Z",
+    "one_line": "FB-p-4: the order asks for its status to flip to complete in the same commit as the proof instance, but the order file that carries the status is outside the lane's <paths> grant, so this worker did not flip it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-4.inflection-plan-nomove-notes.md@ab8081bfdd (worker face line 4 asks the flip; the <paths> block names only the deliverables folder and the channel file)",
+        "C:/dev/wk-firmbkts-r9-87 git rev-parse --abbrev-ref HEAD = wk-ADVI_FIRMBKTS-87; AC1 PASS recorded in the proof instance of this worker"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's worker face says to flip the order's status to complete in the same commit as the proof instance, only when AC1 passes; its <paths> grant names only the deliverables folder and the channel file.",
+    "world_is": "The status flip writes the order file, which the lane grant does not admit, so the flip cannot be made by this worker. AC1 passes and the proof instance is committed with the order's status left as it was.",
+    "notes": "Owner: the issuer 2.0.0_SA_COO~B1, to flip the status or widen the grant. The worker did not override the lane gate. Disarm: none (INERT)."
+  }
+]
+```
