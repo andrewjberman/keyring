@@ -28181,3 +28181,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not reconstructed or extracted: the schema was not copied from the base checkout and the sparse configuration was not changed. Owner of the worktree materialisation: 2.0.0_SA_COO~R1."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W474-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~474",
+  "surfaced_at": "2026-10-16T00:25:28Z",
+  "one_line": "bn-4 walk 2026-10-16: the Key Figures P/E row is absent on four of the five withheld drawn names (ZURN SW, 939 HK, ICT PM, 1299 HK); only NOVN SW renders the research-team P/E line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bn-4/A/20261016T000245Z/shots/013-ZURN-SW-Model-expanded.png (Key Figures block at top; no P/E row)",
+      "C:/dev/ui-walk-evidence/bn-4/A/20261016T000245Z/shots/068-939-HK-Model-expanded.png (Key Figures: EPS, earnings margin, ROE, debt; no P/E row)",
+      "C:/dev/ui-walk-evidence/bn-4/B/20261016T000739Z/shots/013-ICT-PM-Model-expanded.png (Key Figures: no P/E row)",
+      "C:/dev/ui-walk-evidence/bn-4/B/20261016T000739Z/shots/040-1299-HK-Model-expanded.png (Key Figures: no P/E row)",
+      "C:/dev/ui-walk-evidence/bn-4/C/20261016T001146Z/shots/071-NOVN-SW-Model-expanded.png (P/E 16.6x-29.2x, 12.9x, 12.6x each with research team estimate)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~474/walk_A.txt (walk log, void: no)"
+    ]
+  },
+  "spec_asserts": "bn-4 item 1 (order at deliverables 0.9.0_WK_AMGT_RESAPP~474): a Key Figures P/E cell that the page fills from the research team sheet, where the vendor ratio is withheld, prints a visible research team estimate line; five of the ten drawn names (ZURN SW, 939 HK, ICT PM, 1299 HK, NOVN SW) are withheld names.",
+  "world_is": "On the local PROD build (e0e69da7) at the 2026-10-16 walk, Key Figures on ZURN SW, 939 HK, ICT PM and 1299 HK renders no P/E row at all (EPS, EBITDA, margins, ROE and debt only), so no P/E cell exists on which the line could print. Only NOVN SW of the five renders a P/E row, with 16.6x-29.2x, 12.9x and 12.6x each carrying the line.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Read-only walk; nothing is disarmed or changed. Four of five withheld names cannot show the mark on a P/E cell because the cell is not rendered; the CTO ruling reads the mark as keyed on a team-filled cell (see W471 rows on the same topic). No change proposed here; the CVO and CTO read the shots at the re-grade."
+}
+```
