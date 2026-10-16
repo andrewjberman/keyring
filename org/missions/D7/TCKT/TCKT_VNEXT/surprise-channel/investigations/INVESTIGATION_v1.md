@@ -2703,3 +2703,29 @@ used as fixtures is a different read with a different denominator.
   "notes": "Stop taken at the first act. No source edit, no test, no deploy, no apply, no live call. TO-R19-L3 status stays pending. The issuer may re-provision the worktree or amend the grant; the worker does not decide which."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W47-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~47",
+  "surfaced_at": "2026-10-16T02:27:24Z",
+  "one_line": "The whole-folder drain check cannot collect 8 of the 30 test modules in this sparse worktree: test_package_route.py reads org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json at import, the file is tracked at HEAD but outside the sparse-checkout list, so collection raises FileNotFoundError.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout = true; git sparse-checkout list (rc=0) has no org/missions/D9 entry",
+      "git ls-files -- org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json lists the file at HEAD (839 bytes); it is absent from C:/dev/wk-tckt-vnext-47",
+      "python -m pytest C:/dev/wk-tckt-vnext-47/infra/aws/lambda/ticket_center/tests/ -q -p no:cacheprovider (no -k): 8 errors during collection, FileNotFoundError at test_package_route.py:37 (_i7_canonical); line 37 is not edited by this order (git diff of test_package_route.py touches line 85 only)",
+      "scratch copy under .scratch/cur-root (the working-tree infra folder plus the same fixture restored byte-for-byte from HEAD): 403 passed, 42 subtests passed, 0 failed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The drain check named by TO-R19-L3 (the whole infra/aws/lambda/ticket_center/tests folder run in the worker worktree, zero failures after the re-pins) collects and runs every test module in the worktree.",
+  "world_is": "In this sparse worktree org/missions/D9 is outside the sparse-checkout, so the one fixture read at import is absent and 8 modules (test_no_row_refuses, test_package_409_codes, test_package_env_firms, test_package_i5p_i7, test_package_principal, test_package_request_id, test_package_route, test_status_active) error at collection. The worker did not change the sparse checkout or the grant. The folder count in the record comes from the scratch copy with the fixture restored from HEAD; the product tree was not changed for it.",
+  "notes": "Filed for the issuer. AC1 and AC2 are measured as the order states. The fix (a sparse-checkout entry for that fixture, or a grant for it) is the issuer's decision; the worker does not decide which."
+}
+```
