@@ -21279,3 +21279,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not decided by the worker. The contract now declares a column that no producer writes, which is the state the order names for a later producer cell. The issuer decides how the run test's declared-field assertion is to read a declared-but-unwritten optional column."
 }
 ```
+
+## IRPT_DASHBD-D2-W1301-S1 -- the contract rule24_record cites the CVO grades and the CTO round-124 analysis, which this worktree does not materialize
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1301-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1301",
+  "surfaced_at": "2026-10-16T06:03:25Z",
+  "one_line": "The order cites the CVO grades and the CTO round-124 analysis in the contract rule24_record, but neither folder is materialized in this worktree, so they were cited by path and not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1301 step 1: the contract rule24_record cites the CVO grades and the CTO round-124 analysis path; the worker face materializes only org/standards, org/tier1_exec/4.0.0_SA_CRO/deliverables and the irpt_reporting scripts folder.",
+  "world_is": "The worktree holds org/tier1_exec/4.0.0_SA_CRO only; no org/tier1_exec/1.0.0_SA_CTO or 3.0.0_SA_CVO folder is present. The round-124 analysis path and the CVO grades were not read. The contract states this in its rule24_record.cvo_grades field. The checker does not test these strings.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1301.fwd5-transaction-contract-and-ratified-mapping-with-per-code-flow-class.md@ac575c7ad2",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json@ac575c7ad2 (rule24_record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. DBF127-1-AC1 and AC2 PASS. The grades are not invented; the rule24_record says so. Recorded for the issuer."
+}
+```
+
+## IRPT_DASHBD-D2-W1301-S2 -- the naming gate refuses the mapping data file as a hand-kept carrier of firm literals (WARN only)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1301-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1301",
+  "surfaced_at": "2026-10-16T06:11:35Z",
+  "one_line": "The naming gate refuses the mapping data file rows that carry the firm literals as hand-kept carriers (224 REFUSE verdicts, WARN only, not blocking); the order requires the file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1301 step 6: transaction_words.json is written by a script from the contract and carries the 224 source_mapping rows with their firm literal, as the producer data file.",
+  "world_is": ".tools/naming-gate reports 224 REFUSE verdicts on data/assets/scripts/gold/irpt_reporting/transaction_words.json (new hand-kept carrier of 49financial, cottonwood and inflection, read through lookup()); its live-read leg failed (CensusError, rc=2), and the verdicts are WARN (NAMING_GATE_ENFORCE unset). The commit landed. Enforcement would refuse the file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/transaction_words.json@227196a9ed",
+      "commit 227196a9ed (safe-commit gate output, naming-gate section)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. DBF127-1-AC2 checks the file against the contract and PASSES. The naming gate is the lane the issuer and the CTO own; no gate was edited or bypassed here. Recorded for the issuer before any enforcement flip."
+}
+```
