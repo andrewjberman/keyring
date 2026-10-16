@@ -85,6 +85,22 @@ small; event volume per person is **absent** (not measured).
 - **Separation.** Layer 2 consent sits with a second admin by Microsoft's design. That is Microsoft's control, not
   one this seat is adding.
 
+## 5a. Addendum (same session): the app-only layer Andrew's role CAN approve
+
+The non-Graph exception in section 2 reaches further than the audit log (inferred from the documented consent
+rule; none exercised):
+
+| API (resource) | application permission | reach | usable? |
+|---|---|---|---|
+| Office 365 Management APIs | `ActivityFeed.Read` | every employee's activity events (Layer 1) | yes |
+| Office 365 SharePoint Online (`00000003-0000-0ff1-ce00-000000000000`, not Graph) | `Sites.Read.All` (or `Sites.FullControl.All`; `Sites.Selected` for named sites) | **every SharePoint site and every OneDrive** (OneDrive is SharePoint), content included | yes; app-only SharePoint needs a certificate, not a secret |
+| Office 365 Exchange Online (EWS) | `full_access_as_app` | every mailbox | **no**: EWS phased disablement began 2026-10-01 (removal 2027-04-01) and re-enabling needs an Exchange admin to allow-list the app ID ([MC1227454](https://mc.merill.net/message/MC1227454), [MC1447678](https://mc.merill.net/message/MC1447678)) |
+
+Still out of reach without a Global / Privileged Role Admin: Teams chat and channel content, calendars, and mail
+through Graph. Ownership of M365-MCP-Graph is not what grants any of this; the role is. Put any app-only grant on a
+NEW app, never on the gateway's user-facing app, so the gateway's secret does not carry tenant-wide reach. Every
+consent is written to the Entra audit log (visible to the tenant's Global Admins).
+
 ## 6. Unmeasured, each closed by the first Layer-1 act
 
 | item | state |

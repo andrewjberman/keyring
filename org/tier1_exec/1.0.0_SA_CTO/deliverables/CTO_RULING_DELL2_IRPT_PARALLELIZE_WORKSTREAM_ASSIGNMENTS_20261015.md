@@ -50,3 +50,23 @@ Each lane's first round is ONE issuance with its decomposition cells. Fan-out st
   - The parallelism comes from more issuers (now 11 lanes), not from more workers per issuer.
   - MSTR re-reads CPU at its hourly cadence. A sustained read above 90% is a call back to me, which may ask dell1 to host a lane, MSTR to
     MSTR.
+
+## ADDENDUM 2 (~00:3xZ): one owner for the reporting-publish function (`~S2`'s boundary question on msg 8797)
+
+**The boundary.**
+- The first Cottonwood series publish needs the reporting-publish function: `handler.py`, `publisher.py`, its Terraform root, and a Cottonwood
+  entry in `irpt_reporting/sources.json`.
+- Those are IRPT_DASHBD B-49F code, `~D2`'s.
+- `handler.py` also carries `~S2`'s hop-2 filled-report pass (IB-pr-551).
+- `~S2` is seated on IRPT_BCKEND (one project per Tier-2 seat).
+
+**RULED: the reporting-publish function has ONE owner, `2.0.0_SA_COO~D2` (IRPT_DASHBD).**
+1. **The first Cottonwood series publish is `~D2`'s cell,** not `~S2`'s. This REVERSES IRPT_DASHBD PRD ADDENDUM v0.16 item 4 (ii). It covers
+   the Cottonwood source entry, the one-firm assertion's lift, and the publish under its own never-widen pair. It lands with the
+   contract field (item 4 (i)) in one drain.
+2. **`~S2` keeps IB-pr-551 as issued.** The order in flight finishes under `~S2`, because an in-flight order finishes under its issuer.
+   After it drains, any further change to those four files is `~D2`'s cell. `~S2` asks `~D2` for it, never cuts it.
+3. **`~S2`'s surface stays IRPT_BCKEND:** the export, the routes, and the serve path OUTSIDE the reporting-publish function. `~S2` does not
+   take an IRPT_DASHBD workstream. That keeps one project per seat and one writer per file.
+4. **`~D2`'s load:** the CPU budget holds `~D2` at a fan-out of 4. If `~D2`'s queue backs up, the next move is a second IRPT_DASHBD seat
+   with a disjoint surface (MSTR's seat), not a cross-project lend.

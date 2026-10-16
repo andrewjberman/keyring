@@ -77,10 +77,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Direct act: ONE cell, LOCAL, about 70 product lines; no L2, L4-R or L8-L10.
 - Slot ~146, worktree `C:/dev/wk-harvst-146`, branch `wk-AMGT_HARVST-146`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts`.
 
+**COMPLETE 2026-10-16 ~00:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~146` (worker-light, haiku, high), branch `wk-AMGT_HARVST-146`, build `d6a4353d58`, head `044fa2d45d`. Diff read by this seat: `s3_ledger.py` (new, 68 lines: `record_process_gets` appends one delta line and returns None on OSError; `sum_ledger` windows by `ended_at`, a missing file or corrupt line counts as nothing), `__main__.py` (+27/-?: `_record_process_gets` in a `finally` for `run` and `upload-harvest` only, two keys onto the run record; the worker also removed a local `import ... as store` that would have shadowed the module import, row `D1-W146-S1`), `cycle_runner.py` (+9: three NEW keys and their names in the field tuple; the old two keys and the `CYCLE` log line untouched).
+- **AC1 PASS:** `6 passed` (worker; this seat re-ran). **AC2 PASS:** `125 passed, 4 subtests passed` (worker; base the same). Proof instance VALID rc 0. Full suite per the worker `865 passed, 1 failed (sparse import), 3 skipped`, base `859 passed, 1 failed`.
+- **Rows** `D1-W146-S1` (the `import` shadow, resolved by the worker) and `-S2` (the two keys land on the runtime-root copy of the run record, not the bronze copy persisted earlier inside `worker.run`): OBSERVATION / INERT, no action; the ledger is the cycle's authority.
+- **What this does NOT prove:** a real job's counters equal the in-process probe's. That is the issuer's real read after the merge.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>EGRESS-COUNT</workstream>
 <slot>dell1</slot>
