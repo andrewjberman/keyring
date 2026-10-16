@@ -25973,3 +25973,104 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts and seconds only. Bears on OG-en-17."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~129",
+  "surfaced_at": "2026-10-16T23:41:23Z",
+  "id": "NFRA_OPLGTW-Z-W129-S1",
+  "one_line": "OG-en-17 AC2 names a window of 450 partitions, but a window of at most 13 months holds at most 396 daily partitions, so 450 cannot be built; the test plants the 396 days of the largest admitted window.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@f1c5b4f8d7 _window: a window whose end is after the start plus WINDOW_MONTHS (13) raises window_too_long, so a window spans at most 13 calendar months",
+      "same file@f1c5b4f8d7 _partitions: the dated names are one per calendar day (YYYY-MM-DD), so 2025-09-16 through 2026-10-16 inclusive is 396 partitions, the most one window can hold"
+    ]
+  },
+  "spec_asserts": "tests/test_og_en17.py test_ogen17_ac02 (the order's wording): a window of 450 partitions; cursor: the pages end with next_cursor null at the window start and their union equals all 450.",
+  "world_is": "450 partitions cannot sit inside a window the contract admits. The test runs over the largest admitted window: 396 daily partitions read as six pages of 60 and one of 36, the union is all 396, and next_cursor is null on the last page at the window start. The 400-partition concurrent branch is not built, because the measure's verdict selects the cursor branch.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "BLOCKING until the issuer or the CTO rules whether the criterion should name 396, or a window of daily partitions, instead of 450. No runtime hazard: the cursor answers every page of any admitted window."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~129",
+  "surfaced_at": "2026-10-16T23:41:23Z",
+  "id": "NFRA_OPLGTW-Z-W129-S2",
+  "one_line": "OG-en-17 says the rows run newest partition first 'as today'; at the base they ran oldest partition first. The named test requires newest first, so the served order changed and the pinned order tests were updated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@f1c5b4f8d7 _window_plan and _window_read: chosen is in_window[-60:] in ascending order and _window_read iterates chosen in that order, so the rows come oldest partition first",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en15.py@f1c5b4f8d7 test_ogen15_ac01 lines 93-96: the expected transaction rows run 2026-10-02, 2026-10-02, 2026-10-03, 2026-10-05",
+      "infra/aws/ec2/opal-gateway/tests/test_og_cl2.py@f1c5b4f8d7 line 207: the served transaction ids are [9, 101], the 2026-10-08 partition before the 2026-10-14 one"
+    ]
+  },
+  "spec_asserts": "OG-en-17 cell: keep the order of the answer's rows by partition date (newest first, as today) whatever the completion order; test_ogen17_ac01 asserts rows newest first.",
+  "world_is": "Today's order is oldest partition first, so 'as today' is false for this base. Commit d0708b11bf serves newest partition first, the order the named test pins, and updates test_og_en15 (AC1 expected rows, read order, AC3 cursor note), test_og_cl2 (AC03 served order [101, 9], AC03 and AC08 read order). The CTO should confirm newest first or direct oldest first.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The adapter is not released by this cell (the cell carries no deploy), so no consumer outside the gateway tests has seen the old order."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~129",
+  "surfaced_at": "2026-10-16T23:41:23Z",
+  "id": "NFRA_OPLGTW-Z-W129-S3",
+  "one_line": "The literal cursor rule (the day before the oldest partition read, null only at the window start) flags a fully read window as partial and returns an empty trailing page; next_cursor is set only when a partition of the window still lies before the page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@d0708b11bf _window_plan: next_cursor is None unless chosen and left are both non-empty, where left is the in-window partitions older than the page",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en17.py@d0708b11bf test_ogen17_ac01: a window of exactly 60 partitions returns next_cursor None and window_partial False"
+    ]
+  },
+  "spec_asserts": "OG-en-17 cell: next_cursor is the ISO date of the day BEFORE the oldest partition read, or null when the window start is reached; window_partial is true while next_cursor is not null.",
+  "world_is": "Read literally, a window of exactly 60 partitions whose oldest partition is later than the window start would return a cursor, report window_partial true although every partition was read, and send the caller to a page that reads nothing. The implementation keeps the day-before value whenever a partition remains and returns null once none does.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The two readings agree on every window whose oldest partition is the window start, which is the case in the planted fixtures of AC1 and AC2."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~129",
+  "surfaced_at": "2026-10-16T23:41:23Z",
+  "id": "NFRA_OPLGTW-Z-W129-S4",
+  "one_line": "Off-task: tests/test_og_ch1.py fails when run alone in this worktree (ac02 ValueError on a second 49financial adapter registration; ac04 finds no repo partner roster file). Neither failure is in the window code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run: python -m pytest tests/test_og_ch1.py -q -p no:cacheprovider from infra/aws/ec2/opal-gateway at d0708b11bf: 2 failed, 4 passed; FAILED test_ogch1_ac02 (ValueError: a different adapter is already registered for this vendor and one of these firms, app/client_core.py register_adapter) and test_ogch1_ac04 (AssertionError: the repo roster file is not on this tree)",
+      "infra/aws/ec2/opal-gateway/tests/test_og_ch1.py@d0708b11bf ac02 registers the recorder adapter for 49financial before the real module; ac04 walks up from the app directory looking for data/mdpf/config/partner_roster.json and finds none"
+    ]
+  },
+  "spec_asserts": "(off-task) The gateway test file tests/test_og_ch1.py is expected to pass in a worktree of the gateway.",
+  "world_is": "Two of its six tests fail in this worktree. The roster file is absent from this worktree. The registry conflict is in the core's module-level adapter registry. Not measured at the base commit: I did not check out or copy the base.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Off-task observation, filed for the owner of the core registry and the roster. No file of the OG-en-17 write set is involved."
+}
+```
