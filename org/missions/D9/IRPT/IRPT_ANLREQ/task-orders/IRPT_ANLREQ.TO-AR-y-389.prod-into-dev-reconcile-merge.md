@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~289</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-17</issued_date>
-<status>open</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -42,7 +42,7 @@ You are `0.9.0_WK_IRPT_ANLREQ~289`.
 `AR389-y-AC1`: you write `ancestry_check.py`: it prints `ANCESTRY-OK head <sha12> contains origin/PROD and origin/DEV, <n> commits over DEV, no conflict markers` only when both ancestry checks exit 0 and `git grep -n -E '^(<<<<<<<|=======|>>>>>>>)' <branch> -- src` finds nothing; otherwise `ANCESTRY-BAD <why>`, exit 1.
 
 <criterion id="AR389-y-AC2" cell_refs="AR-y-389"><invocation>python C:/dev/wk-irpt-anlreq-289/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~289/r48/gates_check.py</invocation><expect>^GATES-OK </expect></criterion>
-`AR389-y-AC2`: you write `gates_check.py`: it prints `GATES-OK typecheck 0 eslint 0 errors failing-lines-equal-DEV <k> new-load-errors <e> explained trade-lines-equal <t>` only when typecheck and eslint hold, the failing test lines equal `origin/DEV`'s, every new load error is explained in `r48/GATES.json`, no path matching `trade` differs from DEV and the Trade Request lines of `TicketCenter.tsx` equal DEV's; otherwise `GATES-BAD <why>`, exit 1.
+`AR389-y-AC2`: you write `gates_check.py`: it prints `GATES-OK typecheck 0 eslint 0 errors failing-lines-equal-DEV <k> new-load-errors <e> explained trade-lines-equal <t>` only when typecheck and eslint hold, the failing test lines equal `origin/DEV`'s, every new load error is explained in `r48/GATES.json`, no path matching `trade` differs from DEV and the Trade Request lines of `TicketCenter.tsx` equal DEV's, AND (AMENDMENT 1, CTO msg 10556) the diff of `origin/PROD` against the branch head names NO file outside the DEV-only set (`git diff --name-only origin/PROD <branch>` is a subset of `git diff --name-only origin/PROD origin/DEV`) and no Trade Request hunk crosses into PROD content (the set of `trade`/`Trade` lines of `git diff origin/PROD <branch>` equals the set of the same lines of `git diff origin/PROD origin/DEV`; it prints both counts); otherwise `GATES-BAD <why>`, exit 1.
 
 <criterion id="AR389-y-AC3" cell_refs="AR-y-389"><invocation>python C:/dev/wk-irpt-anlreq-289/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~289/r48/once_check.py</invocation><expect>^ONCE-OK </expect></criterion>
 `AR389-y-AC3` (a third check, with a reason: the CTO's rule is "each change appears once", which a typecheck can pass while a block is doubled): you write `once_check.py`: for `src/api/endpoints/tickets.ts` and `src/pages/TicketCenter/TicketCenter.tsx` it extracts every top-level `export` declaration name and every import specifier and prints `ONCE-OK <n> exports <m> imports, none repeated, every export of origin/DEV and of origin/PROD present` only when no name repeats and the union of the exports of `origin/DEV:<file>` and `origin/PROD:<file>` is a subset of the resolved file's exports; its control: it prints `CONTROL-FIRES` after it shows it rejects a copy of the resolved file in which one export is duplicated.
