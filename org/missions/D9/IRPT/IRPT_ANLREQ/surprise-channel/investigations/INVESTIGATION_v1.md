@@ -24754,3 +24754,69 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S190 -- W150-S3 disarmed: the PROD Ticket Center reads the firm list and has the staff Firm control
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S190",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T11:04:13Z",
+  "one_line": "W150-S3 DISARMED: origin/PROD's Ticket Center now reads the firm list for staff too (loadAllowedFirms(ir, internal)) and has a staff Firm control; both PROD heads deployed green.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W150-S3"
+  ],
+  "spec_asserts": "Row W150-S3 (disarm owner 2.0.0_SA_COO~Y2): origin/PROD TicketCenter.tsx:306 reads 'if (!formShown || internal) {', so the staff form never calls loadAllowedFirms and staff see 'Your firms are still loading' with no failure; the deployed PROD bundle was not read.",
+  "world_is": "MEASURED 2026-10-17 ~11:0xZ by this seat from origin/PROD (head 15bc21b304d4, which has 4cf06588736b, the recut release, as an ancestor): TicketCenter.tsx lines 326 to 338 call loadAllowedFirms(ir, internal) as soon as the form is shown, with no skip for an internal caller; the old line the row names ('if (!formShown || internal) {') is gone. AnalysisRequestParts.tsx at PROD holds filingFirm(firms, own, internal, chosen) and filingFormOf, whose header names the Firm control the staff filer writes; commit 6f4e5f67 (AR-y-325) added it. Both PROD heads built and deployed (Deploy to Production success for 4cf06588 and 15bc21b3; the DT record K3 names 4cf06588 with its tag peeled). NOT READ: the rendered PROD page as a staff login (no sanctioned staff login on this box; the DT's K4 is ABSENT for that reason) and the deployed bundle's bytes; the claim rests on the source at the deployed head and the CI conclusion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show origin/PROD:src/pages/TicketCenter/TicketCenter.tsx (lines 326 to 338: loadAllowedFirms(ir, internal) is called when the form is shown, for staff too)",
+      "git -C portal show origin/PROD:src/pages/TicketCenter/AnalysisRequestParts.tsx (filingFirm and the staff Firm control, introduced by commit 6f4e5f67 per git log -S FIRM_CHOICE_LABEL)",
+      "gh run list --repo Opal-Capital/portal --branch PROD: Deploy to Production success for 4cf06588736b and for 15bc21b304d4 (both PROD heads at 11:0xZ)",
+      "org/tier2_senior/0.4.0_DT_ClientPlatform~DELL2/deliverables/irpt_anlreq_set/A_PROMOTE_SET.txt (K3: CI success, deployed sha 4cf06588736b, tag peeled)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The line the row cites is absent at the PROD head and the staff firm read and control are present; deployed per CI. A staff-login render is not claimed."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S191 -- W111-S5 disarmed: the PROD Ticket Center reads the firm list and has the staff Firm control
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S191",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T11:04:13Z",
+  "one_line": "W111-S5 DISARMED: the staff analysis form has a Firm control at origin/PROD (and at the DEV pin 6f4e5f67), so the held submit's 'Choose the firm' no longer points at a missing control.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W111-S5"
+  ],
+  "spec_asserts": "Row W111-S5 (disarm owner 2.0.0_SA_COO~Y2): on the internal (staff) analysis form, once staff pick the Analysis Request type, the held submit says 'Choose the firm' while the form has no firm control and says staff cannot submit.",
+  "world_is": "MEASURED 2026-10-17 ~11:0xZ by this seat from origin/PROD (head 15bc21b304d4, which has 4cf06588736b, the recut release, as an ancestor): TicketCenter.tsx lines 326 to 338 call loadAllowedFirms(ir, internal) as soon as the form is shown, with no skip for an internal caller; the old line the row names ('if (!formShown || internal) {') is gone. AnalysisRequestParts.tsx at PROD holds filingFirm(firms, own, internal, chosen) and filingFormOf, whose header names the Firm control the staff filer writes; commit 6f4e5f67 (AR-y-325) added it. Both PROD heads built and deployed (Deploy to Production success for 4cf06588 and 15bc21b3; the DT record K3 names 4cf06588 with its tag peeled). NOT READ: the rendered PROD page as a staff login (no sanctioned staff login on this box; the DT's K4 is ABSENT for that reason) and the deployed bundle's bytes; the claim rests on the source at the deployed head and the CI conclusion. The same commit (6f4e5f67, AR-y-325) is the one worker 287's audit found at the DEV pin; DEV 38d4f947 and 539b1ee7 contain it as an ancestor of their merges of the recut's inputs. NOT READ for this row: the served DEV build on 5174 as a rendered page.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show origin/PROD:src/pages/TicketCenter/TicketCenter.tsx (lines 326 to 338: loadAllowedFirms(ir, internal) is called when the form is shown, for staff too)",
+      "git -C portal show origin/PROD:src/pages/TicketCenter/AnalysisRequestParts.tsx (filingFirm and the staff Firm control, introduced by commit 6f4e5f67 per git log -S FIRM_CHOICE_LABEL)",
+      "gh run list --repo Opal-Capital/portal --branch PROD: Deploy to Production success for 4cf06588736b and for 15bc21b304d4 (both PROD heads at 11:0xZ)",
+      "org/tier2_senior/0.4.0_DT_ClientPlatform~DELL2/deliverables/irpt_anlreq_set/A_PROMOTE_SET.txt (K3: CI success, deployed sha 4cf06588736b, tag peeled)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The control the message points at exists in source at PROD and DEV and PROD is deployed; the mismatch the row names has no remaining instance in source."
+}
+]
+```
