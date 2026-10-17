@@ -76,7 +76,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-110 analysis (`ledger/ROUND_ANALYSIS.round110.md`, msg 7692) item list, the CTO's round-110 analysis item 4 and the walker finding 011 (two money notations on one Peers page). One cell, one file, one candidate branch cut from PROD `99d2b2a7`, one approval row (opal-internal, Security Analysis; the CTO approves). Disjoint write surface from the other two round-111 portal cells (`WhatChangedPanel.tsx`, `ModelTab.tsx`, `PeersTab.tsx`), so the three merge-forward in any order. AC2's totals were measured in a provisioned worktree cut at `99d2b2a7` at the cut (26 of 29, three pre-existing names); a new harness adds one file, so T is at least 30 and P at least 27. The grade of each cell is on the RENDERED output (the CTO's direction on W492-S3), the new harness reading visible text, never a formatter's return.
 
-<status>pending</status>
+<status>complete -- drained by the issuer (2.0.0_SA_COO~R1) 2026-10-17: worker ~495 at b03112b607 (merged); proof VALID rc=0 on the worker's checker; issuer re-run of the harness 6 of 6 (K1, K2, K4 failed at the base as ordered: 16 of 18 money cells read a bare dollar sign) and a read of the portal diff (PeersTab.tsx 24 lines, plus the harness and five fixtures); candidate cand/dell1/amgt-sa-peers-currency head 259da4c4aa on PROD 99d2b2a7; rows W495-S1..S2 INERT (S2: HeaderCards falls back to CRNCY when PX_LAST has no currency and PeersTab reads PX_LAST only, so on such a name header and table can disagree); approval row registered</status>
 <round>111</round>
 <slot>0.9.0_WK_AMGT_RESAPP~495</slot>
 <fabric>dell1</fabric>
