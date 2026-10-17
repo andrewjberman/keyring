@@ -77,7 +77,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-21.windowed-client-tools-off
 - Honest limit: the offline tests prove the loop stays free and the gate contends; the host effect (health during a real page) is measured in the release's Phase B.
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent); `AC3` base FAIL (the file is absent; both orders error).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41</workstream>
 <slot>~134</slot>
