@@ -26422,3 +26422,58 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Ruled: a window page is ordered by trade date, newest first, with a stable sort; the cursor stays by PARTITION date. Cut as OG-en-19 (worker ~131, commit 29fca12c0c). The e1_newest_first arm is reworded at the next release's amendment: within a page the dates are non-increasing; across pages the cursor moves back by partition date."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T02:33:15Z",
+  "id": "NFRA_OPLGTW-Z-S341",
+  "one_line": "Round-40 ruling on Z-S135: YR_SERVED.json stays as measured (0d828b51); the current served oracle is 3bbd5ab2",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S135"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REMEDIATION_v20.md Z-S135 remedy line: only yr1.AC2's record remained, the issuer's call",
+      "OG-yr-1 order amendment A3 and the CVO half OG-ap-18 v3 item 2 (served md5 moves 0d828b51 to 3bbd5ab2)"
+    ]
+  },
+  "spec_asserts": "A point-in-time measurement record is not edited to match a later state.",
+  "world_is": "Ruled: W/YR_SERVED.json of OG-yr-1 (0.7.0_AE_CloudOps~Z) is a point-in-time measurement of the page as served on 2026-10-14 (the checked-out CRLF form, md5_source 0d828b51 under order amendment A3); re-pointing it to 3bbd5ab2 would rewrite a measurement into a value nobody measured at that time. The later ruling A8 (OG-ap-18, CVO half v3) moved the served form to LF 3bbd5ab2 and the host read it post-deploy (Z-S135). The record stays as measured; the current oracle is 3bbd5ab2, stated here and in Z-S135.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: W/YR_SERVED.json of OG-yr-1 (0.7.0_AE_CloudOps~Z) is a point-in-time measurement of the page as served on 2026-10-14 (the checked-out CRLF form, md5_source 0d828b51 under order amendment A3); re-pointing it to 3bbd5ab2 would rewrite a measurement into a value nobody measured at that time. The later ruling A8 (OG-ap-18, CVO half v3) moved the served form to LF 3bbd5ab2 and the host read it post-deploy (Z-S135). The record stays as measured; the current oracle is 3bbd5ab2, stated here and in Z-S135."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T02:38:25Z",
+  "id": "NFRA_OPLGTW-Z-S342",
+  "one_line": "OG-ev-4: the retained memory between paged reads sits in glibc's per-thread arenas: MALLOC_ARENA_MAX=2 cuts the median RSS growth per page from 135.9 MB to 26.7 MB; freeing arrow's pool or gc does not; no variant reaches the 20 MB rule, so the flattening variant is none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/MEMORY_RETENTION.json (six variants, three pages each, fresh processes on the host, release b124377b41 app staged in a scratch folder and removed; staged md5 equal to the release for the adapter and the catalog; idle host 28.1 percent used; each variant started within 1.2 points of idle; no variant stopped; the highest host reading was 69.5 percent)",
+      "median page-to-page RSS growth in MB over pages 2 and 3: A release as is 135.9; B gc and arrow release_unused 146.8; C B plus malloc_trim 110.7; D MALLOC_ARENA_MAX=2 26.7; E arrow system pool 104.5; F READ_WORKERS 4 42.4",
+      "RSS after pages 1, 2, 3 in MB: A 513.7, 692.5, 785.4; D 338.5, 388.6, 391.8 (page 3 grew 3.2); F 394.9, 445.5, 479.7; process RSS before page 1 was 102.3 in every variant",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev4_driver.json.raw.txt"
+    ]
+  },
+  "spec_asserts": "The retained memory is one of three candidates: glibc arenas, pyarrow's memory pool, a cache on the ctx (row Z-S338).",
+  "world_is": "The numbers support the arenas. Releasing pyarrow's pool and collecting garbage after each page (B) did not reduce growth (146.8 against 135.9), and the Arrow system pool (E) moved it by about a quarter (104.5). malloc_trim after the pool release (C) trimmed some (110.7) but left most. Capping the arenas at 2 (D) cut the growth by about 80 percent and also lowered the first page's RSS (338.5 against 513.7); fewer reader threads (F, 4 instead of 16) cut it by about 70 percent. Both act on how many per-thread arenas hold freed memory. D's second growth was 50.1 MB and its third 3.2, so the median over two growths is 26.7 and misses the 20 MB rule; with three pages the trend cannot be separated from noise. A ctx cache is not excluded as a smaller part (D still grew 50 MB on page 2) and was not isolated. D and F were not combined. Wall time per page did not move by more than 20 percent in any variant (page 1 between 29.3 and 30.5 s, page 3 between 24.0 and 25.1 s).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Numbers and letters only. The flattening variant under the issuer's rule is none; the lowest median among B to F is D. The mitigation is an environment setting of the service (MALLOC_ARENA_MAX) or a smaller reader pool; the choice and the 20 MB line are the issuer's and the CTO's."
+}
+```
