@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T09:40:01.965942+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261017T140527Z
 **Deploy:** TCKT_EARLYWARN TO-EWS-d2: ews launcher logs items_opened per rule and persists its open-items store to s3://opal-data-49financial/schwab/49financial/state/ews_store/current/ews.db; fence admission for opal-clientops-ews-role (Get/List/Put, that prefix only) on opal-data-49financial; image rebuilt through opal-clientops-ews-build. Only task family pulling the opal-clientops-ews-task repo tag is opal-clientops-ews-task (one describe-task-definition family sweep: 1 family). One-time cost: the replacement task replays 573 dates (~3.5h at 0.25 vCPU), no resize.
 **Authored by:** 0.7.0_AE_CloudOps~TM1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -30,3 +30,4 @@
 - 20261017T095945Z LEG L6 closed: ews_check.py from the repo root at 2026-10-17T10:00Z: running EWS-RUN-OK, iam EWS-IAM-OK, ledger EWS-LED-OK, persist-iam
 - 20261017T100013Z LEG L1 closed: committed with explicit paths on box/dell1: 3ca3785007 (launcher counts and persist, row D1-S7), e2313fed92 (exemptions.
 - 20261017T133715Z LEG L7 closed: new task 19419353 first pass ended 2026-10-17T13:35:23Z (3h37m after the 09:58Z start): log run_pending dates_processed=
+- 20261017T140527Z CLOSED -- all 7 legs proven
