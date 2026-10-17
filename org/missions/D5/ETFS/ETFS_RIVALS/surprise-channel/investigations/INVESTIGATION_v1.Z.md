@@ -5220,6 +5220,30 @@
     "spec_asserts": "An enrichment leg that exits 94 'landed' has done its naming work for the candidates it asked about.",
     "world_is": "Exit 94 'landed' coexists with names PARTIAL: 8 asked, 0 named, nothing written, two days running. The leg's exit code does not distinguish a full landing from a landing whose naming sub-step named nothing.",
     "notes": "Filed by 0.0.0_AB_MSTR~Z on 0.0.3_BG_BBGTerminal's ask (msg 34010): the channel is outside that seat's writable paths. No ruling here; whether 8/0 is a defect, an expected vendor gap, or a reporting gap in the exit code is the issuer's (2.0.0_SA_COO~V1, dell1) to disposition."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S83",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-10-17T04:56Z",
+    "one_line": "The rivalfunds corporate-actions landing for 2026-10-16 carries 264 of 400 event rows with event_type=unmapped:*; 262 are one money-market fund (DGVXX US: Daily Accrual 250, Income 12) and 2 are single rows (3491 TT 'Return of Capital', JAN US 'Pro Rata'), so three raw dividend types fall through the mapped enum.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured by 0.0.3_BG_BBGTerminal (msg 35375 to 1.0.0_SA_CTO~Z, 2026-10-17T04:54Z); filed here by 1.0.0_SA_CTO~Z because the channel is outside that seat's writable paths",
+        "object: rivalfunds/etfs/gold/corporate_actions/date=2026-10-16/actions-20261016-76ab7604b40b.parquet, head_object 24,260 B, marker rv-dvd70-20261017; 429 rows = 400 event + 29 status, 70 securities",
+        "unmapped split: 262 of 264 are DGVXX US (Daily Accrual 250, Income 12), the only security with zero mapped rows; 1 row 3491 TT 'Return of Capital'; 1 row JAN US 'Pro Rata'",
+        "the 29 status rows have one measured cause, BAD_FLD 9 'Field not applicable to security', all genuine non-payers (ADBE, AMD, CMG, RBLX, TEAM ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "event_type on a landed corporate-actions row is a value of the mapped enum.",
+    "world_is": "Three raw Bloomberg dividend types (Daily Accrual, Income, Return of Capital) plus 'Pro Rata' fall through as unmapped:*. The 264-of-400 headline overstates the breadth: it is one money-market name plus two single rows. Return of Capital moves cost basis, so it is the one whose mapping matters to a consumer.",
+    "notes": "Filed by 1.0.0_SA_CTO~Z on 0.0.3_BG_BBGTerminal's ask (msg 35375). No ruling here; whether to map the three types, and how a Return of Capital row reaches a consumer, is the issuer's (2.0.0_SA_COO~V1, dell1) to disposition."
   }
 ]
 ```
