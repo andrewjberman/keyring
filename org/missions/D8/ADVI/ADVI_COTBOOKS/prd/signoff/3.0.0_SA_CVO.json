@@ -1,0 +1,13 @@
+{
+  "prd": "ADVI_COTBOOKS_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "087fb97ca4e50403e50e4b793786ea1d606087f0",
+  "half": "ratified-text",
+  "half_hash": "b3b6a73a5078a29bfa382abc6ddda1dceb46506304d162e07dac3e7e462b8399",
+  "endpoint_hash": "f3e50c1ec3d60e9be17504a44347d4115b99a56986db5d47dd20df2a37758f10",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ADVI_COTBOOKS_v0.1_RATIFIED_TEXT_20261017.md@8cc7a87a60",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-17T03:22:55Z",
+  "reason": "ENDPOINT not yet confirmed by Andrew (open call dell1-20261017T030813Z-0cf5 OPEN); FWD-2 every account in one book contradicts C-SCOPE unsupervised in no book"
+}
