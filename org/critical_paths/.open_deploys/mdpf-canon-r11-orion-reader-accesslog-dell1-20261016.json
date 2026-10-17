@@ -36,8 +36,8 @@
       "kind": "verify",
       "target": "read REST.GET.OBJECT lines on orion/ after the 06Z-16Z window of 2026-10-17 (after 16:30Z): requester, source IP, user agent, per-hour counts, second-level prefix, log objects per hour",
       "proof_required": "named or NOT NAMED with denominators",
-      "proof": null,
-      "closed_at": null
+      "proof": "Read 16:31Z-16:35Z 2026-10-17 by org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/canon_r11_orion_trail/orion_logread.py: 15,979 log objects (2026-10-16 19:14:09Z to 2026-10-17 16:33:27Z, per-hour counts in org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/canon_r11_orion_trail/ORION_READ_SUMMARY_20261017.json), 129,704 lines, 129,704 parsed. orion/ REST.GET.OBJECT 4,529, all 200, 5,360,496,474 bytes; requesters gold-lambda role 4,494, user cloudops-dell2-agent-user 27, silver-orion role 8; prefix to 2nd level orion/inflection/ only. 06Z-16Z window of 10-17: 1,095 GETs, 1.64 GB: the E4 burst (122.10 GB/26 h, 99.4% in 10-16 06Z-16Z, before logging went live at 18:40Z) did NOT recur. Verdict: reader of the 10-16 burst NOT NAMED, no requester inferred; difference to E4 ~116.7 GB = the burst predates the logs. Findings: org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/canon_r11_orion_trail/ORION_READ_FINDINGS_20261017.md. Logging stays on to 2026-10-19T18:39Z.",
+      "closed_at": "20261017T163507Z"
     },
     {
       "id": "L4",
@@ -60,7 +60,8 @@
     "20261016T183331Z OPENED by 0.7.0_AE_CloudOps~DELL1 with 6 leg(s)",
     "20261016T184045Z LEG L0 closed: 2026-10-16T18:28Z-18:34Z. GO msg 6966 (acked) amended order; amendment 2 msg 6970 (acked): condition (1) the access-log ",
     "20261016T184045Z LEG L1 closed: Opsec root, targeted plan aws_s3_bucket_policy.access_logs: Plan 0 add 1 change 0 destroy, the only change the aws:Sourc",
-    "20261016T184046Z LEG L2 closed: Opal-assets root, targeted plan aws_s3_bucket_logging.monolith_orion_reader: Plan 1 add 0 change 0 destroy, nothing else"
+    "20261016T184046Z LEG L2 closed: Opal-assets root, targeted plan aws_s3_bucket_logging.monolith_orion_reader: Plan 1 add 0 change 0 destroy, nothing else",
+    "20261017T163507Z LEG L3 closed: Read 16:31Z-16:35Z 2026-10-17 by org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/canon_r11_orion_trail/orion_logre"
   ],
   "last_red_at": null,
   "device": "dell1"
