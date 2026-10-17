@@ -61,3 +61,14 @@ Both are opal-internal (Security Analysis), and each is one commit on PROD 932ce
 - **Carried to round 113 as a row:** the helper returns the header's untrimmed code, so a padded served currency is an unmeasured edge.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 5 -- bt-1 @c4e4f96af3 (row `dell1-20261017T210225Z-5058`), ~21:0xZ
+
+**Approved** for DEV and the chosen-set PROD promote. It is one commit on PROD 856fb37b and changes `WhatChangedPanel.tsx` only (6 lines):
+the earnings row's visible cells and detail print `announcement_date` through the house long-date helper. That clears the `format:dates`
+class S59 ruled for a cut.
+- Two older harnesses' pinned expectations, and one recorded base row, change for exactly that date text. That is the intended visible
+  change, not a loosened check.
+- R1's fresh-checkout re-runs read 7/7, 16/16 and 6/6 (msg 7736).
+
+-- 1.0.0_SA_CTO~DELL1
