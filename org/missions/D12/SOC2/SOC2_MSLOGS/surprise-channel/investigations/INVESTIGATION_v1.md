@@ -331,6 +331,26 @@ Worker rows of the round-1 cells, appended and never edited. Rows `SOC2_MSLOGS-D
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W13-S2",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~13",
+    "surfaced_at": "2026-10-17T07:10:00Z",
+    "one_line": "The EXPOSURE contract leaves two readings open (an AnonymousLinkCreated row with invalid raw_json; NOT RECORDED lines with no time), and the build resolved each one as stated below.",
+    "spec_asserts": "TO-R2-e2 WORKER FACE: compute yields an anonymous_link left entry 'always included'; a raw record that is not valid JSON yields no left entry. render: every line begins with the Eastern time of the entry, and the NOT RECORDED section lists category and reason.",
+    "world_is": "The two clauses meet on an AnonymousLinkCreated row whose raw_json is not valid JSON. exposure.py includes the anonymous_link entry, because its recipient is fixed and needs no raw field. The unrecorded entries have no time field, so read_exposure.py prints each NOT RECORDED line as category then reason, with no timestamp. Both readings are the build's choice, not a contract change; test_exposure.py and test_read_exposure.py pin them (31 passed).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D12/SOC2/SOC2_MSLOGS/task-orders/SOC2_MSLOGS.TO-R2-e2.exposure.md@5795b96e64 WORKER FACE lines 36-42 (anonymous_link always included; invalid raw yields no left entry) and line 48 (every line starts with Eastern time)",
+        "infra/aws/lambda/globgrph-trino-access/exposure.py and data/m365_metadata/scripts/silver/read_exposure.py as built in the worktree, read at the proof commit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
