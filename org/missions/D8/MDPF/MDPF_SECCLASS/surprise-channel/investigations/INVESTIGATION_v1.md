@@ -8473,3 +8473,49 @@ by dell1 or by this seat.
   "world_is": "Named: the key that moved (gold/canonical/holdings/<date>.parquet, 15 dates) and its writer (B_00.canonical_holdings.py, rolling window). Not named: the writer's upstream input that changed between 23:15Z and 04:16Z (the Schwab RPS silver partitions are the candidate; a version listing of that prefix returned no rows and was not trusted without a positive control). Round 28 cell 1 continues from here."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W99-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~99",
+  "surfaced_at": "2026-10-17T08:12:29Z",
+  "one_line": "SC-e-109 premise magnitude: the order says each date's TOTAL rose by about $381k to $419k on 2026-10-01..10-14; measured on the 14 holdings version pairs it runs +382,473 (10-11) to +450,743 (10-14), and 10-02 is +407,720.32 as stated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions opal-data-bd gold/canonical/holdings/<date>.parquet, window-filtered (23:00-23:59:59 on 2026-10-16 and 04:00-05:00 on 2026-10-17): 14 before/after pairs for 10-01..10-14; per-date sum(market_value) deltas read from the downloaded objects in .scratch/s48/hold/ (python -I, alldates.py)",
+      "2026-10-02 pair: before 2,023,532,725.44 after 2,023,940,445.76 delta +407,720.32 (matches the order and the S48_CAUSE checker recompute)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-109 order premise: the nightly fire restated each date's TOTAL on 2026-10-01..10-14 by about $381k to $419k.",
+  "world_is": "Measured across the 14 restated dates: +382,473 (2026-10-11) to +450,743 (2026-10-14); 2026-10-01 +438,765, 2026-10-02 +407,720. The cause read uses the measured figures; the magnitude premise is not the order's range."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W99-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~99",
+  "surfaced_at": "2026-10-17T08:12:29Z",
+  "one_line": "SC-e-109 lead: the Cottonwood carrier chain is not the writer of the moved inputs; the window's changed inputs came from the 49F (BD) bronze run of the shared cot_bronze_ingest.py landing in opal-data-bd, and the same script's rollback guard was live only after that run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 opal-data-bd forwardfill_v2/ filtered to 2026-10-16T23:15:29..2026-10-17T04:16:05: TRANSACTIONS_DAILY_2026-10-05/11/14/17.xlsx and REALIZED_DAILY_2026-10-17.xlsx written 00:02:18-00:08:48Z with _complete markers producer cot_bronze_ingest.py; positive control returned 10 objects modified since 2026-10-17T00:00",
+      "aws s3api list-object-versions code/bronze/cot_bronze_ingest.py: 6ZIv (04:11:00Z) sha256 5486514d = guard version; O0rS (04:13:33Z) and the 2026-08 versions sha256 c8764a43 = prior bytes; the code live during the 00:02-00:08Z run was the c8764a43 bytes. Script default bucket opal-data-cot (cottonwood); BD runs set BD_S3_BUCKET=opal-data-bd (data/cot/scripts/bronze/cot_bronze_ingest.py at HEAD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-109 order lead: the Cottonwood carrier chain (separate tree, B_00 runs --force-recent-days 14) is the candidate source of the moved input, and any 49F bronze pull in the window must be ruled in or out for 2026-10-01..10-14.",
+  "world_is": "The moved inputs of the 2026-10-02 holdings: positions_cube (A_03, rebuilt 04:13-04:14Z from silver/transactions and silver/realized), silver/prices/canonical_prices.parquet (04:03:39Z) and accounts_dimension_latest (04:03:49Z). The 49F bronze run (00:02-00:08Z) landed transactions for 10-05, 10-11, 10-14 and realized for 10-17; silver/transactions 10-05 (+183/-102 rows, trade dates 10-05 only), 10-14 (2,921 rows of trade dates 10-01..10-12 replaced by 14,361 rows of 10-12..10-14; all 2,921 survive in other partitions), 10-17 (new, trade dates 10-12..10-15). The realized partition of 10-17 carries sales dated 2026-10-15 for z0817205211 and z0822659431 with open dates 07/17-09/10, the two accounts absent from the 23:14Z cube. The guard in cot_bronze_ingest.py rejected nothing in the window (live 04:11:00-04:13:33Z, after the run). No Cottonwood-bucket object was read for this, so the bucket-level Cottonwood check is not run."
+}
+```
