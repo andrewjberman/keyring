@@ -29091,3 +29091,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as read. No verdict."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S55",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-17T12:07:58Z",
+  "one_line": "The task-order status vocabulary has no terminal NOT_MET value: AMGT-bo-3 had to keep the leading word complete while its record says NOT MET on AC5, and round-close-check reads REFUSED on its FAIL proof row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 7486 and ROUND_ANALYSIS.round108.md section 2: an order that ends with a failed criterion is recorded as terminal NOT MET, and a reader of the status alone must not read it as clean.",
+  "world_is": "The status words the tools read are complete, completed, done, closed (COMPLETE_WORDS) and superseded, cancelled, canceled, withdrawn, retired, parked (OTHER_TERMINAL_WORDS) in .tools/round-close-check.py lines 306-307, read off the FIRST token of the <status> text (lead_word, line 310); to-check.py carries a separate COMPLETE_WORDS set (line 51). A status led by any other word is not recognised, so AMGT-bo-3's line reads `complete -- NOT MET on AC5 (...)`: a reader of the first word sees complete, and round-close-check counts the order as complete and reads its proof row FAIL as proof_bad (proof_ok=7 proof_bad=1, verdict=REFUSED). The CTO's ruling closes the round over it; no token states NOT MET to the tools. Needed: a terminal NOT_MET value in the to-pipeline status enum that round-close-check honours as terminal and not clean (counted as not_met, not as proof_bad).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py lines 306-307 and 310-314 @8d978ee526 (read)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-bo-3.withheld-reasons-walk-on-a-local-build-of-prod.md <status> line @8d978ee526",
+      "round-close-check --project AMGT_RESAPP --round 108 output 2026-10-17: ORDERS 8 complete; PROOFS proof_ok=7 proof_bad=1; verdict=REFUSED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on the CTO's instruction (msg 7490, ROUND_ANALYSIS.round108.md section 2) against the gate's lane (the owner of the to-pipeline status enum and round-close-check). Not a cell of this project."
+}
+```
