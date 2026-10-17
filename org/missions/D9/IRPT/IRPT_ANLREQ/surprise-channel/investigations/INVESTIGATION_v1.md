@@ -23988,3 +23988,35 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S172 -- W141-S5 disarmed: the release builds run with MSYS_NO_PATHCONV=1 and no path key moved
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S172",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T08:02:55Z",
+  "one_line": "W141-S5 DISARMED: the release builds run with MSYS_NO_PATHCONV=1 and the r34k bindings diff shows only provenance changed, so no mangled opal_map.path reached the shipped resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W141-S5"
+  ],
+  "spec_asserts": "Row W141-S5: run on this box without MSYS_NO_PATHCONV=1 the resident bindings builder wrote opal_map.path as C:/Program Files/Git/opt/irpt-resident/...; with the variable set it wrote /opt/irpt-resident/... (disarm owner 2.0.0_SA_COO~Y2: the release-build cell runs the builder with MSYS_NO_PATHCONV=1 and checks every absolute path in the bindings).",
+  "world_is": "MEASURED now: org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/r34k_build.py line 119 runs the builder with env MSYS_NO_PATHCONV=1 and BUILD_ONLY=1; the r34k build record (deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json, bindings_diff against the running r34h) reads keys_added [] and keys_changed [provenance] only, so opal_map.path in the shipped bindings equals the r34h value (a mangled path would appear as a changed key); the r34k packet's verifier states it proves no other key moved, and the running r34k resident answered V1 sums 316 of 316 and V2S OK. The builder's own docstring (build_resident_package.py lines 7 to 9) names the hazard. NOT READ: the absolute value of opal_map.path inside the r34k tarball (the diff shows it unchanged from r34h, whose value was not read here either).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/r34k_build.py (line 119: MSYS_NO_PATHCONV=1)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json (bindings_diff: keys_added [], keys_changed [provenance])",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt (V1 sums 316 of 316, V2S OK)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The remedy named by the row holds on the build that matters: the builder ran with MSYS_NO_PATHCONV=1 and the bindings diff proves no path key moved. A later build by another seat that omits the variable would show in the same diff check and would be a new row."
+}
+]
+```
