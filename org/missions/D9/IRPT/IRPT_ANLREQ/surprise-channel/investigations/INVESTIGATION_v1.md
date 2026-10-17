@@ -23274,3 +23274,32 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S163 -- the pricing as_of is a weekday rule, not the trading-calendar frontier
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S163",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-17T01:15:45Z",
+  "one_line": "The pricing as_of (T-1) is a WEEKDAY rule, not the trading-calendar frontier: on a Saturday it is Friday, the calendar's frontier is Thursday; a holiday gives a date with no row. Moving it changes report as-of dates (a served move), so it is its own pair with a count of the reports whose as_of changes (CTO msg 10122).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-7 and C-PRICES: every price is the T-1 frontier close, stated as the report's as-of; CLAUDE.md: resolve the trading calendar, one frontier lib/trading_calendar.py, Friday is Monday's answer.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/resident_installed.py:379-385 _t_minus_1(epoch): the UTC date minus one day, minus further days while Saturday or Sunday (AR-g-90); it does not read lib/trading_calendar.py. On Saturday 2026-10-17 it returns 2026-10-16 (Friday); prev_trading_day(expected_last_trading_day) returns 2026-10-15 (Thursday). A Monday after a holiday returns the holiday's date, which has no row; the price reader (price_adapter_yfinance.py:117-120) then ends on the last row at or before it. The door's checker (intake/yfinance_check.py) had no cut at all until AR-g-157, which uses the calendar frontier. The two rules now differ on weekends and holidays.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:379-385 @52f16d8e45 (_t_minus_1)",
+      "lib/trading_calendar.py:192-218 @52f16d8e45 (prev_trading_day, expected_last_trading_day)",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py:9-10 (the frontier definition: prev_trading_day of expected_last_trading_day)",
+      "org/mcp/inbox/2.0.0_SA_COO/~G2/read/20261017T011059Z_1.0.0_SA_CTO_DELL2_Re_the_door_checker__REC_accepted_--_the.md (CTO msg 10122: own pair, with a count of the reports whose as_of changes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
