@@ -4601,3 +4601,15 @@ Check IB249-1 (`deliverables/2.0.0_SA_COO~S2/checks/r249/p249_cells.py`), dry-ru
 | `IB-pr-619` | REPAIR: four stale comments and one docstring in retained_export.py describe the old pinned-VersionId read; make them true, comments and docstring only | FWD-21 | WORLD (path floor) | IB-pr-617 (built) | PS8-a |
 
 fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell on the same chain as IB-pr-617, so the same worker continues; one write surface (retained_export.py).
+
+## 242. ROUND 6, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 1: the READ; 2026-10-17 ~03:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO msg 10155 and ruling B, msg 10161; plan blob `f1f250ab37`)
+
+The laptop CTO ruled (@3ffa142af0) that `client-data-check.py` reads a keyed list, `HMAC-SHA256(key, UPPER(id))`, produced by a scheduled served-layer job; the dell2 CTO ruled B: the step goes in `irpt-directory-refresh`, the existing all-firm reader, as its LAST stage after the directory write commits (its failure never alters or rolls back the directory output, proved by a planted-failure test), the object holds only sorted HMACs (no firm, count by firm or id), the role gains `GetSecretValue` on one ARN and `PutObject` on one key, and a never-widen pair; the hook flip to refuse-on-absent is the laptop CTO's after the first list lands. Six cells (IB-hm-1 to IB-hm-6, plan section 3). This section cuts the first: a READ-ONLY repository measurement by a worker, so that the producer code (IB-hm-2), the Terraform (IB-hm-3) and the pair (IB-hm-4) are built on cited facts, not on my reading of two files. IB-hm-2 to IB-hm-6 are cut when this one is graded.
+
+Check IBHM1 (`deliverables/2.0.0_SA_COO~P2/checks/r247/p247_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control247.py`) passes the three positives and each of 18 negatives fails its own arm (0 unexpected). Rounds 2 to 5 of ~PM already carry an issuance, so this takes round 6.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-hm-1` | READ the seven facts (last stage, where the ids live, spelling, names, IAM and env, the gate, the tests) with evidence that resolves | FWD-21 | LOCAL | none (ruling B) | PM6-a |
+
+fanout: 1 of 6 chains cut, cap 8, reason: IB-hm-2 and IB-hm-3 depend on this read's facts; IB-hm-4 on 3; IB-hm-5 and 6 on 4 and the IB2 lane.
