@@ -3106,3 +3106,20 @@ The filled-report pass (TO-DB-b-328) is done and its ledger closed (4,012 docume
 **fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 27 single-fault mutants):** `checks/r150/p197_vleg_pair_mint.py` (DBC197-1-AC1, DBC197-2-AC1).
+
+
+## 193. ROUND 150, WORKSTREAM RELAND (2026-10-17 ~15:2xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood re-land pair -- eight gold days rewritten and the series republished once
+
+dell1's carrier lane landed the Cottonwood `fact_allocations` of 07-22, 08-03, 08-19, 09-24 and 09-25 in full and (the convert) 07-27 and 07-29 (read at 14:26Z: 894, 897, 896 and 901 accounts on the four days that also hold transactions). The CTO ruled (msgs after 10575): ONE pair, ONE republish, over 07-22, 08-03, 07-27 and 07-29; the three days with no transactions partition (08-19, 09-24, 09-25) wait on a separate ask to dell1. **The issuer's finding that widened the pair:** the next trading day of each re-landed day (07-23, 07-28, 07-30, 08-04) holds gold rows that are NOT_MEASURABLE in the gold itself (734, 878, 880 and 740 of about 880), because the function derives a day from the allocations of that day and of the previous trading day and the previous day was partial; a republish alone cannot repair them, so the pair rewrites EIGHT gold days (the CTO accepted, half @e5d081d262, with one widening: a next day's series may also be gained). The checker reads each day's NOT_MEASURABLE share live (at most 15 percent; a normal day is about 3). The baseline read of the republish tool (current gold against the published series) is IDENTICAL for all 939 series, so every change after the pair is the pair's.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. eight gold days rewritten (dry run first) and the 939 series republished once | DB-b-332 | FWD-10 (Cottonwood Performance tab) | WORLD, served output | both halves signed (COO @0fdec09136; CTO @e5d081d262); IB2's queue | chain AZ |
+| 2. the three days with no transactions partition | to be cut | FWD-10 | WORLD | dell1's lane re-requesting fact_transactions | after dell1's reply |
+| 3. `~F2`'s transaction pair on the same function | F2's | FWD-10 | WORLD | item 1 closed (CTO msg 10391) | after item 1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the pair rewrites each day with its own event (not a range) so no unaffected landed day is touched; (b) the republish stays part of the pair, once; (c) the Act 3 read (each of the eight days at most 15 percent NOT_MEASURABLE) stops the pair before any series is touched; (d) the pre-write read tool now prints the dates gained, dropped and changed by count, so the Act 4 STOP lines (only the three movable fields on the four next days may change on a common day; only re-landed days or next days may be gained) are measured, not derived; (e) no code is applied, so `~F2`'s bundle hash question does not arise (answered to F2).
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a 4-day and a 2-day synthetic record and red on 77 single-fault mutants):** `checks/r150/p198_cot_reland_apply.py` (DBC198-1-AC1, DBC198-2-AC1, DBC198-3-AC1).
