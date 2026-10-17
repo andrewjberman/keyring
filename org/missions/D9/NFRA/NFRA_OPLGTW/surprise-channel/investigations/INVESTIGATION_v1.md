@@ -28045,3 +28045,33 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: the TO's AC3 set is 32 of 32 in both orders; these two are base failures, recorded so the drain does not read them as OG-en-26 regressions."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T21:05:00Z",
+  "id": "NFRA_OPLGTW-Z-S381",
+  "one_line": "Round-41 ruling on worker rows Z-W141-S1 and Z-W141-S2: OG-en-26 verified and drained (725714077a); the streamed Arrow peak follows the ROW GROUP, so the applier's Phase A re-run on the real peer files is the grade; two test failures are baseline",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W141-S1",
+    "NFRA_OPLGTW-Z-W141-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain 725714077a of wk-NFRA_OPLGTW-141 (OG-en-26): my runs in the main tree: named tests 3 of 3, the eight-file peer/window/client set 32 of 32 in both orders, py_compile ok, proof VALID rc=0; product diff read: a filtered or length-measured read streams by iter_batches (2048 rows, one thread) keeping matched rows, an unfiltered read is refused from the footer before any read, length_columns measure the lineage column on matched rows, distinct_values streams, the peer tool passes length_columns=(input_manifest,)",
+      "the worker's measurements (fresh python -I processes, Arrow pool peak): lineage streamed read of 400,000 rows with a 2 KB input_manifest peaked at 10.8 MB against 836 MB uncompressed (bound 209 MB); distinct_values over 800,000 rows 1.5 MB against 58 MB (bound 2.9 MB); the golden comparison of the peer tool base against new over five period/axis pairs for two funds was byte-identical for string and list-typed lineage; 15 other typed-reader test files 117 passed, 2 failed (the two baseline failures)",
+      "git diff 8c9ab74515 HEAD over infra/aws/ec2/opal-gateway: three files (typed_scope.py, etfs_rivals_flow.py, tests/test_og_en26.py); added lines holding a 9-or-more digit run or an e-mail: 0"
+    ]
+  },
+  "spec_asserts": "A filtered typed read holds one batch and the matched rows, never the table; the answers are unchanged.",
+  "world_is": "Z-W141-S1: the streamed Arrow peak follows the ROW GROUP size, not only the batch (3.9 MB at 50,000-row groups against 2.4 MB at 4,096-row groups on the same data): 'one batch' holds for small row groups, and the real peer files' row-group layout is unknown to the worker, so the HOST measurement of the applier's Phase A re-run (3(a), under the hard guard) is the grade, with the answer stated in the ask. Z-W141-S2: test_og_gt8 AC03 and test_og_ch1 AC04 fail on the base extract as well as the worktree (outside the cone; the release's full-suite comparison carries them). The commit-time client-data list was absent; my text scan of the merged diff finds 0 hits.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row-group dependence is a stated limit that the host measurement grades; the two failures are baseline; the list's absence is a device fact with a clean text scan. Z-S375 and Z-S380 stay open until the OG-ap-38 Phase A re-run passes and the release is live."
+}
+```
