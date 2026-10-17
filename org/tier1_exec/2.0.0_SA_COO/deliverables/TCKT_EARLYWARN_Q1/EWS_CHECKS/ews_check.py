@@ -3,6 +3,10 @@
   python ews_check.py iam       EWS-IAM-OK  : the role, SIMULATED, may GetSecretValue on opal/ews/graph-app-cert and read the two Schwab silver prefixes, and may NOT
                                               GetSecretValue on any other secret, write to S3, or send (ses, sns, sqs)
   python ews_check.py ledger    EWS-LED-OK  : the NEVER-2 ledger entry for this deploy is CLOSED and its sentinel is committed
+  python ews_check.py persist-iam   EWS-PIAM-OK : the role, SIMULATED, may GetObject and PutObject on the manifest's persist_prefix ONLY: it may not DeleteObject there, nor
+                                              PutObject on a sibling prefix of the same bucket (TO-EWS-d2)
+  python ews_check.py persist-object EWS-POBJ-OK : the store object named by the manifest (persist_bucket, persist_key) exists and is non-empty (date-gated: after the first pass)
+  python ews_check.py counts        EWS-CNT-OK  : in the container log, the latest run_pending pass is followed by one "ews-launcher: items_opened rule=<name> n=<int>" line for each of three distinct rules
 Else EWS-BAD <why>. Run from the repository root. The manifest is written by the deploying lane: org/tier1_exec/0.7.0_AE_CloudOps~TM1/deliverables/EWS_DEPLOY.json with keys
 cluster, task_arn, role_arn, role_name, task_name, ledger_slug. The positive arms are unexercised until the first deploy; a misfiring check is a surprise row, never a weakened check.
 """
@@ -107,11 +111,62 @@ def ledger() -> int:
     return 0
 
 
+def persist_iam() -> int:
+    m = manifest()
+    role, bucket, key = m["role_arn"], m["persist_bucket"], m["persist_key"]
+    prefix = key.rsplit("/", 1)[0] + "/" if "/" in key else ""
+    inside = "arn:aws:s3:::%s/%s" % (bucket, key)
+    sibling = "arn:aws:s3:::%s/%sx-ews-sibling-probe/object" % (bucket, prefix.rsplit("/", 2)[0] + "/" if prefix.count("/") > 1 else "")
+    for act in ("s3:GetObject", "s3:PutObject"):
+        got = simulate(role, act, inside)
+        if got != "allowed":
+            return bad("%s on %s reads %s, wanted allowed" % (act, inside, got))
+    for act, res in (("s3:DeleteObject", inside), ("s3:PutObject", sibling)):
+        got = simulate(role, act, res)
+        if got == "allowed":
+            return bad("%s on %s reads allowed, wanted denied" % (act, res))
+    print("EWS-PIAM-OK")
+    return 0
+
+
+def persist_object() -> int:
+    m = manifest()
+    d = aws("s3api", "head-object", "--bucket", m["persist_bucket"], "--key", m["persist_key"])
+    if int(d.get("ContentLength") or 0) <= 0:
+        return bad("store object %s/%s is empty" % (m["persist_bucket"], m["persist_key"]))
+    print("EWS-POBJ-OK")
+    return 0
+
+
+def counts() -> int:
+    d = aws("logs", "filter-log-events", "--log-group-name", "/aws/ecs/opal-clientops-ews-task", "--filter-pattern", "?run_pending ?items_opened")
+    lines = [e["message"] for e in sorted(d.get("events", []), key=lambda e: (e["timestamp"], e.get("eventId", "")))]
+    idx = [i for i, ln in enumerate(lines) if "run_pending dates_processed=" in ln]
+    if not idx:
+        return bad("no run_pending pass line in the log")
+    tail = lines[idx[-1] + 1:]
+    import re
+    rules = set()
+    for ln in tail:
+        if "run_pending dates_processed=" in ln:
+            break
+        mt = re.search(r"items_opened rule=(\S+) n=(\d+)", ln)
+        if mt:
+            rules.add(mt.group(1))
+    if len(rules) < 3:
+        return bad("after the latest pass line, %d distinct items_opened rule line(s), wanted 3" % len(rules))
+    print("EWS-CNT-OK")
+    return 0
+
+
 if __name__ == "__main__":
     arm = sys.argv[1] if len(sys.argv) > 1 else ""
-    try:
-        sys.exit({"running": running, "iam": iam, "ledger": ledger}[arm]())
-    except KeyError:
+    arms = {"running": running, "iam": iam, "ledger": ledger, "persist-iam": persist_iam, "persist-object": persist_object, "counts": counts}
+    if arm not in arms:
         sys.exit(bad("unknown arm %r" % arm))
+    try:
+        sys.exit(arms[arm]())
+    except KeyError as exc:
+        sys.exit(bad("the deploy manifest lacks the key %s" % exc))
     except Exception as exc:  # a failed read is BAD, never an error
         sys.exit(bad("%s: %s" % (type(exc).__name__, exc)))
