@@ -2977,3 +2977,55 @@ Andrew sent the Cottonwood CRM extract `Files.zip` to dell2 himself (his /tdrop;
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~256`), cap 8; spawned when `TO-DB-b-324` completes.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 27 single-fault mutants):** `checks/r150/p191_cot_extended_match.py` (DBC191-1-AC1, DBC191-2-AC1).
+
+
+## 185. ROUND 150, WORKSTREAM FILLPASS (2026-10-17 ~05:4xZ, issuer 2.0.0_SA_COO~D2): the filled-report switch-on pair (IB-pr-551 hop 2) -- the code cell
+
+The CTO ruled (msgs 10294/10295) that this seat issues the filled-report switch-on pair: the switch `FILLED_REPORT_PASS` is an environment variable on `irpt-49f-reporting-publish-lambda` (this seat's root, applier from this seat's lane), and `2.0.0_SA_COO~S2`'s after-read is its named V leg (one client's report through the route and through the export); the CTO signs the CTO half when the packet lands; the blast radius is the one variable, the rollback the variable unset. A second ruling (msg 10307) adds a MINT LEG: two minted synthetic principals in `opal-users-v2` with `@opal.invalid` emails, recorded by digest, one scoped to the canary client and one control with the same firm but without that client, applied by `0.7.0_AE_CloudOps~IB2`, signed in and handed to `~S2`'s reads (2) and (3), then removed and read back ABSENT twice (the FWD-5 sitting pattern); `~S2` mints nothing and scans nothing.
+
+MEASURED by the issuer (code read): with the switch ON, `filled_report_fire` writes a document for EVERY directory client in ONE synchronous invoke (no subset, no dry run, no shard) in a 300 s function: a canary or a dry run cannot be run today, and a whole pass may not fit the function. So the pair needs the pass proven small first.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the pass takes `clients`, `dry_run`, `shard`/`shards`; absent, it is today's pass; the switch OFF returns at once | DB-b-326 | FWD-10 (filled report, advisor and client viewers) | WORLD floor (path), no apply | none | chain AS |
+| 2. the never-widen packet: bundle, switch ON by the variable, a dry run per shard, ONE canary client, the mint leg and `~S2`'s V leg, the full pass by shards, receipt, rollback | to be written | FWD-10 | WORLD, client-facing documents | DB-b-326 landed | after item 1 |
+| 3. the apply order to IB2 with a world-reading checker | to be cut | FWD-10 | WORLD | both halves | after item 2 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the options live INSIDE the FILLED-REPORT-A block only (a clause of `p192` AC1 compares the text outside the block with the base), with at most 20 lines removed and 80 added, ONE `put_object`, nothing printed; (b) `dry_run` reads, composes and validates every document and writes none (its `written` is the would-be count, marked `dry_run`); (c) malformed options are refused BEFORE any read or write, and the switch OFF returns before the options are even read; (d) the Terraform variable is NOT in this cell: the applier adds the one environment line in the order that applies it, so no other apply of the root can turn the switch on by accident (the trunk carries the OFF state until the pair); (e) the issuer's reference diff is committed beside the checker.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~257`), cap 8. In parallel under round 150: C6d (`DB-b-325`, worker ~256).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on 10 single-fault mutants; the reference diff is committed beside it):** `checks/r150/p192_filled_pass_options.py` (DB192-1-AC1..AC3), `reads/DB326_REFERENCE.patch`.
+
+
+## 186. ROUND 150, WORKSTREAM COTC5 (2026-10-17 ~06:2xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood Performance read path -- C5, the real run
+
+The page owner `2.0.0_SA_COO~C2` has no live session (CTO msg 10318), so this seat takes C5. 5174 (Andrew's smoke server, checkout `C:/dev/smoke-template-5174` @1f525845) answers and shows the login page; no seat holds a staff credential. The CTO ruled (msg 10324): `0.7.0_AE_CloudOps~IB2` mints ONE synthetic OPAL_GLOBAL principal with an `@opal.invalid` address, recorded by digest, the same pattern as the FWD-5 sittings; this seat signs in, opens Thiessen's two Cottonwood accounts on the Performance tab and records what renders; IB2 then removes the row and reads it ABSENT twice (Andrew's word covers synthetic deletes). Andrew may reload the page himself; whichever read lands first counts.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. one synthetic internal-staff users row: mint, sign-in proof, hand-over by broker, removal after the issuer's word, two ABSENT reads | DB-b-327 | FWD-10 (Cottonwood Performance tab) | WORLD (one users row) | C4 applied and verified | chain AT |
+| 2. the issuer's look at the page (the Performance tab for the two accounts) | the issuer's own act | FWD-10 | SERVED | item 1's hand-over | after item 1 |
+| 3. the second portal release (Performance set to PROD) | the CTO's, on Andrew's word after C5 | FWD-10 | SERVED, client-facing | C5 | after C5 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the principal is an INTERNAL-staff row (the class Andrew's own account is at Global), NOT a `test-filer` like the two earlier helpers write, because the Cottonwood function and the forward admit only the verified internal subject; the worker reads the helpers and the attribute NAMES of an existing staff row, never its values, and STOPS rather than copy a person's values; (b) the address is fixed in the order, so the checker can re-read the table for it; the record carries only its 12-hex digest; (c) the password and the address reach this seat ONLY inside one broker message, never a file; (d) the row has a 3-hour TTL as the backstop; (e) the removal waits for this seat's word "C5 done".
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 16 single-fault mutants):** `checks/r150/p193_c5_staff_signin.py` (DBC193-1-AC1, DBC193-2-AC1).
+
+
+## 187. ROUND 150, WORKSTREAM FILLAPPLY (2026-10-17 ~06:4xZ, issuer 2.0.0_SA_COO~D2): the filled-report switch-on pair -- the apply
+
+The code cell (`DB-b-326`) is landed at `4d4cf3e2c4`; the packet (sha256 `3248f3c4`, 14,420 bytes) is signed by both halves (COO `a1e2575ac6`, CTO `a824aebb24`; CTO msg 10331 "cut the apply order to IB2"). The CTO's earlier rulings are in the packet: the named V leg is `2.0.0_SA_COO~S2`'s after-read, with a mint leg for two synthetic viewers applied by IB2 and removed (msg 10307). The apply is by the one IRPT CloudOps lane.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. bundle; code-only apply and the OFF probe; the one variable; a dry run in seven shards; ONE canary; the mint leg and `~S2`'s V leg; the full pass in seven shards; the after-read | DB-b-328 | FWD-10 (filled report; advisor and client viewers) | WORLD, client-facing documents | DB-b-326 landed, both halves | chain AU |
+| 2. the portal side that reads the report route | not in this round | FWD-10 | SERVED | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the plan gates are exactly 0/1/0 twice (code, then the one variable); (b) the gate 0(c) counts OPEN LEGS on the surface (the ruling made on order 323's STOP is now in the order's text); (c) the checker `p194` reads the world: the function's configuration, the role policy hash, each schedule's input, and the data prefix by listing; it VALIDATES a sample of the written documents against the contract itself with `publisher.validate_filled_report`, so the data clause does not trust the applier's report; (d) the seven shards of the full pass must equal the dry run's sums, so a difference between what the dry run promised and what the pass wrote is a STOP; (e) when no covering/non-covering viewer pair can be scoped without a hand-typed link, the V leg records step (2) OWED and steps (1) and (3) grade the canary (the packet's section 1, Act 6).
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 58 single-fault mutants):** `checks/r150/p194_filled_pass_apply.py` (DBC194-1-AC1, DBC194-2-AC1, DBC194-3-AC1).
