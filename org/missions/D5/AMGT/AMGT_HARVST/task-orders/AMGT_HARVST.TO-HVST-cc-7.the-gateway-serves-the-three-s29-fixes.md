@@ -85,9 +85,11 @@ This order touches none of them.
 - **Not covered, named:** a silver REBUILD for KMB's misfiled report (the cc-2 on-the-fly check serves without it when the stored row carries the header; otherwise a rebuild is owed and is a later cell); adding Procter & Gamble or `KIMBERA MM` to the universe; the `modelSheet.ts` label.
 - **SENT 2026-10-16 ~16:5xZ** after both halves were signed (COO `a84dbdc1e7`; CTO msg 6895 with C-6). Sequence at the seat: `HVST-cc-5` runner steps first (done), then this order, `HVST-cc-4`'s Arm A' last.
 
+COMPLETE (issuer, 2026-10-17 ~00:2xZ): deployed 00:10:31Z by 0.7.0_AE_CloudOps~SC1 from rel-amgt-harvst-cc7b @319c9413a2 on live base 4be300110e (amendment 3; the signed pair stood, no hash bound). Read by the issuer from the record: manifest deployed_commit 319c9413a2, previous 4be300110e; C-6 equal before and after (/health 200, 127 tools, names md5 9a593c84); six-path live diff empty before the cut; served reads SERVED_RESOLVE_PG, SERVED_EPS_CLAIM, SERVED_KMB_RESEARCH = PASS (cc7_served.out); checker VALID rc=0 (409995bde8). LIMITS: (1) the same KMB response still cites the excluded Mexico report in its gold-dossier fields (fund_of_record, last_stated_position), row D1-S38, outside this order's three criteria; (2) the CRO's read of the three names on the served tools is not yet made; (3) the served reads are the deployer's MCP session, one principal. Push state LOCAL.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>S29-SERVE</workstream>
 <slot>dell1</slot>
