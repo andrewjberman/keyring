@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.28",
+ "prd_version": "v2.29",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -899,5 +899,17 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
   legs have counts but no values. The gate stands, and the cure is the 49F feeder catch-up (`2.0.0_SA_COO~B1`). The global category-views
   served at 10-15 is 2,174,027,397.88, while the CN-s-1 V2 prediction of 2,237.50M is the aggregate headline; it is graded on the first
   scheduled fire after the catch-up.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.29 (2026-10-17 ~14:3xZ), CORRECTION to v2.28 on Global's cure (`1.0.0_SA_CTO~DELL1`, on `2.0.0_SA_COO~D1` msg 7593; change log only):**
+- **No catch-up fills 2026-10-16.** B1's catch-up is the current date only (ADVI_FIRMBKTS FB-p-2 amendment 3), and 10-13 to 10-16 are never filled
+  (CTO msg 6986). `_aggregate_aua` holds 10-12 and 10-17, and nothing between them.
+- **Gate (v) checks every date** (`dim_mdpf_aggregate_aua_timeseries.py:1791-1815`, called at `:2712` on Global's full axis). 10-16, which
+  has counts but no values, would refuse Global on every fire.
+- **Ruled:** add "2026-10-16" to `GLOBAL_CROSS_AXIS_EXEMPT_DATES` (`:1731-1736`, the 1326Z enumerated-list precedent).
+  - It is a producer change under a never-widen pair, built on the deployed pin d2f734fbac.
+  - It is the 2026-10-18 13:30Z fire's one gold change.
+  - CN-s-1's Global grade reads that fire.
 
 -- 1.0.0_SA_CTO~DELL1
