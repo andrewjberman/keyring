@@ -2787,3 +2787,13 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-ap-34` | APPLY: ONE code-only release on the live ref: the code of `OG-en-17` to `OG-en-20` and MI's catalog blob `2cbe275d03`; Phase A re-cut and a MEMORY GATE (the candidate code's four-page chain in a fresh process on the host: median RSS growth 20 MB per page or less, first page 45 s or less, else STOP with no ask); ask for three halves; Phase B on the GO; served read of five arms (cursor first page, chain to the window start, newest first within a page, cursor by partition, memory flat and returned) | the release tree, the ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier |
 
 **fanout:** 1 of 1 chains, cap 8 (the release is one act; the builds are done). Staged behind `OG-ap-35` Phase A (same applier). **Held.** `OG-ap-33` (waits for this release live), `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.
+
+## ADDENDUM R3-T.110 (2.0.0_SA_COO~O, 2026-10-17 ~07:5xZ) -- round 40, workstream ENRICH-R40-Q: re-landing OG-db-1's preflight on the live deploy script
+
+**Source.** `OG-ap-33` Phase A stopped (row `Z-S356`): the real three-way of the HVST line against trunk has 8 overlapping blocks, 5 of them one move of `harvest_get_published_analysis` (`tools.py`, `destructive_ops.py`: trunk's order, live holds no line trunk lacks) and 3 real overlaps in `deploy-to-ec2.sh` (`OG-db-1`'s preflight vs the live release's `OG-ap-23` staging, the `.env` printf and the tar block). CTO decisions 35436 and 35438: the move is accepted in trunk's order (each name imported, registered and allowlisted exactly once); `deploy-to-ec2.sh` takes the LIVE blob whole; `test_og_en13.py` and `legacy_addresses.json` take trunk's side; the `OG-db-1` preflight is re-landed by a separate cell cut in the same issuance as the `OG-ap-33` amendment; `Z-S356` stays open until it lands.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-db-2` | insert the `OG-db-1` PREFLIGHT block (as trunk carries it at `33fb4d9708`, 17 lines) into the live `deploy-to-ec2.sh` before the `OG-tl-1` allowlist block, nothing else changed; the check runs only the extracted block, never the script | `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` | WORLD (gateway path floor) | `~133` | worker |
+
+**fanout:** 1 of 1 chains, cap 8 (a one-file edit that must start from the `OG-ap-33` merge). **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`, `Z-S354`.
