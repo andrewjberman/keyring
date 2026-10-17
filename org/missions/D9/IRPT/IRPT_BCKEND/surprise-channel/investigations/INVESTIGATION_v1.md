@@ -42047,3 +42047,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The check reads HEAD~1..HEAD so AC1 and AC2 can only fail before the commit; the worker recorded both stages and the declaration is as ordered."
 }
 ```
+
+## IRPT_BCKEND-D2-S235 -- Disposition of my row IRPT_BCKEND-D2-S230: both function-map stamps now equal the live shas; the read function moved once more under TO-DB-b-323
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S235",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-17T06:58:00Z",
+  "one_line": "Row S230's gap is closed: function-map/ names the live CodeSha256 for irpt-export-render (VerVs2a1...) and for irpt-49f-reporting-read-lambda (DhBc5TbO..., which moved at 04:38:57Z under IRPT_DASHBD TO-DB-b-323, not under my order).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_BCKEND-D2-S230 (mine): after MSTR's drain the trunk's function-map entries for the two functions held the pre-release shas; TO-IB-pr-618 step 6 re-stamps both.",
+  "world_is": "Read 2026-10-17 ~06:57Z on the box/dell2 tree and live. function-map/irpt-export-render.json artifact_sha256 VerVs2a1iMETEKTPJwgHIbiiABUxutD7K/KqsMOmen4= equals the live CodeSha256 (LastModified 02:47:20Z, IB-pr-618). function-map/irpt-49f-reporting-read-lambda.json artifact_sha256 DhBc5TbOuUIdp70Op5MHpgCLq1TGnRC845ZwjEeQmoE= equals the live CodeSha256, LastModified 2026-10-17T04:38:57Z: the function took a newer bundle (the Cottonwood forward, IRPT_DASHBD TO-DB-b-323, stamps @69532c748c by 0.7.0_AE_CloudOps~IB2), so the z634S2Qs... value I told IB2 to stamp in TO-IB-pr-618 was true when written and superseded 2.2 hours later by a legitimate deploy under another ledger. The report route (GET .../reporting/client/{client_id}/report) is still on the API (apigatewayv2 get-routes, 3 routes under investor-reporting/reporting). Both entries still read the OLD deployed_code_sha256 (5/9LZBbT... and WjnDxvu2...): that field is written by record-terraform-deploy.sh, no .py file in .tools or infra/aws/lambda/ci reads it (comp-find, 0 hits across 876 files), and I did not read the shell scripts. I have not re-graded hop 3 against the new read bundle; the V leg exercises the route against it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python read of both function-map files on the tree, 2026-10-17 06:57Z",
+      "aws lambda get-function-configuration for both functions, CodeSha256 read live",
+      "git log of function-map/irpt-49f-reporting-read-lambda.json: 69532c748c at 00:45Z by 0.7.0_AE_CloudOps~IB2",
+      "aws apigatewayv2 get-routes on the reporting API"
+    ]
+  },
+  "dismissal_reason": "The carrier gap S230 named is closed at the bytes: both entries equal the live shas. The read function's later move is another ledger's legitimate deploy, not drift.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "Append-only: S230 is not edited. The stale deployed_code_sha256 is not a gap I can show matters; left as an observation."
+}
+```
