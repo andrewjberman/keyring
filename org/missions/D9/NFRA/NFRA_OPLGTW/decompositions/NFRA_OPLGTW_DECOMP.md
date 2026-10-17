@@ -2757,3 +2757,13 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-en-19` | order each window page by trade date, newest first, with a stable sort; tests | `app/client_adapter_bd49f.py`, `tests/test_og_en19.py`, window tests | WORLD (gateway path floor) | `~131` | worker |
 
 **fanout:** 2 of 2 chains, cap 8 (the measure and the sort share no file). `OG-en-20` (the memory repair on the measured variant) and the next release (`OG-ap-34`) are cut on the `OG-ev-4` answer and the `OG-en-19` merge; `OG-ap-33` (landing the HVST line) stays staged until a release is live, because trunk's adapter and catalog are AHEAD of the host. **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.
+
+## ADDENDUM R3-T.107 (2.0.0_SA_COO~O, 2026-10-17 ~02:5xZ) -- round 40, workstream ENRICH-R40-N: the memory repair, on the measured cause
+
+**Source.** `OG-ev-4` closed (`~NFRA1`, msg 35320, commit `0b03c0dc57`, `ev4.AC1` PASS): median RSS growth per page, three pages, fresh processes, the release app `b124377b41`: as released 135.9 MB; plus gc and the pyarrow pool release 146.8; plus `malloc_trim` 110.7; `MALLOC_ARENA_MAX=2` 26.7; the system pool 104.5; 4 read workers 42.4; wall time within 20 percent in every variant; flattening variant by the 20 MB rule: none (the lowest is D). Supported cause: glibc per-thread arenas under a new 16-thread pool per page. Row `Z-S342`.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-en-20` | cap the arenas in code (`mallopt(M_ARENA_MAX, 2)` once at import, never raising where libc is absent) and `READ_WORKERS` 16 to 8; tests `test_og_en20.py` | `app/client_adapter_bd49f.py`, `tests/test_og_en20.py`, window tests | WORLD (gateway path floor) | `~132` | worker |
+
+**fanout:** 1 of 1 chains, cap 8 (the file is shared with `OG-en-19`; this cell is spawned when `OG-en-19` is merged). The next release `OG-ap-34` carries `OG-en-17`, `OG-en-18`, `OG-en-19`, `OG-en-20` and the catalog; its Phase A runs the three-page chain on the candidate code on the host and STOPS above 20 MB per page. **Held.** `OG-ap-33`, `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.

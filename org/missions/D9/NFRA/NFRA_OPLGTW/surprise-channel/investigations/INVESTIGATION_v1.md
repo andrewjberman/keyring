@@ -26477,3 +26477,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Numbers and letters only. The flattening variant under the issuer's rule is none; the lowest median among B to F is D. The mitigation is an environment setting of the service (MALLOC_ARENA_MAX) or a smaller reader pool; the choice and the 20 MB line are the issuer's and the CTO's."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T02:46:57Z",
+  "id": "NFRA_OPLGTW-Z-S343",
+  "one_line": "Round-40 ruling on Z-S342: accept the OG-ev-4 cause (glibc arenas); repair is OG-en-20",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S342"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~NFRA1 msg 35320 and commit 0b03c0dc57: six variants, ev4.AC1 PASS, proof VALID",
+      "order OG-en-20 (addendum R3-T.107)"
+    ]
+  },
+  "spec_asserts": "A worker or applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled: the OG-ev-4 measurement is accepted as the cause of Z-S338 (glibc per-thread arenas under a per-page thread pool; MALLOC_ARENA_MAX=2 cut the growth from 135.9 to 26.7 MB per page, 4 workers to 42.4). The repair is OG-en-20 (mallopt M_ARENA_MAX=2 in code, READ_WORKERS 8), spawned after OG-en-19 merges; the combination is measured in the next release's Phase A. Z-S338 stays ARMED until a release holds memory flat on the host.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: the OG-ev-4 measurement is accepted as the cause of Z-S338 (glibc per-thread arenas under a per-page thread pool; MALLOC_ARENA_MAX=2 cut the growth from 135.9 to 26.7 MB per page, 4 workers to 42.4). The repair is OG-en-20 (mallopt M_ARENA_MAX=2 in code, READ_WORKERS 8), spawned after OG-en-19 merges; the combination is measured in the next release's Phase A. Z-S338 stays ARMED until a release holds memory flat on the host."
+}
+```
