@@ -24765,3 +24765,165 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The issuer or the F2 applier decides which statement is current; this cell changed no registry file."
 }
 ```
+
+## IRPT_DASHBD-D2-W253-S1 -- DB185-1-AC1 cannot pass on this branch as written: the checker diffs against BASE dc96ba2eb7, which predates 18 commits already on the branch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:28:51Z",
+  "one_line": "DB185-1-AC1 FAILS on this worktree: the checker diff base dc96ba2eb7 predates 18 commits already on the branch, so 38 files from other seats count as outside the agreed set.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-319 criterion DB185-1-AC1: only served.py and the new test_forward_cottonwood* file changed, judged by the checker invocation run from the worker worktree root.",
+  "world_is": "p185_cot_read_forward.py line 23 sets BASE = dc96ba2eb7 and check_diff (lines 49-56) runs git diff --name-only BASE, so it compares the worktree to BASE and not to HEAD. Branch HEAD 5b50c09c34 is 18 commits past dc96ba2eb7, carrying other seats' records and checkers. The run printed FAIL with 4 of 38 names shown, among them IRPT_BCKEND checks/r249/p249_cells.py and IRPT_ANLREQ TO-APPLY-R34J.md. Against HEAD the only changes are served.py and the untracked test file. Not repaired: BASE and the branch were not changed, and no reset or rebase was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p185_cot_read_forward.py@a48b617842 line 23 (BASE = dc96ba2eb7) and lines 49-56 (check_diff, git diff --name-only BASE)",
+      "git rev-list --count dc96ba2eb7..HEAD printed 18 at HEAD 5b50c09c34; git merge-base --is-ancestor dc96ba2eb7 HEAD returned rc 0",
+      "python -I p185_cot_read_forward.py . DB185-1-AC1 printed FAIL: files outside the agreed set changed (rc 1); the same run for AC2 and AC3 printed PASS (rc 0 each)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether the checker BASE is re-pinned to the worktree cut point or the criterion is re-stated; this worker changed neither."
+}
+```
+
+## IRPT_DASHBD-D2-W253-S2 -- the reference diff's new test file is refused by the universal commit gate (ruff F841: unused local out), so the code cannot be committed as the reference stands
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:28:51Z",
+  "one_line": "The reference diff's new test file is refused at commit by ruff F841 (unused local out), so the code cannot be committed as the reference stands; nothing was committed and nothing was edited to pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-319 step 2: apply DB319_REFERENCE.patch as issued and then commit the artifact with safe-commit; step 2 also says to file a BLOCKING row and stop if the reference is wrong.",
+  "world_is": "safe-commit.sh ran the commit-gate on the staged .py files and returned BLOCKED: ruff check failed on test_forward_cottonwood.py line 68 column 5 (F841, local variable out assigned but never used). The line is the out assignment in test_forward_49f_path_is_unchanged_and_never_forwards, the same line as patch line 154. The gate returned rc 1 with nothing staged, and HEAD stayed 5b50c09c34. The gate states --force does not bypass a gate failure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run with -F .scratch/msg_253_code.txt returned commit rc 1 with BLOCKED: ruff check failed on infra/aws/lambda/investor-reporting/_authz/tests/test_forward_cottonwood.py",
+      "git status after the refusal: nothing staged; git rev-parse --short HEAD printed 5b50c09c34",
+      "DB319_REFERENCE.patch line 154 carries the same out assignment on the 49F test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether the reference hunk is corrected (a one-token change) or the gate is satisfied another way; this worker edited neither the reference nor the gate."
+}
+```
+
+## IRPT_DASHBD-D2-W253-S3 -- the worker face names the worktree C:/dev/wk-irpt-dashbd-253, but the launch message directed C:/dev/wk-irpt-dashbd-253r, which this worker used
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:28:51Z",
+  "one_line": "The order's worktree path C:/dev/wk-irpt-dashbd-253 was not used; the launch message directed the 253r worktree (branch wk-IRPT_DASHBD-253), which carries the order file and the named paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-319 WORKER FACE: the workspace worktree is C:/dev/wk-irpt-dashbd-253 (branch wk-IRPT_DASHBD-253); run everything from its root.",
+  "world_is": "The launch message named C:/dev/wk-irpt-dashbd-253r (branch wk-IRPT_DASHBD-253) for this serial. In that worktree the branch is wk-IRPT_DASHBD-253, test -d org and test -d .tools both pass, and the order file, the checker, the reference patch, served.py and the investigation file are present. The path C:/dev/wk-irpt-dashbd-253 was not inspected by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --abbrev-ref HEAD in C:/dev/wk-irpt-dashbd-253r printed wk-IRPT_DASHBD-253; test -d org and test -d .tools printed TREE-OK",
+      "the order file, p185_cot_read_forward.py, DB319_REFERENCE.patch, served.py and INVESTIGATION_v1.md were each present at their paths under C:/dev/wk-irpt-dashbd-253r"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The next order should name the worktree path that is in use."
+}
+```
+
+## IRPT_DASHBD-D2-W253-S4 -- the issuer repaired W253-S1 (checker base) and W253-S2 (ruff F841) by ruling; the main-tree checker passes AC1, AC2 and AC3 against the worktree
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:49:44Z",
+  "one_line": "The issuer repaired W253-S1 and W253-S2 by ruling: the checker BASE was amended to 5b50c09c34 at 8d31127ce6, and the reference unused local was dropped at fc8d52804c and in the worktree at a3058c274c.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Mid-order ruling from the order's issuer 2.0.0_SA_COO~D2: amend the checker base for S1, drop the unused local for S2, commit the artifact first, re-run AC1 to AC3 from the main-tree checker, and flip the order only after the proof validates.",
+  "world_is": "Both repairs are present in git: 8d31127ce6 amends the checker BASE and exempts this worker's own deliverable and channel paths; fc8d52804c drops the unused assignment in the reference patch. The artifact commit a3058c274c carries served.py and the test file with the assignment dropped. The main-tree checker, run with the worktree as root, printed PASS for AC1, AC2 and AC3 at rc 0 each. Dispositions of S1 and S2 are left UNDER_INVESTIGATION for the CVO to set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file -t 8d31127ce6 and git cat-file -t fc8d52804c each printed commit",
+      "artifact commit a3058c274c on wk-IRPT_DASHBD-253; ruff check on served.py and the test file printed All checks passed",
+      "python -I main-tree p185_cot_read_forward.py C:/dev/wk-irpt-dashbd-253r DB185-1-AC1, AC2 and AC3 each returned rc 0 with the final line PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The repairs are the issuer's; this worker edited the test file line only as the ruling directed and changed no checker or reference file."
+}
+```
+
+## IRPT_DASHBD-D2-W253-S5 -- the proof validator refuses the main-tree invocation the ruling directed: invocation-alignment 0 of 3 against the order's criterion text, so the instance is INVALID and the order cannot flip
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:52:13Z",
+  "one_line": "The proof validator refuses the main-tree invocation the ruling directed: invocation-alignment is 0 of 3 against the order's criterion text, so the instance is INVALID (rc 1) and the order cannot flip.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ruling from 2.0.0_SA_COO~D2: run the checker from the main tree by absolute path with the worktree as root, record that exact invocation in the proof rows, validate with proof-of-spec-check, then flip the order status to complete as the last commit.",
+  "world_is": "The recorded invocation python -I main-tree p185 C:/dev/wk-irpt-dashbd-253r DB185-1-AC1 (and AC2, AC3) differs from the order's criterion invocation python -I worktree-relative p185 . DB185-1-AC1. proof-of-spec-check printed invocation-alignment 0 of 3 comparable with a VIOLATION per row and INVALID rc 1. The order's own invocation cannot give the amended result from this worktree: its relative path resolves to the worktree copy, whose BASE is dc96ba2eb7. Not repaired: the order's criterion text, the checker and the validator were not changed, and the instance records the invocation actually run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py on the refreshed instance printed VIOLATION invocation-alignment for DB185-1-AC1, AC2 and AC3 and INVALID (rc=1)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p185_cot_read_forward.py in the worktree at a3058c274c line 23 reads BASE = dc96ba2eb7",
+      "main-tree checker run with root C:/dev/wk-irpt-dashbd-253r printed PASS for AC1, AC2 and AC3 at rc 0 each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether the criterion invocation is amended to the main-tree form or a placeholder is declared; this worker changed neither the order criteria nor the validator."
+}
+```
+
+## IRPT_DASHBD-D2-W253-S6 -- the issuer repaired W253-S5 by ruling: the criterion invocations are amended to the main-tree form at 2d2dc06faf, and the proof validator now reads the instance VALID
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T03:03:47Z",
+  "one_line": "The issuer repaired W253-S5 by ruling: the order's step-4 line and the three criterion invocations were amended to the main-tree form at 2d2dc06faf, and the proof validator reads the refreshed instance VALID (rc 0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ruling from 2.0.0_SA_COO~D2 on W253-S5: amend the order's criterion invocations to the main-tree form, make the identical change in the worktree copy of the order file, re-validate the proof, then flip the order status to complete as the last commit.",
+  "world_is": "Commit 2d2dc06faf on the main tree amends four invocation strings in the order file. The worktree copy of the order file now carries the identical change (byte-identical to 2d2dc06faf). proof-of-spec-check on the refreshed instance printed invocation-alignment 3 of 3 comparable, 0 diverge, VALID rc 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 2d2dc06faf: one file, 4 insertions and 4 deletions, the order file",
+      "cmp of the worktree order file against git show 2d2dc06faf:<order path> printed IDENTICAL",
+      "python .tools/proof-of-spec-check.py on the refreshed instance printed VALID (rc=0) with invocation-alignment 3/3 comparable, 0 diverge"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The repair is the issuer's; this worker made the identical edit to the order file and changed no checker, validator or other file."
+}
+```

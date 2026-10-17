@@ -24,4 +24,24 @@ Issuer `2.0.0_SA_COO~F2`, 2026-10-17 ~03:0xZ. Gate key of the first cell: `<roun
 | DBF138-1-AC2 | `python -I .../checks/r138/p138_port.py . DBF138-1-AC2` | FAIL (BUILD_ONLY prints `SCt7IgN3..`) |
 | DBF138-1-AC3 | `python -I .../checks/r138/p138_port.py . DBF138-1-AC3` | FAIL (no record) |
 
-Fan-out: 1 of 1 chains, cap 4. The remaining round 138 items (Cottonwood wiring, the Inflection bounded-default cell and the pair) are cut when the CTO's round-137 analysis is in hand.
+Fan-out: 1 of 1 chains, cap 4. The remaining round 138 items (Cottonwood wiring and the Inflection pair's rest) are cut when the CTO's round-137 analysis is in hand.
+
+## Cell 2 (added 2026-10-17 ~03:3xZ; ONE order; LOCAL, workstream `F2BOUND`): the Inflection launcher's bounded default
+
+Answers the CTO's RULING B on the nightly block (msg 10145, item 4): without `--since` the launcher writes only the business days after the newest day already written at the target prefix, the 25 newest of them at most; an empty target takes the cap, not the history; an up-to-date target writes nothing; an explicit `--since` keeps its meaning (the applier's bounded range, no cap). Round 138 list item 4 (the Inflection pair), the first of its parts; no unmet dependency (the launcher is on the trunk since round 135).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| The launcher `data/inf/scripts/gold/INF_G_01.account_transaction_gold.py` gains the bounded default (newest written day read from the target prefix, the cap of 25), and its test file gains the tests | `DB-f-2602` | FWD-5 | LOCAL | none | R138-B |
+
+**Four-postulate record.** (i) Domain: one launcher function path (`run`) and its CLI default; the producer, the bundle members, the dispatch script and the contract untouched. (ii) Same grain: a business day. (iii) One intent: the default is bounded. (iv) Not moved: `--since` semantics, the plan, the no-repeat guard over the FULL output, the S6 report, the bundle manifest and its pin (the launcher is not a bundle member).
+
+**Measured at the cut (the issuer, 2026-10-17):** two bundle members drifted from the manifest at HEAD (`infra/logic/registry/exemptions.json`, `lib/opal_naming.py`, edited by other lanes), so `build_bundle` REFUSES and the launcher test file reads 2 failed, 7 errors (49 passed) on the trunk BEFORE this cell. They are not this cell's: the manifest and pin are re-cut on the release day (the CTO's order). The cell's own tests must pass; the 9 baseline items are named in the order and neither fixed nor worsened.
+
+| criterion | invocation | base reading |
+|---|---|---|
+| DBF138-2-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r138/p138_bounded.py . DBF138-2-AC1` | FAIL (an empty target wrote 43 days) |
+| DBF138-2-AC2 | `python -I .../checks/r138/p138_bounded.py . DBF138-2-AC2` | FAIL (an up-to-date target was written again) |
+| DBF138-2-AC3 | `python -I .../checks/r138/p138_bounded.py . DBF138-2-AC3` | FAIL (a dry run reports 43 days) |
+
+Checker `p138_bounded.py` (selftest 7 arms); a reference implementation put into the launcher by the issuer makes all three PASS (positive control run and reverted).
