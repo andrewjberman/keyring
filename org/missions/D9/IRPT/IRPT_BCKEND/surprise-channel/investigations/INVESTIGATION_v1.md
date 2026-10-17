@@ -41331,3 +41331,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Owner of the port: whoever integrates box/dell2 (0.0.0_AB_MSTR~DELL2 box-sync); this seat reports it and does not edit the trunk's map."
 }
 ```
+
+## IRPT_BCKEND-D2-W481-S1 -- The order's line-34 premise: that module-head sentence describes the PATH B platinum read-back, not the filled report
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W481-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~481",
+  "surfaced_at": "2026-10-17T01:47:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order names the module head near line 34 of retained_export.py as a sentence that is now false; lines 30-34 describe the PATH B platinum series read-back through the 49F route, which is still true, so that sentence was left unedited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order, Do step 2: update the module-head docstring near line 34 only where it would now be false; change nothing else.",
+  "world_is": "Lines 30-34 of infra/aws/lambda/investor-reporting/export/retained_export.py say the platinum series read-back pins X-Opal-Version-Id and asks for the pinned version_id. That remains true for the platinum series (render_read still passes held version_id). The filled-report read is not mentioned in the module head, so no edit was made there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py@5e9dfb4e13 lines 30-34 read 2026-10-17 by the worker",
+      "retained_export.py worktree lines 301-305 (render_read, platinum) still pass version_id=held[version_id]"
+    ]
+  },
+  "notes": "No behaviour is affected. The issuer may re-state the premise in the next round."
+}
+```
+
+## IRPT_BCKEND-D2-W481-S2 -- Four comments in retained_export.py still say the filled-report read uses the pinned VersionId or never the current object
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W481-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~481",
+  "surfaced_at": "2026-10-17T01:47:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After the read_pinned_filled change, four comments in retained_export.py describe the old pinned-VersionId read; they are now false, sit outside the two named functions, and were left unedited under the order's change-nothing-else bound.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order, Do step 2: update docstrings or comments that say the pinned VersionId is always passed or the current object is never consulted, only where they would now be false; change nothing else.",
+  "world_is": "The filled-report read now reads the current object and refuses on sha256 or size mismatch. Stale statements remain in the worktree copy of retained_export.py at: the PATH C banner, line 316 ('The freeze reads that VersionId through the injected reader'); the IB-pr-563 block, line 411 ('The pinned read that follows reads back exactly that VersionId'); the FILLED-REPORT-F banner, line 495 ('reads back exactly the pinned VersionId and never the current object'); and the filled_leg_read docstring, lines 554-556 ('the pinned VersionId is read back ... The current object is never consulted'). Code behaviour is correct; these are documentation only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "retained_export.py worktree lines 316, 411, 495, 554-556 read 2026-10-17 by the worker; base commit 5e9dfb4e13",
+      "grep of the worktree copy for 'the pinned VersionId|never the current object' returned lines 381, 495 and 555 after the change"
+    ]
+  },
+  "notes": "Hazard INERT: a reader of these comments could be misled, nothing runs on them. Owner may fold the four edits into the next change to this file."
+}
+```
