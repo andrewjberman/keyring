@@ -25311,3 +25311,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W290-S2 -- the release build reproduces the live irpt-status package member for member: acceptance.py is staged from a pin whose blob lacks get_commentary_ref
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W290-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~290",
+  "surfaced_at": "2026-10-17T15:26:24Z",
+  "one_line": "The stage zip the build tool wrote at faf037e0d0 matches the LIVE irpt-status package on all 49 members by name and sha256, and its CodeSha256 equals the live value: the function map stages acceptance.py from a pin (361c44fa9d) whose blob lacks get_commentary_ref, so this build moves zero members and cannot open the commentary PDF.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-391 (cell AR-y-391, CTO msg 10600): the release build packages acceptance.py carrying get_commentary_ref, so the live zip's acceptance.py is MOVED and the diff names it as the mover (step 3 and AC1 expect acceptance.py MOVED and carrying the text).",
+  "world_is": "MEASURED on C:/dev/irpt-release-r36s/irpt-status.zip (the tool's output, stage folder outside the repository): 49 of 49 members equal the LIVE member file by name and sha256 (LIVE_IRPT_STATUS_MEMBERS_20261017.json); CodeSha256 +TcZDWmwE7uv3sUwos2+jn1lbKyQikK+13nNBzD6q4A= equals the live code_sha256; zip sha256 f937190d69b013bbafdec530a2cdbe8e7d656cac908a42bed779cd0730faab80, 368309 bytes. Cause, read-only: infra/aws/lambda/ci/function-map/irpt-status.json at faf037e0d0 stages acceptance.py (packaged_as) from infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py at pin 361c44fa9d (blob sha 06425d4731b7, 9393 bytes, no get_commentary_ref); the same repository file at faf037e0d0 and at 90b69dcb12 is 11639 bytes (sha e8cbd46a8277) and carries get_commentary_ref. So the release as mapped moves zero members. NOT READ: the live zip beyond the issuer's member file; no function-map edit was made (a staged pin change is for the issuer or the CTO to place).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r36s/irpt-status.zip (tool output, outside the repository)",
+      "infra/aws/lambda/ci/function-map/irpt-status.json@faf037e0d0 (staged_from row for packaged_as acceptance.py)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@361c44fa9d and @faf037e0d0 (sha and get_commentary_ref check)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
