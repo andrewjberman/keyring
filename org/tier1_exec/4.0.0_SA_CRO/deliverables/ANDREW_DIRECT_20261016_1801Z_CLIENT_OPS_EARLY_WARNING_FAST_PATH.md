@@ -75,6 +75,19 @@ logins should see real numbers, and whether to start the Day 1 build. Andrew, VE
   It runs no live app-only mailbox read until the Graph grant exists (Day 0, Andrew).
   The daily rules read Schwab silver directly, never through the gateway.
 
+## Addendum 5, 2026-10-17 ~04:5xZ: no position on client-ops outreach
+
+The CRO's /open-calls carried two cards that took positions on client-ops outreach: refunding the Victor fee, and sending
+advisors a notice of the Schwab cutoff plus telling Peter Lee. Andrew, VERBATIM:
+
+> do not take any position on the client-ops outreach, not our job not our call
+
+- The early-warning work SURFACES findings: what happened, since when, the evidence.
+- It never recommends, drafts or routes client-facing or advisor-facing action, whether a refund, a notice, outreach or
+  a question to an advisor.
+- The "suggested owner/action" column on danger-zone output is withdrawn. Who acts on a finding is client ops' call.
+- Rule owners stay a system setting: whose screen row an item lands on. That is not outreach.
+
 ## Addendum 4, 2026-10-17 ~03:3xZ: an interim bridge on Andrew's mailbox
 
 Admin consent for the app's `Mail.Read` (application) failed: Andrew holds Cloud Application Administrator, and consent

@@ -14,7 +14,7 @@
   "at": "2026-10-17T04:29:27Z",
   "bus_message_id": "42cba874-a493-44cb-ab91-4f07aaf133f3"
  },
- "ack_bus_message_id": null,
+ "ack_bus_message_id": "bce3d9ff-05e8-42d3-9908-e13b88116fe8",
  "closed_from": {
   "at": null,
   "by": null
