@@ -69,6 +69,42 @@ DataMining holdings template does not. Two routes, in order:
 - **Not in this fix:** the $8.86M plane gap (section 3). Until it is resolved, the served figure is the export-plane
   supervised value. The page's source line should say so, rather than imply a tie to the BD Dashboard.
 
+## ADDENDUM 1 (2026-10-17 ~01:5xZ) -- the $8.86M is located, to the cent
+
+Input: Andrew's BD export "BI Dashboard Export - Relationship_Account - 10_15_2026.xlsx" (Supervised, 10/15, by
+relationship and account). Its Executive Summary total is 530,421,988.14, the screenshot figure. The file holds client
+names and addresses and is NOT committed. The scratch copy was deleted after the diff.
+
+- 849 distinct account numbers in the export. One is in two relationships: +205,070.77, the known relationship-grain
+  double-count, which the BD total row already collapses.
+- **753 of them match our supervised accounts with $0.00 difference. 96 are ABSENT from every DataMining export we
+  ingest** (holdings, allocations and account attributes all hold 1,004 accounts). They total **8,860,829.31**, the whole
+  supervised gap. The other way round: 0 of our supervised accounts is missing from the export with a value, and 0 of our
+  Unsupervised accounts shows in it.
+- **The 96 are insurance and annuity carrier-feed accounts**, by their account-number prefix:
+
+| Prefix | Accounts | Ending MV 10/15 | With a YTD BD mgmt fee |
+|---|---:|---:|---:|
+| DTCCR_ (DTCC insurance feed) | 78 | 4,890,211.59 | 78 (5,300.70 total) |
+| ASLAA_ | 13 | 2,527,925.27 | 0 |
+| AEGON_ | 3 | 1,060,666.07 | 0 |
+| LNANN_ | 1 | 226,189.95 | 0 |
+| EQUIT_ | 1 | 155,836.44 | 0 |
+| **Total** | **96** | **8,860,829.31** | 78 |
+
+  They sit in 47 relationships across all three advisor books, which is why the gap looked spread evenly.
+
+**Two causes, two remedies:**
+1. **Ingest (mechanical).** BD's DataMining templates do not return these accounts, while the Dashboard does. Remedy:
+   widen the Cottonwood DataMining account set, or the holdings, allocations and attributes templates, to include the
+   insurance-feed accounts. Owner: the COT ingest (0.7.0_AE_CloudOps on the cot-bd session pipeline). Proof: the
+   10/15-equivalent export ties to 530,421,988.14 supervised.
+2. **Display (sovereign).** Andrew ruled on 2026-08-24 that Insurance is excluded from the MDPF view ("we don't take fees
+   on it"). Matching BD's 530.42M means counting these 96 annuities in Cottonwood's supervised total. 78 of them DO carry a
+   BD management fee, so the ruling's stated reason does not hold for them. **This is Andrew's call:** count Cottonwood's
+   insurance in its total to match BD (530.42M), or keep the exclusion and serve 521.56M with "excluding $8.86M insurance"
+   stated on the page.
+
 ## 5. Not captured
 
 The BD Dashboard's per-relationship values (only the four group rows in the screenshots). The August HAR oracle
