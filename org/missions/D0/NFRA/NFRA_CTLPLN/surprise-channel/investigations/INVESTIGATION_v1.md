@@ -14813,3 +14813,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1 for the dell1 side; the dell2 and laptop facts are RELAYED (grounding INFERRED for that reason). Counts and timestamps only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-D2-S8 -- two dell2 COO seat ends today (C2 02:56:51Z, T2 05:33:04Z), Monitor-killed tail each, no MSTR kill, 0 open orders; cause not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D2-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL2",
+  "surfaced_at": "2026-10-17T06:34:57Z",
+  "one_line": "Two dell2 COO seats ended today (COO~C2 02:56:51Z, COO~T2 05:33:04Z), each with a Monitor-killed notice as the transcript's last entry, no MSTR kill line; cause not measured",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COO~C2 (session 16a988ac, 13,618 lines): last entry type queue-operation, operation enqueue, 2026-10-17T02:56:51.964Z; content is a task-notification, status killed, for its inbox watcher Monitor (30m re-arm). Transcript mtime 02:56:52Z. Absent from seat-liveness at 03:24Z; present at 02:40Z.",
+      "COO~T2 (session d06bd34d, 13,266 lines): last entry type queue-operation, operation enqueue, 2026-10-17T05:33:04.020Z; task-notification, status killed, for its inbox stream Monitor (re-arm 130). Last commit 04:02Z (iso -04:00 00:02). Present in seat-liveness at 05:25Z, absent at 06:24Z.",
+      "Neither seat has a kill line of 0.0.0_AB_MSTR~DELL2 in org/mcp/agent-spawn-audit.log; the only C2 KILL-ORPHAN line is 2026-10-14 by C2 itself. KILL-MAINT-RUN rows 02:46:10Z, 03:34:04Z, 04:26:22Z, 05:26:52Z all killed=0. Each seat held 0 open task orders when it left.",
+      "Same end shape as dell1 rows NFRA_CTLPLN-D1-S13 to D1-S19 (23 ended lives, arm-to-end 223 to 1274 s) and the laptop's COO~CA. dell2 earlier: CVO~DELL2 on 2026-10-16.",
+      "Andrew anchor, relayed not measured: his record ANDREW_DIRECT_20261017_025xZ_USE_DELL1_MATCH_SHEET_TDROP_VIA_MSTR_DELL2.md (@08e88fadba) says he spoke at the 1.0.0_SA_CTO~DELL2 terminal at ~02:5xZ, bracketing C2's end; no record of him on dell2 near 05:33Z.",
+      "Live-seat fact, measured 03:4xZ: all 18 live claude.exe seats share ONE WindowsTerminal.exe parent, pid 13972."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat survives its watcher's 30-minute expiry: a Monitor expiring or being stopped does not end the seat's session (CTO~DELL2 msg 10348).",
+  "world_is": "Two dell2 COO sessions ended today (02:56:51Z and 05:33:04Z) with a killed-Monitor notice as the last transcript entry, not by an MSTR kill or kill-maint, with no open orders. Whether the seat ended and the Monitors were stopped with it, or the Monitors' stop ended the seat, is unmeasured. The cause is unmeasured.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL2. Counts, serials and timestamps only; no transcript content. Logged on the dell2 CTO's ask (msg 10348). Cites D1-S13 to D1-S19; none edited."
+}
+```
