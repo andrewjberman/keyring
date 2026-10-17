@@ -2894,3 +2894,79 @@
   "notes": "Breach of my own half's no-account_attributes term, self-reported at 14:23Z (msg 7579); remedied by the quarantine. Lesson for any historical single-table re-pull: use a sweep-free path (the ingest's --table run without --backfill-holdings-net), or scope the sweep. The ingest's owning lane (CloudOps COT) decides whether the SSM document should skip the sweep when Table is set."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W33-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~33",
+  "surfaced_at": "2026-10-17T14:53:09Z",
+  "one_line": "The order's proof invocations cd to $(git rev-parse --show-toplevel), which resolves to the primary workspace when the shell cwd has reset, so AC1 and AC2 as written measure the base tree (AC1 reads 2 of 5; AC2 reads 16 passed) and not the worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cuts the proof criteria with an explicit cd to the worktree path, so a re-run cannot read the base tree)",
+  "spec_asserts": "TO-CN-s-6 section 4: AC1 and AC2 run from the worktree root via cd to $(git rev-parse --show-toplevel), and read 5 of 5 arms and at least 17 passed.",
+  "world_is": "Each Bash call resets to the primary workspace (C:/Dev/ajb_workspace, box/dell1). Run as written from that cwd, AC1 printed S0 FAIL drop=None and 'ROUND 11 CN-S-6 REAL: 2 of 5 arms' (exit 1), and AC2 printed '16 passed, 3 deselected' (exit 0), both against the base. Run after cd to C:/dev/wk-canon-s6-33 they read 5 of 5 and 17 passed. Code commit 128fce3524 is unaffected. The misdirected run may have written __pycache__ and .pytest_cache in the primary checkout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-s-6.global-axis-drops-2026-10-16.md@a7ae0a1fde (section 4 invocations)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round11/checks/r11_cn_s_6.py@a7ae0a1fde (S0 reads getattr(spine, GLOBAL_AXIS_DROP_DATES, None))",
+      "worktree run from C:/dev/wk-canon-s6-33 at 128fce3524: AC1 5 of 5 arms exit 0; AC2 17 passed 3 deselected exit 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker-side. Not a defect in the code change: the invocation cannot name its own tree when the shell cwd resets. Remedy is the issuer's: an explicit worktree path in the criterion."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W33-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~33",
+  "surfaced_at": "2026-10-17T14:53:09Z",
+  "one_line": "The commit gate could not run its client account-id check on this box: the hashed account-id list is absent at C:/Users/Test/.opal/account_id_hashes.txt, so commit 128fce3524 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to the dell1 box owner to place the hashed list or set OPAL_ACCOUNT_ID_HASHES; until then no commit on this box is checked for client account ids)",
+  "spec_asserts": "The safe-commit path checks each staged commit for client account ids before it lands.",
+  "world_is": "safe-commit printed 'WARN: client-data-check: hashed account-id list ABSENT' and the commit landed with the message 'this commit was NOT checked for client account ids'. The two code files add only synthetic constants and synthetic test numbers: no account id, no firm level, and no client figure was typed into them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 128fce3524 safe-commit output: WARN client-data-check hashed account-id list ABSENT (read at commit time)",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py@128fce3524 (the added lines are the frozenset and the subtraction)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Capability missing on this box, not a verdict on the diff. The ids-check is a WARN, not a refusal, so the commit landed."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W33-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~33",
+  "surfaced_at": "2026-10-17T14:53:09Z",
+  "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on commit 128fce3524: its danger map is 42.9h stale and the build guard refused a linked worktree, so it scanned 0 of 2 files and the commit landed unchecked by the reflex.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to the comp-pulse owner: the danger-map refresh and the linked-worktree limb of the build guard, since every worker commit lands in a linked worktree)",
+  "spec_asserts": "The pre-commit risk reflex grades the staged diff and reports a checked state before a commit lands.",
+  "world_is": "The reflex printed 'danger map: 42.9h old STALE', 'NOT-DECIDABLE ... the build guard refused: linked worktree (git-dir differs from git-common-dir)', 'ANSWER STATE: PARTIAL_OR_BLIND', and 'WITHIN BUDGET: scanned 0 of 2 file(s)'. Its own text reads 'could not check' is NOT 'checked clean'. The commit proceeded; the other gates printed OK.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 128fce3524 safe-commit output: [risk-reflex] ANSWER STATE PARTIAL_OR_BLIND, scanned 0 of 2 file(s)",
+      "git rev-parse --git-dir in C:/dev/wk-canon-s6-33 differs from --git-common-dir C:/dev/ajb_workspace/.git (linked worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Tooling state for the worker path, not a verdict on the diff. Every L7 worker commit runs in a linked worktree, so the reflex is blind on each of them until the limb or the map is refreshed."
+}
+```
