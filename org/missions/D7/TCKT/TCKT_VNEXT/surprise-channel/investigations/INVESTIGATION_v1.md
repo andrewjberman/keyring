@@ -3104,3 +3104,29 @@ used as fixtures is a different read with a different denominator.
   "world_is": "The seat was reachable on every liveness signal (LIVE, heartbeat seconds old, a watcher monitor running) and unreachable for the one thing that mattered: its watcher emitted no [INBOX] event for message 10369, and the seat concluded 'no new messages' from the silence. The cost was about 55 minutes on a due-in-seven-days run, recovered by a keystroke nudge. Cause not measured: this seat did not read the watcher script's run or the seat's monitor output. Not claimed: that other seats are affected."
 }
 ```
+
+## TCKT_VNEXT-D2-S59 -- The meeting outcome line is drawn on the Ticket Center board in navy ink on the board's dark navy row, a contrast of 1.25 to 1, so a filer cannot read it in the rendered page after the confirm or after completion; the outcome words are in the DOM and the build tests pass, so only the rendered read shows it. It blocks FWD-11 from REALIZED and rides in the approved PROD re-cut.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-17T08:30:46Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S59",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The meeting outcome line is drawn on the Ticket Center board in navy ink on the board's dark navy row, a contrast of 1.25 to 1, so a filer cannot read it in the rendered page after the confirm or after completion; the outcome words are in the DOM and the build tests pass, so only the rendered read shows it. It blocks FWD-11 from REALIZED and rides in the approved PROD re-cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the six R20-RV shots at org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r20_run/ (TCK-20261017-da2a1987, origin http://localhost:5174 serving DEV 38d4f9473284), each READ by this seat as an image: in filer_waiting, filer_confirmed, filer_completed and bystander_no_control the second row of the ticket reads in dark blue on the dark navy board row; in coordinator_controls the white controls panel is readable but the outcome line above it is not",
+      "contrast measured from the pixels of the saved PNGs (python PIL, the outcome line's rows, left 620 px): background rgb(25,38,67), strongest text pixel rgb(22-23,51,114), WCAG contrast ratio 1.25:1 on filer_waiting, filer_confirmed and filer_completed (readable text needs 4.5:1)",
+      "portal/src/pages/TicketCenter/MeetingRequestParts.tsx line 29 'const INK = text-[hsl(var(--palette-navy))]' (the ink the file's own comment says belongs on a white panel) and line 222 MeetingOutcomeLine returns <p className={text-xs font-medium ${INK}}>; the board row it mounts in (TicketCenter.tsx, the meeting row after AnalysisDraftAndPackage) has no white panel, and its neighbours use text-white/50 and text-white/70"
+    ]
+  },
+  "spec_asserts": "The CTO's rounds 18-19 ruling 4 and the PRD FWD-11: the filer reads the meeting outcome on the ticket in every status that carries one; R20PT-AC4J as graded: the outcome line shows (graded on the diff, the tests and the DOM text, not rendered).",
+  "world_is": "The outcome line is present in the DOM and absent to the eye: navy ink on a dark navy row at 1.25:1. The ten tests render to static markup and assert the words, never a colour, so they pass; the first look at the rendered page (R20-RV, the filer's shots) is the first thing that could show it. The same code is in the approved PROD re-cut (row 8b35, 4e1e35bf) that the dell2 PROD set carries, so PROD would ship the line unreadable. Remedy not yet applied: one class on MeetingOutcomeLine (a light ink for the board row, as its neighbours use) and a test that the line carries no navy ink outside a white panel."
+}
+```
