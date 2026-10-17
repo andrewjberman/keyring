@@ -1215,6 +1215,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "The page-status tool reports what the published page says.",
     "world_is": "The tool reads revisions/<newest>/manifest.json, which is the page the newest publish replaced; after a same-day republish it reports the superseded page. This seat took it for a served regression for one read before reading the live object.",
     "notes": "The tool is the gateway's (NFRA_OPLGTW); this row records the read. Not fixed here."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S23",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-17T07:30:00Z",
+    "one_line": "OBSERVATION: the rivalfunds package records no OpenAI token usage -- the AI stage stores the accounts and the model, never the prompt or completion token counts -- so the round-31 ledger's token-usage item (CTO C7) closes ABSENT, not measured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census of usage|prompt_tokens|completion_tokens over data/etfs/scripts/rivalfunds/ai_stage.py and ai_client.py: 0 hits (2 files)",
+        "research_hypotheses-20261016T130239Z-ai.parquet columns: fund_id, run_id, item_id, kind, text, observed, inferred, cited_rows, invalidation, input_vintages, web_reads, grounding, grounding_reason, model_version, prompt_version, input_manifest, produced_at -- no usage column",
+        "1.0.0_SA_CTO~DELL1 msg 7414: token usage closes as ABSENT with a row, picked up by next round's enrichment"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The AI step's cost (prompt and completion tokens per run) is recorded where a ledger read can find it.",
+    "world_is": "No module of the package writes the API's usage block anywhere; the only cost figure on record is the 2026-10-15 13-fund trial (123,968 prompt, 23,137 completion tokens) read by hand.",
+    "notes": "For the next round's enrichment list (CTO msg 7414)."
   }
 ]
 ```
