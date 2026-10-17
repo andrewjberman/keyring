@@ -29844,3 +29844,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   }
 }
 ```
+
+
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~501",
+  "surfaced_at": "2026-10-17T20:57:29Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W501-S1",
+  "one_line": "AMGT-bt-2 Repair A: no stacking context traps the Model tooltip bubble; the walker cover is the All figures scroller's overflow clip, which a z-index does not lift.",
+  "spec_asserts": "Repair A (order section 1): the Model tab tooltip bubble is covered by the later list because a stacking context on the bubble's side ranks below a positioned ancestor of the list; fix with a higher z-index or by removing that stacking context.",
+  "world_is": "At 856fb37b the bubble (FigureTooltip, components/StatTile.tsx:163-164, z-10 absolute, rendered in the ModelCell td at tabs/ModelTab.tsx:146-163) has no stacking-context ancestor on its chain to the Model panel root (harness M2 reads none). The list it sits under (the unread sheet-block ul, tabs/ModelTab.tsx:931-943) is non-positioned and follows the grid's div.overflow-x-auto (tabs/ModelTab.tsx:821), whose overflow clips the bubble at its box. The bubble was raised to z-50 (Z_INDEX.dropdown) on branch cand/dell1/amgt-sa-model-layout-repairs @847c474b, a stacking-only change that does not lift the bubble past that clip. The cover the walker measures is most likely the clip. This is a structural reading of the markup, not a browser measurement.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@856fb37b:819-822 (details data-model-full-grid, div.overflow-x-auto, table data-model-sheet)",
+      "portal/src/pages/SecurityAnalysis/components/StatTile.tsx@856fb37b:163-164 (FigureTooltip bubble, z-10 absolute, hidden group-hover:block)",
+      "portal/src/pages/SecurityAnalysis/__harness__/modelLayout.harness.cjs@847c474b, run on the unedited head: M1 FAIL (z=10), M2 PASS (fold positioned max z=0, traps none, 10 ancestors read)"
+    ]
+  }
+}
+```
+
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~501",
+  "surfaced_at": "2026-10-17T20:57:29Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W501-S2",
+  "one_line": "AMGT-bt-2 Repair B: the All figures scroller already carries overflow-x-auto with no scrollbar-hiding class; the label wrap is added; the walker's clip count is not reproducible from static markup.",
+  "spec_asserts": "Repair B (order section 1): the grid's scroll container does not show a horizontal scrollbar; add overflow-x-auto without any scrollbar-hiding class and let the label column wrap.",
+  "world_is": "At 856fb37b the grid's container is div.overflow-x-auto (tabs/ModelTab.tsx:821) and its chain to the Model panel carries no overflow-hidden, overflow-x-hidden or scrollbar-none class (harness M3 PASS on the RIO LN and BA renders). The label cells had no explicit wrap class (tabs/ModelTab.tsx:882; harness M4 read 0 of 135 wrapping before the edit) and now carry whitespace-normal break-words. portal/src/index.css:722-758 paints scrollbar thumbs transparent until hover, so a scrollbar exists in layout but is not painted at rest. Static markup cannot show the walker's 151 and 149 cut texts; the post-merge browser walk grades them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@856fb37b:821 (div className=overflow-x-auto wrapping the All figures table)",
+      "portal/src/index.css@856fb37b:722-758 (webkit and Firefox scrollbar rules: thumb and colour transparent until hover)",
+      "portal/src/pages/SecurityAnalysis/__harness__/modelLayout.harness.cjs@847c474b, run on the unedited head: M3 PASS, M4 FAIL (0 of 135 label cells wrap)"
+    ]
+  }
+}
+```
