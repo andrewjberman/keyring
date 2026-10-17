@@ -23517,3 +23517,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W282-S1 -- the order's repository-root index parents[5] is infra/, not the root; the test puts lib on sys.path from parents[6]
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W282-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~282",
+  "surfaced_at": "2026-10-17T04:02:43Z",
+  "one_line": "TO-AR-g-161 step 2 says the repository root is Path(__file__).parents[5] and lib is parents[5] / 'lib'. For reports/tests/test_opal_pricing_binding.py, parents[5] is infra/ and holds no lib; the root is parents[6], where lib/trading_calendar.py is. The test file puts lib on sys.path from parents[6]; no other change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-161 step 2: 'the repository root is Path(__file__).parents[5], so lib is Path(__file__).parents[5] / \"lib\"; confirm it holds trading_calendar.py'.",
+  "world_is": "From infra/aws/lambda/investor-reporting/reports/tests/test_opal_pricing_binding.py the index chain is 0 tests, 1 reports, 2 investor-reporting, 3 lambda, 4 aws, 5 infra, 6 the repository root. parents[5]/lib does not exist (infra/lib absent); parents[6]/lib/trading_calendar.py exists. Measured at 79eae4afed's tree with a python Path walk; the test file at that commit inserts parents[6] / 'lib' and 19 of 19 tests pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_opal_pricing_binding.py:18-19 @79eae4afed (the parents[6] insert, with the index note)",
+      "lib/trading_calendar.py @c05c5de81a (the calendar the path must reach)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-161.pricing-as-of-calendar-frontier.md:52 (step 2, the parents[5] clause)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
