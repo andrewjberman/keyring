@@ -2858,3 +2858,18 @@ The CTO's round analysis for packet 5 (`CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROU
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~252`), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on six handler/validator mutants and one diff mutant; the reference diff is committed beside it):** `checks/r149/p183_contract_055_minted_form.py` (DB183-1-AC1..AC3), `reads/DB317_REFERENCE.patch`.
+
+## 178. ROUND 150, WORKSTREAM COTREAD (2026-10-17 ~02:0xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood Performance read path -- C0, the read-only trace
+
+Andrew's smoke showed the Cottonwood Performance tab empty; the CTO traced it to the live 49F read function's directory bucket map (`{49financial}`) and ruled option A (msg 10134, `RULING_COTTONWOOD_READ_PATH_OPTION_A_20261017.md` @6bfcbcf2cc): a NEW `-cot-` read function reached by a literal one-entry forward in the 49F function, no S3 widening of the 49F role, four conditions (the cot function runs the full served guard and trusts no forwarder field; the forward is a literal one-entry map admitted by the 49F guard first and never logs the body; the 49F role gets no Cottonwood S3 grant, shown by a simulate DENY and ALLOW pair; the pair names the 939-series client effect and C5 is Thiessen's two accounts read served). The plan is `COTTONWOOD_READ_PATH_PLAN_20261017.md` @bba0548150. This section cuts C0 only; C1 to C4 follow once C0 answers the open items (the Cottonwood ownership map, the authorizer's firm list).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| C0. A read-only trace: three synthetic invokes by label, the ownership-map and directory existence, the authorizer's firm handling, the function unchanged | DB-b-318 | FWD-10 (Cottonwood Performance tab) | WORLD, read only | the CTO's ruling A | chain AL |
+| C1 to C4 | to be cut | FWD-10 | WORLD | C0's record | after C0 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the applier is the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2` (rule 34); (b) the client is named only by the label `cottonwood-client-1` (the conditions of XA-20261016T213506Z-8db5 carry); (c) no ledger is opened (no write leg); (d) the record keeps statuses and reason tokens only, never a response body.
+
+**fanout:** 0 workers (an applier order), 1 of 1 chains, cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected, no record exists; selftest green on a synthetic record and red on 16 single-fault arms):** `checks/r149/p184_cot_read_c0.py` (DBC184-1-AC1, -2-AC1).
