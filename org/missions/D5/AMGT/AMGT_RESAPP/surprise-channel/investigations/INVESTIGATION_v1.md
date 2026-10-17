@@ -29261,3 +29261,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as read. No verdict. AC1 and AC3 read as expected; AC2 is graded FAIL by literal comparison in the proof instance, which leaves the order open."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W491-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~491",
+  "surfaced_at": "2026-10-17T12:57:13Z",
+  "one_line": "AMGT-bp-2 AC1 reading: the RIO LN What Changed earnings-announcement row prints a plain reading with an entry-count suffix, '2026-10-13 (2026:Q3), 135 entries' before and '2026-10-13 (2026:Q3), 136 entries' after, where the order states '<date> (<period>)'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face AMGT-bp-2 section 1: the What Changed table shows the earnings-announcement figure as a plain reading, '<date> (<period>)', never an error.",
+  "world_is": "On the RIO LN Model tab of walk 20261017T124617Z (shots/044-RIO-LN-Model-expanded.png, read in crops) the earnings-announcement row reads '2026-10-13 (2026:Q3), 135 entries' (before) and '2026-10-13 (2026:Q3), 136 entries' (after), change '--', change % '--'. The date and period are present; the trailing entry count is outside the stated form. No error text is shown on the row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-bp-2.walk-three-names-on-prod-plus-the-crash-fix.md@8d9d6744a5 (the expected plain-reading form, section 1)",
+      "C:/dev/ui-walk-evidence/bp-2/A/20261017T124617Z/shots/044-RIO-LN-Model-expanded.png (outside the repository; the row read through crops at C:/dev/wk-resapp-491/.scratch/rio_model_1.png and rio_model_s3.png, uncommitted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Recorded as read; no verdict. The order's expected form and the rendered form differ by the entry-count suffix only."
+}
+```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W491-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~491",
+  "surfaced_at": "2026-10-17T12:57:13Z",
+  "one_line": "AMGT-bp-2 walker findings: the walk's findings.json reports raw JSON text of the announcement-date list on RIO LN Model (UIW-20261017T124617Z-014, -016, -017); the Model-expanded shot prints no raw JSON in the What Changed row, whose Full figures is collapsed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face AMGT-bp-2 section 1 (c): the earnings row is read from the shot, and any [object Object] or undefined text is named.",
+  "world_is": "findings.json of walk 20261017T124617Z carries raw-code findings 014 (two steps), 016 and 017 quoting '[{\"announcement_date\":\"2026-10-13\",\"period\":\"2026:Q3\"},...]' on RIO LN Model and its select states. The shot shows the earnings row with its Full figures collapsed and prints no such JSON. The walk did not open that expansion, so the source of the raw text is not located by this read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bp-2/A/20261017T124617Z/findings.json (outside the repository; findings 014, 016, 017 quoted)",
+      "C:/dev/ui-walk-evidence/bp-2/A/20261017T124617Z/shots/044-RIO-LN-Model-expanded.png (the What Changed row, collapsed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Recorded as read; no verdict. The walker finding and the rendered shot disagree on whether raw JSON is printed; the collapsed expansion is the unread location."
+}
+```
