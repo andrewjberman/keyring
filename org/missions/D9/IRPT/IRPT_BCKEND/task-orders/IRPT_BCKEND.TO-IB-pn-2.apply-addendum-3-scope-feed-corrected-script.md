@@ -5,13 +5,15 @@
 <issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
 <issued_by>2.0.0_SA_COO~N2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>9</round>
 <workstream>~PO</workstream>
+
+**SUPERSEDED (2026-10-17, issuer 2.0.0_SA_COO~N2):** by `IRPT_BCKEND.TO-IB-pn-4` (ADDENDUM 4). Graded FAIL, not complete: IBN2-AC1 PASS, IBN2-AC2 FAIL (Branch B performed), IBN2-AC3 FAIL (the 11:33Z chain tolerated a NoRegionError, row `IRPT_BCKEND-D2-S236`, IB2 msg 10539). Ledger `irpt-scope-feed-corrected-script-ibn2-20261016` closed with that failure as L5's proof.
 
 **Directive:** D9 | **Fabric:** dell2 | **Ordered by:** the signed ADDENDUM 3, `deliverables/2.0.0_SA_COO~N2/ORION_PAIR_B_ADDENDUM_3_SCOPE_FEED_RUNNER_LAYOUT.md` (blob `d4b8c52eeeccbd176e22d7acbc072033d5ccbefc`; READ IT ALL, its sections 1 to 6 are the specification), COO half `deliverables/2.0.0_SA_COO~N2/NEVER_WIDEN_ORION_PAIR_B_ADDENDUM_3_SCOPE_FEED_RUNNER_LAYOUT_COO_HALF.md`, CTO half `deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ORION_PAIR_B_ADDENDUM_3_SCOPE_FEED_RUNNER_LAYOUT_CTO_HALF.md` (its four conditions), and ADDENDUM 1 (blob `1e138cbeeaa12d4bf972cf579851546a7e3b3b37`) for every act, the key set, the blast radius, the rollback and the stop rule that ADDENDUM 3 does not change | **Decomp cell:** `IB-pn-2` (`IRPT_BCKEND_DECOMP_R9_N.md`) | **outcome_ref:** FWD-3
 
