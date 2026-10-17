@@ -29530,3 +29530,100 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed on observation only. The reflex verdict is quoted as printed and is not used as evidence for this commit."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W494-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~494",
+  "surfaced_at": "2026-10-17T17:58:53Z",
+  "one_line": "The stored model-block reasons that can reach the P/E not shown footer are written by a producer that is absent from this worktree, so their text was not read at source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-br-3 census: every source of a string the P/E footer can print is read with file:line, and every vendor-mnemonic token each can contain is named.",
+  "world_is": "lib/research/api/scoped_amgt.py L5803-5807 copies the stored model-block unresolved rows (scope fiscal_year_line_item) into fiscal_unresolved beside pe_withheld. The producer named by lib/research/checkface/scopes.py L12-18 (integrations/bloomberg/research/model_block_pull.py L392-426) is not in the worktree: Glob over C:/dev/wk-resapp-494 returned no file. The landed posture model blocks under lib/research/posture/data/model_block/ carry 0 reason values with an underscore token.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py@ed8cb77238 L5803-5807",
+      "lib/research/checkface/scopes.py@ed8cb77238 L12-18",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~494/FEATURE_RECEIPT.md ## Mnemonic census"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on AMGT-br-3. Not a cell of this order; the owner of the producer decides whether its reason text is owed a census."
+}
+```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W494-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~494",
+  "surfaced_at": "2026-10-17T17:58:53Z",
+  "one_line": "The order's P5 example changes on the unedited head, so P5 cannot both pass there and assert the plain not-stated wording.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-br-3 step 3: P5 is a control that passes on the unedited head; its example (not stated becomes reported earnings per share is not stated) is a plain-words change.",
+  "world_is": "On the unedited head the not-stated variant reads reported EPS is not stated, so the plain wording fails there. P5 was built as the no-mnemonic control (the price is in GBp prints unchanged; FY2025, GBp and USD survive in the five variants) and the not-positive and not-stated wording moved to P7. Measured: head run NO (2 of 7) with P1 P2 P3 P4 P7 FAIL and P5 P6 PASS; edited run YES (7 of 7).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/peFooterWords.harness.cjs (commit 3eb64c263a) P5 and P7",
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-br-3.pe-footer-in-words.md step 3"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on AMGT-br-3. Resolved within the cell by splitting the check; no product behaviour depends on it."
+}
+```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W494-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~494",
+  "surfaced_at": "2026-10-17T17:58:53Z",
+  "one_line": "The order gives PX_LAST as share price in its table and as the share price in its expected sentence, and one replacement cannot produce both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-br-3 (a): PX_LAST maps to share price, and the expected P3 sentence reads an input is absent (the share price or reported earnings per share), while the example reads the fiscal-year share price is not positive.",
+  "world_is": "A bracketed price (PX_LAST) reads share price; a bare PX_LAST reads the share price. plainPeReason carries both rules. The first edited run printed P3 as (share price or reported earnings per share) and failed; the bare rule was corrected in the same commit before the final run. Measured: final run YES (7 of 7).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx (commit 3eb64c263a) plainPeReason",
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-br-3.pe-footer-in-words.md step 1 (a) and P3"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on AMGT-br-3. The bracketed and bare forms are both carried by the one function; no served value changes."
+}
+```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W494-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~494",
+  "surfaced_at": "2026-10-17T17:58:53Z",
+  "one_line": "The pre-commit risk reflex in a nested portal worktree ran the base checkout's comp-pulse tool and danger map, because the nested toplevel carries no .tools of its own.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-br-3 commit: safe-commit.sh run from the nested portal worktree reads the risk reflex from the checkout that owns the commit.",
+  "world_is": "safe-commit printed WARN: the caller toplevel C:/dev/wk-resapp-494/portal carries no .tools/comp-pulse and executed the baked path C:/dev/ajb_workspace/.tools/comp-pulse. The reflex read a danger map 6.1h old: 2 files checked against 3672 danger nodes, REFLEX CLEAN.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of the portal commit 3eb64c263a (risk-reflex lines)",
+      "C:/dev/wk-resapp-494/.tools/safe-commit.sh@ed8cb77238 (risk reflex block)"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on AMGT-br-3. Not a cell of this order; the reflex verdict was recorded, not relied on for the grade."
+}
+```
