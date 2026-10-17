@@ -24765,3 +24765,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The issuer or the F2 applier decides which statement is current; this cell changed no registry file."
 }
 ```
+
+## IRPT_DASHBD-D2-W254-S1 -- AC2's changed-set read counts the worktree's portal gitlink, which this worker did not write and must not commit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W254-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~254",
+  "surfaced_at": "2026-10-17T03:22:48Z",
+  "one_line": "DB186-1-AC2 FAILs in this worktree: git diff --name-only HEAD lists the portal gitlink as modified, outside the agreed set.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB186-1-AC2 as written: the changed-file set is exactly the agreed set (the iso root, forward.tf, lambda.tf and the worker's own folder). The checker reads that set as the worker's commit files plus git diff --name-only HEAD plus untracked files. WORKER FACE: never commit the workspace portal gitlink.",
+  "world_is": "The worktree's nested portal checkout is at fcbf2bcecb while HEAD records the gitlink at d1f9ca2967 (git ls-tree HEAD portal reads 160000 commit d1f9ca29675b; git diff --submodule=short HEAD -- portal reads the two subproject commits). The main tree showed the same ' M portal' at session start. This worker's commits carry only the six agreed files. The checker run at 56b7770f5d printed: FAIL: files outside the agreed set changed: ['portal'], then DB186-1-AC2 FAIL. Repair would need a checkout or submodule update of a path outside the grant, which the refusal clause forbids, so AC2 is reported as measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD portal at worktree HEAD 56b7770f5d reads 160000 commit d1f9ca29675bd9012284272806afc9c587ef55f0 portal",
+      "git diff --submodule=short HEAD -- portal in C:/dev/wk-irpt-dashbd-254 reads Subproject commit fcbf2bcecb45eb502da8517c0933aafee68a688c against the recorded d1f9ca2967",
+      "python -I checks/r150/p186_cot_read_terraform.py C:/dev/wk-irpt-dashbd-254 DB186-1-AC2 printed: FAIL: files outside the agreed set changed: ['portal'] and DB186-1-AC2 FAIL (rc 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The gitlink is not in any commit of this worker (git log --author lists the six agreed files). The issuer or the CTO decides whether AC2's changed-set read should exclude a nested gitlink that the worktree checkout moved."
+}
+```
+
+## IRPT_DASHBD-D2-W254-S2 -- the commit's Co-Authored-By line names the model that wrote it (Haiku 5.5), where the order names Sonnet 5.5
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W254-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~254",
+  "surfaced_at": "2026-10-17T03:22:48Z",
+  "one_line": "The order's commit trailer names Claude Sonnet 5.5; this worker is Claude Haiku 5.5 and its session attribution rule names Haiku 5.5, so the commits carry Haiku 5.5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO BOUNDS, Writes clause: the commit message's last line is Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>.",
+  "world_is": "The worker runs on Claude Haiku 5.5 (claude-haiku-5-5). The session's attribution instruction for commits names Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>, and the artifact commit 56b7770f5d was written with that line. The trailer's model name is an attribution fact, so the worker kept the true one and did not copy the order's string.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the TO order file IRPT_DASHBD.TO-DB-b-320.cottonwood-read-path-c2-terraform.md, BOUNDS section, names Claude Sonnet 5.5 for the last line of the commit message",
+      "the session attribution instruction names Claude Haiku 5.5 for commits made from this session (model claude-haiku-5-5)",
+      "the artifact commit 56b7770f5d carries the Haiku 5.5 trailer in its message file .scratch/msg_artifact.txt, last line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether the trailer string in later orders should follow the executing model."
+}
+```
