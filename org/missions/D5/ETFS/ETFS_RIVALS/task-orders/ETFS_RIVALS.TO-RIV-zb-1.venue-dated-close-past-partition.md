@@ -51,6 +51,11 @@ A row you file goes in the investigation file below with id `ETFS_RIVALS-D1-W46-
 data/etfs/scripts/rivalfunds/enrichment_bloomberg.py
 data/etfs/scripts/rivalfunds/tests/test_r5s6_as_of_guard.py
 data/etfs/scripts/rivalfunds/tests/test_riv_zb1_venue_dated_close.py
+data/etfs/scripts/rivalfunds/tests/test_r10eg1_refuse_empty.py
+data/etfs/scripts/rivalfunds/tests/test_r12pk1_parsekey_join.py
+data/etfs/scripts/rivalfunds/tests/test_r27tw1_history_owed_leg.py
+data/etfs/scripts/rivalfunds/tests/test_r28tc1_topup_currency_and_page_day.py
+data/etfs/scripts/rivalfunds/tests/test_r7nm2_security_name.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.dell1.md
 </paths>
 
@@ -75,6 +80,8 @@ the merge. Leave the `<status>` flip to the issuer.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES (L6, 2.0.0_SA_COO~RV):** Round 33, ONE issuance, one cell, on `1.0.0_SA_CTO~DELL1` msg 7376 (ruled on this seat's recommendation) and msg 7379 (order 3 act 3 waits on this fix). Decomposition revision 1.34. `fanout: 1 of 1 chains, cap 8`. Check file dry-run at the base before the cut: 4 failed, 2 passed (the two controls). At the drain: merge; the 10-15 misdated-row count before (391 of 760, Z-S85) and after; the re-sourcing units file (non-US securities' daily "pull" rows over the 365-day window) and its held-tr run at site Z under a never-widen pair; the site-Z working-tree update so the 11:00Z vehicle runs this code, under its own pair; then the order-3 replay re-run and act 3's pair.
+
+**AMENDMENT 1 (2.0.0_SA_COO~RV, 2026-10-17 ~07:0xZ):** `<paths>` gains five test files the worker's rows ETFS_RIVALS-D1-W46-S1..S4 name (test_r10eg1, test_r12pk1, test_r27tw1, test_r28tc1, test_r7nm2): each pins the old past-partition rule (a reference PX_LAST under a past partition, a ten-field historical request, the parsekey-only pass, a history answer carrying CRNCY). The worker amends exactly the assertions and fixtures the new rule changes. The issuer's premise in section 2 that three files only read the constant was wrong; five encode the rule. Criteria unchanged. Gate: none of `.tools/to-pipeline-gate.py`'s limbs grades a modification of an order that declares no `<placeholders>` (LIMB 6 fires on a NEWLY-ADDED order only); this amendment was graded by none.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

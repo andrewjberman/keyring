@@ -176,7 +176,13 @@ def derive_run(which, n_objects):
 
 
 def _run_sub(which, n_objects):
-    p = subprocess.run([sys.executable, os.path.abspath(__file__), "derive_run", which, str(n_objects)], capture_output=True, text=True, cwd=ROOT, timeout=100)
+    iso = tempfile.mkdtemp(prefix="r2iso_")  # a private temp directory, so the leftover-file arm sees this run only
+    env = dict(os.environ, TMP=iso, TEMP=iso, TMPDIR=iso)
+    try:
+        p = subprocess.run([sys.executable, os.path.abspath(__file__), "derive_run", which, str(n_objects)], capture_output=True, text=True,
+                           cwd=ROOT, timeout=100, env=env)
+    finally:
+        shutil.rmtree(iso, ignore_errors=True)
     line = (p.stdout.strip().splitlines() or [""])[-1]
     if p.returncode != 0 or not line.startswith("{"):
         raise RuntimeError("%s run failed rc=%s: %s %s" % (which, p.returncode, line[:200], p.stderr.strip()[-200:]))
