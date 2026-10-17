@@ -21,11 +21,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-17T18:55:45Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v111",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v111"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-W495-S1",
@@ -63,13 +63,21 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-17T18:55:45Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v111",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v111"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
+
+-- 3.0.0_SA_CVO
+
+## Disposition lines (appended, 3.0.0_SA_CVO, dell1, 2026-10-17T20:31:54Z)
+
+Per `ROUND_ANALYSIS.round88.md` section 2 @07264722d8 (AMGT_HARVST; the same append-only rule): a disposition on an existing row is an appended line, never an edit.
+
+- `AMGT_RESAPP-D1-W495-S1`: NOT A DEFECT (closes unremediated). The served peer body for SPCX states its price currency unknown (`price_currency_reason`), so 'currency not stated' is the served truth; ruled by the issuer, round 112 packet section 3 item 3 (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round112/DRAIN_END_PACKET.md @f7c77b9721); see ADJUDICATION_v150 C-S178.
 
 -- 3.0.0_SA_CVO
