@@ -24072,6 +24072,47 @@
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W288-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~288",
+  "surfaced_at": "2026-10-17T10:07:25Z",
+  "one_line": "Three of the 21 listed rows (W133-S1, W133-S4, W150-S3) cite portal bytes; portal is a gitlink at HEAD, so the HEAD-only read rule cannot decide them and they are NEEDS-LIVE-READ in AUDIT_b.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-388 WORKER FACE: read the tree ONLY with git show HEAD:<path> or git grep HEAD; a verdict resting on a file read from the sparse disk is invalid; the 21 rows are decided on the tree at HEAD.",
+  "world_is": "portal is a submodule gitlink (160000 d1f9ca29675bd9012284272806afc9c587ef55f0) at HEAD 40534c9381; the TicketCenter bytes the rows cite (origin/PROD TicketCenter.tsx:306, analysisRequest.ts, the AR-y-325 test files) are not in this tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal (gitlink) @40534c9381: git ls-tree HEAD portal returns mode 160000 commit d1f9ca29675b",
+      "r47/AUDIT_b.json rows W133-S1, W133-S4, W150-S3 verdict NEEDS-LIVE-READ, each reason naming the portal read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W288-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~288",
+  "surfaced_at": "2026-10-17T10:07:25Z",
+  "one_line": "Rows W145-S6 and W145-S8 cite infra/aws/lambda/ci/lambda-source-map.json (functions.irpt-status, staged_from pins); that file is absent at HEAD, retired for the per-function folder infra/aws/lambda/ci/function-map/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The rows' cited instrument: the remedy for W145-S6 and W145-S8 is an edit to infra/aws/lambda/ci/lambda-source-map.json (TO-AR-y-339 AMENDMENT 1, commit e008b6216a); the TO's read rule is HEAD only.",
+  "world_is": "lambda-source-map.json does not exist at HEAD 40534c9381 (git cat-file rc 128); commit fb20cba7b3 retired the single map; the per-function irpt-status.json has no staged pin for ops/entry.py or ops/owned_report.py, and a staged row for reports/status_installed.py at line 158.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "HEAD @40534c9381: git cat-file -e HEAD:infra/aws/lambda/ci/lambda-source-map.json returns rc 128",
+      "fb20cba7b3: subject 'stage 2 -- the retired single map infra/aws/lambda/ci/lamb...'",
+      "infra/aws/lambda/ci/function-map/irpt-status.json:158 staged repo_path reports/status_installed.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
