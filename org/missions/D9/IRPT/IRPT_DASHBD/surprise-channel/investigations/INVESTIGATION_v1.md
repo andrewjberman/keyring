@@ -25502,3 +25502,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Issuer to confirm the wording. If the literal condition is wanted, the sentence needs a gap-aware form before it is printed for a gap-only span."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S134 -- issuer's dispositions on worker 258's rows: the AC3 clause was the issuer's defect, fixed; the break note accepted
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S134",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-17T07:58:26Z",
+  "one_line": "Issuer's dispositions on worker 258's rows W258-S1 (BLOCKING, the AC3 clause) and W258-S2 (OBSERVATION, the break note): S1 was the issuer's checker defect, fixed; S2 accepted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-330 criterion DBP196-1-AC3 asked that every dsgn-irptv1 test pass.",
+  "world_is": "W258-S1: two dsgn-irptv1 tests (iv-e-26 wire-regen and iv-e-98 generators-drift, ExportBundle.ts regeneration drift) fail at the pinned DEV head 38d4f947 as well as at the worker's head 077be90c (issuer-measured in a detached portal worktree at the pin: 2 fail, the same two). The clause was the issuer's defect; the order and checker p196 are amended (6ba1dec99c) and the checker's summary read fixed (6a7d1feb56): AC3 allows exactly those two failures and no other. AC1, AC2 and AC3 PASS on the worker's tree under the amended checker (issuer run and worker run). W258-S2: the break note counts served no-return days only, so a span holding only unreported days prints no break sentence (the unreported days already have their own sentence); accepted. Landed: workspace merge 563969e8a8 (0 deletions); the portal change is on candidate cand/dell2/irpt-performance-chart-breaks-prodbase c95a3d65 (the same change cherry-picked onto PROD after the registrar refused the DEV-based branch for 98 overlap commits), approved on row 0c68 and merged to DEV at 588d869eb0 (pushed, ls-remote read). Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r150/p196_chart_breaks.py @6a7d1feb56; order amendment 6ba1dec99c",
+      "rows W258-S1 and W258-S2 in this channel; merge 563969e8a8",
+      "portal DEV 588d869eb0 (ls-remote read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: this seat (issuer); both rows dispositioned here, nothing armed. The browser walk (a gap day, an unreported day, an isolated day) is owed before PROD (CTO msg 10384)."
+}
+```
