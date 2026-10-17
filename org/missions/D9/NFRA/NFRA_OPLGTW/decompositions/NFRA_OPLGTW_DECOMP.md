@@ -2797,3 +2797,16 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-db-2` | insert the `OG-db-1` PREFLIGHT block (as trunk carries it at `33fb4d9708`, 17 lines) into the live `deploy-to-ec2.sh` before the `OG-tl-1` allowlist block, nothing else changed; the check runs only the extracted block, never the script | `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` | WORLD (gateway path floor) | `~133` | worker |
 
 **fanout:** 1 of 1 chains, cap 8 (a one-file edit that must start from the `OG-ap-33` merge). **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`, `Z-S354`.
+
+## ADDENDUM R3-T.111 (2.0.0_SA_COO~O, 2026-10-17 ~09:4xZ) -- ROUND 41, workstream ENRICH-R41: the enrichment list of the CTO's round-40 analysis, cut in ONE issuance
+
+**Source.** `ledger/ROUND_ANALYSIS.round40.md` @66aeb73b0c (the CTO's answer to this seat's slug 35454): no FWD went unserved by a cell; the round-41 enrichment list is four items, thread-breaking first. Each build order carries at most three mechanical criteria.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-en-21` | item 1 (FIRST, thread-breaking, row Z-S353): `client_get_transactions` and `client_get_fees` run in a worker thread (`anyio.to_thread.run_sync`), so `/health` and every route answer during a 22 to 34 s page and the one-read gate contends in the service | `app/tools.py`, `tests/test_og_en21.py`, window tests | WORLD (gateway path floor) | `~134` | worker |
+| `OG-en-22` | item 2 (row Z-S328): `Ctx.partition_keys(prefix)` lists the served prefix ONCE and `read_rows(..., key=...)` skips the per-partition listing; the adapter indexes once per call; a ctx without `partition_keys` runs as before | `app/client_core.py`, `app/client_adapter_bd49f.py`, `tests/test_og_en22.py`, window tests | WORLD | `~135` | worker |
+| `OG-db-3` | item 3 (row Z-S354): `deploy-to-ec2.sh` writes the release sha to `/opt/opal-gateway/.deployed_commit` after the extract and before the restart | `deploy-to-ec2.sh`, `tests/test_og_db3.py` | WORLD | `~136` | worker |
+| `OG-ev-5` | item 4 (row Z-S355): a READ-ONLY trace of the near-empty fees stretch: is the SOURCE thin there or the ACCOUNT; verdict by a 25 percent rule from counts; no tool change in this round | `W/` | SERVED | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 4 of 4 chains, cap 8: the write sets are disjoint (`tools.py`; `client_core.py` plus the adapter; `deploy-to-ec2.sh`; a read-only trace). The batched release that carries items 1 to 3 (`OG-ap-36`, with its own never-widen, its Phase A page-wall measurement before and after item 2, a health probe during a page chain, and a marker read on the host) is cut after the three builds merge. **Carried, no cell** (the CTO's list): `Z-S313`, `Z-S177`, `Z-S322`/`Z-S325` (cut only with a named principal list), `Z-S338` (the organic case, never an impersonated call), `Z-W94-S2` (producer: dell2 `IRPT_BCKEND` IB-hm-5; the reader grant is the laptop CTO's).
