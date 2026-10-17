@@ -25832,3 +25832,83 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm owner is 2.0.0_SA_COO~D2: the reader fix (D to D+14 trading days, trade_date = D, dedup on TransactionID) as one code release with this seat's transaction stage (cell DB-f-2706), then the all-days rewrite pair and the republish (CTO msg 10592 items 2 and 3). TO-DB-b-332 is on the CTO's hold."
 }
 ```
+
+## IRPT_DASHBD-D2-W259-S1 -- the checker clause DBC199-1-AC1 counts a dirty portal submodule pointer as a changed file outside the agreed set
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W259-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~259",
+  "surfaced_at": "2026-10-17T15:44:32Z",
+  "one_line": "DBC199-1-AC1 fails as written: its diff clause lists portal as a changed file outside the agreed set. The portal submodule checkout in this worktree was already dirty before any worker edit; the commits since the branch point touch exactly the three named files.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "p199_cot_late_window.py DBC199-1-AC1 (check_diff): the files changed since the branch point, from git diff --name-only against the merge-base of HEAD and box/dell2 plus untracked files, must be only the adapter, the handler and the test files of the grant.",
+  "world_is": "git diff --name-only against the branch point lists portal as well as the three named files. portal is a submodule: its checkout is at fcbf2bc while the tree records d1f9ca2, and the first git status read of this worktree, before any edit, already listed the portal entry as modified. Commit fa48b9d8b7 touches exactly the three named files. Measured with the checker's own method: adapter 77 changed lines of 150, handler 38 of 120, test file 0 non-ASCII bytes. Nothing was repaired: no submodule operation, checkout, reset or change to the clause was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --name-only against the merge-base of HEAD and box/dell2, run in C:/dev/wk-irpt-dashbd-259, lists portal and the three named files",
+      "git ls-tree of portal at the merge-base and at HEAD both read commit d1f9ca29675bd9012284272806afc9c587ef55f0; git -C portal rev-parse HEAD reads fcbf2bcecb45eb502da8517c0933aafee68a688c",
+      "the first git status read of the worktree, before any edit, listed the entry ' M portal'",
+      "checker output on DBC199-1-AC1: FAIL: files outside the agreed set changed: ['portal']"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "DBC199-1-AC1 stays FAIL as written. AC2 PASS and AC3 PASS were measured. The proof flip is withheld and the order stays open. The decision on the clause, or on the worktree's submodule state, belongs to the issuer 2.0.0_SA_COO~D2 or the CTO. Commit fa48b9d8b7 is LOCAL on wk-IRPT_DASHBD-259; nothing was pushed."
+}
+```
+
+## IRPT_DASHBD-D2-W259-S2 -- the commit gate's pre-commit risk reflex could not decide the commit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W259-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~259",
+  "surfaced_at": "2026-10-17T15:44:32Z",
+  "one_line": "The risk reflex printed NOT-DECIDABLE for commit fa48b9d8b7: the danger map was STALE and the build guard refused a linked worktree, so the answer state was PARTIAL_OR_BLIND with 0 of 3 files scanned. The other gates reported OK and the commit landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face asks that every commit go through safe-commit.sh with its whole gate output read, and that a refusal be fixed, not bypassed. The reflex is part of that gate output and is expected to reach a verdict on the commit's files.",
+  "world_is": "risk-reflex in the commit output: danger map 43.7h old and STALE; the build guard refused the linked worktree (git-dir differs from git-common-dir); ANSWER STATE PARTIAL_OR_BLIND; WITHIN BUDGET scanned 0 of 3 files. Commit-gate, naming-gate, to-pipeline-gate and surprise-row-gate reported OK over the same 3 files. The commit landed as fa48b9d8b7.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for fa48b9d8b7: the line '[risk-reflex] NOT-DECIDABLE: danger map STALE and the build guard refused: linked worktree'",
+      "the same output: '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND' and 'WITHIN BUDGET: scanned 0 of 3 file(s)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the reflex could not run on a linked worktree. Which seat refreshes the danger map is not measured here."
+}
+```
+
+## IRPT_DASHBD-D2-W259-S3 -- the commit gate's client-data check did not run: the hashed account-id list is absent on this box
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W259-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~259",
+  "surfaced_at": "2026-10-17T15:44:32Z",
+  "one_line": "The client-data check printed WARN and did not check commit fa48b9d8b7 for client account ids, because the hashed list is absent at its default path on this box. Absent is not empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face asks that every commit pass the commit gate in full, with its whole output read. The gate's client-data check is part of that output and is expected to run on the commit.",
+  "world_is": "WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt; this commit was NOT checked for client account ids. The new test file carries only synthetic account ids (two 11-character test keys), and the commit touches no other data file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for fa48b9d8b7: the line 'WARN: client-data-check: hashed account-id list ABSENT' with the default path",
+      "the same output states that absent is not empty and that the commit was not checked for client account ids"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Which seat provisions the hashed list on this box is not measured here. The owner of the list is not named by this row."
+}
+```
