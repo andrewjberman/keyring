@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.24",
+ "prd_version": "v2.26",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -842,5 +842,34 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
   name the accounts. Until then, the source-line wording in FWD-10 holds.
 - **Portal:** the source line is a client-facing page change. It goes to DEV and waits for Andrew's word before PROD.
 - **Ratified-text half re-owed** to `3.0.0_SA_CVO` (an ENDPOINT change).
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.25 (2026-10-17 ~01:5xZ), FWD-10 (b) located (`1.0.0_SA_CTO~DELL1`, on `4.0.0_SA_CRO~DDD` msg 7119; change log only, ENDPOINT unchanged):**
+- **Input:** the findings ADDENDUM 1 @2c373db08e. The $8,860,829.31 gap is 96 insurance and annuity carrier-feed accounts (DTCCR_ 78, ASLAA_
+  13, AEGON_ 3, LNANN_ 1, EQUIT_ 1). The BD Dashboard counts them; the DataMining exports we ingest do not return them. The other 753
+  supervised accounts tie at $0.00.
+- **Ruled, the display: the 96 COUNT in Cottonwood's supervised total.** Andrew's 2026-10-17 word, "matches that ... number", is later and
+  more specific than the 2026-08-24 Insurance exclusion, which gave the reason "we don't take fees on it". 78 of the 96 carry a BD management
+  fee. Scope: Cottonwood only. The 49 Financial and Inflection insurance treatment is unchanged. Andrew may reverse this; FWD-10 (b) then
+  reads 521.56M with "excluding $8.86M insurance" stated on the page.
+- **Ruled, the ingest:** widen Cottonwood's DataMining account set, or its holdings, allocations and attributes templates, to return the
+  insurance-feed accounts. Placed in ADVI_COTBKF (Cottonwood's served data), whose next round cuts it. Proof: the 10/15-equivalent build ties
+  to 530,421,988.14 supervised. FWD-10 (b) closes on that proof plus the FWD-10 (a) cell.
+- **Order:** the (a) filter cell in round 12 does not wait on the ingest. The source line reads per FWD-10 until (b) ties.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.26 (2026-10-17 ~01:5xZ), FWD-10 executed ad hoc (`1.0.0_SA_CTO~DELL1`, on `4.0.0_SA_CRO~DDD` msg 7124; change log only):**
+- **Andrew-direct ~01:5xZ** (record `org/tier1_exec/4.0.0_SA_CRO~DDD/deliverables/ANDREW_DIRECT_20261017_015xZ_COTTONWOOD_530M_MDPF_AND_ADVI_CRO_EXECUTES.md`
+  @aca8db2e43): "We want that 530.42m number ... it has to be done for ADVI Advisor Intelligence page too ... probably have you just do it."
+  The target is 530.42M, so the 96 insurance-feed accounts count (v2.25 confirmed on his word).
+- **Placement superseded:** FWD-10 is NOT round 12's first cell, and the ADVI_COTBKF widen cell is not a next-round cut. `4.0.0_SA_CRO~DDD`
+  executes both directly. The never-widen pair and the apply gate still apply: the CRO brings the producer half, and this seat signs the CTO half.
+- **Two collisions the half must name:**
+  - D1 reads the CN-s-1 V2 Global headline on the 2026-10-17 13:30Z fire against a predicted 2,237.50M. A Cottonwood filter landed before
+    that fire moves the same headline. The half states the joint expected Global for that fire, and 2.0.0_SA_COO~D1 reads against it.
+  - The Cottonwood silver `account_attributes` organic fire (~2026-10-17 midday, R106) reads the same accounts. Nothing writes Cottonwood
+    silver between now and that fire's close read, unless 2.0.0_SA_COO~C1 agrees in writing.
 
 -- 1.0.0_SA_CTO~DELL1
