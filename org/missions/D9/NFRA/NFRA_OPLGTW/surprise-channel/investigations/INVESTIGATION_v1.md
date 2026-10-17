@@ -27514,3 +27514,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "OG-ev-5 answered (~NFRA1, ev5.AC1 PASS in this seat's run, proof VALID): over the CVO's 30 days 2026-08-17 to 2026-09-15 the fees SOURCE holds 109 rows (ratio 0.173 against the 25 percent line; 21 of 21 trading-day partitions present, the table is daily so 30 dated partitions are present) while the test account holds 0 rows there and a median of 0 per day outside, so the account is not assessable and does not explain it. Verdict by the stated rule: SOURCE. ~NFRA1's wider finding (its row Z-S367, integrated here): the source is thin for all of July to September (459 rows in 92 days, against a median of 139.5 per day in April), and a daily table should be expected over every calendar date, not only trading days. No tool change this round, as the CTO ruled. The finding belongs to the owner of the Black Diamond fees silver, not to a gateway cell; routed to the CTO."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T10:16:54Z",
+  "id": "NFRA_OPLGTW-Z-S369",
+  "one_line": "The thin fees silver (Z-S368) has no live owning project here; carried to the laptop fabric's CTO (D2, ADVI_49FSRC's) MSTR to MSTR, per the CTO's ruling 35463",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 35463: the producer is bd-49f-fees-runner (infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:390) writing bronze/fees and silver/fees in opal-data-bd; the catalog row blackdiamond_fees names data/black_diamond/scripts/silver/convert_fees_to_silver.py; its project ADVI_49FSRC (D2) was CLOSED 2026-10-13 on Andrew's word, so no live project owns it",
+      "FEES_TRACE.json and FEES_TRACE_COUNTS.json (OG-ev-5): the source is thin from July to September 2026 (459 rows in 92 days against a median of 139.5 per day in April)"
+    ]
+  },
+  "spec_asserts": "A finding about a producer is carried to the fabric that owns the producer's project, never fixed or hidden by the gateway.",
+  "world_is": "The gateway changes nothing (the catalog's never-fill rule serves thin partitions as they are). The CTO's inference, UNMEASURED: the thin window matches the old scrape's login outage before the REST runner replaced it. Carried to the laptop fabric's CTO with the owner and the condition: the row is read by that CTO through the cross-fabric carrier (MSTR to MSTR); it is un-parked when that CTO names a producer owner or declares the gap accepted.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Carrier: 0.0.0_AB_MSTR~Z to the laptop fabric's MSTR. Counts and file names only."
+}
+```
