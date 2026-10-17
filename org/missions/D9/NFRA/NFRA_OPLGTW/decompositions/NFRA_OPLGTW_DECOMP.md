@@ -2767,3 +2767,13 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-en-20` | cap the arenas in code (`mallopt(M_ARENA_MAX, 2)` once at import, never raising where libc is absent) and `READ_WORKERS` 16 to 8; tests `test_og_en20.py` | `app/client_adapter_bd49f.py`, `tests/test_og_en20.py`, window tests | WORLD (gateway path floor) | `~132` | worker |
 
 **fanout:** 1 of 1 chains, cap 8 (the file is shared with `OG-en-19`; this cell is spawned when `OG-en-19` is merged). The next release `OG-ap-34` carries `OG-en-17`, `OG-en-18`, `OG-en-19`, `OG-en-20` and the catalog; its Phase A runs the three-page chain on the candidate code on the host and STOPS above 20 MB per page. **Held.** `OG-ap-33`, `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.
+
+## ADDENDUM R3-T.108 (2.0.0_SA_COO~O, 2026-10-17 ~03:1xZ) -- round 40, workstream ENRICH-R40-G: enforce Andrew's no-download word on alyssa's grant
+
+**Source.** The CTO's ruling on open call `sitez-20261016T111519Z-bd68` (`CTO_RULING_OPLGTW_BD68_ALYSSA_DOWNLOADS_ENFORCE_HIS_WORD_20261017_Z.md` @aed4469fa6, laptop CTO 02:52Z, msg 35321): her live grant holds `download_filtered` (row `Z-S173`, `OG-mg-1` section 3) against Andrew's word of 2026-10-08, "no downloads needed yet"; enforce it with a one-key narrowing under three never-widen halves, usage counts to the CTO first, no seat contacting her or her firm.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-35` | APPLY: before-record and usage counts (counts only); one-key candidate (`operations` minus `download_filtered`) through the admin module's `prepare`; ask for three halves; Phase B on the GO: ledger, `activate` under `opal-gateway-access-admin`, read-back through the installed code (her download refused, one other operation answers), after-record | the grant record (one revision), the ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (one grant write; it shares no file or host with the release work). **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.
