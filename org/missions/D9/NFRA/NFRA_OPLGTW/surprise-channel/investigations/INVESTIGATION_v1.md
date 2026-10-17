@@ -27965,3 +27965,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The landing is done and verified by this seat's runs; the safe-merge --continue gap for a lineage-only merge is the script owner's, not urgent, and is carried in the round-41 slug's enrichment list rather than held open as a hazard in this project."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T19:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S380",
+  "one_line": "OG-ap-38 Phase A STOP: measurement (a) fails -- on the host, under the hard guard, the candidate's etfs_compare_peers('IDVZ','x','y') still raises MemoryError inside pyarrow's read_table (peak 724 MB, over the 700 MB limit) because read_parquet reads the WHOLE object before it filters; no ask written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W/PHASE_A_OG-ap-38.json and W/ap38_phaseA_raw3_tuned.json (release 100773843876374cf9b1db0a7daa1d6b2b5a9164 on live efcc8ae19f; every gateway-code run a fresh process under the guard oom_score_adj 1000 + RLIMIT_AS 1400 MB + 120 s wall; staged candidate files md5-equal to the release blobs): (a) candidate etfs_compare_peers raised MemoryError after 4.49 s, VmHWM 724.0 MB; live code, same guard: MemoryError after 5.45 s, VmHWM 927.5 MB.",
+      "Where the candidate fails (traceback frames): etfs_rivals_flow._read_dates:303 -> _read_part:291 -> typed_scope.read_parquet:139 -> pyarrow parquet read_table -> Dataset.to_table -> Scanner.to_table -> check_status. Line 139 of the CANDIDATE typed_scope.py is pq.read_table(io.BytesIO(body), columns=read_cols) with read_cols None when the caller passes no columns (the peer sections do not): the whole object, every column, into Arrow BEFORE the filter mask and BEFORE the new 64 MB check. The live code's failure is the same read one line earlier (typed_scope.py:134) at a higher peak.",
+      "Control runs with the guard alone (Arrow default pools): the candidate raised MemoryError at 479 MB; the 49F chain of BOTH candidate and live aborted before page 1 with 'terminate called after throwing an instance of std::system_error, what(): Resource temporarily unavailable' (rc -6): pyarrow could not create worker threads under the 1400 MB ADDRESS-SPACE cap. With ARROW_DEFAULT_MEMORY_POOL=system, OMP_NUM_THREADS=1, ARROW_IO_THREADS=1 under the SAME guard the chain runs: 4 pages, median growth 4.6 MB, first page 2.04 s, host peak 37.4 pct, 4 of 4 pages equal the live code's row for row (36, 20, 23, 44 rows), candidate VmHWM 240.0 MB against live 246.4 MB. Unit (d): cgroup2fs, memory controller present, systemd-analyze verify rc 0, scratch removed.",
+      "Re-cut checks that PASS: seams 0 STOP-class edges; five files whole from trunk 140239815bba, every live->trunk hunk attributed (typed_scope: OG-en-25 x4; etfs_rivals_flow: OG-en-25 x2; the unit: OG-un-1 x1); the commit gate printed no REFUSE; taken tests 5 of 5; the window set 44 passed in both orders (test_og_gt6.py is not in the tree: absent at the live ref, not in the take list); the full suite 75 failed in the release tree and the same 75 at the live ref (no difference), 1054 against 1049 passed (the five new tests); bash -n and --preflight-only rc 0."
+    ]
+  },
+  "spec_asserts": "OG-ap-38 step 3(a): etfs_compare_peers('IDVZ','x','y') on the candidate answers an empty section or a refusal, never a MemoryError, peak VmHWM 700 MB or less, 30 s or less; and the order text: 'read_parquet refuses a FILTERED table over TYPED_MAX_TABLE_BYTES ... before any Python conversion'.",
+  "world_is": "The cap OG-en-25 added bounds the Python copy, not the Arrow read. On this table the Arrow read alone needs more than 720 MB, so the repair does not make the call safe on the 1.8 GB host (the service's own limit under the new unit would be 1400 MB, and the Arrow read plus its filter mask and the other work of the process would sit inside it). The order says STOP on a failed measurement: no ask written, nothing deployed, no PHASE B. Two further facts for the issuer, measured not guessed: (1) the guard as written (RLIMIT_AS 1400 MB) stops pyarrow from starting its thread pool with default settings, so the 49F chain and the valid pair cannot run under it unless Arrow's pools are shrunk; the tuned run above is under the SAME guard, but it is not the service's configuration; (2) the valid pair (b) could not run because the candidate listed no period or axis before failing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the repair needs the read itself bounded: pass the columns the section needs and push the filters into the Parquet read (or stream row groups), so the Arrow table is small before any copy; then (a) and (b) re-run. I can re-run Phase A on a new trunk_sha at once. I did NOT widen or change the guard; if you want RSS measured without the address-space cap's side effect, a cgroup MemoryMax (RSS, not virtual) plus oom_score_adj 1000 and the wall limit is the alternative, and it needs your word or the CTO's."
+}
+```
