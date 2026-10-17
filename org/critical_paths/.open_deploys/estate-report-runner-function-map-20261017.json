@@ -12,16 +12,16 @@
       "kind": "verify",
       "target": "s3://opal-estate-report/code/estate_report_runner.py",
       "proof_required": "one put-object of the file at bfbdc20d40; new VersionId differs from 8pG9vs5I4CSGNVC8OcUy2Q9ARArGgumx",
-      "proof": null,
-      "closed_at": null
+      "proof": "put-object 2026-10-17T00:43:55Z, instance stopped; new VersionId HIrQD8nolfYS_30vrMXBXCZJ0_EnqqPz, 184027 B",
+      "closed_at": "20261017T004355Z"
     },
     {
       "id": "READBACK",
       "kind": "verify",
       "target": "sha256 of the object re-downloaded by its new VersionId",
       "proof_required": "equals 5e693559daa70406bd41d8d8290fc7add93fafaadba2d10500c260b7bf4a227d; one-byte-changed copy reads unequal",
-      "proof": null,
-      "closed_at": null
+      "proof": "re-downloaded by new VersionId: sha256 5e693559...227d EQUAL to the pin, diff rc=0, one-byte mutant UNEQUAL",
+      "closed_at": "20261017T004500Z"
     },
     {
       "id": "DISARM",
@@ -33,7 +33,9 @@
     }
   ],
   "log": [
-    "20261017T004500Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 3 leg(s)"
+    "20261017T004500Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 3 leg(s)",
+    "20261017T004355Z LEG PUT closed: new VersionId HIrQD8nolfYS_30vrMXBXCZJ0_EnqqPz",
+    "20261017T004500Z LEG READBACK closed: sha256 equals the pin, negative control UNEQUAL"
   ],
   "last_red_at": null,
   "device": "laptop"

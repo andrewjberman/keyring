@@ -46,7 +46,11 @@ sha256 `ee3bda02...e163`. Trigger: a RAISE or the retired path in the next start
 
 ## Legs
 
-1. [ ] PUT: one `put-object` of the pinned file.
-2. [ ] READBACK: object re-downloaded by its new VersionId, sha256 equals the pin's, VersionId differs from the rollback's,
-       comparator proven able to fail (one-byte-changed copy reads UNEQUAL).
+(Clock note: the entry header reads 00:45Z; `date -u` at the act read 00:43:49Z. The OPEN commit `704e74caa5` precedes the upload.)
+
+1. [x] PUT: one `put-object` at 2026-10-17T00:43:55Z, instance read `stopped` seconds before. New VersionId
+       **`HIrQD8nolfYS_30vrMXBXCZJ0_EnqqPz`**, ETag `329134bd5763b9c5fa4f180d0999d6ec`, 184,027 B.
+2. [x] READBACK: re-downloaded by that VersionId: sha256 `5e693559daa70406bd41d8d8290fc7add93fafaadba2d10500c260b7bf4a227d`
+       equals the pin's; `diff` rc=0; VersionId differs from the rollback's `8pG9vs5I...`; head-object latest is the new
+       VersionId; one-byte-changed copy read UNEQUAL.
 3. [ ] DISARM: the 13:00Z start's log shows the lambda hop reading `function-map/` with no WARN naming the retired map.
