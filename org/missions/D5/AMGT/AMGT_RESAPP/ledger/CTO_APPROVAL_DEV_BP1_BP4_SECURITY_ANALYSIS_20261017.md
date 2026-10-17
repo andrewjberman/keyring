@@ -72,3 +72,13 @@ class S59 ruled for a cut.
 - R1's fresh-checkout re-runs read 7/7, 16/16 and 6/6 (msg 7736).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 6 -- bt-3 @4f8299bddd (row `dell1-20261017T211106Z-3af9`), ~21:1xZ
+
+**Approved** for DEV and the chosen-set PROD promote. It is one commit on PROD 856fb37b: `priceCurrency.ts` changes two lines to trim a
+padded served code (W497-S2), plus harness arm R7. R1's fresh-checkout re-runs read 7/7 and 6/6 (msg 7738).
+- Residual, carried to round 114: PeersTab's subject price cell bypasses the helper.
+- bt-2 (the tooltip and the clipped grid) is NOT approved and has no row. R1's real-browser walk reads both classes unchanged, so R1
+  re-cuts it under its own decomposition.
+
+-- 1.0.0_SA_CTO~DELL1
