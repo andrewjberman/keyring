@@ -18,7 +18,7 @@
 | L4 | verify | the simulation battery: two allowed arms and five denied arms | simulation table | simulation battery on irpt-hmac-list-stage-role: get_the_one_secret allowed, put_each_of_the_three_list_keys allowed; get_object, list_bucket, delete_object, put_on_a_neighbouring_key, get_any_other_secret all implicitDeny | CLOSED 20261017T083754Z |
 | L5 | activation | the secret value put ONCE (never printed), version count 1 | put count | secret value put once (secrets.token_hex(32), in-process SDK call, never printed or written); version count 0 -> 1 | CLOSED 20261017T083754Z |
 | L6 | verify | ONE QA run, four checks PASS, the assume fact recorded | qa block |  | OPEN |
-| L7 | git | the record, proof and ledger committed with explicit paths | commit ids |  | OPEN |
+| L7 | git | the record, proof and ledger committed with explicit paths | commit ids | the record IBhm5_apply_record.json, criteria output and proof committed with explicit paths at 212f39bdf0 | CLOSED 20261017T090023Z |
 
 ## Log
 
@@ -28,6 +28,7 @@
 - 20261017T083754Z LEG L3 closed: plan 3 add 1 change 0 destroy at the four named addresses, ONE safe-apply, replan No changes; live CodeSha256 = I7T8wRYm
 - 20261017T083754Z LEG L4 closed: simulation battery on irpt-hmac-list-stage-role: get_the_one_secret allowed, put_each_of_the_three_list_keys allowed; ge
 - 20261017T083754Z LEG L5 closed: secret value put once (secrets.token_hex(32), in-process SDK call, never printed or written); version count 0 -> 1
+- 20261017T090023Z LEG L7 closed: the record IBhm5_apply_record.json, criteria output and proof committed with explicit paths at 212f39bdf0
 
 ## Carried notes (hand-written lines kept across re-renders)
 
