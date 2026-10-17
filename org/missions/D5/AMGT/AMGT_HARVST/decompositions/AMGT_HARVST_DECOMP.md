@@ -4311,3 +4311,18 @@ Round 90 closed MAY-CLOSE (CVO `ADJUDICATION_v84.md`, `REMEDIATION_v21.md`; 11 r
 - **`HVST-ce-5` is SUPERSEDED** (status `superseded`): the CTO did not sign the half and amended his round-90 item 5. After `HVST-ce-4` no live read triggers the new sentence, so a gateway restart for it alone "is not worth the window"; the two files of `HVST-ce-3` ride the next gateway release due for a live reason, under that release's own order and pair with the same controls. The carrier is `ledger/ROUND91_CARRIED_FOR_NEXT_GATEWAY_RELEASE.md`. No GO was sent; SC1 started nothing.
 - **Accepted by the CTO:** the hold on the `fund_form` code behind `cf-4` ("right") and the naming of the C-S61 misread ("the cf-1 census is the remedy").
 - **Fan-out line of section 121 stands** (`N of M chains, N=1 worker (cf-1)`); `ce-5` leaves the round's cell set.
+
+### 121b. ROUND 91 -- `HVST-cf-1` merged (`934ecb88c5`); the census cuts `HVST-cf-2` (2026-10-17 ~20:4xZ)
+
+`HVST-cf-1` read all 94 names: 22 distinct verb phrases; 69 names have a fund token. The non-holding phrases are `candidate for` (10 names: the 9 round-90 rebuilds `8035_JP`, `ADBE`, `BZLFY`, `CDNS`, `CELH`, `HEI`, `MNST`, `MSCI`, `SNPS` and `CLX_US_Equity`, served that way before round 90), `initiate ~<N>% position in` (`CNR`), `interesting exposure for` (`ST_SP`) and the bracketed template `[BUY IN IDVZ TO X%]` (`ML_FP`). A second served defect predates round 90: four names serve a `COMPANY DESCRIPTION:` paragraph as `last_stated_position`.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cf-2` | `cf-2` | **`fund_of_record` only from a line that states a holding**; a candidate, initiation, interest or template line is served in `last_stated_position` with a `stance` and never as the fund of record; continuation method `/5`; a table test over the 22 census phrases; a read-only census of the effect (expected 13 names change). The issuer's classification of the phrases is in the order; the CTO ratifies it in the rebuild's pair. | LOCAL | worker `~160` | CUT |
+| `HVST-cf-4` | -- | The forward rebuild of the names `cf-2`'s census lists, newer objects only, canary `MNST_US_Equity` first, `UNH_US_Equity` unchanged and a control; a seat order under its own never-widen pair; foreground or manifest-checking supervisor (item 3). | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cf-2` merged and the pair |
+| `HVST-cf-3`, `-5` | -- | The `fund_form` chain: unchanged (held behind `cf-4`; section 121). | -- | -- | DEFINED, NOT CUT |
+
+- **Fan-out:** `N of M chains, N=1 worker (cf-2) of M=1 chain, cap 8` (the C-S61 chain; `cf-4` consumes `cf-2`).
+- **Check at the cut (dry-run at the base):** `cf-2` AC1 FAIL as expected (no test file), AC2 PASS (`66 passed` over seven files), AC3 FAIL as expected (no census file).
+- **Armed row:** `D1-W159-S1` (the `ML_FP` template) stays open until `cf-2` and the rebuild.
+- **Asked of the CTO (not blocking the code cell):** ratify the classification; say whether the `COMPANY DESCRIPTION` defect (4 names) joins this fix.
