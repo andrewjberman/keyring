@@ -23192,3 +23192,29 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S161 -- disposition of W277-S1 and W277-S2: the driver's six new read routes, the two edited GET counts, the schema file absent from the sparse tree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S161",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-17T00:04:55Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W277-S1 (two existing envelope tests asserted 7 GETs per run; the run now makes 13, so their expected count moved 7 to 13, intent unchanged: ACCEPTED) and W277-S2 (the surprise-channel schema file and the doctrine file are absent from the worker's sparse tree: NOTED, the gate passed at commit); merged with AR-tz-74 (fa0a9a6889).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order allowed edits to the older driver tests only where a test asserted the old route count (7 made, 9 rows) or the old grading of a 2xx JSON without ok; the worker found two tests asserting the GET count and no test asserting the old no-ok grading.",
+  "world_is": "Measured on the merged tree at HEAD 439ca2890e: test_fwd5_driver_routes.py reads R46-TESTS-OK passed=18; the four older driver test files read passed=54 over 52 functions; fwd5_driver.py --selftest reads FWD5-SELFTEST-OK checks=59 (50 kept, 9 new). Edited: test_fwd5_envelope_every_get_carries_contract_version_run and test_fwd5_envelope_every_get_carries_contract_version_control (the GET count, 7 to 13). The driver now makes 13 calls and writes 15 rows per run: five more report-side read routes on the request and job (request-read, request-history, job-status, narrative, export-receipt) and the no-selection call; a served body (2xx JSON with no ok) is a LEAK for firm B and ALLOWED in the control; the no-selection call is refused by absence in the caller's own tenant. NOT done: the driver has not yet been run with the six routes against the live service (the third sitting, after the CTO's re-sign of packet blob 6bf8cd3887).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py (merged fa0a9a6889; blob ba8010bb70)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/fwd5_driver/test_fwd5_driver_routes.py (blob 8c8a0a7c79)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py (blob f9eb292472)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
