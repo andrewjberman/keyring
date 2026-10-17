@@ -77,7 +77,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-22.list-the-partition-prefix
 - Disjoint from `OG-en-21` (which edits only `app/tools.py`) and `OG-db-3` (only `deploy-to-ec2.sh`); the three drain in any order. The existing window tests may be touched by two workers; the drain is the issuer's and resolves a test-file overlap in the issuer's own tree.
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent); `AC3` base FAIL (the file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41</workstream>
 <slot>~135</slot>
