@@ -27150,3 +27150,111 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Form only. The gate's refusal is fail-closed by design; the worktree cone omits the folder it reads. The fix is an environment choice for the issuer or the CTO: add the folder to the cone, or land the record from a materialized tree. This worker did not widen the cone, which would be a materialization act outside the order."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:10:52Z",
+  "id": "NFRA_OPLGTW-Z-S359",
+  "one_line": "Round-40 disposition of worker row Z-W133-S1: Worker environment note: the row-schema path is skip-worktree in the sparse cone; the worker read it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W133-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-db-2 drained 02aabf0e2b; db2.AC1, AC2 and the write-set bound PASS in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker environment note: the row-schema path is skip-worktree in the sparse cone; the worker read it from the main tree. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker environment note: the row-schema path is skip-worktree in the sparse cone; the worker read it from the main tree. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:10:52Z",
+  "id": "NFRA_OPLGTW-Z-S360",
+  "one_line": "Round-40 disposition of worker row Z-W133-S2: Worker environment note: .claude/agents/worker.md is not materialized in the sparse worktree; the wo",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W133-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-db-2 drained 02aabf0e2b; db2.AC1, AC2 and the write-set bound PASS in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker environment note: .claude/agents/worker.md is not materialized in the sparse worktree; the worker took its rules from the order. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker environment note: .claude/agents/worker.md is not materialized in the sparse worktree; the worker took its rules from the order. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:10:52Z",
+  "id": "NFRA_OPLGTW-Z-S361",
+  "one_line": "Round-40 disposition of worker row Z-W133-S3: Worker note: the commit-time risk reflex printed PARTIAL_OR_BLIND and the client-data check was ABSE",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W133-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-db-2 drained 02aabf0e2b; db2.AC1, AC2 and the write-set bound PASS in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker note: the commit-time risk reflex printed PARTIAL_OR_BLIND and the client-data check was ABSENT (the same device gap as Z-W94-S2); the commit was not refused and the change is a shell block with no client data. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker note: the commit-time risk reflex printed PARTIAL_OR_BLIND and the client-data check was ABSENT (the same device gap as Z-W94-S2); the commit was not refused and the change is a shell block with no client data. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:10:52Z",
+  "id": "NFRA_OPLGTW-Z-S362",
+  "one_line": "Round-40 disposition of worker row Z-W133-S4: The issuer's cut defect, repaired: the wk-provision cone for worker ~133 omitted infra/aws/lambda/ci",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W133-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-db-2 drained 02aabf0e2b; db2.AC1, AC2 and the write-set bound PASS in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "The issuer's cut defect, repaired: the wk-provision cone for worker ~133 omitted infra/aws/lambda/ci, so the naming limb (which reads function-map/ fail-closed) refused the record commit. The issuer added the folder to the cone and continued the worker by message; the record landed (7eafa6dbb9) and the order drained (02aabf0e2b). Carry for the next cut: the standard gateway worker cone includes infra/aws/lambda/ci.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer's cut defect, repaired: the wk-provision cone for worker ~133 omitted infra/aws/lambda/ci, so the naming limb (which reads function-map/ fail-closed) refused the record commit. The issuer added the folder to the cone and continued the worker by message; the record landed (7eafa6dbb9) and the order drained (02aabf0e2b). Carry for the next cut: the standard gateway worker cone includes infra/aws/lambda/ci."
+}
+```
