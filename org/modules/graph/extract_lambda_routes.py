@@ -2,7 +2,8 @@
 Pass 5: Lambda Handler Router -- connect ENDPOINT nodes to LAMBDA nodes.
 
 Two-phase approach:
-  Phase A: Build a Lambda source directory map from lambda-source-map.json.
+  Phase A: Build a Lambda source directory map from the function-map folder
+           (infra/aws/lambda/ci/function-map/, one file per function, read through lib/opal_lambda_map.py).
            Maps function names to their source directories.
   Phase B: Scan Lambda handler source for API Gateway route patterns.
            Matches URL paths from ENDPOINT nodes (extract_api.py) to Lambda handlers.
@@ -17,8 +18,8 @@ Zero API calls. Pure static analysis.
 
 from __future__ import annotations
 
-import json
 import re
+import sys
 from pathlib import Path
 
 from .trace_graph import TraceGraph, Node, Edge
@@ -62,19 +63,22 @@ _CF_BEHAVIOR_PATTERN = re.compile(
 )
 
 # ---------------------------------------------------------------------------
-# Lambda source map loader
+# Lambda function map loader (one file per function, read through lib/opal_lambda_map.py)
 # ---------------------------------------------------------------------------
 
+_LIB = Path(__file__).resolve().parents[3] / "lib"
+
+
 def _load_source_map(workspace_root: Path) -> dict[str, dict]:
-    """Load lambda-source-map.json. Returns {function_name: {source_dir, files, ...}}."""
-    map_file = workspace_root / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
-    if not map_file.exists():
-        return {}
-    try:
-        data = json.loads(map_file.read_text(encoding="utf-8"))
-        return data.get("functions", {})
-    except Exception:
-        return {}
+    """Load the function-map folder under workspace_root. Returns {function_name: {source_dir, files, ...}}.
+
+    Raises FileNotFoundError (folder absent) or ValueError (folder holds no function file). A silent empty map is
+    the clean-looking false answer this loader used to give (NFRA_CTLPLN round 30 ruling 1), so it does not return one.
+    """
+    if str(_LIB) not in sys.path:
+        sys.path.insert(0, str(_LIB))
+    from opal_lambda_map import load_all  # noqa: PLC0415
+    return load_all(str(workspace_root))
 
 
 # ---------------------------------------------------------------------------

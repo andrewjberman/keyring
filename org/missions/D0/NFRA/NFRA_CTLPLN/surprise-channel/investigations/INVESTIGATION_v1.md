@@ -13798,6 +13798,7 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Owner: the provisioning step (.tools/wk-provision.sh) for the sparse set of a worker that runs the intake suites. The fix is a provisioning entry, not a code change in the intake folder."
 }
 ```
+
 ## NFRA_CTLPLN-W145-S1 -- a census-named reader outside this cell's grant reads the whole Lambda source map
 
 ```json
@@ -14421,6 +14422,140 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-W151-S1 -- rcg/charters.yaml names the retired map as an exact root_set entry; after the split it roots nothing
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "rcg/charters.yaml line 24 still lists infra/aws/lambda/ci/lambda-source-map.json in root_set. build_root_set matches an exact entry against the scan population, so the entry roots nothing now that the map is deleted; before the split the map file was a root. No function-map file is a root either: the root_set holds no prefix that covers infra/aws/lambda/ci/. The file is outside this order's grant (census class DOC) and was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "rcg/charters.yaml@226e46649f line 24 (root_set list, lines 17-27): the retired path is an exact entry; no entry ends in infra/aws/lambda/ci/",
+      "rcg/bin/mark.py@333aea1678 build_root_set: exact entries are added only when entry in population; the lambda roots come from source_dir prefixes of the function-map folder",
+      "census at HEAD e51e048c99 (.scratch/census_after_wip.md): rcg/charters.yaml classed DOC, reading row line 24; the census does not class it as a live reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell's readers read the function folder; a root set that names the retired path is a reader of the retired path whose effect is a silent no-op.",
+  "world_is": "The charter entry is text the census classes DOC, so the census cannot see its effect; mark.py's root set loses the map file as a root and gains no folder file.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (replace the entry with the folder prefix in rcg/charters.yaml, or accept the no-op). Not changed here: the file is outside the grant."
+}
+```
+
+## NFRA_CTLPLN-W151-S2 -- the deployed estate report runner artifact still reads the retired map until its S3 object is re-uploaded
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "The estate report runner runs on EC2 from the S3 object code/estate_report_runner.py, which the 2026-08-05 deploy ledger records as re-uploaded by PutObject and which the instance pulls on every boot. Commit 3ccb99154a (estate_report_runner.py) changes the runner to read the function-map folder, but the S3 object is unchanged. Until a CloudOps artifact upload carries 3ccb99154a, the deployed runner's lambda hop reads the retired path, finds nothing and degrades with a WARN on the next boot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20260805T1456Z_estate-report-runner-corpus-vintage_deploy_completion.md (lines 1-17): the act is ONE s3api put-object to s3://opal-estate-report/code/estate_report_runner.py; re-uploading the artifact IS the deploy; the instance is transient and its systemd oneshot pulls on every boot",
+      "git show 3ccb99154a:infra/aws/ec2/estate-report-runner/estate_report_runner.py load_function_map: the lambda hop reads the folder; the pre-change runner runs git checkout of the retired path, which the clone no longer has, and degrades that hop",
+      "the risk-reflex HOLD printed by safe-commit for 3ccb99154a named this ledger entry (18 recorded claims)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-29 ruling 1 requires every reader to be repaired before the first estate report run reaches it.",
+  "world_is": "The repair is committed on the branch but the artifact that the box runs is the pre-repair object; the repair reaches the box only through a CloudOps upload this worker does not perform (WORLD class: no upload was run here).",
+  "notes": "Disarm: the issuer 2.0.0_SA_COO~C routes the artifact upload to 0.7.0_AE_CloudOps after the drain; the row is disarmed when the S3 object's ETag matches the file at the merged commit. No AWS command was run by this worker."
+}
+```
+
+## NFRA_CTLPLN-W151-S3 -- the grant names rcg/tests/, which does not exist at HEAD
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "The task order's paths list rcg/tests/ as a grant. At HEAD 226e46649f the rcg tree holds bin/, grader/, ledger/, rulings/, workflows/, charters.yaml, MANIFEST.yaml and .gitattributes, and no tests folder. No suite exists there to run; the arms that cover rcg/bin/lexicon.py and rcg/bin/mark.py are in .tools/tests/test_round30_follow_readers.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only 226e46649f rcg (printed in the worker worktree): no path under rcg/tests/",
+      "the worktree lists rcg/ with the same six entries and no tests folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The grant names rcg/tests/ as a folder the cell may write to and run.",
+  "world_is": "The folder is absent; the grant names a path that does not exist, and no test under it is run by the cell's invocations.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (drop the grant line, or name the folder the tests will live in)."
+}
+```
+
+## NFRA_CTLPLN-W151-S4 -- the provisioned sparse set omits the envelope source that comp_closure self-test imports, so the suite is red at base in a cut worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "In the worktree cut by wk-provision the comp_closure self-test fails at base with ModuleNotFoundError: observation_envelope. Its envelope source is org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/src and its schema is under the same folder, neither in the sparse set. The worker added the folder with git sparse-checkout add (no commit); after that the self-test reads 28/28 at base and after.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run at base (before the sparse add): org/modules/graph/comp_closure.py --self-test -> ModuleNotFoundError: No module named 'observation_envelope' (line 166 of comp_closure.py at 226e46649f)",
+      "after git sparse-checkout add of the envelope folder: comp-closure self-test: 28/28 passed (base mirror of HEAD and the worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cut worktree carries the folders the order's suites run from.",
+  "world_is": "The sparse set names only the grant's folders and their direct dependencies; a suite that imports another project's source reads red at base for a reason that is not in the grant.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (add the envelope folder to the cell's sparse list, or leave the suite red at base as the order's acceptance does not name it)."
+}
+```
+
+## NFRA_CTLPLN-W151-S5 -- after the reader change, p137's DBF137-1-AC1 and AC2 print FAIL on the entry's content, not on the missing map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "At base p137_repin.py FAILs with missing infra/aws/lambda/ci/lambda-source-map.json. After commit e51e048c99 it reads the entry from the function-map folder and FAILs on content: three staged pins are STALE (lib/opal_naming.py, lib/trading_calendar.py, infra/logic/registry/systems.json), and account_transaction.py reads trading_calendar.first_trading_day_on_or_after, which the pinned trading_calendar (pin b2b7488660) does not define. The pre-split map gives an identical entry (240 of 240 equal), so the findings are the entry's own and belong to the round-137 re-pin cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python checks/r136/p137_repin.py <worktree> DBF137-1-AC1 at e51e048c99: reason lists the three STALE pins; DBF137-1-AC2: reason names first_trading_day_on_or_after (output in .scratch/p137_ac1_after.txt and .scratch/p137_ac2_after.txt)",
+      "python checks/r136/p137_repin.py --selftest at e51e048c99: selftest PASS (5 arms)",
+      "pre-split map dd6e42b5cd vs function folder at 226e46649f: 240 of 240 entries equal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DBF137-1-AC1 and AC2 grade the staged members of irpt-49f-reporting-gold-lambda against their pins and the attribute closure.",
+  "world_is": "The three pins and the attribute closure fail on the committed entry; the reader is not the cause. The check names the failures, as designed.",
+  "notes": "Decision owner: the round-137 re-pin cell (DB-f-2205, the issuer 2.0.0_SA_COO~F2). This worker did not re-pin."
+}
+```
+
 ## NFRA_CTLPLN-D1-S13 -- ten dell1 seat lives ended with no kill line; seven transcripts stop within six minutes of each other and show no error; the cause is not measured
 
 ```json
@@ -14448,5 +14583,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "spec_asserts": "A seat that ends is ended by a recorded act (a KILL line, or its own close log); NFRA_CTLPLN-D1-S12 asked for the cause of the first four.",
   "world_is": "Ten lives ended with neither record. Their transcripts show no error class that would explain it, their lifetimes are unrelated, and seven of them stop within six minutes of each other. The cause is still not measured; what remains unread is the Windows Terminal host's own log and the process-exit record of each window.",
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content is recorded here. Respawns follow the dell1 CTO's dated plan (msg 7021). Asked for by 1.0.0_SA_CTO~DELL1 msg 7068."
+}
+```
+
+## NFRA_CTLPLN-D1-S14 -- addition to D1-S13: no session event and no crash event in 21:25-21:45Z; the Security log cannot be read as evidence; no cause claimed
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T00:36:00Z",
+  "one_line": "Addition to NFRA_CTLPLN-D1-S13: the Windows logs read for 21:25-21:45Z show no session logon, logoff, disconnect or reconnect and no crash event, the TaskScheduler log is disabled, and the Security log cannot be read as evidence; no cause is claimed. (S13's surfaced_at reads 00:45Z; the true time was about 00:27Z.)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL1 msg 7072 (read by that seat, 2026-10-17 00:2xZ, window 21:25-21:45Z = 17:25-17:45 local EDT): System log shows only BITS start-type changes and IsolatedUserMode trustlet events; Application log shows SPP and Edge; no Application Error (event 1000) for WindowsTerminal, claude, node or bun; the Microsoft-Windows-TaskScheduler/Operational log has IsEnabled=False, so scheduled-task runs in the window cannot be measured.",
+      "Read by 0.0.0_AB_MSTR~DELL1, 2026-10-17 00:3xZ: Microsoft-Windows-TerminalServices-LocalSessionManager/Operational records events (181 in the last 3 days; its newest are at 7:32 PM to 8:20 PM local) and has 0 events between 21:25Z and 21:45Z, so no logon, logoff, disconnect or reconnect of the console session in the window. query user: user test, console, session 1, Active, logged on since 2026-10-15 11:47 AM, no logoff since. All 22 claude.exe processes now read SessionId 1.",
+      "Control that FAILED: the Security log. Get-WinEvent for events 4624, 4634 and 4672 over the last 24 hours returns none, and auditpol answers 'a required privilege is not held', so the Security log's zero for the window is NOT a negative and nothing is concluded from it. Laptop MSTR (bus a0ba5eb6) had asked for 4624/4634/4647/4778/4779.",
+      "Not read: the Windows Terminal host's own log, and a person-side act that leaves no event (closing windows or tabs). The CTO's leading hypothesis is a person closing windows or tabs, unverified, and is being put to Andrew by the CTO."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-D1-S13: ten lives ended with no kill line, seven within 5 min 53 s of each other (2026-10-16 21:33:11Z to 21:39:04Z).",
+  "world_is": "A console-session event (logon, logoff, disconnect, reconnect) did not occur in the window, so a session change is not the cause of the ends; whether a person closed windows or tabs cannot be read from the logs that work, because that act leaves no event there.",
+  "notes": "A correction is a new item citing the old id, per the surprise-row gate; S13 is left as written. OWNER: 0.0.0_AB_MSTR~DELL1. Asked for by 1.0.0_SA_CTO~DELL1 msg 7072 and the laptop MSTR."
 }
 ```
