@@ -96,7 +96,10 @@ def ledger() -> int:
     sentinel = os.path.join("org", "critical_paths", ".open_deploys", slug + ".json")
     cm = [f for f in os.listdir(os.path.join("org", "critical_paths", "change_management")) if slug in f and f.endswith("_deploy_completion.md")]
     if not cm:
-        return bad("no closed change-management entry for " + slug)
+        return bad("no change-management entry for " + slug)
+    status = [ln for ln in open(os.path.join("org", "critical_paths", "change_management", cm[0]), encoding="utf-8").read().splitlines() if ln.startswith("**Status:**")]
+    if not status or "CLOSED" not in status[0].upper():
+        return bad("the entry %s reads %s, not CLOSED" % (cm[0], status[0] if status else "no status line"))
     r = subprocess.run(["git", "ls-files", "--error-unmatch", sentinel], capture_output=True, text=True, check=False)
     if r.returncode != 0:
         return bad("sentinel %s is not committed" % sentinel)
