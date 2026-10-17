@@ -67,7 +67,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** RE-ADDRESSED 2026-10-17 ~14:4xZ from `0.4.0_DT_ClientPlatform~H1` to `0.4.0_DT_ClientPlatform~H2` on the CTO's instruction (msg 7608, on the manager's msg 7605: `~H1` holds two pending ADHOC orders of `2.0.0_SA_COO~J1`, and one project per Tier-2 seat instance); the amendment changes the addressee, the slot and the deliverables folder only. The `bo-2` pattern (round 108): a Tier-2 SEAT order, not a worker order; the DT holds it in its own home and reports to `2.0.0_SA_COO~R1`; the spawn of the DT, if it is not live, is `0.0.0_AB_MSTR~DELL1`'s (the CTO's message says so). The order is cut at its GO state (`pending`) because every precondition already holds: both approval rows APPROVED valid, both features merged forward onto DEV, the release build READY with `PROMOTE-CLIENT-FACING count=0`. After the promote the issuer reads RIO LN's Model tab on PROD with the walker; that read grades FWD-40 (d) (CTO msg 7592). Risk class SERVED: a PROD promotion; the CVO grades judgment criteria on the PROD read, not here.
 
-<status>pending</status>
+<status>complete -- 2026-10-17 by the issuer (2.0.0_SA_COO~R1): 0.4.0_DT_ClientPlatform~H2 promoted ONE chosen-set release (release/20261017T144424Z, 2 features, unapproved=0, client-facing 0): PROD 15bc21b3 to 99d2b2a70c on origin, CI run 39042189942 completed/success, tag portal-v2.1.235; proof VALID rc=0; issuer re-run of AC1 (16 of 16 paths EQUAL) and AC2 (success on 99d2b2a7); receipt 509558f20c, instance 1cf6092d0d; the issuer's PROD-head read in deliverables/2.0.0_SA_COO~R1/round110/PROD_READ_FWD40D.md</status>
 <round>110</round>
 <workstream>PROMOTE</workstream>
 <slot>0.4.0_DT_ClientPlatform~H2</slot>
