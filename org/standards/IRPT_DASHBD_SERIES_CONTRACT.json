@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.3.3",
+  "contract_version": "0.4.0",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -25,6 +25,11 @@
       "contract_version": "0.3.2",
       "sha256": "42fc230550fe15eae9f05552ebdab5f78c1e49c36bf0e7daed3aea9711d246b9",
       "note": "the bytes of 0.3.2 before the history_scope_claim and history_scope_basis pair, the history_scope_rule and the every-firm present_when of the unreported-days rule were added (TO-DB-b-293, round 149); the series section keeps its required, array_keys and shape unchanged from them"
+    },
+    {
+      "contract_version": "0.3.3",
+      "sha256": "68044cb0ca66c772791bdcadcb0c18ce6d520e07138abb1a467700b6eed74cfc",
+      "note": "the bytes of 0.3.3 before the class_object section and files.class_series were added (TO-DB-b-335, round 150); series and manifest unchanged"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -37,7 +42,8 @@
   "source_table_contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
   "files": {
     "series": "series.json.gz -- one gzip-compressed JSON object per account at lib.opal_naming.address(\"irpt\", <firm>, \"platinum\", \"reporting\", \"account=<id>\", \"series.json.gz\")",
-    "manifest": "manifest.json -- one JSON object per account beside the series file"
+    "manifest": "manifest.json -- one JSON object per account beside the series file",
+    "class_series": "class_series.json.gz -- one gzip-compressed JSON object per account at lib.opal_naming.address(\"irpt\", <firm>, \"platinum\", \"reporting\", \"account=<id>\", \"class_series.json.gz\"), beside the series file; its layout is the class_object section of this file"
   },
   "change_rule": "C-SEAM: workstream B is the only writer of this file and the page is its only reader. A field the page needs and the file lacks is a change request to the issuer of workstream B, never a page-side derivation from another source. Enum members are defined once, in source_table_contract; this file names the enum and never restates its members.",
   "series": {
@@ -267,6 +273,68 @@
         "sentence": "Which trading calendar answered the unreported-day derivation: pandas_market_calendars when the library answered, or fallback_2010_2027 when the hardcoded calendar table answered; the fallback is that hardcoded table, never the library. Absent when no derivation ran."
       }
     }
+  },
+  "class_object": {
+    "version": "0.4.0",
+    "file": "class_series",
+    "shape": "columnar: `date` and `coverage` are per-day arrays of one length, and `market_value_eod` and `class_return_daily` are objects from a class name to a per-day array of that same length; every per-day entry is aligned by index with `date`",
+    "required": ["account_id", "firm", "as_of", "method_version", "schema_version", "date", "class_names", "coverage", "market_value_eod", "class_return_daily"],
+    "per_day_arrays": ["date", "coverage"],
+    "per_class_arrays": ["market_value_eod", "class_return_daily"],
+    "class_names_enum": ["fixed_income", "equity", "commodities", "structured", "alternatives", "cash", "unclassified", "other"],
+    "coverage_values": ["CLASSIFIED", "UNCLASSIFIED_PRESENT", "SOURCE_ABSENT"],
+    "fields": {
+      "account_id": {
+        "kind": "scalar string",
+        "sentence": "The custodian account id in the source table's account form, the same id the series file carries; never null."
+      },
+      "firm": {
+        "kind": "scalar string",
+        "sentence": "The registry-derived firm scope the account belongs to, the same firm the series file carries; never null and never a typed token."
+      },
+      "as_of": {
+        "kind": "scalar string",
+        "sentence": "The newest trading day the class series holds, as YYYY-MM-DD; equal to the last entry of `date`; never null."
+      },
+      "method_version": {
+        "kind": "scalar integer",
+        "sentence": "The `dim_return_method` row the class figures were produced under, equal to the series file's `method_version`; never null."
+      },
+      "schema_version": {
+        "kind": "scalar string",
+        "fixed_value": "class_object-0.4.0",
+        "sentence": "The fixed text 'class_object-0.4.0', naming the layout of this object; never null and never any other text."
+      },
+      "date": {
+        "kind": "per-day array of string",
+        "sentence": "The trading day of each entry as YYYY-MM-DD, strictly increasing, each one a day the series file holds in its `date` array; never null."
+      },
+      "class_names": {
+        "kind": "list of string",
+        "sentence": "The asset classes this object reports, each a member of `class_names_enum` and listed once; the keys of `market_value_eod` and `class_return_daily` are exactly these names; never null."
+      },
+      "coverage": {
+        "kind": "per-day array of string",
+        "sentence": "What the day's class figures stand on, one member of `coverage_values`: CLASSIFIED means every held security had a classification row in force on the day; UNCLASSIFIED_PRESENT means at least one held security had none in force and sits in the class unclassified; SOURCE_ABSENT means the securities read of the account was unavailable that day, so no class figure is written for it; never null."
+      },
+      "market_value_eod": {
+        "kind": "per-class object: class name to per-day array of number or null",
+        "sentence": "The market value held in each class at end of day in US dollars, aligned by index with `date`; the classes of a day sum to the series file's `value` on that date; null exactly on a SOURCE_ABSENT day, and never filled, carried forward or read as zero."
+      },
+      "class_return_daily": {
+        "kind": "per-class object: class name to per-day array of number or null",
+        "sentence": "The class's CONTRIBUTION to the account's daily total return as a decimal fraction (0.01 is one percent), so that the classes sum to the account: their sum on a day equals the series file's `total_return_daily` on that date. Null on a SOURCE_ABSENT day and on a day whose `total_return_daily` is null; NEVER filled, carried forward or read as zero."
+      }
+    },
+    "dated_classification_rule": "A holding is mapped by the classification row in force ON THE DAY, never by today's row; a holding with no classification row in force on that day is mapped to the class unclassified and nothing is guessed; a day whose securities read is unreadable is SOURCE_ABSENT, and no class figure is written for it.",
+    "sum_test": {
+      "return_tolerance": 1e-9,
+      "value_tolerance_usd": 0.01,
+      "applies_to": "every day whose coverage is not SOURCE_ABSENT",
+      "return_rule": "the sum over class_names of class_return_daily equals the series file's total_return_daily on the same date within return_tolerance; both are null together",
+      "value_rule": "the sum over class_names of market_value_eod equals the series file's value on the same date within value_tolerance_usd"
+    },
+    "absent_means": "no class view: the page says so and never derives a class from another source; the series file is unaffected, and an absent class_series object is read as no class view yet."
   },
   "open_changes": [
     "PRD v0.4 ruling 17 (@a8a65b9f62): HOLDINGS_INCOME_FALLBACK is never emitted; the member leaves the source table contract in that file's own versioned edit, and this file changes nothing because it names the enum and not its members.",
