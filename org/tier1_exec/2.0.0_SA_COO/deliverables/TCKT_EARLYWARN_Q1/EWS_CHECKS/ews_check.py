@@ -25,7 +25,7 @@ def bad(why: str) -> int:
     return 1
 
 
-def aws(*args: str) -> dict:
+def aws(*args: str) -> dict:  # no bare "*" argument: the shim re-expands it against the working directory
     r = subprocess.run(["bash", ".tools/aws", *args, "--output", "json"], capture_output=True, text=True, timeout=100, check=False)
     if r.returncode != 0:
         raise RuntimeError("aws %s rc=%d: %s" % (" ".join(args[:3]), r.returncode, (r.stderr or r.stdout)[-300:]))
@@ -73,7 +73,9 @@ def iam() -> int:
     deny = [("secretsmanager:GetSecretValue", other_secret),
             ("s3:PutObject", "arn:aws:s3:::%s/schwab/%s/silver/x" % (BUCKET, MASTERS[0])),
             ("s3:GetObject", "arn:aws:s3:::%s/schwab/%s/bronze/x" % (BUCKET, MASTERS[0])),
-            ("ses:SendEmail", "*"), ("sns:Publish", "*"), ("sqs:SendMessage", "*")]
+            ("ses:SendEmail", "arn:aws:ses:us-east-1:%s:identity/opalinvest.com" % acct),
+            ("sns:Publish", "arn:aws:sns:us-east-1:%s:ews-probe-topic" % acct),
+            ("sqs:SendMessage", "arn:aws:sqs:us-east-1:%s:ews-probe-queue" % acct)]
     for act, res in allow:
         got = simulate(role, act, res)
         if got != "allowed":
@@ -94,7 +96,10 @@ def ledger() -> int:
     sentinel = os.path.join("org", "critical_paths", ".open_deploys", slug + ".json")
     cm = [f for f in os.listdir(os.path.join("org", "critical_paths", "change_management")) if slug in f and f.endswith("_deploy_completion.md")]
     if not cm:
-        return bad("no closed change-management entry for " + slug)
+        return bad("no change-management entry for " + slug)
+    status = [ln for ln in open(os.path.join("org", "critical_paths", "change_management", cm[0]), encoding="utf-8").read().splitlines() if ln.startswith("**Status:**")]
+    if not status or "CLOSED" not in status[0].upper():
+        return bad("the entry %s reads %s, not CLOSED" % (cm[0], status[0] if status else "no status line"))
     r = subprocess.run(["git", "ls-files", "--error-unmatch", sentinel], capture_output=True, text=True, check=False)
     if r.returncode != 0:
         return bad("sentinel %s is not committed" % sentinel)
