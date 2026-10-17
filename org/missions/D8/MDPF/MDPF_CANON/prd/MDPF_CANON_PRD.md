@@ -907,7 +907,11 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
   (CTO msg 6986). `_aggregate_aua` holds 10-12 and 10-17, and nothing between them.
 - **Gate (v) checks every date** (`dim_mdpf_aggregate_aua_timeseries.py:1791-1815`, called at `:2712` on Global's full axis). 10-16, which
   has counts but no values, would refuse Global on every fire.
-- **Ruled:** add "2026-10-16" to `GLOBAL_CROSS_AXIS_EXEMPT_DATES` (`:1731-1736`, the 1326Z enumerated-list precedent).
+- **Ruled (amended ~14:3xZ, D1 msg 7598):** first ruled as an exemption, but exempting the date leaves it on Global's axis
+  (the union of the three legs, `:2368`). Global would then be keyed 10-16 (`:2860`) with a None headline. Instead, drop 2026-10-16 from Global's
+  axis by an ENUMERATED set applied at `:2368`, never a general filter (the 1326Z doctrine). It is not added to the exempt list as well.
+  Cottonwood's own axis keeps 10-16. D4's no-write dry run is the go/no-go: Global as_of = the frontier, a non-None headline, and no None
+  model_value inside the covered range.
   - It is a producer change under a never-widen pair, built on the deployed pin d2f734fbac.
   - It is the 2026-10-18 13:30Z fire's one gold change.
   - CN-s-1's Global grade reads that fire.
