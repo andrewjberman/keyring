@@ -3384,6 +3384,70 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "git ls-files integrations/bloomberg/pipeline/etf_daily_pull.py@worktree branch wk-MDPF_DEMQUE-63: tracked (positive control), ls integrations/bloomberg/pipeline/ on disk: No such file or directory"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W64-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~64",
+    "surfaced_at": "2026-10-17T04:28:49Z",
+    "one_line": "bbg_backfill.run draws up to the quote's allowance_today and passes no drawn_surface_today, so a surface-tagged request it runs (the D-tagged DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS) reads the full budgets.surfaces.D room even on a day the drawer already drew surface D.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "DQ-t-69 THE RULE (CTO ruling 1.0.0_SA_CTO~DELL1, 2026-10-17): a surface-tagged request draws against its surface room less the surface cells drawn today. bbg_backfill.py is not in the order's <paths>, so its quote call was not edited.",
+    "world_is": "data/mdpf/scripts/demque/bbg_backfill.py line 111 calls bbg_quote.quote(request, allowance, _spent(today, actuals), today) with no drawn_surface_today; line 112 takes room = quote['allowance_today'] and lines 141-142 cap every draw at room. The quote of a surface-D request is now budgets.surfaces.D (100000) less drawn_surface_today, which this call leaves at 0. test_demque_bbg_backfill.py::test_backfill_stops_at_the_days_allowance asserted the old 5858 ceiling for this request and was edited to 100000 (named in the worker report).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_backfill.py@626c692706 lines 110-112 (quote and room), lines 141-142 (room caps every draw)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json@626c692706 line 2 (\"surface\": \"D\")",
+        "data/mdpf/scripts/demque/test_demque_bbg_backfill.py@wk-MDPF_DEMQUE-64 lines 59-63 (the edited assertion; worktree, uncommitted at filing)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W64-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~64",
+    "surfaced_at": "2026-10-17T04:28:49Z",
+    "one_line": "The untagged history figure also adds the production budget ledger for the day, which holds the drawer's own draws (surface draws included) under their UTC date, so a surface draw can reduce the untagged room on a day whose UTC date it was recorded under; the rule 'a surface draw never shrinks the untagged ceiling' is not met across a UTC-midnight run.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "DQ-t-69 Room in the drawer: leave out of the untagged figure the actuals-ledger cells of surface-tagged jobs, so a surface draw never shrinks the untagged ceiling; keep production's cells as they are.",
+    "world_is": "bbg_budget.record writes each draw to bbg_budget_<UTC date of the draw>.jsonl. bbg_ledger_upload.rows_for_day(D) reads that file and converts mode demque-backfill to channel history (CELLS_PER_ROW). standing_drawer._drawn_history_today(D) adds those rows to the untagged figure, and the spec leaves them in. A drawer run on a local evening can write its draws under the next UTC day, so the next day's untagged room (and day_room --room) is reduced by surface draws. The same budget-ledger rows also repeat the drawer's own untagged draws already counted from the actuals ledger (a double count that was already in the base code and is unchanged). test_demque_surface_room.py makes bbg_budget.record a no-op, so no test figure depends on the wall clock.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_ledger_upload.py@626c692706 lines 112-131 (rows_for_day reads bbg_budget_<day>.jsonl; demque-backfill maps to history)",
+        "data/etfs/scripts/rivalfunds/bbg_budget.py@626c692706 line 30 (ENV_DIR) and the record path (UTC day file)",
+        "data/mdpf/scripts/demque/standing_drawer.py@wk-MDPF_DEMQUE-64 _drawn_history_today (budget ledger term kept as spec'd; worktree, uncommitted at filing)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W64-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~64",
+    "surfaced_at": "2026-10-17T04:28:49Z",
+    "one_line": "The order names the drawn_surface_today keyword of quote only; the --quote --actuals CLI path was also made surface-aware, which the order did not ask for.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-69 Build 1: bbg_quote.py gains surface_budget, the drawn_surface_today keyword, the tagged walk and record_actual(surface=None). The CLI quote path is not named.",
+    "world_is": "bbg_quote.main --quote with --actuals now passes REQUESTS_DIR and the allowance to _actuals_drawn (surface rows are left out of drawn_today for history) and, for a surface-tagged request, passes drawn_surface_today from surface_drawn_today. Without this the CLI quote of a tagged request would ignore the surface's draws today. The order's AC2 (no --actuals) is unaffected.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_quote.py@wk-MDPF_DEMQUE-64 main() --quote branch and _actuals_drawn (worktree, uncommitted at filing)",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R10_CHECKS/dq_t69_real.py@626c692706 (AC2 invocation without --actuals)"
+      ]
+    }
   }
 ]
 ```
