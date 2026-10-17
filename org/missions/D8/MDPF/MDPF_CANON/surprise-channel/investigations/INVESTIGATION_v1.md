@@ -2869,3 +2869,28 @@
   "notes": "Not a timing gap: the next ADVI build will not close it. Remedy (not applied): dedup cot silver holdings on (account_id, asset_id), the key BD and MDPF use. That is an ADVI-lane silver change with its own half. Asked by 1.0.0_SA_CTO~DELL1 msg 7550."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S35",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "4.0.0_SA_CRO~DDD",
+  "surfaced_at": "2026-10-17T14:35:00Z",
+  "one_line": "SSM opal-cot-bronze-run always runs --backfill-holdings-net (a retry sweep over EVERY snapshot table, incl. account_attributes, for the 5 bdays before RunDate) BEFORE its main pull, so a single-table historical re-pull silently lands other tables: 7 July/Aug holdings runs first-landed 14 bronze account_attributes keys and re-landed 2 allocations days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO half NEVER_WIDEN_COT_CARRIER_7DAY_REPULL_CTO_HALF.md @8c36f9f375 and CTO 7390: holdings and allocations only; no account_attributes partition is touched.",
+  "world_is": "MEASURED from s3://opal-data-cot/logs/cot-exporter/bronze-run/cot-bronze-net-20261017-140*.log: relanded account_attributes 07-15,16,17,20,21,22,23,24,27,28,29,30,31, 08-12 (first lands, no prior version; each today's 1,127-row/1,004-account snapshot stamped with the past date) and allocations 07-27 (3->1,553 rows), 07-29 (1->1,552). The re-landed allocations carry as-of positions (per-account median |diff| to as-of holdings $4.26/$6.04 vs $1,145/$658 to 10/16). The 14 attribute keys are now in FORWARDFILL_QUARANTINE (deployed @da8fd571b8 bytes, sha 72dcb7e5..), so no silver run merges them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/cot-pipeline/ssm.tf opal-cot-bronze-run runCommand: --backfill-holdings-net before the main pull",
+      "s3://opal-data-cot/logs/cot-exporter/bronze-run/cot-bronze-net-20261017-140557.log .. -140951.log",
+      "org/missions/D8/MDPF/MDPF_CANON/ledger/CTO_RULING_QUARANTINE_14_STRAY_ACCOUNT_ATTRIBUTES_20261017.md @d398734b87"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Breach of my own half's no-account_attributes term, self-reported at 14:23Z (msg 7579); remedied by the quarantine. Lesson for any historical single-table re-pull: use a sweep-free path (the ingest's --table run without --backfill-holdings-net), or scope the sweep. The ingest's owning lane (CloudOps COT) decides whether the SSM document should skip the sweep when Table is set."
+}
+```
