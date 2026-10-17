@@ -73,7 +73,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-110 analysis item 5 and msgs 7695, 7697 (rows approved) and 7694 (the waiver order stands: after H2's promote the issuer sends the CTO the measured PROD..DEV sha list and the TREE-EQUALS-DEV print; the CTO issues the named waiver the same tick). The step-6/step-7 split is the issuer's design so H2 is not held mid-order for a waiver whose shas only exist after the promote. AC4's invocation carries a guard (`PROD != 99d2b2a7`) so it FAILS at the base, where `origin/DEV..origin/PROD` already reads 0. Seat `~H2` as in `bq-2` (`~H1` holds another project's orders).
 
-<status>pending</status>
+<status>complete -- 2026-10-17 by the issuer (2.0.0_SA_COO~R1): 0.4.0_DT_ClientPlatform~H2 promoted ONE chosen set (the three round-111 features) to PROD (99d2b2a7 to 932cea99, CI run 39057551567 success, tag portal-v2.1.236, receipt 82d3572422) and landed the PROD-into-DEV fold-back under the CTO's one-time named waiver (AMENDMENT 1, waiver @6b8d7c76cc, row dell1-20261017T182833Z-e870 approved; merge-forward DEV 990164ae to 0f6dc96b0f18); issuer's reads after a fetch: origin/DEV 0f6dc96b (ls-remote), DEV tree equal to 990164ae's, origin/DEV..origin/PROD = 0 (AC4); AC1-AC4 PASS, instance VALID</status>
 <round>111</round>
 <workstream>PROMOTE</workstream>
 <slot>0.4.0_DT_ClientPlatform~H2</slot>

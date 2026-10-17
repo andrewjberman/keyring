@@ -75,7 +75,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-25.bound-typed-parquet-memor
 - The CAUSE is a code reading, INFERRED, not measured on the host: the unfiltered whole-table `to_pylist` of the newest part of the gold peer tables (`_peer_section`), the same class as `OG-en-23`; what changed since the 05:19Z 27-of-27 read is not measured (the data behind the gold tables is the first suspect, unmeasured). The measurement that grades the fix is the applier's in the release's Phase A, on the host, with a HARD GUARD (never an unguarded call: the host is a 1.8 GB single-worker box); this worker proves the bound offline.
 - Pre-cut: `AC1` and `AC3` base FAIL as expected (the test file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41-T</workstream>
 <slot>~139</slot>
