@@ -5244,6 +5244,59 @@
     "spec_asserts": "event_type on a landed corporate-actions row is a value of the mapped enum.",
     "world_is": "Three raw Bloomberg dividend types (Daily Accrual, Income, Return of Capital) plus 'Pro Rata' fall through as unmapped:*. The 264-of-400 headline overstates the breadth: it is one money-market name plus two single rows. Return of Capital moves cost basis, so it is the one whose mapping matters to a consumer.",
     "notes": "Filed by 1.0.0_SA_CTO~Z on 0.0.3_BG_BBGTerminal's ask (msg 35375). No ruling here; whether to map the three types, and how a Return of Capital row reaches a consumer, is the issuer's (2.0.0_SA_COO~V1, dell1) to disposition."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S84",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-10-17T06:08Z",
+    "one_line": "The rivalfunds history backfill's first TIMED object in the 2026-09-29 G4 partition demoted that date's two untimed pull objects to descriptive-only under RIV-rk-1(2); the backfill row then wins the merge and drop_backfill nulls it, so the rankings for 2026-09-29 lost 650 price cells (814 merged rows, 164 seen).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured by 0.0.3_BG_BBGTerminal on live S3 by running hc.g4_rows + hc.drop_backfill (msg 35393 to 1.0.0_SA_CTO~Z, 2026-10-17T06:03Z); filed here by 1.0.0_SA_CTO~Z because the channel is outside that seat's writable paths",
+        "2026-09-29: merged 814 rows, the rankings see 164; 650 price cells lost",
+        "cause: the partition held two UNTIMED pull objects and no timed one; the ORDER 2 step-1 object 20261017T043649Z is the first TIMED object there, so _g4_merge now treats the untimed objects as descriptive-only and the backfill price wins (992 HK 35.48 over the untimed 34.54) before drop_backfill nulls it",
+        "blast radius measured by that seat: 1 partition of 251, the only one with timed_today and no timed_older"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Landing history backfill rows never removes a price the rankings already saw; backfill rows are dropped from the rankings and must leave the pull prices in place.",
+    "world_is": "The merge picks its winner before drop_backfill runs. A backfill-flagged timed object therefore displaces untimed pull prices and is then itself dropped, leaving the cell empty. On 2026-09-29, 650 cells went this way.",
+    "notes": "Ruling by 1.0.0_SA_CTO~Z (site Z), 2026-10-17 ~06:0xZ, on 0.0.3_BG_BBGTerminal's ask: NO S3 write and NO delete for this partition. (1) A corrective timed non-backfill object is REFUSED: it would stamp untimed pull prices as timed, a claim the data does not carry. (2) The delete is not asked of Andrew: it would remove backfill rows he ordered landed, to cure a read-side defect. (3) The fix SHAPE, for the owner: in the rankings read, apply drop_backfill BEFORE the timed/untimed winner is chosen in _g4_merge, so backfill rows can never displace a price and are then dropped. That restores 2026-09-29 by reading, with no write, and covers every future backfill. DISARM is the issuer's (2.0.0_SA_COO~V1, dell1): until the read fix lands, no rankings rebuild that includes 2026-09-29 is served as complete. The WRITE of the fix is the owner of the rankings reader."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S85",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-10-17T06:14Z",
+    "one_line": "The rivalfunds daily pull records PX_LAST at about 11:00Z and files it under NYSE T-1 for every venue. US names are correct, Asian names are shifted one trading day later, and European names match neither close; on partition 2026-10-15, 391 of 760 rows are priced on the wrong venue clock. This makes S84's fix shape wrong: the 650 cells it counted as lost on 2026-09-29 were shifted values.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured by 0.0.3_BG_BBGTerminal against BDH (msg 35399 to 1.0.0_SA_CTO~Z, 2026-10-17T06:09Z); full record org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-10-17/rivalfunds_daily_pull_files_non_us_closes_on_a_nyse_clock.md (uncommitted when this row was filed); filed here by 1.0.0_SA_CTO~Z because the channel is outside that seat's writable paths",
+        "US: ADBE 4 of 4 correct",
+        "ASIA: 992 HK, 1 HK and 005380 KS, 12 of 12 checks, each served value is the NEXT trading day's close",
+        "EUROPE: 6 names (LN/FP/GR) match neither close; intraday-as-close is INFERRED, not measured",
+        "partition 2026-10-15: 391 of 760 rows priced by a writer that is wrong for the venue",
+        "triggered by Andrew's direct word to 0.0.3_BG_BBGTerminal to fix 'that lenovo price history' (992 HK); the defect is universe-wide"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "ETFS_RIVALS-Z-S84"
+    ],
+    "spec_asserts": "A rivalfunds G4 price for date D is that security's official close for D on its own venue.",
+    "world_is": "Only US closes are filed under the correct date. Asian closes sit one trading day early, under the previous NYSE date, and European values are not a close. The BDH backfill closes are the correct values: on 2026-09-29 the backfill's 35.48 for 992 HK is right and the untimed pull's 34.54 is the shifted value.",
+    "notes": "SUPERSEDES the fix shape in ETFS_RIVALS-Z-S84 (its world_is coverage count stands). S84 proposed applying drop_backfill before the merge winner. That would RESTORE shifted prices, so it is withdrawn. What stands: no corrective timed object, no delete. RULING by 1.0.0_SA_CTO~Z on 'who owns the per-venue attribution fix': the WRITE and the order belong to ETFS_RIVALS, whose issuer is 2.0.0_SA_COO~V1 (dell1). Andrew's direct word to 0.0.3_BG_BBGTerminal ('fix that lenovo price history') stands as given and is not narrowed: that seat may fix within its own lane. Where the producer is outside its lane, it hands the measured spec to the issuer. The FIX SHAPE: file each security's close under its own venue's trading date (venue calendar, not NYSE T-1), pulled after that venue's close, and re-source the affected history from BDH. DISARM: until the fix lands, non-US rivalfunds prices are not served as closes for the date they are filed under."
   }
 ]
 ```

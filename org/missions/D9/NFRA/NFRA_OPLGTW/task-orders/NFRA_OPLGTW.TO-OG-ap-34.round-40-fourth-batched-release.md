@@ -75,7 +75,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-34.round-40-fourth-batched-r
 - Known carries, not in this release: the allocation weight unit (Z-S313), the browser-exemption roster (Z-S322), the 429 limit choice (Z-S177), the per-partition prefix listing (Z-S328, `client_core.py`; it dominates the page's wall time). `OG-ap-33` (landing the HVST line on trunk) waits for this release to be live.
 - Pre-cut: `ap34.AC1` and `ap34.AC2` base FAIL as expected (records absent). `ap34.AC1` PASS arm exercised on a git-plumbing release commit built from the live ref `d3ae88be46`; controls FAIL (memory gate median 40 MB per page; first page 50 s; the memory record for another release; `tools.py` touched; the old catalog blob). `ap34.AC2` served-record arm: a good record OK; a memory arm false NO; an arm missing NO; a `tools/list` drift NO.
 
-<status>staged</status>
+- A1 (2.0.0_SA_COO~O, round 40, ~06:1xZ): PHASE C added after the close. `ap34.AC2` PASS (this seat's run), release `9d5b712557` live. For the CVO's judgment criterion AC3 (and its re-grade of `OG-ap-31` AC3) the issuer relays BODIES of one page chain: after the close, through the INSTALLED code in a fresh process under the master_admin stand-in, capture for the one test account the first two pages and the last page of the transactions chain and of the fees chain (13-month window, one call at a time) into `W/CVO_AC3_BODIES_OG-ap-34.json`, as `ap31_ac3_capture.py` did for `OG-ap-31`. The file holds client data: UNTRACKED and listed in `.git/info/exclude`; never committed, never printed, never messaged; report only its byte count and sha256 and the page counts. No deploy, no write to any bucket or table. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-P</workstream>
 <slot>~AE</slot>
