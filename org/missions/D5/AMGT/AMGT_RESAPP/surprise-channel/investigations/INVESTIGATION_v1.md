@@ -29238,3 +29238,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by the worker. The census check C1 asserts the file set, which is the part the order states as an assertion, and it passes."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W488-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~488",
+  "surfaced_at": "2026-10-17T12:19:17Z",
+  "one_line": "AMGT-bp-1 AC2: the feature-green script exits 0 and prints YES with regressions 0, but its harness count (25 of 28 pass) and its pre-existing list (3 names) do not match the order's expected line (22 of 28, 6 names).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bp-1 order section 4, AC2 expect: the line 'R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness 22 of 28 pass, base 21 of 27, regressions 0, pre-existing: assembled.harness.cjs exportCompare.harness.cjs posture.harness.cjs posturePattern.harness.cjs tabs.harness.cjs timelineFourStates.harness.cjs)', with lint rc 0 on src/pages/SecurityAnalysis and exit=0.",
+  "world_is": "Run by this worker at branch head 25afc84c4d64403127626139803848086316f196 (portal base 15bc21b3), exit 0: 'R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness 25 of 28 pass, base 21 of 27, regressions 0, pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs)'. Typecheck, lint, the base count and the regression count match the expectation. The harness pass count and the pre-existing list do not: posture.harness.cjs, posturePattern.harness.cjs and tabs.harness.cjs exit 0 on this branch, where the expected line names them as failing. The cut's PROD preflight read harness 21 of 27. The branch changes WhatChangedPanel.tsx and adds one harness folder; the cause of the three passes is not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 invocation run in C:/dev/wk-resapp-488 with the portal at C:/dev/wk-resapp-488/portal on cand/dell1/amgt-sa-changed-list-value @25afc84c4d64403127626139803848086316f196; the output line above, exit=0",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107_prep/checks/r107_feature_green_v3.sh @46c09f960f29ca4cfed316cf8d55dc7891ab3805 (the script; the harness loop runs each __harness__ file bare on the branch and on a detached base at 15bc21b3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as read. No verdict. AC1 and AC3 read as expected; AC2 is graded FAIL by literal comparison in the proof instance, which leaves the order open."
+}
+```
