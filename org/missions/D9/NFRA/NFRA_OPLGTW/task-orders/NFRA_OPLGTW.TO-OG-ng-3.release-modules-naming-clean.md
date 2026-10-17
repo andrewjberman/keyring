@@ -67,7 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ng-3.release-modules-naming-cle
 
 - A1 (issuer, 2026-10-16 ~11:0xZ, round-close-check PROOF-BAD, row Z-W111-S16): the proof instance still carries the worker's AC1 `FAIL` row, an environment effect of its sparse tree (the gate's live-read client was not in the cone); the lane `TREE_DELIVERABLES` gives the instance to its serial alone, so the issuer cannot rewrite it. RE-SEATED slot `~111` (prior commits `a9dd9aff6c` and the worker's proof commit are inherited state): in a worktree whose cone holds `.tools/`, `lib/`, `infra/logic/`, `infra/aws/globgrph/` and `infra/aws/ec2/opal-gateway/app/`, re-run `ng3.AC1.sh` and `ng3.AC2.sh`, rewrite ONLY the AC1 acceptance row of the instance from that run (its output verbatim, the verdict the run reads; keep the former FAIL and its cause in `status_reason`; set the row's recorded `expect` to this order's current AC1 expect, which admits the gate's `WARN` summary token since `06dfc8b95c`), validate with `proof-of-spec-check.py`, flip the order `<status>` back to `complete`. No product file is touched. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>staged</status>
+<status>complete</status>
 <status_reason>closed by the issuer 2026-10-16: the worker's AC1 FAIL was one line, admin_gateway_breakdown.py:164 (opal-data-bd), an environment effect of its sparse tree (the gate's live-read client infra/aws/globgrph/projection_client.py was not in the cone; row Z-W111-S16). The issuer re-ran ng3.AC1 in the main tree on trunk 396b0690d5: rc=0, REFUSE 0, RULED 11, 13 graded, PASS; ng3.AC2 PASS (worker and issuer).</status_reason>
 <round>37</round>
 <workstream>NAMING-RELEASE-CLEAN</workstream>
