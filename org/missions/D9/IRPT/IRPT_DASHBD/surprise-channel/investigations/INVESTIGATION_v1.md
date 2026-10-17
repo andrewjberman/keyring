@@ -25832,3 +25832,79 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm owner is 2.0.0_SA_COO~D2: the reader fix (D to D+14 trading days, trade_date = D, dedup on TransactionID) as one code release with this seat's transaction stage (cell DB-f-2706), then the all-days rewrite pair and the republish (CTO msg 10592 items 2 and 3). TO-DB-b-332 is on the CTO's hold."
 }
 ```
+
+## IRPT_DASHBD-D2-W2706-S1 -- the order's re-pin premise fails: handler.py is listed in the function-map entry's files with no pin or sha256, so no staged_from pin moves and no re-pin commit was made
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2706",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2706-S1",
+  "surfaced_at": "2026-10-17T15:29:25Z",
+  "one_line": "The order's step 5 premise fails: handler.py is listed in the function-map entry's files with no pin or sha256, so no staged_from pin moves and no re-pin commit was made; pins_moved is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-cot-account-return-daily-lambda.json at e707f85c1a: files lists handler.py by path; staged_from holds 20 pins, none of them for handler.py",
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py committed at a1638e91c0 (the code commit); the function-map file is not in the commit",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r138/p138_cotbundle.py ac1 reads only the staged_from pins; DBF138-6-AC1 to AC3 PASS at a1638e91c0"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-2706 WORKER FACE step 5: re-pin the entry's staged_from pin of each edited file to the commit that carried it and its new sha256, and the handler (and any bundled file you edit) is pinned in the function-map entry; step 7 names a second commit for the re-pin.",
+  "world_is": "The entry pins 20 producer-chain members in staged_from; the handler is the source_dir and appears in files by path only, with no pin key and no sha256. The worker edited handler.py and the tests directory, neither of them a staged_from member, so the re-pin is empty and no second commit was made. The bundle checker reads the staged pins only, so DBF138-6-AC1 to AC3 pass unchanged."
+}
+```
+
+## IRPT_DASHBD-D2-W2706-S2 -- a window-complete day whose window holds no line of that business day is refused by the producer's empty-partition rule and named on each fire that owes it; the order states no rule for a zero-row day
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2706",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2706-S2",
+  "surfaced_at": "2026-10-17T15:29:25Z",
+  "one_line": "A window-complete day with no Cottonwood rows is refused by the producer's empty-partition rule and named in transaction_failed on each fire that owes it; the order says nothing about a zero-row day, so the producer's rule was kept.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_cottonwood.py emit_transaction_day line 237 at a1638e91c0 (unchanged by this cell): REFUSED no transaction rows; an empty partition is not written",
+      "DBF139-6-AC3 run at a1638e91c0 printed TRANSACTION_SKIPPED 2026-08-28 SystemExit: REFUSED: no transaction rows for 2026-08-28 on the synthetic silver, which holds no line of that business day"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-2706 WORKER FACE step 2: emit_transactions writes a full-window day once with the deduped row count; no clause states the outcome of a window-complete day whose window holds no line of that business day.",
+  "world_is": "On the synthetic silver of the checker the scheduled fire owes 2026-08-28, the newest writable day, and no window line carries that business day; the producer refuses the empty day, the stage names it as failed and writes nothing. Whether a real Cottonwood trading day with no trades occurs and how it reads in the returns log is not measured here."
+}
+```
+
+## IRPT_DASHBD-D2-W2706-S3 -- the window checker and the directory's tests print a WARN that the hardcoded NYSE calendar answers, because pandas_market_calendars is absent on this box
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2706",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2706-S3",
+  "surfaced_at": "2026-10-17T15:29:25Z",
+  "one_line": "Every run of the window checker prints WARN trading_calendar: the hardcoded NYSE fallback answers, because pandas_market_calendars is absent on this box; the window arithmetic was measured on that fallback.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WARN line printed by python -I checks/r139/p139_cotwindow.py . DBF139-6-AC1 at a1638e91c0 on 2026-10-17: NYSE/hardcoded-fallback-2010-2027, regenerate with lib/tests/gen_nyse_closures.py --write before 2028",
+      "lib/trading_calendar.py names the fallback source NYSE/hardcoded-fallback-2010-2027 and its span 2010 to 2027"
+    ]
+  },
+  "spec_asserts": "The window arithmetic (14 trading days, the newest writable day, the lag) reads the lib/trading_calendar frontier as the census counts it.",
+  "world_is": "On the dell2 worktree the calendar answers from the hardcoded fallback, which covers 2010 to 2027. The checker's dates (2026-07 to 2026-09) fall inside that span, so the criteria are measured on the fallback rather than on the package calendar."
+}
+```
