@@ -1,0 +1,13 @@
+{
+ "project_code": "ADVI_COTBOOKS",
+ "home": "org/missions/D8/ADVI/ADVI_COTBOOKS",
+ "directive": "D8",
+ "macro_code": "ADVI",
+ "fabric": "dell1",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "Cottonwood's advisor books on Advisor Intelligence: every account in one advisor's book by a stated rule, each book tied to Black Diamond, the page in Inflection's shape",
+ "generated_from": "org/missions/D8/ADVI/ADVI_COTBOOKS/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-10-17T03:06:58Z"
+}
