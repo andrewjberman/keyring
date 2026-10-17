@@ -78,7 +78,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-112 analysis for the R1 track (`ledger/ROUND_ANALYSIS.round112.R1.md`, msg 7733) item list. One cell, one candidate branch cut from PROD `856fb37b`, one approval row (opal-internal, Security Analysis; the CTO approves). Disjoint write surface from the other round-113 cells. AC2's totals were measured in a provisioned worktree cut at `856fb37b` at the cut (30 of 33, pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs). The three-way expectation: the new harness fails at the base on D1 to D3. The grade is the rendered text (the CTO's item 1, RIO LN and ICT PM).
 
-<status>pending</status>
+<status>complete -- drained by the issuer (2.0.0_SA_COO~R1) 2026-10-17: worker ~500 at c350f8b500 (merged 2a575f68cd); proof VALID rc=0 on the worker's checker; issuer re-runs in a FRESH checkout of the candidate: EARNINGS LONG DATES HARNESS YES (7 of 7), CHANGED LIST VALUE HARNESS YES (16 of 16), CHANGED OBJECT CELLS HARNESS YES (6 of 6); diff read: WhatChangedPanel.tsx three lines (the longDate import and its two uses in listReading and fullReading), the two older harnesses' pinned expectations updated, the earnings row's recorded base text re-recorded for that ONE row (the other 46 RIO LN and 13 ICT PM rows byte-identical to the recorded digests) and the recorded-text comparison normalising CRLF; candidate cand/dell1/amgt-sa-earnings-long-dates head c4e4f96af3 on PROD 856fb37b; at the unedited head the new harness read NO (4 of 7: D1, D2, D3 failing); rows W500-S1..S2 INERT; approval row dell1-20261017T210225Z-5058</status>
 <round>113</round>
 <slot>0.9.0_WK_AMGT_RESAPP~500</slot>
 <fabric>dell1</fabric>
