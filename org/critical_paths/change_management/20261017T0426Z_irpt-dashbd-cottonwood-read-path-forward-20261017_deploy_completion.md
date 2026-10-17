@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T04:26:16.992010+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261017T045355Z
 **Deploy:** IRPT_DASHBD TO-DB-b-323 (C4 of the Cottonwood Performance read path, round 150): ONE build of the cot and read function-map entries, ONE safe-apply of the new root reporting-read-iso (5 add), direct probes of the new function incl. a forged-forward event, ONE safe-apply of reporting-read (1 add, 1 change), probes through the live 49 Financial function, receipt. Gate 0(c) per the issuer's ruling (msg 10272): the open ledger irpt-bckend-serve-path-hops-3-4a-report-route-export-bundle-20261017 names the read function but its read-function legs L2 and L3 are closed and its one open leg L7 is the export-role statement: another surface for this order.
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -26,3 +26,4 @@
 - 20261017T044210Z LEG L4 closed: eight probes by label: direct manifest 200 735 bytes, series gzip 2671, forged forward refused FIRM_BINDING 408 bytes (b
 - 20261017T044322Z LEG L5 closed: after-read and receipt written (COT_READ_APPLY_RECORD.json); prefixes 939, objects 1878, versions 5640 and the bucket po
 - 20261017T044604Z LEG L1 closed: function-map artifact_sha256 for both entries (DhBc5TbO..) plus this ledger sentinel and the receipt committed with expl
+- 20261017T045355Z CLOSED -- all 5 legs proven
