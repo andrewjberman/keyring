@@ -162,10 +162,12 @@ def main():
     if bindings["ycharts_window_budget"] != {"calls": 6, "window_s": 390} or bindings32["ycharts_window_budget"] != bindings["ycharts_window_budget"]:
         bad("ycharts_window_budget is %r (want 6 calls, 390 s, unchanged from r34h)" % (bindings["ycharts_window_budget"],))
     # 4b. THE IMPORT SMOKE (CTO msg 10172 ruling 2): every module the static walk marks LIVE imports under the service's own sys.path in a fresh -I interpreter
-    smoke = run([sys.executable, "-I", os.path.join(REPO, R34, "smoke_imports_r34.py"), x34, os.path.join(REPO, REACH)])
+    smoke = run([sys.executable, "-I", "-B", os.path.join(REPO, R34, "smoke_imports_r34.py"), x34, os.path.join(REPO, REACH)])
     smoke_lines = [ln for ln in smoke.stdout.splitlines() if ln.startswith("SMOKE")]
     if smoke.returncode != 0 or not smoke_lines or " fail=0 " not in smoke_lines[0] + " ":
         bad("the import smoke over the built tree failed: %s" % " | ".join(smoke_lines)[:400])
+    if walk(x34) != w34:
+        bad("the import smoke wrote into the built tree: %s" % sorted(set(walk(x34)) ^ set(w34))[:3])
     # 5. the scripts
     scripts_dir = out + "/scripts"
     os.makedirs(scripts_dir)
