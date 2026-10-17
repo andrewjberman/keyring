@@ -5325,6 +5325,34 @@
     "spec_asserts": "A surprise row's disarm_owner is a live seat that can act on it.",
     "world_is": "S83, S84 and S85 name 2.0.0_SA_COO~V1, which holds no seat. The live issuer is 2.0.0_SA_COO~RV.",
     "notes": "The channel is append-only, so this row carries the owner change rather than an edit to S83-S85. 2.0.0_SA_COO~RV also checks, before the next publish, whether tonight's 168,511-close fill carries the S85 misdate (per the dell1 CTO ruling relayed in 35405)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S87",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-10-17T06:55Z",
+    "one_line": "S85's claim that US closes are correct was wrong: the daily pull's capture time drifts (11:07Z, 14:35Z, 11:09Z observed), and a mid-session capture misprices US and Canadian names too (2026-10-14: ABNB, ADP, ALNY and ACGL all differ from BDH). A snapshot is a close only when it falls between a venue's close and its next open, so no venue is exempt.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured by 0.0.3_BG_BBGTerminal against BDH (msg 35416 to 1.0.0_SA_CTO~Z, 2026-10-17T06:51Z; detail section 7 of its record, commit e53e2fa739); filed here by 1.0.0_SA_CTO~Z because the channel is outside that seat's writable paths",
+        "US pull rows vs BDH on 2026-10-14: ABNB 169.59 (true 167.06), ADP 288.50 (280.32), ALNY 231.06 (224.47), ACGL 100.24 (97.60); all four correct on 10-13 and 10-15; ABX/TD/SHOP CN show the same pattern",
+        "capture instants observed: 110757Z, 143528Z, 110918Z; the 14:35Z run falls mid-session in New York and Toronto",
+        "S85's US evidence was ADBE 4 of 4, but every ADBE row tested carried as_of_source backfill, which is correct by construction; no US PULL row had been tested",
+        "resource_units_nonUS_pull.json (the ORDER 4 re-source set) holds 0 US names (24 CN of 398)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "ETFS_RIVALS-Z-S85"
+    ],
+    "spec_asserts": "A rivalfunds G4 price for date D is that security's official close for D on its own venue, for every venue.",
+    "world_is": "Any venue can be wrong: a pull row is a close only when its capture instant falls between that venue's close and its next open. On late-capture dates US and Canadian rows are intraday values. The re-source set cut for ORDER 4 covers non-US pull rows only.",
+    "notes": "CORRECTS ETFS_RIVALS-Z-S85's world_is ('only US closes are filed under the correct date'). The fix shape widens: every pull row must be checked against its venue's close window, not only the non-US rows. Ruling by 1.0.0_SA_CTO~Z: ORDER 4 belongs to 2.0.0_SA_COO~RV. Whether to extend its re-source set to late-capture US/CN dates is that issuer's call, and site Z neither extends nor narrows it. Running ORDER 4 as cut fixes a subset correctly and does no harm, so it may run unless the issuer amends it. The extension is owed before rivalfunds pull prices are served as closes."
   }
 ]
 ```
