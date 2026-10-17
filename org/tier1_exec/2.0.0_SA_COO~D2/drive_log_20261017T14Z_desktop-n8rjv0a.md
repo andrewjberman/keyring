@@ -1,0 +1,9 @@
+# Drive log 2026-10-17 14Z -- 2.0.0_SA_COO~D2 (IRPT_DASHBD, DSGN_IRPTV1 second project)
+
+Substantive ticks of the hour, copied from the runtime tick file (counts, hashes and words only). Push state: LOCAL.
+
+- 2026-10-17T14:21:40Z tick: IRPT_DASHBD EXECUTING r150 | dell1 landed allocations for 5 of 7 days (07-22 894, 08-03 901, 08-19 921, 09-24 949, 09-25 948); my read: 07-22 and 08-03 FULL (alloc + transactions); 07-27 (3) and 07-29 (1) allocations still partial; 08-19, 09-24, 09-25 transactions still ABSENT; asked CTO: one pair over all 7 (REC) or cut now over 2. LOCAL.
+- 2026-10-17T14:26:11Z tick: IRPT_DASHBD EXECUTING r150 | CTO re-land ruling: ONE pair over 07-22, 08-03, 07-27, 07-29 once dell1's convert lands (else 07-22 and 08-03 alone after Monday 15:00Z); prepared the issuer's checker p198 (day set from the packet DAYS line, 68 mutants, f692250df4); waiting for the convert, then re-read, cut packet, halves, order. LOCAL.
+- 2026-10-17T14:33:12Z tick: IRPT_DASHBD EXECUTING r150 | dell1 convert landed (07-27 897, 07-29 896); all four days read full; FOUND the next trading day of each is NOT_MEASURABLE in the gold itself (734/878/880/740) so the pair rewrites EIGHT gold days; p198 reworked (75 mutants, live NM share), packet sha 37ce1e48 + COO half committed, CTO half asked. LOCAL.
+- 2026-10-17T14:39:06Z tick: IRPT_DASHBD EXECUTING r150 | CTO half of the re-land pair signed @e5d081d262 (eight days, next days may be gained); cut TO-DB-b-332 + decomp 193 (b678fa07f2), p198 widened (77 mutants), read tool prints dates gained/dropped/changed (baseline: 939 identical); GO to IB2. LOCAL.
+- 2026-10-17T14:40:40Z tick: CTO (dell2) waived the letter of the no-bronze-change condition for 07-27/07-29; my re-land pair (sha 37ce1e48, TO-DB-b-332) may apply now; GO already with IB2; waiting on its dry runs. LOCAL.
