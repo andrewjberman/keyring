@@ -30288,3 +30288,137 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded, not investigated. The arithmetic uses only the script's printed counts."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "AC2 reads 18 failed, 1146 passed in this worktree, not the 9 failed the order expects: the worktree is a sparse checkout that omits infra/aws/terraform/harvest and integrations/, and nine tests read those paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout = true; git sparse-checkout list (worktree C:/dev/wk-resapp-506, branch wk-AMGT_RESAPP-506, HEAD fce34ac73c) = .tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP, org/modules/graph, org/ref, org/standards",
+      "git ls-files infra/aws/terraform/harvest = 22 tracked; the worktree holds 0 of them; integrations/ is absent in the worktree (71 tracked under integrations/bloomberg/research)",
+      "AC2 invocation output in this worktree: 18 failed, 1146 passed, 327 warnings in 63.35s, exit=1",
+      "grep render_pack over test_scoped_amgt_mount.py, test_harvest_prefixes.py, test_fiscal_scope_contract.py = no match; the base checkout C:/dev/ajb_workspace holds infra/aws/terraform/harvest/scoped-amgt-api.tf and integrations/bloomberg/research/model_block_pull.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 expects `9 failed, P passed` with P at least 1155, and the FAILED lines are exactly the nine listed. The order states the base as 9 failed, 1148 passed (measured by the issuer).",
+  "world_is": "In this worktree the same run gives 18 failed, 1146 passed. The nine listed failures are present and their causes are unchanged. The nine extra are the sparse-cone reads (6 mount, 2 harvest prefixes, 1 fiscal producer source), and none imports render_pack. 1155 cannot be met here without materialising the cone, which the order forbids. The base count in this worktree is inferred from the missing paths, not measured, because the full suite was not run at the unedited head.",
+  "notes": "AC2 is recorded FAIL in the proof instance and the order stays open. Needs AC2 run in a full checkout, or the worktree's cone widened on the issuer's word. Not fixed here: the order forbids rebuilding the tree."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "The order names committed print-test fixtures for RIO LN and ICT PM; none is committed, so both fixtures were hand-built for this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep lib/research (native, path-scoped) for ICT_PM|RIO_LN: 11 files, none a model block for either name",
+      "Glob lib/research/**/*model_block*: lib/research/posture/data/model_block/ holds BA, BABA, SAP only",
+      "lib/research/print/tests/conftest.py (19 lines): one autouse offline drafted-reader fixture, no builders",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round113/READS_ITEM4.md lines 17-19: the live print was read, not the block"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Fixtures: use the committed print-test fixtures for RIO LN and ICT PM if the existing tests have them; otherwise build them from conftest.py's builders and say so.",
+  "world_is": "No RIO LN or ICT PM model block is committed. A native Grep of lib/research for ICT_PM and RIO_LN found no block, and a Glob for model_block files found only BA, BABA and SAP under lib/research/posture/data/model_block. conftest.py holds one offline drafted-reader fixture and no builders. Built instead: lib/research/print/tests/fixtures/bu3_block_ICT_PM.json and bu3_block_RIO_LN.json, carrying the shapes READS_ITEM4.md recorded. Every value is synthetic. T1 to T6 grade the renderer on these constructed blocks, not on the live print.",
+  "notes": "The live-print block for either name is not in the repo; a live check of the printed pack would need the landed block through the scoped API."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "T6's line-for-line control cannot compare raw PDF lines: a long-form date is longer, the renderer's 92-character wrap moves, and T6 de-wraps both sides before it compares.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py _wrap (LINE_WRAP_CHARS 92, WRAP_INDENT 4 spaces): the continuation rule the de-wrap reproduces",
+      "lib/research/print/tests/test_bu3_pack_long_dates.py test_T6 (de-wrap, then inverse, then compare)",
+      "scratch measurement of raw line equality on the edited renderer: raw-equal False for both fixtures"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "T6: the pack text with every long-form date mapped back to ISO equals the text recorded at the base head, line for line (after normalising \\r\\n to \\n).",
+  "world_is": "Measured on the edited renderer: the raw comparison fails in both fixtures. The first raw difference is at line 12 of ICT PM and line 10 of RIO LN, where the long-form earnings line wraps earlier than the ISO line did. The line counts agree (32 and 28). A long date is also cut across printed lines ('period ending December 31st,' then '2026'). T6 therefore de-wraps both texts by the renderer's own WRAP_INDENT rule, applies the hand-written inverse to each logical line, and compares line for line. The raw comparison is recorded here, not asserted.",
+  "notes": "A reviewer who reads T6 as a raw-PDF comparison will find it fails by construction; the de-wrap is the documented reading."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "The format=rich export still prints ISO days (the vintages line, the as-of vintage in every figure row through render_print.render_figure_line, and served prose verbatim); the order says not to touch it, so it is reported, not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py build_rich_text line 1627 (base fce34ac73c): vintages from f.get('vintage')",
+      "lib/research/provenance/render_print.py render_figure_line lines 242 and 244 (read whole, 299 lines)",
+      "lib/research/api/scoped_amgt.py _print_pack lines 7866-7903 (read): rich and pdf branches delegate; no text assembled",
+      "lib/research/print/render_pack.py census fixture bu3_date_sites.json: rich_export_sites X01 to X10"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Do not touch the rich-text export (format=rich) or any other module: report whether render_print.py, scoped_amgt.py or the format=rich path print an ISO day to a reader. T7: no census entry reads bypass true with a disposition other than fixed_here.",
+  "world_is": "build_rich_text prints 'vintages <ISO timestamp>' (render_pack.py line 1627 at base). _figures_table and _forecast_table print render_print.render_figure_line verbatim, which appends 'as of <vintage>' (render_print.py line 244, an ISO timestamp such as 2026-09-10T23:20:18Z on the SAP fixture) and 'observed <date>' (line 242 path). scoped_amgt._print_pack assembles no text and hands the block to build_rich_text or build_pack. read_drafted_sections returns served sentences verbatim. T7 read literally over a census that lists the ten rich sites cannot pass without editing them, so T7 is scoped to the ten pack sites, and the rich sites stay in the census as rich_export_sites, reported_not_edited.",
+  "notes": "render_print.render_model_block (the CLI in that module) also prints the vintage; it is not a reader surface of the pack."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "Served drafted sentences that carry an ISO day print in the long form: the long-form guard sits in the wrap every printed pack line passes through, so it reaches served prose.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py _wrap (edited): first statement applies _long_days to the printed text",
+      "lib/research/print/tests/fixtures/bu3_block_ICT_PM.json served_drafted: recommendation sentence carries 2026-10-16",
+      "lib/research/print/tests/fixtures/bu3_block_RIO_LN.json served_drafted: risks sentence carries 2026-07-23",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round113/READS_ITEM4.md line 19: the CTO ruling text the order cites"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Do not reword any existing sentence; display only: no served value, sort key or comparison changes.",
+  "world_is": "The order's two rules meet at served prose. I read 'every date a reader sees' (CTO ruling 2) as covering a day inside a served sentence, so _wrap applies the long form (census sites S08 and S09). The served text in the store is unchanged; the printed sentence reads 'October 16th, 2026' for '2026-10-16'. The fixture's recommendation and risks sentences carry such days and T1 grades them. Whether served prose is in scope is the CTO's call. If it is not, the change is one line in _wrap.",
+  "notes": "Form only. If the CTO rules served prose out of scope, the census's S08 and S09 become no_date_shown and the guard is narrowed."
+}
+```
