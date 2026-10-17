@@ -29984,3 +29984,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   }
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S60",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-17T21:26:15Z",
+  "one_line": "The walker's layout:clipped check counts every horizontally scrolling container in its headless Chromium, because a scrollbar takes no layout space there; the Model All-figures grid reads 151/149 'clipped' elements though it scrolls.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "walk.mjs lines ~237-256: text cut sideways by its nearest clipping ancestor is counted unless that ancestor 'shows a horizontal scrollbar' (offsetHeight - clientHeight - borders > 1) or an ellipsis; scrolling is 'visible, by design'.",
+  "world_is": "A patched throwaway copy of the walker (diagnostics only, deleted) on a local build of the bt-2 candidate read, for the Model grid: the clipping ancestor `div.overflow-x-auto` with scrollWidth 1494, clientWidth 1266 (228 px of horizontal scroll), offsetHeight 9291 == clientHeight 9291, so the test for a visible scrollbar reads zero although the container scrolls; the portal's global CSS also paints scrollbar thumbs transparent until hover (src/index.css 'SCROLLBAR STYLING'). Headless Chromium hides scrollbars, so any overflow-x scroller reads as clipped text. The CTO ruled (msg 7741) that an overflow-x-auto grid that scrolls is not clipped text and the walker's owner stops counting a scroller's hidden width; a corrected probe would test `overflow-x` in (auto, scroll) with scrollWidth > clientWidth directly. The scroll affordance (the scrollbar is invisible and sits 9291 px down the page) is a separate round-114 candidate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/r113-bt2/findings_20261017T211249Z.json and findings_20261017T211500Z.json (the diagnostic fields anc and el_info)",
+      ".claude/skills/ui-walk/walk.mjs lines 237-256",
+      "portal src/index.css lines 722-750"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Instrument row for the walker's owner (CTO msg 7741); not a cell of this project."
+}
+```
