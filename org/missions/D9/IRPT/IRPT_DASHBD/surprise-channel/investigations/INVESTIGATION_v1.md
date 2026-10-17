@@ -24819,3 +24819,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The issuer decides whether the trailer string in later orders should follow the executing model."
 }
 ```
+
+## IRPT_DASHBD-D2-W254-S3 -- W254-S1 repaired by the issuer: the checker's changed-set read no longer counts the nested portal checkout; AC2 re-run PASS on this tree
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W254-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~254",
+  "surfaced_at": "2026-10-17T03:40:13Z",
+  "one_line": "IRPT_DASHBD-D2-W254-S1 repaired by the issuer in the checker (amend f2846b8c4a); DB186-1-AC1, AC2 and AC3 re-run on this tree and all PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB186-1-AC2 as written: the changed-file set is exactly the agreed set; the checker is the issuer's instrument at the main-tree path, run with the order's exact invocation.",
+  "world_is": "The issuer amended the checker at f2846b8c4a so the changed-set read no longer counts the nested portal checkout (the coordinator's ruling on W254-S1). Re-run at HEAD 1ed95cbbe8 of wk-IRPT_DASHBD-254: DB186-1-AC1 PASS, DB186-1-AC2 PASS, DB186-1-AC3 PASS, each rc 0. The portal gitlink is still shown as modified in this worktree and is still not committed by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of the main-tree checker org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r150/p186_cot_read_terraform.py shows the amend commit f2846b8c4a above the issue commit 18709f6799",
+      "python -I the checker at C:/dev/wk-irpt-dashbd-254 DB186-1-AC2 printed: OK: the change touches only the iso root, forward.tf, lambda.tf and the worker's own folder ... DB186-1-AC2 PASS, rc 0",
+      "the same command for DB186-1-AC1 and DB186-1-AC3 printed DB186-1-AC1 PASS and DB186-1-AC3 PASS, rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Note only. No act is owed by this worker. Adjudication of W254-S1 belongs to the issuer's L9 carrier."
+}
+```
