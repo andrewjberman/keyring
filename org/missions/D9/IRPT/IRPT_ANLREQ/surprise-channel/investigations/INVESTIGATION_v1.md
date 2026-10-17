@@ -23545,3 +23545,67 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S166 -- S29 disarmed: the packager's live attach port is built (AR-g-32, AR-g-41) and wired into the resident factory
+
+```json
+[
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-17T05:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "DISMISSED_WITH_REASON",
+  "id": "IRPT_ANLREQ-D2-S166",
+  "one_line": "S29 DISARMED: the premise that the packager's live attach port is a stub nothing builds no longer holds at HEAD; AR-g-32 and AR-g-41 built it and the resident factory passes it to make_packager.",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S29"
+  ],
+  "spec_asserts": "Row S29 (armed, disarm owner 2.0.0_SA_COO~G2): release 4 cannot attach because live_attach and live_ticket_package raise PACKAGER_PRINCIPAL_UNSET and no cell builds the real ports.",
+  "world_is": "Read at box/dell2 HEAD after 87c9948811, 2026-10-17: ycharts/research/opal_packager.py:268 live_ticket_ports(config, read_secret, http) builds the attach port as svc-irpt-packager (bearer token read by secret NAME, 401/403 drops the token); reports/resident_installed.py:588-595 (AR-g-41) calls it with bindings['packager'] and passes ticket_ports to make_packager, whose attach port is then ticket_ports['attach'] (:474-475). The module-level live_attach at opal_packager.py:233-237 still raises PACKAGER_PRINCIPAL_UNSET, as the refusing form used only when no ticket_ports is given (or the packager binding is malformed). Tests exist: ycharts/research/tests/test_packager_live_ports.py and test_packager_own_store.py. Not measured here: the live POST against the deployed ticket service; that is the FWD-1 run's own evidence (window 5), not this hazard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:233-237 and :268-284 read at HEAD",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:449-475 and :583-596 read at HEAD",
+      "grep of live_ticket_ports( across investor-reporting/*.py: one production caller (resident_installed.py:590) and the test files"
+    ]
+  },
+  "dismissal_reason": "The hazard was that no cell builds the real attach port; the port is built (AR-g-32, AR-g-41) and wired into the resident factory. Whether the deployed resident attaches against the live ticket service is measured by the FWD-1 run, not by this row."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S167 -- W174-S3 disarmed: a receipt-less KEPT holding refuses as RecipeRefused, not TypeError (AR-g-68)
+
+```json
+[
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-17T05:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "DISMISSED_WITH_REASON",
+  "id": "IRPT_ANLREQ-D2-S167",
+  "one_line": "W174-S3 DISARMED: a receipt-less KEPT holding now refuses as RecipeRefused, not a TypeError (AR-g-68), with a test.",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W174-S3"
+  ],
+  "spec_asserts": "Row W174-S3 (armed, disarm owner 2.0.0_SA_COO~G2): prepare_normalized_upload subscripts the provider receipt of every holdings row, so a KEPT_BY_HISTORY holding (receipt None) raises TypeError rather than the declared RecipeRefused.",
+  "world_is": "Read at box/dell2 HEAD: ycharts/generate/normalized_input.py:44-52 _receipt_sha256 reads the receipt with isinstance guards and raises RecipeRefused('holdings row has no provider receipt') when it is absent; :77-81 calls it for the identity bindings; commit ec0e2621f7 (AR-g-68, worker ~178) made the change; ycharts/generate/tests/test_normalized_input_unresolved.py:48-50 pins a KEPT TIMXX holding with provider_receipt None. Residual, named and not closed here: the template path still REFUSES a KEPT holding (the row's second sentence wanted it accepted); the yfinance-first program prices a KEPT holding through the door checker, not this upload, so this is not on the current path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py:44-52 read at HEAD",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_normalized_input_unresolved.py:48-50 read at HEAD",
+      "git log -S'AR-g-68' on normalized_input.py: ec0e2621f7"
+    ]
+  },
+  "dismissal_reason": "The TypeError (an undeclared exception class that the resident worker does not catch) is gone and pinned by a test; the declared RecipeRefused is raised. The residual question of whether the template path should accept a KEPT holding is a product question for the price-tier program, listed here and not part of this hazard."
+}
+]
+```
