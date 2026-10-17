@@ -23726,3 +23726,35 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S169 -- W64-S6 disarmed: the BUILD_ONLY guard is in every base a worker is cut from
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S169",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T07:03:49Z",
+  "one_line": "W64-S6 DISARMED: every base a worker is cut from now carries the BUILD_ONLY guard (the guard predates HEAD and every live worker worktree holds it); the second half is a closed round's check weakness with no live artifact.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W64-S6"
+  ],
+  "spec_asserts": "Row W64-S6: BUILD_ONLY=1 is honoured only by builders at or after the commit that added the guard (absent at 9e58503be1 and f89fc8e731, present at e274a0e60c and later), so a holds-only build run from an older base uploads for real; and the y213-rebase check reads tests.failed but not tests.errors (disarm owner 2.0.0_SA_COO~Y2: forbid BUILD_ONLY runs from a base whose builder lacks the guard, or land the guard in the base commits).",
+  "world_is": "MEASURED now: git merge-base --is-ancestor e274a0e60c HEAD -> ancestor (control: 9e58503be1 is an ancestor of e274a0e60c, and e274a0e60c is NOT an ancestor of 9e58503be1). infra/aws/lambda/ci/build-and-upload.sh at HEAD carries the BUILD_ONLY branch before the upload calls (lines 709 to 714) and the end-of-run branch (line 805). The live worker worktrees 281, 283, 284 and 285 each hold the guard at their HEAD (git grep -c 'BUILD_ONLY:-0' = 2); .tools/wk-provision.sh cuts a worker from the current branch, never an older base, so the guard is landed in every base a candidate is cut from. The second half (checks/r20/ar20_checks.py reads tests.failed and tests.passed but not tests.errors) is a weakness in the check of a CLOSED order (AR-y-213); no live artifact depends on it, and the lesson (read tests.errors as well as tests.failed in any build check) is carried to the next round's order-writing, not armed. NOT READ: a worker worktree older than 281 (none is live).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor e274a0e60c HEAD (ancestor), with the two controls above",
+      "git show HEAD:infra/aws/lambda/ci/build-and-upload.sh (lines 709 to 714 and 805 to 806)",
+      "git -C C:/dev/wk-irpt-anlreq-285 grep -c 'BUILD_ONLY:-0' HEAD -- infra/aws/lambda/ci/build-and-upload.sh -> 2 (also 281, 283 and 284)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's own remedy (land the guard in the base commits used as candidates) holds: the guard is in HEAD and in every live worker base, and bases are cut from the current branch. The tests.errors point is a closed order's check, recorded as an order-writing lesson, not an armed hazard."
+}
+]
+```
