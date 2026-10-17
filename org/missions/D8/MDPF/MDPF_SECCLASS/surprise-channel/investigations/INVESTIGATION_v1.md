@@ -8448,3 +8448,28 @@ by dell1 or by this seat.
   "world_is": "The restatement is served and covered by none of this project's pairs; whether another project's pair covers it is not read. Round 28's first item is the cause read (CTO, msg 7411). The disarm: the cause is named and ruled before the 23:00Z fire, or the CTO holds the fire; this seat does not stop a scheduled producer."
 }
 ```
+
+## MDPF_SECCLASS-D1-S49 -- cause read of the 04:00Z restatement (D1-S48), first pass: the input that moved is gold/canonical/holdings/<date>.parquet, rewritten by B_00 at 04:16Z
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S49",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-17T07:50Z",
+  "one_line": "Diff of the two input versions for 2026-10-02 (opal-data-bd gold/canonical/holdings/2026-10-02.parquet, version wtAhSnBV... written 2026-10-16T23:15:29Z against aMEdNa9y... written 2026-10-17T04:16:05Z): market_value total 2,023,532,725.44 to 2,023,940,445.76 (+407,720.32, the D1-S48 total shift of about $400k), rows 112,417 to 112,510; by (account_id, asset_name, source) 335 rows added ($2,935,368.64, 118 of them schwab_override) and 242 removed ($2,563,187.46), 153 rows changed in place (+$35,539.14), 55 accounts touched, 1 of them new. The key is rewritten for 15 dates by B_00.canonical_holdings.py each fire; the 23:15Z rewrite equals the 2026-10-16T04:16Z one in size, the 04:16Z rewrite does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions opal-data-bd gold/canonical/holdings/ since 2026-10-16T20:00Z: 30 versions, 15 written at 2026-10-16T23:15Z and 15 at 2026-10-17T04:16Z; the two 2026-10-02 versions downloaded and read with pandas (cols date, account_id, asset_name, units, price, market_value, source, bd_units, schwab_units, ticker)",
+      "aws s3api list-object-versions opal-data-bd code/gold/ since 2026-10-10 (positive control returned rows): no gold code object changed after 2026-10-15T18:02Z, so the code did not move between the fires; gold/dimensions/schwab_bd_account_mapping.parquet is unchanged since 2026-04-10T20:36:27Z; comp-pipescript io B_00 --pipeline bd-gold lists its reads as SCHWAB_RPS_PREFIX schwab/08335338/silver/fact_rps/ and the account mapping"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D1-S48: a served change to the firm mix has a named input and writer before the next fire.",
+  "world_is": "Named: the key that moved (gold/canonical/holdings/<date>.parquet, 15 dates) and its writer (B_00.canonical_holdings.py, rolling window). Not named: the writer's upstream input that changed between 23:15Z and 04:16Z (the Schwab RPS silver partitions are the candidate; a version listing of that prefix returned no rows and was not trusted without a positive control). Round 28 cell 1 continues from here."
+}
+```
