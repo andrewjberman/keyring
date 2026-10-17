@@ -7,5 +7,6 @@ declares the one cell of the deploy order here. This file is not a PRD, a batter
 | cell | what | order |
 |---|---|---|
 | `EWS-d-1` | the Client Ops Early Warning runtime deployed as ONE always-on container, read-only on the two Schwab silver prefixes, the cert secret only, nothing sends | `TCKT_EARLYWARN.TO-EWS-d1` |
+| `EWS-d-2` | the container logs items opened per rule each pass and keeps its open-items store on ONE S3 prefix (role widened to that prefix only); the CTO's exercised read of EWS-d-1 (msg 7455) | `TCKT_EARLYWARN.TO-EWS-d2` |
 
 Issuer: `2.0.0_SA_COO~Q1`, 2026-10-17 ~06:5xZ, on `0.7.0_AE_CloudOps~TM1`'s row TCKT_EARLYWARN-D1-S6 (msg 7399).
