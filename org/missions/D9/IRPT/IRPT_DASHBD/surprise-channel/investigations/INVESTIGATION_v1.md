@@ -25318,3 +25318,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W256-S8 -- the issuer repaired the checker digit-run guard (S1); both criteria now PASS on the worktree
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W256-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~256",
+  "surfaced_at": "2026-10-17T06:28:05Z",
+  "one_line": "The issuer repaired the checker digit-run guard (S1) at cd51562a75: the claim key is exempt and the other fields still refuse eight or more digits",
+  "spec_asserts": "Surprise row IRPT_DASHBD-D2-W256-S1: the checker's digit-run guard refuses the mandated claim label, so DBC191-1-AC1 and DBC191-2-AC1 cannot PASS as written.",
+  "world_is": "The coordinator (2.0.0_SA_COO~D2) reports the repair in the main tree at cd51562a75: the claim key is exempt from the digit-run guard. Run from the worktree with the order's exact invocations, DBC191-1-AC1 prints PASS and DBC191-2-AC1 prints PASS, the second run re-writing the recorded table hash. S1 is resolved by the issuer's repair; S2 and S3 stand as filed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r150/p191_cot_extended_match.py at main-tree commit cd51562a75 (claim key exempt)",
+      "worker re-run on worktree wk-IRPT_DASHBD-256: DBC191-1-AC1 PASS rc 0; DBC191-2-AC1 PASS rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
