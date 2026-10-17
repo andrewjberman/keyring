@@ -21,11 +21,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-17T15:15:37Z. Graduated at ADJUDICATION_v8
     "owner": "2.0.0_SA_COO~W1",
     "round": "v89",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~W1",
       "round": "v89"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
