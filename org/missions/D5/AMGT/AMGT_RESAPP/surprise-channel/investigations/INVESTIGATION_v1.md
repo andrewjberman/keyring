@@ -29701,3 +29701,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "An instrument trap: re-run a worker's harness in a FRESH checkout (a provisioned worktree), not in the worker's own, before reading a recorded-file control as passing."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W496-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~496",
+  "surfaced_at": "2026-10-17T19:26:56Z",
+  "one_line": "The SA classifier that the producer's STOPPED fallback reasons depend on sits under integrations/seekingalpha, which this worktree's sparse checkout does not materialise, so it was read with git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bs-1 step 2: the producer and the served side are read at source, and every reason the producer can emit is listed with its file:line and every token it can contain.",
+  "world_is": "integrations/bloomberg/research/sa_forecast_fallback.py _load_rest_fetch (L113-120) loads integrations/seekingalpha/rest_fetch.py, whose _do_get classifies each response through integrations/seekingalpha/detectors.py classify (L39-48, values FAILURE, REHARVEST, AUTH_FAIL, OK). The worktree sparse-checkout list is .tools, infra/logic/registry, integrations/bloomberg/research, lib, org/devices; ls integrations/seekingalpha finds no directory, though git ls-tree HEAD lists both files. The classifier was read with git show HEAD into the worktree scratch folder. The sparse set was not widened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/sa_forecast_fallback.py@8bdbdc8a94 L113-120 (_load_rest_fetch)",
+      "integrations/seekingalpha/detectors.py@8bdbdc8a94 L39-48 (classify, read with git show HEAD)",
+      "git sparse-checkout list in C:/dev/wk-resapp-496 (.tools, infra/logic/registry, integrations/bloomberg/research, lib, org/devices)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on AMGT-bs-1. Not a cell of this order: the census lists the classifier values from source. A worker that needs an integrations/seekingalpha file must read it with git show or ask for the path to be added to the sparse set."
+}
+```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W496-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~496",
+  "surfaced_at": "2026-10-17T19:26:56Z",
+  "one_line": "The producer's estimate-year BEST_PE_RATIO reasons never print on the Key Figures footer: the served side routes them to forecast_reason, which the footer does not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bs-1 census: reaches_footer yes for an estimate-year BEST_PE_RATIO reason the footer prints, the order's conditional reading of reaches_footer for the producer's forecast rows.",
+  "world_is": "Producer forecast-scope rows (model_block_pull.py:1421 and :1542, FY1-FY3) are served through read_model as forecast_reason (scoped_amgt.py 5785-5798, _per_period_forecast_reason at 5712). ModelTab.tsx withheldPeReason reads only model.forecast_withheld for an estimate column, and only the served _derive_forward_pe (scoped_amgt.py 2779-2806) writes that key, with currency-mismatch reasons. The producer never writes forecast_withheld, so no producer estimate-year reason prints. Read at source; no producer forecast reason was rendered.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py@8bdbdc8a94 L5785-5798 (forecast_reason) and L2779-2806 (_derive_forward_pe, the only writer of forecast_withheld)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@932cea99 (fiscalPeReason and withheldPeReason readers of the footer)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on AMGT-bs-1. Form only: the footer's estimate-year text is currency-mismatch wording. The owner of the producer's forecast reasons decides whether they are owed a footer route."
+}
+```
