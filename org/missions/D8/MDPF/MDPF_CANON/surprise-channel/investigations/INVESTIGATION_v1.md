@@ -2818,3 +2818,28 @@
   "notes": "Issuer's D4-STOP sent to 0.7.0_AE_CloudOps~DELL1 at 16:32Z (the rollback is the order's section 4). The fix is a producer or fold change or a new CTO ruling that accepts the Global headline moving; it is the CTO's (a leaf outside the signed set, SERVED work). Window: D2 and D4 by 12:44Z on 2026-10-17; the fire at 13:30Z then runs the round-10 bytes unless a ruling lands."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S33",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-17T13:56:00Z",
+  "one_line": "The 2026-10-17 13:30Z scheduled gold fire (code d2f734fbac, which contains CN-s-1) refused to emit GLOBAL (cross-axis coherence gate (v): five model legs on 2026-10-16 carry an account_count and no model_value), built 12 of 16 objects, and 7 dated 49financial/inflection keys came back `conflict` (immutable dated key, new Custom-member content); so CN-s-1's outcome is realized at Cottonwood (new 2026-10-16 keys) and NOT at Global, 49financial or inflection.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Pair R11_CN_S_1_V2 section 6 (acceptance after the fire): (3) the run manifest `errors` empty, `a4_objects_built` 16, `run.code.commit` equals the pin; (2) Global model_aua / opal_aggregate_aua differ from the prior object by X(d) on the seven dates; the CTO's msg 6984 that the 13:30Z fire carries CN-s-1 alone and the earlier fire (2026-10-16 13:30Z, manifest 20261016T133150Z) read errors [] and 16 built.",
+  "world_is": "MEASURED by the issuer from the fire's manifest s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-15/20261017T133145Z.json (written 13:31:46Z; downloaded to C:/dev/_deploy_artifacts/canon_r11_muni/fire_20261017/, outside the repo) beside yesterday's 20261016T133150Z.json: yesterday code b6352de8f8, writes written 17 staged 4, errors []; today code d2f734fbac, a4_expected 16, a4_objects_built 12, writes written 6 staged 2 conflict 7, errors {global}. Global error: AssertionError CROSS-AXIS COHERENCE GATE FAILED (global) REFUSING TO EMIT, (v) presence disagreement 5 across 1 date (2026-10-16 opal_ultra_short_term / short_term / intermediate / long_term_conservative / long_term_aggressive: model_value=None with account_count 214 / 903 / 2111 / 3722 / 1469). Conflicts (sha256_existing vs sha256_new, business_diff_count): 49financial aggregate-aua 10 (incl. tax_coverage), inflection aggregate-aua 3 (process fields only), aum-metrics 1 each (process_time only), 49financial account-distribution 2026-10-16 291, category-views 5 / 3 (Custom members[12] and [13], the Muni addition). Written: cottonwood x4 at 2026-10-16, inflection account-distribution 2026-10-17. Served Global keys read LastModified 2026-10-16T13:31 (the previous fire), newest 2026-10-15 for the aggregate. Cottonwood 2026-10-16 aggregate: by_model.opal_muni_income present, display_name 'Opal Municipal Bonds'; partner_custody_total differs from the pre-CN-s-1 baseline on 90 of 498 common dates and model_aua on 7, which cannot be attributed to CN-s-1 alone because the same fire carries FWD-10 and the Cottonwood 10/15 restatement. NOT read: why Global has account counts for 2026-10-16 without values (the feeder has not dispatched since 2026-10-12, CTO msg 6981; B1 owns it); whether Global would emit once the 2026-10-16 values land; whether the 49financial/inflection conflicts clear on the next dated key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-15/20261017T133145Z.json (27,399 B) and 20261016T133150Z.json",
+      "C:/dev/_deploy_artifacts/canon_r11_muni/fire_20261017/served_response.json (16 newest served bodies, 2,032,081 B, outside the repo)",
+      "git merge-base --is-ancestor 66ae82d62d d2f734fbac -> yes (CN-s-1 is in the fire's code)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the remedy: not the issuer. The Global refusal follows the stale feeder (ADVI_FIRMBKTS B1) or a producer rule for a date with counts and no values (CTO). Sent to 1.0.0_SA_CTO~DELL1 with one question; one line to 2.0.0_SA_COO~B1. C-3 (no ad-hoc run as evidence) stands: no ad-hoc gold run is read as the acceptance."
+}
+```
