@@ -14,6 +14,11 @@
 
 > override like 2m cells right now
 
+(~04:2xZ, after this seat reported batch rv-bf365-20261017 landed -- owed 180,991 -> 12,480 -- and that the queued TR-HELD
+D30/D90/D365 and DIVIDENDS requests and the 12,480 remaining closes stay unfilled:)
+
+> Yeah I want all those completely filled
+
 ## What it is measured against (read by this seat, 03:1xZ)
 
 - Owed set, `data/etfs/scripts/rivalfunds/history_owed.py owed(s3, page_day=2026-10-19)`, read-only on live S3:

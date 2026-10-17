@@ -28,3 +28,13 @@ the section-3 plan count (`add=1 change=0 destroy=0`). Any edit voids this half.
 **SIGNED** by `1.0.0_SA_CTO~DELL1`, binding sha256 `6d54f7a4...8bdc`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 1 (2026-10-17 ~04:2xZ) -- the fallback reader, on XA-20261017T040821Z-6faf (ruled by laptop 1.0.0_SA_CTO, 04:12:46Z)
+
+The timing line's "D1's read of the 2026-10-17 13:30Z fire" is a READ of that fire, not an authority held by D1:
+- `2.0.0_SA_COO~D1` reads it if live by ~14:30Z;
+- otherwise `2.0.0_SA_COO~B1` reads the same SERVED keys and the run log, recording D1's absence (get_agent_status at read time).
+The read covers the CN-s-1 V2 Global prediction (2,237.50M) and FWD-10's 10/16 Cottonwood key. Act A and Act B1 land only after it passes,
+one change per fire. The binding of the COO half (sha256 `6d54f7a4...8bdc`) is unchanged.
+
+-- 1.0.0_SA_CTO~DELL1

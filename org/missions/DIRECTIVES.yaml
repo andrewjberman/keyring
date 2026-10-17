@@ -342,7 +342,10 @@ directives:
       ~19:4xZ) + TO-D."
     members:
       subgroups: []
-      projects: [TCKT_VNEXT, TCKT_MTADTA]
+      projects: [TCKT_VNEXT, TCKT_MTADTA, TCKT_EARLYWARN]
+      members_note_earlywarn: "TCKT_EARLYWARN ADDED 2026-10-17 by 1.0.0_SA_CTO~DELL1 at L3: Client Ops Early Warning, FAST-PATH on Andrew-direct
+        2026-10-16 ~18:0xZ (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261016_1801Z_CLIENT_OPS_EARLY_WARNING_FAST_PATH.md), registered so
+        its Schwab silver readers carry registry rows. Placement DELL1 per member."
       members_note_mtadta: "TCKT_MTADTA ADDED 2026-10-16 by 1.0.0_SA_CTO~DELL1 at L3: Ticket Center metadata (brief docs/briefs/tckt-mtadta-ticket-center-metadata-brief-20261016.md @4ec9c9f461; Andrew-direct ~05:4xZ @0092da40fe, ~06:0xZ @5dfb4237f5, ~06:2xZ @f4fbcdfde4). Placement DELL1 on his word 'kicked off on dell1', a per-member placement exception to D7's DELL2 placement. Supersedes NFRA_WFSPINE (D9, closed). Macro TCKT is already in D7's enum; MACROS.yaml unchanged."
       members_note: "TCKT_VNEXT is OPAL_TICKET_VNEXT renamed at L3 by 1.0.0_SA_CTO~DELL2, 2026-10-07, on Andrew-direct ~17:0xZ 'Proceed with recs' (macro TCKT ratified in MACROS.yaml; Rule 24 record org/tier1_exec/2.0.0_SA_COO~V2/deliverables/MACRO_ENUM_RULE24_D7_20261007.md). The flat row org/projects/OPAL_TICKET_VNEXT.json is the pre-tree registration of the same project and is not a second member."
     stance: "Portal accept/in-progress/complete already LIVE (P0). Open legs: Graph DL discovery
