@@ -25436,3 +25436,87 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W291-S1 -- the order's commit range for the mover is empty by construction: the live build pin 90b69dcb12 postdates every acceptance.py commit, and the map stages acceptance.py from 361c44fa9d
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W291-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~291",
+  "surfaced_at": "2026-10-17T15:48:19Z",
+  "one_line": "live_diff.py prints NO-COMMIT-SINCE-90b69dcb12 for the mover acceptance.py, because 90b69dcb12 is later than all three acceptance.py commits; the blob at 90b69dcb12 already carries get_commentary_ref, so 90b69dcb12 is not the commit the live zip's acceptance.py was staged from.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-392 step 5 and worker face: live_diff.py prints, for each non-SAME member, the commits that moved it since the live build pin 90b69dcb12 (empty: NO-COMMIT-SINCE-90b69dcb12), and the mover is named as the commit that adds get_commentary_ref (06557b6618).",
+  "world_is": "MEASURED at ae2ab2072b: git log --oneline 90b69dcb12..ae2ab2072b -- infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py is empty; git merge-base --is-ancestor 90b69dcb12 ae2ab2072b and 06557b6618 90b69dcb12 both hold; the path's commits in 361c44fa9d..06557b6618 are 2f7cc7be42, 74bbdbb322 and 06557b6618 (the last adds get_commentary_ref); git show 90b69dcb12:<acceptance.py> is 11639 bytes, sha256 e8cbd46a8277..., and contains def get_commentary_ref (count 1). The live zip's acceptance.py (9393 bytes, sha256 06425d4731b7...) is the 361c44fa9d blob, which is what the map staged. live_diff.py also prints the map-pin range (MAPPIN line: 361c44fa9d40 -> 06557b66184a) which names the three commits. NOT READ: how the live zip was deployed; no inference beyond the staged pin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-status.json@ae2ab2072b (acceptance.py staged_from row, pin 06557b66184a after the edit; 361c44fa9d before it)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@90b69dcb12 (carries def get_commentary_ref, 11639 bytes)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@06557b6618 (11034 bytes, the mover blob)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/LIVE_DIFF.txt (GITLOG and MAPPIN lines)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W291-S2 -- a second function map stages the superseded acceptance.py: irpt-commentary-draft-store-lambda.json still pins acceptance.py at 283f7e7700 with sha256 06425d47
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W291-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~291",
+  "surfaced_at": "2026-10-17T15:48:19Z",
+  "one_line": "irpt-commentary-draft-store-lambda.json stages acceptance.py from pin 283f7e7700 with the superseded sha256 06425d47 (no get_commentary_ref); the order's edit covered only the irpt-status map, so this holder is unedited and would package the old acceptance.py if that map is built.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "Order TO-AR-y-392 step 2: any OTHER place that names acceptance.py's old sha256 is reported in a row and not edited.",
+  "world_is": "MEASURED at ae2ab2072b: git grep -n for 06425d4731b7... under infra/aws/lambda/ci returns one line, infra/aws/lambda/ci/function-map/irpt-commentary-draft-store-lambda.json:27 (staged_from row, repo_path infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py, pin 283f7e770056467a3fd7a74efc1447fa4f843420, packaged_as acceptance.py, sha256 06425d4731b7...). The other 89 lines of the combined grep are the 361c44fa9d pin on other members, which stay by design. NOT READ: whether the commentary-draft-store Lambda is built, deployed or live; no edit was made to that map.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-commentary-draft-store-lambda.json@ae2ab2072b (line 27)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/MAP_EDIT.txt (after-edit grep)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W291-S3 -- the record does not name its stage folder, so live_diff.py takes it as --stage with a default device path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W291-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~291",
+  "surfaced_at": "2026-10-17T15:48:19Z",
+  "one_line": "The order names the stage zip only as <stage>/irpt-status.zip, but the r36s build record carries no --out path, so live_diff.py locates the zip through a --stage argument whose default is the order's C:/dev/irpt-release-r36s2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-392 step 5: live_diff.py opens <stage>/irpt-status.zip and checks acceptance.py; step 4 names the stage only as --out C:/dev/irpt-release-r36s2 on the build command.",
+  "world_is": "MEASURED: r36s_build.py writes the record with keys schema, pin, functions, live_read and no stage path; live_diff.py's invocations in AC1 and AC2 pass no stage argument, so the default C:/dev/irpt-release-r36s2 is used, which is outside the repository. A wrong folder fails loud: the zip sha256 is checked against the record's zip_sha256 (dbbe1d9766c2...), and a missing zip is LIVE-DIFF-BAD. The default is a device path inside a worker tool, not portal or workspace code. NOT READ: nothing beyond the stage folder listing used by AC1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/live_diff.py (STAGE_DEFAULT, --stage)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/CHECK lines in LIVE_DIFF.txt (zip path and zip sha256)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
