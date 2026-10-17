@@ -24820,3 +24820,133 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S192 -- W136-S2 disarmed: the remedy is in the r34k build that is the running resident
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S192",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T11:33:03Z",
+  "one_line": "W136-S2 DISARMED: the bindings builder writes the opal_map member (build_resident_package.py line 115 at the r34k pin, commit 53f683857c) and r34k, built at that pin, is the running resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W136-S2"
+  ],
+  "spec_asserts": "Row W136-S2 (disarm owner 2.0.0_SA_COO~Y2): the tracked bindings builder writes no opal_map member, so a listed principal's Opal job is refused OPAL_MAP_BINDING_REQUIRED.",
+  "world_is": "MEASURED (git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/build_resident_package.py, line 115): the builder writes `\"opal_map\": {\"path\": HOST_ROOT + \"/\" + OPAL_MAP_TARGET, \"sha256\": opal_map_sha}` and line 116 opal_map_comparison. The r34k build record shows the bindings differ from r34h in `provenance` only (bindings_diff keys_changed [provenance]), so the opal_map the running bindings carry is the builder's. The deployed side: the running resident is r34k, built at package pin 1ad8bd8c1b (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat; IB2's after-read: root r34k active, V1 members 5 of 5 MATCH and package sums 316 of 316, V2S OK; `~G2` re-verified the three S3 objects by VersionId, msg 10240). The remedy commit is an ancestor of that pin (git merge-base --is-ancestor <commit> 1ad8bd8c1b exit 0 for 53f683857c, 26b34d0449 and 4ac9dd9eb2; control: the pin is not an ancestor of 53f683857c). NOT READ: the installed bindings document or the registered artifact families on the host itself (a host read); the claim rests on the build at the pin and the verified package sums.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/build_resident_package.py (lines 113 to 116)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json (bindings_diff)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The writer omission does not hold at the pin that is the running resident; the key the refusal needs is written by the builder that produced the bindings."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S193 -- W141-S2 disarmed: the remedy is in the r34k build that is the running resident
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S193",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T11:33:03Z",
+  "one_line": "W141-S2 DISARMED: the builder writes commentary_ready_queue_url and the packager block together (lines 113 and 114 at the r34k pin, commit 26b34d0449), so load_bindings' RESIDENT_PACKAGER_REQUIRED is not reached by the running resident's bindings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W141-S2"
+  ],
+  "spec_asserts": "Row W141-S2 (disarm owner 2.0.0_SA_COO~Y2): load_bindings raises RESIDENT_PACKAGER_REQUIRED for any document that carries commentary_ready_queue_url without a packager block, so the bindings the builder wrote could not load.",
+  "world_is": "MEASURED (git show 1ad8bd8c1b): build_resident_package.py lines 113 and 114 write both keys together; reports/resident_installed.py lines 154 to 156 raise RESIDENT_PACKAGER_REQUIRED only when commentary_ready_queue_url is present and `packager` is not. The two are consistent at the pin. The resident loaded these bindings at r34k start (V1 and V2S ran against the running service; the install would have rolled back on a failed start). The deployed side: the running resident is r34k, built at package pin 1ad8bd8c1b (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat; IB2's after-read: root r34k active, V1 members 5 of 5 MATCH and package sums 316 of 316, V2S OK; `~G2` re-verified the three S3 objects by VersionId, msg 10240). The remedy commit is an ancestor of that pin (git merge-base --is-ancestor <commit> 1ad8bd8c1b exit 0 for 53f683857c, 26b34d0449 and 4ac9dd9eb2; control: the pin is not an ancestor of 53f683857c). NOT READ: the installed bindings document or the registered artifact families on the host itself (a host read); the claim rests on the build at the pin and the verified package sums.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/build_resident_package.py (lines 113 to 114)",
+      "git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/resident_installed.py (lines 150 to 156)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The builder and the loader agree at the pin; the running resident started and passed V1 and V2S on those bindings, so the refusal the row names is not occurring."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S194 -- W155-S2 disarmed: the remedy is in the r34k build that is the running resident
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S194",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T11:33:03Z",
+  "one_line": "W155-S2 DISARMED: ANALYSIS_COMMENTARY is registered as an additional policy revision in resident_installed.py (lines 549 to 551 at the r34k pin, commit 4ac9dd9eb2) and r34k is the running resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W155-S2"
+  ],
+  "spec_asserts": "Row W155-S2 (disarm owner 2.0.0_SA_COO~Y2): every commentary_ready message the live resident handles is refused at the draft read because ANALYSIS_COMMENTARY is not a family of the resident's ArtifactRepository.",
+  "world_is": "MEASURED (git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/resident_installed.py): line 68 defines ANALYSIS_COMMENTARY_REVISION and lines 549 to 551 pass `additional_policy_revisions=(OPAL_RESEARCH_REVISION, ANALYSIS_COMMENTARY_REVISION)` to build_retained_repositories, which is the registration the row asked for. reports/resident_installed.py is a member of the r34k package (package sums verified 316 of 316). The deployed side: the running resident is r34k, built at package pin 1ad8bd8c1b (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat; IB2's after-read: root r34k active, V1 members 5 of 5 MATCH and package sums 316 of 316, V2S OK; `~G2` re-verified the three S3 objects by VersionId, msg 10240). The remedy commit is an ancestor of that pin (git merge-base --is-ancestor <commit> 1ad8bd8c1b exit 0 for 53f683857c, 26b34d0449 and 4ac9dd9eb2; control: the pin is not an ancestor of 53f683857c). NOT READ: the installed bindings document or the registered artifact families on the host itself (a host read); the claim rests on the build at the pin and the verified package sums.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/resident_installed.py (lines 66 to 68 and 549 to 551)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The registration the row asks for is in the build that is the running resident; a live commentary_ready message through it is not claimed (window 5 and the chain read exercise it)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S195 -- W133-S1 disarmed: the three red tests were re-pointed in the landed commit
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S195",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T12:03:40Z",
+  "one_line": "W133-S1 DISARMED: the three TicketCenter tests that AR-y-325 turned red were re-pointed in the same landed commit (6f4e5f67), and both PROD and DEV hold the updated assertions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W133-S1"
+  ],
+  "spec_asserts": "Row W133-S1 (BLOCKING, disarm owner 2.0.0_SA_COO~Y2): AR-y-325's staff-filer change turns three existing TicketCenter tests red (analysis-firm-c-firm.test.tsx tests (d) and 'the page derives the filing firm', analysis-firm-choice.test.tsx 'an internal caller is offered...'), the two files being outside the order's grant, so AC1 (folder 0 failed) could not print PORTAL-TESTS-OK.",
+  "world_is": "MEASURED 2026-10-17 ~12:0xZ with git -C portal show: at origin/PROD (head 15bc21b304d4) and at origin/DEV, src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx line 70 reads `test('(d) an Opal-internal caller is offered the served firms in a control and files under the one it chooses; no sentence says it cannot file'` (the assertion now states the new staff behaviour, not the removed staff sentence), and analysis-firm-choice.test.tsx line 123 reads `test('an internal caller is offered the READY firms of the Global context and never an UNAVAILABLE one'`. git log on the first file shows commit 6f4e5f67 (`feat(TicketCenter AR-y-325): an Opal staff filer chooses the firm from the served list`) touching it, so the test files were updated in the landed feature commit itself; the stranded-test repair commit 1c71bfd8 is also in its history. NOT READ: a clean run of the folder by this seat; the DT's gate for the 4cf06588 release recorded failing test lines EQUAL to origin/PROD's (118 each) in the same sparse-worktree command, so a full-tree run of these two files is not claimed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show origin/PROD:src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx (line 70) and the same at origin/DEV",
+      "git -C portal show origin/PROD:src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx (line 123)",
+      "git -C portal log --format='%h %s' origin/PROD -- src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx (6f4e5f67 and 1c71bfd8 in the history)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The red tests were repaired in the commit that landed the change; the blocking condition (a change that cannot satisfy its own acceptance because two files are outside its grant) no longer stands in the tree on either trunk. A full-tree test run is not claimed."
+}
+]
+```
