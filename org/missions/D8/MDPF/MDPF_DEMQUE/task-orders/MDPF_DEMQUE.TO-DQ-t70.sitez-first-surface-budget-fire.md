@@ -4,14 +4,14 @@
 <issued_to>0.7.0_AE_CloudOps~MDPF1</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-17</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>9</round>
 <workstream>SURFROOM</workstream>
-**GO:** the issuer sets `pending` and carries this order to site Z once `TO-DQ-t69` is merged on `box/dell1` and its merge commit is on `CLOUD`. Until then it is staged and nothing at site Z moves.
+**GO (issuer, 2026-10-17 ~04:4xZ):** `TO-DQ-t69` is merged @8ce2921610 and on `CLOUD` @3af9864832 (ls-remote read; `merge-base --is-ancestor 8ce2921610 origin/CLOUD` TRUE). Addressee: `0.7.0_AE_CloudOps~MDPF1` ON THE SITEZ DEVICE (the lane site Z seated 04:24Z; the laptop's lane of the same name is a different seat and is NOT the addressee). Site Z's checkout must take `CLOUD` at or after 3af9864832 BEFORE the 14:00Z fire.
 **Directive:** D8 | **Fabric:** dell1 (placement site Z) | **Decomp cell:** `DQ-t-70` (`decompositions/MDPF_DEMQUE_DECOMP.md`, amendment 33) |
 **outcome_ref:** C-PRICES, C-RESERVE | **depends_on:** DQ-t-69 (merged and on CLOUD)
 
