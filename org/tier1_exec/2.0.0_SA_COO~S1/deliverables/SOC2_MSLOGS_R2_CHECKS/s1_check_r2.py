@@ -145,6 +145,7 @@ def derive_run(which, n_objects):
 
     import pyarrow as pa
 
+    sys.path.insert(0, ROOT)  # the handler takes its bronze prefix from lib.opal_naming when the zip's names.py is absent
     door = load(os.path.join(DOOR, "handler.py"), "r2_handler")
     sb = load(os.path.join(DOOR, "silver_builder.py"), "r2_sb")
     store = _synth("20261015", "20261016", n_objects=int(n_objects))
