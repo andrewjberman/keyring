@@ -27566,3 +27566,27 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts, seconds, percentages and hashes only. Phase A stops here as the order says: no ask, no deploy; live stays 9d5b712557. The issuer cuts the next repair. The release commit e45922ef75 stays in C:/tmp/og-rel-batch6 (branch rel-nfra-oplgtw-batch6) unpushed."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~137",
+  "surfaced_at": "2026-10-17T11:44:48Z",
+  "id": "NFRA_OPLGTW-Z-W137-S1",
+  "one_line": "The commit e2455019c5 printed WARN client-data-check: the hashed account-id list is absent on this device, so the commit was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for e2455019c5 (.scratch/commit_product.log in the worktree): WARN: client-data-check: hashed account-id list ABSENT under the user profile .opal folder -- this commit was NOT checked for client account ids (absent is not empty); the commit was not refused",
+      "git show --stat e2455019c5 touches infra/aws/ec2/opal-gateway/app/client_core.py, app/client_adapter_bd49f.py, tests/test_og_en22.py and tests/test_og_en23.py (new file); the test fixtures reuse the account ids of test_og_en22.py, which are not client values"
+    ]
+  },
+  "spec_asserts": "The order names the commit paths and the write set; it asserts nothing about a commit-time client-data check, and its AC2 is a write-set bound, not a client-data check.",
+  "world_is": "The commit landed with rc 0 while the client-data check was ABSENT on this device, so commit e2455019c5 is not read as checked clean for client account ids. The commit is an arrow-side read path and its tests, built on offline fixtures.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and hashes only. Recorded so the drain does not read the commit as checked clean. The check's absence is a device fact, not a refusal."
+}
+```
