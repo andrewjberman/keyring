@@ -41811,3 +41811,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No row is needed: the existing registry and builders already emit them, and the rows I ordered are refused. The ruling's home is reached by the existing FIRM silver home."
 }
 ```
+
+## IRPT_BCKEND-D2-W454-S1 -- module.irpt_scopes FIRM class marks four rows, demo included, so the FIRM class alone cannot select the three list firms; the registry kind filter does.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W454-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~454",
+  "surfaced_at": "2026-10-17T05:01:26Z",
+  "one_line": "module.irpt_scopes FIRM class marks four rows, demo included, so the FIRM class alone cannot select the three list firms; the registry kind filter does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-hm-8 step 4 and the worker face: the three list-key firm tokens are derived from the registry the way principal_49f.tf derives its firm, through module.irpt_scopes, and the check requires exactly the three kind-client firms of data/firm_registry.json.",
+  "world_is": "module.irpt_scopes scope_class (infra/aws/terraform/modules/opal_name/generated_locals.tf:51-55) marks FOUR rows FIRM: 49financial, inflection, cottonwood and demo. The demo row is kind demo in data/firm_registry.json, so the FIRM class alone yields four list keys and AC2 fails on the extra key. hmac_list_stage.tf reads data/firm_registry.json with file() and keeps the kind client rows, each also tested against scope_class FIRM with lookup(); no firm token is typed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf:51-55 (scope_class FIRM rows) at 0.9.0_WK_IRPT_BCKEND~454 HEAD",
+      "data/firm_registry.json firms[] kind: 49financial, inflection, cottonwood = client; demo = demo",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r251/p251_cells.py ac2 (firms = kind client, exactly 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The declaration uses the registry kind filter; a CTO or CVO ruling on whether the module should carry the kind column is open. No module file was edited."
+}
+```
+
+## IRPT_BCKEND-D2-W454-S2 -- The check AC1 counts every Sid label in the file, trust document included, so the trust statement carries no Sid, unlike principal_49f.tf.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W454-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~454",
+  "surfaced_at": "2026-10-17T05:01:26Z",
+  "one_line": "The check AC1 counts every Sid label in the file, trust document included, so the trust statement carries no Sid, unlike principal_49f.tf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-hm-8 step 4 and the worker face: the file mirrors principal_49f.tf, whose trust statement carries a Sid, and the policy holds exactly two statements.",
+  "world_is": "p251_cells.py ac1 collects every Sid assignment in the file and requires the sorted set to equal exactly the two policy Sids. The first AC1 run at this worktree FAILED with the trust Sid counted as a third statement. The trust statement now carries no Sid. It still names only local.irpt_runner_role_arn and sts:AssumeRole, so the grant is unchanged; a Sid is a label, not a grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r251/p251_cells.py ac1 (sid regex over the whole file)",
+      "infra/aws/terraform/investor-reporting/directory/principal_49f.tf:104 (trust Sid at 0.9.0_WK_IRPT_BCKEND~454 HEAD)",
+      "AC1 first run output at this worktree: FAIL policy statements found [trust, ReadTheOneHmacSecretOnly, PutTheThreeFirmListKeysOnly]; re-run PASS after the edit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. A future check or a mirror of principal_49f.tf should decide whether a trust Sid is wanted; this file follows the check."
+}
+```
