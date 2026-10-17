@@ -86,9 +86,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~156, worktree `C:/dev/wk-harvst-156`, branch `wk-AMGT_HARVST-156`. Widen the sparse set at provision with `lib/research`, `.claude/agents` and `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922` (the KPI census file the pure derivation reads by a relative path; row `D1-W155-S3`).
 - **SENT:** with the round-90 recut.
 
+**COMPLETE 2026-10-17T17:0xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~156` (worker, haiku, high), branch `wk-AMGT_HARVST-156`, commits `88442d65c3`, `398139a4a7`, `853fed019a` (first pass), `7f281c6d16`, `73777baeec`, `3f41e6ed89` (AMENDMENT 1), merged `344ea6a5fc` (safe-merge fast lane, index check 0 of 8 paths differ); worktree and branch removed. Diff read by this seat (final): `continuation.py`: `METHOD_VERSION` `/4`, `_old_rule_candidates` (the old rule unchanged), `_pdf_line_candidates` (the fallback list), `_recommendation_candidates_ex` (old candidates when any exist, else the line list with `line_only`), `_resolve_fund_and_position` adds `"line_only": true` to a line-read position value only; the docstring amended twice; `test_continuation_terms.py` one assertion `/3` to `/4`.
+- **AC1 PASS:** `13 passed` (worker; re-run here). **AC2 PASS:** `53 passed` (worker; re-run here, base count 53). **AC3 PASS:** `CENSUS securities=94 changed_fund=30 changed_position=30 gets=360 bytes=99746748`, preceded by `VALUE_TO_VALUE=0` and `ABSENT_BEFORE_BOTH=30 of CHANGED=30` (re-read here). Proof instance VALID rc 0 (re-run here).
+- **How the first reading was wrong, and the repair:** the first rule made 4 securities change from one value to another (`CPA_US`, `JD_US`, `MER_PM`, `ML_FP`), with the pdf line cut at the line break (`...A SOURCE OF` against `...A SOURCE OF CAPITAL.`); AMENDMENT 1 made the line rule a fallback only and put the claim `line_only` on its value. A census rerun in the worker's session compared against `HEAD` (already the round-90 commit) and read zero changes; the worker discarded it, pinned `BASE_COMMIT` `8005ccbacb` in the script and reran: the numbers above.
+- **Rows** `D1-W156-S1` (INERT: before the change a label-start pdf page was read only when it was a single line) and `-S2` (INERT: 50 sparse-checkout test failures on a missing `field_map.json`, outside AC2's six files); read and accepted. The ARMED rows `D1-W155-S1` and `-S2` and `D1-W158-S2` stay open until `HVST-ce-4` reads clean on the served tool.
+- **What this does NOT prove:** a rebuilt object or a served read (`HVST-ce-4`).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>90</round>
 <workstream>S43-FIX</workstream>
 <slot>dell1</slot>
