@@ -26921,3 +26921,26 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Accepted as a finding, not a defect of this release: the client_* windowed tools are sync FastMCP tools and run on the event loop, as at the live ref d3ae88be46, so WINDOW_READ_GATE never contends in the service and a page of 22 to 34 s holds up every other route, health included. Nobody grades window_read_busy as a served outcome (the CVO's note). The repair is a separate cell for the round-41 enrichment list: run the windowed client tools off the event loop in a worker thread (tools.py), so health answers during a page and the gate becomes real. Carried to the CTO's round analysis; not in OG-ap-34."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T06:28:34Z",
+  "id": "NFRA_OPLGTW-Z-S354",
+  "one_line": "The host carries no /opt/opal-gateway/.deployed_commit release-sha marker; the CTO (msg 35413) asks the next batched release ask to put the deploy-written marker in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO ROUND_ANALYSIS.round21.md section 3 @d6a798cc93, msg 35413: /opt/opal-gateway/.deployed_commit is absent on the host; until it lands, release reports read identity by the served blob's md5"
+    ]
+  },
+  "spec_asserts": "A release's identity on the host is readable from a deploy-written marker.",
+  "world_is": "The marker is absent today, so a release report reads identity by md5 of the served blob (the OG-ap-34 close did this: host md5 139 of 139 against the release blobs). Carried to the next batched gateway release: its ask names the deploy-written release-sha marker in the diff or in the wrapper's behaviour (safe-ec2-deploy.sh / deploy-to-ec2.sh are not in the OG-ap-34 diff), for the halves to sign. Not a defect of any release already live.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
