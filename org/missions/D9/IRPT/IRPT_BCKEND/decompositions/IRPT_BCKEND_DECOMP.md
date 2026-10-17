@@ -4602,6 +4602,18 @@ Check IB249-1 (`deliverables/2.0.0_SA_COO~S2/checks/r249/p249_cells.py`), dry-ru
 
 fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell on the same chain as IB-pr-617, so the same worker continues; one write surface (retained_export.py).
 
+## 245. ROUND 10, WORKSTREAM ~PS (the APPLY of the new export bundle that reads the CURRENT filled-report object and refuses on a sha256 or size mismatch: the first of the three things IB-pr-616 Step 6 waits on; 2026-10-17 ~03:xxZ, issuer 2.0.0_SA_COO~S2 on dell2, after the drain 1dab1295ef of IB-pr-617 and IB-pr-619)
+
+IB-pr-616 Step 5 left `irpt-export-render` on the bundle whose `read_pinned_filled` reads the pinned VersionId (live CodeSha256 `5bIgn/MLNgtN...`, read by the issuer 2026-10-17). IB-pr-551 ADDENDUM 3 grants `s3:GetObject` ONLY, so that code would be refused by the role once the statement lands. The merged code (`1dab1295ef`) reads the current object and refuses on a sha256 or size mismatch. This cell applies that bundle through `0.7.0_AE_CloudOps~IB2` (code attributes of the one function; the filled-report switch is not touched; no IAM change), before the fence row regeneration and the Step 6 statement. Order of the three, per the CTO: bundle, then the fence row and regeneration, then the statement.
+
+Check IB250-1 (`deliverables/2.0.0_SA_COO~S2/checks/r250/p250_cells.py`) reads the record IB2 writes; dry-run at the base on dell2: AC1, AC2 and AC3 each FAIL (no record), as a build check should.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-618` | APPLY: the export bundle with the current-object read and sha256 refusal, code attributes only | FWD-21 | WORLD | IB-pr-617 and IB-pr-619 (merged), IB-pr-616 Steps 1 to 5 (applied) | PS8-b |
+
+fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one APPLY cell on the CloudOps lane IB2, the single seat for this macro on dell2 (rule 34); it follows the build chain PS8-a.
+
 ## 242. ROUND 6, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 1: the READ; 2026-10-17 ~03:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO msg 10155 and ruling B, msg 10161; plan blob `f1f250ab37`)
 
 The laptop CTO ruled (@3ffa142af0) that `client-data-check.py` reads a keyed list, `HMAC-SHA256(key, UPPER(id))`, produced by a scheduled served-layer job; the dell2 CTO ruled B: the step goes in `irpt-directory-refresh`, the existing all-firm reader, as its LAST stage after the directory write commits (its failure never alters or rolls back the directory output, proved by a planted-failure test), the object holds only sorted HMACs (no firm, count by firm or id), the role gains `GetSecretValue` on one ARN and `PutObject` on one key, and a never-widen pair; the hook flip to refuse-on-absent is the laptop CTO's after the first list lands. Six cells (IB-hm-1 to IB-hm-6, plan section 3). This section cuts the first: a READ-ONLY repository measurement by a worker, so that the producer code (IB-hm-2), the Terraform (IB-hm-3) and the pair (IB-hm-4) are built on cited facts, not on my reading of two files. IB-hm-2 to IB-hm-6 are cut when this one is graded.
