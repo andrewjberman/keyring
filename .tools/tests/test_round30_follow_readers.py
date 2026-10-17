@@ -132,7 +132,7 @@ def make_clone(files, branch="CLOUD"):
     return d
 
 
-def main():
+def run_arms():
     # arms a: the six readers do not name the retired map and do load the folder
     for key, rel in FILES.items():
         text = read(rel)
@@ -236,6 +236,14 @@ def main():
 
     for d in (empty, missing, bare, empty_clone, clone, root):
         shutil.rmtree(d, ignore_errors=True)
+
+
+def main():
+    # an arm body that raises is a FAIL arm, never a crash: the last line is always printed
+    try:
+        run_arms()
+    except Exception as e:  # noqa: BLE001
+        arm("abort %s" % type(e).__name__, False, str(e)[:200])
     k = sum(1 for _n, ok in ARMS if ok)
     n = len(ARMS)
     print("FOLLOW-READERS arms=%d/%d ok=%s" % (k, n, k == n))
