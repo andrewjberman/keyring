@@ -41705,3 +41705,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not widened. Adding the D14 and infra/aws/lambda paths to the sparse set would rebuild the tree, which the worker rules forbid, and the grant does not name them. The base counts are the baseline the order asks for, measured in this worktree. A worker cannot make AC2 pass here without the carried set changing, so the set's owner decides."
 }
 ```
+
+## IRPT_BCKEND-D2-W452-S1 -- The ruled GLOBAL scopes row for product globgrph is refused by validate (two refusals); the address outcome is reachable without it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W452-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~452",
+  "surfaced_at": "2026-10-17T04:24:08Z",
+  "one_line": "A GLOBAL scopes.json row for the product globgrph, bucket opal-data-assets, cannot be appended: validate() refuses it twice. A PRODUCT row is refused too. address() already emits the ruled s3://opal-data-assets/globgrph/ addresses through the existing FIRM scopes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-3a (CTO ruling msg 10259, as the order quotes it): a GLOBAL scopes.json row for the product globgrph whose bucket is the standing shared bucket opal-data-assets, so that address(...) emits s3://opal-data-assets/globgrph/...; a shared home names a standing_shared bucket (NAMING_SCHEMA.json bucket.standing_shared).",
+  "world_is": "Base HEAD 87c9948811, registry copied to a scratch directory with one GLOBAL row appended (key globgrph, short globgrph, bucket opal-data-assets): validate() returns 2 refusals. (a) scopes.json[15] key: 'the global scope is global / global' (lib/opal_naming.py:515; a GLOBAL row must be key global, and the existing global row carries bucket opal-data-portal-v2). (b) systems.json[26]: 'globgrph is a GLOBAL scope ... a firm is never a system' (lib/opal_naming.py:652; globgrph is a systems.json key). A PRODUCT row for globgrph is refused for its bucket, which must be opal-data-globgrph (lib/opal_naming.py:510-511). Base copy: 0 refusals. With NO new scope row, address('globgrph', <firm_id>, 'silver', 'account_id_list', 'hmac') returns s3://opal-data-assets/globgrph/<firm_id>/silver/account_id_list/hmac for 49financial, inflection and cottonwood: the FIRM tenancy silver home is shared to opal-data-assets (infra/logic/registry/tiers.json homes.FIRM.silver).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:510-511, 515, 516-517, 652 @87c9948811 (validate refusals quoted above)",
+      "infra/logic/registry/tiers.json homes.FIRM.silver @87c9948811 (shared, opal-data-assets)",
+      "infra/logic/registry/scopes.json global row @87c9948811 (key global, bucket opal-data-portal-v2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No registry row was written for the ruled globgrph scope row, and no code was edited. The order's refusal clause holds the build. The CTO needs to rule on the home: the FIRM silver path (the probe's result, not yet recorded in a deliverable) or a validator change, which is not this worker's to make. The tier silver is this worker's probe choice; the order names none."
+}
+```
+
+## IRPT_BCKEND-D2-W452-S2 -- The irpt SECRET row for irpt/hmac-list/key is refused by validate as redundant; criterion AC3 cannot be met under the row rules
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W452-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~452",
+  "surfaced_at": "2026-10-17T04:24:08Z",
+  "one_line": "Every irpt/... SECRET name resolves system irpt from its own first token, so validate() refuses a resources.json row naming irpt as redundant. The one secret row the order requires cannot be appended.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-3a step 2 and criterion IBHM3A-AC3: one registered SECRET row of system irpt in infra/logic/registry/resources.json in the slash grammar irpt/<scope>/<purpose> that the repository's secret grading accepts; the row's evidence cites CTO messages 10161 and 10234.",
+  "world_is": "grade('irpt/hmac-list/key', 'SECRET') returns CONFORMANT with canonical irpt/hmac-list/key before any row, so the grader already accepts the name. Appending {name: irpt/hmac-list/key, type: SECRET, system: irpt, evidence: ...} to a scratch copy of resources.json, base otherwise, makes validate() refuse it with: 'irpt/hmac-list/key already resolves irpt from its own tokens (type SECRET); a row naming the same system is redundant' (lib/opal_naming.py:924). Base copy: 0 refusals. The validator's redundancy test is: no placeholder and the row's system equals the system the tokens resolve. For any name starting irpt/, the tokens resolve irpt (irpt is a systems.json key), so the test fires for every such row. The check's required row (p249_cells.py ac3: one SECRET row, system irpt, name in the regex irpt/[a-z0-9][a-z0-9-]*/[a-z0-9][a-z0-9-]*) and the validator cannot both hold without a code or rule change. resources.json holds 0 rows with system irpt at base.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:918-924 @87c9948811 (the redundancy refusal)",
+      "lib/opal_naming.py:2151-2184 @87c9948811 (_grade_resource; the SECRET grading path via _slots)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r249/p249_cells.py ac3 (the regex and the row test)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No resources.json row was written: the order's step 2 says STOP if a row is refused by validate, and adding one needs a change to the validator or to the name rule. Options for the CTO to rule: a validator exemption for SECRET names whose first token is the system (a code change, not made here), or a grammar change that gives the secret a name whose first token is not a system (AC3's regex forbids this as written)."
+}
+```
+
+## IRPT_BCKEND-D2-W452-S3 -- The naming tests at this worktree are not eleven red: 12 failed and 3 errors, two failures outside the check's base-red set
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W452-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~452",
+  "surfaced_at": "2026-10-17T04:24:08Z",
+  "one_line": "python -m pytest lib/tests -q -k naming at base 87c9948811 gives 12 failed, 124 passed, 3 errors; the order and the check's BASE_RED set say eleven red, and two failing ids are outside that set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-3a step 4 and check AC2 (p249_cells.py BASE_RED): the naming tests are red at base in eleven ids, and a worker may not add to them.",
+  "world_is": "Measured by this worker before any edit, worktree C:/dev/wk-IRPT_BCKEND-452 at 87c9948811: 12 failed, 124 passed, 123 deselected, 3 errors, rc 1. Failed ids not in BASE_RED: lib/tests/test_opal_naming_firm_access_ts.py::test_firm_page_sets_equal_the_hand_kept_object and lib/tests/test_opal_naming_firm_access_ts.py::test_mark_names_firm_pages_json_and_its_hash. The errors are test_opal_naming_firm_access_ts.py::test_portal_file_reproduces_under_generate, ::test_generated_block_in_portal_file_equals_fresh_render and test_opal_naming_firm_notes.py::test_t1_generated_block_equals_fresh_render. A traceback shown reads subprocess git -C portal show 2ed4373d523a278d2064967b5bd9fc24cfc35b3e:src/lib/firmAccess.ts, rc 128.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest lib/tests -q -k naming run at this worktree before any edit (rc 1; the short summary read by this worker)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r249/p249_cells.py BASE_RED (lines 28-40)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Environment fact of the sparse worktree (the portal commit is absent), not caused by this worker. The check's AC2 would fail on these two ids at HEAD whatever the registry edit. Not repaired: no code or portal edit is within the grant."
+}
+```
