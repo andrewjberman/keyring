@@ -10921,5 +10921,97 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
          },
          "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S48",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T23:36:55Z",
+     "one_line": "Row D1-W162-S1 is dismissed: the closed batch-4 ledger's rollback to d3ae88be46 is superseded by three manifest moves; the HVST-cg-3 release is cut on the live commit.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "D1-W162-S1: a later release of harvest_research.py needs a base that accounts for the batch-4 rollback to d3ae88be46; disarm_owner 2.0.0_SA_COO~W1.",
+     "world_is": "Read by the issuer 2026-10-17 23:5xZ: the batch-4 ledger (20261017T0149Z) closed at 02:13Z with the rollback; infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway deployed_commit then moved d3ae88be46 -> 9d5b71255 (commit 013125d0b1, 01:53Z), -> 1753c741d9 (commit 25699bc8e5, 11:07Z, HVST-cd-2) -> efcc8ae19f (commit 16cefe735c, 13:43Z, OG-ap-36); at read time deployed_commit = efcc8ae19f7eebb04e2f45f45c0def28af037c24 and previous = 1753c741d9. The HVST-cg-3 order (staged) cuts the release on the live commit read from the manifest, the instance and /opt/opal-gateway/.deployed_commit, prints the b77e08e198^1 equality against the live file (md5 6d9e0dd38166b82943d6834a0ce482b5 at efcc8ae19f) and STOPS on any difference. Not read: the host itself (the order's step 0).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/critical_paths/change_management/20261017T0149Z_nfra-oplgtw-gateway-release-batch4_deploy_completion.md",
+       "infra/aws/ec2/EC2_MANIFEST.json (git log -3: 16cefe735c, 25699bc8e5, 013125d0b1)",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cg-3.the-gateway-serves-fund-relation-and-the-absent-note-wording.md (step 0 and 1)"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W162-S1"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The hazard (a release based on a tree that the batch-4 rollback made stale) is removed by the live-commit cut and the equality guard in the HVST-cg-3 order, and the manifest shows the live commit has moved three times since; nothing else is owed on D1-W162-S1."
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W161-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~161",
+      "surfaced_at": "2026-10-17T23:30:17Z",
+      "one_line": "The order's named mutant cannot fail the MNST arm: with the holding words matching everything, MNST still reads candidate, because the candidate test runs before the holding test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cg-1 cell 1c(6): with fund_relation._HOLDING_WORD_RE monkeypatched to match everything, the MNST arm (RECOMMENDATION: CANDIDATE FOR PFOE returns candidate) FAILS. Cell section 0 fixes the test order as template, then the candidate words, then holding, then unclassified.",
+      "world_is": "Under that mutant classify() still returns candidate for MNST, since the candidate words are tested first (continuation._line_stance at continuation.py@2065535803:448-464 has the same order). The mutant is caught by the unseen-phrase arm instead (watch list name for PFOE reads holding). The test file asserts the observed behaviour (test_mutant_holding_matches_everything_does_not_move_mnst) and adds a candidate-words mutant that does fail the MNST arm (test_mutant_candidate_words_removed_fails_the_mnst_arm). The mutant ML_FP arm (template check removed) fails as specified.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/corpus/fund_relation.py (worktree wk-AMGT_HARVST-161, classify() test order)",
+          "lib/research/corpus/tests/test_fund_relation.py (worktree wk-AMGT_HARVST-161, mutant arms; 17 passed)",
+          "lib/research/corpus/continuation.py@2065535803:448-464 (_line_stance order)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W161-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~161",
+      "surfaced_at": "2026-10-17T23:30:17Z",
+      "one_line": "A recommendation line spelled RECOMMEDATION (no N) falls outside the header pattern, so its relation reads none, not unclassified, and the line's stated text is hidden.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cg-1 cell section 0: fund_relation is none only when fund is None or fund_evidence does not start with a recommendation header (the typed._RECOMMENDATION_HDR_RE pattern); any other named-fund line is one of the six relations.",
+      "world_is": "CPA_US_Equity, reports 9b28cee18bfae30c and a687821c8b07fc09 (class OTHER), carry fund=IDVZ and fund_evidence beginning RECOMMEDATION: Consider adding 50-100bps in IDVZ. The header pattern does not match the misspelling, so both rows read relation=none (cg1_census.out RELATION lines). The line states a size increase (adding), which the taxonomy would place as unclassified. Not a holding under either reading, so no holding consumer is misled, but the none value hides the line. typed._find_fund also took the bare-token fallback for these rows.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~161/cg1_census.out (RELATION lines for CPA_US_Equity)",
+          "lib/research/corpus/typed.py@2065535803:214 (_RECOMMENDATION_HDR_RE)",
+          "lib/research/corpus/fund_relation.py (worktree wk-AMGT_HARVST-161, header test)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W161-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~161",
+      "surfaced_at": "2026-10-17T23:30:17Z",
+      "one_line": "The worktree wk-AMGT_HARVST-161 lacks the untracked file integrations/bloomberg/research/field_map.json, so 51 corpus tests fail; the same failures reproduce at the base commit and are not caused by HVST-cg-1.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cg-1 preflight names the corpus tests AC2 (five files, 58 passed). The full lib/research/corpus/tests package is the wider regression surface an order cannot see from its five named files.",
+      "world_is": "Full run of lib/research/corpus/tests on the worktree: 51 failed, 616 passed. team_sheet round44, 46, 47, 49 and template round47 raise FileNotFoundError on integrations/bloomberg/research/field_map.json (absent in the worktree; team_sheet.py:269). test_dossier::test_composed_document_with_every_section_present fails with the HEAD typed.py too (typed.py swapped to git show HEAD: and restored; the same single failure). AC1 and AC2 pass.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/corpus/team_sheet.py@2065535803:269 (FileNotFoundError on field_map.json)",
+          "integrations/bloomberg/research/field_map.json (absent in worktree wk-AMGT_HARVST-161; ls rc=2)",
+          "pytest run on lib/research/corpus/tests (worktree; 51 failed, 616 passed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
