@@ -41383,3 +41383,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Hazard INERT: a reader of these comments could be misled, nothing runs on them. Owner may fold the four edits into the next change to this file."
 }
 ```
+
+## IRPT_BCKEND-D2-S229 -- Disposition of worker 481's rows IRPT_BCKEND-D2-W481-S1 and S2 on TO-IB-pr-617: the line-34 premise stays true for the p
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S229",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-17T02:17:30Z",
+  "one_line": "Disposition of worker 481's rows IRPT_BCKEND-D2-W481-S1 and S2 on TO-IB-pr-617: the line-34 premise stays true for the platinum series, and the four stale comments were made true by TO-IB-pr-619.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker 481's rows on TO-IB-pr-617: W481-S1 (the module head's PATH B paragraph still describes the pinned-VersionId read, which stays true for the platinum series) and W481-S2 (four statements outside the two named functions describe the old filled-report read).",
+  "world_is": "Merged at 1dab1295ef (drain of TO-IB-pr-617 at 302d7fc367 and TO-IB-pr-619 at fc8b3c2f57). The issuer's own reads on the worker's final tree and again on the merged trunk: p248 AC1 to AC3 and p249 AC1 to AC3 PASS (AC3 of p248 on the worker's tree, before the merge); the three export filled-report test files read 31 passed; py_compile clean. The PATH B paragraph is about the platinum SERIES read through the reporting route and was correctly left untouched. The four stale statements (the PATH C banner, the IB-pr-563 block, the FILLED-REPORT-F banner and the filled_leg_read docstring) now say the CURRENT object is re-read and refused on a sha256 or size mismatch; the diff against the worker's merged head is comments and one docstring only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff e2d1530c3d..3146338cb9 on retained_export.py read by the issuer: comment and docstring lines only",
+      "p248 and p249 outputs run by the issuer, all PASS",
+      "pytest of the three files on the merged trunk: 31 passed"
+    ]
+  },
+  "dismissal_reason": "W481-S1 is a true observation that needs no act (the PATH B paragraph is about the series route and is correct); W481-S2 is resolved by the merged TO-IB-pr-619, which the issuer cut for it and verified.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "Append-only: the worker's two rows are not edited."
+}
+```
