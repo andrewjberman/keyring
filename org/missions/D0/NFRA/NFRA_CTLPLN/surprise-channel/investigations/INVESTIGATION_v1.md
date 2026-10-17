@@ -14613,3 +14613,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "A correction is a new item citing the old id, per the surprise-row gate; S13 is left as written. OWNER: 0.0.0_AB_MSTR~DELL1. Asked for by 1.0.0_SA_CTO~DELL1 msg 7072 and the laptop MSTR."
 }
 ```
+
+## NFRA_CTLPLN-D1-S15 -- one dell2 seat life also ended with no kill line (reported by dell2's manager); the unexplained ends are not only on dell1
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T00:48:00Z",
+  "one_line": "One dell2 seat life also ended with no kill line (3.0.0_SA_CVO~DELL2, between the 07:2xZ and 08:2xZ reads on 2026-10-16), reported by dell2's manager; so the unexplained ends are not only on dell1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 on the agent bus, id f9b6e542, 2026-10-17T00:40:44Z, a correction to its fe96cc86 (relayed, not measured by this seat): 3.0.0_SA_CVO~DELL2 left the dell2 seat-liveness table between the 07:2xZ and 08:2xZ reads on 2026-10-16; its last commit was about 6 hours old; no kill line, no crash event that manager found; its broker row read NOT REGISTERED; it relaunched the seat at 08:38Z on the dell2 CTO's ask.",
+      "Same manager, bus fe96cc86 (00:40:10Z): dell2's kill-maint runs at 23:31Z and 00:23Z both killed 0; its only kill lines on 2026-10-16 are its own (CloudOps~DB2 about 19:4xZ, ~AQ2 about 20:4xZ, on the dell2 CTO's rule-34 ruling); every other dell2 seat-count change that day has a kill line of its own.",
+      "This seat did not read dell2's audit log or transcripts."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-D1-S12, S13 and S14 read the unexplained seat ends as a dell1 shape.",
+  "world_is": "By dell2's own report one seat life there also ended without a kill line, earlier in the day and singly, not in a cluster; on dell2 it is one case against ten on dell1. Whether it shares a cause with dell1's is not measured.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1 for the cross-box evidence. Relayed fact, so grounding is INFERRED; dell2's transcript tails would give it the same counts-only read asked for on dell1."
+}
+```
