@@ -79,9 +79,16 @@ This order touches none of them.
 - **Add-only, named:** gold puts never overwrite; the old objects stay; the rollback is an Andrew-confirmed delete of the new keys listed in `ce4_written.out`. The other 63 securities of the 94 (the census lists 30 and KMB is the thirty-first) are not touched.
 - **Not covered, named:** the corpus-wide `fund_form` object (`D1-W158-S2`); a rebuild of securities outside the signed list; the `line_only` text cut at a line break.
 
+**COMPLETE 2026-10-17T19:4xZ (issuer `2.0.0_SA_COO~W1`):** executed by `0.7.0_AE_CloudOps~SC1` from a worktree at `344ea6a5fc`, window 17:22:02Z to 19:27:01Z (inside the 17:20Z to 19:30Z that site Z's CTO cleared, msg 35537), commits `b03ad544b1` (deliverables) and `3008a3471a` (ledger `harvst-ce4-gold-rebuild-20261017` CLOSED 19:36Z, manifest committed). Read by the issuer from the record and the served tool:
+- **Manifest** `ce4_written.out`: 62 `WROTE` lines, 62 distinct keys, 31 continuation and 31 dossier, every name in the signed list (sha256 `7881772d...c67b`), none missing or extra, every put `put_performed=True existed=False` with a VersionId; the `GAP` and `EXISTED-NOT-REWRITTEN` lines record the repaired half pair. The CTO read it too (msg 7713).
+- **AC1 to AC3 PASS** (`ce4_served.out`: `SERVED_CANARY=PASS`, `SERVED_SAMPLE_AND_CONTROL=PASS`, `WRITTEN continuation=31 dossier=31`); proof instance VALID rc 0 (re-run here).
+- **Served reads by this seat** (live gateway, my own session): `NFLX_US_Equity` (not in SC1's sample) fund `PFOE`, `Maintain position in PFOE`, `line_only` true, cited to page 0 of the 2Q26 pdf, new objects served; `TSM_US_Equity` fund `PFOE`, `Maintain positions in PFOE and IDVZ`; the control `CPA_US_Equity` unchanged (fund `IDVZ`, the 1-2% position from the docx, `content_sha256` `61b9977a...` equal to SC1's before-reading). SC1's canary: UNH fund `PFOE` `line_only` true; KMB branch X (both fields absent with reasons, 0 Mexico ids in any served field, `misfiled_fields_excluded` `[]`; 7 Mexico-id strings before, 2 after, the 2 being the exclusion list itself).
+- **What went wrong, and the ruling:** the serial driver (`nohup ... rest`, bash pid 3178395) died silently at 18:37:11Z to 18:45Z leaving `NOW_US_Equity` a half pair; SC1 stopped and told me; I ruled a resume (msg 7706, inside C-5, accepted by the CTO, msg 7713): the dossier was written 18:50:15Z, nothing rewritten. Cause NOT established (row `D1-S44`). The printed pre-write branch checks of 18 names were lost in the buffer; SC1 reran them read-only afterwards (Branch A 18 of 18).
+- **Limits:** 26 of the 29 other names were not read served (their builds were checked against the census before each write; the manifest holds each put); a rollback is an Andrew-confirmed delete of the manifest keys.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>90</round>
 <workstream>S43-REBUILD</workstream>
 <slot>dell1</slot>
