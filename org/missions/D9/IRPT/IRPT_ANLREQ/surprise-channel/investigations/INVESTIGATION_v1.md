@@ -25551,3 +25551,36 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S208 -- W144-S1 and S198 disarmed: irpt-status packages get_commentary_ref since r36
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S208",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T17:11:29Z",
+  "one_line": "W144-S1 and S198 DISARMED: irpt-status now packages the acceptance.py that defines get_commentary_ref (release r36, ledger irpt-status-r36s-20261017 CLOSED); the route no longer falls back for want of the function. The commentary PDF still refuses for want of a retained PDF artifact, which is row S207.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W144-S1",
+    "IRPT_ANLREQ-D2-S198"
+  ],
+  "spec_asserts": "Rows W144-S1 and S198 (disarm owner 2.0.0_SA_COO~Y2): the live irpt-status package holds an acceptance.py without get_commentary_ref, so ops/owned_report.py refuses COMMENTARY_PDF_NOT_RETAINED for every ticket.",
+  "world_is": "MEASURED 2026-10-17 ~16:4xZ to 17:1xZ by this seat: get-function-configuration irpt-status reads CodeSha256 274dl2bCd2VC3OcX4Uqc4AMbWep65B97F1+CVNoKfMc=, LastModified 2026-10-17T16:41:08Z, the digest of the build that worker 291 verified (acceptance.py sha256 0c4acec625b7, acceptance_has_get_commentary_ref=yes, live_diff re-run by this seat on the merged tree: moved=1 added=0 removed=0 same=48) and that IB2 applied (ledger CLOSED, G1 and G2: the live object differs from the pre-window zip in acceptance.py only, 49 of 49). A request item that carries commentary_ref (the synthetic REQ-d47252fe...) now passes the ref read; the route's next refusal is the absent PDF artifact (row S207). NOT READ: the live zip's acceptance.py bytes by this seat (the claim rests on the digest equality and IB2's G2 member diff).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/LIVE_DIFF.txt",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r36s/A_AFTER_R36S.txt",
+      "org/critical_paths/change_management/20261017T1627Z_irpt-status-r36s-20261017_deploy_completion.md (CLOSED)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The remedy both rows named (an irpt-status release that packages the current acceptance.py) shipped under a signed pair and a closed deploy record whose build pin descends from the remedy; the remaining refusal has its own row, S207."
+}
+]
+```
