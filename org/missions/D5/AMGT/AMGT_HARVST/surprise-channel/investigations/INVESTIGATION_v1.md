@@ -10851,5 +10851,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S46",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T22:12:50Z",
+     "one_line": "C-S61 is served a second way: the silver research_report row's `fund` (typed.py::_find_fund, an unanchored search) still reads PFOE for a report whose recommendation line says CANDIDATE FOR PFOE, and harvest_get_research serves it in research_reports; the HVST-cf-4 rebuild does not touch silver.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "CTO round-90 analysis item 2 and msg 7735: a candidate or watch line is served as such, never as the fund of record or as a fund the name is held in.",
+     "world_is": "Read by the issuer on the live gateway at 22:2xZ after HVST-cf-4's canary: MNST_US_Equity serves fund_of_record absent (no stated holding line) and last_stated_position CANDIDATE FOR PFOE with stance candidate (correct), but research_reports[0] (report 12221d56f9087d0e, class A) carries fund 'PFOE' and fund_evidence 'RECOMMENDATION: CANDIDATE FOR PFOE'. The silver value is written by lib/research/corpus/typed.py::_find_fund (HVST-ce-1 section (b): an unanchored search for the header word, then the first fund token within 250 characters, whatever the verb); gold's fund_of_record no longer uses it, but any consumer of the report list reads fund PFOE from a candidate line. The same shape applies to every report whose line is a candidate, initiation, interest or template line (the 13 names of HVST-cf-2's census at least). Not read: how many silver rows, and whether the portal or another consumer reads research_reports[].fund.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~155/ce1_measure.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round91/cf4_canary.out",
+       "lib/research/corpus/typed.py (_find_fund, lines 203-212 at ff3c82da5e)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
