@@ -27992,3 +27992,56 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: the repair needs the read itself bounded: pass the columns the section needs and push the filters into the Parquet read (or stream row groups), so the Arrow table is small before any copy; then (a) and (b) re-run. I can re-run Phase A on a new trunk_sha at once. I did NOT widen or change the guard; if you want RSS measured without the address-space cap's side effect, a cgroup MemoryMax (RSS, not virtual) plus oom_score_adj 1000 and the wall limit is the alternative, and it needs your word or the CTO's."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~141",
+  "surfaced_at": "2026-10-17T20:37:16Z",
+  "id": "NFRA_OPLGTW-Z-W141-S1",
+  "one_line": "OG-en-26: a streamed filtered Parquet read's Arrow pool peak follows the ROW GROUP, not only the 2048-row batch; the TO's 'one batch plus the matched rows' does not hold at 50 000-row groups.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-26.stream-typed-parquet-reads-by-batch.md@8c9ab74515 section 1 item 1 (STREAM: 'The Arrow memory at any moment is one batch plus the matched rows, not the table').",
+      "Worktree probe .scratch/rg_probe.py (uncommitted, C:/tmp/wk-oplgtw-141/.scratch/rg_probe.py): one 53 311 048-byte part (label 120 bytes x 400 000 rows plus a 6000-value code column), no dictionary, data_page_size 65536, read by ParquetFile.iter_batches(batch_size=8192, use_threads=False) in a fresh python -I process (pyarrow 24.0.0, mimalloc): pool max_memory 3 871 360 bytes at 50 000-row groups, 2 538 240 at 8 192-row groups, 2 427 712 at 4 096-row groups; the same shape at 1 048 576-byte pages with 50 000-row groups: 5 182 656 bytes.",
+      "The shipped test shape (tests/test_og_en26.py::test_ogen26_ac03, 800 000 rows, 60-byte label, 4 096-row groups, 58 470 991 uncompressed bytes in the named columns): fresh-process pool peak 1 508 608 bytes (2.6 percent)."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-en-26 worker face, section 1 item 1: the Arrow memory at any moment is one batch plus the matched rows, not the table; AC3 bound: distinct_values pool peak under 5 percent of the column's uncompressed bytes.",
+  "world_is": "pyarrow's iter_batches decodes at row-group granularity for this shape: the pool peak for an 8192-row batch scales with the row group (3.87 MB at 50 000-row groups against 2.43 MB at 4 096-row groups, the same 53.3 MB of data). With 120-byte labels and 50 000-row groups the 5 percent bound (2 665 552 bytes) FAILS at 3 871 360 bytes; the shipped test therefore uses 4 096-row groups and 800 000 rows, a shape chosen after measuring, and that choice is recorded here, not hidden.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the streaming bound holds only when the object's row groups are small relative to the 64 MB cap; a production gold table with very large row groups would peak above one batch. Not measured on production objects. No change to the cap, the batch size or the production code is made for this row."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~141",
+  "surfaced_at": "2026-10-17T20:37:16Z",
+  "id": "NFRA_OPLGTW-Z-W141-S2",
+  "one_line": "OG-en-26 regression check: two tests outside the TO's named set fail on the worktree and fail identically on the unmodified base (git archive of HEAD 8c9ab74515): test_og_gt8.py::test_oggt8_ac03_deploy_stages_lib and test_og_ch1.py::test_ogch1_ac04.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worktree run of 15 other typed-reader test files (tests/test_schwab_query.py, test_schwab_engine.py, test_positioning_extension.py, test_og_rv1.py, test_og_nw1.py, test_og_nw2.py, test_og_gt0.py, test_og_gt8.py, test_og_gp1.py, test_og_en5.py, test_og_et2.py, test_og_gf1.py, test_og_ch1.py, test_og_cl1.py, test_og_en12.py): 117 passed, 2 failed.",
+      "gt8 AC03: AssertionError [] at tests/test_og_gt8.py:98 (no line starting with -C \"$TMP/bundle\" and ending in ' lib' in the deploy text the test reads).",
+      "ch1 AC04: AssertionError 'the repo roster file is not on this tree' at tests/test_og_ch1.py:99.",
+      "Base: git archive HEAD infra/aws/ec2/opal-gateway into C:/tmp/wk-oplgtw-141/.scratch/base, the same two node ids run there: 2 failed, same messages."
+    ]
+  },
+  "spec_asserts": "TO NFRA_OPLGTW.TO-OG-en-26 section 2 BOUNDS and section 4 AC3: the peer, window and client set passes in both orders; no other test file is named by the order.",
+  "world_is": "Two tests in the wider typed-reader set fail on the base tree as well as the worktree, neither reads a function OG-en-26 changed. The cause of each is outside this order's cone (a deploy-text line and a repo roster file), so the order does not touch them.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the TO's AC3 set is 32 of 32 in both orders; these two are base failures, recorded so the drain does not read them as OG-en-26 regressions."
+}
+```
