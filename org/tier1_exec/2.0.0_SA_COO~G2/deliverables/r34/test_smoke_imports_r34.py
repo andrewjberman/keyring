@@ -74,6 +74,7 @@ try:
     make_tree(tree, helper_extra="raise ValueError('boom at import')")
     rc, out = run(tree)
     check("a LIVE module that raises another exception on import is a FAILURE", rc == 1 and "ValueError" in out and "boom at import" in out, "rc=%d %s" % (rc, out[-400:]))
+    check("the tool wrote nothing into the good tree (no __pycache__)", not list((tmp / "good").rglob("__pycache__")), str(list((tmp / "good").rglob("__pycache__"))[:3]))
     tree = tmp / "notuple"
     make_tree(tree)
     (tree / "ycharts/generate/resident_main.py").write_text("x = 1\n", encoding="utf-8")
