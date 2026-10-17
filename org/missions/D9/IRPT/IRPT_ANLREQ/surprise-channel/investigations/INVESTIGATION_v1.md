@@ -24690,3 +24690,67 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S188 -- W96-S3 disarmed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S188",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:39:58Z",
+  "one_line": "W96-S3 DISARMED: the junction hazard is removed. The stale worker-96 portal worktree is gone, its node_modules link was unlinked first, and the main checkout's node_modules is intact (313 entries before and after).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W96-S3"
+  ],
+  "spec_asserts": "Row W96-S3 (disarm owner 2.0.0_SA_COO~Y2): worker 96 linked C:/dev/wk-portal-96/node_modules to the main checkout's node_modules with a directory junction; whether git worktree remove or a recursive delete follows the junction was not tested.",
+  "world_is": "MEASURED 2026-10-17 ~10:5xZ by this seat: C:/dev/wk-portal-96 still existed with node_modules a link to /c/dev/ajb_workspace/portal/node_modules and one portal worktree registration; git status in it was clean and its HEAD 80d7c70a is contained in origin/DEV (branch -a --contains), so removing it lost no commit. The link was removed first with a plain rm (never recursive), the worktree with git worktree remove --force; main portal/node_modules read 313 entries before and 313 after (the follow-the-link outcome did not occur), the directory is absent and git worktree list holds 0 entries for it. All later worker portal worktrees come from .tools/wk-provision.sh, which unlinks the node_modules link before git worktree remove (script lines 474 to 486). NOT READ: whether git worktree remove alone would have followed the link; it was not tried, by design.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -ld /c/dev/wk-portal-96/node_modules (symlink to the main checkout) and git worktree list, before; absent and 0 entries, after",
+      "ls portal/node_modules | wc -l -> 313 before, 313 after",
+      ".tools/wk-provision.sh lines 474 to 486 (unlink before worktree remove)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The object the row describes is gone and the main checkout was verified intact by count; the provisioning script unlinks before removing, so the hazard has no remaining instance."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S189 -- W145-S5 disarmed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S189",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:39:58Z",
+  "one_line": "W145-S5 DISARMED: nothing in C:/dev/irpt-release-r31 has changed since 2026-10-14 19:06, release 31 is CLOSED, and the standing law already bars deleting what a seat did not create.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W145-S5"
+  ],
+  "spec_asserts": "Row W145-S5 (disarm owner 2.0.0_SA_COO~Y2, issuer: one release directory per seat or per release, so that no seat's cleanup reaches another seat's artifacts; the owner of the other r31 build decides its own paths): the shared release directory C:/dev/irpt-release-r31 holds another seat's r31 resident build.",
+  "world_is": "MEASURED 2026-10-17 ~10:5xZ: ls -la --time-style=long-iso C:/dev/irpt-release-r31 lists build_a, build_b, delta, wrapper, control and pkgtest folders, files_from_r31.txt, pack_r31.py and the r31 tarball and sums, newest entry 2026-10-14 19:06 (the directory itself), everything else 2026-10-14 15:37 to 19:06; nothing was changed since, so no cleanup has reached the other seat's artifacts. The r31 release is closed (R31L CLOSED 2026-10-15 per worker 288's audit of W145-S6). Rulings recorded here as the issuer: a release build directory is named per release and per seat; no worker deletes a directory it did not create (CLAUDE.md Agent Autonomy: recursive deletion needs Andrew's word, and the worker rule 'scratch outside the product tree' keeps each worker's scratch its own); the owner of the r31 build (2.0.0_SA_COO~G2 or its worker) decides its paths. The r34k build used its own build directory and the deliverables folder, not this one. NOT READ: file owners (all show the same Windows user on this box, so ownership cannot separate seats).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la --time-style=long-iso /c/dev/irpt-release-r31 (newest entry 2026-10-14 19:06)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~288/r47/AUDIT_b.json (the W145-S6 line: R31L CLOSED 2026-10-15)",
+      "CLAUDE.md Agent Autonomy (recursive deletion needs Andrew's word)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "No cleanup occurred in the six days of the directory's quiet life; the release is closed; the standing law and the per-release naming ruling cover the future; the other build's owner decides its own paths."
+}
+]
+```
