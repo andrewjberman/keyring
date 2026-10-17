@@ -42103,3 +42103,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~N2"
 }
 ```
+
+## IRPT_BCKEND-D2-W481-S3 -- The order's row-id premise (start at 1) collides: IRPT_BCKEND-D2-W481-S1 and S2 already exist from the round-4 worker of this serial; this worker's rows start at S3
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W481-S3",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~481",
+  "surfaced_at": "2026-10-17T12:25:21Z",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "one_line": "The order's row-id premise (start at 1) collides: IRPT_BCKEND-D2-W481-S1 and S2 already exist from the round-4 worker of this serial; this worker's rows start at S3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-pn-3 worker face: row ids are IRPT_BCKEND-D2-W481-S<k>, start at 1. The general worker rule: k is the next unused within the coordinate.",
+  "world_is": "INVESTIGATION_v1.md at base 151e71f132 already holds IRPT_BCKEND-D2-W481-S1 (line 41335) and IRPT_BCKEND-D2-W481-S2 (line 41361), filed on TO-IB-pr-617 by the round-4 worker of serial 0.9.0_WK_IRPT_BCKEND~481 (commit dae909c87f, 2026-10-16); S1 and S2 are dispositioned by IRPT_BCKEND-D2-S229. The deliverables folder 0.9.0_WK_IRPT_BCKEND~481 holds that worker's four tracked files (commits dae909c87f and 3146338cb9). This worker's rows are S3, S4 and S5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of INVESTIGATION_v1.md for IRPT_BCKEND-D2-W481-S at base 151e71f132",
+      "git log of the deliverables folder 0.9.0_WK_IRPT_BCKEND~481 at base: dae909c87f and 3146338cb9, 2026-10-16"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The serial was reissued across rounds; the collision is a form fact, not a defect in the rows. Append-only: S1 and S2 are not edited."
+}
+```
+
+## IRPT_BCKEND-D2-W481-S4 -- TO-IB-pn-3 test 3 names the existing fake transport, which never calls session_token(); the test uses the real OrionPost with only its urllib opener replaced
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W481-S4",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~481",
+  "surfaced_at": "2026-10-17T12:25:21Z",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "one_line": "TO-IB-pn-3 test 3 names the existing fake transport, which never calls session_token(); the test uses the real OrionPost with only its urllib opener replaced.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-pn-3 cell text: run the script's run through the existing fake transport after replacing BaseClient._make_api_call for secretsmanager, so that session_token() is exercised and the run reaches an Orion request through the fake transport.",
+  "world_is": "FakeTransport.post(body) in data/inf/manual_api/test_scope_feed_day_complete.py (base 151e71f132) answers from the canned handler and never calls the token loader, so session_token() is not called under it and the secretsmanager replacement would be unused. data/inf/manual_api/test_scope_feed_region.py (this worktree) builds the real OrionPost(session_token) and replaces only its opener attribute with a canned-reply object, so the token path runs under the flat layout. FakeS3 and FakePacer are reused unchanged from the existing file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read of FakeTransport in test_scope_feed_day_complete.py at base 151e71f132",
+      "control arm: test 3 with the base script fails with NoRegionError raised from session_token(), so the token path is exercised"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Test design, not a product defect. The fake opener sits at the network edge only."
+}
+```
+
+## IRPT_BCKEND-D2-W481-S5 -- The flat layout the order names has no address source: feed_addresses() needs lib/opal_naming (not synced) or scope_feed_addresses.json beside the script; the test supplies a synthetic sidecar
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W481-S5",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~481",
+  "surfaced_at": "2026-10-17T12:25:21Z",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "one_line": "The flat layout the order names has no address source: feed_addresses() needs lib/opal_naming (not synced) or scope_feed_addresses.json beside the script; the test supplies a synthetic sidecar.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-pn-3 test 3: copy the feed script, INF_B_00 and every module the existing flat helper copies into a flat directory, then run the script's run for one household.",
+  "world_is": "At base 151e71f132 the feed resolves bronze and silver addresses through lib/opal_naming when it imports, else through scope_feed_addresses.json beside the script (_sidecar and feed_addresses in pull_inflection_scope_account_returns.py). Neither is among the modules the flat helper copies (the four synced folders plus trading_calendar.py). Test 3 blocks the opal_naming import and writes a sidecar with synthetic values beside the flat copy. The runner's own sidecar is not read: its presence is inferred, not measured, from the fact that the 11:33Z run reached session_token() after feed_addresses() ran in its PLAN loop.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read of _sidecar and feed_addresses in pull_inflection_scope_account_returns.py at base 151e71f132",
+      "run of test 3 in the flat directory: the sidecar and the blocked opal_naming import are both required for the addresses to resolve"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The runner's flat directory contents are not read in this worktree. Inferred, not measured: the sidecar is present on the runner."
+}
+```
