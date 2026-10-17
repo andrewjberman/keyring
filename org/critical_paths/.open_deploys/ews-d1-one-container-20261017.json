@@ -1,0 +1,64 @@
+{
+  "slug": "ews-d1-one-container-20261017",
+  "title": "TCKT_EARLYWARN TO-EWS-d1: the Client Ops Early Warning runtime as ONE always-on Fargate task (own cluster opal-clientops-ews-cluster, new ECR repo, new CodeBuild image build); Schwab daily rules on, mail poller off by launcher. New repo and new task family: no other task family pulls the image tag it moves (the repo is created by this deploy).",
+  "author": "0.7.0_AE_CloudOps~TM1",
+  "status": "OPEN",
+  "opened_at": "2026-10-17T05:02:29.380730+00:00",
+  "window_hours": 6.0,
+  "entry_path": "org/critical_paths/change_management/20261017T0502Z_ews-d1-one-container-20261017_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "git",
+      "target": "module infra/aws/terraform/client-ops-early-warning + Dockerfile + this ledger sentinel committed with explicit paths",
+      "proof_required": "commit ids recorded",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "s3-prefix",
+      "target": "image build source zip under s3://opal-313476888478-lambda-artifacts/client-ops-early-warning/",
+      "proof_required": "landed sha256 equals the staged zip",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "tf-lambda",
+      "target": "safe-apply 1 of infra/aws/terraform/client-ops-early-warning: ECR repo, CodeBuild project and roles, cluster, log group, security group, task and execution roles (no task, no service)",
+      "proof_required": "plan resource list, replan No changes",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L4",
+      "kind": "activation",
+      "target": "CodeBuild start-build pushes the image to the new ECR repo",
+      "proof_required": "build SUCCEEDED, image digest read from ECR describe-images",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L5",
+      "kind": "tf-lambda",
+      "target": "safe-apply 2: the task definition (image by digest) and the one-task service",
+      "proof_required": "plan resource list, replan No changes",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L6",
+      "kind": "verify",
+      "target": "ews_check.py running, iam and ledger arms and the deploy manifest EWS_DEPLOY.json",
+      "proof_required": "EWS-RUN-OK, EWS-IAM-OK, EWS-LED-OK",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261017T050229Z OPENED by 0.7.0_AE_CloudOps~TM1 with 6 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell1"
+}
