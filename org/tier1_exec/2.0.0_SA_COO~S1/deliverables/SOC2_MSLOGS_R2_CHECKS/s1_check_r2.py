@@ -145,6 +145,7 @@ def derive_run(which, n_objects):
 
     import pyarrow as pa
 
+    sys.path.insert(0, ROOT)  # the handler takes its bronze prefix from lib.opal_naming when the zip's names.py is absent
     door = load(os.path.join(DOOR, "handler.py"), "r2_handler")
     sb = load(os.path.join(DOOR, "silver_builder.py"), "r2_sb")
     store = _synth("20261015", "20261016", n_objects=int(n_objects))
@@ -244,7 +245,12 @@ def naming():
     cid = "0" * 23 + "$" + "1" * 23 + "$audit_exchange$Audit_Exchange$abc"
     if not h.key_ok("bronze", want + cid + ".json.gz"):
         bad.append("key_ok no longer admits a builder-shaped bronze key")
-    hits = [ln for ln in _gate_lines(py) if "audit_records" in ln and ln.startswith("NAMING REFUSE")]
+    lines = _gate_lines(py)
+    errors = [ln for ln in lines if ln.startswith("NAMING ERROR")]
+    graded = [ln for ln in lines if ln.startswith("NAMING-GATE:")]
+    if errors or len(graded) != len(py):
+        bad.append("the naming gate could not grade (errors %d, summaries %d of %d files): %s" % (len(errors), len(graded), len(py), (errors or ["no summary line"])[0][:160]))
+    hits = [ln for ln in lines if "audit_records" in ln and ln.startswith("NAMING REFUSE")]
     if hits:
         bad.append("the naming gate still refuses %d audit_records line(s), first: %s" % (len(hits), hits[0][:160]))
     return finish("R2-NAMING", bad, "files=%d" % len(py))
