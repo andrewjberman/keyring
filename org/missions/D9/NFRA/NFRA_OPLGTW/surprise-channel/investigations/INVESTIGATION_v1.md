@@ -26286,3 +26286,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The client-data check did not run on this box (hashed list absent), but the commit's fixtures are the synthetic z08/z09 ids already in tests/test_og_en17.py, and the issuer read the merged diff (d2b95c10cf): no real account id. Record only; the device-side list is not this project's."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T01:00:59Z",
+  "id": "NFRA_OPLGTW-Z-S336",
+  "one_line": "OG-ap-32 Phase A redo STOPPED at step 1: the live gateway ref moved from 4be300110e to 319c9413a2 (AMGT_HARVST HVST-cc-7 by 0.7.0_AE_CloudOps~SC1, deployed 2026-10-17T00:10:31Z); that commit is not in this repository.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/EC2_MANIFEST.json at box/sitez HEAD: services.opal-gateway.deployed_commit 319c9413a20895a63517c5ca1b9ced0f78a5573a, previous_deployed_commit 4be300110ec912ac8c11a1663403e41eea45117c, deployed_by 0.7.0_AE_CloudOps~SC1; the S3 git-ref of opal-gateway-latest.tar.gz reads the same",
+      "org/critical_paths/change_management/20261017T0008Z_harvst-cc7-gateway-s29-20261016_deploy_completion.md (CLOSED 00:16:01Z; release rel-amgt-harvst-cc7b, local, never merged; six paths only)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32b_host_md5.json (host md5 walk against 4be300110e: 136 equal, 3 differ: app/harvest_figures.py, app/harvest_identity.py, app/harvest_research.py; 0 missing, 0 extra)",
+      "git cat-file -t 319c9413a2... in this repository: could not get object info (the commit is not here)",
+      "the host's three files each equal their blob at trunk d2b95c10cf (md5 read over SSM) and differ from their blob at 4be300110e"
+    ]
+  },
+  "spec_asserts": "The live ref is 4be300110e (OG-ap-32 step 1 and its issuer note: 'Queue on the gateway host: THIS only').",
+  "world_is": "Another seat released to the same host between my first Phase A read (live 4be300110e) and the redo (live 319c9413a2). A release built on 4be300110e and deployed over the host would extract the OLD copies of those three harvest files and revert the HVST-cc-7 fixes; the stale-base guard would refuse it first (declared base 4be300110e != live 319c9413a2), and ap32.AC1 requires base_sha to equal the live ref. Nothing was deployed or written by me. Facts that bear on the issuer's choice: the three live files are byte-equal to trunk d2b95c10cf, so a release that takes those three files whole from trunk carries exactly what is live; but base..release would then hold three paths outside ap32.AC1's allowed set, and the base commit 319c9413a2 is not available to cut on. Options: (A) the HVST seat makes commit 319c9413a2 available (a ref my repository can fetch) and I cut on it; (B) the take list gains the three harvest files whole from trunk, the release is cut on 4be300110e, the base is declared as 319c9413a2 only after a host md5 walk shows the release carries everything live has, and ap32.AC1 is amended to allow the three paths and read the declared base; (C) hold OG-ap-32 until the HVST release is merged into trunk and the live ref is a trunk commit.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and names only. OG-ap-32 Phase A redo is stopped; release 11031f278d stays superseded; no deploy."
+}
+```
