@@ -81,7 +81,7 @@ This order touches none of them.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>RUNNER-ORDER</workstream>
 <slot>dell1</slot>
