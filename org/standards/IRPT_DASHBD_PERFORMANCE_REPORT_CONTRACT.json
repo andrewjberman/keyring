@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.5.4",
+  "contract_version": "0.5.5",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -55,6 +55,11 @@
       "contract_version": "0.5.3",
       "sha256": "1066158a26720e1ff47b94b7812f4df0cec8ed2eb711812eee3340a9dee05888",
       "reason": "the 0.5.3 bytes, before the 0.5.4 bump: the ten activity and net-gain members (act.beginning_value, act.net_gain and act.ending_value at household and account grain, and hold.net_gain_last_12_months, hold.net_gain_ytd, hold.net_gain_qtd and hold.net_gain_since_inception) sourced the account activity table, whose trading days hold no history for the last 12 months or since inception, so the members printed INSUFFICIENT_HISTORY where their value-summary counterparts beside them were measured; 0.5.4 names each member's value-summary counterpart as its source (the same fold, round 105 DB-b-202 part d), adds one equivalence per pair, and changes no other member"
+    },
+    {
+      "contract_version": "0.5.4",
+      "sha256": "abb005cac25a227f8d87c28899acc425640c4f7a4db8f8c125a3b6bed396e91c",
+      "reason": "the 0.5.4 bytes, before the 0.5.5 bump: the account_id of the filled report is the minted opaque id (ids.opaque_account), a new field account_id_form = minted travels on every account entry, and the accounts are ascending by the minted account_id; the reader and the validator carry the same form in one drain"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -123,7 +128,7 @@
     }
   ],
   "document": {
-    "shape": "One filled report per household. A filled report is one JSON object with exactly two keys, household and values (document.filled_report states the layout). household is {household_ref, as_of, first_data_date, accounts}: household_ref is the household's reference, as_of the report date, first_data_date the earliest first_data_date of its accounts, and accounts one entry per account of the household in account_id order, each entry {account_id, last4, first_data_date, window_status}. values is an object keyed by member id with exactly one entry per member in members. A member whose grain is an account or an asset class holds {\"by_row\": {\"<account_id or asset class>\": figure}} (filled_report.per_row_member_form); a chart member holds a list of series {name, points: [{date, value}]}, a point with no measured figure left out, and a chart with no measured point holds its absent form. A value is a number, a text, or {\"absent\": \"<reason in words>\"}. A member whose source is ABSENT always holds the absent form, never zero and never a default. Units follow each member's unit: dollars as whole dollars with thousands separators; percent to one decimal place; text as written; series as the list the chart reads. A percent member holds PERCENT POINTS: a stored 1.5 means 1.5 percent, and a consumer must not scale it again (the unit_scale field on each percent member names this). The sample builder writes this object from the sibling contracts named in each member's source; the tab and the export read it by member id and print every absent form as its words. Neither the tab nor the export derives a figure from another source.",
+    "shape": "One filled report per household. A filled report is one JSON object with exactly two keys, household and values (document.filled_report states the layout). household is {household_ref, as_of, first_data_date, accounts}: household_ref is the household's reference, as_of the report date, first_data_date the earliest first_data_date of its accounts, and accounts one entry per account of the household in ascending account_id order, each entry {account_id, account_id_form, last4, first_data_date, window_status}, where account_id is the issued opaque (minted) id and account_id_form is the text minted. values is an object keyed by member id with exactly one entry per member in members. A member whose grain is an account or an asset class holds {\"by_row\": {\"<account_id or asset class>\": figure}} (filled_report.per_row_member_form); a chart member holds a list of series {name, points: [{date, value}]}, a point with no measured figure left out, and a chart with no measured point holds its absent form. A value is a number, a text, or {\"absent\": \"<reason in words>\"}. A member whose source is ABSENT always holds the absent form, never zero and never a default. Units follow each member's unit: dollars as whole dollars with thousands separators; percent to one decimal place; text as written; series as the list the chart reads. A percent member holds PERCENT POINTS: a stored 1.5 means 1.5 percent, and a consumer must not scale it again (the unit_scale field on each percent member names this). The sample builder writes this object from the sibling contracts named in each member's source; the tab and the export read it by member id and print every absent form as its words. Neither the tab nor the export derives a figure from another source.",
     "filled_report": {
       "top_level_keys": [
         "household",
@@ -137,6 +142,7 @@
       ],
       "account_entry_fields": [
         "account_id",
+        "account_id_form",
         "last4",
         "first_data_date",
         "window_status"
@@ -146,15 +152,16 @@
         "NOT_SPANNED",
         "BREAK"
       ],
-      "per_row_member_form": "a member whose grain is an account (the account value summaries, the activity account rows, the realized-lot members and the account gain-loss review) or an asset class (hold.allocation) holds {\"by_row\": {\"<account_id or asset class>\": figure}}, with one key per account of the household or per asset class; a figure is a number, a text, or the absent form {absent, kind}, and an asset-class entry the household holds none of is the text UNHELD (document.unheld_rule); a household-grain member holds its figure or its absent form directly, never a by_row map",
+      "per_row_member_form": "a member whose grain is an account (the account value summaries, the activity account rows, the realized-lot members and the account gain-loss review) or an asset class (hold.allocation) holds {\"by_row\": {\"<account_id or asset class>\": figure}}, with one key per account of the household or per asset class; a figure is a number, a text, or the absent form {absent, kind}, and an asset-class entry the household holds none of is the text UNHELD (document.unheld_rule); a household-grain member holds its figure or its absent form directly, never a by_row map; an account key of a by_row map is the minted account_id",
       "window_status_rule": "for each of the four windows (qtd, ytd, last_12_months, since_inception), with the window's opening anchor day (for since_inception, the account's first_data_date): NOT_SPANNED when the account has no account_return_daily row on the opening anchor day; BREAK when the opening anchor day is SOURCE_LAG, or when a day inside the window (after the anchor, up to and including as_of) has no row, a SOURCE_LAG row, a null total_return_daily or a GRADED_DISAGREED guard_state; else MEASURED, read from the account return table",
-      "first_data_date_rule": "an account's first_data_date is the business_date of its first row in the account return table, across every date= partition; the household's first_data_date is the earliest of its accounts' first_data_date values"
+      "first_data_date_rule": "an account's first_data_date is the business_date of its first row in the account return table, across every date= partition; the household's first_data_date is the earliest of its accounts' first_data_date values",
+      "account_id_form_rule": "account_id is the issued opaque (minted) id, ids.opaque_account(firm, custodian account id), the form of the client summary contract; account_id_form is the text minted on every account entry so a consumer rejects a custodian-form id by field; no custodian-form id leaves the function; the gold table's row_key keeps the custodian form and the reader mints it; the accounts are ascending by account_id (the minted id)"
     },
     "row_dimensions": {
       "account": {
-        "order": "the household's accounts in account_id order; one row per account, labelled with its registration name and last four digits (the registration name is absent, so the label carries the absent form until a name source exists)",
+        "order": "the household's accounts in ascending account_id (the minted id) order; one row per account, labelled with its registration name and last four digits (the registration name is absent, so the label carries the absent form until a name source exists)",
         "sources": {
-          "account_id": "account_activity_daily account_id (custodian account form)"
+          "account_id": "the issued opaque (minted) id, ids.opaque_account(firm, custodian account id) (the form of IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT account_id); the account_activity_daily custodian form is minted by the reader"
         },
         "grain": "account"
       },

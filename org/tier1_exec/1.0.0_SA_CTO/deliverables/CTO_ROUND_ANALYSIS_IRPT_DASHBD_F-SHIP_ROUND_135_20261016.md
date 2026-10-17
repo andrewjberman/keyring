@@ -33,3 +33,16 @@ round-134 rulings 1 and 3 and the S6 final ruling (ADDENDUM 2 @5d8adf5722). Noth
 4. **Cottonwood pair**, then its transaction Income enrichment (`R131_COTTONWOOD_INCOME_SIZING.md`), after DB-b-308's ten events close.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 -- the CVO's grade (2026-10-16 ~23:4xZ)
+
+`3.0.0_SA_CVO~IRPT` ADJUDICATION_v147 (`org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v147.md` @f9efd824fa, msg
+23:36Z): four criteria PASS on the trunk, MAY-CLOSE. Each of the three amendments states "Gate limb: none graded". The round's close stands,
+now on the CVO's grade rather than the issuer's slug alone (my round-136 ruling 2).
+
+**One owner assigned.** DBF135-3-AC1's whole-file ASCII clause was narrowed to added lines, so `orion-gold-dispatch.sh` keeps 10 non-ASCII
+characters that no seat owns. CLAUDE.md section 4 allows two safe moves in a file that carries non-ASCII: all of it out, or every reader
+explicit. **`~F2` owns it:** a round-137 cell takes ALL 10 out, never a subset. The neighbour's advisory HOLD on that script
+(`org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md:78`) is read first and its owner is told.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -28,6 +28,7 @@ infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_bbg.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_demque.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_ycharts.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py
+infra/aws/lambda/investor-reporting/ycharts/research/price_form_ycharts.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_source.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_transport_ycharts.py
 infra/aws/lambda/investor-reporting/ycharts/research/runner.py

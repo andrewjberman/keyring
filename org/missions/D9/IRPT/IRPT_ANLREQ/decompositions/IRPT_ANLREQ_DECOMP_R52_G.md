@@ -27,3 +27,10 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 (i) Domain: one adapter, one query form, the three unknowns. (ii) One grain: a request. (iii) One intent: make the price tier's first call a call YCharts answers. (iv) What this cut does NOT move: the budget, the lease, the tiers list, the transport, the door.
 
 fanout: 1 of 2 chains, cap 8, reason: AR-g-152 is the one worker cell; AR-g-151 is the issuer's applier order to IB2 (rule 34), not a worker cell.
+
+## Addendum (2026-10-16 ~23:5xZ, issuer, on CTO msgs 10027 and 10040 and the CRO's research @c9f3005376)
+
+- `AR-g-151` (the recipe-form read) RAN (IB2 `RECIPE_FORM_READ.txt` @5704252df1): the recipe form with SPY is refused HTTP 400, plain and typed. Form NONE.
+- `AR-g-152` is **SUPERSEDED**, not merged: it fixed `calcs=id:level` for a plain ticker, which is the form just measured 400. The estate's working client (`infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py:219-249`, 67 of 67 HTTP 200 in May) sends `calcs=id:price` for a security or ETF in the full quote-page form. Branch `wk-IRPT_ANLREQ-276` (head f0ce972908) stays unmerged; its criteria passed on a premise the world refuted.
+- `AR-g-153` (new): the r34i release, tiers back to `[estate, yfinance]`, bindings only (CTO ruling: known-400 calls must stop spending the budget). Build, packet, both halves, apply by IB2.
+- `AR-g-154` (new): ONE SPY read through the stored session with the estate client's exact parameters (`ycharts_price_probe3.sh`, 14 offline cases). If it answers with a series, r34j re-adds the tier by CALLING the estate client's request builder (build ladder step 2), not a re-implemented form; if refused, FWD-7's YCharts-second clause returns to the CRO. A noted difference: `format=real` returns PRICE levels, so the adapter's base-100 chain over them is a price return, not a total return; the claim field must say so.

@@ -23112,3 +23112,348 @@
   "dismissal_reason": "The field is display only and the server decides authority; the CTO disarmed the row for DEV and window 5, and no PROD promote of the candidate is asked, so the hazard of a needless field for an unrestricted staff filer cannot reach a client."
 }
 ```
+
+## IRPT_ANLREQ-D2-W173-S3 -- the serial ~173, this worktree and its folder were used before TO-AR-y-381: rows S1 and S2 and the TO-AR-g-54 record already exist, so this order continues at S3
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W173-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~173",
+  "surfaced_at": "2026-10-16T23:29:44Z",
+  "one_line": "The serial 0.9.0_WK_IRPT_ANLREQ~173, this worktree (branch wk-IRPT_ANLREQ-173) and the folder deliverables/0.9.0_WK_IRPT_ANLREQ~173 were used before this order: TO-AR-g-54's commits, proof and r7/ record are on the branch and the channel already holds rows W173-S1 and S2. This order's rows continue at S3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-381 worker face: the worktree is the issuer's provision for ~173 and the write grant is the order's three paths plus deliverables/0.9.0_WK_IRPT_ANLREQ~173/ (its r43/ record and the proof instance); a row id is IRPT_ANLREQ-D2-W<n>-S<k> with k the next unused within the coordinate.",
+  "world_is": "At HEAD 05df1731dd the folder deliverables/0.9.0_WK_IRPT_ANLREQ~173 holds IRPT_ANLREQ.TO-AR-g-54.engine-compose-and-variants-read.proof_of_spec.json and r7/ENGINE_COMPOSE_READ.json, committed at 9a7685aafc, 80be7fd041 and a3f17b27b7; INVESTIGATION_v1.md holds IRPT_ANLREQ-D2-W173-S1 (BLOCKING, closed by S2) at lines 17505 and 17533. The order's files are new paths in that folder; no earlier file is edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --oneline -- org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~173 at HEAD 05df1731dd: 9a7685aafc, 80be7fd041, a3f17b27b7",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md lines 17505-17545: IRPT_ANLREQ-D2-W173-S1 and IRPT_ANLREQ-D2-W173-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a blocker: the order's files are new paths and k is S3 by the channel's own count. The issuer rules whether a serial is reused by design across orders."
+}
+```
+
+## IRPT_ANLREQ-D2-W277-S1 -- two route-count asserts in test_fwd5_envelope.py moved from 7 GETs to 13 for the six new routes; both edited tests are named here
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W277-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~277",
+  "surfaced_at": "2026-10-16T23:44:52Z",
+  "one_line": "TO-AR-tz-74 item 4 allows an edit to an existing driver test only for the old route count or the old no-ok grading. Two route-count asserts were edited, both in test_fwd5_envelope.py: test_fwd5_envelope_every_get_carries_contract_version_run (GET count 7 to 13) and test_fwd5_envelope_every_get_carries_contract_version_control (GET count 7 to 13). No other existing test was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tz-74 item 4: the four existing driver test files MAY be edited ONLY where a test asserts the old route count (7 made, 9 rows) or the old grading of a 2xx JSON without ok on a report-side route; every edited test is listed by name in a surprise row.",
+  "world_is": "At base 66c870659c, org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py asserted len(gets) == 7 in two tests (lines 154 and 164). With the six new GET routes the run makes 13 GETs, so both asserts now read 13. No test in the four files asserts the old no-ok grading: the envelope test named run_non_boolean_ok keeps a present-but-non-boolean ok, which is still UNREACHED. The edited tests are test_fwd5_envelope_every_get_carries_contract_version_run and test_fwd5_envelope_every_get_carries_contract_version_control.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_fwd5_driver_envelope.py@66c870659c lines 154 and 164 (read before the edit)",
+      "the four driver test files run after the edit: R46-TESTS-OK passed=54, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W277-S2 -- the row schema and the doctrine file the worker face names are absent from this worktree; the row follows the shape of the rows already in this channel file
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W277-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~277",
+  "surfaced_at": "2026-10-16T23:44:52Z",
+  "one_line": "The row schema the worker face names, org/surprise_channel/schemas/investigation_item.schema.json, and the doctrine file docs/doctrine/THE_SURPRISE_CHANNEL.md are absent from this worktree, so the row was written to the shape of the rows already in this channel file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The surprise-channel convention in the worker face names the row schema at org/surprise_channel/schemas/investigation_item.schema.json and the doctrine at docs/doctrine/THE_SURPRISE_CHANNEL.md.",
+  "world_is": "At worktree HEAD 66c870659c, the directory org/surprise_channel/ does not exist and a Glob of org/surprise_channel/schemas/* returns no file; docs/doctrine/THE_SURPRISE_CHANNEL.md does not exist. .tools/surprise-row-gate.py is present. The new rows follow the shape of the existing rows in INVESTIGATION_v1.md; the gate's verdict on them is read at commit, not assumed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob org/surprise_channel/schemas/* in the worktree: no files",
+      "ls org/surprise_channel and ls docs/doctrine/THE_SURPRISE_CHANNEL.md in the worktree: no such file or directory, @66c870659c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S161 -- disposition of W277-S1 and W277-S2: the driver's six new read routes, the two edited GET counts, the schema file absent from the sparse tree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S161",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-17T00:04:55Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W277-S1 (two existing envelope tests asserted 7 GETs per run; the run now makes 13, so their expected count moved 7 to 13, intent unchanged: ACCEPTED) and W277-S2 (the surprise-channel schema file and the doctrine file are absent from the worker's sparse tree: NOTED, the gate passed at commit); merged with AR-tz-74 (fa0a9a6889).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order allowed edits to the older driver tests only where a test asserted the old route count (7 made, 9 rows) or the old grading of a 2xx JSON without ok; the worker found two tests asserting the GET count and no test asserting the old no-ok grading.",
+  "world_is": "Measured on the merged tree at HEAD 439ca2890e: test_fwd5_driver_routes.py reads R46-TESTS-OK passed=18; the four older driver test files read passed=54 over 52 functions; fwd5_driver.py --selftest reads FWD5-SELFTEST-OK checks=59 (50 kept, 9 new). Edited: test_fwd5_envelope_every_get_carries_contract_version_run and test_fwd5_envelope_every_get_carries_contract_version_control (the GET count, 7 to 13). The driver now makes 13 calls and writes 15 rows per run: five more report-side read routes on the request and job (request-read, request-history, job-status, narrative, export-receipt) and the no-selection call; a served body (2xx JSON with no ok) is a LEAK for firm B and ALLOWED in the control; the no-selection call is refused by absence in the caller's own tenant. NOT done: the driver has not yet been run with the six routes against the live service (the third sitting, after the CTO's re-sign of packet blob 6bf8cd3887).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py (merged fa0a9a6889; blob ba8010bb70)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/fwd5_driver/test_fwd5_driver_routes.py (blob 8c8a0a7c79)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py (blob f9eb292472)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S162 -- FWD-5 sitting 3: the entitled staff control read UNEXPECTED on request-history and on the no-selection call, on both targets
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S162",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-17T00:51:48Z",
+  "one_line": "In the third FWD-5 sitting the staff control (opal-capital, allowedFirmIds [49financial]) read the public reason code UNEXPECTED (HTTP 200 refusal envelopes of 469 B and 420 B) on analysis/requests (request-history, with selected_tenant) and on analysis/requests/{id} with NO selected_tenant, on BOTH targets, while firm B read FIRM_BINDING and NOT_AUTHORIZED there; the function answered an internal-error code to an entitled caller, not read further.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A refusal envelope carries a code from the closed boundary vocabulary (served.status_envelope BOUNDARY_REASONS); UNEXPECTED is the catch-all for a handler exception (public_reason_for), and the CTO's ruling (msg 10096) asks that these control reads go in a row with the codes.",
+  "world_is": "Reports org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/{packaged,synthetic}/fwd5_control_report.json (route names, statuses, lengths and codes only; no body kept). Control: request-history 200 / 469 B / UNEXPECTED and request-read-no-selection 200 / 420 B / UNEXPECTED on both targets. Firm B on the same routes: request-history FIRM_BINDING (428 B), no-selection NOT_AUTHORIZED (467 B). On the packaged target the control also read UNEXPECTED on request-history (so it is not specific to a request that has no job). NOT read: the function's log lines for these two invocations per target (the irpt-status log group would carry the internal record), the cause, and whether a staff caller of class OPAL_GLOBAL has any history to list. Consequence for the grade: a control that cannot read these two routes says nothing about the fence there; the fence reading on them rests on firm B's refusal alone (the CTO's RE-SIGN 4: a control refused by the fence's own codes grades nothing; UNEXPECTED is neither a fence code nor a served body). Owner for the cause: the irpt-status function's owner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/packaged/fwd5_control_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/synthetic/fwd5_control_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/synthetic/fwd5_run_report.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W278-S1 -- the resident package does not stage ycharts-market-data-pull, so the estate client that the price form calls is not reachable from the deployed resident
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W278-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~278",
+  "surfaced_at": "2026-10-17T00:48:04Z",
+  "one_line": "price_form_ycharts reaches the estate client by import, else by the sibling Lambda directory infra/aws/lambda/ycharts-market-data-pull (the repository layout). The resident package build does not stage that directory, so on the deployed resident request_path has no ycharts_client to import and the ycharts price tier cannot build its request. The repository tests pass because the repository tree holds the sibling.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "TO-AR-g-155 step 1: request_path imports ycharts_client, and if it is not importable puts the sibling Lambda directory infra/aws/lambda/ycharts-market-data-pull on sys.path so the estate builder is reachable; step 5 is the r34j resident release carrying the form.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/build_resident_package.py stages only DIRS = _scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, ycharts/extract, ycharts/research (lines 37-38; layout docstring lines 11-15). No ycharts-market-data-pull directory is staged. The sibling fallback therefore resolves to a path outside the staged package root, and as the package stands request_path would raise ImportError on the deployed resident. This is INFERRED from the staged layout and was not run against a deployed package. The resident builds the reader from price_adapter_ycharts (resident_installed.py:420-422), and price_transport_ycharts documents that a reader error is recorded as that tier's error (price_source._ask_tier). build_resident_package.py is outside this order's paths, so the packaging was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37-38 @08426fcc59 (the DIRS list; no ycharts-market-data-pull entry)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:11-15 @08426fcc59 (the layout docstring)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_form_ycharts.py @08426fcc59 (_client_module: the sibling fallback path)",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:420-422 @08426fcc59 (the resident builds the reader from price_adapter_ycharts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S163 -- the pricing as_of is a weekday rule, not the trading-calendar frontier
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S163",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-17T01:15:45Z",
+  "one_line": "The pricing as_of (T-1) is a WEEKDAY rule, not the trading-calendar frontier: on a Saturday it is Friday, the calendar's frontier is Thursday; a holiday gives a date with no row. Moving it changes report as-of dates (a served move), so it is its own pair with a count of the reports whose as_of changes (CTO msg 10122).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-7 and C-PRICES: every price is the T-1 frontier close, stated as the report's as-of; CLAUDE.md: resolve the trading calendar, one frontier lib/trading_calendar.py, Friday is Monday's answer.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/resident_installed.py:379-385 _t_minus_1(epoch): the UTC date minus one day, minus further days while Saturday or Sunday (AR-g-90); it does not read lib/trading_calendar.py. On Saturday 2026-10-17 it returns 2026-10-16 (Friday); prev_trading_day(expected_last_trading_day) returns 2026-10-15 (Thursday). A Monday after a holiday returns the holiday's date, which has no row; the price reader (price_adapter_yfinance.py:117-120) then ends on the last row at or before it. The door's checker (intake/yfinance_check.py) had no cut at all until AR-g-157, which uses the calendar frontier. The two rules now differ on weekends and holidays.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:379-385 @52f16d8e45 (_t_minus_1)",
+      "lib/trading_calendar.py:192-218 @52f16d8e45 (prev_trading_day, expected_last_trading_day)",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py:9-10 (the frontier definition: prev_trading_day of expected_last_trading_day)",
+      "org/mcp/inbox/2.0.0_SA_COO/~G2/read/20261017T011059Z_1.0.0_SA_CTO_DELL2_Re_the_door_checker__REC_accepted_--_the.md (CTO msg 10122: own pair, with a count of the reports whose as_of changes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W279-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~279, cell AR-tz-76) TO item 2 asks for an exact tickets/metrics entry and a refused tickets/claim, but the base ticket-read shape already GET-admitted both paths
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~279",
+  "surfaced_at": "2026-10-17T01:20:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W279-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "At base c53d74c0d1 the guard ticket-read shape /api/scoped/tickets/<seg> GET-admitted any single segment, so /api/scoped/tickets/claim and /api/scoped/tickets/metrics were admitted before the edit; an exact metrics entry alone would leave claim admitted, so the ticket-read shape now excludes the two reserved words.",
+  "spec_asserts": "TO-AR-tz-76 item 2: extend the guard GET allow-list with exactly /api/scoped/tickets/metrics (nothing else under /api/scoped/tickets/); the offline tests refuse /api/scoped/tickets/metrics/anything and /api/scoped/tickets/claim.",
+  "world_is": "Positive control: the base fwd5_driver.py taken from git show c53d74c0d1 (copied into .scratch, imported with python -I) answers admit GET /api/scoped/tickets/claim True, /api/scoped/tickets/metrics True, /api/scoped/tickets/metrics/anything False; base ROUTES has 15 entries. The edit adds the exact entry /api/scoped/tickets/metrics and makes the ticket-read shape /api/scoped/tickets/(?!(?:claim|metrics)$)<SEG>. No other ticket path is admitted; claim is admitted by no entry. Side effect: a GET whose ticket id is literally claim or metrics is now refused by the guard; no route in ROUTES sends one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py GET_ALLOWED @c53d74c0d1 (base, before this commit)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~279/fwd5_driver/test_fwd5_driver_real_ids.py test_fwd5_real_guard_refuses_metrics_extra_segment_and_claim (this commit)"
+    ]
+  },
+  "notes": "The exact entry is added as ordered; the claim refusal needs the ticket-read shape narrowed, which the order's test list implies but its item 2 does not state."
+}
+```
+
+## IRPT_ANLREQ-D2-W279-S2 -- (worker 0.9.0_WK_IRPT_ANLREQ~279, cell AR-tz-76) five existing driver test files needed edits: the two new flags on full-route runs, the call-count asserts, and one rename; each edit is named here
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~279",
+  "surfaced_at": "2026-10-17T01:20:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W279-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The five existing driver test files were edited only where a full-route run expected exit 0 without the new flags (the flags added to each run helper) or asserted the old 13-call, 15-row count; the names are in world_is.",
+  "spec_asserts": "TO-AR-tz-76 item 4: the five existing driver test files MAY be edited only where a test asserts the old call count (13 made, 15 rows) or runs the full route set without the two new flags and expects exit 0; keep each test intent and list every edited test by name.",
+  "world_is": "(a) 231 test_fwd5_driver_offline.py: run_main() argv gains --report-id and --export-id; every test that runs the full set through run_main is covered by that one helper edit, no assertion changed. (b) 232 test_fwd5_driver_exit_semantics.py: run_with() argv gains the two flags, no assertion changed. (c) 272 test_fwd5_driver_control.py: test_fwd5_control_run_mode_unchanged_writes_run_report_without_mode argv gains the two flags, because its rc 0 needs them; control_argv is unchanged since the control exit reads only the two gate routes. (d) 275 test_fwd5_driver_envelope.py: drive() argv gains the two flags; test_fwd5_envelope_every_get_carries_contract_version_run GET count 13 -> 14; test_fwd5_envelope_every_get_carries_contract_version_control GET count 13 -> 14. (e) 277 test_fwd5_driver_routes.py: drive() argv gains the two flags; MADE_ORDER gains tickets-metrics after ticket-list; test_fwd5_routes_run_makes_thirteen_calls_and_writes_fifteen_rows RENAMED to test_fwd5_routes_run_makes_fourteen_calls_and_writes_sixteen_rows with 15 -> 16 rows, 13 -> 14 made, REFUSED 13 -> 14, GET 13 -> 14; test_fwd5_routes_six_new_routes_send_the_path_the_record_names slice gts[7:] -> gts[8:] because one GET now precedes the six. The rename and the slice are consequences of the count, not literal count asserts, and are declared here rather than hidden.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/fwd5_driver/test_fwd5_driver_routes.py (this commit, the diff)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py (this commit, the diff)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W279-S3 -- (worker 0.9.0_WK_IRPT_ANLREQ~279, cell AR-tz-76) the TO does not say how a supplied --report-id or --export-id is checked; the driver checks its shape like the other ids, before sign-in
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~279",
+  "surfaced_at": "2026-10-17T01:20:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W279-S3",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "--report-id and --export-id get the same id shape check as --request-id and --job-id (ID_RE), run before sign-in and only when supplied, so a malformed value exits 2 with no request sent instead of reaching a URL path segment.",
+  "spec_asserts": "TO-AR-tz-76 item 1: add the two flags, optional at parse time; a run without the value leaves that route UNREACHED and exits 2; the ids are NOT markers.",
+  "world_is": "The base do_run checks --request-id and --job-id against ID_RE before sign-in. The two new flags take the same check. Test test_fwd5_real_malformed_report_id_exits_two_and_sends_nothing sends report id bad/id: rc 2, zero requests, no report written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py do_run problem chain (this commit)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~279/fwd5_driver/test_fwd5_driver_real_ids.py test_fwd5_real_malformed_report_id_exits_two_and_sends_nothing (this commit)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W279-S4 -- (worker 0.9.0_WK_IRPT_ANLREQ~279, cell AR-tz-76) the worktree is a sparse checkout without org/surprise_channel/, so the row schema the surprise rule names is not on disk
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~279",
+  "surfaced_at": "2026-10-17T01:20:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W279-S4",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-279 is a sparse checkout: org/surprise_channel/ is absent on disk, so org/surprise_channel/schemas/investigation_item.schema.json is not readable there; I read it with git show HEAD:<path> and checked the row shape against that copy.",
+  "spec_asserts": "The surprise-channel rule names org/surprise_channel/schemas/investigation_item.schema.json as the row schema, and the first act requires the worktree to carry the paths the order names.",
+  "world_is": "git ls-files lists the schema at HEAD; the directory does not exist in the worktree; git sparse-checkout list names .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ and not org/surprise_channel; 86,541 index entries carry the skip-worktree bit. The task order's own named paths are present, so the order was not blocked. Nothing was rebuilt or extracted to fill the gap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in worktree C:/dev/wk-irpt-anlreq-279 (read at filing)",
+      "git ls-files -v org/surprise_channel: S-prefixed entries (skip-worktree), read at filing"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-S164 -- disposition of W279-S1 to S4: the driver's guard admitted /tickets/claim and /tickets/metrics as ticket ids, the real-id flags, the edited tests, the sparse tree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S164",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-17T01:38:58Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W279-S1 (the merged driver's ticket-read path shape matched any one segment, so GET /api/scoped/tickets/claim and /tickets/metrics were ADMITTED as ticket ids; the shape now excludes the two reserved words: ACCEPTED, a real fix of the guard I wrote), W279-S2 (named edits to the five older driver test files: argv gains the two new flags, GET counts 13 to 14, one test renamed thirteen/fifteen to fourteen/sixteen: ACCEPTED), W279-S3 (--report-id and --export-id get the ID shape check before sign-in, only when supplied: ACCEPTED) and W279-S4 (the surprise-channel schema is absent from the sparse tree, read via git show: NOTED); merged with AR-tz-76 (d79cf5d1ea).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order said the guard's allow-list gains exactly /api/scoped/tickets/metrics and nothing else under /api/scoped/tickets/; the worker found that the existing ticket-read shape already admitted both /tickets/claim and /tickets/metrics because its segment pattern matches any one segment.",
+  "world_is": "Measured on the merged tree at HEAD af0bb2315a: test_fwd5_driver_real_ids.py reads R46-TESTS-OK passed=15; the five older driver test files read passed=72 over 70 functions; fwd5_driver.py --selftest reads FWD5-SELFTEST-OK checks=65 (59 kept, 6 new, including the metrics admit, the metrics/anything refusal and the claim refusal). Driver blob 3746dc3354. The driver now makes 14 calls and writes 16 rows per run; narrative and export-receipt take --report-id and --export-id (a run without one leaves that route UNREACHED, exit 2); tickets-metrics is graded like a ticket route (a 2xx is a LEAK in run mode). IMPORTANT for the earlier sittings: the pre-fix guard would have SENT a GET to /tickets/claim if a ticket id of that spelling had been passed; no sitting passed such an id, and the sittings only ever sent the listed shapes with real ticket ids, so no claim route was reached; the claim route is a write route and was never requested (the fake-server tests refuse it now). NOT done: the fourth sitting (it waits on FWD-1 window 5).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py (merged d79cf5d1ea; blob 3746dc3354)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~279/fwd5_driver/test_fwd5_driver_real_ids.py (blob 6ab41bd972)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W280-S1 -- the checker test file does not add the intake directory to sys.path; the calendar needed an explicit lib path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W280-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~280",
+  "surfaced_at": "2026-10-17T01:39:06Z",
+  "one_line": "TO-AR-g-157 asks the test file to add lib to sys.path 'the way the file already adds the intake directory'; the file adds no directory to sys.path (it loads the checker by path with spec_from_file_location), so the lib path was added as an explicit guarded sys.path insert of Path(__file__).parents[6] / 'lib'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-157 step 3: 'the file needs the repository's lib directory on sys.path for the calendar: add it at the top of the test file the way the file already adds the intake directory'.",
+  "world_is": "infra/aws/lambda/investor-reporting/intake/tests/test_yfinance_check.py:19-20 (base b27df7d15d) loads the checker and the resolver with importlib.util.spec_from_file_location and inserts no directory on sys.path; there is no existing pattern to copy. The product module imports trading_calendar inside _check_one as the order specifies, so the path is needed only by the tests and by the checks script (which inserts lib itself). The insert added at the top of the test file is guarded (if not already present) and derives the path from the file's location; no existing test was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_yfinance_check.py:19-20 @b27df7d15d (checker_mod and resolution loaded by spec_from_file_location; no sys.path insert)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_yfinance_check.py:9-14 @03bf10f6fc (the guarded lib insert added for AR-g-157)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-157.yfinance-checker-last-finite-close-at-t1.md step 3 (the order's wording)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
