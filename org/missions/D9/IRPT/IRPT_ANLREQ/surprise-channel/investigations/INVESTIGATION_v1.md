@@ -25640,3 +25640,133 @@
 }
 ]
 ```
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W293-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~293",
+  "surfaced_at": "2026-10-17T19:23:39Z",
+  "one_line": "The commentary-pdf route answer: the portal types it as signedUrl, but the v1 contract and the ops handler carry the signed link under download_route.url.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-398 U3 asks for the route answer and its closed field to read. portal/src/api/endpoints/investor-reporting.ts:1197-1198 types the analysis-request-commentary-pdf answer as { signedUrl: string } and passes the wire through unchanged.",
+  "world_is": "docs/contracts/investor-reporting/v1/AnalysisRequestPdf.schema.json:10-15 requires download_route {url, expires_at}, sha256 and byte_length, and infra/aws/lambda/investor-reporting/ops/owned_report.py:379 returns that shape. A grep of the ops/ tree finds no signedUrl key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/investor-reporting.ts:1197-1198 (analysis-request-commentary-pdf typed as { signedUrl: string }, wire passed through)",
+      "docs/contracts/investor-reporting/v1/AnalysisRequestPdf.schema.json:10-15 and infra/aws/lambda/investor-reporting/ops/owned_report.py:379",
+      "read at HEAD f8b43377ae of branch wk-IRPT_ANLREQ-293"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W293-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~293",
+  "surfaced_at": "2026-10-17T19:23:39Z",
+  "one_line": "The portal's closed submission reader refuses commentary_requested, which its own wire type admits, so the portal cannot file the field the run depends on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts:23 declares commentary_requested as an optional field of the submission body.",
+  "world_is": "portal/src/pages/InvestorReporting/contracts/submission-request.ts:14 allows only the required keys plus input_id and ticket_id, and :25 refuses any other key. readSubmissionRequest is called at portal/src/api/endpoints/investor-reporting.ts:1492, so the portal's submit refuses a body carrying commentary_requested. The Lambda admits the field at infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:16 and :82-83.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/submission-request.ts:14 and :25",
+      "portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts:23 and portal/src/api/endpoints/investor-reporting.ts:1492",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:16 and :82-83"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W293-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~293",
+  "surfaced_at": "2026-10-17T19:23:39Z",
+  "one_line": "The premise of TO AR-y-398 U6 fails: the window-4 record holds no completed-hop timing, because window 4 was refused at the upload door and no run reached accept, render, drafter or packager.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-398 U6 asks for the observed duration of each hop (upload, accept, resident render, drafter, packager poll) in the window-4 record.",
+  "world_is": "Window 4 was refused at the upload step with NOT_AUTHORIZED; no ticket, no object, row removed, window spent (org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md:22815-22823). No window-4 run record exists under org/tier2_senior/0.7.0_AE_CloudOps~IB2/ in this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md:22815-22823 (row IRPT_ANLREQ-D2-S154)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/ has task_orders/ only in this worktree (ls, 2026-10-17)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S209 -- IRPT_ANLREQ-D2-W147-S2 disarmed with re-read evidence
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S209",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T20:03:57Z",
+  "one_line": "W147-S2 DISARMED: the drafter's live state is now MEASURED (Active, analysis_ready mapping Enabled, its model and queue settings set) and its first analysis_ready message is the deliberate act of the CTO-paired synthetic run, not a surprise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W147-S2"
+  ],
+  "spec_asserts": "Row W147-S2 (disarm owner 2.0.0_SA_COO~Y2): commentary.tf says NOT APPLIED while the drafter Lambda, its queues and its analysis_ready mapping are live with KIMI_STANDING_WORD_REF set, so the drafter can reach a model call and a ticket write on its first analysis_ready message.",
+  "world_is": "MEASURED 2026-10-17 by this seat and IB2: list-event-source-mappings for outlook-global-commentary-draft-lambda reads the analysis_ready queue mapping Enabled; IB2's read R4 (A_COMMENTARY_READS.txt): CodeSha256 I/6mirBTU5+JPCUUx6Xrmd1bn1vGAjvZTL75LhOm3HY=, LastModified 2026-10-16T08:51:41Z, COMMENTARY_READY_QUEUE_URL set, KIMI_STANDING_WORD_REF set, environment key names COMMENTARY_READY_QUEUE_URL, COMPOSITION_READ_FUNCTION, DRAFT_STORE_FUNCTION, KIMI_API_URL, KIMI_STANDING_WORD_REF, TICKET_API_BASE, TICKET_TOKEN_SECRET_ID, WIPE_GATE_RECORD; the analysis_ready queue depth reads 0 and its DLQ 0. The resident sends analysis_ready only for a request whose record has a ticket id and commentary_requested exactly True (resident_worker.py:247-258), and the portal at origin/PROD 99d2b2a7 and origin/DEV d8df08e4 never sets that field, so no portal-filed request can reach the drafter today. The first message is deliberate: the CTO's paired synthetic end-to-end run (ruling addendum 1, msg 10652; pair signed msg 10658) sends it under a TICKET_DL_MAP {} and recipient-domain stop. NOT READ: the model call itself and the ticket write on that first message (the run reads them).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_reads/A_COMMENTARY_READS.txt (R4)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:247-258",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_E2E_COMMENTARY_RUN_CTO_HALF.md (conditions 1 to 3)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The state the row could not see is now measured, the path to the drafter is closed to portal filings by the missing flag, and the first message is the paired run's own act with its stop rules."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S210 -- IRPT_ANLREQ-D2-W150-S2 disarmed with re-read evidence
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S210",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T20:03:57Z",
+  "one_line": "W150-S2 DISARMED: the absent mint record (~149/r41/FWD1_DRIVER_RECORD.json) no longer carries the run; the staff user is minted by the mint script itself with allowed firm ids (TO-AR-y-373) and every run order reads the script and the order, not that record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W150-S2"
+  ],
+  "spec_asserts": "Row W150-S2 (disarm owner 2.0.0_SA_COO~Y2): the order cites ~149/r41/FWD1_DRIVER_RECORD.json for the minted staff row's attributes (no allowedFirmIds, no MFA); the file is absent from the worktree, HEAD and the base checkout, so the Q4 recommendation rests on the order's stated attributes.",
+  "world_is": "MEASURED 2026-10-17 by this seat (read-only, by name): the mint tool org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_mint.py exists (cmd_mint at :86, cmd_remove at :126 per worker 293's specification U2), and worker 167's cell TO-AR-y-373 (fwd1-mint-allowed-firm-ids) changed the mint to write allowed firm ids, with its proof instance and tests under deliverables/0.9.0_WK_IRPT_ANLREQ~167/. The later run orders (window 5, and the paired synthetic end-to-end run) tell the applier to mint with the script and read the order for the firm and allowed-firm-ids, so the attributes the row's Q4 depended on (no allowedFirmIds) are not the attributes any live mint writes now. NOT READ: the absent record's own contents.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~167/IRPT_ANLREQ.TO-AR-y-373.fwd1-mint-allowed-firm-ids.proof_of_spec.json",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~293/r52/E2E_RUN_SPECIFICATION.md (U2)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's premise (the minted attributes come from an absent record) was overtaken by the allowed-firm-ids mint and by run orders that read the script; no live mint depends on the missing file."
+}
+]
+```
