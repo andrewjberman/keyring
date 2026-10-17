@@ -97,9 +97,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~160, worktree `C:/dev/wk-harvst-160`, branch `wk-AMGT_HARVST-160`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922` and `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159`.
 - **SENT:** with the round-91 recut.
 
+**COMPLETE 2026-10-17T21:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~160` (worker, haiku, high), branch `wk-AMGT_HARVST-160`, first pass `6b2d311900`, `eeeb19507e`; AMENDMENT 2 `4b44abc97c`, `8a9f09003f`; merged `80d0701876` (safe-merge fast lane, index check 0 of 8); worktree and branch removed after `merge-base --is-ancestor` read true. Diff read by this seat (the amendment-2 hunks and the whole of the first pass): `_line_stance` (template, candidate, holding, unclassified; default NOT a holding), `fund_of_record` only from a holding line, `last_stated_position` text unchanged with `stance`, `fund` None and `candidate_fund` ONLY where the content names a fund token and is not a holding, the absent reason `_NO_HOLDING_LINE_REASON` ONLY when a fund-naming candidate exists and none is a holding, `_NOT_RECOMMENDATION_HEADINGS` (a closed list) so a section heading is never content, `METHOD_VERSION` `/5`; the round-90 fixture `Buy IDVZ` became `Maintain position in IDVZ`.
+- **AC1 PASS:** `16 passed` (worker; re-run here). **AC2 PASS:** `66 passed` (worker; re-run here; the first reading `1 failed, 65 passed` is kept in the instance). **AC3 PASS:** `CENSUS-CS61-FIX securities=94 changed_fund=13 changed_position=17`, `ALLOWED_CLASS candidate=12 template=1 unclassified=0`, `HOLDING_CHANGED=0`, `JP_SECTION_FIXED=4` (re-read here: the CHANGED names are exactly the 13 non-holding names and the four JP names; `BABA`, `SHOP_CN`, `WALMEX*_MM` are not in it). Proof instance VALID rc 0 (re-run here).
+- **How the first pass was wrong, and the rulings:** it claimed a stance and a new absent reason on lines that name no fund token (`BABA`, `SHOP_CN`, `WALMEX*_MM`), which changed served values for names that claim no fund; AMENDMENT 2 restricted both to lines that name a fund token. The census baseline was first read from `HEAD` after the worker's own commits; it is pinned to the round-90 commit `dca8722353`. The CTO ratified the classification and the four JP names joined (msg 7735).
+- **Rows** `D1-W160-S1` (BLOCKING, INERT: the AC2 conflict, resolved by AMENDMENT 2) and `-S2` (INERT: a no-fund `SELL` line classified by a stray `Add`, moot after AMENDMENT 2); read and accepted. `D1-W159-S1` (ARMED, the `ML_FP` template) stays open until the rebuild is read served.
+- **What this does NOT prove:** a rebuilt object or a served read (`HVST-cf-4`).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>91</round>
 <workstream>CS61-FIX</workstream>
 <slot>dell1</slot>
