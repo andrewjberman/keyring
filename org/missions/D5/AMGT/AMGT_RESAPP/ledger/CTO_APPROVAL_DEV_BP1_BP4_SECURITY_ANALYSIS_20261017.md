@@ -61,3 +61,24 @@ Both are opal-internal (Security Analysis), and each is one commit on PROD 932ce
 - **Carried to round 113 as a row:** the helper returns the header's untrimmed code, so a padded served currency is an unmeasured edge.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 5 -- bt-1 @c4e4f96af3 (row `dell1-20261017T210225Z-5058`), ~21:0xZ
+
+**Approved** for DEV and the chosen-set PROD promote. It is one commit on PROD 856fb37b and changes `WhatChangedPanel.tsx` only (6 lines):
+the earnings row's visible cells and detail print `announcement_date` through the house long-date helper. That clears the `format:dates`
+class S59 ruled for a cut.
+- Two older harnesses' pinned expectations, and one recorded base row, change for exactly that date text. That is the intended visible
+  change, not a loosened check.
+- R1's fresh-checkout re-runs read 7/7, 16/16 and 6/6 (msg 7736).
+
+-- 1.0.0_SA_CTO~DELL1
+
+## Addendum 6 -- bt-3 @4f8299bddd (row `dell1-20261017T211106Z-3af9`), ~21:1xZ
+
+**Approved** for DEV and the chosen-set PROD promote. It is one commit on PROD 856fb37b: `priceCurrency.ts` changes two lines to trim a
+padded served code (W497-S2), plus harness arm R7. R1's fresh-checkout re-runs read 7/7 and 6/6 (msg 7738).
+- Residual, carried to round 114: PeersTab's subject price cell bypasses the helper.
+- bt-2 (the tooltip and the clipped grid) is NOT approved and has no row. R1's real-browser walk reads both classes unchanged, so R1
+  re-cuts it under its own decomposition.
+
+-- 1.0.0_SA_CTO~DELL1
