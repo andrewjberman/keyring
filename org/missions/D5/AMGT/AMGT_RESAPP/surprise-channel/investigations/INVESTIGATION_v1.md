@@ -29091,3 +29091,75 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as read. No verdict."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W490-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~490",
+  "surfaced_at": "2026-10-17T12:17:48Z",
+  "one_line": "AMGT-bp-4: components/model/WhatChangedPanel.tsx builds its own money string (inDisplayUnits) from currencyPrefix, so a negative figure there still prints the sign after the prefix; the file is outside this cell's write grant and is unedited on the bp-4 branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order AMGT-bp-4 section 1 item 1: a negative amount prints its minus sign BEFORE the currency prefix, in formatStatValue and anywhere else in src/pages/SecurityAnalysis/ that builds a signed money string from currencyPrefix. Item 2: WhatChangedPanel.tsx is not to be edited.",
+  "world_is": "At PROD 15bc21b3, portal/src/pages/SecurityAnalysis/components/model/WhatChangedPanel.tsx line 199 returns the template of currencyPrefix(currency) followed by displayAmount(n, ...). displayAmount (lines 184-188) keeps the minus sign, so a negative ABSOLUTE or MILLIONS figure with a currency and no HEADER_FORMATS entry prints as a dollar sign, a minus and the amount. Code read only; not rendered. Lines 209 and 230 call formatStatValue and do receive the sign fix.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/model/WhatChangedPanel.tsx lines 184-199 @15bc21b3 (code read by the worker, not rendered)",
+      "portal/src/pages/SecurityAnalysis/components/StatTile.tsx formatStatValue sign-first rule on cand/dell1/amgt-sa-money-display, harness moneyDisplay.harness.cjs S1 and S9 YES (24 of 24)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Not graded here; whether a later cell carries WhatChangedPanel.tsx is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W490-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~490",
+  "surfaced_at": "2026-10-17T12:17:48Z",
+  "one_line": "AMGT-bp-4 AC2 (r107_feature_green_v3.sh on the bp-4 branch): the printed line reads harness 25 of 28 pass with three pre-existing names; the order's expect reads harness 22 of 28 pass with six names. Regressions 0 and rc 0 in both.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AC2 expect: R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness 22 of 28 pass, base 21 of 27, regressions 0, pre-existing: assembled.harness.cjs exportCompare.harness.cjs posture.harness.cjs posturePattern.harness.cjs tabs.harness.cjs timelineFourStates.harness.cjs).",
+  "world_is": "At cand/dell1/amgt-sa-money-display (commits 94c30e22 and the product edit on top of PROD 15bc21b3) the script printed: R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness 25 of 28 pass, base 21 of 27, regressions 0, pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs), exit 0. Run by hand at the same head: posture, posturePattern and tabs exit 0 with no FAIL or Error line; assembled exits 2, exportCompare exits 2, timelineFourStates exits 1. The base 21 of 27 is the script's own base run and was not re-measured by the worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 output line, bp-4 worker run at the head of cand/dell1/amgt-sa-money-display, rc 0 (the order's own invocation, timeout 590)",
+      "per-harness exit codes from node <harness>.harness.cjs at the same head, written to .scratch/h_<name>.txt in the worker worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker as the BLOCKING row on AC2. The worker did not reword the expect or the count. The difference may come from the cut's base run, not from this diff; not graded here."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W490-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~490",
+  "surfaced_at": "2026-10-17T12:17:48Z",
+  "one_line": "AMGT-bp-4 premise: the order says formatStatValue and currencyPrefix occur 24 times at PROD across five files; the file set is as stated, but the count does not reproduce under either counting method.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order AMGT-bp-4 section 1 item 3: formatStatValue and currencyPrefix are called from five files, 24 occurrences at PROD.",
+  "world_is": "At PROD 15bc21b3 the grep for either identifier, counting imports and comments, returns 26 lines in the non-harness page source (30 lines with four harness files). The harness census of call sites with an opening parenthesis, excluding imports and the two definitions, reads 14 at PROD. The file set is the five named.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis (non-harness) @15bc21b3, grep before the product edit, 26 lines in five files",
+      "portal/src/pages/SecurityAnalysis/__harness__/moneyDisplay.harness.cjs check C1 census output, 14 call sites in 5 files at the unedited page (the base run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. The census check C1 asserts the file set, which is the part the order states as an assertion, and it passes."
+}
+```
