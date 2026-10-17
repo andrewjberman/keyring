@@ -1,0 +1,13 @@
+{
+ "schema": "crossbox-answer/1",
+ "id": "XB-20261017T051858Z-cd36",
+ "box": "sitez",
+ "ack": {
+  "at": "2026-10-17T05:32:11Z",
+  "by": "0.0.3_BG_BBGTerminal"
+ },
+ "closed_to": {
+  "at": null,
+  "by": null
+ }
+}
