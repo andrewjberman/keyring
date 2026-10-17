@@ -3156,3 +3156,20 @@ Cell `DB-b-333` (the late-posting reader) drained at `5bec535804`; ~F2's `TO-DB-
 **fanout:** 1 of 1 chains for this cell (worker 260), cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the three criteria FAIL as expected):** `checks/r150/p200_cot_release_repin.py` (DBR200-1-AC1, DBR200-2-AC1, DBR200-3-AC1).
+
+
+## 196. ROUND 150, WORKSTREAM CONTRACT (2026-10-17 ~18:3xZ, issuer 2.0.0_SA_COO~D2): the series contract 0.4.0 -- the `class_object` section
+
+`~S2` (msg 10638) waits on the class series contract to cut the `class_series` member of the IRPT_BCKEND reporting entry; I named the object and the section to `~F2` and `~S2` on 2026-10-16 (msg 8846: object `class_series.json.gz` beside `series.json.gz`, section `class_object` v0.4.0, columnar). The file is `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` (0.3.3), not under `docs/contracts`. Cutting the section is a LOCAL contract edit with no deploy; the publisher that writes the object, the entry route and the page reader are later cells that need this file first.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the contract 0.4.0: `class_object`, `files.class_series`, the lineage entry, the version, the four pinned tests moved | DB-b-335 | FWD-3 (class view) | LOCAL | none | chain BC |
+| 2. the publisher writes `class_series.json.gz` (dated classification read, sum test at build), then a release and a republish | later | FWD-3 | WORLD | item 1; the all-days rewrite pair (the class returns derive from the corrected daily returns) | after item 1 |
+| 3. the route member `class_series` (~S2) and the page reader (~F2) | other seats | FWD-3 | by their cells | item 1 | parallel to 2 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the vocabulary is closed: the eight classes of PRD C-CLASSES (fixed_income, equity, commodities, structured, alternatives, cash, unclassified, other) and three coverage states (CLASSIFIED, UNCLASSIFIED_PRESENT, SOURCE_ABSENT) where SOURCE_ABSENT is the coverage state for the Cottonwood host's missing securities read (IRPT_BCKEND S173), never a workaround; (b) the sum test is declared in machine-readable numbers (return tolerance 1e-9 against the series file's `total_return_daily`, value tolerance 0.01 dollars against its `value`) so a reader validates from the declarations alone; (c) the file version moves to 0.4.0 although the series and manifest sections are unchanged, because the file is one contract and the lineage records the 0.3.3 bytes; (d) four existing tests pin the 0.3.3 version and the lineage length, so their eight asserts move in this cell (at most 24 changed lines), the pattern of the earlier contract cells; (e) the existing optional series keys `class_value`, `class_weight` and `class_names` are left as they are: the class view lives in the new object and the page reads the object, not those keys (a later contract edit may retire them).
+
+**fanout:** 1 of 1 chains for this cell (worker 261), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; the issuer's reference edit passes):** `checks/r150/p202_series_contract_040.py` (DB202-1-AC1, DB202-1-AC2, DB202-1-AC3).
