@@ -21,6 +21,7 @@
 | L7-door-10240-7e | activation | trino root: safe-apply aws_lambda_function.access memory_size 6144->10240, timeout stays 600 (item 7e, Andrew-direct via issuer) | plan summary + apply receipt + deployed memory read + s1_check_r1.py applied | safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T00:59:35Z MemorySize 10240 Timeout 600; aliases collector+member on v4; s1_check_r1.py applied R1-APPLIED-OK | CLOSED 20261017T010008Z |
 | L8-redeploy-7d | activation | trino root: safe-apply the repaired collector code hash alone (item 7d, TO-SM-c1 AMENDMENT 3 at 3b35dca82a) | plan summary + apply receipt + apply_at.txt + switch_at.txt (first new-code START) | safe-apply rc=0 0 added 1 changed 0 destroyed; collector LastModified 2026-10-17T01:11:48Z CodeSha256 u5AxkMNd... equals planned hash; apply_at.txt written; switch_at awaits first new-code START | CLOSED 20261017T011233Z |
 | L9-fires-7d | verify | scheduled collector fires on the new code: counts, duration, no timeout | per-fire counts line, duration, REPORT timeout status |  | OPEN |
+| L10-door-code-7f | activation | trino root: safe-apply the door code hash plus the two aliases to the new version (item 7f, TO-SM-a1 AMENDMENT 2 at c332e46ace) | plan summary + apply receipt + s1_check_r1.py applied | safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T02:36:19Z 10240 MB 600 s; aliases on v5; a1 detail/ops/bronze/tf OK; s1_check_r1.py applied R1-APPLIED-OK | CLOSED 20261017T023657Z |
 
 ## Log
 
@@ -36,3 +37,5 @@
 - 20261017T010008Z LEG L7-door-10240-7e closed: safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T00:59:35Z MemorySize 10240 Timeout 600; alia
 - 20261017T010950Z LEGS L8-redeploy-7d, L9-fires-7d added; WINDOW extended 7.49h -> 10.5h (to ~2026-10-17T04:34Z) per 2.0.0_SA_COO~S1 item 7d: new-code fires are the acceptance
 - 20261017T011233Z LEG L8-redeploy-7d closed: safe-apply rc=0 0 added 1 changed 0 destroyed; collector LastModified 2026-10-17T01:11:48Z CodeSha256 u5AxkMNd... equals
+- 20261017T023429Z LEG L10-door-code-7f added by 0.7.0_AE_CloudOps~SOC21 (TO-SM-r1 item 7f)
+- 20261017T023657Z LEG L10-door-code-7f closed: safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T02:36:19Z 10240 MB 600 s; aliases on v5; a1 
