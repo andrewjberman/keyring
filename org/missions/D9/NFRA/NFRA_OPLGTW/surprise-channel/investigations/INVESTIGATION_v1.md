@@ -27459,3 +27459,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Worker environment note: .claude/agents/worker.md and the row schema are tracked at HEAD but not materialized in the sparse worktree; the worker took its rules from the order and read the schema from the main tree. Record only."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T10:07:31Z",
+  "id": "NFRA_OPLGTW-Z-S367",
+  "one_line": "OG-ev-5: the fees SOURCE is thin for all of July to September 2026, wider than the CVO's 30 days, and the table is partitioned daily including weekends (so 'partitions expected = trading days' undercounts by 9 in the stretch).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/FEES_TRACE_COUNTS.json (per-date counts, 394 of 394 fees partitions of the window read in a new process on the host through the installed adapter's read path, 30 partitions a page, host memory never above 75 percent) and FEES_TRACE.json (ev5.AC1 PASS)",
+      "source rows by month (sum, median per day): 2026-04 24728, 139.5; 2026-05 10653, 22; 2026-06 14482, 3; 2026-07 201, 3; 2026-08 95, 1; 2026-09 163, 3; 2026-10 (15 days) 74186, 1431; the CVO's stretch 2026-08-17 to 2026-09-15 holds 109 rows, equal to the CVO's count",
+      "112 of 112 weekend-dated partitions hold rows (2668 rows in all); in the stretch 30 partitions are present, 21 on trading days (all 21 expected present) and 9 on non-trading days holding 63 of the 109 rows"
+    ]
+  },
+  "spec_asserts": "OG-ev-5: the stretch is a 30-day thin patch, and the partitions expected in it are the trading days of lib/trading_calendar.py.",
+  "world_is": "The source rows per day are heavy-tailed (mean 1184 outside the stretch, median 21), and the thin run is not 30 days but the whole of July to September (459 rows in 92 days); the account holds 0 rows in the stretch and a median of 0 per day outside (90 rows over 394 dates), so the account cannot be assessed against the 25 percent rule. The verdict by the stated rule is source (109 against a threshold of 157.5; ratio 0.173). The stretch's expected partition count was read as the trading days (21 of 21 present); the table itself is daily, so a count of all dated partitions is 30.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and dates only. No tool change in this round (the CTO's rule). The question for the CTO's round analysis: whether the producer gap (source thin from July to September) is the cause, and whether the expected-partition rule should count every calendar date for a daily table."
+}
+```
