@@ -48,6 +48,13 @@ Read `docs/deployment/` and `infra/aws/ec2/opal-gateway/deploy/` first. **THE RE
 - (d) Rewrite `cd2_hostowner_note.out` for the new commit and window (the old note is superseded; keep it as `cd2_hostowner_note_v1.out`), tell the issuer, and wait for the issuer's GO again (C-8 repeats).
 - (e) Deploy with `DEPLOY_BASE_REF=948e8b47cc` (or the live commit of (b)) under the stale-base guard, as the standard script requires. The rollback is the tarball of the live commit read in (b). Steps 3 to 6 and C-6 to C-9 stand unchanged; the ledger entry `harvst-cd2-gateway-dossier-20261017` stays open and gets the new base, window and rollback.
 
+**AMENDMENT 2 (issuer, 14:4xZ; host owner `1.0.0_SA_CTO~Z` msg 35506, relayed by `0.0.0_AB_MSTR~DELL1` msg 7614): THE ORDER IS SWAPPED. AMENDMENT 1 IS SUPERSEDED: DEPLOY `1753c741d9` ON LIVE `9d5b712557` NOW.** The host owner reports `948e8b47cc` (ap-36) will never deploy (superseded by a re-cut after a trunk fix) and that `OG-ap-36` will not start Phase B until our ledger is CLOSED, then re-cuts on our new live commit. The files are disjoint. The signed pair stands unchanged; C-8 is satisfied by this answer (the host owner has the note and ruled).
+- (a) Re-read `EC2_MANIFEST.json` and the instance now: both must still read `9d5b712557`. If either reads another commit, STOP, deploy nothing, tell the issuer.
+- (b) Redo the control read BEFORE and the tool-name count and `/health` BEFORE (C-6, C-7); the old `cd2_before.out` values are a day-old record, not the baseline. Re-run the release branch's test list once.
+- (c) THE WINDOW is stated afresh in the ledger entry (supersedes the 13:00Z to 14:00Z of the note): start no earlier than your reads of (a) and (b), end by 15:50Z. Rewrite `cd2_hostowner_note.out` as `cd2_hostowner_note_v2.out` with that window and keep the first as `cd2_hostowner_note_v1.out`.
+- (d) Deploy `rel-amgt-harvst-cd2` @`1753c741d9` as cut (no re-cut), with `DEPLOY_BASE_REF=9d5b712557` under the stale-base guard, as the standard script requires. Steps 3, 4 and 6, and C-6 to C-9, stand. The rollback is `opal-gateway-9d5b712557.tar.gz`.
+- (e) When the ledger is CLOSED, tell the issuer the NEW live sha and the CLOSED time in one message; the issuer sends both to the host owner through MSTR (ap-36 waits on them).
+
 Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round89/`.
 
 <paths>
