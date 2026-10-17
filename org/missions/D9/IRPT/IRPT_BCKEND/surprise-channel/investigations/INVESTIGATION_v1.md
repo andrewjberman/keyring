@@ -41889,3 +41889,161 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "AC3 admits no order-file path, so the issuer flips the status after grading; the AC1 text said ten for a tuple of six."
 }
 ```
+
+## IRPT_BCKEND-D2-W454-S1 -- module.irpt_scopes FIRM class marks four rows, demo included, so the FIRM class alone cannot select the three list firms; the registry kind filter does.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W454-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~454",
+  "surfaced_at": "2026-10-17T05:01:26Z",
+  "one_line": "module.irpt_scopes FIRM class marks four rows, demo included, so the FIRM class alone cannot select the three list firms; the registry kind filter does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-hm-8 step 4 and the worker face: the three list-key firm tokens are derived from the registry the way principal_49f.tf derives its firm, through module.irpt_scopes, and the check requires exactly the three kind-client firms of data/firm_registry.json.",
+  "world_is": "module.irpt_scopes scope_class (infra/aws/terraform/modules/opal_name/generated_locals.tf:51-55) marks FOUR rows FIRM: 49financial, inflection, cottonwood and demo. The demo row is kind demo in data/firm_registry.json, so the FIRM class alone yields four list keys and AC2 fails on the extra key. hmac_list_stage.tf reads data/firm_registry.json with file() and keeps the kind client rows, each also tested against scope_class FIRM with lookup(); no firm token is typed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf:51-55 (scope_class FIRM rows) at 0.9.0_WK_IRPT_BCKEND~454 HEAD",
+      "data/firm_registry.json firms[] kind: 49financial, inflection, cottonwood = client; demo = demo",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r251/p251_cells.py ac2 (firms = kind client, exactly 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The declaration uses the registry kind filter; a CTO or CVO ruling on whether the module should carry the kind column is open. No module file was edited."
+}
+```
+
+## IRPT_BCKEND-D2-W454-S2 -- The check AC1 counts every Sid label in the file, trust document included, so the trust statement carries no Sid, unlike principal_49f.tf.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W454-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~454",
+  "surfaced_at": "2026-10-17T05:01:26Z",
+  "one_line": "The check AC1 counts every Sid label in the file, trust document included, so the trust statement carries no Sid, unlike principal_49f.tf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-hm-8 step 4 and the worker face: the file mirrors principal_49f.tf, whose trust statement carries a Sid, and the policy holds exactly two statements.",
+  "world_is": "p251_cells.py ac1 collects every Sid assignment in the file and requires the sorted set to equal exactly the two policy Sids. The first AC1 run at this worktree FAILED with the trust Sid counted as a third statement. The trust statement now carries no Sid. It still names only local.irpt_runner_role_arn and sts:AssumeRole, so the grant is unchanged; a Sid is a label, not a grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r251/p251_cells.py ac1 (sid regex over the whole file)",
+      "infra/aws/terraform/investor-reporting/directory/principal_49f.tf:104 (trust Sid at 0.9.0_WK_IRPT_BCKEND~454 HEAD)",
+      "AC1 first run output at this worktree: FAIL policy statements found [trust, ReadTheOneHmacSecretOnly, PutTheThreeFirmListKeysOnly]; re-run PASS after the edit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. A future check or a mirror of principal_49f.tf should decide whether a trust Sid is wanted; this file follows the check."
+}
+```
+
+## IRPT_BCKEND-D2-S233 -- The firm tokens come from the registry's client rows and the trust statement has no Sid: both are label and de
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S233",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-17T05:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W454-S1 and IRPT_BCKEND-D2-W454-S2 (worker ~454, order TO-IB-hm-8). S1: module.irpt_scopes marks FOUR rows FIRM (demo included), so the firm tokens for the three list keys come from the client rows of data/firm_registry.json, each also tested against the FIRM class; the worker's file does this and no firm token is typed; the check re-runs the builder for the three tokens and AC2 passes. My order's wording (derive through module.irpt_scopes alone) was the defect. S2: AC1 counts every Sid label in the file, so the trust statement carries no Sid; a Sid is a label, not a grant, and the trust still names only local.irpt_runner_role_arn and sts:AssumeRole. Neither changes what the file declares.",
+  "one_line": "The firm tokens come from the registry's client rows and the trust statement has no Sid: both are label and derivation choices, the grants are as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p251_cells.py . IBHM8-AC1|AC2|AC3 re-run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-454 at f43e108861: PASS x3",
+      "infra/aws/terraform/investor-reporting/directory/hmac_list_stage.tf read whole by 2.0.0_SA_COO~P2"
+    ]
+  },
+  "spec_asserts": "The firm tokens derive through module.irpt_scopes alone, and the trust statement may carry a Sid (my order, mirroring principal_49f.tf).",
+  "world_is": "module.irpt_scopes FIRM holds four rows including demo, and the check counts every Sid, so the file derives from the registry's client rows and the trust has no Sid; the declared grants are exactly the ordered ones."
+}
+```
+
+## IRPT_BCKEND-D2-W455-S1 -- The AC1 and AC2 checks read the commit diff HEAD~1..HEAD, so they cannot PASS on the working tree before the one commit the order makes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W455-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~455",
+  "surfaced_at": "2026-10-17T05:49:29Z",
+  "one_line": "The order asks for IBHM10-AC1 and IBHM10-AC2 to be run and recorded before the commit, but p253_cells.py ac1 and ac2 read git diff HEAD~1 HEAD (its _diff at line 28), so before the commit they FAIL on the prior commit's diff and cannot PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r253/p253_cells.py _diff (line 28: git diff -U0 HEAD~1 HEAD -- iam.tf) read at this worktree, branch wk-IRPT_BCKEND-455",
+      "pre-commit run at this worktree: python p253_cells.py . IBHM10-AC1 printed 'FAIL: the commit adds nothing to infra/aws/terraform/mdpf-pipeline/iam.tf' rc=1; IBHM10-AC2 printed 'FAIL: no added module block irpt_hmac_list_stage_role_name' rc=1"
+    ]
+  },
+  "spec_asserts": "TO-IB-hm-10 step 3: run IBHM10-AC1 and IBHM10-AC2 and record their output BEFORE the commit; run IBHM10-AC3 AFTER the one commit.",
+  "world_is": "AC1 and AC2 read HEAD~1..HEAD, which is the commit before the worker's change until the commit exists, so the pre-commit run is a FAIL by construction. The decisive AC1 and AC2 runs are made after the commit. The pre-commit output is recorded verbatim beside them and is not a verdict on the declaration.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer may move the AC1 and AC2 runs to the working tree in a later check revision, or accept post-commit runs as the criterion's evidence. This row does not change the declaration."
+}
+```
+
+## IRPT_BCKEND-D2-W455-S2 -- The worktree is sparse-checked-out, so org/surprise_channel/ is tracked at HEAD but absent on disk
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W455-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~455",
+  "surfaced_at": "2026-10-17T05:49:29Z",
+  "one_line": "This worktree has core.sparseCheckout=true, and org/surprise_channel/ (including schemas/investigation_item.schema.json) is tracked at HEAD but not on disk, so the schema was read with git show HEAD:path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout printed true at C:/dev/wk-IRPT_BCKEND-455",
+      "ls org/surprise_channel printed 'No such file or directory'; git ls-tree -r --name-only HEAD -- org/surprise_channel/schemas/ lists investigation_item.schema.json and remediation_row.schema.json"
+    ]
+  },
+  "spec_asserts": "The order's write surface and reads sit inside the worktree, and the surprise row is appended to the investigation file the order names.",
+  "world_is": "The worktree is sparse, so the surprise channel's schema directory is not on disk. The investigation file the order names is on disk and was appended to. Any gate that reads the schema from the working tree sees it absent.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Recorded so the sparse state of this worktree is on the channel; the write surface named by the order was not widened and no path outside it was touched."
+}
+```
+
+## IRPT_BCKEND-D2-S234 -- The r253 check reads the commit diff so AC1 and AC2 have no pre-commit PASS, and the worktree is sparse: proce
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S234",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-17T06:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W455-S1 and IRPT_BCKEND-D2-W455-S2 (worker ~455, order TO-IB-hm-10). S1: my check r253 grades the commit diff (HEAD~1..HEAD), so AC1 and AC2 cannot pass before the worker's one commit and the order's record-before-commit step had nothing to record; the worker recorded the pre-commit FAILs verbatim and the post-commit PASS runs, and I re-ran all three after the commit and copied the post-commit record and proof into the main tree. The wording of the order step is my defect. S2: the worktree is sparse by design; the worker read the row schema with git show. Neither changes what the file declares.",
+  "one_line": "The r253 check reads the commit diff so AC1 and AC2 have no pre-commit PASS, and the worktree is sparse: process notes, the declaration is as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p253_cells.py . IBHM10-AC1|AC2|AC3 re-run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-455 at 8acf77d517: PASS x3",
+      "git show 8acf77d517 -- infra/aws/terraform/mdpf-pipeline/iam.tf read whole: 21 lines added, 0 deleted"
+    ]
+  },
+  "spec_asserts": "The worker records AC1 and AC2 output before the commit (the order's step 3, my wording).",
+  "world_is": "The check reads HEAD~1..HEAD so AC1 and AC2 can only fail before the commit; the worker recorded both stages and the declaration is as ordered."
+}
+```

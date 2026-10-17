@@ -84,4 +84,18 @@ Checker `p138_bounded.py` (selftest 7 arms); a reference implementation put into
 
 Checkers `p138_cot_tf.py` (selftest 9 arms) and `p138_cot_handler.py` (selftest 9 arms); the handler checker's positive control (a reference implementation in a scratch sibling directory) passes its source, behaviour and wiring clauses against today's handler; the base of the handler tests is 16 passed.
 
+**Cell 6 (added 2026-10-17 ~06:0xZ; ONE order; WORLD, the infra/ floor; workstream `F2COTBN`): the Cottonwood landing function's bundle gains the transaction producer.** After `DB-f-2605` merged (92f40e64d9). `function-map/irpt-cot-account-return-daily-lambda.json` (16 files, 15 pins) gains five members, appended last and pinned: `account_transaction_cottonwood.py`, `account_transaction.py`, `account_return_daily.py` and `transaction_words.json` (all under `data/assets/scripts/gold/irpt_reporting/`) and `data/assets/scripts/lib/stream_parquet.py`. Measured by the issuer: with the five appended and the 15 existing pins UNMOVED, the attribute closure over the pinned blobs and the bundle smoke (the handler imports the producer in the packaged layout) both PASS, so no existing pin needs to move. This is the disarm evidence for `IRPT_DASHBD-D2-W2605-S1`.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| the five new members and their pins in the Cottonwood landing function-map entry | `DB-f-2606` | FWD-5 | WORLD | `DB-f-2605` (merged) | R138-F |
+
+| criterion | invocation | base reading |
+|---|---|---|
+| DBF138-6-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r138/p138_cotbundle.py . DBF138-6-AC1` | FAIL (files and pins absent) |
+| DBF138-6-AC2 | `python -I .../checks/r138/p138_cotbundle.py . DBF138-6-AC2` | PASS at base (the closure over the unchanged entry); stays PASS with the members added |
+| DBF138-6-AC3 | `python -I .../checks/r138/p138_cotbundle.py . DBF138-6-AC3` | FAIL (the handler's guarded import fails in the packaged layout) |
+
+Checker `p138_cotbundle.py` (selftest 8 arms; a reference entry put into the file by the issuer makes all three PASS, run and restored). Four-postulate record: (i) one function-map file of 241; (ii) a member and its pin; (iii) the bundle carries what the handler imports; (iv) not moved: the 15 existing pins, every other key of the entry (including `artifact_sha256`, stamped by the applier at the build), every other file of the folder. AC2 passing at base is stated, not hidden: it guards against a re-pin that breaks the closure.
+
 **Cell 3, closing note:** checker `p138_inf_s4.py` (selftest 10 arms; the reference insertion makes both PASS, run and reverted). The round-137 criteria `DBF137-5-AC1` and `AC2` read the pre-S4 base; AC1 (a pure insertion) and AC2 (the actions and sids) still hold after S4.
