@@ -2873,3 +2873,19 @@ Andrew's smoke showed the Cottonwood Performance tab empty; the CTO traced it to
 **fanout:** 0 workers (an applier order), 1 of 1 chains, cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected, no record exists; selftest green on a synthetic record and red on 16 single-fault arms):** `checks/r149/p184_cot_read_c0.py` (DBC184-1-AC1, -2-AC1).
+
+## 179. ROUND 150, WORKSTREAM COTFWD (2026-10-17 ~02:3xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood Performance read path -- C1, the forward code
+
+C0 is answered (`COT_READ_C0_RECORD.json`, verified by `p184`): the live 49F read function refuses a Cottonwood request with FIRM_BINDING because its directory bucket map holds only `49financial`; the Cottonwood ownership-map objects are absent; the Cottonwood directory pointer exists (271 entries, in the registry bucket); the authorizer `naqxlm` (`opal-portal-authorizer`) keeps no fixed firm list. Option A (CTO ruling, msg 10134) puts the Cottonwood read in its own function and forwards to it from the 49F function. This cell is the code of the forward, with the ruling's conditions 1 and 2 as tests; the Terraform (C2), the function-map file (C3), the pair (C4) and the real run (C5) follow.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `served.py`: the literal one-entry forward map, the `forward_invoke` port, `Entry._forward`, the guard change in `handle`; one new test file (11 tests) | DB-b-319 | FWD-10 (Cottonwood Performance tab) | WORLD floor (path), no apply | C0 (done) | chain AM |
+| 2. C2 Terraform root `reporting-read-iso` and the forward's environment and invoke grant in `reporting-read` | to be cut | FWD-10 | WORLD | C1 | after C1 |
+| 3. C3 the function-map file for the new function; C4 the pair; C5 the real run | to be cut | FWD-10 | WORLD, SERVED | C2 | after C2 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the forward sits AFTER the internal test and the allowed-firm narrowing (so a caller the 49F function would refuse for any firm is refused for cottonwood too) and only for the literal one-entry map with the target named by the function's own environment (the Cottonwood function never sets it, so it cannot forward); (b) the source directory is shared by both functions, so the code lands once; (c) no registry row is added in this cell: the Cottonwood ownership-map location is decided after the pair's real probe shows whether a staff read needs it (an absent map reads as an empty map); (d) the issuer's reference diff is committed beside the checker.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~253`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on five single-fault mutants; the reference diff is committed beside it):** `checks/r149/p185_cot_read_forward.py` (DB185-1-AC1..AC3), `reads/DB319_REFERENCE.patch`.
