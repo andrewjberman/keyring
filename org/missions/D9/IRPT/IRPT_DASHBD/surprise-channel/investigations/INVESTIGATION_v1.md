@@ -25557,3 +25557,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Found while building the reader for Monday's first-fire read; pre-existing, NOT from the transaction stage (which does not list the filled prefix). Not this seat's to fix: the filled-report function and its role belong to the 49 Financial filled-report lane (2.0.0_SA_COO~D2 and the CTO's switch-on addendum). Monday's read reports this line separately from the stage lines so it is not mistaken for a transaction failure."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S136 -- row S135 re-marked ARMED with this seat as disarm owner: the listing grant is already live, so no new pair; disarm on Monday's fire
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S136",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-17T12:04:23Z",
+  "one_line": "Row S135 (the 49 Financial gold function's FILLED_CATCHUP_LIST_FAILED AccessDenied): the listing grant it needs is already live on the role; the failure predates it; the row is ARMED with this seat as disarm owner until Monday's fire shows the line gone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Row S135 and the cross-adjudication XA-20261017T112805Z-03dd (ruled 2026-10-17 11:35Z): this seat owns a pair adding s3:ListBucket on opal-data-49financial conditioned on s3:prefix irpt/49financial/gold/filled_report_values/ and its children.",
+  "world_is": "MEASURED 2026-10-17 by this seat (read-only): the live inline policy of irpt-49f-reporting-gold-role holds, on the statement ListExactlyTheSixGoldPrefixes, an s3:prefix StringLike list that includes irpt/49financial/gold/filled_report_values/*; the policy simulator allows s3:ListBucket on opal-data-49financial for that prefix (with delimiter /) and gives an implicit deny for a sibling prefix and for the prefix without its trailing slash. That grant was applied by TO-DB-b-300 (ledger opened 2026-10-16 13:41Z, closed 15:22Z), after the 2026-10-16 11:46Z fire on which F2 read the AccessDenied. So no new pair is needed (the CTO confirmed it, msg after 10527). Not measured: any fire since the grant (the next scheduled fire is Monday 2026-10-19), so the line's absence is not yet read. The sid says Six and the list holds seven prefixes (cosmetic, the CTO's note: fix it at the next edit of that root, not alone).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live get_role_policy and simulate_principal_policy of irpt-49f-reporting-gold-role, read 2026-10-17 by this seat",
+      "org/critical_paths/change_management/20261016T1341Z_irpt-dashbd-49f-reporting-gold-listing-codeupdate-20261016_deploy_completion.md",
+      "org/critical_paths/cross_adjudication/20261017T1135Z_XA-20261017T112805Z-03dd.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: after Monday 2026-10-19's 49 Financial fire, read the gold function's log for FILLED_CATCHUP_LIST_FAILED (none expected) and the filled table's day count; the line recurring is a new finding about the listing's prefix shape and goes to the CTO."
+}
+```
