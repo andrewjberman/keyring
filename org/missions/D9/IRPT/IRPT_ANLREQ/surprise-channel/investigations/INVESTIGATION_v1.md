@@ -23218,3 +23218,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S162 -- FWD-5 sitting 3: the entitled staff control read UNEXPECTED on request-history and on the no-selection call, on both targets
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S162",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-17T00:51:48Z",
+  "one_line": "In the third FWD-5 sitting the staff control (opal-capital, allowedFirmIds [49financial]) read the public reason code UNEXPECTED (HTTP 200 refusal envelopes of 469 B and 420 B) on analysis/requests (request-history, with selected_tenant) and on analysis/requests/{id} with NO selected_tenant, on BOTH targets, while firm B read FIRM_BINDING and NOT_AUTHORIZED there; the function answered an internal-error code to an entitled caller, not read further.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A refusal envelope carries a code from the closed boundary vocabulary (served.status_envelope BOUNDARY_REASONS); UNEXPECTED is the catch-all for a handler exception (public_reason_for), and the CTO's ruling (msg 10096) asks that these control reads go in a row with the codes.",
+  "world_is": "Reports org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/{packaged,synthetic}/fwd5_control_report.json (route names, statuses, lengths and codes only; no body kept). Control: request-history 200 / 469 B / UNEXPECTED and request-read-no-selection 200 / 420 B / UNEXPECTED on both targets. Firm B on the same routes: request-history FIRM_BINDING (428 B), no-selection NOT_AUTHORIZED (467 B). On the packaged target the control also read UNEXPECTED on request-history (so it is not specific to a request that has no job). NOT read: the function's log lines for these two invocations per target (the irpt-status log group would carry the internal record), the cause, and whether a staff caller of class OPAL_GLOBAL has any history to list. Consequence for the grade: a control that cannot read these two routes says nothing about the fence there; the fence reading on them rests on firm B's refusal alone (the CTO's RE-SIGN 4: a control refused by the fence's own codes grades nothing; UNEXPECTED is neither a fence code nor a served body). Owner for the cause: the irpt-status function's owner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/packaged/fwd5_control_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/synthetic/fwd5_control_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/synthetic/fwd5_run_report.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
