@@ -23244,3 +23244,104 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W279-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~279, cell AR-tz-76) TO item 2 asks for an exact tickets/metrics entry and a refused tickets/claim, but the base ticket-read shape already GET-admitted both paths
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~279",
+  "surfaced_at": "2026-10-17T01:20:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W279-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "At base c53d74c0d1 the guard ticket-read shape /api/scoped/tickets/<seg> GET-admitted any single segment, so /api/scoped/tickets/claim and /api/scoped/tickets/metrics were admitted before the edit; an exact metrics entry alone would leave claim admitted, so the ticket-read shape now excludes the two reserved words.",
+  "spec_asserts": "TO-AR-tz-76 item 2: extend the guard GET allow-list with exactly /api/scoped/tickets/metrics (nothing else under /api/scoped/tickets/); the offline tests refuse /api/scoped/tickets/metrics/anything and /api/scoped/tickets/claim.",
+  "world_is": "Positive control: the base fwd5_driver.py taken from git show c53d74c0d1 (copied into .scratch, imported with python -I) answers admit GET /api/scoped/tickets/claim True, /api/scoped/tickets/metrics True, /api/scoped/tickets/metrics/anything False; base ROUTES has 15 entries. The edit adds the exact entry /api/scoped/tickets/metrics and makes the ticket-read shape /api/scoped/tickets/(?!(?:claim|metrics)$)<SEG>. No other ticket path is admitted; claim is admitted by no entry. Side effect: a GET whose ticket id is literally claim or metrics is now refused by the guard; no route in ROUTES sends one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py GET_ALLOWED @c53d74c0d1 (base, before this commit)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~279/fwd5_driver/test_fwd5_driver_real_ids.py test_fwd5_real_guard_refuses_metrics_extra_segment_and_claim (this commit)"
+    ]
+  },
+  "notes": "The exact entry is added as ordered; the claim refusal needs the ticket-read shape narrowed, which the order's test list implies but its item 2 does not state."
+}
+```
+
+## IRPT_ANLREQ-D2-W279-S2 -- (worker 0.9.0_WK_IRPT_ANLREQ~279, cell AR-tz-76) five existing driver test files needed edits: the two new flags on full-route runs, the call-count asserts, and one rename; each edit is named here
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~279",
+  "surfaced_at": "2026-10-17T01:20:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W279-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The five existing driver test files were edited only where a full-route run expected exit 0 without the new flags (the flags added to each run helper) or asserted the old 13-call, 15-row count; the names are in world_is.",
+  "spec_asserts": "TO-AR-tz-76 item 4: the five existing driver test files MAY be edited only where a test asserts the old call count (13 made, 15 rows) or runs the full route set without the two new flags and expects exit 0; keep each test intent and list every edited test by name.",
+  "world_is": "(a) 231 test_fwd5_driver_offline.py: run_main() argv gains --report-id and --export-id; every test that runs the full set through run_main is covered by that one helper edit, no assertion changed. (b) 232 test_fwd5_driver_exit_semantics.py: run_with() argv gains the two flags, no assertion changed. (c) 272 test_fwd5_driver_control.py: test_fwd5_control_run_mode_unchanged_writes_run_report_without_mode argv gains the two flags, because its rc 0 needs them; control_argv is unchanged since the control exit reads only the two gate routes. (d) 275 test_fwd5_driver_envelope.py: drive() argv gains the two flags; test_fwd5_envelope_every_get_carries_contract_version_run GET count 13 -> 14; test_fwd5_envelope_every_get_carries_contract_version_control GET count 13 -> 14. (e) 277 test_fwd5_driver_routes.py: drive() argv gains the two flags; MADE_ORDER gains tickets-metrics after ticket-list; test_fwd5_routes_run_makes_thirteen_calls_and_writes_fifteen_rows RENAMED to test_fwd5_routes_run_makes_fourteen_calls_and_writes_sixteen_rows with 15 -> 16 rows, 13 -> 14 made, REFUSED 13 -> 14, GET 13 -> 14; test_fwd5_routes_six_new_routes_send_the_path_the_record_names slice gts[7:] -> gts[8:] because one GET now precedes the six. The rename and the slice are consequences of the count, not literal count asserts, and are declared here rather than hidden.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~277/fwd5_driver/test_fwd5_driver_routes.py (this commit, the diff)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py (this commit, the diff)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W279-S3 -- (worker 0.9.0_WK_IRPT_ANLREQ~279, cell AR-tz-76) the TO does not say how a supplied --report-id or --export-id is checked; the driver checks its shape like the other ids, before sign-in
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~279",
+  "surfaced_at": "2026-10-17T01:20:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W279-S3",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "--report-id and --export-id get the same id shape check as --request-id and --job-id (ID_RE), run before sign-in and only when supplied, so a malformed value exits 2 with no request sent instead of reaching a URL path segment.",
+  "spec_asserts": "TO-AR-tz-76 item 1: add the two flags, optional at parse time; a run without the value leaves that route UNREACHED and exits 2; the ids are NOT markers.",
+  "world_is": "The base do_run checks --request-id and --job-id against ID_RE before sign-in. The two new flags take the same check. Test test_fwd5_real_malformed_report_id_exits_two_and_sends_nothing sends report id bad/id: rc 2, zero requests, no report written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py do_run problem chain (this commit)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~279/fwd5_driver/test_fwd5_driver_real_ids.py test_fwd5_real_malformed_report_id_exits_two_and_sends_nothing (this commit)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W279-S4 -- (worker 0.9.0_WK_IRPT_ANLREQ~279, cell AR-tz-76) the worktree is a sparse checkout without org/surprise_channel/, so the row schema the surprise rule names is not on disk
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~279",
+  "surfaced_at": "2026-10-17T01:20:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W279-S4",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-279 is a sparse checkout: org/surprise_channel/ is absent on disk, so org/surprise_channel/schemas/investigation_item.schema.json is not readable there; I read it with git show HEAD:<path> and checked the row shape against that copy.",
+  "spec_asserts": "The surprise-channel rule names org/surprise_channel/schemas/investigation_item.schema.json as the row schema, and the first act requires the worktree to carry the paths the order names.",
+  "world_is": "git ls-files lists the schema at HEAD; the directory does not exist in the worktree; git sparse-checkout list names .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ and not org/surprise_channel; 86,541 index entries carry the skip-worktree bit. The task order's own named paths are present, so the order was not blocked. Nothing was rebuilt or extracted to fill the gap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in worktree C:/dev/wk-irpt-anlreq-279 (read at filing)",
+      "git ls-files -v org/surprise_channel: S-prefixed entries (skip-worktree), read at filing"
+    ]
+  }
+}
+```
