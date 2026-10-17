@@ -23404,3 +23404,28 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-S164 -- disposition of W279-S1 to S4: the driver's guard admitted /tickets/claim and /tickets/metrics as ticket ids, the real-id flags, the edited tests, the sparse tree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S164",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-17T01:38:58Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W279-S1 (the merged driver's ticket-read path shape matched any one segment, so GET /api/scoped/tickets/claim and /tickets/metrics were ADMITTED as ticket ids; the shape now excludes the two reserved words: ACCEPTED, a real fix of the guard I wrote), W279-S2 (named edits to the five older driver test files: argv gains the two new flags, GET counts 13 to 14, one test renamed thirteen/fifteen to fourteen/sixteen: ACCEPTED), W279-S3 (--report-id and --export-id get the ID shape check before sign-in, only when supplied: ACCEPTED) and W279-S4 (the surprise-channel schema is absent from the sparse tree, read via git show: NOTED); merged with AR-tz-76 (d79cf5d1ea).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order said the guard's allow-list gains exactly /api/scoped/tickets/metrics and nothing else under /api/scoped/tickets/; the worker found that the existing ticket-read shape already admitted both /tickets/claim and /tickets/metrics because its segment pattern matches any one segment.",
+  "world_is": "Measured on the merged tree at HEAD af0bb2315a: test_fwd5_driver_real_ids.py reads R46-TESTS-OK passed=15; the five older driver test files read passed=72 over 70 functions; fwd5_driver.py --selftest reads FWD5-SELFTEST-OK checks=65 (59 kept, 6 new, including the metrics admit, the metrics/anything refusal and the claim refusal). Driver blob 3746dc3354. The driver now makes 14 calls and writes 16 rows per run; narrative and export-receipt take --report-id and --export-id (a run without one leaves that route UNREACHED, exit 2); tickets-metrics is graded like a ticket route (a 2xx is a LEAK in run mode). IMPORTANT for the earlier sittings: the pre-fix guard would have SENT a GET to /tickets/claim if a ticket id of that spelling had been passed; no sitting passed such an id, and the sittings only ever sent the listed shapes with real ticket ids, so no claim route was reached; the claim route is a write route and was never requested (the fake-server tests refuse it now). NOT done: the fourth sitting (it waits on FWD-1 window 5).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py (merged d79cf5d1ea; blob 3746dc3354)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~279/fwd5_driver/test_fwd5_driver_real_ids.py (blob 6ab41bd972)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
