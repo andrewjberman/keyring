@@ -131,6 +131,36 @@ because BD posts the carrier-feed values later. Later pulls carry them. Measured
 
 Source: a scoping read of the bronze ingest by this seat's research agent, verified here on 10/09.
 
+## ADDENDUM 3 (2026-10-17 ~02:4xZ) -- what is landed, and the runbook to 530.42M
+
+**Landed tonight:**
+- **MDPF.** `mdpf-gold-lambda` runs f09a6a3adb, the supervised switch (ledger
+  `mdpf-gold-fwd10-cottonwood-supervised-20261017`, CLOSED; CTO half @a047cb0922). The 10-17 13:30Z run serves Cottonwood
+  at the supervised value. Global is unchanged: its Client leg is 49F only.
+- **ADVI.** C_03 switch @9a3a0e5605, producer half @62badadb7b, waiting on the CTO half before `safe-deploy --tree cot`.
+- **Not landed.** The mix leaves (D_03 is COO~M1's lane; C_06 is incremental).
+
+**Why the pages will read ~521.5M, not 530.42M, until step 2 below:** the carrier-feed accounts are $0 at the 07:30 ET pull.
+
+**Runbook to 530.42M** (each step waits only on the one before it):
+1. 2.0.0_SA_COO~C1 posts "fire read done" after the R106 read (~13:00Z 10-17) and agrees in writing to a Cottonwood silver
+   write. It needs the write time, the partitions, and whether any of the 122 multi-book accounts gain rows. Answer: no new
+   accounts, values only on existing rows.
+2. After BD posts carrier values, re-run bronze holdings and allocations for the latest date (`opal-cot-bronze-run`
+   RunDate). Each must carry non-null carrier values: check the 106/96-account set. Then run the silver merge for that date.
+3. Re-run the MDPF gold Lambda and publisher once (a scheduled-equivalent production run, CTO-gated), and let the ADVI gold
+   chain run. Read: Cottonwood supervised equals BD's Dashboard Supervised for that date, within the ~$51K
+   canonical-collapse delta.
+
+**Durable fix (spec for the CloudOps COT lane; not this seat's to build):**
+- Mark carrier-feed accounts. Use the transactions `Original Account Number` prefix (DTCCR_/ASLAA_/AEGON_/LNANN_/EQUIT_), or
+  an account-attributes column if BD has one.
+- Fail `_table_complete("holdings")` when marked accounts are present and all null, so the existing bounded late-publish
+  retry (3 x 900 s) re-pulls the same morning.
+- If BD posts later than that window, add a same-day re-pull slot that also rebuilds silver. Today a re-landed bronze file
+  never re-runs silver; 10/09 shows it.
+- Backfill the null dates since 2026-08-13.
+
 ## 5. Not captured
 
 The BD Dashboard's per-relationship values (only the four group rows in the screenshots). The August HAR oracle
