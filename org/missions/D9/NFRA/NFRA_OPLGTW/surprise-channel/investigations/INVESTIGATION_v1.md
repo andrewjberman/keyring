@@ -27834,3 +27834,50 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S370 and Z-S372 are resolved by the live release and its passing records; the two worker rows are a device fact (the client-data list absent, my text scan clean) and an instrument note; the A8 order-of-acts miss is recorded with its outcome and does not reopen the ledger. Z-S375 and Z-S338 are not dismissed and stay with this seat."
 }
 ```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~139",
+  "surfaced_at": "2026-10-17T18:31:31Z",
+  "id": "NFRA_OPLGTW-Z-W139-S1",
+  "one_line": "OG-en-25: a peer part that lacks the period, axis or fund_id column now makes the whole etfs_compare_peers answer absent (the _read_part column contract), where the base code answered an empty section for that table; the order fixed the answer for valid period and axis values only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/etfs_rivals_flow.py@6784006a1f _peer_section (base): read the part unfiltered and derived periods, axes and the match in Python, so a missing column gave an empty section with empty available lists.",
+      "app/typed_scope.py@6784006a1f read_parquet (base): no filter was applied, so no column was checked; with this change any filter column absent from the object raises ValueError('unknown column') and _read_part turns it into _Absent, which is the module's documented contract."
+    ]
+  },
+  "spec_asserts": "OG-en-25 TO section 1 fix 2: a section's answer for a VALID period and axis is IDENTICAL to today's; the order is silent on a part that lacks a filter column.",
+  "world_is": "For a valid period and axis the answer is identical (test_ogen25_ac02). For a part without fund_id, period or axis the filtered read refuses the whole tool as absent; the base code answered an empty section. No such part is measured on the host; the gold tables are assumed to carry the three columns.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: say whether a missing column should answer the empty section (a pre-check of the schema in _peer_section) or the whole-tool absent. The worker did not change the behaviour beyond the module's own contract."
+}
+```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~139",
+  "surfaced_at": "2026-10-17T18:31:31Z",
+  "id": "NFRA_OPLGTW-Z-W139-S2",
+  "one_line": "Gateway tests outside this order's files fail at the base HEAD as well as with the OG-en-25 change: seven failures in test_schwab_host_inputs (3), test_portal_index (1), test_og_gt8 (1) and test_og_ch1 (2, one of them order-dependent).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_schwab_host_inputs.py@6784006a1f -- three failures: printf naming (29 == 19), whitespace quoting (65 == 52), and 'build_package.py is not in this tree'.",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_portal_index.py@6784006a1f test_portal_tools_catalog_refs_resolve; infra/aws/ec2/opal-gateway/tests/test_og_gt8.py@6784006a1f test_oggt8_ac03_deploy_stages_lib; infra/aws/ec2/opal-gateway/tests/test_og_ch1.py@6784006a1f test_ogch1_ac04 ('the repo roster file is not on this tree') and test_ogch1_ac02 ('a different adapter is already registered', seen when the four files run together).",
+      "RUN: the four files at HEAD product bytes and at the OG-en-25 bytes give the same seven failing ids (7 failed, 27 passed in each), so none is caused by OG-en-25."
+    ]
+  },
+  "spec_asserts": "OG-en-25 TO AC3: the window, peer and client test files pass together in both orders with the same count.",
+  "world_is": "Those seven ids fail on the base tree and do not belong to the order's file set; the order's AC3 counts only its listed files, which pass. The count of the wider gateway run was not graded here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the order's AC3 set is the seven-file list and is green; the seven ids above are pre-existing and need an owner outside this order. Nothing was edited to make them pass."
+}
+```
