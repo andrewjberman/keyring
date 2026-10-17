@@ -3552,6 +3552,67 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md@836e16bafd (row shape reference)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W65-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~65",
+    "surfaced_at": "2026-10-17T14:59:06Z",
+    "one_line": "An INCOMPLETE vendor return (rows missing a requested field) is stored into the history identity before the check that stops the run, so the stored row is never asked again.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-75: an INCOMPLETE return (rows present but a requested field missing) still stops the run, exactly as today.",
+    "world_is": "The run stops on an incomplete return, but _draw_history first extends res rows, cells and the stored identity with the returned dates (standing_drawer.py@69b52bb6cf lines 848-852), and only then tests the fields (line 860). The stored dates make undrawn_runs skip those days on every later fire, so the field-less row is never re-requested. The t75 edit leaves this order as it was; the t74 stop tests now cite its two counted cells. Fires on an incomplete vendor return only; no such return is in the records this worker read.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py@69b52bb6cf lines 848-852 (rows, cells and stored identity written before the check)",
+        "data/mdpf/scripts/demque/standing_drawer.py@69b52bb6cf line 860 (the incomplete-row stop)",
+        "data/mdpf/scripts/demque/standing_drawer.py@wk-MDPF_DEMQUE-65 _draw_history (worktree, uncommitted at filing)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W65-S5",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~65",
+    "surfaced_at": "2026-10-17T14:59:06Z",
+    "one_line": "A request whose only owed windows are cooled reads DRAWN with 0 cells and writes a 0-cell actuals line on each fire of its cooldown.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-75: an empty window draws zero cells, writes no rows and adds no actuals cells; the request_complete rule is unchanged. The order does not state the actuals line for such a request.",
+    "world_is": "run() outcome rules are unchanged, so an attempted request with no stop, no refusal and no cells reads DRAWN (standing_drawer.py@wk-MDPF_DEMQUE-65 outcome loop), and record_actual writes one line for every such request (the actuals loop skips only GATED and REFUSED-without-cells). A cooled window therefore produces one 0-cell DRAWN line per fire until its seventh day. Before this order the same window stopped the run and wrote a STOPPED line, so a line per fire is not new; the 0-cell DRAWN form is. Tests assert the 0-cell line is absent only after completion.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py@wk-MDPF_DEMQUE-65 run() outcome loop and the ONE actuals line per request loop (worktree, uncommitted at filing)",
+        "data/mdpf/scripts/demque/test_demque_standing_drawer_close.py@836e16bafd test_no_zero_cell_drawn_line_after_completion (the completion-only assertion)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W65-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~65",
+    "surfaced_at": "2026-10-17T14:59:06Z",
+    "one_line": "The empty-window record is keyed by the owed run's first and last day, not by the attempted chunk's window, because the chunk's stop moves with the room.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-75: the cooldown key is (request_id, security identifier, window start, window stop).",
+    "world_is": "The attempted chunk runs from its start for cap = min(128, room // 2) rows, so the same undrawn window gets a different stop on a fire with a different room. A key on the chunk would not match the next fire. The key used (standing_drawer.py _window_key) takes the owed run's first and last undrawn trading day; nothing stores rows inside an empty run, so both ends hold until a later fire draws it. A second request that stores rows inside the same security splits the run and changes the key, so that window is asked again once; not tested.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py@wk-MDPF_DEMQUE-65 _window_key, _empty_window and _cooldown_gate (worktree, uncommitted at filing)",
+        "data/mdpf/scripts/demque/standing_drawer.py@69b52bb6cf _draw_history chunk cap = min(CHUNK_ROWS, avail // per_row)"
+      ]
+    }
   }
 ]
 ```
