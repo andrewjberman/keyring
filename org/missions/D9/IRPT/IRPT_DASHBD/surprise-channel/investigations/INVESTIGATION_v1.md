@@ -25061,3 +25061,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The trailer follows the attribution instruction of this session. The order's text is the issuer's and was not edited."
 }
 ```
+
+## IRPT_DASHBD-D2-W2602-S1 -- an explicit --since run reports the window fields as null; the order names the default path only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2602-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2602",
+  "surfaced_at": "2026-10-17T03:44:03Z",
+  "one_line": "The order names the summary window {newest_written, cap, days_pending} but not its values on an explicit --since run; the launcher reports all three as null on that path and lists nothing at the target.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-f-2602 step 2: the summary gains window {newest_written (the day or null), cap, days_pending}; an explicit --since behaves exactly as today (every business day from it, no cap).",
+  "world_is": "At data/inf/scripts/gold/INF_G_01.account_transaction_gold.py@2b17f1111c, run() with since set writes every business day from it with no cap and sets window to {newest_written: null, cap: null, days_pending: null}, with no listing of the gold prefix. The default path (no since) sets cap 25 and reads newest_written as the order states. The order does not say which value a since run reports.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py@2b17f1111c run(): the else branch of 'if not since' sets window to the three nulls and does not call newest_written_day()",
+      "data/inf/scripts/gold/tests/test_INF_G_01_account_transaction_gold.py@2b17f1111c test_window_explicit_since_writes_every_day_from_it_with_no_cap asserts the null window",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-2602.inflection-launcher-bounded-default-window.md step 2 names the window fields without a since value"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker chose nulls for a since run so that an explicit range start reads nothing at the target and needs no new list permission on the gold prefix; the issuer or the CTO may rule the fields otherwise. No criterion reads the window fields on the since path: DBF138-2-AC3 checks the days written and the dry-run days."
+}
+```
