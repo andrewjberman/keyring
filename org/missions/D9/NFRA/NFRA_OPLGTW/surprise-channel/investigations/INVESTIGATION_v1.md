@@ -27881,3 +27881,33 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: the order's AC3 set is the seven-file list and is green; the seven ids above are pre-existing and need an owner outside this order. Nothing was edited to make them pass."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T19:05:00Z",
+  "id": "NFRA_OPLGTW-Z-S377",
+  "one_line": "Round-41 ruling on worker rows Z-W139-S1 and Z-W139-S2: OG-en-25 verified and drained (a197c3fc38); a peer part lacking period, axis or fund_id now answers absent instead of an empty section (named for the ask); seven failing gateway tests are not this order's",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W139-S1",
+    "NFRA_OPLGTW-Z-W139-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain a197c3fc38 of wk-NFRA_OPLGTW-139 (OG-en-25): my runs in the main tree: named tests 3 of 3, the seven-file peer/window/client set 29 of 29 in both orders, py_compile ok, proof VALID rc=0",
+      "the worker's measurement: the base whole-part read of 1,000,000 rows converted peaks at 851,491,942 bytes of Python heap (tracemalloc), the fixed path at 91.8 MB over two runs; tracemalloc does not count Arrow's native memory, so the HOST measurement under a hard guard in the release's Phase A is the grade",
+      "git diff 6784006a1f HEAD over infra/aws/ec2/opal-gateway: added lines with a 9-or-more digit run or an e-mail: 1, a synthetic Opal-domain reader address in a test fixture"
+    ]
+  },
+  "spec_asserts": "A valid period and axis answer exactly as before; a table over the in-memory cap refuses before any conversion; a commit that landed while the client-data list was absent is not read as checked clean.",
+  "world_is": "Z-W139-S1: the peer part read now names its filter columns, so a part lacking period, axis or fund_id raises the 'unknown column' ValueError that _read_part turns into an absent answer for the WHOLE call, where the base answered an empty section with the lists; this is a malformed-part case only, it states an absent_reason rather than a silent empty section, and the ask names it. Z-W139-S2: seven gateway test failures outside this order's files also fail at the base product bytes (carried in the full-suite failing set the release's Phase A compares to the live ref). Reach and cost: twelve call sites of typed_scope.read_parquet in eight modules now sit behind the new in-memory cap (they already handle TypedOverCap); distinct_values makes a peer call read the newest part twice (two GETs of one object); available_periods and available_axes may carry a values_truncated key past 5 000 distinct values. The commit-time client-data list was absent on this device: my text scan finds one hit, rivals.reader@opalinvest.com, a synthetic Opal address in a fixture, no client value.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The malformed-part behaviour is an honest absent answer, named for the ask; the seven failures are baseline; the list's absence is a device fact and my scan finds only a synthetic Opal-domain address; the new cap and the extra GET are stated costs of the repair. Z-S375 stays ARMED until the fix release is live and its measurement under a hard guard is read."
+}
+```
