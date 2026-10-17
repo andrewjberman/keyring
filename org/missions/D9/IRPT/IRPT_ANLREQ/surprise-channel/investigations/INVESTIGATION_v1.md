@@ -23666,99 +23666,6 @@
 ]
 ```
 
-## IRPT_ANLREQ-D2-W284-S1 -- origin/DEV has moved 39 commits past the order's base 4d4dc68cae; the two test files and both lint errors are unchanged on origin/DEV
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-W284-S1",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~284",
-  "surfaced_at": "2026-10-17T06:13:48Z",
-  "one_line": "The order names origin/DEV @4d4dc68cae as the base. At filing, origin/DEV resolves to 8ecad4a5, 39 commits past 4d4dc68cae (4d4dc68cae is an ancestor of it). The two lint errors are still present on origin/DEV and the two test files are byte-identical between the two commits, so the candidate, cut from 4d4dc68cae as the order says, is unaffected. The order's premise 'origin/DEV @4d4dc68cae' is stale.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "spec_asserts": "TO-AR-y-384 BASE line and the AR384-y-AC2 control: the base is origin/DEV at 4d4dc68cae, where the two errors are present, and the eslint control runs on origin/DEV.",
-  "world_is": "Read in the portal worktree C:/dev/wk-irpt-anlreq-284/portal at filing: git rev-parse origin/DEV = 8ecad4a5; git merge-base --is-ancestor 4d4dc68cae origin/DEV holds; git rev-list --count 4d4dc68cae..origin/DEV = 39; git diff --stat 4d4dc68cae origin/DEV over the two test files is empty; git show origin/DEV:src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 190 still holds the two-space regex; origin/DEV's filing-decision-tree.test.tsx still holds the U+0008 bytes (one line). The candidate branch cand/dell2/anlreq-test-lint-fixes is cut at 4d4dc68cae and its diff is the two files only.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "C:/dev/wk-irpt-anlreq-284/portal: git rev-parse origin/DEV -> 8ecad4a5; git rev-parse --short 4d4dc68cae -> 4d4dc68c (read at filing)",
-      "C:/dev/wk-irpt-anlreq-284/portal: git merge-base --is-ancestor 4d4dc68cae origin/DEV -> ancestor; git rev-list --count 4d4dc68cae..origin/DEV -> 39",
-      "C:/dev/wk-irpt-anlreq-284/portal: git diff --stat 4d4dc68cae origin/DEV -- the two test files -> empty",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~284/r45/LINT_FINDING.json (the eslint record at 4d4dc68cae)"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION"
-}
-]
-```
-
-## IRPT_ANLREQ-D2-S168 -- W165-S2 disarmed: the yfinance checker is wired into the door's resolver
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-S168",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "2.0.0_SA_COO~Y2",
-  "surfaced_at": "2026-10-17T06:35:57Z",
-  "one_line": "W165-S2 DISARMED: the yfinance checker is wired into the door's resolver. resident_session.template_resolver builds YfinanceChecker() when no checker is passed, and the resident that runs it (r34k) imports it and answers V2S DOOR OK.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "adjudicates": [
-    "IRPT_ANLREQ-D2-W165-S2"
-  ],
-  "spec_asserts": "Row W165-S2: security_resolution.py runs the checker only when self.checker is not None and the default was None; resident_session.py built SecurityResolver with no checker argument, so a real symbol YCharts omits and yfinance knows got TICKER_NOT_FOUND on every upload (disarm owner 2.0.0_SA_COO~Y2: wire the checker or retire the step).",
-  "world_is": "At HEAD, infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py lines 138 to 152 (MEASURED by git show HEAD:<path>): template_resolver imports YfinanceChecker and passes checker=checker if checker is not None else YfinanceChecker() to SecurityResolver, so the production call builds the real checker. The running resident is r34k (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat): V1 reports resident_session among the modules imported from the r34k root and V2S DOOR OK; V2S, run inside the service, shows SPY KEPT (HISTORY_ROWS 22) and ZQXWVK NOT_KEPT (NO_ROWS) through the shipped checker. The hazard (checker=None on every upload) no longer stands in the source or in the running resident. NOT READ: a live upload through the deployed door in which YCharts omits a real symbol and the checker keeps it; window 5 exercises that (its F8 lines) and any failure there is a new row.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git show HEAD:infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py (lines 138 to 152: checker defaults to YfinanceChecker())",
-      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt (V1 imports, V2S DOOR OK, SPY KEPT, ZQXWVK NOT_KEPT)",
-      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md (Status CLOSED)"
-    ]
-  },
-  "disposition": "DISMISSED_WITH_REASON",
-  "dismissal_reason": "The row's own remedy (wire the checker or retire the step) is done: the checker is wired in the production resolver at HEAD and the running r34k resident imports it and answers V2S DOOR OK. A live proof through the door is window 5's F8, not this hazard."
-}
-]
-```
-
-## IRPT_ANLREQ-D2-S169 -- W64-S6 disarmed: the BUILD_ONLY guard is in every base a worker is cut from
-
-```json
-[
-{
-  "id": "IRPT_ANLREQ-D2-S169",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "2.0.0_SA_COO~Y2",
-  "surfaced_at": "2026-10-17T07:03:49Z",
-  "one_line": "W64-S6 DISARMED: every base a worker is cut from now carries the BUILD_ONLY guard (the guard predates HEAD and every live worker worktree holds it); the second half is a closed round's check weakness with no live artifact.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "adjudicates": [
-    "IRPT_ANLREQ-D2-W64-S6"
-  ],
-  "spec_asserts": "Row W64-S6: BUILD_ONLY=1 is honoured only by builders at or after the commit that added the guard (absent at 9e58503be1 and f89fc8e731, present at e274a0e60c and later), so a holds-only build run from an older base uploads for real; and the y213-rebase check reads tests.failed but not tests.errors (disarm owner 2.0.0_SA_COO~Y2: forbid BUILD_ONLY runs from a base whose builder lacks the guard, or land the guard in the base commits).",
-  "world_is": "MEASURED now: git merge-base --is-ancestor e274a0e60c HEAD -> ancestor (control: 9e58503be1 is an ancestor of e274a0e60c, and e274a0e60c is NOT an ancestor of 9e58503be1). infra/aws/lambda/ci/build-and-upload.sh at HEAD carries the BUILD_ONLY branch before the upload calls (lines 709 to 714) and the end-of-run branch (line 805). The live worker worktrees 281, 283, 284 and 285 each hold the guard at their HEAD (git grep -c 'BUILD_ONLY:-0' = 2); .tools/wk-provision.sh cuts a worker from the current branch, never an older base, so the guard is landed in every base a candidate is cut from. The second half (checks/r20/ar20_checks.py reads tests.failed and tests.passed but not tests.errors) is a weakness in the check of a CLOSED order (AR-y-213); no live artifact depends on it, and the lesson (read tests.errors as well as tests.failed in any build check) is carried to the next round's order-writing, not armed. NOT READ: a worker worktree older than 281 (none is live).",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git merge-base --is-ancestor e274a0e60c HEAD (ancestor), with the two controls above",
-      "git show HEAD:infra/aws/lambda/ci/build-and-upload.sh (lines 709 to 714 and 805 to 806)",
-      "git -C C:/dev/wk-irpt-anlreq-285 grep -c 'BUILD_ONLY:-0' HEAD -- infra/aws/lambda/ci/build-and-upload.sh -> 2 (also 281, 283 and 284)"
-    ]
-  },
-  "disposition": "DISMISSED_WITH_REASON",
-  "dismissal_reason": "The row's own remedy (land the guard in the base commits used as candidates) holds: the guard is in HEAD and in every live worker base, and bases are cut from the current branch. The tests.errors point is a closed order's check, recorded as an order-writing lesson, not an armed hazard."
-}
-]
-```
-
 ## IRPT_ANLREQ-D2-W285-S1 -- the approved candidate tckt-meeting-form-prod-recut is patch-identical to excluded commits, so it is left out whole (AR-y-385)
 
 ```json
@@ -23918,6 +23825,250 @@
     "evidence": [
       "portal worktree: git ls-tree -r --name-only origin/PROD (both paths listed)",
       "portal worktree: git merge-base --is-ancestor c05e3ddaa1ce97ecb98fe26d5f592dd01fbf0e2a origin/PROD, non-zero"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W284-S1 -- origin/DEV has moved 39 commits past the order's base 4d4dc68cae; the two test files and both lint errors are unchanged on origin/DEV
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W284-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~284",
+  "surfaced_at": "2026-10-17T06:13:48Z",
+  "one_line": "The order names origin/DEV @4d4dc68cae as the base. At filing, origin/DEV resolves to 8ecad4a5, 39 commits past 4d4dc68cae (4d4dc68cae is an ancestor of it). The two lint errors are still present on origin/DEV and the two test files are byte-identical between the two commits, so the candidate, cut from 4d4dc68cae as the order says, is unaffected. The order's premise 'origin/DEV @4d4dc68cae' is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-384 BASE line and the AR384-y-AC2 control: the base is origin/DEV at 4d4dc68cae, where the two errors are present, and the eslint control runs on origin/DEV.",
+  "world_is": "Read in the portal worktree C:/dev/wk-irpt-anlreq-284/portal at filing: git rev-parse origin/DEV = 8ecad4a5; git merge-base --is-ancestor 4d4dc68cae origin/DEV holds; git rev-list --count 4d4dc68cae..origin/DEV = 39; git diff --stat 4d4dc68cae origin/DEV over the two test files is empty; git show origin/DEV:src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 190 still holds the two-space regex; origin/DEV's filing-decision-tree.test.tsx still holds the U+0008 bytes (one line). The candidate branch cand/dell2/anlreq-test-lint-fixes is cut at 4d4dc68cae and its diff is the two files only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-284/portal: git rev-parse origin/DEV -> 8ecad4a5; git rev-parse --short 4d4dc68cae -> 4d4dc68c (read at filing)",
+      "C:/dev/wk-irpt-anlreq-284/portal: git merge-base --is-ancestor 4d4dc68cae origin/DEV -> ancestor; git rev-list --count 4d4dc68cae..origin/DEV -> 39",
+      "C:/dev/wk-irpt-anlreq-284/portal: git diff --stat 4d4dc68cae origin/DEV -- the two test files -> empty",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~284/r45/LINT_FINDING.json (the eslint record at 4d4dc68cae)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S168 -- W165-S2 disarmed: the yfinance checker is wired into the door's resolver
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S168",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T06:35:57Z",
+  "one_line": "W165-S2 DISARMED: the yfinance checker is wired into the door's resolver. resident_session.template_resolver builds YfinanceChecker() when no checker is passed, and the resident that runs it (r34k) imports it and answers V2S DOOR OK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W165-S2"
+  ],
+  "spec_asserts": "Row W165-S2: security_resolution.py runs the checker only when self.checker is not None and the default was None; resident_session.py built SecurityResolver with no checker argument, so a real symbol YCharts omits and yfinance knows got TICKER_NOT_FOUND on every upload (disarm owner 2.0.0_SA_COO~Y2: wire the checker or retire the step).",
+  "world_is": "At HEAD, infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py lines 138 to 152 (MEASURED by git show HEAD:<path>): template_resolver imports YfinanceChecker and passes checker=checker if checker is not None else YfinanceChecker() to SecurityResolver, so the production call builds the real checker. The running resident is r34k (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat): V1 reports resident_session among the modules imported from the r34k root and V2S DOOR OK; V2S, run inside the service, shows SPY KEPT (HISTORY_ROWS 22) and ZQXWVK NOT_KEPT (NO_ROWS) through the shipped checker. The hazard (checker=None on every upload) no longer stands in the source or in the running resident. NOT READ: a live upload through the deployed door in which YCharts omits a real symbol and the checker keeps it; window 5 exercises that (its F8 lines) and any failure there is a new row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py (lines 138 to 152: checker defaults to YfinanceChecker())",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt (V1 imports, V2S DOOR OK, SPY KEPT, ZQXWVK NOT_KEPT)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md (Status CLOSED)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's own remedy (wire the checker or retire the step) is done: the checker is wired in the production resolver at HEAD and the running r34k resident imports it and answers V2S DOOR OK. A live proof through the door is window 5's F8, not this hazard."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S169 -- W64-S6 disarmed: the BUILD_ONLY guard is in every base a worker is cut from
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S169",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T07:03:49Z",
+  "one_line": "W64-S6 DISARMED: every base a worker is cut from now carries the BUILD_ONLY guard (the guard predates HEAD and every live worker worktree holds it); the second half is a closed round's check weakness with no live artifact.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W64-S6"
+  ],
+  "spec_asserts": "Row W64-S6: BUILD_ONLY=1 is honoured only by builders at or after the commit that added the guard (absent at 9e58503be1 and f89fc8e731, present at e274a0e60c and later), so a holds-only build run from an older base uploads for real; and the y213-rebase check reads tests.failed but not tests.errors (disarm owner 2.0.0_SA_COO~Y2: forbid BUILD_ONLY runs from a base whose builder lacks the guard, or land the guard in the base commits).",
+  "world_is": "MEASURED now: git merge-base --is-ancestor e274a0e60c HEAD -> ancestor (control: 9e58503be1 is an ancestor of e274a0e60c, and e274a0e60c is NOT an ancestor of 9e58503be1). infra/aws/lambda/ci/build-and-upload.sh at HEAD carries the BUILD_ONLY branch before the upload calls (lines 709 to 714) and the end-of-run branch (line 805). The live worker worktrees 281, 283, 284 and 285 each hold the guard at their HEAD (git grep -c 'BUILD_ONLY:-0' = 2); .tools/wk-provision.sh cuts a worker from the current branch, never an older base, so the guard is landed in every base a candidate is cut from. The second half (checks/r20/ar20_checks.py reads tests.failed and tests.passed but not tests.errors) is a weakness in the check of a CLOSED order (AR-y-213); no live artifact depends on it, and the lesson (read tests.errors as well as tests.failed in any build check) is carried to the next round's order-writing, not armed. NOT READ: a worker worktree older than 281 (none is live).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor e274a0e60c HEAD (ancestor), with the two controls above",
+      "git show HEAD:infra/aws/lambda/ci/build-and-upload.sh (lines 709 to 714 and 805 to 806)",
+      "git -C C:/dev/wk-irpt-anlreq-285 grep -c 'BUILD_ONLY:-0' HEAD -- infra/aws/lambda/ci/build-and-upload.sh -> 2 (also 281, 283 and 284)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's own remedy (land the guard in the base commits used as candidates) holds: the guard is in HEAD and in every live worker base, and bases are cut from the current branch. The tests.errors point is a closed order's check, recorded as an order-writing lesson, not an armed hazard."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S170 -- W114-S2 disarmed: the worktree with the empty index is gone
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S170",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T07:35:13Z",
+  "one_line": "W114-S2 DISARMED: the worktree with the empty index no longer exists. C:/dev/wk-irpt-anlreq-114 is absent, git lists no worktree for it, its branch is gone and the slot's order TO-AR-y-296 is complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W114-S2"
+  ],
+  "spec_asserts": "Row W114-S2: the worker worktree C:/dev/wk-irpt-anlreq-114 held its named paths on disk but its git index was empty (80,527 staged deletions); any index-reading git command reported the whole tree as deleted (disarm owner 2.0.0_SA_COO~Y2: re-index or re-cut the worktree).",
+  "world_is": "MEASURED 2026-10-17 ~07:4xZ: the directory C:/dev/wk-irpt-anlreq-114 is absent; git worktree list names no path ending anlreq-114; git branch --list wk-IRPT_ANLREQ-114 prints nothing; the only order issued to slot 114 (TO-AR-y-296) is complete. The hazard (an index-less worktree misread by a commit without a path filter) has no object left to act on, and every worktree provisioned since (281, 283, 284, 285) comes from .tools/wk-provision.sh, which builds a sparse checkout with its own index (git ls-files lists entries; the 285 recut ran git cherry-pick and git commit in it). NOT READ: whether the row's cause (how the 114 index was lost) is understood; no recurrence is recorded in this round's four new worktrees.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d /c/dev/wk-irpt-anlreq-114 -> absent (read 2026-10-17)",
+      "git worktree list -> no entry naming the path; git branch --list wk-IRPT_ANLREQ-114 -> empty",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/ (the one order issued to the slot reads <status>complete</status>)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The worktree the row describes is gone and no later worktree shows the fault; the remedy (re-cut) was the removal and the re-provision of later slots."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S171 -- W144-S12 disarmed: no second writer remains under slot 144
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S171",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T07:35:13Z",
+  "one_line": "W144-S12 DISARMED: no second writer remains under slot 144. C:/dev/wk-irpt-anlreq-144 is absent, git lists no worktree for it, its branch is gone and the slot's order TO-AR-y-338 is complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W144-S12"
+  ],
+  "spec_asserts": "Row W144-S12: two live writers under serial 0.9.0_WK_IRPT_ANLREQ~144 were working one worktree at once and rewrote each other's record, scripts and channel (disarm owner 2.0.0_SA_COO~Y2: name the one worker of record for slot 144 and stop the other instance before any further write).",
+  "world_is": "MEASURED 2026-10-17 ~07:4xZ: the directory C:/dev/wk-irpt-anlreq-144 is absent; git worktree list names no path ending anlreq-144; git branch --list wk-IRPT_ANLREQ-144 prints nothing; the only order issued to slot 144 (TO-AR-y-338) is complete. Workers are subagents of this seat and are spawned one per slot per cut by the issuer (this session's slots 283, 284 and 285 each ran one agent; slot 285 was re-seated only after its first agent had finished). The double-writer condition has no worktree left to occur in. NOT READ: which instance wrote the surviving r31 record (r31 is closed and was superseded by r34k).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d /c/dev/wk-irpt-anlreq-144 -> absent (read 2026-10-17)",
+      "git worktree list -> no entry naming the path; git branch --list wk-IRPT_ANLREQ-144 -> empty",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/ (the one order issued to the slot reads <status>complete</status>)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The worktree is gone and the slot's order is complete; no live writer remains, and the issuer spawns one agent per slot per cut."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S172 -- W141-S5 disarmed: the release builds run with MSYS_NO_PATHCONV=1 and no path key moved
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S172",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T08:02:55Z",
+  "one_line": "W141-S5 DISARMED: the release builds run with MSYS_NO_PATHCONV=1 and the r34k bindings diff shows only provenance changed, so no mangled opal_map.path reached the shipped resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W141-S5"
+  ],
+  "spec_asserts": "Row W141-S5: run on this box without MSYS_NO_PATHCONV=1 the resident bindings builder wrote opal_map.path as C:/Program Files/Git/opt/irpt-resident/...; with the variable set it wrote /opt/irpt-resident/... (disarm owner 2.0.0_SA_COO~Y2: the release-build cell runs the builder with MSYS_NO_PATHCONV=1 and checks every absolute path in the bindings).",
+  "world_is": "MEASURED now: org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/r34k_build.py line 119 runs the builder with env MSYS_NO_PATHCONV=1 and BUILD_ONLY=1; the r34k build record (deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json, bindings_diff against the running r34h) reads keys_added [] and keys_changed [provenance] only, so opal_map.path in the shipped bindings equals the r34h value (a mangled path would appear as a changed key); the r34k packet's verifier states it proves no other key moved, and the running r34k resident answered V1 sums 316 of 316 and V2S OK. The builder's own docstring (build_resident_package.py lines 7 to 9) names the hazard. NOT READ: the absolute value of opal_map.path inside the r34k tarball (the diff shows it unchanged from r34h, whose value was not read here either).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/r34k_build.py (line 119: MSYS_NO_PATHCONV=1)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json (bindings_diff: keys_added [], keys_changed [provenance])",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt (V1 sums 316 of 316, V2S OK)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The remedy named by the row holds on the build that matters: the builder ran with MSYS_NO_PATHCONV=1 and the bindings diff proves no path key moved. A later build by another seat that omits the variable would show in the same diff check and would be a new row."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S7 -- origin/PROD carries the excluded commentary-always commit 406345bce1 in its history (merged by 45a3e18f, reverted by e0b43076), so an ancestry test of the recut reads PRESENT for it (AR-y-385 AMENDMENT 1, step 4)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:51:34Z",
+  "one_line": "The excluded commit 406345bce1 (commentary-always) is an ancestor of origin/PROD: PROD merged it in with 45a3e18f and reverted that merge in e0b43076. An ancestry test of the recut against origin/PROD therefore reads PRESENT for 406345bce1 even though the recut carries no copy of it. The v2 payload check tests the recut's own commits (origin/PROD..branch, 20 commits) for the excluded commit, and its content, body and patch-id checks all read ABSENT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 AMENDMENT 1 and step 4: the excluded items (c05e3dda, the 7f6c698d second-parent commit 406345bce1) read ABSENT against the recut; the recut carries no excluded commit.",
+  "world_is": "git merge-base --is-ancestor 406345bce120cdec5d9b7a0cef00bd7b80b680e9 origin/PROD exits 0. git log origin/PROD lists 45a3e18f (merge feature cand/dell2/anlreq-commentary-always-requested into release/20261015T180116Z) and e0b43076 (Revert of that merge). origin/PROD..cand/dell2/anlreq-prod-recut-v2 does not list 406345bce1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git merge-base --is-ancestor 406345bce120cdec5d9b7a0cef00bd7b80b680e9 origin/PROD, exit 0",
+      "portal worktree: git log --oneline origin/PROD grep for commentary: 45a3e18f and e0b43076 listed",
+      "r46/payload_check.py v2 output: ABSENT own commit 406345bc in origin/PROD..cand/dell2/anlreq-prod-recut-v2; INFO 406345bc is an ancestor of origin/PROD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S8 -- the hop-failure conflict cannot repeat the first run's resolution once the meeting form is applied: the block that resolution dropped is the approved meeting-form block (AR-y-385 step 2, AMENDMENT 1)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:51:34Z",
+  "one_line": "The order says to repeat the conflict resolution of the first run for ticket-hop-failure commit 7d5f953c (take the commit own AnalysisPackageRow line, drop the meeting_request block). With the meeting form applied under AMENDMENT 1, that block is HEAD's showsMeetingOutcome block, which the approved meeting-form candidate carries. The v2 resolution takes the commit own line and keeps HEAD's showsMeetingOutcome block, which the commit does not change. The resolved commit (8623c829) has the same stat as the source (3 files, 104 insertions, 19 deletions).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 2: repeat the conflict resolution used before, adding nothing beyond the commit's own lines; AMENDMENT 1: the meeting-form candidate is applied.",
+  "world_is": "At the 7d5f953c pick (over HEAD with the meeting-form commits 76432f0b and c7a63531), TicketCenter.tsx carries the block {showsMeetingOutcome(t) && (...)} at the conflict site. The commit 7d5f953c has that block as unchanged context only. git show 8623c829 --stat and git show 7d5f953c --stat both list 3 files, 104 insertions, 19 deletions.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: conflict markers at TicketCenter.tsx lines 919-929 before the resolution; git show 7d5f953c -- TicketCenter.tsx (the commit diff, the meeting block is context)",
+      "portal worktree: git show --stat 8623c829 and 7d5f953c, equal totals"
     ]
   },
   "disposition": "UNDER_INVESTIGATION"

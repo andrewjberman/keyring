@@ -3078,3 +3078,29 @@ used as fixtures is a different read with a different denominator.
   "world_is": "With the presign built from req_firm, removing the equality refusal alone leaves the answers-prefix key refused by the existing key-prefix check with the same 404, so no test on that key fails on the mutant. The mutant fires only on a ticket whose key sits under the requester firm's prefix; the base answers-prefix case is what makes the before-arm fail. Both are kept: the first same-member case (one named test) carries sub-ticket a (answers-prefix key) and sub-ticket b (requester-prefix key). The mutant fires on sub-ticket b. The order's two expectations are met only with that second sub-ticket."
 }
 ```
+
+## TCKT_VNEXT-D2-S58 -- A LIVE seat with an armed inbox watcher did not receive a GO message for about 55 minutes: the broker offered it and recorded OFFER-EXHAUSTED with no READ, the seat's watcher re-armed three times reporting no new messages, and only a keystroke nudge into its terminal made it read the message.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-17T08:02:02Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S58",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "A LIVE seat with an armed inbox watcher did not receive a GO message for about 55 minutes: the broker offered it and recorded OFFER-EXHAUSTED with no READ, the seat's watcher re-armed three times reporting no new messages, and only a keystroke nudge into its terminal made it read the message.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get_delivery_state(0.7.0_AE_CloudOps~TV2, since 2026-10-17T07:00Z) read at ~07:28Z: msg 10369 (2.0.0_SA_COO~V2 to TV2, 'TO-R20-RV: GO written'), sent 2026-10-17T07:05:11Z, SENT@07:08:13Z, state OFFER-EXHAUSTED, READ coverage 0/1; get_agent_status read at the same time: LIVE, last seen 6s ago, and its inbox listing carried 20261017T070511Z_2.0.0_SA_COO_V2_TCKT_VNEXT_TO-R20-RV__GO_written__AMENDM.md unread",
+      "unstick peek of TV2's tab at 07:58:27Z (PNG unstick_peek_0.7.0_AE_CloudOps~TV2_20261017T075827Z.png, read by this seat): the transcript shows the seat re-arming its inbox watcher three times, each followed by 'No new messages. I'm idle.', and an empty composer",
+      "after one nudge typed into the composer at 07:59Z (the order id and message id only), the peek at 08:00:20Z shows the seat's own words: 'I see the message was actually sent at 07:08Z but my watcher missed it, so my earlier no new messages reports were a false inference rather than confirmed fact', and it then measured the pair blobs and read the GO draft"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 22a (DELIVERY): SENT != EMITTED != READ, only an agent-side ACK is a sound oracle, and an orphaned watcher reads REACHABLE because the agent is deaf; the watcher skill: the inbox monitor emits one [INBOX] event per message.",
+  "world_is": "The seat was reachable on every liveness signal (LIVE, heartbeat seconds old, a watcher monitor running) and unreachable for the one thing that mattered: its watcher emitted no [INBOX] event for message 10369, and the seat concluded 'no new messages' from the silence. The cost was about 55 minutes on a due-in-seven-days run, recovered by a keystroke nudge. Cause not measured: this seat did not read the watcher script's run or the seat's monitor output. Not claimed: that other seats are affected."
+}
+```
