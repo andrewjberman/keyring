@@ -24738,3 +24738,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Observation only. No act is owed by this seat; the issuer decides whether the reference diff should carry the lineage entry in its next revision. Nothing deployed, no AWS call, no Terraform."
 }
 ```
+
+## IRPT_DASHBD-D2-W2501-S1 -- the registry's Inflection bucket is provisioned in the scope row and not yet in the alias note; the new gold grant names it by derivation
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2501-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2501",
+  "surfaced_at": "2026-10-17T01:22:46Z",
+  "one_line": "The Inflection scope row in scopes.json says bucket opal-data-inflection is provisioned (bucket_provisioned true, managed by s3-lgic-firm-buckets.tf), but a note in the same row's aliases (the opal-data-inf spelling) says opal-data-inflection does not exist yet. The new scoped gold policy grants Put on the Inflection account_transaction prefix of that bucket, derived from the scope row as the order states. No AWS call was made, so existence is not measured here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-2501 WORKER FACE, cell step 2: the gold bucket is the Inflection scope row's bucket in scopes.json, and the gold grant is a Put on one prefix of it.",
+  "world_is": "infra/logic/registry/scopes.json at d13d73086e: the inflection row (lines 122 to 162) carries bucket opal-data-inflection at line 128 and bucket_provisioned true at line 129, while the alias at line 154 says opal-data-inflection does not exist yet. The two statements disagree inside one registry file. The policy text is pure derivation from the row and needs no edit for this; the applier's plan or a bucket listing would settle which statement holds.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/scopes.json@d13d73086e lines 128-129 (bucket and bucket_provisioned on the inflection row)",
+      "infra/logic/registry/scopes.json@d13d73086e line 154 (the opal-data-inf alias note: opal-data-inflection does not exist yet)",
+      "lib/opal_naming.py address('irpt', 'inflection', 'gold', 'account_transaction', <partition>), run by python -I from the worktree root, returns s3://opal-data-inflection/irpt/inflection/gold/account_transaction/<partition>; the builder takes the bucket from the scope row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer or the F2 applier decides which statement is current; this cell changed no registry file."
+}
+```
