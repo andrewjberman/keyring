@@ -26811,3 +26811,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Worker note: the portal gitlink is dirty before any edit (index vs checkout differ); not committed, not this project's. Record only."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-17T04:55Z",
+  "id": "NFRA_OPLGTW-Z-S350",
+  "one_line": "OG-ap-34's 'second windowed call in flight answers window_read_busy after 15 s' branch is unreachable in the service: the client_* tools are sync FastMCP tools, which mcp 1.28.x runs ON the event loop, so a second call never runs beside the first; it queues behind the page with no 15 s bound, and so does every other route (health included) for the page's 22-34 s.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "NEVER_WIDEN_ASK_OG-ap-34.md section 4 (sha256 bdccc464670ea801): 'A second windowed call in flight in the same process: window_read_busy after 15 s.' Section 2: 'One windowed read runs at a time per process; a second answers window_read_busy after 15 s.'",
+  "world_is": "Release 9d5b712557: tools.py:1591-1594 registers client_get_transactions as a plain def (@mcp.tool(), body _run(... _cc.client_get_transactions ...)), the same for client_get_fees; _PolicyGuardedMCP.call_tool offloads only the guard (anyio.to_thread) and then awaits super().call_tool. mcp 1.28.1 (installed on site Z; requirements pins 1.28.0) server/fastmcp/utilities/func_metadata.py:92-95 calls a sync fn directly on the loop (no thread). So WINDOW_READ_GATE (client_adapter_bd49f.py) never contends in the service; test_og_en18 can reach the busy branch only by calling the adapter from threads directly. The same dispatch holds at the live ref d3ae88be46 (tools.py and the mcp pin are not in the diff), so this is not a widening.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/og-rel-batch5 show 9d5b712557:infra/aws/ec2/opal-gateway/app/tools.py lines 75-104 and 1591-1606",
+      "site-packages/mcp/server/fastmcp/utilities/func_metadata.py:92-95 (mcp 1.28.1, site Z)",
+      "infra/aws/ec2/opal-gateway/requirements*.txt: mcp==1.28.0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INFERRED for the host's 1.28.0 from the 1.28.1 source plus the pin; one host read of the same four lines would make it measured. Consequence for Phase B: a health probe sent while a page is in flight waits for the page, so a first page near the 55 s trigger can also trip the 60 s health trigger; the read-back should probe health between pages. The memory reasoning ('one windowed read at a time per process') holds more strongly than stated (the loop enforces it). Remedy, the issuer's to cut or not: run the client_* tools off the loop (anyio.to_thread, as the guard already is), which makes the gate load-bearing and frees the other routes during a page, or strike the busy branch from the contract."
+}
+```
