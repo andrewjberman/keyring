@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | function-map artifact_sha256 for irpt-49f-reporting-publish-lambda, the one lambda.tf environment line, plus this ledger sentinel and the receipt, committed with explicit paths | commit ids recorded |  | OPEN |
+| L1 | git | function-map artifact_sha256 for irpt-49f-reporting-publish-lambda, the one lambda.tf environment line, plus this ledger sentinel and the receipt, committed with explicit paths | commit ids recorded | function-map artifact_sha256 for the publish function, the one lambda.tf environment line, this ledger sentinel and the receipt committed with explicit paths (9c44478225, 5813071a6f) | CLOSED 20261017T111013Z |
 | L2 | s3-prefix | the publish artifact key: a NEW VERSION built == landed == the packet hash 4SF81dqn.. (17 members); the rollback version oXM0wQg8.. kept | new VersionId | built == landed == 4SF81dqnVu8rqP3xT0dWtQ8br1w9hvjQft/0knAtaic= (17 members); new version Nh.5z_OquDPiUL0VYa9CdkJqkQ0NqvZJ; rollback version oXM0wQg8.. kept | CLOSED 20261017T110809Z |
 | L3 | tf-lambda | TWO safe-applies of reporting-publish, each exactly 0 add 1 change 0 destroy: the code attributes, then the one environment variable; each with a clean re-plan; the exact OFF probe between them | plan counts, replan No changes, probe_off | two safe-applies of reporting-publish, each plan 0 add 1 change 0 destroy (code attributes; then FILLED_REPORT_PASS=1), replans No changes; OFF probe exact between them; schedule inputs clean | CLOSED 20261017T110809Z |
 | L4 | verify | the dry run in seven shards writes nothing (object count equal before and after) | shard table | dry run 28 shards: clients 4776, would-write 4012, not available 764, refused 0; peak 846 MB (line 900), longest 149 s (line 240); prefix 18257 objects before and after; the first 7-shard attempt (300 s, 847 MB) and two probes are in the notes | CLOSED 20261017T110809Z |
@@ -29,3 +29,4 @@
 - 20261017T110809Z LEG L5 closed: one canary (digest dde0e6ed7721) written once, validates, prefix +1, S2 step 1 PASS; V leg: nothing minted, steps 2 and 
 - 20261017T110810Z LEG L6 closed: full pass 28 shards equal to the dry run's sums (4012 written, 764 not available, 0 refused); peak 838 MB, longest 150 s
 - 20261017T110810Z LEG L7 closed: after-read and the receipt written; counts equal (series, summary, manifests), filled 4012; role policy and schedules un
+- 20261017T111013Z LEG L1 closed: function-map artifact_sha256 for the publish function, the one lambda.tf environment line, this ledger sentinel and the 
