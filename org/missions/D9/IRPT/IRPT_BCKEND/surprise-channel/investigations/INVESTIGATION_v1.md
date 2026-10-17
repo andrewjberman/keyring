@@ -41811,3 +41811,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No row is needed: the existing registry and builders already emit them, and the rows I ordered are refused. The ruling's home is reached by the existing FIRM silver home."
 }
 ```
+
+## IRPT_BCKEND-D2-W453-S1 -- AC3 admits no file for this order's own status flip, so the flip to complete cannot ride the one commit the order asks for
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W453-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~453",
+  "surfaced_at": "2026-10-17T04:59:30Z",
+  "one_line": "AC3's allowlist admits no path for TO-IB-hm-9's own file, so the status flip to complete cannot ride the one commit the spawn cut names; the flip is held at pending for the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-9 flips <status> to complete with the instance and the deliverables (standing worker rule: commit instance, deliverables and flip together), and its <paths> list names the order file. The spawn cut says ONE commit with refresh.py, the new test file, the deliverables folder and any surprise row.",
+  "world_is": "p252_cells.py ac3() admits only RUNNER, TESTS, paths under the deliverables folder, any path containing INVESTIGATION_v1.md, and any path containing TO-IB-hm-2. The order file TO-IB-hm-9 matches none of these, so a commit that carries the flip fails IBHM9-AC3. The worker commits without the flip and leaves <status> pending; the issuer flips it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r252/p252_cells.py ac3() allowlist, read at 6c413115b9",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-hm-9.dispatch-passes-the-hmac-arguments.md <paths> and step 3 at 6c413115b9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the check is the issuer's and may not be edited by the worker. The issuer decides whether the flip rides a later commit or the allowlist admits the order file."
+}
+```
+
+## IRPT_BCKEND-D2-W453-S2 -- p252_cells.py AC1 prints "the ten named tests" over a six-name tuple; the six pass
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W453-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~453",
+  "surfaced_at": "2026-10-17T04:59:30Z",
+  "one_line": "The AC1 success line of p252_cells.py says ten named tests while its NAMES tuple holds six; the six named tests pass and the verdict is unaffected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-9 AC1: the six named tests exist in test_refresh_hmac_args.py and pass; the check prints the result of that grading.",
+  "world_is": "NAMES in p252_cells.py holds six entries; the check's print reads 'OK: the ten named tests exist and all pass'. Measured at the worktree: python -m pytest on the new file gives 6 passed, twice; AC1 prints IBHM9-AC1 PASS, rc 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r252/p252_cells.py NAMES and ac1() print, read at 6c413115b9",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~453/IBhm9_criteria_output.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Cosmetic text in the issuer's check; not repaired, the check may not be edited by the worker."
+}
+```
