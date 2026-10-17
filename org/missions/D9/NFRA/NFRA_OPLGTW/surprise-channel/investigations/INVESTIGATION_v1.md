@@ -27050,3 +27050,78 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "No false state results: Z-S336 and Z-S338 stayed ARMED and OPEN in v21, so nothing was disarmed early. The defect is that the slug's routing precondition was sidestepped by a mislabel. Fix going forward: a remediation row's round is the project round of the item it remediates, read from the order's <round> tag, never the adjudication file's version. The two rows' round fields are not clock fields, so they cannot be corrected in place; this row is the correction of record."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~133",
+  "surfaced_at": "2026-10-17T08:53:48Z",
+  "id": "NFRA_OPLGTW-Z-W133-S1",
+  "one_line": "The order's schema path org/surprise_channel/schemas/investigation_item.schema.json is not materialized in this worktree: the sparse cone omits org/surprise_channel, so the row shape was read from the main tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rules: the row shape is checked against org/surprise_channel/schemas/investigation_item.schema.json, read from the worker's own worktree (the rule says every search names the worktree; the schema is the row's contract).",
+  "world_is": "git sparse-checkout list in C:/tmp/wk-oplgtw-133 names no org/surprise_channel path; ls on the schemas directory fails with 'No such file or directory'; the index tracks the file with skip-worktree (S). The file was read from C:/Users/Opal Bloomberg/Desktop/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json, read-only. The row was appended to the channel file the order names, which is materialized.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -t org/surprise_channel/schemas/investigation_item.schema.json @83eb42b2ad -> S (skip-worktree); the directory is absent on disk",
+      "git sparse-checkout list (worktree C:/tmp/wk-oplgtw-133) -> .tools, infra/aws/ec2/opal-gateway, infra/logic, lib, org/devices, org/mcp, org/missions/D9/NFRA/NFRA_OPLGTW, org/modules/graph, org/ref, org/standards",
+      "sibling instance org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~132/NFRA_OPLGTW.TO-OG-en-20.bound-glibc-arenas-and-read-workers.proof_of_spec.json (surprises NFRA_OPLGTW-Z-W132-S2, same path, same absence)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker's proof and the row gate do not need the schema text; the row follows the fields the channel already carries."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~133",
+  "surfaced_at": "2026-10-17T08:53:48Z",
+  "id": "NFRA_OPLGTW-Z-W133-S2",
+  "one_line": "The worker rules file .claude/agents/worker.md is tracked in the index but not materialized in this worktree (sparse cone), so the rules were taken from the session context.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Agent definition: the worker's rules are in .claude/agents/worker.md, read from the worker's own worktree.",
+  "world_is": "ls -la .claude/agents/worker.md in C:/tmp/wk-oplgtw-133 -> No such file or directory; git ls-tree HEAD .claude/agents lists worker.md and worker-light.md. The file exists in the main tree at C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.claude/agents/worker.md. The rules were taken from the session system prompt, unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la C:/tmp/wk-oplgtw-133/.claude/agents/worker.md -> No such file or directory",
+      "git ls-tree --name-only HEAD .claude/agents/ @83eb42b2ad -> .claude/agents/worker-light.md, .claude/agents/worker.md",
+      "git sparse-checkout list in C:/tmp/wk-oplgtw-133 -> no .claude path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Same cause as NFRA_OPLGTW-Z-W133-S1: the sparse cone of this worktree does not name the paths the rules point at. The order's paths are unaffected."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~133",
+  "surfaced_at": "2026-10-17T08:53:48Z",
+  "id": "NFRA_OPLGTW-Z-W133-S3",
+  "one_line": "The commit-time risk reflex answered PARTIAL_OR_BLIND on the deploy-script commit (danger map STALE, 0 of 1 file scanned), and the client-data check was ABSENT for this commit; the commit went through with both unresolved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order preflight and worker rules: a commit of this worker lands through safe-commit.sh with its pre-commit gates clear; the order names no risk reflex, and its preflight declares comp-adversary and comp-schedule not applicable.",
+  "world_is": "safe-commit.sh 83eb42b2ad printed: [risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND, NOT-DECIDABLE: danger map STALE (36.9h old), WITHIN BUDGET scanned 0 of 1 file(s); and WARN: client-data-check: hashed account-id list ABSENT. The commit was not refused. The diff is an 18-line insertion of trunk text with no account identifiers.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 83eb42b2ad (wk-NFRA_OPLGTW-133): [risk-reflex] ANSWER STATE PARTIAL_OR_BLIND; NOT-DECIDABLE danger map STALE; scanned 0 of 1 file(s)",
+      "safe-commit.sh output for commit 83eb42b2ad: WARN client-data-check hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt",
+      "git show --stat 83eb42b2ad -> infra/aws/ec2/opal-gateway/deploy-to-ec2.sh | 18 insertions(+)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The reflex prints its state and does not block; a commit-time check that cannot decide a diff is recorded here, not read as checked clean. The main-tree danger map is the instrument the reflex names for the rebuild; this worker did not run it (the order bounds the graph and adversary lenses out)."
+}
+```
