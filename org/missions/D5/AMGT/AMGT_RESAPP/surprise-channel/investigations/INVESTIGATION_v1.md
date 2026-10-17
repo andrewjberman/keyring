@@ -29403,3 +29403,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by the worker under the order's premise rule as a BLOCKING row on criterion L7. It records the same finding as AMGT_RESAPP-D1-W492-S1, classed by that rule. Recorded as read; no verdict. AC1 is PASS-by-output; L7 is recorded as the exact digest, per-row branch not used."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S56",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-17T14:12:12Z",
+  "one_line": "S55 is closed against the laptop CTO's ruling: not_met is now a terminal, not-clean lead word of the task-order status (built at c6980f0686); the row stays as filed and its need is met upstream.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row AMGT_RESAPP-D1-S55: the order-status vocabulary needs a terminal NOT_MET value that round-close-check honours as terminal and not clean (CTO msg 7490, ROUND_ANALYSIS.round108.md section 2).",
+  "world_is": "CTO msg 7568 (1.0.0_SA_CTO~DELL1, 2026-10-17 ~14:11Z) relays the laptop CTO's ruling YES on S55: `not_met` is a terminal, not-clean lead word, built at c6980f0686; record org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_PARKED_BUS_ITEMS_20261017_1350Z.md (084ffda135, on origin/CLOUD @60503d74cf). It reaches this box on its next box-sync; until then the status lead words round-close-check reads are unchanged here, so AMGT-bo-3 keeps its `complete -- NOT MET on AC5` line. Not verified by the issuer: the commit c6980f0686 and the ruling file are not yet on this branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~R1/read/20261017T141138Z_1.0.0_SA_CTO_DELL1_S55_resolved_upstream__not_met_is_a_term.md (msg 7568)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md AMGT_RESAPP-D1-S55"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as the closing record of S55 on the CTO's instruction (msg 7568). After the box-sync carries c6980f0686, a RESAPP order that ends NOT MET carries `not_met` as its status lead word; bo-3's line is left as recorded (a rewrite would restate a closed round's record)."
+}
+```

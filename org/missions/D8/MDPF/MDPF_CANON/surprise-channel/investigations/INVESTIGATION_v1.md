@@ -2818,3 +2818,79 @@
   "notes": "Issuer's D4-STOP sent to 0.7.0_AE_CloudOps~DELL1 at 16:32Z (the rollback is the order's section 4). The fix is a producer or fold change or a new CTO ruling that accepts the Global headline moving; it is the CTO's (a leaf outside the signed set, SERVED work). Window: D2 and D4 by 12:44Z on 2026-10-17; the fire at 13:30Z then runs the round-10 bytes unless a ruling lands."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S33",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-17T13:56:00Z",
+  "one_line": "The 2026-10-17 13:30Z scheduled gold fire (code d2f734fbac, which contains CN-s-1) refused to emit GLOBAL (cross-axis coherence gate (v): five model legs on 2026-10-16 carry an account_count and no model_value), built 12 of 16 objects, and 7 dated 49financial/inflection keys came back `conflict` (immutable dated key, new Custom-member content); so CN-s-1's outcome is realized at Cottonwood (new 2026-10-16 keys) and NOT at Global, 49financial or inflection.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Pair R11_CN_S_1_V2 section 6 (acceptance after the fire): (3) the run manifest `errors` empty, `a4_objects_built` 16, `run.code.commit` equals the pin; (2) Global model_aua / opal_aggregate_aua differ from the prior object by X(d) on the seven dates; the CTO's msg 6984 that the 13:30Z fire carries CN-s-1 alone and the earlier fire (2026-10-16 13:30Z, manifest 20261016T133150Z) read errors [] and 16 built.",
+  "world_is": "MEASURED by the issuer from the fire's manifest s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-15/20261017T133145Z.json (written 13:31:46Z; downloaded to C:/dev/_deploy_artifacts/canon_r11_muni/fire_20261017/, outside the repo) beside yesterday's 20261016T133150Z.json: yesterday code b6352de8f8, writes written 17 staged 4, errors []; today code d2f734fbac, a4_expected 16, a4_objects_built 12, writes written 6 staged 2 conflict 7, errors {global}. Global error: AssertionError CROSS-AXIS COHERENCE GATE FAILED (global) REFUSING TO EMIT, (v) presence disagreement 5 across 1 date (2026-10-16 opal_ultra_short_term / short_term / intermediate / long_term_conservative / long_term_aggressive: model_value=None with account_count 214 / 903 / 2111 / 3722 / 1469). Conflicts (sha256_existing vs sha256_new, business_diff_count): 49financial aggregate-aua 10 (incl. tax_coverage), inflection aggregate-aua 3 (process fields only), aum-metrics 1 each (process_time only), 49financial account-distribution 2026-10-16 291, category-views 5 / 3 (Custom members[12] and [13], the Muni addition). Written: cottonwood x4 at 2026-10-16, inflection account-distribution 2026-10-17. Served Global keys read LastModified 2026-10-16T13:31 (the previous fire), newest 2026-10-15 for the aggregate. Cottonwood 2026-10-16 aggregate: by_model.opal_muni_income present, display_name 'Opal Municipal Bonds'; partner_custody_total differs from the pre-CN-s-1 baseline on 90 of 498 common dates and model_aua on 7, which cannot be attributed to CN-s-1 alone because the same fire carries FWD-10 and the Cottonwood 10/15 restatement. NOT read: why Global has account counts for 2026-10-16 without values (the feeder has not dispatched since 2026-10-12, CTO msg 6981; B1 owns it); whether Global would emit once the 2026-10-16 values land; whether the 49financial/inflection conflicts clear on the next dated key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-15/20261017T133145Z.json (27,399 B) and 20261016T133150Z.json",
+      "C:/dev/_deploy_artifacts/canon_r11_muni/fire_20261017/served_response.json (16 newest served bodies, 2,032,081 B, outside the repo)",
+      "git merge-base --is-ancestor 66ae82d62d d2f734fbac -> yes (CN-s-1 is in the fire's code)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the remedy: not the issuer. The Global refusal follows the stale feeder (ADVI_FIRMBKTS B1) or a producer rule for a date with counts and no values (CTO). Sent to 1.0.0_SA_CTO~DELL1 with one question; one line to 2.0.0_SA_COO~B1. C-3 (no ad-hoc run as evidence) stands: no ad-hoc gold run is read as the acceptance."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S34",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "4.0.0_SA_CRO~DDD",
+  "surfaced_at": "2026-10-17T14:00:00Z",
+  "one_line": "ADVI's Cottonwood total sits 51,507.91 (10/16) / 51,505.76 (10/15) below MDPF and BD on the SAME 864 supervised accounts: the opal-data-cot silver holdings merge dedups on (account_id, asset_name) and drops one of two distinct holdings that share a name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-10 (PRD v2.24-v2.27): Cottonwood's supervised total matches the BD Dashboard Supervised figure on both pages (Andrew-direct 2026-10-17 ~01:5xZ: 'it has to be done for ADVI Advisor Intelligence page too').",
+  "world_is": "MEASURED on bronze HOLDINGS_DAILY_2026-10-16.xlsx (supervised rows 21,121). MDPF's (AccountID, AssetID) relationship-grain collapse keeps 20,990 rows = 524,463,230.11, the served MDPF value. A (AccountID, Asset Name) dedup keeps 20,988 rows = 524,411,722.20, the served ADVI header_metrics value. Accounts are 864 on both. Exactly one account+name pair has more than one AssetID: 'VAN ALSTYNE TEX 5% 02/15/2028', 3 rows, 51,507.91, which is the whole gap. On 10/15 the same mechanism gave 530,421,988.14 vs 530,370,482.38. cot_silver_merge.py holdings 'Dedup (account_id+asset_name)' printed 'removed 133 duplicate rows (21,643 -> 21,510)'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-10-16.xlsx (1,632,063 B, landed 12:11Z)",
+      "s3://opal-data-portal-v2/platinum/mdpf/cottonwood/category-views.json as_of 2026-10-16 total 524,463,230.11",
+      "s3://opal-data-cot/platinum/firm/header_metrics.json data_as_of 2026-10-16 total.aua 524,411,722.20",
+      "data/cot/scripts/silver/cot_silver_merge.py holdings dedup key (account_id + asset_name)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a timing gap: the next ADVI build will not close it. Remedy (not applied): dedup cot silver holdings on (account_id, asset_id), the key BD and MDPF use. That is an ADVI-lane silver change with its own half. Asked by 1.0.0_SA_CTO~DELL1 msg 7550."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S35",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "4.0.0_SA_CRO~DDD",
+  "surfaced_at": "2026-10-17T14:35:00Z",
+  "one_line": "SSM opal-cot-bronze-run always runs --backfill-holdings-net (a retry sweep over EVERY snapshot table, incl. account_attributes, for the 5 bdays before RunDate) BEFORE its main pull, so a single-table historical re-pull silently lands other tables: 7 July/Aug holdings runs first-landed 14 bronze account_attributes keys and re-landed 2 allocations days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO half NEVER_WIDEN_COT_CARRIER_7DAY_REPULL_CTO_HALF.md @8c36f9f375 and CTO 7390: holdings and allocations only; no account_attributes partition is touched.",
+  "world_is": "MEASURED from s3://opal-data-cot/logs/cot-exporter/bronze-run/cot-bronze-net-20261017-140*.log: relanded account_attributes 07-15,16,17,20,21,22,23,24,27,28,29,30,31, 08-12 (first lands, no prior version; each today's 1,127-row/1,004-account snapshot stamped with the past date) and allocations 07-27 (3->1,553 rows), 07-29 (1->1,552). The re-landed allocations carry as-of positions (per-account median |diff| to as-of holdings $4.26/$6.04 vs $1,145/$658 to 10/16). The 14 attribute keys are now in FORWARDFILL_QUARANTINE (deployed @da8fd571b8 bytes, sha 72dcb7e5..), so no silver run merges them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/cot-pipeline/ssm.tf opal-cot-bronze-run runCommand: --backfill-holdings-net before the main pull",
+      "s3://opal-data-cot/logs/cot-exporter/bronze-run/cot-bronze-net-20261017-140557.log .. -140951.log",
+      "org/missions/D8/MDPF/MDPF_CANON/ledger/CTO_RULING_QUARANTINE_14_STRAY_ACCOUNT_ATTRIBUTES_20261017.md @d398734b87"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Breach of my own half's no-account_attributes term, self-reported at 14:23Z (msg 7579); remedied by the quarantine. Lesson for any historical single-table re-pull: use a sweep-free path (the ingest's --table run without --backfill-holdings-net), or scope the sweep. The ingest's owning lane (CloudOps COT) decides whether the SSM document should skip the sweep when Table is set."
+}
+```
