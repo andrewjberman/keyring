@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T04:09:41.503076+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261017T135213Z
 **Deploy:** FWD-10 (b) addendum A: cot bronze no-regress guard @de2e85035d + 10/16 carrier re-pull (CTO half @473450d658)
 **Authored by:** 4.0.0_SA_CRO~DDD
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -15,7 +15,7 @@
 | R1 | s3-prefix | opal-data-cot code/bronze/cot_bronze_ingest.py | safe-deploy MATCH + sha256 read-back | safe-deploy 04:1xZ DEPLOYED [cot] + DEPLOYED-SECOND-TARGET opal-data-bd/code/bronze (flagged to CTO) + VERIFY OK; s3 sha256 5486514d5d2ff872.. == git HEAD de2e85035d bytes | CLOSED 20261017T041201Z |
 | B1 | verify | bronze holdings+allocations as-of 10/16 | carriers valued | 04:12Z SSM 5fa12bcd (holdings) + eda989c8 (allocations), RunDate 2026-10-17 -> as-of 10/16: BRANCH (b) -- holdings REJECT nzf 1.9% < 50% floor (BD prices unpopulated), allocations REJECT 46,046 B < partial floor 92,043 B; nothing landed (prior absent). Side note: CTO 7262 rollback of the guard's second target opal-data-bd/code/bronze/cot_bronze_ingest.py by copy-object prior kN1MpNQd.. -> head O0rS0ijN.., sha256 c8764a43.. == prior. | CLOSED 20261017T041354Z |
 | S1 | activation | scoped silver 10/16 + MDPF mirror/convert | totals read back | NOT RUN -- branch (b): no 10/16 bronze landed, so no silver/mirror step (per addendum A branch b) | CLOSED 20261017T041354Z |
-| V1 | verify | 11:30Z guard REJECT line + 13:30Z 10/16 dated key | served cottonwood 10/16 supervised |  | OPEN |
+| V1 | verify | 11:30Z guard REJECT line + 13:30Z 10/16 dated key | served cottonwood 10/16 supervised | 11:30Z scheduled pull landed 10/16 at nzf 0.6385 (carriers null; first land, so no REJECT line). 12:10Z re-pull admitted by the guard (0.655 > 0.6385) 12:11Z; allocations 12:12Z; scoped silver 12:13Z; MDPF mirror+convert 12:14Z; ADVI gold a8b9d3ed 12:14-12:17Z. SERVED: platinum cottonwood category-views as_of 2026-10-16 total_aua 524,463,230.11 = aum-metrics total.aum 524,463,230.11 (13:51Z, 13:30Z fire); ADVI header_metrics 10/16 524,411,722.20 | CLOSED 20261017T135213Z |
 
 ## Log
 
@@ -23,6 +23,10 @@
 - 20261017T041201Z LEG R1 closed: safe-deploy 04:1xZ DEPLOYED [cot] + DEPLOYED-SECOND-TARGET opal-data-bd/code/bronze (flagged to CTO) + VERIFY OK; s3 sha
 - 20261017T041354Z LEG B1 closed: 04:12Z SSM 5fa12bcd (holdings) + eda989c8 (allocations), RunDate 2026-10-17 -> as-of 10/16: BRANCH (b) -- holdings REJEC
 - 20261017T041354Z LEG S1 closed: NOT RUN -- branch (b): no 10/16 bronze landed, so no silver/mirror step (per addendum A branch b)
+- 20261017T135213Z LEG V1 closed: 11:30Z scheduled pull landed 10/16 at nzf 0.6385 (carriers null; first land, so no REJECT line). 12:10Z re-pull admitted
+- 20261017T135213Z CLOSED -- all 4 legs proven
+
+## Carried notes (hand-written lines kept across re-renders)
 
 - 20261017T0925Z OPEN LEG STATED by 4.0.0_SA_CRO~DDD: V1 stays open by design. At 12:10Z (own timer) the 10/16 holdings and
   allocations are re-pulled behind the no-regress guard once BD has posted carrier values. V1 closes on the guard's line at
