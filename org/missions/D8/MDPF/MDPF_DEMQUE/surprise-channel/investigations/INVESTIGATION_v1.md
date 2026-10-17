@@ -3448,6 +3448,66 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R10_CHECKS/dq_t69_real.py@626c692706 (AC2 invocation without --actuals)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W65-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~65",
+    "surfaced_at": "2026-10-17T14:36:37Z",
+    "one_line": "A run stopped by a bookkeeping exception has no stopping request, so DQ-t-74's per-request rule reads every attempted request DRAWN or COMPLETE under a STOPPED run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-74: a request reads STOPPED when the run's stop reason came from THIS request, i.e. got['stop'] is set on this entry; the draw loop breaks on the first stop, so at most one attempted request carries it.",
+    "world_is": "run() wraps the draw loop in a try whose except Exception sets the run's reason with no got['stop'] on any entry (standing_drawer.py@836e16bafd lines 1042-1043). A fault raised inside _draw_history also loses that request's got, since it is never appended to attempted. The edit implements the stated rule literally: such a run reads its attempted requests COMPLETE or DRAWN, and the run result reads STOPPED with the exception as its reason. The order does not name this path.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py@836e16bafd lines 1042-1043 (except Exception sets reason; no got stop)",
+        "data/mdpf/scripts/demque/standing_drawer.py@wk-MDPF_DEMQUE-65 run() outcome loop (worktree, uncommitted at filing)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W65-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~65",
+    "surfaced_at": "2026-10-17T14:36:37Z",
+    "one_line": "Every actuals line of a stopped run carries the run's stop_reason, so after DQ-t-74 a DRAWN line can name a stop that another request caused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-74: the RUN-level result is unchanged, the receipt's stop_reason is unchanged, and nothing else changes.",
+    "world_is": "run() passes line_reason = reason to bbg_quote.record_actual on every line that is not REFUSED or GATED (standing_drawer.py@836e16bafd lines 1106-1111 region), and record_actual writes stop_reason whenever it is not None (bbg_quote.py@836e16bafd lines 852-853). A COMPLETE line of a stopped run already carried the run's reason before the edit; the edit adds the same to DRAWN lines of a stopped run. No reader in data/mdpf/scripts/demque that was grepped tests stop_reason on a DRAWN line. The line-level reason was left as the order says.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py@836e16bafd lines 1101-1111 (line_reason = reason for every non-GATED line)",
+        "data/mdpf/scripts/demque/bbg_quote.py@836e16bafd lines 838-853 (record_actual writes stop_reason when not None)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W65-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~65",
+    "surfaced_at": "2026-10-17T14:36:37Z",
+    "one_line": "The surprise-channel schema the system names is absent from this worktree: the worktree is sparse-checked-out and org/surprise_channel is outside its materialized set, though tracked at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Investigation rows conform to org/surprise_channel/schemas/investigation_item.schema.json.",
+    "world_is": "core.sparseCheckout is true in the worktree. org/surprise_channel does not exist on disk (ls fails) while git ls-files lists its files at HEAD; the schema file is not under org/ (Glob, zero matches). The org tree holds 23 materialized entries against 76840 tracked files. This row follows the shape of the rows already in INVESTIGATION_v1.md instead of the schema.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config core.sparseCheckout in the worktree wk-MDPF_DEMQUE-65 (true); git ls-files org/surprise_channel at 836e16bafd (lists tracked rows)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md@836e16bafd (row shape reference)"
+      ]
+    }
   }
 ]
 ```
