@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T07:31:21.633859+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261017T111106Z
 **Deploy:** IRPT_DASHBD TO-DB-b-328 (the 49F filled-report switch-on pair, round 150, IB-pr-551 hop 2): a new publish bundle (code only, 0/1/0), the one environment variable FILLED_REPORT_PASS (0/1/0), a dry run in seven shards, ONE canary, the mint leg and ~S2's V leg, the full pass in seven shards, the after-read. Gate 0(c): no open leg on the publish function, the reporting-publish root or the reporting prefix at the worktree census.
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -30,3 +30,4 @@
 - 20261017T110810Z LEG L6 closed: full pass 28 shards equal to the dry run's sums (4012 written, 764 not available, 0 refused); peak 838 MB, longest 150 s
 - 20261017T110810Z LEG L7 closed: after-read and the receipt written; counts equal (series, summary, manifests), filled 4012; role policy and schedules un
 - 20261017T111013Z LEG L1 closed: function-map artifact_sha256 for the publish function, the one lambda.tf environment line, this ledger sentinel and the 
+- 20261017T111106Z CLOSED -- all 7 legs proven
