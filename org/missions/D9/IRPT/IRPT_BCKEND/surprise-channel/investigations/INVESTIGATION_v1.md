@@ -41863,3 +41863,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Cosmetic text in the issuer's check; not repaired, the check may not be edited by the worker."
 }
 ```
+
+## IRPT_BCKEND-D2-S232 -- The order file sits outside AC3's allowlist and AC1's success line says ten for six: the issuer flips the stat
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S232",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-17T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W453-S1 and IRPT_BCKEND-D2-W453-S2 (worker ~453, order TO-IB-hm-9). S1: check r252 AC3 allowlists the runner, the test file and the worker deliverables but not the order file, so the worker could not flip the order status inside its one commit; the issuer flips it in the grade commit after the merge, which is the order's designed path, and the flip is not a worker act. S2: the AC1 success line of p252_cells.py says ten tests while its tuple holds six; the six named tests pass (re-run by me in the worker worktree) and the verdict is unaffected; the text is corrected in the same commit.",
+  "one_line": "The order file sits outside AC3's allowlist and AC1's success line says ten for six: the issuer flips the status and fixes the text; no verdict changes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p252_cells.py . IBHM9-AC1|AC2|AC3 re-run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-453 at e44a81ee64: PASS x3",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r252/p252_cells.py"
+    ]
+  },
+  "spec_asserts": "The worker flips the order to complete in its one commit and the AC1 line counts the tests it names (my check design).",
+  "world_is": "AC3 admits no order-file path, so the issuer flips the status after grading; the AC1 text said ten for a tuple of six."
+}
+```
