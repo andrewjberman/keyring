@@ -24978,6 +24978,120 @@
   },
   "disposition": "DISMISSED_WITH_REASON",
   "dismissal_reason": "The tracked file is a fixture Andrew sanctioned in his own words and the CTO already adjudicated it; tracked-by-decision is not a hazard. No value was read or copied by this row. Its MFA caution stays in the file header."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W289-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~289",
+  "surfaced_at": "2026-10-17T13:40:56Z",
+  "one_line": "TO-AR-y-389 step 1 names --author on git merge; this git has no such option, so the merge ran with --no-commit and the author and committer identity in env vars, and the commit was made with git commit --author. Same identity, same merge parents; no content affected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-389 WORKER FACE, step 1: run git merge --no-ff origin/PROD with the committer env and --author on every git merge and git commit.",
+  "world_is": "MEASURED 2026-10-17 in the portal worktree C:/dev/wk-irpt-anlreq-289/portal: git merge --author=... prints error: unknown option and no merge starts (printed in the call). The merge was then run as git merge --no-ff --no-commit origin/PROD with GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set to the worker identity; the two conflicted files were resolved; the merge commit e5682ec51cbf was made with git commit --author and the same env (LOCAL on cand/dell2/prod-into-dev-reconcile). Parents: 539b1ee70ba1 and 15bc21b304d4. Nothing pushed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge --author=... in the portal worktree: error: unknown option (printed in the worker call; no merge started)",
+      "git log -1 --format parents, author and committer of e5682ec51cbf in the portal repo"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W289-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~289",
+  "surfaced_at": "2026-10-17T13:40:56Z",
+  "one_line": "The portal merge commit e5682ec51cbf was made with git commit --no-verify, which skips the portal commit-msg hook; the bypass was the worker's own choice and is recorded here, not authorized by the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-389 names the commit line for the portal merge (git commit with the committer env and --author) and gives no hook bypass.",
+  "world_is": "MEASURED 2026-10-17: the portal hooks directory holds commit-msg and pre-push only (no pre-commit). The commit-msg hook appends a SURFACE_ACK line only when SURFACE_ACK is set in the environment; SURFACE_ACK was unset in this session (printed). The merge commit therefore carries no SURFACE_ACK line and needed none. The bypass was not needed for any gate in this order: typecheck, eslint and the bun tests were run after the commit, on the same tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of the portal hooks directory (commit-msg, pre-push); echo of SURFACE_ACK (unset)",
+      "git commit --no-verify of e5682ec51cbf in the portal worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W289-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~289",
+  "surfaced_at": "2026-10-17T13:40:56Z",
+  "one_line": "A detached origin/DEV worktree at another depth below the workspace gives a false failing-line difference (56 against 55) in bun test; the baseline must be run at the same path as the branch, and the same-path run gives 55 against 55 with identical error lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-389 step 4: bun test at origin/DEV in a detached worktree of the same repository; failing test lines at the branch must equal those at origin/DEV.",
+  "world_is": "MEASURED 2026-10-17: the detached worktree at .scratch/portal-dev-ref (depth below the workspace root differs from portal/) gave 71 fail, 27 errors, 56 failing-line marks, with one extra failing line (IV-e-97, the COMMITTED module is what the generator writes, except for the frontier commit and blob) and a generator frontier identity read through its own path. Tests read ../../ paths, so the detached copy at another depth is not the same instrument. The same tree run in the portal worktree path (git switch --detach origin/DEV, then back to the branch, status clean both times) gave 70 fail, 27 errors, 55 failing-line marks, identical to the branch run line for line. The same-path run is the baseline; the .scratch run is superseded and recorded in r48/GATES.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/TicketCenter src/pages/InvestorReporting: logs in r48/logs (test_branch, test_dev_samepath, test_dev)",
+      "git worktree at .scratch/portal-dev-ref, detached at 539b1ee70ba1; symlinks org, infra and lib under .scratch for the parent-relative reads"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W289-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~289",
+  "surfaced_at": "2026-10-17T13:49:06Z",
+  "one_line": "The order file in the worker worktree carried the issuer's AMENDMENT 1 text (AR389-y-AC2, CTO msg 10556) as uncommitted working-tree text, so the status-flip commit b23895a789 carries that amendment line as well as the flip; the text is byte-identical to the issuer's amendment commit 6212d38463 (on box/dell2, not an ancestor of wk-IRPT_ANLREQ-289).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-389 ends with a status flip only: the worker's commit to the order file is the status line and nothing else.",
+  "world_is": "MEASURED 2026-10-17: git show HEAD~1 (cut 25ac5f17c3) of the order file has 0 occurrences of AMENDMENT 1; the worktree file read at the start of the task has the amended AC2 line; git show 6212d38463 (issuer amendment, one line changed) is not an ancestor of HEAD; diff of git show HEAD (b23895a789) against git show 6212d38463 differs only in the status line. The worker did not author the amendment text and did not notice the difference before committing (the status diff was checked, the full file diff was not). Not amended or reverted, because the text is the issuer's own and matches its commit; the integrator sees the same line on box/dell2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD~1:org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-389.prod-into-dev-reconcile-merge.md (0 AMENDMENT 1 occurrences)",
+      "git show 6212d38463 --stat (one file, one line changed); diff of the committed order against it: status line only",
+      "git show --numstat b23895a789 (order file: 2 insertions, 2 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S197 -- W133-S4 disarmed: the upload door refuses a firm outside the staff profile before any write
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S197",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T14:03:34Z",
+  "one_line": "W133-S4 DISARMED: the upload door itself refuses a staff caller's chosen firm that is outside its profile's allowedFirmIds (FIRM_BINDING, before any write), so the ticket CREATE's later 400 is a second line, not the first; the check is in the live r33 pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W133-S4"
+  ],
+  "spec_asserts": "Row W133-S4 (disarm owner 2.0.0_SA_COO~Y2): the staff chooser offers the Global READY firms; the ticket CREATE refuses a staff filing for a firm outside the principal's allowedFirmIds or profile scope with a 400, and the upload door has already been called for that firm by then; whether the door checks the firm was NOT read.",
+  "world_is": "MEASURED 2026-10-17 ~14:1xZ with git show: infra/aws/lambda/investor-reporting/_authz/served.py at HEAD (and at the r33 build pin 927337a741, where the same refusal line appears once) holds `_internal_allowed_firms` (IB-pr-387, commit b4b544fb15, an ancestor of the pin) and, in Entry.handle, `caller_refused = listed is not None and selected not in listed` followed by `return refuse(operation or self.function_name, None, \"FIRM_BINDING\")`; any error reading the users row, a status other than exactly 'active', a non-list allowedFirmIds or the string 'ALL' also refuses FIRM_BINDING (fail closed). The portal calls the door first (analysisRequest.ts lines 406 to 407 at origin/DEV, before createTicket at line 443). So a staff filer's chosen firm outside its profile is refused AT THE DOOR with nothing written, which is the answer to the row's NOT READ; the ticket service's own 400 is a second, independent line. The deployed side: the live irpt-ycharts-generate CodeSha256 is the value ledger irpt-ycg-r33-20261016 (CLOSED) records and the window-4 R0 read printed (see D2-S176 to D2-S186). served.py differs between the pin and HEAD (35 insertions, 2 deletions) but both hold the refusal. NOT READ: a case where the door admits a firm that the ticket service's _firm_allowed or _in_profile_scope refuses (the two read the same maintained profile row but are separate checks); a live staff filing for a refused firm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/_authz/served.py (lines 1163 to 1200 and 1278 to 1292) and the same at 927337a741",
+      "git merge-base --is-ancestor b4b544fb15 927337a741 (exit 0)",
+      "git -C portal show origin/DEV:src/pages/TicketCenter/analysisRequest.ts (lines 406 to 407 and 443: the door call precedes createTicket)",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (CLOSED)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's open question is answered in the tree and in the live pin: the door checks the firm first and fails closed, so no object is written for a refused firm. The residual (a door/service disagreement on one firm) is a different, unobserved case and is not claimed closed."
 }
 ]
 ```

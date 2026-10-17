@@ -12,12 +12,16 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | gates 1(a) to 1(i) measured and both rollback copies saved outside the repository | the printed reads and saved sha256 values |  | OPEN |
-| L2 | s3-prefix | the repository script uploaded over code/manual_api/pull_inflection_scope_account_returns.py, read back sha256 equal to a92589d6 | uploaded sha256 and version id |  | OPEN |
-| L3 | verify | the three-part smoke over the LIVE code prefixes (import, session_token under scrubbed region, plan-only run), no Orion request | the smoke output |  | OPEN |
-| L4 | s3-prefix | code/gold/orion-gold-dispatch.sh replaced by the file at commit e7d5361cf9 only after a clean smoke: exactly 1 row and its chain entries vs live | rows_added 1, chain entries equal chains carrying PERF, other_lines_changed 0 |  | OPEN |
+| L1 | verify | gates 1(a) to 1(i) measured and both rollback copies saved outside the repository | the printed reads and saved sha256 values | gates 1(a)-1(i) measured: addendum blob 22172a052e, both halves bound, IB-pn-3 complete, no ledger open on the chain (98 worktrees read), live dispatch d6b00f6f equal to the pre-row copy, runner role simulations allowed, 294 households = bound, sidecar equals generated address, calendar present, filter does not match; saved copies script ab5905d7 (version FaHfnhIl..) and dispatch d6b00f6f (version L8GGxBII..) outside the repo | CLOSED 20261017T133039Z |
+| L2 | s3-prefix | the repository script uploaded over code/manual_api/pull_inflection_scope_account_returns.py, read back sha256 equal to a92589d6 | uploaded sha256 and version id | script a92589d6 uploaded 2026-10-17T13:26:55Z as version tDiwpCZv.., read back sha256 equal; replaced object ab5905d7 saved first | CLOSED 20261017T133039Z |
+| L3 | verify | the three-part smoke over the LIVE code prefixes (import, session_token under scrubbed region, plan-only run), no Orion request | the smoke output | three-part smoke clean on Python 3.9.25 over 209 flat files from the live prefixes: import and source_prefixes 0 socket attempts; session_token under scrubbed region OK; plan-only run OK; negative control NoRegionError on 4527c57f; orion_requests 0 | CLOSED 20261017T133039Z |
+| L4 | s3-prefix | code/gold/orion-gold-dispatch.sh replaced by the file at commit e7d5361cf9 only after a clean smoke: exactly 1 row and its chain entries vs live | rows_added 1, chain entries equal chains carrying PERF, other_lines_changed 0 | dispatch from commit e7d5361cf9 (AMENDMENT 1) uploaded 2026-10-17T13:29:03Z as version JjTLNaZe.., read back sha256 e9aef66b equal; exactly 1 row, 2 chain entries (CHAIN_PULL, CHAIN_INCREMENTAL = chains carrying PERF), 0 other lines | CLOSED 20261017T133039Z |
 | L5 | verify | the first scheduled chain run read from the STEP LOG: exit 0 not tolerated, no SKIPPED, coverage = denominator, daily_factor stored, requests within 294, calcGrossOfFees false, nothing outside orion/inflection | the first-run read |  | OPEN |
 
 ## Log
 
 - 20261017T132549Z OPENED by 0.7.0_AE_CloudOps~IB2 with 5 leg(s)
+- 20261017T133039Z LEG L1 closed: gates 1(a)-1(i) measured: addendum blob 22172a052e, both halves bound, IB-pn-3 complete, no ledger open on the chain (98
+- 20261017T133039Z LEG L2 closed: script a92589d6 uploaded 2026-10-17T13:26:55Z as version tDiwpCZv.., read back sha256 equal; replaced object ab5905d7 sa
+- 20261017T133039Z LEG L3 closed: three-part smoke clean on Python 3.9.25 over 209 flat files from the live prefixes: import and source_prefixes 0 socket 
+- 20261017T133039Z LEG L4 closed: dispatch from commit e7d5361cf9 (AMENDMENT 1) uploaded 2026-10-17T13:29:03Z as version JjTLNaZe.., read back sha256 e9ae

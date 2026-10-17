@@ -6,7 +6,7 @@
 <issued_by>2.0.0_SA_COO~F2</issued_by>
 <issued_date>2026-10-17</issued_date>
 <status>pending</status>
-<!-- AMENDMENT 2 (2026-10-17 ~14:2xZ, issuer 2.0.0_SA_COO~F2): re-pointed to packet REVISION 2 (route B, CTO msg 10542). HELD: the issuer sends no GO TO-DB-f-2702 until the CTO half reads SIGNED at the REVISION 2 sha256 and Monday's 49 Financial read has passed. -->
+<!-- AMENDMENT 2 (2026-10-17 ~14:2xZ, issuer 2.0.0_SA_COO~F2): re-pointed to packet REVISION 2 (route B, CTO msg 10542). HELD: the issuer sends no GO TO-DB-f-2702 until the CTO half reads SIGNED at the REVISION 2 sha256 and Monday's 49 Financial read has passed. AMENDMENT 3 (~13:3xZ): the CTO half reads SIGNED at 5bfd8e040939 (@dbd06bb04b, msg 10563; Q1 yes, Q2 confirmed, Q3 host-wide trust accepted as worded; no cross-firm explicit Deny required on the new role now, but any future widening of the role adds that Deny in the same plan; Act 6 stops above 40 minutes). The CTO's day: Tuesday 2026-10-20 after Monday's 49 Financial first-fire read, outside 11:30Z to 14:15Z. Only Monday's read remains of gate R0. -->
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
