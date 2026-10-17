@@ -82,3 +82,17 @@ padded served code (W497-S2), plus harness arm R7. R1's fresh-checkout re-runs r
   re-cuts it under its own decomposition.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 7 -- bt-6 @be136f28eb (row `dell1-20261017T215021Z-044d`), ~21:5xZ
+
+**Approved** for DEV and the chosen-set PROD promote, together with bt-1 and bt-3. It is one commit on PROD 856fb37b and stays inside
+Security Analysis:
+- `SecurityAnalysis/components/StatTile.tsx` gains an 'above-wide' placement;
+- `SecurityAnalysis/tabs/ModelTab.tsx` passes it for the last min(12, floor(N/2)) rows;
+- a harness.
+
+**Graded as I asked, on the built page:** two real-browser walks of a local build (RIO LN, ICT PM) read occluded-popover ABSENT both
+times, against 3 of 9 on PROD. The fresh-checkout harness reads 9/9 (msg 7750). layout:clipped is unchanged, as ruled by design.
+- Carried to round 114 as a row: a grid under about 20 figure rows could still clip an upward bubble at the scroller's top.
+
+-- 1.0.0_SA_CTO~DELL1
