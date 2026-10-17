@@ -285,8 +285,8 @@ def tf():
     # two partitions held as Python dicts): the door needs memory and time for a day of raw records.
     mem = re.search(r"memory_size\s*=\s*(\d+)", fn.group(0)) if fn else None
     tmo = re.search(r"timeout\s*=\s*(\d+)", fn.group(0)) if fn else None
-    if not mem or int(mem.group(1)) < 3008:
-        bad.append("the door function memory_size must be at least 3008 MB (derive of a busy raw day ran out of memory at 1024)")
+    if not mem or int(mem.group(1)) < 10240:
+        bad.append("the door function memory_size must be 10240 MB (the Lambda maximum; Andrew-direct 2026-10-17) (derive of a busy raw day ran out of memory at 1024)")
     if not tmo or int(tmo.group(1)) < 600:
         bad.append("the door function timeout must be at least 600 s")
     if "TCKT" in t:
