@@ -24215,3 +24215,73 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W287-S1 -- the portal is an empty gitlink in this worktree, so the portal rows of TO-AR-y-387 were read from the submodule's own store at the pinned commit
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W287-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~287",
+  "surfaced_at": "2026-10-17T10:25:00Z",
+  "one_line": "The portal is a gitlink at HEAD with no checkout in this worktree, so the portal evidence of TO-AR-y-387 could not be read with git show HEAD on the worktree; it was read from the portal submodule's own object store at the pinned commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-387 BOUNDS: read the tree ONLY with git show HEAD:<path> or git grep ... HEAD -- <pathspec>; the worktree is sparse, so a missing file on disk proves nothing.",
+  "world_is": "git ls-tree HEAD portal gives 160000 commit d1f9ca29675bd9012284272806afc9c587ef55f0; the worktree portal/ directory holds only .config/. The commit and its files resolve in C:/dev/ajb_workspace/.git/modules/portal (git --git-dir ... show <pin>:<path>). The portal/ refs of AUDIT_a.json are resolved that way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD portal in C:/dev/wk-irpt-anlreq-287 (branch wk-IRPT_ANLREQ-287, base 40534c9381): 160000 commit d1f9ca29675bd9012284272806afc9c587ef55f0",
+      "git --git-dir C:/dev/ajb_workspace/.git/modules/portal cat-file -t d1f9ca29675bd9012284272806afc9c587ef55f0 returns commit",
+      "r47/audit_check.py portal_ctx() and check_code() for portal/ refs (deliverables 0.9.0_WK_IRPT_ANLREQ~287/r47)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W287-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~287",
+  "surfaced_at": "2026-10-17T10:25:00Z",
+  "one_line": "The cell says 21 armed rows name 2.0.0_SA_COO~Y2 as disarm owner, but comp-surprise.py lists 44 armed rows naming Y2 in any form (30 with the exact owner); 23 of the 44 are outside the cell's 21, among them W64-S6, which the RECORD FACE names as graduated.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO-AR-y-387 cell context: 21 of the project's armed rows name 2.0.0_SA_COO~Y2 as disarm owner. CLAUDE.md section 1 rule 27 (L10): every ARMED row is dispositioned before the slug goes to the CTO.",
+  "world_is": "python .tools/comp-surprise.py --project IRPT_ANLREQ --json (run at 40534c9381): the armed list holds 67 rows; 44 name a Y2 owner in any form and 30 carry the exact owner. The 21 cell ids are all in the armed list. Outside the 21: W55-S5, W64-S6, W128-S3, W129-S1, S100, W133-S1, W133-S4, W136-S2, W141-S1, W141-S2, W144-S1, W145-S1, W145-S5, W145-S6, W145-S8, W146-S4, W147-S2, W148-S1, S118, W150-S2, W150-S3, W155-S2, W166-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/comp-surprise.py --project IRPT_ANLREQ --json at worktree HEAD 40534c9381: armed list 67 rows, Y2-owned 44 (any form), exact 30",
+      "TO-AR-y-387 worker face, THE CELL paragraph (21 ids) and RECORD FACE (nine GRADUATED rows including W64-S6)",
+      "surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W64-S6: disarm_owner 2.0.0_SA_COO~Y2 (issuer), ARMED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W287-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~287",
+  "surfaced_at": "2026-10-17T10:25:00Z",
+  "one_line": "The row IRPT_ANLREQ-D2-W107-S4 cites infra/aws/lambda/investor-reporting/intake/intake/portfolio.py:455-456, a path absent at d2c68580a1 and at HEAD; the cited lines are in infra/aws/lambda/investor-reporting/intake/portfolio.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A row's grounding cites a path and line that a reader can resolve at the commit it names (ARMED-row evidence must be re-readable).",
+  "world_is": "git cat-file -e d2c68580a1:infra/aws/lambda/investor-reporting/intake/intake/portfolio.py fails (does not exist); git show d2c68580a1:infra/aws/lambda/investor-reporting/intake/portfolio.py lines 455-456 hold the YCharts provider-id comment the row quotes. The row's hazard was resolved from the correct path in TO-AR-y-387 (AUDIT_a.json W107-S4).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file -e d2c68580a1:infra/aws/lambda/investor-reporting/intake/intake/portfolio.py (fatal: path does not exist)",
+      "git show d2c68580a1:infra/aws/lambda/investor-reporting/intake/portfolio.py (lines 455-456, the YCharts provider id comment)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
