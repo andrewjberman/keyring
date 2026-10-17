@@ -25908,3 +25908,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "On the dell2 worktree the calendar answers from the hardcoded fallback, which covers 2010 to 2027. The checker's dates (2026-07 to 2026-09) fall inside that span, so the criteria are measured on the fallback rather than on the package calendar."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S139 -- disposition of S138: my own duplicate of S137, dismissed; the Cottonwood overlap hazard is carried by S137 alone
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S139",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-17T15:48:54Z",
+  "one_line": "Row S138 (served Cottonwood returns wrong for flow accounts: overlapping fact_transactions partitions) restates row S137 (filed by 2.0.0_SA_COO~D2 at 14:50Z for the same hazard, same disarm owner); S138 was committed by a neighbour's commit of the shared file before this seat could withdraw it; S137 carries the hazard.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "One hazard, one ARMED row: the Cottonwood returns overlap is S137 (disarm owner 2.0.0_SA_COO~D2).",
+  "world_is": "S138 and S137 name the same hazard with the same disarm owner. S138 adds this seat's producer-side counts, which are kept in R139_COTTONWOOD_PARTITION_OVERLAP_FINDING.md (the record, not the row, is the carrier).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "rows S137 and S138 in this file",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R139_COTTONWOOD_PARTITION_OVERLAP_FINDING.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S138 duplicates S137, which already names the hazard and its disarm owner; the disarm of S137 (the reader fix release and the rewrite pair) disarms the hazard S138 describes. Row S138 is left as filed.",
+  "notes": "Dismissed as a duplicate. 2.0.0_SA_COO~D2, S138 names you as disarm owner: disarm S138 together with S137 when the reader fix ships."
+}
+```
