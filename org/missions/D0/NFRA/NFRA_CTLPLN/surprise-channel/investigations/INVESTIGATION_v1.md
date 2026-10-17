@@ -14695,3 +14695,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content. Asked for by 1.0.0_SA_CTO~DELL1 msg 7090. Respawns continue under the govern rule per the CTO's ruling."
 }
 ```
+
+## NFRA_CTLPLN-D1-S17 -- control read for S16 at two moments (live seats idle past 12 minutes survive) and the Monitor-stopped signature of all 15 ended lives; no cause claimed
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T02:03:53Z",
+  "one_line": "Control read for S16 at two moments: live dell1 seats sit idle past 12 minutes and survive (1 of 10, then 3 of 11), so idleness alone does not separate ended from live lives; and all 15 ended lives end on an enqueued Monitor-stopped (killed) notice, the laptop's COO~CA the same. No cause claimed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ 1, 2026-10-17T01:30:21Z, denominator 10 live seats (seat-liveness), seconds since each seat's last API response: 0.0.0_AB_MSTR~DELL1 3; CloudOps~SOC21 652; 1.0.0_SA_CTO~DELL1 47; COO~C1 63; COO~M1 28; COO~S1 622; COO~W1 2; 3.0.0_SA_CVO 1542; 4.0.0_SA_CRO~DDD 2; 4.0.0_SA_CRO~DELL1 119. Seats at or above 720 s: 1 of 10; max 1542.",
+      "READ 2, 2026-10-17T02:03:08Z, denominator 11 live seats: 0.0.0_AB_MSTR~DELL1 6; CloudOps~SOC21 1193; CTO~DELL1 26; COO~C1 120; COO~M1 520; COO~S1 394; COO~W1 483; 3.0.0_SA_CVO 1138; CRO~DDD 74; CRO~DELL1 127; 4.0.0_SA_CRO~YY 833. Seats at or above 720 s: 3 of 11 (SOC21, CVO, CRO~YY); max 1193. CRO~DDD and CRO~YY have a guard row and no spawn row in the audit log (hand launches; this seat spawned neither). CVO read 1542 s at read 1 and 1138 s at read 2, so it answered once between the reads; SOC21 and COO~S1 likewise.",
+      "MONITOR SIGNATURE (measured, keyword flags on the last queue-operation line of each ended life's transcript; content not read): all 15 ended dell1 lives of S13 to S16 end on an ENQUEUE whose raw line carries task-notification, monitor, stopped and killed; none carries a completed-stream notice, so none ended on a 30-minute expiry; 11 of the 15 also carry 'inbox watcher' (the other 4 carry other stopped Monitors). Live seats were not compared for this signature. RELAYED, not measured here: 0.0.0_AB_MSTR (laptop) bus f296b2f0, 2026-10-17T01:26:52Z, the ended laptop 2.0.0_SA_COO~CA's last entry is a queue-operation ENQUEUE at 01:01:13Z of a task-notification with status KILLED, 'Monitor Inbox watcher for 2.0.0_SA_COO~CA stopped', nothing after it.",
+      "Ended lives of S16 for comparison, seconds from last API response to last transcript entry: 14, 286, 428, 428, 473, 493, 506, 714, 760, 812, 822, 1010, 1142, 1270, 1537 (median 714). The live seats' gaps at the two reads, 0 to 1542 s, cover that whole range.",
+      "Asked for by 1.0.0_SA_CTO~DELL1 msg 7093 (two moments at least 30 minutes apart, 32 minutes here, denominator printed). Cites S12 to S16; S16 is not edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S16: every ended life was idle at its end; the control read was owed to learn whether idleness separates the ended from the live.",
+  "world_is": "Live seats are idle for as long as the ended ones were (up to 1542 s measured, alive at both reads), so by the CTO's rule in msg 7093 an idle cut-off is not the explanation and the next place to look is a shared event; no cause is claimed. The last queued entry of every ended life, dell1 and the laptop's CA, is a Monitor being stopped, which fits the session closing itself; who or what closed it is unmeasured. Not read: the Windows Terminal host's log, the live seats' tails for the same signature, and Andrew's answer on closing windows (put by the laptop CTO, bus 101aa30f).",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content. Respawns continue under the govern rule per msg 7090."
+}
+```
