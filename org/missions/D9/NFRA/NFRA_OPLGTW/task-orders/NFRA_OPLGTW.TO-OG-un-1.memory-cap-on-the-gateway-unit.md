@@ -66,7 +66,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-un-1.memory-cap-on-the-gateway-
 - A limit that is too low would make the gateway restart under a legitimate load: the values come from the measured working set (100 to 450 MB across the window chains, plateau 386 MB) with a wide margin; the applier's release read-back is the check.
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41-T</workstream>
 <slot>~140</slot>
