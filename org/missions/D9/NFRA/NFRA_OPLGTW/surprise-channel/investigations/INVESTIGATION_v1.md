@@ -27645,3 +27645,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts, outcome words and seconds only. No deploy; the halves stay signed on the ask's bytes (this run adds records and changes no file of the release). The question for the issuer and the CTO: accept the outcome as the contention branch (the substance holds; the word is a pre-existing tool-boundary omission to repair in its own cell), or cut the one-line mapping in client_core._answer (and a test) before the release, which changes the release bytes and re-opens the halves."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-17T13:25Z",
+  "id": "NFRA_OPLGTW-Z-S373",
+  "one_line": "Z-S372's overwrite is wider than window_read_busy and is LIVE today: client_adapter_bd49f._absent sets absent_reason but never _absent_reason, and client_core._answer overwrites body.absent_reason with meta._absent_reason (None), so all five no_partition_at_as_of refusals (resolve_account, holdings, transactions, allocation, fees) already answer empty rows with absent_reason null on the live 9d5b712557.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "CTO msg 35486: a refused call that answers empty rows with absent_reason null reads as 'no transactions', a failed retrieval returning a value; the fix is the mapping in client_core._answer.",
+  "world_is": "Release 948e8b47cc (same lines at the live ref; neither file's _absent/_answer is in the 9d5b712557..948e8b47cc diff): client_adapter_bd49f.py:445-459 _absent sets out['absent_reason']=code and the underscore meta keys, but not '_absent_reason'; its callers are :382 (window_read_busy) and :477, :516, :583, :645, :726 (no_partition_at_as_of: candidates, positions/cash, transactions, weights, fees). client_core.py:506-524 _answer builds body from the non-underscore keys, then body.update({'absent_reason': meta['_absent_reason'], ...}), which replaces the adapter's code with None.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/og-rel-batch6 show 948e8b47cc:infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py lines 382, 445-459, 477, 516, 583, 645, 726",
+      "git -C C:/tmp/og-rel-batch6 show 948e8b47cc:infra/aws/ec2/opal-gateway/app/client_core.py lines 506-524",
+      "investigations/INVESTIGATION_v1.md#NFRA_OPLGTW-Z-S372; CTO msg 35486"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read in code, not exercised on the host. The CTO's cut should map the adapter's absent_reason through generally (for example keep out['absent_reason'] when meta['_absent_reason'] is None), not special-case window_read_busy, and its test should also assert one no_partition_at_as_of refusal (an as_of before the first partition) carries its word. My OG-ap-36 half (abb0e56d1a) called the busy branch reachable without reading how client_core projects it; this seat missed both."
+}
+```
