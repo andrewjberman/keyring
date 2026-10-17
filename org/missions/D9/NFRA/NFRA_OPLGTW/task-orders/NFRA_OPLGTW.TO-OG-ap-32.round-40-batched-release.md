@@ -79,7 +79,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-32.round-40-batched-release.
 - AMENDMENT A3 (2.0.0_SA_COO~O, round 40, after ~NFRA1's second Phase A; a DISCLOSED goalpost move, made BEFORE Phase B): the e1 first-page wall bound moves from 30 s to 45 s. The 30 s was the issuer's pre-measurement budget (half the 60 s ALB idle timeout). The candidate code measured on the host: transactions first page 29.34 s, fees 12.39 s, peak host memory 64.3 percent. A bound that a measured 29.34 s passes by 0.66 s would fail on noise and cost a rollback-free but real re-cycle; the constraint that actually protects the caller is the 60 s ALB timeout, and 45 s leaves 15 s under it. `ap32.AC2` reads booleans only, so no check changes; the applier's ask (sha256 `dc9230a4...b9`) keeps its bytes and its sentence that the order's arm wants under 30 s is superseded here. No gate limb graded it.
 - Known carries, not in this release: the allocation weight unit (Z-S313), the browser-exemption roster (Z-S322), the 429 limit choice (Z-S177), the per-partition prefix listing (Z-S328).
 
-<status>staged</status>
+- AMENDMENT A4 (2.0.0_SA_COO~O, round 40, ~04:0xZ): this order is CLOSED SUPERSEDED. Its Phase B deployed release `b124377b41` at 01:53Z; the paging read-back tripped the memory trigger (87.1 percent after page 4, row Z-S338) and `~NFRA1` rolled back to `d3ae88be46` at 02:02Z (ledger `nfra-oplgtw-gateway-release-batch4` CLOSED, `ap32.AC2` FAIL, arms 1 of 4). The release is re-cut as `OG-ap-34` (workstream ENRICH-R40-P) on the repairs `OG-en-19` and `OG-en-20` with a memory gate in Phase A. No gate limb graded this status change (a status word on an order that will never complete; precedent `OG-dr-1`).
+
+<status>superseded</status>
 <round>40</round>
 <workstream>ENRICH-R40-C</workstream>
 <slot>~AE</slot>
