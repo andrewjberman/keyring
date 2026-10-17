@@ -26094,3 +26094,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Which seat provisions the hashed list on this box is not measured here. The owner of the list is not named by this row."
 }
 ```
+
+## IRPT_DASHBD-D2-W261-S1 -- The issuance commit 69e3f882f0 has a subject that describes the series contract 0.4.0 edit and its eight test asserts, but the commit touches no contract or test file.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W261-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~261",
+  "surfaced_at": "2026-10-17T18:31:59Z",
+  "one_line": "The issuance commit 69e3f882f0 has a subject that describes the series contract 0.4.0 edit and its eight test asserts, but the commit touches no contract or test file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The issuance commit 69e3f882f0 is described by its own subject line as carrying the series contract 0.4.0 (the class_object section, files.class_series, the lineage entry for the 0.3.3 bytes and the eight asserts of four pinned tests).",
+  "world_is": "git show --stat 69e3f882f0 lists three files: the decomposition (17 insertions), the checker p202_series_contract_040.py (318 insertions) and the task order (98 insertions). The contract file and the four pinned test files are not in that commit. The contract bytes at 69e3f882f0 are the 0.3.3 bytes (sha256 68044cb0ca66c772791bdcadcb0c18ce6d520e07138abb1a467700b6eed74cfc), the same as at HEAD 4eb681e53c. The 0.4.0 edit was made by this order's worker in dd4929683a.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 69e3f882f0: 3 files changed, 433 insertions, none of them the contract or a pinned test",
+      "git show 69e3f882f0:org/standards/IRPT_DASHBD_SERIES_CONTRACT.json: contract_version 0.3.3; sha256 68044cb0ca66c772791bdcadcb0c18ce6d520e07138abb1a467700b6eed74cfc",
+      "git diff --numstat 69e3f882f0 4eb681e53c -- org/standards/IRPT_DASHBD_SERIES_CONTRACT.json: empty"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worker's base is the commit that first added the order, so the checker's base is the 0.3.3 bytes and the lineage hash is correct. The mismatch is between the commit subject and its content only; no criterion of this order depends on the subject. Which seat wrote the subject is not measured here."
+}
+```
