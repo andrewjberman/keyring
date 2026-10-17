@@ -4625,3 +4625,25 @@ Check IBHM1 (`deliverables/2.0.0_SA_COO~P2/checks/r247/p247_cells.py`), dry-run 
 | `IB-hm-1` | READ the seven facts (last stage, where the ids live, spelling, names, IAM and env, the gate, the tests) with evidence that resolves | FWD-21 | LOCAL | none (ruling B) | PM6-a |
 
 fanout: 1 of 6 chains cut, cap 8, reason: IB-hm-2 and IB-hm-3 depend on this read's facts; IB-hm-4 on 3; IB-hm-5 and 6 on 4 and the IB2 lane.
+
+## 243. ROUND 7, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 2: the BUILD; 2026-10-17 ~03:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO rulings msg 10161 and msg 10203)
+
+IB-hm-1 (the READ, graded: criteria PASS, the key claim re-read by me in `directory_runner.py` and `_ids/ids.py`) found that the directory's account ids are opaque minted ids (`acc_` plus 24 hex), so a list over them alone would miss the raw custodian numbers the hook exists to catch. The laptop-side containment target is the RAW numbers; the dell2 CTO ruled (msg 10198, then 10203): the raw keys are already in process in the runner at the mint, under the runner's own profile, so no new reader; the step goes in `directory_runner.py` per firm in `run_firm`, HMAC(key, UPPER(raw)) plus the minted hex, ONE key per firm in the globgrph folder (`address()` output), the box pull tool reads all of them and the hook reads their union; the combined key and its hand-off are dropped (so the READ cell IB-hm-1b I had drafted was not cut). The plan's cell list changes accordingly:
+
+| cell | item | risk | depends on |
+|---|---|---|---|
+| `IB-hm-2` | BUILD the stage in the runner (this section): `emit_hmac_list`, the two arguments, ten tests | LOCAL | IB-hm-1 |
+| `IB-hm-3` | REGISTRY + TERRAFORM + DISPATCH: registry rows for the secret and the globgrph product folder (bucket `opal-313476888478-globgrph`, declared in the globgrph module), the secret, the runner profile's two grants (one `GetSecretValue` ARN, one `PutObject` key per firm), `refresh.py` `runner_script` passing the two arguments | LOCAL (plan) | IB-hm-2, and the runner profile's TF home (measured in the cell) |
+| `IB-hm-4` | PAIR: packet, COO half, CTO half | SERVED | IB-hm-3 |
+| `IB-hm-5` | APPLY by `0.7.0_AE_CloudOps~IB2`: the bundle mint, the plan, the secret, one QA run, the first scheduled fire | WORLD | IB-hm-4 signed, the IB2 lane |
+| `IB-hm-6` | READERS: the grant for each box identity to read the three firm keys and the secret; the pull tool and the hook edit are the laptop CTO's | WORLD | IB-hm-5 |
+
+It takes round 7 of ~PM because round 6 already carries IB-hm-1's issuance (the gate keys one issuance to the round); it depends on IB-hm-1's graded facts, so it could not have been cut in the same issuance.
+
+Check IBHM2 (`deliverables/2.0.0_SA_COO~P2/checks/r248/p248_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control248.py`, synthetic git repos) passes the three positives and each of 10 negatives fails its own arm (0 unexpected; it caught a parsing defect in my own check on the first run).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-hm-2` | BUILD `emit_hmac_list` as the LAST stage of `run_firm`, isolated, with ten named tests | FWD-21 | LOCAL | IB-hm-1 | PM6-b |
+
+fanout: 2 of 6 chains cut (IB-hm-1 graded, IB-hm-2 now), cap 8, reason: IB-hm-3 waits on the runner profile fact and on IB-hm-2's argument names; IB-hm-4 on 3; IB-hm-5 and 6 on 4 and the IB2 lane.
