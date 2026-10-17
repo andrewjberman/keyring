@@ -10899,5 +10899,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "The hazard (a served fund_of_record IDVZ from a template placeholder) is removed in the served ML_FP gold object by the cf-4 rebuild under the cf-2 rule, shown by my own served read against the UNH control; the silver field is a separate row (D1-S46)."
     }
+    ,
+    {
+         "id": "AMGT_HARVST-D1-W162-S1",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~162",
+         "surfaced_at": "2026-10-17T23:30:12Z",
+         "one_line": "HVST-cg-4: the commit gate's risk reflex HOLDs harvest_research.py on a CLOSED release ledger (20261017T0149Z, batch 4); that release was rolled back on the host to d3ae88be46, which restores the harvest files to their pre-release state.",
+         "class": "OBSERVATION",
+         "hazard_standing": "ARMED",
+         "disarm_owner": "2.0.0_SA_COO~W1",
+         "spec_asserts": "HVST-cg-4 sections 0 and 1: this cell changes code and tests only and deploys nothing; the edit is made on this worktree and the release of the file is a later seat order.",
+         "world_is": "git commit 4536e9ecb9 printed a risk-reflex HOLD on infra/aws/ec2/opal-gateway/app/harvest_research.py citing the CLOSED ledger org/critical_paths/change_management/20261017T0149Z_nfra-oplgtw-gateway-release-batch4_deploy_completion.md line 15: release b124377b41 was deployed from C:/tmp/og-rel-batch4 and rolled back at 02:02Z to d3ae88be463d88c6f4ea22fb297659bf44f43758; the ledger names harvest_research.py among the three harvest files the rollback restored to their pre-release state. The ledger's log says runbook 7.2 names d3ae88be46 as the rollback target for any further release, not 4be300110e.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "org/critical_paths/change_management/20261017T0149Z_nfra-oplgtw-gateway-release-batch4_deploy_completion.md (main-tree read at 2026-10-17T23:30Z, lines 15 and 22-25; the file is uncommitted in the main tree at read time)",
+                   "infra/aws/ec2/opal-gateway/app/harvest_research.py@4536e9ecb9 (REPORT_FIELDS, lines 60-62, the file this cell edits)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
