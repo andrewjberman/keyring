@@ -1,0 +1,39 @@
+{
+  "slug": "nfra-mcportal-c17r2-release",
+  "title": "NFRA_MCPORTAL MP-n-4: the C17 round-2 gateway release -- gitstate _refused reads the per-box last-integrate pointer",
+  "author": "0.7.0_AE_CloudOps~MQ",
+  "status": "OPEN",
+  "opened_at": "2026-10-14T01:18:49.740935+00:00",
+  "window_hours": 8.0,
+  "entry_path": "org/critical_paths/change_management/20261014T0118Z_nfra-mcportal-c17r2-release_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "s3-prefix",
+      "target": "s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ -- opal-gateway-<release sha>.tar.gz + -latest.tar.gz",
+      "proof_required": "head-object on BOTH new keys showing git-ref = the release commit, AND the rollback key opal-gateway-7eff14b2e6.tar.gz still ETag c8b27c104c2f95a6108eece752ccef66",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "activation",
+      "target": "SSM pull + systemctl restart opal-gateway on i-07dccb1615503ac99",
+      "proof_required": "/health 200 within 90 s, unit active, MainPID moved off 1080008, the running module md5-equal to the release bytes with a negative control, and the MCP tool-name difference EMPTY against the 67-name BEFORE read",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "git",
+      "target": "infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway on rel-nfra-mcportal-c17r2",
+      "proof_required": "deployed_commit = the release commit, previous_deployed_commit = 7eff14b2e620c8c1f688d41de6f37c09addde7b4, release_note written, mcportal_commit left at 0e02a1f",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261014T011849Z OPENED by 0.7.0_AE_CloudOps~MQ with 3 leg(s)"
+  ],
+  "last_red_at": null
+}
