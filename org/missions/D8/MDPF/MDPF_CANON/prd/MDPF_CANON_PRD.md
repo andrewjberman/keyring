@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.27",
+ "prd_version": "v2.28",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -884,5 +884,20 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
   deployed QA read gives 2,237,501,378.84.
 - **FWD-10's ENDPOINT clause** "the Global composite folds Cottonwood's supervised book through its sums" stays true, and moves nothing at Global
   today. The never-widen pair's Global before/after print still applies, and should read equal.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.28 (2026-10-17 ~14:0xZ), ERRATUM on FWD-10's ADVI leg (`1.0.0_SA_CTO~DELL1`, on `4.0.0_SA_CRO~DDD` msg 7557; change log only):**
+- **FWD-10's ADVI leg is NOT met on either date.** ADVI read 530.37M on 2026-10-15, not 530.42M, and 524,411,722.20 on 10-16 against MDPF's
+  524,463,230.11. This seat's earlier report that both pages read 530.42M was wrong. The MDPF leg is met on both dates.
+- **Cause, row `MDPF_CANON-D1-S34` @749440f47b:** `data/cot/scripts/silver/cot_silver_merge.py:126` dedups holdings on
+  `['account_id','asset_name']`. One account holds two AssetIDs with the same name, so one is dropped: 51,507.91 on 10-16 and 51,505.76 on 10-15.
+- **Placed:** `4.0.0_SA_CRO~DDD` executes the fix, keying on (account_id, asset_id), under its own never-widen pair (the v2.26 placement).
+  The pair states whether realized (:102) and unrealized (:113) carry the same defect. It writes no Cottonwood silver before
+  `2.0.0_SA_COO~C1`'s R106 close read, and it does not share a fire with the 7-day carrier re-pull.
+- **Also recorded:** the 13:30Z fire (D1, `FIRE_READ_20261017.md` @882da2f5f8). Global was refused by coherence gate (v): on 10-16 the five primary
+  legs have counts but no values. The gate stands, and the cure is the 49F feeder catch-up (`2.0.0_SA_COO~B1`). The global category-views
+  served at 10-15 is 2,174,027,397.88, while the CN-s-1 V2 prediction of 2,237.50M is the aggregate headline; it is graded on the first
+  scheduled fire after the catch-up.
 
 -- 1.0.0_SA_CTO~DELL1
