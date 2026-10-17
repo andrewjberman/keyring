@@ -25283,3 +25283,59 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W290-S1 -- r35l_build.py refuses at its baseline census call; no R36S_BUILD record, so AR-y-391 cannot run past step 2
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W290-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~290",
+  "surfaced_at": "2026-10-17T15:17:20Z",
+  "one_line": "The release-35 build tool fails with a Python traceback (not an R35L-BUILD-BAD line) after both builds succeed: its baseline census call reads the function map at the pin 927337a741, which has no irpt-status entry, so no record is written and steps 3 to 5 of AR-y-391 cannot run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-391 step 2: python -I org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r35/r35l_build.py --pin faf037e0d02c021c0717f051b01ec72ed0b063d2 --out C:/dev/irpt-release-r36s --record .../r49/R36S_BUILD.json ends with R35L-BUILD-OK, or with R35L-BUILD-BAD and one row; the tool's STATUS_BASELINE (line 19) is the pin the live package was built from.",
+  "world_is": "MEASURED at worktree HEAD f332b96a4d: run 1 (--out C:/dev/irpt-release-r36s) and run 2, the one retry the order allows (--out C:/dev/irpt-release-r36sb), each exit rc=1 with a traceback raised at r35l_build.py line 127 (census.build_members at the baseline) and release_census.CensusError: function 'irpt-status' is not in the source map at 927337a741. Both builds ran and the zip was written to the stage folder before the failure (tmp_irpt-status_a and _b, irpt-status.zip); the record was not written. Read-only: git show 927337a741:infra/aws/lambda/ci/function-map/irpt-status.json is absent (rc=128); the function-map folder holds 0 files at 927337a741 and at 90b69dcb12 and 242 at faf037e0d0. The tool's comment names 927337a741 as the release-33 live build; the order names 90b69dcb12 as the release-35 live pin. NOT READ: the live zip beyond the issuer's member file; no member diff; no upload, plan, apply or AWS call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r35/r35l_build.py@f332b96a4d (lines 19 and 127)",
+      "infra/aws/lambda/ci/release-census.py@f332b96a4d (build_members, line 65: function not in the source map at the pin)",
+      "C:/dev/irpt-release-r36s (stage folder left as the tool made it; run 1 output held in .scratch/r36s_build.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W290-S2 -- the release build reproduces the live irpt-status package member for member: acceptance.py is staged from a pin whose blob lacks get_commentary_ref
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W290-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~290",
+  "surfaced_at": "2026-10-17T15:26:24Z",
+  "one_line": "The stage zip the build tool wrote at faf037e0d0 matches the LIVE irpt-status package on all 49 members by name and sha256, and its CodeSha256 equals the live value: the function map stages acceptance.py from a pin (361c44fa9d) whose blob lacks get_commentary_ref, so this build moves zero members and cannot open the commentary PDF.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-391 (cell AR-y-391, CTO msg 10600): the release build packages acceptance.py carrying get_commentary_ref, so the live zip's acceptance.py is MOVED and the diff names it as the mover (step 3 and AC1 expect acceptance.py MOVED and carrying the text).",
+  "world_is": "MEASURED on C:/dev/irpt-release-r36s/irpt-status.zip (the tool's output, stage folder outside the repository): 49 of 49 members equal the LIVE member file by name and sha256 (LIVE_IRPT_STATUS_MEMBERS_20261017.json); CodeSha256 +TcZDWmwE7uv3sUwos2+jn1lbKyQikK+13nNBzD6q4A= equals the live code_sha256; zip sha256 f937190d69b013bbafdec530a2cdbe8e7d656cac908a42bed779cd0730faab80, 368309 bytes. Cause, read-only: infra/aws/lambda/ci/function-map/irpt-status.json at faf037e0d0 stages acceptance.py (packaged_as) from infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py at pin 361c44fa9d (blob sha 06425d4731b7, 9393 bytes, no get_commentary_ref); the same repository file at faf037e0d0 and at 90b69dcb12 is 11639 bytes (sha e8cbd46a8277) and carries get_commentary_ref. So the release as mapped moves zero members. NOT READ: the live zip beyond the issuer's member file; no function-map edit was made (a staged pin change is for the issuer or the CTO to place).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r36s/irpt-status.zip (tool output, outside the repository)",
+      "infra/aws/lambda/ci/function-map/irpt-status.json@faf037e0d0 (staged_from row for packaged_as acceptance.py)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@361c44fa9d and @faf037e0d0 (sha and get_commentary_ref check)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
