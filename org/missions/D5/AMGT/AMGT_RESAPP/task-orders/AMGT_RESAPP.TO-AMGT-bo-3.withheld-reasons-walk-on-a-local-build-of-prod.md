@@ -99,7 +99,7 @@ The `<status>` flip is the issuer's.
 
 **AMENDMENT 1 (issuer, 2026-10-16 ~15:2xZ), per the CTO's ruling (msg 6769, `1.0.0_SA_CTO~DELL1`: one walk with one owner, so no second cell; amend `AMGT-bo-3` as its issuer, keep its 2026-10-17 date gate): `GOOGL US`, `ISP IM` and `BATS LN` join the walk so `W418-S3` (the historical P/E and its price basis, the CVO's REMEDIATION_v41) and the BATS half of `C-S142` (the empty `Period 4` column) close on it; `PBR US`'s half of `C-S142` (a `$` on BRL team-model rows) is read on the name already walked. Also corrected: the paragraph that said the `ai_fill` section reads ABSENT on every name (stale: the hold is lifted, R2 msg 6768). AC7 now names three names, AC8 is the BATS LN walk, AC9 the judgment. The names are in `round106/census_v5.json`. C-S133 stays with R2 (CTO).**
 
-<status>staged</status>
+<status>pending</status>
 <round>108</round>
 <slot>0.9.0_WK_AMGT_RESAPP~477</slot>
 <fabric>dell1</fabric>
