@@ -25694,3 +25694,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Blocks the iam.tf commit only; nothing is planned, applied or pushed. The direction (a registry row, an R20 register entry Andrew acknowledges, or a gate ruling on this literal) belongs to the CTO or the issuer. Rows S1 to S3 stand regardless."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W2704-S5 -- row S4 resolved by the coordinator's ruling: the fixed session name is now g01-account-transaction, amended in f6965003da
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2704-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2704",
+  "surfaced_at": "2026-10-17T13:02:30Z",
+  "one_line": "Row S4 (the naming limb refusing inf-g-01-account-transaction) is resolved by the ruling carried in commit f6965003da: the fixed session name is g01-account-transaction, the checker SESSION_NAME is amended to match, and the merge into this branch is ce9b599299. The worktree iam.tf literal at line 245 is changed to g01-account-transaction and the three criteria re-run PASS. Row S4 itself is not edited; this row is the resolution note.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W2704-S4: the naming limb refused the literal inf-g-01-account-transaction at iam.tf line 245 as a new hand-kept carrier of the inf token.",
+  "world_is": "The ruling amends the literal to g01-account-transaction (order DB-f-2704, checker p139_inf_role.py line 32, decomposition amendment 3a). The iam.tf change is the one literal; the three criteria PASS on the new bytes (sha256 04d22a42b9e8bcf2caa4b5a678c02650ed46f6af4c0fda196a93385d739c02c3). Whether the naming limb now passes the literal is read at the commit that carries iam.tf, not asserted here.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show f6965003da: amend(IRPT_DASHBD round 139, 2.0.0_SA_COO~F2), the fixed session name g01-account-transaction",
+      "git merge --no-edit f6965003da into wk-IRPT_DASHBD-2704 at ce9b599299; iam.tf line 245 reads g01-account-transaction in the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closes when the iam.tf commit lands and the naming limb's read of the new literal is printed in that commit's output. Rows S1 to S3 stand unchanged."
+}
+```
