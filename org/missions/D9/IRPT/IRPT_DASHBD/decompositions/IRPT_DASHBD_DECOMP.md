@@ -2889,3 +2889,21 @@ C0 is answered (`COT_READ_C0_RECORD.json`, verified by `p184`): the live 49F rea
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~253`), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on five single-fault mutants; the reference diff is committed beside it):** `checks/r149/p185_cot_read_forward.py` (DB185-1-AC1..AC3), `reads/DB319_REFERENCE.patch`.
+
+
+## 180. ROUND 150, WORKSTREAM COTTF (2026-10-17 ~03:1xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood Performance read path -- C2, the Terraform
+
+The CTO asked (msg 10193) for C1 and C2 in parallel. C2 does not need C1's bytes: the Terraform names the new function and its grants, and reads its artifact key from a function-map entry that the next cell (C3) creates after C1 lands. So the root cannot plan until C3 exists; nothing is planned in any case (the box has no terraform), and the applier's plan at the pair is the first reading. C2 is cut now, as its own workstream tag because the gate keys one issuance per (round, workstream).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the new root `reporting-read-iso` (function, `-cot-` role, two policies), `forward.tf` in `reporting-read` (target name, one `lambda:InvokeFunction`), one environment line in its `lambda.tf` | DB-b-320 | FWD-10 (Cottonwood Performance tab) | WORLD floor (path), no apply | C0 (done) | chain AN |
+| 2. C3 the function-map file of the new function (members and pins copy the 49 Financial read entry's; served.py re-pinned to the C1 landing commit in BOTH entries) | to be cut | FWD-10 | LOCAL | C1 landed | after C1 |
+| 3. C4 the never-widen pair and the apply order to `0.7.0_AE_CloudOps~IB2`; C5 the real run (the page owner, Global staff on Thiessen) | to be cut | FWD-10 | WORLD, SERVED | C1, C2, C3 | after C3 |
+| 4. C6 the Cottonwood ownership map built from the dell1 match sheet (Andrew-direct 025xZ, CTO msg 10215), counts only, behind C5 | to be cut | FWD-10 (advisor and client viewers) | WORLD | the sheet (on this box, outside the repo) | parallel |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) NO ownership-map statement is added to the Cottonwood role beyond the object-scoped read: `loaders.py load_ownership` already reads an absent map as an empty map under both wire shapes (NoSuchKey and the AccessDenied masking of a missing key without ListBucket), and a Global staff caller takes the firm population without the map (`_scope/resolve.py:445-451`), so the pair's staff read does not need it; (b) the Cottonwood function has NO render grant and no `IRPT_EVIDENCE_BUCKET` (the Performance read installs no render ports); (c) the forward variable is set only on the 49 Financial function, a checked clause of AC1; (d) the policy that gives the 49 Financial role `lambda:InvokeFunction` is a separate role policy in its own file, so the existing policies are not edited; (e) the artifact key is read from the function map by the builder-derived function name (the publish-iso form), which is why C3 creates the entry; (f) the issuer's reference diff is committed beside the checker.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~254`), cap 8 (C1 runs in parallel as order DB-b-319 under round 150, workstream COTFWD).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on thirty single-fault mutants; the reference diff is committed beside it):** `checks/r150/p186_cot_read_terraform.py` (DB186-1-AC1..AC3), `reads/DB320_REFERENCE.patch`.
