@@ -2977,3 +2977,22 @@ Andrew sent the Cottonwood CRM extract `Files.zip` to dell2 himself (his /tdrop;
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~256`), cap 8; spawned when `TO-DB-b-324` completes.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 27 single-fault mutants):** `checks/r150/p191_cot_extended_match.py` (DBC191-1-AC1, DBC191-2-AC1).
+
+
+## 185. ROUND 150, WORKSTREAM FILLPASS (2026-10-17 ~05:4xZ, issuer 2.0.0_SA_COO~D2): the filled-report switch-on pair (IB-pr-551 hop 2) -- the code cell
+
+The CTO ruled (msgs 10294/10295) that this seat issues the filled-report switch-on pair: the switch `FILLED_REPORT_PASS` is an environment variable on `irpt-49f-reporting-publish-lambda` (this seat's root, applier from this seat's lane), and `2.0.0_SA_COO~S2`'s after-read is its named V leg (one client's report through the route and through the export); the CTO signs the CTO half when the packet lands; the blast radius is the one variable, the rollback the variable unset. A second ruling (msg 10307) adds a MINT LEG: two minted synthetic principals in `opal-users-v2` with `@opal.invalid` emails, recorded by digest, one scoped to the canary client and one control with the same firm but without that client, applied by `0.7.0_AE_CloudOps~IB2`, signed in and handed to `~S2`'s reads (2) and (3), then removed and read back ABSENT twice (the FWD-5 sitting pattern); `~S2` mints nothing and scans nothing.
+
+MEASURED by the issuer (code read): with the switch ON, `filled_report_fire` writes a document for EVERY directory client in ONE synchronous invoke (no subset, no dry run, no shard) in a 300 s function: a canary or a dry run cannot be run today, and a whole pass may not fit the function. So the pair needs the pass proven small first.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the pass takes `clients`, `dry_run`, `shard`/`shards`; absent, it is today's pass; the switch OFF returns at once | DB-b-326 | FWD-10 (filled report, advisor and client viewers) | WORLD floor (path), no apply | none | chain AS |
+| 2. the never-widen packet: bundle, switch ON by the variable, a dry run per shard, ONE canary client, the mint leg and `~S2`'s V leg, the full pass by shards, receipt, rollback | to be written | FWD-10 | WORLD, client-facing documents | DB-b-326 landed | after item 1 |
+| 3. the apply order to IB2 with a world-reading checker | to be cut | FWD-10 | WORLD | both halves | after item 2 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the options live INSIDE the FILLED-REPORT-A block only (a clause of `p192` AC1 compares the text outside the block with the base), with at most 20 lines removed and 80 added, ONE `put_object`, nothing printed; (b) `dry_run` reads, composes and validates every document and writes none (its `written` is the would-be count, marked `dry_run`); (c) malformed options are refused BEFORE any read or write, and the switch OFF returns before the options are even read; (d) the Terraform variable is NOT in this cell: the applier adds the one environment line in the order that applies it, so no other apply of the root can turn the switch on by accident (the trunk carries the OFF state until the pair); (e) the issuer's reference diff is committed beside the checker.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~257`), cap 8. In parallel under round 150: C6d (`DB-b-325`, worker ~256).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on 10 single-fault mutants; the reference diff is committed beside it):** `checks/r150/p192_filled_pass_options.py` (DB192-1-AC1..AC3), `reads/DB326_REFERENCE.patch`.
