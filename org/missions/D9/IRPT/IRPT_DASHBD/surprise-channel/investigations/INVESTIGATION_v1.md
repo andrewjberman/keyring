@@ -25774,3 +25774,61 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Notes row. S1 keeps its own disposition; the adjudication belongs to the CVO."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S137 -- the served Cottonwood gold external flows are inflated 8 to 13 times: derive sums every overlapping transactions partition; the re-land pair is held
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S137",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-17T14:50:56Z",
+  "one_line": "The Cottonwood account-return derivation sums fact_transactions rows from EVERY partition on or after the day; the partitions are rolling pulls that repeat each trade, so the landed gold external flows (and the series built from them) are inflated 8 to 13 times for the accounts that have a flow.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "cottonwood_bd_account_return_daily.derive reads the fact_transactions partitions on or after the start day and window_flows sums each row into the performance day of its Trade Date; a trade is counted once. The CTO's ruling (dell1 finding, msg 7612): a day's trades live in LATER partitions, so read D through D+14 trading days, filter trade_date = D and dedup on TransactionID.",
+  "world_is": "MEASURED 2026-10-17 by this seat (read-only; tools reads/cot_tx_partition_overlap_read.py and reads/cot_gold_flow_sanity_read.py): trade date 2026-07-24 appears in 19 fact_transactions partitions with 3,328 rows against 277 distinct TransactionIDs; partitions 2026-08-22 to 2026-08-24 hold the same 5,722 rows. The adapter run offline against today's silver reproduces the landed gold day 2026-07-24 for all 880 accounts, external_flow included; the landed gold flows (both versions of the object, written 2026-10-15 and 2026-10-16, after the later partitions existed) equal the raw sums, a multiple of 7.75 to 13.00 of the deduplicated sums. The gold's |external_flow| over market value reaches 13.0 on 2026-07-24 and 72.7 on 2026-09-10 (3 of 30 and 3 of 19 flow accounts exceed 1.0). So served returns of flow accounts are wrong today; roughly 20 to 30 account-days a day. A rewrite of any day now, by the current code, repeats the defect. Not measured: the size of the return error per account, which days before 2026-07-10 or which firm other than Cottonwood read the same silver.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reads/cot_tx_partition_overlap_read.py run 2026-10-17 (counts: 3,328 rows, 277 distinct ids)",
+      "reads/cot_gold_flow_sanity_read.py run 2026-10-17 on 2026-07-24 and 2026-09-10",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py lines 423-489 (derive) and 299-344 (window_flows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "TO-DB-b-332 (the re-land pair) is HELD by the issuer. Disarm: after the reader fix ships (the CTO's cell, deduplicated on TransactionID, read D to D+14) and every Cottonwood gold day is rewritten and the series republished, read the same measure again (flows over value, distinct ids against rows)."
+}
+```
+
+
+## IRPT_DASHBD-D2-S138 -- the served Cottonwood returns for accounts with external flows are wrong: the landing function sums overlapping fact_transactions partitions (a 14-day period pull repeats a transaction across about ten partitions); only Opal staff in Global view can see them
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S138",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-17T14:59:00Z",
+  "one_line": "Served Cottonwood account returns for accounts with external flows are wrong: the flow term of the return is summed over fact_transactions partitions that repeat the same transaction (about ten partitions per business day), so flows read about 8 to 13 times too large; the same overlap makes the Cottonwood transaction producer (DB-f-2605) refuse nearly every day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "The Cottonwood landing function's returns path takes a business day's flows from the single fact_transactions partition date=D (and the transaction producer takes the day's frame from that one partition); the reader is assumed to see each transaction once.",
+  "world_is": "Measured read-only today by this seat from the silver (counts only; tools/cottonwood_partition_lag_census.py, cottonwood_dedup_probe.py, cottonwood_completeness_curve.py, cottonwood_key_columns_probe.py, silver_overlap_probe.py). Over 127 partitions and 1,114,603 rows, only 21,693 rows (1.9 percent) sit in the partition of their own business day; 99.77 percent sit within 0 to 14 trading days of it; 125 of 127 partitions hold at least one row of another business day. A business day's rows repeat across about ten partitions: for the CTO's three days the rows read across the window against the distinct TransactionID counts were 8,701 against 875, 8,502 against 917 and 4,600 against 475 (D2 measured 3,328 rows against 277 on 07-24). In the newest six partitions 85.7 percent of TransactionIDs appear in two or more partitions. None of the 14 columns the producer reads varies across partitions for one TransactionID; 106 same-partition pairs sharing an id differ only in portfolio columns. A day is complete by lag 4 (median) and by lag 14 for every one of 34 full-window days. The 49 Financial fact_trn partitions are daily files carrying only their own business_date (12 of 12 newest partitions, 0 other rows); the Inflection Orion partitions are full snapshots (about 1.52 million ids each, 99.7 percent in all four newest) read as ONE snapshot by the producer. Visibility, as the CTO states it: only Opal staff in Global view can see the Cottonwood returns; no advisor has a grant. Not measured here: the served return values themselves, and any returns consumer outside the repo.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 10588 and 10592 (dell1 msg 7612; D2's 07-24 count)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R139_COTTONWOOD_PARTITION_OVERLAP_FINDING.md",
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py transaction_frame (one partition read) and the adapter's per-partition read at cottonwood_bd_account_return_daily.py line 458"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner is 2.0.0_SA_COO~D2: the reader fix (D to D+14 trading days, trade_date = D, dedup on TransactionID) as one code release with this seat's transaction stage (cell DB-f-2706), then the all-days rewrite pair and the republish (CTO msg 10592 items 2 and 3). TO-DB-b-332 is on the CTO's hold."
+}
+```
