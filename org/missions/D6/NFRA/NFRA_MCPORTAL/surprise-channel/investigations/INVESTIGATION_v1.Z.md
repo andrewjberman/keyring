@@ -3389,3 +3389,34 @@
   }
 ]
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-17T05:12:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S74",
+  "adjudicates": [
+    "NFRA_MCPORTAL-Z-W3-S4",
+    "NFRA_MCPORTAL-Z-W3-S5"
+  ],
+  "one_line": "Z-W3-S4 (a 200 on GET / to a non-owner) is DISMISSED: the session that signed in at 04:55:48Z was the dashboard OWNER, so the 200 was correct and the window did not test a non-owner; Z-W3-S5 is DISMISSED as a non-defect.",
+  "dismissal_reason": "Z-W3-S4's premise (a non-owner session) is false. The owner roster may hold only andrew@opalinvest.com (owner_gate.validate_owner_emails, a boot guard) and a verified non-owner answers 403. The issuer sent ONE read-only GET /api/admin/whoami through the window's own persistent profile, headless, after the worker's window had closed: status 200 and the returned email is the dashboard owner (printed as true/false only). The walk script never verified the signed-in identity (its worker said so), which is why the worker could not know. Z-W3-S5 (the read-only app path is not in the sparse worktree, read from HEAD with git show) is not a defect.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker window 2026-10-17T04:52:43Z to 04:56:48Z (v2_run.json, committed 86942b2d71); sign-in completed 04:55:48Z; the walk's first request GET / answered 200 and it stopped (1 of 13 sent)",
+      "v2.AC1.sh re-run by the issuer: GET / 403=0 200=1; refused=0 of 13; admitted=1; RESULT: FAIL (as the worker reported); v2.AC2.sh: GET /sprint 200=2 of 2 (the browser's own page loads, owner session): neither is a test of a non-owner",
+      "issuer whoami read through the profile at ~05:0xZ: status 200, email-is-the-dashboard-owner=true"
+    ]
+  },
+  "spec_asserts": "Z-W3-S4 asserted that GET / returned 200 to a non-owner session.",
+  "world_is": "The signed-in session was the owner. Nothing in the gateway admitted a non-owner. The MP-v-2 order stays OPEN: a window signed in as Opal Bloomberg (a fresh profile, the account chosen explicitly) is still owed; the first window's AC1 FAIL and AC2 PASS are records of a window that did not test the criterion.",
+  "notes": "Filed by the issuer, the disarm_owner of record. The old profile folder (deliverables/0.9.0_WK_NFRA_MCPORTAL~3/.scratch/profile-edge, git-ignored) holds the owner's session cookies; it is left in place and a redo uses a different profile folder."
+}
+```
