@@ -25520,3 +25520,34 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S207 -- the commentary PDF is retained for no request, so the route still answers NOT_RETAINED after release r36
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S207",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T16:51:46Z",
+  "one_line": "After release r36 the commentary PDF route reads the request's commentary_ref, but no commentary PDF artifact (family YCHARTS_OPAL_REPORT, logical id <request id>-commentary-<sha256>) is retained for any request in any tenant, so the route still answers COMMENTARY_PDF_NOT_RETAINED everywhere.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "CTO msg 10600: release irpt-status so the ticket's commentary PDF opens (the package carried acceptance.py without get_commentary_ref, so ops/owned_report.py refused COMMENTARY_PDF_NOT_RETAINED).",
+  "world_is": "MEASURED 2026-10-17 ~16:5xZ by this seat, read-only: irpt-status live CodeSha256 274dl2bCd2VC3OcX4Uqc4AMbWep65B97F1+CVNoKfMc= (IB2 applied 16:41Z; G1 to G4 and G6 green per msg 10620). The synthetic request REQ-d47252fe... carries commentary_ref {artifact_id, sha256, version_id}; that artifact is family ANALYSIS_COMMENTARY (the DRAFT, logical id = the request id). The route resolves the PDF under family YCHARTS_OPAL_REPORT with logical id <request id>-commentary-<sha256>, an id the offline recompute with repository._owner and digest puts at ART-aa9a66..., and that ARTIFACT# item is ABSENT. A query of every ARTIFACT# item whose logical_id contains -commentary- returned 0 matched of 206 scanned (49financial), 210 (cottonwood) and 33 (inflection). So the release removed one refusal cause and the next cause (no PDF retained) stands for every request, Andrew's ticket included. NOT READ: why the producer retained none (whether opal_producer's artifacts-port branch is wired in the live resident, or runs only on a trigger no request has reached); Andrew's ticket's own request item (not touched, CTO condition 3).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/task_orders/IRPT_ANLREQ.TO-APPLY-R36S.irpt-status-commentary-ref-ib2.md (AMENDMENT 1, c1d3b448dd)",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:335-379 (commentary_pdf)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:372-464 (commentary_logical_id, the retention call)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:240-262 (the packager's binding of the same id)",
+      "live reads of irpt-requests, table irpt-requests, three tenant queries with denominators 206, 210, 33"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
