@@ -10746,5 +10746,70 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "The pdf-rule hazard and the missing-exclusion hazard are fixed and read served (HVST-ce-2, -6, -4); the remaining fund_form count is a corpus-wide object no security's served field cites, carried as a round-91 candidate."
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W159-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~159",
+     "surfaced_at": "2026-10-17T20:27:49Z",
+     "one_line": "HVST-cf-1: ML_FP_Equity's first candidate is the bracketed template line '[BUY IN IDVZ TO X%]' (report 615fde6598a49c72, class A docx). The derivation takes IDVZ from it as fund_of_record, and ML is not among the 31 rebuilt names, so no served ML object was read.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "HVST-cf-1 section 1.c: NAMES lists every security whose fund_of_record is supplied by a candidate, whatever the verb before the fund token (the C-S61 mechanism named in the cell section 0: the derivation takes the first fund token of the line whatever the verb).",
+     "world_is": "cf1_census.out at b5238574f8, NAME ML_FP_Equity line: phrase=[buy in | fund=IDVZ | via=old | rebuilt_in_ce4=no | report_id=615fde6598a49c72 | class=A | type=docx | raw=[BUY IN IDVZ TO X%]. A rebuild of ML under HEAD code (continuation.py _resolve_fund_and_position, ff381860ad) serves fund_of_record IDVZ from a bracketed template placeholder. The served ML gold object was not read (out of the 31).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159/cf1_census.out@b5238574f8 (NAME ML_FP_Equity line)",
+       "lib/research/corpus/continuation.py@ff381860ad:415-462 (_resolve_fund_and_position: first candidate naming a fund token supplies fund_of_record)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W159-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~159",
+     "surfaced_at": "2026-10-17T20:27:49Z",
+     "one_line": "HVST-cf-1 start point: ce2_census.py replaces typed.reports_for with a filter that omits typed.MISFILED_REPORTS, so a census built from it puts the two KMB Mexico class B reports into KMB's items. The corrected cf-1 census applies the exclusion (commit b5238574f8).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cf-1 section 1 (population): the code of the merged tree, with the items built as continuation.py builds them; the start point ce2_census.py builds them as continuation.py does. continuation.py reads silver only through typed.reports_for (_read_reports_with_bytes).",
+     "world_is": "typed.py:596-599 (ff381860ad) reports_for drops (security_key, report_id) pairs in MISFILED_REPORTS, which holds the two KMB rows fbd50086c4065785 and 1a3b56044db679a5. ce2_census.py (deliverables 0.9.0_WK_AMGT_HARVST~156, commit 73777baeec) replaces typed.reports_for with a filter that omits the exclusion. The first cf-1 census (commit 6a2e2a49cd) inherited that omission and showed KMB code fund IDVZ against served null; the corrected census (b5238574f8) shows KMB with no candidate and no fund. ce2_census.out has no KMB line, and both of its arms shared the omission, so its published lines are not re-derived here.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/research/corpus/typed.py@ff381860ad:591-600 (reports_for with the MISFILED_REPORTS filter)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~156/ce2_census.py@73777baeec (typed.reports_for replaced without the filter)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159/cf1_census.py@b5238574f8 (EXCLUSION line: the filter as reports_for applies it)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W159-S3",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~159",
+     "surfaced_at": "2026-10-17T20:30:18Z",
+     "one_line": "HVST-cf-1 budget: the two census runs read 844 requests and 201751487 bytes in all (run 1 423 requests and 100909091 bytes, superseded by the exclusion correction; run 2 421 requests and 100842396 bytes, the counted run in cf1_census.out). The order's cap is 800 requests in all; the out file counts run 2 only.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cf-1 preflight (comp-iam): budget at most 800 requests and 500 MiB in all, counted in cf1_census.out.",
+     "world_is": "cf1_census.out at b5238574f8 prints BUDGET requests=421 bytes=100842396 for run 2. Run 1, the census at 6a2e2a49cd, printed BUDGET requests=423 bytes=100909091 and was replaced by run 2 after the MISFILED_REPORTS correction (see AMGT_HARVST-D1-W159-S2). Summed over both runs: 844 requests (above 800) and 201751487 bytes (below 500 MiB). No gold writer, put, copy or delete was run.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159/cf1_census.out@b5238574f8 (BUDGET line, run 2)",
+       "git show 6a2e2a49cd:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159/cf1_census.out (BUDGET line, run 1; superseded)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
