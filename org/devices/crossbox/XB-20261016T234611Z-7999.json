@@ -16,8 +16,8 @@
  },
  "ack_bus_message_id": null,
  "closed_from": {
-  "at": null,
-  "by": null
+  "at": "2026-10-17T02:17:36Z",
+  "by": "2.0.0_SA_COO~C"
  },
  "closed_to_issuer": {
   "at": null,
