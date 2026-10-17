@@ -105,6 +105,32 @@ names and addresses and is NOT committed. The scratch copy was deleted after the
    insurance in its total to match BD (530.42M), or keep the exclusion and serve 521.56M with "excluding $8.86M insurance"
    stated on the page.
 
+## ADDENDUM 2 (2026-10-17 ~02:3xZ) -- CORRECTION: the 96 are IN our pull; their values arrive after we pull
+
+Addendum 1 said the 96 insurance-feed accounts are "ABSENT from every DataMining export we ingest". **That is wrong.** My join
+keyed on BD's displayed account number (`DTCCR_04003450617`, `AEGON_000000150828TAL`). DataMining's `Account Number` drops the
+carrier prefix (`04003450617`, `150828TAL`). So the 96 sat among our 1,004 accounts at $0, and the 127 supervised "$0, not in
+allocations" accounts in section 2's custodian table were them.
+
+**The real cause is timing, so Andrew's lag hypothesis was half right.** The holdings export carries the carrier rows every day.
+Their Market Value is null when the export runs at the scheduled 07:30 ET (`cot_bronze_ingest.py`, `schedule-et.tf:90-91`),
+because BD posts the carrier-feed values later. Later pulls carry them. Measured:
+- `HOLDINGS_DAILY_2026-10-09.xlsx` was re-landed 10-12 11:45Z. 106 accounts read $0 in silver and $11,058,624.83 in that
+  bronze, all `Supervised`.
+- Silver for 10/09 was never rebuilt from the re-landed bronze. The silver/bronze total delta is exactly 11,058,624.83.
+- The completeness check passes these files (share of positions with a value 0.633 against a 0.5 floor), so nothing
+  retries them.
+
+**Remedy, replacing Addendum 1's ingest remedy (no BD template change):**
+1. **Now:** re-pull T-1 holdings and allocations after BD posts carrier values, then rebuild silver, gold (MDPF and ADVI) and
+   publish. This writes Cottonwood silver, so it waits for 2.0.0_SA_COO~C1's written agreement after the R106 read.
+2. **Durable:** fail the holdings completeness check when carrier-shaped accounts are present but all null, so the retry
+   sweep re-pulls. Pair it with a later re-pull slot so the retry lands the same day, not the next. Silver also rebuilds
+   whenever bronze is re-landed.
+3. **Backfill:** re-pull and rebuild the null dates, most weekdays since 2026-08-13.
+
+Source: a scoping read of the bronze ingest by this seat's research agent, verified here on 10/09.
+
 ## 5. Not captured
 
 The BD Dashboard's per-relationship values (only the four group rows in the screenshots). The August HAR oracle
