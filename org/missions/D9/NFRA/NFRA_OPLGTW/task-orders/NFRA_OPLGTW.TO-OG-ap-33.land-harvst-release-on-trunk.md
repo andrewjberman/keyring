@@ -56,6 +56,8 @@ infra/aws/ec2/opal-gateway/tests/test_og_cl2.py
 infra/aws/ec2/opal-gateway/tests/test_og_cp1.py
 infra/aws/ec2/opal-gateway/tests/test_og_en15.py
 infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf
+infra/aws/ec2/opal-gateway/tests/test_og_en13.py
+infra/logic/registry/legacy_addresses.json
 org/critical_paths/change_management/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -66,7 +68,7 @@ The tree convention grants `W`. Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), f
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-ap-33"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap33.AC1.sh; echo "exit=$?"</invocation><expect>(?s)conflicted paths \(merge-tree of trunk_base and hvst, the denominator\): (\d+).*merge parents are exactly trunk_base and hvst: yes; hvst is an ancestor of the merge: yes; conflict markers in 0 of \1 paths \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-ap-33"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap33.AC2.sh; echo "exit=$?"</invocation><expect>(?s)gateway live-byte paths (\d+) of \1 equal the release blobs; gateway test paths (\d+) of \2 equal trunk's; manifest opal-gateway block equals trunk's: yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ap-33"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap33.AC2.sh; echo "exit=$?"</invocation><expect>(?s)gateway live-byte paths (\d+) of \1 equal the release blobs; gateway test paths (\d+) of \2 equal trunk's; manifest opal-gateway block equals trunk's: yes.*three-way paths 2 of 2 keep both sides once each; registry file equals trunk's: yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-ap-33"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap33.AC3.sh; echo "exit=$?"</invocation><expect>(?s)mcportal change_management entries (\d+) of \1 carry both sides; billing IAM Terraform carries both sides' added lines: yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -85,6 +87,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-33.land-harvst-release-on-tr
 - Staged: the GO is the issuer's message citing this order, naming `trunk_base_sha`, sent after `nfra-oplgtw-gateway-release-batch4` closes.
 
 - A1 (2.0.0_SA_COO~O, round 40, ~06:1xZ): `OG-ap-32` was rolled back and `OG-ap-34` is the release that is live (`9d5b7125571520b977401634a01935924f4c9787`, deployed 05:19:28Z, ledger `nfra-oplgtw-gateway-release-batch5` CLOSED, `ap34.AC2` PASS). Every reference to the live release is re-pointed from `b124377b41` to `9d5b712557` (the blobs the gateway conflicts resolve to and the `release_sha` in the record). The adapter and catalog on trunk now EQUAL the live blobs, so the dropped-trunk-change STOP is expected not to fire on them. No gate limb graded this edit beyond GATE (viii) on the modified order (placeholders NONE).
+- A2 (2.0.0_SA_COO~O, round 40, ~07:4xZ; your row `Z-S356`, CTO decisions 35436 and 35438): the conflict set is 20 paths, not 18. Resolutions, replacing the CTO's rule 1 for these paths and the worker-face line on the gateway tests: (1) `app/tools.py` and `app/destructive_ops.py` take the MOVE in TRUNK'S ORDER (the live blobs hold no line that trunk lacks; the only difference is the position of `harvest_get_published_analysis`'s import, registration and allowlist entry): the merged blob must lose no live line and no trunk line, and `harvest_get_published_analysis` is imported, registered and allowlisted EXACTLY once each; (2) `deploy-to-ec2.sh` takes the LIVE blob (the blob at `release_sha`) whole: `OG-db-1`'s preflight is re-landed on it by the separate cell `OG-db-2`, and row `Z-S356` stays open until that cell lands; (3) `tests/test_og_en13.py` and `infra/logic/registry/legacy_addresses.json` take TRUNK'S side (a strict superset, measured by you); (4) the other 15 paths follow the worker-face rules. The gateway tests and `py_compile` of the merged tree must pass; there is no deploy. `<paths>` gains the two extra paths. `ap33.AC2` is amended to this reading and its output carries a `three-way paths` line (dry-run: PASS arm; controls FAIL: a three-way path set to the live blob, the allowlist entry twice, the adapter at the HVST bytes). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>staged</status>
 <round>40</round>
