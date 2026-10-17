@@ -4684,3 +4684,15 @@ Checks: IBHM8 (`r251`, static markers plus the builder re-run for the three URIs
 | `IB-hm-9` | BUILD the dispatch half in `refresh.py` (validated arguments, byte-identical when absent) and six tests | FWD-21 | WORLD (gate floor: an infra/aws/lambda path) | IB-hm-7 | PM10-b |
 
 fanout: 2 of 2 chains cut this round, cap 8, reason: the two cells touch disjoint write surfaces (one Terraform file and `schedule.tf`; `refresh.py` and its tests), so they run in parallel; IB-hm-4 waits on both.
+
+## 247. ROUND 11, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 10: the HOST ROLE may assume the stage role; 2026-10-17 ~05:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO ruling msg 10234 and the finding of worker ~454)
+
+IB-hm-8 (graded and merged) declares the stage role in the `directory` root with a trust that names the shared daily-runner host role only. Worker ~454's step 6 read the host role's identity policy (`infra/aws/terraform/mdpf-pipeline/iam.tf`, the `mdpf_runner` inline policy) and found it holds an `sts:AssumeRole` statement for the 49 Financial source principal (Sid `IrptDirectory49fAssumeSourcePrincipal`, lines about 659 to 664, Resource built from the builder name `module.irpt_49f_directory_read_role_name.name`) and none for the stage role. The CTO's ruling (msg 10234) says "the host profile gains only `sts:AssumeRole` on that one role". Whether the statement is strictly needed in one account (a trust policy that names the role ARN suffices unless a permission boundary or an SCP intervenes) is NOT measured; the statement follows the precedent in the same policy and the ruling, and the apply's step 5 reads the assume as the host would make it. This cell adds, in the OTHER root, one name module (`irpt_hmac_list_stage_role_name`, builder inputs system irpt, function hmac-list-stage, kind role, no scope) and one statement (Sid `IrptHmacListStageAssumeRole`), additions only, nothing applied.
+
+Check: IBHM10 (`r253`, diff-based: additions only, one module, one statement, no wildcard, no Principal; the builder re-run; the one-commit surface; control passes the three positives and each of 12 negatives fails its own arm, 0 unexpected); dry-run at the base: AC1 to AC3 FAIL. WORLD because the gate's floor for an `infra/` path is WORLD; it applies nothing. The apply is a second leg of the HMAC list apply (a change of 1 resource in the `mdpf-pipeline` root, a root other projects also apply: the pair counts its writers).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-hm-10` | DECLARE the host role's `sts:AssumeRole` statement for the stage role and its builder name module (no apply) | FWD-21 | WORLD | IB-hm-8 | PM11-a |
+
+fanout: 1 of 1 chains cut this round, cap 8, reason: one cell, one file in the second root; IB-hm-4 (the pair) now waits on IB-hm-10 too.
