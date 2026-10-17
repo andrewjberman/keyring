@@ -8685,3 +8685,28 @@ by dell1 or by this seat.
   "world_is": "Disarmed. One step is carried by the CTO's word (msg 7442) and is NOT done: the rise measured on the canonical holdings (+382,473 to +450,743 per date, worker ~99) and the rise measured on the served totals (about +381k to +419k, CVO) are two measures of two objects and are not reconciled; it is named in the round-28 input."
 }
 ```
+
+## MDPF_SECCLASS-D1-S52 -- TO-SC-e111b leg Q: the nine held-out are hidden from E_18 by an April name-to-ticker table, and the single ran with --upload (CTO msg 7449 items 1 and 2)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S52",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-17T08:49Z",
+  "one_line": "(1) E_18 skips a holdings name found in gold/dimensions/ticker_resolution.parquet (opal-data-bd; 4,424 rows, ONE version written 2026-04-07T21:54:55Z, every row last_updated 2026-04-07T21:54:05Z, writer data/black_diamond/scripts/classification/resolve_tickers.py, method bd_feed = 'ticker already in holdings_lots for this asset_name'); the nine held-out (BALCX, CIMAX, DODBX, FSNQX, HBLFX, JBAWX, KAMIX, PCEF, TRRNX) are nine bd_feed rows of that table (confidence 1.0, last_updated 2026-04-07T21:54:05Z), so E_18 counts them 'already resolved' at the continue before the planner although none is in etf-classifications. The table maps a NAME to a TICKER; it says nothing about the ticker's class, so E_18 hides any holding whose name was resolved in April and whose ticker is absent from the canonical table, on every later run. (2) TO-SC-e111b leg Q ran 'gold_dispatch.sh --single E_18' with --upload because the dispatcher strips it only under DRY_RUN=1 (gold_dispatch.sh:388-390); with 0 candidates there was no plan and no put (etf-classifications 11,375 items before and after).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python read 2026-10-17 of s3://opal-data-bd/gold/dimensions/ticker_resolution.parquet (columns asset_name_normalized, asset_name_raw, resolved_ticker, resolution_method, confidence, last_updated; the nine rows by resolved_ticker); aws s3api list-object-versions of the key returned one version (2026-04-07T21:54:55Z, 181,478 bytes); E_18.detect_new_securities.py:121-135 (_load_resolution_table) and :218 (the skip); resolve_tickers.py:6-10 and :60",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/E111_LEGQ_FINDINGS_20261017.md (0.7.0_AE_CloudOps~DELL1, msg 7446); CTO msg 7449 (ACCEPT, items 1 and 2 go in rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The E_18 repoint makes an old-list-only ticker a live candidate unless it is in the canonical table (pair, request @5690597b29).",
+  "world_is": "For the nine it does not: the April name table suppresses them first. No write happened and none is owed to the nine now (they are held out on purpose). The latent defect is the suppression itself; whether the resolution table should still gate candidacy once a ticker exists is a design question for the round after this one, with the table's writer already named. The next served single runs the plan step first and with --dry-run."
+}
+```
