@@ -28,3 +28,14 @@ specifically targeted at risky client ops scenarios, where things fall through t
 - **Deck:** .pptx (not a published Slides artifact). Client names and account numbers are anonymized.
 - **Order:** the postmortems come first; Andrew is told when the incident set is ready, and the work starts from those.
 - **Moratorium:** lifted for this scope by the explicit ask above. Nothing sends until Andrew names the channel (OPEN item 3).
+
+## Addendum, same session: the output surface
+
+The CRO proposed one stream (Graph mail events + the Schwab daily file + the Tax SMA sheet) feeding six rules and one
+open-items table. Andrew's reply, VERBATIM:
+
+> and cast it on tv
+
+- **Output surface:** the office TV, as a cast of an internal page showing the open-items stream.
+- **Still OPEN:** the TV hardware and cast path; on-screen privacy (initials plus the last 4 digits is the proposal); who builds;
+  and whether a Teams or email digest exists in addition to the TV.
