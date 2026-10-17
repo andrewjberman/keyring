@@ -41438,3 +41438,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Closes when IB2's record for TO-IB-pr-618 reads both entries at the live shas and I have re-read the two function-map files at HEAD. Append-only: S228 and S229 are not edited."
 }
 ```
+
+## IRPT_BCKEND-D2-W447-S1 -- The worktree's sparse checkout omits the _ids, _authz, _scope, _keys modules and org/surprise_channel, all tracked at HEAD
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W447-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~447",
+  "surfaced_at": "2026-10-17T02:27:10Z",
+  "one_line": "The worktree is a cone sparse checkout that leaves the investor-reporting _ids, _authz, _scope and _keys modules and the org/surprise_channel folder off disk, though all are tracked at HEAD; the read of them was made with git show at HEAD and the sparse set was not changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-1 (WORKER FACE, q2 and q3) asks which structure carries the served ids and how they are spelled, and its paths name the investigation file and the refresh folder; the id normaliser _ids/ids.py is the module that mints the directory's ids and was expected to be readable from the worktree.",
+  "world_is": "git sparse-checkout list at the worktree names eleven cone folders and neither infra/aws/lambda/investor-reporting/_ids nor the _authz, _scope or _keys siblings nor org/surprise_channel. git ls-files -v marks those paths with the skip-worktree flag and they are absent on disk, while git ls-tree at HEAD lists them. The record's q2 and q3 cites into _ids/ids.py and the q4 cite into org/standards were read by git show at HEAD; no file was materialised and the sparse set was not changed. Whether the directory tests import these siblings was not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree wk-IRPT_BCKEND-447 (read 2026-10-17), eleven entries, none under infra/aws/lambda/investor-reporting/_ids",
+      "git ls-files -v infra/aws/lambda/investor-reporting/_ids shows the S (skip-worktree) flag on ids.py and raw_keys.json",
+      "git ls-tree -r --name-only HEAD infra/aws/lambda/investor-reporting/_ids lists ids.py at HEAD 776faec3e3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a path the order names; the issuer or the integrator decides whether the worker sparse set should carry the _ids siblings. This row records the gap and does not widen the grant."
+}
+```
+
+## IRPT_BCKEND-D2-W447-S2 -- The served directory carries opaque minted account ids, so an HMAC list of the served ids would never match a raw account key in a staged file
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W447-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~447",
+  "surfaced_at": "2026-10-17T02:27:10Z",
+  "one_line": "The served directory's account ids are opaque minted ids, not the raw account keys the commit-time hook matches, so an HMAC list built from the served ids would never match a raw id in a staged file.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "client-data-check.py:11-12 says the hashed list holds one lowercase sha256 hex per line of the upper-cased served account id, and TO IB-hm-1 q3 asks whether UPPER of the directory id equals the hook token for the same id.",
+  "world_is": "The directory's account ids are minted by _ids/ids.py:214-218 as the account kind prefix (ids.py:69-70) plus 24 lowercase hex digits (ids.py:75-76), and directory_runner.py:484 writes them into ids.account_ids. The hook TOKEN_RE (client-data-check.py:28) excludes the underscore, so it can see at most the hex body as a token and never the full prefixed id; a raw account key (raw_keys.json:34, accounts_v2.account_id, zero-padded to ten digits) is a different string. So UPPER of the directory id does not equal the hook token for the same account and upper_equal is false. An HMAC list must hash UPPER of the raw upstream account key, not the served opaque id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_ids/ids.py:214-218 at HEAD 776faec3e3 (git show): _mint returns the kind prefix plus sha256 hexdigest[:24]",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:484 and :515: account_ids minted by opaque_id from the raw key",
+      ".tools/git-hooks/client-data-check.py:28 TOKEN_RE and :11-12 the served-id wording, read in the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The premise of the HMAC producer cell is what fails here, not the hook. This seat measured the premise only and did not choose the key the producer hashes; no account id or value is written in this row."
+}
+```
+
+## IRPT_BCKEND-D2-W447-S3 -- The registry holds no globgrph bucket or product-scope row, no irpt secret row, and no builder emits the slash secret grammar
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W447-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~447",
+  "surfaced_at": "2026-10-17T02:27:10Z",
+  "one_line": "The registry has no globgrph bucket or product-scope row and no irpt secret row, and lib/opal_naming.py has no builder for the slash-path secret grammar, so the two names the HMAC step needs cannot be built by name() or address() yet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-1 q4 asks which lib/opal_naming.py builders and infra/logic/registry rows exist for an irpt-tier Secrets Manager secret and for the globgrph fabric bucket's product folder, and CLAUDE.md section 4 says every resource name is name() output and every S3 address is address() output.",
+  "world_is": "name() (lib/opal_naming.py:2700) emits hyphen-joined {system}-{scope}-{function}-{kind} names; the secret grammar {system}/{scope}/{purpose} is written at org/standards/NAMING_SCHEMA.json:123 and only graded (lib/opal_naming.py:2185), with no builder. resources.json has no irpt row and its SECRET rows use the slash form (infra/logic/registry/resources.json:2753). systems.json:244 registers globgrph with no bucket field, scopes.json has no globgrph row, and no opal-data-glob string appears under infra/logic/registry, so key() (opal_naming.py:2507 calls _long_scope) and address() have no scope or bucket to resolve for globgrph.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:2700 name() and :2499-2515 key() and address() read in the worktree",
+      "org/standards/NAMING_SCHEMA.json:123 secret grammar read in the worktree",
+      "infra/logic/registry/systems.json:244 globgrph row with no bucket field, read in the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Registry rows are a CTO or integrator edit; the producer cell names them in its PRD. This row records the absence only."
+}
+```

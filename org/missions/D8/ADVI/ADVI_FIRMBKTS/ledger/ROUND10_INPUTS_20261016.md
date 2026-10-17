@@ -20,6 +20,8 @@ Standing list for the next issuance (the CTO's round-9 analysis names the enrich
 - **The shared portal role's grant.** `opal-portal-lambda-role` carries `MonitorDataFreshnessRead`: `s3:GetObject` on all of `opal-data-inf`. Every function under it can read the marker; the census found none that does.
 - **The four container-image functions** have no zip to scan; one (`opal-news-ai-sentiment`) could read the key; its application layer was searched, six layers over 5 MB were not.
 
+- **A scoped fence row that names `s3:GetObject` renders a bucket-policy Allow, which grants the read on its own.** Found at the `FB-q-1` cut (2026-10-17 ~03:3xZ, `modules/opal_name/main.tf` 226 to 288): the export role's reporting-prefix row grants GetObject on 18,257 objects at the apply, wider than the IAM statement the pair described. The CTO ruled the halves re-signed at the true reach (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_FB_Q1_FENCE_REACH_IRPT_EXPORT_20261017.md` @c783217cff) and put an ENRICHMENT on this project with LGIC: a generator option for a DENY-ONLY scoped row (no rendered Allow), so an IAM grant can bind the read narrower; a separate pair. Round 10 cuts it from that ruling's item 3.
+
 ## 3. Method inputs (this seat's own)
 
 - The worker prompts of round 9 were pointer-style, not the worker face verbatim; round 10 spawns carry the face verbatim.
