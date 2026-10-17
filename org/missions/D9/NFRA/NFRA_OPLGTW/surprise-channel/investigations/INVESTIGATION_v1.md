@@ -26314,3 +26314,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts and names only. OG-ap-32 Phase A redo is stopped; release 11031f278d stays superseded; no deploy."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T01:12:42Z",
+  "id": "NFRA_OPLGTW-Z-S337",
+  "one_line": "Round-40 ruling on Z-S336: option B (cut on 4be300110e, declared live base 319c9413a2, three harvest files from trunk)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S336"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "manifest at HEAD: deployed 319c9413a2, previous 4be300110e",
+      "Amendment A2 a31880f508; ap32.AC1 dry-run: PASS arm and four FAIL controls"
+    ]
+  },
+  "spec_asserts": "A blocking row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled option B: another seat's release 319c9413a2 (AMGT_HARVST, three harvest files, byte-equal to trunk) moved the live ref and is not fetchable here. The release is cut on 4be300110e with those three files taken whole from trunk, the live ref declared as base and the host md5 walked (OG-ap-32 Amendment A2, a31880f508; ap32.AC1 amended and dry-run). Option A waits on a seat that is not live; C holds the round.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled option B: another seat's release 319c9413a2 (AMGT_HARVST, three harvest files, byte-equal to trunk) moved the live ref and is not fetchable here. The release is cut on 4be300110e with those three files taken whole from trunk, the live ref declared as base and the host md5 walked (OG-ap-32 Amendment A2, a31880f508; ap32.AC1 amended and dry-run). Option A waits on a seat that is not live; C holds the round."
+}
+```
