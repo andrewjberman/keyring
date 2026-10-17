@@ -10457,5 +10457,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S43",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T15:11:37Z",
+     "one_line": "HVST-cd-2 CRO read (msg 7635): the UNH control contradicts itself on the served gateway: fund_of_record and last_stated_position read absent while a research report of the same security carries fund PFOE and a Maintain-positions evidence line.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "The dossier's fund_of_record and last_stated_position are derived from the security's research reports (D1-S29 b): a security that holds a report with a stated fund and position has them.",
+     "world_is": "On gateway 1753c741d9 the second principal 4.0.0_SA_CRO~DELL1 read harvest_get_research(UNH_US_Equity), a control with no listed report: misfiled_fields_excluded and misfiled_reports_excluded are empty, nothing was over-dropped. But fund_of_record and last_stated_position read absent with the reason 'no report carries a non-empty RECOMMENDATION line', while research_reports 48d81f053e5076e8 (class B, 2Q26) carries fund PFOE and fund_evidence 'Recommendation: Maintain positions in PFOE'. This is not the cd-1 filter (it drops fields that cite a listed report, and UNH lists none); it is the dossier producer's derivation of those two fields. Not read by the issuer: the dossier object itself. A candidate for the round-90 enrichment list.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/mcp/inbox/2.0.0_SA_COO/~W1/read/20261017T151055Z_4.0.0_SA_CRO_DELL1_Re_7634__KMB_reads_right_on_1753c741d9__.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round89/cd2_served.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
