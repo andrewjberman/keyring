@@ -23609,3 +23609,88 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W283-S1 -- the order's line numbers for reportRefBody and its call sites do not match origin/DEV 4d4dc68cae (AR-y-383)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W283-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~283",
+  "surfaced_at": "2026-10-17T05:42:34Z",
+  "one_line": "TO-AR-y-383 places reportRefBody at analysisRequest.ts lines 530 to 539 and its call sites about 593 and 675. At origin/DEV 4d4dc68cae it is at 566 to 575, its one call site is at 632 (inside recordStep), and recordStep is reached at 603 (fileAndRequestAnalysis) and 653 (retryAnalysisStep). The code shape matches the order; the change followed the code, not the numbers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-383 Context and step 1: reportRefBody(requestId, requestRevision) at portal src/pages/TicketCenter/analysisRequest.ts lines 530 to 539 at origin/DEV; its two call sites about lines 593 and 675.",
+  "world_is": "Read at the portal worktree HEAD 4d4dc68cae: analysisRequest.ts:567-575 holds reportRefBody (Number(requestRevision) at 568, the ternary at 571-573); the only call is analysisRequest.ts:632 inside recordStep; recordStep is called at analysisRequest.ts:603 and :653. Line 593 is the refusal return of fileAndRequestAnalysis and 675 is past the end of retryAnalysisStep. The type lines are analysisRequest.ts:53 and tickets.ts:266, as the order says.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-283/portal/src/pages/TicketCenter/analysisRequest.ts:567-575 read at 4d4dc68cae (reportRefBody)",
+      "C:/dev/wk-irpt-anlreq-283/portal/src/pages/TicketCenter/analysisRequest.ts:603, :632, :653 read at 4d4dc68cae (recordStep call sites)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~283/r44/REVISION_FINDING.json (the recorded line map)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W283-S2 -- the order's cited schema and doctrine files are absent from the sparse worktree; the row is written in the form of its sibling rows
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W283-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~283",
+  "surfaced_at": "2026-10-17T05:42:34Z",
+  "one_line": "The order says rows follow org/surprise_channel/schemas/investigation_item.schema.json and cites docs/doctrine/THE_SURPRISE_CHANNEL.md. Neither path exists in the workspace worktree at HEAD (org/surprise_channel/ is absent; the Glob for investigation_item.schema.json returned nothing under org/). This row copies the field set of the sibling rows in INVESTIGATION_v1.md; the surprise-row gate was not run against a schema.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-383 surprise rule: each row per org/surprise_channel/schemas/investigation_item.schema.json; docs/doctrine/THE_SURPRISE_CHANNEL.md is the channel doctrine.",
+  "world_is": "Read at the workspace worktree HEAD: org/surprise_channel/ does not exist in this sparse tree; docs/doctrine/THE_SURPRISE_CHANNEL.md does not exist; the investigation rows of INVESTIGATION_v1.md carry id, project, fabric, surfaced_by, surfaced_at, one_line, class, hazard_standing, spec_asserts, world_is, grounding and disposition.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-283 ls of org/surprise_channel/ returned no such directory at HEAD",
+      "C:/dev/wk-irpt-anlreq-283 Glob **/investigation_item.schema.json under org/ returned no files",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md rows W282-S1 and S167 (the sibling form)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W284-S1 -- origin/DEV has moved 39 commits past the order's base 4d4dc68cae; the two test files and both lint errors are unchanged on origin/DEV
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W284-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~284",
+  "surfaced_at": "2026-10-17T06:13:48Z",
+  "one_line": "The order names origin/DEV @4d4dc68cae as the base. At filing, origin/DEV resolves to 8ecad4a5, 39 commits past 4d4dc68cae (4d4dc68cae is an ancestor of it). The two lint errors are still present on origin/DEV and the two test files are byte-identical between the two commits, so the candidate, cut from 4d4dc68cae as the order says, is unaffected. The order's premise 'origin/DEV @4d4dc68cae' is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-384 BASE line and the AR384-y-AC2 control: the base is origin/DEV at 4d4dc68cae, where the two errors are present, and the eslint control runs on origin/DEV.",
+  "world_is": "Read in the portal worktree C:/dev/wk-irpt-anlreq-284/portal at filing: git rev-parse origin/DEV = 8ecad4a5; git merge-base --is-ancestor 4d4dc68cae origin/DEV holds; git rev-list --count 4d4dc68cae..origin/DEV = 39; git diff --stat 4d4dc68cae origin/DEV over the two test files is empty; git show origin/DEV:src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 190 still holds the two-space regex; origin/DEV's filing-decision-tree.test.tsx still holds the U+0008 bytes (one line). The candidate branch cand/dell2/anlreq-test-lint-fixes is cut at 4d4dc68cae and its diff is the two files only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-284/portal: git rev-parse origin/DEV -> 8ecad4a5; git rev-parse --short 4d4dc68cae -> 4d4dc68c (read at filing)",
+      "C:/dev/wk-irpt-anlreq-284/portal: git merge-base --is-ancestor 4d4dc68cae origin/DEV -> ancestor; git rev-list --count 4d4dc68cae..origin/DEV -> 39",
+      "C:/dev/wk-irpt-anlreq-284/portal: git diff --stat 4d4dc68cae origin/DEV -- the two test files -> empty",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~284/r45/LINT_FINDING.json (the eslint record at 4d4dc68cae)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
