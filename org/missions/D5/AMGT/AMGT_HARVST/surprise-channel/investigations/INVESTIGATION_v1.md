@@ -10921,5 +10921,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
          },
          "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S48",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T23:36:55Z",
+     "one_line": "Row D1-W162-S1 is dismissed: the closed batch-4 ledger's rollback to d3ae88be46 is superseded by three manifest moves; the HVST-cg-3 release is cut on the live commit.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "D1-W162-S1: a later release of harvest_research.py needs a base that accounts for the batch-4 rollback to d3ae88be46; disarm_owner 2.0.0_SA_COO~W1.",
+     "world_is": "Read by the issuer 2026-10-17 23:5xZ: the batch-4 ledger (20261017T0149Z) closed at 02:13Z with the rollback; infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway deployed_commit then moved d3ae88be46 -> 9d5b71255 (commit 013125d0b1, 01:53Z), -> 1753c741d9 (commit 25699bc8e5, 11:07Z, HVST-cd-2) -> efcc8ae19f (commit 16cefe735c, 13:43Z, OG-ap-36); at read time deployed_commit = efcc8ae19f7eebb04e2f45f45c0def28af037c24 and previous = 1753c741d9. The HVST-cg-3 order (staged) cuts the release on the live commit read from the manifest, the instance and /opt/opal-gateway/.deployed_commit, prints the b77e08e198^1 equality against the live file (md5 6d9e0dd38166b82943d6834a0ce482b5 at efcc8ae19f) and STOPS on any difference. Not read: the host itself (the order's step 0).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/critical_paths/change_management/20261017T0149Z_nfra-oplgtw-gateway-release-batch4_deploy_completion.md",
+       "infra/aws/ec2/EC2_MANIFEST.json (git log -3: 16cefe735c, 25699bc8e5, 013125d0b1)",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cg-3.the-gateway-serves-fund-relation-and-the-absent-note-wording.md (step 0 and 1)"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W162-S1"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The hazard (a release based on a tree that the batch-4 rollback made stale) is removed by the live-commit cut and the equality guard in the HVST-cg-3 order, and the manifest shows the live commit has moved three times since; nothing else is owed on D1-W162-S1."
+    }
 ]
 ```
