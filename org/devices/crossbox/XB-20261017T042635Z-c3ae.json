@@ -16,8 +16,8 @@
  },
  "ack_bus_message_id": "bce3d9ff-05e8-42d3-9908-e13b88116fe8",
  "closed_from": {
-  "at": null,
-  "by": null
+  "at": "2026-10-17T07:25:33Z",
+  "by": "2.0.0_SA_COO~RV"
  },
  "closed_to_issuer": {
   "at": null,
