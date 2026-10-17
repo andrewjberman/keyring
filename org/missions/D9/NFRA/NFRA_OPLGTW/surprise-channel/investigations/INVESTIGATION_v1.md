@@ -27258,3 +27258,27 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The issuer's cut defect, repaired: the wk-provision cone for worker ~133 omitted infra/aws/lambda/ci, so the naming limb (which reads function-map/ fail-closed) refused the record commit. The issuer added the folder to the cone and continued the worker by message; the record landed (7eafa6dbb9) and the order drained (02aabf0e2b). Carry for the next cut: the standard gateway worker cone includes infra/aws/lambda/ci."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~135",
+  "surfaced_at": "2026-10-17T09:47:56Z",
+  "id": "NFRA_OPLGTW-Z-W135-S1",
+  "one_line": "The agent definition .claude/agents/worker.md and the row schema org/surprise_channel/schemas/investigation_item.schema.json are not materialized in this sparse worktree; the standing rules came from the session context and the schema was read from the main tree, read-only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "The worker face says the rules are in the agent definition (.claude/agents/worker.md), and that rows follow org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "Both files are tracked at HEAD (worker.md blob 02f18058479fc1089c8fcd92e872dec777595715) but are absent from C:/tmp/wk-oplgtw-135. The rules were taken from the session context; the schema was read from C:/Users/Opal Bloomberg/Desktop/ajb_workspace, read-only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD .claude/agents/worker.md returns 100644 blob 02f18058479fc1089c8fcd92e872dec777595715; test -f .claude/agents/worker.md in the worktree reports absent",
+      "python open of org/surprise_channel/schemas/investigation_item.schema.json in the worktree raises FileNotFoundError; the same path opens in the main tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
