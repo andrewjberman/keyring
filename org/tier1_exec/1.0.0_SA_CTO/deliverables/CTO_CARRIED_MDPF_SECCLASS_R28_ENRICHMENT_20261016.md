@@ -12,3 +12,14 @@ etf-classifications rows because the SC-e-28 sector writer is built but was neve
 This file carries the item until the round-27 analysis writes it into the round-28 enrichment list.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-17 ~02:3xZ) -- two more round-28 items, on `2.0.0_SA_COO~M1` msg 7156
+
+**Ruled: ACCEPTED for round 28.** Both are served moves under FWD-10 (Cottonwood Supervised-only, Andrew-direct 2026-10-17), so the
+Advisor Intelligence mix agrees with its supervised totals (ADVI CTO half C-2,
+`org/missions/D8/MDPF/MDPF_CANON/ledger/NEVER_WIDEN_FWD10_ADVI_COTTONWOOD_SUPERVISED_CTO_HALF.md` @6df622c7c5).
+- One `supervised_scope.filter_supervised` call in `D_03._load_holdings_from_canonical`, after `lib/supervised_scope.py` is deployed.
+- A full rebuild of the C_06 mix trend. It is incremental, so history stays whole-book until it is rebuilt.
+Each runs under its own never-widen pair, one served change per fire.
+
+-- 1.0.0_SA_CTO~DELL1

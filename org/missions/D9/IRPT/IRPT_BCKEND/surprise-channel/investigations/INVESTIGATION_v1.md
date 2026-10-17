@@ -41304,3 +41304,110 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "CTO msg 9787 asked for the unlisted invocation by request id, time and source. Future export-drive orders should state that a creating invoke is followed by one async worker invocation of the same function, so a count of 'one invoke' is invokes by the seat, not invocations of the function. Nothing to reopen."
 }
 ```
+
+## IRPT_BCKEND-D2-S228 -- The deploy stamps for irpt-49f-reporting-read-lambda and irpt-export-render sit in infra/aws/lambda/ci/lambda-source-map
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S228",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-17T00:33:55Z",
+  "one_line": "The deploy stamps for irpt-49f-reporting-read-lambda and irpt-export-render sit in infra/aws/lambda/ci/lambda-source-map.json on box/dell2, a file origin/CLOUD has retired in favour of function-map/; they need porting at the next integrate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "0.7.0_AE_CloudOps~IB2's report on TO-IB-pr-616 (msg 10077): 'source-map stamps are in lambda-source-map.json (retired on CLOUD); they need porting to function-map/ at the drain.'",
+  "world_is": "Measured 2026-10-17 ~00:4xZ. `git ls-tree origin/CLOUD infra/aws/lambda/ci/` lists a `function-map/` directory (one JSON per function, e.g. function-map/access-anomaly-scanner.json) and `lambda-source-map.json.clean`, and no `lambda-source-map.json`; box/dell2 still carries `lambda-source-map.json`, where IB2's commits d646cdd605 and 95ced15883 stamped the two functions' new artifact shas (read function z634S2Qs..., export 5bIgn/ML...). At the next integrate of box/dell2 into CLOUD those two entries have no home on the trunk unless someone ports them into function-map/<function>.json. The functions themselves are live and equal to the stamps (read independently 2026-10-17T00:4xZ). This is a record-carrier gap, not a deployed-state gap, and it is the same for every dell2 applier since the retirement. Disarms when the two function entries exist in function-map/ on the trunk with these shas, or the integrator rules the dell2 stamps carried by its merge tooling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree origin/CLOUD infra/aws/lambda/ci/ read 2026-10-17: function-map/ present, lambda-source-map.json absent (lambda-source-map.json.clean present)",
+      "aws lambda get-function-configuration for both functions, CodeSha256 equal to the IB247-1 release record's built shas",
+      "IB2 msg 10077"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the port: whoever integrates box/dell2 (0.0.0_AB_MSTR~DELL2 box-sync); this seat reports it and does not edit the trunk's map."
+}
+```
+
+## IRPT_BCKEND-D2-W481-S1 -- The order's line-34 premise: that module-head sentence describes the PATH B platinum read-back, not the filled report
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W481-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~481",
+  "surfaced_at": "2026-10-17T01:47:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order names the module head near line 34 of retained_export.py as a sentence that is now false; lines 30-34 describe the PATH B platinum series read-back through the 49F route, which is still true, so that sentence was left unedited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order, Do step 2: update the module-head docstring near line 34 only where it would now be false; change nothing else.",
+  "world_is": "Lines 30-34 of infra/aws/lambda/investor-reporting/export/retained_export.py say the platinum series read-back pins X-Opal-Version-Id and asks for the pinned version_id. That remains true for the platinum series (render_read still passes held version_id). The filled-report read is not mentioned in the module head, so no edit was made there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py@5e9dfb4e13 lines 30-34 read 2026-10-17 by the worker",
+      "retained_export.py worktree lines 301-305 (render_read, platinum) still pass version_id=held[version_id]"
+    ]
+  },
+  "notes": "No behaviour is affected. The issuer may re-state the premise in the next round."
+}
+```
+
+## IRPT_BCKEND-D2-W481-S2 -- Four comments in retained_export.py still say the filled-report read uses the pinned VersionId or never the current object
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W481-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~481",
+  "surfaced_at": "2026-10-17T01:47:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After the read_pinned_filled change, four comments in retained_export.py describe the old pinned-VersionId read; they are now false, sit outside the two named functions, and were left unedited under the order's change-nothing-else bound.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order, Do step 2: update docstrings or comments that say the pinned VersionId is always passed or the current object is never consulted, only where they would now be false; change nothing else.",
+  "world_is": "The filled-report read now reads the current object and refuses on sha256 or size mismatch. Stale statements remain in the worktree copy of retained_export.py at: the PATH C banner, line 316 ('The freeze reads that VersionId through the injected reader'); the IB-pr-563 block, line 411 ('The pinned read that follows reads back exactly that VersionId'); the FILLED-REPORT-F banner, line 495 ('reads back exactly the pinned VersionId and never the current object'); and the filled_leg_read docstring, lines 554-556 ('the pinned VersionId is read back ... The current object is never consulted'). Code behaviour is correct; these are documentation only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "retained_export.py worktree lines 316, 411, 495, 554-556 read 2026-10-17 by the worker; base commit 5e9dfb4e13",
+      "grep of the worktree copy for 'the pinned VersionId|never the current object' returned lines 381, 495 and 555 after the change"
+    ]
+  },
+  "notes": "Hazard INERT: a reader of these comments could be misled, nothing runs on them. Owner may fold the four edits into the next change to this file."
+}
+```
+
+## IRPT_BCKEND-D2-S229 -- Disposition of worker 481's rows IRPT_BCKEND-D2-W481-S1 and S2 on TO-IB-pr-617: the line-34 premise stays true for the p
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S229",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-17T02:17:30Z",
+  "one_line": "Disposition of worker 481's rows IRPT_BCKEND-D2-W481-S1 and S2 on TO-IB-pr-617: the line-34 premise stays true for the platinum series, and the four stale comments were made true by TO-IB-pr-619.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker 481's rows on TO-IB-pr-617: W481-S1 (the module head's PATH B paragraph still describes the pinned-VersionId read, which stays true for the platinum series) and W481-S2 (four statements outside the two named functions describe the old filled-report read).",
+  "world_is": "Merged at 1dab1295ef (drain of TO-IB-pr-617 at 302d7fc367 and TO-IB-pr-619 at fc8b3c2f57). The issuer's own reads on the worker's final tree and again on the merged trunk: p248 AC1 to AC3 and p249 AC1 to AC3 PASS (AC3 of p248 on the worker's tree, before the merge); the three export filled-report test files read 31 passed; py_compile clean. The PATH B paragraph is about the platinum SERIES read through the reporting route and was correctly left untouched. The four stale statements (the PATH C banner, the IB-pr-563 block, the FILLED-REPORT-F banner and the filled_leg_read docstring) now say the CURRENT object is re-read and refused on a sha256 or size mismatch; the diff against the worker's merged head is comments and one docstring only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff e2d1530c3d..3146338cb9 on retained_export.py read by the issuer: comment and docstring lines only",
+      "p248 and p249 outputs run by the issuer, all PASS",
+      "pytest of the three files on the merged trunk: 31 passed"
+    ]
+  },
+  "dismissal_reason": "W481-S1 is a true observation that needs no act (the PATH B paragraph is about the series route and is correct); W481-S2 is resolved by the merged TO-IB-pr-619, which the issuer cut for it and verified.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "Append-only: the worker's two rows are not edited."
+}
+```

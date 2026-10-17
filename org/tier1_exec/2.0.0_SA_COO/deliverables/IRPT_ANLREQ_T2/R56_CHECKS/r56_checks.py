@@ -1,20 +1,24 @@
-"""IRPT_ANLREQ round 60, workstream T -- the issuer's checks of the FWD-5 live cross-firm run (2.0.0_SA_COO~T2).
+"""IRPT_ANLREQ rounds 60-65, workstream T -- the issuer's checks of the FWD-5 live cross-firm sittings (2.0.0_SA_COO~T2).
 
-  report  R56-REPORT  the driver's run report (fwd5_run_report.json, in the applier's deliverables folder) shows: schema fwd5_run_report/1,
-                      the run's go token, firm-a cottonwood (the principal's firm) and firm-b 49financial (the ticket's owner), a signed-in
-                      session, exactly 7 REFUSED, 0 LEAK, 0 UNREACHED and 2 EXCLUDED rows of 9, rc 0, and nothing in the file that is a
-                      body, token, password or address.
-  control R56-CONTROL the driver's --control report (fwd5_control_report.json, same folder): schema fwd5_control_report/1, mode control, the
-                      go token, firm-a opal-capital, firm-b 49financial, signed in, ticket-read and ticket-list ALLOWED, rc 0, 9 rows with
-                      only ALLOWED/DENIED/UNREACHED/EXCLUDED verdicts, nothing in the file that is a body, token, password or address.
-  fence   R56-FENCE   per route, the fence is SHOWN iff the control read ALLOWED and the firm-B run read REFUSED; OK needs it SHOWN on
-                      ticket-read and ticket-list (the CTO's positive control, msg 9804); other routes are listed, not required.
-  absent  R56-ABSENT  BOTH minted principals (fwd5-cottonwood-r60@opal.invalid and fwd5-control-r60@opal.invalid) are gone from
-                      opal-users-v2: no PROFILE row on a consistent read and a count of 0 on the email index. A control: it passes at
-                      the base (nothing was minted) and after the run.
+The THIRD sitting (CTO msg 10010, CVO ADJUDICATION_v26) drives TWO targets with the same two principals:
+  packaged   the packaged ticket TCK-20261014-2965a5e0 (its files exist), reports in <DIR>/packaged/
+  synthetic  the synthetic ticket TCK-20261015-944c84f8 and its job (the job-level reads), reports in <DIR>/synthetic/
+each holding fwd5_run_report.json (the firm-B principal) and fwd5_control_report.json (the entitled control). Each report has
+15 rows: 13 made calls and 2 EXCLUDED.
+
+  report  R56-REPORT  both run reports: schema, go token, firm-a cottonwood, firm-b 49financial, signed in, 13 REFUSED / 0 LEAK /
+                      0 UNREACHED / 2 EXCLUDED, rc 0, every report-side REFUSED carrying a fence code (the no-selection call may be
+                      refused by absence), nothing that is a body, token, password or address.
+  control R56-CONTROL both control reports: schema, mode control, go, firm-a opal-capital, firm-b 49financial, ticket-read and
+                      ticket-list ALLOWED, rc 0, verdicts only ALLOWED/DENIED/UNREACHED/EXCLUDED.
+  fence   R56-FENCE   per target and route: SHOWN iff the control read ALLOWED and firm B read REFUSED; PAST-FENCE iff the control read
+                      DENIED with a non-fence code (NOT_FOUND and the like: it passed the guard, no artifact) and firm B was REFUSED.
+                      OK needs every made route except form-as-filled SHOWN or PAST-FENCE (the no-selection call needs firm B REFUSED
+                      only), and on the packaged target original-upload, report-pdf and commentary-pdf SHOWN (the control served each file).
+  absent  R56-ABSENT  BOTH minted principals are gone from opal-users-v2: no PROFILE row (consistent) and email-index count 0.
   --self-test         the evaluators against green cases and mutants.
 
-Read-only: one file read (report), one get-item and one index-count query (absent). Prints R56-<ARM>-OK or -FAIL <reason>.
+Read-only: file reads (report, control, fence), one get-item and one index-count query per principal (absent). Prints R56-<ARM>-OK or -FAIL <reason>.
 """
 import json
 import os
@@ -22,131 +26,185 @@ import subprocess
 import sys
 import tempfile
 
-REPORT_PATH = "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/fwd5_run_report.json"
-GO = "IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-s2-ib2"
+DIR = "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s3/"
+TARGETS = ("packaged", "synthetic")
+GO = "IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-s3-ib2"
 EMAIL = "fwd5-cottonwood-r60@opal.invalid"
 EMAIL_CONTROL = "fwd5-control-r60@opal.invalid"
-CONTROL_PATH = REPORT_PATH.replace("fwd5_run_report.json", "fwd5_control_report.json")
 TABLE = "opal-users-v2"
 CALL_KEYS = {"route", "method", "status", "verdict", "body_len", "reason", "code"}
-REPORT_SIDE = ("original-upload", "opal-report", "report-pdf", "commentary-pdf")
+MADE_ROUTES = ("ticket-read", "ticket-list", "form-as-filled", "original-upload", "opal-report", "report-pdf", "commentary-pdf",
+               "request-read", "request-history", "job-status", "narrative", "export-receipt", "request-read-no-selection")
+REPORT_SIDE = MADE_ROUTES[3:]
+FILE_ROUTES = ("original-upload", "report-pdf", "commentary-pdf")
+NO_SELECTION = "request-read-no-selection"
 FENCE_CODES = ("FIRM_BINDING", "NOT_AUTHORIZED")
+NOT_PAST = FENCE_CODES + ("CONTRACT_VERSION", "?", "")
 FORBIDDEN = ("bearer", "password", "accesstoken", "refresh", "@opal.invalid", "set-cookie")
 AWS = [sys.executable, "-c", "import subprocess,sys;sys.exit(subprocess.call(['bash','.tools/aws']+sys.argv[1:]))"]
 
 
-def evaluate(text):
-    """(ok, why) over the report file's text."""
+def _load(text):
     try:
-        rep = json.loads(text)
+        obj = json.loads(text)
     except ValueError:
-        return False, "the report is not JSON"
-    if not isinstance(rep, dict):
-        return False, "the report is not an object"
+        return None
+    return obj if isinstance(obj, dict) else None
+
+
+def _common(rep, text, schema, firm_a):
     low = text.lower()
     bad = [w for w in FORBIDDEN if w in low]
     if bad:
-        return False, "the report holds a forbidden token: %s" % ",".join(bad)
-    if rep.get("schema") != "fwd5_run_report/1":
-        return False, "schema is not fwd5_run_report/1"
+        return "the report holds a forbidden token: %s" % ",".join(bad)
+    if rep.get("schema") != schema:
+        return "schema is not %s" % schema
     if rep.get("go") != GO:
-        return False, "go token is not %s" % GO
-    if rep.get("firm_a") != "cottonwood" or rep.get("firm_b") != "49financial":
-        return False, "firm-a/firm-b are not cottonwood/49financial"
+        return "go token is not %s" % GO
+    if rep.get("firm_a") != firm_a or rep.get("firm_b") != "49financial":
+        return "firm-a/firm-b are not %s/49financial" % firm_a
     if rep.get("sign_in") != "signed in":
-        return False, "sign_in is %r" % rep.get("sign_in")
+        return "sign_in is %r" % rep.get("sign_in")
     calls = rep.get("calls")
-    if not isinstance(calls, list) or len(calls) != 9:
-        return False, "calls is not a list of 9"
+    if not isinstance(calls, list) or len(calls) != 15:
+        return "calls is not a list of 15"
     for c in calls:
         if not isinstance(c, dict) or set(c) != CALL_KEYS:
-            return False, "a call row has keys outside the closed set"
+            return "a call row has keys outside the closed set"
+    routes = [c["route"] for c in calls if c["verdict"] != "EXCLUDED"]
+    if routes != list(MADE_ROUTES):
+        return "the made routes are %s, not the 13 expected in order" % routes
+    return None
+
+
+def evaluate(text):
+    """(ok, why) over a firm-B run report's text."""
+    rep = _load(text)
+    if rep is None:
+        return False, "the report is not a JSON object"
+    err = _common(rep, text, "fwd5_run_report/1", "cottonwood")
+    if err:
+        return False, err
+    calls = rep["calls"]
     for c in calls:
-        if c.get("route") in REPORT_SIDE and c.get("verdict") == "REFUSED" and c.get("code") not in FENCE_CODES:
-            return False, "report-side route %s is REFUSED with code %r, not a fence code" % (c.get("route"), c.get("code"))
-    counts = {v: sum(1 for c in calls if c.get("verdict") == v) for v in ("REFUSED", "LEAK", "UNREACHED", "EXCLUDED")}
-    if counts != {"REFUSED": 7, "LEAK": 0, "UNREACHED": 0, "EXCLUDED": 2}:
-        return False, "counts are %s, not 7/0/0/2" % counts
+        if c["verdict"] not in ("REFUSED", "LEAK", "UNREACHED", "EXCLUDED"):
+            return False, "a verdict is outside the closed set"
+        if c["route"] in REPORT_SIDE and c["verdict"] == "REFUSED" and c["route"] != NO_SELECTION and c["code"] not in FENCE_CODES:
+            return False, "report-side route %s is REFUSED with code %r, not a fence code" % (c["route"], c["code"])
+        if c["route"] == NO_SELECTION and c["verdict"] == "REFUSED" and c["code"] in ("CONTRACT_VERSION", "?", ""):
+            return False, "the no-selection call is REFUSED with code %r, which refuses nothing" % c["code"]
+    counts = {v: sum(1 for c in calls if c["verdict"] == v) for v in ("REFUSED", "LEAK", "UNREACHED", "EXCLUDED")}
+    if counts != {"REFUSED": 13, "LEAK": 0, "UNREACHED": 0, "EXCLUDED": 2}:
+        return False, "counts are %s, not 13/0/0/2" % counts
     if rep.get("counts") != counts:
         return False, "the report's own counts disagree with its rows"
     if rep.get("rc") != 0:
         return False, "rc is %r" % rep.get("rc")
     if rep.get("guard_refused"):
         return False, "the guard refused a route"
-    return True, "REFUSED=7 LEAK=0 UNREACHED=0 EXCLUDED=2 of 9, rc 0"
+    return True, "REFUSED=13 LEAK=0 UNREACHED=0 EXCLUDED=2 of 15, rc 0"
 
 
 def evaluate_control(text):
-    """(ok, why) over the control report's text."""
-    try:
-        rep = json.loads(text)
-    except ValueError:
-        return False, "the control report is not JSON"
-    if not isinstance(rep, dict):
-        return False, "the control report is not an object"
-    low = text.lower()
-    bad = [w for w in FORBIDDEN if w in low]
-    if bad:
-        return False, "the control report holds a forbidden token: %s" % ",".join(bad)
-    if rep.get("schema") != "fwd5_control_report/1" or rep.get("mode") != "control":
-        return False, "schema/mode are not fwd5_control_report/1 / control"
-    if rep.get("go") != GO:
-        return False, "go token is not %s" % GO
-    if rep.get("firm_a") != "opal-capital" or rep.get("firm_b") != "49financial":
-        return False, "firm-a/firm-b are not opal-capital/49financial"
-    if rep.get("sign_in") != "signed in":
-        return False, "sign_in is %r" % rep.get("sign_in")
-    calls = rep.get("calls")
-    if not isinstance(calls, list) or len(calls) != 9:
-        return False, "calls is not a list of 9"
-    for c in calls:
-        if not isinstance(c, dict) or set(c) != CALL_KEYS or c.get("verdict") not in ("ALLOWED", "DENIED", "UNREACHED", "EXCLUDED"):
-            return False, "a call row has keys or a verdict outside the closed set"
-    by = {c["route"]: c["verdict"] for c in calls}
+    """(ok, why) over a control report's text."""
+    rep = _load(text)
+    if rep is None:
+        return False, "the control report is not a JSON object"
+    if rep.get("mode") != "control":
+        return False, "mode is not control"
+    err = _common(rep, text, "fwd5_control_report/1", "opal-capital")
+    if err:
+        return False, err
+    for c in rep["calls"]:
+        if c["verdict"] not in ("ALLOWED", "DENIED", "UNREACHED", "EXCLUDED"):
+            return False, "a verdict is outside the closed set"
+    by = {c["route"]: c["verdict"] for c in rep["calls"]}
     if by.get("ticket-read") != "ALLOWED" or by.get("ticket-list") != "ALLOWED":
         return False, "ticket-read/ticket-list are %s/%s, not ALLOWED" % (by.get("ticket-read"), by.get("ticket-list"))
     if rep.get("rc") != 0:
         return False, "rc is %r" % rep.get("rc")
-    return True, "ticket-read ALLOWED, ticket-list ALLOWED, rc 0; " + ",".join("%s=%s" % (k, v) for k, v in sorted(by.items()))
+    return True, "ticket-read ALLOWED, ticket-list ALLOWED, rc 0"
 
 
-def evaluate_fence(run_text, control_text):
-    """(ok, why): per route the fence is SHOWN iff control ALLOWED and run REFUSED; OK needs ticket-read and ticket-list SHOWN."""
+def evaluate_fence(run_text, control_text, target):
+    """(ok, why): per route SHOWN or PAST-FENCE; the file routes SHOWN on the packaged target."""
     okr, whyr = evaluate(run_text)
     okc, whyc = evaluate_control(control_text)
     if not okr:
-        return False, "run report: " + whyr
+        return False, "%s run report: %s" % (target, whyr)
     if not okc:
-        return False, "control report: " + whyc
-    run = {c["route"]: c["verdict"] for c in json.loads(run_text)["calls"]}
-    ctl = {c["route"]: c["verdict"] for c in json.loads(control_text)["calls"]}
-    shown = sorted(r for r in run if run[r] == "REFUSED" and ctl.get(r) == "ALLOWED")
-    inconclusive = sorted(r for r in run if run[r] == "REFUSED" and ctl.get(r) != "ALLOWED")
-    if "ticket-read" not in shown or "ticket-list" not in shown:
-        return False, "fence not shown on ticket-read and ticket-list; shown=%s inconclusive=%s" % (shown, inconclusive)
-    return True, "fence SHOWN on %s; INCONCLUSIVE (control not ALLOWED) on %s" % (shown, inconclusive)
+        return False, "%s control report: %s" % (target, whyc)
+    run = {c["route"]: c for c in json.loads(run_text)["calls"]}
+    ctl = {c["route"]: c for c in json.loads(control_text)["calls"]}
+    shown, past, missing = [], [], []
+    for r in MADE_ROUTES:
+        if r == "form-as-filled":
+            continue
+        if run[r]["verdict"] != "REFUSED":
+            missing.append(r)
+            continue
+        cv, cc = ctl[r]["verdict"], ctl[r]["code"]
+        if r == NO_SELECTION:
+            past.append(r)
+        elif cv == "ALLOWED":
+            shown.append(r)
+        elif cv == "DENIED" and cc not in NOT_PAST:
+            past.append(r)
+        else:
+            missing.append(r)
+    if target == "packaged":
+        notserved = [r for r in FILE_ROUTES if r not in shown]
+        if notserved:
+            return False, "packaged target: the control did not serve %s (shown=%s past=%s)" % (notserved, shown, past)
+    if missing:
+        return False, "%s: no fence reading on %s (shown=%s past=%s)" % (target, missing, shown, past)
+    return True, "%s: SHOWN on %s; PAST-FENCE on %s" % (target, shown, past)
 
 
-def control():
-    if not os.path.isfile(CONTROL_PATH):
-        return False, "no control report at %s" % CONTROL_PATH
-    with open(CONTROL_PATH, encoding="utf-8") as fh:
-        return evaluate_control(fh.read())
+def _read(path):
+    if not os.path.isfile(path):
+        return None
+    with open(path, encoding="utf-8") as fh:
+        return fh.read()
 
 
-def fence():
-    for pth in (REPORT_PATH, CONTROL_PATH):
-        if not os.path.isfile(pth):
-            return False, "no report at %s" % pth
-    with open(REPORT_PATH, encoding="utf-8") as a, open(CONTROL_PATH, encoding="utf-8") as b:
-        return evaluate_fence(a.read(), b.read())
+def _each(fn_one):
+    msgs = []
+    for t in TARGETS:
+        ok, why = fn_one(t)
+        if not ok:
+            return False, why
+        msgs.append(why)
+    return True, " || ".join(msgs)
 
 
 def report():
-    if not os.path.isfile(REPORT_PATH):
-        return False, "no report at %s" % REPORT_PATH
-    with open(REPORT_PATH, encoding="utf-8") as fh:
-        return evaluate(fh.read())
+    def one(t):
+        text = _read(DIR + t + "/fwd5_run_report.json")
+        if text is None:
+            return False, "no run report at %s%s/fwd5_run_report.json" % (DIR, t)
+        ok, why = evaluate(text)
+        return ok, "%s: %s" % (t, why)
+    return _each(one)
+
+
+def control():
+    def one(t):
+        text = _read(DIR + t + "/fwd5_control_report.json")
+        if text is None:
+            return False, "no control report at %s%s/fwd5_control_report.json" % (DIR, t)
+        ok, why = evaluate_control(text)
+        return ok, "%s: %s" % (t, why)
+    return _each(one)
+
+
+def fence():
+    def one(t):
+        a, b = _read(DIR + t + "/fwd5_run_report.json"), _read(DIR + t + "/fwd5_control_report.json")
+        if a is None or b is None:
+            return False, "no reports under %s%s/" % (DIR, t)
+        return evaluate_fence(a, b, t)
+    return _each(one)
 
 
 def aws(*args):
@@ -154,25 +212,17 @@ def aws(*args):
     return r.returncode, r.stdout, r.stderr
 
 
-def absent():
-    for email in (EMAIL, EMAIL_CONTROL):
-        ok, why = absent_one(email)
-        if not ok:
-            return False, "%s: %s" % (email.split("@")[0], why)
-    return True, "both principals: no PROFILE row (consistent), index count 0"
-
-
-def absent_one(EMAIL):
-    fds = []
+def absent_one(email):
+    paths = []
     try:
         fd1, k = tempfile.mkstemp(suffix=".json")
-        fds.append(k)
+        paths.append(k)
         with os.fdopen(fd1, "w", encoding="ascii") as fh:
-            fh.write(json.dumps({"PK": {"S": "USER#" + EMAIL}, "SK": {"S": "PROFILE"}}))
+            fh.write(json.dumps({"PK": {"S": "USER#" + email}, "SK": {"S": "PROFILE"}}))
         fd2, v = tempfile.mkstemp(suffix=".json")
-        fds.append(v)
+        paths.append(v)
         with os.fdopen(fd2, "w", encoding="ascii") as fh:
-            fh.write(json.dumps({":e": {"S": EMAIL}}))
+            fh.write(json.dumps({":e": {"S": email}}))
         rc1, got, _ = aws("dynamodb", "get-item", "--table-name", TABLE, "--key", "file://" + k.replace("\\", "/"),
                           "--consistent-read", "--query", "Item.PK.S", "--output", "text")
         rc2, cnt, _ = aws("dynamodb", "query", "--table-name", TABLE, "--index-name", "email-index",
@@ -180,7 +230,7 @@ def absent_one(EMAIL):
                           "--expression-attribute-values", "file://" + v.replace("\\", "/"),
                           "--select", "COUNT", "--query", "Count", "--output", "text")
     finally:
-        for p in fds:
+        for p in paths:
             try:
                 os.unlink(p)
             except OSError:
@@ -194,81 +244,89 @@ def absent_one(EMAIL):
     return True, "no PROFILE row (consistent), index count 0"
 
 
-def _green():
-    names = ["ticket-read", "ticket-list", "form-as-filled", "original-upload", "opal-report", "report-pdf", "commentary-pdf"]
-    calls = [{"route": n, "method": "GET", "status": 404, "verdict": "REFUSED", "body_len": 0, "reason": "",
-              "code": "FIRM_BINDING" if n in REPORT_SIDE else ""} for n in names]
-    calls += [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded",
-               "code": ""} for i in range(2)]
+def absent():
+    for email in (EMAIL, EMAIL_CONTROL):
+        ok, why = absent_one(email)
+        if not ok:
+            return False, "%s: %s" % (email.split("@")[0], why)
+    return True, "both principals: no PROFILE row (consistent), index count 0"
+
+
+def _row(route, verdict, code="", status=200, body_len=5):
+    return {"route": route, "method": "GET", "status": status, "verdict": verdict, "body_len": body_len, "reason": "", "code": code}
+
+
+def _excluded():
+    return [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded", "code": ""}
+            for i in range(2)]
+
+
+def _green_run():
+    calls = []
+    for r in MADE_ROUTES:
+        if r in REPORT_SIDE:
+            calls.append(_row(r, "REFUSED", "NOT_FOUND" if r == NO_SELECTION else "FIRM_BINDING"))
+        else:
+            calls.append(_row(r, "REFUSED", "", 403 if r != "ticket-list" else 200))
+    calls += _excluded()
     return {"schema": "fwd5_run_report/1", "go": GO, "principal_digest": "abcdef012345", "firm_a": "cottonwood",
             "firm_b": "49financial", "sign_in": "signed in", "calls": calls, "guard_refused": [],
-            "counts": {"REFUSED": 7, "LEAK": 0, "UNREACHED": 0, "EXCLUDED": 2}, "rc": 0}
+            "counts": {"REFUSED": 13, "LEAK": 0, "UNREACHED": 0, "EXCLUDED": 2}, "rc": 0}
 
 
-def _green_control():
-    names = ["ticket-read", "ticket-list", "form-as-filled", "original-upload", "opal-report", "report-pdf", "commentary-pdf"]
-    calls = [{"route": n, "method": "GET", "status": 200 if i < 2 else 404, "verdict": "ALLOWED" if i < 2 else "DENIED",
-              "body_len": 5, "reason": "", "code": ""} for i, n in enumerate(names)]
-    calls += [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded",
-               "code": ""} for i in range(2)]
+def _green_control(packaged):
+    calls = []
+    for r in MADE_ROUTES:
+        if r in ("ticket-read", "ticket-list"):
+            calls.append(_row(r, "ALLOWED"))
+        elif r == "form-as-filled":
+            calls.append(_row(r, "DENIED", "", 404, 63))
+        elif r in FILE_ROUTES and packaged:
+            calls.append(_row(r, "ALLOWED"))
+        else:
+            calls.append(_row(r, "DENIED", "NOT_FOUND", 200, 460))
+    calls += _excluded()
     return {"schema": "fwd5_control_report/1", "mode": "control", "go": GO, "principal_digest": "abcdef012345",
             "firm_a": "opal-capital", "firm_b": "49financial", "sign_in": "signed in", "calls": calls, "guard_refused": [],
-            "counts": {"ALLOWED": 2, "DENIED": 5, "UNREACHED": 0, "EXCLUDED": 2}, "rc": 0}
+            "counts": {"ALLOWED": 2, "DENIED": 11, "UNREACHED": 0, "EXCLUDED": 2}, "rc": 0}
 
 
 def self_test():
-    g = _green()
-    cases = [("green", g, True)]
+    g = _green_run()
+    gp, gs = _green_control(True), _green_control(False)
+    dump = json.dumps
+    checks = [("run green", evaluate(dump(g))[0], True), ("control green packaged", evaluate_control(dump(gp))[0], True),
+              ("control green synthetic", evaluate_control(dump(gs))[0], True),
+              ("fence packaged", evaluate_fence(dump(g), dump(gp), "packaged")[0], True),
+              ("fence synthetic", evaluate_fence(dump(g), dump(gs), "synthetic")[0], True),
+              ("fence packaged with the unserved control (the synthetic control)", evaluate_fence(dump(g), dump(gs), "packaged")[0], False)]
 
-    def mut(name, fn):
-        d = json.loads(json.dumps(g))
+    def mutate(base, fn):
+        d = json.loads(dump(base))
         fn(d)
-        cases.append((name, d, False))
+        return dump(d)
 
-    def leak(d):
-        d["calls"][0]["verdict"] = "LEAK"
-        d["counts"] = {"REFUSED": 6, "LEAK": 1, "UNREACHED": 0, "EXCLUDED": 2}
-        d["rc"] = 1
+    def idx(d, route):
+        return [c["route"] for c in d["calls"]].index(route)
 
-    def unreached(d):
-        d["calls"][1]["verdict"] = "UNREACHED"
-        d["counts"] = {"REFUSED": 6, "LEAK": 0, "UNREACHED": 1, "EXCLUDED": 2}
-        d["rc"] = 2
-
-    mut("a CONTRACT_VERSION refusal graded REFUSED", lambda d: d["calls"][3].update(code="CONTRACT_VERSION"))
-    mut("a LEAK", leak)
-    mut("an UNREACHED", unreached)
-    mut("wrong firms", lambda d: d.update(firm_a="49financial", firm_b="cottonwood"))
-    mut("wrong go", lambda d: d.update(go="IRPT_ANLREQ.TO-RUN-FWD5.other"))
-    mut("a body key", lambda d: d["calls"][0].update(body="x"))
-    mut("a secret", lambda d: d["calls"][0].update(reason="Bearer abc"))
-    for name, d, want in cases:
-        got, _ = evaluate(json.dumps(d))
+    checks += [
+        ("run LEAK", evaluate(mutate(g, lambda d: d["calls"][idx(d, "narrative")].update(verdict="LEAK")))[0], False),
+        ("run UNREACHED", evaluate(mutate(g, lambda d: d["calls"][idx(d, "job-status")].update(verdict="UNREACHED")))[0], False),
+        ("CONTRACT_VERSION graded REFUSED", evaluate(mutate(g, lambda d: d["calls"][idx(d, "export-receipt")].update(code="CONTRACT_VERSION")))[0], False),
+        ("no-selection refused with CONTRACT_VERSION", evaluate(mutate(g, lambda d: d["calls"][idx(d, NO_SELECTION)].update(code="CONTRACT_VERSION")))[0], False),
+        ("a route missing", evaluate(mutate(g, lambda d: d["calls"].pop(idx(d, "request-history"))))[0], False),
+        ("wrong go", evaluate(mutate(g, lambda d: d.update(go="IRPT_ANLREQ.TO-RUN-FWD5.other")))[0], False),
+        ("a secret", evaluate(mutate(g, lambda d: d["calls"][0].update(reason="Bearer abc")))[0], False),
+        ("control ticket-read DENIED", evaluate_control(mutate(gp, lambda d: d["calls"][0].update(verdict="DENIED")))[0], False),
+        ("control wrong firm", evaluate_control(mutate(gp, lambda d: d.update(firm_a="cottonwood")))[0], False),
+        ("control past-fence code is a fence code",
+         evaluate_fence(dump(g), mutate(gs, lambda d: d["calls"][idx(d, "narrative")].update(code="FIRM_BINDING")), "synthetic")[0], False),
+    ]
+    for name, got, want in checks:
         if got != want:
             print("R56-SELFTEST-FAIL %s" % name)
             return 1
-    gc = _green_control()
-    ccases = [("control green", gc, True)]
-    for name, fn in (("control ticket-read DENIED", lambda d: d["calls"][0].update(verdict="DENIED")),
-                     ("control list UNREACHED", lambda d: d["calls"][1].update(verdict="UNREACHED")),
-                     ("control wrong firm", lambda d: d.update(firm_a="cottonwood")),
-                     ("control uses REFUSED", lambda d: d["calls"][2].update(verdict="REFUSED"))):
-        d = json.loads(json.dumps(gc))
-        fn(d)
-        ccases.append((name, d, False))
-    for name, d, want in ccases:
-        got, _ = evaluate_control(json.dumps(d))
-        if got != want:
-            print("R56-SELFTEST-FAIL %s" % name)
-            return 1
-    okf, _ = evaluate_fence(json.dumps(g), json.dumps(gc))
-    d = json.loads(json.dumps(gc))
-    d["calls"][1]["verdict"] = "DENIED"
-    badf, _ = evaluate_fence(json.dumps(g), json.dumps(d))
-    if not okf or badf:
-        print("R56-SELFTEST-FAIL fence")
-        return 1
-    print("R56-SELFTEST-OK green plus seven mutants refused; control green plus four mutants; fence both ways")
+    print("R56-SELFTEST-OK %d cases (run green, control green x2, fence x3, 13 mutants refused)" % len(checks))
     return 0
 
 
