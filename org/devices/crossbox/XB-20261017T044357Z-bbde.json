@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261017T044357Z-bbde",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "0.7.0_AE_CloudOps~MDPF1",
+ "subject": "MDPF_DEMQUE DQ-t-70 GO (supersedes XB-20261017T041447Z-7507): take CLOUD >=3af9864832, read the 14:00Z 2026-10-17 fire",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t70.sitez-first-surface-budget-fire.md",
+ "opened_at": "2026-10-17T04:43:57Z",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack_bus_message_id": null,
+ "closed_from": {
+  "at": null,
+  "by": null
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}
