@@ -23831,3 +23831,58 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W285-S7 -- origin/PROD carries the excluded commentary-always commit 406345bce1 in its history (merged by 45a3e18f, reverted by e0b43076), so an ancestry test of the recut reads PRESENT for it (AR-y-385 AMENDMENT 1, step 4)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:51:34Z",
+  "one_line": "The excluded commit 406345bce1 (commentary-always) is an ancestor of origin/PROD: PROD merged it in with 45a3e18f and reverted that merge in e0b43076. An ancestry test of the recut against origin/PROD therefore reads PRESENT for 406345bce1 even though the recut carries no copy of it. The v2 payload check tests the recut's own commits (origin/PROD..branch, 20 commits) for the excluded commit, and its content, body and patch-id checks all read ABSENT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 AMENDMENT 1 and step 4: the excluded items (c05e3dda, the 7f6c698d second-parent commit 406345bce1) read ABSENT against the recut; the recut carries no excluded commit.",
+  "world_is": "git merge-base --is-ancestor 406345bce120cdec5d9b7a0cef00bd7b80b680e9 origin/PROD exits 0. git log origin/PROD lists 45a3e18f (merge feature cand/dell2/anlreq-commentary-always-requested into release/20261015T180116Z) and e0b43076 (Revert of that merge). origin/PROD..cand/dell2/anlreq-prod-recut-v2 does not list 406345bce1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git merge-base --is-ancestor 406345bce120cdec5d9b7a0cef00bd7b80b680e9 origin/PROD, exit 0",
+      "portal worktree: git log --oneline origin/PROD grep for commentary: 45a3e18f and e0b43076 listed",
+      "r46/payload_check.py v2 output: ABSENT own commit 406345bc in origin/PROD..cand/dell2/anlreq-prod-recut-v2; INFO 406345bc is an ancestor of origin/PROD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S8 -- the hop-failure conflict cannot repeat the first run's resolution once the meeting form is applied: the block that resolution dropped is the approved meeting-form block (AR-y-385 step 2, AMENDMENT 1)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:51:34Z",
+  "one_line": "The order says to repeat the conflict resolution of the first run for ticket-hop-failure commit 7d5f953c (take the commit own AnalysisPackageRow line, drop the meeting_request block). With the meeting form applied under AMENDMENT 1, that block is HEAD's showsMeetingOutcome block, which the approved meeting-form candidate carries. The v2 resolution takes the commit own line and keeps HEAD's showsMeetingOutcome block, which the commit does not change. The resolved commit (8623c829) has the same stat as the source (3 files, 104 insertions, 19 deletions).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 2: repeat the conflict resolution used before, adding nothing beyond the commit's own lines; AMENDMENT 1: the meeting-form candidate is applied.",
+  "world_is": "At the 7d5f953c pick (over HEAD with the meeting-form commits 76432f0b and c7a63531), TicketCenter.tsx carries the block {showsMeetingOutcome(t) && (...)} at the conflict site. The commit 7d5f953c has that block as unchanged context only. git show 8623c829 --stat and git show 7d5f953c --stat both list 3 files, 104 insertions, 19 deletions.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: conflict markers at TicketCenter.tsx lines 919-929 before the resolution; git show 7d5f953c -- TicketCenter.tsx (the commit diff, the meeting block is context)",
+      "portal worktree: git show --stat 8623c829 and 7d5f953c, equal totals"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
