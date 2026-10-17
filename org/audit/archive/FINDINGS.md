@@ -632,3 +632,9 @@ ERROR: safe-commit did NOT commit (rc=1). The refusal text is printed above.
        Two-phase path: everything was staged in a PRIVATE index, so the shared index holds nothing from this call.
 
 - note: distinct from DEATH: the invoker RAN, the commit failed
+
+## 2026-10-16T060347Z -- INTEGRITY -- NON-APPEND-EDIT
+<!-- sig: INTEGRITY|NON-APPEND-EDIT|org/mcp/log-open-ok-override.log|non-append edit: first divergence at line #, col # (baseline #B / live-head #B) -->
+- log: org/mcp/log-open-ok-override.log
+- detail: non-append edit: first divergence at line 1, col 6 (baseline 480B / live-head 424B)
+- action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
