@@ -27801,3 +27801,36 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Issuer: the main tree's map is the one the reflex names. Not read or rebuilt here: a sparse worktree is not to rebuild a map. The two OG-un-1 files are a unit directive set and a test, read in full at commit."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T18:35:00Z",
+  "id": "NFRA_OPLGTW-Z-S376",
+  "one_line": "Round-41 ruling: OG-ap-36 is live and closed (efcc8ae19f, ledger CLOSED 18:11:52Z, ap36.AC1 and AC2 PASS on my runs); Z-S370 and Z-S372 are resolved by it; worker rows Z-W140-S1 and Z-W140-S2 ruled; the ledger was closed before the CVO's clock condition was read (the read was normal)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S370",
+    "NFRA_OPLGTW-Z-S372",
+    "NFRA_OPLGTW-Z-W140-S1",
+    "NFRA_OPLGTW-Z-W140-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ap36.AC1 and ap36.AC2 PASS on this seat's runs in the main tree at HEAD debe31c5ea (ledger CLOSED 1 of 1, sentinel 0, landed=current; per-tool 26 of 27 with the named exception; arms 9 of 9; host md5 differ 0; marker equals the release sha; harvest_research.py host md5 6d9e0dd3 equals its 1753c741d9 blob; read-back 30 minutes, 0 triggers, 0 window calls); proof instance VALID rc=0",
+      "ledger entry 20261017T1657Z_nfra-oplgtw-gateway-release-batch6_deploy_completion.md: Status CLOSED, closed 20261017T181152Z",
+      "applier msg 35548 (clock read at 18:16:58Z: Leap Normal, synchronised, failed units 1, a stale init.scope oom flag, 0 after reset-failed; daemons active)",
+      "drain a6788723f3 of wk-NFRA_OPLGTW-140 (OG-un-1): my runs named 2 of 2, proof VALID; the infra diff is exactly deploy/opal-gateway.service and tests/test_og_un1.py"
+    ]
+  },
+  "spec_asserts": "Z-S370 (the Phase A stop) and Z-S372 (the busy word nulled at the tool boundary) are repaired by OG-en-23 and OG-en-24 and shown by the release's own measurements and arms; a worker's commit that landed while the client-data list was absent is not read as checked clean; the CVO's condition says the clock and failed-unit read comes BEFORE the ledger closes.",
+  "world_is": "Z-S370 and Z-S372: the release carrying OG-en-23 and OG-en-24 is live and passed every Phase A and Phase B measurement and the nine served arms (including the refusal word end to end); both rows are resolved. Z-W140-S1: the hashed account-id list is absent on this device; my text scan of the OG-un-1 diff finds 0 long digit runs and 0 e-mails; the commit is a unit file and a test. Z-W140-S2: the worker's pre-commit risk reflex read its danger map as stale for 0 of 2 files, an instrument note. The ORDER OF ACTS did not meet the CVO's A8 condition: the applier closed the ledger at 18:11:52Z before reading A8 (35547), and read the clock and the failed units at 18:16:58Z; the result met the condition (Leap Normal, synchronised, one stale init.scope failure cleared by reset-failed) and the ledger stands CLOSED; the miss is recorded, not repaired by reopening. Z-S375 (the ARMED OOM hazard) and Z-S338 (zero organic window calls) stay open and mine.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S370 and Z-S372 are resolved by the live release and its passing records; the two worker rows are a device fact (the client-data list absent, my text scan clean) and an instrument note; the A8 order-of-acts miss is recorded with its outcome and does not reopen the ledger. Z-S375 and Z-S338 are not dismissed and stay with this seat."
+}
+```
