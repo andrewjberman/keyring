@@ -49,3 +49,15 @@ plus its harness and fixtures. Security Analysis is opal-internal.
   - Row W495-S2: the Peers header falls back to CRNCY where the table reads PX_LAST only.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 4 -- bs-1 @618a39dd5f (row `dell1-20261017T193744Z-48c7`) and bs-2 @937f15a01d (row `dell1-20261017T194202Z-32d8`), ~19:4xZ
+
+Both are opal-internal (Security Analysis), and each is one commit on PROD 932cea99.
+- **bs-1 is approved for DEV merge-forward only, and is NOT in the PROD promote,** as R1 proposes. It adds a harness and a census fixture,
+  with no product file and no served change. The census covers 8 of 8 producer sites and 25 entries; 8 reach the footer, with tokens IS_EPS
+  and PX_LAST only.
+- **bs-2 is approved for DEV and the chosen-set PROD promote.** It adds `priceCurrency.ts`, a single helper that `HeaderCards.tsx` and
+  `PeersTab.tsx` both read, plus the harness CRLF fix. R1's re-runs in fresh checkouts read YES 5/5, 6/6 and 6/6 (msg 7715).
+- **Carried to round 113 as a row:** the helper returns the header's untrimmed code, so a padded served currency is an unmeasured edge.
+
+-- 1.0.0_SA_CTO~DELL1

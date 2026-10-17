@@ -29775,3 +29775,72 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed on AMGT-bs-1. Form only: the footer's estimate-year text is currency-mismatch wording. The owner of the producer's forecast reasons decides whether they are owed a footer route."
 }
 ```
+
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~497",
+  "surfaced_at": "2026-10-17T19:27:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W497-S1",
+  "one_line": "The row schema the worker face names is absent from the worker worktree; the row was formed to the channel's existing shape.",
+  "spec_asserts": "The surprise row validates against org/surprise_channel/schemas/investigation_item.schema.json, the schema the worker face names for the row form.",
+  "world_is": "That path does not exist in C:/dev/wk-resapp-497 (ls org/surprise_channel/ returns No such file or directory). The row was formed to the shape of the rows already in org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md and is not validated against that schema.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls org/surprise_channel/ run in C:/dev/wk-resapp-497 at HEAD of wk-AMGT_RESAPP-497: No such file or directory",
+      "the schema path as named in the AMGT-bs-2 worker face"
+    ]
+  }
+}
+```
+
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~497",
+  "surfaced_at": "2026-10-17T19:27:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W497-S2",
+  "one_line": "The shared price-currency helper returns the header's untrimmed code; the old PeersTab helper returned it trimmed, so a padded served currency now reaches the Peers money cells as served.",
+  "spec_asserts": "priceCurrencyOf is ONE helper read by HeaderCards and PeersTab with the header's rule (a trimmed non-empty PX_LAST currency, else a trimmed non-empty CRNCY value, else null), and HeaderCards is byte-identical.",
+  "world_is": "At 932cea99 HeaderCards.tsx returned the PX_LAST currency untrimmed, and PeersTab.tsx returned it trimmed (code.trim()). The one helper returns the header's untrimmed value, so a PX_LAST currency with surrounding whitespace now reaches the Peers money cells untrimmed. No committed fixture carries such a code; the order does not say which return the helper takes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cand/dell1/amgt-sa-price-currency-rule@937f15a0 src/pages/SecurityAnalysis/priceCurrency.ts (returns the PX_LAST currency as served when its trim is non-empty)",
+      "932cea99:src/pages/SecurityAnalysis/tabs/PeersTab.tsx (the old helper: return typeof code === 'string' && code.trim() !== '' ? code.trim() : null)"
+    ]
+  }
+}
+```
+
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~497",
+  "surfaced_at": "2026-10-17T19:27:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W497-S3",
+  "one_line": "INVESTIGATION_v1.md is one fenced json block per row, not one array; the appended row follows the file's own shape.",
+  "spec_asserts": "The new row is appended inside the fenced json array of the first block, per the worker face.",
+  "world_is": "INVESTIGATION_v1.md holds 283 separate fenced json blocks (283 opening and 283 closing fences), one row each, and no single array; its header still says ONE FENCED JSON BLOCK. The gate reads every block with its FENCE_RE in .tools/surprise-row-gate.py. The row was appended as a new fenced block at the end of the file, the same shape as the rows before it, and no existing row was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "count of json fence openings and closings in org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md in C:/dev/wk-resapp-497 at HEAD: 283 opening, 283 closing",
+      ".tools/surprise-row-gate.py line 107 defines a fence regex with re.S that reads each json fenced block as its own document"
+    ]
+  }
+}
+```
