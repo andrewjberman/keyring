@@ -27696,3 +27696,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not fixed in this cell: test_og_ch1.py is outside the order's <paths>, and copying an untracked data file into the worktree would rebuild the tree. The twelve window files pass 42 of 42 with the line in place. Issuer to say whether the worktree should carry the roster file or the suite should skip the path walk when it is absent."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T13:57:00Z",
+  "id": "NFRA_OPLGTW-Z-S374",
+  "one_line": "Round-41 ruling on worker row Z-W138-S1: OG-en-24 verified and drained (ec8e21a6d0); the client-data list was absent so the commit was text-scanned; the one scan hit is a synthetic SYN- number reused from test_og_cl2.py; eight codes now surface",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W138-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain ec8e21a6d0 of wk-NFRA_OPLGTW-138 (OG-en-24): my runs in the main tree: named tests 3 of 3, the twelve-file window set 42 of 42 in both orders, py_compile ok, proof VALID rc=0; the product diff is one line of client_core._answer plus a comment",
+      "git diff 9998b55793 HEAD over infra/aws/ec2/opal-gateway: added lines with a 9-or-more digit run or an e-mail: 1, a SYN-prefixed synthetic account number that test_og_cl2.py already carries"
+    ]
+  },
+  "spec_asserts": "A commit that landed while the client-data check was ABSENT is not read as checked clean.",
+  "world_is": "The hashed account-id list is absent on this device, so the commit could not be checked against it. The issuer's text scan of the merged diff finds one hit, 'SYN-000004441234', a synthetic number with the SYN- prefix that the older test_og_cl2.py carries; no e-mail. The worker's other note, test_og_ch1.py::test_ogch1_ac04 failing in its worktree for an untracked partner_roster.json it does not hold, is a worktree fact: the file is untracked in the shared tree and the test is red at the base (carried by name). The CHANGE of behaviour is wider than the two refusals the CTO named, and the issuer names it: eight codes now surface where the core dropped them (window_read_busy; no_partition_at_as_of on five tools; no_candidate_for_last4, account_not_in_partition, no_model_assignment_49f, no_fee_rows_in_window from the 49F adapter; no_model_assignment and model_not_in_roster from the Cottonwood allocation adapter); the Orion, Eclipse, SmartX, Schwab and Commonwealth answers are unchanged. No row is added or removed; only the reason, which the adapter already set, is no longer nulled.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The list's absence is a device fact; the issuer's text scan finds one synthetic SYN- number already in an older test and no e-mail; the roster failure is a worktree fact on a test that is red at the base. The eight surfacing codes are named for the ask and widen no reach."
+}
+```
