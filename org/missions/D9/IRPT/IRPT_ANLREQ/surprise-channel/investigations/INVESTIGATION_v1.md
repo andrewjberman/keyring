@@ -25640,3 +25640,70 @@
 }
 ]
 ```
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W293-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~293",
+  "surfaced_at": "2026-10-17T19:23:39Z",
+  "one_line": "The commentary-pdf route answer: the portal types it as signedUrl, but the v1 contract and the ops handler carry the signed link under download_route.url.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-398 U3 asks for the route answer and its closed field to read. portal/src/api/endpoints/investor-reporting.ts:1197-1198 types the analysis-request-commentary-pdf answer as { signedUrl: string } and passes the wire through unchanged.",
+  "world_is": "docs/contracts/investor-reporting/v1/AnalysisRequestPdf.schema.json:10-15 requires download_route {url, expires_at}, sha256 and byte_length, and infra/aws/lambda/investor-reporting/ops/owned_report.py:379 returns that shape. A grep of the ops/ tree finds no signedUrl key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/investor-reporting.ts:1197-1198 (analysis-request-commentary-pdf typed as { signedUrl: string }, wire passed through)",
+      "docs/contracts/investor-reporting/v1/AnalysisRequestPdf.schema.json:10-15 and infra/aws/lambda/investor-reporting/ops/owned_report.py:379",
+      "read at HEAD f8b43377ae of branch wk-IRPT_ANLREQ-293"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W293-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~293",
+  "surfaced_at": "2026-10-17T19:23:39Z",
+  "one_line": "The portal's closed submission reader refuses commentary_requested, which its own wire type admits, so the portal cannot file the field the run depends on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts:23 declares commentary_requested as an optional field of the submission body.",
+  "world_is": "portal/src/pages/InvestorReporting/contracts/submission-request.ts:14 allows only the required keys plus input_id and ticket_id, and :25 refuses any other key. readSubmissionRequest is called at portal/src/api/endpoints/investor-reporting.ts:1492, so the portal's submit refuses a body carrying commentary_requested. The Lambda admits the field at infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:16 and :82-83.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/submission-request.ts:14 and :25",
+      "portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts:23 and portal/src/api/endpoints/investor-reporting.ts:1492",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:16 and :82-83"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W293-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~293",
+  "surfaced_at": "2026-10-17T19:23:39Z",
+  "one_line": "The premise of TO AR-y-398 U6 fails: the window-4 record holds no completed-hop timing, because window 4 was refused at the upload door and no run reached accept, render, drafter or packager.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-398 U6 asks for the observed duration of each hop (upload, accept, resident render, drafter, packager poll) in the window-4 record.",
+  "world_is": "Window 4 was refused at the upload step with NOT_AUTHORIZED; no ticket, no object, row removed, window spent (org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md:22815-22823). No window-4 run record exists under org/tier2_senior/0.7.0_AE_CloudOps~IB2/ in this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md:22815-22823 (row IRPT_ANLREQ-D2-S154)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/ has task_orders/ only in this worktree (ls, 2026-10-17)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
