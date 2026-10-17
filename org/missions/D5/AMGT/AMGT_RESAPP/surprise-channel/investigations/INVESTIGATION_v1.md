@@ -30010,3 +30010,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Instrument row for the walker's owner (CTO msg 7741); not a cell of this project."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W503-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~503",
+  "surfaced_at": "2026-10-17T21:35:39Z",
+  "one_line": "AMGT-bt-6's bound floor(N/2) keeps a short grid's FIRST rows downward, but it does not keep the upward rows of a short grid clear of the scroller's top edge: the 284 px bubble of row index 3 of a 6-row grid needs more room above it than the grid has.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@be136f28 (ModelBody: gridFigureRows and upwardRows = last min(UPWARD_TAIL_ROWS, floor(N/2)) rows)",
+      "portal/src/pages/SecurityAnalysis/__harness__/modelTooltipRows.harness.cjs@be136f28 run: RIO LN N=60, K=12, B1 PASS; synthetic 6-row grid K=3, B4 rows 3-5 upward (the first 3 rows downward)",
+      "AMGT-bt-6 order section 1: bubble about 284 px tall, grid row at least about 30 px; the bound stated as keeping a short grid's first rows from opening upward past the top",
+      "Arithmetic from those stated heights (not measured in a browser): row index i sits at least i x 30 px below the scroller top, plus the header; the upward bubble needs about 284 px, so the bound clears the top only from about index 10, i.e. N of about 20 or more"
+    ]
+  },
+  "spec_asserts": "AMGT-bt-6 section 1 step (2): the last min(12, floor(rowCount / 2)) rows open upward, and 'the floor(rowCount / 2) bound keeps a short grid from opening its FIRST rows upward past the scroller's top'.",
+  "world_is": "The bound keeps rows index 0 to N/2-1 downward, which the harness confirms. It does not keep the upward rows of a short grid inside the scroller: for N below about 20, row index N/2 has less than 284 px above it, so its bubble runs past the scroller top and is clipped there. The RIO LN grid has N=60 (K=12, rows 48-59 upward, all above 284 px of room), so the case is latent on the names this page serves, not live on RIO LN. Not verified in a browser.",
+  "notes": "Form and arithmetic only; no product change was made to close the gap, because the order fixes the bound. The disposition (widen the bound, or accept the clip on short grids) belongs to the issuer. Row appended as a new fenced block at the tail, the form every existing row uses."
+}
+```
