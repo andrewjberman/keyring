@@ -4659,3 +4659,15 @@ Check IBHM3A (`deliverables/2.0.0_SA_COO~P2/checks/r249/p249_cells.py`), dry-run
 | `IB-hm-3` | REGISTRY rows and recorded builder calls: three firm key addresses (globgrph bucket), the stage role and policy names, the irpt SECRET row | FWD-21 | WORLD (gate floor: an infra/ path) | IB-hm-1, CTO msg 10234 | PM8-a |
 
 fanout: 3 of 9 chains cut (IB-hm-1 graded, IB-hm-2 running, IB-hm-3 now), cap 8, reason: IB-hm-7 waits on IB-hm-2's landed stage (same file); IB-hm-8 and IB-hm-9 wait on IB-hm-3's recorded names. A cell id takes no letter suffix by the decomposition grammar (the gate refused `IB-hm-3a`), hence the numbers.
+
+## 245. ROUND 9, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 7: the stage ASSUMES the narrow role and accepts the list bucket; 2026-10-17 ~04:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO rulings msg 10203 and 10234)
+
+IB-hm-2 (BUILD, graded: IBHM2 AC1 to AC3 re-run PASS in the worker's worktree by me, the proof VALID; the worker's runner diff read whole) landed the stage `emit_hmac_list`. Two points of its diff do not match the later rulings, and both are mine to correct because my order left them open: (1) it REFUSES a destination whose bucket is not the firm's own bucket (`_parse_hmac_uri`), a constraint the worker added to keep the stage from overwriting a directory object; the CTO ruled (msg 10203) that the list goes to the globgrph folder, so the bucket is the one the URI names and the refusal narrows to a key inside a directory prefix of the firm's own bucket; (2) it reads the secret and puts the object under the ambient (host) session, but the CTO ruled B (msg 10234): a narrow role assumed with the fixed session name `hmac-list-stage`. This cell makes both changes in the one file with six new named tests. The check IBHM7 (`deliverables/2.0.0_SA_COO~P2/checks/r250/p250_cells.py`) dry-run at the base: AC1 to AC3 all FAIL; the control (`control250.py`) passes the three positives and each of 10 negatives fails its own arm (0 unexpected).
+
+Side notes from the worker's rows (all OBSERVATION, INERT): `W449-S1` the status when upload is off is a distinct value (`skipped_no_upload`); `W449-S2` one `--hmac-list-uri` names one object, so `main` refuses it for more than one firm (the dispatch is per firm); `W449-S3` the runner test folder is red at base (136 failed, 20 errors, identical after), which is not ours. One edge to carry into the pair: a client carried forward from the previous directory (terminated) contributes its minted hex but not a raw key (the raw keys exist only for entries built in this run).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-hm-7` | BUILD: `--hmac-role-arn`, `assume_role` with the fixed session name for the secret read and the put; the destination bucket rule; six tests | FWD-21 | LOCAL | IB-hm-2 (merged), CTO msgs 10203 and 10234 | PM9-a |
+
+fanout: 4 of 9 chains cut (IB-hm-1 graded, IB-hm-2 graded, IB-hm-3 running, IB-hm-7 now), cap 8, reason: IB-hm-8 (Terraform) and IB-hm-9 (dispatch arguments) wait on IB-hm-3's recorded names; IB-hm-4 on 7, 8 and 9.

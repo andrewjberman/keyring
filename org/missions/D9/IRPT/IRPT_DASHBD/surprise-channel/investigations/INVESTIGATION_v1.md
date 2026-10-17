@@ -24927,3 +24927,164 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The repair is the issuer's; this worker made the identical edit to the order file and changed no checker, validator or other file."
 }
 ```
+
+## IRPT_DASHBD-D2-W254-S1 -- AC2's changed-set read counts the worktree's portal gitlink, which this worker did not write and must not commit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W254-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~254",
+  "surfaced_at": "2026-10-17T03:22:48Z",
+  "one_line": "DB186-1-AC2 FAILs in this worktree: git diff --name-only HEAD lists the portal gitlink as modified, outside the agreed set.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB186-1-AC2 as written: the changed-file set is exactly the agreed set (the iso root, forward.tf, lambda.tf and the worker's own folder). The checker reads that set as the worker's commit files plus git diff --name-only HEAD plus untracked files. WORKER FACE: never commit the workspace portal gitlink.",
+  "world_is": "The worktree's nested portal checkout is at fcbf2bcecb while HEAD records the gitlink at d1f9ca2967 (git ls-tree HEAD portal reads 160000 commit d1f9ca29675b; git diff --submodule=short HEAD -- portal reads the two subproject commits). The main tree showed the same ' M portal' at session start. This worker's commits carry only the six agreed files. The checker run at 56b7770f5d printed: FAIL: files outside the agreed set changed: ['portal'], then DB186-1-AC2 FAIL. Repair would need a checkout or submodule update of a path outside the grant, which the refusal clause forbids, so AC2 is reported as measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD portal at worktree HEAD 56b7770f5d reads 160000 commit d1f9ca29675bd9012284272806afc9c587ef55f0 portal",
+      "git diff --submodule=short HEAD -- portal in C:/dev/wk-irpt-dashbd-254 reads Subproject commit fcbf2bcecb45eb502da8517c0933aafee68a688c against the recorded d1f9ca2967",
+      "python -I checks/r150/p186_cot_read_terraform.py C:/dev/wk-irpt-dashbd-254 DB186-1-AC2 printed: FAIL: files outside the agreed set changed: ['portal'] and DB186-1-AC2 FAIL (rc 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The gitlink is not in any commit of this worker (git log --author lists the six agreed files). The issuer or the CTO decides whether AC2's changed-set read should exclude a nested gitlink that the worktree checkout moved."
+}
+```
+
+## IRPT_DASHBD-D2-W254-S2 -- the commit's Co-Authored-By line names the model that wrote it (Haiku 5.5), where the order names Sonnet 5.5
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W254-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~254",
+  "surfaced_at": "2026-10-17T03:22:48Z",
+  "one_line": "The order's commit trailer names Claude Sonnet 5.5; this worker is Claude Haiku 5.5 and its session attribution rule names Haiku 5.5, so the commits carry Haiku 5.5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO BOUNDS, Writes clause: the commit message's last line is Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>.",
+  "world_is": "The worker runs on Claude Haiku 5.5 (claude-haiku-5-5). The session's attribution instruction for commits names Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>, and the artifact commit 56b7770f5d was written with that line. The trailer's model name is an attribution fact, so the worker kept the true one and did not copy the order's string.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the TO order file IRPT_DASHBD.TO-DB-b-320.cottonwood-read-path-c2-terraform.md, BOUNDS section, names Claude Sonnet 5.5 for the last line of the commit message",
+      "the session attribution instruction names Claude Haiku 5.5 for commits made from this session (model claude-haiku-5-5)",
+      "the artifact commit 56b7770f5d carries the Haiku 5.5 trailer in its message file .scratch/msg_artifact.txt, last line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether the trailer string in later orders should follow the executing model."
+}
+```
+
+## IRPT_DASHBD-D2-W254-S3 -- W254-S1 repaired by the issuer: the checker's changed-set read no longer counts the nested portal checkout; AC2 re-run PASS on this tree
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W254-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~254",
+  "surfaced_at": "2026-10-17T03:40:13Z",
+  "one_line": "IRPT_DASHBD-D2-W254-S1 repaired by the issuer in the checker (amend f2846b8c4a); DB186-1-AC1, AC2 and AC3 re-run on this tree and all PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB186-1-AC2 as written: the changed-file set is exactly the agreed set; the checker is the issuer's instrument at the main-tree path, run with the order's exact invocation.",
+  "world_is": "The issuer amended the checker at f2846b8c4a so the changed-set read no longer counts the nested portal checkout (the coordinator's ruling on W254-S1). Re-run at HEAD 1ed95cbbe8 of wk-IRPT_DASHBD-254: DB186-1-AC1 PASS, DB186-1-AC2 PASS, DB186-1-AC3 PASS, each rc 0. The portal gitlink is still shown as modified in this worktree and is still not committed by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of the main-tree checker org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r150/p186_cot_read_terraform.py shows the amend commit f2846b8c4a above the issue commit 18709f6799",
+      "python -I the checker at C:/dev/wk-irpt-dashbd-254 DB186-1-AC2 printed: OK: the change touches only the iso root, forward.tf, lambda.tf and the worker's own folder ... DB186-1-AC2 PASS, rc 0",
+      "the same command for DB186-1-AC1 and DB186-1-AC3 printed DB186-1-AC1 PASS and DB186-1-AC3 PASS, rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Note only. No act is owed by this worker. Adjudication of W254-S1 belongs to the issuer's L9 carrier."
+}
+```
+
+## IRPT_DASHBD-D2-W255-S1 -- the 49 Financial entry's _staged_from_note still names served.py at acce364286 while its pin is now 3eb27c60c0, and the order bars every key but the pin and sha256 from moving
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W255-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~255",
+  "surfaced_at": "2026-10-17T03:42:05Z",
+  "one_line": "irpt-49f-reporting-read-lambda.json _staged_from_note names served.py at acce364286; after the DB-b-321 re-pin its pin is 3eb27c60c0. The note matched no pin at base either. Left as is: the order allows only the pin and sha256 of served.py to move.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-321 step 2(a) and AC2: irpt-49f-reporting-read-lambda.json changes in ONE member only (the served.py pin and sha256); no other key moves; AC2 fails if any key other than staged_from changes.",
+  "world_is": "At base 8adcf0b94e the entry's _staged_from_note (line 225) cites served.py at acce364286 while the served.py pin was 564e604838. After the re-pin (commit 3d0decfa00) the pin is 3eb27c60c0 and the note still cites acce364286, so the note disagrees with the pin. The note is a key outside the allowed change and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 8adcf0b94e:infra/aws/lambda/ci/function-map/irpt-49f-reporting-read-lambda.json line 40 carries pin 564e60483858a3cc5c51ffea6aed0f76ff291abe",
+      "git show 8adcf0b94e:infra/aws/lambda/ci/function-map/irpt-49f-reporting-read-lambda.json line 225 _staged_from_note cites served.py acce364286",
+      "artifact commit 3d0decfa00 moves only the served.py pin and sha256 of the 49F entry; its _staged_from_note is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The note is documentation for the 49F entry. Its repair needs an issuer-sanctioned edit, since AC2 bars any other key from moving. No change made in this order."
+}
+```
+
+## IRPT_DASHBD-D2-W255-S2 -- the order names the commit trailer Co-Authored-By Claude Sonnet 5.5, and this worker's identity and attribution instruction name Claude Haiku 5.5
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W255-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~255",
+  "surfaced_at": "2026-10-17T03:42:05Z",
+  "one_line": "TO-DB-b-321 asks for the last line Co-Authored-By: Claude Sonnet 5.5; the worker is Claude Haiku 5.5 and its attribution instruction names Haiku 5.5, so the commits carry the Haiku 5.5 trailer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-321 BOUNDS: commit messages end with the line Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>.",
+  "world_is": "The model running this worker is claude-haiku-5-5, and the session attribution instruction names Claude Haiku 5.5 for commit trailers. The artifact commit and each later commit end with the Claude Haiku 5.5 trailer, not the Sonnet 5.5 trailer the order names. Only the trailer text differs; the author line is the serial as ordered.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 --format=%B 3d0decfa00 ends with the line Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>",
+      "the author of 3d0decfa00 is 0.9.0_WK_IRPT_DASHBD~255 as the order's safe-commit form requires"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The trailer follows the attribution instruction of this session. The order's text is the issuer's and was not edited."
+}
+```
+
+## IRPT_DASHBD-D2-W2602-S1 -- an explicit --since run reports the window fields as null; the order names the default path only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2602-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2602",
+  "surfaced_at": "2026-10-17T03:44:03Z",
+  "one_line": "The order names the summary window {newest_written, cap, days_pending} but not its values on an explicit --since run; the launcher reports all three as null on that path and lists nothing at the target.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-f-2602 step 2: the summary gains window {newest_written (the day or null), cap, days_pending}; an explicit --since behaves exactly as today (every business day from it, no cap).",
+  "world_is": "At data/inf/scripts/gold/INF_G_01.account_transaction_gold.py@2b17f1111c, run() with since set writes every business day from it with no cap and sets window to {newest_written: null, cap: null, days_pending: null}, with no listing of the gold prefix. The default path (no since) sets cap 25 and reads newest_written as the order states. The order does not say which value a since run reports.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py@2b17f1111c run(): the else branch of 'if not since' sets window to the three nulls and does not call newest_written_day()",
+      "data/inf/scripts/gold/tests/test_INF_G_01_account_transaction_gold.py@2b17f1111c test_window_explicit_since_writes_every_day_from_it_with_no_cap asserts the null window",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-2602.inflection-launcher-bounded-default-window.md step 2 names the window fields without a since value"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker chose nulls for a since run so that an explicit range start reads nothing at the target and needs no new list permission on the gold prefix; the issuer or the CTO may rule the fields otherwise. No criterion reads the window fields on the since path: DBF138-2-AC3 checks the days written and the dry-run days."
+}
+```
