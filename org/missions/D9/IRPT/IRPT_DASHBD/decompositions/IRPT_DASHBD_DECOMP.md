@@ -3013,3 +3013,19 @@ The page owner `2.0.0_SA_COO~C2` has no live session (CTO msg 10318), so this se
 **fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 16 single-fault mutants):** `checks/r150/p193_c5_staff_signin.py` (DBC193-1-AC1, DBC193-2-AC1).
+
+
+## 187. ROUND 150, WORKSTREAM FILLAPPLY (2026-10-17 ~06:4xZ, issuer 2.0.0_SA_COO~D2): the filled-report switch-on pair -- the apply
+
+The code cell (`DB-b-326`) is landed at `4d4cf3e2c4`; the packet (sha256 `3248f3c4`, 14,420 bytes) is signed by both halves (COO `a1e2575ac6`, CTO `a824aebb24`; CTO msg 10331 "cut the apply order to IB2"). The CTO's earlier rulings are in the packet: the named V leg is `2.0.0_SA_COO~S2`'s after-read, with a mint leg for two synthetic viewers applied by IB2 and removed (msg 10307). The apply is by the one IRPT CloudOps lane.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. bundle; code-only apply and the OFF probe; the one variable; a dry run in seven shards; ONE canary; the mint leg and `~S2`'s V leg; the full pass in seven shards; the after-read | DB-b-328 | FWD-10 (filled report; advisor and client viewers) | WORLD, client-facing documents | DB-b-326 landed, both halves | chain AU |
+| 2. the portal side that reads the report route | not in this round | FWD-10 | SERVED | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the plan gates are exactly 0/1/0 twice (code, then the one variable); (b) the gate 0(c) counts OPEN LEGS on the surface (the ruling made on order 323's STOP is now in the order's text); (c) the checker `p194` reads the world: the function's configuration, the role policy hash, each schedule's input, and the data prefix by listing; it VALIDATES a sample of the written documents against the contract itself with `publisher.validate_filled_report`, so the data clause does not trust the applier's report; (d) the seven shards of the full pass must equal the dry run's sums, so a difference between what the dry run promised and what the pass wrote is a STOP; (e) when no covering/non-covering viewer pair can be scoped without a hand-typed link, the V leg records step (2) OWED and steps (1) and (3) grade the canary (the packet's section 1, Act 6).
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 58 single-fault mutants):** `checks/r150/p194_filled_pass_apply.py` (DBC194-1-AC1, DBC194-2-AC1, DBC194-3-AC1).
