@@ -24846,3 +24846,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The next order should name the worktree path that is in use."
 }
 ```
+
+## IRPT_DASHBD-D2-W253-S4 -- the issuer repaired W253-S1 (checker base) and W253-S2 (ruff F841) by ruling; the main-tree checker passes AC1, AC2 and AC3 against the worktree
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:49:44Z",
+  "one_line": "The issuer repaired W253-S1 and W253-S2 by ruling: the checker BASE was amended to 5b50c09c34 at 8d31127ce6, and the reference unused local was dropped at fc8d52804c and in the worktree at a3058c274c.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Mid-order ruling from the order's issuer 2.0.0_SA_COO~D2: amend the checker base for S1, drop the unused local for S2, commit the artifact first, re-run AC1 to AC3 from the main-tree checker, and flip the order only after the proof validates.",
+  "world_is": "Both repairs are present in git: 8d31127ce6 amends the checker BASE and exempts this worker's own deliverable and channel paths; fc8d52804c drops the unused assignment in the reference patch. The artifact commit a3058c274c carries served.py and the test file with the assignment dropped. The main-tree checker, run with the worktree as root, printed PASS for AC1, AC2 and AC3 at rc 0 each. Dispositions of S1 and S2 are left UNDER_INVESTIGATION for the CVO to set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file -t 8d31127ce6 and git cat-file -t fc8d52804c each printed commit",
+      "artifact commit a3058c274c on wk-IRPT_DASHBD-253; ruff check on served.py and the test file printed All checks passed",
+      "python -I main-tree p185_cot_read_forward.py C:/dev/wk-irpt-dashbd-253r DB185-1-AC1, AC2 and AC3 each returned rc 0 with the final line PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The repairs are the issuer's; this worker edited the test file line only as the ruling directed and changed no checker or reference file."
+}
+```
+
+## IRPT_DASHBD-D2-W253-S5 -- the proof validator refuses the main-tree invocation the ruling directed: invocation-alignment 0 of 3 against the order's criterion text, so the instance is INVALID and the order cannot flip
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:52:13Z",
+  "one_line": "The proof validator refuses the main-tree invocation the ruling directed: invocation-alignment is 0 of 3 against the order's criterion text, so the instance is INVALID (rc 1) and the order cannot flip.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ruling from 2.0.0_SA_COO~D2: run the checker from the main tree by absolute path with the worktree as root, record that exact invocation in the proof rows, validate with proof-of-spec-check, then flip the order status to complete as the last commit.",
+  "world_is": "The recorded invocation python -I main-tree p185 C:/dev/wk-irpt-dashbd-253r DB185-1-AC1 (and AC2, AC3) differs from the order's criterion invocation python -I worktree-relative p185 . DB185-1-AC1. proof-of-spec-check printed invocation-alignment 0 of 3 comparable with a VIOLATION per row and INVALID rc 1. The order's own invocation cannot give the amended result from this worktree: its relative path resolves to the worktree copy, whose BASE is dc96ba2eb7. Not repaired: the order's criterion text, the checker and the validator were not changed, and the instance records the invocation actually run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py on the refreshed instance printed VIOLATION invocation-alignment for DB185-1-AC1, AC2 and AC3 and INVALID (rc=1)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p185_cot_read_forward.py in the worktree at a3058c274c line 23 reads BASE = dc96ba2eb7",
+      "main-tree checker run with root C:/dev/wk-irpt-dashbd-253r printed PASS for AC1, AC2 and AC3 at rc 0 each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether the criterion invocation is amended to the main-tree form or a placeholder is declared; this worker changed neither the order criteria nor the validator."
+}
+```
