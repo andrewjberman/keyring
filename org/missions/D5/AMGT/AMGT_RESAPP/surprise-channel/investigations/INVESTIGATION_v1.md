@@ -29454,3 +29454,79 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed on the CTO's instruction (msg 7669): a row, not a gate on the fold-back act. Not a cell of this project; the owner is the portal manager."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W493-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~493",
+  "surfaced_at": "2026-10-17T17:53:54Z",
+  "one_line": "The order's commit step names the OUTER checkout's safe-commit with portal-root paths, but the portal is a separate git repository, so the commit ran with the nested worktree as its working directory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-br-1 step (7): commit with .tools/safe-commit.sh of the OUTER checkout, with -- the changed paths relative to the portal root, and do not stage portal in the outer worktree.",
+  "world_is": "The portal is its own repository (git -C C:/dev/wk-resapp-493/portal rev-parse --show-toplevel prints C:/dev/wk-resapp-493/portal), so the outer checkout cannot stage portal-root paths. The commit was made with bash ../.tools/safe-commit.sh run from inside the nested worktree: commit 164c9fd58da4a5fae9ebb3d1ee5aa984c918886f on cand/dell1/amgt-sa-changed-object-cells, four files, author 0.9.0_WK_AMGT_RESAPP~493. Nothing under portal was staged in the outer worktree and no outer commit names portal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit 164c9fd58da4a5fae9ebb3d1ee5aa984c918886f (safe-commit output: [cand/dell1/amgt-sa-changed-object-cells 164c9fd5] and [msg-verify] MATCH len=963)",
+      "git -C C:/dev/wk-resapp-493/portal rev-parse --show-toplevel printed C:/dev/wk-resapp-493/portal"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as the form of an off-spec step: the order's commit wording and the nested git layout disagree. Nothing was pushed; the branch is LOCAL."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W493-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~493",
+  "surfaced_at": "2026-10-17T17:53:54Z",
+  "one_line": "This worktree is a cone sparse checkout that leaves org/surprise_channel/ off disk, and the commit-time naming gate reports a function-map folder missing under the worktree root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker's worktree carries the paths the task order names (preflight TREE-OK: org and .tools present), and the commit-time gates grade the worker's own tree.",
+  "world_is": "git config core.sparseCheckout and core.sparseCheckoutCone are both true. git ls-files -t org/surprise_channel/schemas/investigation_item.schema.json flags the file S (skip-worktree), and ls org/surprise_channel fails, though git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json reads. The safe-commit naming gate printed NAMING ERROR function-map folder missing for infra/aws/lambda/ci/function-map/ under this worktree. The order's named paths are all present, so no block: the schema was not needed for the work.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout printed true; git ls-files -t org/surprise_channel/schemas/investigation_item.schema.json printed S",
+      "ls org/surprise_channel under C:/dev/wk-resapp-493 failed: No such file or directory",
+      "safe-commit output line [naming-gate] NAMING ERROR function-map folder missing (portal commit 164c9fd58da4a5fae9ebb3d1ee5aa984c918886f)"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on observation only. The worktree was cut by the issuer; its sparse set is the issuer's to state."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W493-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~493",
+  "surfaced_at": "2026-10-17T17:53:54Z",
+  "one_line": "The pre-commit risk reflex ran the base checkout's comp-pulse rather than this worktree's, and the commit-gate graded none of the four files of the portal commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A tool runs at its own path in the worker's worktree (ESTATE trap 2), and the commit gate grades the bytes it is asked to commit.",
+  "world_is": "safe-commit printed [risk-reflex] WARN: comp-pulse: the caller toplevel C:/dev/wk-resapp-493/portal carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse, then REFLEX CLEAN over 4 of 4 files against a danger map 6.1h old. It also printed [commit-gate] WARN: commit-gate checked 0 of 4 file(s) -- NOTHING WAS CHECKED, because the gate reads .py, .sh, .tf and org/projects JSON only. The portal's .tsx change was therefore graded by tsc, eslint and the AC2 feature-green run, not by a commit gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of portal commit 164c9fd58da4a5fae9ebb3d1ee5aa984c918886f: the [risk-reflex] WARN line naming the baked path, and the [commit-gate] WARN line naming 0 of 4 checked",
+      "ls -a C:/dev/wk-resapp-493/portal/.tools printed no such file (the nested portal carries no .tools)"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on observation only. The reflex verdict is quoted as printed and is not used as evidence for this commit."
+}
+```

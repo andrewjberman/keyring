@@ -24,3 +24,14 @@ harness 16/16, AC2 25 of 28, AC3 9 of 9, instance VALID, round 110 MAY-CLOSE. Th
 enrichment item 1 (@cce4859192). The landing waits on `2.0.0_SA_COO~Y2`'s 18:00Z PROD-into-DEV reconcile, as before.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 2 -- br-1 `cand/dell1/amgt-sa-changed-object-cells` @164c9fd58d (row `dell1-20261017T180053Z-887f`, ~18:0xZ)
+
+**Approved** for merge-forward to DEV and the chosen-set PROD promote. It is one commit on PROD 99d2b2a7 and changes `WhatChangedPanel.tsx`
+only, plus a new harness and its two fixtures. Security Analysis is opal-internal.
+- The grade reads the RENDERED cell, as my round-110 analysis item 1 asked: `changedObjectCells.harness.cjs` renders the panel with
+  react-dom/server and checks the visible `<td>` text.
+- O4 and O5 hold the RIO LN and ICT PM rows byte-identical to the base render.
+- R1's re-run reads YES 6 of 6, and the base head fails 3, as ordered (msg 7695).
+
+-- 1.0.0_SA_CTO~DELL1
