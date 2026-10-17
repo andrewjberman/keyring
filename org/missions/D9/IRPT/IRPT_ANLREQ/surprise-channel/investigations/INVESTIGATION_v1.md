@@ -23758,3 +23758,169 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W285-S1 -- the approved candidate tckt-meeting-form-prod-recut is patch-identical to excluded commits, so it is left out whole (AR-y-385)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "AR-y-385 leaves the approved candidate tckt-meeting-form-prod-recut out whole. Its first commit e5c8e07569 is patch-identical (patch id 9950b74e) to the excluded original commit 12c164a073, and its second commit 4e1e35bfa0 carries the same 267 added and removed lines as the excluded outcome-visibility commit 8e4f088522. Applying either pulls an excluded commit's content into the recut, so the recut carries no meeting-request form.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rules whether the meeting-request form is in the release before the approval-by-sha of cand/dell2/anlreq-prod-recut; the recut as built omits it)",
+  "spec_asserts": "TO-AR-y-385 step 2 and the CTO ruling it cites: tckt-meeting-form-prod-recut is an approved candidate (its two own commits, the meeting-form content only); 12c164a0 and 8e4f0885 are excluded commits; an excluded commit is never pulled in.",
+  "world_is": "At the portal worktree, base origin/PROD fa21a303d8: git show e5c8e07569 piped to git patch-id --stable gives 9950b74eac14324f6e061418a6716d7f31ac6a19, equal to 12c164a0732db6b040df78a0a5d820e9fb220a96. The added and removed lines of 4e1e35bfa0 equal those of 8e4f088522 (267 lines each, zero differing); their patch ids 6b7b21df and d0762b71 differ only by base context. The candidate is left out whole and named in r46/LEFT_OUT.json; the recut payload check passes without it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git show plus git patch-id --stable of e5c8e07569aa090b29b7a31c363f68246ce41821 and 12c164a0732db6b040df78a0a5d820e9fb220a96",
+      "portal worktree: added and removed lines of 4e1e35bfa0826bbf07971b4cc0bad76ff79edc9d and 8e4f088522685acf223c1054cb5e896df613cbeb compared, zero lines differing",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~285/r46/CANDIDATE_COMMITS.json and r46/LEFT_OUT.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S2 -- the 0-failed test gate cannot pass as written: origin/PROD carries the same 70 failures and 27 errors in this worktree (AR-y-385 gate)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "The AR-y-385 gate bun test on src/pages/TicketCenter and src/pages/InvestorReporting requires 0 failed. On origin/PROD itself, in this worker worktree, the same folders give 70 fail and 27 errors. The 55 failing test lines are identical with the recut. The dominant errors are ENOENT reads of docs/contracts/investor-reporting/v1/routes.json and of org/missions artifacts that this worker worktree does not carry. The recut adds 57 passing tests and no new failure. A second run on the recut gave 28 errors where the first gave 27.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 5 and AR385-y-AC2: bun test on src/pages/TicketCenter and src/pages/InvestorReporting gives 0 failed; GATES-OK requires 0 failed.",
+  "world_is": "bun test on the recut (gates_check run): 1208 pass, 25 skip, 70 fail, 28 errors, 1303 tests across 435 files. bun test on origin/PROD (detached, same command): 1151 pass, 25 skip, 70 fail, 27 errors, 1246 tests across 427 files. The failing test lines are identical (diff empty).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~285/r46/GATES.json (recut tests block)",
+      "portal worktree: bun test src/pages/TicketCenter src/pages/InvestorReporting at origin/PROD fa21a303d8 (detached checkout, then back to the recut branch)",
+      "portal worktree: the 55 failing test lines of each run, compared with diff (empty)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S3 -- candidate irpt-series-mirror-contract-031 is content-empty on origin/PROD, so its cherry-pick is recorded empty (AR-y-385)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "The one own commit of irpt-series-mirror-contract-031 (a020da0bff) adds lines that origin/PROD already carries in src/pages/InvestorReporting/dashboard/seriesContract.ts (income_claim, calendar_source). Its cherry-pick conflicted only in the history_scope lines that PROD also carries; the resolved tree equals the tree before the pick. It is recorded as an empty commit (8df73982) so the -x trailer exists for the AC3 record. No content was added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 2 (candidate 5 of 9): the candidate's own commit applies on the recut by cherry-pick -x; a conflict is resolved only when the resolution adds no behaviour beyond the commit's own diff.",
+  "world_is": "origin/PROD seriesContract.ts holds income_claim in SERIES_OPTIONAL and the interface, the history_scope_claim and history_scope_basis pair, and calendar_source. The commit's parent 8012cd1a is an ancestor of PROD, not PROD itself. Keeping the HEAD side of both conflict hunks left the tree equal to HEAD, so git cherry-pick --continue refused an empty result and the commit was made with git commit --allow-empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git show origin/PROD:src/pages/InvestorReporting/dashboard/seriesContract.ts (lines 29, 30, 77 to 81, 101)",
+      "portal worktree: commit 8df73982 on cand/dell2/anlreq-prod-recut, trailer (cherry picked from commit a020da0bff1f043fb8dd58060e818f5290e307ab)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S4 -- the lint rewrite keeps a vacuous negative assertion: the raw backspace bytes in the candidate's test were never a word boundary (AR-y-385 step 3)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "The eslint error in filing-decision-tree.test.tsx line 299 comes from six raw backspace bytes in candidate 1's own commit 9b20efde, where a word-boundary escape was meant. The negative assertion therefore matches only a literal backspace-Yes-backspace, which rendered text never holds. The agreed lint commit rewrites the bytes to a backspace character class, which keeps the same match, so the assertion stays vacuous. It is not repaired here: that is a test-semantics ruling, not a lint fix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 3: the lint rewrite of filing-decision-tree.test.tsx is the agreed fix for the eslint error in that file.",
+  "world_is": "At the recut: git show 9b20efde piped to a byte count of backspace (octal 010) gives 6; the same count at c27d9189 (the lint commit) gives 0, and line 299 reads a backspace class around Yes, Replace and No. In bun, the regex with a backspace class does not match the plain text Ticker GAMA Yes (false), while the plain alternation does (true).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git show 9b20efde91269e8b89fada01e1670a41402078a1:src/pages/TicketCenter/__tests__/filing-decision-tree.test.tsx byte count of octal 010 is 6",
+      "portal worktree: git show c27d9189cd4eb73e6f2387ee738e79bb76a509b0 of the same file, byte count 0",
+      "portal worktree: bun -e check of the backspace-class regex against plain text, false"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S5 -- the worker face asks for --author on git cherry-pick, which git does not accept (AR-y-385 worker face)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "The worker face asks for --author on every git cherry-pick. git cherry-pick has no --author option (the first attempt failed with empty commit set passed, and no commit was made). The picks keep each source commit's author; the committer is set for each command by GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL. No git config was written. The empty commit 8df73982 was made with git commit --author set to its source author.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 worker face: git cherry-pick and git commit each take --author 0.9.0_WK_IRPT_ANLREQ~285.",
+  "world_is": "git 2.55.0.windows.5: git cherry-pick -h lists -x, -n, -m, -s, --ff and no --author; git commit accepts --author.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git cherry-pick -h usage line (read at the recut)",
+      "portal worktree: git log of 9b20efde's pick (f0ba2bb3) shows the source author 0.9.0_WK_IRPT_ANLREQ~160"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S6 -- origin/PROD already carries TradeRequestParts.tsx and its test, so the payload item reads no diff entry, not absent from PROD (AR-y-385 step 4)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "origin/PROD already carries src/pages/TicketCenter/TradeRequestParts.tsx and src/pages/TicketCenter/__tests__/trade-request.test.tsx. The excluded commit c05e3dda is not an ancestor of origin/PROD, so the payload check prints ABSENT TradeRequestParts.tsx as no diff entry against PROD, which is the only reading a recut on PROD can satisfy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 4: the payload check prints ABSENT TradeRequestParts.tsx and ABSENT trade-request tests (no path under src/ matching trade except files already on PROD).",
+  "world_is": "git ls-tree origin/PROD lists both paths. git merge-base --is-ancestor c05e3dda origin/PROD exits non-zero. The recut does not modify either file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git ls-tree -r --name-only origin/PROD (both paths listed)",
+      "portal worktree: git merge-base --is-ancestor c05e3ddaa1ce97ecb98fe26d5f592dd01fbf0e2a origin/PROD, non-zero"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
