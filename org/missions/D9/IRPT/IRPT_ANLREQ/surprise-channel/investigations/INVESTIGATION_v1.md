@@ -23485,3 +23485,35 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S165 -- W278-S1 disarmed: r34k carries the estate client and the running root imports it
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S165",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-17T03:41:46Z",
+  "one_line": "W278-S1 DISARMED: the resident package now carries the estate client. r34k added ycharts/research/ycharts_client.py (from the pin, by --member) and the price-form module, and the running r34k root imports both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W278-S1"
+  ],
+  "spec_asserts": "Row W278-S1: price_form_ycharts reaches the estate client by import, else by the sibling Lambda directory; the resident package build stages only its own directories, so on the deployed resident request_path had no ycharts_client to import (BLOCKING, armed, disarm owner 2.0.0_SA_COO~G2).",
+  "world_is": "r34k (ledger irpt-resident-r34k-20261017 CLOSED) adds ycharts/research/ycharts_client.py to the package as a --member at the pinned blob 95f3f2009eb1; the census on the host lists it among the 2 members only in r34k; IB2's V1 imports price_form_ycharts and ycharts_client from the r34k root; V2S TIER built the SPY path through the shipped reader, price-form module and estate client from /opt/irpt-resident/0485393f3a-r34k (path_len 760, sha256 96a5d1b9...). The hazard (the form not reachable on the deployed resident) is closed by the release, as the row's own owner said it would be.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt (census: 2 only in r34k; V2S TIER OK)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/ssm_v2s_out.txt (the V2S TIER line naming form= and client= under the r34k root)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json (the added members and their sha256)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The release that adds the estate client to the package is applied and verified (r34k closed; the three S3 objects hash equal to the build record; V2S OK). The live priced request through the tier is still to come and is logged per the CTO's r34j condition 2; that is a separate measurement, not this hazard."
+}
+]
+```
