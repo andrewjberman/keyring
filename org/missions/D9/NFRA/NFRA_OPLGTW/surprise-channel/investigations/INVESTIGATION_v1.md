@@ -27590,3 +27590,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts and hashes only. Recorded so the drain does not read the commit as checked clean. The check's absence is a device fact, not a refusal."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T11:54:00Z",
+  "id": "NFRA_OPLGTW-Z-S371",
+  "one_line": "Round-41 ruling on worker row Z-W137-S1: OG-en-23's commit was not checked by the hashed account-id list (absent on this device); the issuer's own scan of the added lines finds no long digit run and no e-mail",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W137-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain 83c8c75f83 of wk-NFRA_OPLGTW-137 (OG-en-23): my runs in the main tree: named tests 3 of 3, the eleven-file window set 39 of 39 in both orders, the four-file set (en21, db3, en22, en23) 12 of 12 in both orders, py_compile ok, proof VALID rc=0",
+      "git diff 557b841548 83c8c75f83 over infra/aws/ec2/opal-gateway: added lines holding a 9-or-more digit run or an e-mail address: 0"
+    ]
+  },
+  "spec_asserts": "A commit that landed while the client-data check was ABSENT is not read as checked clean.",
+  "world_is": "The hashed account-id list is absent on this device, so safe-commit could not check e2455019c5 for client account ids (absent is not empty). The issuer's own text scan of the whole merged diff (a 9-or-more digit run, an e-mail address) finds 0 added lines; it is a weaker check than the hashed list, it covers the diff and not the fixtures' short ids, and the fixtures reuse test_og_en22.py's synthetic ids. The code reads an account's rows in Arrow and holds no client value. The commit is read as scanned by text, not as checked by the list.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The check's absence is a device fact, not a refusal; the issuer's text scan of the merged diff finds no long digit run and no e-mail, the fixtures are synthetic, and the code carries no client value. The commit is recorded as text-scanned, not as checked by the hashed list."
+}
+```
