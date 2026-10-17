@@ -25140,3 +25140,79 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only, no harm: the constant is a plain value and the new statement's resource is built from it. The checker does not grade the constant's position. The issuer may rule a different placement."
 }
 ```
+
+## IRPT_DASHBD-D2-W2605-S1 -- the guarded import needs the irpt_reporting producer directory on sys.path, which the order did not name
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2605",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "id": "IRPT_DASHBD-D2-W2605-S1",
+  "surfaced_at": "2026-10-17T05:15:12Z",
+  "one_line": "The guarded import of account_transaction_cottonwood needs the irpt_reporting producer directory on sys.path; the handler now appends that directory last. The order named the producer file and the adapter only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py@acbf569543 appends data/assets/scripts/gold/irpt_reporting to sys.path after the adapter and lib entries and before the guarded import as atc",
+      "python -I import of the handler from the worktree resolves atc to data/assets/scripts/gold/irpt_reporting/account_transaction_cottonwood.py with ATC_IMPORT_ERROR None (rc 0)"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-2605 cell step 2 names the GUARDED import of account_transaction_cottonwood as atc, the producer file under data/assets/scripts/gold/irpt_reporting/, and the adapter the handler already imports; it names no path for the producer.",
+  "world_is": "The handler sys.path carried the adapters directory and lib only, so the producer in irpt_reporting/ does not import without a path line. Without it the guarded import sets atc to None and every transaction day is refused by name. A packaged bundle that omits irpt_reporting/ would meet the same refusal on every fire; the bundle is a later act and its issuer is the disarm owner."
+}
+```
+
+## IRPT_DASHBD-D2-W2605-S2 -- the naming gate refused the typed firm literal in the transaction stage; the stage reads the adapter's FIRM
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2605",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2605-S2",
+  "surfaced_at": "2026-10-17T05:15:12Z",
+  "one_line": "The commit-time naming gate refused the typed firm literal in emit_transactions; the committed handler reads the firm as cbd.FIRM, the adapter's opal_naming.lookup key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first safe-commit attempt on the two files was refused by the naming gate at handler.py:195 and :196 (cottonwood -> lookup('cottonwood')); the commit aborted with files unstaged",
+      "acbf569543 carries firm = cbd.FIRM; data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py:68-69 holds _ROW = opal_naming.lookup('cottonwood') and FIRM = _ROW['key']"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-2605 cell step 2 writes the two calls as atc.normalize_trn(frame, 'cottonwood') and atc.emit_transaction_day(s3, rows, 'cottonwood', day, upload=...), a typed firm name.",
+  "world_is": "The commit-time naming gate (LGIC_ENFORCE, rule 30) refuses a hand-kept carrier of the firm name outside the permitted contexts, and the typed literal in the two calls was refused. The name now comes from the adapter's FIRM, derived from the registry; the checker and the 35 tests pass unchanged."
+}
+```
+
+## IRPT_DASHBD-D2-W2605-S3 -- the pre-commit risk reflex held handler.py on a closed 09-11 deploy ledger that names it by file name
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2605",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2605-S3",
+  "surfaced_at": "2026-10-17T05:15:12Z",
+  "one_line": "The pre-commit risk reflex printed HOLD lines on handler.py citing a CLOSED 09-11 deploy ledger row for another worker's export branch; read, it concerns no path this order touches, and no deploy runs here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the first safe-commit attempt printed [risk-reflex] HOLD on infra/aws/lambda/investor-reporting/account-return-daily/handler.py citing org/critical_paths/change_management/20260911T1227Z_irpt-bckend-rt8_deploy_completion.md:15",
+      "that leg L1 reads state CLOSED 20260911T124214Z; the reflex is advisory, and the commit went through at acbf569543 after the naming fix"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-2605 names the commit route and a record face whose preflight declares comp-blast, comp-iam, comp-routes, comp-schedule, comp-cache and comp-adversary NOT-APPLICABLE; it names no pre-commit risk reflex.",
+  "world_is": "safe-commit ran a risk-reflex comp-pulse diff over the two paths and reported HOLD against a closed deploy ledger row that matches the handler's file name. The commit gates passed; the citation was read and the commit proceeded."
+}
+```
