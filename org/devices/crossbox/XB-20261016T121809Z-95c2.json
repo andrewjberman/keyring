@@ -10,7 +10,7 @@
  "subject": "round-close-check grades from the first CVO row, not the grade of record (Z-S176): take the last/superseding row",
  "body_path": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~Z/XB_CALL_ROUND_CLOSE_CHECK_FIRST_ROW_TO_COO_C_20261016.md",
  "opened_at": "2026-10-16T12:18:09Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-16T12:22:39Z",
   "bus_message_id": "ac0634a4-bd34-4d21-ac18-de4315bfc34a"
@@ -21,8 +21,8 @@
   "bus_message_id": "789ed228-c581-4d33-8c64-2c8e49f924bb"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-16T19:04:44Z",
+  "from_by": "1.0.0_SA_CTO~Z",
   "to_at": "2026-10-16T13:17:14Z",
   "to_by": "2.0.0_SA_COO~C"
  }
