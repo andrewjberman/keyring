@@ -29676,3 +29676,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed as a form mismatch between two readers of one rule. Not fixed here: HeaderCards.tsx is outside this order's grant, and the order names PX_LAST as the rule."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S58",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-17T19:06:25Z",
+  "one_line": "A harness that compares rendered text with a committed recorded file byte for byte fails on every fresh checkout here (git writes CRLF); the drain re-run passed only in the worker's own worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 111 br-4 AC1/K5: the ratio cells' rendered text is byte-identical to peersCurrencyFixture.base_ratio.txt, and the issuer's drain re-run read YES 6 of 6.",
+  "world_is": "In a provisioned worktree cut at PROD 932cea99, `node peersCurrency.harness.cjs` prints `CHECK K5 FAIL ratio cells 24; byte-identical to the base recording: false` and `PEERS CURRENCY HARNESS: NO (5 of 6 checks)`; r107_feature_green_v3.sh lists peersCurrency.harness.cjs as pre-existing. The committed blob has 0 CR bytes; the checkout has 24 (`core.autocrlf=true` in both the portal and the worktree), so the recorded file reads CRLF and the rendered text LF. The issuer's drain re-run (round 111) ran in the worker's worktree, where the file was written by the harness itself with LF, and passed. The same trap can hit changedObjectFixture.base_rio_row.txt (1 CR) and any harness reading a recorded text file; changedObjectCells.harness.cjs and peFooterWords.harness.cjs pass on the fresh checkout. Remedy cut as part of AMGT-bs-2: normalise CRLF on both sides of the K5 comparison.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/cal-r112/portal (provisioned worktree at 932cea99, removed after): K5 output and `tr -cd '\r'` counts 24 in the checkout, 0 in `git show HEAD:<file>`",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107_prep/checks/r107_feature_green_v3.sh output at the cut"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "An instrument trap: re-run a worker's harness in a FRESH checkout (a provisioned worktree), not in the worker's own, before reading a recorded-file control as passing."
+}
+```
