@@ -3090,3 +3090,19 @@ The CTO relayed Andrew's look at the Cottonwood tab (msg 10331 (a)): the chart i
 |---|---|---|---|---|---|
 | 1. the filled-report pass proven small then whole | DB-b-328 | FWD-10 (49 Financial filled report) | WORLD, served output | Addendum 1, both halves | chain AX |
 | 2. the six-day re-land pair, now seven days | to be cut | FWD-10 | WORLD, served output | dell1's list (after 13:30Z) | after dell1's reply |
+
+
+## 192. ROUND 150, WORKSTREAM VLEGPAIR (2026-10-17 ~11:2xZ, issuer 2.0.0_SA_COO~D2): the V leg of the filled-report pass, steps (2) and (3) -- a live session pair
+
+The filled-report pass (TO-DB-b-328) is done and its ledger closed (4,012 documents; p194 AC1-3 PASS on fresh live reads). S2 graded V-leg step (1) PASS (msg 10462); steps (2) and (3) stayed OWED for want of a session pair. The CTO (msg 10509) ruled that no user-to-advisor edit is needed: the pair is the FWD-5 shape, COVERING = one synthetic OPAL_GLOBAL staff viewer (covers 49 Financial by role), NON-COVERING = one synthetic Cottonwood viewer with a non-empty Cottonwood scope that excludes every 49 Financial account; S2 grades (2) (200 with body sha256 equal for COVERING, a coverage refusal for NON-COVERING) and (3) (one export as COVERING); both rows are removed and read ABSENT twice; recorded by digest only, outside the 11:30Z to 14:15Z weekday band; the receipt states the within-firm advisor split is not exercised and owed once a 49 Financial advisor map exists.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the pair minted, handed to S2 by broker, removed after the issuer's word | DB-b-331 | FWD-10 (49 Financial filled report; step (2) before any page reads the route) | WORLD (two users rows) | the CTO's ruling msg 10509; IB2's queue (TO-IB-hm-11 first) | chain AY |
+| 2. S2's grades of steps (2) and (3) | S2's own | FWD-10 | graded on the live route | item 1 handed over | after item 1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) one order and one ledger for both rows (they share their legs and their removal word); (b) IB2 waits for the issuer's message "V leg done", which this seat sends only after S2's grades are read, so the rows live no longer than the grading; the 3-hour TTL on each row is the backstop; (c) the checker `p197` re-reads the table (both rows ABSENT) and validates the record's shape (27 single-fault mutants), and it requires the advisor-split sentence in the notes (the CTO's condition); (d) the sessions never touch a file: they go to S2 in broker messages only.
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 27 single-fault mutants):** `checks/r150/p197_vleg_pair_mint.py` (DBC197-1-AC1, DBC197-2-AC1).

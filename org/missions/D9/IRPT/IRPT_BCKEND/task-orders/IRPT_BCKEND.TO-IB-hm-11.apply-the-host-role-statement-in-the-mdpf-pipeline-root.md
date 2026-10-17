@@ -18,6 +18,8 @@
 
 **AMENDMENT 1 (issuer, 2026-10-17 ~08:4xZ, after IB2's STOP msg 10425 on IB-hm-5): STEP 6 (the QA re-run) IS STRUCK; make NO manual invoke.** The refresh function has no one-firm payload (a manual invoke refreshes all three firms), so no QA run is made by this order. The assume fact is read from the SCHEDULED fires: the issuer reads the first fire after the apply of IB-hm-5 (Monday 2026-10-19 13:30Z) and, after this leg lands, the next one. Record `qa` as `{"runs":0,"deferred_to_scheduled_fire":true}` and `lambda_invokes` 0. Gate limb: a modification of an existing order (GATE viii); the check was re-cut (`r255`) and re-controlled.
 
+
+**AMENDMENT 2 (issuer, 2026-10-17 ~11:2xZ): STEP 0, BEFORE the gates: place the QA leg of the HMAC list ledger on an external hold.** IB-hm-5's ledger `irpt-bckend-hmac-list-producer-hm5-20261017` has its leg L6 (the QA) open on purpose: it is closed by the issuer's read of the first scheduled directory fire (Monday 2026-10-19 13:30Z). Its window is 4.0 h (ends about 12:07Z), after which it would read PAST-WINDOW and raise a false half-landed RED. Run: `python .tools/deploy_ledger.py hold --slug irpt-bckend-hmac-list-producer-hm5-20261017 --gate-type external --gate-ref "first scheduled irpt-directory-refresh fire after the apply (Mon 2026-10-19 13:30Z), read by 2.0.0_SA_COO~P2 with checks/hm5_verify_read.py" --reread-date 2026-10-19` and record `hm5_ledger_held` true in the IBhm11 record's `gates` object (the check does not grade it). Do this FIRST, even if gate (b) then stops the rest of the order. Gate limb: a modification of an existing order (GATE viii); no criterion, cell or path modified.
 ---
 
 ## WORKER FACE
