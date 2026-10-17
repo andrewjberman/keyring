@@ -5,10 +5,10 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.23",
+ "prd_version": "v2.24",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
  "status": "RATIFIED"
 }
 ```
@@ -329,6 +329,39 @@ CONTRACTS changed, so both halves are owed again.
          SOURCE     Andrew-direct 2026-10-13 ~18:4xZ at the dell2 terminal, record
                     ANDREW_DIRECT_20261013_184xZ_MODEL_PORTFOLIOS_AUA_TREND_GROUP_CUSTOM_MODELS_AND_CHIPS.md
                     @5e80d5eb9b (owner MDPF_CANON)
+
+  FWD-10 Cottonwood's figures count only the assets Cottonwood supervises, and the
+         total matches the one Cottonwood sees in Black Diamond for the same day
+         DONE WHEN  EXERCISED -- read on the Cottonwood view of Model Portfolios (the
+                    headline total, the Total Assets breakdown and the AUA Trend)
+                    on `bun run dev:live --port 5174` at a STATED portal commit
+                    against the live services, for a STATED value date:
+                    (a) every Cottonwood figure counts only accounts whose BD
+                    `Account Supervised` reads `Supervised`; history applies
+                    today's flags, and the served meta says so in a field; the
+                    model and SMA legs move only by Unsupervised accounts that
+                    carry them (measured 0 of 130 on 2026-10-16); the Global
+                    composite folds Cottonwood's supervised book through its
+                    sums; 49 Financial and Inflection are byte-identical before
+                    and after (their whole-book rule of 2026-08-25 stands);
+                    (b) the Cottonwood total equals the BD Dashboard
+                    "Supervised" figure for that value date, or the page's
+                    source line names the remaining difference and its cause.
+                    Until (b) closes, the source line says the figure is BD's
+                    export valuation of supervised accounts and does not claim
+                    a tie to the BD Dashboard. Negative arm: today's build,
+                    554,632,228.45 on 2026-10-15 including 33,071,069.62 of
+                    Unsupervised accounts, against BD Dashboard Supervised
+                    530,421,988
+         ACCEPT     Cottonwood's advisors see only the assets they supervise, and
+                    the total they see here is the number Black Diamond shows
+                    them for that day, or the page says plainly by how much and
+                    why it differs.
+         SOURCE     Andrew-direct 2026-10-17 ~01:0xZ at the 4.0.0_SA_CRO~DDD
+                    terminal, record org/tier1_exec/4.0.0_SA_CRO~DDD/deliverables/
+                    ANDREW_DIRECT_20261017_010xZ_COTTONWOOD_SUPERVISED_ONLY_MATCH_BD.md
+                    @f67b4711f1; re-affirms Andrew-direct 2026-08-25 ~14:05Z
+                    (a78c51158c)
 ```
 
 ## CONTRACTS
@@ -786,5 +819,28 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - **The category-views history leaf** stays served and read-only, with no required reader. Its retirement is not ordered.
 - **Placement:** round 11 cut, after round 10's drain. ENDPOINT text moves (FWD-9 head (a), (f), (g)), so the ratified-text half is re-owed to
   `3.0.0_SA_CVO`.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.24 (2026-10-17 ~01:4xZ), FWD-10, Cottonwood Supervised-only (`1.0.0_SA_CTO~DELL1`, on `4.0.0_SA_CRO~DDD` msg 7097):**
+- **Input:** `org/tier1_exec/4.0.0_SA_CRO~DDD/deliverables/COTTONWOOD_SUPERVISED_GAP_FINDINGS_20261017.md` @f67b4711f1. Andrew's word is the
+  outcome itself, so it is added at the next unused number. FWD-1 to FWD-9 are untouched.
+- **Ruled, (a), the build: ACCEPTED as the CRO proposes.** `build_cottonwood_mdpf_slice.py` `holdings_total_by_date` reads
+  `Account Supervised` and keeps `Supervised` before the collapse and the sum. One filter, at the one producer of Cottonwood's totals, so the
+  headline, the breakdown and the Trend's `partner_custody_total` all move together. Cottonwood only. An edit that makes "the firms
+  consistent" is refused (`mdpf_category_registry.py` :818-858).
+- **Served move:** a never-widen pair, the COO half first. Blast radius: Cottonwood's slice and the Global composite. Every Global leaf is
+  read before and after, and 49 Financial and Inflection must be byte-identical. Both branches are named:
+  - the model or SMA leg moves (an Unsupervised account carries a model on the build date), so the cell stops and reports;
+  - it does not move.
+  Rollback: a per-key prior VersionId.
+- **Timing:** not on the fire that D1 reads for CN-s-1 V2 (2026-10-17 13:30Z), because one change lands per fire. It is round 12's first
+  cell, issued when round 11 drains (CN-s-3 and CN-s-5 are open).
+- **Ruled, (b), the $8.86M gap:** it is inside BD, between the Dashboard and the DataMining exports, and was measured before (-8,697,205.48
+  on 2026-08-19, `D_05.supervised_split.py:57-68`). Route 1 is taken: one Dashboard export by relationship, from Andrew's own BD login. That
+  login is his act. The CRO diffs it against the export in the same turn. Route 2, the vendor question, goes out only if route 1 does not
+  name the accounts. Until then, the source-line wording in FWD-10 holds.
+- **Portal:** the source line is a client-facing page change. It goes to DEV and waits for Andrew's word before PROD.
+- **Ratified-text half re-owed** to `3.0.0_SA_CVO` (an ENDPOINT change).
 
 -- 1.0.0_SA_CTO~DELL1
