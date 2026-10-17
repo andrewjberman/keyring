@@ -27024,3 +27024,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-17T08:15Z",
+  "id": "NFRA_OPLGTW-Z-S358",
+  "one_line": "MY ERROR: REMEDIATION_v21 (377e7f9c54) labels the remediation rows for Z-S336 and Z-S338 round 'v39' although both items arose in round 40 (OG-ap-32, <round>40). The row gate counts open orders by the row's round, so it graded them against round 39 (all terminal) and admitted the slug while round-40 orders OG-ap-33 and OG-ap-34 were open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "Spine v3.19 / surprise-row-gate _open_tos_census(round_n): a slug's round counts ITS orders only, and the remediation row's `round` names the project round it belongs to. A slug waits until that round's orders are terminal.",
+  "world_is": "REMEDIATION_v21.md rows NFRA_OPLGTW-Z-S336 and Z-S338 carry round v39 and remediation.round v39; task-orders NFRA_OPLGTW.TO-OG-ap-32 reads <round>40. The v21 commit's gate notes read 'ACCEPTANCE (round 39)' and admitted it, while its census note listed OG-ap-33 and OG-ap-34 open. I took the round label from my adjudication file's version (v39), not from the project round. The Z-S312 row's v39 label is defensible: its remedies OG-ap-30 and OG-ap-31 are round 39. Today's Z-S336 clock, labeled round 40, was refused for exactly the round-40 open orders, which is the gate working.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 377e7f9c54:org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/remediations/REMEDIATION_v21.md (round v39 on Z-S336 and Z-S338)",
+      "task-orders/NFRA_OPLGTW.TO-OG-ap-32.round-40-batched-release.md <round>40",
+      ".tools/surprise-row-gate.py:1299-1341 (_open_tos_census, round_n filter)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No false state results: Z-S336 and Z-S338 stayed ARMED and OPEN in v21, so nothing was disarmed early. The defect is that the slug's routing precondition was sidestepped by a mislabel. Fix going forward: a remediation row's round is the project round of the item it remediates, read from the order's <round> tag, never the adjudication file's version. The two rows' round fields are not clock fields, so they cannot be corrected in place; this row is the correction of record."
+}
+```
