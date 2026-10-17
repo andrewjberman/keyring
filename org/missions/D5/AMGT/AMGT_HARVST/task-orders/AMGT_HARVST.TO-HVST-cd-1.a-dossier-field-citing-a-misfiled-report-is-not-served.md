@@ -69,9 +69,14 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~154, worktree `C:/dev/wk-harvst-154`, branch `wk-AMGT_HARVST-154`. Widen the sparse set at provision with `infra/aws/ec2/opal-gateway`, `org/tier1_exec/4.0.0_SA_CRO/scripts` and `.claude/agents` (rows `D1-W150-S1`, `D1-W152-S1`, `D1-W153-S1`: the cone left out the standing-rules file).
 - **SENT:** with the round-89 issuance.
 
+**COMPLETE 2026-10-17T12:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~154` (worker, haiku, high), branch `wk-AMGT_HARVST-154`, build `4a6a63f12c`, head `5393ddb851`, merged `9784d58e12` (safe-merge fast lane, index check 0 of 3 paths differ). Diff read by this seat: `harvest_research.py` (+45/-4): `_cited_misfiled` (the whole entry's JSON carries `security_key=<key>/<report_id>/` for a listed report of the same key) and `_drop_misfiled`; `_research` drops matching dossier and continuation fields, records them in `misfiled_fields_excluded` (present on every response, `[]` by default), says in `run.miss` when every field of a part is dropped, and adds the count sentence to `denominator_note` only when something is dropped; `denominator` unchanged.
+- **AC1 PASS:** `5 passed` (worker; this seat re-ran in the worktree). **AC2 PASS:** `33 passed` (worker; re-run here, base count 33). Proof instance VALID rc 0 (re-run here). The mutant arm (`MISFILED_REPORTS = ()`) fails arm 1 as asserted. No surprise row filed.
+- **What this does NOT prove:** the served tool. The code is merged, not deployed; the served KMB read with a control name is `HVST-cd-2`.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>89</round>
 <workstream>S29-DOSSIER</workstream>
 <slot>dell1</slot>
