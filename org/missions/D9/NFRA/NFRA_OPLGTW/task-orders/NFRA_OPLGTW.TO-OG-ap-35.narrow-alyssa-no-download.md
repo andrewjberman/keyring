@@ -76,7 +76,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-35.narrow-alyssa-no-download
 - The usage count may be 0 or small; it does not gate the act (the ruling enforces Andrew's word either way), but it goes to the CTO before Phase B so Andrew sees it. The halves still sign on the ask.
 - Pre-cut: `ag1.AC1` and `ag1.AC2` base FAIL as expected (records absent); PASS arms on synthetic records; controls FAIL (AC1: before lacks `download_filtered`, a non-numeric count, the ask without the CVO half, without the no-contact line, an e-mail in the ask; AC2: no ledger, a second key removed, `download_filtered` still present, another scope key changed, another principal moved, the download not refused, the revision jumping by 2). The 10-hex hash values are exempt from the digit-run scan (a hash can be all digits).
 
-<status>staged</status>
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-G</workstream>
 <slot>~AE</slot>
