@@ -29,6 +29,8 @@
 - 20261017T002635Z LEG L5 closed: plan 0 add 1 change 0 destroy (export function code attributes only); naming gate WARN 28 graded (6 WARN on existing unc
 - 20261017T002635Z LEG L6 closed: IB247-1 release record and criteria output written; AC1 PASS, AC2 PASS, AC3 owed (step 6 not released); proof instance V
 - 20261017T002805Z LEG L1 closed: source-map stamps (artifact_sha256 only, two entries), the release record, proof and this ledger committed with explicit
+- 20261017T035650Z HELD-SOVEREIGN-GATED gate=external/ADVI_FIRMBKTS.TO-FB-q-1 fence regeneration of opal-data-49financial by 0.7.0_AE_
+- 20261017T042553Z HOLD RELEASED -> OPEN
 
 ## Carried notes (hand-written lines kept across re-renders)
 

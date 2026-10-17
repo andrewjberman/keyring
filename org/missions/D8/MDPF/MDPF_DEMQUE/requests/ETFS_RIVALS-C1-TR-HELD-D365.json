@@ -1,4 +1,5 @@
 {
+  "draw_hold": "Held by 2.0.0_SA_COO~Q1 2026-10-17 ~04:2xZ on 1.0.0_SA_CTO~DELL1 msg 7279 (ruling): Andrew-direct 'completely filled ... Now' goes by 2.0.0_SA_COO~RV's producer route through site Z, which lands on the page store; DEMQUE output lands in ZQ_STANDING and does not reach the page, so a DEMQUE draw would land twice. Lifted only by the issuer removing this key in a commit, after the ETFS_RIVALS landing cell (carried to DEMQUE round 10) exists.",
   "surface": "C",
   "as_of": "2026-10-12",
   "authority": "Andrew-direct ~18:5xZ 2026-10-14, verbatim: 'ETFS_RIVALS is done now, all it needs is its backfill sorted out in DEMQUE' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_185xZ_ETFS_RIVALS_DONE_BACKFILL_TO_DEMQUE.md; relayed by 1.0.0_SA_CTO~DELL1 msg 5712-5713); the 30, 90, 365 day order: Andrew 'C1 yes, approved in that order' (org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md).",

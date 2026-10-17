@@ -1,0 +1,36 @@
+{
+  "project_code": "TCKT_EARLYWARN",
+  "macro_code": "TCKT",
+  "directive": "D7",
+  "fabric": "dell1",
+  "pipeline": "client-ops-early-warning",
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-10-17",
+  "registered_under_tree": "2026-10-17",
+  "placement": "DELL1",
+  "pods": [],
+  "related": [
+    "TCKT_VNEXT",
+    "SOC2_MSLOGS",
+    "NFRA_OPLGTW"
+  ],
+  "name": "Client Ops Early Warning: scheduled scans of the Outlook audit channel and Schwab silver for client-ops loose ends (unanswered requests, unresolved operational accounts, idle new cash accounts)",
+  "description": "FAST-PATH on Andrew-direct 2026-10-16 ~18:0xZ at 4.0.0_SA_CRO~DELL1 ('pptx, anonymize names, fast-path it'; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261016_1801Z_CLIENT_OPS_EARLY_WARNING_FAST_PATH.md): this project does not run L1-L10. The alert moratorium is lifted for this scope only by his explicit Teams ask (2026-10-16 17:26Z and 17:55Z, quoted in the record); nothing sends until Andrew names a channel. Registered at L3 by 1.0.0_SA_CTO~DELL1 so its readers of Schwab silver can carry registry rows (rule 30). Package infra/aws/ec2/client-ops-early-warning/.",
+  "phase": "2026-10-17 ~04:2xZ (1.0.0_SA_CTO~DELL1): registered for its registry reader rows on 4.0.0_SA_CRO~DELL1 msg 7281; Day 1 and Day 2 merged @004c4df6a9 by 4.0.0_SA_CRO~DELL1.",
+  "blocking": null,
+  "brief_ref": null,
+  "endpoint_ref": null,
+  "prds": [],
+  "decompositions": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~DELL1",
+    "coo": null,
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO~DELL1"
+  },
+  "coo_lane": null,
+  "rulings": [
+    "FAST-PATH -- Andrew-direct 2026-10-16 ~18:0xZ (record above): 'pptx, anonymize names, fast-path it.' Addendum 4: 'yes we can run it on mine thats fine' (the bridge on his mailbox)."
+  ]
+}

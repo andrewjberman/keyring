@@ -1,4 +1,5 @@
 {
+ "draw_hold": "Held by 2.0.0_SA_COO~Q1 2026-10-17 ~04:2xZ on 2.0.0_SA_COO~RV msg 7269: site Z batch rv-bf365-20261017 already filled 168,511 of the 180,991 owed closes (owed now 12,480, org/tier1_exec/2.0.0_SA_COO~RV/deliverables/backfill_20261017/owed_after_rv-bf365_20261017T04Z.csv @bc1c08e456); drawing this request would re-draw landed cells. Lifted only by the issuer removing this key in a commit, after the request is re-scoped to the owed remainder.",
  "surface": "C",
  "as_of": "2026-10-16",
  "authority": "Andrew-direct 2026-10-17 ~03:1xZ and ~03:4xZ (records above); CTO ruling org/missions/D8/MDPF/MDPF_DEMQUE/ledger/CTO_RULING_DRAWER_HONOURS_SURFACE_BUDGETS_20261017.md @d4ad590946",
