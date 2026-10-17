@@ -3140,3 +3140,19 @@ The issuer's re-land read found that the Cottonwood gold external flows are infl
 **fanout:** 1 of 1 chains for this cell (worker 259), cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; the probe passes on the issuer's reference and the 19 mutants are all killed):** `checks/r150/p199_cot_late_window.py` and `checks/r150/p199_probe_late_window.py` (DBC199-1-AC1, DBC199-2-AC1, DBC199-3-AC1). Reference edit: `reads/DB333_REFERENCE.patch`.
+
+
+## 195. ROUND 150, WORKSTREAM RELEASE (2026-10-17 ~16:4xZ, issuer 2.0.0_SA_COO~D2): the re-pin of the Cottonwood landing entry for the ONE code release
+
+Cell `DB-b-333` (the late-posting reader) drained at `5bec535804`; ~F2's `TO-DB-f-2706` (the late-window transaction stage) is final at `c845490521` (msg 10610) and merged on the trunk. Measured at the trunk: the entry `irpt-cot-account-return-daily-lambda` has three or more stale staged members (the adapter, `lib/opal_naming.py`, registry files), so the entry's own check refuses a build and ~F2's `DBF139-6-AC3` fails on `DBF138-6-AC2` only. ~F2 asked that the release cell own the entry re-pin and run `p138_cotbundle` and `p139_cotwindow` as its checks.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 2a. the entry re-pin (one JSON file) | DB-b-334 | FWD-10 (Cottonwood Performance tab) | WORLD by the gate's floor for an infra path (an edit in a worktree) | items 1 of section 194 and TO-DB-f-2706 landed | chain BB |
+| 2b. the bundle build (build-only hash), the never-widen pair (COO half + CTO half bound to the packet sha256), the apply by the one CloudOps lane (IB2) | to be cut after 2a drains | FWD-10 | WORLD | 2a drained; ~F2's packet addendum names the same bundle hash | after 2a |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the cell is mechanical and is graded by three criteria: the entry clause (the proven `check_repin_entry` of `p172`), ~F2's `DBF139-6-AC3` run on the worker's tree (it carries the function's tests and the bundle criteria `DBF138-6-AC1` to `AC3`), and the build-only package equal to its sources; (b) `lib/opal_naming.py` now imports `opal_lambda_map` inside a generator-side function that the bundle does not package; the checker allows exactly that one function-local import and refuses any other packaged source that names the reader, so the bundle cannot fail at import time; that no runtime path calls the generator function is NOT proven by a run and is stated in the packet; (c) the build, the packet and the apply wait for the drain so the packet binds the bundle hash of the trunk, not a worktree.
+
+**fanout:** 1 of 1 chains for this cell (worker 260), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the three criteria FAIL as expected):** `checks/r150/p200_cot_release_repin.py` (DBR200-1-AC1, DBR200-2-AC1, DBR200-3-AC1).
