@@ -25587,7 +25587,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-W2704-S1 -- DB-f-2704's plan count (3 add, 0 change, 0 destroy) is asserted by the checker header but unmeasured: the edit moves an existing policy's role argument
 
 ```json
@@ -25719,5 +25718,59 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Closes when the iam.tf commit lands and the naming limb's read of the new literal is printed in that commit's output. Rows S1 to S3 stand unchanged."
+}
+```
+
+## IRPT_DASHBD-D2-W2705-S1 -- the order's literal SESSION_NAME is refused by the commit-time naming limb as a new hand-kept carrier of 'inf'; the launcher and test commit is aborted (rc=1)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2705-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2705",
+  "surfaced_at": "2026-10-17T12:47:56Z",
+  "one_line": "The order's literal SESSION_NAME = \"inf-g-01-account-transaction\" is refused by the commit naming limb (LGIC_ENFORCE DEC-6, ENFORCE) as a new hand-kept carrier of inf, so the launcher and test commit is aborted (rc=1) and nothing lands.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face DB-f-2705 step 2 and checker DBF139-5-AC1 require the launcher to carry a module constant SESSION_NAME equal to the literal \"inf-g-01-account-transaction\", and the commit to pass the safe-commit gates. CLAUDE.md section 4 requires a builder refusal to be a missing registry row, never a hand-typed workaround.",
+  "world_is": "The commit gate's naming limb refused the diff at its first run (safe-commit.sh, worktree HEAD 3b3d3e9f94): NAMING REFUSE data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 inf-g-01-account-transaction -> lookup('inflection'), 'NEW hand-kept carrier (context rule); hand-kept carrier of inf outside every permitted context'. The role name built by name() at line 390 is CONFORMANT. The literal cannot land as written, and the order names no route that satisfies both the literal and the gate. Not repaired: the literal is kept, nothing is derived, no gate is bypassed, no override is used. The three checker criteria PASS on the uncommitted worktree bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run at worktree HEAD 3b3d3e9f94: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' rc=1",
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 (uncommitted worktree bytes, base 3b3d3e9f94): SESSION_NAME = \"inf-g-01-account-transaction\"",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-2705.inflection-launcher-assumes-transaction-role-flat-directory-naming.md (WORKER FACE step 2 and DBF139-5-AC1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced at the first commit attempt. The three criteria were run on the uncommitted bytes: DBF139-5-AC1 PASS, AC2 PASS, AC3 PASS; the launcher test file is 83 passed, 0 failed, 0 errors (77 at base). The proof instance cannot validate while its artifacts are uncommitted (artifact-resolution). Routing is the COO's and the CTO's: a registry row or a derived session name, under a decision on the literal."
+}
+```
+
+## IRPT_DASHBD-D2-W2705-S2 -- S1 resolved by the coordinator's ruling: the fixed session name is g01-account-transaction and the naming gate passes it; the launcher committed at 2231124c6b
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2705-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2705",
+  "surfaced_at": "2026-10-17T13:04:14Z",
+  "one_line": "S1 is resolved by the ruling: SESSION_NAME is g01-account-transaction (amended order and checker in f6965003da, merged at 69c26cdf29); the naming gate passes the literal and the launcher and test commit landed at 2231124c6b.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Surprise row IRPT_DASHBD-D2-W2705-S1 (BLOCKING): the literal SESSION_NAME from the order was refused by the commit naming limb, aborting the launcher commit.",
+  "world_is": "The coordinator's ruling (order and checker amended in f6965003da) fixed the session name at g01-account-transaction; the worker changed SESSION_NAME and the test literals, re-ran AC1, AC2, AC3 (PASS) and the launcher test file (83 passed, 0 failed, 0 errors), and the commit gate and naming gate passed at 2231124c6b.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 at 2231124c6b: SESSION_NAME = \"g01-account-transaction\"",
+      "safe-commit.sh of 2231124c6b: '[naming-gate] NAMING-GATE: PASS 1 graded' and rc=0",
+      "f6965003da (the ruling's amended order and checker), merged into the worktree branch at 69c26cdf29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Notes row. S1 keeps its own disposition; the adjudication belongs to the CVO."
 }
 ```
