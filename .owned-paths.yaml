@@ -76,6 +76,11 @@ lanes:
     description: "CTO grantor IRPT-M-REGISTRY-01 under Andrew session delegation: exact two registry files only, preserve CRO incumbents plus exact COO~M. IRPT unprovisioned product row and X10 twelve-family policy only; file-level gate, semantic boundaries independently reviewed; no default home or global rule change."
 
 
+  CLOUDOPS_DEPLOY_RECORDER:
+    permitted_agents:
+      - 0.7.0_AE_CloudOps
+    description: "Single-owner lane (NFRA_CTLPLN round 30, TO-CT-ca-1): the deploy recorder record-terraform-deploy.sh belongs to the CloudOps base 0.7.0_AE_CloudOps alone (round-28 ruling 2 of 1.0.0_SA_CTO, restated in the round-29 analysis ruling 3). Shape copied from the single-owner lane TOOL_BATTERIES."
+
   IRPT_COMPLETION_SOURCE_MAP:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -2798,9 +2803,13 @@ paths:
     lane: PUBLIC_DATA_ROUTER_DEPLOY
     note: "public-data-router edge function source -- full AE set PRESERVED + DT 0.2.0 (the live portal-promote lane; CTO WO-3 names this router as DT's surface, GO 005733Z, Andrew-direct repoint-tonight). Longest-match overrides infra/aws/** AE-only. SCOPED to this one edge function: the other lambda-edge functions remain CLOUD_OPS_OR_ETL. COO grantor-landed 2026-07-29 (SoD); CTO arch-gate cc'd."
 
-  "infra/aws/lambda/ci/lambda-source-map.json":
+  "infra/aws/lambda/ci/function-map/**":
     lane: IRPT_COMPLETION_SOURCE_MAP
-    note: "Shared source map: incumbent YANG_PIPELINE_DEPLOY members preserved plus exact COO~P for IRPT build composition only, CTO ruling IRPT-P-BUILD-01. Non-IRPT member equality and offline package proof required. File-granular gate; member scope reviewed independently. No deploy grant."
+    note: "Per-function Lambda source map (NFRA_CTLPLN round 30, TO-CT-ca-1): the folder that replaces the retired single file lambda-source-map.json, one JSON file per function. The incumbent lane members keep their write grant (YANG_PIPELINE_DEPLOY members preserved plus exact COO~P for IRPT build composition only, CTO ruling IRPT-P-BUILD-01). Granularity is one file per function. No deploy grant."
+
+  "infra/aws/lambda/ci/record-terraform-deploy.sh":
+    lane: CLOUDOPS_DEPLOY_RECORDER
+    note: "Deploy recorder (NFRA_CTLPLN round 30, TO-CT-ca-1): writes only the deployed function file under function-map/. Owner 0.7.0_AE_CloudOps alone (round-28 ruling 2)."
 
   "infra/aws/terraform/nfra-ctlpln-identity/**":
     lane: NFRA_CTLPLN_FAST_C

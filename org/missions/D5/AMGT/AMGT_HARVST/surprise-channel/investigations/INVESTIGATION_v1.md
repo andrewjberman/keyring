@@ -10320,5 +10320,66 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S37",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T23:53:58Z",
+     "one_line": "HVST-cc-7: the bun cache is now 77 of 77 (amendment 2 i-iii done), but the live gateway moved TWICE since the signed pair: live ref is 4be300110e (22:00:58Z, NFRA1, OG-ap-31), not d14445961d; the kept release is two releases stale, so the deploy is NOT started.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-7 step 0 and the signed COO half: the release is cut on the LIVE deployed commit (d14445961d at the signing), the six-path diff against it is exactly the six paths, and C-6 reads the tool-name count equal before and after (127 at the last release record).",
+     "world_is": "Amendment 2 done: 50 of 50 sha512 equal to mcportal@c66ca82952 bun.lock (cc7_cache_receipt.out), intake_receive.py install unpacked 50 of 50 (refused=0), bun_cache_precheck reads 77 of 77. Then the pre-deploy re-read: EC2_MANIFEST.json (HEAD, commit 30d14203b4) services.opal-gateway.deployed_commit = 4be300110ec912ac8c11a1663403e41eea45117c at 2026-10-16T22:01:25Z by 0.7.0_AE_CloudOps~NFRA1 (OG-ap-31, round-39 batched release, previous_deployed_commit bf9d23b518); S3 opal-313476888478-lambda-artifacts ec2/opal-gateway/opal-gateway-latest.tar.gz git-ref = 4be300110e, LastModified 22:00:58Z, 893529 B. Both 4be300110e and bf9d23b518 are absent from dell1 (git cat-file: could not get object info). The kept release rel-amgt-harvst-cc7 @b5aa696c90 has parent d14445961d: deploying it would revert OG-ap-28 and OG-ap-31 (and the stale-base guard must refuse it). The release note records registry 103 and tools/list 103 before and after, not 127, so C-6's baseline of the signed pair no longer holds. Nothing was built, uploaded or deployed by this seat; the ledger entry is not opened; the runner hold is unaffected.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway at HEAD",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_cache_receipt.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_before.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S38",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-17T00:15:51Z",
+     "one_line": "HVST-cc-7 served: the cc-2 filter excludes the misfiled KMB reports from research_reports, but the served gold dossier still sources KMB fund_of_record IDVZ 2.25% from the excluded report fbd50086c4065785 (Kimberly-Clark de Mexico).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-2 and the close condition of D1-S29: a misfiled research report is excluded and named, and KMB must not carry Kimberly-Clark de Mexico's content as KMB's own.",
+     "world_is": "After the cc-7 deploy (319c9413a2, 00:10:26Z) harvest_get_research(KMB_US_Equity) answers research_reports without fbd50086c4065785 and 1a3b56044db679a5 and names both in misfiled_reports_excluded (the order's SERVED_KMB_RESEARCH criterion, PASS). The same response's dossier_fields (gold dossier amgt/harvest/gold/research_dossier/security_key=KMB_US_Equity/as_of=2026-10-12.abd82596c92db453.json, method amgt-corpus-dossier/15) still carry fund_of_record = IDVZ and last_stated_position = MAINTAIN 2.25% POSITION IN IDVZ, each citing report_key .../research-report/security_key=KMB_US_Equity/fbd50086c4065785/Kimberly Clark Mexico Q2 2026 Earnings Update.docx, and pack_shape's basis names the 1a3b56044db679a5 pdf. So the filter is on the report list only; the dossier built from the excluded report is served as KMB's. The order's Not-covered clause names the silver/gold rebuild as a later cell; this is the served evidence that the rebuild is owed. Nothing was changed by this seat.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_served.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S39",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T00:24:27Z",
+     "one_line": "HVST-cc-7 CRO caller read (msg 7066): D1-S38 reaches continuation_fields as well as dossier_fields, and the PG candidates answer does not say Procter & Gamble is outside the universe.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-2 and HVST-cc-3: a misfiled KMB report is excluded and named, and a ticker-shaped query that matches no ticker returns candidates and says what the universe does not hold.",
+     "world_is": "On gateway 319c9413a2 a second principal (4.0.0_SA_CRO~DELL1) read harvest_get_research(KMB_US_Equity): research_reports drops fbd50086c4065785 and misfiled_reports_excluded names it, but fund_of_record and last_stated_position cite the same excluded report ('MAINTAIN 2.25% POSITION IN IDVZ') in BOTH dossier_fields and continuation_fields, so one response contradicts itself. harvest_resolve_security('PG') answers status candidates with PG&E (PCG) on a name prefix; not_held is empty, so nothing says Procter & Gamble is outside the 243-security universe. Both are outside the three criteria of cc-7 and cc-3 and are candidates for the round-88 analysis (ROUND88_ENRICHMENT_CANDIDATES_20261017.md).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/mcp/inbox/2.0.0_SA_COO/~W1/read/20261017T002311Z_4.0.0_SA_CRO_DELL1_AMGT_HARVST_cc-7__caller_read_of_the_thr.md"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

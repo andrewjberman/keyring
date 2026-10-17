@@ -1083,7 +1083,7 @@ def _carried_at_head(value, path):
 
 def _packaged_citations(post_text):
     """The `packaged_as` names of a packaging manifest whose `repo_path` resolves to a tracked file at HEAD
-    (2026-09-23, 0.0.0_AB_MSTR, on 2.0.0_SA_COO~P 99805: lambda-source-map.json rows such as
+    (2026-09-23, 0.0.0_AB_MSTR, on 2.0.0_SA_COO~P 99805: Lambda source map rows such as
     {"repo_path": ".../performance/bd_live.py", "packaged_as": "bd_live.py"} and the member lists that
     repeat those names). The packaged name is the in-zip spelling of a file already committed under its
     repo_path, so it is the same citation R-11 already recognises for the repo_path itself -- renaming it
@@ -1106,7 +1106,9 @@ def _packaged_citations(post_text):
     return out
 
 
-SOURCE_MAP_PATH = "infra/aws/lambda/ci/lambda-source-map.json"
+FUNCTION_MAP_DIR = "infra/aws/lambda/ci/function-map/"
+# CT-ca-1 (NFRA_CTLPLN round 30): the Lambda source map is one JSON file per function under FUNCTION_MAP_DIR; the
+# file name is the function name and the file holds that entry object alone.
 _SOURCE_MAP_NAME_FIELDS = ("function_name", "iam_role")
 
 
@@ -1289,17 +1291,28 @@ def _changelog_name_position(post_lines, line_no, value):
 _SOURCE_MAP_FUNCS = []
 
 
+def function_map_problem(folder=None):
+    """None when the function-map folder exists and holds at least one function file; otherwise the loud reason. A missing or
+    empty folder must never read as an empty citation set (the old single-file readers did exactly that): the gate refuses."""
+    d = folder if folder is not None else os.path.join(REPO, FUNCTION_MAP_DIR)
+    if not os.path.isdir(d):
+        return "NAMING ERROR function-map folder missing: %s (the Lambda source map is read from this folder; nothing is graded from a copy)" % d
+    if not any(f.endswith(".json") for f in os.listdir(d)):
+        return "NAMING ERROR function-map folder empty: %s" % d
+    return None
+
+
 def _source_map_functions():
-    """The `functions` keys of lambda-source-map.json at HEAD (the deployed functions it already records); empty when unreadable,
-    so nothing extra passes. 1.0.0_SA_CTO ruling on 0.0.0_AB_MSTR msg 107746 (4.0.0_SA_CRO's proposal,
+    """The function names the Lambda source map already records: the stems of the function-map folder's files (one entry per
+    file). Empty when the folder is unreadable, so nothing extra passes (main() refuses on that case loudly).
+    1.0.0_SA_CTO ruling on 0.0.0_AB_MSTR msg 107746 (4.0.0_SA_CRO's proposal,
     AMGT_RESAPP_D1S6_ANSWER_20261009.md): a changelog that names such a function cites it and mints nothing."""
     if not _SOURCE_MAP_FUNCS:
+        d = os.path.join(REPO, FUNCTION_MAP_DIR)
         names = set()
         try:
-            p = subprocess.run(["git", "show", "HEAD:" + SOURCE_MAP_PATH], cwd=REPO, capture_output=True)
-            if p.returncode == 0:
-                names = set((json.loads(p.stdout.decode("utf-8")).get("functions") or {}).keys())
-        except Exception:  # noqa: BLE001 -- unreadable = no extra citations
+            names = {f[:-len(".json")] for f in os.listdir(d) if f.endswith(".json")}
+        except OSError:
             names = set()
         _SOURCE_MAP_FUNCS.append(names)
     return _SOURCE_MAP_FUNCS[0]
@@ -1325,25 +1338,66 @@ def _changelog_name_citations(mod, path, lits, post_text):
             lit.permitted = True  # (1.0.0_SA_CTO, msg 107746) `_pipeline` naming the changelog's own root folder cites it
 
 
+def _is_function_map_file(path):
+    """True for one file of the per-function Lambda source map (CT-ca-1): infra/aws/lambda/ci/function-map/<name>.json."""
+    p = path or ""
+    return p.startswith(FUNCTION_MAP_DIR) and p.endswith(".json") and "/" not in p[len(FUNCTION_MAP_DIR):]
+
+
+def _entry_doc(post_text):
+    """The parsed entry object of a function-map file (the whole file is one entry), or None when it does not parse."""
+    try:
+        doc = json.loads(post_text or "")
+    except ValueError:
+        return None
+    return doc if isinstance(doc, dict) else None
+
+
+def _entry_artifact_key_cited(mod, entry, key, line_text, value):
+    """The entry's own `artifact_s3_key` line CITES `<P>/<K>.zip` iff (a) the value is exactly that, (b) K is the function's own
+    name (the file stem, `key`) and _builder_reproduces(K), (c) P equals the entry's `pipeline` AND the first segment of its
+    `source_dir` after infra/aws/lambda/, and (d) P carries no firm token. The same four limbs as _artifact_key_cited, read from
+    the one-entry file. Any limb failing leaves the literal graded."""
+    if entry is None or not re.match(r'^\s*"artifact_s3_key"\s*:\s*%s\s*,?\s*$' % re.escape(json.dumps(value)), line_text):
+        return False
+    if not value.endswith("/%s.zip" % key):
+        return False
+    prefix = value[:-len("/%s.zip" % key)]
+    src = entry.get("source_dir")
+    if not prefix or "/" in prefix or not isinstance(src, str) or not src.startswith(_LAMBDA_SRC_PREFIX):
+        return False
+    if entry.get("pipeline") != prefix or src[len(_LAMBDA_SRC_PREFIX):].split("/")[0] != prefix:
+        return False
+    for tok in re.split(r"[-_/]", prefix):
+        try:
+            if (mod.lookup(tok) or {}).get("class") == "FIRM":
+                return False
+        except Exception:  # noqa: BLE001 -- an unreadable lookup is a miss
+            continue
+    return _builder_reproduces(mod, key)
+
+
 def _source_map_name_citations(mod, path, added, lits, post_text=""):
     """3.0.0_SA_CVO ruling @7b38f056ca (CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md, on 2.0.0_SA_COO~P 104859 /
-    row W114-S1): in lambda-source-map.json ONLY, a literal in a resource-name position passes iff name() reproduces it byte for
-    byte. Such a string CITES a resource Terraform minted through the builder; it mints nothing (Rule 30's existing-pipeline
-    non-application). Free-text fields get no carve-out, and a literal the builder does not reproduce stays refused. COST: a few
-    builder calls per added source-map literal. NON-APPLICATION: every other file."""
-    if path != SOURCE_MAP_PATH:
+    row W114-S1): in a Lambda source map file ONLY (CT-ca-1: one entry object per file under function-map/), a literal in a
+    resource-name position passes iff name() reproduces it byte for byte. Such a string CITES a resource Terraform minted through
+    the builder; it mints nothing (Rule 30's existing-pipeline non-application). Free-text fields get no carve-out, and a literal
+    the builder does not reproduce stays refused. COST: a few builder calls per added source-map literal. NON-APPLICATION: every
+    other file."""
+    if not _is_function_map_file(path):
         return
+    key = path[len(FUNCTION_MAP_DIR):-len(".json")]
+    entry = _entry_doc(post_text)
     for lit in lits:
         if lit.permitted:
             continue
         line_text = added.get(lit.line, "")
         if _source_map_name_position(line_text, lit.value) and _builder_reproduces(mod, lit.value):
             lit.permitted = True
-        elif re.match(r'^\s*"tf_resource"\s*:\s*%s\s*,?\s*$' % re.escape(json.dumps(lit.value)), line_text) \
-                and _tf_address_cited(_row_tf_file(post_text, lit.line), lit.value):
+        elif entry is not None and re.match(r'^\s*"tf_resource"\s*:\s*%s\s*,?\s*$' % re.escape(json.dumps(lit.value)), line_text)                 and _tf_address_cited(entry.get("tf_file") if isinstance(entry.get("tf_file"), str) else None, lit.value):
             lit.permitted = True  # the follow-on ruling: a tf_resource whose module and resource are declared at HEAD
-        elif _artifact_key_cited(mod, post_text, lit.line, line_text, lit.value):
-            lit.permitted = True  # the third follow-on: <pipeline>/<own row key>.zip, the key builder-reproduced
+        elif _entry_artifact_key_cited(mod, entry, key, line_text, lit.value):
+            lit.permitted = True  # the third follow-on: <pipeline>/<own function name>.zip, the key builder-reproduced
 
 
 _GITATTR_BINARY_TOKENS = ("binary", "-diff")
@@ -3643,6 +3697,11 @@ def main(argv=None):
     args = ap.parse_args(argv)
     if args.self_test:
         return self_test()
+    problem = function_map_problem()
+    if problem:
+        # CT-ca-1: the folder that holds the Lambda source map is missing or empty -- refuse loudly, in every mode
+        print(problem)
+        return 1
     enforce = enforcing(args.enforce)
     mode = "ENFORCE" if enforce else "WARN"
     try:

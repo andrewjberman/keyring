@@ -8346,3 +8346,53 @@ by dell1 or by this seat.
   "world_is": "FWD-12 reads NOT REALIZED. The apply (a new Lambda and schedule, then a write over etf-classifications rows) is a SERVED/WORLD move that needs a never-widen pair and the CTO; this seat does not apply it on a row. Source coverage of held value (IRPT_DASHBD's 80 percent rule) is not measured here. Carried to the CTO as a round-28 enrichment candidate with a recommendation to apply after the E_18 ship and the partners-data repoint, so only one served change moves per fire."
 }
 ```
+
+## MDPF_SECCLASS-D1-S45 -- leg G read after the 23:00Z 2026-10-16 fire: ok=False on 15 of 15 dates, no seeded class move visible, a cash to fixed_income shift of about 38k on every date
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S45",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-17T01:32Z",
+  "one_line": "seed22_legg_read.py read at 01:31Z (runner i-01003b035d2988dfb stopped since the 23:00:11Z launch, trigger-pending 404) reads SEED22-LEGG ok=False window_dates=15 moved=15 bad=15 tol=250: the seeded 13 do not show their expected class move on 2026-10-02 or 2026-10-09 (the only dates carrying seeded or held-out weight), and every date shows cash about -36k to -39k against fixed_income about +36k to +39k.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "same-shell reads at 01:31:35Z: ec2 describe-instances i-01003b035d2988dfb = stopped, LaunchTime 2026-10-16T23:00:11+00:00; s3api head-object gold/trigger-pending.json = 404",
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/seed22_legg_read.py read --pre-version-id 3BY8Etw3LetRaRFcOofjaAT98PSfp4Z3 printed 'SEED22-LEGG ok=False window_dates=15 moved=15 bad=15 tol=250'; dates after 2026-10-14 and 2026-10-05..08, 10..14 also print lots-unreadable NoSuchKey on the lots partition. The pre-fire read at 22:48Z was moved=0 bad=2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e108b hold (2): leg G on the first scheduled fire after the seed reads the seed applied, so the GO for the E_18 repoint can be given.",
+  "world_is": "Leg G is NOT MET as read at 01:31Z. Not yet known whether the read is early (satellites or the chain not finished, the 01:45Z plan), the instrument's expectation is wrong for the nonzero cash/fixed_income delta that is on all 15 dates including dates with no seeded weight, or the fire moved the table. The GO for e108b is NOT given. Next: re-read after 01:45Z and the 04:00Z chain; the cash/fixed_income delta is checked against the pre-fire baseline of the same dates before any cause is named."
+}
+```
+
+## MDPF_SECCLASS-D1-S46 -- follow-up to D1-S45: the 01:48Z re-read is byte-identical, only one fire sits between the pre and post versions, and the instrument cannot grade 13 of the 15 dates
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S46",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-17T01:50Z",
+  "one_line": "Re-read of leg G at 01:48Z prints the same 15 of 15 bad dates and the same deltas as 01:31Z; the pre version (3BY8Etw3...) is 2026-10-16T05:25:26Z (9,968,887 bytes) and the latest (87CvfcFp...) is 2026-10-17T00:22:27Z (9,968,784 bytes), so exactly one fire (the 23:00Z launch) sits between them and the cash to fixed_income shift of about 36k to 39k per date came from it; for 13 of the 15 dates the lots partition read prints lots-unreadable (NoSuchKey), so the instrument has no expected move for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions opal-data-49financial advi/49financial/platinum/views/mix_daily_summary.json at 01:49Z: the two newest versions are 87CvfcFpbyM7ZRAb0P6AztqK1X74W6cQ (2026-10-17T00:22:27Z, IsLatest) and 3BY8Etw3LetRaRFcOofjaAT98PSfp4Z3 (2026-10-16T05:25:26Z); the next older is 4RCK7FSqtwPG4BiFcLkRrxDsi2.LWbs7 (2026-10-16T00:23:41Z, 9,955,634 bytes)",
+      "seed22_legg_read.py read at 01:48:17Z, runner stopped (LaunchTime 2026-10-16T23:00:11Z), trigger-pending 404: SEED22-LEGG ok=False window_dates=15 moved=15 bad=15; header of the script (lines 1-12) defines the expected move as the open-lot dollars of the SEEDED tickers, graded per class"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e108b hold (2): the seed reads applied by leg G on the first fire after it.",
+  "world_is": "Not read as applied. The cash to fixed_income shift is not an effect the seed plan predicts for any date the instrument can grade, so its source is unnamed: it needs a per-security diff of the pre and latest C_06 outputs, which this row does not run. The e108b GO stays held; the 04:00Z chain writes a third version and leg G is re-read against it as well."
+}
+```

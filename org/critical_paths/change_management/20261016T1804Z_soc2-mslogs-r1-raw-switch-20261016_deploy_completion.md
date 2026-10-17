@@ -4,7 +4,7 @@
 **Deploy:** SOC2_MSLOGS round 1: in-place switch of the collector and door to raw bronze
 **Authored by:** 0.7.0_AE_CloudOps~SOC21
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
-**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+**Window:** 10.5h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
 
 ---
 
@@ -17,6 +17,10 @@
 | L3-switch-readback | verify | s1_check_r1.py applied/subs/switch + r2_check_r1.py plan | check lines read |  | OPEN |
 | L4-redeploy-7b | activation | trino root: safe-apply the repaired collector code hash alone (item 7b, repair 6cef75fd39) | plan summary + apply receipt + new switch_at.txt | safe-apply rc=0 Apply complete 0 added 1 changed 0 destroyed; collector LastModified 2026-10-16T23:10:36Z CodeSha256 ZWVtuj7Q... equals planned hash; switch_at.txt reset | CLOSED 20261016T231109Z |
 | L5-fires-7b | verify | two scheduled collector fires after the new switch_at.txt: counts, duration, no timeout | per-fire counts line, duration, REPORT timeout status |  | OPEN |
+| L6-door-memory-7c | activation | trino root: safe-apply aws_lambda_function.access memory_size 1024->6144, timeout 300->600 (item 7c, door OutOfMemory in derive_silver) | plan summary + apply receipt + deployed memory/timeout read | safe-apply rc=0 0 added 3 changed 0 destroyed 2026-10-17T00:07:06Z; door MemorySize 6144 Timeout 600; aliases collector+member on v3; s1_check_r1.py applied R1-APPLIED-OK | CLOSED 20261017T000755Z |
+| L7-door-10240-7e | activation | trino root: safe-apply aws_lambda_function.access memory_size 6144->10240, timeout stays 600 (item 7e, Andrew-direct via issuer) | plan summary + apply receipt + deployed memory read + s1_check_r1.py applied | safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T00:59:35Z MemorySize 10240 Timeout 600; aliases collector+member on v4; s1_check_r1.py applied R1-APPLIED-OK | CLOSED 20261017T010008Z |
+| L8-redeploy-7d | activation | trino root: safe-apply the repaired collector code hash alone (item 7d, TO-SM-c1 AMENDMENT 3 at 3b35dca82a) | plan summary + apply receipt + apply_at.txt + switch_at.txt (first new-code START) | safe-apply rc=0 0 added 1 changed 0 destroyed; collector LastModified 2026-10-17T01:11:48Z CodeSha256 u5AxkMNd... equals planned hash; apply_at.txt written; switch_at awaits first new-code START | CLOSED 20261017T011233Z |
+| L9-fires-7d | verify | scheduled collector fires on the new code: counts, duration, no timeout | per-fire counts line, duration, REPORT timeout status |  | OPEN |
 
 ## Log
 
@@ -25,3 +29,10 @@
 - 20261016T182634Z LEG L2-subscription closed: start HTTP: Audit.AzureActiveDirectory 200, Exchange 400, SharePoint 400, General 400 (the three already enabled; body n
 - 20261016T230837Z LEGS L4-redeploy-7b, L5-fires-7b added by 0.7.0_AE_CloudOps~SOC21 (TO-SM-r1 item 7b, fire 4 timeout repair)
 - 20261016T231109Z LEG L4-redeploy-7b closed: safe-apply rc=0 Apply complete 0 added 1 changed 0 destroyed; collector LastModified 2026-10-16T23:10:36Z CodeSha256 ZWV
+- 20261016T234209Z WINDOW extended 4.0h -> 7.49h (to 2026-10-17T01:30Z) per 2.0.0_SA_COO~S1: code repair redeployed 2026-10-16T23:10:36Z (item 7b); two scheduled fires 23:31Z and 00:31Z are the acceptance; close after item 8 reads
+- 20261017T000458Z LEG L6-door-memory-7c added by 0.7.0_AE_CloudOps~SOC21 (TO-SM-r1 item 7c)
+- 20261017T000755Z LEG L6-door-memory-7c closed: safe-apply rc=0 0 added 3 changed 0 destroyed 2026-10-17T00:07:06Z; door MemorySize 6144 Timeout 600; aliases collector+
+- 20261017T005713Z LEG L7-door-10240-7e added by 0.7.0_AE_CloudOps~SOC21 (TO-SM-r1 item 7e)
+- 20261017T010008Z LEG L7-door-10240-7e closed: safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T00:59:35Z MemorySize 10240 Timeout 600; alia
+- 20261017T010950Z LEGS L8-redeploy-7d, L9-fires-7d added; WINDOW extended 7.49h -> 10.5h (to ~2026-10-17T04:34Z) per 2.0.0_SA_COO~S1 item 7d: new-code fires are the acceptance
+- 20261017T011233Z LEG L8-redeploy-7d closed: safe-apply rc=0 0 added 1 changed 0 destroyed; collector LastModified 2026-10-17T01:11:48Z CodeSha256 u5AxkMNd... equals

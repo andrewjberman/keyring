@@ -13798,3 +13798,929 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Owner: the provisioning step (.tools/wk-provision.sh) for the sparse set of a worker that runs the intake suites. The fix is a provisioning entry, not a code change in the intake folder."
 }
 ```
+
+## NFRA_CTLPLN-W145-S1 -- a census-named reader outside this cell's grant reads the whole Lambda source map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T16:59:59Z",
+  "one_line": "A reader outside this cell's grant loads the whole Lambda source map and is classed OTHER by the re-run census: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p170_filled_reader.py (C-S102). The atomic set cannot close and the map cannot be deleted in this cell.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer): add that file to the grant of CT-ca-1, or re-cut the checker so it no longer reads the map; then the switch of that file and the deletion of the map land in the same cell",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show ca239c0486:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p170_filled_reader.py line 32: SOURCE_MAP = \"infra/aws/lambda/ci/lambda-source-map.json\"; line 98 reads the whole map as bytes and requires it byte-identical to the base",
+      "source_map_census.py at ca239c0486 (stage-1 script, default run, reads HEAD): SOURCEMAP-CENSUS files=2538 grep_files=2538 reconciled=True map_functions=240 classes=read_whole:175,read_one:0,write:6,test:21,doc:2335,other:1 ok=False; the one OTHER file is the p170 path above (run with an in-process classification, the same functions as the census)",
+      "the file is outside this worker's <paths> and was not edited; the worktree is sparse and does not hold the folder (read with git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 BUILD step 1: the re-run census reads other=0 ok=True at the cut; any file the re-run names as reading or writing the map that is not in the can-follow list JOINS the atomic set, and a joining file outside <paths> is a BLOCKING row and a stop on that file.",
+  "world_is": "p170 is a checks file of IRPT_DASHBD round 149 (2.0.0_SA_COO~D2). Its AC1 requires the whole map to be byte-identical to base. Deleting the map makes it fail loudly; switching the map to a folder changes its input. It is not in the cell's grant, so the cell stops on it: the three Terraform roots, the deploy path and the shared gates are switched in the branch, the map deletion is withheld, and the census of the branch reads other=1 until the grant is extended.",
+  "notes": "Not decided here: whether p170 is a live check (its round is open) or a closed-round record. The census class is OTHER because no line pattern settles it. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S2 -- terraform fmt -check fails on iam.tf in each of the three roots, a file outside the grant that is unformatted at base
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "terraform fmt -check on each of the three investor-reporting roots exits 3 because of iam.tf in that root, a file this cell does not edit and that is unformatted at its base commit; the locals.tf of each root passes fmt -check.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check on infra/aws/terraform/investor-reporting/account-return-daily, reporting-gold-iso and reporting-publish-iso after the cell's edit: rc=3 each, naming iam.tf only",
+      "terraform fmt -check on the base blob of iam.tf (git show ca239c0486:<root>/iam.tf written to a scratch file) for the same three roots: rc=3 each, so the file was unformatted before this cell",
+      "terraform fmt -check on each locals.tf file after the cell's edit: rc=0 for the three files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 BUILD step 2 and criterion CTca1-AC3: terraform fmt -check must pass on each of the three roots.",
+  "world_is": "The root-level check cannot pass as the criterion is worded, because iam.tf in each root is already unformatted at ca239c0486 and is outside the cell's grant. The cell's own edit (locals.tf) is fmt-clean.",
+  "notes": "Not decided here: whether the criterion should name the locals.tf files or the whole roots, and who formats iam.tf. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S3 -- the deploy recorder's reconcile step calls a can-follow reader that writes the whole single map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "record-terraform-deploy.sh runs .tools/comp-lambdamap reconcile-deployed after each deploy record. That tool is org/modules/graph/lambdamap_cli.py, which the cell's can-follow list labels as a manual tool. It is on the deploy path and it writes the whole single map, so it must move in the same cell as the map deletion.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer): move org/modules/graph/lambdamap_cli.py into the atomic set (its reconcile_deployed writes the function map, and its check reads it) before the map is deleted, or the recorder's reconcile fails after the deletion",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/record-terraform-deploy.sh (this worktree): the reconcile block runs the comp-lambdamap wrapper with reconcile-deployed --functions ... --deployed-commit ...; a failure prints the HALF-LANDED ALERT and publishes to SNS",
+      ".tools/comp-lambdamap: python org/modules/graph/lambdamap_cli.py \"$@\"",
+      "org/modules/graph/lambdamap_cli.py at ca239c0486: line 37 SRCMAP_REL = the single map path; reconcile_deployed() writes the whole map with json.dump (about line 588)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 ruling 1 (round-29 analysis): the atomic set is every live reader and writer of the map on a live path, the deploy path included; the can-follow list is only for readers that fail loudly in a manual tool or a record.",
+  "world_is": "The reconcile step is on the deploy path. Kept as the cell leaves it, it writes the stale single copy after each deploy and never updates the folder. After the map is deleted it fails and the recorder reports a false HALF-LANDED alert. The cell does not edit lambdamap_cli.py because it is outside the grant.",
+  "notes": "Not decided here: whether the reconcile should move in this cell or in the next. The cell's map deletion is withheld in this branch for the separate reason in row NFRA_CTLPLN-W145-S1. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S4 -- the cut worktree lacks two folders that the suites read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "The sparse checkout cut for this worker did not hold infra/aws/terraform/modules/opal_name or infra/aws/terraform/nfra-ctlpln-identity, both tracked at base and read by the shared-infra suite. Both were added with git sparse-checkout add, as the worker face allows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "baseline suite run at ca239c0486 before any sparse add: derive_fence_row_shape.py raised FileNotFoundError for infra/aws/terraform/modules/opal_name/generated_locals.tf",
+      "git ls-tree HEAD infra/aws/terraform/modules/opal_name/ lists four entries; git sparse-checkout list had no modules or nfra-ctlpln-identity entry before the add",
+      "the next run raised FileNotFoundError for the nfra-ctlpln-identity folder (the suite's IDENT path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worktree carries the paths the order names, and the folders a suite reads when the suite is named by the order.",
+  "world_is": "The wk-provision sparse list does not carry every folder that the named suites read, so a suite can fail on a missing folder and not on the cell's change. This worker added the two folders and recorded the base verdicts after the add.",
+  "notes": "Decision owner: 0.0.0_AB_MSTR (the worktree provisioner)."
+}
+```
+
+## NFRA_CTLPLN-W145-S5 -- a named suite makes live AWS reads, and this worker ran it before the cell's no-aws rule was applied
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py is named in the cell's suite list, but it calls sts get-caller-identity and iam simulate-principal-policy through the repo shim. This worker ran it twice (in the base suite run and once directly) before it applied the cell's rule that no aws command runs. After that it is listed NOT-RUN in the after table and its file is restored to base bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py lines 20-21 state the AWS calls, read-only, through the repo shim",
+      "SUITES_BASE.txt (first run, before the NOT-RUN rule): derive_fence_row_shape FAIL FileNotFoundError; second run: FAIL KeyError Statement; both runs were made by this worker",
+      "the suite's policy reader raised KeyError 'Statement' on a dell policy document in the second run (a base-state failure, not repaired)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker's suite run reads only the committed tree and makes no aws call (the cell's rule); a suite that does make one is run by the issuer, not by the worker.",
+  "world_is": "The suite's base verdict is red for a reason in its own reader (KeyError on a policy document), and its AWS reads happened twice in this worker's session. Its string key for the retired map is unchanged because the suite could not be run here.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (the suite list and the run venue). The two AWS reads are read-only; no write happened."
+}
+```
+
+## NFRA_CTLPLN-W145-S6 -- the folder's order is by file name, and the first-match lookup in the recorder depends on order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "The base map's functions are not sorted by name (its first key is not the alphabetically first), and the function folder is read in sorted name order. The recorder's get_previous_commit returns the first match in key order, so it can return a different function's last_deployed_commit than the single file did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python check at ca239c0486: keys of functions in file order are not sorted (the sorted and file orders differ at index 0)",
+      "infra/aws/lambda/ci/record-terraform-deploy.sh get_previous_commit (this worktree): iterates the folder in sorted order and returns on the first tf_file prefix match with a last_deployed_commit",
+      "the value is the fallback anchor for the first deploy, after the CHANGELOG's own most recent entry (the recorder's range rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The per-function layout keeps every reader's answer the same as the single file's, or names the change.",
+  "world_is": "The order of the single file is lost in the folder. The recorder's fallback anchor can differ for a pipeline with several functions that carry a last_deployed_commit. The change is named here and not repaired.",
+  "notes": "Not decided here: whether a stable order matters for the fallback. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S7 -- the first WIP commit's function-map entries were refused by the naming gate on the old path key
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "The naming gate's carve-out for source-map literals was keyed to the retired file path. The first WIP commit (da5e5eb8cc) therefore drew 228 REFUSE verdicts in WARN mode on the function-map entries; the second commit keys the carve-out to the folder. Names the old limb also refused on the map remain refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of da5e5eb8cc: NAMING-GATE: WARN 336 graded, with 228 REFUSE verdicts on infra/aws/lambda/ci/function-map/*.json (WARN window, not enforced)",
+      "naming-gate.py at ca239c0486: _source_map_name_citations returned unless path == SOURCE_MAP_PATH (the retired file)",
+      "SWEEP_BEFORE_naming_gate.txt: the atomic set at base, 2522 graded, 2462 REFUSE (WARN), including the retired map's own rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A checker that grades the map keeps its verdicts when the map changes shape, or names the change in the sweep.",
+  "world_is": "The shared gate's verdicts on the folder entries differ from the single file's until the carve-out follows the folder. The second commit makes them follow it; the verdicts that remain are the names the old limb already refused.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (the gate's owner for the sweep)."
+}
+```
+
+## NFRA_CTLPLN-W145-S8 -- the jq ban refuses the commit of parity-gates.sh: bare jq invocations outside the P9 gate, and the P9 change is not committed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:55:00Z",
+  "one_line": "The jq ban (.tools/git-hooks/jq-ban-check.sh) refuses any commit of .tools/parity-gates.sh on this box: the file carries bare jq invocations in the EC2 gate (lines 91 and 114 of the cut file), outside the P9 gate this cell changes. The P9 change is therefore NOT in the branch; the worktree holds it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer) with the owner of parity-gates.sh: land the P9 folder change (the worktree copy) with the EC2 jq calls moved to the vendored .tools/jq.exe, or grant an audited ban exception for that one file; until then P9 reads nothing after the map is deleted and warns-and-returns, the silent behaviour the cell removes",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of the second WIP commit: BLOCKED: jq INVOCATION staged in .tools/parity-gates.sh -- jq is NOT INSTALLED (CLAUDE.md Rule 16); the commit aborted and nothing from that attempt landed",
+      ".tools/git-hooks/jq-ban-check.sh: matches jq as a command token in staged .sh files under .tools/, excluding lines that name the vendored jq.exe, JQ= or $JQ; it reads the whole staged file",
+      "the same file at ca239c0486 carries the EC2 jq calls (gate_ec2_manifest) and the P9 declared and deployed calls; the P9 change of this cell removes the declared-side jq call and keeps the deployed-side one"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A gate that a cell changes lands with the cell, and its refusal is filed as a row, not overridden (worker face: if a gate REFUSES, STOP and file a BLOCKING row).",
+  "world_is": "parity-gates.sh is outside the cell's clean commit path because of pre-existing jq calls in a gate the cell does not own (EC2). The worker stopped at the refusal, did not migrate the EC2 lines and did not use the audited ban exception.",
+  "notes": "Not decided here: who migrates the EC2 jq calls and whether the one-file exception is granted. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S9 -- a probe of the committed parity gate sent one read-only aws lambda list-functions through the shim
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T19:20:00Z",
+  "one_line": "A probe of the committed copy of .tools/parity-gates.sh was run without the no-aws stub on PATH. The gate's P9 section calls aws lambda list-functions before its jq step, and aws resolves to the repo shim, so one read-only AWS API call was sent. The output was discarded (jq was not installed) and nothing was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command -v aws on this box: /c/Users/AndrewBerman/bin/aws (the forwarder to .tools/aws)",
+      "the probe output (.scratch/parity_head_probe.txt): 'jq: command not found' at line 135, then 'WARN: aws lambda list-functions returned nothing (or call failed)'",
+      "the committed gate calls aws lambda list-functions --output json 2>/dev/null before its jq pipe; the probe ran the committed file, not the worktree copy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell runs no aws command (worker face and RULES FOR THIS CELL); a probe of a gate that makes an AWS call runs under a stub on PATH.",
+  "world_is": "One read-only list-functions call may have reached the AWS API from this worker's probe. No write, deploy or terraform command was run. The worker did not repeat the probe after noticing.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether the call is recorded in the cell's proof). Disclosed in the worker report."
+}
+```
+
+## NFRA_CTLPLN-W145-S10 -- p170_filled_reader.py's identity pin was already FAIL at the cell base: its BASE predates the map's last change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T19:48:14Z",
+  "one_line": "p170_filled_reader.py (IRPT_DASHBD r149) pins the source map byte-identical to BASE 2cbe7bbc, but the map at the cell base ca239c0486 is a different blob (fc137d60 against 91526a1c, 550 commits later). Its AC1 was already FAIL before any change of this cell. The amendment's folder identity check is therefore read against the cell base, MAP_BASE, the map the folder was split from.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p170_filled_reader.py <worktree> DB170-1-AC1 at the cell base (before the edit): FAIL: the source map must be byte-identical to the base (the re-pin is a later cell); rc=1",
+      "git rev-parse 2cbe7bbcac:infra/aws/lambda/ci/lambda-source-map.json = 91526a1c6f; git rev-parse ca239c0486:infra/aws/lambda/ci/lambda-source-map.json = fc137d609f; git rev-list --count 2cbe7bbc..ca239c0486 = 550",
+      "p170 edited at org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p170_filled_reader.py: new constant MAP_BASE; check_diff compares lib/opal_lambda_map.py load_all() with the functions of the map at MAP_BASE; after the edit DB170-1-AC1 PASS rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 (W145-S1): p170's AC1 identity pin, read at its own base, becomes the folder must hold exactly the base map's functions; keep the file's intent with the least change.",
+  "world_is": "Read at its own BASE 2cbe7bbc the folder cannot equal the map (the map moved after that commit), so the least change that keeps the intent reads the cell base instead. The file's owner (dell2 COO~D2) should confirm the MAP_BASE choice; the check's output lines and last-line shape are unchanged.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (to tell COO~D2 after the merge, per amendment 1)."
+}
+```
+
+## NFRA_CTLPLN-W145-S11 -- the amendment names two bare jq calls in parity-gates.sh; the file holds four, and the ban refuses on any one
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T19:48:14Z",
+  "one_line": "Amendment 1 (W145-S8) grants the two bare jq calls of parity-gates.sh's EC2 gate. The file holds four bare jq invocations: EC2 lines 87, 91 and 114, and the P9 deployed-side call at line 136. The jq ban reads the whole staged file, so the commit could not pass with two moved. All four moved to the vendored jq resolved first, and the change is committed as 114b926ec4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of the cell's parity-gates.sh for command-position jq before the edit: lines 87, 91, 114 (EC2 gate) and 136 (P9); at the cell base ca239c0486 the same file carries the EC2 jq calls and P9 declared and deployed calls",
+      "after the edit the same grep returns only line 74, a printf string, which the ban strips",
+      "safe-commit of 114b926ec4 (.tools/parity-gates.sh alone): commit-gate OK, no BLOCKED jq line, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 (W145-S8): change the two bare jq calls to the vendored .tools/jq.exe resolved first, fail closed loud, no audited ban exception, and ONLY them besides the P9 change.",
+  "world_is": "The four invocations moved, not two, and the resolution is a JQ variable set once from WORKSPACE with an exit 1 when .tools/jq.exe is absent. Converting fewer would leave the file refused. Row W145-S8 (ARMED, disarm_owner the issuer) is disarmed by 114b926ec4: the P9 folder read and the vendored jq are both in the branch.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C, to confirm the four-call reading and the disarm of W145-S8."
+}
+```
+
+## NFRA_CTLPLN-W145-S12 -- two read-only folders outside the cell's paths were added to the sparse checkout because a check reads them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T19:48:14Z",
+  "one_line": "The worktree's sparse checkout did not hold the IRPT_DASHBD r149 checks folder or the investor-reporting reporting-publish Terraform root, both of which p170_filled_reader.py reads. Both were added with git sparse-checkout add (read-only; no file in them was written). Neither folder is in this cell's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p170 path open before the sparse add: File does not exist (the r149 folder absent from the worktree)",
+      "git sparse-checkout add of the r149 folder, then of infra/aws/terraform/investor-reporting/reporting-publish: rc=0 each",
+      "p170 DB170-1-AC1 after the adds: OK line, DB170-1-AC1 PASS rc=0; the p170 read of reporting-publish/locals.tf and its sibling files matched the base bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker reads only its <paths> and its own folder; a check file that reads a folder outside them is a BLOCKING row on that path when the read is needed.",
+  "world_is": "p170 reads a Terraform root that the lane grant does not name. The read is needed for the amended check to run, and the grant covers the check file, not the root. The check's AC1 reads the root and passes at the cell base.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C, to decide whether the root belongs in the grant for the drain's run of p170."
+}
+```
+
+## NFRA_CTLPLN-W145-S13 -- the census reading tables are outside the grant: one non-owner deploy commit is unread and the reading rows for files now switched are stale
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T20:17:38Z",
+  "one_line": "The census reads its per-file reading tables (READINGS_CONSUMERS_A/B/D.tsv and READINGS_DEPLOY_COMMITS.tsv, in the stage-1 folder) and those tables are not in this cell's paths. After the switch the census prints unread=1 (the WIP 2 commit e00d501231 of this worker, author not the CloudOps base, has no row in READINGS_DEPLOY_COMMITS.tsv) and about 35 STALE reading rows for files that no longer name the retired map. Neither changes the census ok verdict, and neither was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "source_map_census.py (stage-1 folder, HEAD 262f8bc1e6) run read-only: 'UNREAD non-owner deploy commit e00d501231' and 'OWNER_COMMITS owner_commits=14 non_owner_commits=14 non_owner_data=1 non_owner_code=12 unread=1'",
+      "the same run lists STALE reading row lines for .github/workflows/lambda-deploy.yml, .tools/deploy_ledger.py, infra/aws/lambda/ci/record-terraform-deploy.sh and about 30 more, each one a file whose HEAD bytes no longer contain the retired map name",
+      "census ok after this cell: SOURCEMAP-CENSUS ... other:0 ok=True (the verdict does not read unread or stale)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The census classes every file that names the map and reads its deploy history from the reading tables (worker face step 1, and the stage-1 census design).",
+  "world_is": "The tables are data for the census, not census code, and they sit outside the cell's grant. The issuer owns the next row for e00d501231 and the removal of the stale rows, or the table grant.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (grant the READINGS tables, or accept unread=1 and the stale rows as a recorded state)."
+}
+```
+
+## NFRA_CTLPLN-W145-S14 -- the test_lambdamap suite is red at the base and stays red after the change, for the same three test names
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T20:17:38Z",
+  "one_line": "org/modules/graph/tests/test_lambdamap.py ran 11 passed and 3 failed at the base and 11 passed and 3 failed after the change. The three failures (test_detects_mislocated_top_level, test_detects_missing_entry_blindspots, test_detects_seeking_alpha_tf_sourcedir_bug) assert findings that need top-level keys outside functions{} and TF lambdas that the map does not carry. The change does not touch those findings; the cell moved the test's own fixtures to the folder and left the assertions as they were.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SUITES_BASE.txt row test_lambdamap | FAIL | rc=1 | 3 failed, 11 passed (run at ca239c0486 before the change)",
+      "SUITES_AFTER.txt row test_lambdamap after the change: the same counts; pytest -q org/modules/graph/tests/test_lambdamap.py run under the worktree (rc=1, 3 failed, 11 passed)",
+      "the base map has 5 top-level keys (4 metadata keys and functions), so no non-meta top-level key exists for MISLOCATED to find; the folder holds exactly the same functions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 (W145-S3): test_lambdamap.py stays green or is changed minimally; it was red at the base and stays red if it was, and the worker says so.",
+  "world_is": "The three assertions were red before the cell and are red after it; the change to the test is only the fixture helpers that write and read the folder (_write_fmap, _read_fmap).",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether those three assertions are repaired in a later cell; the cell does not repair them)."
+}
+```
+
+## NFRA_CTLPLN-W145-S15 -- the round-19 register suite's first invocation exceeds the 120 s bound in both runs; its slow sub-tool reads origin refs, not the map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T21:19:30Z",
+  "one_line": "test_round19_register.py --fwd2 ran past the 120 s suite bound (rc=124) in both suite runs of this cell (base: FAIL rc=1 inside the bound). Timed alone, its sub-tool .tools/crossbox-matrix.py ran past 110 s; that tool reads origin/box/* refs through git show and does not read the Lambda map. Red at the base and red after, so the verdict is unchanged in kind; the label moved from FAIL to TIMEOUT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SUITES_BASE.txt row round19_register | FAIL | rc=1,1 (run at ca239c0486); SUITES_AFTER.txt row round19_register | TIMEOUT | rc=124,1 (second run, idle machine)",
+      "timed alone: .tools/crossbox-matrix.py rc=124 secs=110 (bound of the timing script); .tools/seat-list.py show --all rc=0 secs=1; lib/devices.py names rc=0 secs=1",
+      "grep of .tools/crossbox-matrix.py: the tool reads each origin ref through git show and the working-tree folder of crossbox json files; no reference to lambda-source-map or function-map"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The suite table is the cell's record of neighbouring suites: a suite red at the base stays red and is listed, and a timeout is the recorded output, retried once at most (worker face, step 5 and the bound rule).",
+  "world_is": "The suite was retried once (two whole runs) and timed out both times. The slow step is outside the cell's paths and outside the Lambda map; the cause (the count of origin refs read by the sub-tool on this box) was not isolated in this cell.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether the sub-tool's runtime is a separate row for its owner)."
+}
+```
+
+## NFRA_CTLPLN-W145-S16 -- disarm record for the ARMED rows W145-S1, W145-S3 and W145-S8: each hazard is removed in this cell's commits
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T21:22:54Z",
+  "one_line": "Rows NFRA_CTLPLN-W145-S1 (p170_filled_reader.py reads the whole map), NFRA_CTLPLN-W145-S3 (lambdamap_cli.py writes and reads the whole map through reconcile-deployed) and NFRA_CTLPLN-W145-S8 (the jq ban refuses parity-gates.sh) were filed ARMED with the issuer as disarm owner. Each hazard is removed in this seating: p170 afe01dd68d and 262f8bc1e6, lambdamap_cli.py 78896655a0, parity-gates.sh 114b926ec4, and the map itself deleted in fb20cba7b3 (the retired file no longer exists to be read or written).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log: 114b926ec4 parity-gates.sh (jq ban passes on this commit, safe-commit rc=0); afe01dd68d p170 (DB170-1-AC1 PASS rc=0); 262f8bc1e6 atomic_check.py and the p170 name-by-parts; 78896655a0 lambdamap_cli.py and test_lambdamap.py (11 passed, 3 failed, the same 3 as at the base)",
+      "fb20cba7b3 deletes infra/aws/lambda/ci/lambda-source-map.json; atomic_check.py default at 4dcd7f4e69: ATOMIC-SPLIT functions=240 equal=240 map_present=False census_other=0 live_old_path_users=0 ok=True",
+      "the disarm of each ARMED hazard is recorded here, not by editing the three rows (append-only); the issuer 2.0.0_SA_COO~C is the disarm owner named in each row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via the row's disarm_owner (CLAUDE.md section 2, surprise channel).",
+  "world_is": "The three hazards named in the ARMED rows no longer exist on this branch at HEAD of this seating. The disarm is a fact of the branch; the issuer confirms it at the drain, because the merge and the drain run the Terraform plans and the suites on the merged state.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (confirm the disarm of W145-S1, W145-S3 and W145-S8 at the merge)."
+}
+```
+
+## NFRA_CTLPLN-W145-S17 -- the drain census on the merged branch names a reader that landed on box/laptop after the base: IRPT_DASHBD ~D2 checks/r149/p172_repin_after_reader.py reads the retired single map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:06:44Z",
+  "one_line": "AMENDMENT 2 step 3 re-ran the read-only census on the merged branch at HEAD 7411f90fd2: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p172_repin_after_reader.py reads the retired single map and is classed OTHER (census other=2 ok=False). The file is outside this cell's grant and was not edited. Per the order, this cell stops here.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer): add this file to the grant of CT-ca-1, or re-cut its checker so it reads the function-map folder through lib/opal_lambda_map.py; the map deletion is committed on the branch at 7411f90fd2 and must not reach box/laptop while this reader names the map",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p172_repin_after_reader.py (HEAD 7411f90fd2): line 30 SOURCE_MAP_REL = infra/aws/lambda/ci/lambda-source-map.json; line 153 reads the map at base by git show; line 154 reads the map from the working tree by read_text and fails once the map is gone",
+      "source_map_census.py (default, read-only; its git grep runs over HEAD) at HEAD 7411f90fd2: SOURCEMAP-CENSUS files=2512 grep_files=2512 reconciled=True map_functions=240 classes=read_whole:153,read_one:0,write:0,test:2,doc:2355,other:2 ok=False; CENSUS-OTHER-FILES names p172 and p136_sourcemap.py (row NFRA_CTLPLN-W145-S18)",
+      "first appearance on box/laptop: commit 0f91454ded (issuance IRPT_DASHBD round 149 workstream FILLEDPASS); absent at ca239c0486 (the base of the first seating), present at 651de9c2e4 and f0c0e87682"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 AMENDMENT 2 step 3: if the census names a NEW reader that landed on box/laptop since the base, file a BLOCKING row naming it and STOP; the issuer adds the file to the grant.",
+  "world_is": "p172 is a checks file of IRPT_DASHBD round 149 (2.0.0_SA_COO~D2). It reads the whole single map by path, once at base and once from the working tree. With the map deleted on the branch it fails loudly; with the map present it keeps reading the single file. The census at the pre-merge HEAD (565dbb146c) did not see it because the census greps HEAD and this file reached HEAD only with the merge commit.",
+  "notes": "Not decided here: whether p172 is a live check (its round is open) or a closed-round record, and whether it should read the folder the way p170 was changed under amendment 1 (W145-S1). Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S18 -- the drain census on the merged branch names a second reader that landed on box/laptop after the base: IRPT_DASHBD ~F2 checks/r136/p136_sourcemap.py requires the retired single map to be a file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S18",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:06:44Z",
+  "one_line": "The same merged-branch census run names org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r136/p136_sourcemap.py as a reader of the retired single map (classed OTHER). It is outside this cell's grant, its folder is outside the sparse worktree, and it was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer): add this file to the grant of CT-ca-1, or re-cut its checker to read the function-map folder; the map deletion on branch 7411f90fd2 must not reach box/laptop while this reader names the map",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r136/p136_sourcemap.py (HEAD 7411f90fd2, 171 lines): line 19 SOURCE_MAP = infra/aws/lambda/ci/lambda-source-map.json; lines 83-84 need Path(root, SOURCE_MAP).is_file(); line 117 reads the map bytes and requires ASCII",
+      "source_map_census.py at HEAD 7411f90fd2: other:2 ok=False, CENSUS-OTHER-FILES lists this path (row NFRA_CTLPLN-W145-S17 names the second file)",
+      "first appearance on box/laptop: commit be99bf5767 (issuance IRPT_DASHBD round 136 workstream ~F2); absent at ca239c0486, present at 651de9c2e4 and f0c0e87682; the worktree is sparse and does not hold this folder (read with git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 AMENDMENT 2 step 3: if the census names a NEW reader that landed on box/laptop since the base, file a BLOCKING row naming it and STOP; the issuer adds the file to the grant.",
+  "world_is": "p136 is a checks file of IRPT_DASHBD round 136 (2.0.0_SA_COO~F2). It requires the single map to exist as a file and that it stay ASCII. With the map deleted on the branch its check fails; with the map present it passes. It is the second of the two readers the census names.",
+  "notes": "Not decided here: whether p136 is a live check or a closed-round record, and whether the issuer prefers to re-pin the check to the folder. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S19 -- the read-only census greps HEAD, so a run made before the merge commit cannot see readers the merge brings in
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S19",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:06:44Z",
+  "one_line": "The first census run of this seating, made with the merge of box/laptop open and not yet committed (HEAD 565dbb146c), reported census other=0. The rerun after the merge commit (HEAD 7411f90fd2) reports other=2. The census is a git grep over HEAD, so an uncommitted merge is invisible to it; the zero was an instrument fact, not an absence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~140/source_map_census.py: line 162 git grep -l -z -F -e NEEDLE HEAD; line 201 git ls-tree -r --name-only HEAD FOLDER_REL; line 318 git grep -c over HEAD for *.tf",
+      "first census run (HEAD 565dbb146c, merge open): other=0 with the box/laptop file list already in the index; rerun after the merge commit (HEAD 7411f90fd2): other=2 naming p172_repin_after_reader.py and p136_sourcemap.py (rows NFRA_CTLPLN-W145-S17 and S18)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 BUILD step 1 and AMENDMENT 2 step 3: the census is run read-only on the cut and on the merged state, and a zero that could hide a merged-in reader is not a pass.",
+  "world_is": "A census zero taken on a branch with an open or uncommitted merge is measured against the pre-merge HEAD. The drain check must run after the merge commit lands on the branch, and the census verdict must be read with the HEAD it measured.",
+  "notes": "Not decided here: whether the census should accept a worktree mode. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S20 -- disarm record for the ARMED rows W145-S17 and W145-S18: both readers now read the function-map folder on this branch
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S20",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:43:01Z",
+  "one_line": "Rows NFRA_CTLPLN-W145-S17 (p172_repin_after_reader.py reads the whole map) and NFRA_CTLPLN-W145-S18 (p136_sourcemap.py requires the map to be a file) were filed ARMED with the issuer as disarm owner. Both readers are changed in commit e23584c80f (AMENDMENT 3) to read the function-map folder through lib/opal_lambda_map.py. At the merge HEAD 32a4d22d57 the census reads other=0 and live_old_path_users=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show e23584c80f: p136 AC1 PASS, AC2 PASS, selftest PASS (7 arms); p172 selftest PASS (7 red arms) and AC1 FAIL with the reason of row NFRA_CTLPLN-W145-S23, the same reason as on the target before the change",
+      "merge commit 32a4d22d57 (safe-merge fast lane, index check 0 of 176 merged paths differ); atomic_check.py default at HEAD 32a4d22d57: ATOMIC-SPLIT functions=240 equal=240 map_present=False census_other=0 live_old_path_users=0 ok=True",
+      "the disarm is recorded here, not by editing the two rows (append-only); the issuer 2.0.0_SA_COO~C is the disarm owner named in each row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via the row's disarm_owner (CLAUDE.md section 2, surprise channel). The map deletion must not reach box/laptop while a reader names the retired map (rows W145-S17, W145-S18).",
+  "world_is": "On this branch neither reader names the retired map literally. p172 reads the working-tree map through the folder and reads its base by a name built from parts (row NFRA_CTLPLN-W145-S22). The disarm is a fact of the branch; the issuer confirms it at the drain, because the drain runs the Terraform plans and the suites on the merged state.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (confirm the disarm of W145-S17 and W145-S18 at the merge)."
+}
+```
+
+## NFRA_CTLPLN-W145-S21 -- the two DB172 criteria of the IRPT_DASHBD p172 checker (AC2 and AC3) reach live AWS and cannot run in this cell
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S21",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:43:01Z",
+  "one_line": "The checker org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p172_repin_after_reader.py runs its layer-import clause (a live AWS layer lookup through p149 latest_layer_version) before the AC2 and AC3 branches, and its build step runs build-and-upload.sh. The cell's no-aws rule forbids both, so DB172-1-AC2 and DB172-1-AC3 were not run; DB172-1-AC1 and the --selftest were run (both read-only, no aws).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p172 at e23584c80f: line 207 calls p160.build_only(root) (bash infra/aws/lambda/ci/build-and-upload.sh with BUILD_ONLY=1); line 210 calls check_layer_imports, whose line 121 calls p149.layer_names(p149.latest_layer_version()), a live lookup; line 214 is the first cid branch, so both run before AC2 and AC3 are decided",
+      "the cell's face: no aws command; the checker was not run for AC2 or AC3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A checker named in a worker's record is run under its own criterion and its output and last-line shape are kept (amendment 3: keep its output and last-line shape).",
+  "world_is": "The checker has no offline arm for AC2 and AC3: its only offline arm is the selftest, which exercises the pure clauses on synthetic data. Its AC2 and AC3 verdicts are therefore unmeasured in this cell.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (who runs the layer clause, and where, for the IRPT_DASHBD round 149 check)."
+}
+```
+
+## NFRA_CTLPLN-W145-S22 -- the census grades a history read written with the literal map path as a live reader, so both readers name the retired path by parts
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S22",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:43:01Z",
+  "one_line": "At HEAD 7411f90fd2 the census classed the two readers OTHER (census other=2 ok=False): p172 and p136 name the retired path literally, and their only lines with the name are history reads at the order base or a constant, with no reading inside the window. The face asked p172 to keep the literal git show path; the census bar other=0 cannot pass with it. Both readers now name the path by parts (the p170 and atomic_check.py precedent), so the census grep set does not contain them and it classes no file OTHER.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 7411f90fd2:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p172_repin_after_reader.py line 30 and the census CENSUS-OTHER-FILES line at that HEAD (row NFRA_CTLPLN-W145-S17)",
+      "git show e23584c80f: p172 SOURCE_MAP_REL = infra/aws/lambda/ci/ + lambda + -source-map.json (the comment above it states the reason); p136 has no literal of the retired name",
+      "census at HEAD 32a4d22d57: SOURCEMAP-CENSUS files=2510 grep_files=2510 reconciled=True map_functions=240 classes=read_whole:153,read_one:0,write:0,test:2,doc:2355,other:0 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The census verdict is other=0 and live_old_path_users=0 (AMENDMENT 3 step 3); a history read of the retired map at a pinned base is not a live reader.",
+  "world_is": "The census is a grep over HEAD that classes by pattern: it cannot tell a history read at a pinned commit from a live read of the working tree, so the only ways to pass it are a reading row in the census tables (outside this grant) or naming the path by parts. The parts-naming hides the name from the grep for every reader that uses it.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (accept the parts-naming for the two readers as the precedent, or grant a reading row in READINGS_CONSUMERS_D.tsv for each)."
+}
+```
+
+## NFRA_CTLPLN-W145-S23 -- the IRPT_DASHBD p172 checker's AC1 is FAIL on the target before and after this change: an entry outside its order changed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:43:01Z",
+  "one_line": "On box/laptop be0c78cf70 and ec33cbc208 (the same map blob dc02f1689673 as the base) the p172 checker's AC1 prints FAIL: an entry outside the order changed: irpt-49f-reporting-gold-lambda. The F2 change of checks/r136/p136_sourcemap.py (DBF136-3-AC1) added two files to that entry after p172's order base. The reader change in e23584c80f keeps this verdict and reason; the check was not weakened.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the baseline run on the target map before the change (the map copied in untracked for the run, then removed): FAIL: an entry outside the order changed: irpt-49f-reporting-gold-lambda; the same command after the change at e23584c80f on the folder: the same line",
+      "a comparison of the folder with the map at the order base f0c0e87682 (scratch script in the worktree .scratch): 240 functions in both; 4 entries differ: the three entries of the order and irpt-49f-reporting-gold-lambda"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The p172 checker's AC1 asserts that only the three entries of its order changed between its base and the working tree.",
+  "world_is": "The gold entry changed under a closed-round check of another round (F2, round 136) after p172's base; the p172 clause therefore cannot pass as written on the current map, whatever the reader reads.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~D2 for IRPT_DASHBD round 149 (re-base the clause or accept the F2 change); not changed here, since the criterion of this order does not name it."
+}
+```
+
+## NFRA_CTLPLN-W151-S1 -- rcg/charters.yaml names the retired map as an exact root_set entry; after the split it roots nothing
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "rcg/charters.yaml line 24 still lists infra/aws/lambda/ci/lambda-source-map.json in root_set. build_root_set matches an exact entry against the scan population, so the entry roots nothing now that the map is deleted; before the split the map file was a root. No function-map file is a root either: the root_set holds no prefix that covers infra/aws/lambda/ci/. The file is outside this order's grant (census class DOC) and was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "rcg/charters.yaml@226e46649f line 24 (root_set list, lines 17-27): the retired path is an exact entry; no entry ends in infra/aws/lambda/ci/",
+      "rcg/bin/mark.py@333aea1678 build_root_set: exact entries are added only when entry in population; the lambda roots come from source_dir prefixes of the function-map folder",
+      "census at HEAD e51e048c99 (.scratch/census_after_wip.md): rcg/charters.yaml classed DOC, reading row line 24; the census does not class it as a live reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell's readers read the function folder; a root set that names the retired path is a reader of the retired path whose effect is a silent no-op.",
+  "world_is": "The charter entry is text the census classes DOC, so the census cannot see its effect; mark.py's root set loses the map file as a root and gains no folder file.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (replace the entry with the folder prefix in rcg/charters.yaml, or accept the no-op). Not changed here: the file is outside the grant."
+}
+```
+
+## NFRA_CTLPLN-W151-S2 -- the deployed estate report runner artifact still reads the retired map until its S3 object is re-uploaded
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "The estate report runner runs on EC2 from the S3 object code/estate_report_runner.py, which the 2026-08-05 deploy ledger records as re-uploaded by PutObject and which the instance pulls on every boot. Commit 3ccb99154a (estate_report_runner.py) changes the runner to read the function-map folder, but the S3 object is unchanged. Until a CloudOps artifact upload carries 3ccb99154a, the deployed runner's lambda hop reads the retired path, finds nothing and degrades with a WARN on the next boot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20260805T1456Z_estate-report-runner-corpus-vintage_deploy_completion.md (lines 1-17): the act is ONE s3api put-object to s3://opal-estate-report/code/estate_report_runner.py; re-uploading the artifact IS the deploy; the instance is transient and its systemd oneshot pulls on every boot",
+      "git show 3ccb99154a:infra/aws/ec2/estate-report-runner/estate_report_runner.py load_function_map: the lambda hop reads the folder; the pre-change runner runs git checkout of the retired path, which the clone no longer has, and degrades that hop",
+      "the risk-reflex HOLD printed by safe-commit for 3ccb99154a named this ledger entry (18 recorded claims)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-29 ruling 1 requires every reader to be repaired before the first estate report run reaches it.",
+  "world_is": "The repair is committed on the branch but the artifact that the box runs is the pre-repair object; the repair reaches the box only through a CloudOps upload this worker does not perform (WORLD class: no upload was run here).",
+  "notes": "Disarm: the issuer 2.0.0_SA_COO~C routes the artifact upload to 0.7.0_AE_CloudOps after the drain; the row is disarmed when the S3 object's ETag matches the file at the merged commit. No AWS command was run by this worker."
+}
+```
+
+## NFRA_CTLPLN-W151-S3 -- the grant names rcg/tests/, which does not exist at HEAD
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "The task order's paths list rcg/tests/ as a grant. At HEAD 226e46649f the rcg tree holds bin/, grader/, ledger/, rulings/, workflows/, charters.yaml, MANIFEST.yaml and .gitattributes, and no tests folder. No suite exists there to run; the arms that cover rcg/bin/lexicon.py and rcg/bin/mark.py are in .tools/tests/test_round30_follow_readers.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only 226e46649f rcg (printed in the worker worktree): no path under rcg/tests/",
+      "the worktree lists rcg/ with the same six entries and no tests folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The grant names rcg/tests/ as a folder the cell may write to and run.",
+  "world_is": "The folder is absent; the grant names a path that does not exist, and no test under it is run by the cell's invocations.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (drop the grant line, or name the folder the tests will live in)."
+}
+```
+
+## NFRA_CTLPLN-W151-S4 -- the provisioned sparse set omits the envelope source that comp_closure self-test imports, so the suite is red at base in a cut worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "In the worktree cut by wk-provision the comp_closure self-test fails at base with ModuleNotFoundError: observation_envelope. Its envelope source is org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/src and its schema is under the same folder, neither in the sparse set. The worker added the folder with git sparse-checkout add (no commit); after that the self-test reads 28/28 at base and after.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run at base (before the sparse add): org/modules/graph/comp_closure.py --self-test -> ModuleNotFoundError: No module named 'observation_envelope' (line 166 of comp_closure.py at 226e46649f)",
+      "after git sparse-checkout add of the envelope folder: comp-closure self-test: 28/28 passed (base mirror of HEAD and the worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cut worktree carries the folders the order's suites run from.",
+  "world_is": "The sparse set names only the grant's folders and their direct dependencies; a suite that imports another project's source reads red at base for a reason that is not in the grant.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (add the envelope folder to the cell's sparse list, or leave the suite red at base as the order's acceptance does not name it)."
+}
+```
+
+## NFRA_CTLPLN-W151-S5 -- after the reader change, p137's DBF137-1-AC1 and AC2 print FAIL on the entry's content, not on the missing map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "At base p137_repin.py FAILs with missing infra/aws/lambda/ci/lambda-source-map.json. After commit e51e048c99 it reads the entry from the function-map folder and FAILs on content: three staged pins are STALE (lib/opal_naming.py, lib/trading_calendar.py, infra/logic/registry/systems.json), and account_transaction.py reads trading_calendar.first_trading_day_on_or_after, which the pinned trading_calendar (pin b2b7488660) does not define. The pre-split map gives an identical entry (240 of 240 equal), so the findings are the entry's own and belong to the round-137 re-pin cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python checks/r136/p137_repin.py <worktree> DBF137-1-AC1 at e51e048c99: reason lists the three STALE pins; DBF137-1-AC2: reason names first_trading_day_on_or_after (output in .scratch/p137_ac1_after.txt and .scratch/p137_ac2_after.txt)",
+      "python checks/r136/p137_repin.py --selftest at e51e048c99: selftest PASS (5 arms)",
+      "pre-split map dd6e42b5cd vs function folder at 226e46649f: 240 of 240 entries equal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DBF137-1-AC1 and AC2 grade the staged members of irpt-49f-reporting-gold-lambda against their pins and the attribute closure.",
+  "world_is": "The three pins and the attribute closure fail on the committed entry; the reader is not the cause. The check names the failures, as designed.",
+  "notes": "Decision owner: the round-137 re-pin cell (DB-f-2205, the issuer 2.0.0_SA_COO~F2). This worker did not re-pin."
+}
+```
+
+## NFRA_CTLPLN-D1-S13 -- ten dell1 seat lives ended with no kill line; seven transcripts stop within six minutes of each other and show no error; the cause is not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T00:45:00Z",
+  "one_line": "Ten dell1 seat lives ended with no kill line; seven of their session transcripts stop within 5 minutes 53 seconds of each other (21:33:11Z to 21:39:04Z), two at 21:19Z, and no transcript tail shows an API, auth or context-limit signal -- so the end times cluster while the lifetimes do not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Session transcripts read by python on dell1 at 00:3xZ 2026-10-17, last 20 lines of each of ten ended lives (counts and timestamps only, no content): the last entry type is queue-operation in 10 of 10; entries flagged as an API error (isApiErrorMessage or an error key) 0 of 10; system entry subtypes present are stop_hook_summary, turn_duration and away_summary only (no api_error, no compact_boundary); keyword counts for overloaded, rate_limit, authentication, invalid_request, api_error and prompt-is-too-long are 0 in all ten.",
+      "Last transcript timestamp per life (UTC, 2026-10-16): 2.0.0_SA_COO~R1 21:19:25, ~R2 21:19:30, ~M1 21:33:11, ~D1 21:33:18, ~B1 21:38:24, 0.7.0_AE_CloudOps~FB1 21:38:28, ~DELL1 21:38:47, ~SC1 21:39:01, ~SOC21 21:39:04; and the second life of ~M1 (spawned 22:25Z by 0.0.0_AB_MSTR~DELL1) 00:07:38, its last telemetry 23:54:56Z.",
+      "Lifetime from the SPAWN row in org/mcp/agent-spawn-audit.log, minutes: M1 life 2 = 90; FB1 = 149; SOC21 = 209; DELL1 = 358; R2 = 1062; SC1 = 1096; M1 life 1 = 1109; B1 = 1116; D1 = 1117 (R1 not computable: its SPAWN row predates its session). Not a fixed time to live.",
+      "Seven lives of very different ages (149 to 1117 minutes) end inside one 5 min 53 s window; that points to a common event at about 21:33-21:39Z, not to age. Coincident, not claimed as cause: 2.0.0_SA_COO~C1 reported Andrew at the dell1 ADVI_COTBKF COO terminal at about 21:40Z; C1 itself did not end.",
+      "Box read 00:2xZ 2026-10-17: no reboot since 2026-10-15 11:46 local; physical memory 40.4 of 63.7 GB free; no Resource-Exhaustion or claude/node/bun Application Error event in the 3 hours before 00:21Z; no KILL-MAINT-RUN line by 0.0.0_AB_MSTR~DELL1 between 2026-10-15T15:27Z and 2026-10-16T23:37Z (the 23:37Z run stopped two tail.exe, no seat).",
+      "Controls: 1.0.0_SA_CTO~DELL1, 2.0.0_SA_COO~C1, ~S1, ~W1, 3.0.0_SA_CVO and 4.0.0_SA_CRO~DELL1 stayed live through 21:33-21:39Z and read live at 00:21Z; the later lives of ~SC1 and ~SOC21 are live and end their transcript on a system entry, not on queue-operation (one sample each, read at 00:3xZ; a live idle seat can also end on queue-operation, so this is a lead, not a test)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat that ends is ended by a recorded act (a KILL line, or its own close log); NFRA_CTLPLN-D1-S12 asked for the cause of the first four.",
+  "world_is": "Ten lives ended with neither record. Their transcripts show no error class that would explain it, their lifetimes are unrelated, and seven of them stop within six minutes of each other. The cause is still not measured; what remains unread is the Windows Terminal host's own log and the process-exit record of each window.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content is recorded here. Respawns follow the dell1 CTO's dated plan (msg 7021). Asked for by 1.0.0_SA_CTO~DELL1 msg 7068."
+}
+```
+
+## NFRA_CTLPLN-D1-S14 -- addition to D1-S13: no session event and no crash event in 21:25-21:45Z; the Security log cannot be read as evidence; no cause claimed
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T00:36:00Z",
+  "one_line": "Addition to NFRA_CTLPLN-D1-S13: the Windows logs read for 21:25-21:45Z show no session logon, logoff, disconnect or reconnect and no crash event, the TaskScheduler log is disabled, and the Security log cannot be read as evidence; no cause is claimed. (S13's surfaced_at reads 00:45Z; the true time was about 00:27Z.)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL1 msg 7072 (read by that seat, 2026-10-17 00:2xZ, window 21:25-21:45Z = 17:25-17:45 local EDT): System log shows only BITS start-type changes and IsolatedUserMode trustlet events; Application log shows SPP and Edge; no Application Error (event 1000) for WindowsTerminal, claude, node or bun; the Microsoft-Windows-TaskScheduler/Operational log has IsEnabled=False, so scheduled-task runs in the window cannot be measured.",
+      "Read by 0.0.0_AB_MSTR~DELL1, 2026-10-17 00:3xZ: Microsoft-Windows-TerminalServices-LocalSessionManager/Operational records events (181 in the last 3 days; its newest are at 7:32 PM to 8:20 PM local) and has 0 events between 21:25Z and 21:45Z, so no logon, logoff, disconnect or reconnect of the console session in the window. query user: user test, console, session 1, Active, logged on since 2026-10-15 11:47 AM, no logoff since. All 22 claude.exe processes now read SessionId 1.",
+      "Control that FAILED: the Security log. Get-WinEvent for events 4624, 4634 and 4672 over the last 24 hours returns none, and auditpol answers 'a required privilege is not held', so the Security log's zero for the window is NOT a negative and nothing is concluded from it. Laptop MSTR (bus a0ba5eb6) had asked for 4624/4634/4647/4778/4779.",
+      "Not read: the Windows Terminal host's own log, and a person-side act that leaves no event (closing windows or tabs). The CTO's leading hypothesis is a person closing windows or tabs, unverified, and is being put to Andrew by the CTO."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-D1-S13: ten lives ended with no kill line, seven within 5 min 53 s of each other (2026-10-16 21:33:11Z to 21:39:04Z).",
+  "world_is": "A console-session event (logon, logoff, disconnect, reconnect) did not occur in the window, so a session change is not the cause of the ends; whether a person closed windows or tabs cannot be read from the logs that work, because that act leaves no event there.",
+  "notes": "A correction is a new item citing the old id, per the surprise-row gate; S13 is left as written. OWNER: 0.0.0_AB_MSTR~DELL1. Asked for by 1.0.0_SA_CTO~DELL1 msg 7072 and the laptop MSTR."
+}
+```
+
+## NFRA_CTLPLN-D1-S15 -- one dell2 seat life also ended with no kill line (reported by dell2's manager); the unexplained ends are not only on dell1
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T00:48:00Z",
+  "one_line": "One dell2 seat life also ended with no kill line (3.0.0_SA_CVO~DELL2, between the 07:2xZ and 08:2xZ reads on 2026-10-16), reported by dell2's manager; so the unexplained ends are not only on dell1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 on the agent bus, id f9b6e542, 2026-10-17T00:40:44Z, a correction to its fe96cc86 (relayed, not measured by this seat): 3.0.0_SA_CVO~DELL2 left the dell2 seat-liveness table between the 07:2xZ and 08:2xZ reads on 2026-10-16; its last commit was about 6 hours old; no kill line, no crash event that manager found; its broker row read NOT REGISTERED; it relaunched the seat at 08:38Z on the dell2 CTO's ask.",
+      "Same manager, bus fe96cc86 (00:40:10Z): dell2's kill-maint runs at 23:31Z and 00:23Z both killed 0; its only kill lines on 2026-10-16 are its own (CloudOps~DB2 about 19:4xZ, ~AQ2 about 20:4xZ, on the dell2 CTO's rule-34 ruling); every other dell2 seat-count change that day has a kill line of its own.",
+      "This seat did not read dell2's audit log or transcripts."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-D1-S12, S13 and S14 read the unexplained seat ends as a dell1 shape.",
+  "world_is": "By dell2's own report one seat life there also ended without a kill line, earlier in the day and singly, not in a cluster; on dell2 it is one case against ten on dell1. Whether it shares a cause with dell1's is not measured.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1 for the cross-box evidence. Relayed fact, so grounding is INFERRED; dell2's transcript tails would give it the same counts-only read asked for on dell1."
+}
+```
+
+## NFRA_CTLPLN-S9137 -- a laptop seat vanished with no recorded kill (same shape as dell1 D1-S13/S14)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9137",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-17T01:23Z",
+  "one_line": "A laptop seat process (2.0.0_SA_COO~CA) vanished between 00:17Z and 01:17Z 2026-10-17 with no kill line in agent-spawn-audit.log and no kill-maint target; the same unexplained-exit shape as dell1 rows D1-S13/S14, now seen on a second box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 109783: no process at 01:17Z, alive at 00:17Z; no kill line in org/mcp/agent-spawn-audit.log; kill-maint 00:17Z killed one stray python.exe, 01:17Z no targets; respawned 01:19Z pid 28272"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat ends only by a recorded act (a kill line, a stop, or its own exit with a record).",
+  "world_is": "A seat's process ended with no recorded act on a second box; the cause is unmeasured (no exit code or Windows event read yet).",
+  "notes": "Same class as dell1 D1-S13/S14; the cross-box pattern makes it an NFRA_CTLPLN liveness question. Next read: the Windows Application/System event log around 00:17-01:17Z for the claude.exe exit."
+}
+```
+
+## NFRA_CTLPLN-D1-S16 -- fourth wave: five more dell1 seats ended 00:36-00:56Z, an M1/W1 pair five seconds apart, every ended life idle at the end; the laptop's COO~CA ended the same way
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T01:40:00Z",
+  "one_line": "Fourth wave of unexplained dell1 seat ends (five seats, 00:36:51Z to 00:56:28Z), including a COO~M1/COO~W1 pair five seconds apart; in all 15 ended lives measured the seat was idle at the end (14 had no API response for 4 minutes or more before its last transcript entry), and the laptop's COO~CA ended the same way, so a cross-box cause now leads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Per ended life, UTC: last transcript entry / last assistant (API response) entry / gap in seconds. Wave 1 (2026-10-16): COO~R1 21:19:25 / 21:00:23 / 1142; COO~R2 21:19:30 / 21:14:43 / 286; COO~M1 life 1 21:33:11 / 21:19:28 / 822; COO~D1 21:33:18 / 21:26:10 / 428; COO~B1 21:38:24 / 21:24:51 / 812; CloudOps~FB1 21:38:28 / 21:12:50 / 1537; CloudOps~DELL1 21:38:47 / 21:38:33 / 14; CloudOps~SC1 life 1 21:39:01 / 21:31:53 / 428; CloudOps~SOC21 life 1 21:39:04 / 21:27:10 / 714. Wave 3 (2026-10-17 00:07Z): COO~M1 life 2 00:07:38 / 23:54:58 (2026-10-16) / 760. Wave 4 (2026-10-17): COO~M1 life 3 00:36:51 / 00:28:25 / 506; COO~W1 00:36:56 / 00:28:43 / 493; COO~C1 00:47:04 / 00:39:11 / 473; CloudOps~SC1 life 2 00:50:17 / 00:29:07 / 1270; DT~H1 00:56:28 / 00:39:39 / 1010.",
+      "Pair: COO~M1 (respawned 00:22:44Z by 0.0.0_AB_MSTR~DELL1, read LIVE at 00:35:08Z) and COO~W1 (a session since 2026-10-16 15:50Z) have last transcript entries 5 seconds apart, 00:36:51Z and 00:36:56Z; their last API responses are 00:28:25Z and 00:28:43Z, 18 seconds apart. kill-maint ran at 00:38Z with targets 0, after both. No kill by 0.0.0_AB_MSTR~DELL1 in the spawn audit; all five transcripts end on queue-operation with 0 API-error flags.",
+      "Measured reading of the table: every ended life's last entry is a queue-operation (a message enqueued to the session), written by the live process, then nothing; the gap from its last API response is 14 s to 1537 s (median 714 s). Not measured here: how long the live seats (CTO, CVO, CRO~DELL1, COO~S1, CloudOps~SOC21) sit idle between API responses, so idleness alone is not shown to separate ended from live.",
+      "RELAYED, not measured here: 0.0.0_AB_MSTR (laptop) bus b6398e8e, 2026-10-17T01:21:41Z: 2.0.0_SA_COO~CA on the laptop ended between 00:17Z and 01:17Z with no kill line and no kill-maint target; the laptop respawned it at 01:19Z (pid 28272). Earlier relayed (S15): 3.0.0_SA_CVO~DELL2 ended once on dell2 between 07:2xZ and 08:2xZ on 2026-10-16.",
+      "Box facts (S13, S14 stand): no reboot, no crash or resource-exhaustion event, no session logon/logoff/disconnect/reconnect in 21:25-21:45Z; the Security log is unusable as evidence and the TaskScheduler log is disabled. This seat did not read those logs again for wave 4.",
+      "1.0.0_SA_CTO~DELL1 msg 7090: the laptop case weakens the closed-tabs explanation; a cross-box harness- or session-level cause now leads; Andrew's answer on closed windows still settles the dell1 waves."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-D1-S13 and S14: the dell1 ends cluster in time and no error class explains them; S15: one dell2 case.",
+  "world_is": "Fifteen ended dell1 lives and one laptop seat now show the same shape: a seat that was alive and idle, whose last event was a queued message, with no kill line, no error, no crash event and no session event; five of them in a 20-minute span, two of them five seconds apart. The cause is still unmeasured; what is not yet read is the Windows Terminal host's log, the same table for the laptop seat, and how idle the live seats are.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content. Asked for by 1.0.0_SA_CTO~DELL1 msg 7090. Respawns continue under the govern rule per the CTO's ruling."
+}
+```
+
+## NFRA_CTLPLN-D1-S17 -- control read for S16 at two moments (live seats idle past 12 minutes survive) and the Monitor-stopped signature of all 15 ended lives; no cause claimed
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T02:03:53Z",
+  "one_line": "Control read for S16 at two moments: live dell1 seats sit idle past 12 minutes and survive (1 of 10, then 3 of 11), so idleness alone does not separate ended from live lives; and all 15 ended lives end on an enqueued Monitor-stopped (killed) notice, the laptop's COO~CA the same. No cause claimed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ 1, 2026-10-17T01:30:21Z, denominator 10 live seats (seat-liveness), seconds since each seat's last API response: 0.0.0_AB_MSTR~DELL1 3; CloudOps~SOC21 652; 1.0.0_SA_CTO~DELL1 47; COO~C1 63; COO~M1 28; COO~S1 622; COO~W1 2; 3.0.0_SA_CVO 1542; 4.0.0_SA_CRO~DDD 2; 4.0.0_SA_CRO~DELL1 119. Seats at or above 720 s: 1 of 10; max 1542.",
+      "READ 2, 2026-10-17T02:03:08Z, denominator 11 live seats: 0.0.0_AB_MSTR~DELL1 6; CloudOps~SOC21 1193; CTO~DELL1 26; COO~C1 120; COO~M1 520; COO~S1 394; COO~W1 483; 3.0.0_SA_CVO 1138; CRO~DDD 74; CRO~DELL1 127; 4.0.0_SA_CRO~YY 833. Seats at or above 720 s: 3 of 11 (SOC21, CVO, CRO~YY); max 1193. CRO~DDD and CRO~YY have a guard row and no spawn row in the audit log (hand launches; this seat spawned neither). CVO read 1542 s at read 1 and 1138 s at read 2, so it answered once between the reads; SOC21 and COO~S1 likewise.",
+      "MONITOR SIGNATURE (measured, keyword flags on the last queue-operation line of each ended life's transcript; content not read): all 15 ended dell1 lives of S13 to S16 end on an ENQUEUE whose raw line carries task-notification, monitor, stopped and killed; none carries a completed-stream notice, so none ended on a 30-minute expiry; 11 of the 15 also carry 'inbox watcher' (the other 4 carry other stopped Monitors). Live seats were not compared for this signature. RELAYED, not measured here: 0.0.0_AB_MSTR (laptop) bus f296b2f0, 2026-10-17T01:26:52Z, the ended laptop 2.0.0_SA_COO~CA's last entry is a queue-operation ENQUEUE at 01:01:13Z of a task-notification with status KILLED, 'Monitor Inbox watcher for 2.0.0_SA_COO~CA stopped', nothing after it.",
+      "Ended lives of S16 for comparison, seconds from last API response to last transcript entry: 14, 286, 428, 428, 473, 493, 506, 714, 760, 812, 822, 1010, 1142, 1270, 1537 (median 714). The live seats' gaps at the two reads, 0 to 1542 s, cover that whole range.",
+      "Asked for by 1.0.0_SA_CTO~DELL1 msg 7093 (two moments at least 30 minutes apart, 32 minutes here, denominator printed). Cites S12 to S16; S16 is not edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S16: every ended life was idle at its end; the control read was owed to learn whether idleness separates the ended from the live.",
+  "world_is": "Live seats are idle for as long as the ended ones were (up to 1542 s measured, alive at both reads), so by the CTO's rule in msg 7093 an idle cut-off is not the explanation and the next place to look is a shared event; no cause is claimed. The last queued entry of every ended life, dell1 and the laptop's CA, is a Monitor being stopped, which fits the session closing itself; who or what closed it is unmeasured. Not read: the Windows Terminal host's log, the live seats' tails for the same signature, and Andrew's answer on closing windows (put by the laptop CTO, bus 101aa30f).",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content. Respawns continue under the govern rule per msg 7090."
+}
+```

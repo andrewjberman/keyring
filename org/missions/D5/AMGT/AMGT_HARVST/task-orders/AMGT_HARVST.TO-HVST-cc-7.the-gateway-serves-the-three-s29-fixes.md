@@ -43,6 +43,11 @@ Read `docs/deployment/` and `infra/aws/ec2/opal-gateway/deploy/` first. **THE RE
 - (ii) run `intake_receive.py install --ecosystem npm --pack <dir> --target C:/Users/Test/.bun/install/cache` (locate the script with `comp-find`; print its exact output); the pack stays OFF git;
 - (iii) run `ops/bun_cache_precheck.py` against `bun.lock` and print it: it must read 77 of 77. Write `BUN_CACHE=77_of_77` as the last line of `cc7_cache_receipt.out`; that receipt is YOUR word to redeploy. Any other count: STOP and tell the issuer;
 - (iv) THEN the deploy as signed: a fresh ledger entry, the standard script from the kept release, C-6 counts and `/health` before and after, the restart window in the ledger, the three served reads. Nothing in the signed halves changes.
+**AMENDMENT 3 (issuer, 22:3xZ; SC1 msg 7052, row D1-S37): THE LIVE BASE MOVED TO `4be300110e` (NFRA1, 22:01:25Z); THE SIGNED PAIR STANDS, THE CUT IS RE-DONE ON THE NEW BASE.** Both halves bind the cut to "THE LIVE DEPLOYED COMMIT read from `EC2_MANIFEST.json` and the instance" and name no hash; the six-path diff and C-6 (tool-name count and `/health` equal BEFORE and AFTER) are base-independent, and the "127" in C-6 is a record of the last release, not the control. No re-sign. Release `rel-amgt-harvst-cc7` @`b5aa696c90` (on `d14445961d`) is RETIRED; deploy nothing from it.
+- (a) WAIT for the commit: `4be300110e` and its rollback target `bf9d23b518` are not on dell1; the issuer has asked `0.0.0_AB_MSTR~DELL1` to relay a push of a ref holding both. The issuer sends GO with the ref name. Do not look for it before.
+- (b) On GO: re-read `EC2_MANIFEST.json` and the instance. If the live commit is still `4be300110e`, cut `rel-amgt-harvst-cc7b` from it; if it moved again, cut from whatever the manifest and instance agree on and say so. Print `git diff d14445961d <live> -- <the six paths>`: it must be EMPTY. A non-empty diff means the live gateway changed a file this order carries, so STOP, carry nothing, tell the issuer.
+- (c) Carry the six files, prove `git diff <live> rel-amgt-harvst-cc7b --name-only` lists exactly those six, run the gateway tests, read the tool-name count and `/health` and print them in `cc7_before.out` (the count there is the baseline, ~103 per NFRA1's note); the bun cache is already 77 of 77 (`cc7_cache_receipt.out`; re-run the precheck once before the build).
+- (d) Then the deploy as signed: a FRESH ledger entry naming `previous_deployed_commit` as the rollback, the standard script, C-6 counts and `/health` after, the three served reads in `cc7_served.out`. Branch F rolls back to the manifest's `previous_deployed_commit` read at the start.
 Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/`.
 
 <paths>
@@ -80,9 +85,11 @@ This order touches none of them.
 - **Not covered, named:** a silver REBUILD for KMB's misfiled report (the cc-2 on-the-fly check serves without it when the stored row carries the header; otherwise a rebuild is owed and is a later cell); adding Procter & Gamble or `KIMBERA MM` to the universe; the `modelSheet.ts` label.
 - **SENT 2026-10-16 ~16:5xZ** after both halves were signed (COO `a84dbdc1e7`; CTO msg 6895 with C-6). Sequence at the seat: `HVST-cc-5` runner steps first (done), then this order, `HVST-cc-4`'s Arm A' last.
 
+COMPLETE (issuer, 2026-10-17 ~00:2xZ): deployed 00:10:31Z by 0.7.0_AE_CloudOps~SC1 from rel-amgt-harvst-cc7b @319c9413a2 on live base 4be300110e (amendment 3; the signed pair stood, no hash bound). Read by the issuer from the record: manifest deployed_commit 319c9413a2, previous 4be300110e; C-6 equal before and after (/health 200, 127 tools, names md5 9a593c84); six-path live diff empty before the cut; served reads SERVED_RESOLVE_PG, SERVED_EPS_CLAIM, SERVED_KMB_RESEARCH = PASS (cc7_served.out); checker VALID rc=0 (409995bde8). LIMITS: (1) the same KMB response still cites the excluded Mexico report in its gold-dossier fields (fund_of_record, last_stated_position), row D1-S38, outside this order's three criteria; (2) the CRO's read of the three names on the served tools is not yet made; (3) the served reads are the deployer's MCP session, one principal. Push state LOCAL.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>S29-SERVE</workstream>
 <slot>dell1</slot>

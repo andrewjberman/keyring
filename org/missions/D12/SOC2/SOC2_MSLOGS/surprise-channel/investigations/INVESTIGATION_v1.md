@@ -290,6 +290,26 @@ Worker rows of the round-1 cells, appended and never edited. Rows `SOC2_MSLOGS-D
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W7-S1",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~7",
+    "surfaced_at": "2026-10-17T00:58:34Z",
+    "one_line": "data/m365_metadata/scripts/app/RUNBOOK.md still says the Entra sign-in feed is not subscribed, while the collector and start_subscriptions.py now carry all four feeds.",
+    "spec_asserts": "The collector contract v3 of SOC2_MSLOGS.TO-SM-c1 collects all four CONTENT_TYPES, Audit.AzureActiveDirectory included, and start_subscriptions.py starts all four with no excluded feed.",
+    "world_is": "RUNBOOK.md line 14 says the sign-in feed Audit.AzureActiveDirectory is not subscribed, and line 42 tells the operator to confirm no sign-in feed in the dry-run. start_subscriptions.py line 13 lists all four feeds. The RUNBOOK is outside the TO-SM-c1 grant, so it was not edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/m365_metadata/scripts/app/RUNBOOK.md@a61efb5b70 lines 14 and 42 name the sign-in feed as not subscribed",
+        "data/m365_metadata/scripts/app/start_subscriptions.py@a61efb5b70 line 13 CONTENT_TYPES lists Audit.AzureActiveDirectory"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

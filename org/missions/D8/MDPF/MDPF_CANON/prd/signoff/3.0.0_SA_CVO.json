@@ -1,12 +1,12 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.23",
-  "prd_pin": "c81505610dac3ceaab369384190483090873a3af",
+  "prd_version": "v2.24",
+  "prd_pin": "3de758b21deb7a7c79b40a5e825037c0019778b1",
   "half": "ratified-text",
-  "half_hash": "d388fe8bbfd3be880277cac17bbd635fd9fa9508ec1c1a4c9ae8ece5c5745655",
-  "endpoint_hash": "9015f6545a3cd5254d666b1eba0e079071b2b22b0a222b91b9e4c0795787140a",
+  "half_hash": "640d56ab0283a594e0235629b73d75dc957b95c337cab686256a7c3291cf9182",
+  "endpoint_hash": "8e5e5359edf0e2e9a9166bb9ccbd800df9a3a016659f7c217e8f0202403d2579",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.23_RATIFIED_TEXT_20261015.md@8dc11dc359",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_MDPF_CANON_v2.24_RATIFIED_TEXT_20261017.md@b9f290b81c",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-15T18:54:31Z"
+  "signed_at": "2026-10-17T01:43:28Z"
 }

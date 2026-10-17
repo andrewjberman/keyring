@@ -7,19 +7,21 @@ CTO rulings batch 61 item 3 and batch 62 item 6: a function whose bundle would m
 at one commit. For each named function this sets every `staged_from` entry's `pin` to <commit> and its `sha256` to
 the sha256 of `git show <commit>:<repo_path>` (the bytes build-and-upload.sh verifies before it stages a member).
 
-The edit is TEXTUAL and ROW-SCOPED: only the `pin` and `sha256` values inside the named functions' `staged_from`
-lists change; every other byte of lambda-source-map.json, every other function's row included, is left as it is
-(the lane grant covers these rows only). Without --write it prints what would change and writes nothing.
-Prints, per function: entries, entries whose bytes change, entries whose pin alone moves. ASCII only.
+CT-ca-1 (NFRA_CTLPLN round 30): the map is one JSON file per function under infra/aws/lambda/ci/function-map/. Each named
+function's own file is edited; the edit is TEXTUAL and FILE-SCOPED: only the `pin` and `sha256` values inside that file's
+`staged_from` list change; every other byte of that file is left as it is, and no other function's file is opened for
+writing. Without --write it prints what would change and writes nothing. Prints, per function: entries, entries whose bytes
+change, entries whose pin alone moves. ASCII only.
 """
 import hashlib
 import io
 import json
+import os
 import re
 import subprocess
 import sys
 
-MAP = "infra/aws/lambda/ci/lambda-source-map.json"
+MAP_DIR = "infra/aws/lambda/ci/function-map"
 ENTRY = re.compile(r"\{[^{}]*\}")
 
 
@@ -44,15 +46,13 @@ def main(argv):
     root, commit, functions = args[0], args[1], args[2:]
     commit = subprocess.run(["git", "-C", root, "rev-parse", commit], capture_output=True, text=True,
                             check=True).stdout.strip()
-    path = root.rstrip("/\\") + "/" + MAP
-    text = io.open(path, encoding="utf-8", newline="").read()
-    before = json.loads(text)
     for fn in functions:
-        key = '"%s": {' % fn
-        if text.count(key) != 1:
-            raise SystemExit("ERROR: %d rows named %s" % (text.count(key), fn))
-        row_start = text.index(key)
-        a, b = span_of_list(text, text.index('"staged_from"', row_start))
+        path = root.rstrip("/\\") + "/" + MAP_DIR + "/" + fn + ".json"
+        if not os.path.isfile(path):
+            raise SystemExit("ERROR: no function file for %s at %s" % (fn, path))
+        text = io.open(path, encoding="utf-8", newline="").read()
+        before = json.loads(text)
+        a, b = span_of_list(text, text.index('"staged_from"'))
         block = text[a:b]
         moved = changed = total = 0
 
@@ -79,20 +79,17 @@ def main(argv):
         text = text[:a] + ENTRY.sub(repin, block) + text[b:]
         print("%-24s staged entries %d; bytes change in %d; pin moves in %d; all now at %s"
               % (fn, total, changed, moved, commit[:10]))
-    after = json.loads(text)
-    rows = before.get("functions", before)
-    untouched = sum(1 for k in rows if k not in functions and rows[k] == after.get("functions", after)[k])
-    print("other rows byte-compared as JSON: %d of %d unchanged" % (untouched, len(rows) - len(functions)))
-    for fn in functions:
-        b_row, a_row = dict(rows[fn]), dict(after.get("functions", after)[fn])
-        b_row.pop("staged_from", None), a_row.pop("staged_from", None)
+        after = json.loads(text)
+        b_row, a_row = dict(before), dict(after)
+        b_row.pop("staged_from", None)
+        a_row.pop("staged_from", None)
         if b_row != a_row:
             raise SystemExit("ERROR: a field outside staged_from moved in " + fn)
-    if write:
-        io.open(path, "w", encoding="utf-8", newline="").write(text)
-        print("written:", MAP)
-    else:
-        print("dry run: nothing written")
+        if write:
+            io.open(path, "w", encoding="utf-8", newline="").write(text)
+            print("written:", path)
+        else:
+            print("dry run: nothing written (%s)" % fn)
     return 0
 
 

@@ -6,7 +6,7 @@ then cross-references against Terraform IAM policy documents.
 Flags cases where a script calls an operation the role may not permit.
 
 Authoritative sources:
-  1. infra/aws/lambda/ci/lambda-source-map.json  -- Lambda function -> source path
+  1. infra/aws/lambda/ci/function-map/  -- Lambda function -> source path
   2. infra/aws/terraform/*/iam.tf               -- IAM role policies
   3. Lambda source .py files                    -- boto3 client calls
   4. data/black_diamond/scripts/gold/*.py        -- gold scripts on EC2 (boto3 + aws CLI)
@@ -2602,23 +2602,13 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
 # ---------------------------------------------------------------------------
 
 def _load_lambda_profiles(workspace_root: Path, roles: dict[str, IamRole]) -> list[ServiceProfile]:
-    """Load Lambda functions from lambda-source-map.json and scan their source."""
-    source_map_file = workspace_root / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
-    if not source_map_file.exists():
-        return []
-
-    try:
-        source_map = json.loads(source_map_file.read_text(encoding="utf-8"))
-    except Exception:
-        return []
-
-    # Support nested structure: merge 'functions' sub-dict into top-level iteration
-    if isinstance(source_map.get("functions"), dict):
-        merged = dict(source_map["functions"])
-        for k, v in source_map.items():
-            if k != "functions" and isinstance(v, dict):
-                merged[k] = v
-        source_map = merged
+    """Load Lambda functions from the function map (one <name>.json per function) and scan their source.
+    CT-ca-1 (NFRA_CTLPLN round 30): a missing or empty folder RAISES. It never returns an empty profile list, which the
+    single-file reader did when the file was absent."""
+    fn_dir = workspace_root / "infra" / "aws" / "lambda" / "ci" / "function-map"
+    if not fn_dir.is_dir() or not any(fn_dir.glob("*.json")):
+        raise FileNotFoundError("function-map folder missing or empty: %s" % fn_dir)
+    source_map = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted(fn_dir.glob("*.json"))}
 
     profiles = []
     for fn_name, entry in source_map.items():

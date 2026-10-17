@@ -2799,7 +2799,7 @@ def generate(out_dir, targets=None):
 # a re-derived rule. `python lib/opal_naming.py targets` is READ-ONLY -- it classifies, it never renders,
 # because a re-render re-stamps every SHIP view and some of those views SHIP (R-16).
 
-LAMBDA_SOURCE_MAP_PATH = "infra/aws/lambda/ci/lambda-source-map.json"
+LAMBDA_FUNCTION_MAP_DIR = "infra/aws/lambda/ci/function-map"  # CT-ca-1: one JSON file per function (lib/opal_lambda_map.py)
 TF_ROOT = "infra/aws/terraform"
 _HASH_PIN_MARKERS = ("sha_metadata_key", "index_md5")
 
@@ -2816,9 +2816,12 @@ def _sdc():
 
 
 def _lambda_source_map():
-    """The Lambda plane's own record: infra/aws/lambda/ci/lambda-source-map.json's `functions` dict."""
-    with open(os.path.join(REPO, *LAMBDA_SOURCE_MAP_PATH.split("/")), encoding="utf-8") as fh:
-        return json.load(fh).get("functions", {})
+    """The Lambda plane's own record: {name: entry} read from the function-map folder (one file per function, CT-ca-1).
+    lib/opal_lambda_map.py raises when the folder is absent or holds no function file: never an empty answer."""
+    if LIB_DIR not in sys.path:
+        sys.path.insert(0, LIB_DIR)
+    import opal_lambda_map  # noqa: E402
+    return opal_lambda_map.load_all(root=REPO)
 
 
 _JS_SOURCE_EXT = (".mjs", ".js", ".cjs", ".ts")
@@ -2842,7 +2845,7 @@ def _import_hit(rel, text, stem):
 
 
 def lambda_plane_consumers(t):
-    """Functions declaring `t` as a build input, resolved from lambda-source-map.json alone (R-26): a
+    """Functions declaring `t` as a build input, resolved from the Lambda function map alone (R-26): a
     basename the function's OWN source_dir does not itself hold on disk (a shared import packaged FLAT --
     e.g. _authz/loaders.py lands in seven functions' `files` lists though no loaders.py sits beside any of
     them), OR a declared source file that IMPORTS `t`'s stem (an esbuild-bundled shared import -- e.g.
@@ -2967,7 +2970,7 @@ def hash_pinned_census():
 def targets_report(extra_targets=None):
     """[(status, plane, path, measured)] over generate()'s own target list (the 7 VIEWS plus LOCALS_PATH,
     VECTORS_PATH, TFTEST_PATH) and any extra_targets appended: each plane's OWN record decides SHIP (S3/DS
-    via safe_deploy_core, Lambda via lambda-source-map.json, Terraform via the consuming root); the two
+    via safe_deploy_core, Lambda via the Lambda function map, Terraform via the consuming root); the two
     opal_name test fixtures print REPO-ONLY (fixtures beside a shipping module are not a deploy); a .tools/
     script no deploy plane claims prints REPO-ONLY (repo-local tooling); a target NO plane claims at all
     prints UNCLASSIFIED. Never calls generate() and writes nothing (R-16)."""
@@ -2986,7 +2989,7 @@ def targets_report(extra_targets=None):
         lam = lambda_plane_consumers(t)
         if lam:
             rows.append(("SHIP", "lambda", t,
-                         "lambda-source-map.json (%d consumer(s): %s)" % (len(lam), ", ".join(lam[:5]))))
+                         "Lambda function map (%d consumer(s): %s)" % (len(lam), ", ".join(lam[:5]))))
             continue
         tfc = terraform_plane_consumers(t)
         if tfc:

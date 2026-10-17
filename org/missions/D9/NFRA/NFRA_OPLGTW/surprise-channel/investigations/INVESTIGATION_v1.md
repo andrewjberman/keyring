@@ -25919,3 +25919,453 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "RULED, a recipe repair for the next release order (issuer): a release tree cut on the live ref carries the live ref's .tools/halt-gate-check.sh, which rejects a rule-34 lane (~<MACRO><n>), and its sparse cone needs one org/<tier>/ home folder matching the base. Both refusals came before any upload and were cured with no override. The next batched release order's step 2 therefore says: lay the TRUNK copy of .tools/halt-gate-check.sh into the release tree UNCOMMITTED, add a CloudOps home folder to the cone, and restore both before the deploy tree's clean check (as the naming-gate overlay already is). Not a defect of OG-ap-31: nothing half-landed."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T23:20:21Z",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S327",
+  "one_line": "OG-ev-3: ev3.AC1 cannot pass as written -- the transactions window is 317754041 bytes, a 9-digit run the check's hygiene limb rejects, and the host's memory guard stopped transactions at 1 complete run of the 5 required.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/WINDOW_MEASURE.json",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev3_transactions.json (and .raw.txt)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev3_fees.json",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ev3.AC1.sh",
+      "ev3.AC1 prints: transactions runs 1; content hygiene long digit runs 1 (want 0); verdict outside (rule says outside); fees runs 5; RESULT: FAIL"
+    ]
+  },
+  "spec_asserts": "The record WINDOW_MEASURE.json can carry bytes as an int for both tables, five runs per table, and contain no digit run of 9 or more (ev3.AC1 limbs 1 and 3).",
+  "world_is": "Two conflicts. (1) bytes for the transactions window is an int of 9 digits (the 334 files total 317754041 bytes as stored), and the check's own regex flags any run of 9 or more digits, so the limb can only pass for a window under 100000000 bytes; the fees window (32251262) passes. (2) Run 1 of transactions took 239.888 s with the host at 78.5 percent used memory (no swap; the gateway process resident 122 MB before and after); run 2 reached 81.6 percent and my guard (80 percent, stricter than the order's 85) stopped it at 190 of 334 files. The 5 runs of fees completed (peak 43.8 percent). The verdict does not depend on the missing runs: the one complete transactions run is 8 times the 30 s threshold and the 5 fees runs sit at 146 to 147 s. I did not repeat transactions in separate processes on a live no-swap host to complete a record the hygiene limb would still reject.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Verdict word is reported to the issuer: outside. The status stays staged. A re-cut of the check (bytes in KiB or a hygiene bound that spares a bytes count) and the choice to run transactions 4 more times in separate processes are the issuer's."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T23:20:21Z",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-S328",
+  "one_line": "OG-ev-3: the 13-month read is slow because every ctx.read_rows call lists the whole prefix first (about 0.4 s of 0.55 s on fees), so 396 partitions cost 146 s even at concurrency 16 with only 32 MB of data.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev3_diag.json (single-threaded, fees, newest partition, 3 repetitions: typed_scope.list_keys over 2009 objects 0.375 to 0.462 s; read_parquet of the one key 0.087 to 0.193 s; the whole ctx.read_rows 0.512 to 0.608 s)",
+      "infra/aws/ec2/opal-gateway/app/client_core.py read_rows at the live release 4be300110e: it calls typed_scope.list_keys(scope, real) on every call, then picks the key for the date",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ev3_fees.json: 5 runs at concurrency 16 read 396 files in 145.7 to 147.2 s with the host CPU 52 to 54 percent busy of 2 vCPUs"
+    ]
+  },
+  "spec_asserts": "Reading every dated partition of a window through the installed adapter's read path is bounded by the data read.",
+  "world_is": "It is bounded by the per-call prefix listing, which is repeated once per partition: about 80 percent of a single call on fees. At concurrency 16 the 396 calls took 146 s against about 218 s serial (396 x 0.55 s), a 1.5 times speed-up, consistent with a python-side cost that does not parallelise (the listing is processed on the GIL; the host used about one of two vCPUs). Not isolated further: I did not profile inside list_keys. A reader that lists the prefix once and reads the dated keys directly would remove the repeated listing; that is a design choice for the code cell, not measured here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and seconds only. Bears on OG-en-17."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:30:03Z",
+  "id": "NFRA_OPLGTW-Z-S329",
+  "one_line": "Round-40 disposition of applier row Z-S327: Issuer defect, fixed: ev3.AC1 demanded five runs of every table and counted the legitimate nine-digit bytes integer as a",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S327"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/WINDOW_MEASURE.json; order OG-ev-3 A1"
+    ]
+  },
+  "spec_asserts": "An applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Issuer defect, fixed: ev3.AC1 demanded five runs of every table and counted the legitimate nine-digit bytes integer as a leak. OG-ev-3 A1 (f1c5b4f8d7) corrects both with the evidence (one complete 239.9 s transactions run, fastest above the 30 s threshold, so a verdict of outside could not change; integer bytes excluded from the digit scan); the amended check passes the real WINDOW_MEASURE.json and its controls fail. The applier's memory-guard stop at 81.6 percent was correct.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer defect, fixed: ev3.AC1 demanded five runs of every table and counted the legitimate nine-digit bytes integer as a leak. OG-ev-3 A1 (f1c5b4f8d7) corrects both with the evidence (one complete 239.9 s transactions run, fastest above the 30 s threshold, so a verdict of outside could not change; integer bytes excluded from the digit scan); the amended check passes the real WINDOW_MEASURE.json and its controls fail. The applier's memory-guard stop at 81.6 percent was correct."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:30:03Z",
+  "id": "NFRA_OPLGTW-Z-S330",
+  "one_line": "Round-40 disposition of applier row Z-S328: CARRIED to the round-41 enrichment list (outside OG-en-17's paths): one read_rows costs 0.55 s and about 0.4 s of it is ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S328"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/WINDOW_MEASURE.json (read timing notes)"
+    ]
+  },
+  "spec_asserts": "An applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED to the round-41 enrichment list (outside OG-en-17's paths): one read_rows costs 0.55 s and about 0.4 s of it is the whole-prefix listing repeated for every partition (app/client_core.py). Listing once per call and passing the listing to the reads would cut a 60-partition page by most of its wall time. OG-en-17 pages at 60 partitions with concurrency 16 as measured; the listing repair is a separate client_core cell.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED to the round-41 enrichment list (outside OG-en-17's paths): one read_rows costs 0.55 s and about 0.4 s of it is the whole-prefix listing repeated for every partition (app/client_core.py). Listing once per call and passing the listing to the reads would cut a 60-partition page by most of its wall time. OG-en-17 pages at 60 partitions with concurrency 16 as measured; the listing repair is a separate client_core cell."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~129",
+  "surfaced_at": "2026-10-16T23:41:23Z",
+  "id": "NFRA_OPLGTW-Z-W129-S1",
+  "one_line": "OG-en-17 AC2 names a window of 450 partitions, but a window of at most 13 months holds at most 396 daily partitions, so 450 cannot be built; the test plants the 396 days of the largest admitted window.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@f1c5b4f8d7 _window: a window whose end is after the start plus WINDOW_MONTHS (13) raises window_too_long, so a window spans at most 13 calendar months",
+      "same file@f1c5b4f8d7 _partitions: the dated names are one per calendar day (YYYY-MM-DD), so 2025-09-16 through 2026-10-16 inclusive is 396 partitions, the most one window can hold"
+    ]
+  },
+  "spec_asserts": "tests/test_og_en17.py test_ogen17_ac02 (the order's wording): a window of 450 partitions; cursor: the pages end with next_cursor null at the window start and their union equals all 450.",
+  "world_is": "450 partitions cannot sit inside a window the contract admits. The test runs over the largest admitted window: 396 daily partitions read as six pages of 60 and one of 36, the union is all 396, and next_cursor is null on the last page at the window start. The 400-partition concurrent branch is not built, because the measure's verdict selects the cursor branch.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "BLOCKING until the issuer or the CTO rules whether the criterion should name 396, or a window of daily partitions, instead of 450. No runtime hazard: the cursor answers every page of any admitted window."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~129",
+  "surfaced_at": "2026-10-16T23:41:23Z",
+  "id": "NFRA_OPLGTW-Z-W129-S2",
+  "one_line": "OG-en-17 says the rows run newest partition first 'as today'; at the base they ran oldest partition first. The named test requires newest first, so the served order changed and the pinned order tests were updated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@f1c5b4f8d7 _window_plan and _window_read: chosen is in_window[-60:] in ascending order and _window_read iterates chosen in that order, so the rows come oldest partition first",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en15.py@f1c5b4f8d7 test_ogen15_ac01 lines 93-96: the expected transaction rows run 2026-10-02, 2026-10-02, 2026-10-03, 2026-10-05",
+      "infra/aws/ec2/opal-gateway/tests/test_og_cl2.py@f1c5b4f8d7 line 207: the served transaction ids are [9, 101], the 2026-10-08 partition before the 2026-10-14 one"
+    ]
+  },
+  "spec_asserts": "OG-en-17 cell: keep the order of the answer's rows by partition date (newest first, as today) whatever the completion order; test_ogen17_ac01 asserts rows newest first.",
+  "world_is": "Today's order is oldest partition first, so 'as today' is false for this base. Commit d0708b11bf serves newest partition first, the order the named test pins, and updates test_og_en15 (AC1 expected rows, read order, AC3 cursor note), test_og_cl2 (AC03 served order [101, 9], AC03 and AC08 read order). The CTO should confirm newest first or direct oldest first.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The adapter is not released by this cell (the cell carries no deploy), so no consumer outside the gateway tests has seen the old order."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~129",
+  "surfaced_at": "2026-10-16T23:41:23Z",
+  "id": "NFRA_OPLGTW-Z-W129-S3",
+  "one_line": "The literal cursor rule (the day before the oldest partition read, null only at the window start) flags a fully read window as partial and returns an empty trailing page; next_cursor is set only when a partition of the window still lies before the page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@d0708b11bf _window_plan: next_cursor is None unless chosen and left are both non-empty, where left is the in-window partitions older than the page",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en17.py@d0708b11bf test_ogen17_ac01: a window of exactly 60 partitions returns next_cursor None and window_partial False"
+    ]
+  },
+  "spec_asserts": "OG-en-17 cell: next_cursor is the ISO date of the day BEFORE the oldest partition read, or null when the window start is reached; window_partial is true while next_cursor is not null.",
+  "world_is": "Read literally, a window of exactly 60 partitions whose oldest partition is later than the window start would return a cursor, report window_partial true although every partition was read, and send the caller to a page that reads nothing. The implementation keeps the day-before value whenever a partition remains and returns null once none does.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The two readings agree on every window whose oldest partition is the window start, which is the case in the planted fixtures of AC1 and AC2."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~129",
+  "surfaced_at": "2026-10-16T23:41:23Z",
+  "id": "NFRA_OPLGTW-Z-W129-S4",
+  "one_line": "Off-task: tests/test_og_ch1.py fails when run alone in this worktree (ac02 ValueError on a second 49financial adapter registration; ac04 finds no repo partner roster file). Neither failure is in the window code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run: python -m pytest tests/test_og_ch1.py -q -p no:cacheprovider from infra/aws/ec2/opal-gateway at d0708b11bf: 2 failed, 4 passed; FAILED test_ogch1_ac02 (ValueError: a different adapter is already registered for this vendor and one of these firms, app/client_core.py register_adapter) and test_ogch1_ac04 (AssertionError: the repo roster file is not on this tree)",
+      "infra/aws/ec2/opal-gateway/tests/test_og_ch1.py@d0708b11bf ac02 registers the recorder adapter for 49financial before the real module; ac04 walks up from the app directory looking for data/mdpf/config/partner_roster.json and finds none"
+    ]
+  },
+  "spec_asserts": "(off-task) The gateway test file tests/test_og_ch1.py is expected to pass in a worktree of the gateway.",
+  "world_is": "Two of its six tests fail in this worktree. The roster file is absent from this worktree. The registry conflict is in the core's module-level adapter registry. Not measured at the base commit: I did not check out or copy the base.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Off-task observation, filed for the owner of the core registry and the roster. No file of the OG-en-17 write set is involved."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:52:33Z",
+  "id": "NFRA_OPLGTW-Z-S331",
+  "one_line": "Round-40 disposition of worker row Z-W129-S1: Issuer spec error, accepted: OG-en-17 AC2 asked for a window of 450 partitions, but a 13-month window holds at",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W129-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 4ebc1e781b (OG-en-17); AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders (43 and 29 passed)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Issuer spec error, accepted: OG-en-17 AC2 asked for a window of 450 partitions, but a 13-month window holds at most 396 daily partitions, so the premise is unbuildable. The worker ran the test over the 396-day window, which exercises the same paging to the window start; nothing is lost. The issuer's number was wrong, the worker's reading is right.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer spec error, accepted: OG-en-17 AC2 asked for a window of 450 partitions, but a 13-month window holds at most 396 daily partitions, so the premise is unbuildable. The worker ran the test over the 396-day window, which exercises the same paging to the window start; nothing is lost. The issuer's number was wrong, the worker's reading is right."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:52:33Z",
+  "id": "NFRA_OPLGTW-Z-S332",
+  "one_line": "Round-40 disposition of worker row Z-W129-S2: ACCEPTED and to be DISCLOSED in the release ask: the order said 'newest first, as today' but the base served r",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W129-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 4ebc1e781b (OG-en-17); AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders (43 and 29 passed)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED and to be DISCLOSED in the release ask: the order said 'newest first, as today' but the base served rows oldest first. The cursor answer now serves each page newest first, which is the order a paging caller expects (page 1 is the newest slice, next_cursor goes back in time). It is a change in what an analyst sees and the next release's ask states it plainly.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED and to be DISCLOSED in the release ask: the order said 'newest first, as today' but the base served rows oldest first. The cursor answer now serves each page newest first, which is the order a paging caller expects (page 1 is the newest slice, next_cursor goes back in time). It is a change in what an analyst sees and the next release's ask states it plainly."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:52:33Z",
+  "id": "NFRA_OPLGTW-Z-S333",
+  "one_line": "Round-40 disposition of worker row Z-W129-S3: ACCEPTED: next_cursor is null when no partition remains before the page, not only when the window start is rea",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W129-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 4ebc1e781b (OG-en-17); AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders (43 and 29 passed)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED: next_cursor is null when no partition remains before the page, not only when the window start is reached; the window may start before the oldest partition that exists, so this is the exact end-of-data signal.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED: next_cursor is null when no partition remains before the page, not only when the window start is reached; the window may start before the oldest partition that exists, so this is the exact end-of-data signal."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:52:33Z",
+  "id": "NFRA_OPLGTW-Z-S334",
+  "one_line": "Round-40 disposition of worker row Z-W129-S4: CARRIED: tests/test_og_ch1.py fails 2 of 6 (registry ValueError, roster file absent) in the worker's tree; it ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W129-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 4ebc1e781b (OG-en-17); AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders (43 and 29 passed)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED: tests/test_og_ch1.py fails 2 of 6 (registry ValueError, roster file absent) in the worker's tree; it is the known red test carried since round 38 (rows Z-S317), not caused by OG-en-17, not in its paths.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED: tests/test_og_ch1.py fails 2 of 6 (registry ValueError, roster file absent) in the worker's tree; it is the known red test carried since round 38 (rows Z-S317), not caused by OG-en-17, not in its paths."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~130",
+  "surfaced_at": "2026-10-17T00:41:50Z",
+  "id": "NFRA_OPLGTW-Z-W130-S1",
+  "one_line": "safe-commit of OG-en-18 (8ec557f953) printed WARN client-data-check: hashed account-id list ABSENT on this box, so the commit was not checked for client account ids",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 8ec557f953 on wk-NFRA_OPLGTW-130: safe-commit output 'WARN: client-data-check: hashed account-id list ABSENT at the device default path -- this commit was NOT checked'",
+      "the four files of the commit use the synthetic fixture ids z08A1001, z08B2002, z09X7001, the same ids tests/test_og_en17.py carries at HEAD 887e203b8c"
+    ]
+  },
+  "spec_asserts": "Every commit passes the commit gate, and the worker face names no client-data check to be skipped (CLAUDE.md rule 14: every .py edit passes .tools/commit-gate.sh).",
+  "world_is": "The commit gate ran and printed a WARN that the client-data check did not run on this box (the hashed account-id list is not at the default path, and OPAL_ACCOUNT_ID_HASHES is unset in this worker session). Not fixed here: a device-side list is outside the order's paths.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T00:51:44Z",
+  "id": "NFRA_OPLGTW-Z-S335",
+  "one_line": "Round-40 disposition of worker row Z-W130-S1: The client-data check did not run on this box (hashed list absent), but the commit's fixtures are th",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W130-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge d2b95c10cf (OG-en-18); AC1 3 of 3 and AC3 29 of 29 both orders in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "The client-data check did not run on this box (hashed list absent), but the commit's fixtures are the synthetic z08/z09 ids already in tests/test_og_en17.py, and the issuer read the merged diff (d2b95c10cf): no real account id. Record only; the device-side list is not this project's.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-data check did not run on this box (hashed list absent), but the commit's fixtures are the synthetic z08/z09 ids already in tests/test_og_en17.py, and the issuer read the merged diff (d2b95c10cf): no real account id. Record only; the device-side list is not this project's."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T01:00:59Z",
+  "id": "NFRA_OPLGTW-Z-S336",
+  "one_line": "OG-ap-32 Phase A redo STOPPED at step 1: the live gateway ref moved from 4be300110e to 319c9413a2 (AMGT_HARVST HVST-cc-7 by 0.7.0_AE_CloudOps~SC1, deployed 2026-10-17T00:10:31Z); that commit is not in this repository.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/EC2_MANIFEST.json at box/sitez HEAD: services.opal-gateway.deployed_commit 319c9413a20895a63517c5ca1b9ced0f78a5573a, previous_deployed_commit 4be300110ec912ac8c11a1663403e41eea45117c, deployed_by 0.7.0_AE_CloudOps~SC1; the S3 git-ref of opal-gateway-latest.tar.gz reads the same",
+      "org/critical_paths/change_management/20261017T0008Z_harvst-cc7-gateway-s29-20261016_deploy_completion.md (CLOSED 00:16:01Z; release rel-amgt-harvst-cc7b, local, never merged; six paths only)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32b_host_md5.json (host md5 walk against 4be300110e: 136 equal, 3 differ: app/harvest_figures.py, app/harvest_identity.py, app/harvest_research.py; 0 missing, 0 extra)",
+      "git cat-file -t 319c9413a2... in this repository: could not get object info (the commit is not here)",
+      "the host's three files each equal their blob at trunk d2b95c10cf (md5 read over SSM) and differ from their blob at 4be300110e"
+    ]
+  },
+  "spec_asserts": "The live ref is 4be300110e (OG-ap-32 step 1 and its issuer note: 'Queue on the gateway host: THIS only').",
+  "world_is": "Another seat released to the same host between my first Phase A read (live 4be300110e) and the redo (live 319c9413a2). A release built on 4be300110e and deployed over the host would extract the OLD copies of those three harvest files and revert the HVST-cc-7 fixes; the stale-base guard would refuse it first (declared base 4be300110e != live 319c9413a2), and ap32.AC1 requires base_sha to equal the live ref. Nothing was deployed or written by me. Facts that bear on the issuer's choice: the three live files are byte-equal to trunk d2b95c10cf, so a release that takes those three files whole from trunk carries exactly what is live; but base..release would then hold three paths outside ap32.AC1's allowed set, and the base commit 319c9413a2 is not available to cut on. Options: (A) the HVST seat makes commit 319c9413a2 available (a ref my repository can fetch) and I cut on it; (B) the take list gains the three harvest files whole from trunk, the release is cut on 4be300110e, the base is declared as 319c9413a2 only after a host md5 walk shows the release carries everything live has, and ap32.AC1 is amended to allow the three paths and read the declared base; (C) hold OG-ap-32 until the HVST release is merged into trunk and the live ref is a trunk commit.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and names only. OG-ap-32 Phase A redo is stopped; release 11031f278d stays superseded; no deploy."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T01:12:42Z",
+  "id": "NFRA_OPLGTW-Z-S337",
+  "one_line": "Round-40 ruling on Z-S336: option B (cut on 4be300110e, declared live base 319c9413a2, three harvest files from trunk)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S336"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "manifest at HEAD: deployed 319c9413a2, previous 4be300110e",
+      "Amendment A2 a31880f508; ap32.AC1 dry-run: PASS arm and four FAIL controls"
+    ]
+  },
+  "spec_asserts": "A blocking row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled option B: another seat's release 319c9413a2 (AMGT_HARVST, three harvest files, byte-equal to trunk) moved the live ref and is not fetchable here. The release is cut on 4be300110e with those three files taken whole from trunk, the live ref declared as base and the host md5 walked (OG-ap-32 Amendment A2, a31880f508; ap32.AC1 amended and dry-run). Option A waits on a seat that is not live; C holds the round.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled option B: another seat's release 319c9413a2 (AMGT_HARVST, three harvest files, byte-equal to trunk) moved the live ref and is not fetchable here. The release is cut on 4be300110e with those three files taken whole from trunk, the live ref declared as base and the host md5 walked (OG-ap-32 Amendment A2, a31880f508; ap32.AC1 amended and dry-run). Option A waits on a seat that is not live; C holds the round."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T02:02:34Z",
+  "id": "NFRA_OPLGTW-Z-S338",
+  "one_line": "OG-ap-32 Phase B TRIGGER: host memory reached 87.1 percent during the paging read-back (limit 85) and climbed 6 to 9 points per page; the release was rolled back at once.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32_arms.json (and .raw.txt): the transactions chain, 4 pages of 30 partitions read one call at a time through the INSTALLED release b124377b41 in a new process on the host; host memory percent used after each page 52.4, 58.3, 64.5, 73.3; before the chain 27.8; peak during the chains 87.1; the harness stopped the chain at its 80 percent line after page 4; wall seconds 29.64, 22.04, 24.18, 34.41",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32_toolslist_trigger.json and ap32_workers_trigger.json: after the harness exited, health 200, tools/list 103, the gateway service unchanged (same MainPID, NRestarts 0), host memory back to about 26 percent used (1 - available/total)",
+      "COO half C5 / ask section 6: host memory above 85 percent during the paging read-back is a rollback trigger; C6: the chain stops at 80 percent",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32_rollback_deploy.out: the rollback tree (adapter and catalog at their 4be300110e blobs, harvest files kept) committed as d3ae88be46 on rel-nfra-oplgtw-batch4-rollback and redeployed"
+    ]
+  },
+  "spec_asserts": "OG-en-18 bounds a page's memory by the 16 partitions in flight, so a page chain does not accumulate memory (ask section 2).",
+  "world_is": "The retained-row design is fixed (the first-page peak was 64.3 percent), but memory is not returned between pages: each page added about 6 to 9 points (roughly 110 to 165 MB) and the fourth page reached 87.1 percent, with 12 pages to go for transactions. The measurement ran in a fresh process beside the service, not in the service, but it is the same installed code path, and a long-lived single uvicorn worker (workers 1, so the per-process gate covers it) would carry the same retention across requests; on a host with 1846 MB and no swap that ends in the kernel killing a process. The cause was not isolated here: candidates are the allocator keeping freed arenas, pyarrow's memory pool, and caches on the ctx. The rollback was ordered by the halves; the manifest, S3 ref and runbook are recorded for the rollback commit, not the release. Not tried: smaller pages, an explicit pool release or a process recycle between pages.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and percentages only. OG-ap-32 AC2 cannot read 4 of 4 arms true on this release. The page chain was not completed (4 of about 12 transactions pages; fees not started)."
+}
+```

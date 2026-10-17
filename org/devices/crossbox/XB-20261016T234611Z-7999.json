@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261016T234611Z-7999",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "NFRA_CTLPLN npm pack sent by Taildrop: SC1 verify, install, return precheck",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_NPM_PACK_SENT_DELL1.md",
+ "opened_at": "2026-10-16T23:46:11Z",
+ "sent": {
+  "at": "2026-10-16T23:48:09Z",
+  "bus_message_id": "300520c1-527b-4443-bb7c-17a567583d38"
+ },
+ "ack_bus_message_id": null,
+ "closed_from": {
+  "at": "2026-10-17T02:17:36Z",
+  "by": "2.0.0_SA_COO~C"
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}

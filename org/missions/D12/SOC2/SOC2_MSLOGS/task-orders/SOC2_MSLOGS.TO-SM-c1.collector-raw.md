@@ -2,7 +2,7 @@
 
 <to_id>SOC2_MSLOGS.TO-SM-c1</to_id>
 <project>SOC2_MSLOGS</project>
-<issued_to>0.9.0_WK_SOC2_MSLOGS~6</issued_to>
+<issued_to>0.9.0_WK_SOC2_MSLOGS~7</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-16</issued_date>
 <status>complete</status>
@@ -91,6 +91,17 @@ function, its fetch loop near "Fetch and store until the budget is spent", the d
 5. Keep everything else of TO-SM-c1's contract (raw bytes, key grammar, already-stored, cold start, coverage fields, parse_recollect). Update the module docstring for the new order and the reserve. `handler.py` needs no change.
 6. Tests: extend `tests/test_collector.py` for the four rules (a slow-derive clock never passes the grace end; derive keeps a share with a backlog; descending order; the cursor is put before the first derive and again after; a small budget still fetches). ASCII only; stdlib only.
 
+### AMENDMENT 3 (2026-10-17 ~00:5xZ, issuer) -- DERIVE MUST BE CONCURRENT AND ITS CLIENT MUST NOT RETRY; this order is RE-OPENED again and re-seated to worker ~7
+
+Amendment 2 is merged (6cef75fd39) and its rules stand. The live fire of 00:31:22Z STILL hit the 900 s limit. The door log shows why: five `derive_silver` invocations 60 s apart (start 00:42:05, 00:43:06, 00:44:07, 00:45:10, 00:46:15), each `outcome=ok`
+on the door (102 s, 77 s, 65 s, 63 s, 59 s), all for one fire. The collector built its door client with the DEFAULT boto3 `lambda` client, whose read timeout is 60 s and which makes 5 attempts: one derive of 60 to 100 s was re-invoked four times and the collector waited 300 s
+for ONE day, ending past 900 s. The door itself is healthy since its memory was raised to 6144 MB (840 invocations, 0 errors). Two repairs, both in your paths:
+1. **A derive client that does not retry.** In `handler.py`, build a second `boto3.client("lambda", config=botocore.config.Config(read_timeout=200, connect_timeout=10, retries={"max_attempts": 1, "mode": "standard"}))` for `derive_silver` calls only; the existing client keeps the defaults for put/get_state (short calls, retries welcome).
+   `AccessClient.__init__(self, invoke, derive_invoke=None)`: `derive_silver` uses `derive_invoke` when given, else `invoke`. The handler wires `derive_invoke=lambda_invoker(derive_client, <door>, "collector")`. A `ReadTimeout` or any exception from a derive call leaves that day pending (it is never retried inside the fire).
+2. **Derive the owed days concurrently.** In `collect.py`, derive newest day first in BATCHES of up to `max_workers` days, the days of a batch running at the same time in a thread pool (the handler passes `max_workers=8`; with `max_workers=1` the order and behaviour are exactly Amendment 2's). A batch's duration is its longest call. The first batch of a fire always starts;
+   a later batch starts only when `elapsed + 1.5 * longest_batch_so_far <= budget_seconds + DERIVE_GRACE_SECONDS`. Cursor-before-derive and cursor-after-derive stay as Amendment 2 says. No date is derived twice in a fire.
+Tests: extend `tests/test_collector.py` (concurrency with a barrier or an in-flight counter, a failing call leaves its day pending, `derive_invoke` selection, a stateless `AccessClient` under threads). ASCII only; stdlib plus the already-present boto3/botocore only inside the handler.
+
 ### ACCEPTANCE
 
 <criterion id="SM1-c1-AC1" cell_refs="SM-c-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_c1.py raw</invocation><expect>C1-RAW-OK</expect></criterion>
@@ -105,7 +116,13 @@ function, its fetch loop near "Fetch and store until the budget is spent", the d
 <criterion id="SM1-c1-AC4" cell_refs="SM-c-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_c1.py derive_time</invocation><expect>C1-DERIVETIME-OK</expect></criterion>
 `SM1-c1-AC4` -- (a fourth mechanical criterion, with this reason: the live release measured the fault after the cut, AMENDMENT 2) with 40 s and 120 s derive calls and a 1200-blob backlog the fire ends by 885 s; at least three derives run under the backlog; the days go newest first; the cursor is put before the first derive; the final cursor lists exactly the undone days; a 90 s budget still fetches. `SM1-c1-AC2` (switch) now also asserts newest-first derive order.
 
-<expected_criteria>SM1-c1-AC1,SM1-c1-AC2,SM1-c1-AC3,SM1-c1-AC4</expected_criteria>
+<criterion id="SM1-c1-AC5" cell_refs="SM-c-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_c1.py derive_par</invocation><expect>C1-DERIVEPAR-OK</expect></criterion>
+`SM1-c1-AC5` -- (a fifth mechanical criterion, with this reason: AMENDMENT 3, measured live at 00:42-00:46Z) with `max_workers=4` and several owed days, derive runs more than one day at a time (never more than `max_workers`), the newest day starts first, no day twice, and an unbudgeted fire leaves nothing pending.
+
+<criterion id="SM1-c1-AC6" cell_refs="SM-c-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_c1.py derive_client</invocation><expect>C1-DERIVECLIENT-OK</expect></criterion>
+`SM1-c1-AC6` -- (a sixth mechanical criterion, same reason) the handler builds a botocore `Config` for the derive call with a read timeout between 200 and 290 s and `max_attempts` 1, so one slow derive is one door invocation.
+
+<expected_criteria>SM1-c1-AC1,SM1-c1-AC2,SM1-c1-AC3,SM1-c1-AC4,SM1-c1-AC5,SM1-c1-AC6</expected_criteria>
 
 Dry-run at the base 2026-10-16 ~17:0xZ: AC1 `C1-RAW-REFUSED missing ...raw_records.py`, AC2 `C1-SWITCH-REFUSED an old-era cursor must re-fetch the whole window: fetched 0 of 8; ...`, AC3
 `C1-RECOLLECT-REFUSED TypeError: run_once() got an unexpected keyword argument 'window'` -- each FAIL as expected. All three were driven GREEN against a throwaway reference outside the repository.
@@ -116,9 +133,9 @@ Run each from the repository (worktree) root.
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Everything else you READ and never edit. The deletions named above are inside the grant.
 - **LOCAL; NOTHING is called live.** No AWS call, no Management API call, no network, no Terraform. Synthetic values only in tests. Never read a stored bronze object.
 - `access.tf`, `collector.tf`, `silver_builder.py` and the door handler are other cells' files: never create or edit them.
-- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id `SOC2_MSLOGS-D1-W6-S<k>`, next free number, `surfaced_at` = `date -u +%FT%TZ` at
+- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id `SOC2_MSLOGS-D1-W7-S<k>`, next free number, `surfaced_at` = `date -u +%FT%TZ` at
   filing, in the investigation file below), and do not weaken a check to pass it.
-- Commit only through `.tools/safe-commit.sh` with `--author "0.9.0_WK_SOC2_MSLOGS~6 <0.9.0_WK_SOC2_MSLOGS~6@opal.agent>"`, `-F` a message file you write with the Write tool, and `-- <paths>`.
+- Commit only through `.tools/safe-commit.sh` with `--author "0.9.0_WK_SOC2_MSLOGS~7 <0.9.0_WK_SOC2_MSLOGS~7@opal.agent>"`, `-F` a message file you write with the Write tool, and `-- <paths>`.
 
 <paths>
 data/m365_metadata/scripts/collector/raw_records.py
@@ -142,8 +159,8 @@ org/missions/D12/SOC2/SOC2_MSLOGS/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SM1-c1-AC1, SM1-c1-AC2, SM1-c1-AC3, SM1-c1-AC4. Instance at `org/missions/D12/SOC2/SOC2_MSLOGS/deliverables/0.9.0_WK_SOC2_MSLOGS~6/SOC2_MSLOGS.TO-SM-c1.collector-raw.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> SM1-c1-AC1,SM1-c1-AC2,SM1-c1-AC3,SM1-c1-AC4` BEFORE the flip.
+Criterion ids: SM1-c1-AC1, SM1-c1-AC2, SM1-c1-AC3, SM1-c1-AC4, SM1-c1-AC5, SM1-c1-AC6. Instance at `org/missions/D12/SOC2/SOC2_MSLOGS/deliverables/0.9.0_WK_SOC2_MSLOGS~7/SOC2_MSLOGS.TO-SM-c1.collector-raw.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> SM1-c1-AC1,SM1-c1-AC2,SM1-c1-AC3,SM1-c1-AC4,SM1-c1-AC5,SM1-c1-AC6` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the three check lines, the `pytest` summary line of your own tests (`python -m pytest data/m365_metadata/scripts/tests/test_collector.py data/m365_metadata/scripts/tests/test_app.py -q`),
