@@ -27752,3 +27752,52 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: (a) grade the served read as 26 of 27 with this row open, or give me a probe for etfs_compare_peers that is bounded (a valid period and axis, which the harness cannot derive today because its own discovery call is the one that runs away); (b) route the hazard to the owner of etfs_rivals_flow. The ledger stays OPEN until you rule. No rollback: no trigger of the ask fired and the release does not cause this."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~140",
+  "surfaced_at": "2026-10-17T18:10:54Z",
+  "id": "NFRA_OPLGTW-Z-W140-S1",
+  "one_line": "On this device the commit gate printed 'WARN: client-data-check: hashed account-id list ABSENT', so the OG-un-1 commit 2bfe3f7c89 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "OG-un-1 commits two files (a systemd unit and a test) through .tools/safe-commit.sh; the order names no client-data check and does not say that check can run on this device.",
+  "world_is": "safe-commit printed WARN at the client-data check: the hashed account-id list is absent at C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt (OPAL_ACCOUNT_ID_HASHES unset), so commit 2bfe3f7c89 was not checked against it. The two committed files hold no account identifier: a systemd unit and a test that reads literal unit text.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 2bfe3f7c89 in C:/tmp/wk-oplgtw-140: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the two files committed: infra/aws/ec2/opal-gateway/deploy/opal-gateway.service and infra/aws/ec2/opal-gateway/tests/test_og_un1.py (2 files changed, 127 insertions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer: say whether this device should carry the hashed list, or whether the check is out of scope for a unit-file commit. Not fixed here: the device setup is outside the order's paths."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~140",
+  "surfaced_at": "2026-10-17T18:10:54Z",
+  "id": "NFRA_OPLGTW-Z-W140-S2",
+  "one_line": "The pre-commit risk reflex on this worktree read its danger map as STALE (46.2 h old) and returned ANSWER STATE PARTIAL_OR_BLIND, scanning 0 of 2 files, for the OG-un-1 commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "OG-un-1 names no risk reflex; the order's preflight declares comp-adversary and comp-schedule not applicable and does not say the pre-commit reflex can answer on a sparse worktree.",
+  "world_is": "safe-commit ran comp-pulse diff on the two staged files and printed 'danger map: 46.2h old !! STALE', 'REBUILD: sparse worktree: read the MAIN tree's map', 'ANSWER STATE: PARTIAL_OR_BLIND', 'WITHIN BUDGET: scanned 0 of 2 file(s)'. The reflex could not clear the diff; the commit went through because the reflex is informational at commit time.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for the OG-un-1 commit in C:/tmp/wk-oplgtw-140: '[risk-reflex] danger map: 46.2h old  !! STALE' and '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND' and '[risk-reflex] WITHIN BUDGET: scanned 0 of 2 file(s)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer: the main tree's map is the one the reflex names. Not read or rebuilt here: a sparse worktree is not to rebuild a map. The two OG-un-1 files are a unit directive set and a test, read in full at commit."
+}
+```
