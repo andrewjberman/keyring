@@ -1,8 +1,10 @@
 """MDPF_DEMQUE DQ-t-70 criterion AC2 (site Z; date-gated to the 2026-10-17 fire of the standing drawer task, 14:00Z): read the real actuals ledger.
-FIRE-OK when, over the rows dated 2026-10-17 on channel history: (1) the rows of surface C (a row's own "surface" member, else the surface of the
-request file of the job) sum to MORE than 5858 and at most 400000; (2) all rows of the day (every job, history and reference) sum to at most 2500000;
-(3) no row of the day carries a stop_reason naming a vendor limit (the words limit or warning, any case). Else FIRE-BAD <why>.
-At the base (no fire yet): FIRE-BAD no surface-C cells drawn on 2026-10-17. Run from the repository root.
+Amended 2026-10-17 ~04:4xZ by the issuer: every ETFS_RIVALS-C1 request carries a draw_hold (CTO msg 7279), so surface C has no open request; the fire is graded on
+the surfaces that do draw. FIRE-OK when, over the rows dated 2026-10-17 on channel history: (1) the rows of surface-tagged jobs (a row's own "surface" member,
+else the surface of the request file of the job) sum to MORE than 5858; (2) each surface's cells are at most its budget in bbg_allowance.json budgets.surfaces;
+(3) all rows of the day (every job, history and reference) sum to at most budgets.daily_total; (4) no row of the day carries a stop_reason naming a vendor limit
+(the words limit or warning, any case). Else FIRE-BAD <why>. At the base (no fire yet): FIRE-BAD no surface-tagged cells drawn on 2026-10-17.
+Run from the repository root.
 """
 from __future__ import annotations
 
@@ -12,6 +14,7 @@ import sys
 
 MISSION = os.path.join("org", "missions", "D8", "MDPF", "MDPF_DEMQUE")
 LEDGER = os.path.join(MISSION, "ledger", "BBG_ACTUALS.jsonl")
+ALLOW = os.path.join("data", "mdpf", "scripts", "demque", "bbg_allowance.json")
 DAY = "2026-10-17"
 
 
@@ -28,20 +31,27 @@ def surface_of(row: dict):
 def main() -> int:
     rows = [json.loads(ln) for ln in open(LEDGER, encoding="utf-8", errors="replace").read().splitlines() if ln.strip()]
     day = [r for r in rows if r.get("date") == DAY]
-    c_cells = sum(int(r.get("cells_drawn") or 0) for r in day if r.get("channel") == "history" and surface_of(r) == "C")
+    budgets = json.load(open(ALLOW, encoding="utf-8"))["budgets"]
+    per = {}
+    for r in day:
+        s = surface_of(r) if r.get("channel") == "history" else None
+        if s in budgets["surfaces"]:
+            per[s] = per.get(s, 0) + int(r.get("cells_drawn") or 0)
+    tagged = sum(per.values())
     total = sum(int(r.get("cells_drawn") or 0) for r in day)
-    if c_cells <= 0:
-        print("FIRE-BAD no surface-C cells drawn on %s (%d rows that day, %d cells in all)" % (DAY, len(day), total))
+    if tagged <= 0:
+        print("FIRE-BAD no surface-tagged cells drawn on %s (%d rows that day, %d cells in all)" % (DAY, len(day), total))
         return 1
-    print("surface C drew %d cells on %s; all jobs %d cells in %d rows" % (c_cells, DAY, total, len(day)))
-    if c_cells <= 5858:
-        print("FIRE-BAD surface C drew %d, not past the 5858 history ceiling" % c_cells)
+    print("surface cells on %s: %s; all jobs %d cells in %d rows" % (DAY, json.dumps(per, sort_keys=True), total, len(day)))
+    if tagged <= 5858:
+        print("FIRE-BAD surface-tagged cells %d are not past the 5858 history ceiling" % tagged)
         return 1
-    if c_cells > 400000:
-        print("FIRE-BAD surface C drew %d, over its 400000 budget" % c_cells)
+    over = {s: n for s, n in per.items() if n > budgets["surfaces"][s]["value"]}
+    if over:
+        print("FIRE-BAD over budget: %s" % json.dumps(over, sort_keys=True))
         return 1
-    if total > 2500000:
-        print("FIRE-BAD the day's cells %d exceed the 2500000 daily total" % total)
+    if total > budgets["daily_total"]["value"]:
+        print("FIRE-BAD the day's cells %d exceed the %d daily total" % (total, budgets["daily_total"]["value"]))
         return 1
     hit = [r.get("job") for r in day if any(w in str(r.get("stop_reason") or "").lower() for w in ("limit", "warning"))]
     if hit:
