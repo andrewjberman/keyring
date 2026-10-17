@@ -14843,3 +14843,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL2. Counts, serials and timestamps only; no transcript content. Logged on the dell2 CTO's ask (msg 10348). Cites D1-S13 to D1-S19; none edited."
 }
 ```
+
+## NFRA_CTLPLN-W152-S1 -- the order's five checkout sites are three call sites carrying seven paths
+
+```json
+{
+  "id": "NFRA_CTLPLN-W152-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~152",
+  "surfaced_at": "2026-10-17T14:33:05Z",
+  "one_line": "The cell names five checkout sites to route through the helper; the runner at base cfcc48413a carries three checkout call sites (capture_census loop over three sources, load_function_map over two paths, load_attribution_maps loop over two entries) naming seven paths. All seven now route through checkout_paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show cfcc48413a:infra/aws/ec2/estate-report-runner/estate_report_runner.py: the checkout argv sits at lines 493 (capture_census loop), 862 (load_function_map, two paths) and 890 (load_attribution_maps loop, two wanted entries)",
+      "git show 5917a8e42f:infra/aws/ec2/estate-report-runner/estate_report_runner.py: the literal checkout argv appears once, inside checkout_paths (line 322); the seven paths reach it through checkout_paths calls at lines 535, 538, 906, 931 and 934"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell routes five checkout sites through the helper, one per checkout site of the runner.",
+  "world_is": "Three call sites carry the checkout argv for seven paths. Routing all seven through checkout_paths meets the intent (every path prefetched in one call); the count of five does not match the code.",
+  "notes": "Decision owner: 2.0.0_SA_COO~C (the count in the order). No change beyond the cell's paths was made. Counts only."
+}
+```
+
+## NFRA_CTLPLN-W152-S2 -- the cut worktree's sparse set omits the p137 folder, so the neighbouring test is red at base
+
+```json
+{
+  "id": "NFRA_CTLPLN-W152-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~152",
+  "surfaced_at": "2026-10-17T14:33:05Z",
+  "one_line": "At base in the cut worktree, test_round30_follow_readers.py aborts (FOLLOW-READERS arms=10/11 ok=False, FileNotFoundError on org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r136/p137_repin.py), because the provisioned sparse set omits that folder. The order records its base as ok=True. Green (arms=31/31 ok=True) after git sparse-checkout add of that folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round30_follow_readers.py at worktree wk-NFRA_CTLPLN-152 before the sparse add: last line FOLLOW-READERS arms=10/11 ok=False; the abort line names p137_repin.py",
+      "git sparse-checkout add of org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r136 (rc 0): the same run then prints FOLLOW-READERS arms=31/31 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The neighbouring test of the cell stays green; its base is ok=True.",
+  "world_is": "The provisioned sparse set omits the folder the test's arm d reads, the same shape as NFRA_CTLPLN-W151-S4 (a folder the test imports was missing from the sparse set at cut).",
+  "notes": "Owner of the sparse set: the issuer's provisioning (.tools/wk-provision.sh). The folder was added in this worktree only and named in the report. Counts only."
+}
+```
