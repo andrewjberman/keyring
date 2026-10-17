@@ -8,6 +8,7 @@
   python s1_check_r2.py retire           -> R2-RETIRE-OK      (door_client derive_dates; the two round-1 stopgaps are gone)
   python s1_check_r2.py exposure_door    -> R2-EXPOSURE-OK    (exposure.compute over detail rows)
   python s1_check_r2.py exposure_client  -> R2-EXPCLIENT-OK   (read_exposure fetch and render)
+  python s1_check_r2.py hookup           -> R2-HOOKUP-OK      (the door serves exposure on the member alias only, through exposure.compute)
   python s1_check_r2.py retry            -> R2-RETRY-OK       (collector async retry attempts are 0 in collector.tf)
   python s1_check_r2.py tfvalidate       -> R2-TFVALIDATE-OK  (terraform validate on a scratch copy of the trino root)
   python s1_check_r2.py text             -> R2-TEXT-OK        (README, RUNBOOK, main.tf carry no eight-account or filter text; four feeds named)
@@ -580,6 +581,48 @@ def exposure_client():
     return finish("R2-EXPCLIENT", bad)
 
 
+def hookup():
+    sys.path.insert(0, ROOT)
+    h = load(os.path.join(DOOR, "handler.py"), "r2_hookup_handler")
+    bad = []
+    rec = {"ObjectId": "https://x.example/a"}
+    rows = [{"time": "2026-10-15T13:01:00Z", "feed": "SharePoint", "operation": "FileDownloaded", "result_status": "Succeeded", "client_ip": "203.0.113.7",
+             "item_name": "a.xlsx", "user_id": "pat@opalinvest.com", "record_id": "x1", "raw_json": json.dumps(rec)},
+            {"time": "2026-10-15T13:02:00Z", "feed": "SharePoint", "operation": "AnonymousLinkCreated", "result_status": "Succeeded", "client_ip": "203.0.113.7",
+             "item_name": "a.xlsx", "user_id": "pat@opalinvest.com", "record_id": "x2", "raw_json": json.dumps(rec)}]
+
+    class Reader:
+        calls = []
+
+        def timeline_rows(self, s3, bucket, prefix, account, start, end, detail=False):
+            Reader.calls.append(detail)
+            return [dict(r) for r in rows]
+
+    class Ctx:
+        def __init__(self, alias):
+            self.invoked_function_arn = "arn:aws:lambda:us-east-1:111122223333:function:globgrph-trino-access-lambda:" + alias
+
+    logs = []
+    ev = {"op": "exposure", "account": "pat@opalinvest.com", "start": "2026-10-15T00:00:00Z", "end": "2026-10-16T00:00:00Z"}
+    os.environ["BUCKET"] = "opal-data-trino"
+    ans = h.handle(ev, Ctx("member"), s3=None, log=logs.append, silver_reader=Reader())
+    if sorted(ans) != ["left", "ok", "opened", "truncated", "unrecorded"] or ans.get("ok") is not True:
+        bad.append("member answer is %r" % (sorted(ans),))
+    elif [e["record_id"] for e in ans["opened"]] != ["x1"] or [e["kind"] for e in ans["left"]] != ["anonymous_link"]:
+        bad.append("the answer does not carry what the rows opened and let out")
+    if Reader.calls != [True]:
+        bad.append("the reader must be asked for detail rows exactly once: %r" % (Reader.calls,))
+    if logs != ["op=exposure outcome=ok"]:
+        bad.append("log line %r" % (logs,))
+    if h.handle(ev, Ctx("collector"), s3=None, log=logs.append, silver_reader=Reader()).get("ok") is not False:
+        bad.append("the collector alias must not be served exposure")
+    if "exposure" not in h.KNOWN_OPS or "exposure" not in h.ALIAS_OPS["member"] or "exposure" in h.ALIAS_OPS["collector"]:
+        bad.append("KNOWN_OPS and ALIAS_OPS do not place exposure on the member alias alone")
+    if h.handle(dict(ev, account="not-an-address"), Ctx("member"), s3=None, log=logs.append, silver_reader=Reader()).get("ok") is not False:
+        bad.append("a bad account must be refused")
+    return finish("R2-HOOKUP", bad)
+
+
 # ---------------------------------------------------------------------------------------------------- terraform and text
 def retry():
     text = open(os.path.join(TRINO, "collector.tf"), encoding="utf-8").read()
@@ -641,7 +684,7 @@ def text():
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else ""
     table = {"silverip": silverip, "derive": derive, "naming": naming, "paging": paging, "desktop": desktop, "retire": retire,
-             "exposure_door": exposure_door, "exposure_client": exposure_client, "retry": retry, "tfvalidate": tfvalidate, "text": text}
+             "exposure_door": exposure_door, "exposure_client": exposure_client, "hookup": hookup, "retry": retry, "tfvalidate": tfvalidate, "text": text}
     if mode == "derive_run":
         sys.exit(derive_run(sys.argv[2], sys.argv[3]))
     fn = table.get(mode)
