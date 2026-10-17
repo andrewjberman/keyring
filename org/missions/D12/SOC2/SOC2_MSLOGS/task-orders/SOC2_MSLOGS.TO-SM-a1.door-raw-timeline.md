@@ -2,10 +2,10 @@
 
 <to_id>SOC2_MSLOGS.TO-SM-a1</to_id>
 <project>SOC2_MSLOGS</project>
-<issued_to>0.9.0_WK_SOC2_MSLOGS~2</issued_to>
+<issued_to>0.9.0_WK_SOC2_MSLOGS~8</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -85,6 +85,16 @@ Rewrite `tests/test_handler.py` for the contract: every cell of the table (serve
 by `lib/opal_naming.address("m365-metadata","trino","bronze","audit_records","date=20261015", object="<contentId>.json.gz")`; refused: a file name, an address, a `person=` segment, a foreign
 prefix, `..`, the old `audit_events` key); write-once; derive over two partitions; `timeline` limits and truncation; `recollect` rules including a member-supplied body. Replace `TCKT_MTADTA` in files you own.
 
+### AMENDMENT 2 (2026-10-17 ~02:3xZ, issuer) -- TIMELINE DETAIL: THE WHOLE RECORD, SO AN INVESTIGATOR CAN SEE WHO ACTED; this order is RE-OPENED and re-seated to worker ~8
+
+The first cut (worker ~2, merged at 36f107cee9; then access.tf edits by the CloudOps seat) is the base of your worktree; it stands. Andrew read a real week through `timeline` (relayed by the laptop CTO, msg 109788): the six columns cannot say WHO acted
+(no AppId, ClientAppId, UserAgent, LogonType, and `client_ip` is blank on 4,307 of 5,000 Exchange rows because Exchange records carry `ClientIPAddress`). Silver already holds every record whole in its `raw_json` column. Build:
+1. **`timeline` gains `detail`.** The request may carry `"detail": true`. Any `detail` value that is not a JSON boolean is refused `{"ok": false, "error": "detail"}`. Without `detail` (or `false`) the answer is EXACTLY as before (5000-row cap) and the reader is called EXACTLY as before, with six positional arguments and no keyword.
+   With `detail: true` the door calls `reader.timeline_rows(s3, bucket, prefix, account, start, end, detail=True)`; each row it gets back carries a `raw_json` string; the door replaces it with `"raw": <the parsed record dict>` (no `raw_json` key in the answer). The rows are sorted by `time` as today, and the answer is capped at
+   `TIMELINE_DETAIL_MAX_ROWS = 1000` rows AND at `TIMELINE_DETAIL_MAX_BYTES = 5000000` bytes of JSON (a synchronous Lambda answer is limited to 6 MB): rows are added in time order until either cap would be passed, and `truncated` is true when any row was left out.
+2. **The default reader reads `raw_json` when asked.** `_TimelineSilverReader.timeline_rows(..., detail=False)`: with `detail=True` it adds `raw_json` to the columns it reads and to each row it returns. Without it, unchanged.
+3. Update the module docstring (DOOR CONTRACT) and `tests/test_handler.py` for both rules. Nothing else in the door changes; no Terraform change.
+
 ### ACCEPTANCE
 
 <criterion id="SM1-a1-AC1" cell_refs="SM-a-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_a1.py ops</invocation><expect>A1-OPS-OK</expect></criterion>
@@ -96,7 +106,10 @@ prefix, `..`, the old `audit_events` key); write-once; derive over two partition
 <criterion id="SM1-a1-AC3" cell_refs="SM-a-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_a1.py tf</invocation><expect>A1-TF-OK</expect></criterion>
 `SM1-a1-AC3` -- `access.tf` lets the door role invoke the collector function alone, sets `COLLECTOR_FUNCTION`, keeps the bucket Deny without `ListBucket` and the group policy on the member alias alone, and names no Ticket Center project.
 
-<expected_criteria>SM1-a1-AC1,SM1-a1-AC2,SM1-a1-AC3</expected_criteria>
+<criterion id="SM1-a1-AC4" cell_refs="SM-a-1"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_a1.py detail</invocation><expect>A1-DETAIL-OK</expect></criterion>
+`SM1-a1-AC4` -- (a fourth mechanical criterion, with this reason: Andrew's first live read, AMENDMENT 2) a detail timeline returns each record whole under `raw`, caps at 1000 rows and 5,000,000 bytes with `truncated`, refuses a non-boolean `detail`, and leaves the plain answer and its 5000 cap unchanged.
+
+<expected_criteria>SM1-a1-AC1,SM1-a1-AC2,SM1-a1-AC3,SM1-a1-AC4</expected_criteria>
 
 Dry-run at the base 2026-10-16 ~17:0xZ: AC1 `A1-OPS-REFUSED TypeError: handle() got an unexpected keyword argument 'lambda_client'`, AC2 `A1-BRONZE-REFUSED TypeError: handle() got an unexpected keyword argument 'now'`, AC3
 `A1-TF-REFUSED the door role policy must allow lambda:InvokeFunction on aws_lambda_function.collector.arn alone; ...` -- each FAIL as expected. All three were driven GREEN against a throwaway reference outside the repository.
@@ -107,8 +120,8 @@ Run each from the repository (worktree) root (the checks import `lib/opal_naming
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Everything else you READ and never edit.
 - **WORLD by the gate's path floor; NOTHING is applied or called live.** No `terraform apply`/`init` against the backend, no AWS call, no S3 access, no Lambda invoke. `terraform fmt -check` on your file is welcome (no network).
 - `collector.tf`, `silver_builder.py`, the collector package and the registry are other cells' files: never create or edit them.
-- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id `SOC2_MSLOGS-D1-W2-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing, in the investigation file below), and do not weaken a check to pass it.
-- Commit only through `.tools/safe-commit.sh` with `--author "0.9.0_WK_SOC2_MSLOGS~2 <0.9.0_WK_SOC2_MSLOGS~2@opal.agent>"`, `-F` a message file you write with the Write tool, and `-- <paths>`.
+- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id `SOC2_MSLOGS-D1-W8-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing, in the investigation file below), and do not weaken a check to pass it.
+- Commit only through `.tools/safe-commit.sh` with `--author "0.9.0_WK_SOC2_MSLOGS~8 <0.9.0_WK_SOC2_MSLOGS~8@opal.agent>"`, `-F` a message file you write with the Write tool, and `-- <paths>`.
 
 <paths>
 infra/aws/lambda/globgrph-trino-access/handler.py
@@ -123,8 +136,8 @@ org/missions/D12/SOC2/SOC2_MSLOGS/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SM1-a1-AC1, SM1-a1-AC2, SM1-a1-AC3. Instance at `org/missions/D12/SOC2/SOC2_MSLOGS/deliverables/0.9.0_WK_SOC2_MSLOGS~2/SOC2_MSLOGS.TO-SM-a1.door-raw-timeline.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> SM1-a1-AC1,SM1-a1-AC2,SM1-a1-AC3` BEFORE the flip.
+Criterion ids: SM1-a1-AC1, SM1-a1-AC2, SM1-a1-AC3, SM1-a1-AC4. Instance at `org/missions/D12/SOC2/SOC2_MSLOGS/deliverables/0.9.0_WK_SOC2_MSLOGS~8/SOC2_MSLOGS.TO-SM-a1.door-raw-timeline.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> SM1-a1-AC1,SM1-a1-AC2,SM1-a1-AC3,SM1-a1-AC4` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the three check lines, the `pytest` summary line of your own tests (`python -m pytest infra/aws/lambda/globgrph-trino-access/tests/test_handler.py -q`), the diff nature of `access.tf` (lines added and removed, by resource), commits.
