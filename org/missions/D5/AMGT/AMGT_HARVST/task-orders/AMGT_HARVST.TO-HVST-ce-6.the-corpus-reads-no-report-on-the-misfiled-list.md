@@ -66,9 +66,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~158, worktree `C:/dev/wk-harvst-158`, branch `wk-AMGT_HARVST-158`. Widen the sparse set at provision with `lib/research`, `infra/aws/ec2/opal-gateway/app` and `.claude/agents`.
 - **SENT:** with the round-90 recut.
 
+**COMPLETE 2026-10-17T16:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~158` (worker, haiku, high), branch `wk-AMGT_HARVST-158`, commits `c847c0c723`, `5dd4d6532f`, `9c007fb94c`, merged `87b542aed4` (safe-merge fast lane, index check 0 of 4 paths differ); worktree and branch removed. Diff read by this seat: `typed.py` (+19/-1): `MISFILED_REPORTS` (the gateway's two entries, key and id and reason) and `reports_for` drops a row only when BOTH `security_key` and `report_id` match; a new five-arm test.
+- **AC1 PASS:** `5 passed` (worker; re-run here, arm (4) the no-drift arm RAN). **AC2:** the worker read FAIL (`5 failed, 30 passed`): the five failures were `FileNotFoundError` on `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json`, which this seat's provisioning left out of the sparse checkout (row `D1-W158-S1`, INERT: an issuer defect, not a code defect). With the folder added to the sparse set this seat re-ran AC2: `35 passed` (the base count). Proof instance VALID rc 0 (re-run here).
+- **Rows** `D1-W158-S1` (INERT, the sparse omission above), `-S2` (ARMED, disarm owner this seat) and `-S3` (INERT). **`-S2`:** `fund_form.py::gather_items` (line 249) and `sector_template.py::_all_rows` (line 446) read silver through `store.silver_latest`, not `reports_for`, so the exclusion does not reach them. Read by this seat: `fund_form.gather_items` builds ONE corpus-wide form from every silver row (not a per-security read); `sector_template` reads xlsx rows only for its business types, and the two Mexico reports are a docx and a pdf. So KMB's per-security reads (continuation, dossier substrate, report input) are covered; the corpus-wide `fund_form` object still counts the two reports. That is a named LIMIT, not a KMB served field, and a candidate for round 91; the issuer dispositions `-S2` with it recorded.
+- **What this does NOT prove:** a rebuilt KMB object (`HVST-ce-4`).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>90</round>
 <workstream>S43-EXCLUDE</workstream>
 <slot>dell1</slot>

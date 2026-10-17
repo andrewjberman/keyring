@@ -10609,5 +10609,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W157-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~157",
+        "surfaced_at": "2026-10-17T15:55:28Z",
+        "one_line": "HVST-ce-3: the order's mutant arm says load the pre-change module from git show HEAD:<path>; once the change is committed HEAD is the post-change file, so the arm would load the new code. The arm pins the base commit 8005ccbacb instead.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Arm (5): the pre-change module is loaded from git show HEAD:infra/aws/ec2/opal-gateway/app/harvest_research.py into a temporary module, and the arm-(1) wording check fails on it.",
+        "world_is": "At the base HEAD (8005ccbacb) the file is the pre-change module and carries the every-dossier-field sentence at line 332. After the HVST-ce-3 commit, HEAD names the changed module, so a git show HEAD: read inside the test would load the new wording and the mutant would not fail. tests/test_ce3_parts_absent_wording.py therefore reads git show 8005ccbacb:<path>, a fixed object that stays the pre-change bytes. No product file other than harvest_research.py changed.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py@8005ccbacb:332 (the every-dossier-field run.miss)",
+                "git show 8005ccbacb:infra/aws/ec2/opal-gateway/app/harvest_research.py (pre-change bytes, 8005ccbacb)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+            "id": "AMGT_HARVST-D1-W157-S2",
+            "project": "AMGT_HARVST",
+            "fabric": "dell1",
+            "surfaced_by": "0.9.0_WK_AMGT_HARVST~157",
+            "surfaced_at": "2026-10-17T15:59:49Z",
+            "one_line": "HVST-ce-3 premise: the order names the provisioning base as box/dell1 HEAD cf47884994; the worktree sits at 8005ccbacb, one later commit. The one file that differs is an MDPF_CANON order file, so the gateway module and the tests are the same bytes at both.",
+            "class": "OBSERVATION",
+            "hazard_standing": "INERT",
+            "spec_asserts": "The worktree is provisioned from box/dell1 HEAD cf47884994 (the order's header).",
+            "world_is": "git rev-parse HEAD in C:/dev/wk-harvst-157 is 8005ccbacb before the HVST-ce-3 commit. cf47884994 is its ancestor. git diff --name-only cf47884994 8005ccbacb lists one path, org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-s-6.global-axis-drops-2026-10-16.md. harvest_research.py and the tests tree are unchanged between the two.",
+            "grounding": {
+                "status": "GROUNDED",
+                "evidence": [
+                    "git diff --name-only cf47884994 8005ccbacb (one path, the MDPF_CANON order file)",
+                    "infra/aws/ec2/opal-gateway/app/harvest_research.py@8005ccbacb (unchanged from cf47884994)"
+                ]
+            },
+            "disposition": "UNDER_INVESTIGATION"
+        }
 ]
 ```
