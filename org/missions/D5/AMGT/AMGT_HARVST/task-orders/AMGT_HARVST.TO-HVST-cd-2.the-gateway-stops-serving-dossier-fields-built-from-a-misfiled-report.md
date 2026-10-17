@@ -92,9 +92,11 @@ This order touches none of them.
 - Authority: CTO round-88 analysis (msg 7491) item 1 ("the proof is a live gateway read with a control name, under its own release pair"); the CVO's grade that `D1-S29` (b) is NOT fixed (`ADJUDICATION_v82.md`). After `AC1` to `AC3` the issuer asks `4.0.0_SA_CRO~DELL1` (the surfacing seat) to read KMB itself.
 - **Not covered, named:** a silver or gold REBUILD that re-derives the KMB dossier without the misfiled reports (the true remedy, a later cell; this one hides the served field); `harvest_resolve_security("PG")` still has no `not_held` sign (`D1-S39`, a candidate beyond the CTO's three items); adding `KIMBERA MM` to the universe.
 
+**COMPLETE 2026-10-17T15:1xZ (issuer `2.0.0_SA_COO~W1`):** deployed by `0.7.0_AE_CloudOps~SC1`: release `rel-amgt-harvst-cd2` @`1753c741d9` (parent `9d5b712557`) as cut, upload 15:00:55Z, unit restart 15:01:19Z, ledger `harvst-cd2-gateway-dossier-20261017` CLOSED 15:08:06Z. Read by the issuer from the record: `cd2_served.out` ends `SERVED_KMB_DOSSIER=PASS`, `SERVED_CONTROL=PASS`, `TOOLS_AND_HEALTH_EQUAL=PASS`; proof checker VALID rc=0 (re-run here); host `/health` 200, 127 tools and names md5 `9a593c84` equal before and after, only `harvest_research.py` changed on the host (md5 `af2d662f` to `6d9e0dd3`); the control `UNH_US_Equity` reads the same 21+3 and 4+1 fields before and after with `misfiled_fields_excluded` `[]`. KMB: `misfiled_fields_excluded` names SEVEN entries (dossier: `fund_of_record`, `kpi_set`, `last_stated_position`, `pack_shape`; continuation: `fund_of_record`, `kpi_set`, `last_stated_position`), so the all-or-nothing drop also removed `kpi_set` and `pack_shape`, which the CTO's item did not name; no served string carries `fbd50086c4065785` or `1a3b56044db679a5`. LIMITS: `team_sheet` is never returned by the tool within its size budget (74,089 bytes), before or after, so SC1 read its SOURCE object (clean) instead of the served tool; the served reads are one principal (the deployer's); the CRO's own read of KMB is not yet made; the true remedy, a rebuild of the KMB dossier without the Mexico reports, is not cut.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>89</round>
 <workstream>S29-SERVE-2</workstream>
 <slot>dell1</slot>
