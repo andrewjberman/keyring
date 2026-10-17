@@ -24658,3 +24658,35 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S187 -- W287-S2 disarmed: the count gap is two named rows
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S187",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:34:27Z",
+  "one_line": "W287-S2 DISARMED: the count gap the worker named is explained. The two audit cells list 21 rows each (42); the 44th and 43rd armed rows naming this seat were W64-S6 (adjudicated by D2-S169, a GRADUATED row whose entry is the CVO's) and the worker's own row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W287-S2"
+  ],
+  "spec_asserts": "Row W287-S2 (BLOCKING, ARMED, disarm owner 2.0.0_SA_COO~Y2): 44 armed rows name this seat, the audit cell lists 21, and W64-S6 is omitted, so the L10 gate could be read as under-counted.",
+  "world_is": "MEASURED by this seat's census at 09:5xZ before the cuts (comp-surprise --project IRPT_ANLREQ --json): 43 armed rows named this seat, split into two lists of 21 (orders TO-AR-y-387 and TO-AR-y-388, 42 rows) plus W64-S6, which D2-S169 had already adjudicated (it is GRADUATED, so its ARMED entry sits in REMEDIATION_v13.md, the CVO's lane). The tool's count of 44 includes the row W287-S2 once it was filed. Nothing is omitted: worker 287 audited 21 rows, worker 288 audited the other 21, and the audit files are complete (AUDIT-OK 21 rows each). NOT READ: whether the L8 compile counts W64-S6 as dispositioned from D2-S169.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-387.armed-row-evidence-audit-a.md and ...TO-AR-y-388.armed-row-evidence-audit-b.md (21 ids each)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json and ...~288/r47/AUDIT_b.json (AUDIT-OK 21 rows each, re-run by the issuer)",
+      "comp-surprise --project IRPT_ANLREQ --json at 10:5xZ: the armed rows naming this seat outside the 42 listed ids are D2-W64-S6 and D2-W287-S2 only"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The gap is two rows by name, W64-S6 (already adjudicated, the CVO's entry) and the row itself; the two audit cells together cover the 42 other rows, each audited once."
+}
+]
+```
