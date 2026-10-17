@@ -69,7 +69,7 @@ DRIVES = ("canonical-drive", "closer-drive", "remote-drive")
 STALE_SECONDS = 600          # the fabric-check threshold: last activity older than this is STALE
 PRESENCE_GRACE = 30 * 60     # .tools/drive-mode.py: presence extends a lease by this much
 SUMMARY_MAX = 240
-TERMINAL = {"complete", "superseded", "cancelled", "canceled", "withdrawn", "retired", "closed"}
+TERMINAL = {"complete", "superseded", "cancelled", "canceled", "withdrawn", "retired", "closed", "not_met"}
 STATUS_WORDS = TERMINAL | {"pending", "staged", "open", "parked", "active", "in_progress", "in-progress",
                            "blocked", "held", "draft", "issued"}
 PROJECT_TOKEN = re.compile(r"(?<![A-Za-z0-9_])[A-Z][A-Z0-9]{1,7}_[A-Z][A-Z0-9]{2,11}(?![A-Za-z0-9_])")

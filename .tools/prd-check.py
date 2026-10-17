@@ -16,7 +16,6 @@ from __future__ import annotations
 import json
 import re
 import sys
-import os
 import glob
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -48,6 +47,9 @@ def clean(t: str) -> str:
 COMPLETE_WORDS = {"complete", "completed", "closed", "cancelled", "canceled",
                   "superseded", "done", "merged", "decommissioned", "dropped",
                   "archived", "shipped", "impl-complete", "impl_complete", "implemented"}
+# Terminal and NOT clean (row AMGT_RESAPP-D1-S55; CTO ruling RULINGS_PARKED_BUS_ITEMS_20261017_1350Z.md item 2).
+NOT_MET_WORDS = {"not_met"}
+TERMINAL_CLASSES = {"COMPLETE", "NOT_MET"}
 
 
 def _strip_xml_comments(text: str) -> str:
@@ -66,6 +68,8 @@ def _classify_status(raw: str) -> str:
     cleaned = _strip_xml_comments(raw).strip().lower()
     # Take first word before space, dash-dash, or newline
     first = re.split(r"[\s\-\n]", cleaned)[0].rstrip(".,;:") if cleaned else ""
+    if first in NOT_MET_WORDS:
+        return "NOT_MET"
     if first in COMPLETE_WORDS:
         return "COMPLETE"
     if first in {"active", "dispatched", "dispatch", "in_progress", "staged", "go"}:
@@ -272,7 +276,7 @@ def _fmt_assignee(raw: str) -> str:
 
 def _status_label(sc: str) -> str:
     return {"ACTIVE": "ACTIVE", "PENDING": "PENDING",
-            "BLOCKED": "BLOCKED", "COMPLETE": "DONE",
+            "BLOCKED": "BLOCKED", "COMPLETE": "DONE", "NOT_MET": "NOT MET",
             "UNKNOWN": "??"}.get(sc, sc)
 
 
@@ -303,7 +307,7 @@ def main():
     for p in prd_projects:
         code = p.get("project_code", "")
         tos = tos_by_project.get(code, [])
-        active_tos = [t for t in tos if t["status_class"] != "COMPLETE"]
+        active_tos = [t for t in tos if t["status_class"] not in TERMINAL_CLASSES]
         if active_tos:
             p["_active_tos"] = active_tos
             has_active.append(p)
