@@ -27258,3 +27258,96 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The issuer's cut defect, repaired: the wk-provision cone for worker ~133 omitted infra/aws/lambda/ci, so the naming limb (which reads function-map/ fail-closed) refused the record commit. The issuer added the folder to the cone and continued the worker by message; the record landed (7eafa6dbb9) and the order drained (02aabf0e2b). Carry for the next cut: the standard gateway worker cone includes infra/aws/lambda/ci."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~136",
+  "surfaced_at": "2026-10-17T09:41:47Z",
+  "id": "NFRA_OPLGTW-Z-W136-S1",
+  "one_line": "The order's AC02 premise (a temp folder as REMOTE_DIR) does not hold on Site Z: the Windows temp path holds a space and the marker line expands REMOTE_DIR unquoted, so the test runs the same line from inside the folder with REMOTE_DIR set to '.'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SCRIPT: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh@d34f006418 line 364 -- the marker line expands ${REMOTE_DIR} unquoted, the same form as the tar line at line 362",
+      "TEST: infra/aws/ec2/opal-gateway/tests/test_og_db3.py@d34f006418 -- test_ogdb3_ac02 enters the temp folder as cwd with REMOTE_DIR='.'; the first run with REMOTE_DIR set to the temp folder failed rc=1 (tee: 'C:/Users/Opal': Is a directory)"
+    ]
+  },
+  "spec_asserts": "AC02 of the order runs that one marker line with REMOTE_DIR set to a temp folder and FULL_SHA to a 40-hex sample, then expects the folder to hold the marker file with the sample and a newline.",
+  "world_is": "On this device the temp folder path holds a space (the Windows profile name). The unquoted expansion word-splits it, so tee writes to nothing and the run fails. The test enters the folder as cwd, sets REMOTE_DIR to '.' and runs the unchanged line; the file lands in the folder and its bytes are asserted. Production REMOTE_DIR is /opt/opal-gateway, which holds no space. The unquoted form is pre-existing (line 362, tar -C).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~136",
+  "surfaced_at": "2026-10-17T09:41:47Z",
+  "id": "NFRA_OPLGTW-Z-W136-S2",
+  "one_line": "This worktree is a sparse cone: org/surprise_channel/ is tracked at HEAD but not on disk, so the row schema the order names is absent here and was read with git show HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list on C:/tmp/wk-oplgtw-136 names .tools, infra/aws/ec2/opal-gateway, infra/aws/globgrph, infra/aws/lambda/ci and infra/aws/terraform, and no org/surprise_channel; ls of org/surprise_channel/ returned No such file or directory",
+      "git ls-files lists org/surprise_channel/schemas/investigation_item.schema.json; git show HEAD of that path returned rc=0 and 10462 bytes"
+    ]
+  },
+  "spec_asserts": "The order names org/surprise_channel/schemas/investigation_item.schema.json as the row schema, readable from the worker's worktree.",
+  "world_is": "The worktree materialises only its sparse cone. The schema is skip-worktree here, so it was read from HEAD into the worker's scratch folder, read-only. The channel file under the order's paths is materialised and was appended in this worktree. The same condition is recorded by NFRA_OPLGTW-Z-W133-S1.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~136",
+  "surfaced_at": "2026-10-17T09:41:47Z",
+  "id": "NFRA_OPLGTW-Z-W136-S3",
+  "one_line": "The commit d34f006418 printed WARN client-data-check: the hashed account-id list is absent on this device, so the commit was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for d34f006418: WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids; the commit was not refused",
+      "git show --stat d34f006418 touches infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (2 insertions) and infra/aws/ec2/opal-gateway/tests/test_og_db3.py (new file)"
+    ]
+  },
+  "spec_asserts": "The order names the commit paths and the write set; it asserts nothing about a commit-time client-data check.",
+  "world_is": "The commit landed with rc 0 while the client-data check was ABSENT on this device, so the commit is not read as checked clean. The commit is a two-line shell edit and a test file that reads the script as text.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~135",
+  "surfaced_at": "2026-10-17T09:47:56Z",
+  "id": "NFRA_OPLGTW-Z-W135-S1",
+  "one_line": "The agent definition .claude/agents/worker.md and the row schema org/surprise_channel/schemas/investigation_item.schema.json are not materialized in this sparse worktree; the standing rules came from the session context and the schema was read from the main tree, read-only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "The worker face says the rules are in the agent definition (.claude/agents/worker.md), and that rows follow org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "Both files are tracked at HEAD (worker.md blob 02f18058479fc1089c8fcd92e872dec777595715) but are absent from C:/tmp/wk-oplgtw-135. The rules were taken from the session context; the schema was read from C:/Users/Opal Bloomberg/Desktop/ajb_workspace, read-only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD .claude/agents/worker.md returns 100644 blob 02f18058479fc1089c8fcd92e872dec777595715; test -f .claude/agents/worker.md in the worktree reports absent",
+      "python open of org/surprise_channel/schemas/investigation_item.schema.json in the worktree raises FileNotFoundError; the same path opens in the main tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
