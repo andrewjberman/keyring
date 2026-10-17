@@ -76,10 +76,12 @@ This order touches none of them.
 - **Sequencing hazard (decomposition 121):** the run is from a worktree at `80d0701876`, which holds NO `fund_form` change; `HVST-cf-3` (the fund_form code) is not merged until this order's rebuild is done, because a changed `fund_form.gather_items` makes every dossier build find no stored fund form.
 - **Add-only, named:** gold puts never overwrite; the old objects stay; the rollback is an Andrew-confirmed delete of the manifest keys.
 - **Not covered, named:** the `fund_form` rebuild (`HVST-cf-3`, `-5`); the `line_only` text; any gateway release.
+- **COMPLETE (issuer, 2026-10-17 23:1xZ):** SC1 wrote 17 continuation and 17 dossier objects add-only, 22:05Z to 22:57Z, inside the window site Z cleared (its CTO msg 35561); one foreground command per name. **Re-read here:** the manifest `cf4_written.out` holds 34 WROTE lines, 34 distinct keys, 34 VersionIds, all `existed=False`, 17 names equal to the signed list (`221a63c3...ee48`), none missing, none extra. **Served reads of mine (gateway, after the last write):** MNST fund absent, position `CANDIDATE FOR PFOE` stance candidate; `ML_FP_Equity` fund absent, position `[BUY IN IDVZ TO X%]` stance template (the ARMED row `D1-W159-S1` is disarmed by this read); `CLX_US_Equity` fund absent, `Candidate for DIVZ` stance candidate; control `UNH_US_Equity` unchanged (fund `PFOE`, `line_only`, `Maintain positions in PFOE and DIVZ`). SC1 read 10 served (8 of the 17 and the controls UNH and CPA, equal to step 0); 9 names were checked at build and put, not served. Proof instance VALID rc 0 (re-run here, 3 of 3 criteria). Rollback (an S3 delete) was not taken and stays Andrew's.
+- **What this did NOT move:** the silver `research_reports[].fund` (row `D1-S46`: MNST, `ML_FP`, CLX still serve the candidate or template fund there); the `fund_form` objects (`HVST-cf-3`, `-5`).
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>91</round>
 <workstream>CS61-REBUILD</workstream>
 <slot>dell1</slot>
