@@ -1,0 +1,93 @@
+{
+ "2026-07-22": {
+  "opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-07-22.xlsx": "erzcFc7B8fjbeBmSilhvipdG.WzRmcOC",
+  "opal-data-cot/forwardfill_v2/holdings/_complete/2026-07-22.json": "AUxVLSi3cuwak.CjhUtM6XS9ofcwOSnM",
+  "opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-07-22.xlsx": "tJMgx8Rb_.aDnRERR0PyRlRPooTSu70a",
+  "opal-data-cot/forwardfill_v2/allocations/_complete/2026-07-22.json": "M.5.WpX96WxwmkKaj1IOZX1ni3AJB3qR",
+  "opal-data-cot/silver/holdings/2026-07-22.parquet": "6DM_5VGsNr7P2VC0WdzZYXSKyjG_fU6h",
+  "opal-data-cot/silver/allocations/2026-07-22.parquet": "eFmusgup2X0I4TxibMWTYKhIOscXcLfT",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/holdings/HOLDINGS_DAILY_2026-07-22.xlsx": "hDyGGlVO6VDLAZSHy7Oguu7vC2UUYP3O",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/allocations/ALLOCATIONS_DAILY_2026-07-22.xlsx": "._9yys9KjbpBNEWtsUQjdeS37ySQicnM",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-07-22/data.parquet": "DAdsdQ.R0f8nwfzxP0tEhhy5CTqbFBjo",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/date=2026-07-22/data.parquet": "a.YKKj5UNkjcQZLKKs2XKWOsNjdHn3Av",
+  "_holdings_nzf": 0.636
+ },
+ "2026-07-27": {
+  "opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-07-27.xlsx": "jaTyrVqB2Jhpv_LatwQysGh9tbZuK3Z.",
+  "opal-data-cot/forwardfill_v2/holdings/_complete/2026-07-27.json": "ceGhSybxFQb5kR5SfDNE27zpUoqorsi9",
+  "opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-07-27.xlsx": "_iAF.zoMc6R8Ktjq6Gj1uocZ6v8TGiva",
+  "opal-data-cot/forwardfill_v2/allocations/_complete/2026-07-27.json": "1.pYljOkswR4y96MJvAvp0WYBnqjjVry",
+  "opal-data-cot/silver/holdings/2026-07-27.parquet": "10qzCViXvg9ouC6tNF4vROEvPDPHFq1j",
+  "opal-data-cot/silver/allocations/2026-07-27.parquet": "cyI.SAYUYBkFDKjHjdxxjPOQ73S.XaZj",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/holdings/HOLDINGS_DAILY_2026-07-27.xlsx": "13bmYVsWSi4oysu8cZljdpUdMQbYtMOG",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/allocations/ALLOCATIONS_DAILY_2026-07-27.xlsx": "ros76R9LKRdQ7lFjsz1tXYClOL7DwKll",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-07-27/data.parquet": "U91VVyo_2wUxuuCG_ea56IEUQZvXvUu9",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/date=2026-07-27/data.parquet": "fWt7jv_tLc_AUQu_x_d9m1lDPNqSZfc6",
+  "_holdings_nzf": 0.651
+ },
+ "2026-07-29": {
+  "opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-07-29.xlsx": "flvJa1_BojjXltUzKb60mzWA1Ue86bmt",
+  "opal-data-cot/forwardfill_v2/holdings/_complete/2026-07-29.json": "lxv6WRpUCrlNbg9RugdnkK971jcLu2Q4",
+  "opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-07-29.xlsx": "QQPQkzYIAQ4qu4bx79Jn4_09NjTLjMGt",
+  "opal-data-cot/forwardfill_v2/allocations/_complete/2026-07-29.json": "BmokKRMo7rxbpTs_zZxN_AvlCNiwTcL_",
+  "opal-data-cot/silver/holdings/2026-07-29.parquet": "j_AsGEQxEwtAexfrcMdpXI3BTdCA4pY0",
+  "opal-data-cot/silver/allocations/2026-07-29.parquet": "jDBsre.0lDaxRu4rAkJuJSdfFRIxAIOn",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/holdings/HOLDINGS_DAILY_2026-07-29.xlsx": "KtDsJ6khfhbzfkVYAHKrdVG_JJ_b2dMf",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/allocations/ALLOCATIONS_DAILY_2026-07-29.xlsx": "Br6wUqvNSo.5nmq0jlGLCyzeDlv2xexj",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-07-29/data.parquet": "YRIidOnLnToQogMPMLA_tFYZAA62PgJ.",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/date=2026-07-29/data.parquet": "_IQy5O2UMUOkopfi2O7cilp.3uiOqqwF",
+  "_holdings_nzf": 0.6522
+ },
+ "2026-08-03": {
+  "opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-08-03.xlsx": "kEsyUk47bk324DO8YJImQ0MkwkMQnyUZ",
+  "opal-data-cot/forwardfill_v2/holdings/_complete/2026-08-03.json": "YpFH9.k3aPjHWUbYwW4dwahr0sz7geSF",
+  "opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-08-03.xlsx": "lFgV6Qgloz9GX8hDVE6hvRAlckYtCI7m",
+  "opal-data-cot/forwardfill_v2/allocations/_complete/2026-08-03.json": "c3HPnFgWC8ZOKt8Kvwq70w4.24_oQ2iV",
+  "opal-data-cot/silver/holdings/2026-08-03.parquet": "8xq94y2eIJkvfwtxYawAa._BJxMIpoEi",
+  "opal-data-cot/silver/allocations/2026-08-03.parquet": "3DmWmcJEDeqvxbHQojPAhbNLRqAGonaU",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/holdings/HOLDINGS_DAILY_2026-08-03.xlsx": "y1rPnThd2A81.9Mw9CfGSc_GTP5dCYXE",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/allocations/ALLOCATIONS_DAILY_2026-08-03.xlsx": "74vZ.AfCtDlbZzTlJ0ByV8CI6Czi0vgv",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-08-03/data.parquet": "rnEh9kXabBBzP5Cy_QQ8rHCLStjGOR78",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/date=2026-08-03/data.parquet": "UdUia3jyySqa0Arn8IEszwzXVwCA91Vs",
+  "_holdings_nzf": 0.6506
+ },
+ "2026-08-19": {
+  "opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-08-19.xlsx": "AKu9paJt.R_kWlyai3Jcsmc726RQ.ccp",
+  "opal-data-cot/forwardfill_v2/holdings/_complete/2026-08-19.json": "Njrh_LXGGEhuIqWT2qeZMtcDrQ9zC.ES",
+  "opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-08-19.xlsx": "ddw8PaM5f7AU8FtTLpkiCNNcvh2SznBd",
+  "opal-data-cot/forwardfill_v2/allocations/_complete/2026-08-19.json": "6F8wvNVDR.OF0VXbyzNEZlVpfwrnuc97",
+  "opal-data-cot/silver/holdings/2026-08-19.parquet": "JnCSq961Kl.fyYvuH2OCFLjIA3J0Xkt0",
+  "opal-data-cot/silver/allocations/2026-08-19.parquet": "AtXRWqGpQyPYMlrY0MNGkN5gPmHmCVlJ",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/holdings/HOLDINGS_DAILY_2026-08-19.xlsx": "PFCMT8qMfj_Sb35GaBScnlrFDPI1Tu4u",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/allocations/ALLOCATIONS_DAILY_2026-08-19.xlsx": "9ZANc98MFYD4FQHNV98d8xomB92SufbR",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-08-19/data.parquet": "KM.RIWnqt_Qlmu4HM1ROaKetQRAjE0MV",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/date=2026-08-19/data.parquet": "1vR7mD8QK3xlNxThFeAge2GX0v2_NUAx",
+  "_holdings_nzf": 0.6368
+ },
+ "2026-09-24": {
+  "opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-09-24.xlsx": "GDBHvTt7F2CLT_6a75alcWY4ygSxm8i1",
+  "opal-data-cot/forwardfill_v2/holdings/_complete/2026-09-24.json": "gYjrUnvpK7H7cGSTrznQojK5G4g8kGR8",
+  "opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-09-24.xlsx": "ojNuSFIwSCCb0FVi8aiNMgJFn7c.4Rjo",
+  "opal-data-cot/forwardfill_v2/allocations/_complete/2026-09-24.json": "IbGqAJD83o02pST_16LgtgLmyG4PhazR",
+  "opal-data-cot/silver/holdings/2026-09-24.parquet": "dzsuLwwdIg6dubxLjkdtgCaSy0azgAMt",
+  "opal-data-cot/silver/allocations/2026-09-24.parquet": "SErsq_UXIZG12YnX104e_hzPY0u7gwEc",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/holdings/HOLDINGS_DAILY_2026-09-24.xlsx": ".c8x62aibSccn1XDpQi7142.O93mFinD",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/allocations/ALLOCATIONS_DAILY_2026-09-24.xlsx": "D.UTwOZRnhbrAUK4cfTBnMDQc7WfkKLg",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-24/data.parquet": "bfVz6Gj1coEvdnGCEqnB3Og1x8deO9QX",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/date=2026-09-24/data.parquet": "vokibI5HXMotM3oyYNWnnWauI1GdlN0f",
+  "_holdings_nzf": 0.6571
+ },
+ "2026-09-25": {
+  "opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-09-25.xlsx": "76JmZ2EN_XecvXCD50M_EBQ3BXyL9H3G",
+  "opal-data-cot/forwardfill_v2/holdings/_complete/2026-09-25.json": "v2WME.5yaC.JgI0nz3jjOK7co.GcDePe",
+  "opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-09-25.xlsx": "pE.LWvkfvArmjo4R1yjHnJm0UBIq0dx4",
+  "opal-data-cot/forwardfill_v2/allocations/_complete/2026-09-25.json": "KJdhCqz.ta8ZpqxR_PQa_VEB0a9lwF.6",
+  "opal-data-cot/silver/holdings/2026-09-25.parquet": "GTc4u1RJkL9yp4vOwGzPTlQEBoupvfjO",
+  "opal-data-cot/silver/allocations/2026-09-25.parquet": "mjJsJYuiUE_nHOCVzOPMsEpWb6l9i3Ez",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/holdings/HOLDINGS_DAILY_2026-09-25.xlsx": "v69MKldErnwz5BFRp_4xaIJ.93.Ukmah",
+  "opal-data-assets/blackdiamond/cottonwood/bronze/allocations/ALLOCATIONS_DAILY_2026-09-25.xlsx": "7Pw3xIkgStcyNFrKDEa_6g_TBKCxtqoA",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-25/data.parquet": "TZjx_6krT237zx2972YiieOAC7jY8XPd",
+  "opal-data-assets/blackdiamond/cottonwood/silver/fact_allocations/date=2026-09-25/data.parquet": "PYAFYqX4_XmJDUHQR8KYfYNZRKFnlmJQ",
+  "_holdings_nzf": 0.6589
+ }
+}
