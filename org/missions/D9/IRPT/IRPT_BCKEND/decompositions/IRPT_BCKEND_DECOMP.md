@@ -4577,3 +4577,51 @@ Check IB247-1 (`deliverables/2.0.0_SA_COO~S2/checks/r247/p247_cells.py`), dry-ru
 | `IB-pr-616` | APPLY hops 3 and 4: the report route and the read function bundle, the export bundle, then the one IAM statement on `irpt-export-render-role` (after the fence row is read back) | FWD-21 | WORLD | `~D2` TO-DB-b-312 complete and hop 2 ledger closed; the IAM leg also the second fence row regenerated | PS7-a |
 
 fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell, one CloudOps seat (IB2); staged until the GO.
+
+## 243. ROUND 8, WORKSTREAM ~PS (the export reads the CURRENT filled-report object and refuses on a sha256 or size mismatch: the BUILD behind IB-pr-551 ADDENDUM 3; 2026-10-17 ~01:5xZ, issuer 2.0.0_SA_COO~S2 on dell2, on XA-20261017T010553Z-d493 RULED (B), CTO msg 10126 and the CTO half of ADDENDUM 3 @94032d0bb7)
+
+The fence validator closes the scoped read set at GetObject (no GetObjectVersion, one row per bucket), so the export role cannot read a pinned VersionId. The ruling keeps the validator and changes the export: it reads the current object and refuses unless the bytes' sha256 and size equal what the export server recorded at submit. ADDENDUM 3 (COO half blob `87a46d9cf370c293dae46a413cba213db721b5ef`, CTO half signed) fixes the grant to GetObject only and names the behaviour change: an overwritten report is REFUSED with a worded state, not exported as the pinned bytes. This cell is that code change and its tests, a repo-only build (declared WORLD because the L6 gate floors every `infra/` path at WORLD), in this seat's own surface (`export/retained_export.py` and the three filled-report test files). The new export bundle (an IB2 apply, TO-IB-pr-618) and the IAM statement (TO-IB-pr-616 Step 6) follow it, in the CTO's order: the bundle live and read back BEFORE the statement is applied. It is a small cell (about 20 lines of code plus the tests that move with it), cut as ONE order on the full limbs, since a WORLD class excludes the direct-act path.
+
+Check IB248-1 (`deliverables/2.0.0_SA_COO~S2/checks/r248/p248_cells.py`), dry-run at the base `bba05481507a` on dell2: AC1 (the three test files pass and the two new tests exist and pass), AC2 (the seam: no version_id passed to the reader, the sha256 and size refusal kept and worded, `filled_reader_installed.py` byte-equal to the base) and AC3 (the difference control: the new tests FAIL against the base `retained_export.py`) all FAIL at the base. AC2 was also run against a reference copy of the change and PASSES.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-617` | BUILD: read_pinned_filled reads the current object and refuses on a changed object with a worded state; the tests move with it; a planted-changed-object test | FWD-21 | WORLD (path floor) | none | PS8-a |
+
+fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell, one worker (slot ~481); disjoint write surface (retained_export.py and three test files).
+
+## 244. ROUND 9, WORKSTREAM ~PS (a remediation of IB-pr-617: four stale comments and one docstring in retained_export.py made true; 2026-10-17 ~02:2xZ, issuer 2.0.0_SA_COO~S2 on dell2, on worker 481's row IRPT_BCKEND-D2-W481-S1)
+
+IB-pr-617 changed `read_pinned_filled` to read the CURRENT object and refuse on a sha256 or size mismatch (`302d7fc367`). Worker 481 correctly left four statements outside the two named functions unedited under its change-nothing-else bound, and filed row W481-S1: the PATH C banner (the freeze "reads that VersionId"), the IB-pr-563 block ("reads back exactly that VersionId"), the FILLED-REPORT-F banner ("never the current object") and the `filled_leg_read` docstring ("The current object is never consulted") now state the opposite of what the code does. They sit in a security-relevant pinning path, and the export bundle (TO-IB-pr-618) is built from this file, so they are corrected BEFORE the bundle: comments and one docstring only, no code token. The module's own head (PATH B, the platinum series read through the route) stays true and is not touched. Cut as one small order for the same worker slot (the next order is handed to the SAME subagent), merged with IB-pr-617 at the chain end.
+
+Check IB249-1 (`deliverables/2.0.0_SA_COO~S2/checks/r249/p249_cells.py`), dry-run at the worker's state `dae909c87f` on dell2: AC1 (the bound, 31 tests pass) PASS and AC2 (the bound, no code token differs from the build commit) PASS as bound checks should at the base; AC3 (the build: the four stale statements gone and the sites say the current object is re-read) FAILS. AC3 also run against a scratch copy with the four planned replacements applied and PASSES.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-619` | REPAIR: four stale comments and one docstring in retained_export.py describe the old pinned-VersionId read; make them true, comments and docstring only | FWD-21 | WORLD (path floor) | IB-pr-617 (built) | PS8-a |
+
+fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell on the same chain as IB-pr-617, so the same worker continues; one write surface (retained_export.py).
+
+## 245. ROUND 10, WORKSTREAM ~PS (the APPLY of the new export bundle that reads the CURRENT filled-report object and refuses on a sha256 or size mismatch: the first of the three things IB-pr-616 Step 6 waits on; 2026-10-17 ~03:xxZ, issuer 2.0.0_SA_COO~S2 on dell2, after the drain 1dab1295ef of IB-pr-617 and IB-pr-619)
+
+IB-pr-616 Step 5 left `irpt-export-render` on the bundle whose `read_pinned_filled` reads the pinned VersionId (live CodeSha256 `5bIgn/MLNgtN...`, read by the issuer 2026-10-17). IB-pr-551 ADDENDUM 3 grants `s3:GetObject` ONLY, so that code would be refused by the role once the statement lands. The merged code (`1dab1295ef`) reads the current object and refuses on a sha256 or size mismatch. This cell applies that bundle through `0.7.0_AE_CloudOps~IB2` (code attributes of the one function; the filled-report switch is not touched; no IAM change), before the fence row regeneration and the Step 6 statement. Order of the three, per the CTO: bundle, then the fence row and regeneration, then the statement.
+
+Check IB250-1 (`deliverables/2.0.0_SA_COO~S2/checks/r250/p250_cells.py`) reads the record IB2 writes; dry-run at the base on dell2: AC1, AC2 and AC3 each FAIL (no record), as a build check should.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-618` | APPLY: the export bundle with the current-object read and sha256 refusal, code attributes only | FWD-21 | WORLD | IB-pr-617 and IB-pr-619 (merged), IB-pr-616 Steps 1 to 5 (applied) | PS8-b |
+
+fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one APPLY cell on the CloudOps lane IB2, the single seat for this macro on dell2 (rule 34); it follows the build chain PS8-a.
+
+## 242. ROUND 6, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 1: the READ; 2026-10-17 ~03:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO msg 10155 and ruling B, msg 10161; plan blob `f1f250ab37`)
+
+The laptop CTO ruled (@3ffa142af0) that `client-data-check.py` reads a keyed list, `HMAC-SHA256(key, UPPER(id))`, produced by a scheduled served-layer job; the dell2 CTO ruled B: the step goes in `irpt-directory-refresh`, the existing all-firm reader, as its LAST stage after the directory write commits (its failure never alters or rolls back the directory output, proved by a planted-failure test), the object holds only sorted HMACs (no firm, count by firm or id), the role gains `GetSecretValue` on one ARN and `PutObject` on one key, and a never-widen pair; the hook flip to refuse-on-absent is the laptop CTO's after the first list lands. Six cells (IB-hm-1 to IB-hm-6, plan section 3). This section cuts the first: a READ-ONLY repository measurement by a worker, so that the producer code (IB-hm-2), the Terraform (IB-hm-3) and the pair (IB-hm-4) are built on cited facts, not on my reading of two files. IB-hm-2 to IB-hm-6 are cut when this one is graded.
+
+Check IBHM1 (`deliverables/2.0.0_SA_COO~P2/checks/r247/p247_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control247.py`) passes the three positives and each of 18 negatives fails its own arm (0 unexpected). Rounds 2 to 5 of ~PM already carry an issuance, so this takes round 6.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-hm-1` | READ the seven facts (last stage, where the ids live, spelling, names, IAM and env, the gate, the tests) with evidence that resolves | FWD-21 | LOCAL | none (ruling B) | PM6-a |
+
+fanout: 1 of 6 chains cut, cap 8, reason: IB-hm-2 and IB-hm-3 depend on this read's facts; IB-hm-4 on 3; IB-hm-5 and 6 on 4 and the IB2 lane.

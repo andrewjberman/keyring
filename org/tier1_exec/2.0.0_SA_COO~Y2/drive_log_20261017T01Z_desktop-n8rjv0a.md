@@ -1,0 +1,7 @@
+# Drive log -- 2.0.0_SA_COO~Y2, IRPT_ANLREQ, 2026-10-17 01Z to 02Z hours (desktop-n8rjv0a)
+
+- 01:0xZ `~G2` confirmed (msg 10121) the checker fix (last finite close at or before T-1) is cut into r34j with the estate-form YCharts tier; `~G2` signed r34j with both halves (CTO half @a6c0932275) and ordered it to IB2 (msg 10152).
+- 01:5xZ I measured the r34j packet blob (d6606fa108) and wrote ADDENDUM 5 AMENDMENT 3 (R0e to r34j; COO blob 086861834d, commit dc96ba2eb7). The CTO signed it @deb2ace7f0: TIMXX may use the YCharts tier (over budget it is reported unpriced); window 5 runs Monday to Friday 00:00Z to 13:00Z only, with a trading-calendar check at R0 (no weekend run).
+- 02:0xZ I re-pinned the held window-5 order to r34j with the new band, the calendar read and an F17 YCharts count line (42598a5fcd, still status held).
+- 02:07Z IB2 installed r34j (V1 green) and ROLLED IT BACK at 02:08Z: V2S SPY CHECK_FAILED EXCEPTION on the first ask, class not printed, second ask clean (msg 10164; ledger irpt-resident-r34j-20261017 ROLLED-BACK; r34h runs). IB2's line "window 5 may open" is wrong; the CTO confirmed (msg 10168) window 5 stays HELD and waits for r34k (the checker's transient retry), a re-pin amendment and the 5174 hand-over. I sent `~G2` the failure and IB2 a no-act note.
+- State: windows 3 and 4 SPENT, window 5 staged HELD; owed: r34k, amendment 4 (R0e to r34k, both halves), the CTO's 5174 hand-over after Andrew's smoke, R20-RV and R20-REL ledgers.
