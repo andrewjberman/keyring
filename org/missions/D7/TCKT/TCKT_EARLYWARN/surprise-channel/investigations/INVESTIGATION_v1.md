@@ -51,6 +51,52 @@
     "spec_asserts": "The entry point is the poller loop, ews/poller.py / ews/bridge.py build_poller().",
     "world_is": "build_poller() returns a poller; nothing in the package constructs the store, the transport and calls loop(). The Dockerfile CMD therefore has to compose them inline (SqliteStore on the container filesystem, HttpTransport, loop()), without touching ews/. The store is SQLite on ephemeral task storage, so a task restart loses open items; the watermark is re-derived from EWS_INITIAL_CUTOFF.",
     "notes": "Not blocking. Persistence beyond the task's life is not in the order (no S3 write, no table in the role), so the open-items store is ephemeral by the order's own constraints."
+  },
+  {
+    "id": "TCKT_EARLYWARN-D1-S3",
+    "project": "TCKT_EARLYWARN",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-17T05:25:40Z",
+    "one_line": "ews_check.py iam misfires on dell1 as written: its deny arms pass the lone argument '*' to aws.exe, which Windows expands against the repo-root listing, so simulate-principal-policy exits rc=254 before it can read a decision.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Q1 (owns the check; the lane did not edit or weaken it)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/TCKT_EARLYWARN_Q1/EWS_CHECKS/ews_check.py iam from the repo root, twice (2026-10-17 05:1xZ and 05:2xZ): EWS-BAD RuntimeError: aws iam simulate-principal-policy --policy-source-arn rc=254, the error tail is the root directory listing (n, design, docs, ..., workflows)",
+        "ews_check.py lines 73-76: the deny list carries ('ses:SendEmail', '*'), ('sns:Publish', '*'), ('sqs:SendMessage', '*'); line 59-61 simulate() passes the resource as one --resource-arns argument through bash .tools/aws",
+        "AWS_SHIM_DEBUG=1 bash .tools/aws ... --resource-arns '*' prints argv [*] literal: the shim does not expand it, the native aws.exe does",
+        "the checker's own functions run with only the aws subprocess cwd changed to an empty directory (.scratch/ews_iam_equiv.py, uncommitted scaffolding): EWS-IAM-OK, rc=0, all 3 allow arms allowed and all 6 deny arms not allowed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ews_check.py iam prints EWS-IAM-OK for a role that may read the one secret and the two silver prefixes and may not read another secret, write S3, read bronze or send.",
+    "world_is": "On this device the check cannot reach a decision: the lone '*' resource is wildcard-expanded by the Windows aws.exe against the current directory, so the call is malformed (rc=254). The role itself grades as ordered when the same code runs from a directory with no files. The check is cwd-dependent on Windows and reads BAD on a correct deploy.",
+    "notes": "The lane did not weaken the check. The equivalent run is evidence about the role, not the criterion's own invocation: AC2 as written stays unmet on this device until the check passes the resource without a bare '*' (for example arn:aws:ses:*:*:identity/x) or is graded from a box or directory where the expansion does not occur."
+  },
+  {
+    "id": "TCKT_EARLYWARN-D1-S4",
+    "project": "TCKT_EARLYWARN",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-17T05:25:50Z",
+    "one_line": "The image answers business days from lib/trading_calendar.py's hardcoded NYSE fallback (covers 2010-2027) because pandas_market_calendars is absent, so the early-warning clock goes wrong at the end of 2027.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1 (a later order: regenerate the fallback or add the calendar package to the Dockerfile)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task log opal-clientops-ews-task stream ews/ews/73ccdcc4753448c68c1dd7156111588a: WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests...",
+        "ews/clock.py _calendar() imports trading_calendar from lib/ and is_business_day() calls it for every date the SLA clock crosses"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The business-hours clock uses the estate's one calendar (README, clock.py: lib/trading_calendar.py).",
+    "world_is": "In the container the estate calendar runs in its offline fallback table, which is correct through 2027 and the image carries nothing to replace it. The package is not a dependency the Dockerfile installs and the order did not ask for it.",
+    "notes": "ARMED only for dates after 2027; no action needed for this order. The first image (digest 5d68df7e..) lacked lib/trading_calendar.py altogether and its launcher logged ModuleNotFoundError on the first pass; the second image (2c1aef59..) carries the file and its task replaced the first task (apply 3); the first task's ephemeral store went with it."
   }
 ]
 ```

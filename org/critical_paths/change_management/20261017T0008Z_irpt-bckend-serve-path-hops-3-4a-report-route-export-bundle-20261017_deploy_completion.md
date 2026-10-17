@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T00:08:01.730632+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261017T050841Z
 **Deploy:** IRPT_BCKEND TO-IB-pr-616 (pair 551 hops 3 and 4): the report route GET /api/scoped/investor-reporting/reporting/client/{client_id}/report on irpt-49f-reporting-read-lambda with a new read bundle, and a new irpt-export-render bundle (code only, the filled-report switch untouched); the IAM statement leg is NOT released in this run. Consumers of irpt-export-render-role (one describe sweep 2026-10-17T00:0xZ): Lambda functions scanned 244, using the role: irpt-export-render only; ECS ACTIVE task families scanned 9, using the role: none.
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -18,7 +18,7 @@
 | L4 | s3-prefix | artifact key for irpt-export-render: ONE NEW VERSION (rollback target the prior version whose code hash is 5/9LZBbT..) | new VersionId, landed sha256 equals the built zip | new VersionId 6kLEkE0n (export bundle), prior eM3_IMEM kept as rollback; landed sha256 5bIgn/MLNgtNtDnRpmE3OejAMw2IpoJBmzzRfHvFLXI= equals the BUILD_ONLY zip; write VERIFIED size 428531 | CLOSED 20261017T002635Z |
 | L5 | tf-lambda | ONE safe-apply of infra/aws/terraform/investor-reporting/export, code attributes only, the filled-report switch untouched | plan resource list, replan No changes, live CodeSha256 equals the built zip | plan 0 add 1 change 0 destroy (export function code attributes only); naming gate WARN 28 graded (6 WARN on existing unchanged policy and log-group names, none on this change); ONE safe-apply 00:20Z-00:21Z; replan No changes; live CodeSha256 5bIgn/ML.. equal; environment unchanged (14 variables) | CLOSED 20261017T002635Z |
 | L6 | verify | IB247-1 release record written, p247_cells AC1 and AC2 run, proof instance validated | record, criteria output, proof VALID | IB247-1 release record and criteria output written; AC1 PASS, AC2 PASS, AC3 owed (step 6 not released); proof instance VALID | CLOSED 20261017T002635Z |
-| L7 | verify | hop 4b IAM statement on irpt-export-render-role: NOT RELEASED by the GO (step 6 owed); left OPEN for the issuer | issuer disposition |  | OPEN |
+| L7 | verify | hop 4b IAM statement on irpt-export-render-role: NOT RELEASED by the GO (step 6 owed); left OPEN for the issuer | issuer disposition | Step 6 under the second GO (msg 10273): STEP 0 role statements read (none covers the filled object), export bundle VerVs2a1.. live, fence row at HEAD and live bucket policy names the reporting prefix, plan 0/1/0 one statement added (s3:GetObject only), ONE safe-apply, replan No changes, simulations as ordered; edit commit b2a92d6b49 | CLOSED 20261017T050305Z |
 
 ## Log
 
@@ -31,6 +31,8 @@
 - 20261017T002805Z LEG L1 closed: source-map stamps (artifact_sha256 only, two entries), the release record, proof and this ledger committed with explicit
 - 20261017T035650Z HELD-SOVEREIGN-GATED gate=external/ADVI_FIRMBKTS.TO-FB-q-1 fence regeneration of opal-data-49financial by 0.7.0_AE_
 - 20261017T042553Z HOLD RELEASED -> OPEN
+- 20261017T050305Z LEG L7 closed: Step 6 under the second GO (msg 10273): STEP 0 role statements read (none covers the filled object), export bundle VerVs
+- 20261017T050841Z CLOSED -- all 7 legs proven
 
 ## Carried notes (hand-written lines kept across re-renders)
 
