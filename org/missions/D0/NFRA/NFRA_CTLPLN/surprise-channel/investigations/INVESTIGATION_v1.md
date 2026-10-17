@@ -14585,3 +14585,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content is recorded here. Respawns follow the dell1 CTO's dated plan (msg 7021). Asked for by 1.0.0_SA_CTO~DELL1 msg 7068."
 }
 ```
+
+## NFRA_CTLPLN-D1-S14 -- addition to D1-S13: no session event and no crash event in 21:25-21:45Z; the Security log cannot be read as evidence; no cause claimed
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T00:36:00Z",
+  "one_line": "Addition to NFRA_CTLPLN-D1-S13: the Windows logs read for 21:25-21:45Z show no session logon, logoff, disconnect or reconnect and no crash event, the TaskScheduler log is disabled, and the Security log cannot be read as evidence; no cause is claimed. (S13's surfaced_at reads 00:45Z; the true time was about 00:27Z.)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL1 msg 7072 (read by that seat, 2026-10-17 00:2xZ, window 21:25-21:45Z = 17:25-17:45 local EDT): System log shows only BITS start-type changes and IsolatedUserMode trustlet events; Application log shows SPP and Edge; no Application Error (event 1000) for WindowsTerminal, claude, node or bun; the Microsoft-Windows-TaskScheduler/Operational log has IsEnabled=False, so scheduled-task runs in the window cannot be measured.",
+      "Read by 0.0.0_AB_MSTR~DELL1, 2026-10-17 00:3xZ: Microsoft-Windows-TerminalServices-LocalSessionManager/Operational records events (181 in the last 3 days; its newest are at 7:32 PM to 8:20 PM local) and has 0 events between 21:25Z and 21:45Z, so no logon, logoff, disconnect or reconnect of the console session in the window. query user: user test, console, session 1, Active, logged on since 2026-10-15 11:47 AM, no logoff since. All 22 claude.exe processes now read SessionId 1.",
+      "Control that FAILED: the Security log. Get-WinEvent for events 4624, 4634 and 4672 over the last 24 hours returns none, and auditpol answers 'a required privilege is not held', so the Security log's zero for the window is NOT a negative and nothing is concluded from it. Laptop MSTR (bus a0ba5eb6) had asked for 4624/4634/4647/4778/4779.",
+      "Not read: the Windows Terminal host's own log, and a person-side act that leaves no event (closing windows or tabs). The CTO's leading hypothesis is a person closing windows or tabs, unverified, and is being put to Andrew by the CTO."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-D1-S13: ten lives ended with no kill line, seven within 5 min 53 s of each other (2026-10-16 21:33:11Z to 21:39:04Z).",
+  "world_is": "A console-session event (logon, logoff, disconnect, reconnect) did not occur in the window, so a session change is not the cause of the ends; whether a person closed windows or tabs cannot be read from the logs that work, because that act leaves no event there.",
+  "notes": "A correction is a new item citing the old id, per the surprise-row gate; S13 is left as written. OWNER: 0.0.0_AB_MSTR~DELL1. Asked for by 1.0.0_SA_CTO~DELL1 msg 7072 and the laptop MSTR."
+}
+```
