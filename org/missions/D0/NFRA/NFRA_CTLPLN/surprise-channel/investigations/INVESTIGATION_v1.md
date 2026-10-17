@@ -14754,3 +14754,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times and counts only; no transcript content. Respawns continue under msg 7090."
 }
 ```
+
+## NFRA_CTLPLN-D1-S19 -- six more dell1 seat ends 03:13Z to 04:37Z, Monitor-stopped tail each, arm-to-end 223 to 1274 s; timeout lead unsupported in 21 of 23 lives; no cause claimed
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S19",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T04:50:24Z",
+  "one_line": "Six more dell1 seat ends (03:13Z to 04:37Z), all with the Monitor-stopped (killed) tail; arm-to-end 223 to 1274 s refutes the timeout-kill lead again (unsupported in 21 of 23 lives); two ends fall in relayed windows of Andrew's presence at the box. No cause claimed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Six more ended dell1 lives since S18, UTC (last transcript entry / last API response / gap s / last Monitor arm / arm-to-end s): CloudOps~SOC21 03:13:05 / 03:06:24 / 402 / 03:06:21 / 404; COO~W1 03:15:12 / 02:54:01 / 1271 / 02:53:58 / 1274; COO~C1 04:02:37 / 03:56:38 / 359 / 03:53:07 / 570; COO~W1 (respawn 03:40:10Z) 04:24:48 / 04:10:39 / 850 / 04:10:35 / 853; CRO~YY (hand launch) 04:32:55 / 04:14:57 / 1078 / 04:14:30 / 1105; COO~S1 04:36:47 / 04:33:08 / 219 / 04:33:04 / 223. Every one ends on an enqueued task-notification whose raw line carries monitor, stopped and killed (keyword flags; content not read); none carries a completed notice. No kill line in the spawn audit and kill-maint at 03:38Z stopped one native tail.exe (not a seat), at 04:41Z stopped none, and no run touched any of the six. 1pt scan 0 for each. Lives now 23 (S18 had 17).",
+      "TEST OF THE MONITOR-TIMEOUT LEAD on these six (CTO msg 7228, 7150): arm-to-end is 223 to 1274 s, never near 1800 s, so none ended at a Monitor's expiry. W1's 1274 s (first W1 life) refutes the lead for that life, as the CTO noted; the second W1 life at 853 s and the others agree. Combined with S18 the lead is unsupported in 21 of 23 lives.",
+      "ANDREW-PRESENCE ANCHORS, RELAYED not measured here: COO~RV msg 7211 (03:26Z) says Andrew gave an order at the dell1 terminal ~03:1xZ (SOC21 and the first W1 life ended 03:13:05Z and 03:15:12Z); the dell1 CTO's record ANDREW_DIRECT_20261017_043xZ_DELETE_MSTR_MATCH_STAGING_COPIES_APPROVED.md says Andrew spoke at the CTO terminal ~04:3xZ (CRO~YY and COO~S1 ended 04:32:55Z and 04:36:47Z). COO~C1 04:02:37Z and the second W1 life 04:24:48Z are not inside a stated presence window. Not measured: whether Andrew was at the box at the other ends; the Windows Terminal host's log; the live seats' tails for the signature.",
+      "Live-seat facts, measured at 03:4xZ: all 24 claude.exe processes then carrying a serial (12 launcher/claude pairs) share ONE WindowsTerminal.exe parent, pid 14984, created 10-15 15:47:42Z, including seats spawned that day; ended seats' processes are gone, so their parents cannot be read.",
+      "Respawn practice under 1.0.0_SA_CTO~DELL1 msg 7228 (amended rule): a seat that ends while Andrew is measured at the box is not respawned unless a dated event it owns would be missed. Respawned under it: COO~S1 (cutting the TCKT_EARLYWARN deploy order Andrew approved tonight) and CloudOps~TM1 (CTO order 7315). Left down: COO~W1 (second end), COO~C1 (silver fire ~13:00Z, one-shot at 12:30Z), CRO~YY (hand launch).",
+      "Cites S12 to S18; none edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S18: the Monitor-timeout lead is unsupported in 15 of 17 lives; S16/S17: no idle cut-off explains the endings.",
+  "world_is": "The same end shape continues at a rate of several seats an hour on dell1: a clean session close whose last act is stopping its Monitors, not at a timeout and not tied to idleness. The cause is still unmeasured; two of six ends fall in a relayed window of Andrew's presence at this box, and he has not yet answered the CTO's question on closing windows.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content."
+}
+```
