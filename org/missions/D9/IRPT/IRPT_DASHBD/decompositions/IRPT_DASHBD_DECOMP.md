@@ -3078,3 +3078,15 @@ The CTO relayed Andrew's look at the Cottonwood tab (msg 10331 (a)): the chart i
 **fanout:** 1 of 1 chains for this cell, cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on the reference edit and red on 15 single-fault mutants):** `checks/r150/p196_chart_breaks.py` (DBP196-1-AC1, DBP196-1-AC2, DBP196-1-AC3). Reference patch: `reads/DB330_REFERENCE.patch`.
+
+
+## 191. ROUND 150 (2026-10-17 ~08:1xZ, issuer 2.0.0_SA_COO~D2): two STOPs at IB2 -- the Jul 27 pair's premise was wrong (cell DB-b-329 withdrawn), and the filled-report pass needs 28 shards and a 921 MB line (cell DB-b-328 addendum)
+
+**DB-b-329 (the Jul 27 gold rewrite and republish).** IB2's dry run read the day as 3 rows, outside the order's 840 to 920 band, and stopped before any write; nothing was written (two read-only dry events). Cause (read file `reads/RD_COT_ALLOCATIONS_PREMISE_20261017.json`): the function derives a day from `fact_allocations`, and its 2026-07-27 partition holds 3 accounts; the issuer's earlier read measured `fact_holdings`, which the function does not read. The same table is partial on 2026-07-22 (157), 2026-07-29 (1) and 2026-08-03 (159); 2026-08-19, 2026-09-24 and 2026-09-25 hold full allocations but no transactions partition. So all seven absent days are carrier-side. The issuer withdraws the pair (packet sha256 8596f43f, both halves signed) and the order closes UNEXECUTED; Jul 27 joins dell1's carrier lane as a seventh day, and the re-land pair covers seven days. The checker p195 stays in the tree as the instrument of that later pair's apply. **Lesson recorded:** a premise about what a function derives from is read from the function's own source table (its ALLOWED_TABLES), never from a sibling table of the same firm.
+
+**DB-b-328 (the filled-report switch-on).** Act 4 shard 0 of 7 timed out at 300 s (847 MB); read-only probes: 5 clients 11.8 s, 25 clients 17.8 s, both 845 MB. The fixed index load alone exceeds the packet's 819 MB stop line, so no event can meet it, and the shard of 7 is too large. Addendum 1 (`NEVER_WIDEN_ADDENDUM_1_49F_FILLED_REPORT_SHARDS_AND_MEMORY_LINE.md`, COO half signed by its bytes) asks the CTO half to accept 28 shards and a 921 MB line, no resize. The order and checker p194 are amended only after the CTO's half is signed.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the filled-report pass proven small then whole | DB-b-328 | FWD-10 (49 Financial filled report) | WORLD, served output | Addendum 1, both halves | chain AX |
+| 2. the six-day re-land pair, now seven days | to be cut | FWD-10 | WORLD, served output | dell1's list (after 13:30Z) | after dell1's reply |

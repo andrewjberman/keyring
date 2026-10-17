@@ -4708,3 +4708,15 @@ Check: IBHM5 (`r254`, a record-based apply check: gates, legs, after-reads; cont
 | `IB-hm-5` | APPLY by IB2: bundle, zip, `directory` root, simulation, the one secret put, one QA run | FWD-21 | WORLD | IB-hm-8, IB-hm-9, IB-hm-2, IB-hm-7 (all complete), the signed pair | PM12-a |
 
 fanout: 1 of 2 chains cut this round, cap 8, reason: the second chain (IB-hm-11, the `mdpf-pipeline` leg) waits on the other writer's open ledger on that root and is cut when it closes; IB-hm-6 (readers) waits on this apply.
+
+## 249. ROUND 13, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 11: the APPLY of the `mdpf-pipeline` leg; 2026-10-17 ~08:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, under the signed pair: packet blob e6d82eb31f, CTO half msg 10336 ruling 1)
+
+Section 248 cut the `directory`-root apply (IB-hm-5) and said the `mdpf-pipeline` leg would be cut when the other writer of that root closed its ledger. The CTO's condition is on the APPLIER, not on the cut: IB2 applies the leg only when no other ledger touching that root is open, reads every live worktree, prints the denominator and plans from a HEAD that holds `c5dd8b293a`. The ledger of MDPF_CANON FWD-10 (`mdpf-gold-fwd10-cottonwood-supervised-20261017`) read OPEN at the cut, so the order's own gate (b) stops it and the issuer re-sends it when that ledger closes; cutting it now puts the whole procedure, the record shape and the check in IB2's queue instead of waiting for a close I cannot see. The order applies the already committed text of IB-hm-10 (one inline-policy change on the host role, `aws_iam_role_policy.mdpf_runner`, plan 0/1/0), reads the statement back (the 49F statement and every other statement byte-equal), simulates the assume (one allowed arm, three denied), and runs the ONE QA re-run only if IB-hm-5's first QA recorded the assume as failed before this leg (ADDENDUM 1 section 4); none otherwise.
+
+Check: IBHM11 (`r255`, a record-based apply check; control passes the clean record and the clean-with-re-run record and each of 31 negatives fails its own arm, 0 unexpected); dry-run at the base: AC1 to AC3 FAIL (no record). WORLD.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-hm-11` | APPLY by IB2: the host role's `IrptHmacListStageAssumeRole` statement in the `mdpf-pipeline` root, the read-back, the assume simulation, the conditional QA re-run | FWD-21 | WORLD | IB-hm-10 (complete), the signed pair, the other writer's ledger (the order's gate), IB-hm-5 for the re-run decision | PM13-a |
+
+fanout: 1 of 1 chains cut this round, cap 8, reason: one cell on one root; the reader grants left the project (XA-0e3e, the laptop CTO's lane), so nothing else is open in the chain.

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~258</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-17</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -39,7 +39,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-258` (branch `wk-IRPT_DASHBD-2
 <criterion id="DBP196-1-AC2" cell_refs="DB-b-330"><invocation>python -I "C:/dev/ajb_workspace/org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r150/p196_chart_breaks.py" C:/dev/wk-irpt-dashbd-258 DBP196-1-AC2</invocation><expect>DBP196-1-AC2 PASS</expect></criterion>
 `DBP196-1-AC2` -- the cell's test file speaks of break, unreported and isolated and passes under bun, and the issuer's probe (written into the test directory by the checker and deleted after) passes against your `chartRows`. Base: FAIL.
 <criterion id="DBP196-1-AC3" cell_refs="DB-b-330"><invocation>python -I "C:/dev/ajb_workspace/org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r150/p196_chart_breaks.py" C:/dev/wk-irpt-dashbd-258 DBP196-1-AC3</invocation><expect>DBP196-1-AC3 PASS</expect></criterion>
-`DBP196-1-AC3` -- every `irpt-dashbd` and `dsgn-irptv1` test passes; the typecheck passes; the production build succeeds and carries neither the `SYNTHETIC PREVIEW` words nor the synthetic fixture. Base: FAIL (the cell's test file is missing).
+`DBP196-1-AC3` -- every `irpt-dashbd` test passes and every `dsgn-irptv1` test passes except the two that FAIL AT THE PINNED BASE (`iv-e-26.wire-regen` and `iv-e-98.generators-drift`, `ExportBundle.ts` regeneration drift; issuer-measured at 38d4f947, worker row W258-S1; AMENDMENT 1); the typecheck passes; the production build succeeds and carries neither the `SYNTHETIC PREVIEW` words nor the synthetic fixture. Base: FAIL (the cell's test file is missing).
 
 <expected_criteria>DBP196-1-AC1,DBP196-1-AC2,DBP196-1-AC3</expected_criteria>
 

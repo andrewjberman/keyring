@@ -1,0 +1,72 @@
+{
+  "slug": "irpt-bckend-hmac-list-producer-hm5-20261017",
+  "title": "IRPT_BCKEND TO-IB-hm-5 (cell IB-hm-5, FWD-21): the HMAC list producer pair in the investor-reporting directory root: the runner bundle s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz FIRST (Branch B: live version W2WragrP5.., ETag 5547fa5e), then the refresh Lambda irpt-directory-refresh zip (Branch B: the prior S3 version whose content equals the live CodeSha256, named before any write) and the directory root apply (3 add 1 change 0 destroy), then the one secret value put to irpt/hmac-list/key, then ONE QA run. Census 97 worktrees, 0 open legs on the root, the function or the bundle; one describe-task-definition sweep (denominator printed in the record).",
+  "author": "0.7.0_AE_CloudOps~IB2",
+  "status": "OPEN",
+  "opened_at": "2026-10-17T08:07:28.346951+00:00",
+  "window_hours": 4.0,
+  "entry_path": "org/critical_paths/change_management/20261017T0807Z_irpt-bckend-hmac-list-producer-hm5-20261017_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "s3-prefix",
+      "target": "the runner bundle re-minted through safe-deploy (12 members, all equal to HEAD after the mint); Branch B version W2WragrP52i8M7MfL22oXVPuHsTjyVLO named",
+      "proof_required": "version before and after, 12 of 12",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "s3-prefix",
+      "target": "the refresh Lambda zip: built digest equals the pin I7T8wRYm.., uploaded and head-object verified; Branch B zip version named",
+      "proof_required": "digest, head-object",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "tf-lambda",
+      "target": "ONE safe-apply of the directory root, plan 3 add 1 change 0 destroy at the named addresses, clean re-plan, three new environment keys",
+      "proof_required": "plan counts, replan, key names",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L4",
+      "kind": "verify",
+      "target": "the simulation battery: two allowed arms and five denied arms",
+      "proof_required": "simulation table",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L5",
+      "kind": "activation",
+      "target": "the secret value put ONCE (never printed), version count 1",
+      "proof_required": "put count",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L6",
+      "kind": "verify",
+      "target": "ONE QA run, four checks PASS, the assume fact recorded",
+      "proof_required": "qa block",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L7",
+      "kind": "git",
+      "target": "the record, proof and ledger committed with explicit paths",
+      "proof_required": "commit ids",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261017T080728Z OPENED by 0.7.0_AE_CloudOps~IB2 with 7 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}
