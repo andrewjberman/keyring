@@ -61,4 +61,27 @@ Checker `p138_bounded.py` (selftest 7 arms); a reference implementation put into
 | DBF138-3-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r138/p138_inf_s4.py . DBF138-3-AC1` | FAIL (iam.tf unchanged from the pinned base) |
 | DBF138-3-AC2 | `python -I .../checks/r138/p138_inf_s4.py . DBF138-3-AC2` | FAIL (S4 absent) |
 
-Checker `p138_inf_s4.py` (selftest 10 arms; the reference insertion makes both PASS, run and reverted). The round-137 criteria `DBF137-5-AC1` and `AC2` read the pre-S4 base; AC1 (a pure insertion) and AC2 (the actions and sids) still hold after S4.
+## Cells 4 and 5 (added 2026-10-17 ~05:0xZ; the Cottonwood wiring, round 138 list item 1; WORLD, the infra/ floor; workstreams `F2COTTF` and `F2COTHD`)
+
+**Authority:** the CTO's XA-20261016T224156Z-3c21 ruling (msg 10002): host (1), the landing function `irpt-cot-account-return-daily-lambda` (`account-return-daily`), CONDITIONAL on the issuer's sizing read, which is done (`R137_COTTONWOOD_SIZING_READ.md`: the role already lists and reads `fact_transactions` silver, so NO read grant; the scheduled fire read 10.7 s and 331 MB of 1,024 MB; the producer on one real day +70 MB and about 3 s); never the filled-report function. Conditions (i) any read grant scoped to Cottonwood's own prefix (none is needed), (ii) the stage runs AFTER the returns-day write is committed and its failure cannot alter the day's returns (the handler cell's planted-failure clause), (iii) the 80 percent read uses the last fires' REPORT lines with the denominator printed (done in the sizing read; the applier prints it again). Round 138 list item 1 accepted in order (msg 10145). Both cells are independent (disjoint files); the bundle cell (the function-map entry's members and pins, `DB-f-2606`) follows the handler's merge, because the pins name the handler-side producer files at a commit.
+
+**Base drift fixed at the cut:** the retirement of the source map edited a comment and the artifact lookup in the root's `locals.tf` (sha256 `198bad3dd156..`); the round-137 TF checker's pinned base was stale and is re-pinned in `checks/r138/` (iam.tf, lambda.tf, main.tf and schedule.tf unchanged).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `account-return-daily` Terraform root: `locals.tf` gains the table constant `irpt_arc_gold_table_transaction`, `iam.tf` gains the NEW statement `WriteTheAccountTransactionGoldPrefixOnly` (`s3:PutObject` on the one gold prefix), both by pure insertion | `DB-f-2604` | FWD-5 | WORLD | XA-3c21 | R138-D |
+| The landing handler `account-return-daily/handler.py`: the guarded `account_transaction_cottonwood` import, `transaction_frame`, `emit_transactions` (never raises), the last stage of the scheduled/day/days path for the written days, a transaction-only event, and a new test file | `DB-f-2605` | FWD-5 | WORLD | XA-3c21 | R138-E |
+
+**Four-postulate record.** (i) Domain: one Terraform root's two files (cell 4); one handler and one new test file (cell 5). (ii) Same grain: a statement; a day. (iii) One intent each: the function may write the new prefix; the function emits the day after the returns day. (iv) Not moved: every existing statement, the schedule, lambda.tf, main.tf (cell 4); the returns write, the rewrite path, every existing test (cell 5); nothing is planned, bundled or applied here.
+
+| criterion | invocation | base reading |
+|---|---|---|
+| DBF138-4-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r138/p138_cot_tf.py . DBF138-4-AC1` | FAIL (both files unchanged from the pinned bases) |
+| DBF138-4-AC2 | `python -I .../checks/r138/p138_cot_tf.py . DBF138-4-AC2` | FAIL (constant and statement absent) |
+| DBF138-5-AC1 | `python -I .../checks/r138/p138_cot_handler.py . DBF138-5-AC1` | FAIL (no `transaction_frame`) |
+| DBF138-5-AC2 | `python -I .../checks/r138/p138_cot_handler.py . DBF138-5-AC2` | FAIL (no `transaction_frame`) |
+| DBF138-5-AC3 | `python -I .../checks/r138/p138_cot_handler.py . DBF138-5-AC3` | FAIL (no new test file) |
+
+Checkers `p138_cot_tf.py` (selftest 9 arms) and `p138_cot_handler.py` (selftest 9 arms); the handler checker's positive control (a reference implementation in a scratch sibling directory) passes its source, behaviour and wiring clauses against today's handler; the base of the handler tests is 16 passed.
+
+**Cell 3, closing note:** checker `p138_inf_s4.py` (selftest 10 arms; the reference insertion makes both PASS, run and reverted). The round-137 criteria `DBF137-5-AC1` and `AC2` read the pre-S4 base; AC1 (a pure insertion) and AC2 (the actions and sids) still hold after S4.
