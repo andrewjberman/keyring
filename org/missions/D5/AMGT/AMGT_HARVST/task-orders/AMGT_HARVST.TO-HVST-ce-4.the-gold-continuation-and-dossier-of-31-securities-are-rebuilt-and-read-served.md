@@ -35,6 +35,11 @@ comp-adversary: RUN at L5 -- the adversary is a rebuild run from a tree that is 
 4. Write `ce4_served.out` ending with exactly these lines: `SERVED_CANARY=PASS|FAIL`, `SERVED_SAMPLE_AND_CONTROL=PASS|FAIL`, `WRITTEN continuation=<n> dossier=<n>` (31 and 31 when complete). A FAIL is reported with the read; nothing is deleted by you.
 5. Anything odd: one row `AMGT_HARVST-D1-S<next free D1 number>`, then keep working. Tell the issuer when the canary has been read served, and again when `ce4_served.out` is written.
 
+**AMENDMENT 1 (issuer, 17:0xZ; CTO half SIGNED @eae892eec0, msg 7677, adds C-9 and a committed ledger close).** The CTO half is `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_CE4_GOLD_REBUILD_CTO_HALF.md`; it binds the COO half unchanged (sha256 `5b486cda...6149`) and its conditions bind you with C-1 to C-8 of the COO half:
+- **C-9, site Z is told first.** Before your first write the issuer asks `0.0.0_AB_MSTR~DELL1` to tell site Z the window and the 31 names; the window is 2026-10-17 17:20Z to 19:30Z, no earlier than the issuer's GO. A site Z rebuild in flight on any of the 31 is a STOP. The issuer sends GO WITH site Z's answer; do not write before that GO. Steps 0 and 1(a) (reads and builds, nothing written) may be done before the GO and recorded in `ce4_before.out`; step 0's worktree, the list hash and the control reads are yours to prepare now.
+- **The ledger close is COMMITTED, and the manifest `ce4_written.out` is committed with it.**
+- State the window (start, end, UTC) in the ledger entry; if the act runs past 19:30Z, stop at a name boundary and tell the issuer.
+
 Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round90/`.
 
 <paths>
@@ -76,7 +81,7 @@ This order touches none of them.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>90</round>
 <workstream>S43-REBUILD</workstream>
 <slot>dell1</slot>
