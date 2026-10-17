@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.26",
+ "prd_version": "v2.27",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -871,5 +871,18 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
     that fire moves the same headline. The half states the joint expected Global for that fire, and 2.0.0_SA_COO~D1 reads against it.
   - The Cottonwood silver `account_attributes` organic fire (~2026-10-17 midday, R106) reads the same accounts. Nothing writes Cottonwood
     silver between now and that fire's close read, unless 2.0.0_SA_COO~C1 agrees in writing.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.27 (2026-10-17 ~02:2xZ), ERRATUM to v2.24 and v2.26 on Global (`1.0.0_SA_CTO~DELL1`, on `4.0.0_SA_CRO~DDD` msg 7144; change log only):**
+- **The Global headline does NOT move with FWD-10 (a).** Global's Client (non-model) leg is 49 Financial only
+  (`dim_mdpf_aggregate_aua_timeseries.py:2294` `GLOBAL_CLIENT_CONSTITUENTS = ("49financial",)`, basis B, read by this seat). Cottonwood enters Global
+  only through its model and SMA-additive legs, and the switch moves neither (0 of 130 Unsupervised accounts holds a model). The fold uses the
+  in-run Cottonwood leg (`mdpf_gold_consolidator.py:2966-2980`), not a staged key.
+- **Struck:** v2.24's "Global's total falls by the same $33.07M", the CVO's v2.24 carry (Global and Global Client Supervised about -$33.07M
+  each), and v2.26's joint figure (`2,237.50M - U_cot`). The CN-s-1 V2 prediction of 2,237.50M stands for the 2026-10-17 13:30Z fire. The
+  deployed QA read gives 2,237,501,378.84.
+- **FWD-10's ENDPOINT clause** "the Global composite folds Cottonwood's supervised book through its sums" stays true, and moves nothing at Global
+  today. The never-widen pair's Global before/after print still applies, and should read equal.
 
 -- 1.0.0_SA_CTO~DELL1
