@@ -26259,3 +26259,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T00:51:44Z",
+  "id": "NFRA_OPLGTW-Z-S335",
+  "one_line": "Round-40 disposition of worker row Z-W130-S1: The client-data check did not run on this box (hashed list absent), but the commit's fixtures are th",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W130-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge d2b95c10cf (OG-en-18); AC1 3 of 3 and AC3 29 of 29 both orders in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "The client-data check did not run on this box (hashed list absent), but the commit's fixtures are the synthetic z08/z09 ids already in tests/test_og_en17.py, and the issuer read the merged diff (d2b95c10cf): no real account id. Record only; the device-side list is not this project's.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-data check did not run on this box (hashed list absent), but the commit's fixtures are the synthetic z08/z09 ids already in tests/test_og_en17.py, and the issuer read the merged diff (d2b95c10cf): no real account id. Record only; the device-side list is not this project's."
+}
+```
