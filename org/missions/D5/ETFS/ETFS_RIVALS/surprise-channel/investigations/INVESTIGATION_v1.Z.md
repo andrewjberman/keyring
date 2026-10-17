@@ -5244,6 +5244,30 @@
     "spec_asserts": "event_type on a landed corporate-actions row is a value of the mapped enum.",
     "world_is": "Three raw Bloomberg dividend types (Daily Accrual, Income, Return of Capital) plus 'Pro Rata' fall through as unmapped:*. The 264-of-400 headline overstates the breadth: it is one money-market name plus two single rows. Return of Capital moves cost basis, so it is the one whose mapping matters to a consumer.",
     "notes": "Filed by 1.0.0_SA_CTO~Z on 0.0.3_BG_BBGTerminal's ask (msg 35375). No ruling here; whether to map the three types, and how a Return of Capital row reaches a consumer, is the issuer's (2.0.0_SA_COO~V1, dell1) to disposition."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S84",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-10-17T06:08Z",
+    "one_line": "The rivalfunds history backfill's first TIMED object in the 2026-09-29 G4 partition demoted that date's two untimed pull objects to descriptive-only under RIV-rk-1(2); the backfill row then wins the merge and drop_backfill nulls it, so the rankings for 2026-09-29 lost 650 price cells (814 merged rows, 164 seen).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured by 0.0.3_BG_BBGTerminal on live S3 by running hc.g4_rows + hc.drop_backfill (msg 35393 to 1.0.0_SA_CTO~Z, 2026-10-17T06:03Z); filed here by 1.0.0_SA_CTO~Z because the channel is outside that seat's writable paths",
+        "2026-09-29: merged 814 rows, the rankings see 164; 650 price cells lost",
+        "cause: the partition held two UNTIMED pull objects and no timed one; the ORDER 2 step-1 object 20261017T043649Z is the first TIMED object there, so _g4_merge now treats the untimed objects as descriptive-only and the backfill price wins (992 HK 35.48 over the untimed 34.54) before drop_backfill nulls it",
+        "blast radius measured by that seat: 1 partition of 251, the only one with timed_today and no timed_older"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Landing history backfill rows never removes a price the rankings already saw; backfill rows are dropped from the rankings and must leave the pull prices in place.",
+    "world_is": "The merge picks its winner before drop_backfill runs. A backfill-flagged timed object therefore displaces untimed pull prices and is then itself dropped, leaving the cell empty. On 2026-09-29, 650 cells went this way.",
+    "notes": "Ruling by 1.0.0_SA_CTO~Z (site Z), 2026-10-17 ~06:0xZ, on 0.0.3_BG_BBGTerminal's ask: NO S3 write and NO delete for this partition. (1) A corrective timed non-backfill object is REFUSED: it would stamp untimed pull prices as timed, a claim the data does not carry. (2) The delete is not asked of Andrew: it would remove backfill rows he ordered landed, to cure a read-side defect. (3) The fix SHAPE, for the owner: in the rankings read, apply drop_backfill BEFORE the timed/untimed winner is chosen in _g4_merge, so backfill rows can never displace a price and are then dropped. That restores 2026-09-29 by reading, with no write, and covers every future backfill. DISARM is the issuer's (2.0.0_SA_COO~V1, dell1): until the read fix lands, no rankings rebuild that includes 2026-09-29 is served as complete. The WRITE of the fix is the owner of the rankings reader."
   }
 ]
 ```
