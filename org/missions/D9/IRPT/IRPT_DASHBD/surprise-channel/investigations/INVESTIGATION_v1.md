@@ -24765,3 +24765,84 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The issuer or the F2 applier decides which statement is current; this cell changed no registry file."
 }
 ```
+
+## IRPT_DASHBD-D2-W253-S1 -- DB185-1-AC1 cannot pass on this branch as written: the checker diffs against BASE dc96ba2eb7, which predates 18 commits already on the branch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:28:51Z",
+  "one_line": "DB185-1-AC1 FAILS on this worktree: the checker diff base dc96ba2eb7 predates 18 commits already on the branch, so 38 files from other seats count as outside the agreed set.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-319 criterion DB185-1-AC1: only served.py and the new test_forward_cottonwood* file changed, judged by the checker invocation run from the worker worktree root.",
+  "world_is": "p185_cot_read_forward.py line 23 sets BASE = dc96ba2eb7 and check_diff (lines 49-56) runs git diff --name-only BASE, so it compares the worktree to BASE and not to HEAD. Branch HEAD 5b50c09c34 is 18 commits past dc96ba2eb7, carrying other seats' records and checkers. The run printed FAIL with 4 of 38 names shown, among them IRPT_BCKEND checks/r249/p249_cells.py and IRPT_ANLREQ TO-APPLY-R34J.md. Against HEAD the only changes are served.py and the untracked test file. Not repaired: BASE and the branch were not changed, and no reset or rebase was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p185_cot_read_forward.py@a48b617842 line 23 (BASE = dc96ba2eb7) and lines 49-56 (check_diff, git diff --name-only BASE)",
+      "git rev-list --count dc96ba2eb7..HEAD printed 18 at HEAD 5b50c09c34; git merge-base --is-ancestor dc96ba2eb7 HEAD returned rc 0",
+      "python -I p185_cot_read_forward.py . DB185-1-AC1 printed FAIL: files outside the agreed set changed (rc 1); the same run for AC2 and AC3 printed PASS (rc 0 each)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether the checker BASE is re-pinned to the worktree cut point or the criterion is re-stated; this worker changed neither."
+}
+```
+
+## IRPT_DASHBD-D2-W253-S2 -- the reference diff's new test file is refused by the universal commit gate (ruff F841: unused local out), so the code cannot be committed as the reference stands
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:28:51Z",
+  "one_line": "The reference diff's new test file is refused at commit by ruff F841 (unused local out), so the code cannot be committed as the reference stands; nothing was committed and nothing was edited to pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-319 step 2: apply DB319_REFERENCE.patch as issued and then commit the artifact with safe-commit; step 2 also says to file a BLOCKING row and stop if the reference is wrong.",
+  "world_is": "safe-commit.sh ran the commit-gate on the staged .py files and returned BLOCKED: ruff check failed on test_forward_cottonwood.py line 68 column 5 (F841, local variable out assigned but never used). The line is the out assignment in test_forward_49f_path_is_unchanged_and_never_forwards, the same line as patch line 154. The gate returned rc 1 with nothing staged, and HEAD stayed 5b50c09c34. The gate states --force does not bypass a gate failure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run with -F .scratch/msg_253_code.txt returned commit rc 1 with BLOCKED: ruff check failed on infra/aws/lambda/investor-reporting/_authz/tests/test_forward_cottonwood.py",
+      "git status after the refusal: nothing staged; git rev-parse --short HEAD printed 5b50c09c34",
+      "DB319_REFERENCE.patch line 154 carries the same out assignment on the 49F test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether the reference hunk is corrected (a one-token change) or the gate is satisfied another way; this worker edited neither the reference nor the gate."
+}
+```
+
+## IRPT_DASHBD-D2-W253-S3 -- the worker face names the worktree C:/dev/wk-irpt-dashbd-253, but the launch message directed C:/dev/wk-irpt-dashbd-253r, which this worker used
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T02:28:51Z",
+  "one_line": "The order's worktree path C:/dev/wk-irpt-dashbd-253 was not used; the launch message directed the 253r worktree (branch wk-IRPT_DASHBD-253), which carries the order file and the named paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-319 WORKER FACE: the workspace worktree is C:/dev/wk-irpt-dashbd-253 (branch wk-IRPT_DASHBD-253); run everything from its root.",
+  "world_is": "The launch message named C:/dev/wk-irpt-dashbd-253r (branch wk-IRPT_DASHBD-253) for this serial. In that worktree the branch is wk-IRPT_DASHBD-253, test -d org and test -d .tools both pass, and the order file, the checker, the reference patch, served.py and the investigation file are present. The path C:/dev/wk-irpt-dashbd-253 was not inspected by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --abbrev-ref HEAD in C:/dev/wk-irpt-dashbd-253r printed wk-IRPT_DASHBD-253; test -d org and test -d .tools printed TREE-OK",
+      "the order file, p185_cot_read_forward.py, DB319_REFERENCE.patch, served.py and INVESTIGATION_v1.md were each present at their paths under C:/dev/wk-irpt-dashbd-253r"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The next order should name the worktree path that is in use."
+}
+```
