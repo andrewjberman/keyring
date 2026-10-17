@@ -85,7 +85,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER AMENDMENT 1 (2026-10-17 ~23:1xZ), record face:** the first worker's report found the S4 control (the sibling harness's whole-text digest B5) cannot hold after the required cue sentence, and that unlayered `src/index.css` scrollbar rules beat a layered Tailwind v4 utility. Both ruled by the issuer inside decomposition s.123 (the grant already covers the whole `__harness__/` folder; only the bound text was narrower): B5's digest is re-recorded, the thumb declarations take the trailing `!`. Gate limb: the amendment commit states whether `.tools/to-pipeline-gate.py` graded it (the order is modified, not newly added; no `<placeholders>` change). The worker slot ~507 is re-seated with the first worker's commits as inherited state.
 
-<status>pending</status>
+<status>complete -- worker ~507 re-seated after AMENDMENT 1 (merged b33c031077); candidate cand/dell1/amgt-sa-model-grid-scroll-cue @dac528b0 (base PROD d1bed0fb): the cue line above the All figures grid and the important-form thumb declarations on its scroller in ModelTab.tsx, the new gridScrollCue harness, the modelTooltipRows B5 digest re-recorded to base-plus-cue. Issuer re-run in a FRESH detached checkout at dac528b0: GRID SCROLL CUE HARNESS YES (5 of 5), MODEL TOOLTIP ROWS HARNESS YES (9 of 9), typecheck rc 0, eslint rc 0; worker AC2 harness 33 of 36 with only the three pre-existing; AC3 3 files all page. THE REAL GRADE (a visible thumb and cue in a real browser) is the issuer's screenshot read, pending.</status>
 <round>114</round>
 <slot>0.9.0_WK_AMGT_RESAPP~507</slot>
 <fabric>dell1</fabric>
