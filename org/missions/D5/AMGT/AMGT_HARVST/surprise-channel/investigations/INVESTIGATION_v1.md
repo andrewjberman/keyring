@@ -10478,5 +10478,74 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W155-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~155",
+     "surfaced_at": "2026-10-17T15:38:56Z",
+     "one_line": "HVST-ce-1: the pdf branch of the RECOMMENDATION rule assumes a page that starts with the label; UNH report 48d81f053e5076e8 page 0 starts with a page number and a title block, so its fund and stated position are never read.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "1.0.0_SA_CTO",
+     "spec_asserts": "continuation.py module docstring, RULED -- RECOMMENDATION-LINE RESOLUTION (line 47 on): fund_of_record and last_stated_position come from the report whose extraction carries a paragraph (docx) or page (pdf) starting RECOMMENDATION, read for content on that line.",
+     "world_is": "extract.v2.json of 48d81f053e5076e8 (5 pages, sha256 prefix 117e704b8346): page 0 begins '1 / UnitedHealth Group Incorporated (UNH-US) / 2Q26 earnings update' and carries 'Recommendation: Maintain positions in PFOE and DIVZ' at offset 75, the only page matching (?i)recommend. The label regex (continuation.py:132) is applied to text.strip() with no MULTILINE flag: 0 of 5 pages match, candidates=0, and all 17 stored UNH objects read absent. The stored continuation equals the code's output today (5 of 5 fields) and the report IS in the inputs. A line-level read yields PFOE.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/research/corpus/continuation.py@ff3c82da5e:132 (label regex), :262-274 (page locators), :342-366 (candidates)",
+       "amgt/harvest/bronze/research-report-extract/security_key=UNH_US_Equity/48d81f053e5076e8/extract.v2.json (read-only GET, sha256 117e704b8346)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~155/ce1_measure.out@a6d080aeb4 (sections c, e, f)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION",
+     "notes": "ARMED: the derivation runs on every continuation --write, so a future report with this layout is silently absent. Disarm owner is the CTO who ruled the docstring rule; the COO may re-own. The fix is a product change outside this read-only cell."
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W155-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~155",
+     "surfaced_at": "2026-10-17T15:38:56Z",
+     "one_line": "HVST-ce-1: the continuation and dossier rebuild writers take no misfiled-report exclusion; a KMB rebuild on the code as written admits the two Mexico reports that the gateway excludes.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "harvest_research.py MISFILED_REPORTS (lines 201-210): a listed report is never served on its security; it is named in misfiled_reports_excluded and its fields are dropped. The exclusion is keyed by (security_key, report_id).",
+     "world_is": "No MISFILED_REPORTS under lib/ at ff3c82da5e (git grep: no hits). typed.reports_for (typed.py:576-586) returns every silver research-report row of the security, and continuation write_one (934) and dossier write_one (1651) build from those rows. The silver rows fbd50086c4065785 and 1a3b56044db679a5 are KMB_US_Equity rows (class B, fund IDVZ, in part_20260923T044515Z.parquet, read locally). KMB gold objects were not fetched, so whether stored KMB objects already carry them is not measured here.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "infra/aws/ec2/opal-gateway/app/harvest_research.py@ff3c82da5e:201-210 (MISFILED_REPORTS, read via git show HEAD)",
+       "lib/research/corpus/typed.py@ff3c82da5e:576-586 (reports_for, security_key the only filter)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~155/ce1_measure.out@a6d080aeb4 (section g)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION",
+     "notes": "A ruling is needed before any KMB rebuild: either the writers take the exclusion as an input, or the rebuild is held."
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W155-S3",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~155",
+     "surfaced_at": "2026-10-17T15:38:56Z",
+     "one_line": "HVST-ce-1: the pure KPI derivation reads a relative path to org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json, which the sparse worktree does not hold; build_document cannot run from the worktree without a HEAD copy.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "The order's preflight: a file a worker must READ but finds absent is read with git show HEAD:<path>, and the pure derivation runs on the fetched documents.",
+     "world_is": "continuation.py KPI_LEXICON_PATH (147-150) is relative and _kpi_lexicon_bytes (177-179) opens it from the working directory. The directory is absent from C:/dev/wk-harvst-155. The harness copied the HEAD bytes (53066) into .scratch and set the module constant there; no product file changed.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/research/corpus/continuation.py@ff3c82da5e:147-179 (KPI_LEXICON_PATH, _kpi_lexicon_bytes)",
+       "git show ff3c82da5e:org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json (53066 bytes)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
