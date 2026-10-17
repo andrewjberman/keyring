@@ -310,6 +310,46 @@ Worker rows of the round-1 cells, appended and never edited. Rows `SOC2_MSLOGS-D
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W12-S1",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~12",
+    "surfaced_at": "2026-10-17T06:38:51Z",
+    "one_line": "The task order names the README silver reader line as read_timeline.py; the README at the base named scripts/silver/read_day.py, a file the tree does not hold.",
+    "spec_asserts": "TO SOC2_MSLOGS.TO-R2-t2 says the silver reader line of data/m365_metadata/README.md names silver/read_timeline.py.",
+    "world_is": "At base 5795b96e64 README.md line 11 named scripts/silver/read_day.py. scripts/silver/ holds read_timeline.py only. The README line was rewritten to name read_timeline.py, the file the tree holds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/m365_metadata/README.md@5795b96e64 line 11 names scripts/silver/read_day.py",
+        "data/m365_metadata/scripts/silver/read_timeline.py@5795b96e64 is the only silver reader present"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W12-S2",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~12",
+    "surfaced_at": "2026-10-17T06:38:51Z",
+    "one_line": "The README usage line for --profile, --mfa-code and --desktop describes flags that the silver reader does not yet take at this base; the door client it names is not in the tree.",
+    "spec_asserts": "TO SOC2_MSLOGS.TO-R2-t2 asks for a README usage line passing --profile, --mfa-code and --desktop to the member's reader, with silver/door_client.py and silver/read_exposure.py named as the client's modules.",
+    "world_is": "At base 5795b96e64 scripts/silver/read_timeline.py argparse takes only --account, --start and --end, and scripts/silver/door_client.py and scripts/silver/read_exposure.py are absent. The usage line was written as the order states; it is accurate only once the sibling cell that adds these flags and modules lands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/m365_metadata/scripts/silver/read_timeline.py@5795b96e64 lines 93-97 add_argument: --account, --start, --end only",
+        "data/m365_metadata/scripts/silver/ at 5795b96e64 holds read_timeline.py only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
