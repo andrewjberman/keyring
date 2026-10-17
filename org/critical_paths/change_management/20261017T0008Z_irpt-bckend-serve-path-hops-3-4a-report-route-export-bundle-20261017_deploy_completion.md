@@ -29,3 +29,7 @@
 - 20261017T002635Z LEG L5 closed: plan 0 add 1 change 0 destroy (export function code attributes only); naming gate WARN 28 graded (6 WARN on existing unc
 - 20261017T002635Z LEG L6 closed: IB247-1 release record and criteria output written; AC1 PASS, AC2 PASS, AC3 owed (step 6 not released); proof instance V
 - 20261017T002805Z LEG L1 closed: source-map stamps (artifact_sha256 only, two entries), the release record, proof and this ledger committed with explicit
+
+## Carried notes (hand-written lines kept across re-renders)
+
+- 20261017T0250Z NOTE IB-pr-618 (applier 0.7.0_AE_CloudOps~IB2; no new leg, no leg closed): irpt-export-render took a code-only bundle VerVs2a1.. (build commit 347505c467, retained_export blob 296509403c, S3 version TWTi4Yr.uo18..) by ONE safe-apply at 02:47Z, plan 0 add 1 change 0 destroy, replan No changes, environment untouched (14 variables); L7 (the IAM statement) stays open, step 6 of IB-pr-616 still held. The deploy_ledger tool has no note command; this line is hand-written under the carried-notes head the tool preserves.

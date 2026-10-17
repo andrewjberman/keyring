@@ -18,6 +18,8 @@ import importlib.util
 import os
 import sys
 
+sys.dont_write_bytecode = True  # the smoke reads the built tree and writes nothing into it (no __pycache__ members)
+
 
 def path_tuple(text):
     for node in ast.walk(ast.parse(text)):
