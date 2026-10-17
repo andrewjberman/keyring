@@ -30037,3 +30037,77 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form and arithmetic only; no product change was made to close the gap, because the order fixes the bound. The disposition (widen the bound, or accept the clip on short grids) belongs to the issuer. Row appended as a new fenced block at the tail, the form every existing row uses."
 }
 ```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W504-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~504",
+  "surfaced_at": "2026-10-17T22:52:49Z",
+  "one_line": "The commit gate grades no .tsx file: the portal commit of three files (two .ts/.tsx and one .cjs) printed 'commit-gate checked 0 of 3 file(s) -- NOTHING WAS CHECKED' and committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal branch cand/dell1/amgt-sa-peers-subject-currency@a3f2b7277bdb24e29cb4723de502fc0862e281f1 (the commit's own safe-commit output: 'not graded: 1 .tsx', 'commit-gate checked 0 of 3 file(s)')",
+      "the same commit's gate line: 'This line is NOT evidence of a clean gate. This gate reads only .py / .sh / .tf / org/projects/*.json'",
+      "AC2 invocation r107_feature_green_v3.sh (typecheck rc 0, lint rc 0 on src/pages/SecurityAnalysis) was run on the same head and stands in for the frontend check on this commit"
+    ]
+  },
+  "spec_asserts": "The order's step (7) commits through .tools/safe-commit.sh; the repo's commit-gate stage is the pre-commit grading of a commit. The order names no coverage limit for a .tsx commit.",
+  "world_is": "The commit-gate in this worktree reads only .py, .sh, .tf and org/projects/*.json, so the three changed files of a3f2b7277bdb24e29cb4723de502fc0862e281f1 were not graded by it; the commit still exited 0.",
+  "notes": "Form only. No gate was changed and no file outside the order's paths was touched. The frontend evidence used is the AC2 tsc and lint invocation, not the commit-gate."
+}
+```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W504-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~504",
+  "surfaced_at": "2026-10-17T22:52:49Z",
+  "one_line": "A portal commit in the worktree printed 'NAMING ERROR function-map folder missing' for C:\\dev\\wk-resapp-504\\infra/aws/lambda/ci/function-map/, and the commit went through.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of a3f2b7277bdb24e29cb4723de502fc0862e281f1 in the portal: '[naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-resapp-504\\infra/aws/lambda/ci/function-map/'",
+      "measured: test -d C:/dev/wk-resapp-504/infra/aws/lambda/ci/function-map returns ABSENT; the same path under C:/dev/ajb_workspace is PRESENT"
+    ]
+  },
+  "spec_asserts": "The order's step (7) commits the portal change through .tools/safe-commit.sh; no clause of the order names the naming gate or its source map.",
+  "world_is": "The naming gate reads the Lambda source map from the worktree's infra folder, which the worktree does not carry; it prints NAMING ERROR and the commit was not refused.",
+  "notes": "Form only. The worktree is cut from the issuance commit, which carries no infra folder of its own; the message did not block this commit."
+}
+```
+```json
+{
+  "id": "AMGT_RESAPP-D1-W504-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~504",
+  "surfaced_at": "2026-10-17T22:52:49Z",
+  "one_line": "The pre-commit risk reflex found no .tools/comp-pulse under the portal toplevel and executed the baked path in the base checkout, C:/dev/ajb_workspace/.tools/comp-pulse, whose danger map it reports as 11.1h old.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of a3f2b7277bdb24e29cb4723de502fc0862e281f1 in the portal: '[risk-reflex] WARN: comp-pulse: the caller toplevel C:/dev/wk-resapp-504/portal carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse instead'",
+      "measured: test -d C:/dev/wk-resapp-504/portal/.tools returns ABSENT; test -e /c/dev/ajb_workspace/.tools/comp-pulse returns PRESENT",
+      "the reflex line 'danger map: 11.1h old' and 'DENOMINATOR: 3 file(s) checked against 3672 danger node(s)' is the base checkout's map"
+    ]
+  },
+  "spec_asserts": "The order's step (7) commits through .tools/safe-commit.sh from the outer checkout, with the portal as the commit repository; the order names no comp-pulse path.",
+  "world_is": "The risk reflex in a nested-portal commit reads the danger map of the base checkout, not of the worktree; its answer (PRESENT_WITH_ZERO_RESULTS, 3 of 3 files) is therefore a read of another tree's map.",
+  "notes": "Form only. The reflex reported REFLEX CLEAN on the measured map; that map is the base checkout's, so the result is recorded as read from that tree."
+}
+```
