@@ -10651,5 +10651,48 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             },
             "disposition": "UNDER_INVESTIGATION"
         }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W156-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~156",
+     "surfaced_at": "2026-10-17T16:09:48Z",
+     "one_line": "HVST-ce-2: before round 90 a pdf page that STARTS with the label was read only when it was ONE line. The label regex has no multiline flag, so a label-start page that runs on to more lines was never a candidate; the new line rule now reads such a page, which the order's control arm (2) does not describe.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "Order section 1a and control arm (2): the line rule runs only when the existing label test does not match, and a pdf page that STARTS with the label yields the same candidate as before.",
+     "world_is": "continuation.py:132 _RECOMMENDATION_LABEL_RE is compiled (?i) with no (?m) and applied by .match(text.strip()) with a trailing (.*)$. Probe at HEAD 8005ccbacb: 'RECOMMENDATION: Maintain position in IDVZ' matches True; 'RECOMMENDATION: Maintain position in IDVZ' followed by a newline and 'United Group delivered' matches False; 'RECOMMENDATION:' followed by a newline and 'Maintain positions in PFOE' matches True. So a multi-line label-start pdf page had no candidate before this change. ce2_census.out does not separate this class from the line-rule class; both appear among its CHANGED lines.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/research/corpus/continuation.py@8005ccbacb:132 (_RECOMMENDATION_LABEL_RE, no multiline flag)",
+       "lib/research/corpus/continuation.py@8005ccbacb:350 (_RECOMMENDATION_LABEL_RE.match(text.strip()))",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~156/ce2_census.out (CHANGED lines, pinned by the worker commit)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W156-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~156",
+     "surfaced_at": "2026-10-17T16:09:48Z",
+     "one_line": "HVST-ce-2: 50 tests under lib/research/corpus/tests (team_sheet round44/46/47/49 and template round47) fail in this sparse worktree with FileNotFoundError on integrations/bloomberg/research/field_map.json, which the sparse checkout does not hold. The six-file AC2 set (53 passed) is unaffected.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "Order preflight: a file a worker must READ but finds absent is read with git show HEAD:<path>. The order names no test outside its AC2 set.",
+     "world_is": "python -m pytest lib/research/corpus/tests -q in this worktree: 50 failed, 576 passed. Every failure is FileNotFoundError on C:\\dev\\wk-harvst-156\\integrations\\bloomberg\\research\\field_map.json raised from team_sheet.py:269; 'ls integrations/bloomberg' reports the directory absent. The file is outside this order's paths.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/research/corpus/team_sheet.py@8005ccbacb:269 (_field_definitions opens _FIELD_MAP_PATH)",
+       "lib/research/corpus/tests/test_team_sheet_round44.py@8005ccbacb (one of the 50 failing files)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

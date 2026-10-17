@@ -4267,3 +4267,16 @@ The CTO's enrichment list (four items). Round 89 closed MAY-CLOSE (CVO `ADJUDICA
 - **Fan-out:** `N of M chains, N=3 workers (ce-2, ce-3, ce-6) of M=3 chains, cap 8`: disjoint write sets (`continuation.py` and its tests; `harvest_research.py` and its test; `typed.py` and its test). `ce-4` consumes `ce-2` and `ce-6`; `ce-5` consumes `ce-3`.
 - **Checks at the cut (dry-run at the base):** `ce-2` AC1 FAIL as expected (no test file), AC2 PASS (`53 passed in 1.07s`), AC3 FAIL as expected (no census file); `ce-3` AC1 FAIL as expected, AC2 PASS (`38 passed in 2.27s`); `ce-6` AC1 FAIL as expected, AC2 PASS (`35 passed in 0.94s`).
 - **Not cut (named):** a rebuild of every securities' gold objects beyond the census's CHANGED list; `harvest_resolve_security("PG")` `not_held` (`D1-S39`); the standing candidates of `ledger/ROUND88_ENRICHMENT_CANDIDATES_20261017.md`; `ft`.
+
+### 120b. ROUND 90 -- `HVST-ce-2`, `-3`, `-6` merged; `HVST-ce-4` CUT, STAGED behind the CTO half (2026-10-17 ~17:1xZ)
+
+`HVST-ce-6` merged `87b542aed4`, `HVST-ce-3` merged `b77e08e198`, `HVST-ce-2` merged `344ea6a5fc` (after AMENDMENT 1: the pdf line rule is a fallback and its value carries `line_only`; the census reads 30 securities absent-to-value and 0 value-to-value, 94 of 94). The measured answer cuts `ce-4`.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-ce-4` | `ce-4` | **The gold continuation and dossier objects of 31 securities (the census's 30 plus `KMB_US_Equity`) are rebuilt and read on the served tool**: `continuation.build` then `write_one`, then `dossier.build` then `write_one`, serially, canary UNH and KMB first; UNH shows fund PFOE, KMB cites neither Mexico report, the control `CPA_US_Equity` is unchanged. Add-only (gold never overwrites). | WORLD | seat `0.7.0_AE_CloudOps~SC1` | CUT, STAGED: waits on the CTO half (COO half signed, sha256 `5b486cda...6149`; list `ce4_securities.txt` sha256 `7881772d...c67b`) |
+| `HVST-ce-5` | -- | The gateway serves the `ce-3` wording under its own pair, batched with any other gateway change. | WORLD | seat SC1 | DEFINED, NOT CUT: unchanged |
+
+- **Fan-out:** `N of M chains, N=0 workers (ce-4 is a seat order) of M=1 chain, cap 8`; `ce-4` is one chain behind the merged `ce-2` and `ce-6`.
+- **Check at the cut (dry-run at the base):** `ce-4` AC1 to AC3 FAIL as expected (`cat` of a file that does not exist).
+- **Armed rows still open:** `D1-W155-S1`, `D1-W155-S2`, `D1-W158-S2`; the issuer dispositions them when the served reads of `ce-4` are clean.
