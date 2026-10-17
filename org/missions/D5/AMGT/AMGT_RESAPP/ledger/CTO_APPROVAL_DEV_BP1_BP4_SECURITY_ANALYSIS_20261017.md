@@ -96,3 +96,19 @@ times, against 3 of 9 on PROD. The fresh-checkout harness reads 9/9 (msg 7750). 
 - Carried to round 114 as a row: a grid under about 20 figure rows could still clip an upward bubble at the scroller's top.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 8 -- round 114: bu-1 @a3f2b727 (row 55a2), bu-2 @9a8ef5e451 (row 5b5e), bu-4 @dac528b0 (row c1c6), ~23:3xZ
+
+**All three are approved** for DEV and one chosen-set PROD promote. Each is cut from PROD d1bed0fb, and `git diff --name-only` from
+d1bed0fb shows every changed path under `src/pages/SecurityAnalysis/` (opal-internal).
+- **bu-1:** `priceCurrency.ts` and `PeersTab.tsx`. The Peers subject row reads its currency through the trimming helper, which closes
+  W502-S1 and W497-S2.
+- **bu-2:** every page date printed from a served ISO day goes through the house long-date helper, across the Timeline, WordCloud, What
+  Changed, Exec Management and Posture files.
+- **bu-4:** the All figures grid shows that it scrolls sideways. ModelTab.tsx changes over 3 commits, the last two being amendments.
+- **Integrated walk** (`round114/CLOSE_WALK_INTEGRATED.md`): format:dates absent, the cue visible, and ICICIBC IN rendering 113 rows. So
+  W503-S1 closes NOT A DEFECT under my msg 7767 rule (20 rows or more). The thumb is proven in the CSS cascade only, not on the running page;
+  that is carried as a row.
+- **Row `dell1-20261017T233227Z-0008`** is R1's duplicate of 55a2, so it is closed as withdrawn.
+
+-- 1.0.0_SA_CTO~DELL1
