@@ -23429,3 +23429,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W280-S1 -- the checker test file does not add the intake directory to sys.path; the calendar needed an explicit lib path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W280-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~280",
+  "surfaced_at": "2026-10-17T01:39:06Z",
+  "one_line": "TO-AR-g-157 asks the test file to add lib to sys.path 'the way the file already adds the intake directory'; the file adds no directory to sys.path (it loads the checker by path with spec_from_file_location), so the lib path was added as an explicit guarded sys.path insert of Path(__file__).parents[6] / 'lib'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-157 step 3: 'the file needs the repository's lib directory on sys.path for the calendar: add it at the top of the test file the way the file already adds the intake directory'.",
+  "world_is": "infra/aws/lambda/investor-reporting/intake/tests/test_yfinance_check.py:19-20 (base b27df7d15d) loads the checker and the resolver with importlib.util.spec_from_file_location and inserts no directory on sys.path; there is no existing pattern to copy. The product module imports trading_calendar inside _check_one as the order specifies, so the path is needed only by the tests and by the checks script (which inserts lib itself). The insert added at the top of the test file is guarded (if not already present) and derives the path from the file's location; no existing test was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_yfinance_check.py:19-20 @b27df7d15d (checker_mod and resolution loaded by spec_from_file_location; no sys.path insert)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_yfinance_check.py:9-14 @03bf10f6fc (the guarded lib insert added for AR-g-157)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-157.yfinance-checker-last-finite-close-at-t1.md step 3 (the order's wording)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
