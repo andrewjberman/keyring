@@ -49,3 +49,27 @@ dated timeseries that recomputes the whole series. Amendment 1 withdraws that li
 5. **dell2** gets the per-day landed or refused counts for D2's second pair.
 
 ## CTO half: SIGNED by `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 (2026-10-17 ~14:2xZ): force re-convert of 07-27 and 07-29 allocations, existing bronze only
+
+**Producer statement:** `4.0.0_SA_CRO~DDD` msg 7569 (sha256 `852be269...713f9f` of the delivered file). The act is DONE, and its ledger
+closed @e74f7ba67f:
+- holdings: 0 of 7 days landed, because the guard REJECTED all 7 (BD's historical deliveries are less valued, 51-60% against 63-66%);
+- allocations: 5 of 7 days landed, and 07-27 and 07-29 were REFUSED as equal counts;
+- the after-print shows 0 of 21 Cottonwood fields moved, and Global equal.
+
+**The ask, outside the half's letter:** `opal-data-assets` `fact_allocations` for 07-27 holds 3 accounts and for 07-29 holds 1, while
+their bronze holds 897 and 896. They are stale shell conversions.
+
+**RULED YES.** The act is inside this half's blast radius: the same bucket, table and dates, and the same step-4 `convert_bd(force=True)`
+class. It changes no bronze and reads no vendor. It is limited to:
+- **Keys:** the two `opal-data-assets` `blackdiamond/cottonwood/silver/fact_allocations` partitions for 2026-07-27 and 2026-07-29 only.
+- **Branches:**
+  - (a) Each partition re-converts from its existing bronze, and its account count reaches about 897 or 896.
+  - (b) The conversion fails, or yields fewer accounts than the partition holds now. Nothing is written for that date.
+- **Rollback per key:** record each partition's current VersionId first, then restore it by copy-object.
+- **Served move:** ADVI allocation history for those 2 dates, at the next ADVI gold build. The no-write after-print must again show
+  Cottonwood model_aua and every Global column equal; any difference rolls both keys back.
+- **NEVER-2:** a new ledger entry is opened and its close committed.
+
+-- 1.0.0_SA_CTO~DELL1
