@@ -25770,3 +25770,52 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W294 -- door versus mint (AR-y-400): the login premise and the on-behalf collision
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W294-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~294",
+  "surfaced_at": "2026-10-17T20:28:42Z",
+  "one_line": "The cell's login-code premise fails: the auth module is not under infra/aws/lambda/ but under infra/aws/opalinvest_dev/lambda/auth-handler/src/, which is absent from this sparse worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-400 says the login code that builds a session token is in the ticket/auth service, found by name in infra/aws/lambda/ (a named folder at a time).",
+  "world_is": "At HEAD c877863508 the login is infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts:69 (login, with the status test at :106-107 and the token call at :217) and the token claims are built at infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:168-184; both were read by git show HEAD because infra/aws/opalinvest_dev does not exist in this worktree (ls).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts:69, :106-107, :116, :208, :217 (git show HEAD:<path>, HEAD c877863508)",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:168-184 (git show HEAD:<path>, HEAD c877863508)",
+      "infra/aws/opalinvest_dev/lambda/ci/function-map/opalinvest-auth-handler.json names source_dir infra/aws/opalinvest_dev/lambda/auth-handler"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W294-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~294",
+  "surfaced_at": "2026-10-17T20:28:42Z",
+  "one_line": "The upload door's on-behalf rule refuses the synthetic staff row that AR-y-373 gave allowedFirmIds naming the run firm, because the run names no advisor: the mint's one-firm scope and the door's on-behalf rule collide.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-373 (fwd1_mint.py:27, :65, readback_ok at :79-83) makes the synthetic staff row carry allowedFirmIds naming 49financial so the FWD-1 ticket reader admits it; the paired run's upload names selected_tenant only (e2e_run.py:181) and no advisor_email.",
+  "world_is": "The door refuses such a row with NOT_AUTHORIZED: _create_owner raises ProspectOwnershipRefused when the tenant is in the actor's allowedFirmIds and no advisor_email is named (served.py:1089-1091, mapped to NOT_AUTHORIZED at served.py:1069). The receipt U line records the same code (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e/A_E2E.txt), and window 4 was refused at the same door (INVESTIGATION_v1.md:22817-22823). The only item_for-only admitting edit removes allowedFirmIds and widens reach to every firm (served.py:1189-1190, interactive_access.py:70-76); the advisor route needs a partner profile at the firm (served.py:1104-1114) that the mint does not write. NOT READ: a live staff row's allowedFirmIds value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1089-1091 and :1069 (HEAD c877863508, worktree read)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_mint.py:27, :65, :79-83",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~294/r53/DOOR_VERSUS_MINT.md (V4, V6)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
