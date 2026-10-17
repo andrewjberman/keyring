@@ -4589,3 +4589,15 @@ Check IB248-1 (`deliverables/2.0.0_SA_COO~S2/checks/r248/p248_cells.py`), dry-ru
 | `IB-pr-617` | BUILD: read_pinned_filled reads the current object and refuses on a changed object with a worded state; the tests move with it; a planted-changed-object test | FWD-21 | WORLD (path floor) | none | PS8-a |
 
 fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell, one worker (slot ~481); disjoint write surface (retained_export.py and three test files).
+
+## 244. ROUND 9, WORKSTREAM ~PS (a remediation of IB-pr-617: four stale comments and one docstring in retained_export.py made true; 2026-10-17 ~02:2xZ, issuer 2.0.0_SA_COO~S2 on dell2, on worker 481's row IRPT_BCKEND-D2-W481-S1)
+
+IB-pr-617 changed `read_pinned_filled` to read the CURRENT object and refuse on a sha256 or size mismatch (`302d7fc367`). Worker 481 correctly left four statements outside the two named functions unedited under its change-nothing-else bound, and filed row W481-S1: the PATH C banner (the freeze "reads that VersionId"), the IB-pr-563 block ("reads back exactly that VersionId"), the FILLED-REPORT-F banner ("never the current object") and the `filled_leg_read` docstring ("The current object is never consulted") now state the opposite of what the code does. They sit in a security-relevant pinning path, and the export bundle (TO-IB-pr-618) is built from this file, so they are corrected BEFORE the bundle: comments and one docstring only, no code token. The module's own head (PATH B, the platinum series read through the route) stays true and is not touched. Cut as one small order for the same worker slot (the next order is handed to the SAME subagent), merged with IB-pr-617 at the chain end.
+
+Check IB249-1 (`deliverables/2.0.0_SA_COO~S2/checks/r249/p249_cells.py`), dry-run at the worker's state `dae909c87f` on dell2: AC1 (the bound, 31 tests pass) PASS and AC2 (the bound, no code token differs from the build commit) PASS as bound checks should at the base; AC3 (the build: the four stale statements gone and the sites say the current object is re-read) FAILS. AC3 also run against a scratch copy with the four planned replacements applied and PASSES.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-619` | REPAIR: four stale comments and one docstring in retained_export.py describe the old pinned-VersionId read; make them true, comments and docstring only | FWD-21 | WORLD (path floor) | IB-pr-617 (built) | PS8-a |
+
+fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell on the same chain as IB-pr-617, so the same worker continues; one write surface (retained_export.py).
