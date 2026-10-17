@@ -41520,3 +41520,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Registry rows are a CTO or integrator edit; the producer cell names them in its PRD. This row records the absence only."
 }
 ```
+
+## IRPT_BCKEND-D2-W449-S1 -- The stage's status set has no value for both arguments present on a run that does not upload
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W449-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~449",
+  "surfaced_at": "2026-10-17T03:34:10Z",
+  "one_line": "The order fixes four stage statuses, and none names the case where both arguments are present but the run does not upload; the stage adds skipped_no_upload there and reads no secret.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-2 WORKER FACE step 4 fixes the hmac_list status to written, skipped_no_args, skipped_empty or failed, and step 3 writes only when upload is on and both arguments are given.",
+  "world_is": "A --dry-run or a run without --upload that is given both arguments has no status in that set. emit_hmac_list returns skipped_no_upload after the empty check and before any secret read or put, and prints nothing for that case. The new value is stated in the function docstring.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-hm-2.build-the-runner-hmac-list-stage.md@44518fb9a3 WORKER FACE step 3 and step 4",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py (the staged worker commit; base 44518fb9a3 has no stage) emit_hmac_list status returns"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Additive value only; the four named statuses are unchanged. No secret is read on a run that does not upload, so a dry run makes no AWS call."
+}
+```
+
+## IRPT_BCKEND-D2-W449-S2 -- One --hmac-list-uri cannot give one key per firm when --firms selects several firms
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W449-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~449",
+  "surfaced_at": "2026-10-17T03:34:10Z",
+  "one_line": "One --hmac-list-uri names one object, but --firms all selects several firms and each run_firm call would put the same key, so main refuses that call with rc 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-2 WORKER FACE step 2 and step 3: the destination is ONE key per firm, named by the --hmac-list-uri argument; the order names no multi-firm form of the argument.",
+  "world_is": "main calls run_firm once per selected firm. With two or more firms and one URI, the last firm would overwrite the others. main now prints ERROR and returns 2 when --hmac-list-uri is given and the selection is not one firm, mirroring --previous-key. emit_hmac_list also refuses a URI whose bucket is not the firm bucket or whose key lies under the directory prefixes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-hm-2.build-the-runner-hmac-list-stage.md@44518fb9a3 WORKER FACE step 3",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py main() --previous-key precedent and the --hmac-list-uri one-firm check (staged worker commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The dispatch in the later cell must pass one firm per call for the URI to name one object per firm. This row records the gap; the choice of per-firm keys is the issuer's."
+}
+```
+
+## IRPT_BCKEND-D2-W449-S3 -- The runner test folder is not green at base: 136 fail and three modules fail collection
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W449-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~449",
+  "surfaced_at": "2026-10-17T03:34:10Z",
+  "one_line": "At base 44518fb9a3 the investor_reporting tests folder has 136 failing tests, 20 error entries and three modules that fail collection, so the no-regression bar can only be read as the set of base-passing tests.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-2 step 2: run the whole data/assets/scripts/gold/investor_reporting/tests folder and require that no test that passed at base may fail.",
+  "world_is": "Base run with --continue-on-collection-errors: 329 passed, 136 failed, 20 ERROR entries; test_cot_account_mapping.py, test_holdings_display.py and test_tax_membership_once.py error at collection. After the change: 339 passed (the 329 plus the ten new tests), 136 failed, 20 ERROR entries, with the failing and error sets identical to base and every base-passing id still passing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~449/IBhm2_notes.md base and after test counts",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_display.py collection FileNotFoundError at base 44518fb9a3 (Windows path in the fixture)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Pre-existing and not caused by this change. Not repaired here: the order bounds the grant to the runner and the new test file."
+}
+```
