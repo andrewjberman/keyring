@@ -1,0 +1,40 @@
+{
+  "slug": "estate-report-runner-function-map-20261017",
+  "title": "NFRA_CTLPLN TO-APPLY-32: estate_report_runner.py at bfbdc20d40 to s3://opal-estate-report/code/ (reads the function-map folder)",
+  "author": "0.7.0_AE_CloudOps~NFRA1",
+  "status": "OPEN",
+  "opened_at": "2026-10-17T00:45:00+00:00",
+  "window_hours": 14.0,
+  "entry_path": "org/critical_paths/change_management/20261017T0045Z_estate-report-runner-function-map_deploy_completion.md",
+  "legs": [
+    {
+      "id": "PUT",
+      "kind": "verify",
+      "target": "s3://opal-estate-report/code/estate_report_runner.py",
+      "proof_required": "one put-object of the file at bfbdc20d40; new VersionId differs from 8pG9vs5I4CSGNVC8OcUy2Q9ARArGgumx",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "READBACK",
+      "kind": "verify",
+      "target": "sha256 of the object re-downloaded by its new VersionId",
+      "proof_required": "equals 5e693559daa70406bd41d8d8290fc7add93fafaadba2d10500c260b7bf4a227d; one-byte-changed copy reads unequal",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "DISARM",
+      "kind": "verify",
+      "target": "estate-report.service log at the 2026-10-17 13:00Z start",
+      "proof_required": "lambda hop reads function-map/, no WARN naming the retired map, no RAISE",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261017T004500Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 3 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "laptop"
+}
