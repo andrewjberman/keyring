@@ -10,6 +10,7 @@ import types
 
 ROOT = os.getcwd()
 sys.path.insert(0, os.path.join(ROOT, "lib"))
+sys.path.insert(0, ROOT)  # round 2: the door handler imports lib.opal_naming
 CK = os.path.dirname(os.path.abspath(__file__))
 PKG = os.path.join(ROOT, "data", "m365_metadata", "scripts", "collector")
 DOOR = os.path.join(ROOT, "infra", "aws", "lambda", "globgrph-trino-access")
