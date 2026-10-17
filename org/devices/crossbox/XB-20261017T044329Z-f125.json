@@ -11,8 +11,8 @@
  "body_path": "org/tier1_exec/4.0.0_SA_CRO~DDD/deliverables/CROSSBOX_ORDER2_LAPTOP_CLOUDOPS_MDPF_COTTONWOOD_1015_DONUT.md",
  "opened_at": "2026-10-17T04:43:29Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-17T04:46:22Z",
+  "bus_message_id": "23fc46d5-821a-432d-8514-de12abd4cc66"
  },
  "ack_bus_message_id": null,
  "closed_from": {
