@@ -27050,3 +27050,211 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "No false state results: Z-S336 and Z-S338 stayed ARMED and OPEN in v21, so nothing was disarmed early. The defect is that the slug's routing precondition was sidestepped by a mislabel. Fix going forward: a remediation row's round is the project round of the item it remediates, read from the order's <round> tag, never the adjudication file's version. The two rows' round fields are not clock fields, so they cannot be corrected in place; this row is the correction of record."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~133",
+  "surfaced_at": "2026-10-17T08:53:48Z",
+  "id": "NFRA_OPLGTW-Z-W133-S1",
+  "one_line": "The order's schema path org/surprise_channel/schemas/investigation_item.schema.json is not materialized in this worktree: the sparse cone omits org/surprise_channel, so the row shape was read from the main tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rules: the row shape is checked against org/surprise_channel/schemas/investigation_item.schema.json, read from the worker's own worktree (the rule says every search names the worktree; the schema is the row's contract).",
+  "world_is": "git sparse-checkout list in C:/tmp/wk-oplgtw-133 names no org/surprise_channel path; ls on the schemas directory fails with 'No such file or directory'; the index tracks the file with skip-worktree (S). The file was read from C:/Users/Opal Bloomberg/Desktop/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json, read-only. The row was appended to the channel file the order names, which is materialized.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -t org/surprise_channel/schemas/investigation_item.schema.json @83eb42b2ad -> S (skip-worktree); the directory is absent on disk",
+      "git sparse-checkout list (worktree C:/tmp/wk-oplgtw-133) -> .tools, infra/aws/ec2/opal-gateway, infra/logic, lib, org/devices, org/mcp, org/missions/D9/NFRA/NFRA_OPLGTW, org/modules/graph, org/ref, org/standards",
+      "sibling instance org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~132/NFRA_OPLGTW.TO-OG-en-20.bound-glibc-arenas-and-read-workers.proof_of_spec.json (surprises NFRA_OPLGTW-Z-W132-S2, same path, same absence)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The worker's proof and the row gate do not need the schema text; the row follows the fields the channel already carries."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~133",
+  "surfaced_at": "2026-10-17T08:53:48Z",
+  "id": "NFRA_OPLGTW-Z-W133-S2",
+  "one_line": "The worker rules file .claude/agents/worker.md is tracked in the index but not materialized in this worktree (sparse cone), so the rules were taken from the session context.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Agent definition: the worker's rules are in .claude/agents/worker.md, read from the worker's own worktree.",
+  "world_is": "ls -la .claude/agents/worker.md in C:/tmp/wk-oplgtw-133 -> No such file or directory; git ls-tree HEAD .claude/agents lists worker.md and worker-light.md. The file exists in the main tree at C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.claude/agents/worker.md. The rules were taken from the session system prompt, unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la C:/tmp/wk-oplgtw-133/.claude/agents/worker.md -> No such file or directory",
+      "git ls-tree --name-only HEAD .claude/agents/ @83eb42b2ad -> .claude/agents/worker-light.md, .claude/agents/worker.md",
+      "git sparse-checkout list in C:/tmp/wk-oplgtw-133 -> no .claude path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Same cause as NFRA_OPLGTW-Z-W133-S1: the sparse cone of this worktree does not name the paths the rules point at. The order's paths are unaffected."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~133",
+  "surfaced_at": "2026-10-17T08:53:48Z",
+  "id": "NFRA_OPLGTW-Z-W133-S3",
+  "one_line": "The commit-time risk reflex answered PARTIAL_OR_BLIND on the deploy-script commit (danger map STALE, 0 of 1 file scanned), and the client-data check was ABSENT for this commit; the commit went through with both unresolved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order preflight and worker rules: a commit of this worker lands through safe-commit.sh with its pre-commit gates clear; the order names no risk reflex, and its preflight declares comp-adversary and comp-schedule not applicable.",
+  "world_is": "safe-commit.sh 83eb42b2ad printed: [risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND, NOT-DECIDABLE: danger map STALE (36.9h old), WITHIN BUDGET scanned 0 of 1 file(s); and WARN: client-data-check: hashed account-id list ABSENT. The commit was not refused. The diff is an 18-line insertion of trunk text with no account identifiers.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 83eb42b2ad (wk-NFRA_OPLGTW-133): [risk-reflex] ANSWER STATE PARTIAL_OR_BLIND; NOT-DECIDABLE danger map STALE; scanned 0 of 1 file(s)",
+      "safe-commit.sh output for commit 83eb42b2ad: WARN client-data-check hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt",
+      "git show --stat 83eb42b2ad -> infra/aws/ec2/opal-gateway/deploy-to-ec2.sh | 18 insertions(+)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The reflex prints its state and does not block; a commit-time check that cannot decide a diff is recorded here, not read as checked clean. The main-tree danger map is the instrument the reflex names for the rebuild; this worker did not run it (the order bounds the graph and adversary lenses out)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~133",
+  "surfaced_at": "2026-10-17T09:01:53Z",
+  "id": "NFRA_OPLGTW-Z-W133-S4",
+  "one_line": "The naming limb refused the proof-and-status commit of OG-db-2: the function-map folder infra/aws/lambda/ci/function-map/ is outside this worktree's sparse cone, so the commit did not land.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: write the proof instance, validate it, flip the one status tag, and commit the instance, the deliverables and the flip together through safe-commit.sh.",
+  "world_is": "bash .tools/safe-commit.sh refused the set (instance, deliverables folder, task order): 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-oplgtw-133\\infra/aws/lambda/ci/function-map/'. The folder is not materialized in this sparse worktree. The proof-of-spec-check rc=0 VALID stands; the status flip is reverted in the worktree to staged; the proof instance and the flip are untracked and uncommitted. Not widened, not routed around.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- <proof instance> <task order> (rc=1): ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6); files unstaged; output at C:/tmp/wk-oplgtw-133/.scratch/commit_proof.out",
+      ".tools/naming-gate.py:1109 FUNCTION_MAP_DIR = infra/aws/lambda/ci/function-map/ and :1295-1299 the missing-folder NAMING ERROR (fail closed)",
+      "git sparse-checkout list in C:/tmp/wk-oplgtw-133 names no infra/aws/lambda path; the surprise-row commit be6b218289 and the deploy commit 83eb42b2ad passed the gate with the same cone"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The gate's refusal is fail-closed by design; the worktree cone omits the folder it reads. The fix is an environment choice for the issuer or the CTO: add the folder to the cone, or land the record from a materialized tree. This worker did not widen the cone, which would be a materialization act outside the order."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:10:52Z",
+  "id": "NFRA_OPLGTW-Z-S359",
+  "one_line": "Round-40 disposition of worker row Z-W133-S1: Worker environment note: the row-schema path is skip-worktree in the sparse cone; the worker read it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W133-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-db-2 drained 02aabf0e2b; db2.AC1, AC2 and the write-set bound PASS in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker environment note: the row-schema path is skip-worktree in the sparse cone; the worker read it from the main tree. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker environment note: the row-schema path is skip-worktree in the sparse cone; the worker read it from the main tree. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:10:52Z",
+  "id": "NFRA_OPLGTW-Z-S360",
+  "one_line": "Round-40 disposition of worker row Z-W133-S2: Worker environment note: .claude/agents/worker.md is not materialized in the sparse worktree; the wo",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W133-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-db-2 drained 02aabf0e2b; db2.AC1, AC2 and the write-set bound PASS in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker environment note: .claude/agents/worker.md is not materialized in the sparse worktree; the worker took its rules from the order. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker environment note: .claude/agents/worker.md is not materialized in the sparse worktree; the worker took its rules from the order. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:10:52Z",
+  "id": "NFRA_OPLGTW-Z-S361",
+  "one_line": "Round-40 disposition of worker row Z-W133-S3: Worker note: the commit-time risk reflex printed PARTIAL_OR_BLIND and the client-data check was ABSE",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W133-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-db-2 drained 02aabf0e2b; db2.AC1, AC2 and the write-set bound PASS in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker note: the commit-time risk reflex printed PARTIAL_OR_BLIND and the client-data check was ABSENT (the same device gap as Z-W94-S2); the commit was not refused and the change is a shell block with no client data. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker note: the commit-time risk reflex printed PARTIAL_OR_BLIND and the client-data check was ABSENT (the same device gap as Z-W94-S2); the commit was not refused and the change is a shell block with no client data. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:10:52Z",
+  "id": "NFRA_OPLGTW-Z-S362",
+  "one_line": "Round-40 disposition of worker row Z-W133-S4: The issuer's cut defect, repaired: the wk-provision cone for worker ~133 omitted infra/aws/lambda/ci",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W133-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-db-2 drained 02aabf0e2b; db2.AC1, AC2 and the write-set bound PASS in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "The issuer's cut defect, repaired: the wk-provision cone for worker ~133 omitted infra/aws/lambda/ci, so the naming limb (which reads function-map/ fail-closed) refused the record commit. The issuer added the folder to the cone and continued the worker by message; the record landed (7eafa6dbb9) and the order drained (02aabf0e2b). Carry for the next cut: the standard gateway worker cone includes infra/aws/lambda/ci.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer's cut defect, repaired: the wk-provision cone for worker ~133 omitted infra/aws/lambda/ci, so the naming limb (which reads function-map/ fail-closed) refused the record commit. The issuer added the folder to the cone and continued the worker by message; the record landed (7eafa6dbb9) and the order drained (02aabf0e2b). Carry for the next cut: the standard gateway worker cone includes infra/aws/lambda/ci."
+}
+```
