@@ -27539,3 +27539,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Carrier: 0.0.0_AB_MSTR~Z to the laptop fabric's MSTR. Counts and file names only."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T11:14:00Z",
+  "id": "NFRA_OPLGTW-Z-S370",
+  "one_line": "OG-ap-36 Phase A STOP: two of the five host measurements fail on the candidate (e45922ef75): the event loop is starved 1 to 3.9 s at a time during a page (limit 1 s), and the four-page chain's median RSS growth is 27.7 MB per page (limit 20). No ask is written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/MEM_GATE_OG-ap-36.json (release e45922ef75e764e7ce3084953f818ebba9b1f759 on live 9d5b712557, trunk 58bb50256e; fresh processes on the host, candidate and live code staged in scratch folders removed after, one call at a time)",
+      "(e) FAIL: the candidate's own async tool wrapper running one full 30-partition page (20.8 s) with /health probed every 0.5 s on the same loop: 42 probes during the page, longest 3.867 s (limit 1 s). A diagnostic of 3 further runs (ap36_diag, 20.8 to 21.3 s a page) shows the same shape: the longest probe 2.3, 2.6 and 2.5 s, with 23 to 27 probes later than 0.2 s in each run, in stalls of 1 to 3 s spread across the whole page. The live code (the sync tool on the loop) held the loop for the whole page: 1 probe, longest 29.797 s.",
+      "(a) FAIL: the four-page transactions chain on the candidate: RSS before 103.3 MB, after pages 1 to 4 398.7, 426.4, 408.5, 452.9 MB; the page-to-page growth +27.7, -17.9, +44.4, median 27.7 MB per page (limit 20); first page 21.11 s (limit 45) and host peak 51.3 percent (limit 75) pass. The live code's chain in the same run: 349.6, 345.4, 363.7, 388.3 MB, median 18.3.",
+      "(b) PASS: the whole chain twice in one process: 12 pages and 334 partitions each, RSS at the end of chain 1 351.8 MB and of chain 2 386.3 MB, net growth 34.5 MB (limit 50), host peak 70.7 percent (limit 80), longest page 25.66 s (limit 55). (c) PASS: first page by the live code 29.74 s (runs 30.27, 29.19, 29.74), by the candidate 20.81 s (20.98, 20.26, 20.81). (d) PASS: 4 of 4 pages equal the live code's row for row (row counts and sha256 of the canonical rows, same cursors); the hash list is in the untracked, git-excluded PAGE_HASHES_OG-ap-36.json."
+    ]
+  },
+  "spec_asserts": "OG-ap-36 step 3: (a) the chain's median growth is 20 MB per page or less, (e) a probe of the event loop's health handler during one full page is answered in under 1 s; item 1 makes the windowed tools run off the event loop.",
+  "world_is": "Item 1 moves the page off the loop (the live code blocks the loop for the whole page: 29.8 s), but the loop is still starved for 1 to 3.9 s at a time while the worker threads read: the stalls recur through the whole page, which reads as the worker threads holding the GIL (row conversion in Python) rather than the loop being blocked by the call; the diagnostic did not look inside the threads, so the cause is a reading, not a measurement. The release's first page is 9 s faster (20.8 against 29.7 s) and its pages are byte-equal to the live code's, and the plateau holds, but its chain sits about 50 MB higher than the live code's (398.7 to 452.9 against 349.6 to 388.3 MB) with a median growth of 27.7 against 18.3 MB; the growth is a median of three sawtooth differences (+27.7, -17.9, +44.4) and one chain per code, so its noise is not measured. The whole-window plateau test peaked at 70.7 percent host used (the OG-ap-34 plateau peaked at 55.1).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts, seconds, percentages and hashes only. Phase A stops here as the order says: no ask, no deploy; live stays 9d5b712557. The issuer cuts the next repair. The release commit e45922ef75 stays in C:/tmp/og-rel-batch6 (branch rel-nfra-oplgtw-batch6) unpushed."
+}
+```
