@@ -23218,3 +23218,33 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W278-S1 -- the resident package does not stage ycharts-market-data-pull, so the estate client that the price form calls is not reachable from the deployed resident
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W278-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~278",
+  "surfaced_at": "2026-10-17T00:48:04Z",
+  "one_line": "price_form_ycharts reaches the estate client by import, else by the sibling Lambda directory infra/aws/lambda/ycharts-market-data-pull (the repository layout). The resident package build does not stage that directory, so on the deployed resident request_path has no ycharts_client to import and the ycharts price tier cannot build its request. The repository tests pass because the repository tree holds the sibling.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "TO-AR-g-155 step 1: request_path imports ycharts_client, and if it is not importable puts the sibling Lambda directory infra/aws/lambda/ycharts-market-data-pull on sys.path so the estate builder is reachable; step 5 is the r34j resident release carrying the form.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/build_resident_package.py stages only DIRS = _scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, ycharts/extract, ycharts/research (lines 37-38; layout docstring lines 11-15). No ycharts-market-data-pull directory is staged. The sibling fallback therefore resolves to a path outside the staged package root, and as the package stands request_path would raise ImportError on the deployed resident. This is INFERRED from the staged layout and was not run against a deployed package. The resident builds the reader from price_adapter_ycharts (resident_installed.py:420-422), and price_transport_ycharts documents that a reader error is recorded as that tier's error (price_source._ask_tier). build_resident_package.py is outside this order's paths, so the packaging was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37-38 @08426fcc59 (the DIRS list; no ycharts-market-data-pull entry)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:11-15 @08426fcc59 (the layout docstring)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_form_ycharts.py @08426fcc59 (_client_module: the sibling fallback path)",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:420-422 @08426fcc59 (the resident builds the reader from price_adapter_ycharts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
