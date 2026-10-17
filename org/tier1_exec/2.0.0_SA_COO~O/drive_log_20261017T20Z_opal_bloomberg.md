@@ -1,0 +1,15 @@
+# Drive log -- 2.0.0_SA_COO~O -- NFRA_OPLGTW -- 2026-10-17 19Z to 20Z (host opal_bloomberg)
+
+## Substantive ticks since the 18Z-19Z log (ticks 196 to 198)
+
+- `OG-ap-38` Phase A GO (35554, 19:11Z) READ by ~NFRA1 at 19:16:00Z; its release commit cut on the live ref `efcc8ae19f` (I read it by git: the five take-list files, each byte-equal to trunk `140239815b`). Unsigned draft of my COO-half conditions committed (`fa40b81465`): C6 the hard guard on every host run, C10 the clock and failed units read BEFORE the ledger closes (order of acts), C11 27 of 27 under the guard with no named exception, the `NRestarts` trigger, C14 `Z-S375` disarmed only on the evidence.
+- `OG-ap-38` Phase A STOPPED (applier msg 35555, row `Z-S380`): re-cut clean (release `100773843876`, seams 0, hunks all `OG-en-25`/`OG-un-1`, tests 5 of 5, window set 44 in both orders, full suite 75 failed equal to the live ref's 75), but under the hard guard (a) candidate `etfs_compare_peers` raised MemoryError inside `pyarrow.parquet.read_table`, peak 724 MB (limit 700; the live code 927 MB); (b) not runnable; (c) passes only with the Arrow pools tuned (pyarrow cannot start its thread pools under `RLIMIT_AS`); (d) unit passes. Cause read from the code and the applier's report (INFERRED): `typed_scope.read_parquet` reads the WHOLE object before filtering (no projection for the peer tables) and my `OG-en-25` cap ran after the read; the peer tables' lineage column `input_manifest` (about 100 KB a row, replaced in the answer by its byte count) is the bulk. The limits were NOT relaxed.
+- Repair cut: `OG-en-26` (`8c9ab74515`, addendum R3-T.118, workstream `ENRICH-R41-W`, worker `~141`): a filtered read streams by batch (`iter_batches`, 2048 rows, one thread), an unfiltered read is refused from the file metadata BEFORE it reads, `length_columns` measures the lineage column for matched rows only, `distinct_values` streams; fresh-subprocess Arrow-peak tests; the peer tool's answer must be identical. `OG-ap-38` amended A1: the guard may be a cgroup limit (`systemd-run --scope -p MemoryMax=1400M -p OOMScoreAdjust=1000`) as well as the address-space cap; `ap38.AC1`/`AC2` accept either named guard (dry-run ok). ~NFRA1 told to hold (35557 note); the re-run GO follows the merge.
+- `round-close-check` round 41 (19:14Z): 11 orders, 10 complete, `OG-ap-38` not complete and outside the verdict; verdict MAY-CLOSE over the other ten; L10 waits on `OG-ap-38` terminal.
+- Still ARMED (mine): `Z-S375` (until `OG-ap-38` is live and measured), `Z-S338`, `Z-S177`, `Z-W94-S2`; `Z-S380` (the applier's row) stays open until the re-run passes.
+
+## Next
+
+Worker `~141`: read the diff, drain, re-run the checks; the `OG-ap-38` Phase A re-run GO naming the new `trunk_sha`; `ap38.AC1` on my run; the CTO's half and the CVO's relay (naming my reading of "each under its own never-widen" as one release, one ask); Phase B; `ap38.AC2` on my run; the CLOSED time to the CTO; the round-41 L10 slug.
+
+Push state: LOCAL (box/sitez ahead of origin; not pushed this hour).
