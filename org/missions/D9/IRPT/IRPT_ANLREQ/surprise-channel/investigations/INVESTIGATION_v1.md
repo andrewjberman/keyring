@@ -23609,3 +23609,59 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W283-S1 -- the order's line numbers for reportRefBody and its call sites do not match origin/DEV 4d4dc68cae (AR-y-383)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W283-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~283",
+  "surfaced_at": "2026-10-17T05:42:34Z",
+  "one_line": "TO-AR-y-383 places reportRefBody at analysisRequest.ts lines 530 to 539 and its call sites about 593 and 675. At origin/DEV 4d4dc68cae it is at 566 to 575, its one call site is at 632 (inside recordStep), and recordStep is reached at 603 (fileAndRequestAnalysis) and 653 (retryAnalysisStep). The code shape matches the order; the change followed the code, not the numbers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-383 Context and step 1: reportRefBody(requestId, requestRevision) at portal src/pages/TicketCenter/analysisRequest.ts lines 530 to 539 at origin/DEV; its two call sites about lines 593 and 675.",
+  "world_is": "Read at the portal worktree HEAD 4d4dc68cae: analysisRequest.ts:567-575 holds reportRefBody (Number(requestRevision) at 568, the ternary at 571-573); the only call is analysisRequest.ts:632 inside recordStep; recordStep is called at analysisRequest.ts:603 and :653. Line 593 is the refusal return of fileAndRequestAnalysis and 675 is past the end of retryAnalysisStep. The type lines are analysisRequest.ts:53 and tickets.ts:266, as the order says.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-283/portal/src/pages/TicketCenter/analysisRequest.ts:567-575 read at 4d4dc68cae (reportRefBody)",
+      "C:/dev/wk-irpt-anlreq-283/portal/src/pages/TicketCenter/analysisRequest.ts:603, :632, :653 read at 4d4dc68cae (recordStep call sites)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~283/r44/REVISION_FINDING.json (the recorded line map)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W283-S2 -- the order's cited schema and doctrine files are absent from the sparse worktree; the row is written in the form of its sibling rows
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W283-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~283",
+  "surfaced_at": "2026-10-17T05:42:34Z",
+  "one_line": "The order says rows follow org/surprise_channel/schemas/investigation_item.schema.json and cites docs/doctrine/THE_SURPRISE_CHANNEL.md. Neither path exists in the workspace worktree at HEAD (org/surprise_channel/ is absent; the Glob for investigation_item.schema.json returned nothing under org/). This row copies the field set of the sibling rows in INVESTIGATION_v1.md; the surprise-row gate was not run against a schema.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-383 surprise rule: each row per org/surprise_channel/schemas/investigation_item.schema.json; docs/doctrine/THE_SURPRISE_CHANNEL.md is the channel doctrine.",
+  "world_is": "Read at the workspace worktree HEAD: org/surprise_channel/ does not exist in this sparse tree; docs/doctrine/THE_SURPRISE_CHANNEL.md does not exist; the investigation rows of INVESTIGATION_v1.md carry id, project, fabric, surfaced_by, surfaced_at, one_line, class, hazard_standing, spec_asserts, world_is, grounding and disposition.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-283 ls of org/surprise_channel/ returned no such directory at HEAD",
+      "C:/dev/wk-irpt-anlreq-283 Glob **/investigation_item.schema.json under org/ returned no files",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md rows W282-S1 and S167 (the sibling form)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
