@@ -14420,3 +14420,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Decision owner: the issuer 2.0.0_SA_COO~D2 for IRPT_DASHBD round 149 (re-base the clause or accept the F2 change); not changed here, since the criterion of this order does not name it."
 }
 ```
+
+## NFRA_CTLPLN-D1-S13 -- ten dell1 seat lives ended with no kill line; seven transcripts stop within six minutes of each other and show no error; the cause is not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T00:45:00Z",
+  "one_line": "Ten dell1 seat lives ended with no kill line; seven of their session transcripts stop within 5 minutes 53 seconds of each other (21:33:11Z to 21:39:04Z), two at 21:19Z, and no transcript tail shows an API, auth or context-limit signal -- so the end times cluster while the lifetimes do not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Session transcripts read by python on dell1 at 00:3xZ 2026-10-17, last 20 lines of each of ten ended lives (counts and timestamps only, no content): the last entry type is queue-operation in 10 of 10; entries flagged as an API error (isApiErrorMessage or an error key) 0 of 10; system entry subtypes present are stop_hook_summary, turn_duration and away_summary only (no api_error, no compact_boundary); keyword counts for overloaded, rate_limit, authentication, invalid_request, api_error and prompt-is-too-long are 0 in all ten.",
+      "Last transcript timestamp per life (UTC, 2026-10-16): 2.0.0_SA_COO~R1 21:19:25, ~R2 21:19:30, ~M1 21:33:11, ~D1 21:33:18, ~B1 21:38:24, 0.7.0_AE_CloudOps~FB1 21:38:28, ~DELL1 21:38:47, ~SC1 21:39:01, ~SOC21 21:39:04; and the second life of ~M1 (spawned 22:25Z by 0.0.0_AB_MSTR~DELL1) 00:07:38, its last telemetry 23:54:56Z.",
+      "Lifetime from the SPAWN row in org/mcp/agent-spawn-audit.log, minutes: M1 life 2 = 90; FB1 = 149; SOC21 = 209; DELL1 = 358; R2 = 1062; SC1 = 1096; M1 life 1 = 1109; B1 = 1116; D1 = 1117 (R1 not computable: its SPAWN row predates its session). Not a fixed time to live.",
+      "Seven lives of very different ages (149 to 1117 minutes) end inside one 5 min 53 s window; that points to a common event at about 21:33-21:39Z, not to age. Coincident, not claimed as cause: 2.0.0_SA_COO~C1 reported Andrew at the dell1 ADVI_COTBKF COO terminal at about 21:40Z; C1 itself did not end.",
+      "Box read 00:2xZ 2026-10-17: no reboot since 2026-10-15 11:46 local; physical memory 40.4 of 63.7 GB free; no Resource-Exhaustion or claude/node/bun Application Error event in the 3 hours before 00:21Z; no KILL-MAINT-RUN line by 0.0.0_AB_MSTR~DELL1 between 2026-10-15T15:27Z and 2026-10-16T23:37Z (the 23:37Z run stopped two tail.exe, no seat).",
+      "Controls: 1.0.0_SA_CTO~DELL1, 2.0.0_SA_COO~C1, ~S1, ~W1, 3.0.0_SA_CVO and 4.0.0_SA_CRO~DELL1 stayed live through 21:33-21:39Z and read live at 00:21Z; the later lives of ~SC1 and ~SOC21 are live and end their transcript on a system entry, not on queue-operation (one sample each, read at 00:3xZ; a live idle seat can also end on queue-operation, so this is a lead, not a test)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat that ends is ended by a recorded act (a KILL line, or its own close log); NFRA_CTLPLN-D1-S12 asked for the cause of the first four.",
+  "world_is": "Ten lives ended with neither record. Their transcripts show no error class that would explain it, their lifetimes are unrelated, and seven of them stop within six minutes of each other. The cause is still not measured; what remains unread is the Windows Terminal host's own log and the process-exit record of each window.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content is recorded here. Respawns follow the dell1 CTO's dated plan (msg 7021). Asked for by 1.0.0_SA_CTO~DELL1 msg 7068."
+}
+```

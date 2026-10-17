@@ -6,6 +6,9 @@ Round 88 state at writing: 5 of 7 cells complete (cc-1, cc-2, cc-3, cc-4, cc-6);
 
 ## Candidates (thread-breaking first)
 
+0a. **KMB misfiled report still cited by the served dossier** (rows D1-S38, D1-S39; CRO caller read, msg 7066, a second principal): `fund_of_record` and `last_stated_position` cite the excluded report ("MAINTAIN 2.25% POSITION IN IDVZ") in BOTH `dossier_fields` and `continuation_fields`, so one response contradicts itself. The cc-2 filter reaches `research_reports` only; the fields derived from the report need the same exclusion at the gold build and the continuation.
+0b. **`harvest_resolve_security("PG")` does not say what the universe lacks:** the answer is candidates (PG&E, PCG), correct, but `not_held` is empty, so a caller who means Procter & Gamble gets no sign it is outside the 243-security universe (row D1-S39).
+
 1. **Tolerant hold loop in `verification._press_and_hold_box`** (cc-4 finding, row D1-S35): record the frame URL, retry one pass, read the page after the hold. The `bbg` error is a frame query during the vendor's post-hold reload, not a page closure.
 2. **Per-leg budget with rotation:** the `sa` leg runs about 66 h per cycle and starves the serial pass; a per-leg time budget with rotation lets each publisher reach its cycle line.
 3. **Installer STOP parent/default:** `install-cycle-schedule.ps1` leaves the stop-file parent and default unset, which made a restart depend on the seat's memory.
