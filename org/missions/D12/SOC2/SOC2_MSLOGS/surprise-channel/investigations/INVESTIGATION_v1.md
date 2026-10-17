@@ -310,6 +310,28 @@ Worker rows of the round-1 cells, appended and never edited. Rows `SOC2_MSLOGS-D
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W10-S1",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~10",
+    "surfaced_at": "2026-10-17T06:38:15Z",
+    "one_line": "The R2-k2 worktree is a sparse checkout that omits infra/aws, so the door handler docstring the order says to READ first is absent; the order is BLOCKED at the first act and stopped there.",
+    "spec_asserts": "SOC2_MSLOGS.TO-R2-k2 WORKER FACE: READ first the DOOR CONTRACT in infra/aws/lambda/globgrph-trino-access/handler.py's docstring, and the worktree carries the paths the order names (first act: BLOCKING and STOP if it does not).",
+    "world_is": "The worktree at C:/Dev/ajb_wk/soc2-r2-10 (branch wk-SOC2_MSLOGS-10, HEAD 5795b96e64) has core.sparseCheckout true; `git sparse-checkout list` names .tools, data/m365_metadata/scripts/silver, data/m365_metadata/scripts/tests, infra/logic/registry, lib, org/devices, org/missions/D12/SOC2/SOC2_MSLOGS, org/modules/graph, org/ref, org/standards and org/tier1_exec/2.0.0_SA_COO~S1/deliverables, and infra/aws is not on the working tree (ls: no such directory). The handler path exists at HEAD (git ls-tree HEAD infra/aws/lambda/ lists it), so the sparse list, not the commit, omits it. The order's <paths> and the check's files are present; the handler docstring is not. No sparse-checkout edit and no git show extraction was made.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Dev/ajb_wk/soc2-r2-10 git sparse-checkout list (core.sparseCheckout true) omits infra/aws",
+        "C:/Dev/ajb_wk/soc2-r2-10 ls infra/aws: No such file or directory (first act, 2026-10-17)",
+        "5795b96e64 git ls-tree HEAD infra/aws/lambda/ lists the lambda directories at the issuing commit",
+        "org/missions/D12/SOC2/SOC2_MSLOGS/task-orders/SOC2_MSLOGS.TO-R2-k2.read-client.md@5795b96e64 line 32 names infra/aws/lambda/globgrph-trino-access/handler.py as READ first"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
