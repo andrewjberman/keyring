@@ -1,0 +1,94 @@
+# AMGT_HARVST task order -- `HVST-cg-1` -- ROUND 92, workstream SILVER-FUNDREL: THE SILVER `research-report` ROW CARRIES A `fund_relation`, A READ-ONLY CENSUS PRINTS THE COUNT PER RELATION, AND A DRY RUN NAMES WHAT THE REWRITE WOULD WRITE (row D1-S46; CTO round-91 analysis item 1)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<to_id>AMGT_HARVST.TO-HVST-cg-1.the-silver-report-row-carries-a-fund-relation-and-the-census-prints-the-counts</to_id>
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
+<owned_cells>HVST-cg-1</owned_cells>
+</decomp_ref>
+<issued_to>0.9.0_WK_AMGT_HARVST~161</issued_to>
+<issued_by>2.0.0_SA_COO~W1</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: RUN at L5 -- no schedule touched.
+comp-iam: RUN at L5 -- LOCAL code and offline tests, plus READ-ONLY S3 reads of the bucket `opal-data-harvest` under the prefix `amgt/harvest/silver/research-report/` ONLY (list and get of the parquet parts, through `lib.research.harvest.store._default_client()` or the repo shim `.tools/aws`; never `put`, `delete`, `copy`, `sync`, a recursive `cp` or a bare `aws` call). Budget: at most 200 requests and 300 MiB in all, counted in the last line of each output. NO silver or gold writer is RUN against the real client (`silver_append`, `typed.main`, `write_one`, `--write` are NEVER run with a real client), NO deploy, NO edit outside `<paths>`.
+comp-adversary: RUN at L5 -- the adversary is a classifier that is right on the census phrases and wrong on the next one (so an unknown phrase is `unclassified`, never `holding`); a relation derived from the bare-token fallback window (it states no relation, so it is `none`); a drift between this classifier and `continuation._line_stance` that the table test does not see; a census that counts the OLD rows of a report beside the new one (count the newest row per report only, as the gateway serves it); a dry run that performs a put because the wrapper delegates it; and a test that passes whatever the code does.
+</preflight>
+
+## 0. THE CELL
+
+The silver `research-report` row has a `fund` (the fund token the report names) and a `fund_evidence` (the text from the `RECOMMENDATION` header up to that token). The gateway serves both in `research_reports[]`, so a consumer reads `fund = PFOE` for a report whose line says `RECOMMENDATION: CANDIDATE FOR PFOE` (MNST), and cannot tell a holding from a candidate (row `D1-S46`). The CTO ruled: **`fund` stays, the named token; the row gains `fund_relation`; every consumer that means "held" reads `fund_relation = holding` only.** This cell adds the key and its classifier (LOCAL), measures the stored silver (read-only), and dry-runs the rewrite that a later seat order will perform. It touches no gold object, no gateway file, no `fund_form` and no `continuation.py`.
+
+THE TAXONOMY (rule 24; the CTO ratified six names, the issuer adds a seventh and names why). The domain is every silver `research-report` row (class A, B, C, D and OTHER; docx, pdf, xlsx, png, html), the newest row per report. `fund_relation` takes exactly one of:
+- `holding` -- the report's recommendation line states a held position (a whole word `maintain`, `mainain`, `maitain`, `retain`, `increase` or `add`, the words `no change`, or a leading size statement such as `2%` or `~2.5%` or `1-2%`, in the text before the fund token);
+- `candidate` -- a whole word `candidate` before the fund token (the report proposes the name for the fund);
+- `initiate` -- a whole word `initiate` before the fund token (a position not yet held);
+- `interest` -- a whole word `interesting` before the fund token;
+- `template` -- the text before the fund token starts with `[` (a bracketed placeholder such as `[BUY IN IDVZ TO X%]`);
+- `unclassified` -- the line names a fund token and none of the tests above matches (**the seventh value, added by the issuer**: a phrase nobody has seen needs a home; it is NOT a holding; the CTO's six have none);
+- `none` -- the row names no fund (`fund` is None), or its `fund_evidence` is not a recommendation-header window (the bare-token fallback: nothing states a relation).
+Test order, as `continuation._line_stance`: template first, then the candidate words (the EARLIEST of `candidate`, `initiate`, `interesting` in the text decides which of the three), then holding, then `unclassified`. The text before the fund token is lowercased and whitespace-collapsed; the text of `fund_evidence` after the header is the text before the token (the evidence ends at the token). **State coherence:** this field does not move `fund`, `fund_evidence` or `fund_absent_reason`, and it says nothing about WHICH of a security's reports is the fund of record (that is gold's rule, `continuation._resolve_fund_and_position`).
+
+## 1. THE BUILD (LOCAL, about 90 product lines)
+
+Work in your worktree. Change only the files named in `<paths>`.
+a. New `lib/research/corpus/fund_relation.py`: `RELATIONS = ("holding", "candidate", "initiate", "interest", "template", "unclassified", "none")` and a pure `classify(fund, fund_evidence)` returning one of them by section 0. The header test is a match anchored at the START of `fund_evidence` with `(?i)\s*REC\w*MENDATION\w*\b\s*:?\s*` (the same header pattern `typed._RECOMMENDATION_HDR_RE` uses); a `fund_evidence` that does not start with it is the fallback window and returns `none`. Use the same word patterns as `lib/research/corpus/continuation.py` lines 443-445 (`_HOLDING_WORD_RE`, `_CANDIDATE_WORD_RE`, `_SIZE_STATEMENT_RE`; read them, copy the patterns, do not import `continuation` into `fund_relation`).
+b. In `lib/research/corpus/typed.py`: `record()` gains the key `"fund_relation": fund_relation.classify(fund, fund_evidence)` placed right after `fund_absent_reason`; extend the module docstring's row shape with one line for it. Change nothing else in the file. Where an existing test compares the exact key set of a `record()` row, add `fund_relation` to its expectation and nothing else.
+c. New test `lib/research/corpus/tests/test_fund_relation.py`, offline. Arms:
+   - (1) a table test over ALL 22 phrases of `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159/cf1_census.out` (each `PHRASE` line carries a `raw=` example; build `fund_evidence` as `RECOMMENDATION: ` plus the raw text up to and including its fund token): the 17 holding phrases return `holding`, `candidate for` returns `candidate`, `initiate ~<N>% position in` returns `initiate`, `interesting exposure for` returns `interest`, `[buy in` returns `template`; the `[no fund token]` phrase has `fund` None and returns `none`;
+   - (2) MNST `RECOMMENDATION: CANDIDATE FOR PFOE` returns `candidate`; UNH `Recommendation: Maintain positions in PFOE` returns `holding`; ML_FP `RECOMMENDATION: [BUY IN IDVZ` returns `template`; CLX `RECOMMENDATION: Candidate for DIVZ` returns `candidate`; NKE `RECOMMENDATION: MAINTAIN IN PFOE` (the text before the FIRST fund token) returns `holding`;
+   - (3) a phrase never seen (`RECOMMENDATION: watch list name for PFOE`) returns `unclassified`; a fallback window (`... the PFOE sleeve ...` not starting with a header) returns `none`; `fund` None returns `none`; a line with two candidate words (`initiate ... candidate for`) returns the earliest (`initiate`);
+   - (4) **the drift test:** for every one of the 21 phrases that carries a fund token, the relation with `initiate` and `interest` folded into `candidate` equals `continuation._line_stance(raw)` for the same `raw` (import `continuation` in the TEST only);
+   - (5) `typed.record(...)` on a fixture extraction whose page reads `RECOMMENDATION: CANDIDATE FOR PFOE` yields `fund == "PFOE"` AND `fund_relation == "candidate"` (copy the fixture shape from `tests/test_typed.py`; read it first);
+   - (6) **A MUTANT:** with `fund_relation._HOLDING_WORD_RE` monkeypatched to match everything, the MNST arm FAILS (assert that it does); and with the early `[` template test removed (monkeypatch the template check to return False), the ML_FP arm FAILS.
+d. **The census (read-only).** Write `cg1_census.py` in your deliverables folder and run it once in the FOREGROUND with `python -u`, stdout to `cg1_census.out`. It lists every `part-*.parquet` under `amgt/harvest/silver/research-report/`, reads each, and keeps the NEWEST row per (`security_key`, `report_id`): the row in the part whose key sorts highest (the gateway's own rule, `infra/aws/ec2/opal-gateway/app/harvest_research.py::_research_reports`, lines 258-295; read it). It computes `fund_relation.classify(row["fund"], row["fund_evidence"])` per kept row. Output: one line per kept row whose `fund` is not None, `RELATION <security_key> <report_id> <report_class> fund=<fund> relation=<relation> evidence=<first 70 characters of fund_evidence>`; then `NONHOLDING_SECURITIES <n> <comma list>` (securities having at least one kept report whose relation is `candidate`, `initiate`, `interest`, `template` or `unclassified`); then exactly `CENSUS-FUND-RELATION rows=<all rows read> reports=<kept rows> securities=<distinct security_key> holding=<n> candidate=<n> initiate=<n> interest=<n> template=<n> unclassified=<n> none=<n> gets=<S3 requests> bytes=<bytes read>` (the seven counts sum to `reports`); then exactly `PROOF-NAMES ADBE_US_Equity=<r> SNPS_US_Equity=<r> MNST_US_Equity=<r> ML_FP_Equity=<r> CLX_US_Equity=<r> UNH_US_Equity=<r>` where `<r>` is the distinct relations among that security's kept reports that name a fund, sorted and joined with `+` (`none` if it has no such report). **The CTO's expected proof is `ADBE=candidate SNPS=candidate MNST=candidate ML_FP=template CLX=candidate UNH=holding`. If the census prints anything else, DO NOT edit the expectation or the code to match it: print the actual line, add a row, and report the difference.**
+e. **The dry run of the rewrite (nothing put).** Write `cg1_rebuild_plan.py` and run it once in the FOREGROUND with `python -u`, stdout to `cg1_rebuild_plan.out`. The rewrite a later seat order will perform is: for each kept row (as in d), `dict(row)` plus `fund_relation`, re-appended with `lib.research.harvest.store.silver_append`, called with the same source, table and record-key arguments `typed.py` passes at line 696 (read it), a fresh `run_stamp`, and your recording wrapper as the client, so the rows keep their `fetched_at` (their date partition) and land as NEW parts. Your wrapper object delegates `get_paginator`, `get_object` and `head_object` to the real client and RECORDS each `put_object` (key, byte length) WITHOUT performing it and without raising; count the calls that reached the real client's `put_object` with a spy and print it. Output: one line per part it would write `WOULD_PUT <key> rows=<n> bytes=<n>`; then exactly `REBUILD-PLAN rows=<n rows given to silver_append> skipped_unchanged=<n> new_parts=<n> dates=<n distinct date partitions> puts_recorded=<n> puts_performed=<n, must be 0> gets=<n> bytes=<n>`. If `silver_append` cannot be driven this way (a signature or validation refusal), print the refusal verbatim, stop this step, file a row and finish the others.
+f. **The consumers.** Using the Grep tool, list in `cg1_consumers.out` every non-test `.py` file under `lib/` and `infra/aws/ec2/opal-gateway/app/` that reads the `fund` key of a silver `research-report` row or of a `research_reports[]` entry: `file:line  <the line>  MEANS_HELD=<yes|no|unclear>  <one clause why>`. State the folders searched and that `portal/` was NOT searched. Do not change any consumer.
+g. Do not run any silver or gold writer against the real client; do not edit any other file. A surprise is a row; keep working.
+
+<paths>
+lib/research/corpus/fund_relation.py
+lib/research/corpus/typed.py
+lib/research/corpus/tests/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~161/
+org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+## PROOF OF SPEC (each invocation LITERAL)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="HVST-cg-1"><invocation>python -m pytest lib/research/corpus/tests/test_fund_relation.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^\d+ passed in</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-cg-1"><invocation>python -m pytest lib/research/corpus/tests/test_typed.py lib/research/corpus/tests/test_typed_misfiled_reports.py lib/research/corpus/tests/test_fund_form.py lib/research/corpus/tests/test_substrate.py lib/research/corpus/tests/test_continuation_holding_stance.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^58 passed in</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-cg-1"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~161/cg1_census.out</invocation><expect>(?m)^CENSUS-FUND-RELATION rows=\d+ reports=\d+ securities=\d+ holding=\d+ candidate=\d+ initiate=\d+ interest=\d+ template=\d+ unclassified=\d+ none=\d+ gets=\d+ bytes=\d+$</expect></criterion>
+  <criterion id="AC4" cell_refs="HVST-cg-1"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~161/cg1_census.out</invocation><expect>(?m)^PROOF-NAMES ADBE_US_Equity=candidate SNPS_US_Equity=candidate MNST_US_Equity=candidate ML_FP_Equity=template CLX_US_Equity=candidate UNH_US_Equity=holding$</expect></criterion>
+</proof_of_spec>
+
+- A fourth criterion, with its reason: AC4 is the CTO's named proof for this ruling (ADBE, SNPS, MNST, ML_FP, CLX read candidate or template, UNH reads holding); it is separate from AC3 because AC3 is the shape of the census and AC4 is a claim about the world that may not hold.
+- The checker reads `<expect>` as a regular expression. **Dry-run at the base (issuer, dell1, 2026-10-17 ~23:3xZ):** AC1 FAIL as expected (the test file does not exist); AC2 PASS as expected (`58 passed in 1.02s` over the five files); AC3 and AC4 FAIL as expected (`cat` of a file that does not exist). If your base count differs, say so with both counts and do not weaken the pattern.
+- **LINE ENDINGS:** edit so `git diff --stat` reads only the lines you changed; a whole-file diff is a defect. Check `git diff --stat` before you commit.
+- A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. Your next row id is `AMGT_HARVST-D1-W161-S1`. The channel file has MIXED line endings and is append-only: append a row by BYTES and check the diff reads only insertions. If the row gate refuses your commit on the pre-existing duplicate `AMGT_HARVST-Z-S106` pair, put `# surprise-row-override: pre-existing duplicate AMGT_HARVST-Z-S106 pair at HEAD (1.0.0_SA_CTO~DELL1 msg 1310); this commit adds only my row` in the message body.
+- INSTANCE NAMED EXACTLY
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~161/AMGT_HARVST.TO-HVST-cg-1.the-silver-report-row-carries-a-fund-relation-and-the-census-prints-the-counts.proof_of_spec.json`
+  with `to_id` `AMGT_HARVST.TO-HVST-cg-1.the-silver-report-row-carries-a-fund-relation-and-the-census-prints-the-counts` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cg-1.the-silver-report-row-carries-a-fund-relation-and-the-census-prints-the-counts.md`. Pin every artifact row to its commit.
+  Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` from the root of YOUR worktree and report its last line.
+- Run every script from the repo root of YOUR worktree. Commit with `.tools/safe-commit.sh`. Do not edit this order file: the issuer flips its status. Commit the outputs `cg1_rebuild_plan.out` and `cg1_consumers.out` with the rest; they are deliverables the issuer reads, not criteria.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER NOTES:**
+- Authority: CTO round-91 analysis (`ledger/ROUND_ANALYSIS.round91.md` @9bdb466396, msg 7773) item 1; his ruling on `D1-S46` (msg 7771); decomposition section 122.
+- **Why the rewrite derives from the stored rows and not from `typed.record()`:** `record()` needs each report's bronze head and extraction (one or two GETs per report) and would re-derive every other field too; deriving `fund_relation` from the stored `fund` and `fund_evidence` is exactly what `record()` will compute (same two inputs) and moves nothing else. The dry run (step e) is the measurement a seat order and its never-widen pair need: rows, date partitions, part keys, and the rollback list (the new parts).
+- **The seventh value (`unclassified`) is the issuer's addition, to be named to the CTO** (rule 24 (i): the domain has a member, a phrase nobody classified, that the six do not hold). The census prints its count; it should be 0 or near it.
+- **Known and NOT in this cell:** the gateway serves silver rows through the fixed tuple `REPORT_FIELDS` (`harvest_research.py:60`), so `fund_relation` reaches no gateway consumer until a gateway release adds it (decomposition cell `HVST-cg-3`, the CTO is asked). `fund_form.py:262` is the held-consumer (`cf-3`). The worker does not touch either.
+- **Class:** the gate decides; the first commit attempt declares LOCAL.
+- Slot ~161, worktree `C:/dev/wk-harvst-161`, branch `wk-AMGT_HARVST-161`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~160` and `infra/aws/ec2/opal-gateway/app` (read-only, for the gateway's dedupe rule).
+- **SENT:** with the round-92 issuance.
+
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
+<status>pending</status>
+<round>92</round>
+<workstream>SILVER-FUNDREL</workstream>
+<slot>dell1</slot>
+<fabric>dell1</fabric>

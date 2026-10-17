@@ -30211,3 +30211,214 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Method note for the round's controls: a base digest must name its cut commit."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W507-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~507",
+  "surfaced_at": "2026-10-17T22:55:32Z",
+  "one_line": "The arbitrary scrollbar-thumb utility the cell names may be defeated by the unlayered global scrollbar rules in index.css, so the grid's thumb may still not paint.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-bu-4 change (2): give the grid scroller a visible horizontal scrollbar thumb at all times, with Tailwind arbitrary variants on that one element (a [&::-webkit-scrollbar-thumb]:bg-[...] class), and do not edit src/index.css.",
+  "world_is": "src/index.css section 6 SCROLLBAR STYLING (L721-758 at d1bed0fb) sits outside every @layer. Its ::-webkit-scrollbar-thumb rule (L735-739) sets background transparent, and its *:hover::-webkit-scrollbar-thumb rule (L742-744) paints it only on hover. The comment at L509 says Tailwind v4 emits utilities in a native cascade layer, so an unlayered rule beats a layered one regardless of specificity. The arbitrary thumb utility is therefore expected to lose to the unlayered transparent rule, and the thumb may stay invisible off-hover. Not verified in a browser; the static harness cannot read the cascade.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/index.css@d1bed0fb L509 (comment: UNLAYERED ON PURPOSE, Tailwind v4 utilities in a native cascade layer, a rule inside @layer base loses)",
+      "portal/src/index.css@d1bed0fb L721-758 (SCROLLBAR STYLING: unlayered ::-webkit-scrollbar-thumb transparent, and *:hover::-webkit-scrollbar-thumb paint)",
+      "portal/src/index.css@d1bed0fb L531 (@layer utilities)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@9fb741c1 (scroller class carries [&::-webkit-scrollbar-thumb]:bg-[hsl(var(--palette-navy)/0.35)])"
+    ]
+  },
+  "notes": "Form only. src/index.css is outside the order's paths, so it was not edited. The grade is the issuer's real-browser screenshot read; if the thumb does not paint, the caption is the only visible cue on the grid."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W507-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~507",
+  "surfaced_at": "2026-10-17T22:55:32Z",
+  "one_line": "The round-113 tooltip harness's whole-text digest cannot hold once the cue sentence is added, so the S4 control and AC1 read FAIL on a correct display-only change.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-bu-4 S4 CONTROL: modelTooltipRows.harness.cjs, spawned by the new harness, still prints YES (9 of 9 checks) after the change (the round-113 tooltip placement is untouched).",
+  "world_is": "The sibling's B5 (modelTooltipRows.harness.cjs L43 and L255-257 at d1bed0fb) digests the whole RIO LN Model tab text with class attributes removed, against a constant recorded at the unedited head. The cue sentence is new text: 65 characters, 197277 to 197342. B5 therefore FAILS and the sibling prints NO (8 of 9 checks). B1 to B4 and the three B3 placement classes still PASS. The new harness S4 FAILS, AC1 cannot read every check PASS, and the feature-green run reads NO with regressions 2 (modelTooltipRows, and gridScrollCue, which the script counts as a regression because the base lacks it). The sibling is outside the order's paths and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/modelTooltipRows.harness.cjs@d1bed0fb L43 (BASE_TEXT_SHA256 = 71223f56...) and L255-257 (B5 digest of the text with classes removed)",
+      "gridScrollCue.harness.cjs run at portal@9fb741c1: CHECK S4 FAIL -- MODEL TOOLTIP ROWS HARNESS: NO (8 of 9 checks); failing CHECK B5 digest 16b517afe90efcbb5bf2d5a2b646d90f6a6227a5744521e288ad5531ad475c23, 197342 chars",
+      "r107_feature_green_v3.sh run at portal@9fb741c1 with base d1bed0fb: harness 31 of 36 pass, regressions 2: gridScrollCue.harness.cjs modelTooltipRows.harness.cjs"
+    ]
+  },
+  "notes": "Filed by the worker, not decided. The B5 control is a whole-page digest that any display-text change moves; its owner either re-records the constant or the COO rules on the control. No edit was made to the sibling harness."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W507-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~507",
+  "surfaced_at": "2026-10-17T22:55:32Z",
+  "one_line": "The feature-green check's base run reads 29 of 35 harnesses passing, not the 32 of 35 the order's preflight recorded, so the base comparison is not the one the order described.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-bu-4 preflight: AC2 run in a provisioned worktree cut at d1bed0fb reads YES with harness 32 of 35 pass, the base is the regression guard that passes at the base, and the pre-existing failures are assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs.",
+  "world_is": "On this run the branch reads harness 31 of 36 pass and the base reads base 29 of 35, so six harnesses fail at the base, not the three named pre-existing ones. Arithmetic from the printed counts: three base failures are the named pre-existing harnesses and three more pass on the branch. The base comparison is a detached worktree the script cuts under /tmp. Its cause was not investigated; the two readings differ and are recorded, not reconciled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r107_feature_green_v3.sh run at portal@9fb741c1 with base d1bed0fb: harness 31 of 36 pass | base 29 of 35 | regressions 2 | pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107_prep/checks/r107_feature_green_v3.sh@fce34ac73c L17 and L25 (TMPB under /tmp; git worktree add --detach)"
+    ]
+  },
+  "notes": "Recorded, not investigated. The arithmetic uses only the script's printed counts."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "AC2 reads 18 failed, 1146 passed in this worktree, not the 9 failed the order expects: the worktree is a sparse checkout that omits infra/aws/terraform/harvest and integrations/, and nine tests read those paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout = true; git sparse-checkout list (worktree C:/dev/wk-resapp-506, branch wk-AMGT_RESAPP-506, HEAD fce34ac73c) = .tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP, org/modules/graph, org/ref, org/standards",
+      "git ls-files infra/aws/terraform/harvest = 22 tracked; the worktree holds 0 of them; integrations/ is absent in the worktree (71 tracked under integrations/bloomberg/research)",
+      "AC2 invocation output in this worktree: 18 failed, 1146 passed, 327 warnings in 63.35s, exit=1",
+      "grep render_pack over test_scoped_amgt_mount.py, test_harvest_prefixes.py, test_fiscal_scope_contract.py = no match; the base checkout C:/dev/ajb_workspace holds infra/aws/terraform/harvest/scoped-amgt-api.tf and integrations/bloomberg/research/model_block_pull.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 expects `9 failed, P passed` with P at least 1155, and the FAILED lines are exactly the nine listed. The order states the base as 9 failed, 1148 passed (measured by the issuer).",
+  "world_is": "In this worktree the same run gives 18 failed, 1146 passed. The nine listed failures are present and their causes are unchanged. The nine extra are the sparse-cone reads (6 mount, 2 harvest prefixes, 1 fiscal producer source), and none imports render_pack. 1155 cannot be met here without materialising the cone, which the order forbids. The base count in this worktree is inferred from the missing paths, not measured, because the full suite was not run at the unedited head.",
+  "notes": "AC2 is recorded FAIL in the proof instance and the order stays open. Needs AC2 run in a full checkout, or the worktree's cone widened on the issuer's word. Not fixed here: the order forbids rebuilding the tree."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "The order names committed print-test fixtures for RIO LN and ICT PM; none is committed, so both fixtures were hand-built for this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep lib/research (native, path-scoped) for ICT_PM|RIO_LN: 11 files, none a model block for either name",
+      "Glob lib/research/**/*model_block*: lib/research/posture/data/model_block/ holds BA, BABA, SAP only",
+      "lib/research/print/tests/conftest.py (19 lines): one autouse offline drafted-reader fixture, no builders",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round113/READS_ITEM4.md lines 17-19: the live print was read, not the block"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Fixtures: use the committed print-test fixtures for RIO LN and ICT PM if the existing tests have them; otherwise build them from conftest.py's builders and say so.",
+  "world_is": "No RIO LN or ICT PM model block is committed. A native Grep of lib/research for ICT_PM and RIO_LN found no block, and a Glob for model_block files found only BA, BABA and SAP under lib/research/posture/data/model_block. conftest.py holds one offline drafted-reader fixture and no builders. Built instead: lib/research/print/tests/fixtures/bu3_block_ICT_PM.json and bu3_block_RIO_LN.json, carrying the shapes READS_ITEM4.md recorded. Every value is synthetic. T1 to T6 grade the renderer on these constructed blocks, not on the live print.",
+  "notes": "The live-print block for either name is not in the repo; a live check of the printed pack would need the landed block through the scoped API."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "T6's line-for-line control cannot compare raw PDF lines: a long-form date is longer, the renderer's 92-character wrap moves, and T6 de-wraps both sides before it compares.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py _wrap (LINE_WRAP_CHARS 92, WRAP_INDENT 4 spaces): the continuation rule the de-wrap reproduces",
+      "lib/research/print/tests/test_bu3_pack_long_dates.py test_T6 (de-wrap, then inverse, then compare)",
+      "scratch measurement of raw line equality on the edited renderer: raw-equal False for both fixtures"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "T6: the pack text with every long-form date mapped back to ISO equals the text recorded at the base head, line for line (after normalising \\r\\n to \\n).",
+  "world_is": "Measured on the edited renderer: the raw comparison fails in both fixtures. The first raw difference is at line 12 of ICT PM and line 10 of RIO LN, where the long-form earnings line wraps earlier than the ISO line did. The line counts agree (32 and 28). A long date is also cut across printed lines ('period ending December 31st,' then '2026'). T6 therefore de-wraps both texts by the renderer's own WRAP_INDENT rule, applies the hand-written inverse to each logical line, and compares line for line. The raw comparison is recorded here, not asserted.",
+  "notes": "A reviewer who reads T6 as a raw-PDF comparison will find it fails by construction; the de-wrap is the documented reading."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "The format=rich export still prints ISO days (the vintages line, the as-of vintage in every figure row through render_print.render_figure_line, and served prose verbatim); the order says not to touch it, so it is reported, not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py build_rich_text line 1627 (base fce34ac73c): vintages from f.get('vintage')",
+      "lib/research/provenance/render_print.py render_figure_line lines 242 and 244 (read whole, 299 lines)",
+      "lib/research/api/scoped_amgt.py _print_pack lines 7866-7903 (read): rich and pdf branches delegate; no text assembled",
+      "lib/research/print/render_pack.py census fixture bu3_date_sites.json: rich_export_sites X01 to X10"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Do not touch the rich-text export (format=rich) or any other module: report whether render_print.py, scoped_amgt.py or the format=rich path print an ISO day to a reader. T7: no census entry reads bypass true with a disposition other than fixed_here.",
+  "world_is": "build_rich_text prints 'vintages <ISO timestamp>' (render_pack.py line 1627 at base). _figures_table and _forecast_table print render_print.render_figure_line verbatim, which appends 'as of <vintage>' (render_print.py line 244, an ISO timestamp such as 2026-09-10T23:20:18Z on the SAP fixture) and 'observed <date>' (line 242 path). scoped_amgt._print_pack assembles no text and hands the block to build_rich_text or build_pack. read_drafted_sections returns served sentences verbatim. T7 read literally over a census that lists the ten rich sites cannot pass without editing them, so T7 is scoped to the ten pack sites, and the rich sites stay in the census as rich_export_sites, reported_not_edited.",
+  "notes": "render_print.render_model_block (the CLI in that module) also prints the vintage; it is not a reader surface of the pack."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W506-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~506",
+  "surfaced_at": "2026-10-17T23:05:20Z",
+  "one_line": "Served drafted sentences that carry an ISO day print in the long form: the long-form guard sits in the wrap every printed pack line passes through, so it reaches served prose.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py _wrap (edited): first statement applies _long_days to the printed text",
+      "lib/research/print/tests/fixtures/bu3_block_ICT_PM.json served_drafted: recommendation sentence carries 2026-10-16",
+      "lib/research/print/tests/fixtures/bu3_block_RIO_LN.json served_drafted: risks sentence carries 2026-07-23",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round113/READS_ITEM4.md line 19: the CTO ruling text the order cites"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Do not reword any existing sentence; display only: no served value, sort key or comparison changes.",
+  "world_is": "The order's two rules meet at served prose. I read 'every date a reader sees' (CTO ruling 2) as covering a day inside a served sentence, so _wrap applies the long form (census sites S08 and S09). The served text in the store is unchanged; the printed sentence reads 'October 16th, 2026' for '2026-10-16'. The fixture's recommendation and risks sentences carry such days and T1 grades them. Whether served prose is in scope is the CTO's call. If it is not, the change is one line in _wrap.",
+  "notes": "Form only. If the CTO rules served prose out of scope, the census's S08 and S09 become no_date_shown and the guard is narrowed."
+}
+```
