@@ -26128,3 +26128,111 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Off-task observation, filed for the owner of the core registry and the roster. No file of the OG-en-17 write set is involved."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:52:33Z",
+  "id": "NFRA_OPLGTW-Z-S331",
+  "one_line": "Round-40 disposition of worker row Z-W129-S1: Issuer spec error, accepted: OG-en-17 AC2 asked for a window of 450 partitions, but a 13-month window holds at",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W129-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 4ebc1e781b (OG-en-17); AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders (43 and 29 passed)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Issuer spec error, accepted: OG-en-17 AC2 asked for a window of 450 partitions, but a 13-month window holds at most 396 daily partitions, so the premise is unbuildable. The worker ran the test over the 396-day window, which exercises the same paging to the window start; nothing is lost. The issuer's number was wrong, the worker's reading is right.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer spec error, accepted: OG-en-17 AC2 asked for a window of 450 partitions, but a 13-month window holds at most 396 daily partitions, so the premise is unbuildable. The worker ran the test over the 396-day window, which exercises the same paging to the window start; nothing is lost. The issuer's number was wrong, the worker's reading is right."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:52:33Z",
+  "id": "NFRA_OPLGTW-Z-S332",
+  "one_line": "Round-40 disposition of worker row Z-W129-S2: ACCEPTED and to be DISCLOSED in the release ask: the order said 'newest first, as today' but the base served r",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W129-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 4ebc1e781b (OG-en-17); AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders (43 and 29 passed)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED and to be DISCLOSED in the release ask: the order said 'newest first, as today' but the base served rows oldest first. The cursor answer now serves each page newest first, which is the order a paging caller expects (page 1 is the newest slice, next_cursor goes back in time). It is a change in what an analyst sees and the next release's ask states it plainly.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED and to be DISCLOSED in the release ask: the order said 'newest first, as today' but the base served rows oldest first. The cursor answer now serves each page newest first, which is the order a paging caller expects (page 1 is the newest slice, next_cursor goes back in time). It is a change in what an analyst sees and the next release's ask states it plainly."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:52:33Z",
+  "id": "NFRA_OPLGTW-Z-S333",
+  "one_line": "Round-40 disposition of worker row Z-W129-S3: ACCEPTED: next_cursor is null when no partition remains before the page, not only when the window start is rea",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W129-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 4ebc1e781b (OG-en-17); AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders (43 and 29 passed)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED: next_cursor is null when no partition remains before the page, not only when the window start is reached; the window may start before the oldest partition that exists, so this is the exact end-of-data signal.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED: next_cursor is null when no partition remains before the page, not only when the window start is reached; the window may start before the oldest partition that exists, so this is the exact end-of-data signal."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:52:33Z",
+  "id": "NFRA_OPLGTW-Z-S334",
+  "one_line": "Round-40 disposition of worker row Z-W129-S4: CARRIED: tests/test_og_ch1.py fails 2 of 6 (registry ValueError, roster file absent) in the worker's tree; it ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W129-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 4ebc1e781b (OG-en-17); AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders (43 and 29 passed)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED: tests/test_og_ch1.py fails 2 of 6 (registry ValueError, roster file absent) in the worker's tree; it is the known red test carried since round 38 (rows Z-S317), not caused by OG-en-17, not in its paths.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED: tests/test_og_ch1.py fails 2 of 6 (registry ValueError, roster file absent) in the worker's tree; it is the known red test carried since round 38 (rows Z-S317), not caused by OG-en-17, not in its paths."
+}
+```
