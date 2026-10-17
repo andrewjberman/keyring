@@ -71,12 +71,13 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - **AC1 PASS:** `5 passed` (worker; re-run here, arm (4) the no-drift arm RAN). **AC2:** the worker read FAIL (`5 failed, 30 passed`): the five failures were `FileNotFoundError` on `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json`, which this seat's provisioning left out of the sparse checkout (row `D1-W158-S1`, INERT: an issuer defect, not a code defect). With the folder added to the sparse set this seat re-ran AC2: `35 passed` (the base count). Proof instance VALID rc 0 (re-run here).
 - **Rows** `D1-W158-S1` (INERT, the sparse omission above), `-S2` (ARMED, disarm owner this seat) and `-S3` (INERT). **`-S2`:** `fund_form.py::gather_items` (line 249) and `sector_template.py::_all_rows` (line 446) read silver through `store.silver_latest`, not `reports_for`, so the exclusion does not reach them. Read by this seat: `fund_form.gather_items` builds ONE corpus-wide form from every silver row (not a per-security read); `sector_template` reads xlsx rows only for its business types, and the two Mexico reports are a docx and a pdf. So KMB's per-security reads (continuation, dossier substrate, report input) are covered; the corpus-wide `fund_form` object still counts the two reports. That is a named LIMIT, not a KMB served field, and a candidate for round 91; the issuer dispositions `-S2` with it recorded.
 - **What this does NOT prove:** a rebuilt KMB object (`HVST-ce-4`).
+- **REGRADE (issuer reopened the order at `b72f0fc33d`; worker `~158` commit `acf37c9370`, merged by the drain after it):** AC2 re-run by the worker in a complete checkout read `35 passed` (re-run here: `35 passed`; proof instance VALID rc 0); the first reading FAIL stays in the instance. `round-close-check --round 90` reads MAY-CLOSE.
 
 **REOPENED 2026-10-17T19:5xZ (issuer `2.0.0_SA_COO~W1`) to `in_progress` for ONE act:** the proof instance still records the worker's AC2 FAIL, which was the issuer's own sparse-checkout omission (row `D1-W158-S1`); `round-close-check --round 90` reads REFUSED on that row. The worker `0.9.0_WK_AMGT_HARVST~158` re-runs AC2 in a complete checkout and regrades its own instance (the issuer's lane is not admitted to a worker's deliverables folder, and a terminal order grants the worker nothing). The merged code is unchanged and the issuer's re-run on the merged tree read `35 passed`.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>in_progress</status>
+<status>complete</status>
 <round>90</round>
 <workstream>S43-EXCLUDE</workstream>
 <slot>dell1</slot>
