@@ -74,3 +74,24 @@ logins should see real numbers, and whether to start the Day 1 build. Andrew, VE
   - a YTD replay as proof.
   It runs no live app-only mailbox read until the Graph grant exists (Day 0, Andrew).
   The daily rules read Schwab silver directly, never through the gateway.
+
+## Addendum 4, 2026-10-17 ~03:3xZ: an interim bridge on Andrew's mailbox
+
+Admin consent for the app's `Mail.Read` (application) failed: Andrew holds Cloud Application Administrator, and consent
+needs Global Administrator or Privileged Role Administrator. The ApplicationAccessPolicy needs Exchange Administrator. Both
+wait on a Global Admin (likely AJ).
+
+The CRO proposed a bridge: INBOX RADAR reads Andrew's own mailbox, which receives 49@ and inflection@, through the gateway's
+existing delegated access every ~5 minutes, until the app-only grant and its policy test pass. Andrew, VERBATIM:
+
+> yes we can run it on mine thats fine
+
+- **Scope:** Andrew's mailbox only, read-only, about every 5 minutes, labeled BRIDGE.
+- **Retirement:** it is switched off when `Test-ApplicationAccessPolicy` prints Granted for a member and Denied for a
+  non-member.
+- **Known gap:** an Opal reply that copies neither 49@ nor Andrew is invisible, so false "unanswered" items are possible.
+- **Done already, outside the grant:**
+  - the app registration `opal-client-ops-early-warning` (client `3d9262d1-36a0-476b-b176-cf8e0fa427ed`);
+  - a certificate credential in Secrets Manager `opal/ews/graph-app-cert` (thumbprint `4EC53E1D...C5B8`; the public
+    `.cer` handed to Andrew for upload);
+  - no client secret.
