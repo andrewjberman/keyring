@@ -25140,3 +25140,181 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only, no harm: the constant is a plain value and the new statement's resource is built from it. The checker does not grade the constant's position. The issuer may rule a different placement."
 }
 ```
+## IRPT_DASHBD-D2-W256-S1 -- the checker's digit-run guard refuses the mandated claim label, so DBC191-1-AC1 and DBC191-2-AC1 cannot PASS as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W256-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~256",
+  "surfaced_at": "2026-10-17T06:07:23Z",
+  "one_line": "DBC191-1-AC1 and DBC191-2-AC1 cannot PASS as written: the checker's digit-run guard refuses the mandated claim label before any criterion branch runs",
+  "spec_asserts": "Order DB-b-325: the record's claim is exactly the mandated label (inferred from the CRM extract Files.zip, sha256 prefix c66bae52, and the dell1 match sheet stamp); DBC191-1-AC1 and DBC191-2-AC1 are expected to print PASS when run on the worker's worktree.",
+  "world_is": "p191 run() applies a digit-run scan (eight or more digits, LONG_DIGITS in p151 line 51) to every string in the record whose key is not in DIGIT_OK_KEYS (p151 lines 52-53, which omit claim) before the criterion branch. The mandated claim carries an eight-digit run from the sheet stamp, so both criteria print FAIL on the first output line for any record carrying the claim. Measured on the worktree record: check_record passed, then FAIL with the digit-run line and rc 1 for both ids. The checker's reproducibility leg and its sampled-key leak leg are never reached; this seat measured both outside the checker (two runs of the matcher gave one table hash; zero sampled-key hits in the folder). Not repaired: the checker lives in the issuer's tree and is read only here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r150/p191_cot_extended_match.py@c152352793 line 104 (run() digit guard before the criterion branch)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r147/p151_pubapply.py@c152352793 lines 51-53 (LONG_DIGITS and DIGIT_OK_KEYS without claim)",
+      "worker run on worktree wk-IRPT_DASHBD-256: DBC191-1-AC1 and DBC191-2-AC1 each print FAIL with the digit-run line, rc 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W256-S2 -- the CRM carries an email for each user, but no certain key joins a household advisor code to a user
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W256-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~256",
+  "surfaced_at": "2026-10-17T06:07:23Z",
+  "one_line": "The CRM names an email for each of seven users, but no certain key joins a household advisor code to a user, so the advisor-email join is not built",
+  "spec_asserts": "Order DB-b-325 step 2 and the CTO rule (msg 10304): if the CRM carries no advisor email, report the counts and stop there; the ownership map is keyed by the portal user's login email, matched exactly to the advisor email in the CRM.",
+  "world_is": "The Users table has seven rows, each with a non-blank EmailAddress. The household advisor codes (Crmhouseholds AdvisorID, four distinct; the portfolio Advisor_ID carries the same four) are short alphanumeric codes, and none equals a Users UserID (zero equal values). Activity owner ids all equal Users UserIDs (seven of seven), so Users is the activity-owner table and carries no household advisor key. The matcher writes advisor_email empty for every row and advisors_with_email 0. The stop clause keys on whether an advisor email exists; the table exists but has no certain join, so the record names the table and column and reports the zero join rather than stopping silently. The issuer rules whether the email link is buildable.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker probe on the CRM member of Files.zip, read in memory: Users, Crmhouseholds and Activities counts only (worktree ff9170b2d3)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~256/cot_extended_match.py (users lookup keyed on the household advisor code; zero matches)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W256-S3 -- only 92 published keys have any route into the extract; the other 847 have no certain rule, so the grant population is four keys
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W256-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~256",
+  "surfaced_at": "2026-10-17T06:07:23Z",
+  "one_line": "Only 92 of the 939 published keys have any route into the extract; the other 847 have no certain rule, so the grant population is four keys",
+  "spec_asserts": "Order DB-b-325 cell: link the 939 published Cottonwood accounts to CRM households over the extract, with a method and a confidence for each, and record in notes what did not link and why.",
+  "world_is": "No published key appears as a token in any text member of the extract (zero hits across the CRM tables, the activity notes, the portfolio files and the imaging listings), and none of the 870 opaque directory account ids equals a published key. The only bridge is the 118-pair list: 96 distinct current accounts, 92 of them published keys (11 deterministic). Its old accounts reach the extract through activity-note citations (138 rows, 77 accounts) and the portfolio performance file (114 of 115). Result: HIGH 4 (all through a deterministic pair), LOW 58, UNMATCHED 877. The sheet gives no HIGH link (direct 0, via a deterministic pair 0). The 847 keys with no pair have no certain rule the extract supports.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~256/COT_EXTENDED_MATCH_RECORD.json (result and join counts; notes)",
+      "worker run of cot_extended_match.py twice on the worktree: output 940 lines, identical table hash"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W256-S4 -- the pair list's old accounts are nine-character alphanumerics, not nine digits
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W256-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~256",
+  "surfaced_at": "2026-10-17T06:07:23Z",
+  "one_line": "The pair list's old accounts are nine-character alphanumerics, not nine digits; all 115 distinct values carry at least one letter",
+  "spec_asserts": "Order DB-b-325 worker face: the pair list has columns commonwealth_account (old, 9 digits) and black_diamond_account (current, 11 chars).",
+  "world_is": "The 118 rows carry 115 distinct old accounts; every one is nine characters and none is all digits. The matcher matches them as exact alphanumeric tokens. The portfolio positions file carries the sheet's 83 accounts (83 of 83); the portfolio performance file carries 114 of the 115 old accounts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/opal-intake/inbound/cottonwood-match/dell1_desktop_20261017/Cottonwood_match_list_118_pairs.csv (column commonwealth_account; counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W256-S5 -- the sheet household cell carries a HouseholdID and an HHID in one string
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W256-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~256",
+  "surfaced_at": "2026-10-17T06:07:23Z",
+  "one_line": "The sheet household cell carries a HouseholdID and an HHID in one string; 78 of 83 rows resolve, and both ids agree on one CRM row",
+  "spec_asserts": "Order DB-b-325: the sheet has columns account, advisor, confidence and hhid; the CRM tables carry two household id spaces, HouseholdID and HHID.",
+  "world_is": "The sheet hhid cell reads '<HouseholdID> / HHID <HHID>' for 78 of 83 rows (51 distinct households); the other five are blank or unpaired and grant nothing. In the CRM households table HouseholdID and HHID map one to one over 270 rows, and the two ids of every resolved cell agree on one row. Contacts and activities key households by HouseholdID; the client-360 table keys them by HHID (270 of 270 agree).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker matcher run on the worktree: sheet household cells resolved 78 of 83 (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W256-S6 -- the imaging index carries 78 of the 115 old accounts beside client names, with no household id
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W256-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~256",
+  "surfaced_at": "2026-10-17T06:07:23Z",
+  "one_line": "The imaging index carries 78 of the 115 old accounts beside client names with no household id; the order names no method for it and none was used",
+  "spec_asserts": "Order DB-b-325 step 2: discover which text sources exist; the method set is the one the order names, and a name match is MEDIUM at best.",
+  "world_is": "The imaging listings (three nested archives, 51 listing files) hold account numbers in their account, statement and tax columns, and 78 distinct old accounts appear there. Those files carry names and no household identifier, and no imaging account equals a published key. Name evidence was not used as a link: the CTO ruling (msg 10304) excludes fuzzy name matching, and the order names no exact-name method. The issuer may rule whether the imaging index is a second source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker matcher run on the worktree: imaging listings 51, pair-account tokens counted (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W256-S7 -- a timing run wrote a third table under the work folder; this seat removed its own stray output the same turn
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W256-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~256",
+  "surfaced_at": "2026-10-17T06:07:23Z",
+  "one_line": "A timing run wrote a third table under the work folder beyond the two files the order names; this seat removed its own stray output the same turn",
+  "spec_asserts": "Order DB-b-325 bounds: WRITE of the two files under C:/opal-intake/work/ that the order names (the match table and the temporary second-run table); nothing is deleted.",
+  "world_is": "A timing run of the matcher wrote a third file, cot_extended_match_timing.csv, under C:/opal-intake/work/; its hash equals the recorded table hash. This seat removed that file the same turn; it is the only deletion in this order and it removed only this seat's own output. The two named files are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/opal-intake/work/ listing after the removal: the match table and the second-run table present (worker check)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
