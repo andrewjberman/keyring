@@ -4366,3 +4366,17 @@ Round 91 closed MAY-CLOSE (CVO `ADJUDICATION_v85.md`, `REMEDIATION_v22.md`; 6 ro
 - **Fan-out:** `N of M chains, N=1 worker (cg-1) of M=1 chain, cap 8` (`cg-1` then `cg-2` / `cg-3`, then `cf-3`, then `cf-5` are one dependency chain; the gateway cell is a seat order).
 - **Checks at the cut (dry-run at the base):** `cg-1` AC1 FAIL as expected (no test file), AC2 PASS as expected (`58 passed`), AC3 and AC4 FAIL as expected (`cat` of a file that does not exist).
 - **Not cut (named):** `ce-5` (deferred, rides `cg-3` if the CTO says so); `D1-S39` (`not_held`); the `line_only` text recovered from `section_leads`; the standing candidates of `ledger/ROUND88_ENRICHMENT_CANDIDATES_20261017.md`.
+
+### 122a. ROUND 92 -- the CTO cut `cg-3` (msg 7775): the gateway release rides the silver rewrite; `HVST-cg-4` (the code half) CUT in parallel (2026-10-17 ~23:3xZ)
+
+The CTO accepted the recommendation: a gateway consumer still reading `fund` as held is the live reason `ce-5` was waiting for. **Order (his):** (1) `cg-1` census and dry run; (2) the silver rewrite (`cg-2`) under its pair; (3) `cg-3`, the gateway release, AFTER the silver lands so the field is never served empty; (4) the proof read through the gateway on ADBE, SNPS, MNST, ML_FP and CLX with UNH as control; `cf-3` and `cf-5` follow (2). One release, its own pair, site Z told first, the stale-base guard on the live commit (`ledger/ROUND91_CARRIED_FOR_NEXT_GATEWAY_RELEASE.md`); the two `ce-3` files ride it.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cg-4` | `cg-4` | **`REPORT_FIELDS` gains `fund_relation`** (one tuple, `harvest_research.py:60`) with an offline test (served, absent-key row served `None`, pinned tuple, all seven values, a mutant). The CODE half of the gateway release; deploys nothing. | WORLD (the path floor of `infra/`; workstream `GATEWAY-FUNDREL`) | worker `~162` (light) | CUT, in parallel with `cg-1` (disjoint write sets) |
+| `HVST-cg-3` | -- | **The gateway release** on the live deployed commit: the files of `cg-4` and of `ce-3` (`b77e08e198`), nothing else; host owner told first; the controls of the carried file; restart; the MCP tool count and `/health` equal before and after. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cg-2` (the field must not be served empty), `cg-4` merged and its own pair |
+| `HVST-cg-2` | -- | The silver rewrite (section 122). | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cg-1` merged and the dry run read |
+| `HVST-cf-3`, `HVST-cf-5` | -- | The `fund_form` chain (section 122). | LOCAL, then WORLD | worker, then SC1 | DEFINED, NOT CUT: wait on `cg-2` |
+
+- **Fan-out (this recut):** `N of M chains, N=2 workers (cg-1, cg-4) of M=2 chains, cap 8` (the silver chain `cg-1` then `cg-2` then `cf-3` then `cf-5`; the gateway-code chain `cg-4`, which `cg-3` consumes after `cg-2`).
+- **Checks at the cut (dry-run at the base):** `cg-4` AC1 FAIL as expected (no test file), AC2 PASS as expected (`43 passed`).
