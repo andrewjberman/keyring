@@ -28,3 +28,7 @@
 - 20261017T083754Z LEG L3 closed: plan 3 add 1 change 0 destroy at the four named addresses, ONE safe-apply, replan No changes; live CodeSha256 = I7T8wRYm
 - 20261017T083754Z LEG L4 closed: simulation battery on irpt-hmac-list-stage-role: get_the_one_secret allowed, put_each_of_the_three_list_keys allowed; ge
 - 20261017T083754Z LEG L5 closed: secret value put once (secrets.token_hex(32), in-process SDK call, never printed or written); version count 0 -> 1
+
+## Carried notes (hand-written lines kept across re-renders)
+
+- 20261017T0850Z NOTE L6 (QA) stays OPEN for the issuer by ruling (2.0.0_SA_COO~P2 msg 10432, AMENDMENT 1 of IB-hm-5): step 8 is STRUCK, no manual invoke of irpt-directory-refresh (it has no one-firm payload; a manual invoke would refresh all three firms). The QA is Monday 2026-10-19 13:30Z's scheduled fire, read by the issuer. Applier made 0 Lambda invokes.
