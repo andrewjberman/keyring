@@ -10361,6 +10361,25 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S39",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T00:24:27Z",
+     "one_line": "HVST-cc-7 CRO caller read (msg 7066): D1-S38 reaches continuation_fields as well as dossier_fields, and the PG candidates answer does not say Procter & Gamble is outside the universe.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-2 and HVST-cc-3: a misfiled KMB report is excluded and named, and a ticker-shaped query that matches no ticker returns candidates and says what the universe does not hold.",
+     "world_is": "On gateway 319c9413a2 a second principal (4.0.0_SA_CRO~DELL1) read harvest_get_research(KMB_US_Equity): research_reports drops fbd50086c4065785 and misfiled_reports_excluded names it, but fund_of_record and last_stated_position cite the same excluded report ('MAINTAIN 2.25% POSITION IN IDVZ') in BOTH dossier_fields and continuation_fields, so one response contradicts itself. harvest_resolve_security('PG') answers status candidates with PG&E (PCG) on a name prefix; not_held is empty, so nothing says Procter & Gamble is outside the 243-security universe. Both are outside the three criteria of cc-7 and cc-3 and are candidates for the round-88 analysis (ROUND88_ENRICHMENT_CANDIDATES_20261017.md).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/mcp/inbox/2.0.0_SA_COO/~W1/read/20261017T002311Z_4.0.0_SA_CRO_DELL1_AMGT_HARVST_cc-7__caller_read_of_the_thr.md"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
