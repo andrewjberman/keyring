@@ -8473,3 +8473,119 @@ by dell1 or by this seat.
   "world_is": "Named: the key that moved (gold/canonical/holdings/<date>.parquet, 15 dates) and its writer (B_00.canonical_holdings.py, rolling window). Not named: the writer's upstream input that changed between 23:15Z and 04:16Z (the Schwab RPS silver partitions are the candidate; a version listing of that prefix returned no rows and was not trusted without a positive control). Round 28 cell 1 continues from here."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W100-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~100",
+  "surfaced_at": "2026-10-17T08:02:23Z",
+  "one_line": "Leg G expects 124,848.36 to leave unclassified+other on 2026-10-02, read from the legacy open-lots partition gold/holdings_lots, not from canonical holdings; that bucket held 1,924.34 before the seed and after the first post-seed fire.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-object opal-data-bd gold/holdings_lots/2026-10-02.parquet --version-id AAxZkgyyoXBCx8vpHOev.AdSpRxRWUnm: summing open lots per seeded ticker reproduces leg G 124848.36 exactly (.scratch/s45/tick.py, names.py)",
+      "aws s3api get-object opal-data-49financial advi/49financial/platinum/views/mix_daily_summary.json at 3BY8Etw3LetRaRFcOofjaAT98PSfp4Z3 and 87CvfcFpbyM7ZRAb0P6AztqK1X74W6cQ: firm 2026-10-02 unclassified+other 1924.34 in both",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/seed22_legg_read.py@86c308e3ef reads gold/holdings_lots (legacy prefix); data/black_diamond/scripts/gold/lib/s3_layout.py@86c308e3ef HOLDINGS_LOTS_PREFIX is gold/timeseries/holdings_lots/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-110 / leg G: the seeded dollars leave unclassified+other on the first fire after the seed, with the expectation read from gold/holdings_lots/<date>.parquet.",
+  "world_is": "The legacy lots hold open HPI 47,463.89, LCFYX 29,531.77, EZET 18,856.67, VRP 9,504.00, PFF 12,056.00, HODL 3,151.90, GLPI 4,284.12 and no open lot for AEMGX, CEMVX, FBCVX, FIADX or CUBE. Canonical 2026-10-02 (wtAh) has no HPI or CUBE row and holds LCFYX 36,406.68 under blank tickers. C_06 reads canonical; the identity resolver reads a third prefix. Served unclassified+other is 1,924.34 both before and after the seed, so 124,848.36 cannot leave it."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W100-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~100",
+  "surfaced_at": "2026-10-17T08:02:23Z",
+  "one_line": "Leg G compares the pre-seed version with the LATEST served object, not the first post-seed fire: 14 of 14 window dates fail, 12 of them with zero seeded dollars in the lots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/seed22_legg_read.py read --pre-version-id 3BY8Etw3LetRaRFcOofjaAT98PSfp4Z3: SEED22-LEGG ok=False window_dates=14 moved=14 bad=14 tol=250 (read by this worker, rc=1)",
+      "read() takes VersionId only for pre; post is get_object without VersionId, so the latest object is graded (post_restated_through=2026-10-01)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Leg G grades the seed first fire against the pre-seed version, so non-seed rewrites do not enter the grade.",
+  "world_is": "Every class moves on every window date. Example 2026-10-03 (seeded 0.00): unclassified+other delta 5021.55, equity delta 200285.60, cash delta -38440.73. Those deltas come from the canonical rewrites at 23:15Z and 04:16Z, not the seed, so leg G cannot isolate the seed against the latest object."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W100-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~100",
+  "surfaced_at": "2026-10-17T08:02:23Z",
+  "one_line": "The NAME:: row for LORD ABBETT CONVERTIBLE I classes cash, against LCFYX ruled fixed_income; C_06 does not reach it for the blank-name rows because the resolution table resolves them first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb get-item --table-name etf-classifications --key {\"ticker\":{\"S\":\"NAME::LORD ABBETT CONVERTIBLE I\"}}: asset_class cash, sub_asset_class Cash, updated_by mdpf-secclass-old-list-reclassify, last_updated 2026-10-07T19:03:32Z",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py@86c308e3ef _row_class maps sub_asset_class Cash to cash; classify_with_identity resolves the name-resolution-table hop before the NAME row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A NAME:: row carries the canonical class of a blank-ticker position (SC-e-76 fallback after the identity chain).",
+  "world_is": "Six blank-ticker rows of 2026-10-02 (36,406.68) classify fixed_income through the name-resolution-table hop to LCFYX. A position whose name is absent from that table would fall through to the NAME row and classify cash."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W100-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~100",
+  "surfaced_at": "2026-10-17T08:02:23Z",
+  "one_line": "Served 2026-10-02 moves from 3BY8 to 87Cv differ from the canonical rows that should cause them by +0.56 (LCFYX) and -0.60 (GLPI); not reconciled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served firm 2026-10-02 3BY8 to 87Cv: cash -36407.65, fixed_income +36407.24, equity -66.64, alternatives +66.64 (.scratch/s45 diff)",
+      "canonical gold/canonical/holdings/2026-10-02.parquet at wtAhSnBVfcTlrV.Y6Ml3Jh.ggcyBgQkf: LCFYX blank-name rows 36406.68, GLPI ticker row 67.24"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The first fire moves the served class dollars by the canonical market_value of the rows that changed class.",
+  "world_is": "The served moves match the canonical rows within 0.56 and 0.60 in opposite directions. The residual is not explained by this read and was not chased, per the order."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W100-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~100",
+  "surfaced_at": "2026-10-17T08:02:23Z",
+  "one_line": "The first post-seed fire moves about 7,501 to 7,594 a day from unclassified to alternatives on 2026-10-08 to 10-14 (CUBE); canonical 2026-10-02 holds no CUBE row, so the CUBE dollars reach the served mix from 2026-10-08.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served mix diff 3BY8 to 87Cv per date: unclassified -7501.41 on 2026-10-08 through -7541.20 on 2026-10-14, alternatives +7568.65 to +7661.07 (.scratch/s45 diff)",
+      "canonical gold/canonical/holdings/2026-10-02.parquet at wtAhSnBVfcTlrV.Y6Ml3Jh.ggcyBgQkf: no row whose ticker or asset_name carries CUBE (tick.py, names.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SEED22_PLAN.json carries CUBE at market_value 7570.0 as a seeded dollar that leaves unclassified.",
+  "world_is": "CUBE leaves unclassified on 2026-10-08 onward in the served mix and is absent from canonical 2026-10-02 and from the legacy lots. Canonical for 2026-10-08 and later was not read (outside this cell)."
+}
+```
