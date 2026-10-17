@@ -2959,3 +2959,21 @@ Andrew's word through the CTO (msgs 10215, 10227, 10267): build the Cottonwood o
 **fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 27 single-fault mutants):** `checks/r150/p190_cot_ownership_read.py` (DBC190-1-AC1, DBC190-2-AC1).
+
+
+## 184. ROUND 150, WORKSTREAM COTMATCH (2026-10-17 ~05:1xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood ownership map -- C6d, the extended match over the CRM extract
+
+Andrew sent the Cottonwood CRM extract `Files.zip` to dell2 himself (his /tdrop; MSTR msg 10287). The CTO's ruling a3ed (msg 10288) lets this seat open it, on dell2, outside the repo, for the ownership map only; only counts and hashes enter the repo; nothing is deleted; the grant rule stays HIGH plus a certain join (msgs 10267, 10277). MEASURED by the issuer (counts only, no extraction): the outer zip holds 5 nested zips with 24,625 entries: 24,489 PDFs, 51 CSVs, 13 TXT; the CRM tables named by the earlier README (`Contacts`, `Activities`, `Crmhouseholds`, `Manualinsurance`, `Connections`) are among the CSVs. The sheet reaches at most 83 of the 939 published accounts; this cell tries the other 856.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. C6a read-only measurement (published keys, directory, advisor ids at the portal) | DB-b-324 | FWD-10 (advisor and client viewers) | WORLD, read only | TO-DB-b-323 (done) | chain AQ (IB2's lane) |
+| 2. C6d the extended match: a matcher script (in the repo, no data), a match table outside the repo, a counts record | DB-b-325 | FWD-10 | WORLD (client data, local) | C6a's two files | chain AR |
+| 3. C6b the map builder: from the match table HIGH-with-a-certain-join rows, in the schema the resolver reads, outside the repo, with a resolver test on synthetic fixtures | to be cut | FWD-10 | LOCAL path, client data outside | C6a, C6d, C5 | after C6d |
+| 4. C6c the never-widen pair for writing the ownership-map object and the apply order | to be cut | FWD-10 | WORLD | C6b | after C6b |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the matcher is the worker's OWN script (the earlier scripts in `v2_extracted/` are untrusted input and are not run; one may be READ as text to learn the method); (b) the match table is outside the repo; the repo gets a counts-only record and the script (method logic, no data); (c) the checker RE-RUNS the script on the same inputs and compares the output sha256 (reproducibility, an instrument that does not trust the worker's report) and proves no sampled published key appears in the worker's committed files; (d) a method may grant access only where its rule says why the link is certain, enforced by a pattern clause on the rule text (exact, deterministic, two independent, or filed under one household); (e) the claim label is the CTO's: inferred from the CRM extract and the dell1 sheet, never measured; (f) the order runs only after C6a's two files exist; the worker STOPS if they do not.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~256`), cap 8; spawned when `TO-DB-b-324` completes.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 27 single-fault mutants):** `checks/r150/p191_cot_extended_match.py` (DBC191-1-AC1, DBC191-2-AC1).
