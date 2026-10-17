@@ -25038,6 +25038,27 @@
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W289-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~289",
+  "surfaced_at": "2026-10-17T13:49:06Z",
+  "one_line": "The order file in the worker worktree carried the issuer's AMENDMENT 1 text (AR389-y-AC2, CTO msg 10556) as uncommitted working-tree text, so the status-flip commit b23895a789 carries that amendment line as well as the flip; the text is byte-identical to the issuer's amendment commit 6212d38463 (on box/dell2, not an ancestor of wk-IRPT_ANLREQ-289).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-389 ends with a status flip only: the worker's commit to the order file is the status line and nothing else.",
+  "world_is": "MEASURED 2026-10-17: git show HEAD~1 (cut 25ac5f17c3) of the order file has 0 occurrences of AMENDMENT 1; the worktree file read at the start of the task has the amended AC2 line; git show 6212d38463 (issuer amendment, one line changed) is not an ancestor of HEAD; diff of git show HEAD (b23895a789) against git show 6212d38463 differs only in the status line. The worker did not author the amendment text and did not notice the difference before committing (the status diff was checked, the full file diff was not). Not amended or reverted, because the text is the issuer's own and matches its commit; the integrator sees the same line on box/dell2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD~1:org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-389.prod-into-dev-reconcile-merge.md (0 AMENDMENT 1 occurrences)",
+      "git show 6212d38463 --stat (one file, one line changed); diff of the committed order against it: status line only",
+      "git show --numstat b23895a789 (order file: 2 insertions, 2 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
