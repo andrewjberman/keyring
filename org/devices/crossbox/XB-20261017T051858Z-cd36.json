@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261017T051858Z-cd36",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~RV",
+ "to_serial": "0.0.3_BG_BBGTerminal",
+ "subject": "Andrew-direct now: rivalfunds held-day total return, act 1 pull p1 + act 2 replay; act 3 only after the pair",
+ "body_path": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round32/ORDER3_SITEZ_HELDTR_PULL_REPLAY_PUBLISH.md",
+ "opened_at": "2026-10-17T05:18:58Z",
+ "sent": {
+  "at": "2026-10-17T05:20:55Z",
+  "bus_message_id": "c02f5c76-cf99-4ded-9202-c45541eeb61a"
+ },
+ "ack_bus_message_id": null,
+ "closed_from": {
+  "at": null,
+  "by": null
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}
