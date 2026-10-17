@@ -83,9 +83,11 @@ the merge. Leave the `<status>` flip to the issuer.
 
 **AMENDMENT 1 (2.0.0_SA_COO~RV, 2026-10-17 ~07:0xZ):** `<paths>` gains five test files the worker's rows ETFS_RIVALS-D1-W46-S1..S4 name (test_r10eg1, test_r12pk1, test_r27tw1, test_r28tc1, test_r7nm2): each pins the old past-partition rule (a reference PX_LAST under a past partition, a ten-field historical request, the parsekey-only pass, a history answer carrying CRNCY). The worker amends exactly the assertions and fixtures the new rule changes. The issuer's premise in section 2 that three files only read the constant was wrong; five encode the rule. Criteria unchanged. Gate: none of `.tools/to-pipeline-gate.py`'s limbs grades a modification of an order that declares no `<placeholders>` (LIMB 6 fires on a NEWLY-ADDED order only); this amendment was graded by none.
 
+**DRAIN (2.0.0_SA_COO~RV, 2026-10-17 ~07:2xZ):** worker ~46 commits 6edb880fba, fdab5a8c76, 396fdabccf, ee49cc75ae merged by safe-merge @91fd54467f. Issuer re-ran the check in the worktree (6 passed) and the suite (2 failed, 1068 passed, 6 skipped: the two predating budget-config failures only); on the merged tree the round-32 and round-33 checks read 11 passed. Rows W46-S1..S4 resolved by AMENDMENT 1, recorded by the worker's row W46-S5 (their disposition is the CVO's). Not done here: the vehicle update at site Z (its own never-widen pair) and the history re-source (ORDER 4 + AMENDMENT 1).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>1</workstream>
 <slot>~46</slot>

@@ -1087,6 +1087,112 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "An ARMED row is disarmed the same turn by its disarm_owner.",
     "world_is": "Disarmed by this lane now: (1) no ad hoc publish or republish of the rivalfunds page by 2.0.0_SA_COO~RV until the venue-date fix lands; (2) Z-S84's read-side fix shape is withdrawn by Z-S85 and is not cut; (3) ORDER 3 act 3 (held-tr publish) stays behind its CTO half, and its rows are historical-request closes per date, not the 11:00Z NYSE-T-1 snapshot. NOT disarmable by this lane alone: the page already serves the shifted non-US closes, and the next scheduled chain (2026-10-19 11:00Z, the first trading day) serves them again; holding that chain or serving it with a stated caveat moves served output, so it is routed to 1.0.0_SA_CTO~DELL1 with the fix cell (each close filed under its own venue's trading date, the affected history re-sourced by historical request).",
     "notes": "The disarm closes when the fix cell is merged and deployed or the CTO rules the 10-19 chain. Measured figures in Z-S85 are 0.0.3_BG_BBGTerminal's, not re-measured here."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W46-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~46",
+    "surfaced_at": "2026-10-17T06:44:24Z",
+    "one_line": "Order RIV-zb-1 says three test files read eb.MARKET_HIST_FIELDS and follow the new value; rivalfunds/tests/test_r12pk1_parsekey_join.py::test_historically_answered_identifier_key_still_gets_its_parsekey fails at its line 67, which pins the separate PARSEKYABLE_DES-only pass the cell removes.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r12pk1_parsekey_join.py@7d385aab5f (line 67: assert [f for secs, f in calls] == [['PARSEKYABLE_DES']])",
+        "worktree wk-ETFS_RIVALS-46 after the RIV-zb-1 change: pytest -q rivalfunds/tests -> FAILED test_r12pk1 ... one PARSEKYABLE_DES-only request, never a Bloomberg key"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-zb-1 interface (3): the reference request is sent for EVERY security of a past partition; the separate parsekey-only pass for historical identifier-keyed securities is no longer needed. Section 2: the three files that compare a stub's fields to eb.MARKET_HIST_FIELDS 'read the constant, so they follow the new value'.",
+    "world_is": "The test asserts exactly one reference call whose fields are ['PARSEKYABLE_DES'] on a partition where a bloomberg-keyed security (NBIS US Equity) also needs a reference descriptor request, so the call-shape pin cannot hold under the rule. The file is outside this cell's write paths and is unamended; the test's other assertions pass.",
+    "notes": "Amend line 67 at merge (the identifier-keyed security's parsekey is asserted on its one reference request). The parsekey_points == 2 and as_of_source_counts assertions in the same test still hold."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W46-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~46",
+    "surfaced_at": "2026-10-17T06:44:24Z",
+    "one_line": "Three history-owed tests fail on fixtures that let the daily pull's historical answer carry CRNCY: test_r27tw1_history_owed_leg.py::test_print_sends_and_writes_nothing_more, ::test_ask_lands_one_object_per_date_with_price_date, and test_r28tc1_topup_currency_and_page_day.py::test_a_security_priced_in_this_run_is_never_looked_up.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r27tw1_history_owed_leg.py@7d385aab5f (historical stub: if fields == eb.MARKET_HIST_FIELDS returns {f: 10.0 for f in fields}; reference stub returns {})",
+        "data/etfs/scripts/rivalfunds/tests/test_r28tc1_topup_currency_and_page_day.py@7d385aab5f (same stub shape; reference returns {} except CRNCY for ['CRNCY'])",
+        "worktree wk-ETFS_RIVALS-46 after the change: 'HISTORY OWED: owed 6 units, 3 securities, 2 dates; asked 0 (request off); currency lookups 3 (not sent); carried 6'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-zb-1 (2)-(3): a past partition's price group is the historical answer dated D (PX_LAST and total return only); every descriptor, CRNCY included, comes from the reference request. Section 2: these three files 'read the constant, so they follow the new value'.",
+    "world_is": "Each fixture answers the daily pull's own historical request with every field of MARKET_HIST_FIELDS, so under the old seven-field group the answer carried CRNCY. Under the two-field group the answer carries no CRNCY; the reference stub returns {} for descriptors, the G4 currency is NULL, and the history-owed currency lookup runs (three lookups in r27tw1; D1 US Equity looked up in r28tc1). The fixtures encode the old rule and are outside this cell's write paths; unamended.",
+    "notes": "The fixtures need the reference stub to return CRNCY for the daily pull's securities, or the test needs its expectation restated. Either edit is the issuer's at merge."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W46-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~46",
+    "surfaced_at": "2026-10-17T06:44:24Z",
+    "one_line": "rivalfunds/tests/test_r10eg1_refuse_empty.py::test_one_usable_lands fails: its reference stub files a PX_LAST for AAA on a past partition (DATE 2026-10-02), which the rule never files, so the revision is REFUSED (0 of 2 usable) where the test expects OK.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r10eg1_refuse_empty.py@7d385aab5f (answer lambda returns {PX_LAST: 5.0} for AAA only; DATE = 2026-10-02 is a past partition against the run date)",
+        "worktree wk-ETFS_RIVALS-46 after the change: pytest -q rivalfunds/tests -> FAILED test_one_usable_lands - assert ('REFUSED' == 'OK'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-zb-1 (3) and (5): the reference request for a past partition never carries the price group and the reference PX_LAST is never filed under a past partition; the all-empty refusal (RIV-eg-1) counts a row with descriptors as usable, as today.",
+    "world_is": "The test's one usable row is a reference PX_LAST on a past date. Under the rule that row has no descriptor and no price, so the whole revision is REFUSED. The test pins the old rule, sits outside this cell's write paths, and is unamended.",
+    "notes": "At merge the test's usable row should carry a descriptor (for example GICS_SECTOR_NAME) rather than PX_LAST."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W46-S4",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~46",
+    "surfaced_at": "2026-10-17T06:44:24Z",
+    "one_line": "rivalfunds/tests/test_r7nm2_security_name.py::test_past_date_historical_request_excludes_the_name_and_still_lands_historical fails (PARTIAL): it asserts the past-date historical request asks the ten-field set and that no reference request is sent ('no pull expected').",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r7nm2_security_name.py@7d385aab5f (line 42: reference stub raises AssertionError 'no pull expected'; line 45: set(asked['fields']) == set(TEN))",
+        "worktree wk-ETFS_RIVALS-46 after the change: pytest -q rivalfunds/tests -> FAILED test_past_date_historical_request_excludes_the_name ... assert ('PARTIAL' == 'OK'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-zb-1 (2)-(3): the historical request for a past partition asks PX_LAST and total return alone, and the reference request is sent for EVERY security of a past partition (descriptors).",
+    "world_is": "Under the rule the historical request asks two fields (the set-equality assertion fails) and the reference request is sent for the security, which the test's stub refuses, so the batch failure returns PARTIAL. The LONG_COMP_NAME-not-asked assertion still holds. The test pins the old rule, sits outside this cell's write paths, and is unamended.",
+    "notes": "At merge the historical-field assertion restates to PRICE, and the no-pull stub becomes a descriptor response."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W46-S5",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~46",
+    "surfaced_at": "2026-10-17T06:57:09Z",
+    "one_line": "RESOLUTION of rows ETFS_RIVALS-D1-W46-S1 to S4 by AMENDMENT 1 to ETFS_RIVALS.TO-RIV-zb-1 (issuer 2.0.0_SA_COO~RV, @41ecff1fbb): the five named test files are amended in the worker worktree and the rivalfunds suite reads 2 failed (the two predating), 1068 passed, 6 skipped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree wk-ETFS_RIVALS-46 after the amendment: cd data/etfs/scripts; python -m pytest -q rivalfunds/tests -> 2 failed, 1068 passed, 6 skipped (the failures are test_r15bf1 and test_r9cb1, predating)",
+        "the five amended files: test_r10eg1_refuse_empty.py, test_r12pk1_parsekey_join.py, test_r27tw1_history_owed_leg.py, test_r28tc1_topup_currency_and_page_day.py, test_r7nm2_security_name.py (base 7d385aab5f)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1 to RIV-zb-1: the five test files join this cell's grant; change only the assertions and fixtures that encode the old past-partition rule, and resolve rows S1 to S4 by doing so.",
+    "world_is": "The five files are amended: the reference stubs return the descriptors the daily pull really gets (CRNCY in r27tw1 and r28tc1), the r12pk1 pin becomes one reference pass asking PARSEKYABLE_DES, the r10eg1 usable row is a GICS sector, and the r7nm2 historical request is the two price fields with the name on the reference request. S1 to S4 are resolved in the worktree. Rows S1 to S4 are not edited in place, since the channel is append-only; their disposition move is the CVO's adjudication.",
+    "notes": "Adjudication of ETFS_RIVALS-D1-W46-S1 to S4 (the CVO's, by an adjudicating row) is the step that moves their disposition to GRADUATED or DISMISSED_WITH_REASON."
   }
 ]
 ```
