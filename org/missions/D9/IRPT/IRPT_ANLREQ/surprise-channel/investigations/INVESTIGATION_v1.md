@@ -25062,3 +25062,36 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S197 -- W133-S4 disarmed: the upload door refuses a firm outside the staff profile before any write
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S197",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T14:03:34Z",
+  "one_line": "W133-S4 DISARMED: the upload door itself refuses a staff caller's chosen firm that is outside its profile's allowedFirmIds (FIRM_BINDING, before any write), so the ticket CREATE's later 400 is a second line, not the first; the check is in the live r33 pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W133-S4"
+  ],
+  "spec_asserts": "Row W133-S4 (disarm owner 2.0.0_SA_COO~Y2): the staff chooser offers the Global READY firms; the ticket CREATE refuses a staff filing for a firm outside the principal's allowedFirmIds or profile scope with a 400, and the upload door has already been called for that firm by then; whether the door checks the firm was NOT read.",
+  "world_is": "MEASURED 2026-10-17 ~14:1xZ with git show: infra/aws/lambda/investor-reporting/_authz/served.py at HEAD (and at the r33 build pin 927337a741, where the same refusal line appears once) holds `_internal_allowed_firms` (IB-pr-387, commit b4b544fb15, an ancestor of the pin) and, in Entry.handle, `caller_refused = listed is not None and selected not in listed` followed by `return refuse(operation or self.function_name, None, \"FIRM_BINDING\")`; any error reading the users row, a status other than exactly 'active', a non-list allowedFirmIds or the string 'ALL' also refuses FIRM_BINDING (fail closed). The portal calls the door first (analysisRequest.ts lines 406 to 407 at origin/DEV, before createTicket at line 443). So a staff filer's chosen firm outside its profile is refused AT THE DOOR with nothing written, which is the answer to the row's NOT READ; the ticket service's own 400 is a second, independent line. The deployed side: the live irpt-ycharts-generate CodeSha256 is the value ledger irpt-ycg-r33-20261016 (CLOSED) records and the window-4 R0 read printed (see D2-S176 to D2-S186). served.py differs between the pin and HEAD (35 insertions, 2 deletions) but both hold the refusal. NOT READ: a case where the door admits a firm that the ticket service's _firm_allowed or _in_profile_scope refuses (the two read the same maintained profile row but are separate checks); a live staff filing for a refused firm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/_authz/served.py (lines 1163 to 1200 and 1278 to 1292) and the same at 927337a741",
+      "git merge-base --is-ancestor b4b544fb15 927337a741 (exit 0)",
+      "git -C portal show origin/DEV:src/pages/TicketCenter/analysisRequest.ts (lines 406 to 407 and 443: the door call precedes createTicket)",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (CLOSED)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's open question is answered in the tree and in the live pin: the door checks the firm first and fails closed, so no object is written for a refused firm. The residual (a door/service disagreement on one firm) is a different, unobserved case and is not claimed closed."
+}
+]
+```
