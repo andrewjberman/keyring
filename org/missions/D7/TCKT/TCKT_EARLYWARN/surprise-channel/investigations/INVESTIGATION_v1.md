@@ -143,6 +143,30 @@
     "spec_asserts": "The order's proof_of_spec block: the instance validates with proof-of-spec-check.py before the flip.",
     "world_is": "Every other limb passes (schema, 3/3 invocation alignment, 5/5 surprises resolve, vintage resolves); the one violation is the order's cell id against an empty register. No instance written for this order can validate until the order or the register changes.",
     "notes": "The lane did not weaken the checker or edit the order. The instance sits at the named path, INVALID on this one violation. Fix is the issuer's: register EWS-d-1 in project.json, or amend the order's decomp_ref and cell citation."
+  },
+  {
+    "id": "TCKT_EARLYWARN-D1-S7",
+    "project": "TCKT_EARLYWARN",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-17T09:20:00Z",
+    "one_line": "TO-EWS-d2 requirement 1: the builder's state address for the store is in opal-data-49financial, whose DenyForeignFirmPrincipals fence does not admit opal-clientops-ews-role, so the order's role grant alone leaves every Get and Put denied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "n/a (INERT: nothing is applied; the apply is held until the bucket is ruled)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py address('schwab','49financial','state','ews_store','current','ews.db') -> s3://opal-data-49financial/schwab/49financial/state/ews_store/current/ews.db; grade(key,'S3Key') -> CONFORMANT (R21: state lives in the bucket of the tenancy; both Schwab masters 08335338 and 08242234 are FIRM scopes homed in opal-data-49financial per infra/logic/registry/scopes.json)",
+        "aws s3api get-bucket-policy opal-data-49financial: statement DenyForeignFirmPrincipals denies s3:* to every principal not in its ArnNotLike list (31 entries, read in full); arn:aws:iam::313476888478:role/opal-clientops-ews-role matches none (the only wildcard is role/*-49f-*)",
+        "infra/logic/registry/exemptions.json holds no row for the role; every admitted principal carries a CTO and COO never-widen signoff_ref (CLAUDE.md section 5, first NEVER)",
+        "aws s3api get-bucket-policy opal-data-assets: 2 statements (DenyParquetUnderBronze17a, AllowMdpfPortalCloudFrontOACRead), no firm fence; builder tier homes put only bronze and silver there for a FIRM scope"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: the bucket, prefix and key are address() output, and the role widens to that one prefix; AC1 simulates the role against the manifest's key.",
+    "world_is": "The builder-correct address sits behind a fence the role is not in. Admitting the role is a bucket-policy change on a firm bucket (exemptions.json row plus a never-widen CTO and COO signoff), which the order's paths do not grant. The simulation in AC1 ignores the resource policy, so AC1 would read EWS-PIAM-OK while the live Put is denied.",
+    "notes": "The lane applied nothing. Two ways out, both a ruling: (A) keep the 49financial address and obtain the fence admission with a Get/Put-only scoped exemption on the one key; (B) a registry deviation (R20) homing this state in opal-data-assets. The launcher change (items_opened lines, persist code) is independent of the bucket and proceeds. AC3 must be graded by the object's existence, not by AC1."
   }
 ]
 ```
