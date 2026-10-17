@@ -1043,6 +1043,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "Every security_bloomberg in gold security_universe is a full Bloomberg key (ticker, exchange, yellow key) the market and history readers can ask for.",
     "world_is": "Two keys are 'HAL US' and 'VLO US' with no yellow key; ORDER 2 step 1 asks them and Bloomberg is expected to refuse them, so Halliburton's and Valero's curves stay empty until the key is repaired at its source (the holdings key mapping), not in the backfill.",
     "notes": "Found reading the post-backfill owed set for Andrew-direct 'completely filled'. Not fixed here: the producer of the key is the holdings mapping, a cell for the round-N list."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W45-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~45",
+    "surfaced_at": "2026-10-17T04:51:06Z",
+    "one_line": "The rivalfunds suite is not clean at the RIV-za-1 base: two budget tests fail on the shipped bbg_budget.json (daily_ceiling_rows 400000), which the tests' own assertions do not accept; neither test is in RIV-za-1's <paths>",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest -q rivalfunds/tests from data/etfs/scripts in worktree C:/tmp/wk-riv-r32-45 (HEAD 3e426f83ad plus RIV-za-1): final line '2 failed, 1061 passed, 6 skipped in 97.72s'; the two FAILED ids are test_r15bf1_market_range.py::test_budget_remainder_refuses_and_check_points_names_it and test_r9cb1_bbg_budget.py::test_shipped_config_keeps_a_reserve_below_the_measured_exhaustion",
+        "the same two tests run alone also fail: test_r9cb1_bbg_budget.py:100 'assert cfg[\"daily_ceiling_rows\"] < 175000' reads 400000; test_r15bf1_market_range.py:90 'assert bb.remaining() == 137' reads 250137",
+        "git show HEAD:data/etfs/scripts/rivalfunds/bbg_budget.json at 3e426f83ad: daily_ceiling_rows 400000, production_reserve_rows 30000; bbg_budget.py and that json are unchanged in the RIV-za-1 diff (git status: only enrichment_bloomberg.py and the new test file)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round-32 regression net reads clean after a cell: the rivalfunds suite's final line carries no failure, and the shipped budget config keeps a reserve below the measured exhaustion (test_r9cb1 asserts a daily ceiling under 175000).",
+    "world_is": "The committed budget config carries a 400000-row daily ceiling, and the two tests' expected values (a ceiling under 175000; 137 points remaining) match no committed config. Whether the ceiling was raised on purpose (the tests are stale) or lowered back (the config is wrong) is not visible from the code read.",
+    "notes": "Not edited: bbg_budget.json and both tests are outside this cell's <paths>, and the cell's own tests pass (6 of 6). The issuer names which side is right at the merge; the owner of the budget ceiling is not named in the code. Owner to be named by 2.0.0_SA_COO~RV."
   }
 ]
 ```
