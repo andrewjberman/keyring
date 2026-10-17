@@ -35,6 +35,8 @@ The CTO's analysis (`ledger/ROUND_ANALYSIS.round90.md` @307764abfe) graduated `C
 4. Write `cf4_served.out` ending with exactly these lines: `SERVED_CANARY=PASS|FAIL`, `SERVED_UNH_AND_CONTROL_UNCHANGED=PASS|FAIL`, `WRITTEN continuation=<n> dossier=<n>` (17 and 17 when complete). A FAIL is reported with the read; nothing is deleted by you.
 5. Anything odd: one row `AMGT_HARVST-D1-S<next free D1 number>`, then keep working. Tell the issuer when the canary has been read served, and again when `cf4_served.out` is written.
 
+**AMENDMENT 1 (issuer, 21:3xZ; CTO half SIGNED @8a5ea52464, msg 7743, binding the COO half unchanged, sha256 `275d5739...95b0`):** the CTO half is `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_CF4_GOLD_REBUILD_C_S61_CTO_HALF.md`; its conditions and C-1 to C-10 of the COO half bind you. **C-10, site Z is told first:** the issuer asks `0.0.0_AB_MSTR~DELL1` to tell site Z the window (2026-10-17 22:00Z to 2026-10-18 00:00Z) and the 17 names; a site Z rebuild in flight on any of them is a STOP; the issuer sends GO WITH site Z's answer; do not write before that GO. Steps 0 and the in-memory builds of step 1(a) (nothing written) may be done before the GO and recorded in `cf4_before.out`: the worktree at `80d0701876`, the list hash, the UNH and CPA reads before, the in-memory UNH build, the MNST and `8306_JP` reads before and their in-memory builds. The ledger close is COMMITTED with the manifest. State the window in the ledger entry; if the run passes 00:00Z, stop at a name boundary and tell the issuer.
+
 Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round91/`.
 
 <paths>
@@ -77,7 +79,7 @@ This order touches none of them.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>91</round>
 <workstream>CS61-REBUILD</workstream>
 <slot>dell1</slot>
