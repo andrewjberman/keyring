@@ -1,0 +1,47 @@
+{
+  "slug": "nfra-mcportal-pf-bundle-release",
+  "title": "NFRA_MCPORTAL MP-pf-9: the bundle-only gateway release (opal-gateway 38fe44d5cb, mcportal 090b9cdc85 -> c66ca82952)",
+  "author": "0.7.0_AE_CloudOps~MQ",
+  "status": "OPEN",
+  "opened_at": "2026-10-16T13:16:24.748122+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261016T1316Z_nfra-mcportal-pf-bundle-release_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "activation",
+      "target": "dashboard bundle build from mcportal c66ca82952c01575968d16cc736cdabe36606572",
+      "proof_required": "dist/index.html and dist/routes.json present, bun cache 77 of 77",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "s3-prefix",
+      "target": "opal-313476888478-lambda-artifacts ec2/opal-gateway/ release tarball + latest",
+      "proof_required": "git-ref metadata equals the release commit on both keys",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "activation",
+      "target": "SSM pull and restart of opal-gateway on i-07dccb1615503ac99",
+      "proof_required": "/health 200 within 90 s, new MainPID, host dashboard index.html names the two new assets, tool names before equal after",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L4",
+      "kind": "git",
+      "target": "EC2_MANIFEST.json services.opal-gateway record",
+      "proof_required": "deployed_commit, previous_deployed_commit, mcportal_commit, release_note committed on the release branch",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261016T131624Z OPENED by 0.7.0_AE_CloudOps~MQ with 4 leg(s)"
+  ],
+  "last_red_at": null
+}

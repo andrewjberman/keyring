@@ -1,0 +1,55 @@
+{
+  "slug": "nfra-mcportal-gw-release",
+  "title": "NFRA_MCPORTAL MP-z-5: the gateway release -- FWD-20 breakdown route + SPA deep links + bundle 0e02a1f",
+  "author": "0.7.0_AE_CloudOps~MQ",
+  "status": "OPEN",
+  "opened_at": "2026-10-13T20:58:21.719306+00:00",
+  "window_hours": 8.0,
+  "entry_path": "org/critical_paths/change_management/20261013T2058Z_nfra-mcportal-gw-release_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "ec2-baked-asset",
+      "target": "mcportal dashboard bundle 0e02a1f built offline into the artifact",
+      "proof_required": "dist/index.html present in the artifact and bun cache pre-check 77 of 77 rc=0, no package fetched",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "s3-prefix",
+      "target": "s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ -- opal-gateway-<release sha>.tar.gz + -latest.tar.gz",
+      "proof_required": "head-object on BOTH new keys showing git-ref = the release commit, AND the rollback key opal-gateway-185dc04888.tar.gz still ETag b486e614fc122cf854f0d063bd198e4e",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "activation",
+      "target": "SSM pull + systemctl restart opal-gateway on i-07dccb1615503ac99",
+      "proof_required": "/health 200 within 90 s, unit active, MainPID moved, running app files md5-equal to the release bytes with a negative control",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L4",
+      "kind": "git",
+      "target": "infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway on rel-nfra-mcportal-gw",
+      "proof_required": "deployed_commit = the release commit, previous_deployed_commit = 185dc048881da2030efa11f4d0bfb8704b500c66, mcportal_commit = 0e02a1f, release_note written",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L5",
+      "kind": "verify",
+      "target": "MCP tool surface + AC1 + AC2",
+      "proof_required": "tool names before/after both recorded with an EMPTY difference; z5.AC1.sh and z5.AC2.sh each RESULT: PASS exit=0",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261013T205821Z OPENED by 0.7.0_AE_CloudOps~MQ with 5 leg(s)"
+  ],
+  "last_red_at": null
+}

@@ -1,0 +1,47 @@
+{
+  "slug": "nfra-mcportal-cp2-release",
+  "title": "NFRA_MCPORTAL MP-r-2: the CP2 gateway release (overlap, gitstate, calls + the A5 load remedy) on live base d3c31e972e",
+  "author": "0.7.0_AE_CloudOps~MP",
+  "status": "OPEN",
+  "opened_at": "2026-10-10T23:00:22.588125+00:00",
+  "window_hours": 4.0,
+  "entry_path": "org/critical_paths/change_management/20261010T2300Z_nfra-mcportal-cp2-release_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "activation",
+      "target": "bundle build: mcportal bc37107 dashboard built by deploy-to-ec2.sh from the manifest pin",
+      "proof_required": "build log + bun pre-check 77 of 77",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "s3-prefix",
+      "target": "release build + upload to s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway",
+      "proof_required": "head-object len/ETag/git-ref on the versioned key AND -latest",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "ec2-baked-asset",
+      "target": "SSM pull + restart on i-07dccb1615503ac99",
+      "proof_required": "SSM md5 of the RUNNING /opt/opal-gateway/app files equals the release bytes",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L4",
+      "kind": "verify",
+      "target": "post-act reads: /health 200, four routes 401/403 with no identity, tool surface difference EMPTY, manifest record",
+      "proof_required": "the read-backs, each independent of the deploy rc",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261010T230022Z OPENED by 0.7.0_AE_CloudOps~MP with 4 leg(s)"
+  ],
+  "last_red_at": null
+}
