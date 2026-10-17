@@ -78,7 +78,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-23.convert-only-the-accounts
 - The answer's two denominators (the partition's total row count and the fence-excluded count) are kept exactly, computed in arrow; a non-string id column takes the old path rather than a guessed cast.
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent); `AC3` base FAIL (the file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41-Q</workstream>
 <slot>~137</slot>
