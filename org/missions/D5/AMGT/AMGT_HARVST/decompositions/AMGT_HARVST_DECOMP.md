@@ -4380,3 +4380,16 @@ The CTO accepted the recommendation: a gateway consumer still reading `fund` as 
 
 - **Fan-out (this recut):** `N of M chains, N=2 workers (cg-1, cg-4) of M=2 chains, cap 8` (the silver chain `cg-1` then `cg-2` then `cf-3` then `cf-5`; the gateway-code chain `cg-4`, which `cg-3` consumes after `cg-2`).
 - **Checks at the cut (dry-run at the base):** `cg-4` AC1 FAIL as expected (no test file), AC2 PASS as expected (`43 passed`).
+
+### 122b. ROUND 92 -- `HVST-cg-4` merged (`290f2e9e6d`); `HVST-cg-3` CUT, STAGED behind the silver rewrite and its pair (2026-10-17 ~23:5xZ)
+
+`HVST-cg-4` (worker `~162`) merged: `REPORT_FIELDS` gains `fund_relation`; AC1 `5 passed`, AC2 `43 passed`, proof VALID (all re-run here on the merged tree). Its ARMED note `D1-W162-S1` (a closed batch-4 ledger names a rollback to `d3ae88be46`) is dismissed by row `D1-S48`: the manifest shows the live commit moved three times since, and the release is cut on the live commit with the `b77e08e198^1` equality guard.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cg-3` | `cg-3` | **The gateway release** of `harvest_research.py` (the `ce-3` hunk and the `REPORT_FIELDS` hunk) and the two tests, on the live commit; the host owner told first; START CONDITION (b): a newest silver part is read and carries `fund_relation`; proof `FUND_RELATION_SERVED` on ADBE, SNPS, MNST, ML_FP, CLX with UNH as control. Workstream `FUNDREL-RELEASE`. | WORLD | seat SC1 | CUT, STAGED: waits on `HVST-cg-2` complete and the pair (COO half to write after the dry run is read, CTO half to sign) |
+| `HVST-cg-2` | -- | The silver rewrite (section 122). | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cg-1` merged |
+| `HVST-cf-3`, `HVST-cf-5` | -- | The `fund_form` chain (section 122). | LOCAL, then WORLD | worker, then SC1 | DEFINED, NOT CUT: wait on `cg-2` |
+
+- **Fan-out (this recut):** `N of M chains, N=0 workers (cg-3 is a seat order) of M=1 chain, cap 8`.
+- **Check at the cut (dry-run at the base):** `cg-3` AC1 to AC4 FAIL as expected (no `cg3_served.out`).
