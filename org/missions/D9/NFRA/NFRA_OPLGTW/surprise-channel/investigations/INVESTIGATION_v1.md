@@ -26944,3 +26944,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-17T07:10Z",
+  "id": "NFRA_OPLGTW-Z-S355",
+  "one_line": "The 49F fees source is near-empty for at least 30 partitions: the fees page whose partitions run 2026-08-17 to 2026-09-15 reads 109 partition rows firm-wide, against 74268 on the next 30 partitions (2026-09-16 to 2026-10-15) and 1760 on the window's oldest 4 (2025-09-17 to 2025-09-20). A 13-month fee total built from the chain may be missing fees the source never carried for that stretch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "TO-OG-ap-34 AC3: the 13-month fees window reads as an analyst would want, the whole window reachable by paging. PARTITION_SEMANTICS fees = increment: each dated partition carries that day's fee rows.",
+  "world_is": "CVO_AC3_BODIES_OG-ap-34.json (sha256 7a92985d0bbf7de5, git-excluded), fees chain 14 pages, kept pages 1, 2, 14: denominator.partition_rows 74268 / 109 / 1760 over 30 / 30 / 4 partitions (firm-wide counts before the account filter). Pages 3 to 13 are dropped by the capture, so the extent of the thin stretch is not measured here. The chain itself is correct: every partition read once, the cursor ends null.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~NFRA1/CVO_AC3_BODIES_OG-ap-34.json (read; counts and dates only)",
+      "2.0.0_SA_COO~O msg 35426 (the chain facts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Source shape, not a gateway defect. One read answers it: the fees partition row counts by date over the 13-month window (a count per partition, no client rows). If the stretch is a source gap, the window_note or a source_coverage field should say so, so a 13-month fee total is not read as complete."
+}
+```
