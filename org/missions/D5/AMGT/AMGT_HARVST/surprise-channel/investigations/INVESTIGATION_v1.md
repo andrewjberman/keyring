@@ -10342,5 +10342,25 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S38",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-17T00:15:51Z",
+     "one_line": "HVST-cc-7 served: the cc-2 filter excludes the misfiled KMB reports from research_reports, but the served gold dossier still sources KMB fund_of_record IDVZ 2.25% from the excluded report fbd50086c4065785 (Kimberly-Clark de Mexico).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-2 and the close condition of D1-S29: a misfiled research report is excluded and named, and KMB must not carry Kimberly-Clark de Mexico's content as KMB's own.",
+     "world_is": "After the cc-7 deploy (319c9413a2, 00:10:26Z) harvest_get_research(KMB_US_Equity) answers research_reports without fbd50086c4065785 and 1a3b56044db679a5 and names both in misfiled_reports_excluded (the order's SERVED_KMB_RESEARCH criterion, PASS). The same response's dossier_fields (gold dossier amgt/harvest/gold/research_dossier/security_key=KMB_US_Equity/as_of=2026-10-12.abd82596c92db453.json, method amgt-corpus-dossier/15) still carry fund_of_record = IDVZ and last_stated_position = MAINTAIN 2.25% POSITION IN IDVZ, each citing report_key .../research-report/security_key=KMB_US_Equity/fbd50086c4065785/Kimberly Clark Mexico Q2 2026 Earnings Update.docx, and pack_shape's basis names the 1a3b56044db679a5 pdf. So the filter is on the report list only; the dossier built from the excluded report is served as KMB's. The order's Not-covered clause names the silver/gold rebuild as a later cell; this is the served evidence that the rebuild is owed. Nothing was changed by this seat.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_served.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
