@@ -195,7 +195,7 @@ def main():
         hot_codes = mod.get_hot_prd_project_codes(mod.LOOKBACK_DAYS)
 
     tos = [mod.parse_to_file(f) for f in mod.find_all_to_files()]
-    active = [t for t in tos if t["status_class"] != "COMPLETE"]
+    active = [t for t in tos if t["status_class"] not in ("COMPLETE", "NOT_MET")]
     if args.project:
         active = [t for t in active if t["project_code"] == args.project.upper()]
     elif hot_codes is not None:
