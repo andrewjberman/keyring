@@ -24686,3 +24686,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "No act is owed by this seat on S4."
 }
 ```
+
+## IRPT_DASHBD-D2-W252-S1 -- the 0.5.5 bump names no lineage line in the reference diff; the bump convention carries one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W252-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~252",
+  "surfaced_at": "2026-10-17T01:19:48Z",
+  "one_line": "The issuer's reference diff for DB-b-317 leaves the lineage array unchanged; the lineage array records the prior bytes' sha256 at a version bump (the 0.5.3 entry matches the 0.5.4 bump's parent blob), so the worker appended the 0.5.4 entry before the 0.5.5 bump and changed nothing else.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json | sha256sum -> abb005cac25a227f8d87c28899acc425640c4f7a4db8f8c125a3b6bed396e91c (the 0.5.4 bytes at base 63c01c34e4; the appended lineage entry carries this sha).",
+      "git show 64596087008d0fe2d5246f33a4e33399de0b93c1^:org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json | sha256sum -> 1066158a26720e1ff47b94b7812f4df0cec8ed2eb711812eee3340a9dee05888, equal to the lineage entry 0.5.3 recorded before the 0.5.4 bump (commit 64596087008d).",
+      "contract change_rule: 'the contract changes by a version bump with the gap table re-bound to its bytes'; the order's WORKER FACE step 2 says add a lineage line if the change_rule asks for it, and nothing else."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DB-b-317 reference diff (DB317_REFERENCE.patch) and the WORKER FACE step 2: the contract change is version 0.5.5, the account_entry_fields, the account_id_form rule, the ascending order and the source note; the reference diff does not touch lineage, and the step says a lineage line is added only where change_rule asks.",
+  "world_is": "change_rule asks for a version bump, and each prior bump appended the prior bytes' sha256 to lineage. The worker appended one lineage entry {contract_version 0.5.4, sha256 abb005ca...} with a reason in the same form as the 0.5.3 entry; the checker AC1 (ALLOWED_PATHS includes lineage) passes with it. The issuer may read this entry as a departure from the reference diff; it is the only change beyond the reference.",
+  "notes": "Observation only. No act is owed by this seat; the issuer decides whether the reference diff should carry the lineage entry in its next revision. Nothing deployed, no AWS call, no Terraform."
+}
+```
