@@ -97,6 +97,52 @@
     "spec_asserts": "The business-hours clock uses the estate's one calendar (README, clock.py: lib/trading_calendar.py).",
     "world_is": "In the container the estate calendar runs in its offline fallback table, which is correct through 2027 and the image carries nothing to replace it. The package is not a dependency the Dockerfile installs and the order did not ask for it.",
     "notes": "ARMED only for dates after 2027; no action needed for this order. The first image (digest 5d68df7e..) lacked lib/trading_calendar.py altogether and its launcher logged ModuleNotFoundError on the first pass; the second image (2c1aef59..) carries the file and its task replaced the first task (apply 3); the first task's ephemeral store went with it."
+  },
+  {
+    "id": "TCKT_EARLYWARN-D1-S5",
+    "project": "TCKT_EARLYWARN",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-17T06:53:00Z",
+    "one_line": "The first run_pending has logged no pass line and no failure line 86 minutes after launch, and the launcher logs nothing per date, so a slow replay and a hung one read the same.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Q1 (owns the order's report; a progress line per date is a Dockerfile launcher change, which needs its own amendment)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task 73ccdcc4753448c68c1dd7156111588a read RUNNING by ecs describe-tasks at 2026-10-17T06:5xZ, startedAt 2026-10-17T01:24:06-04:00 (05:24Z), cpu 256, memory 1024",
+        "log group /aws/ecs/opal-clientops-ews-task, 2 streams (denominator); the live stream ews/ews/73ccdcc4753448c68c1dd7156111588a holds 2 events, last at 05:24:12Z (launcher start line) and 05:24:28Z (calendar WARN), read 06:50Z",
+        "Dockerfile launcher lines 66-78: the only post-start prints are the run_pending summary and the failure line, both after run_pending returns or raises; daily.py:48-57 run_pending loops every complete date with no log inside"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's report carries the first run_pending outcome (dates processed, items opened) and the COO asked for a row if it has not completed by 60 minutes.",
+    "world_is": "86 minutes in, the replay of the complete dates has neither finished nor raised. The log cannot tell a slow S3 replay on a 256 CPU / 1024 MB task from a hang. No criterion grades this; AC1-AC3 read OK.",
+    "notes": "The lane changed nothing. Next read: the same stream at the next tick; a pass line prints dates_processed and last_processed, a failure line prints type and place. The task's ephemeral store means a restart repeats the replay from the first complete date."
+  },
+  {
+    "id": "TCKT_EARLYWARN-D1-S6",
+    "project": "TCKT_EARLYWARN",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-17T07:05:00Z",
+    "one_line": "The proof-of-spec instance for TO-EWS-d1 cannot validate: the order's cell EWS-d-1 is not in project.json, whose decompositions array is empty.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Q1 (owns the order and the project register; the lane's grant does not cover project.json or the order)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/proof-of-spec-check.py <instance> EWS-d1-AC1,EWS-d1-AC2,EWS-d1-AC3 -> INVALID rc=1, one VIOLATION: alignment: cell_ref 'EWS-d-1' (cited by EWS-d1-AC1, AC2, AC3) does NOT exist in org/missions/D7/TCKT/TCKT_EARLYWARN/project.json; decomp id space = 0 distinct cell id(s)",
+        "project.json keys decompositions=[] and prds=[]; the order says FAST-PATH, no decomposition, the cell is the order",
+        "trial with decomp_ref.doc set to the order file: a second VIOLATION, the governing TO names project.json, so the instance and its TO disagree; the trial file was deleted"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's proof_of_spec block: the instance validates with proof-of-spec-check.py before the flip.",
+    "world_is": "Every other limb passes (schema, 3/3 invocation alignment, 5/5 surprises resolve, vintage resolves); the one violation is the order's cell id against an empty register. No instance written for this order can validate until the order or the register changes.",
+    "notes": "The lane did not weaken the checker or edit the order. The instance sits at the named path, INVALID on this one violation. Fix is the issuer's: register EWS-d-1 in project.json, or amend the order's decomp_ref and cell citation."
   }
 ]
 ```
