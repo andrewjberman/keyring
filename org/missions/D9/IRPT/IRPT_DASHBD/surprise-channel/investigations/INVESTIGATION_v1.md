@@ -26016,3 +26016,81 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Which seat provisions the hashed list on this box is not measured here. The owner of the list is not named by this row."
 }
 ```
+
+## IRPT_DASHBD-D2-W260-S1 -- The entry's _staged_from_note says 15 members; the staged_from list holds 20.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W260-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~260",
+  "surfaced_at": "2026-10-17T16:37:54Z",
+  "one_line": "The entry's _staged_from_note says 15 members; the staged_from list holds 20.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The entry's _staged_from_note states that the pin and sha256 of each of the 15 members were written by order DB-b-257.",
+  "world_is": "At baf645b35b the staged_from list of infra/aws/lambda/ci/function-map/irpt-cot-account-return-daily-lambda.json holds 20 members. This cell re-pinned 5 of them and kept every other key, the note included, byte for byte, as the order requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-cot-account-return-daily-lambda.json@baf645b35b key _staged_from_note: '15 members below were written by order DB-b-257'",
+      "infra/aws/lambda/ci/function-map/irpt-cot-account-return-daily-lambda.json@baf645b35b: a read of the staged_from list counts 20 objects; the hash probe reports members=20 fresh=20 stale=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Whether the note is to be refreshed is not decided by this row."
+}
+```
+
+## IRPT_DASHBD-D2-W260-S2 -- The commit's risk reflex printed NOT-DECIDABLE and scanned 0 of 1 file.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W260-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~260",
+  "surfaced_at": "2026-10-17T16:37:54Z",
+  "one_line": "The commit's risk reflex printed NOT-DECIDABLE and scanned 0 of 1 file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face asks that every commit pass the commit gate in full, with its whole output read; the risk reflex is part of that output.",
+  "world_is": "The safe-commit output for baf645b35b printed '[risk-reflex] NOT-DECIDABLE: danger map STALE and the build guard refused: linked worktree', ANSWER STATE PARTIAL_OR_BLIND, WITHIN BUDGET scanned 0 of 1 file(s). The same condition was recorded for the sibling commit fa48b9d8b7 as IRPT_DASHBD-D2-W259-S2. The commit landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for baf645b35b: the line '[risk-reflex] NOT-DECIDABLE: danger map STALE and the build guard refused: linked worktree'",
+      "the same output: '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND' and 'WITHIN BUDGET: scanned 0 of 1 file(s)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the reflex could not run in a linked worktree. Which seat refreshes the danger map is not measured here."
+}
+```
+
+## IRPT_DASHBD-D2-W260-S3 -- The client-data check printed WARN; commit baf645b35b was not checked for client account ids.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W260-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~260",
+  "surfaced_at": "2026-10-17T16:37:54Z",
+  "one_line": "The client-data check printed WARN; commit baf645b35b was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate's client-data check is part of the commit output and is expected to run on the commit.",
+  "world_is": "WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt; this commit was NOT checked for client account ids. The committed file is the entry JSON; a read of it at HEAD shows path, pin, sha256 and deployed-field keys and no account-id-shaped value. Absent is not empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for baf645b35b: the line 'WARN: client-data-check: hashed account-id list ABSENT' at the default path",
+      "the same output states that the commit was not checked for client account ids"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Which seat provisions the hashed list on this box is not measured here. The owner of the list is not named by this row."
+}
+```
