@@ -2842,3 +2842,19 @@ The CTO ruled A (msg 10016): Andrew's point 4 asked for the holdings panels, so 
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~251`), cap 8.
 
 **Checkers (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p180_portal_holdings_panels.py` (DBP180-1-AC1..AC3, amended) and `checks/r149/p181_template_firm_gate.py` (DBP181-1-AC1..AC3, amended).
+
+## 177. ROUND 150, WORKSTREAM CONTRACT055 (2026-10-17 ~01:3xZ, issuer 2.0.0_SA_COO~D2): contract 0.5.5 for the minted account id, in one drain with the reader and the validator
+
+The CTO's round analysis for packet 5 (`CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUND_149_PACKET_5_20261017.md` @`ee3383bf1e`, ruling 2) and the CVO's adjudication (finding b): the minted account ids the reader composes (`DB-b-310`) contradict contract 0.5.4 (line 157: `account_id` is the custodian form; line 126: "in account_id order") and no field says which form an id is. Minting is the policy; the contract catches up. Contract 0.5.5: `account_id` is the minted opaque id (the form of the client summary contract), `account_id_form` = `minted` on every account entry so a consumer rejects a raw id BY FIELD, the accounts ascending by the minted id. The reader sets the field and sorts; the publisher's validator refuses a missing or other form, a non-minted id and an out-of-order list. Nothing is deployed by this cell.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Contract 0.5.5 at the agreed paths, `_filled_mint` (form and order), `validate_filled_report` (four refusals), the two test files and four new tests | DB-b-317 | FWD-10 (hop 2 contract), closes W247-S1 | WORLD floor (path), no apply | `DB-b-310` (merged) | chain AK |
+| 2. The portal mirror (the `FilledReport` account entry type and its fixtures) | none yet | FWD-10 | SERVED, client-facing | item 1; Andrew's smoke of row `dell2-20261017T003553Z-f1bb` (no change to that branch before it) | after the smoke |
+| 3. The deploy of the reader and validator (a later signed pair with the first filled pass, `FILLED_REPORT_PASS`) | none yet | FWD-10 | WORLD | item 1 | after item 1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the reader's account order is ascending by the MINTED id (my `DB-b-310` order said "do not re-sort"; the contract's order rule, restated, supersedes it); (b) the producer (`filled_report_values.py`) is unchanged: its gold rows keep the custodian `row_key`, the contract says so in `account_id_form_rule`, and the next gold run writes `contract_version` 0.5.5 once its bundle carries the contract (a re-pin and a deploy, not this cell); (c) the portal mirror is parked on the condition that Andrew has smoked the branch (the CTO: no change to it before).
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~252`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on six handler/validator mutants and one diff mutant; the reference diff is committed beside it):** `checks/r149/p183_contract_055_minted_form.py` (DB183-1-AC1..AC3), `reads/DB317_REFERENCE.patch`.
