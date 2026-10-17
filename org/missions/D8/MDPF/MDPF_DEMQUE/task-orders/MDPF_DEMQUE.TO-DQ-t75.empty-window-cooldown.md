@@ -4,14 +4,14 @@
 <issued_to>0.9.0_WK_MDPF_DEMQUE~65</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-17</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>9</round>
 <workstream>EMPTYWIN</workstream>
-**GO:** the issuer sets `pending` when `TO-DQ-t74` has merged (the same worker, continued; the two cells edit the same function, so they are one chain).
+**GO (issuer, 2026-10-17 ~15:2xZ):** `TO-DQ-t74` is merged @0e5d1578e7; this order is pending, same worker continued.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-75` (`decompositions/MDPF_DEMQUE_DECOMP.md`, amendment 36) |
 **outcome_ref:** C-PRICES | **depends_on:** DQ-t-74
 
