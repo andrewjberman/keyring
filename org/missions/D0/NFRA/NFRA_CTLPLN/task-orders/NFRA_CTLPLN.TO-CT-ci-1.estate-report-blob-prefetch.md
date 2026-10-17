@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~152</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-17</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Complete, 2026-10-17. Worker 0.9.0_WK_NFRA_CTLPLN~152 built it (4 commits, c16465ba31 head); the issuer re-ran the criteria in the worker tree: CTci1-AC1 ESTATE-PREFETCH arms=14/14 ok=True (control_reproduced=True rc=255 on git 2.55: a bare checkout on a fresh blobless clone fails, the prefetch is the difference); CTci1-AC2 FOLLOW-READERS arms=31/31 ok=True. The helper prefetch_blobs/checkout_paths now carries all seven checked-out paths of three call sites; no other file changed. Rows W152-S1 and W152-S2 are INERT observations. Not deployed: the upload, the runner-host clone and the QA run are CT-cj-1 (TO-APPLY-33).</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
