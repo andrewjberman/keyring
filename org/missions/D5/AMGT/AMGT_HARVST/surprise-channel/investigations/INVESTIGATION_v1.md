@@ -10810,6 +10810,46 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W160-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~160",
+        "surfaced_at": "2026-10-17T20:59:37Z",
+        "one_line": "HVST-cf-2 AC2 conflict: the existing test test_line_on_page_two_third_line_is_read_with_that_page_locator asserts fund IDVZ from 'Recommendation: Buy IDVZ'; under the ratified holding list 'buy' is not a holding, so AC2 measures 65 passed and 1 failed, not the 66 passed the order names.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order AMGT_HARVST.TO-HVST-cf-2 section 1a and AC2: the holding words are maintain, mainain, maitain, retain, increase, add, no change, and a leading size statement; an unclassified phrase is NOT a holding. AC2 is the seven listed test files passing 66 in one run, with only the two /4 assertions updated.",
+        "world_is": "Under the changed code, arm (4) of lib/research/corpus/tests/test_continuation_pdf_recommendation_line.py (page 3 line 'Recommendation: Buy IDVZ', asserting fund IDVZ at line 234) fails: fund_of_record is absent with the no-holding reason, because 'buy' is not in the holding list. The cut run reports 1 failed and 65 passed. The only edit to that file is the /4 to /5 assertion at line 258.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/tests/test_continuation_pdf_recommendation_line.py@dca8722353 (line 226 'Recommendation: Buy IDVZ'; line 234 asserts fund IDVZ)",
+                "pytest AC2 run in C:/dev/wk-harvst-160 after the change: 1 failed, 65 passed; FAILED test_line_on_page_two_third_line_is_read_with_that_page_locator"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W160-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~160",
+        "surfaced_at": "2026-10-17T20:59:37Z",
+        "one_line": "A RECOMMENDATION line with no fund token is classified on its whole content, so the word 'Add' inside BABA_US_Equity's SELL paragraph reads as a holding stance; its position is served with no stance key.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order AMGT_HARVST.TO-HVST-cf-2 section 1a: the stance is read from the text before the first fund token, or from the whole content when the line names no fund token; a holding line is served with no stance key.",
+        "world_is": "BABA_US_Equity's last_stated_position is the SELL paragraph 'SELL - with slowing sales ... Add in China risk ...' (docx report 97909daf4e553396). The line names no fund token, so fund_of_record is absent with the no-holding reason and no fund is served from it. The whole-content read finds the whole word 'Add', so the line is classified holding and its position carries no stance key, which reads as a holding. The fund is not wrong; the stance label is.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~160/cf2_census.out (CHANGED BABA_US_Equity line; stance_after=holding), uncommitted until this commit",
+                "lib/research/corpus/continuation.py@dca8722353 (base) and the worktree _line_stance: whole content when no fund token, whole word add is a holding"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
