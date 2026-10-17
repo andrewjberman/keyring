@@ -66,7 +66,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-4.measure-memory-retention-a
 - The 20 MB per page line is the issuer's reading of "flat" (the page chain of 12 pages would then add at most 240 MB); the CTO may move it. The numbers, not the verdict word, are the evidence.
 - Pre-cut: `ev4.AC1` base FAIL as expected (record absent); PASS arms on synthetic records (C flattening; none flattening; a stopped variant with two pages); controls FAIL (a verdict naming B when C is flatter; `none` though C is flat; A with two pages and not stopped; a median that differs from the pages; F missing; an e-mail in the record).
 
-<status>staged</status>
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-M</workstream>
 <slot>~AE</slot>
