@@ -53,6 +53,8 @@ Your worktree is the absolute path your seat uses for IRPT_DASHBD (a linked work
 
 **AMENDMENT 2 (CTO ruling msg 10467, after S2's V-leg grades of msg 10462: step 1 PASS, steps 2 and 3 OWED because no viewer session pair exists; issuer's amendment of its own order).** Act 7 runs on V-leg step (1) alone: with nothing minted (two zero-digest principals, `signins_ok` false), `s2_step2` and `s2_step3` both read `OWED` (never `PASS`; the export submit needs a session, so step 3 follows step 2). The CTO's conditions: Act 7's `clients`, `written` (4,012 would-write), `not_available` and `refused` (0) equal Act 4's sums; **every Act 7 shard's peak stays at or below 900 MB** (the 921 MB line of Amendment 1 is replaced for Act 7 too); and the receipt `notes` carry steps (2) and (3) as OWED with the reason "no viewer session pair". Before any portal page reads the filled-report route, step (2) is graded on a live pair (the CTO's condition; not this order's to close).
 
+**AMENDMENT 3 (issuer's clarification of its own order, after IB2's record).** `other_objects` means every object under the reporting prefix that is NEITHER a filled report, NOR a summary, NOR a series object (`account=*/series.json.gz`); `series_prefixes` is the count of `account=` prefixes. The zero-digest principals of a mint-nothing V leg are placeholders, not ids.
+
 <expected_criteria>DBC194-1-AC1,DBC194-2-AC1,DBC194-3-AC1</expected_criteria>
 
 ## BOUNDS
