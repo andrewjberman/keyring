@@ -51,12 +51,17 @@ def clean(t: str) -> str:
 COMPLETE_WORDS = {"complete", "completed", "closed", "cancelled", "canceled",
                   "superseded", "withdrawn", "done", "merged", "decommissioned", "dropped",
                   "archived", "shipped", "impl-complete", "impl_complete", "implemented"}
+# Terminal and NOT clean: the order ended with a criterion failed (row AMGT_RESAPP-D1-S55; CTO ruling
+# RULINGS_PARKED_BUS_ITEMS_20261017_1350Z.md item 2). Its own class, so no view shows it as DONE.
+NOT_MET_WORDS = {"not_met"}
+TERMINAL_CLASSES = {"COMPLETE", "NOT_MET"}
 
 STATUS_LABELS = {
     "ACTIVE": "ACTIVE",
     "PENDING": "PENDING",
     "BLOCKED": "BLOCKED !!",
     "COMPLETE": "DONE",
+    "NOT_MET": "NOT MET",
     "UNKNOWN": "??",
 }
 
@@ -252,6 +257,8 @@ def _assignees_from_field(raw: str) -> tuple[list[str], int]:
 def _classify_status(raw: str) -> str:
     cleaned = _strip_xml_comments(raw).strip().lower()
     first = re.split(r"[\s\-\n]", cleaned)[0].rstrip(".,;:") if cleaned else ""
+    if first in NOT_MET_WORDS:
+        return "NOT_MET"
     if first in COMPLETE_WORDS:
         return "COMPLETE"
     if first in {"active", "dispatched", "dispatch", "in_progress", "staged", "go"}:
@@ -743,7 +750,7 @@ def main():
     _third_all = third_population(tos)
 
     # Filter: exclude COMPLETE unless --all with explicit intent
-    active_tos = [t for t in tos if t["status_class"] != "COMPLETE"]
+    active_tos = [t for t in tos if t["status_class"] not in TERMINAL_CLASSES]
 
     # Scope filter
     if project_filter:
@@ -877,7 +884,7 @@ def main():
     # neither `assignee_serials` nor `unresolved_serials`; without this line their silence reads
     # as a clean zero on the seating census. Denominator = scanned; "open" = not COMPLETE.
     _third = _third_all
-    _third_open = [t for t in _third if t["status_class"] != "COMPLETE"]
+    _third_open = [t for t in _third if t["status_class"] not in TERMINAL_CLASSES]
     _to_marker = re.compile(r"\*\*to:\*\*")
     _third_to = [t for t in _third
                  if _to_marker.search(Path(t["path"]).read_text(encoding="utf-8", errors="replace"))]
@@ -887,7 +894,7 @@ def main():
           f"contract does not widen -- fix the face's field, then re-run.")
     _root = WORKSPACE.resolve()
     for t in sorted(_third, key=lambda t: t["path"]):
-        flag = "OPEN" if t["status_class"] != "COMPLETE" else "complete"
+        flag = "OPEN" if t["status_class"] not in TERMINAL_CLASSES else t["status_class"].lower()
         mark = " **to:**" if t in _third_to else ""
         p = Path(t["path"]).resolve()
         try:
