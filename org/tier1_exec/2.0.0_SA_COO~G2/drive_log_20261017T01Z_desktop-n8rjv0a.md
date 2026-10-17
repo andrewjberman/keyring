@@ -1,0 +1,9 @@
+# Drive log 2.0.0_SA_COO~G2, 2026-10-17 00Z-02Z (IRPT_ANLREQ workstream G, IRPT_YCDGEN)
+
+- 00:01Z: IB2's one SPY request with the estate client's form: HTTP 200, 1,256 rows, the adapter parses. The CRO's research (@c9f3005376) had found the form (`ycharts_client.py:219-249`, calc price). CTO msg 10079 accepted option C: the estate `fund_data` builder called unchanged on a URL-only subclass, two pinning tests (byte-equal SPY path; a signature pin).
+- 00:3xZ to 01:0xZ: AR-g-155 (worker ~278, slot moved from 277, which was T2's): I re-ran its three criteria, scope, proof and lint, merged `52f16d8e45`. AR-g-152 (the id:level recipe-form adapter) stays superseded and unmerged.
+- 00:50Z: r34i (tiers back, bindings only) installed by IB2, V1 green, V2S FAIL on SPY `NOT_KEPT LAST_CLOSE_NOT_FINITE`; rolled back at 00:53Z, r34h runs. Cause (mine to find, CTO msg 10112): the door's checker `intake/yfinance_check.py:226-237` reads the NEWEST Yahoo row and calls a null close NOT_KEPT; the price reader is sound. CTO msg 10122: fix the checker in r34j on the calendar frontier; the pricing `as_of` (a weekday rule, `resident_installed.py:379-385`) is its own pair (row S163).
+- 01:1xZ to 01:4xZ: AR-g-157 (round 54, worker ~280; the gate allows one issuance per round per workstream, slot 279 was taken): criteria re-run by me, merged `590fad681e`.
+- 01:5xZ: r34j built from scratch pin 33f40e903a (trunk 6afc8daa32 with lib/trading_calendar.py at the r34e bytes): 317 members, 4 changed 2 added, builds identical, tar 36e19ce7 reproduced; ar_g158 verify OK; packet d6606fa108 (30bce0bf3f); CTO half signed @a6c0932275; apply order d29359ff19; GO sent to IB2. Y2 told: re-pin window 5 to r34j by amendment; a rolled-back r34j leaves it held.
+- Open: IB2's r34j apply; the pricing as_of pair; the signed-out YCharts call and symbols other than SPY (unmeasured); the first priced request through the YCharts tier.
+- Push state: LOCAL on box/dell2.

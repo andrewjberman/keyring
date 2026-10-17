@@ -2842,3 +2842,50 @@ The CTO ruled A (msg 10016): Andrew's point 4 asked for the holdings panels, so 
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~251`), cap 8.
 
 **Checkers (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p180_portal_holdings_panels.py` (DBP180-1-AC1..AC3, amended) and `checks/r149/p181_template_firm_gate.py` (DBP181-1-AC1..AC3, amended).
+
+## 177. ROUND 150, WORKSTREAM CONTRACT055 (2026-10-17 ~01:3xZ, issuer 2.0.0_SA_COO~D2): contract 0.5.5 for the minted account id, in one drain with the reader and the validator
+
+The CTO's round analysis for packet 5 (`CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUND_149_PACKET_5_20261017.md` @`ee3383bf1e`, ruling 2) and the CVO's adjudication (finding b): the minted account ids the reader composes (`DB-b-310`) contradict contract 0.5.4 (line 157: `account_id` is the custodian form; line 126: "in account_id order") and no field says which form an id is. Minting is the policy; the contract catches up. Contract 0.5.5: `account_id` is the minted opaque id (the form of the client summary contract), `account_id_form` = `minted` on every account entry so a consumer rejects a raw id BY FIELD, the accounts ascending by the minted id. The reader sets the field and sorts; the publisher's validator refuses a missing or other form, a non-minted id and an out-of-order list. Nothing is deployed by this cell.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Contract 0.5.5 at the agreed paths, `_filled_mint` (form and order), `validate_filled_report` (four refusals), the two test files and four new tests | DB-b-317 | FWD-10 (hop 2 contract), closes W247-S1 | WORLD floor (path), no apply | `DB-b-310` (merged) | chain AK |
+| 2. The portal mirror (the `FilledReport` account entry type and its fixtures) | none yet | FWD-10 | SERVED, client-facing | item 1; Andrew's smoke of row `dell2-20261017T003553Z-f1bb` (no change to that branch before it) | after the smoke |
+| 3. The deploy of the reader and validator (a later signed pair with the first filled pass, `FILLED_REPORT_PASS`) | none yet | FWD-10 | WORLD | item 1 | after item 1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the reader's account order is ascending by the MINTED id (my `DB-b-310` order said "do not re-sort"; the contract's order rule, restated, supersedes it); (b) the producer (`filled_report_values.py`) is unchanged: its gold rows keep the custodian `row_key`, the contract says so in `account_id_form_rule`, and the next gold run writes `contract_version` 0.5.5 once its bundle carries the contract (a re-pin and a deploy, not this cell); (c) the portal mirror is parked on the condition that Andrew has smoked the branch (the CTO: no change to it before).
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~252`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on six handler/validator mutants and one diff mutant; the reference diff is committed beside it):** `checks/r149/p183_contract_055_minted_form.py` (DB183-1-AC1..AC3), `reads/DB317_REFERENCE.patch`.
+
+## 178. ROUND 150, WORKSTREAM COTREAD (2026-10-17 ~02:0xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood Performance read path -- C0, the read-only trace
+
+Andrew's smoke showed the Cottonwood Performance tab empty; the CTO traced it to the live 49F read function's directory bucket map (`{49financial}`) and ruled option A (msg 10134, `RULING_COTTONWOOD_READ_PATH_OPTION_A_20261017.md` @6bfcbcf2cc): a NEW `-cot-` read function reached by a literal one-entry forward in the 49F function, no S3 widening of the 49F role, four conditions (the cot function runs the full served guard and trusts no forwarder field; the forward is a literal one-entry map admitted by the 49F guard first and never logs the body; the 49F role gets no Cottonwood S3 grant, shown by a simulate DENY and ALLOW pair; the pair names the 939-series client effect and C5 is Thiessen's two accounts read served). The plan is `COTTONWOOD_READ_PATH_PLAN_20261017.md` @bba0548150. This section cuts C0 only; C1 to C4 follow once C0 answers the open items (the Cottonwood ownership map, the authorizer's firm list).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| C0. A read-only trace: three synthetic invokes by label, the ownership-map and directory existence, the authorizer's firm handling, the function unchanged | DB-b-318 | FWD-10 (Cottonwood Performance tab) | WORLD, read only | the CTO's ruling A | chain AL |
+| C1 to C4 | to be cut | FWD-10 | WORLD | C0's record | after C0 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the applier is the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2` (rule 34); (b) the client is named only by the label `cottonwood-client-1` (the conditions of XA-20261016T213506Z-8db5 carry); (c) no ledger is opened (no write leg); (d) the record keeps statuses and reason tokens only, never a response body.
+
+**fanout:** 0 workers (an applier order), 1 of 1 chains, cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected, no record exists; selftest green on a synthetic record and red on 16 single-fault arms):** `checks/r149/p184_cot_read_c0.py` (DBC184-1-AC1, -2-AC1).
+
+## 179. ROUND 150, WORKSTREAM COTFWD (2026-10-17 ~02:3xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood Performance read path -- C1, the forward code
+
+C0 is answered (`COT_READ_C0_RECORD.json`, verified by `p184`): the live 49F read function refuses a Cottonwood request with FIRM_BINDING because its directory bucket map holds only `49financial`; the Cottonwood ownership-map objects are absent; the Cottonwood directory pointer exists (271 entries, in the registry bucket); the authorizer `naqxlm` (`opal-portal-authorizer`) keeps no fixed firm list. Option A (CTO ruling, msg 10134) puts the Cottonwood read in its own function and forwards to it from the 49F function. This cell is the code of the forward, with the ruling's conditions 1 and 2 as tests; the Terraform (C2), the function-map file (C3), the pair (C4) and the real run (C5) follow.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `served.py`: the literal one-entry forward map, the `forward_invoke` port, `Entry._forward`, the guard change in `handle`; one new test file (11 tests) | DB-b-319 | FWD-10 (Cottonwood Performance tab) | WORLD floor (path), no apply | C0 (done) | chain AM |
+| 2. C2 Terraform root `reporting-read-iso` and the forward's environment and invoke grant in `reporting-read` | to be cut | FWD-10 | WORLD | C1 | after C1 |
+| 3. C3 the function-map file for the new function; C4 the pair; C5 the real run | to be cut | FWD-10 | WORLD, SERVED | C2 | after C2 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the forward sits AFTER the internal test and the allowed-firm narrowing (so a caller the 49F function would refuse for any firm is refused for cottonwood too) and only for the literal one-entry map with the target named by the function's own environment (the Cottonwood function never sets it, so it cannot forward); (b) the source directory is shared by both functions, so the code lands once; (c) no registry row is added in this cell: the Cottonwood ownership-map location is decided after the pair's real probe shows whether a staff read needs it (an absent map reads as an empty map); (d) the issuer's reference diff is committed beside the checker.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~253`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on five single-fault mutants; the reference diff is committed beside it):** `checks/r149/p185_cot_read_forward.py` (DB185-1-AC1..AC3), `reads/DB319_REFERENCE.patch`.

@@ -2746,3 +2746,14 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-ap-33` | APPLY (repository only): merge `319c9413a2` on the `box/sitez` head; gateway conflicted paths to the bytes live after `OG-ap-32`; the manifest `opal-gateway` block as trunk has it; the six mcportal entries keep both sides; the billing IAM Terraform file keeps both sides only if disjoint and additive, else STOP; a STOP if a resolution would drop an undeployed trunk change | the 18 conflicted paths, `W/` | WORLD (gateway and Terraform path floors) | `~AE` (`~NFRA1`) | applier |
 
 **fanout:** 1 of 1 chains, cap 8 (one merge, after `OG-ap-32` closes). Dependency: the `OG-ap-32` ledger CLOSED. **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.
+
+## ADDENDUM R3-T.106 (2.0.0_SA_COO~O, 2026-10-17 ~02:5xZ) -- round 40, workstream ENRICH-R40-M: the cursor release rolled back; memory retention and page order
+
+**Source.** `OG-ap-32` Phase B (`0.7.0_AE_CloudOps~NFRA1`, msg 35318): release `b124377b41` deployed 01:53Z; the paging read-back showed host memory 27.8 percent before, 52.4, 58.3, 64.5, 73.3 after pages 1 to 4, peak 87.1 (trigger 85); rolled back at once to `d3ae88be46`; ledger CLOSED; `ap32.AC2` FAIL, arms 1 of 4. Rows `Z-S338` (BLOCKING, ARMED: memory not returned between pages, about 110 to 165 MB per page, cause not isolated) and `Z-S339` (the rows of one page are not ordered by trade date). The OG-en-18 design bound the memory IN a page, not ACROSS pages.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ev-4` | MEASURE on the host: six variants of the three-page chain in fresh processes (as released; plus gc and the pyarrow pool release; plus `malloc_trim`; `MALLOC_ARENA_MAX=2`; the system pool; 4 workers) with RSS and host percent per page; the flattening variant by a stated rule | `W/` | SERVED | `~AE` (`~NFRA1`) | applier |
+| `OG-en-19` | order each window page by trade date, newest first, with a stable sort; tests | `app/client_adapter_bd49f.py`, `tests/test_og_en19.py`, window tests | WORLD (gateway path floor) | `~131` | worker |
+
+**fanout:** 2 of 2 chains, cap 8 (the measure and the sort share no file). `OG-en-20` (the memory repair on the measured variant) and the next release (`OG-ap-34`) are cut on the `OG-ev-4` answer and the `OG-en-19` merge; `OG-ap-33` (landing the HVST line) stays staged until a release is live, because trunk's adapter and catalog are AHEAD of the host. **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.
