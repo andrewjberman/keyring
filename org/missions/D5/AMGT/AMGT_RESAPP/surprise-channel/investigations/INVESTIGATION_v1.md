@@ -29844,3 +29844,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   }
 }
 ```
+
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~500",
+  "surfaced_at": "2026-10-17T20:55:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W500-S1",
+  "one_line": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row's schema; that directory is absent from this worktree, so the row is not validated against it.",
+  "spec_asserts": "The surprise row validates against org/surprise_channel/schemas/investigation_item.schema.json, the schema the worker face names for the row form.",
+  "world_is": "org/surprise_channel/ does not exist in C:/dev/wk-resapp-500 (Glob reports 'Directory does not exist'). The row was formed to the shape of the rows already in org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md and is not validated against that schema.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob **/investigation_item.schema.json under C:/dev/wk-resapp-500/org/surprise_channel: Directory does not exist",
+      "the schema path as named in the AMGT-bt-1 worker face; the same absence was recorded by AMGT_RESAPP-D1-W497-S1 in this file"
+    ]
+  }
+}
+```
+
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~500",
+  "surfaced_at": "2026-10-17T20:55:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W500-S2",
+  "one_line": "The pre-commit risk reflex, run by safe-commit.sh from the nested portal repository, executed the baked comp-pulse path in the base checkout because the portal carries no .tools/comp-pulse.",
+  "spec_asserts": "The commit is made in the worktree and the commit-time checks grade the files of that worktree (the order's commit rule: safe-commit of the outer checkout, paths relative to the portal root).",
+  "world_is": "The commit ran from C:/dev/wk-resapp-500/portal; the reflex printed 'the caller toplevel C:/dev/wk-resapp-500/portal carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/dev/ajb_workspace/.tools/comp-pulse'. Its danger map is 9.2h old and it checked 5 files against 3672 nodes (PRESENT_WITH_ZERO_RESULTS). The commit-gate printed 'checked 0 of 5 file(s)' because it reads only .py, .sh, .tf and org/projects/*.json; the frontend files were graded by the order's own typecheck and lint criteria instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit c4e4f96af3 (portal, branch cand/dell1/amgt-sa-earnings-long-dates): the [risk-reflex] WARN line and the [commit-gate] 'checked 0 of 5' line",
+      "git -C C:/dev/wk-resapp-500/portal rev-parse --show-toplevel is the nested portal worktree; .tools is absent there"
+    ]
+  }
+}
+```
