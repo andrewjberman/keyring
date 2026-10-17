@@ -23924,3 +23924,67 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S170 -- W114-S2 disarmed: the worktree with the empty index is gone
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S170",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T07:35:13Z",
+  "one_line": "W114-S2 DISARMED: the worktree with the empty index no longer exists. C:/dev/wk-irpt-anlreq-114 is absent, git lists no worktree for it, its branch is gone and the slot's order TO-AR-y-296 is complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W114-S2"
+  ],
+  "spec_asserts": "Row W114-S2: the worker worktree C:/dev/wk-irpt-anlreq-114 held its named paths on disk but its git index was empty (80,527 staged deletions); any index-reading git command reported the whole tree as deleted (disarm owner 2.0.0_SA_COO~Y2: re-index or re-cut the worktree).",
+  "world_is": "MEASURED 2026-10-17 ~07:4xZ: the directory C:/dev/wk-irpt-anlreq-114 is absent; git worktree list names no path ending anlreq-114; git branch --list wk-IRPT_ANLREQ-114 prints nothing; the only order issued to slot 114 (TO-AR-y-296) is complete. The hazard (an index-less worktree misread by a commit without a path filter) has no object left to act on, and every worktree provisioned since (281, 283, 284, 285) comes from .tools/wk-provision.sh, which builds a sparse checkout with its own index (git ls-files lists entries; the 285 recut ran git cherry-pick and git commit in it). NOT READ: whether the row's cause (how the 114 index was lost) is understood; no recurrence is recorded in this round's four new worktrees.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d /c/dev/wk-irpt-anlreq-114 -> absent (read 2026-10-17)",
+      "git worktree list -> no entry naming the path; git branch --list wk-IRPT_ANLREQ-114 -> empty",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/ (the one order issued to the slot reads <status>complete</status>)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The worktree the row describes is gone and no later worktree shows the fault; the remedy (re-cut) was the removal and the re-provision of later slots."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S171 -- W144-S12 disarmed: no second writer remains under slot 144
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S171",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T07:35:13Z",
+  "one_line": "W144-S12 DISARMED: no second writer remains under slot 144. C:/dev/wk-irpt-anlreq-144 is absent, git lists no worktree for it, its branch is gone and the slot's order TO-AR-y-338 is complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W144-S12"
+  ],
+  "spec_asserts": "Row W144-S12: two live writers under serial 0.9.0_WK_IRPT_ANLREQ~144 were working one worktree at once and rewrote each other's record, scripts and channel (disarm owner 2.0.0_SA_COO~Y2: name the one worker of record for slot 144 and stop the other instance before any further write).",
+  "world_is": "MEASURED 2026-10-17 ~07:4xZ: the directory C:/dev/wk-irpt-anlreq-144 is absent; git worktree list names no path ending anlreq-144; git branch --list wk-IRPT_ANLREQ-144 prints nothing; the only order issued to slot 144 (TO-AR-y-338) is complete. Workers are subagents of this seat and are spawned one per slot per cut by the issuer (this session's slots 283, 284 and 285 each ran one agent; slot 285 was re-seated only after its first agent had finished). The double-writer condition has no worktree left to occur in. NOT READ: which instance wrote the surviving r31 record (r31 is closed and was superseded by r34k).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d /c/dev/wk-irpt-anlreq-144 -> absent (read 2026-10-17)",
+      "git worktree list -> no entry naming the path; git branch --list wk-IRPT_ANLREQ-144 -> empty",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/ (the one order issued to the slot reads <status>complete</status>)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The worktree is gone and the slot's order is complete; no live writer remains, and the issuer spawns one agent per slot per cut."
+}
+]
+```
