@@ -24927,3 +24927,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The repair is the issuer's; this worker made the identical edit to the order file and changed no checker, validator or other file."
 }
 ```
+
+## IRPT_DASHBD-D2-W255-S1 -- the 49 Financial entry's _staged_from_note still names served.py at acce364286 while its pin is now 3eb27c60c0, and the order bars every key but the pin and sha256 from moving
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W255-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~255",
+  "surfaced_at": "2026-10-17T03:42:05Z",
+  "one_line": "irpt-49f-reporting-read-lambda.json _staged_from_note names served.py at acce364286; after the DB-b-321 re-pin its pin is 3eb27c60c0. The note matched no pin at base either. Left as is: the order allows only the pin and sha256 of served.py to move.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-321 step 2(a) and AC2: irpt-49f-reporting-read-lambda.json changes in ONE member only (the served.py pin and sha256); no other key moves; AC2 fails if any key other than staged_from changes.",
+  "world_is": "At base 8adcf0b94e the entry's _staged_from_note (line 225) cites served.py at acce364286 while the served.py pin was 564e604838. After the re-pin (commit 3d0decfa00) the pin is 3eb27c60c0 and the note still cites acce364286, so the note disagrees with the pin. The note is a key outside the allowed change and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 8adcf0b94e:infra/aws/lambda/ci/function-map/irpt-49f-reporting-read-lambda.json line 40 carries pin 564e60483858a3cc5c51ffea6aed0f76ff291abe",
+      "git show 8adcf0b94e:infra/aws/lambda/ci/function-map/irpt-49f-reporting-read-lambda.json line 225 _staged_from_note cites served.py acce364286",
+      "artifact commit 3d0decfa00 moves only the served.py pin and sha256 of the 49F entry; its _staged_from_note is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The note is documentation for the 49F entry. Its repair needs an issuer-sanctioned edit, since AC2 bars any other key from moving. No change made in this order."
+}
+```
+
+## IRPT_DASHBD-D2-W255-S2 -- the order names the commit trailer Co-Authored-By Claude Sonnet 5.5, and this worker's identity and attribution instruction name Claude Haiku 5.5
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W255-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~255",
+  "surfaced_at": "2026-10-17T03:42:05Z",
+  "one_line": "TO-DB-b-321 asks for the last line Co-Authored-By: Claude Sonnet 5.5; the worker is Claude Haiku 5.5 and its attribution instruction names Haiku 5.5, so the commits carry the Haiku 5.5 trailer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-321 BOUNDS: commit messages end with the line Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>.",
+  "world_is": "The model running this worker is claude-haiku-5-5, and the session attribution instruction names Claude Haiku 5.5 for commit trailers. The artifact commit and each later commit end with the Claude Haiku 5.5 trailer, not the Sonnet 5.5 trailer the order names. Only the trailer text differs; the author line is the serial as ordered.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 --format=%B 3d0decfa00 ends with the line Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>",
+      "the author of 3d0decfa00 is 0.9.0_WK_IRPT_DASHBD~255 as the order's safe-commit form requires"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The trailer follows the attribution instruction of this session. The order's text is the issuer's and was not edited."
+}
+```
