@@ -75,7 +75,7 @@ Report once: the code commit, the diff (one line per file), the output lines of 
 
 **Fanout:** 1 of 1 chain (this amendment's), cap 8. Slot ~33. Base: the deployed pin, not the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <workstream>GLOBAXIS</workstream>
 <to_id>MDPF_CANON.TO-CN-s-6</to_id>
