@@ -65,9 +65,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~162, worktree `C:/dev/wk-harvst-162`, branch `wk-AMGT_HARVST-162`. Widen the sparse set at provision with `infra/aws/ec2/opal-gateway`, `.claude/agents`.
 - **SENT:** with the round-92 recut.
 
+**COMPLETE 2026-10-17T23:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~162` (worker-light, haiku, high), branch `wk-AMGT_HARVST-162`, feature commit `4536e9ecb9`, proof `1653b599ea`; merged `290f2e9e6d` (safe-merge fast lane, index check 0 of 5). Diff read by this seat: `REPORT_FIELDS` gains `"fund_relation"` after `"fund_absent_reason"` (the tuple is rewrapped onto three lines, 2 insertions 1 deletion, nothing else in the file); the new test has five arms (served beside unchanged fund fields, a row without the key served `None`, the pinned tuple, all seven values, a mutant).
+- **AC1 PASS:** `5 passed` (worker twice; re-run here on the merged tree). **AC2 PASS:** `43 passed` (re-run here). Proof instance VALID rc 0 (re-run here).
+- **Declared exclusion, accepted:** the attached-entry path (line 292, `attached_from`) is not asserted for `fund_relation`; it uses the same `REPORT_FIELDS` tuple, so it carries the key by construction. A later test may cover it.
+- **Row `D1-W162-S1` (ARMED, disarm owner this seat):** its claim (a CLOSED batch-4 ledger says a release was rolled back to `d3ae88be46`) is true of that ledger and is superseded: that rollback closed 2026-10-17 02:13Z, and `EC2_MANIFEST.json` since moved `d3ae88be46` to `9d5b71255` (01:53Z commit), `1753c741d9` (cd-2, 11:07Z) and `efcc8ae19f` (OG-ap-36, 13:43Z). The release `HVST-cg-3` is cut on the live commit read from the manifest, the instance and `/opt/opal-gateway/.deployed_commit`; the reflex hold on a commit of this cell was advisory. Dismissed by row `D1-S48`.
+- **What this does NOT prove:** a served `fund_relation` (that is `HVST-cg-3`, after the silver rewrite).
+
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>92</round>
 <workstream>GATEWAY-FUNDREL</workstream>
 <slot>dell1</slot>

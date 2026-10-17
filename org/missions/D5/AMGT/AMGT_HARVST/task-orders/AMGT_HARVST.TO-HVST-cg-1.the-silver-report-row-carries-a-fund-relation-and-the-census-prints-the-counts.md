@@ -85,9 +85,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~161, worktree `C:/dev/wk-harvst-161`, branch `wk-AMGT_HARVST-161`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~160` and `infra/aws/ec2/opal-gateway/app` (read-only, for the gateway's dedupe rule).
 - **SENT:** with the round-92 issuance.
 
+**COMPLETE 2026-10-18T00:0xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~161` (worker, haiku, high), branch `wk-AMGT_HARVST-161`, feature `8ef33bac7e`, proof `2b1744a6a3`; merged `ad116e0037` (safe-merge fast lane, index check 0 of 10). Diff read by this seat: `fund_relation.py` (a pure `classify`, seven values, the word patterns copied from `continuation.py`, header anchored at the start of `fund_evidence`, the earliest candidate word decides), `typed.record()` gains the key after `fund_absent_reason` (3 lines in `typed.py`), 17 offline tests.
+- **AC1 PASS:** `17 passed` (worker; re-run here). **AC2 PASS:** `58 passed` (re-run here). **AC3 PASS and AC4 PASS:** `CENSUS-FUND-RELATION rows=355 reports=353 securities=94 holding=117 candidate=14 initiate=2 interest=2 template=1 unclassified=2 none=215 gets=6 bytes=133462` and `PROOF-NAMES ADBE=candidate SNPS=candidate MNST=candidate ML_FP=template CLX=candidate UNH=holding` (equal to the CTO's expectation). **I re-ran `cg1_census.py` myself (6 GETs, 133,462 bytes) and its output is identical to the worker's, line for line.** Proof instance VALID rc 0 (re-run here).
+- **The dry run (read by me, `cg1_rebuild_plan.out`):** `REBUILD-PLAN rows=353 skipped_unchanged=0 new_parts=3 dates=3 puts_recorded=3 puts_performed=0`: three new parts, one per date partition (2026-09-23 121 rows, 2026-09-24 148, 2026-09-25 84), same date directories as the rows they supersede (so the gateway's newest-part rule and `silver_latest`'s later-`run_stamp` tie rule both pick the new rows); the two misfiled KMB rows are not re-appended. The rollback list of `HVST-cg-2` is the three new part keys.
+- **Two classification gaps the census shows (not in this cell; raised to the CTO before the rewrite fixes the classifier into 353 rows):** `ORA_FP_Equity` (2 rows) `Consider size reduction in IDVZ` reads `unclassified`; `CPA_US_Equity` (2 rows, the gold control) header spelled `RECOMMEDATION` with `Consider adding 50-100bps in IDVZ` reads `none` because the header pattern does not match the misspelling. Both are holdings by meaning; neither changes a gold value today. Rows `D1-W161-S2` (the CPA header) and the issuer's ask.
+- **Rows** `D1-W161-S1` (INERT: the holding-everything mutant of arm 6 does not fail MNST because the candidate test precedes the holding test; the unseen-phrase arm and a candidate-words mutant do catch it; my face asked for a mutant that cannot fail, accepted), `-S2` (above) and `-S3` (INERT: the sparse worktree lacks the untracked `integrations/bloomberg/research/field_map.json`, so 51 corpus tests fail in it and at the base alike; AC2 does not include them): read and accepted.
+- **What this does NOT prove:** a written silver row or a served `fund_relation` (`HVST-cg-2`, `HVST-cg-3`).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>92</round>
 <workstream>SILVER-FUNDREL</workstream>
 <slot>dell1</slot>
