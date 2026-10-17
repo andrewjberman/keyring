@@ -25586,3 +25586,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm: after Monday 2026-10-19's 49 Financial fire, read the gold function's log for FILLED_CATCHUP_LIST_FAILED (none expected) and the filled table's day count; the line recurring is a new finding about the listing's prefix shape and goes to the CTO."
 }
 ```
+
+## IRPT_DASHBD-D2-W2705-S1 -- the order's literal SESSION_NAME is refused by the commit-time naming limb as a new hand-kept carrier of 'inf'; the launcher and test commit is aborted (rc=1)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2705-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2705",
+  "surfaced_at": "2026-10-17T12:47:56Z",
+  "one_line": "The order's literal SESSION_NAME = \"inf-g-01-account-transaction\" is refused by the commit naming limb (LGIC_ENFORCE DEC-6, ENFORCE) as a new hand-kept carrier of inf, so the launcher and test commit is aborted (rc=1) and nothing lands.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face DB-f-2705 step 2 and checker DBF139-5-AC1 require the launcher to carry a module constant SESSION_NAME equal to the literal \"inf-g-01-account-transaction\", and the commit to pass the safe-commit gates. CLAUDE.md section 4 requires a builder refusal to be a missing registry row, never a hand-typed workaround.",
+  "world_is": "The commit gate's naming limb refused the diff at its first run (safe-commit.sh, worktree HEAD 3b3d3e9f94): NAMING REFUSE data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 inf-g-01-account-transaction -> lookup('inflection'), 'NEW hand-kept carrier (context rule); hand-kept carrier of inf outside every permitted context'. The role name built by name() at line 390 is CONFORMANT. The literal cannot land as written, and the order names no route that satisfies both the literal and the gate. Not repaired: the literal is kept, nothing is derived, no gate is bypassed, no override is used. The three checker criteria PASS on the uncommitted worktree bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run at worktree HEAD 3b3d3e9f94: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' rc=1",
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 (uncommitted worktree bytes, base 3b3d3e9f94): SESSION_NAME = \"inf-g-01-account-transaction\"",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-2705.inflection-launcher-assumes-transaction-role-flat-directory-naming.md (WORKER FACE step 2 and DBF139-5-AC1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced at the first commit attempt. The three criteria were run on the uncommitted bytes: DBF139-5-AC1 PASS, AC2 PASS, AC3 PASS; the launcher test file is 83 passed, 0 failed, 0 errors (77 at base). The proof instance cannot validate while its artifacts are uncommitted (artifact-resolution). Routing is the COO's and the CTO's: a registry row or a derived session name, under a decision on the literal."
+}
+```
