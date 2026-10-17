@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.25",
+ "prd_version": "v2.26",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -857,5 +857,19 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
   insurance-feed accounts. Placed in ADVI_COTBKF (Cottonwood's served data), whose next round cuts it. Proof: the 10/15-equivalent build ties
   to 530,421,988.14 supervised. FWD-10 (b) closes on that proof plus the FWD-10 (a) cell.
 - **Order:** the (a) filter cell in round 12 does not wait on the ingest. The source line reads per FWD-10 until (b) ties.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.26 (2026-10-17 ~01:5xZ), FWD-10 executed ad hoc (`1.0.0_SA_CTO~DELL1`, on `4.0.0_SA_CRO~DDD` msg 7124; change log only):**
+- **Andrew-direct ~01:5xZ** (record `org/tier1_exec/4.0.0_SA_CRO~DDD/deliverables/ANDREW_DIRECT_20261017_015xZ_COTTONWOOD_530M_MDPF_AND_ADVI_CRO_EXECUTES.md`
+  @aca8db2e43): "We want that 530.42m number ... it has to be done for ADVI Advisor Intelligence page too ... probably have you just do it."
+  The target is 530.42M, so the 96 insurance-feed accounts count (v2.25 confirmed on his word).
+- **Placement superseded:** FWD-10 is NOT round 12's first cell, and the ADVI_COTBKF widen cell is not a next-round cut. `4.0.0_SA_CRO~DDD`
+  executes both directly. The never-widen pair and the apply gate still apply: the CRO brings the producer half, and this seat signs the CTO half.
+- **Two collisions the half must name:**
+  - D1 reads the CN-s-1 V2 Global headline on the 2026-10-17 13:30Z fire against a predicted 2,237.50M. A Cottonwood filter landed before
+    that fire moves the same headline. The half states the joint expected Global for that fire, and 2.0.0_SA_COO~D1 reads against it.
+  - The Cottonwood silver `account_attributes` organic fire (~2026-10-17 midday, R106) reads the same accounts. Nothing writes Cottonwood
+    silver between now and that fire's close read, unless 2.0.0_SA_COO~C1 agrees in writing.
 
 -- 1.0.0_SA_CTO~DELL1
