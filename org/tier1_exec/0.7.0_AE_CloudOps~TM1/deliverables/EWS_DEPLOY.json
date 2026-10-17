@@ -1,8 +1,11 @@
 {
   "cluster": "opal-clientops-ews-cluster",
-  "task_arn": "arn:aws:ecs:us-east-1:313476888478:task/opal-clientops-ews-cluster/73ccdcc4753448c68c1dd7156111588a",
+  "task_arn": "arn:aws:ecs:us-east-1:313476888478:task/opal-clientops-ews-cluster/19419353d2f44a5e8321fd8f5c787fd4",
   "role_arn": "arn:aws:iam::313476888478:role/opal-clientops-ews-role",
   "role_name": "opal-clientops-ews-role",
   "task_name": "opal-clientops-ews-task",
-  "ledger_slug": "ews-d1-one-container-20261017"
+  "ledger_slug": "ews-d1-one-container-20261017",
+  "persist_bucket": "opal-data-49financial",
+  "persist_key": "schwab/49financial/state/ews_store/current/ews.db",
+  "ledger_slug_d2": "ews-d2-persist-store-20261017"
 }
