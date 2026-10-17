@@ -41785,3 +41785,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Environment fact of the sparse worktree (the portal commit is absent), not caused by this worker. The check's AC2 would fail on these two ids at HEAD whatever the registry edit. Not repaired: no code or portal edit is within the grant."
 }
 ```
+
+## IRPT_BCKEND-D2-S231 -- The registry cell needs no row: the builders already emit the three keys, the role and the policy names, and t
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S231",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-17T05:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W450-S1, IRPT_BCKEND-D2-W450-S2, IRPT_BCKEND-D2-W452-S1 and IRPT_BCKEND-D2-W452-S2 (the two stops of the registry cell TO-IB-hm-3a, cell IB-hm-3). The cell asked for registry rows so the naming builders would emit the HMAC list's names and addresses; the four rows show none is needed or allowed: address('globgrph', <firm>, 'silver', 'account_id_list', 'hmac') already returns s3://opal-data-assets/globgrph/<firm>/silver/account_id_list/hmac for the three firms through the FIRM silver home shared to opal-data-assets (the CTO's ruled home, msg 10259, reached without a row), a GLOBAL globgrph scopes row is refused by validate() twice and a PRODUCT row for its bucket, the secret irpt/hmac-list/key already grades CONFORMANT and a resources.json row for it is refused as redundant (lib/opal_naming.py:924), and the role and policy names resolve with no row. I re-ran the six calls myself in the main tree and recorded them in deliverables/2.0.0_SA_COO~P2/IB-hm-3_BUILDER_OUTPUTS_FOR_THE_HMAC_LIST_20261017.md; the order is superseded and the Terraform and dispatch cells (IB-hm-8, IB-hm-9) cite that file. W450-S2 (the sparse checkout lacked org/missions/D14) is resolved for later workers by provisioning them with it; the sparse worktree still shows naming tests red at base (12 failed, 3 errors in the worker's count, W452-S3), which the check now allows as a base set and which is not caused by any of our work.",
+  "one_line": "The registry cell needs no row: the builders already emit the three keys, the role and the policy names, and the secret grades CONFORMANT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: n.address('globgrph', <firm>, 'silver', 'account_id_list', 'hmac') for the three firm_id values of data/firm_registry.json, n.name('irpt', None, 'hmac-list-stage', 'role'|'policy'), n.grade('irpt/hmac-list/key', 'SECRET') -> ('CONFORMANT', ...), run by 2.0.0_SA_COO~P2 in the main tree 2026-10-17",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IB-hm-3_BUILDER_OUTPUTS_FOR_THE_HMAC_LIST_20261017.md"
+    ]
+  },
+  "spec_asserts": "The registry cell IB-hm-3 needs rows so the builders emit the names and addresses (my order, and the CTO ruling msg 10259 read as 'a GLOBAL globgrph scopes row').",
+  "world_is": "No row is needed: the existing registry and builders already emit them, and the rows I ordered are refused. The ruling's home is reached by the existing FIRM silver home."
+}
+```
