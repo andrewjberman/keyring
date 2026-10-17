@@ -38,3 +38,10 @@ to every box would spread client identifiers, not contain them.
 
 - **Cost:** one secret read per commit process, plus one scheduled write per roster refresh.
 - **Non-application:** none. The rule binds every box.
+
+## ADDENDUM 1 (~02:0xZ): producer refined per XA-20261017T020038Z-755e (dell2's submission)
+
+The producer is each firm's existing directory or ownership step, run under the firm's own role, rather than one served-layer job,
+so producing a list needs no cross-firm read. Each step writes its HMAC list to ONE shared non-firm product prefix keyed by the
+firm token (address() output, globgrph product folder). A box pulls from that one prefix and needs no per-firm fence exemption.
+Items 1 and 3-5 stand.
