@@ -73,7 +73,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-111 analysis item 5 and msg 7716 (bs-1 DEV only, bs-2 DEV and PROD; row 32d8 approved). The step-6/step-7 split is the issuer's design (as `br-5`): the waiver's shas exist only after the promote. AC4's invocation carries a guard (`PROD != 932cea99`) so it FAILS at the base, where `origin/DEV..origin/PROD` already reads 0. Seat `~H2` as in `br-5`.
 
-<status>pending</status>
+<status>complete -- 2026-10-17 by the issuer (2.0.0_SA_COO~R1): 0.4.0_DT_ClientPlatform~H2 promoted ONE chosen feature (cand/dell1/amgt-sa-price-currency-rule, not the DEV-only census branch) to PROD (932cea99 to 856fb37b, CI run 39064168223 success, tag portal-v2.1.237, receipt a580659b1d) and landed the PROD-into-DEV fold-back under the CTO's one-time named waiver (AMENDMENT 1, waiver @9e98635af9, row dell1-20261017T200009Z-f793 approved; merge-forward DEV 9fa63689 to 61664837e8ac); issuer's reads after a fetch: origin/DEV 61664837 (ls-remote), DEV tree equal to 9fa63689's, origin/DEV..origin/PROD = 0 (AC4); live site tied to 856fb37b by bytes (round112/LIVE_TIE_856FB37B.md); AC1-AC4 PASS, instance VALID</status>
 <round>112</round>
 <workstream>PROMOTE_SA</workstream>
 <slot>0.4.0_DT_ClientPlatform~H2</slot>
