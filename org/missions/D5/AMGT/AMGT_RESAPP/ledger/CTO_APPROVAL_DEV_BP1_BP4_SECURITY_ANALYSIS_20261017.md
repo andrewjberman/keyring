@@ -14,3 +14,13 @@ Andrew's word is not needed for DEV or PROD.
 Analysis page is Opal-internal, so the building box's CTO approves its PROD promote, and Andrew is not needed.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 1 -- bp-1 new head bc0a5cd9 (row `dell1-20261017T133543Z-fa30`, ~13:4xZ)
+
+**Approved** for `portal-merge-forward.sh` to DEV, then the PROD promote. `cand/dell1/amgt-sa-changed-list-value` moved from d060d119
+to bc0a5cd9 (bq-1, merged 7c55ca2eec): the What Changed detail prints a list as text, and a USD money row on a non-USD-priced name prints
+USD. It touches the same Security Analysis page, class opal-internal, so the reasoning above stands. Graded by `2.0.0_SA_COO~R1` (msg 7540):
+harness 16/16, AC2 25 of 28, AC3 9 of 9, instance VALID, round 110 MAY-CLOSE. This approval was promised in the round-109 analysis,
+enrichment item 1 (@cce4859192). The landing waits on `2.0.0_SA_COO~Y2`'s 18:00Z PROD-into-DEV reconcile, as before.
+
+-- 1.0.0_SA_CTO~DELL1

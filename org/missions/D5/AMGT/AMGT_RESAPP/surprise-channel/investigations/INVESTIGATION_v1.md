@@ -29307,3 +29307,99 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by the worker. Recorded as read; no verdict. The walker finding and the rendered shot disagree on whether raw JSON is printed; the collapsed expansion is the unread location."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W492-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~492",
+  "surfaced_at": "2026-10-17T13:25:47Z",
+  "one_line": "AMGT-bq-1 L7: the ZURN SW control cannot see the USD price-currency rule, so its unchanged digest holds by construction and does not evidence the rule for ZURN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bq-1 face step (2), L7: the ZURN SW compare may differ ONLY if it carries a money row whose served currency is USD (its price currency is CHF); if it does, replace the digest equality by a per-row comparison.",
+  "world_is": "The ZURN SW compare carries USD money rows (forecast BEST_EBIT, BEST_NET_INCOME and others with currency USD, and header CURR_ENTP_VAL). The harness ZURN bundle serves no header_figures (withheldFixture.ZURN_SW_Equity.json has no header_figures key), so no PX_LAST currency reaches its rows and the USD rule does not run there. L7 read the unchanged sha256 7d5da4a94169e04e, which equals the base digest. No committed fixture carries ZURN's CHF PX_LAST, so the per-row branch was not taken and the production effect on ZURN USD money rows is not measured by this control.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/withheldFixture.ZURN_SW_Equity.json@d060d119 (top-level keys model, security_key, source; no header_figures)",
+      "portal/src/pages/SecurityAnalysis/__harness__/changedListValue.harness.cjs@bc0a5cd9 (bundleOf sets header_figures to an empty array; the ZURN bundle is built from it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Recorded as read; no verdict. Hazard INERT: the USD prefix on ZURN is intended to change in production; this row concerns only what the L7 control can see."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W492-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~492",
+  "surfaced_at": "2026-10-17T13:25:47Z",
+  "one_line": "AMGT-bq-1 step 3: on the unedited head d060d119 the harness printed NO (12 of 16) with L10, L11, L12 and L14 failing; the order named L10, L12 and L14 only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bq-1 face step (3): run once on the unedited head with the new checks added; it must print NO with L10, L12 and L14 failing (the detail prints JSON; the row prints the dollar sign).",
+  "world_is": "The unedited run printed 'CHANGED LIST VALUE HARNESS: NO (12 of 16 checks)' with L10, L11, L12 and L14 FAIL. L11 also fails because the three-entry dated list, the list of strings and the object are printed as JSON text in the expanded detail. L13 passed as the order predicts (a USD-priced name keeps the dollar sign). The observed failures are a superset of the named set, and the extra one is the detail defect the order describes, shown on synthetic rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/model/WhatChangedPanel.tsx@d060d119 (the ChangedRow full helper: JSON.stringify for a non-scalar value)",
+      "portal/src/pages/SecurityAnalysis/__harness__/changedListValue.harness.cjs@bc0a5cd9 (check L11, run against the unedited head before the product edit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Recorded as read; no verdict. The unedited run was executed before any product edit, as order step 3 requires."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W492-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~492",
+  "surfaced_at": "2026-10-17T13:25:47Z",
+  "one_line": "AMGT-bq-1: the visible before and after cell of an object-valued changed row still prints raw JSON (listReading), while the expanded detail now prints key: value pairs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bq-1 item 1: the expanded detail prints an object as key: value pairs, never braces, brackets or quotes; the visible row text (listReading) is unchanged.",
+  "world_is": "listReading still returns JSON.stringify(value) for any object that is not a list, so a changed row whose served value is an object prints braces and quotes in its visible before and after cells (harness L5a renders the before cell as {\"window\":\"x\"}). L5a checks only the absence of [object Object]. The order's L11 reads the expanded detail only, so no check grades the visible object cell. The visible cell was left as the order says; the two instructions are read as scoped to the detail and to the visible cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/model/WhatChangedPanel.tsx@bc0a5cd9 (listReading, its last line returns JSON.stringify(value) for a non-list object)",
+      "portal/src/pages/SecurityAnalysis/__harness__/changedListValue.harness.cjs@bc0a5cd9 (check L5a, the visible cell output)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Recorded as read; no verdict. No served value and no visible sentence was changed by this branch."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W492-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~492",
+  "surfaced_at": "2026-10-17T13:31:53Z",
+  "one_line": "AMGT-bq-1 L7 premise: the ZURN SW price currency (CHF) the order names is served by no committed fixture, so the USD branch of L7 cannot be run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bq-1 face step (2), L7: the ZURN SW compare may now differ only if it carries a money row whose served currency is USD (its price currency is CHF); if it does, replace the digest equality by a per-row comparison. The face's rule: a premise that does not reproduce on a fixture is filed as a BLOCKING row.",
+  "world_is": "The ZURN forecast figures (BEST_EBIT and others) carry currency USD in withheldFixture.ZURN_SW_Equity.json. The ZURN header money row CURR_ENTP_VAL has no header_figures entry to carry its currency, and the file has no header_figures key at all. The harness bundle sets header_figures to an empty array, so no PX_LAST price currency reaches the ZURN rows, the price currency is null, and the rule keeps the dollar sign. The CHF price currency the order names is not served by any committed fixture read. L7 therefore stays an exact digest by construction and cannot show the per-row change for ZURN.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/withheldFixture.ZURN_SW_Equity.json@d060d119 (top-level keys model, security_key, source; no header_figures; forecast_figures carry currency USD)",
+      "portal/src/pages/SecurityAnalysis/__harness__/changedListValue.harness.cjs@bc0a5cd9 (bundleOf and the ZURN render set header_figures to an empty array)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker under the order's premise rule as a BLOCKING row on criterion L7. It records the same finding as AMGT_RESAPP-D1-W492-S1, classed by that rule. Recorded as read; no verdict. AC1 is PASS-by-output; L7 is recorded as the exact digest, per-row branch not used."
+}
+```
