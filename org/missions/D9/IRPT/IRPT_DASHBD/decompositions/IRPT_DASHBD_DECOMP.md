@@ -2925,3 +2925,37 @@ C1 is landed on the trunk (`3eb27c60c0`: `served.py` carries the forward, 11 tes
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~255`), cap 8. C1, C2 and C3 together: orders DB-b-319 (landed), DB-b-320 (worker 254) and DB-b-321 (worker 255), three workstream tags under round 150.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on thirty single-fault mutants; the reference diff is committed beside it):** `checks/r150/p187_cot_read_function_map.py` (DB187-1-AC1..AC3), `reads/DB321_REFERENCE.patch`.
+
+
+## 182. ROUND 150, WORKSTREAM COTAPPLY (2026-10-17 ~04:2xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood Performance read path -- C4, the apply of the signed pair
+
+C1 (`3eb27c60c0`), C2 (`10dac78f46`) and C3 (`67cc230180`) are landed on the trunk, each with 0 deletions and its checker (`p185`, `p186`, `p187`) PASS on the issuer's reads. The never-widen pair is signed on the final bytes: packet sha256 `07e9ab11...`, COO half `d242bc65d8`, CTO half `b43bdc076f` (CTO msg 10262: sections 8 yes/yes/yes; Act 3 uses an OPAL_GLOBAL internal identity and the receipt names the class; Act 3 (c) runs before Act 4). C4 is the apply, by the one IRPT CloudOps lane.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. build both entries to one hash; apply `reporting-read-iso` (5 add); probe the new function directly incl. a forged-forward event; apply `reporting-read` (1 add, 1 change); probe through the live function; receipt | DB-b-323 | FWD-10 (Cottonwood Performance tab) | WORLD | C1, C2, C3, both halves | chain AP |
+| 2. C5 the real run: the page owner looks at the Cottonwood Performance tab for two accounts of one client, as Opal staff at Global, on 5174 | to be cut (page owner ~C2) | FWD-10 | SERVED | C4 | after C4 |
+| 3. C6 the Cottonwood ownership map from the dell1 match sheet | to be cut | FWD-10 (advisor and client viewers) | WORLD | C5 | after C5 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the plan gates stand exactly (5/0/0 and 1/1/0); (b) CORRECTION to the packet and to orders 320 and 321: the box HAS a terraform binary (`.tools/terraform.exe`, v1.15.8); the sentence "the box has no terraform binary" in them is wrong. The issuer ran `init -backend=false` and `validate` on both roots from the landed trunk: both "Success! The configuration is valid", `fmt -check` clean (MEASURED). The signed packet is not edited (its bytes are the halves' binding); the correction rides in this section and in the order's worker face, and the plan lines stay INFERRED until the applier's plan; (c) the forged-forward refusal runs before the 49 Financial function changes; (d) a staff profile row that lacks the firm is a STOP, never a change inside the order; (e) the issuer's world-reading checker is `p189`.
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765 for this macro).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 51 single-fault mutants):** `checks/r150/p189_cot_read_apply.py` (DBC189-1-AC1, DBC189-2-AC1, DBC189-3-AC1).
+
+
+## 183. ROUND 150, WORKSTREAM COTOWN (2026-10-17 ~04:3xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood ownership map -- C6a, the read-only measurement
+
+Andrew's word through the CTO (msgs 10215, 10227, 10267): build the Cottonwood ownership map from the dell1 match sheet as its own cell, behind the real run (C5). The CTO ruled the map grants access on HIGH matches only (40 of 83); MEDIUM (36) only where a second source agrees, with the count reported; LOW (2) and UNMATCHED (5) never; and the 3 sheet advisor codes are measured against the portal's Cottonwood advisor ids in the same read. The sheet holds 83 accounts against 939 published series (a ceiling of 8.8 percent, MEASURED by count), so the other 856 have no row until the full extract (MSTR is looking for `Files.zip`) arrives.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. read-only measurement: published keys (939), directory, the sheet's coverage chain, the portal's Cottonwood advisor ids; two files outside the repo, a counts record | DB-b-324 | FWD-10 (advisor and client viewers) | WORLD, read only | TO-DB-b-323 Act 6 (IB2's one lane) | chain AQ |
+| 2. C6b the map builder and the HIGH-only map (a script in the repo, the data and the map object outside it) with a resolver test on synthetic fixtures | to be cut | FWD-10 | LOCAL path, client data outside | C6a | after C6a |
+| 3. C6c the never-widen pair for writing the object `platinum/cottonwood/ownership_map.json`, and the apply order | to be cut | FWD-10 | WORLD | C6b, C5 | after C5 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the record is counts and booleans only; the match sheet, the published raw keys and the directory copy live outside the repo (`C:/opal-intake/work/`), and the checker proves no sampled raw key appears in the order's committed files; (b) the sheet is read from the NEWER pair only, hash-verified, with `python -I` from outside the sheet folder, no script run; (c) the advisor ids are measured by attribute NAME and shape class, never by value; (d) the map's claim label is "inferred from dell1 match sheet 20261016T0225Z (1)" (CTO msg 10227), never measured; (e) the order is queued behind `TO-DB-b-323` on the single CloudOps lane.
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 27 single-fault mutants):** `checks/r150/p190_cot_ownership_read.py` (DBC190-1-AC1, DBC190-2-AC1).
