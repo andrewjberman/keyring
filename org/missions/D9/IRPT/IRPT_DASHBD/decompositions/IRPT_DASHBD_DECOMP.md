@@ -3123,3 +3123,20 @@ dell1's carrier lane landed the Cottonwood `fact_allocations` of 07-22, 08-03, 0
 **fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a 4-day and a 2-day synthetic record and red on 77 single-fault mutants):** `checks/r150/p198_cot_reland_apply.py` (DBC198-1-AC1, DBC198-2-AC1, DBC198-3-AC1).
+
+
+## 194. ROUND 150, WORKSTREAM LATEWIN (2026-10-17 ~15:4xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood late-posting reader and settle -- the cure for the inflated flows
+
+The issuer's re-land read found that the Cottonwood gold external flows are inflated (row `IRPT_DASHBD-D2-S137`): the function's `derive` sums `fact_transactions` rows from every partition on or after the day, and the partitions are rolling pulls that repeat each trade (07-24: 3,328 rows in 19 partitions against 277 distinct TransactionIDs; both versions of the landed gold hold the summed flows: |flow| over value reaches 13.0). The CTO ruled (msgs 10587, 10591, 10598): the reader reads D through D+14 trading days, filters by trade date, deduplicates on TransactionID; a scheduled fire keeps writing day D from the partitions present (the page stays fresh) and ALSO rewrites the day 14 trading days back through the existing rewrite path, so every day self-corrects once; the release folds with ~F2's transaction stage (order TO-DB-f-2706) as ONE code release after the issuer's re-land pair, which is now SUPERSEDED by one all-days rewrite pair from 2026-07-10 after the release. The re-land pair TO-DB-b-332 (eight days, signed half @e5d081d262) is HELD, its half suspended, not withdrawn. Checked read-only for the other two firms: 49 Financial `fact_trn` partitions are single-day and disjoint (0 repeated rows in 115,125 sampled); Inflection `fact_transactions` partitions are cumulative snapshots read as ONE by their launcher (counts sent to the CTO).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the reader fix and the settle (adapter and handler), tests | DB-b-333 | FWD-10 (Cottonwood Performance tab) | WORLD by the gate's floor for an infra path (code in a worktree) | none | chain BA |
+| 2. the ONE code release (bundle, build-only hash, apply by IB2), folded with ~F2's stage | to be cut | FWD-10 | WORLD | item 1 landed; ~F2's TO-DB-f-2706 landed; both halves of a never-widen pair | after item 1 |
+| 3. the ONE all-days rewrite pair from 2026-07-10 (events of at most 25 days) and one republish; supersedes TO-DB-b-332 | to be cut | FWD-10 | WORLD, served output | item 2 applied | after item 2 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the presence rule KEEPS the old "a partition named the day makes the day present" and adds the late-window alternative, so the existing fixtures and tests stay valid; (b) the dedup key is `TransactionID`, the later partition's copy wins (the producer-side measurement by ~F2: none of the columns the reader uses varies across partitions, same-id pairs differ only in portfolio columns); (c) the settle runs in the handler, not the adapter, and never raises; it carries its own result keys so the returns result is untouched; (d) the checker `p199` grades the data, not the report: the issuer's probe (16 tests, 12 fail on the unfixed code) and a live read-only derivation of 2026-07-24 against an independent deduplicated sum with a control that the raw sum differs; (e) handler edits are confined to three places so ~F2's cell (the transaction stage, same file) merges.
+
+**fanout:** 1 of 1 chains for this cell (worker 259), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; the probe passes on the issuer's reference and the 19 mutants are all killed):** `checks/r150/p199_cot_late_window.py` and `checks/r150/p199_probe_late_window.py` (DBC199-1-AC1, DBC199-2-AC1, DBC199-3-AC1). Reference edit: `reads/DB333_REFERENCE.patch`.
