@@ -310,6 +310,27 @@ Worker rows of the round-1 cells, appended and never edited. Rows `SOC2_MSLOGS-D
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W9-S1",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~9",
+    "surfaced_at": "2026-10-17T06:47:47Z",
+    "one_line": "The derive check's leftover-temp-file arm reads the whole shared system temp directory, so entries written by other seats' processes made the first full run of R2-d2-AC1 print REFUSED; the same check passes on re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-R2-d2 R2-d2-AC1: the door's derive leaves no temporary file behind, measured by the check's derive_run leaked arm (the difference of the system temp listing before and after the run).",
+    "world_is": "The first full run of s1_check_r2.py derive (06:43 Z) printed R2-DERIVE-REFUSED derive left temporary files behind: ['ho1_ibz_k10o']; that directory was created 06:43:40 Z in the shared temp directory during the run and was not made by the door (the door-only subprocess at 16 objects printed leaked []). The naive subprocess later reported a different foreign entry, zb1_ac1.txt, leaked []. The full re-run printed R2-DERIVE-OK vs_build=0.18 growth=1.24. A direct build_stream call leaves no new entry.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s1_check_r2.py derive_run lines 152-173 (tmp_before snapshot and leaked diff over tempfile.gettempdir()), read at the worktree base 827ff5e882",
+        "the three runs named in world_is, output read verbatim in this session, 2026-10-17 06:43-06:46 Z",
+        "build_stream in infra/aws/lambda/globgrph-trino-access/silver_builder.py at the worker's commit of TO-R2-d2 leaves no new entry in a direct probe"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
