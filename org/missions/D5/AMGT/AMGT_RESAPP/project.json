@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-17T17:40:49Z (2.0.0_SA_COO~R1): ROUND 111 issued (br-1, br-3, br-4 to workers; br-2, br-5 placed)",
+  "last_updated": "2026-10-17T18:52:48Z (2.0.0_SA_COO~R1): ROUND 111 drained; PROD 932cea99, DEV 0f6dc96b, DEV..PROD 0; L8 packet to the CVO",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 111 ISSUED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.120): br-1 (object-valued What Changed cells as text), br-3 (the P/E footer in plain words, with the mnemonic census), br-4 (Peers currency rule) cut to workers ~493/~494/~495, br-2 (PROD read of the earnings detail) and br-5 (landing + fold-back) placed. Round 110 closed MAY-CLOSE; FWD-40 (d) REALIZED (CTO round-110 analysis); bp-1/bq-1/bp-4/bp-6 shipped (PROD 99d2b2a70c, DEV d8df08e4, scoped API hLW4fD..).",
-  "blocking": "the three round-111 candidates (br-1/br-3/br-4) then their approval rows, merge-forward, the chosen-set promote and the fold-back under a CTO named waiver (br-5); br-2's PROD read (issuer); G4's positive arm Mon 2026-10-19 07:30 ET (bp-5)",
+  "phase": "ROUND 111 DRAINED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.120; round-close-check MAY-CLOSE), awaiting the CVO's slug and the CTO's round-111 analysis. Shipped: br-1 (object-valued What Changed cells as text), br-3 (the P/E footer in plain words), br-4 (Peers currency rule) on PROD 932cea99 (portal-v2.1.236, CI success), PROD folded back into DEV 0f6dc96b (DEV..PROD 0) under the CTO's one-time named waiver; br-2 read (no raw list JSON on PROD). Round 110 closed MAY-CLOSE; FWD-40 (d) REALIZED.",
+  "blocking": "the CVO's slug and the CTO's round-111 analysis (carried to round 112: the br-3 census gap, W495-S2); G4's positive arm Mon 2026-10-19 07:30 ET (bp-5)",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
