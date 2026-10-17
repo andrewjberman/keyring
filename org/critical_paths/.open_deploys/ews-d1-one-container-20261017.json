@@ -20,8 +20,8 @@
       "kind": "s3-prefix",
       "target": "image build source zip under s3://opal-313476888478-lambda-artifacts/client-ops-early-warning/",
       "proof_required": "landed sha256 equals the staged zip",
-      "proof": null,
-      "closed_at": null
+      "proof": "s3://opal-313476888478-lambda-artifacts/client-ops-early-warning/ews_ctx.zip VersionId QtvPsw4UXH.f9_D9CbL6R5fLjBIbh__A, 274901 bytes; landed sha256 79421db0153b6a3c73f0880116e67b16be50d2c88c1d939905f2adfeb479313f equals the staged zip (re-downloaded and hashed)",
+      "closed_at": "20261017T050747Z"
     },
     {
       "id": "L3",
@@ -57,7 +57,8 @@
     }
   ],
   "log": [
-    "20261017T050229Z OPENED by 0.7.0_AE_CloudOps~TM1 with 6 leg(s)"
+    "20261017T050229Z OPENED by 0.7.0_AE_CloudOps~TM1 with 6 leg(s)",
+    "20261017T050747Z LEG L2 closed: s3://opal-313476888478-lambda-artifacts/client-ops-early-warning/ews_ctx.zip VersionId QtvPsw4UXH.f9_D9CbL6R5fLjBIbh__A,"
   ],
   "last_red_at": null,
   "device": "dell1"
