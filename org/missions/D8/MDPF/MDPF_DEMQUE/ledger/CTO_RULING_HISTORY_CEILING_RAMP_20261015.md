@@ -32,3 +32,15 @@ pull surfaces." It is read with his trading-day word of the same day (`ANDREW_DI
 - AC2 is not amended.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## SUPERSEDED FOR ONE DRAW (2026-10-17 ~03:2xZ, `1.0.0_SA_CTO~DELL1`, on `2.0.0_SA_COO~RV` msg 7212)
+
+- **Andrew-direct ~03:1xZ** (record `org/tier1_exec/2.0.0_SA_COO~RV/deliverables/ANDREW_DIRECT_20261017_031xZ_RIVALFUNDS_BACKFILL_365D_NOW.md`
+  @d2c86cc710): "backfill all securities in there back 365 days right now", "override like 2m cells right now". The ramp above does not
+  bind the rivalfunds 365-day backfill: 746 securities, 180,991 cells as measured by RV. That fits inside surface C's 400,000 cells a day
+  and his 2.5M daily budget.
+- **The ramp stands for every other draw.** Whether the rest of the 2M override serves other queued requests is the site-Z drawer owner's
+  call, as RV relayed it. This seat does not widen his word.
+- The pull runs on site Z through the Bloomberg queue (crossbox XB-20261017T032512Z-a277). dell1 has no Terminal.
+
+-- 1.0.0_SA_CTO~DELL1
