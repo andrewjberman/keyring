@@ -4614,6 +4614,18 @@ Check IB250-1 (`deliverables/2.0.0_SA_COO~S2/checks/r250/p250_cells.py`) reads t
 
 fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one APPLY cell on the CloudOps lane IB2, the single seat for this macro on dell2 (rule 34); it follows the build chain PS8-a.
 
+## 246. ROUND 11, WORKSTREAM ~PS (the reporting route serves `which=class_series`: the contract 0.4.0 `class_object` file; 2026-10-17 ~18:5xZ, issuer 2.0.0_SA_COO~S2 on dell2, on `2.0.0_SA_COO~D2`'s msg 10645, commit a29424b8e9)
+
+The cell parked since the hops 3 and 4 work (drive log `drive_log_20261017T17Z`) is un-parked by D2's condition: the series contract `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` is 0.4.0 and carries `files.class_series` and the `class_object` section (a gzip object per account, `class_series.json.gz`, beside the series file; written by a later publisher cell of `~D2`). The route needs one more member of its `which` path parameter: `OBJECTS` gains `class_series`, and the gzip Content-Encoding fallback covers it. The scope test, the opaque-id map, `_check_version` (series only) and every other line stay. The read function's IAM grant already covers the whole platinum reporting prefix (`reporting-read/locals.tf` 44 to 48), so no infra file changes; the function takes the code only through a later bundle apply by IB2, after D2's publisher writes the object (until then the member answers NOT_READY).
+
+Check IB251-1 (`deliverables/2.0.0_SA_COO~S2/checks/r251/p251_cells.py`), dry-run on dell2: AC1 FAIL (no new test file) and AC2 FAIL (no `class_series` member) at the base, as a build check should; AC3 (the seam and the difference control) is graded in the worker's clean worktree because the issuer's tree carries other seats' uncommitted files.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-620` | BUILD: the reporting route serves `which=class_series` (OBJECTS, the gzip header, a new test file) | FWD-21 | WORLD (path floor) | `~D2`'s contract 0.4.0 (a29424b8e9, signed in its msg 10645) | PS9-a |
+
+fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one small cell, one worker (slot ~482); disjoint write surface (entry.py and one new test file).
+
 ## 242. ROUND 6, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 1: the READ; 2026-10-17 ~03:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO msg 10155 and ruling B, msg 10161; plan blob `f1f250ab37`)
 
 The laptop CTO ruled (@3ffa142af0) that `client-data-check.py` reads a keyed list, `HMAC-SHA256(key, UPPER(id))`, produced by a scheduled served-layer job; the dell2 CTO ruled B: the step goes in `irpt-directory-refresh`, the existing all-firm reader, as its LAST stage after the directory write commits (its failure never alters or rolls back the directory output, proved by a planted-failure test), the object holds only sorted HMACs (no firm, count by firm or id), the role gains `GetSecretValue` on one ARN and `PutObject` on one key, and a never-widen pair; the hook flip to refuse-on-absent is the laptop CTO's after the first list lands. Six cells (IB-hm-1 to IB-hm-6, plan section 3). This section cuts the first: a READ-ONLY repository measurement by a worker, so that the producer code (IB-hm-2), the Terraform (IB-hm-3) and the pair (IB-hm-4) are built on cited facts, not on my reading of two files. IB-hm-2 to IB-hm-6 are cut when this one is graded.

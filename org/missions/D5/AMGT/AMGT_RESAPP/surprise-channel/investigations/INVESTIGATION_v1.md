@@ -29701,3 +29701,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "An instrument trap: re-run a worker's harness in a FRESH checkout (a provisioned worktree), not in the worker's own, before reading a recorded-file control as passing."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S59",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-17T19:14:23Z",
+  "one_line": "Seven walker finding classes (control-missing, truncated, no-day-bar, no-event-element, clipped, occluded-popover, format:dates) recur unchanged across the PROD walks of rounds 110 and 111 with no tracking row of their own.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-111 analysis item 4: triage the walk's 12 findings by class; a class not already covered by the list becomes a surprise row; no cell is cut for a class until it is triaged.",
+  "world_is": "The close walk of PROD 932cea99 (12 findings, 8 classes) and round 110's two walks of PROD 99d2b2a7 carry the same classes: walker:control-missing (Earlier month, lead Trending-Chatter), layout:truncated (6 long company names in the Trending x Price list), timeline:no-day-bar (names FWD-5) and timeline:no-event-element x3 (names FWD-6), layout:clipped (151 and 149 text elements in the Model All-figures grid; ADJUDICATION_v125 records it as known), occluded-popover (a Model tooltip covered by a details list, one state), format:dates (the earnings row prints the served ISO announcement_date while the page's other dates read long form). The eighth class, unconnected-field (the withheld AI-fill sentences on RIO LN Exec Management), belongs to the AIFILL workstream (~R2). A search of this channel for the check names returned 0 rows. Dispositions per class are in deliverables/2.0.0_SA_COO~R1/round112/WALK_FINDINGS_TRIAGE.md: no cell this round; FWD-5 and FWD-6 grades are the CTO's to read; format:dates and occluded-popover are round-113 cell candidates if the CTO wants them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/r111-close/findings.json",
+      "C:/dev/ui-walk-evidence/r111-prod/findings_walk2.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round112/WALK_FINDINGS_TRIAGE.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v125.md"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "One row for the untracked classes, by the CTO's instruction: a class not covered by the list becomes a row, and no cell is cut for a class until it is triaged."
+}
+```
