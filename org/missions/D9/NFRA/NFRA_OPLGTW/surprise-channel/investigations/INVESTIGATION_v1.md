@@ -26477,3 +26477,103 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Numbers and letters only. The flattening variant under the issuer's rule is none; the lowest median among B to F is D. The mitigation is an environment setting of the service (MALLOC_ARENA_MAX) or a smaller reader pool; the choice and the 20 MB line are the issuer's and the CTO's."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T02:46:57Z",
+  "id": "NFRA_OPLGTW-Z-S343",
+  "one_line": "Round-40 ruling on Z-S342: accept the OG-ev-4 cause (glibc arenas); repair is OG-en-20",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S342"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~NFRA1 msg 35320 and commit 0b03c0dc57: six variants, ev4.AC1 PASS, proof VALID",
+      "order OG-en-20 (addendum R3-T.107)"
+    ]
+  },
+  "spec_asserts": "A worker or applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled: the OG-ev-4 measurement is accepted as the cause of Z-S338 (glibc per-thread arenas under a per-page thread pool; MALLOC_ARENA_MAX=2 cut the growth from 135.9 to 26.7 MB per page, 4 workers to 42.4). The repair is OG-en-20 (mallopt M_ARENA_MAX=2 in code, READ_WORKERS 8), spawned after OG-en-19 merges; the combination is measured in the next release's Phase A. Z-S338 stays ARMED until a release holds memory flat on the host.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: the OG-ev-4 measurement is accepted as the cause of Z-S338 (glibc per-thread arenas under a per-page thread pool; MALLOC_ARENA_MAX=2 cut the growth from 135.9 to 26.7 MB per page, 4 workers to 42.4). The repair is OG-en-20 (mallopt M_ARENA_MAX=2 in code, READ_WORKERS 8), spawned after OG-en-19 merges; the combination is measured in the next release's Phase A. Z-S338 stays ARMED until a release holds memory flat on the host."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~131",
+  "surfaced_at": "2026-10-17T02:39:16Z",
+  "id": "NFRA_OPLGTW-Z-W131-S1",
+  "one_line": "test_og_ch1.py::test_ogch1_ac04 fails on this worktree: the roster file it locates is outside the sparse cone",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_og_ch1.py at 29fca12c0c: the AC04 locator walks up from the test file for data/mdpf/config/partner_roster.json and raises 'the repo roster file is not on this tree'",
+      "git ls-files at 29fca12c0c lists data/mdpf/config/partner_roster.json as tracked; git sparse-checkout list on wk-NFRA_OPLGTW-131 has no data/ entry, so the file is not on disk in this worktree"
+    ]
+  },
+  "spec_asserts": "The task order's criteria are the eight window test files (AC3); no other gateway test file is a criterion of OG-en-19. The client-tool suites that call get_transactions and get_fees were run as a read-only probe.",
+  "world_is": "test_ogch1_ac04 fails with a missing-file assertion (1 failed, 51 passed across test_og_cl1, cl3, cl4, cl5, cl6, ch1 and ad1). It is a data-locator failure, not an adapter assertion; the OG-en-19 change touches no roster read.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced while running the probe; the worker did not alter any file outside the write set to make it pass."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~131",
+  "surfaced_at": "2026-10-17T02:39:16Z",
+  "id": "NFRA_OPLGTW-Z-W131-S2",
+  "one_line": "org/surprise_channel/schemas is outside this worktree's sparse cone; the row shape was read from the base checkout",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files at 29fca12c0c lists org/surprise_channel/schemas/investigation_item.schema.json as tracked; the file is not on disk in wk-NFRA_OPLGTW-131 (test -e false; org/surprise_channel/ absent)",
+      "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json read only by absolute path to shape this row"
+    ]
+  },
+  "spec_asserts": "Surprise rows are written per org/surprise_channel/schemas/investigation_item.schema.json, which the channel rules cite as the row contract.",
+  "world_is": "That schema is not materialised in this sparse-checkout worktree, so the row contract could not be read from the worktree; the base checkout's copy was read instead, without writing to it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The commit-time surprise-row gate (.tools/surprise-row-gate.py) is the mechanical check on this row; it runs from the worktree's own tool."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~131",
+  "surfaced_at": "2026-10-17T02:39:16Z",
+  "id": "NFRA_OPLGTW-Z-W131-S3",
+  "one_line": ".claude/agents/worker.md, named in the worker face as the rules location, is not in this worktree",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list on wk-NFRA_OPLGTW-131 (29fca12c0c) names no .claude entry; the worker face's rules pointer resolves to nothing in this worktree",
+      "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.claude/agents/worker.md exists on the base checkout only (ls -la, read by absolute path, not read by this run)"
+    ]
+  },
+  "spec_asserts": "Rules are in your agent definition (.claude/agents/worker.md), per the worker face of NFRA_OPLGTW.TO-OG-en-19.",
+  "world_is": "The file is absent from the worktree. The run took its rules from the session context and did not open that file; no rule was assumed from its absence.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Path elsewhere: the rules location in the worker face does not resolve inside the sparse-checkout worktree."
+}
+```
