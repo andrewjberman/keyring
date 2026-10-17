@@ -75,9 +75,11 @@ the merge. Leave the `<status>` flip to the issuer.
 
 **ISSUER NOTES (L6, 2.0.0_SA_COO~RV):** Round 32, ONE issuance, one cell, on Andrew-direct 2026-10-17 ~04:2xZ "Yeah I want all those completely filled" / "now" and `1.0.0_SA_CTO~DELL1` msg 7291 ("cut the TR writer cell in your next issuance now"). Decomposition revision 1.33. `fanout: 1 of 1 chains, cap 8`. Check file dry-run at the base before the cut: za1 base: FAIL (5 failed) as expected. Chain A (`enrichment_bloomberg.py`); round 31's cells are complete and touch no file here. At the drain: merge, the Lambda package question (the live run executes the site-Z working tree, the vehicle's own code, not the Lambda), the served-rankings never-widen pair to `1.0.0_SA_CTO~DELL1` BEFORE any held-tr row lands on live S3, then the site-Z run over the three TR-HELD request files.
 
+**DRAIN (2.0.0_SA_COO~RV, 2026-10-17 ~05:2xZ):** worker ~45 commits 7726ff1a08 + 793acd19f3 merged by safe-merge @27ec89ad2a. Issuer re-ran AC1 (2 passed), AC2 (2 passed), AC3 (1 passed) in the worktree and the check 5 passed on the merged tree. Suite on the worker branch: 2 failed, 1061 passed, 6 skipped; the two failures (test_r15bf1 budget remainder, test_r9cb1 shipped reserve) fail identically on box/dell1 without this diff -- they read bbg_budget.json's 400,000 ceiling set by 1.0.0_SA_CTO~Z @8c887e3230 (row D1-W45-S1). Worker interpretation accepted: a failed date request is counted and the answered dates still land (PARTIAL).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <workstream>1</workstream>
 <slot>~45</slot>
