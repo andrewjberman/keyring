@@ -75,6 +75,26 @@ logins should see real numbers, and whether to start the Day 1 build. Andrew, VE
   It runs no live app-only mailbox read until the Graph grant exists (Day 0, Andrew).
   The daily rules read Schwab silver directly, never through the gateway.
 
+## Addendum 6, 2026-10-17 ~05:0xZ: all open-call RECs approved
+
+The CRO printed /open-calls; cards 4 and 5 were withdrawn under addendum 5. Andrew, VERBATIM:
+
+> all recs approv ed
+
+**Approved, as carded:**
+
+| Card | Approved |
+|---|---|
+| 1 | SLEEPING MONEY ALARM: a new account fires at 5 business days, idle cash at 5 trading days. The legacy-exclusion list comes from ops after a week of live output. |
+| 2 | Stale items auto-expire after 10 quiet business days and leave the screen, but stay in the log and the digest. A one-click dismiss needs a reason. |
+| 3 | Runtime: one always-on AWS container (~$10-15/mo) beside the gateway, routed to CloudOps (TCKT macro lane). |
+| 6 | Digest: a Teams channel post to a client-ops channel, once daily at 08:00 CT. Which channel is still to be named. |
+| 7 | Rule owners, as a system setting: INBOX RADAR = Manav; SLEEPING MONEY, PAYDAY GUARD and FEE TRIPWIRE = Menachem; RULE CHANGE RELAY = Yang. |
+| 8 | Monitored-mailbox group: Andrew, Manav, Menachem, Yang, Alyssa, Jeanette, Jim. |
+| 9 | Deck v2 keeps its LIVE IN numbers. The email items carry the footnote "from Graph consent". |
+| 10 | The IRPT YCharts brief stays parked. |
+| 11 | The /lauren-report chartbook is seeded from Lauren's 2Q workbook. |
+
 ## Addendum 5, 2026-10-17 ~04:5xZ: no position on client-ops outreach
 
 The CRO's /open-calls carried two cards that took positions on client-ops outreach: refunding the Victor fee, and sending
