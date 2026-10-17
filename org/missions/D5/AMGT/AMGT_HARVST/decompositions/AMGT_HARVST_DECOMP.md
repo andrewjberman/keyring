@@ -4331,3 +4331,16 @@ Round 90 closed MAY-CLOSE (CVO `ADJUDICATION_v84.md`, `REMEDIATION_v21.md`; 11 r
 
 - **Ratified as set:** `potential add in` ("currently ~2.5%"), `increase position in` and `maintain or consider increasing` are holdings; `initiate ~2% position in`, `candidate for`, `interesting exposure for` and the `[BUY IN ... TO X%]` template are not; the default for an unknown phrase stays NOT a holding.
 - **`8306_JP_Equity`, `8316_JP_Equity`, `8766_JP_Equity`, `9433_JP_Equity` JOIN `cf-2`** (AMENDMENT 1 of the order: a closed list of section headings; a description paragraph is never `last_stated_position`) **and `cf-4`'s rebuild list and its served proof.**
+
+### 121d. ROUND 91 -- `HVST-cf-2` merged (`80d0701876`); `HVST-cf-4` CUT, STAGED behind the CTO half (2026-10-17 ~21:5xZ)
+
+`HVST-cf-2` (after AMENDMENT 1 for the four JP names and AMENDMENT 2: a stance is claimed only where a fund token is) merged; its census (94 of 94, baseline pinned at the round-90 commit) lists exactly 17 changed names and `HOLDING_CHANGED=0`.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cf-4` | `cf-4` | **The gold continuation and dossier of 17 securities are rebuilt** (the 13 non-holding names `8035_JP`, `ADBE`, `BZLFY`, `CDNS`, `CELH`, `CLX`, `CNR`, `HEI`, `ML_FP`, `MNST`, `MSCI`, `SNPS`, `ST_SP`, and the four JP names `8306_JP`, `8316_JP`, `8766_JP`, `9433_JP`), add-only, from a worktree pinned at `80d0701876` (no `fund_form` change), canary `MNST` then `8306_JP`, `UNH` and `CPA` read before and after, each name a foreground command with the manifest checked (CTO item 3). | WORLD | seat `0.7.0_AE_CloudOps~SC1` | CUT, STAGED: waits on the CTO half (COO half signed, sha256 `275d5739...95b0`; list `cf4_securities.txt` sha256 `221a63c3...ee48`) |
+| `HVST-cf-3`, `-5` | -- | The `fund_form` chain, held behind `cf-4`. | -- | -- | DEFINED, NOT CUT |
+
+- **Fan-out:** `N of M chains, N=0 workers (cf-4 is a seat order) of M=1 chain, cap 8`.
+- **Check at the cut (dry-run at the base):** `cf-4` AC1 to AC3 FAIL as expected (no `cf4_served.out`).
+- **Armed row:** `D1-W159-S1` (the `ML_FP` template) stays open until the rebuild is read served.
