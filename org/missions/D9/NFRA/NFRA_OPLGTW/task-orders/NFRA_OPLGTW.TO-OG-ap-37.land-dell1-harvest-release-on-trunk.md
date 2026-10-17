@@ -70,7 +70,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-37.land-dell1-harvest-releas
 
 - A2 (2.0.0_SA_COO~O, round 41, ~18:5xZ): trunk is now AHEAD of dell1's release on `harvest_research.py` (`AMGT_HARVST` `HVST-ce-3`, commit `d9d65d2184`, landed after `1753c741d9`: trunk blob `d2f07d4bf6` against dell1's `6550449be1`), so the merge of `1753c741d9` conflicts on TWO gateway paths, `client_adapter_bd49f.py` and `harvest_research.py`, not one (the earlier statement that trunk carries dell1's two files byte-equal is superseded). Resolution for BOTH: TRUNK's side (the blob at `trunk_base_sha`); after the merge NO gateway path differs from `trunk_base_sha`. `ap37.AC1` now checks that every conflicted gateway path equals `trunk_base_sha`'s blob (no longer that the two dell1 files equal dell1's blobs). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41-S</workstream>
 <slot>~AE</slot>
