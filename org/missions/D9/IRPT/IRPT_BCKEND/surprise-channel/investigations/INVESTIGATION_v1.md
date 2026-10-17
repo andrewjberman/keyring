@@ -41598,3 +41598,51 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Pre-existing and not caused by this change. Not repaired here: the order bounds the grant to the runner and the new test file."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W451-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~451",
+  "surfaced_at": "2026-10-17T04:19:39Z",
+  "one_line": "The AC1 check prints 'the ten named tests exist and all pass' although the name list it grades holds six tests, so the printed count does not match what it checks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-7 WORKER FACE names six new tests, and criterion AC1 grades the six named tests passing.",
+  "world_is": "p250_cells.py ac1 prints the fixed text 'the ten named tests exist and all pass' while its NAMES tuple holds six entries and decides the verdict. Run output: 'OK: the ten named tests exist and all pass' then 'IBHM7-AC1 PASS'. The test file holds 16 tests (10 existing, 6 new) and all 16 passed. The verdict rests on the six names, so it is unaffected; only the printed label is wrong.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r250/p250_cells.py ac1 print line @edfeaebe4f",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~451/IBhm7_criteria_output.txt AC1 output (the run of this worker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Label only. Not repaired here: the check belongs to the issuer and the order says not to edit the checks."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W451-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~451",
+  "surfaced_at": "2026-10-17T04:19:39Z",
+  "one_line": "The refusals the order lists do not include an empty bucket: an s3:///key URI passes the destination parser, so the put would be given an empty Bucket.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-hm-7 WORKER FACE (b) lists the refusals that remain: not an s3:// address; an empty key or a key ending in '/'; and a directory-prefix key in the firm's own bucket.",
+  "world_is": "_parse_hmac_uri splits the URI with partition('/') and checks only the key for emptiness. An empty bucket is not the firm's bucket, so it is not refused and the parser returns ('', key). emit_hmac_list then passes Bucket='' to put_object. Whether the client rejects it is not verified here: no AWS call was made. Any failure is caught by run_firm's catch-all and reported by class name. Implemented as the order states; no empty-bucket refusal added.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py _parse_hmac_uri in the worker worktree wk-IRPT_BCKEND-451 (the commit carrying this row)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-hm-7.stage-assumes-the-narrow-role-and-accepts-the-list-bucket.md WORKER FACE (b)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired here: the order enumerates the refusals that remain and bounds the change to the stated behaviour. The issuer may decide whether an empty-bucket refusal belongs."
+}
+```
