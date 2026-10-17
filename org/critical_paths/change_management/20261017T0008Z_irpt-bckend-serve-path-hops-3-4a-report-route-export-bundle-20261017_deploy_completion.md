@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T00:08:01.730632+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / ADVI_FIRMBKTS.TO-FB-q-1 fence regeneration of opal-data-49financial by 0.7.0_AE_CloudOps~ADVI1 (IB-pr-551 ADDENDUM 4); L7 IAM statement follows its read-back (held since 2026-10-17T03:56:50.338418+00:00)
+**Status:** OPEN
 **Deploy:** IRPT_BCKEND TO-IB-pr-616 (pair 551 hops 3 and 4): the report route GET /api/scoped/investor-reporting/reporting/client/{client_id}/report on irpt-49f-reporting-read-lambda with a new read bundle, and a new irpt-export-render bundle (code only, the filled-report switch untouched); the IAM statement leg is NOT released in this run. Consumers of irpt-export-render-role (one describe sweep 2026-10-17T00:0xZ): Lambda functions scanned 244, using the role: irpt-export-render only; ECS ACTIVE task families scanned 9, using the role: none.
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -30,6 +30,7 @@
 - 20261017T002635Z LEG L6 closed: IB247-1 release record and criteria output written; AC1 PASS, AC2 PASS, AC3 owed (step 6 not released); proof instance V
 - 20261017T002805Z LEG L1 closed: source-map stamps (artifact_sha256 only, two entries), the release record, proof and this ledger committed with explicit
 - 20261017T035650Z HELD-SOVEREIGN-GATED gate=external/ADVI_FIRMBKTS.TO-FB-q-1 fence regeneration of opal-data-49financial by 0.7.0_AE_
+- 20261017T042553Z HOLD RELEASED -> OPEN
 
 ## Carried notes (hand-written lines kept across re-renders)
 
