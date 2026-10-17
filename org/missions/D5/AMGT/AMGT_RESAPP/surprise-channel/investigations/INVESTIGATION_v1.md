@@ -29428,3 +29428,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed as the closing record of S55 on the CTO's instruction (msg 7568). After the box-sync carries c6980f0686, a RESAPP order that ends NOT MET carries `not_met` as its status lead word; bo-3's line is left as recorded (a rewrite would restate a closed round's record)."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S57",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-17T16:38:32Z",
+  "one_line": "The approval register has no fold-back verb: a PROD-into-DEV fold-back branch (DEV plus a merge of PROD, tree equal to DEV) refuses dev-overlap for every DEV-only commit, so it needs a hand-named waiver of all of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 7661: the promoting seat folds the PROD release merges back into DEV through an approval row the CTO approves, then portal-merge-forward.sh.",
+  "world_is": "`python .tools/open-calls.py add --kind approval ... --branch cand/dell1/prod-into-dev-fold --check-only` (H2, 2026-10-17 ~16:34Z) printed `APPROVAL-REGISTER result=REFUSED reason=dev-overlap overlap=106 commits=107`: `register_facts` (open-calls.py ~line 933) counts `rev-list PROD..branch` against `rev-list PROD..DEV`, so a branch cut from DEV overlaps in all of DEV's commits not in PROD. The fold-back branch's tree equals origin/DEV (TREE-EQUALS-DEV) and carries one branch-only commit, the fold merge. It registered only under the CTO's one-time named waiver (ledger/CTO_WAIVER_FOLDBACK_DEV_OVERLAP_20261017.md @160cf257d5, 106 shas). A fold-back verb (a register mode that accepts a branch whose tree equals origin/DEV and whose only branch-only commits are merges of origin/PROD) would remove the need for the waiver; the owner is the portal DEV/PROD manager (NFRA_DEVPLN).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/inbox/2.0.0_SA_COO/~R1/read/20261017T163429Z_0.4.0_DT_ClientPlatform_H2_STOP__bq-2_step_6_fold-back_REFUSED_at_r.md (msg 7664)",
+      ".tools/open-calls.py register_facts (read)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_WAIVER_FOLDBACK_DEV_OVERLAP_20261017.md"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed on the CTO's instruction (msg 7669): a row, not a gate on the fold-back act. Not a cell of this project; the owner is the portal manager."
+}
+```
