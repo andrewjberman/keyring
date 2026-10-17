@@ -30037,3 +30037,80 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form and arithmetic only; no product change was made to close the gap, because the order fixes the bound. The disposition (widen the bound, or accept the clip on short grids) belongs to the issuer. Row appended as a new fenced block at the tail, the form every existing row uses."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W507-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~507",
+  "surfaced_at": "2026-10-17T22:55:32Z",
+  "one_line": "The arbitrary scrollbar-thumb utility the cell names may be defeated by the unlayered global scrollbar rules in index.css, so the grid's thumb may still not paint.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-bu-4 change (2): give the grid scroller a visible horizontal scrollbar thumb at all times, with Tailwind arbitrary variants on that one element (a [&::-webkit-scrollbar-thumb]:bg-[...] class), and do not edit src/index.css.",
+  "world_is": "src/index.css section 6 SCROLLBAR STYLING (L721-758 at d1bed0fb) sits outside every @layer. Its ::-webkit-scrollbar-thumb rule (L735-739) sets background transparent, and its *:hover::-webkit-scrollbar-thumb rule (L742-744) paints it only on hover. The comment at L509 says Tailwind v4 emits utilities in a native cascade layer, so an unlayered rule beats a layered one regardless of specificity. The arbitrary thumb utility is therefore expected to lose to the unlayered transparent rule, and the thumb may stay invisible off-hover. Not verified in a browser; the static harness cannot read the cascade.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/index.css@d1bed0fb L509 (comment: UNLAYERED ON PURPOSE, Tailwind v4 utilities in a native cascade layer, a rule inside @layer base loses)",
+      "portal/src/index.css@d1bed0fb L721-758 (SCROLLBAR STYLING: unlayered ::-webkit-scrollbar-thumb transparent, and *:hover::-webkit-scrollbar-thumb paint)",
+      "portal/src/index.css@d1bed0fb L531 (@layer utilities)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@9fb741c1 (scroller class carries [&::-webkit-scrollbar-thumb]:bg-[hsl(var(--palette-navy)/0.35)])"
+    ]
+  },
+  "notes": "Form only. src/index.css is outside the order's paths, so it was not edited. The grade is the issuer's real-browser screenshot read; if the thumb does not paint, the caption is the only visible cue on the grid."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W507-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~507",
+  "surfaced_at": "2026-10-17T22:55:32Z",
+  "one_line": "The round-113 tooltip harness's whole-text digest cannot hold once the cue sentence is added, so the S4 control and AC1 read FAIL on a correct display-only change.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-bu-4 S4 CONTROL: modelTooltipRows.harness.cjs, spawned by the new harness, still prints YES (9 of 9 checks) after the change (the round-113 tooltip placement is untouched).",
+  "world_is": "The sibling's B5 (modelTooltipRows.harness.cjs L43 and L255-257 at d1bed0fb) digests the whole RIO LN Model tab text with class attributes removed, against a constant recorded at the unedited head. The cue sentence is new text: 65 characters, 197277 to 197342. B5 therefore FAILS and the sibling prints NO (8 of 9 checks). B1 to B4 and the three B3 placement classes still PASS. The new harness S4 FAILS, AC1 cannot read every check PASS, and the feature-green run reads NO with regressions 2 (modelTooltipRows, and gridScrollCue, which the script counts as a regression because the base lacks it). The sibling is outside the order's paths and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/modelTooltipRows.harness.cjs@d1bed0fb L43 (BASE_TEXT_SHA256 = 71223f56...) and L255-257 (B5 digest of the text with classes removed)",
+      "gridScrollCue.harness.cjs run at portal@9fb741c1: CHECK S4 FAIL -- MODEL TOOLTIP ROWS HARNESS: NO (8 of 9 checks); failing CHECK B5 digest 16b517afe90efcbb5bf2d5a2b646d90f6a6227a5744521e288ad5531ad475c23, 197342 chars",
+      "r107_feature_green_v3.sh run at portal@9fb741c1 with base d1bed0fb: harness 31 of 36 pass, regressions 2: gridScrollCue.harness.cjs modelTooltipRows.harness.cjs"
+    ]
+  },
+  "notes": "Filed by the worker, not decided. The B5 control is a whole-page digest that any display-text change moves; its owner either re-records the constant or the COO rules on the control. No edit was made to the sibling harness."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W507-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~507",
+  "surfaced_at": "2026-10-17T22:55:32Z",
+  "one_line": "The feature-green check's base run reads 29 of 35 harnesses passing, not the 32 of 35 the order's preflight recorded, so the base comparison is not the one the order described.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-bu-4 preflight: AC2 run in a provisioned worktree cut at d1bed0fb reads YES with harness 32 of 35 pass, the base is the regression guard that passes at the base, and the pre-existing failures are assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs.",
+  "world_is": "On this run the branch reads harness 31 of 36 pass and the base reads base 29 of 35, so six harnesses fail at the base, not the three named pre-existing ones. Arithmetic from the printed counts: three base failures are the named pre-existing harnesses and three more pass on the branch. The base comparison is a detached worktree the script cuts under /tmp. Its cause was not investigated; the two readings differ and are recorded, not reconciled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r107_feature_green_v3.sh run at portal@9fb741c1 with base d1bed0fb: harness 31 of 36 pass | base 29 of 35 | regressions 2 | pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107_prep/checks/r107_feature_green_v3.sh@fce34ac73c L17 and L25 (TMPB under /tmp; git worktree add --detach)"
+    ]
+  },
+  "notes": "Recorded, not investigated. The arithmetic uses only the script's printed counts."
+}
+```
