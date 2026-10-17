@@ -41304,3 +41304,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "CTO msg 9787 asked for the unlisted invocation by request id, time and source. Future export-drive orders should state that a creating invoke is followed by one async worker invocation of the same function, so a count of 'one invoke' is invokes by the seat, not invocations of the function. Nothing to reopen."
 }
 ```
+
+## IRPT_BCKEND-D2-S228 -- The deploy stamps for irpt-49f-reporting-read-lambda and irpt-export-render sit in infra/aws/lambda/ci/lambda-source-map
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S228",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-17T00:33:55Z",
+  "one_line": "The deploy stamps for irpt-49f-reporting-read-lambda and irpt-export-render sit in infra/aws/lambda/ci/lambda-source-map.json on box/dell2, a file origin/CLOUD has retired in favour of function-map/; they need porting at the next integrate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "0.7.0_AE_CloudOps~IB2's report on TO-IB-pr-616 (msg 10077): 'source-map stamps are in lambda-source-map.json (retired on CLOUD); they need porting to function-map/ at the drain.'",
+  "world_is": "Measured 2026-10-17 ~00:4xZ. `git ls-tree origin/CLOUD infra/aws/lambda/ci/` lists a `function-map/` directory (one JSON per function, e.g. function-map/access-anomaly-scanner.json) and `lambda-source-map.json.clean`, and no `lambda-source-map.json`; box/dell2 still carries `lambda-source-map.json`, where IB2's commits d646cdd605 and 95ced15883 stamped the two functions' new artifact shas (read function z634S2Qs..., export 5bIgn/ML...). At the next integrate of box/dell2 into CLOUD those two entries have no home on the trunk unless someone ports them into function-map/<function>.json. The functions themselves are live and equal to the stamps (read independently 2026-10-17T00:4xZ). This is a record-carrier gap, not a deployed-state gap, and it is the same for every dell2 applier since the retirement. Disarms when the two function entries exist in function-map/ on the trunk with these shas, or the integrator rules the dell2 stamps carried by its merge tooling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree origin/CLOUD infra/aws/lambda/ci/ read 2026-10-17: function-map/ present, lambda-source-map.json absent (lambda-source-map.json.clean present)",
+      "aws lambda get-function-configuration for both functions, CodeSha256 equal to the IB247-1 release record's built shas",
+      "IB2 msg 10077"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the port: whoever integrates box/dell2 (0.0.0_AB_MSTR~DELL2 box-sync); this seat reports it and does not edit the trunk's map."
+}
+```
