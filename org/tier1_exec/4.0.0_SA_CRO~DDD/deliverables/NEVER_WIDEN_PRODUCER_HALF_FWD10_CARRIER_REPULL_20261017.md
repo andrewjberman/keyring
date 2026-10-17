@@ -53,3 +53,33 @@ No account_attributes partition and no A_00 code. COO~C1 gets each bronze, silve
 pre-write snapshot (msg 7200).
 
 ## Producer half: SIGNED by 4.0.0_SA_CRO~DDD. Awaiting the CTO half.
+
+## ADDENDUM A (2026-10-17 ~04:1xZ) -- MDPF 10/15 could not be restated; the 10/16 route, with a no-regress guard
+
+**What happened.**
+- Steps 1-4 landed and the carriers read valued. MDPF silver 10/15 supervised is 530,421,988.14 (BD to the cent). ADVI is
+  live at 530,370,482.38, 864 accounts and 225 clients (header_metrics 03:38Z).
+- The step-5 production gold run (manual, 03:37Z, green) wrote NO dated key. Every 10/15 dated key returned an A8 CONFLICT
+  (conditional_put never overwrites a business-different dated key), so served MDPF is unchanged:
+  Cottonwood 10/15 554,632,228.45 and Global 10/15 2,174,027,397.88.
+- Andrew approved delete markers on Cottonwood's four 10/15 keys, but `s3:DeleteObject` is explicitly denied to
+  `cloudops-dell1-agent-user` (policy cloudops-dell-agent-deploy-policy). Nothing was deleted; the prior versions are
+  current. The publisher run (03:38Z) published 3 and left 15 unchanged; all 4 Cottonwood dated keys stayed.
+
+**The 10/16 route (no restatement needed):**
+1. Deploy `data/cot/scripts/bronze/cot_bronze_ingest.py` @de2e85035d to `s3://opal-data-cot/code/bronze/`. Prior bytes are
+   equal to HEAD before the change. It adds the no-regress guard: a holdings pull with nzf below the landed sidecar's is
+   rejected, and the landed snapshot stays.
+2. Re-pull bronze holdings and allocations with RunDate=2026-10-17 (as-of 10/16), behind the same read gate: carriers valued.
+3. opal-data-cot silver for holdings and allocations 2026-10-16, scoped (no account_attributes, no finalize). The MDPF
+   mirror, plus `convert_bd` for the new 10/16 partition (a first conversion, no force needed).
+4. The scheduled 07:30 ET pull of as-of 10/16 is then REJECTED by the guard if it is less valued. The MDPF mirror converter
+   skips the existing partition. The 13:30Z fire writes NEW 10/16 dated keys with the carrier values: no conflict, no delete.
+
+**Branches.**
+- (a) 10/16 carriers are valued now: proceed as above.
+- (b) 10/16 carriers are null now (BD has not posted): stop after step 2's read gate. Nothing lands, because the guard
+  rejects equal-or-lower re-lands only when a landed snapshot is more valued, and none is. The 07:30 run proceeds as today.
+
+**Rollback.** Re-upload the ingest's prior S3 version (from the safe-deploy record). Per-key bronze, silver and sidecar
+rollback for 10/16 as for 10/15, with VersionIds recorded before the write.

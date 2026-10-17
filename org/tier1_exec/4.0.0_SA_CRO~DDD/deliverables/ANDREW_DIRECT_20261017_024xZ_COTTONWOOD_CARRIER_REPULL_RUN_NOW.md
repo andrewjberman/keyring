@@ -13,3 +13,17 @@
   Andrew's word supersedes that timing: the carrier re-pull, the silver rebuild and the gold runs go now.
 - Relayed to 1.0.0_SA_CTO~DELL1 and 2.0.0_SA_COO~C1. C1's other conditions still apply: touch no account_attributes
   partition and no A_00 code, and send the write and gold run times so C1 can snapshot.
+
+## Addendum ~03:5xZ -- restate 10/15 on MDPF (Andrew-direct, AskUserQuestion answer, VERBATIM option chosen)
+
+Question: "Model Portfolios won't overwrite an already-published date. To show $530.42M for 10/15 tonight I need to put S3
+delete markers on Cottonwood's four 10/15 gold objects (prior versions stay recoverable) and rerun. OK to do that?"
+Answer: "Yes, restate 10/15 (Recommended)". Scope: Cottonwood's four dated 10/15 keys under portal/gold/mdpf/cottonwood/
+(category-views, aggregate-aua-timeseries, aum-metrics, account-distribution). Delete markers only; prior versions kept.
+
+## Addendum ~04:1xZ -- route the 10/15 restatement to a laptop CloudOps agent (Andrew-direct, VERBATIM)
+
+"request a cloudops agent on laptop box to do it. i want mdpf whole page done now"
+
+Context: s3:DeleteObject is explicitly denied to cloudops-dell1-agent-user, so the four Cottonwood 10/15 delete markers
+could not be placed from dell1. The act is requested of a laptop 0.7.0_AE_CloudOps lane via the agent bus.
