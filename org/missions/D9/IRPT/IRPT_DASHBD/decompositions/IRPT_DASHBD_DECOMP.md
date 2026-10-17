@@ -2942,3 +2942,20 @@ C1 (`3eb27c60c0`), C2 (`10dac78f46`) and C3 (`67cc230180`) are landed on the tru
 **fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765 for this macro).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 51 single-fault mutants):** `checks/r150/p189_cot_read_apply.py` (DBC189-1-AC1, DBC189-2-AC1, DBC189-3-AC1).
+
+
+## 183. ROUND 150, WORKSTREAM COTOWN (2026-10-17 ~04:3xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood ownership map -- C6a, the read-only measurement
+
+Andrew's word through the CTO (msgs 10215, 10227, 10267): build the Cottonwood ownership map from the dell1 match sheet as its own cell, behind the real run (C5). The CTO ruled the map grants access on HIGH matches only (40 of 83); MEDIUM (36) only where a second source agrees, with the count reported; LOW (2) and UNMATCHED (5) never; and the 3 sheet advisor codes are measured against the portal's Cottonwood advisor ids in the same read. The sheet holds 83 accounts against 939 published series (a ceiling of 8.8 percent, MEASURED by count), so the other 856 have no row until the full extract (MSTR is looking for `Files.zip`) arrives.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. read-only measurement: published keys (939), directory, the sheet's coverage chain, the portal's Cottonwood advisor ids; two files outside the repo, a counts record | DB-b-324 | FWD-10 (advisor and client viewers) | WORLD, read only | TO-DB-b-323 Act 6 (IB2's one lane) | chain AQ |
+| 2. C6b the map builder and the HIGH-only map (a script in the repo, the data and the map object outside it) with a resolver test on synthetic fixtures | to be cut | FWD-10 | LOCAL path, client data outside | C6a | after C6a |
+| 3. C6c the never-widen pair for writing the object `platinum/cottonwood/ownership_map.json`, and the apply order | to be cut | FWD-10 | WORLD | C6b, C5 | after C5 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the record is counts and booleans only; the match sheet, the published raw keys and the directory copy live outside the repo (`C:/opal-intake/work/`), and the checker proves no sampled raw key appears in the order's committed files; (b) the sheet is read from the NEWER pair only, hash-verified, with `python -I` from outside the sheet folder, no script run; (c) the advisor ids are measured by attribute NAME and shape class, never by value; (d) the map's claim label is "inferred from dell1 match sheet 20261016T0225Z (1)" (CTO msg 10227), never measured; (e) the order is queued behind `TO-DB-b-323` on the single CloudOps lane.
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 27 single-fault mutants):** `checks/r150/p190_cot_ownership_read.py` (DBC190-1-AC1, DBC190-2-AC1).
