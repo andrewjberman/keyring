@@ -12,11 +12,14 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | tf-lambda | ONE safe-apply of infra/aws/terraform/mdpf-pipeline, plan 0 add 1 change 0 destroy at aws_iam_role_policy.mdpf_runner only, clean re-plan | plan counts, replan No changes |  | OPEN |
-| L2 | verify | policy read back from the host role: exactly one new statement IrptHmacListStageAssumeRole, no wildcard, every other statement byte-equal to the before-state | statement-by-statement compare |  | OPEN |
-| L3 | verify | the assume simulation: one allowed arm, three denied arms | simulation table |  | OPEN |
+| L1 | tf-lambda | ONE safe-apply of infra/aws/terraform/mdpf-pipeline, plan 0 add 1 change 0 destroy at aws_iam_role_policy.mdpf_runner only, clean re-plan | plan counts, replan No changes | Apply complete 0 added 1 changed 0 destroyed at aws_iam_role_policy.mdpf_runner via safe-apply; replan No changes | CLOSED 20261017T112225Z |
+| L2 | verify | policy read back from the host role: exactly one new statement IrptHmacListStageAssumeRole, no wildcard, every other statement byte-equal to the before-state | statement-by-statement compare | get-role-policy read back: 37 statements, 36 byte-equal to before (0 gone), 1 new IrptHmacListStageAssumeRole sts:AssumeRole on the stage role, no wildcard | CLOSED 20261017T112225Z |
+| L3 | verify | the assume simulation: one allowed arm, three denied arms | simulation table | simulation one resource per call: assume_the_stage_role allowed; unrelated role, other sts action, wildcard resource all implicitDeny; no invoke | CLOSED 20261017T112226Z |
 | L4 | git | the record, proof and ledger committed with explicit paths | commit ids |  | OPEN |
 
 ## Log
 
 - 20261017T111344Z OPENED by 0.7.0_AE_CloudOps~IB2 with 4 leg(s)
+- 20261017T112225Z LEG L1 closed: Apply complete 0 added 1 changed 0 destroyed at aws_iam_role_policy.mdpf_runner via safe-apply; replan No changes
+- 20261017T112225Z LEG L2 closed: get-role-policy read back: 37 statements, 36 byte-equal to before (0 gone), 1 new IrptHmacListStageAssumeRole sts:Assume
+- 20261017T112226Z LEG L3 closed: simulation one resource per call: assume_the_stage_role allowed; unrelated role, other sts action, wildcard resource all
