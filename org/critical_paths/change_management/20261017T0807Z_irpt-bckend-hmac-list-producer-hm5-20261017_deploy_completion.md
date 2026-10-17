@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T08:07:28.346951+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / first scheduled irpt-directory-refresh fire after the apply (Mon 2026-10-19 13:30Z), read by 2.0.0_SA_COO~P2 with checks/hm5_verify_read.py (held since 2026-10-17T11:27:05.082569+00:00)
 **Deploy:** IRPT_BCKEND TO-IB-hm-5 (cell IB-hm-5, FWD-21): the HMAC list producer pair in the investor-reporting directory root: the runner bundle s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz FIRST (Branch B: live version W2WragrP5.., ETag 5547fa5e), then the refresh Lambda irpt-directory-refresh zip (Branch B: the prior S3 version whose content equals the live CodeSha256, named before any write) and the directory root apply (3 add 1 change 0 destroy), then the one secret value put to irpt/hmac-list/key, then ONE QA run. Census 97 worktrees, 0 open legs on the root, the function or the bundle; one describe-task-definition sweep (denominator printed in the record).
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -29,6 +29,8 @@
 - 20261017T083754Z LEG L4 closed: simulation battery on irpt-hmac-list-stage-role: get_the_one_secret allowed, put_each_of_the_three_list_keys allowed; ge
 - 20261017T083754Z LEG L5 closed: secret value put once (secrets.token_hex(32), in-process SDK call, never printed or written); version count 0 -> 1
 - 20261017T090023Z LEG L7 closed: the record IBhm5_apply_record.json, criteria output and proof committed with explicit paths at 212f39bdf0
+- 20261017T112705Z HELD-SOVEREIGN-GATED gate=external/first scheduled irpt-directory-refresh fire after the apply (Mon 2026-10-19 13:3
+- 20261017T112750Z HELD-SOVEREIGN-GATED gate=external/first scheduled irpt-directory-refresh fire after the apply (Mon 2026-10-19 13:3
 
 ## Carried notes (hand-written lines kept across re-renders)
 
