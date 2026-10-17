@@ -75,7 +75,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-113 analysis for the R1 track (`ledger/ROUND_ANALYSIS.round113.R1.md`, msg 7763) item list. One cell, one candidate branch cut from PROD `d1bed0fb`, one approval row (opal-internal, Security Analysis; the CTO approves). Disjoint write surface from the other round-113 cells. AC2's totals were measured in a provisioned worktree cut at `d1bed0fb` at the cut (32 of 35, pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs). The CTO's round-113 item 1 (closes W497-S2 through W502-S1). A defensive repair: no live name carries a padded code.
 
-<status>pending</status>
+<status>complete -- worker ~504 (merged bd4f1bcd5b); candidate `cand/dell1/amgt-sa-peers-subject-currency` @a3f2b727 (base PROD d1bed0fb): priceCurrency.ts `currencyCodeOf` and the PeersTab subject cell's code. Issuer re-run in a FRESH detached checkout at a3f2b727: PRICE CURRENCY RULE HARNESS YES (8 of 8), PEERS CURRENCY HARNESS YES (6 of 6), typecheck rc 0, eslint src/pages/SecurityAnalysis rc 0. Worker: AC2 harness 32 of 35 with only the three pre-existing, AC3 3 files all page, approval --check-only OK, proof VALID. Rows W504-S1..S3 (observations; S1 armed: the commit gate graded 0 of N files on a ts/tsx/cjs commit). Not yet in a real browser; the landing is bu-5.</status>
 <round>114</round>
 <slot>0.9.0_WK_AMGT_RESAPP~504</slot>
 <fabric>dell1</fabric>
