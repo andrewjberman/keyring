@@ -14641,6 +14641,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-S9137 -- a laptop seat vanished with no recorded kill (same shape as dell1 D1-S13/S14)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9137",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-17T01:23Z",
+  "one_line": "A laptop seat process (2.0.0_SA_COO~CA) vanished between 00:17Z and 01:17Z 2026-10-17 with no kill line in agent-spawn-audit.log and no kill-maint target; the same unexplained-exit shape as dell1 rows D1-S13/S14, now seen on a second box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 109783: no process at 01:17Z, alive at 00:17Z; no kill line in org/mcp/agent-spawn-audit.log; kill-maint 00:17Z killed one stray python.exe, 01:17Z no targets; respawned 01:19Z pid 28272"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat ends only by a recorded act (a kill line, a stop, or its own exit with a record).",
+  "world_is": "A seat's process ended with no recorded act on a second box; the cause is unmeasured (no exit code or Windows event read yet).",
+  "notes": "Same class as dell1 D1-S13/S14; the cross-box pattern makes it an NFRA_CTLPLN liveness question. Next read: the Windows Application/System event log around 00:17-01:17Z for the claude.exe exit."
+}
+```
+
 ## NFRA_CTLPLN-D1-S16 -- fourth wave: five more dell1 seats ended 00:36-00:56Z, an M1/W1 pair five seconds apart, every ended life idle at the end; the laptop's COO~CA ended the same way
 
 ```json
