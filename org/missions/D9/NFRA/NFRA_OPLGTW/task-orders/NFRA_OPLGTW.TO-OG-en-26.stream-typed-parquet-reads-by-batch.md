@@ -80,7 +80,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-26.stream-typed-parquet-read
 - `OG-ap-38` is amended (A1) in the same issuance: its guard may be a cgroup limit (`systemd-run --scope -p MemoryMax=1400M`) as well as the address-space limit, because the applier measured that pyarrow cannot start its thread pools under `RLIMIT_AS` (virtual address space); the guard's PURPOSE (the process is the first victim and cannot take the service or a daemon) is unchanged.
 - Pre-cut: `AC1` and `AC3` base FAIL as expected (the test file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41-W</workstream>
 <slot>~141</slot>
