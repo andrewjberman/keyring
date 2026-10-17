@@ -8635,3 +8635,53 @@ by dell1 or by this seat.
   "world_is": "The moved inputs of the 2026-10-02 holdings: positions_cube (A_03, rebuilt 04:13-04:14Z from silver/transactions and silver/realized), silver/prices/canonical_prices.parquet (04:03:39Z) and accounts_dimension_latest (04:03:49Z). The 49F bronze run (00:02-00:08Z) landed transactions for 10-05, 10-11, 10-14 and realized for 10-17; silver/transactions 10-05 (+183/-102 rows, trade dates 10-05 only), 10-14 (2,921 rows of trade dates 10-01..10-12 replaced by 14,361 rows of 10-12..10-14; all 2,921 survive in other partitions), 10-17 (new, trade dates 10-12..10-15). The realized partition of 10-17 carries sales dated 2026-10-15 for z0817205211 and z0822659431 with open dates 07/17-09/10, the two accounts absent from the 23:14Z cube. The guard in cot_bronze_ingest.py rejected nothing in the window (live 04:11:00-04:13:33Z, after the run). No Cottonwood-bucket object was read for this, so the bucket-level Cottonwood check is not run."
 }
 ```
+
+## MDPF_SECCLASS-D1-S50 -- leg G re-read on the object C_06 reads: the seed's effect IS served, and it is the LCFYX move from cash to fixed_income on 15 of 15 dates
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S50",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-17T08:23Z",
+  "one_line": "Re-read after the S45 cause (D1-W100-S1, instrument-expectation): between served mix_daily_summary versions 3BY8Etw3... (pre-seed) and 87CvfcFp... (first fire after the seed), the firm cash delta equals minus, and the fixed_income delta plus, the dollars of Lord Abbett Convertible I (LCFYX) in the canonical-holdings object the 23:00Z fire read, within $1 on each of 15 dates (2026-09-30 to 2026-10-14; for example 2026-10-02: LCFYX 36,406.68, cash -36,407.65, fixed_income +36,407.24). The other 12 seeded names move nothing in the served class totals on those dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R28_CHECKS/seed_legg_reread_lcfyx.py read -> SEED-LEGG-REREAD ok=True dates=15 bad=0 tol=5 (selftest ok=True; reads the two served versions and the 15 canonical-holdings versions written 2026-10-16T23:15Z)",
+      "D1-W100-S1 and org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~100/S45_CAUSE.json: LCFYX has six blank-ticker rows on 2026-10-02 totalling 36,406.68 that classify by name; the table row is fixed_income and an older NAME:: row says cash"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D1-S45: the 13-row seed moved its dollars out of unclassified into the ruled classes on the first fire after it.",
+  "world_is": "The seed moved one name's dollars, LCFYX, from cash to fixed_income (its ruled class), on every date of the window, and nothing else; the other 12 were already classified by other paths. So the seed took effect where C_06 reads it. D1-S45's 'NOT MET' came from leg G's expectation (dollars leaving unclassified), not from the seed. The 04:00Z restatement (D1-S48, cause RIGHT) is a separate, later change."
+}
+```
+
+## MDPF_SECCLASS-D1-S51 -- D1-S48 disarms: the after-the-fact never-widen pair is SIGNED by both halves
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S51",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-17T08:24Z",
+  "one_line": "Disposition of MDPF_SECCLASS-D1-S48 (ARMED, disarm_owner this seat): the 04:00Z restatement of 14 canonical-holdings dates is now covered by a signed never-widen pair, so the hazard is disarmed. COO half signed in org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_AFTER_THE_FACT_S48_B00_REWRITE_20261017.md; CTO half signed in org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_AFTER_THE_FACT_S48_B00_REWRITE_CTO_HALF_20261017.md (msg 7442, binds ca364823), who read the A_03, build_canonical_prices_v2 and A_00 rules at signing and found them consistent with the cause named by SC-e-109 (verdict RIGHT).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL1 msg 7442: 'S48 after-the-fact CTO half SIGNED (RIGHT, binds ca364823); file the disarm row'; the 22:00Z hold on the 23:00Z fire was released earlier by msg 7440",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~99/S48_CAUSE.json (acceptance S48-CAUSE ok=True, re-run on main after the merge @adf846ca2a)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D1-S48: a served change to the firm mix has a named input and writer and a signed pair before the next fire.",
+  "world_is": "Disarmed. One step is carried by the CTO's word (msg 7442) and is NOT done: the rise measured on the canonical holdings (+382,473 to +450,743 per date, worker ~99) and the rise measured on the served totals (about +381k to +419k, CVO) are two measures of two objects and are not reconciled; it is named in the round-28 input."
+}
+```
