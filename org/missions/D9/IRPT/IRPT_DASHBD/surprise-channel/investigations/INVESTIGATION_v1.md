@@ -25216,3 +25216,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "safe-commit ran a risk-reflex comp-pulse diff over the two paths and reported HOLD against a closed deploy ledger row that matches the handler's file name. The commit gates passed; the citation was read and the commit proceeded."
 }
 ```
+
+## IRPT_DASHBD-D2-W2606-S1 -- the append rewrites one existing line: the firm_pages.json entry in files gains a trailing comma, so the diff is not add-only
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2606",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2606-S1",
+  "surfaced_at": "2026-10-17T05:54:21Z",
+  "one_line": "The order asks the entry diff to show ONLY added lines in files and staged_from; strict JSON needs the old last element of files (infra/logic/registry/firm_pages.json) to gain a comma, so git shows one removed line. The five members and five pins are otherwise pure additions, the 15 existing pins are unchanged, and the checker's AC1 to AC3 all PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --numstat on infra/aws/lambda/ci/function-map/irpt-cot-account-return-daily-lambda.json in the worktree (HEAD b907b1806d): 36 added, 1 removed",
+      "git diff of that file: the single '-' line is '    \"infra/logic/registry/firm_pages.json\"' and its '+' counterpart ends with a comma; the other 35 '+' lines are the five members and the five pin objects",
+      "python -I json.load of the edited entry: files 21 entries, staged_from 20 entries; p138_cotbundle.py DBF138-6-AC1, AC2 and AC3 each print PASS"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-2606 WORKER FACE step 2: 'The diff must show ONLY added lines in files and staged_from' and the record face's diff_removed_lines (0).",
+  "world_is": "A JSON array cannot take an appended element while its previous last element keeps no trailing comma, so the one-line rewrite is forced by the format, not by a choice of content. The removed line is that comma-only rewrite of firm_pages.json; no other line of the entry changed, and no existing pin moved."
+}
+```
