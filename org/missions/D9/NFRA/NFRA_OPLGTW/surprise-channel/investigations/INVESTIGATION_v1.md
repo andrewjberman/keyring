@@ -26394,3 +26394,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts and dates of the page boundaries only; no row content."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T02:25:37Z",
+  "id": "NFRA_OPLGTW-Z-S340",
+  "one_line": "Round-40 ruling on Z-S339: sort each window page by trade date (OG-en-19); cursor stays by partition date",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S339"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~NFRA1 ap32_arms.json: transactions pages 1 to 3 non-increasing, page 4 not",
+      "order OG-en-19 committed 29fca12c0c"
+    ]
+  },
+  "spec_asserts": "An observation row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled: a window page is ordered by trade date, newest first, with a stable sort; the cursor stays by PARTITION date. Cut as OG-en-19 (worker ~131, commit 29fca12c0c). The e1_newest_first arm is reworded at the next release's amendment: within a page the dates are non-increasing; across pages the cursor moves back by partition date.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: a window page is ordered by trade date, newest first, with a stable sort; the cursor stays by PARTITION date. Cut as OG-en-19 (worker ~131, commit 29fca12c0c). The e1_newest_first arm is reworded at the next release's amendment: within a page the dates are non-increasing; across pages the cursor moves back by partition date."
+}
+```
