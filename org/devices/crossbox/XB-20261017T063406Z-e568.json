@@ -11,8 +11,8 @@
  "body_path": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round33/ORDER4_SITEZ_P2_AND_RESOURCE_THEN_REPLAY.md",
  "opened_at": "2026-10-17T06:34:06Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-17T06:37:36Z",
+  "bus_message_id": "6ef8764b-5866-4bd2-be23-debe4d30ef57"
  },
  "ack_bus_message_id": null,
  "closed_from": {
