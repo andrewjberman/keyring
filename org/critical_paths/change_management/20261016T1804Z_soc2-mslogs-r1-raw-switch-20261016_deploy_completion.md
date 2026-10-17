@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-16T18:04:29.759766+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261017T023959Z
 **Deploy:** SOC2_MSLOGS round 1: in-place switch of the collector and door to raw bronze
 **Authored by:** 0.7.0_AE_CloudOps~SOC21
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -14,13 +14,13 @@
 |---|---|---|---|---|---|
 | L1-apply | activation | trino root: safe-apply in-place update of collector + door code, door role policy, door env | apply receipt + plan summary | safe-apply rc=0 Apply complete 0 added 15 changed 0 destroyed at 2026-10-16T18:23:40Z; access.tf ade21bee08 | CLOSED 20261016T182437Z |
 | L2-subscription | activation | Management API: start the four feeds incl. Audit.AzureActiveDirectory | HTTP statuses of the four starts | start HTTP: Audit.AzureActiveDirectory 200, Exchange 400, SharePoint 400, General 400 (the three already enabled; body not read); s1_check_r1.py subs R1-SUBS-OK all four listed | CLOSED 20261016T182634Z |
-| L3-switch-readback | verify | s1_check_r1.py applied/subs/switch + r2_check_r1.py plan | check lines read |  | OPEN |
+| L3-switch-readback | verify | s1_check_r1.py applied/subs/switch + r2_check_r1.py plan | check lines read | 2026-10-17T02:39Z: s1_check_r1.py applied R1-APPLIED-OK; subs R1-SUBS-OK (4 feeds); switch R1-SWITCH-OK audit_records=9534 dates=8 silver_dates=9; r2_check_r1.py plan R1-PLAN-OK exit=0 | CLOSED 20261017T023959Z |
 | L4-redeploy-7b | activation | trino root: safe-apply the repaired collector code hash alone (item 7b, repair 6cef75fd39) | plan summary + apply receipt + new switch_at.txt | safe-apply rc=0 Apply complete 0 added 1 changed 0 destroyed; collector LastModified 2026-10-16T23:10:36Z CodeSha256 ZWVtuj7Q... equals planned hash; switch_at.txt reset | CLOSED 20261016T231109Z |
-| L5-fires-7b | verify | two scheduled collector fires after the new switch_at.txt: counts, duration, no timeout | per-fire counts line, duration, REPORT timeout status |  | OPEN |
+| L5-fires-7b | verify | two scheduled collector fires after the new switch_at.txt: counts, duration, no timeout | per-fire counts line, duration, REPORT timeout status | SUPERSEDED by 7d: 7b code fire 1 825 s complete=False failed=1; fire 2 timed out at 900 s (retried twice by Lambda async policy); repaired under 7d (3b35dca82a); the acceptance fires are L9 | CLOSED 20261017T023959Z |
 | L6-door-memory-7c | activation | trino root: safe-apply aws_lambda_function.access memory_size 1024->6144, timeout 300->600 (item 7c, door OutOfMemory in derive_silver) | plan summary + apply receipt + deployed memory/timeout read | safe-apply rc=0 0 added 3 changed 0 destroyed 2026-10-17T00:07:06Z; door MemorySize 6144 Timeout 600; aliases collector+member on v3; s1_check_r1.py applied R1-APPLIED-OK | CLOSED 20261017T000755Z |
 | L7-door-10240-7e | activation | trino root: safe-apply aws_lambda_function.access memory_size 6144->10240, timeout stays 600 (item 7e, Andrew-direct via issuer) | plan summary + apply receipt + deployed memory read + s1_check_r1.py applied | safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T00:59:35Z MemorySize 10240 Timeout 600; aliases collector+member on v4; s1_check_r1.py applied R1-APPLIED-OK | CLOSED 20261017T010008Z |
 | L8-redeploy-7d | activation | trino root: safe-apply the repaired collector code hash alone (item 7d, TO-SM-c1 AMENDMENT 3 at 3b35dca82a) | plan summary + apply receipt + apply_at.txt + switch_at.txt (first new-code START) | safe-apply rc=0 0 added 1 changed 0 destroyed; collector LastModified 2026-10-17T01:11:48Z CodeSha256 u5AxkMNd... equals planned hash; apply_at.txt written; switch_at awaits first new-code START | CLOSED 20261017T011233Z |
-| L9-fires-7d | verify | scheduled collector fires on the new code: counts, duration, no timeout | per-fire counts line, duration, REPORT timeout status |  | OPEN |
+| L9-fires-7d | verify | scheduled collector fires on the new code: counts, duration, no timeout | per-fire counts line, duration, REPORT timeout status | new-code fires: 12a2df72 START 01:31:22Z fetched=14 failed=0 complete=True 409.7 s no timeout; 645327e4 START 02:31:22Z fetched=15 failed=0 complete=True 403.3 s no timeout | CLOSED 20261017T023959Z |
 | L10-door-code-7f | activation | trino root: safe-apply the door code hash plus the two aliases to the new version (item 7f, TO-SM-a1 AMENDMENT 2 at c332e46ace) | plan summary + apply receipt + s1_check_r1.py applied | safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T02:36:19Z 10240 MB 600 s; aliases on v5; a1 detail/ops/bronze/tf OK; s1_check_r1.py applied R1-APPLIED-OK | CLOSED 20261017T023657Z |
 
 ## Log
@@ -39,3 +39,7 @@
 - 20261017T011233Z LEG L8-redeploy-7d closed: safe-apply rc=0 0 added 1 changed 0 destroyed; collector LastModified 2026-10-17T01:11:48Z CodeSha256 u5AxkMNd... equals
 - 20261017T023429Z LEG L10-door-code-7f added by 0.7.0_AE_CloudOps~SOC21 (TO-SM-r1 item 7f)
 - 20261017T023657Z LEG L10-door-code-7f closed: safe-apply rc=0 0 added 3 changed 0 destroyed; door LastModified 2026-10-17T02:36:19Z 10240 MB 600 s; aliases on v5; a1 
+- 20261017T023959Z LEG L5-fires-7b closed: SUPERSEDED by 7d: 7b code fire 1 825 s complete=False failed=1; fire 2 timed out at 900 s (retried twice by Lambda async
+- 20261017T023959Z LEG L9-fires-7d closed: new-code fires: 12a2df72 START 01:31:22Z fetched=14 failed=0 complete=True 409.7 s no timeout; 645327e4 START 02:31:22Z 
+- 20261017T023959Z LEG L3-switch-readback closed: 2026-10-17T02:39Z: s1_check_r1.py applied R1-APPLIED-OK; subs R1-SUBS-OK (4 feeds); switch R1-SWITCH-OK audit_records=95
+- 20261017T023959Z CLOSED -- all 10 legs proven
