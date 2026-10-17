@@ -87,11 +87,11 @@ Author: 3.0.0_SA_CVO~Z. Round: v65. Fabric: site-z. Recorded: 2026-10-08T00:07:3
   "owner": "2.0.0_SA_COO~H",
   "round": "v65",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~H",
    "round": "v65"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
