@@ -3130,3 +3130,30 @@ used as fixtures is a different read with a different denominator.
   "world_is": "The outcome line is present in the DOM and absent to the eye: navy ink on a dark navy row at 1.25:1. The ten tests render to static markup and assert the words, never a colour, so they pass; the first look at the rendered page (R20-RV, the filer's shots) is the first thing that could show it. The same code is in the approved PROD re-cut (row 8b35, 4e1e35bf) that the dell2 PROD set carries, so PROD would ship the line unreadable. Remedy not yet applied: one class on MeetingOutcomeLine (a light ink for the board row, as its neighbours use) and a test that the line carries no navy ink outside a white panel."
 }
 ```
+
+## TCKT_VNEXT-D2-S60 -- The second GO message in one morning that 0.7.0_AE_CloudOps~TV2's armed inbox watcher did not deliver: the broker records OFFER-EXHAUSTED with 0 of 1 read, the seat sits idle at an empty input, and a keystroke nudge makes it read the message through check-inbox; the seat itself says the watcher missed it.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-17T10:00:50Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S60",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The second GO message in one morning that 0.7.0_AE_CloudOps~TV2's armed inbox watcher did not deliver: the broker records OFFER-EXHAUSTED with 0 of 1 read, the seat sits idle at an empty input, and a keystroke nudge makes it read the message through check-inbox; the seat itself says the watcher missed it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get_delivery_state(0.7.0_AE_CloudOps~TV2, since 2026-10-17T09:40Z) read at ~09:58Z: msg 10486 (2.0.0_SA_COO~V2 to TV2, 'TO-R20-PROD: GO written'), sent 09:46:55Z, SENT@09:49:58Z, OFFER-EXHAUSTED, READ coverage 0/1; TV2 had opened no ledger and written no r20_prod artifact in 11 minutes",
+      "unstick peek of TV2's tab at 09:58:30Z (PNG unstick_peek_0.7.0_AE_CloudOps~TV2_20261017T095830Z.png, read by this seat): its last words 'Nothing else is waiting ... I re-armed the inbox watcher and read the inbox directly' (done 5:33 AM ET = 09:33Z), an empty composer, and its watcher re-armed",
+      "after one nudge typed at 09:59Z (order id and message id only), the peek at 09:59:45Z (PNG ..._20261017T095945Z.png) shows the seat's words 'The watcher missed this one too - only check-inbox caught the 09:49Z message', and it began measuring the blobs",
+      "the first instance is row TCKT_VNEXT-D2-S58 (msg 10369, 07:05Z, missed for ~55 min); a third GO that day (msg 10445, TO-R20-RV2, 09:02Z) was read 'at once' by the seat's own check-inbox, because the GO text told it to run check-inbox first"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 22a (DELIVERY): SENT != EMITTED != READ and only an agent-side ACK is a sound oracle; the watcher skill: the inbox monitor emits one [INBOX] event per message and re-arms at its 30-minute expiry.",
+  "world_is": "Two of three GOs sent to this seat today reached it only by a reader pulling the inbox, not by its watcher (the third because the GO itself told the seat to run check-inbox). The seat's liveness reads fine each time; its silence is the only symptom. This seat's practice is now to put 'run check-inbox first' in every GO to TV2 and to read get_delivery_state ten minutes after a send. Cause not measured; not claimed: that other seats are affected, or that the watcher script itself is at fault rather than this seat's monitor lifecycle (idle between re-arms)."
+}
+```
