@@ -29627,3 +29627,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed on AMGT-br-3. Not a cell of this order; the reflex verdict was recorded, not relied on for the grade."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W495-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~495",
+  "surfaced_at": "2026-10-17T18:01:22Z",
+  "one_line": "The USD-priced control's member Price cell prints no currency at all ('148.07 currency not stated') on the rendered Peers table, because the served GOOGL US peer body carries no price_currency for that member; the order's K3 expectation (money cells keep the dollar sign) did not anticipate it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-br-4 K3 (the order's fixture list and check list): the GOOGL US (USD-priced) control's money cells keep the dollar notation, and no cell reads USD.",
+  "world_is": "On the live body peersCurrencyFixture.GOOGL_US_peers.json (copied from round111_prep/fixtures/GOOGL_US_peers_live.json) the one member, SPCX, carries price 148.07 and a price_currency_reason key, but no price_currency and no currency. The table's currency lookup finds no code for that cell, so the rendered Price cell reads '148.07 currency not stated' (no dollar sign), before and after the edit; the Price column carries no summary. The harness counts it as a blank-prefix cell: K3 counts 13 of 13 money cells that print a currency as dollar cells, and 14 money cells in all.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/peersCurrencyFixture.GOOGL_US_peers.json (member SPCX: price and price_currency_reason; no price_currency, no currency)",
+      "harness run on cand/dell1/amgt-sa-peers-currency @259da4c4: CELL GOOGL_US member 'Space Exploration Technologies Corp.' price '148.07 currency not stated'; CHECK K3 PASS GOOGL US money cells 14; $ cells 13",
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-br-4.peers-currency-code.md (K3 clause)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect of this cell: the table prints what the served body carries, in the format's own no-code wording. Recorded so the K3 control is read together with it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W495-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~495",
+  "surfaced_at": "2026-10-17T18:01:22Z",
+  "one_line": "The header and the Peers table name the page's price currency by different rules when PX_LAST carries no currency: the header falls back to the served CRNCY, while the table (as the order states) reads PX_LAST only, so on such a name a USD figure can read USD in the header and dollar sign in the table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-br-4 step 4: the reference is the served PX_LAST figure's currency in the overlay's header_figures; if no price currency is served, pass null (today's behaviour).",
+  "world_is": "HeaderCards.tsx priceCurrencyOf at PROD 99d2b2a7 (lines 46-52) returns the served PX_LAST currency, else the served CRNCY value, else null. The PeersTab priceCurrencyOf added on cand/dell1/amgt-sa-peers-currency @259da4c4 returns the PX_LAST currency, else null, as the order states. On a name whose PX_LAST carries no currency and whose CRNCY is a non-USD code, the header prints a USD figure as USD and the table prints it as a dollar sign. Neither fixture (ICT PM, GOOGL US) has that shape; how often served names have it was not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/HeaderCards.tsx priceCurrencyOf at PROD 99d2b2a7 (lines 46-52; CRNCY fallback at lines 50-51)",
+      "portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx priceCurrencyOf at cand/dell1/amgt-sa-peers-currency @259da4c4 (PX_LAST only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as a form mismatch between two readers of one rule. Not fixed here: HeaderCards.tsx is outside this order's grant, and the order names PX_LAST as the rule."
+}
+```
