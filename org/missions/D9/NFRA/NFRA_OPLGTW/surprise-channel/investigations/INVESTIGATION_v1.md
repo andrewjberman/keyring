@@ -26577,3 +26577,75 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Path elsewhere: the rules location in the worker face does not resolve inside the sparse-checkout worktree."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~132",
+  "surfaced_at": "2026-10-17T03:07:55Z",
+  "id": "NFRA_OPLGTW-Z-W132-S1",
+  "one_line": ".claude/agents/worker.md, named in the worker face as the rules location, is not in this worktree",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test -e C:/tmp/wk-oplgtw-132/.claude/agents/worker.md returned absent, and the worktree root has no .claude entry (ls, 2026-10-17T03:06Z; HEAD of wk-NFRA_OPLGTW-132 = 983095f7af)",
+      "NFRA_OPLGTW-Z-W131-S3 in this file records the same absence for the sibling worktree at 29fca12c0c"
+    ]
+  },
+  "spec_asserts": "Rules are in your agent definition (.claude/agents/worker.md), per the worker face of NFRA_OPLGTW.TO-OG-en-20.",
+  "world_is": "The file is absent from the worktree. The run took its rules from the session context and did not open that file; no rule was assumed from its absence.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Path elsewhere: the rules location in the worker face does not resolve inside this worktree. The run's own write set is the task order's <paths>, which the worker face states in full."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~132",
+  "surfaced_at": "2026-10-17T03:07:55Z",
+  "id": "NFRA_OPLGTW-Z-W132-S2",
+  "one_line": "org/surprise_channel/schemas is outside this worktree; the row shape was taken from the rows already in this channel file",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test -e C:/tmp/wk-oplgtw-132/org/surprise_channel/schemas/investigation_item.schema.json returned absent (2026-10-17T03:07Z; HEAD 983095f7af)",
+      "NFRA_OPLGTW-Z-W131-S2 in this file records the same absence for the sibling worktree at 29fca12c0c"
+    ]
+  },
+  "spec_asserts": "Surprise rows are written per org/surprise_channel/schemas/investigation_item.schema.json, per the worker face of NFRA_OPLGTW.TO-OG-en-20.",
+  "world_is": "That schema is not on disk in this worktree, so the row contract was not read from it. This row takes the form of the rows already in INVESTIGATION_v1.md; the commit-time gate .tools/surprise-row-gate.py checks it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Path elsewhere: the row contract is not materialised in the sparse-checkout worktree."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~132",
+  "surfaced_at": "2026-10-17T03:07:55Z",
+  "id": "NFRA_OPLGTW-Z-W132-S3",
+  "one_line": "The portal gitlink is dirty in this worktree: the checked-out portal HEAD differs from the index entry",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff -- portal at wk-NFRA_OPLGTW-132 (HEAD 983095f7af): index 160000 d1f9ca29675bd9012284272806afc9c587ef55f0, checkout ce3b0cc4d17dfbddc4a64e1035b43d7e351b8760",
+      "git status at session start (base checkout, box/sitez) also lists ' M portal'"
+    ]
+  },
+  "spec_asserts": "The task order names its <paths> as the write surface, and the write-set bound (AC2) counts only the commits of this serial.",
+  "world_is": "Before any edit, git status in this worktree shows ' M portal', outside <paths>. This run did not touch it: it was not staged, committed or reset, and the safe-commit calls named explicit paths only.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Off-task observation; the gitlink is not part of the OG-en-20 write set and no criterion reads it."
+}
+```
