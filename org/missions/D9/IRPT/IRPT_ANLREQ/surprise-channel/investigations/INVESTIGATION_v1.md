@@ -23457,3 +23457,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W281-S1 -- the cell's comment clause and the cell's own AC2 cannot both hold; the tuple line alone was changed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W281-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~281",
+  "surfaced_at": "2026-10-17T02:35:49Z",
+  "one_line": "TO-AR-g-159 step 1 asks the comment above the loop to gain one clause naming lib, and AC2 asks resident_main.py to differ from its base only in the tuple line; the guard enforces AC2 (it strips only the 'for _relative in' line before comparing), so a comment edit would fail guard. The tuple line alone was changed; the comment clause was not added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-159 step 1: 'the comment above the loop gains one clause naming lib'. AC2: 'resident_main.py differing from its base only in the tuple line'. Guard arm: 'resident_main.py differs from its base beyond the tuple line' is a FAIL.",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py:18 (the comment line 'Works with either the source layout or P's flattened deployment package.') sits above the loop at line 20, and the guard in ar_g159_checks.py arms_guard() strips only lines starting 'for _relative in' before comparing with the base. A comment edit is therefore a guard FAIL at the cell's own checker. Commit 3c33fc20e3 changes only the tuple line (line 20 of the module): one line, 'lib' between '_gate' and 'ycharts/session'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py:18-20 @3c33fc20e3 (comment at 18, loop at 20, tuple with lib)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g159_checks.py arms_guard() @HEAD of wk-IRPT_ANLREQ-281 (the strip of the for-line only, then old != new is FAIL)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-159.resident-main-lib-on-path.md:40 (step 1, the comment clause) and :58 (AC2, the tuple line only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```

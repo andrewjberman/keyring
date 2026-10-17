@@ -186,7 +186,7 @@ try:
     rc, out = run(tmp, fixed, main_mutate=('"_gate", "lib", ', '"_gate", '))
     check("an entry module whose tuple lacks lib (r34j's defect): SPY reads CHECK_FAILED, V2S FAIL, rc 1, and V2 prints the first-ask exception class ModuleNotFoundError",
           rc == 1 and "V2S FAIL" in out and "V2S FIRST-ASK EXCEPTION builtins.ModuleNotFoundError" in out and "trading_calendar" in out, "rc=%d %s" % (rc, out[:1500]))
-    check("no class line is printed when nothing failed", "V2S CLASS" not in out, out[-400:])
+    check("no class line is printed when nothing failed", "V2S CLASS" not in out_fixed, out_fixed[-400:])
     check("the in-service back-off check passes: 150, 300, 450 for a WAF code, 60 for another cause", "V2S BACKOFF OK" in out and "waf=[150, 300, 450] flat=60" in out, out[-900:])
     check("the shipped worker is the real back-off block (the stand-in is cut from the repository file)", "def _resolve_retry_visibility(code, receives):" in worker_stub() and "RESOLVE_WAF_BACKOFF_S = (150, 300, 450)" in worker_stub())
     check("the four in-service controls pass: one NOT_KEPT, three stay CHECK_FAILED", "V2S CONTROLS OK 4 of 4" in out and out.count("V2S CONTROL ") >= 4 and "WRONG" not in out, out[-900:])
