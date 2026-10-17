@@ -2843,3 +2843,29 @@
   "notes": "Owner of the remedy: not the issuer. The Global refusal follows the stale feeder (ADVI_FIRMBKTS B1) or a producer rule for a date with counts and no values (CTO). Sent to 1.0.0_SA_CTO~DELL1 with one question; one line to 2.0.0_SA_COO~B1. C-3 (no ad-hoc run as evidence) stands: no ad-hoc gold run is read as the acceptance."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S34",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "4.0.0_SA_CRO~DDD",
+  "surfaced_at": "2026-10-17T14:00:00Z",
+  "one_line": "ADVI's Cottonwood total sits 51,507.91 (10/16) / 51,505.76 (10/15) below MDPF and BD on the SAME 864 supervised accounts: the opal-data-cot silver holdings merge dedups on (account_id, asset_name) and drops one of two distinct holdings that share a name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-10 (PRD v2.24-v2.27): Cottonwood's supervised total matches the BD Dashboard Supervised figure on both pages (Andrew-direct 2026-10-17 ~01:5xZ: 'it has to be done for ADVI Advisor Intelligence page too').",
+  "world_is": "MEASURED on bronze HOLDINGS_DAILY_2026-10-16.xlsx (supervised rows 21,121). MDPF's (AccountID, AssetID) relationship-grain collapse keeps 20,990 rows = 524,463,230.11, the served MDPF value. A (AccountID, Asset Name) dedup keeps 20,988 rows = 524,411,722.20, the served ADVI header_metrics value. Accounts are 864 on both. Exactly one account+name pair has more than one AssetID: 'VAN ALSTYNE TEX 5% 02/15/2028', 3 rows, 51,507.91, which is the whole gap. On 10/15 the same mechanism gave 530,421,988.14 vs 530,370,482.38. cot_silver_merge.py holdings 'Dedup (account_id+asset_name)' printed 'removed 133 duplicate rows (21,643 -> 21,510)'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-10-16.xlsx (1,632,063 B, landed 12:11Z)",
+      "s3://opal-data-portal-v2/platinum/mdpf/cottonwood/category-views.json as_of 2026-10-16 total 524,463,230.11",
+      "s3://opal-data-cot/platinum/firm/header_metrics.json data_as_of 2026-10-16 total.aua 524,411,722.20",
+      "data/cot/scripts/silver/cot_silver_merge.py holdings dedup key (account_id + asset_name)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a timing gap: the next ADVI build will not close it. Remedy (not applied): dedup cot silver holdings on (account_id, asset_id), the key BD and MDPF use. That is an ADVI-lane silver change with its own half. Asked by 1.0.0_SA_CTO~DELL1 msg 7550."
+}
+```
