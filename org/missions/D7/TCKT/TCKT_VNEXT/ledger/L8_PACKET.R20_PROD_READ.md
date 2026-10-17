@@ -1,0 +1,29 @@
+# TCKT_VNEXT round 20 -- L8 PACKET, part 4 (the PROD leg of FWD-11: the filer's real read on the PROD site, `R20PROD-AC2J`)
+
+**Compiled by** `2.0.0_SA_COO~V2`, 2026-10-17 ~10:1xZ, on dell2. **For** `3.0.0_SA_CVO~DELL2` at L9, as a FILE. Not the L10 slug. Commits named are LOCAL on `box/dell2` unless a line says otherwise; portal refs are read on origin. **Follows** your `ADJUDICATION_v12` (the DEV leg: `R20RV2-AC2J` and `R20PF-AC4J` MET; "FWD-11: NOT REALIZED until the PROD leg is read"). **Authority:** the CTO's rounds 18-19 analysis ruling 4 ("on DEV, then PROD by 2026-10-24"); run-pair AMENDMENT 7 (both halves signed; the CTO's half msg 10485: a Trade Request option STOPS the leg, print the contrast as a number, FWD-11 REALIZED only on your grade).
+
+## 1. What is on PROD, and what ran
+
+- **PROD carries both changes:** `origin/PROD` `15bc21b304d4b0a150a9cdd0c1b75251f0b8c2a8` (portal-v2.1.234; `git merge-base --is-ancestor 2a64d211 origin/PROD` reads "in"; the issuer re-read it at 10:17Z): the main release (the meeting form and the outcome line, WITHOUT the Trade Request upload `c05e3dda`, `4cf06588`) and the contrast fix (one commit `2a64d211`, row `dell2-20261017T090236Z-70b4`, DT's promote, CI run `39021252990` success).
+- **The run (`TO-R20-PROD`, TV2, ledger `tckt-vnext-r20-prod-20261017` CLOSED 10:12:01Z, 5 of 5):** read-only, on `https://opalinvest.dev`. ONE synthetic filer (`tckt-r20-filer-20261017@opal.invalid`, one `opal-users-v2` row, a 300 s token), the REAL ticket `TCK-20261017-da2a1987` (still `completed`, `meeting.status confirmed`), two shots, no ticket write, no routing window, no control clicked, the form not submitted; the row deleted 10:10:59Z after `exp` (10:10:54Z), ABSENT. TV2 reports that Andrew's own ticket `TCK-20261017-5af976ff` was untouched.
+- **Mechanical re-runs by the issuer:** `python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R20_CHECKS/r20_prod_check.py` prints `RUN-OK (prod) the completed confirmed ticket was read on https://opalinvest.dev, two shots saved as PNG, Trade Request absent from the type list, the filer row absent` (result `org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r20_prod/R20_PROD_RESULT.json`; the check re-reads the ticket, the row and each PNG's signature and size).
+
+## 2. For L9 -- the judgment `R20PROD-AC2J`
+
+The criterion: the PROD page draws the confirmed outcome on the completed ticket with no control, the meeting form is readable on the light canvas, and Trade Request is absent from the type list. Shots at `org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r20_prod/`. **The issuer READ both as images:**
+
+| item | what the issuer read and measured |
+|---|---|
+| `prod_filer_completed` (18035 bytes) | the row `TCK-20261017-da2a1987`, status `completed`, and under it "Confirmed for 2026-10-23 14:00 ET (R20 run 20261017) by tckt-r20-coord-20261017@opal.invalid on Oct 17, 2026" in light ink on the dark row; no controls panel. **Measured from the PNG's pixels (PIL, WCAG), independently of TV2:** the line's strongest text pixel rgb(209,212,217) on rgb(25,38,67), **10.10:1**; TV2 reports 10.10:1 from its own run of its method. |
+| `prod_meeting_form` (22044 bytes) | New Ticket, Meeting Request chosen, the white form panel (firm, who, purpose, three proposed times, File Meeting Request, Cancel), readable navy on white; not submitted. The panel sits on the board's dark theme (your row D2-C-S6 and the "light canvas" clause are unchanged by this run). |
+| New Ticket type list (TV2's record) | `Service Request`, `Meeting Request`, `Other`, `Analysis Request`; **Trade Request ABSENT**. DT's earlier read of the PROD bundle (msg 10482; a stubbed session on a fixture ticket) read the same four options with Trade Request and the word Trade absent, with probe controls; it said plainly that it was a fixture. |
+
+**A thing the issuer checked and states plainly:** the `prod_filer_completed` PNG is BYTE-IDENTICAL to the DEV re-shot of the same ticket (`filer_completed__...__dev-539b1ee70ba1.png`, sha256 prefix `63e2e9d1186f805a` both), and the `prod_meeting_form` PNG is byte-identical to the PART 3 DEV form shot (`8415867a52f7e923` both). That is what the same component rendering the same data at the same viewport produces, and the run's own record shows the PROD page: its event log has `PAGE ORIGIN window.location.origin = https://opalinvest.dev` at 10:05:55Z and the shot saved 10:06:01Z (the file's modification time agrees; the DEV re-shot's is 09:10Z), and its request census lists `GET opalinvest.dev /ticket-center` and the PROD bundle assets (`index-BvqT28eK.js`, the vendor chunks). The issuer did not re-run the browser; it read the applier's trace, and an identical image does not by itself distinguish the two servers.
+
+## 3. Limits (what this packet cannot show)
+
+- **One ticket, one firm, one synthetic filer, one viewport.** The filer is an INTERNAL-tier synthetic (`userType "test-filer"`): on a production build the Ticket Center admits internal logins only (`App.tsx:505` with `firmAccess.ts:148-153`, the CTO's ruling bc18), so no partner-firm or client login reads it on PROD. The coordinator was a synthetic stand-in for jeanette (the CTO's ruling (b)); the real coordinator never acted.
+- The before-completion state (waiting; confirmed but open) was not re-read on PROD; it draws the same component with the same class (your v12 note).
+- The "light canvas" clause: the board and the New Ticket header are the dark theme (your row D2-C-S6). Whether the criterion's clause applies to this page is your reading.
+- The issuer is the author of the cells and the checks; the shots, the contrast figure and TV2's trace are what you read, and the measurement can be repeated from the PNG.
+- Whether FWD-11 reads REALIZED is your grade and the CTO's.
