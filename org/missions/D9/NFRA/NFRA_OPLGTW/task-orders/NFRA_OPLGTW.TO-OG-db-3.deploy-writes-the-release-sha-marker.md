@@ -67,7 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-db-3.deploy-writes-the-release-
 - The marker sits at the REMOTE_DIR root, outside `app/`, `deploy/`, `dashboard/` and `lib/`, so the release's md5 walk is not affected.
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41</workstream>
 <slot>~136</slot>
