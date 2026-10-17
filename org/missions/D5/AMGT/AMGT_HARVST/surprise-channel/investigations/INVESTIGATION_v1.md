@@ -10873,5 +10873,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S47",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T23:04:41Z",
+     "one_line": "Row D1-W159-S1 is disarmed: after HVST-cf-4 the served ML_FP_Equity gold object carries fund_of_record absent and the bracketed template line as a template-stance position, not IDVZ.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "D1-W159-S1: a rebuild of ML_FP under HEAD code served fund_of_record IDVZ from the bracketed template '[BUY IN IDVZ TO X%]'; disarm_owner 2.0.0_SA_COO~W1.",
+     "world_is": "Read by the issuer on the live gateway (harvest_get_research ML_FP_Equity) at 23:0xZ on 2026-10-17, after the HVST-cf-4 manifest (34 keys, 17 names, ML_FP among them): continuation 3bb0fa9b8e26351d.json and dossier as_of=2026-10-17.b5a290b43c9a8ad3.json; fund_of_record absent ('no stated holding line: the lines found are candidate, template or unclassified'); last_stated_position value fund null, candidate_fund IDVZ, stance template, text '[BUY IN IDVZ TO X%]'. Control read in the same sitting: UNH_US_Equity unchanged (fund PFOE, line_only, 'Maintain positions in PFOE and DIVZ'). Not disarmed by this read: the silver research_reports[].fund of the same name still reads IDVZ for the template line (row D1-S46).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round91/cf4_written.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round91/cf4_served.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cf-4.the-gold-objects-of-17-securities-are-rebuilt-so-no-candidate-reads-as-a-holding.md (COMPLETE note)"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W159-S1"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The hazard (a served fund_of_record IDVZ from a template placeholder) is removed in the served ML_FP gold object by the cf-4 rebuild under the cf-2 rule, shown by my own served read against the UNH control; the silver field is a separate row (D1-S46)."
+    }
 ]
 ```
