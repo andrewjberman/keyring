@@ -8422,3 +8422,29 @@ by dell1 or by this seat.
   "world_is": "Leg G is NOT MET. The served firm class dollars do not show the seed on the one date (2026-10-02) the instrument can grade with seeded weight in range, and a larger unrelated restatement landed at 04:00Z, so the seed cannot be graded on the latest version either. The cause is unnamed: candidates, not yet read, are the incremental skip of retained unclassified holdings (D1-S30) and a whole-book input change. TO-SC-e108b stays staged: its hold (2) is not satisfied."
 }
 ```
+
+## MDPF_SECCLASS-D1-S48 -- the 04:00Z restatement of 14 dates is covered by no signed pair of this project: ARMED until the cause is named
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S48",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-17T07:35Z",
+  "one_line": "On the CTO's ruling (msg 7411, 'name which signed pair covered that served change, or state that none did'): no signed pair of MDPF_SECCLASS covers the 04:00Z fire's restatement of 14 dates (2026-10-01 to 2026-10-14) in the served mix_daily_summary.json (equity about +175k to +208k and fixed_income about +167k per date); this project's pairs are the seed (TO-SC-e107b, applied 2026-10-16T06:27Z), the e91b ship (2026-10-12) and the unshipped e108b. The row is ARMED: the next scheduled fire (23:00Z 2026-10-17) re-derives the same range from the same unnamed input.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "D1-S47 (this channel): leg G reads ok=False on both fires; versions of opal-data-49financial advi/49financial/platinum/views/mix_daily_summary.json: 87CvfcFp... 2026-10-17T00:22:27Z, l2Wqoi6i... 2026-10-17T05:24:08Z",
+      "org/critical_paths/change_management/ closed or opened in the window before the 04:00:46Z launch's reads, none of them this project's and none read here for coverage of this key: 20261017T0322Z_cot-fwd10b-carrier-repull (4.0.0_SA_CRO~DDD, Cottonwood carrier re-pull as-of 2026-10-15, closed 04:25:38Z), 20261017T0357Z_fb-q-1-fence49-reporting-prefix (0.7.0_AE_CloudOps~ADVI1, opal-data-49financial bucket policy, closed 04:02:15Z), 20261017T0409Z_cot-fwd10b-addA-guard-1016; opened after the launch: 20261017T0420Z_mdpf-cottonwood-1015-restate, 20261017T0435Z_mdpf-gold-fwd10-pair-donut, 20261017T0448Z_mdpf-cottonwood-1015-donut"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every served change to the firm mix is covered by a signed never-widen pair of the project that moves it.",
+  "world_is": "The restatement is served and covered by none of this project's pairs; whether another project's pair covers it is not read. Round 28's first item is the cause read (CTO, msg 7411). The disarm: the cause is named and ruled before the 23:00Z fire, or the CTO holds the fire; this seat does not stop a scheduled producer."
+}
+```
