@@ -23694,3 +23694,233 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S168 -- W165-S2 disarmed: the yfinance checker is wired into the door's resolver
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S168",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T06:35:57Z",
+  "one_line": "W165-S2 DISARMED: the yfinance checker is wired into the door's resolver. resident_session.template_resolver builds YfinanceChecker() when no checker is passed, and the resident that runs it (r34k) imports it and answers V2S DOOR OK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W165-S2"
+  ],
+  "spec_asserts": "Row W165-S2: security_resolution.py runs the checker only when self.checker is not None and the default was None; resident_session.py built SecurityResolver with no checker argument, so a real symbol YCharts omits and yfinance knows got TICKER_NOT_FOUND on every upload (disarm owner 2.0.0_SA_COO~Y2: wire the checker or retire the step).",
+  "world_is": "At HEAD, infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py lines 138 to 152 (MEASURED by git show HEAD:<path>): template_resolver imports YfinanceChecker and passes checker=checker if checker is not None else YfinanceChecker() to SecurityResolver, so the production call builds the real checker. The running resident is r34k (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat): V1 reports resident_session among the modules imported from the r34k root and V2S DOOR OK; V2S, run inside the service, shows SPY KEPT (HISTORY_ROWS 22) and ZQXWVK NOT_KEPT (NO_ROWS) through the shipped checker. The hazard (checker=None on every upload) no longer stands in the source or in the running resident. NOT READ: a live upload through the deployed door in which YCharts omits a real symbol and the checker keeps it; window 5 exercises that (its F8 lines) and any failure there is a new row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py (lines 138 to 152: checker defaults to YfinanceChecker())",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt (V1 imports, V2S DOOR OK, SPY KEPT, ZQXWVK NOT_KEPT)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md (Status CLOSED)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's own remedy (wire the checker or retire the step) is done: the checker is wired in the production resolver at HEAD and the running r34k resident imports it and answers V2S DOOR OK. A live proof through the door is window 5's F8, not this hazard."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S169 -- W64-S6 disarmed: the BUILD_ONLY guard is in every base a worker is cut from
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S169",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T07:03:49Z",
+  "one_line": "W64-S6 DISARMED: every base a worker is cut from now carries the BUILD_ONLY guard (the guard predates HEAD and every live worker worktree holds it); the second half is a closed round's check weakness with no live artifact.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W64-S6"
+  ],
+  "spec_asserts": "Row W64-S6: BUILD_ONLY=1 is honoured only by builders at or after the commit that added the guard (absent at 9e58503be1 and f89fc8e731, present at e274a0e60c and later), so a holds-only build run from an older base uploads for real; and the y213-rebase check reads tests.failed but not tests.errors (disarm owner 2.0.0_SA_COO~Y2: forbid BUILD_ONLY runs from a base whose builder lacks the guard, or land the guard in the base commits).",
+  "world_is": "MEASURED now: git merge-base --is-ancestor e274a0e60c HEAD -> ancestor (control: 9e58503be1 is an ancestor of e274a0e60c, and e274a0e60c is NOT an ancestor of 9e58503be1). infra/aws/lambda/ci/build-and-upload.sh at HEAD carries the BUILD_ONLY branch before the upload calls (lines 709 to 714) and the end-of-run branch (line 805). The live worker worktrees 281, 283, 284 and 285 each hold the guard at their HEAD (git grep -c 'BUILD_ONLY:-0' = 2); .tools/wk-provision.sh cuts a worker from the current branch, never an older base, so the guard is landed in every base a candidate is cut from. The second half (checks/r20/ar20_checks.py reads tests.failed and tests.passed but not tests.errors) is a weakness in the check of a CLOSED order (AR-y-213); no live artifact depends on it, and the lesson (read tests.errors as well as tests.failed in any build check) is carried to the next round's order-writing, not armed. NOT READ: a worker worktree older than 281 (none is live).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor e274a0e60c HEAD (ancestor), with the two controls above",
+      "git show HEAD:infra/aws/lambda/ci/build-and-upload.sh (lines 709 to 714 and 805 to 806)",
+      "git -C C:/dev/wk-irpt-anlreq-285 grep -c 'BUILD_ONLY:-0' HEAD -- infra/aws/lambda/ci/build-and-upload.sh -> 2 (also 281, 283 and 284)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's own remedy (land the guard in the base commits used as candidates) holds: the guard is in HEAD and in every live worker base, and bases are cut from the current branch. The tests.errors point is a closed order's check, recorded as an order-writing lesson, not an armed hazard."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S1 -- the approved candidate tckt-meeting-form-prod-recut is patch-identical to excluded commits, so it is left out whole (AR-y-385)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "AR-y-385 leaves the approved candidate tckt-meeting-form-prod-recut out whole. Its first commit e5c8e07569 is patch-identical (patch id 9950b74e) to the excluded original commit 12c164a073, and its second commit 4e1e35bfa0 carries the same 267 added and removed lines as the excluded outcome-visibility commit 8e4f088522. Applying either pulls an excluded commit's content into the recut, so the recut carries no meeting-request form.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rules whether the meeting-request form is in the release before the approval-by-sha of cand/dell2/anlreq-prod-recut; the recut as built omits it)",
+  "spec_asserts": "TO-AR-y-385 step 2 and the CTO ruling it cites: tckt-meeting-form-prod-recut is an approved candidate (its two own commits, the meeting-form content only); 12c164a0 and 8e4f0885 are excluded commits; an excluded commit is never pulled in.",
+  "world_is": "At the portal worktree, base origin/PROD fa21a303d8: git show e5c8e07569 piped to git patch-id --stable gives 9950b74eac14324f6e061418a6716d7f31ac6a19, equal to 12c164a0732db6b040df78a0a5d820e9fb220a96. The added and removed lines of 4e1e35bfa0 equal those of 8e4f088522 (267 lines each, zero differing); their patch ids 6b7b21df and d0762b71 differ only by base context. The candidate is left out whole and named in r46/LEFT_OUT.json; the recut payload check passes without it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git show plus git patch-id --stable of e5c8e07569aa090b29b7a31c363f68246ce41821 and 12c164a0732db6b040df78a0a5d820e9fb220a96",
+      "portal worktree: added and removed lines of 4e1e35bfa0826bbf07971b4cc0bad76ff79edc9d and 8e4f088522685acf223c1054cb5e896df613cbeb compared, zero lines differing",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~285/r46/CANDIDATE_COMMITS.json and r46/LEFT_OUT.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S2 -- the 0-failed test gate cannot pass as written: origin/PROD carries the same 70 failures and 27 errors in this worktree (AR-y-385 gate)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "The AR-y-385 gate bun test on src/pages/TicketCenter and src/pages/InvestorReporting requires 0 failed. On origin/PROD itself, in this worker worktree, the same folders give 70 fail and 27 errors. The 55 failing test lines are identical with the recut. The dominant errors are ENOENT reads of docs/contracts/investor-reporting/v1/routes.json and of org/missions artifacts that this worker worktree does not carry. The recut adds 57 passing tests and no new failure. A second run on the recut gave 28 errors where the first gave 27.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 5 and AR385-y-AC2: bun test on src/pages/TicketCenter and src/pages/InvestorReporting gives 0 failed; GATES-OK requires 0 failed.",
+  "world_is": "bun test on the recut (gates_check run): 1208 pass, 25 skip, 70 fail, 28 errors, 1303 tests across 435 files. bun test on origin/PROD (detached, same command): 1151 pass, 25 skip, 70 fail, 27 errors, 1246 tests across 427 files. The failing test lines are identical (diff empty).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~285/r46/GATES.json (recut tests block)",
+      "portal worktree: bun test src/pages/TicketCenter src/pages/InvestorReporting at origin/PROD fa21a303d8 (detached checkout, then back to the recut branch)",
+      "portal worktree: the 55 failing test lines of each run, compared with diff (empty)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S3 -- candidate irpt-series-mirror-contract-031 is content-empty on origin/PROD, so its cherry-pick is recorded empty (AR-y-385)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "The one own commit of irpt-series-mirror-contract-031 (a020da0bff) adds lines that origin/PROD already carries in src/pages/InvestorReporting/dashboard/seriesContract.ts (income_claim, calendar_source). Its cherry-pick conflicted only in the history_scope lines that PROD also carries; the resolved tree equals the tree before the pick. It is recorded as an empty commit (8df73982) so the -x trailer exists for the AC3 record. No content was added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 2 (candidate 5 of 9): the candidate's own commit applies on the recut by cherry-pick -x; a conflict is resolved only when the resolution adds no behaviour beyond the commit's own diff.",
+  "world_is": "origin/PROD seriesContract.ts holds income_claim in SERIES_OPTIONAL and the interface, the history_scope_claim and history_scope_basis pair, and calendar_source. The commit's parent 8012cd1a is an ancestor of PROD, not PROD itself. Keeping the HEAD side of both conflict hunks left the tree equal to HEAD, so git cherry-pick --continue refused an empty result and the commit was made with git commit --allow-empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git show origin/PROD:src/pages/InvestorReporting/dashboard/seriesContract.ts (lines 29, 30, 77 to 81, 101)",
+      "portal worktree: commit 8df73982 on cand/dell2/anlreq-prod-recut, trailer (cherry picked from commit a020da0bff1f043fb8dd58060e818f5290e307ab)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S4 -- the lint rewrite keeps a vacuous negative assertion: the raw backspace bytes in the candidate's test were never a word boundary (AR-y-385 step 3)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "The eslint error in filing-decision-tree.test.tsx line 299 comes from six raw backspace bytes in candidate 1's own commit 9b20efde, where a word-boundary escape was meant. The negative assertion therefore matches only a literal backspace-Yes-backspace, which rendered text never holds. The agreed lint commit rewrites the bytes to a backspace character class, which keeps the same match, so the assertion stays vacuous. It is not repaired here: that is a test-semantics ruling, not a lint fix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 3: the lint rewrite of filing-decision-tree.test.tsx is the agreed fix for the eslint error in that file.",
+  "world_is": "At the recut: git show 9b20efde piped to a byte count of backspace (octal 010) gives 6; the same count at c27d9189 (the lint commit) gives 0, and line 299 reads a backspace class around Yes, Replace and No. In bun, the regex with a backspace class does not match the plain text Ticker GAMA Yes (false), while the plain alternation does (true).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git show 9b20efde91269e8b89fada01e1670a41402078a1:src/pages/TicketCenter/__tests__/filing-decision-tree.test.tsx byte count of octal 010 is 6",
+      "portal worktree: git show c27d9189cd4eb73e6f2387ee738e79bb76a509b0 of the same file, byte count 0",
+      "portal worktree: bun -e check of the backspace-class regex against plain text, false"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S5 -- the worker face asks for --author on git cherry-pick, which git does not accept (AR-y-385 worker face)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "The worker face asks for --author on every git cherry-pick. git cherry-pick has no --author option (the first attempt failed with empty commit set passed, and no commit was made). The picks keep each source commit's author; the committer is set for each command by GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL. No git config was written. The empty commit 8df73982 was made with git commit --author set to its source author.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 worker face: git cherry-pick and git commit each take --author 0.9.0_WK_IRPT_ANLREQ~285.",
+  "world_is": "git 2.55.0.windows.5: git cherry-pick -h lists -x, -n, -m, -s, --ff and no --author; git commit accepts --author.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git cherry-pick -h usage line (read at the recut)",
+      "portal worktree: git log of 9b20efde's pick (f0ba2bb3) shows the source author 0.9.0_WK_IRPT_ANLREQ~160"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W285-S6 -- origin/PROD already carries TradeRequestParts.tsx and its test, so the payload item reads no diff entry, not absent from PROD (AR-y-385 step 4)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W285-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~285",
+  "surfaced_at": "2026-10-17T07:05:37Z",
+  "one_line": "origin/PROD already carries src/pages/TicketCenter/TradeRequestParts.tsx and src/pages/TicketCenter/__tests__/trade-request.test.tsx. The excluded commit c05e3dda is not an ancestor of origin/PROD, so the payload check prints ABSENT TradeRequestParts.tsx as no diff entry against PROD, which is the only reading a recut on PROD can satisfy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-385 step 4: the payload check prints ABSENT TradeRequestParts.tsx and ABSENT trade-request tests (no path under src/ matching trade except files already on PROD).",
+  "world_is": "git ls-tree origin/PROD lists both paths. git merge-base --is-ancestor c05e3dda origin/PROD exits non-zero. The recut does not modify either file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree: git ls-tree -r --name-only origin/PROD (both paths listed)",
+      "portal worktree: git merge-base --is-ancestor c05e3ddaa1ce97ecb98fe26d5f592dd01fbf0e2a origin/PROD, non-zero"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```

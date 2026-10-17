@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~SOC21</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-17</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
@@ -14,7 +14,7 @@
 <round>2</round>
 
 **Directive:** D12 | **Fabric:** dell1 | **Decomp cell:** `SM-r-2` (`decompositions/SOC2_MSLOGS_DECOMP_R2.md`) |
-**outcome_ref:** FWD-1, FWD-2, FWD-7 | **depends_on:** `SM-s-2`, `SM-d-2`, `SM-n-2`, `SM-k-2`, `SM-c-2`, `SM-t-2`, `SM-e-2` complete and MERGED, and the issuer's `exposure` hookup landed. **STAGED: the issuer flips it to `pending` after the merges and the drain checks, and spawns this seat then.**
+**outcome_ref:** FWD-1, FWD-2, FWD-7 | **depends_on:** `SM-s-2`, `SM-d-2`, `SM-n-2`, `SM-k-2`, `SM-c-2`, `SM-t-2`, `SM-e-2` complete and MERGED, and the issuer's `exposure` hookup landed. **FLIPPED to `pending` by the issuer 2026-10-17 ~09:0xZ after the seven merges (TO-R2-c2 bae1c4c71c, TO-R2-t2 765639cc1e, TO-R2-e2 96d701d119 and its hookup amendment f26a3da767, TO-R2-k2 e36ce35f08, chain A s2/d2/n2 8ed6ce721a) and the drain checks (the twelve modes of `s1_check_r2.py` OK, 361 tests, ruff, `thread_trace_r1.py` THREAD-R1-OK).**
 
 ---
 
@@ -30,7 +30,7 @@ You run as the box identity, deliberately NOT a member of the group: you read no
 
 ### ITEMS, in this order. Stop at the first that fails and write what stands.
 
-1. **Preconditions.** From the repository root these print their OK tokens (all in `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R2_CHECKS/`): `s1_check_r2.py silverip`, `derive`, `naming`, `paging`, `desktop`, `retire`, `exposure_door`, `exposure_client`, `retry`, `tfvalidate`, `text`; and `python -m pytest infra/aws/lambda/globgrph-trino-access/tests data/m365_metadata/scripts/tests -q` passes.
+1. **Preconditions.** From the repository root these print their OK tokens (all in `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R2_CHECKS/`): `s1_check_r2.py silverip`, `derive`, `naming`, `paging`, `desktop`, `retire`, `exposure_door`, `exposure_client`, `hookup`, `retry`, `tfvalidate`, `text`; and `python -m pytest infra/aws/lambda/globgrph-trino-access/tests data/m365_metadata/scripts/tests -q` passes.
    Otherwise STOP and report.
 2. **Open the ledger** before any write: `python .tools/deploy_ledger.py open --slug soc2-mslogs-r2-streaming-derive-20261017 --title "SOC2_MSLOGS round 2: door code, collector retry 0, memory down after the streaming proof" --author 0.7.0_AE_CloudOps~SOC21 --leg ...`
    (legs: apply-code, rederive-proof, memory-down, memory-proof). Blast radius: the code of the door and of the collector, ONE new resource (`aws_lambda_function_event_invoke_config.collector`), the door's configuration (memory only, in the last legs). Rollback: re-apply the previous commit's zips and `terraform` state for that one resource (`git revert` of the round-2 merge range and the same apply). Stored objects are write-once and stay.
