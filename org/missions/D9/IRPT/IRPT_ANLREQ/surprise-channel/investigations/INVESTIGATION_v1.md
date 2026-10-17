@@ -24918,3 +24918,35 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S195 -- W133-S1 disarmed: the three red tests were re-pointed in the landed commit
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S195",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T12:03:40Z",
+  "one_line": "W133-S1 DISARMED: the three TicketCenter tests that AR-y-325 turned red were re-pointed in the same landed commit (6f4e5f67), and both PROD and DEV hold the updated assertions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W133-S1"
+  ],
+  "spec_asserts": "Row W133-S1 (BLOCKING, disarm owner 2.0.0_SA_COO~Y2): AR-y-325's staff-filer change turns three existing TicketCenter tests red (analysis-firm-c-firm.test.tsx tests (d) and 'the page derives the filing firm', analysis-firm-choice.test.tsx 'an internal caller is offered...'), the two files being outside the order's grant, so AC1 (folder 0 failed) could not print PORTAL-TESTS-OK.",
+  "world_is": "MEASURED 2026-10-17 ~12:0xZ with git -C portal show: at origin/PROD (head 15bc21b304d4) and at origin/DEV, src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx line 70 reads `test('(d) an Opal-internal caller is offered the served firms in a control and files under the one it chooses; no sentence says it cannot file'` (the assertion now states the new staff behaviour, not the removed staff sentence), and analysis-firm-choice.test.tsx line 123 reads `test('an internal caller is offered the READY firms of the Global context and never an UNAVAILABLE one'`. git log on the first file shows commit 6f4e5f67 (`feat(TicketCenter AR-y-325): an Opal staff filer chooses the firm from the served list`) touching it, so the test files were updated in the landed feature commit itself; the stranded-test repair commit 1c71bfd8 is also in its history. NOT READ: a clean run of the folder by this seat; the DT's gate for the 4cf06588 release recorded failing test lines EQUAL to origin/PROD's (118 each) in the same sparse-worktree command, so a full-tree run of these two files is not claimed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show origin/PROD:src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx (line 70) and the same at origin/DEV",
+      "git -C portal show origin/PROD:src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx (line 123)",
+      "git -C portal log --format='%h %s' origin/PROD -- src/pages/TicketCenter/__tests__/analysis-firm-c-firm.test.tsx (6f4e5f67 and 1c71bfd8 in the history)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The red tests were repaired in the commit that landed the change; the blocking condition (a change that cannot satisfy its own acceptance because two files are outside its grant) no longer stands in the tree on either trunk. A full-tree test run is not claimed."
+}
+]
+```
