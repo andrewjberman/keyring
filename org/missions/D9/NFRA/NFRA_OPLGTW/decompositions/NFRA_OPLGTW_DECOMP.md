@@ -2861,3 +2861,13 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-un-1` | `deploy/opal-gateway.service` gains `MemoryHigh=1200M`, `MemoryMax=1400M`, `OOMScoreAdjust=300` and nothing else changes; the deploy already installs the unit and restarts it | `deploy/opal-gateway.service`, `tests/test_og_un1.py` | WORLD | `~140` | worker |
 
 **fanout:** 2 of 2 chains, cap 8 (the write sets are disjoint: Python and tests; a unit file and its test). **Not in this issuance:** their release (a later order with its own never-widen), the owner of `etfs_rivals_flow` (the hazard is routed by this cell, not left to it), other whole-table readers beyond the new central cap.
+
+## ADDENDUM R3-T.117 (2.0.0_SA_COO~O, 2026-10-17 ~19:3xZ) -- ROUND 41, workstream ENRICH-R41-V: the release of the Z-S375 repair (OG-en-25 and OG-un-1)
+
+**Source.** `OG-en-25` (typed Parquet in-memory cap, `etfs_compare_peers` Arrow filters; drained `a197c3fc38`) and `OG-un-1` (memory cap on the gateway unit; drained `a6788723f3`) are merged and verified (ruling rows `Z-S376`, `Z-S377`). The ARMED hazard `Z-S375` (any caller can take the 1.8 GB host out of memory through `etfs_compare_peers`) is repaired only when they are LIVE and measured on the host UNDER A HARD GUARD (the applier's unguarded harness caused the 17:21Z OOM). CTO decision 35541: each ships under its own never-widen.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-38` | the sixth batched release (five files: `typed_scope.py`, `etfs_rivals_flow.py`, `deploy/opal-gateway.service`, two tests) on the live ref `efcc8ae19f`: Phase A on the host under the guard (the call that ran away bounded, a valid pair, the 49F chain unchanged, the unit acceptable to systemd), the ask for three halves, Phase B (deploy, the 27-tool read 27 of 27 under the guard, the unit limits live, the clock and failed units read BEFORE the ledger closes) | `W/`, the ledger, the sentinel | WORLD | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (one release on one host; the builds are merged). Staged behind `OG-ap-37` (the same applier; a repository merge) and its GO naming `trunk_sha`. One ask carrying both changes, each stated with its own widening (a reading of the CTO's "each under its own never-widen", named to the CTO). **Held:** `Z-S338` (organic window call), `Z-S177`, `Z-W94-S2`, `Z-S313`, `Z-S322`/`Z-S325`.
