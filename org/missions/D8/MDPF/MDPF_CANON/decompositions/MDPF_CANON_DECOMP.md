@@ -676,3 +676,32 @@ Notes (the drafter's, read by the issuer):
 **Not cut this round, and what is missing (the CTO's "otherwise state what is missing"):** (a) *CN-s-2, the producer emission of Cottonwood carried legs* -- dissolved by ruling 1; if the CTO prefers a producer emission, the input missing is a ruling on how `apply_global_trend_groups` may preserve a scope's own `carried_dates` (it resets every scope), which edits CN-p-1's and CN-r-1's function. (b) *The edge decision for CN-s-5* -- queued, not mine (ruling 3). (c) *The optional extension in the CRO spec* ("Andrew's call; not in the base") -- not cut. Nothing for head (f) or (g) waits on a spec input: both are on file.
 
 **Checks:** `deliverables/2.0.0_SA_COO~D1/round11/checks/` (`r11_cn_s_4.py` modes `pure`, `real`, `wiring`; `r11_cn_s_3.py` mode `pure`; `r11_cn_s_1.py` modes `pure`, `seams`; `ref/` holds the two served-object fixtures, 2026-10-15; every script has a `selftest` with a scratch reference and planted mutants). Base results are in each order's preflight.
+
+
+## v11 AMENDMENT 1 -- the demo tenant's Trend: (C) final, (B) struck, `CN-s-5` superseded (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-16 ~15:3xZ)
+
+**Rests on:** the laptop CTO's ruling `XA-20261016T143752Z-6cad` (ruled 14:43:09Z; box CTO msg 6758: (C) now, (B) next, (A) refused), the issuer's read and measurement `deliverables/2.0.0_SA_COO~D1/round11/CN_S_5_RULING_READ_20261016.md` @ac7b8e71ef, and the CTO's final ruling on that read (box CTO msg 6762, 14:54Z: "(C) is final ... (B) struck as empty under the ruling's own condition; CN-s-4 ships alone").
+
+- *`CN-s-5` is SUPERSEDED.* Its build (portal `e206e06e`, wiring 10 of 10) is not cherry-picked into any landing candidate. As built it would give the demo `mode = variant1` with the stitch reads refused at the edge, which draws no Models band before 2026-05-15; the demo's own form is Variant 2, which `CN-s-4` repairs.
+- *Cell (B) is not cut.* The one-firm suppression condition empties it: all 1,865 pre-2026-05-15 per-model points (383 dates, five primary models) rest on exactly one firm (49 Financial), MEASURED on the served per-firm objects.
+- *`CN-s-4` ships alone* on the next portal promote (client-facing: Andrew's word). The demo's open call `dell1-20261016T143036Z-c7de` closes on the ruling.
+- **Round record, as the CTO asked:** before 2026-05-15 the demo tenant's Global Trend differs from the internal global view, because the per-model lines there are single-firm values (49 Financial's own series) and a non-internal session may not read them (FWD-3). The demo draws Variant 2's one Models band for that span.
+- *Chain 1 now reads:* `CN-s-4` (done, merged), `CN-s-5` (superseded), `CN-s-3` (done, merged). `CN-s-1` is merged. Remaining for the round: the typecheck and the one real run on 5174 of `CN-s-4` and `CN-s-3` (judgment criteria for the CVO), the CN-s-1 never-widen pair and the CloudOps deploy (no earlier than the 2026-10-17 13:30Z fire).
+
+
+## v11 AMENDMENT 2 -- `CN-s-6`, Global's axis drops the enumerated date 2026-10-16 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-17 ~14:5xZ)
+
+**Rests on:** the scheduled fire of 2026-10-17 13:30Z (manifest `20261017T133145Z`, read `deliverables/2.0.0_SA_COO~D1/round11/real_run/FIRE_READ_20261017.md` @882da2f5f8; row `MDPF_CANON-D1-S33`), PRD v2.29 @11ea6ef573, and the CTO's rulings: msg 7594 (exempt 2026-10-16, built on the deployed pin, the 10-18 fire's one gold change) and msg 7600 (ruling (B): drop the date from Global's axis as an ENUMERATED set, never a general filter, never also in the exempt list; the pair names Cottonwood's own axis as untouched; the D4 no-write dry run must show Global `as_of` = the frontier, a non-None headline and no None `model_value` inside the covered range, else the change does not ride the fire).
+
+- *Ruling taken inside this decomposition (issuer):* the repair is a NEW cell, `CN-s-6`, not a reopening of `CN-s-1`: it changes a different function (`build_global_artifact`'s axis, `dim_mdpf_aggregate_aua_timeseries.py` L2368) and a different outcome (the fire emits Global at all), it builds on the deployed pin `d2f734fbac` and not on the issuance base, and it rides the next fire alone. CN-s-1 stays `complete`; its WORLD grade is read on the first scheduled fire after CN-s-6 deploys (CTO msg 7600: "CN-s-1's Global grade reads that fire").
+- *Measured at the pin, read-only:* the Global refusal reproduces offline over the fire's three staged legs ("5 across 1 date(s)"); with the one-set change Global emits 498 dates, `as_of_last` 2026-10-15; with the date in the exempt list instead, gate (v) passes and the composition gate then refuses ("1 band/total violation(s) across 499 dates"), which is why (B) and not (A).
+
+**Gate keying (Rule 27, `to-pipeline-gate.py` GATE (x)):** round 11 already has its issuance at HEAD, and a new order file in it is refused; the order therefore carries the line-anchored `<workstream>GLOBAXIS</workstream>` beside `<round>11</round>`, which keys it as (GLOBAXIS, 11), a scope with its own write surface (the Global axis line in `dim_mdpf_aggregate_aua_timeseries.py`, which no other round-11 order owns). It is still round 11's amendment 2: the round closes only when this workstream is terminal too.
+
+**Fan-out:** 1 of 1 chain, cap 8. Slot ~33, base the deployed pin `d2f734fbac`.
+
+| cell | serves (cell_refs) | candidate | owned files | depends on | actor |
+|---|---|---|---|---|---|
+| `CN-s-6` Global's axis drops the enumerated date 2026-10-16: `GLOBAL_AXIS_DROP_DATES = frozenset({"2026-10-16"})` subtracted from the union of the three legs' dates in `build_global_artifact`, so Global's series, `as_of_last` and coherence gates never see it; the date is not in the exempt list; Cottonwood's axis keeps it (WORLD: a gold-package deploy; the 2026-10-18 13:30Z fire's one gold change) | FWD-9 head (g) as served (CN-s-1's outcome at Global; PRD v2.29); row MDPF_CANON-D1-S33 | producer / Global axis | `data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py`, `data/mdpf/scripts/gold/tests/test_global_fold_flag2.py` | -- (no build edge); a deploy edge: one gold change per fire, no earlier than a never-widen pair signed by both halves, finished before the 2026-10-18 13:30Z fire | ~33 (worker) |
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round11/checks/r11_cn_s_6.py` (mode `real`, arms S0 to S4; legs read from `C:/dev/_deploy_artifacts/canon_s6/`, outside the repo). Base 2 of 5, reference 5 of 5, three planted mutants each red on their named arms (order preflight).
