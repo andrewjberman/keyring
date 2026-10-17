@@ -2,6 +2,7 @@
 
   python s1_check_a1.py ops    -> A1-OPS-OK    (alias matrix v3: timeline, recollect, get_day gone, a member never supplies bytes)
   python s1_check_a1.py bronze -> A1-BRONZE-OK (write-once, the old table frozen, the audit_records key grammar, derive over two days)
+  python s1_check_a1.py detail -> A1-DETAIL-OK (timeline detail=true returns each record whole, capped by rows and by response bytes)
   python s1_check_a1.py tf     -> A1-TF-OK     (door role may invoke the collector; COLLECTOR_FUNCTION set; no TCKT; the Deny unchanged)
 
 Synthetic values only. The door API this file drives is fixed in the order's worker face.
@@ -265,6 +266,74 @@ def bronze():
     return 0
 
 
+def detail():
+    """timeline with detail=true: every row carries the WHOLE raw record (parsed from silver's raw_json) so an investigator can see who acted
+    (AppId, ClientAppId, UserAgent, ClientIPAddress, LogonType, ...). A sync Lambda answer is limited to 6 MB, so detail answers are capped at
+    1000 rows and at 5,000,000 bytes of JSON, and say truncated. Without detail the answer is exactly as before."""
+    h = load()
+    os.environ["BUCKET"] = "opal-data-trino"
+    s3 = FakeS3()
+    seen = []
+
+    def make_rows(n, pad=0):
+        out = []
+        for i in range(n):
+            rec = {"Id": "r%d" % i, "CreationTime": "2026-10-10T11:%02d:%02d" % (i // 60 % 60, i % 60), "Operation": "MoveToDeletedItems",
+                   "UserId": "pat@opalinvest.com", "ClientIPAddress": "203.0.113.9", "AppId": "app-%d" % (i % 3),
+                   "ClientInfoString": "Client=Synthetic;" + "x" * pad}
+            out.append({"time": "2026-10-10T11:%02d:%02dZ" % (i // 60 % 60, i % 60), "feed": "Exchange", "operation": "MoveToDeletedItems",
+                        "result_status": "Succeeded", "client_ip": None, "item_name": None, "user_id": "pat@opalinvest.com",
+                        "record_id": "r%d" % i, "raw_json": json.dumps(rec)})
+        return out
+
+    state = {"rows": make_rows(3)}
+
+    def rows_fn(s3_, bucket, prefix, account, start, end, detail=False):
+        seen.append(detail)
+        rs = state["rows"]
+        return [dict(r) for r in rs] if detail else [{k: v for k, v in r.items() if k != "raw_json"} for r in rs]
+
+    reader = types.SimpleNamespace(timeline_rows=rows_fn)
+
+    def call(ev):
+        return h.handle(ev, ctx("member"), s3=s3, log=lambda x: None, silver_reader=reader, lambda_client=FakeLambda(), now=NOW)
+
+    base = {"op": "timeline", "account": "pat@opalinvest.com", "start": "2026-10-10T00:00:00Z", "end": "2026-10-11T00:00:00Z"}
+    bad = []
+    plain = call(dict(base))
+    if not ok(plain) or any("raw" in r or "raw_json" in r for r in plain.get("rows", [])):
+        bad.append("a timeline without detail must carry no raw record: %r" % (plain.get("rows", [])[:1],))
+    full = call(dict(base, detail=True))
+    rows = full.get("rows", []) if isinstance(full, dict) else []
+    if not ok(full) or len(rows) != 3 or full.get("truncated") is not False:
+        bad.append("detail timeline answer %r" % ({k: v for k, v in (full or {}).items() if k != "rows"},))
+    elif any(not isinstance(r.get("raw"), dict) or "raw_json" in r for r in rows) or rows[0]["raw"].get("AppId") != "app-0":
+        bad.append("each detail row must carry the parsed record under 'raw' and no 'raw_json' string: %r" % (rows[0],))
+    if True not in seen:
+        bad.append("the door never asked its reader for detail")
+    state["rows"] = make_rows(1200)
+    capped = call(dict(base, detail=True))
+    if not ok(capped) or len(capped.get("rows", [])) != 1000 or capped.get("truncated") is not True:
+        bad.append("a detail answer must cap at 1000 rows with truncated=true (got %d)" % len(capped.get("rows", [])))
+    state["rows"] = make_rows(900, pad=9000)
+    big = call(dict(base, detail=True))
+    size = len(json.dumps(big))
+    if not ok(big) or size > 5000000 or big.get("truncated") is not True or not big.get("rows"):
+        bad.append("a detail answer must stay under 5,000,000 bytes and say truncated (bytes %d, rows %d)" % (size, len(big.get("rows", []))))
+    state["rows"] = make_rows(5001)
+    nodetail = call(dict(base))
+    if len(nodetail.get("rows", [])) != 5000 or nodetail.get("truncated") is not True:
+        bad.append("without detail the cap stays 5000")
+    for val in ("yes", 1, None):
+        if ok(call(dict(base, detail=val))):
+            bad.append("detail=%r must be refused (a boolean only)" % (val,))
+    if bad:
+        print("A1-DETAIL-REFUSED " + "; ".join(bad))
+        return 1
+    print("A1-DETAIL-OK")
+    return 0
+
+
 def tf():
     if not os.path.exists(ACCESS_TF):
         print("A1-TF-REFUSED no access.tf")
@@ -308,7 +377,7 @@ def tf():
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else ""
-    fn_ = {"ops": ops, "bronze": bronze, "tf": tf}.get(mode)
+    fn_ = {"ops": ops, "bronze": bronze, "detail": detail, "tf": tf}.get(mode)
     try:
         sys.exit(fn_() if fn_ else 2)
     except FileNotFoundError as e:

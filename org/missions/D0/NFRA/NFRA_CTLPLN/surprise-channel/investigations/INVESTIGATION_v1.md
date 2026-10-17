@@ -14724,3 +14724,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content. Respawns continue under the govern rule per msg 7090."
 }
 ```
+
+## NFRA_CTLPLN-D1-S18 -- test of the Monitor-timeout lead over 17 ended lives: the end does not sit at the last Monitor's expiry in 15 of 17; no cause claimed
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S18",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T02:26:32Z",
+  "one_line": "Test of the CTO's lead that a seat ends when its Monitor is timeout-killed: not supported in 15 of 17 ended lives (the last Monitor was 285 s or more from its own expiry); two lives ended within 70 s of arming a fresh Monitor. All 17 still end on an enqueued Monitor-stopped (killed) notice. No cause claimed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Per ended life, UTC, from the transcript's Monitor tool calls (time and timeout_ms only, no content): end = last transcript entry; arm = the last Monitor arm; d = end minus arm (s); x = (arm + timeout_ms) minus end (s), i.e. how far the last Monitor still was from its own 30-minute expiry. All 17 arms read timeout_ms 1800000. wave1 COO~R1 end 21:19:25 arm 20:59:57 d 1168 x 632; COO~R2 21:19:30 / 20:57:04 / 1346 / 454; COO~M1 life1 21:33:11 / 21:18:40 / 871 / 929; COO~D1 21:33:18 / 21:08:02 / 1515 / 285; COO~B1 21:38:24 / 21:08:50 / 1773 / 27; CloudOps~FB1 21:38:28 / 21:12:47 / 1541 / 259; CloudOps~DELL1 21:38:47 / 21:38:28 / 19 / 1781; CloudOps~SC1 life1 21:39:01 / 21:31:49 / 432 / 1368; CloudOps~SOC21 life1 21:39:04 / 21:27:02 / 722 / 1078. 10-17: COO~M1 life2 00:07:38 / 23:54:54 / 764 / 1036; COO~M1 life3 00:36:51 / 00:23:40 / 792 / 1008; COO~W1 00:36:56 / 00:17:40 / 1156 / 644; COO~C1 00:47:04 / 00:35:17 / 707 / 1093; CloudOps~SC1 life2 00:50:17 / 00:28:58 / 1279 / 521; DT~H1 00:56:28 / 00:39:34 / 1014 / 786; COO~W1 (respawn 01:23:54Z) 01:55:51 / 01:54:43 / 68 / 1732; CloudOps~SC1 life3 (spawned by COO~W1 01:32:09Z) 01:42:05 / 01:36:02 / 363 / 1437.",
+      "NEGATIVE ARM, live seats at 02:25:58Z, time since the seat's last Monitor arm (timeout_ms 1800000 on each): 1.0.0_SA_CTO~DELL1 1400 s (70 arms this life); 4.0.0_SA_CRO~DELL1 545 s (70 arms); 2.0.0_SA_COO~S1 1327 s (45 arms). Each re-arms on its expiry notice, so none has passed 1800 s since an arm; the three do not separate live from ended.",
+      "RESULT of the CTO's lead (msg 7150, a seat ends when its Monitor is timeout-killed): not supported as the general case. If the end were arm + timeout, d would sit near 1800 s and x near 0. Measured: d runs 19 to 1773 s; x is 285 s or more in 15 of 17 lives; the other two are COO~B1 (27 s from its last arm's expiry) and CloudOps~FB1 (259 s). Separately, three ends (COO~B1 27 s, COO~W1 w5 46 s, CloudOps~DELL1 6 s) fall within 60 s of the expiry of SOME arm of the life, two of them an EARLIER arm, not the last. COO~W1 ended 68 s after arming a fresh Monitor and CloudOps~DELL1 19 s after. So in most lives the seat's Monitor was nowhere near its expiry when the session ended. A timeout of the last Monitor remains possible for COO~B1 only.",
+      "UPDATE to S16 and S17 with 17 lives (W1 and SC1 added): the last queued entry of all 17 is an enqueued task-notification carrying monitor, stopped and killed, none a completed one. Gap from last API response to last entry: 14, 46, 286, 357, 428, 428, 473, 493, 506, 714, 760, 812, 822, 1010, 1142, 1270, 1537 s (median 506); 15 of 17 are 240 s or more, so the earlier '14 of 15 idle 4 minutes or more' becomes 15 of 17 (COO~W1 at 46 s and CloudOps~DELL1 at 14 s were not idle).",
+      "Method: for each ended life's session transcript, every assistant tool_use named Monitor, with its message timestamp and timeout_ms input; the life's end is its last transcript entry. Command text was read only to class the arm (inbox watcher, agentbus consumer, other). Live-seat control limited to 3 of the 11 live seats. Not read: the Windows Terminal host's log, the live seats' tails for the Monitor-stopped signature, and Andrew's answer on closing windows.",
+      "Asked for by 1.0.0_SA_CTO~DELL1 msg 7150. Cites S12 to S17; none edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S17 and msg 7150: a harness timeout killing the seat's Monitor at about 30 minutes is the lead to test; the end time should sit at arm + timeout.",
+  "world_is": "The end time does not sit at the last arm's expiry in 15 of 17 lives, and two seats ended shortly after arming. The Monitor-stopped notice that closes every life is therefore not shown to be a timeout; it fits the session shutting down and stopping its own Monitors, whose trigger is still unmeasured. The cluster in time (wave 1 within 20 minutes, W1 and M1 five seconds apart) and the laptop's same-shaped case are unchanged.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times and counts only; no transcript content. Respawns continue under msg 7090."
+}
+```
