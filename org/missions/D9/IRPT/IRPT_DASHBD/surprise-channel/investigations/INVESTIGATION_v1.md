@@ -25530,3 +25530,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Owner: this seat (issuer); both rows dispositioned here, nothing armed. The browser walk (a gap day, an unreported day, an isolated day) is owed before PROD (CTO msg 10384)."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S135 -- the 49 Financial scheduled fire logs FILLED_CATCHUP_LIST_FAILED (AccessDenied on ListObjectsV2) on the filled catch-up listing; pre-existing, read on the 2026-10-16 fire
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S135",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-17T09:19:49Z",
+  "one_line": "The 49 Financial gold function's scheduled fire logs FILLED_CATCHUP_LIST_FAILED with an AccessDenied on ListObjectsV2 (the filled stage's catch-up listing), so the stage owes only the day just written; read on the 2026-10-16 fire, before any transaction code was deployed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "reporting-gold/handler.py filled_stage (and owed_filled_days): the filled table owes every trading day after its own newest landed partition through the newest returns day just written, found by listing the filled prefix (newest_landed_day); a failed listing is caught and the stage owes only the written days.",
+  "world_is": "The log group of irpt-49f-reporting-gold-lambda holds, for the 2026-10-16 fire (invocation at 11:46Z, 298.2 s, peak 1455 MB), one line FILLED_CATCHUP_LIST_FAILED AccessDenied: ListObjectsV2 denied to the function's role; no other error-class line in 48 events scanned (read-only filter-log-events over 11:30Z to 12:45Z). So the catch-up is degraded to the written days on that fire. The function runs and the returns are unaffected; a day a fire fails to write is not recovered by the filled stage's own catch-up until the listing is permitted. Not measured: which prefix and which statement of the role's policy the denial maps to (the role lists the six gold prefixes by a conditioned statement; the filled location's condition match was not checked), how many earlier fires logged it, and whether any filled day has been missed because of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tools/read_49f_fire.py run on 2026-10-16 (this seat), counts: 1 invocation, 1 error-class line",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py lines 860 to 874 and 888 to 898 (the caught failure and its print)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while building the reader for Monday's first-fire read; pre-existing, NOT from the transaction stage (which does not list the filled prefix). Not this seat's to fix: the filled-report function and its role belong to the 49 Financial filled-report lane (2.0.0_SA_COO~D2 and the CTO's switch-on addendum). Monday's read reports this line separately from the stage lines so it is not mistaken for a transaction failure."
+}
+```
