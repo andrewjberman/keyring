@@ -26369,3 +26369,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts and percentages only. OG-ap-32 AC2 cannot read 4 of 4 arms true on this release. The page chain was not completed (4 of about 12 transactions pages; fees not started)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T02:10:23Z",
+  "id": "NFRA_OPLGTW-Z-S339",
+  "one_line": "OG-ap-32 Phase B: on page 4 of the transactions chain the row trade_dates inside one page are not non-increasing, so the e1_newest_first arm as worded would have read false even on a complete chain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32_arms.json: transactions pages 1 to 3 row_days_non_increasing true; page 4 (rows 44, newest row day 2026-07-16, oldest 2026-06-16) false; page order between pages held (each next page's newest row day is not later than the previous page's oldest)",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py _window_read at b124377b41: the rows run newest PARTITION first, rows within one partition in the order read"
+    ]
+  },
+  "spec_asserts": "Within each page the row dates are non-increasing (order step 5, e1_newest_first).",
+  "world_is": "The code orders by partition date, and rows inside one partition stay in read order, so a partition whose rows carry differing trade_dates (or a trade_date later than the file's date) puts a later date after an earlier one inside a page. The arm measures trade_date. The cause on page 4 was not isolated: the chain was stopped by the memory guard and the release was rolled back before another read. The arm wording needs a decision (order by partition date, or by trade_date in the code) before a future release is graded on it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and dates of the page boundaries only; no row content."
+}
+```
