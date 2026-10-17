@@ -57,3 +57,20 @@ access, and whether Teams is in round one. Andrew's reply, VERBATIM:
   The tenant-admin approver is Andrew.
 - **Custodial / account data:** no polling. It runs when the daily file lands, with a scheduled run as backstop.
 - **Teams:** deferred to a later round.
+
+## Addendum 3, 2026-10-17 ~02:0xZ: real account numbers, and build now
+
+The CRO found that Schwab silver (`opal-data-assets/schwab/<master>/silver/`) carries raw account ids and titles, and that
+only the opalgateway replaces them with a keyed HMAC (`account_ref`, NFRA_OPLGTW OG-z-3). It asked whether Opal staff
+logins should see real numbers, and whether to start the Day 1 build. Andrew, VERBATIM:
+
+> 1.) Yes they should show real acct numbers. 2.) Yes start building now
+
+- **(1) Gateway:** Opal staff principals see real Schwab account numbers. Partner and external principals keep the keyed
+  `account_ref`. This is a gateway change in the NFRA_OPLGTW lane, routed to its owner; it is not fast-pathed here.
+- **(2) Build:** the Day 1 early-warning build starts now, offline:
+  - a Graph delta poller (reusing the IRPT IB-s-6 client);
+  - INBOX RADAR, the open-items store and the business-hour clock;
+  - a YTD replay as proof.
+  It runs no live app-only mailbox read until the Graph grant exists (Day 0, Andrew).
+  The daily rules read Schwab silver directly, never through the gateway.
