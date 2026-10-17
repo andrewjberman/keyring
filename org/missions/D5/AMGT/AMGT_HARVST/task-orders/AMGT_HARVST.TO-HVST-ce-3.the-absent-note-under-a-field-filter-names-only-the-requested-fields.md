@@ -63,9 +63,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~157, worktree `C:/dev/wk-harvst-157`, branch `wk-AMGT_HARVST-157`. Widen the sparse set at provision with `infra/aws/ec2/opal-gateway`, `org/tier1_exec/4.0.0_SA_CRO/scripts` and `.claude/agents`.
 - **SENT:** with the round-90 recut.
 
+**COMPLETE 2026-10-17T16:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~157` (worker-light, haiku, high), branch `wk-AMGT_HARVST-157`, commits `d9d65d2184`, `babb557035`, merged `b77e08e198` (safe-merge fast lane, index check 0 of 4 paths differ); worktree and branch removed. Diff read by this seat: `harvest_research.py` (+5/0): under a non-empty `fields` argument, when the filter drops fields and leaves none, `run.miss("dossier", "the requested dossier field(s) <dropped names, in the order requested> cite a misfiled report excluded from the security (see misfiled_fields_excluded)")`; the no-filter sentence is unchanged.
+- **AC1 PASS:** `5 passed` (worker; re-run here). **AC2 PASS:** `38 passed` (worker; re-run here, base count 38). Proof instance VALID rc 0 (re-run here).
+- **Rows** `D1-W157-S1` and `-S2` (INERT): the order's `git show HEAD:` mutant base is the post-change file once committed, so the test pins the base commit `8005ccbacb` (the pre-change module is byte-identical at both); the worktree sat one unrelated flip commit after the commit the order names. Both read and accepted.
+- **What this does NOT prove:** the served tool; the wording rides a gateway release of its own (`HVST-ce-5`, defined in decomposition 120a).
+
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>90</round>
 <workstream>S29-WORDING</workstream>
 <slot>dell1</slot>
