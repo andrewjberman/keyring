@@ -1,0 +1,84 @@
+# AMGT_RESAPP task order -- `AMGT-bt-6` -- THE MODEL TAB'S FIGURE TOOLTIP OF THE LAST ROWS OF THE ALL FIGURES GRID OPENS UPWARD SO THE GRID'S SCROLLER NEVER CLIPS IT (THE RECUT OF AMGT-bt-2's REPAIR A; A NEW CANDIDATE FROM PROD)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
+<owned_cells>AMGT-bt-6</owned_cells>
+</decomp_ref>
+<issued_to>0.9.0_WK_AMGT_RESAPP~503</issued_to>
+<issued_by>2.0.0_SA_COO~R1</issued_by>
+<to_id>AMGT_RESAPP.TO-AMGT-bt-6.model-last-rows-tooltip-upward</to_id>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- commits on a branch in the portal repository and a receipt; nothing scheduled.
+comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call; git, node and bun only.
+comp-adversary: RUN at the cut -- AC1 at the base: the new harness file does not exist, so it FAILS (exit 1); AC2 run in a provisioned worktree cut at `856fb37b` reads `R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness 30 of 33 pass, base <Q> of <U>, regressions 0, pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs)`, so AC2 is a REGRESSION guard here (it PASSES at the base as expected); AC3 with the receipt absent ends in a FileNotFoundError traceback (rc 1). The worker runs the new check against the unedited head before any product edit (step 2 or 3).
+EGRESS CLASS, declared: NONE beyond `git fetch origin` (read) in the nested portal repository; the harness reads committed fixture files and renders with react-dom/server; no browser, no HTTP.
+</preflight>
+
+**Your worktree:** `C:/dev/wk-resapp-503` (branch `wk-AMGT_RESAPP-503`, cut from the issuance commit; its nested portal worktree `C:/dev/wk-resapp-503/portal` is cut at PROD `856fb37b`). Work and commit only there. The shell's working directory resets between calls: start EVERY shell call with `cd C:/dev/wk-resapp-503`; a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout and answers for the wrong tree.
+
+## 1. THE CELL -- `AMGT-bt-6` (round 113, decomposition s.122)
+
+A real-browser walk (the UI walker, headless Chromium) of RIO LN's Model tab with `Earlier version` set to October 16th, 2026 finds `occluded-popover`: `3 of 9 sample points of an open tooltip are covered by another element`, the covering element being the first `li` of the `details` list that follows the `All figures` grid (`Tgt: The research team keeps no workbook for this company; t...`). Round 113's first candidate for this (`AMGT-bt-2`, `z-10` raised to `z-50`) was walked on a real build and read EXACTLY the same finding, so the cause was not stacking. The walker's own diagnostics on that build read the ancestor chain of the open tooltip bubble: `div.pointer-events-none absolute left-0 top-full z-10 hidden pt-1 group-hover:block` (height 284 px) inside `td.group relative` inside `tr` inside `tbody` inside `table.w-full` inside `div.overflow-x-auto` (the grid's scroller: `overflow: auto`, scroll height 9343 px against client height 9291 px, no positioned ancestor between the cell and the scroller). **The scroller clips its absolutely positioned descendants at its bottom edge.** A cell in the LAST rows of the grid opens its bubble DOWNWARD (`top-full`); the bubble is 284 px tall and runs past the scroller's bottom, so the part below the edge is not drawn, and a point there hits the next element on the page (the `details` list). The comment above `FigureTooltip` in `src/pages/SecurityAnalysis/components/StatTile.tsx` records why the Model sheet opens downward (upward from a NARROW cell was clipped because the upward variant is capped to the anchor's width with `max-w-full`).
+
+**The change (display only; no served value, figure or sentence changes).** (1) In `StatTile.tsx` add a third placement value `'above-wide'` to `FigureTooltipProps.placement` and its class branch: `pointer-events-none absolute bottom-full left-0 z-10 hidden pb-1 group-hover:block` (upward, NOT capped to the anchor's width: no `max-w-full`); `'above'` and `'below'` stay byte-identical (the header cards use `'above'`). Update the doc comment of the placement prop to name the new value and why. (2) In `ModelTab.tsx`, where the sheet's figure cells render `FigureTooltip` (the cell component near line ~145-165 and wherever the rows are mapped), pass `placement="above-wide"` for the figure cells of the LAST `min(12, floor(rowCount / 2))` rows of the `All figures` grid and keep the default (`'below'`) for every earlier row. Twelve rows because the bubble is about 284 px tall and a grid row is at least about 30 px tall, so twelve rows of room lie above a last-row cell; the `floor(rowCount / 2)` bound keeps a short grid from opening its FIRST rows upward past the scroller's top. You decide how the row index and the row count reach the cell (a prop from the row map is the smallest change); read how the rows are mapped first. Do not change the grid's markup, columns, order, text or the scroller's classes.
+
+**The grade is on the RENDERED markup, and the real grade is the issuer's walk.** Your harness is a STRUCTURAL check (a static render has no layout engine); a real-browser walk by the issuer after the merge reads whether `occluded-popover` is gone, so say plainly in your receipt what your checks can and cannot prove. The new harness `src/pages/SecurityAnalysis/__harness__/modelTooltipRows.harness.cjs` (YOURS: create it; MODEL the static render of `ModelTab` on `modelPattern.harness.cjs` or `withheldReasons.harness.cjs`, which render it with the hooks stubbed, and read how `shell.harness.cjs` finds a `role="tooltip"` bubble) checks, each named in the output: B1 in the static render of the RIO LN fixture's grid, the bubble of every figure cell in the last `min(12, floor(rowCount / 2))` rows carries `bottom-full` and NOT `top-full` (print the row count and the number of rows checked); B2 the bubble of every figure cell in every EARLIER row carries `top-full` and NOT `bottom-full`; B3 CONTROL: the header cards' bubbles are unchanged (`bottom-full ... max-w-full`), by the existing checks or a direct read of the `HeaderCards` render; B4 a SHORT grid (a synthetic copy of the fixture with 6 rows) opens only its last 3 rows upward (`min(12, floor(6/2))`) and the first 3 downward; B5 CONTROL: the Model tab's served text (every figure, label and sentence of the RIO LN fixture render) is byte-identical to the render at the base head except for class attributes (compare the markup with every `class="..."` removed: record the base text digest BEFORE the edit). Print `MODEL TOOLTIP ROWS HARNESS: YES (<n> of <n> checks)` or `NO` (at least 5 checks, B1 to B5 named). The existing harnesses that pin the tooltip's classes (`shell.harness.cjs` and any other that reads `top-full` or `z-10`) must still pass; if one pins an old class you changed, name it and update ONLY that expectation. A recorded text file is compared after normalising `\r\n` to `\n` on both sides (round 112 row S58).
+
+**Do this in order.** (1) `cd C:/dev/wk-resapp-503/portal && git switch -c cand/dell1/amgt-sa-model-tooltip-last-rows` (your nested worktree is cut at PROD `856fb37b`; confirm `git log -1 --format=%h` reads `856fb37b` before and after). (2) Read `FigureTooltip` and the Model sheet's row map; note the row index path in your receipt. (3) Create the harness FIRST (record the B5 base digest) and run it ONCE on the unedited head: it must print `NO` with B1 failing (the last rows open downward) and B2, B3, B5 passing; record that run. (4) Make the edits. (5) Run AC1 to AC3. Steps (6) to (8) follow.
+
+**Common steps (6) to (8).** (6) Write the receipt `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~503/FEATURE_RECEIPT.md` with the sections `## What the branch carries` (branch, the new head commit, base `856fb37b`, every path changed since `856fb37b`), `## Pages changed` (a table page | route | class | gate: Security Analysis | /security-analysis | Opal-internal | internal; any other page is a defect), `## Shared files` (`- none`), `## Not carried` (package.json, bun.lock, src/lib/firmAccess.ts, src/App.tsx: each absent with the `git diff 856fb37b HEAD -- <path> | wc -l` count, 0), `## How to look` (the dev build `cd portal && bun run dev:live --port 5174`, the page `/security-analysis` and the names this cell names). (7) Commit in the nested worktree on the new branch (`.tools/safe-commit.sh` of the OUTER checkout with the author line below, `-F` a message file written with the Write tool, `--` the changed paths relative to the portal root). Do not stage `portal` in the outer worktree. NEVER push; never rebase or amend any commit. (8) Check the approval row would register: `python .tools/open-calls.py add --check-only --kind approval --project NFRA_DEVPLN --box dell1 --branch cand/dell1/amgt-sa-model-tooltip-last-rows --purpose "AMGT_RESAPP bt-6: the Model tab figure tooltip of the last rows of the All figures grid opens upward so the grid's scroller never clips it" --pages "Security Analysis" --class opal-internal --how "cd portal && bun run dev:live --port 5174; /security-analysis, RIO LN, Model tab, All figures grid, hover a figure in the last rows" --portal portal` and report its output verbatim (a refusal naming a branch-history or overlap reason is a finding to report, not to work around). Do NOT run it without `--check-only`: the issuer registers the row in the shared tree, and you commit no file under `org/devices/`.
+
+Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W503-S<k>`, `disarm_owner` `2.0.0_SA_COO~R1`.
+
+## 2. BOUNDS
+
+1. Portal repository only: nested worktree `C:/dev/wk-resapp-503/portal`, new branch `cand/dell1/amgt-sa-model-tooltip-last-rows` cut from PROD `856fb37b`; never push; never touch `DEV` or `PROD`; never `git merge` DEV; never rewrite an existing commit; no `bun install` (`node_modules` is a link to the main checkout's).
+2. Product edits only in the files this cell names and new or named harness files under `src/pages/SecurityAnalysis/__harness__/`; never `src/components/Tooltip.tsx` or any other shared file, `package.json`, `bun.lock`, `src/lib/firmAccess.ts`, `src/App.tsx` or any file of another page. The saved value of every figure never changes: display only. Do not reword any existing sentence beyond what this cell states.
+3. Do not register the approval row yourself (step 8 is `--check-only`) and commit nothing under `org/devices/`.
+
+## 3. SURFACES
+
+<paths>
+portal/src/pages/SecurityAnalysis/components/StatTile.tsx
+portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx
+portal/src/pages/SecurityAnalysis/__harness__/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~503/
+org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+## 4. PROOF OF SPEC (literal; each invocation bounded by its own `timeout`; set your shell tool's timeout to 600000 ms)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="AMGT-bt-6"><invocation>cd C:/dev/wk-resapp-503/portal &amp;&amp; timeout 300 node src/pages/SecurityAnalysis/__harness__/modelTooltipRows.harness.cjs; echo "exit=$?"</invocation><expect>the line `MODEL TOOLTIP ROWS HARNESS: YES (<n> of <n> checks)` with n at least 5, every check of the cell's list named PASS (a check the order allows to be `not run` is named as such), and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-bt-6"><invocation>cd C:/dev/wk-resapp-503 &amp;&amp; timeout 590 bash "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107_prep/checks/r107_feature_green_v3.sh" "C:/dev/wk-resapp-503/portal" 856fb37b | tail -2; echo "exit=${PIPESTATUS[0]}"</invocation><expect>the line `R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness <P> of <T> pass, base <Q> of <U>, regressions 0, pre-existing: <names>)` with P at least 31 and T at least 34, every `<names>` entry among `assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs`, and `lint rc 0` read on `src/pages/SecurityAnalysis`; and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-bt-6"><invocation>cd C:/dev/wk-resapp-503/portal &amp;&amp; python "C:/dev/wk-resapp-503/org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round103_prep/checks/r103_feature_surface_check.py" --portal . --base 856fb37b --head HEAD --receipt "C:/dev/wk-resapp-503/org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~503/FEATURE_RECEIPT.md"; echo "exit=$?"</invocation><expect>every changed file listed as page, none forbidden or unnamed, and the line `R103 FEATURE SURFACE: YES (<n> files: <n> page, 0 shared named, 0 forbidden, 0 unnamed)`; and exit=0</expect></criterion>
+</proof_of_spec>
+
+## 5. WHEN YOU ARE DONE
+
+Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~503 <0.9.0_WK_AMGT_RESAPP~503@opal.agent>" -F <msgfile> -- <paths>` (message file written with the Write tool, never a shell heredoc; confirm with `git log -1`). Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~503/AMGT_RESAPP.TO-AMGT-bt-6.model-last-rows-tooltip-upward.proof_of_spec.json` (this order's own name is short on purpose, so the canonical path opens on this box) with `to_id` equal to the `<to_id>` line above, character for character, and `decomp_ref` from the order's own `<decomp_ref>` block; record each criterion's `expect` as an ordered regex of the printed lines when the prose has regex-active characters. Run `python .tools/proof-of-spec-check.py <instance> --governing-order <this order's path>` from `C:/dev/wk-resapp-503` on the committed bytes and report its verdict line. Commit the PORTAL change inside the nested worktree first, then the deliverables in `C:/dev/wk-resapp-503`.
+
+Report once:
+- the branch name, its head commit and the base `856fb37b`;
+- the harness run at the unedited head (the line and the failing checks) and the run after;
+- AC1's, AC2's and AC3's output lines;
+- the receipt's `## What the branch carries` and `## Pages changed` sections, verbatim;
+- the `--check-only` output verbatim;
+- any row.
+
+The `<status>` flip is the issuer's.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER NOTES:** the CTO's round-112 analysis for the R1 track (`ledger/ROUND_ANALYSIS.round112.R1.md`, msg 7733) item list. One cell, one candidate branch cut from PROD `856fb37b`, one approval row (opal-internal, Security Analysis; the CTO approves). Disjoint write surface from the other round-113 cells. AC2's totals were measured in a provisioned worktree cut at `856fb37b` at the cut (30 of 33, pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs). The recut of bt-2's Repair A after the issuer's real-browser walk of the first candidate read the same finding (the cause is the scroller's clip, not stacking). The CTO ruled (msg 7741) that the horizontal scroll is by design and cut no cell for the clipped class; the scroll affordance is a round-114 candidate. The real grade is the issuer's walk: occluded-popover absent on RIO LN in the Oct 16 select state.
+
+<status>pending</status>
+<round>113</round>
+<workstream>RECUT</workstream>
+<slot>0.9.0_WK_AMGT_RESAPP~503</slot>
+<fabric>dell1</fabric>
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
