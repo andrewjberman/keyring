@@ -10547,5 +10547,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W157-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~157",
+        "surfaced_at": "2026-10-17T15:55:28Z",
+        "one_line": "HVST-ce-3: the order's mutant arm says load the pre-change module from git show HEAD:<path>; once the change is committed HEAD is the post-change file, so the arm would load the new code. The arm pins the base commit 8005ccbacb instead.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Arm (5): the pre-change module is loaded from git show HEAD:infra/aws/ec2/opal-gateway/app/harvest_research.py into a temporary module, and the arm-(1) wording check fails on it.",
+        "world_is": "At the base HEAD (8005ccbacb) the file is the pre-change module and carries the every-dossier-field sentence at line 332. After the HVST-ce-3 commit, HEAD names the changed module, so a git show HEAD: read inside the test would load the new wording and the mutant would not fail. tests/test_ce3_parts_absent_wording.py therefore reads git show 8005ccbacb:<path>, a fixed object that stays the pre-change bytes. No product file other than harvest_research.py changed.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py@8005ccbacb:332 (the every-dossier-field run.miss)",
+                "git show 8005ccbacb:infra/aws/ec2/opal-gateway/app/harvest_research.py (pre-change bytes, 8005ccbacb)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
