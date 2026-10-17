@@ -24820,3 +24820,101 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S192 -- W136-S2 disarmed: the remedy is in the r34k build that is the running resident
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S192",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T11:33:03Z",
+  "one_line": "W136-S2 DISARMED: the bindings builder writes the opal_map member (build_resident_package.py line 115 at the r34k pin, commit 53f683857c) and r34k, built at that pin, is the running resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W136-S2"
+  ],
+  "spec_asserts": "Row W136-S2 (disarm owner 2.0.0_SA_COO~Y2): the tracked bindings builder writes no opal_map member, so a listed principal's Opal job is refused OPAL_MAP_BINDING_REQUIRED.",
+  "world_is": "MEASURED (git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/build_resident_package.py, line 115): the builder writes `\"opal_map\": {\"path\": HOST_ROOT + \"/\" + OPAL_MAP_TARGET, \"sha256\": opal_map_sha}` and line 116 opal_map_comparison. The r34k build record shows the bindings differ from r34h in `provenance` only (bindings_diff keys_changed [provenance]), so the opal_map the running bindings carry is the builder's. The deployed side: the running resident is r34k, built at package pin 1ad8bd8c1b (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat; IB2's after-read: root r34k active, V1 members 5 of 5 MATCH and package sums 316 of 316, V2S OK; `~G2` re-verified the three S3 objects by VersionId, msg 10240). The remedy commit is an ancestor of that pin (git merge-base --is-ancestor <commit> 1ad8bd8c1b exit 0 for 53f683857c, 26b34d0449 and 4ac9dd9eb2; control: the pin is not an ancestor of 53f683857c). NOT READ: the installed bindings document or the registered artifact families on the host itself (a host read); the claim rests on the build at the pin and the verified package sums.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/build_resident_package.py (lines 113 to 116)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json (bindings_diff)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The writer omission does not hold at the pin that is the running resident; the key the refusal needs is written by the builder that produced the bindings."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S193 -- W141-S2 disarmed: the remedy is in the r34k build that is the running resident
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S193",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T11:33:03Z",
+  "one_line": "W141-S2 DISARMED: the builder writes commentary_ready_queue_url and the packager block together (lines 113 and 114 at the r34k pin, commit 26b34d0449), so load_bindings' RESIDENT_PACKAGER_REQUIRED is not reached by the running resident's bindings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W141-S2"
+  ],
+  "spec_asserts": "Row W141-S2 (disarm owner 2.0.0_SA_COO~Y2): load_bindings raises RESIDENT_PACKAGER_REQUIRED for any document that carries commentary_ready_queue_url without a packager block, so the bindings the builder wrote could not load.",
+  "world_is": "MEASURED (git show 1ad8bd8c1b): build_resident_package.py lines 113 and 114 write both keys together; reports/resident_installed.py lines 154 to 156 raise RESIDENT_PACKAGER_REQUIRED only when commentary_ready_queue_url is present and `packager` is not. The two are consistent at the pin. The resident loaded these bindings at r34k start (V1 and V2S ran against the running service; the install would have rolled back on a failed start). The deployed side: the running resident is r34k, built at package pin 1ad8bd8c1b (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat; IB2's after-read: root r34k active, V1 members 5 of 5 MATCH and package sums 316 of 316, V2S OK; `~G2` re-verified the three S3 objects by VersionId, msg 10240). The remedy commit is an ancestor of that pin (git merge-base --is-ancestor <commit> 1ad8bd8c1b exit 0 for 53f683857c, 26b34d0449 and 4ac9dd9eb2; control: the pin is not an ancestor of 53f683857c). NOT READ: the installed bindings document or the registered artifact families on the host itself (a host read); the claim rests on the build at the pin and the verified package sums.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/build_resident_package.py (lines 113 to 114)",
+      "git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/resident_installed.py (lines 150 to 156)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The builder and the loader agree at the pin; the running resident started and passed V1 and V2S on those bindings, so the refusal the row names is not occurring."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S194 -- W155-S2 disarmed: the remedy is in the r34k build that is the running resident
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S194",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T11:33:03Z",
+  "one_line": "W155-S2 DISARMED: ANALYSIS_COMMENTARY is registered as an additional policy revision in resident_installed.py (lines 549 to 551 at the r34k pin, commit 4ac9dd9eb2) and r34k is the running resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W155-S2"
+  ],
+  "spec_asserts": "Row W155-S2 (disarm owner 2.0.0_SA_COO~Y2): every commentary_ready message the live resident handles is refused at the draft read because ANALYSIS_COMMENTARY is not a family of the resident's ArtifactRepository.",
+  "world_is": "MEASURED (git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/resident_installed.py): line 68 defines ANALYSIS_COMMENTARY_REVISION and lines 549 to 551 pass `additional_policy_revisions=(OPAL_RESEARCH_REVISION, ANALYSIS_COMMENTARY_REVISION)` to build_retained_repositories, which is the registration the row asked for. reports/resident_installed.py is a member of the r34k package (package sums verified 316 of 316). The deployed side: the running resident is r34k, built at package pin 1ad8bd8c1b (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat; IB2's after-read: root r34k active, V1 members 5 of 5 MATCH and package sums 316 of 316, V2S OK; `~G2` re-verified the three S3 objects by VersionId, msg 10240). The remedy commit is an ancestor of that pin (git merge-base --is-ancestor <commit> 1ad8bd8c1b exit 0 for 53f683857c, 26b34d0449 and 4ac9dd9eb2; control: the pin is not an ancestor of 53f683857c). NOT READ: the installed bindings document or the registered artifact families on the host itself (a host read); the claim rests on the build at the pin and the verified package sums.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1ad8bd8c1b:infra/aws/lambda/investor-reporting/reports/resident_installed.py (lines 66 to 68 and 549 to 551)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The registration the row asks for is in the build that is the running resident; a live commentary_ready message through it is not claimed (window 5 and the chain read exercise it)."
+}
+]
+```
