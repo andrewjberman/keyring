@@ -4696,3 +4696,15 @@ Check: IBHM10 (`r253`, diff-based: additions only, one module, one statement, no
 | `IB-hm-10` | DECLARE the host role's `sts:AssumeRole` statement for the stage role and its builder name module (no apply) | FWD-21 | WORLD | IB-hm-8 | PM11-a |
 
 fanout: 1 of 1 chains cut this round, cap 8, reason: one cell, one file in the second root; IB-hm-4 (the pair) now waits on IB-hm-10 too.
+
+## 248. ROUND 12, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 5: the APPLY in the `directory` root; 2026-10-17 ~07:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, under the signed pair: packet blob e6d82eb31f with the CTO half @f52943766f, msg 10336, and ADDENDUM 1 blob cbcf940fbc with the CTO half @f953fdedd3, msg 10358)
+
+All build cells are graded and merged (IB-hm-2, 7, 8, 9, 10; IB-hm-3 superseded). The pair is signed. This cell hands the apply to `0.7.0_AE_CloudOps~IB2` in the order the ADDENDUM corrected: the runner bundle first (the live runner uses strict `parse_args` and would refuse the three arguments the Lambda hands every build once its environment keys exist; the new runner with the arguments absent behaves as before), the refresh Lambda zip at the pinned digest `I7T8wRYmv11nytYpD7i+4XCwwvy6JUaB3fdsgtHyXmA=` (built twice by me at HEAD `94831b912e`; live against built, only `refresh.py` differs, touched only by IB-hm-9), the `directory` root through `safe-apply` (3 to add, 1 to change, 0 to destroy), the simulation battery, the secret value put once and never printed, and ONE QA run read as PASS or FAIL per check. The CTO added a condition: `lib/tests/test_trading_calendar.py` is run and printed before the mint. The `mdpf-pipeline` leg (the host role's statement, IB-hm-10) is NOT in this order: that root has a second writer whose ledger read OPEN at the CTO's reading (MDPF_CANON FWD-10, c5dd8b293a); it is a later order cut when that ledger closes, followed by the one more QA run the addendum allows. The first scheduled fire's read (Monday 2026-10-19 13:30Z) and the readers' grant (IB-hm-6, with the laptop CTO's pull tool and hook edit) follow.
+
+Check: IBHM5 (`r254`, a record-based apply check: gates, legs, after-reads; control passes the three positives and the assume-fact-true variant and each of 32 negatives fails its own arm, 0 unexpected); dry-run at the base: AC1 to AC3 FAIL (no record). WORLD.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-hm-5` | APPLY by IB2: bundle, zip, `directory` root, simulation, the one secret put, one QA run | FWD-21 | WORLD | IB-hm-8, IB-hm-9, IB-hm-2, IB-hm-7 (all complete), the signed pair | PM12-a |
+
+fanout: 1 of 2 chains cut this round, cap 8, reason: the second chain (IB-hm-11, the `mdpf-pipeline` leg) waits on the other writer's open ledger on that root and is cut when it closes; IB-hm-6 (readers) waits on this apply.

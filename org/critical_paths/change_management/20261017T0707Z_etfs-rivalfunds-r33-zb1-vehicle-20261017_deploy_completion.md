@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | 91fd54467f on origin/CLOUD and in the site-Z working tree | merge-base --is-ancestor TRUE on CLOUD + site-Z tree HEAD read |  | OPEN |
+| L1 | git | 91fd54467f on origin/CLOUD and in the site-Z working tree | merge-base --is-ancestor TRUE on CLOUD + site-Z tree HEAD read | 91fd54467f on origin/CLOUD 32ce62526c (merge-base --is-ancestor TRUE, read by 2.0.0_SA_COO~RV 07:2xZ); site-Z tree HEAD carries it (is-ancestor TRUE, read by 0.0.0_AB_MSTR~Z at 07:12Z, relayed msg 7409); box/sitez origin c82cfd5d1e | CLOSED 20261017T071848Z |
 | L2 | verify | the 2026-10-19 11:00Z vehicle run writing partition 2026-10-16 (CTO half C-1) | rows, historical and null counts, nulls by venue, 13 funds rank changes; a US-listed null = revert |  | OPEN |
 
 ## Log
 
 - 20261017T070742Z OPENED by 2.0.0_SA_COO~RV with 2 leg(s)
+- 20261017T071848Z LEG L1 closed: 91fd54467f on origin/CLOUD 32ce62526c (merge-base --is-ancestor TRUE, read by 2.0.0_SA_COO~RV 07:2xZ); site-Z tree HEAD 
