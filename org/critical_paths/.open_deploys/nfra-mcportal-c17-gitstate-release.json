@@ -1,0 +1,47 @@
+{
+  "slug": "nfra-mcportal-c17-gitstate-release",
+  "title": "NFRA_MCPORTAL MP-n-1 (PRD v0.6 C17 + AMENDMENT 1): the bounded gitstate read, released on live base d9f2ebded9",
+  "author": "0.7.0_AE_CloudOps~MP",
+  "status": "OPEN",
+  "opened_at": "2026-10-12T12:38:13.171511+00:00",
+  "window_hours": 4.0,
+  "entry_path": "org/critical_paths/change_management/20261012T1238Z_nfra-mcportal-c17-gitstate-release_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "s3-prefix",
+      "target": "release build + upload to s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway",
+      "proof_required": "head-object on the NEW versioned key AND on the rollback key opal-gateway-d9f2ebded9.tar.gz, which must still read ETag 18b56591a0201d43857c5adf3d955026 (COO condition C-1)",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "ec2-baked-asset",
+      "target": "SSM pull + restart on i-07dccb1615503ac99",
+      "proof_required": "SSM md5 of the RUNNING /opt/opal-gateway/app files equals the release bytes, with a negative control against the base",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L3",
+      "kind": "verify",
+      "target": "served read-back: /health 200, gitstate 401/403 with no identity, the served cold read at or under 10 s with its body-fetch count, tool-surface difference empty",
+      "proof_required": "the read-backs, each independent of the deploy rc; graded by n1.AC3",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L4",
+      "kind": "git",
+      "target": "manifest record on the release branch AND on box/sitez",
+      "proof_required": "deployed_commit/previous_deployed_commit/release_note, the box/sitez record written on top of its current EC2_MANIFEST per msg 33482",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261012T123813Z OPENED by 0.7.0_AE_CloudOps~MP with 4 leg(s)"
+  ],
+  "last_red_at": null
+}
