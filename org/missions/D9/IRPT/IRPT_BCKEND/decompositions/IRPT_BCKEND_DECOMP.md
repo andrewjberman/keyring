@@ -4647,3 +4647,15 @@ Check IBHM2 (`deliverables/2.0.0_SA_COO~P2/checks/r248/p248_cells.py`), dry-run 
 | `IB-hm-2` | BUILD `emit_hmac_list` as the LAST stage of `run_firm`, isolated, with ten named tests | FWD-21 | LOCAL | IB-hm-1 | PM6-b |
 
 fanout: 2 of 6 chains cut (IB-hm-1 graded, IB-hm-2 now), cap 8, reason: IB-hm-3 waits on the runner profile fact and on IB-hm-2's argument names; IB-hm-4 on 3; IB-hm-5 and 6 on 4 and the IB2 lane.
+
+## 244. ROUND 8, WORKSTREAM ~PM (the served account-id HMAC list producer, cell 3: REGISTRY and BUILDER outputs; 2026-10-17 ~04:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO ruling B, msg 10234, and rule 30)
+
+The dell2 CTO ruled (msg 10234) that the secret read and the three puts live on a NARROW role the stage assumes (`secretsmanager:GetSecretValue` on the one secret, `s3:PutObject` on the three firm keys; the host profile gains only `sts:AssumeRole` on that one role; the trust policy names the host's role only; the pair says plainly that B buys attribution (CloudTrail AssumeRole, fixed session name `hmac-list-stage`) and one place to revoke, not isolation). Rule 30 makes every name and address builder output. The READ cell found the registry has no globgrph product row, no irpt SECRET row and no HMAC-list home, so this cell adds the minimum rows and records the builder calls whose results the Terraform and dispatch cells will carry. The remaining chain, revised: `IB-hm-7` (the stage assumes the role: an argument `--hmac-role-arn` and the fixed session name, after IB-hm-2 lands), then `IB-hm-8` (Terraform: the secret container, the narrow role, the host-profile `AssumeRole`, tests by static markers) and `IB-hm-9` (`refresh.py` `runner_script` passing the arguments from the Lambda environment) in one later round, then the pair (IB-hm-4), the apply by IB2 (IB-hm-5) and the readers (IB-hm-6). It takes round 8 of ~PM because round 7 carries IB-hm-2's issuance.
+
+Check IBHM3A (`deliverables/2.0.0_SA_COO~P2/checks/r249/p249_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control249.py`, synthetic git repos with a stub naming module) passes the three positives and each of 14 negatives fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-hm-3` | REGISTRY rows and recorded builder calls: three firm key addresses (globgrph bucket), the stage role and policy names, the irpt SECRET row | FWD-21 | WORLD (gate floor: an infra/ path) | IB-hm-1, CTO msg 10234 | PM8-a |
+
+fanout: 3 of 9 chains cut (IB-hm-1 graded, IB-hm-2 running, IB-hm-3 now), cap 8, reason: IB-hm-7 waits on IB-hm-2's landed stage (same file); IB-hm-8 and IB-hm-9 wait on IB-hm-3's recorded names. A cell id takes no letter suffix by the decomposition grammar (the gate refused `IB-hm-3a`), hence the numbers.
