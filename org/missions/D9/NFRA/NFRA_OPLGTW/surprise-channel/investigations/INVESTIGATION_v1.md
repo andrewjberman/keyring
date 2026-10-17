@@ -26837,3 +26837,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "INFERRED for the host's 1.28.0 from the 1.28.1 source plus the pin; one host read of the same four lines would make it measured. Consequence for Phase B: a health probe sent while a page is in flight waits for the page, so a first page near the 55 s trigger can also trip the 60 s health trigger; the read-back should probe health between pages. The memory reasoning ('one windowed read at a time per process') holds more strongly than stated (the loop enforces it). Remedy, the issuer's to cut or not: run the client_* tools off the loop (anyio.to_thread, as the guard already is), which makes the gate load-bearing and frees the other routes during a page, or strike the busy branch from the contract."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T04:49:01Z",
+  "id": "NFRA_OPLGTW-Z-S351",
+  "one_line": "Z-S312 disarm condition met: Andrew's real browser run reads clear on /sprint, /rivalfunds, /yearinreview",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S312"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MP record ANDREW_DIRECT_20261017_044xZ_THREE_ROUTES_CLEAR_GO_MP_V_2.md (Andrew-direct, verbatim 'they are all clear + go')",
+      "OG-ap-30 complete: email_deny records deleted, live read-back"
+    ]
+  },
+  "spec_asserts": "Z-S312 disarms only on Andrew's real browser run.",
+  "world_is": "Disarm condition met: Andrew ran the browser check at the MC Portal terminal on 2026-10-17 ~04:4xZ (/sprint, /rivalfunds, /yearinreview) and answered verbatim 'they are all clear + go' (recorded by 2.0.0_SA_COO~MP in org/tier1_exec/2.0.0_SA_COO~MP/deliverables/ANDREW_DIRECT_20261017_044xZ_THREE_ROUTES_CLEAR_GO_MP_V_2.md). The owner principals were refused on the four browser routes after OG-mg-1 Phase B (the email_deny record carried no scope); OG-ap-30 deleted those records and the guard read back, and the owner's real browser run now reads clear on the three routes he opened. The hazard of Z-S312 is gone; the disarm word goes to the CVO, who writes the clock.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarm condition met: Andrew ran the browser check at the MC Portal terminal on 2026-10-17 ~04:4xZ (/sprint, /rivalfunds, /yearinreview) and answered verbatim 'they are all clear + go' (recorded by 2.0.0_SA_COO~MP in org/tier1_exec/2.0.0_SA_COO~MP/deliverables/ANDREW_DIRECT_20261017_044xZ_THREE_ROUTES_CLEAR_GO_MP_V_2.md). The owner principals were refused on the four browser routes after OG-mg-1 Phase B (the email_deny record carried no scope); OG-ap-30 deleted those records and the guard read back, and the owner's real browser run now reads clear on the three routes he opened. The hazard of Z-S312 is gone; the disarm word goes to the CVO, who writes the clock."
+}
+```
