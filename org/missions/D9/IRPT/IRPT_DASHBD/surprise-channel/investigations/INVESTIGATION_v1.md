@@ -25113,3 +25113,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "iam.tf of reporting-read carries a formatting deviation that predates this order and was left untouched; the issuer's fmt read must have missed it or read another tree."
 }
 ```
+
+## IRPT_DASHBD-D2-W2604-S1 -- DB-f-2604 premise: locals.tf holds no existing gold table constant to sit beside; the new constant is placed beside the gold bucket local
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2604",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2604-S1",
+  "surfaced_at": "2026-10-17T05:05:34Z",
+  "one_line": "DB-f-2604 says the table constant goes beside the existing gold table constant in locals.tf; no such constant exists at the pinned base, so it was placed after the gold bucket local.",
+  "spec_asserts": "DB-f-2604 step 2: locals.tf gains the table constant irpt_arc_gold_table_transaction by pure insertion, beside the existing gold table constant, in the same style.",
+  "world_is": "At infra/aws/terraform/investor-reporting/account-return-daily/locals.tf @b15f61d07e (sha256 198bad3d, the pinned base) the only gold-scoped local is irpt_arc_gold_bucket (line 35). The gold prefix is written inline in iam.tf, so no gold table local exists to sit beside. The new constant was inserted after line 35 with its own comment line, the nearest gold-scoped position.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/account-return-daily/locals.tf@b15f61d07e lines 34-35: the gold bucket local irpt_arc_gold_bucket is the only gold-scoped local",
+      "infra/aws/terraform/investor-reporting/account-return-daily/locals.tf@b15f61d07e header lines 11-14: the gold prefix is written inline in iam.tf and not as a local",
+      "python -I checks/r138/p138_cot_tf.py . DBF138-4-AC1 and DBF138-4-AC2 both print PASS after the insertion; git diff --stat shows 12 insertions in two files"
+    ]
+  },
+  "notes": "Form only, no harm: the constant is a plain value and the new statement's resource is built from it. The checker does not grade the constant's position. The issuer may rule a different placement."
+}
+```
