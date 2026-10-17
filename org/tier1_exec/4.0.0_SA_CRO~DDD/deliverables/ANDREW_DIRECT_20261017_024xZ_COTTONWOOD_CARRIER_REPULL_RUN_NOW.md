@@ -20,3 +20,10 @@ Question: "Model Portfolios won't overwrite an already-published date. To show $
 delete markers on Cottonwood's four 10/15 gold objects (prior versions stay recoverable) and rerun. OK to do that?"
 Answer: "Yes, restate 10/15 (Recommended)". Scope: Cottonwood's four dated 10/15 keys under portal/gold/mdpf/cottonwood/
 (category-views, aggregate-aua-timeseries, aum-metrics, account-distribution). Delete markers only; prior versions kept.
+
+## Addendum ~04:1xZ -- route the 10/15 restatement to a laptop CloudOps agent (Andrew-direct, VERBATIM)
+
+"request a cloudops agent on laptop box to do it. i want mdpf whole page done now"
+
+Context: s3:DeleteObject is explicitly denied to cloudops-dell1-agent-user, so the four Cottonwood 10/15 delete markers
+could not be placed from dell1. The act is requested of a laptop 0.7.0_AE_CloudOps lane via the agent bus.

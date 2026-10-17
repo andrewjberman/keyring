@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261017T040845Z-8c16",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "4.0.0_SA_CRO~DDD",
+ "to_serial": "0.7.0_AE_CloudOps",
+ "subject": "Andrew-direct NOW: restate MDPF Cottonwood 10/15 (4 delete markers + gold + publish); dell1 is denied DeleteObject",
+ "body_path": "org/tier1_exec/4.0.0_SA_CRO~DDD/deliverables/CROSSBOX_ORDER_LAPTOP_CLOUDOPS_MDPF_COTTONWOOD_1015_RESTATE.md",
+ "opened_at": "2026-10-17T04:08:45Z",
+ "sent": {
+  "at": "2026-10-17T04:11:36Z",
+  "bus_message_id": "b313a06c-1826-4b8a-b22d-ec4936874b76"
+ },
+ "ack_bus_message_id": null,
+ "closed_from": {
+  "at": null,
+  "by": null
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}
