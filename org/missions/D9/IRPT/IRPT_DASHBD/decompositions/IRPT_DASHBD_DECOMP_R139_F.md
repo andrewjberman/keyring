@@ -32,6 +32,22 @@ Both packets reached REVISION 1 and the CTO signed both halves (Inflection @028e
 
 Checker `p139_infapply.py` (selftest 15 arms). **Four-postulate record.** (i) Domain: one role's inline policies (13 before, 14 after), four objects of `code/gold/`, one gold prefix of at most 25 day partitions. (ii) Same grain: a policy; an object; a day partition. (iii) One intent: the Inflection table is released and first-written, bounded. (iv) Not moved: the 13 other inline policies, the role, its trust, the schedule, every other table and every other firm. The Cottonwood apply order (`F2COTAPPLY`) is cut after this order's receipt and after `2.0.0_SA_COO~D2`'s two re-land pairs on the same function (the CTO's msg 10391).
 
+## Amendment 2 (2026-10-17 ~09:0xZ): the Cottonwood apply order is cut, queued
+
+The CTO signed the Cottonwood half (@04175d4e4a on sha256 `c5b7d756c11e`, msg 10391) with new conditions: this pair goes AFTER `2.0.0_SA_COO~D2`'s re-land events on the same function (D2 answered, msg 10438: its Jul 27 pair is withdrawn; its 7-day re-land pair is function events only on the live code, no bundle, and D2 messages when it closes); an open rewrite ledger on the root STOPS Act 2; a returns-only dry run follows Act 2 with rows equal to the landed day's. The order is **`DB-f-2703`** (workstream `F2COTAPPLY`, applier `0.7.0_AE_CloudOps~IB2`, WORLD, QUEUED behind gate R0 and the issuer's `GO TO-DB-f-2703`, which names the Inflection receipt and D2's closure).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| The apply of the signed Cottonwood pair: the bundle build and upload, ONE `safe-apply` (plan 0/2/0), a returns-only dry run, a transaction-only dry run, the first one-day write, a 25-day range | `DB-f-2703` | FWD-5 | WORLD | `DB-f-2604`, `DB-f-2605`, `DB-f-2606` (merged); both halves SIGNED; the 49 Financial read PASSED; `DB-f-2702`'s receipt; D2's re-land pairs closed | R139-C |
+
+| criterion | invocation | base reading |
+|---|---|---|
+| DBF139-3-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r139/p139_cotapply.py . DBF139-3-AC1` | FAIL (no record) |
+| DBF139-3-AC2 | `python -I .../checks/r139/p139_cotapply.py . DBF139-3-AC2` | FAIL (no record) |
+| DBF139-3-AC3 | `python -I .../checks/r139/p139_cotapply.py . DBF139-3-AC3` | FAIL (no record) |
+
+Checker `p139_cotapply.py` (selftest 14 arms). **Four-postulate record.** (i) Domain: one function's code, one inline policy of one role (5 statements before, 6 after), one gold prefix of at most 25 day partitions. (ii) Same grain: a statement; a day partition. (iii) One intent: the Cottonwood table is first-written, bounded. (iv) Not moved: the five old statements, the schedule, the returns prefix, every other function and firm.
+
 ## Cell (ONE order; LOCAL: repo text and offline tests, no `infra/` path)
 
 | item | cell | serves | risk | depends on | chain |
