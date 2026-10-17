@@ -42021,3 +42021,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Form only. Recorded so the sparse state of this worktree is on the channel; the write surface named by the order was not widened and no path outside it was touched."
 }
 ```
+
+## IRPT_BCKEND-D2-S234 -- The r253 check reads the commit diff so AC1 and AC2 have no pre-commit PASS, and the worktree is sparse: proce
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S234",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-17T06:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W455-S1 and IRPT_BCKEND-D2-W455-S2 (worker ~455, order TO-IB-hm-10). S1: my check r253 grades the commit diff (HEAD~1..HEAD), so AC1 and AC2 cannot pass before the worker's one commit and the order's record-before-commit step had nothing to record; the worker recorded the pre-commit FAILs verbatim and the post-commit PASS runs, and I re-ran all three after the commit and copied the post-commit record and proof into the main tree. The wording of the order step is my defect. S2: the worktree is sparse by design; the worker read the row schema with git show. Neither changes what the file declares.",
+  "one_line": "The r253 check reads the commit diff so AC1 and AC2 have no pre-commit PASS, and the worktree is sparse: process notes, the declaration is as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p253_cells.py . IBHM10-AC1|AC2|AC3 re-run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-455 at 8acf77d517: PASS x3",
+      "git show 8acf77d517 -- infra/aws/terraform/mdpf-pipeline/iam.tf read whole: 21 lines added, 0 deleted"
+    ]
+  },
+  "spec_asserts": "The worker records AC1 and AC2 output before the commit (the order's step 3, my wording).",
+  "world_is": "The check reads HEAD~1..HEAD so AC1 and AC2 can only fail before the commit; the worker recorded both stages and the declaration is as ordered."
+}
+```
