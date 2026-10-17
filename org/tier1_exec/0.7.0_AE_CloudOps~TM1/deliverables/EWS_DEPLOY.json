@@ -1,0 +1,8 @@
+{
+  "cluster": "opal-clientops-ews-cluster",
+  "task_arn": "arn:aws:ecs:us-east-1:313476888478:task/opal-clientops-ews-cluster/73ccdcc4753448c68c1dd7156111588a",
+  "role_arn": "arn:aws:iam::313476888478:role/opal-clientops-ews-role",
+  "role_name": "opal-clientops-ews-role",
+  "task_name": "opal-clientops-ews-task",
+  "ledger_slug": "ews-d1-one-container-20261017"
+}
