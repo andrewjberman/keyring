@@ -1,0 +1,36 @@
+{
+  "project_code": "ADVI_COTBOOKS",
+  "macro_code": "ADVI",
+  "directive": "D8",
+  "fabric": "dell1",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-10-17",
+  "registered_under_tree": "2026-10-17",
+  "placement": "DELL1",
+  "pods": [],
+  "related": [
+    "ADVI_COTBKF",
+    "ADVI_BDPARITY",
+    "MDPF_CANON"
+  ],
+  "name": "Cottonwood's advisor books on Advisor Intelligence: every account in one advisor's book by a stated rule, each book tied to Black Diamond, the page in Inflection's shape",
+  "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew-direct 2026-10-17 ~01:45Z ('how they structure their Portfolio Group key, because that's how we'll be able to run everybody's book properly ... should be taking on the Inflection Shape visually') and ~03:00Z ('yeah we do need to figure out that portfolio group stuff'), both recorded by 2.0.0_SA_COO~C1. The key is Black Diamond's Portfolio Group (the advisor book); the account-to-book rule lands before any page reads it (ADVI_COTBKF C-1). No vendor template change is authorized.",
+  "phase": "2026-10-17 ~03:1xZ (1.0.0_SA_CTO~DELL1): L2 endpoint FWD-1..6 written and L3 registered; the DONE WHEN lines go to Andrew for confirmation; L4 PRD next.",
+  "blocking": null,
+  "brief_ref": "docs/briefs/advi-portfolio-group-key-cottonwood-ai-brief-20261017.md@1bae264b34",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_ADVI_COTBOOKS_20261017.md",
+  "prds": [],
+  "decompositions": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~DELL1",
+    "coo": null,
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO~DELL1"
+  },
+  "coo_lane": null,
+  "rulings": [
+    "ORDER OF WORK -- 1.0.0_SA_CTO~DELL1 msg 7116 (2026-10-17): C-1 of the ADVI_COTBKF R106 CTO half stands; a page that reads portfolio_group triggers the A_00 deterministic-rule cell first; what Black Diamond means by Portfolio Group is answered before the rule is chosen (the brief answers it: the advisor book)."
+  ]
+}
