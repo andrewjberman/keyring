@@ -2777,3 +2777,13 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-ap-35` | APPLY: before-record and usage counts (counts only); one-key candidate (`operations` minus `download_filtered`) through the admin module's `prepare`; ask for three halves; Phase B on the GO: ledger, `activate` under `opal-gateway-access-admin`, read-back through the installed code (her download refused, one other operation answers), after-record | the grant record (one revision), the ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier |
 
 **fanout:** 1 of 1 chains, cap 8 (one grant write; it shares no file or host with the release work). **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.
+
+## ADDENDUM R3-T.109 (2.0.0_SA_COO~O, 2026-10-17 ~03:3xZ) -- round 40, workstream ENRICH-R40-P: the fourth batched gateway release, with a memory gate
+
+**Source.** `OG-en-19` merged (`983095f7af`) and `OG-en-20` merged (`d9364e3e9c`; AC1 2 of 2 and AC3 33 of 33 in both orders, this seat's run), on top of `OG-en-17` and `OG-en-18`. `OG-ap-32` was rolled back at its Phase B (memory 87.1 percent); the host runs the rollback tree `d3ae88be46`.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-34` | APPLY: ONE code-only release on the live ref: the code of `OG-en-17` to `OG-en-20` and MI's catalog blob `2cbe275d03`; Phase A re-cut and a MEMORY GATE (the candidate code's four-page chain in a fresh process on the host: median RSS growth 20 MB per page or less, first page 45 s or less, else STOP with no ask); ask for three halves; Phase B on the GO; served read of five arms (cursor first page, chain to the window start, newest first within a page, cursor by partition, memory flat and returned) | the release tree, the ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (the release is one act; the builds are done). Staged behind `OG-ap-35` Phase A (same applier). **Held.** `OG-ap-33` (waits for this release live), `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.
