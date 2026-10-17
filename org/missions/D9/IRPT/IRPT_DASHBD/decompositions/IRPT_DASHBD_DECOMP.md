@@ -2996,3 +2996,20 @@ MEASURED by the issuer (code read): with the switch ON, `filled_report_fire` wri
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~257`), cap 8. In parallel under round 150: C6d (`DB-b-325`, worker ~256).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on 10 single-fault mutants; the reference diff is committed beside it):** `checks/r150/p192_filled_pass_options.py` (DB192-1-AC1..AC3), `reads/DB326_REFERENCE.patch`.
+
+
+## 186. ROUND 150, WORKSTREAM COTC5 (2026-10-17 ~06:2xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood Performance read path -- C5, the real run
+
+The page owner `2.0.0_SA_COO~C2` has no live session (CTO msg 10318), so this seat takes C5. 5174 (Andrew's smoke server, checkout `C:/dev/smoke-template-5174` @1f525845) answers and shows the login page; no seat holds a staff credential. The CTO ruled (msg 10324): `0.7.0_AE_CloudOps~IB2` mints ONE synthetic OPAL_GLOBAL principal with an `@opal.invalid` address, recorded by digest, the same pattern as the FWD-5 sittings; this seat signs in, opens Thiessen's two Cottonwood accounts on the Performance tab and records what renders; IB2 then removes the row and reads it ABSENT twice (Andrew's word covers synthetic deletes). Andrew may reload the page himself; whichever read lands first counts.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. one synthetic internal-staff users row: mint, sign-in proof, hand-over by broker, removal after the issuer's word, two ABSENT reads | DB-b-327 | FWD-10 (Cottonwood Performance tab) | WORLD (one users row) | C4 applied and verified | chain AT |
+| 2. the issuer's look at the page (the Performance tab for the two accounts) | the issuer's own act | FWD-10 | SERVED | item 1's hand-over | after item 1 |
+| 3. the second portal release (Performance set to PROD) | the CTO's, on Andrew's word after C5 | FWD-10 | SERVED, client-facing | C5 | after C5 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the principal is an INTERNAL-staff row (the class Andrew's own account is at Global), NOT a `test-filer` like the two earlier helpers write, because the Cottonwood function and the forward admit only the verified internal subject; the worker reads the helpers and the attribute NAMES of an existing staff row, never its values, and STOPS rather than copy a person's values; (b) the address is fixed in the order, so the checker can re-read the table for it; the record carries only its 12-hex digest; (c) the password and the address reach this seat ONLY inside one broker message, never a file; (d) the row has a 3-hour TTL as the backstop; (e) the removal waits for this seat's word "C5 done".
+
+**fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 16 single-fault mutants):** `checks/r150/p193_c5_staff_signin.py` (DBC193-1-AC1, DBC193-2-AC1).
