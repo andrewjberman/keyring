@@ -29116,3 +29116,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed on the CTO's instruction (msg 7490, ROUND_ANALYSIS.round108.md section 2) against the gate's lane (the owner of the to-pipeline status enum and round-close-check). Not a cell of this project."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W489-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~489",
+  "surfaced_at": "2026-10-17T12:11:58Z",
+  "one_line": "AMGT-bp-3: after the label change, the served period_note still says the columns not named by a year keep Bloomberg's own period numbers, while an untied figure column now reads 'Year not stated (column n)'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order section 1 item 3: period_note, and every key other than the one label, is byte-for-byte as today; the label of an unresolved figure-bearing column is the only value that changes. The served sentences in lib/research/api/segment_served.py (NOTE_SOME_NAMED, NOTE_NONE_TIE, NOTE_NO_REVENUE) say the columns not named by a year keep Bloomberg's own period numbers.",
+  "world_is": "After the change an untied column that carries a figure is served with label 'Year not stated (column n)' (RIO LN column 5, top_level_sum 106861.0). The period_note the portal prints beside the table still says those columns keep Bloomberg's own period numbers, so the page carries a sentence its own column head contradicts. Measured in the edited worktree: test_segment_unresolved_label.py U1 and U4 and the AC1 run (47 passed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/segment_served.py @46c09f960f (base) NOTE_SOME_NAMED and NOTE_NONE_TIE sentences; the label branch edited in the worktree",
+      "lib/research/api/tests/test_segment_unresolved_label.py U1 served label 'Year not stated (column 5)' with the period_note unchanged",
+      "AC1 run after the edit: 47 passed, exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed here: the order fixes period_note byte-for-byte, so the sentence is left for its owner to re-word. The label change itself is in scope."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W489-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~489",
+  "surfaced_at": "2026-10-17T12:11:58Z",
+  "one_line": "The worker worktree has no org/surprise_channel directory on disk, so the row schema could not be read from the worktree; the schema was read from HEAD through git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order section 1 requires each surprise row to follow the investigation item schema, and the row gate .tools/surprise-row-gate.py validates it. The schema path org/surprise_channel/schemas/investigation_item.schema.json is the one the channel names.",
+  "world_is": "In C:/dev/wk-resapp-489 the directory org/surprise_channel does not exist on disk (ls reports no such file), although git ls-files lists 43 tracked paths under it at HEAD 46c09f960f, including schemas/investigation_item.schema.json. git status --short shows nothing for that path. The base checkout C:/Dev/ajb_workspace holds the schema on disk. This row was checked against the HEAD copy of the schema, and the fields it needs are listed there. Not repaired: the path is outside the order's write surface.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json read in C:/dev/wk-resapp-489 (property keys listed, required fields id, surfaced_by, surfaced_at, one_line, class, grounding, disposition)",
+      "ls -la org/surprise_channel in C:/dev/wk-resapp-489: no such file or directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed. The row gate's own read of the schema is not confirmed from this worktree."
+}
+```
