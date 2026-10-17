@@ -10899,5 +10899,71 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "The hazard (a served fund_of_record IDVZ from a template placeholder) is removed in the served ML_FP gold object by the cf-4 rebuild under the cf-2 rule, shown by my own served read against the UNH control; the silver field is a separate row (D1-S46)."
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W161-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~161",
+      "surfaced_at": "2026-10-17T23:30:17Z",
+      "one_line": "The order's named mutant cannot fail the MNST arm: with the holding words matching everything, MNST still reads candidate, because the candidate test runs before the holding test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cg-1 cell 1c(6): with fund_relation._HOLDING_WORD_RE monkeypatched to match everything, the MNST arm (RECOMMENDATION: CANDIDATE FOR PFOE returns candidate) FAILS. Cell section 0 fixes the test order as template, then the candidate words, then holding, then unclassified.",
+      "world_is": "Under that mutant classify() still returns candidate for MNST, since the candidate words are tested first (continuation._line_stance at continuation.py@2065535803:448-464 has the same order). The mutant is caught by the unseen-phrase arm instead (watch list name for PFOE reads holding). The test file asserts the observed behaviour (test_mutant_holding_matches_everything_does_not_move_mnst) and adds a candidate-words mutant that does fail the MNST arm (test_mutant_candidate_words_removed_fails_the_mnst_arm). The mutant ML_FP arm (template check removed) fails as specified.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/corpus/fund_relation.py (worktree wk-AMGT_HARVST-161, classify() test order)",
+          "lib/research/corpus/tests/test_fund_relation.py (worktree wk-AMGT_HARVST-161, mutant arms; 17 passed)",
+          "lib/research/corpus/continuation.py@2065535803:448-464 (_line_stance order)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W161-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~161",
+      "surfaced_at": "2026-10-17T23:30:17Z",
+      "one_line": "A recommendation line spelled RECOMMEDATION (no N) falls outside the header pattern, so its relation reads none, not unclassified, and the line's stated text is hidden.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cg-1 cell section 0: fund_relation is none only when fund is None or fund_evidence does not start with a recommendation header (the typed._RECOMMENDATION_HDR_RE pattern); any other named-fund line is one of the six relations.",
+      "world_is": "CPA_US_Equity, reports 9b28cee18bfae30c and a687821c8b07fc09 (class OTHER), carry fund=IDVZ and fund_evidence beginning RECOMMEDATION: Consider adding 50-100bps in IDVZ. The header pattern does not match the misspelling, so both rows read relation=none (cg1_census.out RELATION lines). The line states a size increase (adding), which the taxonomy would place as unclassified. Not a holding under either reading, so no holding consumer is misled, but the none value hides the line. typed._find_fund also took the bare-token fallback for these rows.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~161/cg1_census.out (RELATION lines for CPA_US_Equity)",
+          "lib/research/corpus/typed.py@2065535803:214 (_RECOMMENDATION_HDR_RE)",
+          "lib/research/corpus/fund_relation.py (worktree wk-AMGT_HARVST-161, header test)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W161-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~161",
+      "surfaced_at": "2026-10-17T23:30:17Z",
+      "one_line": "The worktree wk-AMGT_HARVST-161 lacks the untracked file integrations/bloomberg/research/field_map.json, so 51 corpus tests fail; the same failures reproduce at the base commit and are not caused by HVST-cg-1.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cg-1 preflight names the corpus tests AC2 (five files, 58 passed). The full lib/research/corpus/tests package is the wider regression surface an order cannot see from its five named files.",
+      "world_is": "Full run of lib/research/corpus/tests on the worktree: 51 failed, 616 passed. team_sheet round44, 46, 47, 49 and template round47 raise FileNotFoundError on integrations/bloomberg/research/field_map.json (absent in the worktree; team_sheet.py:269). test_dossier::test_composed_document_with_every_section_present fails with the HEAD typed.py too (typed.py swapped to git show HEAD: and restored; the same single failure). AC1 and AC2 pass.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/corpus/team_sheet.py@2065535803:269 (FileNotFoundError on field_map.json)",
+          "integrations/bloomberg/research/field_map.json (absent in worktree wk-AMGT_HARVST-161; ls rc=2)",
+          "pytest run on lib/research/corpus/tests (worktree; 51 failed, 616 passed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
