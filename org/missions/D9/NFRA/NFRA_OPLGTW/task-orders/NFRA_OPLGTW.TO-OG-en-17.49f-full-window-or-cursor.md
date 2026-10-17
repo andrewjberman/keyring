@@ -70,7 +70,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-17.49f-full-window-or-cursor
 - Round 40, workstream ENRICH-R40-W1 (decomposition addendum R3-T.102). Risk WORLD by the L6 floor (a gateway infrastructure path); no deploy in this cell; it rides the next batched gateway release with MI's re-emitted catalog. SPAWN waits on `OG-ev-3` (the measure's verdict).
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-W1</workstream>
 <slot>~129</slot>
