@@ -1348,7 +1348,7 @@ def _placeholder_modify_violations(rel, head_text, staged_text):
 # :1757-1762 above).
 STATUS_ELEMENT_RE = re.compile(r"^[ \t]*<status>\s*([A-Za-z_-]+)\s*</status>[ \t]*$", re.M)
 GATE_XI_TERMINAL_WORDS = ("complete", "completed", "closed", "done",
-                          "superseded", "cancelled", "canceled", "withdrawn")
+                          "superseded", "cancelled", "canceled", "withdrawn", "not_met")
 
 
 def _status_element_violations(rel, text):

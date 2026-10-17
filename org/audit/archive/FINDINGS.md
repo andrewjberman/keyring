@@ -638,3 +638,13 @@ ERROR: safe-commit did NOT commit (rc=1). The refusal text is printed above.
 - log: org/mcp/log-open-ok-override.log
 - detail: non-append edit: first divergence at line 1, col 6 (baseline 480B / live-head 424B)
 - action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
+## 2026-10-17T132307Z -- SNAPSHOT-FAILURE -- COMMIT-FAILED
+<!-- sig: SNAPSHOT-FAILURE|COMMIT-FAILED||safe-commit rc=# (non-lane): ipeline-gate] OK: no task_orders/*.md in this commit (denominator: # dispatched path(s), # staged-added).
+ERROR: safe-commit did NOT commit (rc=#). The refusal text is printed above.
+       Two-phase path: everything was staged in a PRIVATE index, so the shared index holds nothing from this call.
+ -->
+- detail: safe-commit rc=1 (non-lane): ipeline-gate] OK: no task_orders/*.md in this commit (denominator: 24 dispatched path(s), 24 staged-added).
+ERROR: safe-commit did NOT commit (rc=1). The refusal text is printed above.
+       Two-phase path: everything was staged in a PRIVATE index, so the shared index holds nothing from this call.
+
+- note: distinct from DEATH: the invoker RAN, the commit failed

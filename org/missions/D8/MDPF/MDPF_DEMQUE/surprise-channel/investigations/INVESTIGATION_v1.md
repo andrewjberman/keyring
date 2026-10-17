@@ -3450,6 +3450,50 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     }
   },
   {
+    "id": "MDPF_DEMQUE-Z-S6",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MDPF1",
+    "surfaced_at": "2026-10-17T14:10:15Z",
+    "one_line": "The 2026-10-17 14:00Z fire read the new surface budgets but drew no surface-C cell: the run STOPPED on an empty vendor response in a surface-B request ahead of C, so DQ9-t70-AC2 reads FIRE-BAD.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t70: after the 2026-10-17 14:00Z fire, surface C drew more than 5,858 and at most 400,000 cells, and no row stopped on a vendor limit (AC2 dq_t70_fire.py FIRE-OK).",
+    "world_is": "MEASURED: run.2026-10-17.started.json shows surface_rooms C 400000 and daily_total_left 2500000, so the DQ-t-69 code ran. The receipt reads outcome STOPPED, stop_reason EMPTY_OR_INCOMPLETE_RESPONSE, cells_drawn 5618 (surface D 1004 for DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS, surface B 4614 for ADVI_COTBKF-COTTONWOOD-HIST-T1-01), 55 attempts; the last attempt, /cusip/78658RKQ3 2022-11-22..2023-05-26, returned 0 rows (standing_drawer.py:861 turns that into a run-level stop). No request tagged surface C was reached: dq_t70_fire.py prints 'FIRE-BAD surface-tagged cells 5618 are not past the 5858 history ceiling' (surface cells B 4614, D 1004; C none), dq_t69_room.py still SURF-OK. The task result is 2. INFERRED, not measured: a security that stored no rows keeps the same cursor, so the 2026-10-18 fire may ask the same window of the same security first and stop there again, leaving surface C undrawn; the 5,858 ceiling and the C room are not the limiting factor. No draw was run by hand (order step 5).",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/receipt.2026-10-17.json (attempts[-1], stop_reason, requests)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/ledger/BBG_ACTUALS.jsonl (2 rows dated 2026-10-17, both STOPPED)",
+        "data/mdpf/scripts/demque/standing_drawer.py@08e393fd01 line 861"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-Z-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MDPF1",
+    "surfaced_at": "2026-10-17T14:10:15Z",
+    "one_line": "TO-DQ-t34 AC2 cannot now read CLOSE-OK: the TR request drew its last 1004 cells on 2026-10-17 but was recorded STOPPED, so no COMPLETE row will be written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t34 build item 3: the run whose draws leave every security of a request at its end records that request's ONE line as COMPLETE; AC2 dq_t34_close.py reads exactly one COMPLETE row for the TR request with cells_drawn > 0 (CLOSE-OK).",
+    "world_is": "MEASURED: the 2026-10-17 actuals row for DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS reads cells_drawn 1004, outcome STOPPED, stop_reason EMPTY_OR_INCOMPLETE_RESPONSE; standing_drawer.py --plan --request DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS now prints remaining_cells 0, and --open no longer lists it, so the request is complete. standing_drawer.py:1066 sets every attempted request's outcome to STOPPED whenever the run carries a stop reason (it checks 'reason' before request_complete), and the stop came from the surface-B request (see MDPF_DEMQUE-Z-S6), not from TR. dq_t34_close.py prints 'CLOSE-BAD no COMPLETE row yet (3 rows for the job, 12720 cells drawn)'. A complete request is skipped at the start of a run with no actuals line (:1058-1060), so the 2026-10-18 fire will write none: the one COMPLETE row t34 expects has no way to appear. The deploy-ledger entry mdpf-demque-zq-t34-close L3 expires 2026-10-17T18:53Z. Not changed: the drawer, the task, and the three files.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/ledger/BBG_ACTUALS.jsonl (TR row 2026-10-17)",
+        "data/mdpf/scripts/demque/standing_drawer.py@08e393fd01 lines 1058-1070 and 485-488",
+        "org/critical_paths/.open_deploys/mdpf-demque-zq-t34-close.json (L3 open)"
+      ]
+    }
+  },
+  {
     "id": "MDPF_DEMQUE-D1-W65-S1",
     "project": "MDPF_DEMQUE",
     "fabric": "dell1",
