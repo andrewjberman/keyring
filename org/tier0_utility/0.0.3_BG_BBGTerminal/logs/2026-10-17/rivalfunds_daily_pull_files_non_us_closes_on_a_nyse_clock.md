@@ -94,3 +94,41 @@ framed it as a regression I caused. **The coverage number is right and the frami
 cells were the SHIFTED values. Losing them removed incorrect prices; the merge now serves the correct
 35.48 for Lenovo there. It is a coverage decrease, not a data-quality regression, and I had not yet
 measured the values when I called it one.
+
+## 7. CORRECTION (2026-10-17 ~06:5xZ): "US is correct" was WRONG, and the rule is about CAPTURE TIME
+
+**Sections 1-6 above say US names are correct. That is true only for a run captured at ~11:00Z, and I
+reached it unsoundly: every ADBE US row I checked was a `backfill` row, correct by construction, so I had
+not tested a single US PULL row when I wrote it.**
+
+Measured since, on US PULL rows against BDH:
+
+| security | 2026-10-13 (captured 11:07:57Z) | 2026-10-14 (captured **14:35:28Z**) | 2026-10-15 (captured 11:09:18Z) |
+|---|---|---|---|
+| ABNB US | 165.58 **correct** | 169.59 vs true 167.06 **wrong** | 174.28 **correct** |
+| ADP US | 275.90 **correct** | 288.50 vs true 280.32 **wrong** | 285.65 **correct** |
+| ALNY US | 223.82 **correct** | 231.06 vs true 224.47 **wrong** | 234.03 **correct** |
+| ACGL US | 96.85 **correct** | 100.24 vs true 97.60 **wrong** | 99.31 **correct** |
+| ABX/TD/SHOP CN | **correct** | **wrong** (same pattern) | **correct** |
+
+The capture instants come from the rows' own `revision` / `produced_at`: `20261014T110757Z`,
+`20261015T143528Z`, `20261016T110918Z`. **The daily job's capture time DRIFTS between runs**, and the
+14:35Z run lands mid-session in New York and Toronto.
+
+### The corrected rule
+
+**A snapshot row is correct if and only if the capture instant falls AFTER the venue's last close and
+BEFORE its next open, on the date it is filed under.** There is no venue for which this holds
+unconditionally, because the capture time is not fixed. At ~11:00Z: North America correct, Asia shifted
+one trading day, Europe intraday. At 14:35Z: **North America intraday as well.**
+
+### What this changes in the fix and the test
+
+- The attribution MUST be computed from the ACTUAL capture timestamp against the venue's own calendar,
+  never from an assumption about when the job runs. A per-venue map alone is insufficient if it assumes
+  11:00Z.
+- The acceptance test in section 4 MUST include a LATE-CAPTURE day (2026-10-14 is a measured example) and
+  a US name. A test using only 11:00Z days and non-US names passes while the US defect stands, and a test
+  using only US names on 11:00Z days passes while everything stands.
+- Section 3's point 3 is reinforced, not weakened: no single capture instant is correct for all venues,
+  and an unpinned capture time is not correct for ANY venue reliably.
