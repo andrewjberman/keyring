@@ -27911,3 +27911,57 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The malformed-part behaviour is an honest absent answer, named for the ask; the seven failures are baseline; the list's absence is a device fact and my scan finds only a synthetic Opal-domain address; the new cap and the extra GET are stated costs of the repair. Z-S375 stays ARMED until the fix release is live and its measurement under a hard guard is read."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T18:56:00Z",
+  "id": "NFRA_OPLGTW-Z-S378",
+  "one_line": "OG-ap-37: .tools/safe-merge.sh cannot land a lineage-only merge (every conflict resolved to the base's blob, so the merge stages no file); it refuses 'the merge staged NO files' and aborts, so the order's literal step 1 cannot complete through it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge-tree of trunk_base 6013328e18 and 1753c741d9 lists 2 conflicted paths (client_adapter_bd49f.py, harvest_research.py); both resolved to trunk's blobs (59bfea7afa, d2f07d4bf6, hash-object equal), 0 conflict markers; git status then reads empty (the merged tree equals trunk's).",
+      "bash .tools/safe-merge.sh --continue printed 'REFUSED -- the merge staged NO files. Nothing to grade; refusing rather than reporting a pass over an empty set.' and aborted the merge (.tools/safe-merge.sh lines 775 to 781, rc 1); MERGE_HEAD was gone and HEAD still trunk_base.",
+      "The script's own fast lane lands by git commit-tree with the seat as author (line 630); I created the same shape of commit: git commit-tree <trunk_base tree> -p trunk_base -p 1753c741d9 with GIT_AUTHOR_NAME the seat, then update-ref on the scratch branch land-hvst-cd2-nfra1 only. Result 82244ac7a3, parents exactly the two, tree equal to trunk_base's."
+    ]
+  },
+  "spec_asserts": "OG-ap-37 step 1: 'Merge 1753c741d9 into the branch with .tools/safe-merge.sh'; ap37.AC1: parents exactly trunk_base and the dell1 commit.",
+  "world_is": "safe-merge treats an empty staged set as a failure, which is right for a drain and wrong for a lineage landing whose purpose is to change no byte. The order's A2 (both conflicts to trunk's side) makes the empty set certain. The landing was made by commit-tree on a scratch branch, so no shared branch and no hook was bypassed; ap37.AC1 and AC2 both PASS on it. Anyone landing a lineage-only merge through safe-merge will meet the same refusal.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: drain the branch land-hvst-cd2-nfra1 (82244ac7a3, record 3cf7551f1e+) into box/sitez; the drain's own fast lane should accept a merge whose tree equals the base (check). Owner of a fix, if wanted: a --lineage-only flag in safe-merge that lets an empty staged set pass when the merge commit has two parents and an unchanged tree; MSTR or the CRO own that script. Not urgent."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T19:20:00Z",
+  "id": "NFRA_OPLGTW-Z-S379",
+  "one_line": "Round-41 ruling: OG-ap-37 landed dell1's release commit 1753c741d9 on trunk (drain 09cae34ff0, ap37.AC1 and AC2 PASS on my runs, proof VALID); the safe-merge --continue refusal of an empty staged set (Z-S378) is a tooling gap for the script's owner, routed through the round-41 slug",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S378"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ap37.AC1 and ap37.AC2 PASS on this seat's runs at HEAD 09cae34ff0: parents exactly trunk_base 6013328e18 and 1753c741d9, dell1's release an ancestor, 2 conflicted paths (client_adapter_bd49f.py, harvest_research.py) both equal to trunk_base's blobs, 0 markers, 0 gateway paths differing, 0 Terraform, manifest block efcc8ae19f / previous 1753c741d9 unchanged; proof instance VALID rc=0",
+      "drain of land-hvst-cd2-nfra1 into box/sitez by this seat: safe-merge fast lane MERGED and committed 09cae34ff0 (0 of 5 merged paths differ between the index and HEAD); git merge-base --is-ancestor 1753c741d9 HEAD now true"
+    ]
+  },
+  "spec_asserts": "A lineage landing changes no byte; safe-merge, the drain's guard, accepts what it lands.",
+  "world_is": "The order's A2 made an empty staged set certain, and safe-merge --continue refuses an empty set (lines 775-781) while its own fast lane lands the same shape of commit; the applier's commit-tree on a scratch branch created no shared-branch commit and bypassed no hook, and the drain accepted it. The landing stands. The script's behaviour for a lineage-only merge belongs to its owner (0.0.0_AB_MSTR); it is not urgent and is listed in the round-41 slug for the CTO to route. dell1's release is now an ancestor of trunk: trunk and the live host agree on the lineage of that release.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The landing is done and verified by this seat's runs; the safe-merge --continue gap for a lineage-only merge is the script owner's, not urgent, and is carried in the round-41 slug's enrichment list rather than held open as a hazard in this project."
+}
+```
