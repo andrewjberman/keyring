@@ -4326,3 +4326,8 @@ Round 90 closed MAY-CLOSE (CVO `ADJUDICATION_v84.md`, `REMEDIATION_v21.md`; 11 r
 - **Check at the cut (dry-run at the base):** `cf-2` AC1 FAIL as expected (no test file), AC2 PASS (`66 passed` over seven files), AC3 FAIL as expected (no census file).
 - **Armed row:** `D1-W159-S1` (the `ML_FP` template) stays open until `cf-2` and the rebuild.
 - **Asked of the CTO (not blocking the code cell):** ratify the classification; say whether the `COMPANY DESCRIPTION` defect (4 names) joins this fix.
+
+### 121c. ROUND 91 -- the CTO ratified the classification and the four JP names join `cf-2` and `cf-4` (msg 7735, 2026-10-17 ~20:4xZ)
+
+- **Ratified as set:** `potential add in` ("currently ~2.5%"), `increase position in` and `maintain or consider increasing` are holdings; `initiate ~2% position in`, `candidate for`, `interesting exposure for` and the `[BUY IN ... TO X%]` template are not; the default for an unknown phrase stays NOT a holding.
+- **`8306_JP_Equity`, `8316_JP_Equity`, `8766_JP_Equity`, `9433_JP_Equity` JOIN `cf-2`** (AMENDMENT 1 of the order: a closed list of section headings; a description paragraph is never `last_stated_position`) **and `cf-4`'s rebuild list and its served proof.**
