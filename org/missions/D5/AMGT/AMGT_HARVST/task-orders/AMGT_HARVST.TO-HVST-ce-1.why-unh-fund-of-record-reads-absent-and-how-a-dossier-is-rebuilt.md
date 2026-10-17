@@ -62,10 +62,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~155, worktree `C:/dev/wk-harvst-155`, branch `wk-AMGT_HARVST-155`. Widen the sparse set at provision with `lib/research` and `.claude/agents`.
 - **SENT:** with the round-90 issuance.
 
+**COMPLETE 2026-10-17T15:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~155` (worker, haiku, high), branch `wk-AMGT_HARVST-155`, commits `a6d080aeb4`, `7116ebe68b`, `7b0991ea26`, merged `0dfc96bdd1` (safe-merge fast lane, index check 0 of 5 paths differ); worktree and branch removed. Read by this seat: `ce1_measure.out` in full (119 lines), the last three lines AC1 to AC3, proof instance VALID rc 0 (re-run here).
+- **`CAUSE=rule_miss`** (layout level): the report `48d81f053e5076e8` is in the inputs (1 of 1 items); the stored continuation equals today's code on today's inputs (5 of 5 compared fields); the anchored label regex (`continuation.py` line 132) is applied to a whole pdf PAGE whose text starts with a page number and a title block, so `Recommendation: Maintain positions in PFOE and DIVZ` at offset 75 is never tested. The silver `fund` comes from `typed.py::_find_fund`, an unanchored search, which is why the silver row says PFOE. **`REBUILD_ENTRY`:** `continuation.py::write_one(security_key)` then `dossier.py::write_one(security_key)` (dossier CLI `--security-key`; the continuation CLI has no one-name write); gold writes never overwrite (a new name beside the old); neither writer takes an exclusion input (`REBUILD_NEEDS_EXCLUSION_INPUT=yes`). **`MEASURE gets=47 bytes=1626460 objects=24`** (cap 200 and 120 MiB; 21 of the 47 were NoSuchKey misses from a key-list defect of the worker, corrected on a second pass).
+- **Rows** `D1-W155-S1` (ARMED, disarm owner `1.0.0_SA_CTO`), `D1-W155-S2` (ARMED, disarm owner this seat), `D1-W155-S3` (INERT): the recut `ce-2` and `ce-6` answer S1 and S2; the issuer dispositions them after the round's merges.
+- **What this does NOT prove:** the population effect of a fix (`ce-2`'s census) or any served read.
+
 <risk>LOCAL</risk>
 <direct_act>true</direct_act>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>90</round>
 <workstream>S43-MEASURE</workstream>
 <slot>dell1</slot>
