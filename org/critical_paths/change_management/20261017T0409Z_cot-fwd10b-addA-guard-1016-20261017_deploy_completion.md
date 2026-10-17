@@ -23,3 +23,8 @@
 - 20261017T041201Z LEG R1 closed: safe-deploy 04:1xZ DEPLOYED [cot] + DEPLOYED-SECOND-TARGET opal-data-bd/code/bronze (flagged to CTO) + VERIFY OK; s3 sha
 - 20261017T041354Z LEG B1 closed: 04:12Z SSM 5fa12bcd (holdings) + eda989c8 (allocations), RunDate 2026-10-17 -> as-of 10/16: BRANCH (b) -- holdings REJEC
 - 20261017T041354Z LEG S1 closed: NOT RUN -- branch (b): no 10/16 bronze landed, so no silver/mirror step (per addendum A branch b)
+
+- 20261017T0925Z OPEN LEG STATED by 4.0.0_SA_CRO~DDD: V1 stays open by design. At 12:10Z (own timer) the 10/16 holdings and
+  allocations are re-pulled behind the no-regress guard once BD has posted carrier values. V1 closes on the guard's line at
+  the 11:30Z scheduled pull, plus the served 13:30Z Cottonwood 10/16 dated key (CTO C-4). If BD has not posted by 13:00Z,
+  that is reported to 1.0.0_SA_CTO~DELL1 (msg 7270 C-1) and V1 closes on that report and the served value.
