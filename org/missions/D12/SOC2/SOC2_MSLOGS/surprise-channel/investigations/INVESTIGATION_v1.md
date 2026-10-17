@@ -413,6 +413,69 @@ Worker rows of the round-1 cells, appended and never edited. Rows `SOC2_MSLOGS-D
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W9-S1",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~9",
+    "surfaced_at": "2026-10-17T06:47:47Z",
+    "one_line": "The derive check's leftover-temp-file arm reads the whole shared system temp directory, so entries written by other seats' processes made the first full run of R2-d2-AC1 print REFUSED; the same check passes on re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-R2-d2 R2-d2-AC1: the door's derive leaves no temporary file behind, measured by the check's derive_run leaked arm (the difference of the system temp listing before and after the run).",
+    "world_is": "The first full run of s1_check_r2.py derive (06:43 Z) printed R2-DERIVE-REFUSED derive left temporary files behind: ['ho1_ibz_k10o']; that directory was created 06:43:40 Z in the shared temp directory during the run and was not made by the door (the door-only subprocess at 16 objects printed leaked []). The naive subprocess later reported a different foreign entry, zb1_ac1.txt, leaked []. The full re-run printed R2-DERIVE-OK vs_build=0.18 growth=1.24. A direct build_stream call leaves no new entry.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s1_check_r2.py derive_run lines 152-173 (tmp_before snapshot and leaked diff over tempfile.gettempdir()), read at the worktree base 827ff5e882",
+        "the three runs named in world_is, output read verbatim in this session, 2026-10-17 06:43-06:46 Z",
+        "build_stream in infra/aws/lambda/globgrph-trino-access/silver_builder.py at the worker's commit of TO-R2-d2 leaves no new entry in a direct probe"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W9-S2",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~9",
+    "surfaced_at": "2026-10-17T06:55:59Z",
+    "one_line": "The naming gate cannot grade in this worktree: its function-map folder infra/aws/lambda/ci/function-map is tracked but outside the sparse-checkout cone, so every gate run exits 1 with NAMING ERROR before any line is graded.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-R2-n2 R2-n2-AC1 and the face's gate step: the naming gate grades the door's handler.py and reports the bronze audit_records lines, and the gate's remaining lines on the door directory are reported verbatim.",
+    "world_is": "git config core.sparseCheckout is true (cone mode), and the worktree's skip-worktree bit is set on all 281 tracked files under infra/aws/lambda/ci. Running .tools/naming-gate.py --diff on an all-added handler.py prints NAMING ERROR function-map folder missing: C:\\Dev\\ajb_wk\\soc2-r2-9\\infra/aws/lambda/ci/function-map/ and exits 1, with --enforce too. The folder exists only in the main workspace checkout, untracked there. The function-map was not copied or added to the sparse cone (that would be reconstruction), so no bronze line has been graded in this worktree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config --get core.sparseCheckout -> true; git ls-files -v infra/aws/lambda/ci -> 281 lines with the S (skip-worktree) flag; ls infra/aws/lambda/ci -> no such file",
+        ".tools/naming-gate.py lines 1294-1302 (function_map_problem) and 3700-3704 (main returns 1 in every mode on the problem)",
+        "git diff --no-index -- /dev/null infra/aws/lambda/globgrph-trino-access/handler.py piped to .tools/naming-gate.py --diff -> NAMING ERROR function-map folder missing, rc=1, at 06:5x Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W9-S3",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~9",
+    "surfaced_at": "2026-10-17T06:55:59Z",
+    "one_line": "The check's naming arm prints R2-NAMING-OK when the gate errors out, because it counts only NAMING REFUSE lines and a NAMING ERROR produces none: a false pass on the remediation's own criterion.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~S1 (the issuer): do not record remediation SOC2_MSLOGS-D1-W2-S3 as closed on R2-NAMING-OK; the arm must treat a NAMING ERROR line (rc 1, no graded lines) as a refusal, and the gate must grade in a worktree that carries the function-map",
+    "spec_asserts": "The remediation SOC2_MSLOGS-D1-W2-S3 closes when R2-NAMING-OK passes, and R2-NAMING-OK means the gate refuses no audit_records line in any top-level door module.",
+    "world_is": "In s1_check_r2.py naming(), _gate_lines collects the gate's stdout and the verdict counts only lines starting NAMING REFUSE that mention audit_records. With the gate in NAMING ERROR state (see SOC2_MSLOGS-D1-W9-S2) the list is empty and the arm prints R2-NAMING-OK files=2, rc=0, although no line was graded. The bronze prefix and key-grammar arms of the same check are genuine (BRONZE_DAY equals the builder output; key_ok admits the builder-shaped key).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s1_check_r2.py lines 241-243 (hits = audit_records lines starting NAMING REFUSE) and the _gate_lines helper lines 213-225, read at the worktree base",
+        "python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R2_CHECKS/s1_check_r2.py naming -> R2-NAMING-OK files=2, rc=0, run 06:5x Z, while the gate on the same handler printed NAMING ERROR rc=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
