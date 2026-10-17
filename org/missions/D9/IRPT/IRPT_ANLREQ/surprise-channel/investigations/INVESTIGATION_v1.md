@@ -24285,3 +24285,376 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S176 -- D2-W52-S24 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S176",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W52-S24 DISARMED on evidence: The four headers the row names are matched at HEAD (run on HEAD bytes). The reader is in the deployed irpt-ycharts-generate build, whose template_reader.py blob equals HEAD (record 20261016T0207Z, status CLOSED).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W52-S24"
+  ],
+  "spec_asserts": "Row D2-W52-S24 (disarm owner 2.0.0_SA_COO~Y2): The account-header rule missed Brokerage Account, Subaccount, Account Seq and Account Sequence, so a multi-account file under one of them passed as one account.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: The account-header rule missed Brokerage Account, Subaccount, Account Seq and Account Sequence, so a multi-account file under one of them passed as one account. Evidence: infra/aws/lambda/investor-reporting/intake/template_reader.py:66 (code) :: ACCOUNT_WORDS at HEAD holds subaccount, subaccounts and accnt. | infra/aws/lambda/investor-reporting/intake/template_reader.py:69 (code) :: ACCOUNT_MODIFIERS at HEAD holds brokerage. | infra/aws/lambda/investor-reporting/intake/template_reader.py:72 (code) :: ACCOUNT_TAIL_WORDS at HEAD holds seq and sequence. Run on HEAD bytes: all four row headers return True from _is_account_header. | org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: CLOSED 20261016T024904Z; irpt-ycharts-generate built at pin 927337a741, whose template_reader.py blob 7c2c761d71 equals HEAD.. The deployed chain was re-read by this seat: ledger org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md reads CLOSED (closed 20261016T024904Z), names the build pin 927337a741 and records CodeSha256 kxOEgpbspky...; the window-4 R0 read of the live irpt-ycharts-generate (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd1_r4/r0_aws_out.txt) printed the same CodeSha256; the blobs of intake/template_reader.py (7c2c761d71), intake/uploads.py (7ec1cb2bb6) and ycharts/generate/normalized_input.py (511b71eede) are EQUAL at the pin and at HEAD (git rev-parse), and d9d34f0b77 is an ancestor of the pin. NOT READ: any test executed by this seat; any live request through the deployed path. This row is GRADUATED: its ARMED standing is carried by the REMEDIATION entry (the CVO's lane), so this row is the evidence for the L8 packet, not a clearing of the entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:66 (code) :: ACCOUNT_WORDS at HEAD holds subaccount, subaccounts and accnt.",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:69 (code) :: ACCOUNT_MODIFIERS at HEAD holds brokerage.",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:72 (code) :: ACCOUNT_TAIL_WORDS at HEAD holds seq and sequence. Run on HEAD bytes: all four row headers return True from _is_account_header.",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: CLOSED 20261016T024904Z; irpt-ycharts-generate built at pin 927337a741, whose template_reader.py blob 7c2c761d71 equals HEAD.",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The four headers the row names are matched at HEAD (run on HEAD bytes). The reader is in the deployed irpt-ycharts-generate build, whose template_reader.py blob equals HEAD (record 20261016T0207Z, status CLOSED)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S177 -- D2-W52-S31 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S177",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W52-S31 DISARMED on evidence: All six headers the row names are matched at HEAD (run on HEAD bytes, control headers Cost Basis and Account Value not matched). The vocabulary is in the deployed build (record 20261016T0207Z).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W52-S31"
+  ],
+  "spec_asserts": "Row D2-W52-S31 (disarm owner 2.0.0_SA_COO~Y2): Identifier-like account headers outside the ruled vocabulary (plural tails, subaccounts, accnt, nos, seqno, serial) passed as one account.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: Identifier-like account headers outside the ruled vocabulary (plural tails, subaccounts, accnt, nos, seqno, serial) passed as one account. Evidence: infra/aws/lambda/investor-reporting/intake/template_reader.py:66 (code) :: ACCOUNT_WORDS at HEAD holds subaccounts and accnt. | infra/aws/lambda/investor-reporting/intake/template_reader.py:72 (code) :: ACCOUNT_TAIL_WORDS at HEAD holds numbers, nos, seqno and serial. Run on HEAD bytes: all six row headers return True from _is_account_header. | org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: Deployed build pin 927337a741 carries template_reader.py blob 7c2c761d71, equal to HEAD.. The deployed chain was re-read by this seat: ledger org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md reads CLOSED (closed 20261016T024904Z), names the build pin 927337a741 and records CodeSha256 kxOEgpbspky...; the window-4 R0 read of the live irpt-ycharts-generate (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd1_r4/r0_aws_out.txt) printed the same CodeSha256; the blobs of intake/template_reader.py (7c2c761d71), intake/uploads.py (7ec1cb2bb6) and ycharts/generate/normalized_input.py (511b71eede) are EQUAL at the pin and at HEAD (git rev-parse), and d9d34f0b77 is an ancestor of the pin. NOT READ: any test executed by this seat; any live request through the deployed path. This row is GRADUATED: its ARMED standing is carried by the REMEDIATION entry (the CVO's lane), so this row is the evidence for the L8 packet, not a clearing of the entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:66 (code) :: ACCOUNT_WORDS at HEAD holds subaccounts and accnt.",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:72 (code) :: ACCOUNT_TAIL_WORDS at HEAD holds numbers, nos, seqno and serial. Run on HEAD bytes: all six row headers return True from _is_account_header.",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: Deployed build pin 927337a741 carries template_reader.py blob 7c2c761d71, equal to HEAD.",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "All six headers the row names are matched at HEAD (run on HEAD bytes, control headers Cost Basis and Account Value not matched). The vocabulary is in the deployed build (record 20261016T0207Z)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S178 -- D2-W52-S33 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S178",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W52-S33 DISARMED on evidence: The HEAD reader and door refuse the four multi-account and total-row shapes with ERROR findings (run on HEAD bytes). The deployed build after the remedy carries the same blobs (record 20261016T0207Z). The map pin 3f29017cfc named in the row is no longer the packaged reader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W52-S33"
+  ],
+  "spec_asserts": "Row D2-W52-S33 (disarm owner 2.0.0_SA_COO~Y2): The pinned reader held the total row as a holding and accepted two-account sheets with no finding, so the door counted the total into the portfolio.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: The pinned reader held the total row as a holding and accepted two-account sheets with no finding, so the door counted the total into the portfolio. Evidence: infra/aws/lambda/investor-reporting/intake/template_reader.py:461 (code) :: A total label in column A raises TOTAL_ROW_PRESENT (emit at line 462). | infra/aws/lambda/investor-reporting/intake/template_reader.py:146 (code) :: finding() defaults severity to ERROR, so TOTAL_ROW_PRESENT is an ERROR finding. Run on HEAD: total_row_sheet gives TOTAL_ROW_PRESENT:ERROR; two-accoun | infra/aws/lambda/investor-reporting/intake/uploads.py:491 (code) :: The door takes ERROR findings first and returns NEEDS_CORRECTION (line 495), nothing published. | org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: CLOSED 20261016T024904Z; deployed build at pin 927337a741 carries template_reader.py and uploads.py blobs equal to HEAD (7c2c761d71, 7ec1cb2bb6).. The deployed chain was re-read by this seat: ledger org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md reads CLOSED (closed 20261016T024904Z), names the build pin 927337a741 and records CodeSha256 kxOEgpbspky...; the window-4 R0 read of the live irpt-ycharts-generate (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd1_r4/r0_aws_out.txt) printed the same CodeSha256; the blobs of intake/template_reader.py (7c2c761d71), intake/uploads.py (7ec1cb2bb6) and ycharts/generate/normalized_input.py (511b71eede) are EQUAL at the pin and at HEAD (git rev-parse), and d9d34f0b77 is an ancestor of the pin. NOT READ: any test executed by this seat; any live request through the deployed path. This row is GRADUATED: its ARMED standing is carried by the REMEDIATION entry (the CVO's lane), so this row is the evidence for the L8 packet, not a clearing of the entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:461 (code) :: A total label in column A raises TOTAL_ROW_PRESENT (emit at line 462).",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:146 (code) :: finding() defaults severity to ERROR, so TOTAL_ROW_PRESENT is an ERROR finding. Run on HEAD: total_row_sheet gives TOTAL_ROW_PRESENT:ERROR; two-accoun",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:491 (code) :: The door takes ERROR findings first and returns NEEDS_CORRECTION (line 495), nothing published.",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: CLOSED 20261016T024904Z; deployed build at pin 927337a741 carries template_reader.py and uploads.py blobs equal to HEAD (7c2c761d71, 7ec1cb2bb6).",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The HEAD reader and door refuse the four multi-account and total-row shapes with ERROR findings (run on HEAD bytes). The deployed build after the remedy carries the same blobs (record 20261016T0207Z). The map pin 3f29017cfc named in the row is no longer the packaged reader."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S179 -- D2-W52-S36 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S179",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W52-S36 DISARMED on evidence: The total-row shape now yields an ERROR finding at HEAD and the door refuses it with NEEDS_CORRECTION (run of the reader on HEAD bytes; door code at uploads.py:491-495). The deployed build carries the same blobs (record 20261016T0207Z).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W52-S36"
+  ],
+  "spec_asserts": "Row D2-W52-S36 (disarm owner 2.0.0_SA_COO~Y2): The door answered NORMALIZED with no finding and total 600 on a sheet whose own total row reads 300.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: The door answered NORMALIZED with no finding and total 600 on a sheet whose own total row reads 300. Evidence: infra/aws/lambda/investor-reporting/intake/template_reader.py:461 (code) :: TOTAL_ROW_PRESENT is raised for a total label (line 462) and is an ERROR finding by default (line 146). | infra/aws/lambda/investor-reporting/intake/uploads.py:491 (code) :: ERROR findings are the door's first answer: NEEDS_CORRECTION, nothing handed on (returned at line 495). | org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: CLOSED 20261016T024904Z; deployed build carries uploads.py and template_reader.py blobs equal to HEAD.. The deployed chain was re-read by this seat: ledger org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md reads CLOSED (closed 20261016T024904Z), names the build pin 927337a741 and records CodeSha256 kxOEgpbspky...; the window-4 R0 read of the live irpt-ycharts-generate (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd1_r4/r0_aws_out.txt) printed the same CodeSha256; the blobs of intake/template_reader.py (7c2c761d71), intake/uploads.py (7ec1cb2bb6) and ycharts/generate/normalized_input.py (511b71eede) are EQUAL at the pin and at HEAD (git rev-parse), and d9d34f0b77 is an ancestor of the pin. NOT READ: any test executed by this seat; any live request through the deployed path. This row is GRADUATED: its ARMED standing is carried by the REMEDIATION entry (the CVO's lane), so this row is the evidence for the L8 packet, not a clearing of the entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:461 (code) :: TOTAL_ROW_PRESENT is raised for a total label (line 462) and is an ERROR finding by default (line 146).",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:491 (code) :: ERROR findings are the door's first answer: NEEDS_CORRECTION, nothing handed on (returned at line 495).",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: CLOSED 20261016T024904Z; deployed build carries uploads.py and template_reader.py blobs equal to HEAD.",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The total-row shape now yields an ERROR finding at HEAD and the door refuses it with NEEDS_CORRECTION (run of the reader on HEAD bytes; door code at uploads.py:491-495). The deployed build carries the same blobs (record 20261016T0207Z)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S180 -- D2-W61-S2 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S180",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W61-S2 DISARMED on evidence: For all three functions the map's deployed field equals the latest committed after-read or closed deploy record. The act-4 kMB8 value is superseded by the 2026-10-12 22:26 deploy (abep4h7) and the 10-13 after-read (NdwQ); the ledger itself was not amended and is not edited here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W61-S2"
+  ],
+  "spec_asserts": "Row D2-W61-S2 (disarm owner 2.0.0_SA_COO~Y2): The source map's deployed_code_sha256 for three functions did not match their live CodeSha256, and the act-4 ledger's performance-adapter value was not the live one.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: The source map's deployed_code_sha256 for three functions did not match their live CodeSha256, and the act-4 ledger's performance-adapter value was not the live one. Evidence: infra/aws/lambda/ci/function-map/irpt-performance-adapter.json:520 (code) :: deployed_code_sha256 NdwQsZ4Y... equals artifact_sha256 at line 514. | infra/aws/lambda/ci/function-map/irpt-narrative.json:154 (code) :: deployed_code_sha256 vBzPCvn9... equals the narrative artifact hash. | infra/aws/lambda/ci/function-map/irpt-status.json:321 (code) :: deployed_code_sha256 +TcZDWmw... equals the status artifact hash. | org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r20/L8_AFTER_R20.txt (record) :: After-read 2026-10-13: performance-adapter CodeSha256 NdwQsZ4Y (LastModified 12:51:39Z); narrative vBzPCvn9 (12:39:03Z). | org/critical_paths/change_management/20261016T0554Z_irpt-status-r35l-20261016_deploy_completion.md (record) :: Deploy line: irpt-status code CodeSha256 moved to +TcZDWmw..., CLOSED. | org/critical_paths/change_management/20261012T1340Z_advi-firmbkts-fb-f-11-act4-irpt-leg-20261012_deploy_completion.md (record) :: Act-4 ledger line 165 records kMB8xCI9 for the performance adapter. Superseded; not amended here.. NOT READ: any test executed by this seat; any live request through the deployed path. This row is GRADUATED: its ARMED standing is carried by the REMEDIATION entry (the CVO's lane), so this row is the evidence for the L8 packet, not a clearing of the entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-performance-adapter.json:520 (code) :: deployed_code_sha256 NdwQsZ4Y... equals artifact_sha256 at line 514.",
+      "infra/aws/lambda/ci/function-map/irpt-narrative.json:154 (code) :: deployed_code_sha256 vBzPCvn9... equals the narrative artifact hash.",
+      "infra/aws/lambda/ci/function-map/irpt-status.json:321 (code) :: deployed_code_sha256 +TcZDWmw... equals the status artifact hash.",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r20/L8_AFTER_R20.txt (record) :: After-read 2026-10-13: performance-adapter CodeSha256 NdwQsZ4Y (LastModified 12:51:39Z); narrative vBzPCvn9 (12:39:03Z).",
+      "org/critical_paths/change_management/20261016T0554Z_irpt-status-r35l-20261016_deploy_completion.md (record) :: Deploy line: irpt-status code CodeSha256 moved to +TcZDWmw..., CLOSED.",
+      "org/critical_paths/change_management/20261012T1340Z_advi-firmbkts-fb-f-11-act4-irpt-leg-20261012_deploy_completion.md (record) :: Act-4 ledger line 165 records kMB8xCI9 for the performance adapter. Superseded; not amended here.",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "For all three functions the map's deployed field equals the latest committed after-read or closed deploy record. The act-4 kMB8 value is superseded by the 2026-10-12 22:26 deploy (abep4h7) and the 10-13 after-read (NdwQ); the ledger itself was not amended and is not edited here."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S181 -- D2-W75-S1 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S181",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W75-S1 DISARMED on evidence: Both lanes now default the date for SHARES (uploads.py:445, :613). The refusal at portfolio.py:253 is reached only for a malformed date. The server ignores any client price_date (uploads.py:245). The deployed build carries these bytes (record 20261016T0207Z).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W75-S1"
+  ],
+  "spec_asserts": "Row D2-W75-S1 (disarm owner 2.0.0_SA_COO~Y2): The server refused a SHARES holdings file with no price date (PRICE_DATE_REQUIRED), so the portal's Price date field could not be removed.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: The server refused a SHARES holdings file with no price date (PRICE_DATE_REQUIRED), so the portal's Price date field could not be removed. Evidence: infra/aws/lambda/investor-reporting/intake/uploads.py:245 (code) :: A client price_date is dropped and logged as a closed token; the server derives the date. | infra/aws/lambda/investor-reporting/intake/uploads.py:445 (code) :: CSV lane: a SHARES unit with no date gets default_price_date (prior trading day). | infra/aws/lambda/investor-reporting/intake/uploads.py:613 (code) :: Template lane: SHARES takes default_price_date when no date is sent. | infra/aws/lambda/investor-reporting/intake/portfolio.py:59 (code) :: default_price_date returns the prior trading day for None (return at line 70). | d9d34f0b77 (commit) :: AR-y-245: the server takes the prior trading day close when a SHARES unit has no date (commit subject). | org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: Deployed build carries uploads.py blob 7ec1cb2bb6, equal to HEAD, after d9d34f0b77.. The deployed chain was re-read by this seat: ledger org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md reads CLOSED (closed 20261016T024904Z), names the build pin 927337a741 and records CodeSha256 kxOEgpbspky...; the window-4 R0 read of the live irpt-ycharts-generate (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd1_r4/r0_aws_out.txt) printed the same CodeSha256; the blobs of intake/template_reader.py (7c2c761d71), intake/uploads.py (7ec1cb2bb6) and ycharts/generate/normalized_input.py (511b71eede) are EQUAL at the pin and at HEAD (git rev-parse), and d9d34f0b77 is an ancestor of the pin. NOT READ: any test executed by this seat; any live request through the deployed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:245 (code) :: A client price_date is dropped and logged as a closed token; the server derives the date.",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:445 (code) :: CSV lane: a SHARES unit with no date gets default_price_date (prior trading day).",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:613 (code) :: Template lane: SHARES takes default_price_date when no date is sent.",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:59 (code) :: default_price_date returns the prior trading day for None (return at line 70).",
+      "d9d34f0b77 (commit) :: AR-y-245: the server takes the prior trading day close when a SHARES unit has no date (commit subject).",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: Deployed build carries uploads.py blob 7ec1cb2bb6, equal to HEAD, after d9d34f0b77.",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both lanes now default the date for SHARES (uploads.py:445, :613). The refusal at portfolio.py:253 is reached only for a malformed date. The server ignores any client price_date (uploads.py:245). The deployed build carries these bytes (record 20261016T0207Z)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S182 -- D2-W104-S1 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S182",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W104-S1 DISARMED on evidence: The suite was re-pointed to partner-caller behaviour in portal commit 1c71bfd8, an ancestor of the DEV pin (remedy visible at lines 182 and 89). The folder pass count was not re-run in this audit (no test run); the test file is not a deployed artifact.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W104-S1"
+  ],
+  "spec_asserts": "Row D2-W104-S1 (disarm owner 2.0.0_SA_COO~Y2): The AR-y-283 partner view broke 10 tests in analysis-submit-silence.test.tsx, which mounted a firm caller where the page now shows the partner view.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=n/a), re-read by the issuer. Hazard: The AR-y-283 partner view broke 10 tests in analysis-submit-silence.test.tsx, which mounted a firm caller where the page now shows the partner view. Evidence: portal/src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx:182 (code) :: Helper fills the partner caller's Analysis Request form, open on mount (AR-y-283); no New Ticket press is expected. | portal/src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx:89 (code) :: The useAuth mock is a firm caller (isInternal false), now matched by the partner-view expectations. | portal/src/pages/TicketCenter/TicketCenter.tsx:213 (code) :: partner = !internal: the partner branch the suite now exercises.. NOT READ: any test executed by this seat; any live request through the deployed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx:182 (code) :: Helper fills the partner caller's Analysis Request form, open on mount (AR-y-283); no New Ticket press is expected.",
+      "portal/src/pages/TicketCenter/__tests__/analysis-submit-silence.test.tsx:89 (code) :: The useAuth mock is a firm caller (isInternal false), now matched by the partner-view expectations.",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:213 (code) :: partner = !internal: the partner branch the suite now exercises.",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The suite was re-pointed to partner-caller behaviour in portal commit 1c71bfd8, an ancestor of the DEV pin (remedy visible at lines 182 and 89). The folder pass count was not re-run in this audit (no test run); the test file is not a deployed artifact."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S183 -- D2-W107-S4 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S183",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W107-S4 DISARMED on evidence: The YCharts recipe refuses a KEPT row (no receipt) before any upload, so it cannot be read as a YCharts id. The refusal is at HEAD and in the deployed build (record 20261016T0207Z). The row's cite intake/intake/portfolio.py is not a HEAD path (filed as IRPT_ANLREQ-D2-W287-S3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W107-S4"
+  ],
+  "spec_asserts": "Row D2-W107-S4 (disarm owner 2.0.0_SA_COO~Y2): A KEPT_BY_HISTORY holding carries the client's bare ticker under YCHARTS_SECURITY identity, so a consumer reading it as a YCharts id would misread it.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: A KEPT_BY_HISTORY holding carries the client's bare ticker under YCHARTS_SECURITY identity, so a consumer reading it as a YCharts id would misread it. Evidence: infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py:44 (code) :: _receipt_sha256 is defined here; a row with no provider receipt (a KEPT holding) is refused. | infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py:51 (code) :: raise RecipeRefused: holdings row has no provider receipt. | infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py:80 (code) :: The vendor path calls _receipt_sha256 for each holding row. | org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: Deployed build pin 927337a741 carries normalized_input.py blob 511b71eede, equal to HEAD.. The deployed chain was re-read by this seat: ledger org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md reads CLOSED (closed 20261016T024904Z), names the build pin 927337a741 and records CodeSha256 kxOEgpbspky...; the window-4 R0 read of the live irpt-ycharts-generate (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd1_r4/r0_aws_out.txt) printed the same CodeSha256; the blobs of intake/template_reader.py (7c2c761d71), intake/uploads.py (7ec1cb2bb6) and ycharts/generate/normalized_input.py (511b71eede) are EQUAL at the pin and at HEAD (git rev-parse), and d9d34f0b77 is an ancestor of the pin. NOT READ: any test executed by this seat; any live request through the deployed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py:44 (code) :: _receipt_sha256 is defined here; a row with no provider receipt (a KEPT holding) is refused.",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py:51 (code) :: raise RecipeRefused: holdings row has no provider receipt.",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py:80 (code) :: The vendor path calls _receipt_sha256 for each holding row.",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (record) :: Deployed build pin 927337a741 carries normalized_input.py blob 511b71eede, equal to HEAD.",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The YCharts recipe refuses a KEPT row (no receipt) before any upload, so it cannot be read as a YCharts id. The refusal is at HEAD and in the deployed build (record 20261016T0207Z). The row's cite intake/intake/portfolio.py is not a HEAD path (filed as IRPT_ANLREQ-D2-W287-S3)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S184 -- D2-W103-S3 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S184",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W103-S3 DISARMED on evidence: AR-y-281 is in the deployed ticket code (blob 5968534813 equals HEAD, record 20261016T2320Z), so the client LIST is firm-scoped server-side. AR-y-283's partner view is at the DEV pin. The unscoped-board exposure the row describes is not reachable at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W103-S3"
+  ],
+  "spec_asserts": "Row D2-W103-S3 (disarm owner 2.0.0_SA_COO~Y2): The ticket board was unscoped, so a partner build would show every firm's tickets; the order was to land the candidate only after AR-y-281 and AR-y-283.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: The ticket board was unscoped, so a partner build would show every firm's tickets; the order was to land the candidate only after AR-y-281 and AR-y-283. Evidence: infra/aws/lambda/ticket_center/lambda_function.py:192 (code) :: LIST admits CLIENT (the firm-scoped list) as well as INTERNAL and SVC_ANALYST_INTAKE. | infra/aws/lambda/ticket_center/lambda_function.py:1543 (code) :: client_list_tickets: firm-scoped LIST for a client human (AR-y-281), commit cbdfe204a0. | portal/src/pages/TicketCenter/TicketCenter.tsx:213 (code) :: Partner view (partner = !internal) reads the partner-firm list, server-scoped (portal tickets.ts:258 comment). | org/critical_paths/change_management/20261016T2320Z_tckt-vnext-r20-rel-20261016_deploy_completion.md (record) :: CLOSED 20261016T233151Z; opal-ticket-api code lambda_function.py blob 5968534813, equal to HEAD.. The ticket-service blob 5968534813 is equal at HEAD (git rev-parse) and is the value ledger tckt-vnext-r20-rel-20261016 (CLOSED 20261016T233151Z) records as deployed. NOT READ: any test executed by this seat; any live request through the deployed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:192 (code) :: LIST admits CLIENT (the firm-scoped list) as well as INTERNAL and SVC_ANALYST_INTAKE.",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1543 (code) :: client_list_tickets: firm-scoped LIST for a client human (AR-y-281), commit cbdfe204a0.",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:213 (code) :: Partner view (partner = !internal) reads the partner-firm list, server-scoped (portal tickets.ts:258 comment).",
+      "org/critical_paths/change_management/20261016T2320Z_tckt-vnext-r20-rel-20261016_deploy_completion.md (record) :: CLOSED 20261016T233151Z; opal-ticket-api code lambda_function.py blob 5968534813, equal to HEAD.",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "AR-y-281 is in the deployed ticket code (blob 5968534813 equals HEAD, record 20261016T2320Z), so the client LIST is firm-scoped server-side. AR-y-283's partner view is at the DEV pin. The unscoped-board exposure the row describes is not reachable at HEAD."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S185 -- D2-W109-S2 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S185",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W109-S2 DISARMED on evidence: The server half is in HEAD and in the deployed ticket code (record 20261016T2320Z), so the packager's seven-member attach is accepted. The server-first release order the row requires is satisfied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W109-S2"
+  ],
+  "spec_asserts": "Row D2-W109-S2 (disarm owner 2.0.0_SA_COO~Y2): The packager's attach carries request_id and request_revision, which the ticket server refused as unexpected fields when released ahead of the server half.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=yes), re-read by the issuer. Hazard: The packager's attach carries request_id and request_revision, which the ticket server refused as unexpected fields when released ahead of the server half. Evidence: infra/aws/lambda/ticket_center/lambda_function.py:1800 (code) :: AR-y-284: PACKAGE accepts an optional request_id, with an optional request_revision, recorded in the same write. | infra/aws/lambda/ticket_center/lambda_function.py:1808 (code) :: extra fields are refused unless request_id or request_revision is present (rid_present). | infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:191 (code) :: The packager sends request_id and request_revision in request_ref on every attach. | org/critical_paths/change_management/20261016T2320Z_tckt-vnext-r20-rel-20261016_deploy_completion.md (record) :: Deployed opal-ticket-api code blob 5968534813, equal to HEAD (server half AR-y-284 commit 8151b5626f).. The ticket-service blob 5968534813 is equal at HEAD (git rev-parse) and is the value ledger tckt-vnext-r20-rel-20261016 (CLOSED 20261016T233151Z) records as deployed. NOT READ: any test executed by this seat; any live request through the deployed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1800 (code) :: AR-y-284: PACKAGE accepts an optional request_id, with an optional request_revision, recorded in the same write.",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1808 (code) :: extra fields are refused unless request_id or request_revision is present (rid_present).",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:191 (code) :: The packager sends request_id and request_revision in request_ref on every attach.",
+      "org/critical_paths/change_management/20261016T2320Z_tckt-vnext-r20-rel-20261016_deploy_completion.md (record) :: Deployed opal-ticket-api code blob 5968534813, equal to HEAD (server half AR-y-284 commit 8151b5626f).",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The server half is in HEAD and in the deployed ticket code (record 20261016T2320Z), so the packager's seven-member attach is accepted. The server-first release order the row requires is satisfied."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S186 -- D2-W114-S1 disarmed on worker 287's audit evidence (re-read by the issuer)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S186",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:31:20Z",
+  "one_line": "D2-W114-S1 DISARMED on evidence: The brace-only defect is fixed at HEAD (lines 758 and 763). Run of the HEAD regex on the current channel: 847 fenced blocks, 0 unparsed, 899 rows. The 406-block count of the row is historical and not re-measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W114-S1"
+  ],
+  "spec_asserts": "Row D2-W114-S1 (disarm owner 2.0.0_SA_COO~Y2): The y296 armed checker parsed only brace-opened json fences, so 86 array blocks were never read and the ARMED-OWNED count was wrong.",
+  "world_is": "Worker 287's audit line (verdict CLOSED, deployed=n/a), re-read by the issuer. Hazard: The y296 armed checker parsed only brace-opened json fences, so 86 array blocks were never read and the ARMED-OWNED count was wrong. Evidence: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:758 (code) :: The fence regex at line 758 matches every json fence, not only brace-opened ones (the defect the row names is absent). | org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:763 (code) :: Each fenced body is read as a list or a dict: for r in (got if isinstance(got, list) else [got]).. NOT READ: any test executed by this seat; any live request through the deployed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:758 (code) :: The fence regex at line 758 matches every json fence, not only brace-opened ones (the defect the row names is absent).",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r21/ar21_checks.py:763 (code) :: Each fenced body is read as a list or a dict: for r in (got if isinstance(got, list) else [got]).",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~287/r47/AUDIT_a.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The brace-only defect is fixed at HEAD (lines 758 and 763). Run of the HEAD regex on the current channel: 847 fenced blocks, 0 unparsed, 899 rows. The 406-block count of the row is historical and not re-measured."
+}
+]
+```
