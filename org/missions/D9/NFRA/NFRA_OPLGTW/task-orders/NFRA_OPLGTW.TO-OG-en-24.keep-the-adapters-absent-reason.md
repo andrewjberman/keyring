@@ -78,7 +78,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-24.keep-the-adapters-absent-
 - The enumeration (step 2) matters: every 49F `_absent(...)` answer that reached the caller with `absent_reason` null will now carry its code. That is the intent (the adapter set the code and the core dropped it), and it widens nothing in reach (no row is added or removed), but the issuer names it in the ask. The CTO adopted the CVO's row Z-S373 (msg 35492): the mapping is GENERAL (whenever `_absent_reason` is None), and the five `no_partition_at_as_of` refusals the live release nulls are part of the proof (`test_ogen24_ac03`).
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent); `AC3` base FAIL (the file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41-R</workstream>
 <slot>~138</slot>
