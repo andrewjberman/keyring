@@ -26422,3 +26422,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Ruled: a window page is ordered by trade date, newest first, with a stable sort; the cursor stays by PARTITION date. Cut as OG-en-19 (worker ~131, commit 29fca12c0c). The e1_newest_first arm is reworded at the next release's amendment: within a page the dates are non-increasing; across pages the cursor moves back by partition date."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T02:33:15Z",
+  "id": "NFRA_OPLGTW-Z-S341",
+  "one_line": "Round-40 ruling on Z-S135: YR_SERVED.json stays as measured (0d828b51); the current served oracle is 3bbd5ab2",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S135"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REMEDIATION_v20.md Z-S135 remedy line: only yr1.AC2's record remained, the issuer's call",
+      "OG-yr-1 order amendment A3 and the CVO half OG-ap-18 v3 item 2 (served md5 moves 0d828b51 to 3bbd5ab2)"
+    ]
+  },
+  "spec_asserts": "A point-in-time measurement record is not edited to match a later state.",
+  "world_is": "Ruled: W/YR_SERVED.json of OG-yr-1 (0.7.0_AE_CloudOps~Z) is a point-in-time measurement of the page as served on 2026-10-14 (the checked-out CRLF form, md5_source 0d828b51 under order amendment A3); re-pointing it to 3bbd5ab2 would rewrite a measurement into a value nobody measured at that time. The later ruling A8 (OG-ap-18, CVO half v3) moved the served form to LF 3bbd5ab2 and the host read it post-deploy (Z-S135). The record stays as measured; the current oracle is 3bbd5ab2, stated here and in Z-S135.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: W/YR_SERVED.json of OG-yr-1 (0.7.0_AE_CloudOps~Z) is a point-in-time measurement of the page as served on 2026-10-14 (the checked-out CRLF form, md5_source 0d828b51 under order amendment A3); re-pointing it to 3bbd5ab2 would rewrite a measurement into a value nobody measured at that time. The later ruling A8 (OG-ap-18, CVO half v3) moved the served form to LF 3bbd5ab2 and the host read it post-deploy (Z-S135). The record stays as measured; the current oracle is 3bbd5ab2, stated here and in Z-S135."
+}
+```
