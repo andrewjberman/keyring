@@ -60,7 +60,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-5.trace-the-near-empty-fees-
 - The 25 percent line is the issuer's reading of "near-empty"; the numbers, not the verdict word, are the evidence, and the CTO reads the verdict at the round analysis.
 - Pre-cut: `ev5.AC1` base FAIL as expected (record absent); PASS arms on synthetic records (account near-empty; source near-empty; neither; not_determined); controls FAIL (a verdict contradicting the counts three ways; a 20-day stretch; a missing partition; an e-mail in the record).
 
-<status>staged</status>
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41</workstream>
 <slot>~AE</slot>
