@@ -29379,3 +29379,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by the worker. Recorded as read; no verdict. No served value and no visible sentence was changed by this branch."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W492-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~492",
+  "surfaced_at": "2026-10-17T13:31:53Z",
+  "one_line": "AMGT-bq-1 L7 premise: the ZURN SW price currency (CHF) the order names is served by no committed fixture, so the USD branch of L7 cannot be run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bq-1 face step (2), L7: the ZURN SW compare may now differ only if it carries a money row whose served currency is USD (its price currency is CHF); if it does, replace the digest equality by a per-row comparison. The face's rule: a premise that does not reproduce on a fixture is filed as a BLOCKING row.",
+  "world_is": "The ZURN forecast figures (BEST_EBIT and others) carry currency USD in withheldFixture.ZURN_SW_Equity.json. The ZURN header money row CURR_ENTP_VAL has no header_figures entry to carry its currency, and the file has no header_figures key at all. The harness bundle sets header_figures to an empty array, so no PX_LAST price currency reaches the ZURN rows, the price currency is null, and the rule keeps the dollar sign. The CHF price currency the order names is not served by any committed fixture read. L7 therefore stays an exact digest by construction and cannot show the per-row change for ZURN.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/withheldFixture.ZURN_SW_Equity.json@d060d119 (top-level keys model, security_key, source; no header_figures; forecast_figures carry currency USD)",
+      "portal/src/pages/SecurityAnalysis/__harness__/changedListValue.harness.cjs@bc0a5cd9 (bundleOf and the ZURN render set header_figures to an empty array)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker under the order's premise rule as a BLOCKING row on criterion L7. It records the same finding as AMGT_RESAPP-D1-W492-S1, classed by that rule. Recorded as read; no verdict. AC1 is PASS-by-output; L7 is recorded as the exact digest, per-row branch not used."
+}
+```
