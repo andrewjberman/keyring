@@ -77,9 +77,11 @@ This order touches none of them.
 - **Sequencing with the data chain:** this order touches the gateway only and does not depend on `HVST-cf-1`, `-2` or `-4`; it may run before or after them (the gold objects are read live, the lib code is not deployed).
 - **Not covered, named:** any other gateway change; the corpus-wide `fund_form` rebuild.
 
+**SUPERSEDED 2026-10-17T20:0xZ (issuer `2.0.0_SA_COO~W1`) by the CTO's amended round-90 item 5 (msg 7727):** the CTO did not sign the half and deferred this order: after `HVST-ce-4` no live read triggers the new sentence, so a gateway restart for it alone "is not worth the window". The two files (`harvest_research.py` and `tests/test_ce3_parts_absent_wording.py`, merged `b77e08e198`) ride the NEXT gateway release that is due for a live reason, under that release's own order and never-widen pair with the same controls (the cut on the live commit, the `<merge>^1` equality, C-6 to C-9). No GO was sent; nothing was started by SC1; the COO half (sha256 `be0a5ad6...c59f`) is void. The issuer carries the obligation in decomposition section 121a and in `ledger/ROUND91_CARRIED_FOR_NEXT_GATEWAY_RELEASE.md`.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>superseded</status>
 <round>91</round>
 <workstream>S29-WORDING-SERVE</workstream>
 <slot>dell1</slot>

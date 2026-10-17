@@ -4305,3 +4305,9 @@ Round 90 closed MAY-CLOSE (CVO `ADJUDICATION_v84.md`, `REMEDIATION_v21.md`; 11 r
 - **Fan-out:** `N of M chains, N=1 worker (cf-1) of M=3 chains, cap 8`: the C-S61 chain (`cf-1` then `cf-2` then `cf-4`), the gateway chain (`ce-5`, a seat order), and the fund-form chain (`cf-3` then `cf-5`, held behind `cf-4`).
 - **Checks at the cut (dry-run at the base):** `cf-1` AC1 and AC2 FAIL as expected (`cat` of a file that does not exist); `ce-5` AC1 to AC3 FAIL as expected (no `ce5_served.out`).
 - **Not cut (named):** `D1-S39` (`not_held`); the `line_only` text recovered from the extraction's `section_leads`; the standing candidates of `ledger/ROUND88_ENRICHMENT_CANDIDATES_20261017.md`; `ft`.
+
+### 121a. ROUND 91 -- `HVST-ce-5` DEFERRED by the CTO (msg 7727); the hold on the fund_form code is accepted (2026-10-17 ~20:1xZ)
+
+- **`HVST-ce-5` is SUPERSEDED** (status `superseded`): the CTO did not sign the half and amended his round-90 item 5. After `HVST-ce-4` no live read triggers the new sentence, so a gateway restart for it alone "is not worth the window"; the two files of `HVST-ce-3` ride the next gateway release due for a live reason, under that release's own order and pair with the same controls. The carrier is `ledger/ROUND91_CARRIED_FOR_NEXT_GATEWAY_RELEASE.md`. No GO was sent; SC1 started nothing.
+- **Accepted by the CTO:** the hold on the `fund_form` code behind `cf-4` ("right") and the naming of the C-S61 misread ("the cf-1 census is the remedy").
+- **Fan-out line of section 121 stands** (`N of M chains, N=1 worker (cf-1)`); `ce-5` leaves the round's cell set.
