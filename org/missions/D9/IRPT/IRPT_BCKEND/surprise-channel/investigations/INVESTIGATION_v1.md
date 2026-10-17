@@ -42076,3 +42076,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Append-only: S230 is not edited. The stale deployed_code_sha256 is not a gap I can show matters; left as an observation."
 }
 ```
+
+## IRPT_BCKEND-D2-S236 -- the corrected Scope feed script still failed on the runner: NoRegionError at the secretsmanager client (line 327); the import smoke builds no client
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S236",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-17T12:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The corrected Scope feed script (IB-pn-2, sha256 4527c57f) ran in the 11:33Z chain of 2026-10-17 and the Scope step still exited 1 after 1.6 s, tolerated: botocore NoRegionError at boto3.client(secretsmanager) in session_token() (feed script line 327); the runner sets no default AWS region. Branch B done.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~IB2 msg 10539 (12:10Z), read from the 11:33Z chain's log: Scope step exit 1 after 1.6 s, TOLERATED; cause NoRegionError at the secretsmanager client; no request made, 0 feed keys written",
+      "Branch B at 12:09:21Z: the dispatch object and the script restored as new versions, sha256 equal to the saved copies (IB2's receipt)",
+      "2.0.0_SA_COO~N2 read of the repository script at HEAD: line 327 boto3.client(secretsmanager) has no region_name; line 579 boto3.client(s3, region_name=us-east-1) does; jwt_freshness.py names region_name on every client; checks/r3/pn_region_cells.py on the base tree reproduces the error (AC1 NoRegionError, AC2 line 327)"
+    ]
+  },
+  "spec_asserts": "ADDENDUM 3 section 4 step (d): the import smoke over the live code prefixes, with sockets blocked, proves the corrected script runs in the runner's layout; the first scheduled chain read from the step log is the proof (step f).",
+  "world_is": "The smoke proves the module imports and source_prefixes() returns; it builds no boto3 client, and a client's region resolves at construction, so a missing default region is invisible to it. The step has now failed at import (D2-S221) and at its first client (this row) and has never reached Orion. The next cell (TO-IB-pn-3) adds region_name and one end-to-end run of the feed's run under a scrubbed AWS environment so a third runner-only failure is found in the repository; the re-apply needs a new addendum bound to the new bytes.",
+  "disarm_owner": "2.0.0_SA_COO~N2"
+}
+```
