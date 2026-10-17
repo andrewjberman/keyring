@@ -76,7 +76,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-20.bound-glibc-arenas-and-re
 - Not here: the per-partition prefix listing (`Z-S328`, `client_core.py`), which also dominates the page's wall time; it is a separate cell.
 - Pre-cut: `en20.AC3` base FAIL as expected (the test file is absent); AC1 base FAIL (file absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-N</workstream>
 <slot>~132</slot>
