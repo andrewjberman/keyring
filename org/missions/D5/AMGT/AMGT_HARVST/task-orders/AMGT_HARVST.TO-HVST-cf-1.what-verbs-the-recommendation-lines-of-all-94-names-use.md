@@ -60,10 +60,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~159, worktree `C:/dev/wk-harvst-159`, branch `wk-AMGT_HARVST-159`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922` and `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~155`, `~156` and `2.0.0_SA_COO_W1/round90`.
 - **SENT:** with the round-91 issuance.
 
+**COMPLETE 2026-10-17T20:4xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~159` (worker, haiku, high), commits `6a2e2a49cd` (first run, superseded), `b5238574f8` (the counted run), `f17ac0edfe`, `37cb805f43` (rows), `c01d052258` (proof), merged `934ecb88c5` (safe-merge fast lane, index check 0 of 4; the first merge attempt was REFUSED because another seat's changes were staged in the shared index, and was retried after it cleared). Read by this seat: the 22 `PHRASE` lines, the 69 `NAME` lines for the names behind the non-holding and borderline phrases, the `NOFUND` section, and the two result lines; proof instance VALID rc 0 (re-run here).
+- **AC1 PASS:** `PHRASES distinct=22`. **AC2 PASS:** `CENSUS-C-S61 securities=94 with_fund=69 with_position=76 rebuilt_in_ce4=30 gets=389 bytes=100842396`. The census's RECON check reproduces the code's fund and position on all 94 names (0 mismatches); served against code: 30 of 30 rebuilt names with a code fund match; `KMB_US_Equity` has no fund in code and none served.
+- **What it shows:** the three most frequent phrases are `maintain <N>.<N>% position in` (18), `maintain position in` (14) and `candidate for` (10). `candidate for` is the C-S61 class: 9 of the 10 names are the round-90 rebuilds (`8035_JP`, `ADBE`, `BZLFY`, `CDNS`, `CELH`, `HEI`, `MNST`, `MSCI`, `SNPS`); the tenth, `CLX_US_Equity` (a docx, the old rule), was served that way BEFORE round 90. Three more non-holding phrases: `initiate ~<N>% position in` (`CNR`), `interesting exposure for` (`ST_SP`), and the bracketed template `[BUY IN IDVZ TO X%]` (`ML_FP`, also pre-round-90). Seven names have no fund token; 4 of them (`8306_JP`, `8316_JP`, `8766_JP`, `9433_JP`) serve a `COMPANY DESCRIPTION:` paragraph as `last_stated_position`, a defect that predates round 90.
+- **Rows** `D1-W159-S1` (ARMED, disarm owner this seat: the `ML_FP` template is taken as fund `IDVZ`; `ML_FP` is not among the 31), `-S2` (INERT: the first census run inherited a `ce2_census.py` that dropped the misfiled-reports filter and showed a false KMB mismatch; corrected in `b5238574f8`), `-S3` (INERT: the two runs total 844 requests against the 800 cap; the counted run reads 421). `-S1` stays open until `HVST-cf-2` and the rebuild.
+- **Mistake of mine, named:** I chained the worktree teardown after the merge in one command; the merge was refused, the teardown ran anyway (the branch survived, the commits were safe) and the merge was retried.
+
 <risk>LOCAL</risk>
 <direct_act>true</direct_act>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>91</round>
 <workstream>CS61-MEASURE</workstream>
 <slot>dell1</slot>
