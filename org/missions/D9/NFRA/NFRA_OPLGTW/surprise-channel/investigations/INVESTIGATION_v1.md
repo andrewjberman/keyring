@@ -28075,3 +28075,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The row-group dependence is a stated limit that the host measurement grades; the two failures are baseline; the list's absence is a device fact with a clean text scan. Z-S375 and Z-S380 stay open until the OG-ap-38 Phase A re-run passes and the release is live."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T21:23:00Z",
+  "id": "NFRA_OPLGTW-Z-S382",
+  "one_line": "OG-ap-38 Phase A RE-RUN: (a), (b), (d) PASS on release d077cef043, but (c) read 21.5 MB median RSS growth per page on its first run (limit 20); three repeats read 8.0, 17.0 and 15.7 and the live code reads the same band; no ask written, the issuer rules.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W/PHASE_A_OG-ap-38.json and W/ap38_run2/ (release d077cef04333500595a7a531ebddc2f43e5f8789 on live efcc8ae19f, five files whole from trunk bae898b6a70997f5f632c17a9cb5b9a39cfe8848; every gateway-code run a fresh process under a named guard; staged candidate files md5-equal to the release blobs).",
+      "(a) PASS under oom_score_adj_1000_rlimit_as_1400mb: the candidate's etfs_compare_peers('IDVZ','x','y') answers an EMPTY SECTION listing 12 periods and 4 axes, VmHWM 475.5 MB (limit 700), 4.48 s (limit 30); the live code, same guard: MemoryError, VmHWM 731.0 MB at json.dumps(to_pylist). (b) PASS: the first listed pair (MTD, sector) answers 57 rows, VmHWM 476.0 MB. (d) PASS: cgroup2fs, memory controller present, systemd-analyze verify rc 0 (its one line concerns the system unit acpid.socket), scratch removed.",
+      "(c) the 49F chain, 4 pages, candidate against live, one call at a time. Under the address-space guard neither the candidate (std::system_error, Resource temporarily unavailable) nor the live code (malloc of size 64 failed) can run the chain, so the GO's cgroup guard (systemd-run --scope MemoryMax=1400M, MemoryHigh=1100M, MemorySwapMax=0, oom_score_adj 1000, wall 120 s) ran it. FIRST run: pages equal live row for row (36, 20, 23, 44 rows), first page 1.95 s (limit 45), host peak 41.1 percent (limit 75), candidate VmHWM 278.5 MB against live 310.4, median RSS growth 21.5 MB per page (limit 20). Three repeats, same guard: candidate median 8.0, 17.0, 15.7 MB; live median 13.5, 18.9, 17.1 MB in the same runs; candidate RSS per page [246.4, 254.4, 260.5, 277.6], [264.1, 284.6, 270.1, 287.1], [235.6, 251.3, 253.1, 275.3].",
+      "Re-cut checks that PASS: seams 0 STOP-class edges; every live->trunk hunk attributed (typed_scope 7 hunks: OG-en-25 x2 and OG-en-26 x5; etfs_rivals_flow 6 hunks: OG-en-26 x4 and OG-en-25/26 in _peer_section x2; the unit 1: OG-un-1); the commit gate printed no REFUSE; taken tests 5 of 5; the window set 44 passed in both orders; trunk's test_og_en26.py (3 tests, outside the take list, laid untracked and removed) passes against the release code; the full suite 75 failed in the release tree and the same 75 at the live ref, 1054 passed; bash -n and --preflight-only rc 0."
+    ]
+  },
+  "spec_asserts": "OG-ap-38 step 3(c): the first four pages of the transactions chain, candidate against live, one call at a time: median RSS growth 20 MB per page or less, first page 45 s or less, host peak under 75, pages equal row for row.",
+  "world_is": "One limb of one measurement reads over its limit on its first run, by 1.5 MB, and its repeats read under. What the numbers show, not an excuse: the candidate's median growth is three page-to-page differences taken under Arrow's default memory pool, which swings by 10 MB or more between runs; the live code swings in the same band (13.5 to 18.9) and the candidate is not above the live code in any paired run; the candidate's peak (VmHWM 278.5, 265 to 287 by page) is below the live code's. The order says STOP on a failed measurement, and the figure is the one run named in advance (the first), so the record carries 21.5, the repeats beside it, and no ask. Nothing was changed, deployed or widened.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: either grade (c) on the repeats (a rule you state: for example the median of the per-run medians over four runs, here 16.4 MB, with the live code's paired medians beside it), or repeat the chain a fixed number of times by your word, or tell me to treat 21.5 as the failure. I have the ask drafted locally and will commit it and run ap38.AC1 on your word; the record's chain section then carries the rule you name. I did not change the limit, the guard or the record's first-run figure."
+}
+```
