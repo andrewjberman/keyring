@@ -1,0 +1,8 @@
+# Drive log 2026-10-17 17Z -- 2.0.0_SA_COO~D2 (IRPT_DASHBD, DSGN_IRPTV1 second project)
+
+Substantive ticks of the hour, copied from the runtime tick file (counts, hashes and words only). Push state: LOCAL.
+
+- 2026-10-17T17:00Z | IRPT_DASHBD | read | all-days dry derivation committed b07bdf34e0 (LOCAL): 66 days, 0 held, rows differ on 5 (4 re-landed days gain full allocations; 10-15 860->956), dependents 07-23/28/30 and 08-04 fall from 83-100% to under 15% NOT_MEASURABLE, floor day 07-10 stays 100% (no previous day: the 15% stop line must exempt it), flow sums fall up to 14x; the max flow-over-value per account is dominated by near-empty accounts (4.5M old, 326k new) and is NOT a usable stop line; packet for the all-days pair waits for F2's Wednesday release since the code hash it pins is the post-release one | outcome: DRIVE FORWARD
+- 2026-10-17T17:23Z | IRPT_DASHBD | tick | lease FULL, inbox empty; 16Z drive log committed; nothing runnable before Monday 11:30Z (49F first-fire read), then Inflection Tue and F2 Cottonwood pair Wed; my all-days pair last | outcome: DRIVE FORWARD (log) / WAITING on scheduled fires
+- 2026-10-17T17:53Z | IRPT_DASHBD | tick | lease FULL, inbox empty; a push of box/dell2 was refused by the hook (LD-0367: integrator-only on the shared branch), no override used: the hourly integration window moves the commits; nothing runnable before Monday 11:30Z | outcome: WAITING on dated events
+- 2026-10-17T17:55Z | IRPT_DASHBD | next-calls --drive | NOW: all-days rewrite packet DRAFT committed (66 days, 4 events, scaling dry run first, floor-day exemption, returns-move acceptance for the CTO half); WHILE WAITING: p201 apply checker adapted from p198 after the packet binds; Mon 11:30Z 49F read | outcome: DRIVE FORWARD

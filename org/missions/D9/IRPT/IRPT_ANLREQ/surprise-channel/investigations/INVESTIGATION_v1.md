@@ -25584,3 +25584,59 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W292-S1 -- the cell's T5 premise names produce_package's artifacts branch, but the packager at HEAD calls produce_commentary_pdf, and the r34k base pin has no commentary producer
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W292-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~292",
+  "surfaced_at": "2026-10-17T17:18:04Z",
+  "one_line": "The cell asks whether the staged pins carry the artifacts-port branch of produce_package as the commentary path; at HEAD the packager calls produce_commentary_pdf instead, and at the r34k base pin 0485393f the packager calls produce_package with the package logical id and no commentary producer exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-y-394 T5: which release carries the commentary path, and whether the staged pins include the artifacts-port branch of produce_package.",
+  "world_is": "MEASURED read-only at HEAD 6c11142057 and at the two r34k pins: infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:197 binds produce to opal_producer.produce_commentary_pdf, and produce_package is not on the packager path at HEAD. At pin 1ad8bd8c1bb8 opal_producer.py has produce_commentary_pdf at :430 with its artifacts put at :460 and produce_package's artifacts put at :417. At pin 0485393f3ad0 opal_packager.py:185 calls produce_package (artifacts put at opal_producer.py:272) and no produce_commentary_pdf exists. NOT READ: which pin the deployed resident carries (the live host was not read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:197 (HEAD: produce = ports.get(produce_commentary) or opal_producer.produce_commentary_pdf)",
+      "git show 1ad8bd8c1bb83ecc35d9489014a42c53812f4424:infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py (produce_package :377, produce_commentary_pdf :430)",
+      "git show 0485393f3ad0a7e564f4867f5e70003e2e62195b:infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:185 (produce = ports.get(produce_package) or opal_producer.produce_package)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json (release_input pins)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W292-S2 -- the r34k build record names two backend pins and does not say which one the tarball carries
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W292-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~292",
+  "surfaced_at": "2026-10-17T17:18:04Z",
+  "one_line": "The r34k build record names two backend pins, pin_full_sha 1ad8bd8c and base_pin 0485393f, and does not say which one the tarball bindings pin.backend_commit carries, so the staged commentary code cannot be fixed from the record alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-y-394 T5: name the file and the pin or the staged_from row that stages opal_packager.py, opal_producer.py and the draft store into the resident.",
+  "world_is": "MEASURED: RESIDENT_R34K_BUILD.json release_input carries base_pin 0485393f3ad0a7e564f4867f5e70003e2e62195b and pin_full_sha 1ad8bd8c1bb83ecc35d9489014a42c53812f4424. infra/aws/lambda/investor-reporting/reports/build_resident_package.py:131 writes pin.backend_commit from its PIN argument (sys.argv[3], :29), and the record does not name which value was that argument. The staging walk is build_resident_package.py:84-88 over every tracked file under ycharts/research and reports at PIN, so the three files ride whole at whichever pin was used. NOT READ: the tarball bindings (C:/dev/irpt-release-r34w, outside the worktree) and any deploy ledger (org/critical_paths is absent from this sparse worktree).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/r34k/RESIDENT_R34K_BUILD.json (release_input.base_pin, release_input.pin_full_sha)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:29, :84-88, :131"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
