@@ -10717,5 +10717,34 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S45",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T19:39:01Z",
+     "one_line": "Issuer disposition of the three round-90 ARMED worker rows (D1-W155-S1, D1-W155-S2, D1-W158-S2): the pdf rule, the missing exclusion input and the KMB rebuild are fixed and read on the served tool; the corpus-wide fund_form object still counts the two Mexico reports, a named limit.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "CTO round-89 analysis items 1 and 3: UNH's derivation reads its Recommendation line and the KMB dossier is rebuilt from the reports that remain after the exclusions, graded on the live read.",
+     "world_is": "Read by the issuer on 2026-10-17 after HVST-ce-4 (62 of 62 gold objects written, manifest and ledger committed, proof VALID): (W155-S1) the pdf rule's page-start premise is replaced by a line fallback (344ea6a5fc); UNH, NFLX and TSM serve fund PFOE with the position text and line_only true, read by the issuer on the live gateway; 30 securities moved from absent to a value and none from one value to another (ce2_census.out), the control CPA_US_Equity unchanged. (W155-S2) the library drops the two listed reports (87b542aed4); the rebuilt KMB continuation and dossier carry 0 occurrences of fbd50086c4065785 and 1a3b56044db679a5 and KMB serves both fields absent with their reasons (SC1's canary read; the filter finds nothing left to drop). (W158-S2) fund_form.gather_items (fund_form.py line 249) reads every silver row for ONE corpus-wide object and sector_template reads xlsx rows only; the corpus-wide fund_form object therefore still counts the two Mexico class B reports. That is not a field any security serves from them (the KMB dossier cites neither report), so the hazard W158-S2 named for a KMB rebuild is closed; the corpus-wide object is carried as a candidate for the round-91 list, owner 2.0.0_SA_COO~W1.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round90/ce4_served.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round90/ce4_written.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~156/ce2_census.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ce-4.the-gold-continuation-and-dossier-of-31-securities-are-rebuilt-and-read-served.md"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W155-S1",
+      "AMGT_HARVST-D1-W155-S2",
+      "AMGT_HARVST-D1-W158-S2"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The pdf-rule hazard and the missing-exclusion hazard are fixed and read served (HVST-ce-2, -6, -4); the remaining fund_form count is a corpus-wide object no security's served field cites, carried as a round-91 candidate."
+    }
 ]
 ```
