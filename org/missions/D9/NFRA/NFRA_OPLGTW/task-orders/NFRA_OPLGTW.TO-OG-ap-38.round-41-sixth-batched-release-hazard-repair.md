@@ -1,0 +1,92 @@
+# NFRA_OPLGTW task order -- `OG-ap-38` -- APPLY: the round-41 sixth batched gateway release -- the repair of the ARMED hazard `Z-S375` (a typed Parquet read can no longer turn a small object into gigabytes; `etfs_compare_peers` reads only what it answers; a memory cap on the gateway unit)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the applier's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md</decomp_doc>
+<owned_cells>OG-ap-38</owned_cells>
+</decomp_ref>
+<to_id>NFRA_OPLGTW.TO-OG-ap-38</to_id>
+<issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
+<issued_by>2.0.0_SA_COO~O</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule or trigger is added or changed; you still run `comp-schedule --drift` at the act and record what it scanned.
+comp-iam: DECLARED-NOT-APPLICABLE -- this release changes NO IAM and adds no env key; the same objects are read through the same roles.
+comp-adversary: DECLARED-NOT-APPLICABLE -- the act is the CTO's decision 35541 on the ARMED row `Z-S375` ("bound `etfs_compare_peers`'s memory, or refuse above a size, proven in a fresh process"; "a `MemoryMax` on the gateway unit, so an OOM can never take the system daemons"), built as `OG-en-25` (merged `a197c3fc38`) and `OG-un-1` (merged `a6788723f3`).
+EGRESS CLASS, declared: NONE beyond Opal's own AWS.
+</preflight>
+
+## 1. THE CELL -- `OG-ap-38` (decomposition addendum R3-T.117, round 41)
+
+⛔ **THE HARD-GUARD RULE, BEFORE ANYTHING ELSE.** On 2026-10-17 at 17:21Z an UNGUARDED 27-tool harness run took this 1.8 GB single-worker host out of memory (row `Z-S375`; the gateway and eight system daemons were killed). Every host run of this order that executes gateway code (the call that ran away, the 27-tool read, the chain, any probe) runs in a FRESH process under a HARD GUARD: `oom_score_adj` 1000 (so the kernel kills THAT process first, never the service or a daemon), the address space capped at 1400 MB (`resource.setrlimit(RLIMIT_AS)`), and a wall limit of 120 s. The guard is the one in `W/ap36_guarded.py`; name it in each record as `oom_score_adj_1000_rlimit_as_1400mb`. A run without it is a STOP and a row. The SSM agent's `oom_score_adj` is -900: a child inherits it unless it sets its own.
+
+APPLY: ONE code-and-unit release on the live ref (read it, do not assume it: `services.opal-gateway.deployed_commit` at HEAD; it was `efcc8ae19f7eebb04e2f45f45c0def28af037c24` when this order was cut, the `OG-ap-36` release; if another seat has moved it, STOP and file a row). No Terraform, no IAM, no new env key, no change to `deploy-to-ec2.sh` or `EC2_MANIFEST.json` by hand, one deploy. The take list is FIVE files taken whole from trunk (`box/sitez`) at `trunk_sha` (the GO names it), each byte-equal to trunk's blob; for each, `git diff <live ref> <trunk_sha> -- <file>` must be exactly the hunks of the named cell (any other hunk is a STOP and a row):
+- `infra/aws/ec2/opal-gateway/app/typed_scope.py`: `OG-en-25` (`read_parquet` refuses a FILTERED table over `TYPED_MAX_TABLE_BYTES` = 64 MB of Arrow before any Python conversion; the new `distinct_values`).
+- `infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py`: `OG-en-25` (`_peer_section` reads the peer tables with Arrow filters and takes `available_periods` and `available_axes` from `distinct_values`).
+- `infra/aws/ec2/opal-gateway/deploy/opal-gateway.service`: `OG-un-1` (`MemoryHigh=1200M`, `MemoryMax=1400M`, `OOMScoreAdjust=300`, nothing else).
+- `infra/aws/ec2/opal-gateway/tests/test_og_en25.py` and `tests/test_og_un1.py` (new).
+NOT in this release (the check counts them at 0): `app/tools.py`, every `client_*.py`, `app/destructive_ops.py`, `deploy-to-ec2.sh`, `EC2_MANIFEST.json`, the catalog and `app/refs/`, Terraform, and every file that differs between the live ref and trunk and belongs to no cell named here (for example `harvest_research.py`, which trunk carries newer than the live ref by `AMGT_HARVST`'s `HVST-ce-3`).
+
+### PHASE A (only on the issuer's GO, which names `trunk_sha`): re-cut, HOST MEASUREMENTS UNDER THE GUARD, ask. NO deploy, NO apply IN ANY FORM
+
+1. **Live ref.** Read `deployed_commit` at HEAD and one SSM md5 read of the host against it over `app/`, `deploy/`, `dashboard/` and `lib/`; a mismatch is a STOP and a BLOCKING row. Record `tools_list_before` (103), the `.env` key count (65), host memory percent, the gateway's process count (1), the marker's value, `systemctl show opal-gateway -p MemoryMax -p MemoryHigh -p OOMScoreAdjust -p NRestarts` (the BEFORE state; the unit has no limit today), `MUSE_CLIENT_ID` absent.
+2. **Re-cut** in `C:/tmp/og-rel-batch7`, branch `rel-nfra-oplgtw-batch7`, at the live ref, with the sparse cone and the two cures of `OG-ap-36` (the TRUNK `.tools/halt-gate-check.sh` laid UNCOMMITTED and restored before the clean check; disclose the overlay). Enumerate the seams first (every app module a taken file imports: in-base or in-take-list; a missing seam is a STOP and a row). Take the five files whole from `trunk_sha`; commit with the audited `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` on the release commit only; the gate prints NO REFUSE. Write `W/ap38_release.json` = `{"base_sha", "release_sha", "trunk_sha"}` (FULL 40-character shas; `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/`). In the release tree: every taken test file; the twelve window test files plus `test_og_rv2.py` and `test_og_gt6.py` together in BOTH orders; the full suite's failing set compared with the live ref's in a second tree (name each difference; the baseline reds stay carried); `bash -n deploy-to-ec2.sh` and `--preflight-only`; the host-shaped import check.
+3. **THE HOST MEASUREMENTS** (candidate code staged in a SCRATCH folder on the host, removed after; every run in a fresh process under the HARD GUARD; stop at 75 percent host used). Write `W/PHASE_A_OG-ap-38.json` = `{"body": {"release_sha", "peers": {"candidate_outcome": "empty_section|refusal", "candidate_peak_rss_mb", "candidate_wall_s", "live_outcome": "MemoryError|killed_by_guard", "guard": "oom_score_adj_1000_rlimit_as_1400mb"}, "valid_pair": {"answered": true, "peak_rss_mb", "rows_matched"}, "chain": {"pages", "median_growth_mb", "first_page_wall_s", "host_peak_pct", "pages_equal_live": bool}, "unit": {"cgroup_v2": bool, "memory_controller": bool, "verify_rc", "scratch_removed": bool}}}`:
+   - (a) THE CALL THAT RAN AWAY: `etfs_rivals_flow.etfs_compare_peers("IDVZ", "x", "y")` on the CANDIDATE: its answer is an empty section (with `available_periods` and `available_axes` listed) or a refusal, never a MemoryError or a kill; peak `VmHWM` 700 MB or less and 30 s or less. The same call on the LIVE code under the same guard: the guard stops it (`MemoryError` or `killed_by_guard`); this is the only run of the live code's runaway path, and only under the guard.
+   - (b) A VALID PAIR: take the first `available_periods` and `available_axes` value the candidate returned and call it again: the answer carries rows (`rows_matched`), peak RSS 700 MB or less.
+   - (c) THE 49F CHAIN IS UNCHANGED (`typed_scope.read_parquet` sits under `client_core`'s non-account reads): the first four pages of the transactions chain of `OG-ap-36`'s test account, candidate against live code, one call at a time: median RSS growth 20 MB per page or less, first page 45 s or less, host peak under 75, pages equal row for row (row counts and canonical sha256, as `OG-ap-36`).
+   - (d) THE UNIT: in a scratch copy of the candidate unit, `systemd-analyze verify` returns 0; `stat -fc %T /sys/fs/cgroup` reads `cgroup2fs` and `memory` is in `/sys/fs/cgroup/cgroup.controllers` (so `MemoryMax` is enforceable); remove the scratch copy.
+   If any of (a) to (d) fails: STOP, file a BLOCKING row with the numbers, write NO ask, report.
+4. **The ask**, `W/NEVER_WIDEN_ASK_OG-ap-38.md`, for THREE halves (`1.0.0_SA_CTO~Z`, `2.0.0_SA_COO~O`, `3.0.0_SA_CVO~Z`), each under a heading containing its word: (1) the `diff` by file with the hunk attribution; (2) the `widening`, stated plainly: NO new IAM, NO new env key, NO tool added or removed; twelve call sites of `typed_scope.read_parquet` in eight modules now refuse a filtered table over the 64 MB in-memory cap instead of building the Python copy (a caller that today gets a giant answer gets the existing over-cap refusal); a peer call reads the newest part twice (two GETs of one object); a peer part that lacks `period`, `axis` or `fund_id` now answers absent for the whole call where the base answered an empty section (named, from `OG-en-25`'s worker row `Z-W139-S1`); the gateway unit gains a 1400 MB memory ceiling (a gateway above it is killed and restarted by `Restart=on-failure`, with `OOMScoreAdjust=300` making it the preferred victim ahead of every daemon), which takes effect at the deploy's `daemon-reload` and `restart` (the restart is one brief outage like every release); the honest limits (the measurements ran in guarded fresh processes; the service's own heap is read in the read-back; a legitimate load above 1400 MB would now restart the gateway, and the working set measured so far is 100 to 450 MB); (3) the `order` of acts; (4) `both branches`; (5) the `rollback` (the live ref's tree redeployed through the same wrapper, which reinstalls the old unit WITHOUT the limits and rewrites the marker to the live ref's sha; PROVEN by a host md5 walk equal to the pre-deploy walk; the live ref's tarball sha256 recorded in the ledger); (6) the `triggers` (health not 200 in 60 s; a tool of the 27 not answering under the guard; the `.env` key count not 65; `tools/list` changing from 103; host md5 differing beyond the released paths; host memory above 85 percent during the read-back; `NRestarts` above 0 during the read-back, which would mean the new limit is too low; `systemctl show` not reporting 1400M and the cgroup's `memory.max` 1468006400 after the deploy; the marker not equal to the release sha); (7) the gate lines and the overlay disclosure. Commit, run AC1, REPORT, STOP.
+
+### PHASE B (only on the issuer's GO, which names all three halves signed at `release_sha`)
+
+5. PRECONDITIONS: re-read the live ref, the `.env` (65 keys, `MUSE_CLIENT_ID` absent), host memory, the gateway worker count, the host md5 walk, `NRestarts`; else STOP. Ledger `nfra-oplgtw-gateway-release-batch7`, entry AND sentinel first. Deploy from `C:/tmp/og-rel-batch7` through `infra/aws/ec2/safe-ec2-deploy.sh` with `DEPLOY_BASE_REF=<the live ref>` under the stale-base guard; no `HALT_OVERRIDE`. Read back against the triggers; on any trigger redeploy the rollback tree, and file an ARMED row naming `2.0.0_SA_COO~O`.
+6. **The served read**, writing `W/CODE7_SERVED.json` (fields as in `ap38.AC2.sh`'s header: counts, seconds, bytes, words and booleans only). `per_tool_good` is the 27-tool served read run UNDER THE HARD GUARD (never unguarded, and never again against the service in a way that can take the host: it runs in a fresh process): it must read 27 of 27 (`etfs_compare_peers` now answers under the guard); `unit_limits` is `systemctl show opal-gateway -p MemoryMax -p MemoryHigh -p OOMScoreAdjust` (1468006400, 1258291200, 300) and `/sys/fs/cgroup/system.slice/opal-gateway.service/memory.max` (1468006400); arms: `e10_marker_equals_release_sha` (the host file read and PRINTED, its absence printed on a rollback), `e13_peers_bounded_on_installed_code` (step 3(a) and (b) on the INSTALLED code in a fresh guarded process), `e14_unit_limits_active` (the `unit_limits` above), `e15_window_pages_equal_phase_a` (the first two pages of the chain equal the hashes the live code produced in Phase A). **THE HOST CLOCK AND THE FAILED UNITS (the CVO's condition of `OG-ap-36`) are read and PRINTED BEFORE THE LEDGER IS CLOSED**: `chronyc tracking` (`host_clock` Leap status Normal, synchronised) and `systemctl --failed` (`systemd_failed_units` 0; a stale flag is cleared with `reset-failed` and said so), and `clock_read_before_close` is true only if both reads precede the CLOSE entry; reading them after is a miss and the record says so. The 30-minute service read-back every 60 s (health, `VmRSS`, host percent, `NRestarts`), with the count of `/mcp` window calls served (zero said in those words; `Z-S338` is re-read, never closed on zero).
+7. **Standing clauses:** runbook 7.2 names the new live release; EC2_MANIFEST `deployed_commit` and `file_checksums` come from the release blobs. Close the ledger AFTER the reads of step 6 (with the live ref's tarball sha256), commit, run AC2, and report once per phase; send me the ledger CLOSED time. After the close, `2.0.0_SA_COO~O` tells the CTO (host owner) the CLOSED time and the final live sha.
+
+## 2. BOUNDS
+
+- The release's files only. No IAM or Terraform change, no env key, no deploy-script or manifest edit by hand, no object or item written to any bucket or table (scratch folders on the host are removed after).
+- Never: push, `git stash`, rebase, `checkout --` or `clean`; merge box/sitez into the release branch; bare `terraform apply`; print an `.env` value, a credential, an account number, a person's name or email, or object content; set `MUSE_CLIENT_ID`; override a gate other than the audited lane escape in step 2; **run gateway code on the host without the hard guard**.
+- REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
+
+## 3. SURFACES
+
+<paths>
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-batch7.json
+org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+`W` as above (the tree convention grants it). Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`. The manifest is NOT in your paths: it changes only at the close, when the deploy wrapper writes `deployed_commit` and the checksums.
+
+## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="OG-ap-38"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap38.AC1.sh; echo "exit=$?"</invocation><expect>(?s)base [0-9a-f]+ is the live ref before this release: yes.*outside the take list 0 .want 0.; take-list files missing 0 .want 0.; not byte-equal to trunk's 0 .want 0.; tools, client, destructive_ops, deploy script, manifest, catalog or Terraform files in the diff 0 .want 0.*the call that ran away: candidate (?:empty_section|refusal), peak RSS \S+ MB .limit 700., \S+ s .limit 30.; the live code under the same guard: (?:MemoryError|killed_by_guard): ok.*unit: cgroup v2 True, memory controller True, systemd-analyze verify rc 0: ok.*ask has the three halves yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ap-38"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap38.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*landed=(?:current|superseded).*host marker equals the release sha yes.*the 27-tool read 27 of 27 under the hard guard yes; host md5 differ 0 .want 0.; arms true 4 of 4.*unit limits live: MemoryMax 1468006400, MemoryHigh 1258291200, OOMScoreAdjust 300, cgroup memory.max 1468006400: ok.*host clock: leap status Normal, synchronised True; systemctl --failed units 0; read BEFORE the ledger closed True: ok.*served verdict: OK.*RESULT: PASS.*exit=0</expect></criterion>
+</proof_of_spec>
+
+- `AC1`: the re-cut carries exactly the five files, byte-equal to trunk's, nothing barred, and the host measurements under the hard guard passed (the call that ran away is bounded; a valid pair answers; the 49F chain unchanged; the unit acceptable to systemd). `AC2`: the release landed and closed, after the clock and failed units were read; the unit's limits are live; the 27-tool served read passes 27 of 27 under the guard (the hazard `Z-S375` is repaired).
+
+## 5. WHEN YOU ARE DONE
+
+Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-38.round-41-sixth-batched-release-hazard-repair.proof_of_spec.json`. Validate it after your last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>`, flip the ONE `<status>` tag to `complete` only if both PASS, and report once per phase.
+
+<!-- ===================== RECORD FACE ===================== -->
+
+**ISSUER NOTES:**
+- Round 41 (decomposition addendum R3-T.117). It carries `OG-en-25` and `OG-un-1` as ONE release (the CTO's "each ships under its own never-widen" is read here as each change stated with its own widening in ONE ask, three halves; a second deploy would double the host's exposure windows; the CTO may correct this reading when the halves are asked). Queue on the host: `OG-ap-37` (a repository merge, no host act) does not touch it.
+- The CAUSE of `Z-S375` is a code reading (INFERRED): the unfiltered whole-table `to_pylist` of the gold peer tables after only a compressed-size cap. The measurement that grades it is step 3(a) on the host, under the guard.
+- The hazard `Z-S375` stays ARMED until `ap38.AC2` passes: it is disarmed on the evidence of the guarded 27 of 27 and the bounded call on the installed code, by the CVO's disarm clock on this seat's word.
+- Pre-cut: `ap38.AC1` and `ap38.AC2` base FAIL as expected (records absent). `ap38.AC1` PASS arm exercised on a git-plumbing release commit (live ref `efcc8ae19f` plus the five trunk blobs); controls FAIL (a file missing; `tools.py` in the diff; `typed_scope.py` not equal to trunk's; candidate peak 900 MB; the live code answering under the guard; no guard named; chain pages not equal; `systemd-analyze verify` rc 1; the candidate crashing). `ap38.AC2` served-record arm: a good record OK; 26 of 27 NO; no guard named NO; a wrong `MemoryMax` NO; a marker that is not the release NO; the clock read after the close NO; an arm false NO.
+
+<status>staged</status>
+<round>41</round>
+<workstream>ENRICH-R41-V</workstream>
+<slot>~AE</slot>
+<fabric>site-z</fabric>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
