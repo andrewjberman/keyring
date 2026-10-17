@@ -45,3 +45,20 @@ Answers the CTO's RULING B on the nightly block (msg 10145, item 4): without `--
 | DBF138-2-AC3 | `python -I .../checks/r138/p138_bounded.py . DBF138-2-AC3` | FAIL (a dry run reports 43 days) |
 
 Checker `p138_bounded.py` (selftest 7 arms); a reference implementation put into the launcher by the issuer makes all three PASS (positive control run and reverted).
+
+## Cell 3 (added 2026-10-17 ~03:5xZ; ONE order; WORLD, the infra/ floor; workstream `F2INFIAM`): the runner policy gains S4, ListBucket on the Inflection gold prefix
+
+**Found by the issuer while cutting Cell 2:** the bounded default reads the newest written day by LISTING the gold prefix, and the runner policy of `DB-f-2501` (merged @3e5d4896e2: S1 Get and S2 List on silver, S3 Put on gold) grants no List on the gold bucket, so the default would be AccessDenied on the runner. **The CTO ruled (msg 10239): YES**, `s3:ListBucket` on the Inflection gold bucket, conditioned on `s3:prefix` equal to `irpt/inflection/gold/account_transaction` and its children (builder output), no GetObject on gold, XA-a222 condition 2's form, and the simulate control gains S4 (ALLOW the list on that prefix, DENY a list of another prefix); it rides the Inflection pair (the packet names it).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `inf-pipeline/iam.tf`: statement S4 (between S2 and S3) and the two gold list locals, by pure insertion into the block of `DB-f-2501`; S1 to S3 byte-for-byte | `DB-f-2603` | FWD-5 | WORLD | `DB-f-2501` (merged), CTO msg 10239 | R138-C |
+
+**Four-postulate record.** (i) Domain: one inline policy of one role in one root; four statements after. (ii) Same grain: a statement. (iii) One intent: the runner may list its own output prefix. (iv) Not moved: S1 to S3, every other policy and file of the root, the role, its trust; nothing planned or applied.
+
+| criterion | invocation | base reading |
+|---|---|---|
+| DBF138-3-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r138/p138_inf_s4.py . DBF138-3-AC1` | FAIL (iam.tf unchanged from the pinned base) |
+| DBF138-3-AC2 | `python -I .../checks/r138/p138_inf_s4.py . DBF138-3-AC2` | FAIL (S4 absent) |
+
+Checker `p138_inf_s4.py` (selftest 10 arms; the reference insertion makes both PASS, run and reverted). The round-137 criteria `DBF137-5-AC1` and `AC2` read the pre-S4 base; AC1 (a pure insertion) and AC2 (the actions and sids) still hold after S4.
