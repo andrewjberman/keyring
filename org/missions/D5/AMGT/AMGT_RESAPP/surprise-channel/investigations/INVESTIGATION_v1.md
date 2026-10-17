@@ -29041,3 +29041,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "With D1-S53 this is the disarm owner's evidence for the CVO's clock on REMEDIATION_v40 C-S133 (R-15: the CVO writes it)."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W477-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~477",
+  "surfaced_at": "2026-10-17T11:21:55Z",
+  "one_line": "AMGT-bo-3 walk D: the RIO LN Model tab rendered the page error boundary (TypeError: value.trim is not a function), so the All-figures disclosure was not found on that tab, and the walk's AC5 reads 2 of 3 names with the grid opened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AC5 expect (order section 4): a count of at least 3 of the lines OPEN-FIRST \"All figures\": opened (N table row(s) visible inside it), N at least 5, one per name asked; and the walk file holds one STEP RIO LN-Model line. Order section 1 step 4: the Model-tab shot after the grid was opened, for each of the nineteen names.",
+  "world_is": "walk_D.txt (run 20261017T105133Z, deliverables 0.9.0_WK_AMGT_RESAPP~477) line 60 reads STEP RIO LN-Model: 0 finding(s) and line 61 reads OPEN-FIRST \"All figures\": not found in RIO LN-Model. The shot 044-RIO-LN-Model-expanded.png is the page error boundary, 'Something went wrong' with 'TypeError: value.trim is not a function'. The RIO LN Thesis and Exec Management shots rendered normally. The walk exited 0, printed DISARMED and REFUSED, and its SUMMARY reads walk void: no. Not retried: the order's retry rule covers only HELD and login failure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~477/walk_D.txt lines 60 and 61 @1cfd2e7109",
+      "C:/dev/ui-walk-evidence/bo-3/D/20261017T105133Z/shots/044-RIO-LN-Model-expanded.png shows the error boundary text TypeError: value.trim is not a function",
+      "C:/dev/ui-walk-evidence/bo-3/D/20261017T105133Z/shots/035-RIO-LN-overlay.png and 039-RIO-LN-Exec-Management.png show the other RIO LN tabs rendered"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as the surprise behind AC5 (2 of 3 names opened). The RIO LN All-figures grid was not read. Recorded as filed, no verdict."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W477-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~477",
+  "surfaced_at": "2026-10-17T11:21:55Z",
+  "one_line": "AMGT-bo-3 walk D, VLO US Key Figures: the printed 2025 EPS 7.57 (PROVISIONAL) sits against 2026E EPS 54.11, and the 2025 EBITDA 6,831 against 2026E 23,973, a discontinuity of about 7x and 3.5x that reads as two figures that disagree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order section 1 step 4: for each name, say whether two figures disagree (the round-106 class).",
+  "world_is": "Model-expanded shot 016-VLO-US-Model-expanded.png (walk run 20261017T105133Z) prints EPS (per share, USD) 7.57 PROVISIONAL, 54.11, 48.26 and EBITDA (millions, USD) 6,831 PROVISIONAL, 23,973, 19,769. Each P/E cell is consistent with its own row: 2025 P/E 21.5x equals price 162.79 USD over 7.57, and 2026E P/E 8.2x equals price 444.06 over 54.11. The 2025 provisional and the 2026E consensus differ in magnitude by about 7x on EPS and 3.5x on EBITDA. Not graded here; the CVO and CTO read the shots.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bo-3/D/20261017T105133Z/shots/016-VLO-US-Model-expanded.png prints EPS 7.57 PROVISIONAL and 54.11 and EBITDA 6,831 and 23,973",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~477/walk_D.txt line 27 @1cfd2e7109 (STEP VLO US-Model: 1 finding(s))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as read. No verdict."
+}
+```
