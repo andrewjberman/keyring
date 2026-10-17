@@ -310,6 +310,87 @@ Worker rows of the round-1 cells, appended and never edited. Rows `SOC2_MSLOGS-D
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W12-S1",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~12",
+    "surfaced_at": "2026-10-17T06:38:51Z",
+    "one_line": "The task order names the README silver reader line as read_timeline.py; the README at the base named scripts/silver/read_day.py, a file the tree does not hold.",
+    "spec_asserts": "TO SOC2_MSLOGS.TO-R2-t2 says the silver reader line of data/m365_metadata/README.md names silver/read_timeline.py.",
+    "world_is": "At base 5795b96e64 README.md line 11 named scripts/silver/read_day.py. scripts/silver/ holds read_timeline.py only. The README line was rewritten to name read_timeline.py, the file the tree holds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/m365_metadata/README.md@5795b96e64 line 11 names scripts/silver/read_day.py",
+        "data/m365_metadata/scripts/silver/read_timeline.py@5795b96e64 is the only silver reader present"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W12-S2",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~12",
+    "surfaced_at": "2026-10-17T06:38:51Z",
+    "one_line": "The README usage line for --profile, --mfa-code and --desktop describes flags that the silver reader does not yet take at this base; the door client it names is not in the tree.",
+    "spec_asserts": "TO SOC2_MSLOGS.TO-R2-t2 asks for a README usage line passing --profile, --mfa-code and --desktop to the member's reader, with silver/door_client.py and silver/read_exposure.py named as the client's modules.",
+    "world_is": "At base 5795b96e64 scripts/silver/read_timeline.py argparse takes only --account, --start and --end, and scripts/silver/door_client.py and scripts/silver/read_exposure.py are absent. The usage line was written as the order states; it is accurate only once the sibling cell that adds these flags and modules lands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/m365_metadata/scripts/silver/read_timeline.py@5795b96e64 lines 93-97 add_argument: --account, --start, --end only",
+        "data/m365_metadata/scripts/silver/ at 5795b96e64 holds read_timeline.py only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W13-S1",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~13",
+    "surfaced_at": "2026-10-17T06:37:57Z",
+    "one_line": "The worktree sparse-checkout omits data/ and infra/aws/, so the two TO-R2-e2 new-file paths are tracked in the index but absent on disk and the cell cannot be built in this worktree.",
+    "spec_asserts": "TO-R2-e2 WORKER FACE and <paths>: the worktree carries infra/aws/lambda/globgrph-trino-access/ (exposure.py new, beside handler.py and silver_builder.py) and data/m365_metadata/scripts/silver/ (read_exposure.py new, beside read_timeline.py), so the cell can be built and its two checks run.",
+    "world_is": "Worktree C:/Dev/ajb_wk/soc2-r2-13 at HEAD 5795b96e64 has a git sparse-checkout cone of 9 entries (.tools, infra/logic/registry, lib, org/devices, org/missions/D12/SOC2/SOC2_MSLOGS, org/modules/graph, org/ref, org/standards, org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R2_CHECKS). data/ does not exist on disk and infra/ holds only logic/. git ls-files -v marks 91211 index entries skip-worktree (S), including data/m365_metadata/scripts/silver/read_timeline.py and infra/aws/lambda/globgrph-trino-access/handler.py. The base checkout C:/Dev/ajb_workspace carries data/m365_metadata/scripts/silver/read_timeline.py on disk. Both acceptance checks refuse at this HEAD: exposure_door printed R2-EXPOSURE_DOOR-REFUSED missing ...infra\\aws\\lambda\\globgrph-trino-access\\exposure.py (rc=1); exposure_client printed R2-EXPOSURE_CLIENT-REFUSED missing ...data\\m365_metadata\\scripts\\silver\\read_exposure.py (rc=1). The sparse checkout was not widened and no file was created, per the reconstruction bar.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list and git ls-files -v run in C:/Dev/ajb_wk/soc2-r2-13 at HEAD 5795b96e64, read 2026-10-17T06:37Z",
+        "org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R2_CHECKS/s1_check_r2.py@5795b96e64 run as exposure_door and exposure_client; both rc=1 with the refusal lines quoted in world_is",
+        "org/missions/D12/SOC2/SOC2_MSLOGS/task-orders/SOC2_MSLOGS.TO-R2-e2.exposure.md@5795b96e64 BOUNDS refusal clause and <paths> block"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W13-S2",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~13",
+    "surfaced_at": "2026-10-17T07:10:00Z",
+    "one_line": "The EXPOSURE contract leaves two readings open (an AnonymousLinkCreated row with invalid raw_json; NOT RECORDED lines with no time), and the build resolved each one as stated below.",
+    "spec_asserts": "TO-R2-e2 WORKER FACE: compute yields an anonymous_link left entry 'always included'; a raw record that is not valid JSON yields no left entry. render: every line begins with the Eastern time of the entry, and the NOT RECORDED section lists category and reason.",
+    "world_is": "The two clauses meet on an AnonymousLinkCreated row whose raw_json is not valid JSON. exposure.py includes the anonymous_link entry, because its recipient is fixed and needs no raw field. The unrecorded entries have no time field, so read_exposure.py prints each NOT RECORDED line as category then reason, with no timestamp. Both readings are the build's choice, not a contract change; test_exposure.py and test_read_exposure.py pin them (31 passed).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D12/SOC2/SOC2_MSLOGS/task-orders/SOC2_MSLOGS.TO-R2-e2.exposure.md@5795b96e64 WORKER FACE lines 36-42 (anonymous_link always included; invalid raw yields no left entry) and line 48 (every line starts with Eastern time)",
+        "infra/aws/lambda/globgrph-trino-access/exposure.py and data/m365_metadata/scripts/silver/read_exposure.py as built in the worktree, read at the proof commit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
