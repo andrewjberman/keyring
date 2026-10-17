@@ -14420,3 +14420,137 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Decision owner: the issuer 2.0.0_SA_COO~D2 for IRPT_DASHBD round 149 (re-base the clause or accept the F2 change); not changed here, since the criterion of this order does not name it."
 }
 ```
+
+## NFRA_CTLPLN-W151-S1 -- rcg/charters.yaml names the retired map as an exact root_set entry; after the split it roots nothing
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "rcg/charters.yaml line 24 still lists infra/aws/lambda/ci/lambda-source-map.json in root_set. build_root_set matches an exact entry against the scan population, so the entry roots nothing now that the map is deleted; before the split the map file was a root. No function-map file is a root either: the root_set holds no prefix that covers infra/aws/lambda/ci/. The file is outside this order's grant (census class DOC) and was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "rcg/charters.yaml@226e46649f line 24 (root_set list, lines 17-27): the retired path is an exact entry; no entry ends in infra/aws/lambda/ci/",
+      "rcg/bin/mark.py@333aea1678 build_root_set: exact entries are added only when entry in population; the lambda roots come from source_dir prefixes of the function-map folder",
+      "census at HEAD e51e048c99 (.scratch/census_after_wip.md): rcg/charters.yaml classed DOC, reading row line 24; the census does not class it as a live reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell's readers read the function folder; a root set that names the retired path is a reader of the retired path whose effect is a silent no-op.",
+  "world_is": "The charter entry is text the census classes DOC, so the census cannot see its effect; mark.py's root set loses the map file as a root and gains no folder file.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (replace the entry with the folder prefix in rcg/charters.yaml, or accept the no-op). Not changed here: the file is outside the grant."
+}
+```
+
+## NFRA_CTLPLN-W151-S2 -- the deployed estate report runner artifact still reads the retired map until its S3 object is re-uploaded
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "The estate report runner runs on EC2 from the S3 object code/estate_report_runner.py, which the 2026-08-05 deploy ledger records as re-uploaded by PutObject and which the instance pulls on every boot. Commit 3ccb99154a (estate_report_runner.py) changes the runner to read the function-map folder, but the S3 object is unchanged. Until a CloudOps artifact upload carries 3ccb99154a, the deployed runner's lambda hop reads the retired path, finds nothing and degrades with a WARN on the next boot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20260805T1456Z_estate-report-runner-corpus-vintage_deploy_completion.md (lines 1-17): the act is ONE s3api put-object to s3://opal-estate-report/code/estate_report_runner.py; re-uploading the artifact IS the deploy; the instance is transient and its systemd oneshot pulls on every boot",
+      "git show 3ccb99154a:infra/aws/ec2/estate-report-runner/estate_report_runner.py load_function_map: the lambda hop reads the folder; the pre-change runner runs git checkout of the retired path, which the clone no longer has, and degrades that hop",
+      "the risk-reflex HOLD printed by safe-commit for 3ccb99154a named this ledger entry (18 recorded claims)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-29 ruling 1 requires every reader to be repaired before the first estate report run reaches it.",
+  "world_is": "The repair is committed on the branch but the artifact that the box runs is the pre-repair object; the repair reaches the box only through a CloudOps upload this worker does not perform (WORLD class: no upload was run here).",
+  "notes": "Disarm: the issuer 2.0.0_SA_COO~C routes the artifact upload to 0.7.0_AE_CloudOps after the drain; the row is disarmed when the S3 object's ETag matches the file at the merged commit. No AWS command was run by this worker."
+}
+```
+
+## NFRA_CTLPLN-W151-S3 -- the grant names rcg/tests/, which does not exist at HEAD
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "The task order's paths list rcg/tests/ as a grant. At HEAD 226e46649f the rcg tree holds bin/, grader/, ledger/, rulings/, workflows/, charters.yaml, MANIFEST.yaml and .gitattributes, and no tests folder. No suite exists there to run; the arms that cover rcg/bin/lexicon.py and rcg/bin/mark.py are in .tools/tests/test_round30_follow_readers.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only 226e46649f rcg (printed in the worker worktree): no path under rcg/tests/",
+      "the worktree lists rcg/ with the same six entries and no tests folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The grant names rcg/tests/ as a folder the cell may write to and run.",
+  "world_is": "The folder is absent; the grant names a path that does not exist, and no test under it is run by the cell's invocations.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (drop the grant line, or name the folder the tests will live in)."
+}
+```
+
+## NFRA_CTLPLN-W151-S4 -- the provisioned sparse set omits the envelope source that comp_closure self-test imports, so the suite is red at base in a cut worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "In the worktree cut by wk-provision the comp_closure self-test fails at base with ModuleNotFoundError: observation_envelope. Its envelope source is org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_EPISTEMY.C1-ENVELOPE/src and its schema is under the same folder, neither in the sparse set. The worker added the folder with git sparse-checkout add (no commit); after that the self-test reads 28/28 at base and after.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run at base (before the sparse add): org/modules/graph/comp_closure.py --self-test -> ModuleNotFoundError: No module named 'observation_envelope' (line 166 of comp_closure.py at 226e46649f)",
+      "after git sparse-checkout add of the envelope folder: comp-closure self-test: 28/28 passed (base mirror of HEAD and the worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cut worktree carries the folders the order's suites run from.",
+  "world_is": "The sparse set names only the grant's folders and their direct dependencies; a suite that imports another project's source reads red at base for a reason that is not in the grant.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (add the envelope folder to the cell's sparse list, or leave the suite red at base as the order's acceptance does not name it)."
+}
+```
+
+## NFRA_CTLPLN-W151-S5 -- after the reader change, p137's DBF137-1-AC1 and AC2 print FAIL on the entry's content, not on the missing map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W151-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~151",
+  "surfaced_at": "2026-10-17T00:09:35Z",
+  "one_line": "At base p137_repin.py FAILs with missing infra/aws/lambda/ci/lambda-source-map.json. After commit e51e048c99 it reads the entry from the function-map folder and FAILs on content: three staged pins are STALE (lib/opal_naming.py, lib/trading_calendar.py, infra/logic/registry/systems.json), and account_transaction.py reads trading_calendar.first_trading_day_on_or_after, which the pinned trading_calendar (pin b2b7488660) does not define. The pre-split map gives an identical entry (240 of 240 equal), so the findings are the entry's own and belong to the round-137 re-pin cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python checks/r136/p137_repin.py <worktree> DBF137-1-AC1 at e51e048c99: reason lists the three STALE pins; DBF137-1-AC2: reason names first_trading_day_on_or_after (output in .scratch/p137_ac1_after.txt and .scratch/p137_ac2_after.txt)",
+      "python checks/r136/p137_repin.py --selftest at e51e048c99: selftest PASS (5 arms)",
+      "pre-split map dd6e42b5cd vs function folder at 226e46649f: 240 of 240 entries equal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DBF137-1-AC1 and AC2 grade the staged members of irpt-49f-reporting-gold-lambda against their pins and the attribute closure.",
+  "world_is": "The three pins and the attribute closure fail on the committed entry; the reader is not the cause. The check names the failures, as designed.",
+  "notes": "Decision owner: the round-137 re-pin cell (DB-f-2205, the issuer 2.0.0_SA_COO~F2). This worker did not re-pin."
+}
+```
