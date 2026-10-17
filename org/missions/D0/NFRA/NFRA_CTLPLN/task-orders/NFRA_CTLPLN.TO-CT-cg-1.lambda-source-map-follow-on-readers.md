@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~151</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C by amendment in round 30 (decomposition amendment 8), the 'can follow' cell named in CT-ca-1 and the one reader that landed after its census.</status_reason>
+<status>complete</status>
+<status_reason>Complete, 2026-10-16. Worker 0.9.0_WK_NFRA_CTLPLN~151 built it; the issuer 2.0.0_SA_COO~C re-ran everything in the merged main tree (merge bfbdc20d40): CTcg1-AC1 FOLLOW-READERS arms=31/31 ok=True; CTcg1-AC2 ATOMIC-SPLIT functions=240 equal=240 map_present=False census_other=0 live_old_path_users=0 ok=True (was census_other=1); CTcg1-AC3 SOURCEMAP-SELFTEST arms=10/10 ok=True; neighbours: comp-closure self-test 28/28, FUNCTION-MAP 13/13, p137 selftest PASS (5 arms). Six files changed (comp_closure, extract_lambda_routes, rcg lexicon and mark, estate_report_runner, p137_repin); no history pin. Open from the worker's rows: W151-S2 ARMED (the deployed estate report runner reads the retired path until a CloudOps artifact upload carries the new file: it degrades with a WARN on its next boot; the issuer routes the upload to the CTO as a WORLD act), W151-S1 (rcg/charters.yaml names the retired map: a DOC, inert), W151-S5 (p137 AC1/AC2 print FAIL on stale pins of its own entry, as on the pre-split map: IRPT_DASHBD's to rule).</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

@@ -6,7 +6,7 @@ RETIRED tags are MEASURED where possible (a tool registered in a registry but ab
 
 BOUNDARY DECLARATION (printed every run):
   address_space      four channels: .tools basenames | org/projects codes+status |
-                     SYSTEM_DEFINITIONS term keys+status | lambda-source-map names.
+                     SYSTEM_DEFINITIONS term keys+status | function-map names.
   traversal_residue  agent serials (runtime liveness, not lexicon-stable), S3 bucket/key
                      grammars, portal identifiers, file basenames at large -- all OUT of
                      v1, declared. A mention of an out-channel identifier scores nothing.
@@ -26,6 +26,10 @@ from pathlib import Path
 import yaml
 
 WS = Path(__file__).resolve().parents[2]
+_LIB = WS / "lib"
+if str(_LIB) not in sys.path:
+    sys.path.insert(0, str(_LIB))
+from opal_lambda_map import load_all  # noqa: E402  (the one reader of the function-map folder)
 
 
 def channel_tools() -> list[dict]:
@@ -121,14 +125,11 @@ def channel_canon_nonconform() -> list[dict]:
 
 
 def channel_lambdas() -> list[dict]:
-    path = WS / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
-    d = json.loads(path.read_text(encoding="utf-8"))
-    # The map wraps its entries: real names live under "functions"; top-level keys are
-    # metadata (_description, _updated, ...). The naive d.keys() read returned 5 metadata
-    # keys as "lambdas" -- caught because 5 was implausible for this estate.
-    functions = d.get("functions", {}) if isinstance(d, dict) else {}
+    # One file per function under infra/aws/lambda/ci/function-map/ (round 30). The folder holds no
+    # metadata keys, so every file is a function. load_all raises on an absent or empty folder: no silent empty channel.
+    functions = load_all(str(WS))
     return [{"token": n, "kind": "lambda", "status": "LIVE",
-             "source": "lambda-source-map.json#functions"} for n in sorted(functions)]
+             "source": "function-map/%s.json" % n} for n in sorted(functions)]
 
 
 def main() -> int:

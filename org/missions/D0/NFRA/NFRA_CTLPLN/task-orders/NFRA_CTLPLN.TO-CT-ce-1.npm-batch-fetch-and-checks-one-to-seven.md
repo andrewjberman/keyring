@@ -1,6 +1,6 @@
 # TO NFRA_CTLPLN.TO-CT-ce-1.npm-batch-fetch-and-checks-one-to-seven -- workstream OUTCOME round 33 (cell CT-ce-1): the npm batch: fetch dell1's 50 bun packages (the lockfile of mcportal@c66ca82952) through the checked route into the holding folder and run checks 1-7 on each (check 8 is the CTO's, after)
 
-<to_id>NFRA_CTLPLN.TO-CT-ce-1.npm-batch-fetch-and-checks-one-to-seven</to_id>
+<to_id>NFRA_CTLPLN.TO-CT-ce-1</to_id>
 <project>NFRA_CTLPLN</project>
 <issued_to>0.9.0_WK_NFRA_CTLPLN~149</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>

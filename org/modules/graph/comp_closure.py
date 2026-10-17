@@ -68,7 +68,11 @@ import zipfile
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 WS = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
-SOURCE_MAP = os.path.join(WS, "infra", "aws", "lambda", "ci", "lambda-source-map.json")
+FUNCTION_MAP = os.path.join(WS, "infra", "aws", "lambda", "ci", "function-map")   # one <name>.json per function (TO-CT-ca-1)
+_LIB = os.path.join(WS, "lib")
+if _LIB not in sys.path:
+    sys.path.insert(0, _LIB)
+from opal_lambda_map import load_all as load_function_map  # noqa: E402
 ENVELOPE_SRC = os.path.join(WS, "org", "tier1_exec", "4.0.0_SA_CRO~A", "deliverables",
                             "NFRA_EPISTEMY.C1-ENVELOPE", "src")
 INSTRUMENT = {"id": "comp-closure", "version": "0.3.0"}
@@ -309,9 +313,9 @@ def compile_closure(name, smap, reader, repo, env, execution_reads=None):
     # --- H1 DECLARATION: the source-map entry (BUILD INPUT, read never rewritten) ---
     st = dict(OK) if entry else {"acquisition": "ABSENT", "transport": "SUCCEEDED", "enumeration": "SUCCEEDED", "parse": "SUCCEEDED"}
     o1 = _obs(env, request={"op": "source_map_entry", "fn": name}, status=st, plane="DESIRED", substrate="codebase",
-              population="functions{} of infra/aws/lambda/ci/lambda-source-map.json", count=len(fns),
-              grain="source-map entry", process="json read of the committed map", value=entry,
-              reason="no source-map entry for %s" % name, pointers=["infra/aws/lambda/ci/lambda-source-map.json"],
+              population="functions{} of infra/aws/lambda/ci/function-map/", count=len(fns),
+              grain="source-map entry", process="json read of the committed function file", value=entry,
+              reason="no source-map entry for %s" % name, pointers=["infra/aws/lambda/ci/function-map/%s.json" % name],
               invalidation=["source map _updated changes", "entry for %s edited" % name])
     obs.append(o1)
     if not entry:
@@ -917,7 +921,9 @@ def main(argv=None) -> int:
             print("  basis: %s" % b["equivalence_claim"]["basis"])
             print("  wrote %s.{closure,bundle,observations}.json" % base)
             return 0
-        smap = json.load(open(SOURCE_MAP, encoding="utf-8"))
+        fns = load_function_map(WS)   # raises when the folder is absent or empty (loud, never an empty map)
+        # the folder's stamp: a sha256 of its entries (the retired map's _updated field has no folder counterpart)
+        smap = {"_updated": _sha256(json.dumps(fns, sort_keys=True).encode("utf-8")), "functions": fns}
         reader, repo = LiveReader(), RepoIndex()
         if cmd == "compile":
             name = args[1]
