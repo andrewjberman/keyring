@@ -26649,3 +26649,165 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Off-task observation; the gitlink is not part of the OG-en-20 write set and no criterion reads it."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T03:20:06Z",
+  "id": "NFRA_OPLGTW-Z-S344",
+  "one_line": "Round-40 disposition of worker row Z-W131-S1: Worker env note: test_ogch1_ac04 fails in a sparse worktree because the tracked roster file is outsi",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W131-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges 983095f7af (OG-en-19) and d9364e3e9c (OG-en-20); the named tests pass in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker env note: test_ogch1_ac04 fails in a sparse worktree because the tracked roster file is outside the cone; it is the carried red test of Z-S317. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker env note: test_ogch1_ac04 fails in a sparse worktree because the tracked roster file is outside the cone; it is the carried red test of Z-S317. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T03:20:06Z",
+  "id": "NFRA_OPLGTW-Z-S345",
+  "one_line": "Round-40 disposition of worker row Z-W131-S2: Worker env note: the row schema folder is outside the sparse cone; the worker followed the existing ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W131-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges 983095f7af (OG-en-19) and d9364e3e9c (OG-en-20); the named tests pass in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker env note: the row schema folder is outside the sparse cone; the worker followed the existing rows' shape. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker env note: the row schema folder is outside the sparse cone; the worker followed the existing rows' shape. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T03:20:06Z",
+  "id": "NFRA_OPLGTW-Z-S346",
+  "one_line": "Round-40 disposition of worker row Z-W131-S3: Worker env note: .claude/agents/worker.md does not resolve in the sparse worktree; the worker took i",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W131-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges 983095f7af (OG-en-19) and d9364e3e9c (OG-en-20); the named tests pass in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker env note: .claude/agents/worker.md does not resolve in the sparse worktree; the worker took its rules from the order. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker env note: .claude/agents/worker.md does not resolve in the sparse worktree; the worker took its rules from the order. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T03:20:06Z",
+  "id": "NFRA_OPLGTW-Z-S347",
+  "one_line": "Round-40 disposition of worker row Z-W132-S1: Worker env note: .claude/agents/worker.md absent from the sparse worktree. Record only (same as Z-W1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W132-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges 983095f7af (OG-en-19) and d9364e3e9c (OG-en-20); the named tests pass in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker env note: .claude/agents/worker.md absent from the sparse worktree. Record only (same as Z-W131-S3).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker env note: .claude/agents/worker.md absent from the sparse worktree. Record only (same as Z-W131-S3)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T03:20:06Z",
+  "id": "NFRA_OPLGTW-Z-S348",
+  "one_line": "Round-40 disposition of worker row Z-W132-S2: Worker env note: the row schema file is absent from the sparse worktree; rows followed the existing ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W132-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges 983095f7af (OG-en-19) and d9364e3e9c (OG-en-20); the named tests pass in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker env note: the row schema file is absent from the sparse worktree; rows followed the existing shape. Record only (same as Z-W131-S2).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker env note: the row schema file is absent from the sparse worktree; rows followed the existing shape. Record only (same as Z-W131-S2)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T03:20:06Z",
+  "id": "NFRA_OPLGTW-Z-S349",
+  "one_line": "Round-40 disposition of worker row Z-W132-S3: Worker note: the portal gitlink is dirty before any edit (index vs checkout differ); not committed, ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W132-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges 983095f7af (OG-en-19) and d9364e3e9c (OG-en-20); the named tests pass in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker note: the portal gitlink is dirty before any edit (index vs checkout differ); not committed, not this project's. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker note: the portal gitlink is dirty before any edit (index vs checkout differ); not committed, not this project's. Record only."
+}
+```
