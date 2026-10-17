@@ -4577,3 +4577,15 @@ Check IB247-1 (`deliverables/2.0.0_SA_COO~S2/checks/r247/p247_cells.py`), dry-ru
 | `IB-pr-616` | APPLY hops 3 and 4: the report route and the read function bundle, the export bundle, then the one IAM statement on `irpt-export-render-role` (after the fence row is read back) | FWD-21 | WORLD | `~D2` TO-DB-b-312 complete and hop 2 ledger closed; the IAM leg also the second fence row regenerated | PS7-a |
 
 fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell, one CloudOps seat (IB2); staged until the GO.
+
+## 243. ROUND 8, WORKSTREAM ~PS (the export reads the CURRENT filled-report object and refuses on a sha256 or size mismatch: the BUILD behind IB-pr-551 ADDENDUM 3; 2026-10-17 ~01:5xZ, issuer 2.0.0_SA_COO~S2 on dell2, on XA-20261017T010553Z-d493 RULED (B), CTO msg 10126 and the CTO half of ADDENDUM 3 @94032d0bb7)
+
+The fence validator closes the scoped read set at GetObject (no GetObjectVersion, one row per bucket), so the export role cannot read a pinned VersionId. The ruling keeps the validator and changes the export: it reads the current object and refuses unless the bytes' sha256 and size equal what the export server recorded at submit. ADDENDUM 3 (COO half blob `87a46d9cf370c293dae46a413cba213db721b5ef`, CTO half signed) fixes the grant to GetObject only and names the behaviour change: an overwritten report is REFUSED with a worded state, not exported as the pinned bytes. This cell is that code change and its tests, a repo-only build (declared WORLD because the L6 gate floors every `infra/` path at WORLD), in this seat's own surface (`export/retained_export.py` and the three filled-report test files). The new export bundle (an IB2 apply, TO-IB-pr-618) and the IAM statement (TO-IB-pr-616 Step 6) follow it, in the CTO's order: the bundle live and read back BEFORE the statement is applied. It is a small cell (about 20 lines of code plus the tests that move with it), cut as ONE order on the full limbs, since a WORLD class excludes the direct-act path.
+
+Check IB248-1 (`deliverables/2.0.0_SA_COO~S2/checks/r248/p248_cells.py`), dry-run at the base `bba05481507a` on dell2: AC1 (the three test files pass and the two new tests exist and pass), AC2 (the seam: no version_id passed to the reader, the sha256 and size refusal kept and worded, `filled_reader_installed.py` byte-equal to the base) and AC3 (the difference control: the new tests FAIL against the base `retained_export.py`) all FAIL at the base. AC2 was also run against a reference copy of the change and PASSES.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-617` | BUILD: read_pinned_filled reads the current object and refuses on a changed object with a worded state; the tests move with it; a planted-changed-object test | FWD-21 | WORLD (path floor) | none | PS8-a |
+
+fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell, one worker (slot ~481); disjoint write surface (retained_export.py and three test files).
