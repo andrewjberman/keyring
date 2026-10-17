@@ -1,0 +1,13 @@
+{
+ "project_code": "TCKT_EARLYWARN",
+ "home": "org/missions/D7/TCKT/TCKT_EARLYWARN",
+ "directive": "D7",
+ "macro_code": "TCKT",
+ "fabric": "dell1",
+ "dep_stage": "EXECUTING",
+ "status": "active",
+ "name": "Client Ops Early Warning: scheduled scans of the Outlook audit channel and Schwab silver for client-ops loose ends (unanswered requests, unresolved operational accounts, idle new cash accounts)",
+ "generated_from": "org/missions/D7/TCKT/TCKT_EARLYWARN/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-10-17T04:23:53Z"
+}

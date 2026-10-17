@@ -1,7 +1,7 @@
-# TO MDPF_DEMQUE.TO-DQ-t70 -- DQ-t-70: site Z runs the surface-budget drawer and the 2026-10-17 fire draws surface C past the history ceiling
+# TO MDPF_DEMQUE.TO-DQ-t70 -- DQ-t-70: site Z runs the surface-budget drawer and the 2026-10-17 fire draws surface-tagged requests past the history ceiling
 <to_id>MDPF_DEMQUE.TO-DQ-t70</to_id>
 <project>MDPF_DEMQUE</project>
-<issued_to>0.7.0_AE_CloudOps~ZQ</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MDPF1</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-17</issued_date>
 <status>staged</status>
@@ -27,7 +27,7 @@
 1. Open a change-management entry for this act (`org/critical_paths/change_management/`, and its sentinel in `org/critical_paths/.open_deploys/`) BEFORE the fire; close it at the end.
 2. Bring the site Z checkout to a commit that contains the `TO-DQ-t69` merge (a fast-forward pull of the branch site Z follows; no rebase, no reset). Print `git log --oneline -1` and prove the content: `python data/mdpf/scripts/demque/standing_drawer.py --room --day 2026-10-17` prints surface C 400000.
 3. Read the task's next trigger and last result (`schtasks /query /tn <the built task name> /v /fo list`, where `python data/mdpf/scripts/demque/standing_drawer.py --task-name` prints the name). Do not edit the task.
-4. After the 14:00Z fire, read the receipt in `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/` and the actuals ledger rows of 2026-10-17: report, per request, the cells drawn, and the total for surface C.
+4. After the 14:00Z fire, read the receipt in `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/` and the actuals ledger rows of 2026-10-17: report, per request, the cells drawn, and the total per surface.
 5. If the fire draws nothing (a stop reason in the receipt), write the stop reason into your report and a surprise row; do not run a draw by hand.
 
 ### ACCEPTANCE
@@ -37,7 +37,7 @@
 
 <expected_criteria>DQ9-t70-AC1,DQ9-t70-AC2</expected_criteria>
 
-`DQ9-t70-AC1` -- run at site Z's repository root: the checkout reads the room the surface budgets give (Saturday untagged 5858, surface C 400000, daily total left 2500000; Monday 0). `DQ9-t70-AC2` -- run after the 2026-10-17 14:00Z fire: surface C drew more than 5,858 and at most 400,000 cells that day, the day's cells total at most 2,500,000, and no row stopped on a vendor limit. AC2 is date-gated to that fire and the order stays open until it reads FIRE-OK. At the base: `SURF-BAD standing_drawer --room rc=2 ... unrecognized arguments: --room`; `FIRE-BAD no surface-C cells drawn on 2026-10-17`.
+`DQ9-t70-AC1` -- run at site Z's repository root: the checkout reads the room the surface budgets give (Saturday untagged 5858, surface C 400000, daily total left 2500000; Monday 0). `DQ9-t70-AC2` -- run after the 2026-10-17 14:00Z fire: the surface-tagged cells drawn that day exceed 5,858, each surface stays within its budget, the day's cells total at most 2,500,000, and no row stopped on a vendor limit. (Amended by the issuer ~04:4xZ: every ETFS_RIVALS-C1 request, the surface-C requests, carries a draw_hold by CTO msg 7279, so the fire is graded on the surfaces that draw; criterion text only, no new check.) AC2 is date-gated to that fire and the order stays open until it reads FIRE-OK. At the base: `SURF-BAD standing_drawer --room rc=2 ... unrecognized arguments: --room`; `FIRE-BAD no surface-tagged cells drawn on 2026-10-17`.
 
 ## BOUNDS
 
