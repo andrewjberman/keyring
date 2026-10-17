@@ -43,6 +43,10 @@ from pathlib import Path
 import yaml
 
 WS = Path(__file__).resolve().parents[2]
+_LIB = WS / "lib"
+if str(_LIB) not in sys.path:
+    sys.path.insert(0, str(_LIB))
+from opal_lambda_map import load_all  # noqa: E402  (the one reader of the function-map folder)
 MAX_SOURCE_BYTES = 2_000_000
 PATH_TOKEN = re.compile(r"(?:[A-Za-z0-9_.@-]+/)+[A-Za-z0-9_.@-]+")
 BASENAME_TOKEN = re.compile(
@@ -109,13 +113,9 @@ def build_root_set(population: set) -> tuple[set, dict]:
         if rel in roots and status not in ("active", "on-hold", "on_hold"):
             roots.discard(rel)
             why.pop(rel, None)
-    # lambda-source-map mapped trees
-    smap = WS / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
+    # function-map mapped trees (one file per function, round 30): load_all raises when the folder is absent or empty
     n_lambda_roots = 0
-    try:
-        functions = json.loads(smap.read_text(encoding="utf-8")).get("functions", {})
-    except (OSError, json.JSONDecodeError):
-        functions = {}
+    functions = load_all(str(WS))
     dirs = sorted({str(v.get("source_dir", "")).strip("/").replace("\\", "/")
                    for v in functions.values() if isinstance(v, dict)})
     for p in sorted(population):
@@ -123,7 +123,7 @@ def build_root_set(population: set) -> tuple[set, dict]:
             if d and p.startswith(d + "/"):
                 if p not in roots:
                     roots.add(p)
-                    why[p] = "root:lambda-source-map"
+                    why[p] = "root:function-map"
                     n_lambda_roots += 1
                 break
     # EC2_MANIFEST service trees -- EC2 code deploys via S3->EC2 pull (CLAUDE.md rules
@@ -150,7 +150,7 @@ def build_root_set(population: set) -> tuple[set, dict]:
         if p.startswith("infra/aws/terraform/") and p not in roots:
             roots.add(p)
             why[p] = "root:terraform"
-    print(f"[roots] {len(roots)} root files ({n_lambda_roots} via lambda-source-map "
+    print(f"[roots] {len(roots)} root files ({n_lambda_roots} via function-map "
           f"{len(dirs)} dirs; {n_ec2} via EC2_MANIFEST {len(sdirs)} services)")
     return roots, why
 

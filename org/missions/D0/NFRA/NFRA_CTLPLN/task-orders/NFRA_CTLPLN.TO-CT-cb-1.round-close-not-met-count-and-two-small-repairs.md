@@ -1,6 +1,6 @@
 # TO NFRA_CTLPLN.TO-CT-cb-1.round-close-not-met-count-and-two-small-repairs -- workstream OUTCOME round 30 (cell CT-cb-1): the small batch: not_met=<n> beside graded= on the ROUND-CLOSE line, the crossbox split test's arm (f) compares crossbox/1 files only, and the sweep-before-merge clause in the order protocol (FWD-8; round-close checker)
 
-<to_id>NFRA_CTLPLN.TO-CT-cb-1.round-close-not-met-count-and-two-small-repairs</to_id>
+<to_id>NFRA_CTLPLN.TO-CT-cb-1</to_id>
 <project>NFRA_CTLPLN</project>
 <issued_to>0.9.0_WK_NFRA_CTLPLN~146</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>

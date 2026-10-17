@@ -1,6 +1,6 @@
 # TO NFRA_CTLPLN.TO-CT-cf-1.intake-npm-tarball-top-folder-whatever-its-name -- workstream OUTCOME round 34 (cell CT-cf-1): the npm limb takes a tarball's single top-level folder as the package root whatever its name (check 2, verify and the install verb); the five real @types tarballs then pass check 2
 
-<to_id>NFRA_CTLPLN.TO-CT-cf-1.intake-npm-tarball-top-folder-whatever-its-name</to_id>
+<to_id>NFRA_CTLPLN.TO-CT-cf-1</to_id>
 <project>NFRA_CTLPLN</project>
 <issued_to>0.9.0_WK_NFRA_CTLPLN~150</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
