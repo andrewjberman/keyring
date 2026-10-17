@@ -6,6 +6,8 @@
 <issued_by>2.0.0_SA_COO~F2</issued_by>
 <issued_date>2026-10-17</issued_date>
 <status>pending</status>
+<!-- AMENDMENT 4 (2026-10-17 ~15:3xZ, issuer 2.0.0_SA_COO~F2): HELD / SUSPENDED. The CTO's msgs 10587, 10592, 10597: the Cottonwood silver is a rolling 14-day period pull; the transaction stage as signed (packet REVISION 1, sha256 c5b7d756c11e) reads ONE partition per day and would skip 125 of 127 days. It cannot apply until (1) cell DB-f-2706 (the late-posting window, decomposition R139 amendment 5) and 2.0.0_SA_COO~D2's reader fix ship as ONE code release, (2) the packet is re-pinned by addendum (a new sha256 and both halves re-signed), and (3) this order is amended to the new pins, bundle hash and the 'newest writable day' receipt line. No GO TO-DB-f-2703 is sent before then. -->
+
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
