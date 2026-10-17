@@ -63,7 +63,7 @@ org/missions/D7/TCKT/TCKT_EARLYWARN/surprise-channel/investigations/INVESTIGATIO
 The block is your WRITE grant. Everything else named here you READ and never edit.
 
 <decomp_ref>
-<decomp_doc>org/missions/D7/TCKT/TCKT_EARLYWARN/project.json</decomp_doc> (FAST-PATH: no decomposition), cell `EWS-d-1`.
+<decomp_doc>org/missions/D7/TCKT/TCKT_EARLYWARN/decompositions/TCKT_EARLYWARN_DECOMP.md</decomp_doc> (FAST-PATH: the one-cell declaration file), cell `EWS-d-1`.
 <owned_cells>EWS-d-1</owned_cells>
 </decomp_ref>
 
