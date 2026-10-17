@@ -5,7 +5,7 @@
   "fabric": "dell1",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-10-17",
   "registered_under_tree": "2026-10-17",
   "placement": "DELL1",
@@ -17,11 +17,13 @@
   ],
   "name": "Cottonwood's advisor books on Advisor Intelligence: every account in one advisor's book by a stated rule, each book tied to Black Diamond, the page in Inflection's shape",
   "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew-direct 2026-10-17 ~01:45Z ('how they structure their Portfolio Group key, because that's how we'll be able to run everybody's book properly ... should be taking on the Inflection Shape visually') and ~03:00Z ('yeah we do need to figure out that portfolio group stuff'), both recorded by 2.0.0_SA_COO~C1. The key is Black Diamond's Portfolio Group (the advisor book); the account-to-book rule lands before any page reads it (ADVI_COTBKF C-1). No vendor template change is authorized.",
-  "phase": "2026-10-17 ~03:1xZ (1.0.0_SA_CTO~DELL1): L2 endpoint FWD-1..6 written and L3 registered; the DONE WHEN lines go to Andrew for confirmation; L4 PRD next.",
+  "phase": "2026-10-17 ~03:2xZ (1.0.0_SA_CTO~DELL1): L4 PRD v0.1 DRAFT written; L4-R after Andrew confirms the endpoint (open call dell1-20261017T030813Z-0cf5, HELD). 2026-10-17 ~03:1xZ: L2 endpoint FWD-1..6 and L3 registered @5a2f71d0cc.",
   "blocking": null,
   "brief_ref": "docs/briefs/advi-portfolio-group-key-cottonwood-ai-brief-20261017.md@1bae264b34",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_ADVI_COTBOOKS_20261017.md",
-  "prds": [],
+  "prds": [
+    "org/missions/D8/ADVI/ADVI_COTBOOKS/prd/ADVI_COTBOOKS_PRD.md"
+  ],
   "decompositions": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1",
