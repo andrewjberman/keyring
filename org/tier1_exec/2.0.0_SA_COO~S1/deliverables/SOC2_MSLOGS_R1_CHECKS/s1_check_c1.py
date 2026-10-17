@@ -4,6 +4,8 @@
   python s1_check_c1.py switch    -> C1-SWITCH-OK    (an old-era cursor re-fetches the 7 days; already stored is not a gap; derive is budgeted)
   python s1_check_c1.py recollect -> C1-RECOLLECT-OK (a window run leaves the cursor alone; the handler's window rules)
   python s1_check_c1.py derive_time -> C1-DERIVETIME-OK (a fire never runs past its Lambda limit; derive keeps a reserved share, newest day first)
+  python s1_check_c1.py derive_par  -> C1-DERIVEPAR-OK  (owed days are derived concurrently, up to max_workers at a time, newest first)
+  python s1_check_c1.py derive_client -> C1-DERIVECLIENT-OK (the handler's derive call has a long read timeout and no automatic retry)
 
 Synthetic values only. The collector API this file drives is fixed in the order's worker face.
 """
@@ -318,6 +320,73 @@ def derive_time():
     return 0
 
 
+def derive_par():
+    """The door's derive of a busy day takes 60-100 s, so derive over several owed days must run CONCURRENTLY (up to max_workers at a time)."""
+    import threading
+    import time
+
+    run = mod("collect")
+    bad = []
+
+    class ParAccess(Access):
+        def __init__(self):
+            super().__init__()
+            self.lock = threading.Lock()
+            self.inflight = 0
+            self.max_inflight = 0
+            self.started = []
+
+        def derive_silver(self, date):
+            with self.lock:
+                self.started.append(date)
+                self.inflight += 1
+                self.max_inflight = max(self.max_inflight, self.inflight)
+            time.sleep(0.3)
+            with self.lock:
+                self.inflight -= 1
+                self.derived.append(date)
+            return {"ok": True, "rows": 0}
+
+    acc = ParAccess()
+    out = run.run_once(Source(many_blobs(60)), acc, {}, NOW, cursor=None, max_workers=4)
+    if acc.max_inflight < 2:
+        bad.append("derive ran one day at a time (max in flight %d); owed days must run concurrently" % acc.max_inflight)
+    if acc.max_inflight > 4:
+        bad.append("more derive calls in flight (%d) than max_workers" % acc.max_inflight)
+    if not acc.started or acc.started[0] != max(acc.started):
+        bad.append("the newest day must start first: %r" % (acc.started,))
+    if sorted(set(acc.derived)) != sorted(acc.derived):
+        bad.append("a day was derived twice: %r" % (acc.derived,))
+    if (out["cursor"].get("derive_pending") or []):
+        bad.append("an unbudgeted fire must derive every owed day: pending %r" % (out["cursor"].get("derive_pending"),))
+    if bad:
+        print("C1-DERIVEPAR-REFUSED " + "; ".join(bad))
+        return 1
+    print("C1-DERIVEPAR-OK max_inflight=%d days=%d" % (acc.max_inflight, len(acc.derived)))
+    return 0
+
+
+def derive_client():
+    """The first live fires with a derive of 60-100 s were killed by the DEFAULT boto3 client: a 60 s read timeout with 5 attempts re-invoked
+    the door for the same day five times (door log, 2026-10-17 00:42-00:47Z). The derive call needs a long read timeout and no automatic retry."""
+    import re
+
+    bad = []
+    src = open(LAMBDA, encoding="utf-8").read()
+    rt = [int(x) for x in re.findall(r"read_timeout\s*=\s*(\d+)", src)]
+    if not rt or max(rt) < 200 or max(rt) > 290:
+        bad.append("the handler must build a derive client with read_timeout between 200 and 290 s (found %r)" % (rt,))
+    if not re.search(r"max_attempts[\"']?\s*[:=]\s*1", src):
+        bad.append("the derive client must set max_attempts to 1 (no automatic re-invoke of a derive)")
+    if "Config" not in src:
+        bad.append("the handler does not build a botocore Config")
+    if bad:
+        print("C1-DERIVECLIENT-REFUSED " + "; ".join(bad))
+        return 1
+    print("C1-DERIVECLIENT-OK")
+    return 0
+
+
 def recollect():
     run = mod("collect")
     bad = []
@@ -372,7 +441,8 @@ def recollect():
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else ""
-    fn = {"raw": raw, "switch": switch, "recollect": recollect, "derive_time": derive_time}.get(mode)
+    fn = {"raw": raw, "switch": switch, "recollect": recollect, "derive_time": derive_time,
+          "derive_par": derive_par, "derive_client": derive_client}.get(mode)
     try:
         sys.exit(fn() if fn else 2)
     except FileNotFoundError as e:
