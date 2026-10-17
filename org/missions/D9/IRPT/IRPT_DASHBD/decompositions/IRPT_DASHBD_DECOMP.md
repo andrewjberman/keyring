@@ -3062,3 +3062,19 @@ Andrew read the Cottonwood Performance tab on 5174 (C5 PASS, CTO msg 10331): the
 **fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 56 single-fault mutants):** `checks/r150/p195_cot_gold_rewrite_apply.py` (DBC195-1-AC1, -2-AC1, -3-AC1).
+
+
+## 190. ROUND 150, WORKSTREAM CHARTGAP (2026-10-17 ~07:5xZ, issuer 2.0.0_SA_COO~D2): the Performance chart draws every measured segment, with breaks
+
+The CTO relayed Andrew's look at the Cottonwood tab (msg 10331 (a)): the chart is blank from Jul 15 to Oct 15 and must draw the measured segments with visible breaks at the missing days. The page owner `2.0.0_SA_COO~C2` has no live session, so this seat cuts the cell. The issuer's measured cause: `DashboardPerformance.tsx` builds the chart's values only when the window status is MEASURED; a window holding one day with no return is BREAK, so every chart row has no value and the chart is blank while the series holds measured days. A second gap: the trading days the source did not report are not served days, so no row exists where the line should break (the served `unreported_trading_days` list names them).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `chartRows` (served days plus the unreported days, in date order, the window's path for every status, isolated days marked), the area keeps its nulls as breaks, an isolated day is a dot, one break sentence, the brush mapped through the rows | DB-b-330 | FWD-10 (Cottonwood Performance tab) | SERVED, client-facing | none (pinned DEV head 38d4f947) | chain AW |
+| 2. the DEV merge of the candidate and the second PROD release of the Performance set | to be cut | FWD-10 | SERVED, client-facing | item 1 PASS; an approved row; the CTO's word and Andrew's for PROD | after item 1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the headline figure and the notes do not change: a BREAK window still reads "Not measured" (ruling S16, one window one answer); only the chart changes. (b) The level after a break carries on from the level before it (the existing `cumulativePath` rule, pinned by older tests); the break is shown, not hidden, and one sentence says how many days break the curve. (c) A measured day with a break on both sides draws no line, so it is drawn as a dot. (d) The checker `p196` tests the worker's `chartRows` with an issuer-owned probe, so the worker's own tests cannot be the only proof. (e) No fixture is added; variants derive from the three round-147 fixtures.
+
+**fanout:** 1 of 1 chains for this cell, cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on the reference edit and red on 15 single-fault mutants):** `checks/r150/p196_chart_breaks.py` (DBP196-1-AC1, DBP196-1-AC2, DBP196-1-AC3). Reference patch: `reads/DB330_REFERENCE.patch`.
