@@ -29844,3 +29844,25 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   }
 }
 ```
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~502",
+  "surfaced_at": "2026-10-17T20:53:49Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W502-S1",
+  "one_line": "The padded-code repair in priceCurrency.ts does not reach the Peers subject price cell: PeersTab reads the served PX_LAST currency directly, so a padded code still prints with a double space there.",
+  "spec_asserts": "AMGT-bt-3 premise: the shared helper's returned string is the only path by which a padded served PX_LAST currency reaches formatStatValue on the Peers table, so trimming the helper return makes a padded code behave as the unpadded PHP does.",
+  "world_is": "The helper-level repair holds: R7 helper cases pass and the padded overlay prints every USD figure as USD with no bare dollar sign. The subject row's price cell does not read the helper: PeersTab.tsx cellOf passes the figure's own served currency (code: figure?.currency || null) to formatStatValue. On a padded PX_LAST code the subject price cell prints PHP  860.00 (two spaces) where the unpadded PHP overlay prints PHP 860.00. The order's write surface (priceCurrency.ts only) cannot reach that line. No live name carries a padded code (order-stated, unmeasured on live bodies), so the hazard is inert.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cand/dell1/amgt-sa-price-currency-trim@4f8299bd portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx:156 (unchanged from 856fb37b; subject cell code = figure?.currency || null, passed to formatStatValue)",
+      "cand/dell1/amgt-sa-price-currency-trim@4f8299bd portal/src/pages/SecurityAnalysis/__harness__/priceCurrencyRule.harness.cjs run output: R7 OBSERVED (not graded) subject price cell unpadded PHP 860.00, padded PHP  860.00 (two spaces)"
+    ]
+  }
+}
+```
