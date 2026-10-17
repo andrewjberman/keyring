@@ -11013,5 +11013,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W163-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~163",
+      "surfaced_at": "2026-10-17T23:52:09Z",
+      "one_line": "HVST-cg-5 AC2 reads 57 passed, 1 skipped, not 58 passed: test_typed_misfiled_reports.py:100 skips because this sparse worktree lacks infra/aws/ec2/opal-gateway/app/harvest_research.py.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cg-5 AC2 expects (?m)^58 passed in over five named files: test_typed.py, test_typed_misfiled_reports.py, test_fund_form.py, test_substrate.py, test_continuation_holding_stance.py.",
+      "world_is": "Run at cg-5 on base 6177d7b218 plus the cell's two files: 57 passed, 1 skipped in 1.01s. The skip is test_typed_misfiled_reports.py:100 with reason 'gateway file absent from this checkout (sparse)'; test -f on infra/aws/ec2/opal-gateway/app/harvest_research.py reads ABSENT. git diff --stat names only lib/research/corpus/fund_relation.py and lib/research/corpus/tests/test_fund_relation.py, so the cell does not touch the skipped file. The base count was not re-run in this worktree; the order's own base dry-run reads 58 passed (issuer, dell1, 2026-10-18).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/corpus/tests/test_typed_misfiled_reports.py@6177d7b218:100 (skip guard)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@6177d7b218 (absent from the sparse worktree)",
+          "git diff --stat in wk-AMGT_HARVST-163 (two files changed, both fund_relation)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W163-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~163",
+      "surfaced_at": "2026-10-17T23:52:09Z",
+      "one_line": "The row schema the surprise-channel rule names, org/surprise_channel/schemas/investigation_item.schema.json, is absent from this sparse worktree, so the row shape was taken from the existing rows of INVESTIGATION_v1.md.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Surprise-channel rule: a row is shaped per org/surprise_channel/schemas/investigation_item.schema.json, which the cell names as the carrier schema.",
+      "world_is": "The path does not exist in C:/dev/wk-harvst-163 (Read: file does not exist; Glob of org/ for investigation_item.schema.json: no files) at base 6177d7b218. The row carries the field set every existing row of this file carries: id, project, fabric, surfaced_by, surfaced_at, one_line, class, hazard_standing, spec_asserts, world_is, grounding, disposition. The surprise-row gate at commit (.tools/surprise-row-gate.py, present) is the validation that runs.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/surprise_channel/schemas/investigation_item.schema.json@6177d7b218 (absent)",
+          "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md@6177d7b218 (field set of existing rows)",
+          ".tools/surprise-row-gate.py@6177d7b218 (present)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
