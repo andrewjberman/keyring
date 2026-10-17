@@ -26996,3 +26996,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts, blob prefixes and commit ids only. The question for the issuer: (a) a true three-way merge keeping both sides' lines for the three STOP paths, no live byte moving on the host; or (b) the order's live-blob rule with the trunk changes re-landed by their own order. And whether the two extra conflicts may be resolved here (trunk's side for both)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T08:03:06Z",
+  "id": "NFRA_OPLGTW-Z-S357",
+  "one_line": "Issuer ruling on Z-S356: OG-ap-33 Amendment A2 (CTO 35436 and 35438); OG-db-2 tracks the OG-db-1 preflight re-land",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S356"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ap-33 Amendment A2 and OG-db-2, commit a597ecb787",
+      "CTO decisions 35436 and 35438",
+      "~NFRA1 AP33_STOP_NOTES.md"
+    ]
+  },
+  "spec_asserts": "A blocking row that the issuer rules is dispositioned by a later row naming it; the remedy stays open until its cell lands.",
+  "world_is": "Issuer ruling on Z-S356 (OG-ap-33 stopped before the merge), citing CTO decisions 35436 and 35438 and recorded in OG-ap-33 Amendment A2 (commit a597ecb787): tools.py and destructive_ops.py take the moved harvest_get_published_analysis block in trunk's order (live holds no line trunk lacks; each name imported, registered and allowlisted exactly once); deploy-to-ec2.sh takes the LIVE blob whole; test_og_en13.py and legacy_addresses.json take trunk's side; the other 15 paths follow the order. The trunk-only OG-db-1 preflight is tracked by the cell OG-db-2 (cut in the same issuance, staged until OG-ap-33 merges). Z-S356 stays open until OG-db-2 lands, per the CTO.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
