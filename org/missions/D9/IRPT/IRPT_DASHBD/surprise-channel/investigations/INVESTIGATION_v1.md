@@ -24660,3 +24660,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Hazard: the smoke branch Andrew smokes is at efd86d6c, which still carries the parity-fixture and gate findings the amendment corrects, until the amended head is pushed. The issuer decides whether to widen the p180 clause or re-scope the cases."
 }
 ```
+
+## IRPT_DASHBD-D2-W251-S5 -- disposition of S4: the issuer's p180 checker fix disarms the BLOCKING row
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W251-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~251",
+  "surfaced_at": "2026-10-17T00:23:31Z",
+  "one_line": "S4 is disarmed: the issuer amended the p180 checker write-set clause in the main tree, and DBP180-1-AC1 now PASSes on the amended portal head 1f525845 when the copied checker is run; the head is pushed by fast-forward from efd86d6c.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run from the workspace root: python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p180_portal_holdings_panels.py . DBP180-1-AC1 -> rc=0, output 'DBP180-1-AC1 PASS' (checker copy from C:/dev/ajb_workspace, the issuer's fix).",
+      "git ls-remote origin refs/heads/cand/dell2/irpt-49f-performance-template-mount reads 1f525845f6b793e0ee3f90575694d01ef87d59ee after the fast-forward from efd86d6c."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W251-S4 (BLOCKING, ARMED, disarm owner 2.0.0_SA_COO~D2): the p180 AC1 write-set clause omitted the firm-gate test file that amendment 1(iii) names.",
+  "world_is": "The issuer's checker fix, committed in the main tree, admits that file; the disarm is measured by the AC1 PASS above, not by the fix commit alone.",
+  "notes": "No act is owed by this seat on S4."
+}
+```
