@@ -3340,3 +3340,52 @@
   "notes": "Filed by the issuer, the disarm_owner of record. Carried open on purpose: Z-W28-S1 and Z-W32-S1, with the reasons in world_is. Z-S10 (OBSERVATION, no disposition field) is not a worker row of this seat's round and is left to its owner."
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_MCPORTAL-Z-W3-S4",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~3",
+    "surfaced_at": "2026-10-17T05:02:46Z",
+    "one_line": "GET / returned 200 to the signed-in session of the task order's non-owner account, and the gateway's own access log holds the same 200 in the walk window; the walk stopped at this owner route, so routes 2-13 and GET /sprint were not sent.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "spec_asserts": "MP-v-2 AC1 (PRD acceptance A2): a verified non-owner is refused on every page and every write handler, GET / included, with 403; a 200 on any owner route is a finding and stops the walk (task order section 2, bound 2).",
+    "world_is": "GET / answered 200 to the signed-in session at 04:55:48Z (client read, maxRedirects 0), and the gateway access log for the window 2026-10-17T04:52:43Z to 2026-10-17T04:56:48Z holds the 200 (AC1 output: GET /: 403=0 200=1; refused=0 of 13; admitted=1). The walk did not itself verify the signed-in identity; it relies on the task order's named account.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~3/.scratch/walk.log (uncommitted, ignored): '04:55:48.403Z GET / -> 200' and '04:55:48.404Z STOP: 200 on owner route GET /'",
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~3/v2_run.json@86942b2d71: t0=2026-10-17T04:52:43Z, t1=2026-10-17T04:56:48Z",
+        "v2.AC1.sh at worktree commit 86942b2d71: 'admin_api.py Route census at HEAD=12 (cut: 12)', 'refused=0 of 13; admitted=1', RESULT: FAIL, exit=1",
+        "infra/aws/ec2/opal-gateway/app/owner_gate.py@c529f2936d (git show HEAD): require_owner raises 403 'not the dashboard owner' for a verified identity not on the roster"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Per task order section 2 bound 2 a 200 on an owner route is a finding, not a retry: no further requests were sent from this worker. Nothing was repaired; the gate and the route are outside this worker's paths. The disarm is the issuer's."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W3-S5",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~3",
+    "surfaced_at": "2026-10-17T05:02:46Z",
+    "one_line": "The read-only path infra/aws/ec2/opal-gateway/ named by the task order is not materialized in this worktree (sparse checkout), so the owner gate and the admin route file were read from HEAD with git show.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Task order section 3: the read-only path infra/aws/ec2/opal-gateway/app/ can be read from the worktree.",
+    "world_is": "The worktree has no infra/aws/ec2/opal-gateway/ directory and git sparse-checkout does not list it, while the files exist at HEAD. AC1 reads admin_api.py via git show HEAD, so no criterion was blocked by the gap.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Glob and ls on C:/tmp/mp-v2-3/infra/aws/ec2/opal-gateway/ returned no such directory (worktree c529f2936d)",
+        "git show HEAD:infra/aws/ec2/opal-gateway/app/owner_gate.py@c529f2936d returns the file; git show HEAD:infra/aws/ec2/opal-gateway/app/admin_api.py has 12 Route( lines"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
