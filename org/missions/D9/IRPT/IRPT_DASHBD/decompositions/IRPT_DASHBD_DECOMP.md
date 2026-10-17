@@ -3029,3 +3029,19 @@ The code cell (`DB-b-326`) is landed at `4d4cf3e2c4`; the packet (sha256 `3248f3
 **fanout:** 1 of 1 chains for this cell (the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2`, rule 34), cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected: no record; selftest green on a synthetic record and red on 58 single-fault mutants):** `checks/r150/p194_filled_pass_apply.py` (DBC194-1-AC1, DBC194-2-AC1, DBC194-3-AC1).
+
+
+## 188. ROUND 150 (2026-10-17 ~06:3xZ, issuer 2.0.0_SA_COO~D2): the Cottonwood ownership map is PARKED -- the unlock is a source (CTO ruling msg 10340)
+
+The CTO ruled (msg 10340) to PARK the Cottonwood ownership map and not to start a name match against CRM contacts (MEDIUM at best never grants). The cells below are not cut; the worker's script and its counts record are kept.
+
+**The counts the park rests on (MEASURED, counts only; no id, name or address in any repo file):**
+- The match sheet (newer pair): 83 accounts, HIGH 40, MEDIUM 36, LOW 2, UNMATCHED 5. IB2's read (`COT_OWNERSHIP_READ_RECORD.json` @63eb6c5a9a): 0 of the 83 equal a published key; the 118-pair list reaches 92 of its 96 current accounts, but none of the 40 HIGH rows sits on a deterministic pair: grant-ready 0 of 40; the portal's Cottonwood table has 10 users and no advisor key.
+- The extended match over the CRM extract (`TO-DB-b-325`, worker 256, record `COT_EXTENDED_MATCH_RECORD.json`; `p191` AC1 and AC2 PASS on the issuer's reads after the issuer repaired the checker's digit guard at cd51562a75): of the 939 published accounts HIGH 4 (all through the deterministic pairs), MEDIUM 0, LOW 58, UNMATCHED 877, conflicts 0; 847 published keys appear nowhere in the extract's text; the CRM carries an advisor field on its households (4 distinct codes) and a Users table with email addresses (7 rows), but no certain key joins an advisor code to an email: ZERO advisors keyed by login email (the CTO's rule, msg 10304).
+- So the map would grant 4 accounts to nobody.
+
+**Until un-parked:** Cottonwood advisor logins see no accounts; Opal staff in Global view all of Cottonwood (the applied read path serves them; `p189` AC1..3 PASS).
+
+**The un-park condition (CTO msg 10340):** a source that ties Black Diamond accounts to an advisor by a CERTAIN key. Either of two would do: (1) a Black Diamond account export carrying the rep or advisor code; (2) a list of Cottonwood advisor login emails mapped to those codes. The count goes to Andrew with this named as the unlock; the blank review spreadsheet of the 107 to-confirm pairs is a separate unlock for the old-to-current account continuity.
+
+**Not cut, parked:** C6b (the map builder from the match table, with a resolver test), C6c (the never-widen pair for writing the ownership-map object and its apply order).
