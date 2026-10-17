@@ -1,7 +1,9 @@
 # DEPLOY COMPLETION LEDGER -- estate-report-runner BLOB PREFETCH (NFRA_CTLPLN.TO-APPLY-33)
 
-**Opened:** 2026-10-17T14:55Z by `0.7.0_AE_CloudOps~NFRA1`, committed OPEN before the upload.
-**Status:** OPEN
+**Opened:** by `0.7.0_AE_CloudOps~NFRA1`, committed OPEN at `26e7986827` before the upload. CORRECTION at close: the header and file
+name read 14:55Z, which was an estimate typed ahead of the clock; the upload returned at 14:53:25Z, so the commit preceded 14:53Z.
+The order (open before act) held; the stamp did not.
+**Status:** **CLOSED 2026-10-17T15:21Z** -- all four legs verified.
 **TO:** `org/tier2_senior/0.7.0_AE_CloudOps~NFRA1/task_orders/NFRA_CTLPLN.TO-APPLY-33.estate-report-runner-blob-prefetch-upload-and-qa-run.md`
 (issued by `2.0.0_SA_COO~C`, round 37, cell `CT-cj-1`, built cell `CT-ci-1` merged @7a33c62148)
 
@@ -45,12 +47,20 @@ FAILED. This act is the repair; the issuer decides that entry's disposition. Not
 
 ## Legs
 
-1. [ ] PUT: one `put-object` of the pinned bytes; new VersionId differs from `HIrQD8nolfYS_30vrMXBXCZJ0_EnqqPz`.
-2. [ ] READBACK: re-downloaded sha256 equals the pin's; one-byte-changed copy reads UNEQUAL.
-3. [ ] QA RUN: one ad-hoc start; log read for `STAGE compile_resources` and any Traceback/CalledProcessError; instance self-stopped.
-4. [ ] MANIFEST: `manifest/<date>.json` status other than FAILED.
+1. [x] PUT: one `put-object` at 14:53:25Z, instance `stopped` read at 14:53:22Z. New VersionId `LwDXDuLu9PZ.WHwKa.XV3Q4MQne9MR8i`
+       (differs from the rollback's), 186,165 B, ETag `d4b80c85940e2288cf6050466236ff7e`, SSE AES256.
+2. [x] READBACK by that VersionId: sha256 `62b0d74c...100d` == the pin's, 186,165 B both; one-byte mutant (offset 100) reads UNEQUAL.
+3. [x] QA RUN: ad-hoc, one start via `lambda invoke estate-report-orchestrator` payload `{"mode":"daily-run","trigger":"manual"}` at
+       14:54:44Z (`started:true`); instance launched 14:54:45Z, self-stopped 15:13:56Z (about 19 min, Kimi calls 1028 s of it). Log
+       `s3://opal-estate-report/logs/2026-10-17T151354Z-i-0584e17d283fa7ef4.log` (VersionId `mnIGfWnxuNc4kdSXMgIDZiyUdVgFz1Sy`;
+       the name carries the run's END time): `STAGE compile_resources kind=deterministic status=ok 4374 paths, 98 chain-resolved`;
+       no Traceback, no CalledProcessError, no WARN line.
+4. [x] MANIFEST `s3://opal-estate-report/manifest/2026-10-17.json` (VersionId `a5P0snAQuMq.k8iHMbZ51I5e3xMsQSYs`, written 15:13:55Z):
+       `status` PENDING (awaiting CVO adjudication), not FAILED. It replaced the FAILED manifest (copy kept in the deliverables folder).
 
-## Close condition
+Unmeasured in the same run: strata C and A INSTRUMENT_FAILED; filed as row `NFRA_CTLPLN-S9138` (`32e21be4ae`). Not a leg of this entry.
+
+## Close condition -- MET (the ad-hoc run is not production evidence)
 
 Legs 1-4 verified, report written. First SCHEDULED exercise (the CVO's evidence, not this ad-hoc run): 2026-10-18 13:00Z.
 No watcher, monitor or freshness checker is armed against it.

@@ -2,7 +2,7 @@
   "slug": "estate-report-runner-blob-prefetch-20261017",
   "title": "NFRA_CTLPLN TO-APPLY-33: estate_report_runner.py at 7a33c62148 to s3://opal-estate-report/code/ (blob prefetch) plus one ad-hoc QA run",
   "author": "0.7.0_AE_CloudOps~NFRA1",
-  "status": "OPEN",
+  "status": "CLOSED",
   "opened_at": "2026-10-17T14:55:00+00:00",
   "window_hours": 4.0,
   "entry_path": "org/critical_paths/change_management/20261017T1455Z_estate-report-runner-blob-prefetch_deploy_completion.md",
@@ -12,37 +12,43 @@
       "kind": "verify",
       "target": "s3://opal-estate-report/code/estate_report_runner.py",
       "proof_required": "one put-object of the file at 7a33c62148; new VersionId differs from HIrQD8nolfYS_30vrMXBXCZJ0_EnqqPz",
-      "proof": null,
-      "closed_at": null
+      "proof": "put-object 2026-10-17T14:53:25Z, instance stopped; new VersionId LwDXDuLu9PZ.WHwKa.XV3Q4MQne9MR8i, 186165 B",
+      "closed_at": "20261017T145325Z"
     },
     {
       "id": "READBACK",
       "kind": "verify",
       "target": "sha256 of the object re-downloaded by its new VersionId",
       "proof_required": "equals 62b0d74c17fc4eaf24dcfbdce126964cf126d1e618ccd8538acb18bef453100d; one-byte-changed copy reads unequal",
-      "proof": null,
-      "closed_at": null
+      "proof": "re-downloaded by new VersionId: sha256 62b0d74c...100d EQUAL to the pin, one-byte mutant UNEQUAL",
+      "closed_at": "20261017T145415Z"
     },
     {
       "id": "QARUN",
       "kind": "verify",
       "target": "log object of the ad-hoc QA start under s3://opal-estate-report/logs/",
       "proof_required": "STAGE compile_resources kind=deterministic status=ok; no CalledProcessError; instance self-stopped",
-      "proof": null,
-      "closed_at": null
+      "proof": "ad-hoc start 14:54:45Z via orchestrator (manual); self-stopped 15:13:56Z; log logs/2026-10-17T151354Z-i-0584e17d283fa7ef4.log: compile_resources status=ok, no Traceback/CalledProcessError",
+      "closed_at": "20261017T151356Z"
     },
     {
       "id": "MANIFEST",
       "kind": "verify",
       "target": "s3://opal-estate-report/manifest/<date>.json",
       "proof_required": "status field other than FAILED",
-      "proof": null,
-      "closed_at": null
+      "proof": "manifest/2026-10-17.json VersionId a5P0snAQuMq.k8iHMbZ51I5e3xMsQSYs status PENDING",
+      "closed_at": "20261017T151355Z"
     }
   ],
   "log": [
-    "20261017T145500Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 4 leg(s)"
+    "20261017T145500Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 4 leg(s)",
+    "20261017T145325Z LEG PUT closed",
+    "20261017T145415Z LEG READBACK closed (upper bound: finished before the 14:54:15Z instance-state read; exact second not recorded)",
+    "20261017T151356Z LEG QARUN closed",
+    "20261017T151355Z LEG MANIFEST closed",
+    "20261017T152100Z CLOSED by 0.7.0_AE_CloudOps~NFRA1: 4 of 4 legs verified"
   ],
   "last_red_at": null,
-  "device": "laptop"
+  "device": "laptop",
+  "closed_at": "2026-10-17T15:21:00+00:00"
 }
