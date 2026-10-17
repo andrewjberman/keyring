@@ -1,0 +1,23 @@
+{
+ "allowance_gap": null,
+ "allowance_today": 5858,
+ "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py)",
+ "basis_note": "Independent quote at filing, BEFORE DQ-t-69/70 (the drawer reads history.ceiling 5,858, not budgets.surfaces.C). Expect the room to read 400,000 less surface C drawn today once the round-10 change lands; re-quote then.",
+ "cells": {
+  "bloomberg_history": 93104
+ },
+ "cells_remaining": 93104,
+ "claims": {
+  "ceiling": "measured",
+  "reserve": "held"
+ },
+ "finish_date": "2026-12-05",
+ "finish_date_claim": "measured",
+ "frozen_by": "2.0.0_SA_COO~Q1",
+ "label": "full-request quote",
+ "page": "rival funds (ETFS_RIVALS)",
+ "quoted_at": "2026-10-17T04:03:14Z",
+ "quoted_for_today": "2026-10-17",
+ "request_id": "ETFS_RIVALS-C1-CLOSE-OWED-REST-20261017",
+ "securities_count": 746
+}
