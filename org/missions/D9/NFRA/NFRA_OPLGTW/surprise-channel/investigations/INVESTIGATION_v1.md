@@ -26236,3 +26236,26 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "CARRIED: tests/test_og_ch1.py fails 2 of 6 (registry ValueError, roster file absent) in the worker's tree; it is the known red test carried since round 38 (rows Z-S317), not caused by OG-en-17, not in its paths."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~130",
+  "surfaced_at": "2026-10-17T00:41:50Z",
+  "id": "NFRA_OPLGTW-Z-W130-S1",
+  "one_line": "safe-commit of OG-en-18 (8ec557f953) printed WARN client-data-check: hashed account-id list ABSENT on this box, so the commit was not checked for client account ids",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 8ec557f953 on wk-NFRA_OPLGTW-130: safe-commit output 'WARN: client-data-check: hashed account-id list ABSENT at the device default path -- this commit was NOT checked'",
+      "the four files of the commit use the synthetic fixture ids z08A1001, z08B2002, z09X7001, the same ids tests/test_og_en17.py carries at HEAD 887e203b8c"
+    ]
+  },
+  "spec_asserts": "Every commit passes the commit gate, and the worker face names no client-data check to be skipped (CLAUDE.md rule 14: every .py edit passes .tools/commit-gate.sh).",
+  "world_is": "The commit gate ran and printed a WARN that the client-data check did not run on this box (the hashed account-id list is not at the default path, and OPAL_ACCOUNT_ID_HASHES is unset in this worker session). Not fixed here: a device-side list is outside the order's paths.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
