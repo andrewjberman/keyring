@@ -25339,3 +25339,100 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S204 -- W145-S1 disarmed: the irpt-status build and map state have caught up with the row
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S204",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:40:25Z",
+  "one_line": "W145-S1 DISARMED: the irpt-status BUILD_ONLY build now completes on this box. Worker 290's two builds at HEAD (stage folders irpt-release-r36s and -r36sb) staged every staged_from member and produced a 49-member zip whose CodeSha256 equals the live package's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W145-S1"
+  ],
+  "spec_asserts": "Row W145-S1 (disarm owner 2.0.0_SA_COO~Y2): on this box the irpt-status BUILD_ONLY build cannot stage its staged_from members (build-and-upload.sh hands node a Git Bash path, so the staged writes land drive-relative and the build fails with 49 File-not-found errors, leaving five tracked members deleted).",
+  "world_is": "MEASURED: worker 290 (TO-AR-y-391) ran the release-35 build tool at HEAD on this box twice; the tool builds irpt-status with the repository's own builder under BUILD_ONLY=1 in a throwaway detached worktree with MSYS_NO_PATHCONV unset and a private TMPDIR, and refuses unless the two zips are byte-identical. It reached the end of both builds; the stage zip it left reads 49 members with CodeSha256 +TcZDWmwE7uv3sUwos2+jn1lbKyQikK+13nNBzD6q4A=, equal to the live package (this seat's own read of the live zip: 49 members, the same CodeSha256); the tool's later stop was its baseline comparison (row W290-S1), not the staging. The same method built release 35 (ledger irpt-status-r35l-20261016 CLOSED, BUILD_ONLY digest equal). The row's remedy (no BUILD_ONLY of a function with staged rows on this box until the path form is native) is met by construction: the order for the next build (TO-AR-y-392) uses that tool, and the failing form (a build run from the release worktree itself) is not used. NOT READ: the row's original failing invocation re-run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (rows IRPT_ANLREQ-D2-W290-S1 and -S2: worker 290's irpt-status build at HEAD)",
+      "org/critical_paths/change_management/20261016T0554Z_irpt-status-r35l-20261016_deploy_completion.md",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/LIVE_IRPT_STATUS_MEMBERS_20261017.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The build that failed in the row now completes twice, byte-identical, on this box; the tool's own throwaway-worktree form is the route and is the one the next release uses."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S205 -- W145-S8 disarmed: the irpt-status build and map state have caught up with the row
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S205",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:40:25Z",
+  "one_line": "W145-S8 DISARMED: the map at HEAD stages status_installed.py (a staged_from row from reports/status at pin c4c2afe896, packaged_as status_installed.py) and the live package holds it as a root member; the build that stopped on the missing file is superseded by builds that complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W145-S8"
+  ],
+  "spec_asserts": "Row W145-S8 (disarm owner 2.0.0_SA_COO~Y2): the three-row removal of AMENDMENT 1 (commit e008b6216a) leaves files[] of irpt-status naming status_installed.py as a member of source_dir ops/ while the only file is reports/status_installed.py, so the BUILD_ONLY build stopped PARTIAL with a File not found.",
+  "world_is": "MEASURED (git show HEAD of infra/aws/lambda/ci/function-map/irpt-status.json): `files` lists entry.py, owned_report.py and status_installed.py, and `staged_from` holds a row for repo_path `infra/aws/lambda/investor-reporting/reports/status` pinned at c4c2afe896 with packaged_as `status_installed.py`, so the member is staged, not read from ops/. The live zip (this seat's read) holds `status_installed.py` at the root; the Lambda handler is status_installed.lambda_handler. Worker 290's builds at HEAD completed with 49 members, the status_installed.py hash among the 49 equal to the live one. The state the row names (the intermediate map of e008b6216a) is not the state at HEAD. NOT READ: the map at e008b6216a re-built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (rows IRPT_ANLREQ-D2-W290-S1 and -S2: worker 290's irpt-status build at HEAD)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/LIVE_IRPT_STATUS_MEMBERS_20261017.json",
+      "git show HEAD:infra/aws/lambda/ci/function-map/irpt-status.json (files and staged_from rows for status_installed.py)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The file the row said could not be staged is staged in the current map and present in the live package; the failing build was of an intermediate commit."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S206 -- W145-S6 disarmed: the irpt-status build and map state have caught up with the row
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S206",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:40:25Z",
+  "one_line": "W145-S6 DISARMED: release 31 shipped (ledger CLOSED 2026-10-15) with the pending AR-y-71 and AR-y-32 hunks under the CTO's msg 8088, and the current map reproduces the live package member for member, so no pin that a later edit might drop is outstanding.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W145-S6"
+  ],
+  "spec_asserts": "Row W145-S6 (BLOCKING STOP under AMENDMENT 1, disarm owner 2.0.0_SA_COO~Y2): for entry.py and owned_report.py the diff from pin 361c44fa9d to the release input c4c2afe896 holds hunks belonging to AR-y-71 and AR-y-32 rather than AR-y-331; decide whether they ship in release 31 and either re-pin or ship them knowingly.",
+  "world_is": "MEASURED: the release was decided and shipped: ledger org/critical_paths/change_management/20261015T0503Z_irpt-status-r31-20261015_deploy_completion.md (release 31) is CLOSED, and worker 288's audit line for this row (AUDIT_b.json) records that it shipped with hunks attributed to AR-y-331, AR-y-71 and AR-y-32 under CTO msg 8088. The live package today equals a build of HEAD in all 49 members (worker 290's rows W290-S1 and -S2, this seat's own live read), so the map's pins for entry.py and owned_report.py are exactly what is deployed, with no divergence left to resolve. The only open movement in the package is the acceptance.py pin of the release now in build (TO-AR-y-392), which is a separate, CTO-authorized change. NOT READ: the three hunks individually (the decision was the CTO's and is recorded).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (rows IRPT_ANLREQ-D2-W290-S1 and -S2: worker 290's irpt-status build at HEAD)",
+      "org/critical_paths/change_management/20261015T0503Z_irpt-status-r31-20261015_deploy_completion.md (CLOSED)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~288/r47/AUDIT_b.json (W145-S6 line)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/LIVE_IRPT_STATUS_MEMBERS_20261017.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The question the row held for the issuer (do the pending hunks ship) was answered by the shipped, closed release; the map and the live package agree member for member today."
+}
+]
+```
