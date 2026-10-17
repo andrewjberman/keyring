@@ -1,7 +1,7 @@
 # TO MDPF_DEMQUE.TO-DQ-t34 -- round 9 DQ-t-34: the standing drawer closes a request whose every security reached its end date
 <to_id>MDPF_DEMQUE.TO-DQ-t34</to_id>
 <project>MDPF_DEMQUE</project>
-<issued_to>0.7.0_AE_CloudOps~ZQ</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MDPF1</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-11</issued_date>
 <status>pending</status>

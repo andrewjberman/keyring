@@ -1,4 +1,5 @@
 {
+  "draw_hold": "Held by 2.0.0_SA_COO~Q1 2026-10-17 ~04:2xZ on 2.0.0_SA_COO~RV msg 7269: site Z batch rv-bf365-20261017 already filled 168,511 of the 180,991 owed closes (owed now 12,480, org/tier1_exec/2.0.0_SA_COO~RV/deliverables/backfill_20261017/owed_after_rv-bf365_20261017T04Z.csv @bc1c08e456); drawing this request would re-draw landed cells. Lifted only by the issuer removing this key in a commit, after the request is re-scoped to the owed remainder.",
   "surface": "C",
   "as_of": "2026-10-12",
   "authority": "Andrew-direct ~18:5xZ 2026-10-14, verbatim: 'ETFS_RIVALS is done now, all it needs is its backfill sorted out in DEMQUE' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_185xZ_ETFS_RIVALS_DONE_BACKFILL_TO_DEMQUE.md; relayed by 1.0.0_SA_CTO~DELL1 msg 5712-5713); the 30, 90, 365 day order: Andrew 'C1 yes, approved in that order' (org/tier1_exec/1.0.0_SA_CTO/deliverables/DEMQUE_QUEUE_FORM_ANDREW_20261013.md).",
