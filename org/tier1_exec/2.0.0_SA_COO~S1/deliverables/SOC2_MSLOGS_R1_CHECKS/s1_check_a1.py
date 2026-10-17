@@ -281,6 +281,14 @@ def tf():
     fn = re.search(r'resource\s+"aws_lambda_function"\s+"access".*?\n}\n', t, re.S)
     if not fn or "COLLECTOR_FUNCTION" not in fn.group(0) or "COLLECTOR_FUNCTION = local.collector_lambda_name" not in fn.group(0):
         bad.append("the door function must set COLLECTOR_FUNCTION = local.collector_lambda_name")
+    # The live release measured Runtime.OutOfMemory at 1024 MB when the door derived a busy day (raw records of every account,
+    # two partitions held as Python dicts): the door needs memory and time for a day of raw records.
+    mem = re.search(r"memory_size\s*=\s*(\d+)", fn.group(0)) if fn else None
+    tmo = re.search(r"timeout\s*=\s*(\d+)", fn.group(0)) if fn else None
+    if not mem or int(mem.group(1)) < 3008:
+        bad.append("the door function memory_size must be at least 3008 MB (derive of a busy raw day ran out of memory at 1024)")
+    if not tmo or int(tmo.group(1)) < 600:
+        bad.append("the door function timeout must be at least 600 s")
     if "TCKT" in t:
         bad.append("access.tf still mentions TCKT")
     deny = re.search(r"data_actions\s*=\s*\[(.*?)\]", t, re.S)
