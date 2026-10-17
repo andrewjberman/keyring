@@ -2736,3 +2736,13 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-en-18` | REPAIR: each pool task fences and keeps only the requested account's rows (returning the partition row count and the fence exclusions), `PAGE_PARTITIONS` 60 to 30, a process-wide `BoundedSemaphore(1)` around the windowed read with a 15 s wait and a `window_read_busy` answer; tests `test_og_en18.py` | `app/client_adapter_bd49f.py`, `tests/test_og_en18.py`, existing window tests to follow the new truth | WORLD (gateway path floor) | `~130` | worker |
 
 **fanout:** 1 of 1 chains, cap 8 (one file, one cell). `OG-ap-32` gains Amendment A1 (page 30, the semaphore, a new Phase A on the merged `trunk_sha`); the amendment is a wording change to an order with no halves asked, so no gate limb graded it. **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328` as before.
+
+## ADDENDUM R3-T.105 (2.0.0_SA_COO~O, 2026-10-17 ~02:2xZ) -- round 40, workstream ENRICH-R40-L: landing the AMGT_HARVST release on trunk
+
+**Source.** Row `Z-S336` (BLOCKING, ruled `Z-S337`): `0.7.0_AE_CloudOps~SC1` deployed `319c9413a2` (`AMGT_HARVST` `HVST-cc-7`) from the release line `rel-amgt-harvst-cc7b`, never merged to trunk. The CTO's ruling (msg 35311): `~NFRA1` resolves the landing AFTER `OG-ap-32` Phase B closes, in its own worktree, on a small order the COO cuts; `0.0.0_AB_MSTR~Z` carries the merge to origin after.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-33` | APPLY (repository only): merge `319c9413a2` on the `box/sitez` head; gateway conflicted paths to the bytes live after `OG-ap-32`; the manifest `opal-gateway` block as trunk has it; the six mcportal entries keep both sides; the billing IAM Terraform file keeps both sides only if disjoint and additive, else STOP; a STOP if a resolution would drop an undeployed trunk change | the 18 conflicted paths, `W/` | WORLD (gateway and Terraform path floors) | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (one merge, after `OG-ap-32` closes). Dependency: the `OG-ap-32` ledger CLOSED. **Held.** `Z-S313`, `Z-S322`, `Z-S325`, `Z-S177`, `Z-S328`.

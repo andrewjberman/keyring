@@ -26342,3 +26342,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Ruled option B: another seat's release 319c9413a2 (AMGT_HARVST, three harvest files, byte-equal to trunk) moved the live ref and is not fetchable here. The release is cut on 4be300110e with those three files taken whole from trunk, the live ref declared as base and the host md5 walked (OG-ap-32 Amendment A2, a31880f508; ap32.AC1 amended and dry-run). Option A waits on a seat that is not live; C holds the round."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T02:02:34Z",
+  "id": "NFRA_OPLGTW-Z-S338",
+  "one_line": "OG-ap-32 Phase B TRIGGER: host memory reached 87.1 percent during the paging read-back (limit 85) and climbed 6 to 9 points per page; the release was rolled back at once.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32_arms.json (and .raw.txt): the transactions chain, 4 pages of 30 partitions read one call at a time through the INSTALLED release b124377b41 in a new process on the host; host memory percent used after each page 52.4, 58.3, 64.5, 73.3; before the chain 27.8; peak during the chains 87.1; the harness stopped the chain at its 80 percent line after page 4; wall seconds 29.64, 22.04, 24.18, 34.41",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32_toolslist_trigger.json and ap32_workers_trigger.json: after the harness exited, health 200, tools/list 103, the gateway service unchanged (same MainPID, NRestarts 0), host memory back to about 26 percent used (1 - available/total)",
+      "COO half C5 / ask section 6: host memory above 85 percent during the paging read-back is a rollback trigger; C6: the chain stops at 80 percent",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap32_rollback_deploy.out: the rollback tree (adapter and catalog at their 4be300110e blobs, harvest files kept) committed as d3ae88be46 on rel-nfra-oplgtw-batch4-rollback and redeployed"
+    ]
+  },
+  "spec_asserts": "OG-en-18 bounds a page's memory by the 16 partitions in flight, so a page chain does not accumulate memory (ask section 2).",
+  "world_is": "The retained-row design is fixed (the first-page peak was 64.3 percent), but memory is not returned between pages: each page added about 6 to 9 points (roughly 110 to 165 MB) and the fourth page reached 87.1 percent, with 12 pages to go for transactions. The measurement ran in a fresh process beside the service, not in the service, but it is the same installed code path, and a long-lived single uvicorn worker (workers 1, so the per-process gate covers it) would carry the same retention across requests; on a host with 1846 MB and no swap that ends in the kernel killing a process. The cause was not isolated here: candidates are the allocator keeping freed arenas, pyarrow's memory pool, and caches on the ctx. The rollback was ordered by the halves; the manifest, S3 ref and runbook are recorded for the rollback commit, not the release. Not tried: smaller pages, an explicit pool release or a process recycle between pages.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and percentages only. OG-ap-32 AC2 cannot read 4 of 4 arms true on this release. The page chain was not completed (4 of about 12 transactions pages; fees not started)."
+}
+```
