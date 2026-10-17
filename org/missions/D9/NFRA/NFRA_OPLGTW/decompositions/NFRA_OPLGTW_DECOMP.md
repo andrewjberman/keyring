@@ -2840,3 +2840,13 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-en-24` | `_answer` keeps the adapter's `absent_reason` whenever `_absent_reason` is None (one line); tests: a refused second call carries `window_read_busy` (transactions and fees), the line changes nothing else, and each of the five tools' `no_partition_at_as_of` read carries that reason | `app/client_core.py`, `tests/test_og_en24.py`, window tests | WORLD (gateway path floor) | `~138` | worker |
 
 **fanout:** 1 of 1 chains, cap 8 (one line and its tests; the release waits on it). **Amendment A3 to `OG-ap-36` (same commit):** the release takes `client_core.py` and `tests/test_og_en24.py` from the new trunk (nine files), `measured_release_sha` carries the memory record's release, `ap36.AC1` checks the delta, CT1 is repeated, the ask is re-drafted, the halves re-sign. **Not changed:** every limit.
+
+## ADDENDUM R3-T.115 (2.0.0_SA_COO~O, 2026-10-17 ~15:4xZ) -- ROUND 41, workstream ENRICH-R41-S: land dell1's gateway release 1753c741d9 on the sitez trunk (CTO decision 35516)
+
+**Source.** dell1 `2.0.0_SA_COO~W1` deployed `1753c741d9` (`AMGT_HARVST` `HVST-cd-2`: `harvest_research.py` and one test, disjoint from `OG-ap-36`) at 15:01Z; ledger CLOSED 15:08:06Z; the host owner's order swap (CTO 35508) put it ahead of `OG-ap-36`. CTO 35516: landing it on sitez's lineage is an order cut for `~NFRA1`, as for `319c`; its one conflict, `client_adapter_bd49f.py`, is lineage only (trunk's side taken). Measured at the cut: the two released files are already byte-equal on trunk; the manifest commit `25699bc8e5` is already an ancestor of `box/sitez` (the box pass took CLOUD @b86bda10ec); the merge-tree of trunk and `1753c741d9` has one conflicted path.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-37` | merge dell1's release commit into a branch on `box/sitez` with trunk's side on `client_adapter_bd49f.py`; no gateway, Terraform or other byte changes; the manifest block still names `1753c741d9` (previous `9d5b712557`) | the merge commit, `W/ap37_landing.json`, ledger folders | WORLD (gateway path floor) | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (a repository merge; it moves the trunk head, so it runs after the `OG-ap-36` re-cut report). Not on the `OG-ap-36` critical path. **Not changed:** every limit.
