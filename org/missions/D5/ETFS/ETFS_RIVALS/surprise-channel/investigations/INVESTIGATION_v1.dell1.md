@@ -1193,6 +1193,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "AMENDMENT 1 to RIV-zb-1: the five test files join this cell's grant; change only the assertions and fixtures that encode the old past-partition rule, and resolve rows S1 to S4 by doing so.",
     "world_is": "The five files are amended: the reference stubs return the descriptors the daily pull really gets (CRNCY in r27tw1 and r28tc1), the r12pk1 pin becomes one reference pass asking PARSEKYABLE_DES, the r10eg1 usable row is a GICS sector, and the r7nm2 historical request is the two price fields with the name on the reference request. S1 to S4 are resolved in the worktree. Rows S1 to S4 are not edited in place, since the channel is append-only; their disposition move is the CVO's adjudication.",
     "notes": "Adjudication of ETFS_RIVALS-D1-W46-S1 to S4 (the CVO's, by an adjudicating row) is the step that moves their disposition to GRADUATED or DISMISSED_WITH_REASON."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S22",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-17T07:35:00Z",
+    "one_line": "OBSERVATION: the gateway tool etfs_get_rival_page_status reports the ARCHIVED previous revision as the page: for 2026-10-16 it returned revision 20261016T131257Z (the 11:06Z build, batch 096ad203, analysis_grounding NOT-APPLICABLE on 13 funds) while the live page is the 13:13:00Z AI republish (batch ai-2026-10-16-a746963b, 26 accounts served, analysis_grounding PASS).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gateway call etfs_get_rival_page_status(page_day=2026-10-16) at ~07:1xZ: revision 20261016T131257Z, manifest_key .../date=2026-10-16/revisions/20261016T131257Z/manifest.json, revisions_for_day 1, analysis_grounding '13 funds: no AI account for this fund on the page day'",
+        "s3 opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-16/manifest.json read directly: batch_id ai-2026-10-16-a746963b, generated_at 2026-10-16T13:13:00Z, ai_grounding {earlier 0, served 26}, research_hypotheses input 26 rows; index.html names gpt-6-astra 13 times",
+        "the publish-page marker ai-2026-10-16-a746963b.json lists outputs date=2026-10-16/index.html, audit.html, manifest.json (the live objects); revisions/<t>/ holds the copy a publish replaces"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The page-status tool reports what the published page says.",
+    "world_is": "The tool reads revisions/<newest>/manifest.json, which is the page the newest publish replaced; after a same-day republish it reports the superseded page. This seat took it for a served regression for one read before reading the live object.",
+    "notes": "The tool is the gateway's (NFRA_OPLGTW); this row records the read. Not fixed here."
   }
 ]
 ```
