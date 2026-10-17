@@ -1172,6 +1172,27 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "RIV-zb-1 (2)-(3): the historical request for a past partition asks PX_LAST and total return alone, and the reference request is sent for EVERY security of a past partition (descriptors).",
     "world_is": "Under the rule the historical request asks two fields (the set-equality assertion fails) and the reference request is sent for the security, which the test's stub refuses, so the batch failure returns PARTIAL. The LONG_COMP_NAME-not-asked assertion still holds. The test pins the old rule, sits outside this cell's write paths, and is unamended.",
     "notes": "At merge the historical-field assertion restates to PRICE, and the no-pull stub becomes a descriptor response."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W46-S5",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~46",
+    "surfaced_at": "2026-10-17T06:57:09Z",
+    "one_line": "RESOLUTION of rows ETFS_RIVALS-D1-W46-S1 to S4 by AMENDMENT 1 to ETFS_RIVALS.TO-RIV-zb-1 (issuer 2.0.0_SA_COO~RV, @41ecff1fbb): the five named test files are amended in the worker worktree and the rivalfunds suite reads 2 failed (the two predating), 1068 passed, 6 skipped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree wk-ETFS_RIVALS-46 after the amendment: cd data/etfs/scripts; python -m pytest -q rivalfunds/tests -> 2 failed, 1068 passed, 6 skipped (the failures are test_r15bf1 and test_r9cb1, predating)",
+        "the five amended files: test_r10eg1_refuse_empty.py, test_r12pk1_parsekey_join.py, test_r27tw1_history_owed_leg.py, test_r28tc1_topup_currency_and_page_day.py, test_r7nm2_security_name.py (base 7d385aab5f)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1 to RIV-zb-1: the five test files join this cell's grant; change only the assertions and fixtures that encode the old past-partition rule, and resolve rows S1 to S4 by doing so.",
+    "world_is": "The five files are amended: the reference stubs return the descriptors the daily pull really gets (CRNCY in r27tw1 and r28tc1), the r12pk1 pin becomes one reference pass asking PARSEKYABLE_DES, the r10eg1 usable row is a GICS sector, and the r7nm2 historical request is the two price fields with the name on the reference request. S1 to S4 are resolved in the worktree. Rows S1 to S4 are not edited in place, since the channel is append-only; their disposition move is the CVO's adjudication.",
+    "notes": "Adjudication of ETFS_RIVALS-D1-W46-S1 to S4 (the CVO's, by an adjudicating row) is the step that moves their disposition to GRADUATED or DISMISSED_WITH_REASON."
   }
 ]
 ```
