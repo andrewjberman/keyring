@@ -30037,3 +30037,103 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form and arithmetic only; no product change was made to close the gap, because the order fixes the bound. The disposition (widen the bound, or accept the clip on short grids) belongs to the issuer. Row appended as a new fenced block at the tail, the form every existing row uses."
 }
 ```
+
+
+---
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W505-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~505",
+  "surfaced_at": "2026-10-17T22:58:46Z",
+  "one_line": "ModelTab's price basis line prints the served period_end_date / fiscal_period_end ISO day as served ('at the close of 2026-09-30'), not in the house long form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@d1bed0fb:196-199 (priceBasisLine: date = served period_end_date or fiscal_period_end; printed raw in 'at the close of ${date}')",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~505/ (census) __harness__/dateSites.fixture.json C-18 at portal 9a8ef5e451: bypass true, deferred_to AMGT-bu-4"
+    ]
+  },
+  "spec_asserts": "AMGT-bu-2 (round 114 ruling): every date the Security Analysis page shows passes through longDate; ModelTab.tsx belongs to AMGT-bu-4 and is not edited by this cell.",
+  "world_is": "ModelTab.tsx:199 prints the served ISO day of the price's period end as served. Recorded as a census deferred_to entry for AMGT-bu-4; not fixed in this cell because the file is outside this cell's grant.",
+  "notes": "Found while walking the census. Not rendered by the date rule harness (ModelTab is outside its scope)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W505-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~505",
+  "surfaced_at": "2026-10-17T22:58:46Z",
+  "one_line": "ModelTab's gap-reason notes and PeersTab's absent-peers and column reasons print served reason text as served, and served reasons embed ISO days ('at universe vintage 2026-10-02').",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx@d1bed0fb:972 (gap reason note {reason} printed raw)",
+      "portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx@d1bed0fb:407 ({data.reason} printed raw) and :235 (guardedReason(column.reason), which keeps dates as served)",
+      "portal/src/pages/SecurityAnalysis/__harness__/peersCurrencyFixture.GOOGL_US_peers.json@d1bed0fb:468 (served reason 'at universe vintage 2026-10-02')"
+    ]
+  },
+  "spec_asserts": "AMGT-bu-2 (round 114 ruling): every date the Security Analysis page shows passes through the house helper.",
+  "world_is": "Four sites in the other cells' files (ModelTab.tsx AMGT-bu-4, PeersTab.tsx AMGT-bu-1) print served reason text with ISO days as served. Recorded in the census as deferred_to; not edited here because both files are outside this cell's grant.",
+  "notes": "Census entries C-20, C-33, C-34 at portal 9a8ef5e451. The owning cells should wrap these in daysInWords, as this cell did for the other pages."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W505-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~505",
+  "surfaced_at": "2026-10-17T22:58:46Z",
+  "one_line": "reasonWords.ts reasonInWords (and so dossierReasonWords and guardedReason) passes an ISO date through as served, by its own comment ('a date ... reads as served'), so every reason routed through it can carry a raw ISO day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/reasonWords.ts@d1bed0fb:94 ('A 3-letter acronym, a date or a decimal is not a token and reads as served.')",
+      "portal/src/pages/SecurityAnalysis/__harness__/teamMarkFixture.PBR_US_Equity.json@d1bed0fb:925 (served reason 'no BASE CASE section in class A 2026-04-09 or class B 2026-Q2')"
+    ]
+  },
+  "spec_asserts": "AMGT-bu-2 (round 114 ruling): every date the page shows passes through the house helper; reasonWords.ts is not in this cell's grant.",
+  "world_is": "reasonWords.ts keeps ISO days as served. This cell wrapped the call sites in its grant with daysInWords (display only); the reasonWords.ts file itself, and the call sites in ModelTab.tsx and PeersTab.tsx, are not changed here.",
+  "notes": "A single fix in reasonInWords (apply daysInWords as its last step) would cover every consumer; that edit needs a grant for reasonWords.ts."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W505-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~505",
+  "surfaced_at": "2026-10-17T22:58:46Z",
+  "one_line": "The order's E4 control digest could not be taken from the recorded base file: changedObjectFixture.base_digests.json was recorded at PROD 99d2b2a7, not at the cut d1bed0fb, so E4 was recorded by a recording pass on the unedited head.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/changedObjectFixture.base_digests.json (note: 'base head (PROD 99d2b2a7) renders of WhatChangedPanel')",
+      "portal/src/pages/SecurityAnalysis/__harness__/dateRuleFixture.base_rio_visible.json at portal 9a8ef5e451 (rows 47, visible sha256 a4db5514...), recorded from the unedited head d1bed0fb"
+    ]
+  },
+  "spec_asserts": "AMGT-bu-2 step (3): record the E4 base digest before the edit.",
+  "world_is": "No base digest existed at d1bed0fb for the RIO LN whole-render visible text. The digest was recorded by dateRule.harness.cjs itself on the unedited head (a recording pass with no base file present), then the run on the unedited head compared against it.",
+  "notes": "Method note for the round's controls: a base digest must name its cut commit."
+}
+```
