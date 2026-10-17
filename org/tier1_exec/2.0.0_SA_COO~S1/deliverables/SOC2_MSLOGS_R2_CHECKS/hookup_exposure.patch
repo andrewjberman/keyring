@@ -1,0 +1,143 @@
+diff --git a/infra/aws/lambda/globgrph-trino-access/handler.py b/infra/aws/lambda/globgrph-trino-access/handler.py
+index 7ab5b0f46f..79df179daf 100644
+--- a/infra/aws/lambda/globgrph-trino-access/handler.py
++++ b/infra/aws/lambda/globgrph-trino-access/handler.py
+@@ -28,6 +28,10 @@ lambda_client=None, now=None) -> dict.
+                   carries the WHOLE record as "raw" (the parsed silver raw_json; no raw_json key), taken in time order
+                   until either 1000 rows or 5,000,000 bytes of JSON would be passed; truncated is true when a row was
+                   left out. Without detail (or false) the answer and the reader call are exactly as above.
++  exposure        member only. {op, account, start, end}, window at most 31 days as timeline: what the account opened and what
++                  went to someone outside its domain, computed by exposure.compute over the account's detail rows
++                  -> {"ok": true, "opened": [...], "left": [...], "unrecorded": [...], "truncated": bool}; each list is cut at
++                  5000 entries (truncated true). It says what the audit feed does not record; it carries no raw record.
+   recollect       member only. {op, start, end} and NOTHING else: the door asks the collector to recollect the window,
+                   asynchronously, and never takes bytes from the caller -> {"ok": true}.
+   any other op on any alias, and a get of bronze -> {"ok": false, "error": ...}.
+@@ -77,6 +81,7 @@ TIMELINE_MAX_WINDOW = _dt.timedelta(days=31)
+ # A detail answer is a synchronous Lambda response (6 MB at most): capped by rows and by bytes of its JSON.
+ TIMELINE_DETAIL_MAX_ROWS = 1000
+ TIMELINE_DETAIL_MAX_BYTES = 5000000
++EXPOSURE_MAX_ENTRIES = 5000
+ RECOLLECT_MAX_AGE = _dt.timedelta(days=7)
+ RECOLLECT_FIELDS = frozenset({"op", "start", "end"})
+ TIMELINE_COLUMNS = ["record_id", "creation_time", "feed", "operation", "result_status", "client_ip", "item_name", "user_id"]
+@@ -84,9 +89,9 @@ TIMELINE_COLUMNS = ["record_id", "creation_time", "feed", "operation", "result_s
+ ALIASES = ("collector", "member")
+ ALIAS_OPS = {
+     "collector": frozenset({"put", "derive_silver", "get_state"}),
+-    "member": frozenset({"get_state", "list_state", "derive_silver", "timeline", "recollect"}),
++    "member": frozenset({"get_state", "list_state", "derive_silver", "timeline", "recollect", "exposure"}),
+ }
+-KNOWN_OPS = frozenset({"put", "get_state", "list_state", "timeline", "recollect", "derive_silver"})
++KNOWN_OPS = frozenset({"put", "get_state", "list_state", "timeline", "recollect", "derive_silver", "exposure"})
+ # The head_object error codes that mean "no such key". Any other head failure is an error, never a write.
+ _ABSENT_CODES = frozenset({"404", "NoSuchKey", "NotFound"})
+ 
+@@ -326,6 +331,28 @@ def _timeline(s3, bucket, ev, silver_reader):
+     }, "ok"
+ 
+ 
++def _exposure(s3, bucket, ev, silver_reader):
++    account = ev.get("account")
++    if not isinstance(account, str) or "@" not in account:
++        return {"ok": False, "error": "account"}, "refused"
++    lo = _parse_iso(ev.get("start"))
++    hi = _parse_iso(ev.get("end"))
++    if lo is None or hi is None or hi <= lo or hi - lo > TIMELINE_MAX_WINDOW:
++        return {"ok": False, "error": "window"}, "refused"
++    import exposure  # lazy: the zip carries it beside this module
++
++    reader = silver_reader if silver_reader is not None else _DEFAULT_TIMELINE_READER
++    rows = list(reader.timeline_rows(s3, bucket, SILVER_PREFIX, account, ev["start"], ev["end"], detail=True))
++    answer = exposure.compute(rows, account)
++    truncated = False
++    for key in ("opened", "left", "unrecorded"):
++        if len(answer[key]) > EXPOSURE_MAX_ENTRIES:
++            answer[key] = answer[key][:EXPOSURE_MAX_ENTRIES]
++            truncated = True
++    return {"ok": True, "opened": answer["opened"], "left": answer["left"], "unrecorded": answer["unrecorded"],
++            "truncated": truncated}, "ok"
++
++
+ def _recollect(ev, lambda_client, now):
+     if set(ev) - RECOLLECT_FIELDS:
+         return {"ok": False, "error": "fields"}, "refused"
+@@ -388,6 +415,8 @@ def handle(event, context=None, s3=None, log=print, silver_reader=None, silver_b
+             answer, outcome = _list_state(s3, bucket, event)
+         elif op == "timeline":
+             answer, outcome = _timeline(s3, bucket, event, silver_reader)
++        elif op == "exposure":
++            answer, outcome = _exposure(s3, bucket, event, silver_reader)
+         elif op == "recollect":
+             answer, outcome = _recollect(event, lambda_client, now)
+         else:  # derive_silver, the last served op
+diff --git a/infra/aws/lambda/globgrph-trino-access/tests/test_handler.py b/infra/aws/lambda/globgrph-trino-access/tests/test_handler.py
+index 14a21d2ebc..f655b89f50 100644
+--- a/infra/aws/lambda/globgrph-trino-access/tests/test_handler.py
++++ b/infra/aws/lambda/globgrph-trino-access/tests/test_handler.py
+@@ -222,8 +222,8 @@ def recollect_ev(start=WIN_START, end=WIN_END):
+ 
+ # ---- the module's shape: contract v3 ----
+ 
+-def test_known_ops_are_the_six_v3_ops():
+-    assert handler.KNOWN_OPS == frozenset({"put", "get_state", "list_state", "timeline", "recollect", "derive_silver"})
++def test_known_ops_are_the_seven_ops():
++    assert handler.KNOWN_OPS == frozenset({"put", "get_state", "list_state", "timeline", "recollect", "derive_silver", "exposure"})
+ 
+ 
+ def test_the_account_roster_and_get_day_are_gone():
+@@ -1083,3 +1083,54 @@ def test_lambda_handler_refuses_without_bucket(monkeypatch):
+     monkeypatch.delenv("BUCKET", raising=False)
+     with pytest.raises(RuntimeError):
+         handler.lambda_handler({"op": "timeline"}, None)
++
++
++# ---- exposure: member alias; what one account opened and what left (round 2 hookup of exposure.py) ----
++
++def exposure_ev(account=ACCOUNT, start=WIN_START, end=WIN_END):
++    return {"op": "exposure", "account": account, "start": start, "end": end}
++
++
++def _exposure_row(i, op, raw, item=None):
++    return {"time": "2026-10-15T13:%02d:00Z" % i, "feed": "SharePoint", "operation": op, "result_status": "Succeeded",
++            "client_ip": "203.0.113.7", "item_name": item, "user_id": ACCOUNT, "record_id": "x%d" % i, "raw_json": json.dumps(raw)}
++
++
++def test_exposure_member_answers_opened_left_and_unrecorded(s3, logs):
++    reader = StubDetailTimeline([
++        _exposure_row(1, "FileDownloaded", {"ObjectId": "https://x.example/a"}, "a.xlsx"),
++        _exposure_row(2, "AnonymousLinkCreated", {"ObjectId": "https://x.example/a"}, "a.xlsx"),
++    ])
++    r = call(s3, logs, exposure_ev(), alias="member", silver_reader=reader)
++    assert set(r) == {"ok", "opened", "left", "unrecorded", "truncated"}
++    assert r["ok"] is True and r["truncated"] is False
++    assert [e["record_id"] for e in r["opened"]] == ["x1"]
++    assert [(e["kind"], e["recipient"]) for e in r["left"]] == [("anonymous_link", "anyone with the link")]
++    assert "mail_recipients" in [u["category"] for u in r["unrecorded"]]
++    assert reader.calls == [True]
++    assert "raw_json" not in json.dumps(r)
++    assert logs == ["op=exposure outcome=ok"]
++
++
++def test_exposure_is_not_served_on_the_collector_alias(s3, logs):
++    reader = StubDetailTimeline([])
++    r = call(s3, logs, exposure_ev(), alias="collector", silver_reader=reader)
++    assert r["ok"] is False
++    assert reader.calls == []
++
++
++@pytest.mark.parametrize("ev", [exposure_ev(account="not-an-address"), exposure_ev(account=None),
++                                exposure_ev(start="2026-10-16T00:00:00Z", end="2026-10-15T00:00:00Z"),
++                                exposure_ev(start="2026-09-01T00:00:00Z", end="2026-10-16T00:00:00Z")])
++def test_exposure_bad_account_or_window_is_refused_before_any_read(s3, logs, ev):
++    reader = StubDetailTimeline([])
++    r = call(s3, logs, ev, alias="member", silver_reader=reader)
++    assert r["ok"] is False
++    assert reader.calls == []
++
++
++def test_exposure_cuts_a_list_at_5000_and_says_truncated(s3, logs):
++    rows = [_exposure_row(i % 60, "FileAccessed", {}, "f%d" % i) for i in range(5001)]
++    r = call(s3, logs, exposure_ev(), alias="member", silver_reader=StubDetailTimeline(rows))
++    assert len(r["opened"]) == 5000
++    assert r["truncated"] is True
