@@ -111,9 +111,9 @@ authors set GRADUATED with no remediation row, each read from its own text:
     "remedy": "Shape (b) landed (OG-ap-30) and shape (a) landed (OG-ap-31, OG-en-14). Disarm on Andrew's own signed-in browser run of the four routes.",
     "owner": "2.0.0_SA_COO~O",
     "round": "v38",
-    "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~O", "at": null},
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~O", "round": "v38"},
-    "closed": false
+    "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~O", "at": "2026-10-17T04:49:48Z"},
+    "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~O", "round": "v38"},
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W94-S2",
