@@ -9836,6 +9836,30 @@ carries none.
         "git diff a351afd2b1~1 a351afd2b1 -- DATA_CATALOG.yaml: exactly those five line pairs; git rev-parse a351afd2b1:<catalog> = 2cbe275d03c9a5af85afefabc604e26b71e9be12; merged 70cf87661a."
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S138",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-17T06:13:04Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S136"
+    ],
+    "one_line": "ISSUER DISPOSITION of my own row Z-S136: the stale definition anchors are fixed on the host; the released catalog is blob 2cbe275d03 and the host index check reads 127 of 127.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "Z-S136 was MX-c-24's omission (the order did not name the catalog's definition anchors) and was fixed by MX-c-39 A2 (re-emit at deployed commit 4be300110e, blob 2cbe275d03). The catalog went live in 2.0.0_SA_COO~O's release 9d5b712557 (deployed 05:19:28Z, ledger nfra-oplgtw-gateway-release-batch5 closed, host md5 walk 139 of 139). Issuer host checks at 06:1xZ: r13.AC2 PASS (definitions located 127 of 127, index rc 0), anchor_host_check PASS 127 of 127, r13.AC3 monotone PASS, discover_buckets_host 8 of 8 echo. The issuer is disarm_owner.",
+    "spec_asserts": "Z-S136 asserted the host's r13.AC2 index check reads 125 of 127 definitions until the catalog is released.",
+    "world_is": "After release 9d5b712557 the host serves blob 2cbe275d03c9a5af85afefabc604e26b71e9be12 and r13.AC2 reads definitions located 127 of 127.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round21/post_release/r13.AC2_host_after_batch5.txt: PARTITION a=11 b=104 c=12 sum 127 of N=127; definitions located 127 of 127; RC index=0; RESULT: PASS (ssm 8844a700)",
+        "round21/post_release/anchor_host_check_after_batch5.txt: ANCHORS 127 of 127; round21/post_release/r13.AC3_monotone_after_batch5.txt: monotone PASS (37 equal, 2 behind and tolerated); discover_buckets_host_after_batch5.txt: 8 of 8"
+      ]
+    }
   }
 ]
 ```
