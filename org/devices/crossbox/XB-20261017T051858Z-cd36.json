@@ -11,8 +11,8 @@
  "body_path": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round32/ORDER3_SITEZ_HELDTR_PULL_REPLAY_PUBLISH.md",
  "opened_at": "2026-10-17T05:18:58Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-17T05:20:55Z",
+  "bus_message_id": "c02f5c76-cf99-4ded-9202-c45541eeb61a"
  },
  "ack_bus_message_id": null,
  "closed_from": {
