@@ -41969,3 +41969,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "module.irpt_scopes FIRM holds four rows including demo, and the check counts every Sid, so the file derives from the registry's client rows and the trust has no Sid; the declared grants are exactly the ordered ones."
 }
 ```
+
+## IRPT_BCKEND-D2-W455-S1 -- The AC1 and AC2 checks read the commit diff HEAD~1..HEAD, so they cannot PASS on the working tree before the one commit the order makes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W455-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~455",
+  "surfaced_at": "2026-10-17T05:49:29Z",
+  "one_line": "The order asks for IBHM10-AC1 and IBHM10-AC2 to be run and recorded before the commit, but p253_cells.py ac1 and ac2 read git diff HEAD~1 HEAD (its _diff at line 28), so before the commit they FAIL on the prior commit's diff and cannot PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r253/p253_cells.py _diff (line 28: git diff -U0 HEAD~1 HEAD -- iam.tf) read at this worktree, branch wk-IRPT_BCKEND-455",
+      "pre-commit run at this worktree: python p253_cells.py . IBHM10-AC1 printed 'FAIL: the commit adds nothing to infra/aws/terraform/mdpf-pipeline/iam.tf' rc=1; IBHM10-AC2 printed 'FAIL: no added module block irpt_hmac_list_stage_role_name' rc=1"
+    ]
+  },
+  "spec_asserts": "TO-IB-hm-10 step 3: run IBHM10-AC1 and IBHM10-AC2 and record their output BEFORE the commit; run IBHM10-AC3 AFTER the one commit.",
+  "world_is": "AC1 and AC2 read HEAD~1..HEAD, which is the commit before the worker's change until the commit exists, so the pre-commit run is a FAIL by construction. The decisive AC1 and AC2 runs are made after the commit. The pre-commit output is recorded verbatim beside them and is not a verdict on the declaration.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer may move the AC1 and AC2 runs to the working tree in a later check revision, or accept post-commit runs as the criterion's evidence. This row does not change the declaration."
+}
+```
+
+## IRPT_BCKEND-D2-W455-S2 -- The worktree is sparse-checked-out, so org/surprise_channel/ is tracked at HEAD but absent on disk
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W455-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~455",
+  "surfaced_at": "2026-10-17T05:49:29Z",
+  "one_line": "This worktree has core.sparseCheckout=true, and org/surprise_channel/ (including schemas/investigation_item.schema.json) is tracked at HEAD but not on disk, so the schema was read with git show HEAD:path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout printed true at C:/dev/wk-IRPT_BCKEND-455",
+      "ls org/surprise_channel printed 'No such file or directory'; git ls-tree -r --name-only HEAD -- org/surprise_channel/schemas/ lists investigation_item.schema.json and remediation_row.schema.json"
+    ]
+  },
+  "spec_asserts": "The order's write surface and reads sit inside the worktree, and the surprise row is appended to the investigation file the order names.",
+  "world_is": "The worktree is sparse, so the surprise channel's schema directory is not on disk. The investigation file the order names is on disk and was appended to. Any gate that reads the schema from the working tree sees it absent.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Recorded so the sparse state of this worktree is on the channel; the write surface named by the order was not widened and no path outside it was touched."
+}
+```
