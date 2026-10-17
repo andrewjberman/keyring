@@ -74,7 +74,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-18.49f-window-memory-and-pag
 - The 30-file page and the 15 s gate wait are the issuer's numbers from the measured rates (0.72 s per file: about 22 s for 30 transactions files; +235 to +275 MB if all rows were kept, far less once filtered in the worker). The CTO reads them at the round analysis.
 - Pre-cut: `en18.AC3` is a generic both-order check (`_named`-style); AC1/AC2 base FAIL as expected (the test file is absent; no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-R</workstream>
 <slot>~130</slot>
