@@ -27351,3 +27351,166 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:59:22Z",
+  "id": "NFRA_OPLGTW-Z-S363",
+  "one_line": "Round-41 disposition of worker row Z-W136-S1: Test-premise note, accepted: on site Z the repo path holds a space and the marker line expands REMOT",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W136-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 1d3234ae24 (OG-db-3), a866c7c78c (OG-en-21), 8d2241ef81 (OG-en-22); the named tests pass and the twelve-file window set is 42 of 42 in both orders in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Test-premise note, accepted: on site Z the repo path holds a space and the marker line expands REMOTE_DIR unquoted, so the worker ran the UNCHANGED line with cwd set to a temp folder and REMOTE_DIR='.'. The host path (/opt/opal-gateway) has no space, and the line is the one the order named. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Test-premise note, accepted: on site Z the repo path holds a space and the marker line expands REMOTE_DIR unquoted, so the worker ran the UNCHANGED line with cwd set to a temp folder and REMOTE_DIR='.'. The host path (/opt/opal-gateway) has no space, and the line is the one the order named. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:59:22Z",
+  "id": "NFRA_OPLGTW-Z-S364",
+  "one_line": "Round-41 disposition of worker row Z-W136-S2: Worker environment note: org/surprise_channel/ is not materialized in the sparse cone; the worker re",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W136-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 1d3234ae24 (OG-db-3), a866c7c78c (OG-en-21), 8d2241ef81 (OG-en-22); the named tests pass and the twelve-file window set is 42 of 42 in both orders in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker environment note: org/surprise_channel/ is not materialized in the sparse cone; the worker read the schema with git show. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker environment note: org/surprise_channel/ is not materialized in the sparse cone; the worker read the schema with git show. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:59:22Z",
+  "id": "NFRA_OPLGTW-Z-S365",
+  "one_line": "Round-41 disposition of worker row Z-W136-S3: The commit-time client-data check printed ABSENT (the device gap of Z-W94-S2); the commit is a shell",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W136-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 1d3234ae24 (OG-db-3), a866c7c78c (OG-en-21), 8d2241ef81 (OG-en-22); the named tests pass and the twelve-file window set is 42 of 42 in both orders in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "The commit-time client-data check printed ABSENT (the device gap of Z-W94-S2); the commit is a shell line and a test with no client data. Record only; not read as checked clean.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The commit-time client-data check printed ABSENT (the device gap of Z-W94-S2); the commit is a shell line and a test with no client data. Record only; not read as checked clean."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:59:22Z",
+  "id": "NFRA_OPLGTW-Z-S366",
+  "one_line": "Round-41 disposition of worker row Z-W135-S1: Worker environment note: .claude/agents/worker.md and the row schema are tracked at HEAD but not mat",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W135-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 1d3234ae24 (OG-db-3), a866c7c78c (OG-en-21), 8d2241ef81 (OG-en-22); the named tests pass and the twelve-file window set is 42 of 42 in both orders in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker environment note: .claude/agents/worker.md and the row schema are tracked at HEAD but not materialized in the sparse worktree; the worker took its rules from the order and read the schema from the main tree. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker environment note: .claude/agents/worker.md and the row schema are tracked at HEAD but not materialized in the sparse worktree; the worker took its rules from the order and read the schema from the main tree. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T10:07:31Z",
+  "id": "NFRA_OPLGTW-Z-S367",
+  "one_line": "OG-ev-5: the fees SOURCE is thin for all of July to September 2026, wider than the CVO's 30 days, and the table is partitioned daily including weekends (so 'partitions expected = trading days' undercounts by 9 in the stretch).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/FEES_TRACE_COUNTS.json (per-date counts, 394 of 394 fees partitions of the window read in a new process on the host through the installed adapter's read path, 30 partitions a page, host memory never above 75 percent) and FEES_TRACE.json (ev5.AC1 PASS)",
+      "source rows by month (sum, median per day): 2026-04 24728, 139.5; 2026-05 10653, 22; 2026-06 14482, 3; 2026-07 201, 3; 2026-08 95, 1; 2026-09 163, 3; 2026-10 (15 days) 74186, 1431; the CVO's stretch 2026-08-17 to 2026-09-15 holds 109 rows, equal to the CVO's count",
+      "112 of 112 weekend-dated partitions hold rows (2668 rows in all); in the stretch 30 partitions are present, 21 on trading days (all 21 expected present) and 9 on non-trading days holding 63 of the 109 rows"
+    ]
+  },
+  "spec_asserts": "OG-ev-5: the stretch is a 30-day thin patch, and the partitions expected in it are the trading days of lib/trading_calendar.py.",
+  "world_is": "The source rows per day are heavy-tailed (mean 1184 outside the stretch, median 21), and the thin run is not 30 days but the whole of July to September (459 rows in 92 days); the account holds 0 rows in the stretch and a median of 0 per day outside (90 rows over 394 dates), so the account cannot be assessed against the 25 percent rule. The verdict by the stated rule is source (109 against a threshold of 157.5; ratio 0.173). The stretch's expected partition count was read as the trading days (21 of 21 present); the table itself is daily, so a count of all dated partitions is 30.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and dates only. No tool change in this round (the CTO's rule). The question for the CTO's round analysis: whether the producer gap (source thin from July to September) is the cause, and whether the expected-partition rule should count every calendar date for a daily table."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T10:08:19Z",
+  "id": "NFRA_OPLGTW-Z-S368",
+  "one_line": "Round-41 ruling on Z-S355 and Z-S367: OG-ev-5 reads SOURCE (the fees silver is thin from July to September 2026); no tool change",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S355",
+    "NFRA_OPLGTW-Z-S367"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/FEES_TRACE.json and FEES_TRACE_COUNTS.json; ev5.AC1 PASS",
+      "commits 296ebe49f2 and 00ad978bbd"
+    ]
+  },
+  "spec_asserts": "A finding row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-ev-5 answered (~NFRA1, ev5.AC1 PASS in this seat's run, proof VALID): over the CVO's 30 days 2026-08-17 to 2026-09-15 the fees SOURCE holds 109 rows (ratio 0.173 against the 25 percent line; 21 of 21 trading-day partitions present, the table is daily so 30 dated partitions are present) while the test account holds 0 rows there and a median of 0 per day outside, so the account is not assessable and does not explain it. Verdict by the stated rule: SOURCE. ~NFRA1's wider finding (its row Z-S367, integrated here): the source is thin for all of July to September (459 rows in 92 days, against a median of 139.5 per day in April), and a daily table should be expected over every calendar date, not only trading days. No tool change this round, as the CTO ruled. The finding belongs to the owner of the Black Diamond fees silver, not to a gateway cell; routed to the CTO.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ev-5 answered (~NFRA1, ev5.AC1 PASS in this seat's run, proof VALID): over the CVO's 30 days 2026-08-17 to 2026-09-15 the fees SOURCE holds 109 rows (ratio 0.173 against the 25 percent line; 21 of 21 trading-day partitions present, the table is daily so 30 dated partitions are present) while the test account holds 0 rows there and a median of 0 per day outside, so the account is not assessable and does not explain it. Verdict by the stated rule: SOURCE. ~NFRA1's wider finding (its row Z-S367, integrated here): the source is thin for all of July to September (459 rows in 92 days, against a median of 139.5 per day in April), and a daily table should be expected over every calendar date, not only trading days. No tool change this round, as the CTO ruled. The finding belongs to the owner of the Black Diamond fees silver, not to a gateway cell; routed to the CTO."
+}
+```
