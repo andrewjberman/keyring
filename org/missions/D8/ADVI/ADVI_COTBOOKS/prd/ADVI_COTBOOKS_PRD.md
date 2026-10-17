@@ -5,7 +5,7 @@
  "project": "ADVI_COTBOOKS",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/advi-portfolio-group-key-cottonwood-ai-brief-20261017.md@1bae264b34",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -41,13 +41,13 @@ line, ENDPOINT is re-pasted here.
                     a list of every account in the firm
          SOURCE     brief Part I (candidate thread), O1, Part III admin test
 
-  FWD-2  Every Cottonwood account belongs to exactly one advisor's book, chosen by
-         a rule anyone can read
+  FWD-2  Every account in Cottonwood's supervised book belongs to exactly one
+         advisor's book, chosen by a rule anyone can read
          DONE WHEN  EXERCISED -- read on the served book data for one dated pull:
                     no account sits in two books, none is lost, and an account Black
                     Diamond lists under more than one group shows the book the rule
                     picked and that it is shared
-         ACCEPT     No client is counted twice and none goes missing, and when an
+         ACCEPT     No supervised client is counted twice and none goes missing, and when an
                     account could belong to two advisors the page says which one it
                     shows and why, the same way every day
          SOURCE     brief O2, IV.2 item 1, Part III single-membership test
@@ -154,5 +154,8 @@ the page date (C-FRESH), and dim 436.
 ## CHANGE LOG
 
 - **v0.1 (~03:2xZ):** first draft, written while Andrew's endpoint confirmation is held.
+- **v0.2 (~03:3xZ),** on `3.0.0_SA_CVO` REFUSE @8cc7a87a60: FWD-2 now reads "every account in Cottonwood's supervised book", which matches
+  C-SCOPE (unsupervised accounts are in no book). The endpoint file carries the same edit, before Andrew confirms. The other refusal ground
+  (the endpoint is not yet confirmed) stands until his word.
 
 -- 1.0.0_SA_CTO~DELL1

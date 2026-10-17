@@ -22,13 +22,13 @@ lands before any page reads the book.
                     a list of every account in the firm
          SOURCE     brief Part I (candidate thread), O1, Part III admin test
 
-  FWD-2  Every Cottonwood account belongs to exactly one advisor's book, chosen by
-         a rule anyone can read
+  FWD-2  Every account in Cottonwood's supervised book belongs to exactly one
+         advisor's book, chosen by a rule anyone can read
          DONE WHEN  EXERCISED -- read on the served book data for one dated pull:
                     no account sits in two books, none is lost, and an account Black
                     Diamond lists under more than one group shows the book the rule
                     picked and that it is shared
-         ACCEPT     No client is counted twice and none goes missing, and when an
+         ACCEPT     No supervised client is counted twice and none goes missing, and when an
                     account could belong to two advisors the page says which one it
                     shows and why, the same way every day
          SOURCE     brief O2, IV.2 item 1, Part III single-membership test
