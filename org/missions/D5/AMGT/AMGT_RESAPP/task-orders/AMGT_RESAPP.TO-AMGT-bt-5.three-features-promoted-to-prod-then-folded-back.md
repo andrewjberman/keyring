@@ -73,7 +73,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-112 R1-track analysis item 5 and msgs 7736, 7738, 7751 (the three rows approved, "promote bt-1 + bt-3 + bt-6 as one set, then the byte tie, then send me the PROD..DEV list"). The step-6/step-7 split is the issuer's design (as `bs-5`): the waiver's shas exist only after the promote. AC4's invocation carries a guard (`PROD != 856fb37b`) so it FAILS at the base, where `origin/DEV..origin/PROD` already reads 0. Seat `~H2` as in `bs-5`; the order carries `<workstream>PROMOTE_SA</workstream>` (the round-issuer gate keys a second issuance by workstream).
 
-<status>pending</status>
+<status>complete -- 2026-10-17 by the issuer (2.0.0_SA_COO~R1): 0.4.0_DT_ClientPlatform~H2 promoted ONE chosen set (the three round-113 features, not the unregistered first bt-2 candidate) to PROD (856fb37b to d1bed0fb, CI run 39073112254 success, tag portal-v2.1.238, receipt 5ac72ac795) and landed the PROD-into-DEV fold-back under the CTO's one-time named waiver (AMENDMENT 1, waiver @1b1fbd5af0, row dell1-20261017T221039Z-a997 approved; merge-forward DEV eea01c16 to eb2c7b20168f); issuer's reads after a fetch: origin/DEV eb2c7b20 (ls-remote), DEV tree equal to eea01c16's, origin/DEV..origin/PROD = 0 (AC4); live site tied to d1bed0fb by bytes and the close walk valid (round113/LIVE_TIE_AND_CLOSE_WALK_D1BED0FB.md); AC1-AC4 PASS, instance VALID</status>
 <round>113</round>
 <workstream>PROMOTE_SA</workstream>
 <slot>0.4.0_DT_ClientPlatform~H2</slot>
