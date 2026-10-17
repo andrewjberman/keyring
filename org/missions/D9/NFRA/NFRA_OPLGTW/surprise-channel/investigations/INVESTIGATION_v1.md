@@ -27485,3 +27485,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts and dates only. No tool change in this round (the CTO's rule). The question for the CTO's round analysis: whether the producer gap (source thin from July to September) is the cause, and whether the expected-partition rule should count every calendar date for a daily table."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T10:08:19Z",
+  "id": "NFRA_OPLGTW-Z-S368",
+  "one_line": "Round-41 ruling on Z-S355 and Z-S367: OG-ev-5 reads SOURCE (the fees silver is thin from July to September 2026); no tool change",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S355",
+    "NFRA_OPLGTW-Z-S367"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/FEES_TRACE.json and FEES_TRACE_COUNTS.json; ev5.AC1 PASS",
+      "commits 296ebe49f2 and 00ad978bbd"
+    ]
+  },
+  "spec_asserts": "A finding row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-ev-5 answered (~NFRA1, ev5.AC1 PASS in this seat's run, proof VALID): over the CVO's 30 days 2026-08-17 to 2026-09-15 the fees SOURCE holds 109 rows (ratio 0.173 against the 25 percent line; 21 of 21 trading-day partitions present, the table is daily so 30 dated partitions are present) while the test account holds 0 rows there and a median of 0 per day outside, so the account is not assessable and does not explain it. Verdict by the stated rule: SOURCE. ~NFRA1's wider finding (its row Z-S367, integrated here): the source is thin for all of July to September (459 rows in 92 days, against a median of 139.5 per day in April), and a daily table should be expected over every calendar date, not only trading days. No tool change this round, as the CTO ruled. The finding belongs to the owner of the Black Diamond fees silver, not to a gateway cell; routed to the CTO.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ev-5 answered (~NFRA1, ev5.AC1 PASS in this seat's run, proof VALID): over the CVO's 30 days 2026-08-17 to 2026-09-15 the fees SOURCE holds 109 rows (ratio 0.173 against the 25 percent line; 21 of 21 trading-day partitions present, the table is daily so 30 dated partitions are present) while the test account holds 0 rows there and a median of 0 per day outside, so the account is not assessable and does not explain it. Verdict by the stated rule: SOURCE. ~NFRA1's wider finding (its row Z-S367, integrated here): the source is thin for all of July to September (459 rows in 92 days, against a median of 139.5 per day in April), and a daily table should be expected over every calendar date, not only trading days. No tool change this round, as the CTO ruled. The finding belongs to the owner of the Black Diamond fees silver, not to a gateway cell; routed to the CTO."
+}
+```
