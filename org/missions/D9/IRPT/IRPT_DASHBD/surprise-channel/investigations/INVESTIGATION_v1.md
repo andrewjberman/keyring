@@ -24686,3 +24686,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "No act is owed by this seat on S4."
 }
 ```
+
+## IRPT_DASHBD-D2-S132 -- TO-DB-f-2204 R3: terraform fmt -check flags the pinned file locals.tf of reporting-gold; not edited, not part of the plan
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "id": "IRPT_DASHBD-D2-S132",
+  "surfaced_at": "2026-10-17T01:20Z",
+  "one_line": "TO-DB-f-2204 R3: terraform fmt -check flags the pinned file locals.tf of reporting-gold (alignment of four attribute lines); not edited, not part of the plan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check on infra/aws/terraform/investor-reporting/reporting-gold printed locals.tf, rc 3; fmt -diff shows only the alignment of four attribute lines (irpt_rg_gold_bucket_arn, returns, holdings and class prefixes); locals.tf sha256 eb629c95b43d equals the packet pin; the plan read 0 add 1 change 0 destroy on the function only, by code attributes"
+    ]
+  },
+  "spec_asserts": "Step 4 of the order: fmt -check passes, or a failure on a pinned file is recorded as a row and the file left alone.",
+  "world_is": "locals.tf carries a formatting deviation that predates this order and was left untouched."
+}
+```
