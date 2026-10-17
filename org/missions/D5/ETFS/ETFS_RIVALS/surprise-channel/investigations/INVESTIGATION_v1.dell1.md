@@ -1065,6 +1065,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "The round-32 regression net reads clean after a cell: the rivalfunds suite's final line carries no failure, and the shipped budget config keeps a reserve below the measured exhaustion (test_r9cb1 asserts a daily ceiling under 175000).",
     "world_is": "The committed budget config carries a 400000-row daily ceiling, and the two tests' expected values (a ceiling under 175000; 137 points remaining) match no committed config. Whether the ceiling was raised on purpose (the tests are stale) or lowered back (the config is wrong) is not visible from the code read.",
     "notes": "Not edited: bbg_budget.json and both tests are outside this cell's <paths>, and the cell's own tests pass (6 of 6). The issuer names which side is right at the merge; the owner of the budget ceiling is not named in the code. Owner to be named by 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S21",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-17T06:25:00Z",
+    "one_line": "OBSERVATION: the disarm statement for ETFS_RIVALS-Z-S84 and Z-S85 (ARMED on site Z, disarm_owner 2.0.0_SA_COO~V1, whose lane this seat holds) -- what this lane stops now, and the part of the disarm that is a served-page act it cannot take alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S84 and Z-S85 read from origin/box/sitez org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md (fetched 2026-10-17 ~06:2xZ), relayed by 0.0.0_AB_MSTR~DELL1 msg 7372",
+        "this lane holds ~V1's issuer seat: CTO ruling @f8191183f6 (drive log org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261015T21Z_desktop-hk1uu7n.md)",
+        "the held-tr writer (RIV-za-1, @27ec89ad2a) asks _blp_historical_data(batch, fields, day, day) per date, the same historical request the BDH checks in Z-S85 grade as the correct values"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An ARMED row is disarmed the same turn by its disarm_owner.",
+    "world_is": "Disarmed by this lane now: (1) no ad hoc publish or republish of the rivalfunds page by 2.0.0_SA_COO~RV until the venue-date fix lands; (2) Z-S84's read-side fix shape is withdrawn by Z-S85 and is not cut; (3) ORDER 3 act 3 (held-tr publish) stays behind its CTO half, and its rows are historical-request closes per date, not the 11:00Z NYSE-T-1 snapshot. NOT disarmable by this lane alone: the page already serves the shifted non-US closes, and the next scheduled chain (2026-10-19 11:00Z, the first trading day) serves them again; holding that chain or serving it with a stated caveat moves served output, so it is routed to 1.0.0_SA_CTO~DELL1 with the fix cell (each close filed under its own venue's trading date, the affected history re-sourced by historical request).",
+    "notes": "The disarm closes when the fix cell is merged and deployed or the CTO rules the 10-19 chain. Measured figures in Z-S85 are 0.0.3_BG_BBGTerminal's, not re-measured here."
   }
 ]
 ```

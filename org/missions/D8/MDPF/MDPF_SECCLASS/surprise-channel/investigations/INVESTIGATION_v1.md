@@ -8396,3 +8396,29 @@ by dell1 or by this seat.
   "world_is": "Not read as applied. The cash to fixed_income shift is not an effect the seed plan predicts for any date the instrument can grade, so its source is unnamed: it needs a per-security diff of the pre and latest C_06 outputs, which this row does not run. The e108b GO stays held; the 04:00Z chain writes a third version and leg G is re-read against it as well."
 }
 ```
+
+## MDPF_SECCLASS-D1-S47 -- leg G of the 13-row seed is NOT MET on the first fire after it (23:00Z) and the 04:00Z fire restated every date by far more than the seed
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S47",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-17T06:22Z",
+  "one_line": "With the 04:00Z chain stopped (runner LaunchTime 2026-10-17T04:00:46Z, stopped; gold/trigger-pending.json 404) the served mix_daily_summary.json has a third version l2Wqoi6i... (2026-10-17T05:24:08Z); leg G against the first-fire pair (pre 3BY8Etw3..., post 87CvfcFp...) is NOT MET (D1-S45, D1-S46): on 2026-10-02 the seeded 124,848.36 did not leave unclassified+other (expected -124,848.36); the 04:00Z fire then restated all 14 dates back to 2026-10-01 with equity about +175k to +208k and fixed_income about +167k per date, which the seed does not predict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "same-shell reads at 06:18:11Z: ec2 describe-instances i-01003b035d2988dfb = stopped, LaunchTime 2026-10-17T04:00:46+00:00; s3api head-object gold/trigger-pending.json = 404",
+      "aws s3api list-object-versions opal-data-49financial advi/49financial/platinum/views/mix_daily_summary.json: latest l2Wqoi6iUJwQwwmTCu3lXWozfW4.Ak_. (2026-10-17T05:24:08Z, 9,982,343 bytes), then 87CvfcFpbyM7ZRAb0P6AztqK1X74W6cQ (2026-10-17T00:22:27Z), then 3BY8Etw3LetRaRFcOofjaAT98PSfp4Z3 (2026-10-16T05:25:26Z)",
+      "seed22_legg_read.py read --pre-version-id 3BY8Etw3... at 06:18Z: SEED22-LEGG ok=False window_dates=14 moved=14 bad=14 (post_restated_through 2026-10-01); with --pre-version-id 87CvfcFp... (the 04:00Z fire alone) at 06:20Z: ok=False window_dates=14 moved=14 bad=14, 2026-10-02 unclassified+other delta +5,133.51 against expected -124,848.36"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e107b: the 13 seeded rows move their dollars out of unclassified into the ruled classes on the first scheduled fire after the seed (leg G).",
+  "world_is": "Leg G is NOT MET. The served firm class dollars do not show the seed on the one date (2026-10-02) the instrument can grade with seeded weight in range, and a larger unrelated restatement landed at 04:00Z, so the seed cannot be graded on the latest version either. The cause is unnamed: candidates, not yet read, are the incremental skip of retained unclassified holdings (D1-S30) and a whole-book input change. TO-SC-e108b stays staged: its hold (2) is not satisfied."
+}
+```
