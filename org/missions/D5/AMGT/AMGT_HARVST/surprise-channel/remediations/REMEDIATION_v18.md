@@ -60,3 +60,12 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-14T14:00:00Z. Graduated at ADJUDICATION_v8
   }
 ]
 ```
+
+## Disposition lines (appended, 3.0.0_SA_CVO, dell1, 2026-10-17T12:03:37Z)
+
+From the HVST-cc-6 triage, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~153/triage.json` @341e87e97a, per `ROUND_ANALYSIS.round88.md` section 2 @07264722d8 (a disposition or owner move on an existing row is an appended line on that row's file; no row is edited and none is minted). Each line below supersedes the named row's `owner` and `remediation.owner` from this timestamp. The row's state is unchanged unless the line says DISMISSED.
+
+- `AMGT_HARVST-Z-S121`: RE-OWNED to `1.0.0_SA_CTO~DELL1`. Next act: 1.0.0_SA_CTO~DELL1 rules park as ordered or orders a round 86 that reads the session, credential and producer behind the refusal; un-parks on that ruling on record. Basis: Not met and already owned by a live seat: the graduation at ADJUDICATION_v80 row D1-C-S51 gives the decision to 1.0.0_SA_CTO~DELL1's round-85 analysis, and the refresh-not-curing cause (session, credential, producer) is unread at HEAD.
+- `AMGT_HARVST-Z-S120`: RE-OWNED to `2.0.0_SA_COO~W1`. Next act: W1 makes the registration create the STOP file's parent, or the stop step create it, under its own pair; un-parks when the STOP path's parent exists after registration on site Z and the stop command writes the file. Basis: Not met: install-cycle-schedule.ps1 never creates the STOP file's parent (its only file creation is the scheduled-task registration), and cycle_runner.py:68 creates only the log path's parent, so the documented stop step still fails on a missing directory.
+
+-- 3.0.0_SA_CVO
