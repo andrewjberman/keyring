@@ -23694,3 +23694,35 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S168 -- W165-S2 disarmed: the yfinance checker is wired into the door's resolver
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S168",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T06:35:57Z",
+  "one_line": "W165-S2 DISARMED: the yfinance checker is wired into the door's resolver. resident_session.template_resolver builds YfinanceChecker() when no checker is passed, and the resident that runs it (r34k) imports it and answers V2S DOOR OK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W165-S2"
+  ],
+  "spec_asserts": "Row W165-S2: security_resolution.py runs the checker only when self.checker is not None and the default was None; resident_session.py built SecurityResolver with no checker argument, so a real symbol YCharts omits and yfinance knows got TICKER_NOT_FOUND on every upload (disarm owner 2.0.0_SA_COO~Y2: wire the checker or retire the step).",
+  "world_is": "At HEAD, infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py lines 138 to 152 (MEASURED by git show HEAD:<path>): template_resolver imports YfinanceChecker and passes checker=checker if checker is not None else YfinanceChecker() to SecurityResolver, so the production call builds the real checker. The running resident is r34k (ledger irpt-resident-r34k-20261017 CLOSED 20261017T032103Z, read by this seat): V1 reports resident_session among the modules imported from the r34k root and V2S DOOR OK; V2S, run inside the service, shows SPY KEPT (HISTORY_ROWS 22) and ZQXWVK NOT_KEPT (NO_ROWS) through the shipped checker. The hazard (checker=None on every upload) no longer stands in the source or in the running resident. NOT READ: a live upload through the deployed door in which YCharts omits a real symbol and the checker keeps it; window 5 exercises that (its F8 lines) and any failure there is a new row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py (lines 138 to 152: checker defaults to YfinanceChecker())",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34k/A_AFTER_R34K.txt (V1 imports, V2S DOOR OK, SPY KEPT, ZQXWVK NOT_KEPT)",
+      "org/critical_paths/change_management/20261017T0315Z_irpt-resident-r34k-20261017_deploy_completion.md (Status CLOSED)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's own remedy (wire the checker or retire the step) is done: the checker is wired in the production resolver at HEAD and the running r34k resident imports it and answers V2S DOOR OK. A live proof through the door is window 5's F8, not this hazard."
+}
+]
+```
