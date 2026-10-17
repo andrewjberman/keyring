@@ -41411,3 +41411,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Append-only: the worker's two rows are not edited."
 }
 ```
+
+## IRPT_BCKEND-D2-S230 -- MSTR's drain deleted dell2's lambda-source-map.json and the trunk's function-map entries for irpt-export-render and irpt-49f-reporting-read-lambda still hold the PRE-release shas; TO-IB-pr-618 step 6 re-stamps both
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S230",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-17T02:45:00Z",
+  "one_line": "After MSTR's drain (c17424cfdc) the stamps IB2 wrote for the read function (z634S2Qs...) and the export function (5bIgn/ML...) are gone with lambda-source-map.json, and function-map/ holds the old shas (WjnDxvu2..., 5/9LZBbT...) for both functions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_BCKEND-D2-S228 (mine): the dell2 stamps need porting into function-map/ at the integrate. The CTO's msg 10181 (read 02:30Z): the drain landed, function-map/ is present with 241 files and lambda-source-map.json is gone.",
+  "world_is": "Read 2026-10-17 ~02:4xZ on the box/dell2 tree at HEAD e4fcda6c7f and later: infra/aws/lambda/ci/function-map/irpt-export-render.json reads artifact_sha256 and deployed_code_sha256 5/9LZBbTEWOfrnNZufc6Mqz5pbDxTxYAxpWcZVURGs4=, and irpt-49f-reporting-read-lambda.json reads WjnDxvu2biEPXcwuF8oXJWRUqFaeUY550xnRxa2daa0=; infra/aws/lambda/ci/lambda-source-map.json does not exist. The live functions read z634S2Qs... (read function, LastModified 2026-10-17T00:15:41Z) and 5bIgn/ML... (export, 00:21:01Z), read live by me. So the record carrier names the old bytes for both functions; the deployed state is correct. Remedy: TO-IB-pr-618 step 6 (amended by the issuer, gate limb: none graded, a modification of an order without placeholders) has IB2 stamp both entries through the repo's tool, and check IB250-1 AC3 reads apply.read_stamp_sha256 and apply.stamp_file. Correction to my row S229: W481-S1 and W481-S2 are the two worker rows as TO-IB-pr-619 numbers them (S1 the four stale statements); S229's text swapped their descriptions, the disposition (DISMISSED_WITH_REASON, repaired by TO-IB-pr-619 and the p249 amendment) is unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python read of function-map/irpt-export-render.json and irpt-49f-reporting-read-lambda.json at the tree, 2026-10-17",
+      "aws lambda get-function-configuration for both functions, CodeSha256 read live",
+      "CTO msg 10181"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closes when IB2's record for TO-IB-pr-618 reads both entries at the live shas and I have re-read the two function-map files at HEAD. Append-only: S228 and S229 are not edited."
+}
+```
