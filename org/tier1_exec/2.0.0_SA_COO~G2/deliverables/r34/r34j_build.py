@@ -152,8 +152,10 @@ def main():
     keys_added = sorted(set(bindings) - set(bindings32))
     keys_changed = sorted(k for k in bindings if k in bindings32 and bindings[k] != bindings32[k])
     prov_changed = sorted(k for k in set(bindings["provenance"]) | set(bindings32["provenance"]) if bindings["provenance"].get(k) != bindings32["provenance"].get(k))
-    if keys_added or keys_changed != ["provenance"] or prov_changed != ["files_from_count", "files_from_sha256", "package_pin"]:
-        bad("the bindings differ from r34h beyond provenance (package_pin and the files-from list's count and sha256, which grew by one line): added %s changed %s provenance %s" % (keys_added, keys_changed, prov_changed))
+    if keys_added or keys_changed != ["provenance"] or prov_changed != ["files_from_count", "files_from_sha256", "members_added", "package_pin"]:
+        bad("the bindings differ from r34h beyond provenance (package_pin, the files-from list's count and sha256, which grew by one line, and members_added, which grew by the estate client): added %s changed %s provenance %s" % (keys_added, keys_changed, prov_changed))
+    if bindings["provenance"]["members_added"] != bindings32["provenance"]["members_added"] + [{"packaged": "ycharts/research/ycharts_client.py", "repo_path": "infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py", "sha256": w34["ycharts/research/ycharts_client.py"]}]:
+        bad("members_added is not the r34h list plus exactly the estate client at its pinned blob: %r" % (bindings["provenance"]["members_added"],))
     if bindings["opal_pricing"] != {"enabled": True, "tiers": ["estate", "yfinance", "ycharts"]} or bindings32["opal_pricing"] != bindings["opal_pricing"]:
         bad("opal_pricing is not exactly the tiers estate, yfinance, ycharts (enabled) in both r34h and r34j: %r -> %r" % (bindings32["opal_pricing"], bindings["opal_pricing"]))
     if bindings["ycharts_window_budget"] != {"calls": 6, "window_s": 390} or bindings32["ycharts_window_budget"] != bindings["ycharts_window_budget"]:
