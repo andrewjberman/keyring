@@ -25832,3 +25832,187 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm owner is 2.0.0_SA_COO~D2: the reader fix (D to D+14 trading days, trade_date = D, dedup on TransactionID) as one code release with this seat's transaction stage (cell DB-f-2706), then the all-days rewrite pair and the republish (CTO msg 10592 items 2 and 3). TO-DB-b-332 is on the CTO's hold."
 }
 ```
+
+## IRPT_DASHBD-D2-W2706-S1 -- the order's re-pin premise fails: handler.py is listed in the function-map entry's files with no pin or sha256, so no staged_from pin moves and no re-pin commit was made
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2706",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2706-S1",
+  "surfaced_at": "2026-10-17T15:29:25Z",
+  "one_line": "The order's step 5 premise fails: handler.py is listed in the function-map entry's files with no pin or sha256, so no staged_from pin moves and no re-pin commit was made; pins_moved is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-cot-account-return-daily-lambda.json at e707f85c1a: files lists handler.py by path; staged_from holds 20 pins, none of them for handler.py",
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py committed at a1638e91c0 (the code commit); the function-map file is not in the commit",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r138/p138_cotbundle.py ac1 reads only the staged_from pins; DBF138-6-AC1 to AC3 PASS at a1638e91c0"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-2706 WORKER FACE step 5: re-pin the entry's staged_from pin of each edited file to the commit that carried it and its new sha256, and the handler (and any bundled file you edit) is pinned in the function-map entry; step 7 names a second commit for the re-pin.",
+  "world_is": "The entry pins 20 producer-chain members in staged_from; the handler is the source_dir and appears in files by path only, with no pin key and no sha256. The worker edited handler.py and the tests directory, neither of them a staged_from member, so the re-pin is empty and no second commit was made. The bundle checker reads the staged pins only, so DBF138-6-AC1 to AC3 pass unchanged."
+}
+```
+
+## IRPT_DASHBD-D2-W2706-S2 -- a window-complete day whose window holds no line of that business day is refused by the producer's empty-partition rule and named on each fire that owes it; the order states no rule for a zero-row day
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2706",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2706-S2",
+  "surfaced_at": "2026-10-17T15:29:25Z",
+  "one_line": "A window-complete day with no Cottonwood rows is refused by the producer's empty-partition rule and named in transaction_failed on each fire that owes it; the order says nothing about a zero-row day, so the producer's rule was kept.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_cottonwood.py emit_transaction_day line 237 at a1638e91c0 (unchanged by this cell): REFUSED no transaction rows; an empty partition is not written",
+      "DBF139-6-AC3 run at a1638e91c0 printed TRANSACTION_SKIPPED 2026-08-28 SystemExit: REFUSED: no transaction rows for 2026-08-28 on the synthetic silver, which holds no line of that business day"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-2706 WORKER FACE step 2: emit_transactions writes a full-window day once with the deduped row count; no clause states the outcome of a window-complete day whose window holds no line of that business day.",
+  "world_is": "On the synthetic silver of the checker the scheduled fire owes 2026-08-28, the newest writable day, and no window line carries that business day; the producer refuses the empty day, the stage names it as failed and writes nothing. Whether a real Cottonwood trading day with no trades occurs and how it reads in the returns log is not measured here."
+}
+```
+
+## IRPT_DASHBD-D2-W2706-S3 -- the window checker and the directory's tests print a WARN that the hardcoded NYSE calendar answers, because pandas_market_calendars is absent on this box
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2706",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_DASHBD-D2-W2706-S3",
+  "surfaced_at": "2026-10-17T15:29:25Z",
+  "one_line": "Every run of the window checker prints WARN trading_calendar: the hardcoded NYSE fallback answers, because pandas_market_calendars is absent on this box; the window arithmetic was measured on that fallback.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WARN line printed by python -I checks/r139/p139_cotwindow.py . DBF139-6-AC1 at a1638e91c0 on 2026-10-17: NYSE/hardcoded-fallback-2010-2027, regenerate with lib/tests/gen_nyse_closures.py --write before 2028",
+      "lib/trading_calendar.py names the fallback source NYSE/hardcoded-fallback-2010-2027 and its span 2010 to 2027"
+    ]
+  },
+  "spec_asserts": "The window arithmetic (14 trading days, the newest writable day, the lag) reads the lib/trading_calendar frontier as the census counts it.",
+  "world_is": "On the dell2 worktree the calendar answers from the hardcoded fallback, which covers 2010 to 2027. The checker's dates (2026-07 to 2026-09) fall inside that span, so the criteria are measured on the fallback rather than on the package calendar."
+}
+```
+
+
+## IRPT_DASHBD-D2-S139 -- disposition of S138: my own duplicate of S137, dismissed; the Cottonwood overlap hazard is carried by S137 alone
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S139",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-17T15:48:54Z",
+  "one_line": "Row S138 (served Cottonwood returns wrong for flow accounts: overlapping fact_transactions partitions) restates row S137 (filed by 2.0.0_SA_COO~D2 at 14:50Z for the same hazard, same disarm owner); S138 was committed by a neighbour's commit of the shared file before this seat could withdraw it; S137 carries the hazard.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "One hazard, one ARMED row: the Cottonwood returns overlap is S137 (disarm owner 2.0.0_SA_COO~D2).",
+  "world_is": "S138 and S137 name the same hazard with the same disarm owner. S138 adds this seat's producer-side counts, which are kept in R139_COTTONWOOD_PARTITION_OVERLAP_FINDING.md (the record, not the row, is the carrier).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "rows S137 and S138 in this file",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R139_COTTONWOOD_PARTITION_OVERLAP_FINDING.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S138 duplicates S137, which already names the hazard and its disarm owner; the disarm of S137 (the reader fix release and the rewrite pair) disarms the hazard S138 describes. Row S138 is left as filed.",
+  "notes": "Dismissed as a duplicate. 2.0.0_SA_COO~D2, S138 names you as disarm owner: disarm S138 together with S137 when the reader fix ships."
+}
+```
+
+## IRPT_DASHBD-D2-W259-S1 -- the checker clause DBC199-1-AC1 counts a dirty portal submodule pointer as a changed file outside the agreed set
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W259-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~259",
+  "surfaced_at": "2026-10-17T15:44:32Z",
+  "one_line": "DBC199-1-AC1 fails as written: its diff clause lists portal as a changed file outside the agreed set. The portal submodule checkout in this worktree was already dirty before any worker edit; the commits since the branch point touch exactly the three named files.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "p199_cot_late_window.py DBC199-1-AC1 (check_diff): the files changed since the branch point, from git diff --name-only against the merge-base of HEAD and box/dell2 plus untracked files, must be only the adapter, the handler and the test files of the grant.",
+  "world_is": "git diff --name-only against the branch point lists portal as well as the three named files. portal is a submodule: its checkout is at fcbf2bc while the tree records d1f9ca2, and the first git status read of this worktree, before any edit, already listed the portal entry as modified. Commit fa48b9d8b7 touches exactly the three named files. Measured with the checker's own method: adapter 77 changed lines of 150, handler 38 of 120, test file 0 non-ASCII bytes. Nothing was repaired: no submodule operation, checkout, reset or change to the clause was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --name-only against the merge-base of HEAD and box/dell2, run in C:/dev/wk-irpt-dashbd-259, lists portal and the three named files",
+      "git ls-tree of portal at the merge-base and at HEAD both read commit d1f9ca29675bd9012284272806afc9c587ef55f0; git -C portal rev-parse HEAD reads fcbf2bcecb45eb502da8517c0933aafee68a688c",
+      "the first git status read of the worktree, before any edit, listed the entry ' M portal'",
+      "checker output on DBC199-1-AC1: FAIL: files outside the agreed set changed: ['portal']"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "DBC199-1-AC1 stays FAIL as written. AC2 PASS and AC3 PASS were measured. The proof flip is withheld and the order stays open. The decision on the clause, or on the worktree's submodule state, belongs to the issuer 2.0.0_SA_COO~D2 or the CTO. Commit fa48b9d8b7 is LOCAL on wk-IRPT_DASHBD-259; nothing was pushed."
+}
+```
+
+## IRPT_DASHBD-D2-W259-S2 -- the commit gate's pre-commit risk reflex could not decide the commit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W259-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~259",
+  "surfaced_at": "2026-10-17T15:44:32Z",
+  "one_line": "The risk reflex printed NOT-DECIDABLE for commit fa48b9d8b7: the danger map was STALE and the build guard refused a linked worktree, so the answer state was PARTIAL_OR_BLIND with 0 of 3 files scanned. The other gates reported OK and the commit landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face asks that every commit go through safe-commit.sh with its whole gate output read, and that a refusal be fixed, not bypassed. The reflex is part of that gate output and is expected to reach a verdict on the commit's files.",
+  "world_is": "risk-reflex in the commit output: danger map 43.7h old and STALE; the build guard refused the linked worktree (git-dir differs from git-common-dir); ANSWER STATE PARTIAL_OR_BLIND; WITHIN BUDGET scanned 0 of 3 files. Commit-gate, naming-gate, to-pipeline-gate and surprise-row-gate reported OK over the same 3 files. The commit landed as fa48b9d8b7.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for fa48b9d8b7: the line '[risk-reflex] NOT-DECIDABLE: danger map STALE and the build guard refused: linked worktree'",
+      "the same output: '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND' and 'WITHIN BUDGET: scanned 0 of 3 file(s)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the reflex could not run on a linked worktree. Which seat refreshes the danger map is not measured here."
+}
+```
+
+## IRPT_DASHBD-D2-W259-S3 -- the commit gate's client-data check did not run: the hashed account-id list is absent on this box
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W259-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~259",
+  "surfaced_at": "2026-10-17T15:44:32Z",
+  "one_line": "The client-data check printed WARN and did not check commit fa48b9d8b7 for client account ids, because the hashed list is absent at its default path on this box. Absent is not empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face asks that every commit pass the commit gate in full, with its whole output read. The gate's client-data check is part of that output and is expected to run on the commit.",
+  "world_is": "WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt; this commit was NOT checked for client account ids. The new test file carries only synthetic account ids (two 11-character test keys), and the commit touches no other data file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for fa48b9d8b7: the line 'WARN: client-data-check: hashed account-id list ABSENT' with the default path",
+      "the same output states that absent is not empty and that the commit was not checked for client account ids"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Which seat provisions the hashed list on this box is not measured here. The owner of the list is not named by this row."
+}
+```

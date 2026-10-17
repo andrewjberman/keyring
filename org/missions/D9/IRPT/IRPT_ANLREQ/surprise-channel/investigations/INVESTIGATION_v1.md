@@ -25283,3 +25283,240 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W290-S1 -- r35l_build.py refuses at its baseline census call; no R36S_BUILD record, so AR-y-391 cannot run past step 2
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W290-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~290",
+  "surfaced_at": "2026-10-17T15:17:20Z",
+  "one_line": "The release-35 build tool fails with a Python traceback (not an R35L-BUILD-BAD line) after both builds succeed: its baseline census call reads the function map at the pin 927337a741, which has no irpt-status entry, so no record is written and steps 3 to 5 of AR-y-391 cannot run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-391 step 2: python -I org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r35/r35l_build.py --pin faf037e0d02c021c0717f051b01ec72ed0b063d2 --out C:/dev/irpt-release-r36s --record .../r49/R36S_BUILD.json ends with R35L-BUILD-OK, or with R35L-BUILD-BAD and one row; the tool's STATUS_BASELINE (line 19) is the pin the live package was built from.",
+  "world_is": "MEASURED at worktree HEAD f332b96a4d: run 1 (--out C:/dev/irpt-release-r36s) and run 2, the one retry the order allows (--out C:/dev/irpt-release-r36sb), each exit rc=1 with a traceback raised at r35l_build.py line 127 (census.build_members at the baseline) and release_census.CensusError: function 'irpt-status' is not in the source map at 927337a741. Both builds ran and the zip was written to the stage folder before the failure (tmp_irpt-status_a and _b, irpt-status.zip); the record was not written. Read-only: git show 927337a741:infra/aws/lambda/ci/function-map/irpt-status.json is absent (rc=128); the function-map folder holds 0 files at 927337a741 and at 90b69dcb12 and 242 at faf037e0d0. The tool's comment names 927337a741 as the release-33 live build; the order names 90b69dcb12 as the release-35 live pin. NOT READ: the live zip beyond the issuer's member file; no member diff; no upload, plan, apply or AWS call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r35/r35l_build.py@f332b96a4d (lines 19 and 127)",
+      "infra/aws/lambda/ci/release-census.py@f332b96a4d (build_members, line 65: function not in the source map at the pin)",
+      "C:/dev/irpt-release-r36s (stage folder left as the tool made it; run 1 output held in .scratch/r36s_build.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W290-S2 -- the release build reproduces the live irpt-status package member for member: acceptance.py is staged from a pin whose blob lacks get_commentary_ref
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W290-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~290",
+  "surfaced_at": "2026-10-17T15:26:24Z",
+  "one_line": "The stage zip the build tool wrote at faf037e0d0 matches the LIVE irpt-status package on all 49 members by name and sha256, and its CodeSha256 equals the live value: the function map stages acceptance.py from a pin (361c44fa9d) whose blob lacks get_commentary_ref, so this build moves zero members and cannot open the commentary PDF.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-391 (cell AR-y-391, CTO msg 10600): the release build packages acceptance.py carrying get_commentary_ref, so the live zip's acceptance.py is MOVED and the diff names it as the mover (step 3 and AC1 expect acceptance.py MOVED and carrying the text).",
+  "world_is": "MEASURED on C:/dev/irpt-release-r36s/irpt-status.zip (the tool's output, stage folder outside the repository): 49 of 49 members equal the LIVE member file by name and sha256 (LIVE_IRPT_STATUS_MEMBERS_20261017.json); CodeSha256 +TcZDWmwE7uv3sUwos2+jn1lbKyQikK+13nNBzD6q4A= equals the live code_sha256; zip sha256 f937190d69b013bbafdec530a2cdbe8e7d656cac908a42bed779cd0730faab80, 368309 bytes. Cause, read-only: infra/aws/lambda/ci/function-map/irpt-status.json at faf037e0d0 stages acceptance.py (packaged_as) from infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py at pin 361c44fa9d (blob sha 06425d4731b7, 9393 bytes, no get_commentary_ref); the same repository file at faf037e0d0 and at 90b69dcb12 is 11639 bytes (sha e8cbd46a8277) and carries get_commentary_ref. So the release as mapped moves zero members. NOT READ: the live zip beyond the issuer's member file; no function-map edit was made (a staged pin change is for the issuer or the CTO to place).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/irpt-release-r36s/irpt-status.zip (tool output, outside the repository)",
+      "infra/aws/lambda/ci/function-map/irpt-status.json@faf037e0d0 (staged_from row for packaged_as acceptance.py)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@361c44fa9d and @faf037e0d0 (sha and get_commentary_ref check)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S204 -- W145-S1 disarmed: the irpt-status build and map state have caught up with the row
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S204",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:40:25Z",
+  "one_line": "W145-S1 DISARMED: the irpt-status BUILD_ONLY build now completes on this box. Worker 290's two builds at HEAD (stage folders irpt-release-r36s and -r36sb) staged every staged_from member and produced a 49-member zip whose CodeSha256 equals the live package's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W145-S1"
+  ],
+  "spec_asserts": "Row W145-S1 (disarm owner 2.0.0_SA_COO~Y2): on this box the irpt-status BUILD_ONLY build cannot stage its staged_from members (build-and-upload.sh hands node a Git Bash path, so the staged writes land drive-relative and the build fails with 49 File-not-found errors, leaving five tracked members deleted).",
+  "world_is": "MEASURED: worker 290 (TO-AR-y-391) ran the release-35 build tool at HEAD on this box twice; the tool builds irpt-status with the repository's own builder under BUILD_ONLY=1 in a throwaway detached worktree with MSYS_NO_PATHCONV unset and a private TMPDIR, and refuses unless the two zips are byte-identical. It reached the end of both builds; the stage zip it left reads 49 members with CodeSha256 +TcZDWmwE7uv3sUwos2+jn1lbKyQikK+13nNBzD6q4A=, equal to the live package (this seat's own read of the live zip: 49 members, the same CodeSha256); the tool's later stop was its baseline comparison (row W290-S1), not the staging. The same method built release 35 (ledger irpt-status-r35l-20261016 CLOSED, BUILD_ONLY digest equal). The row's remedy (no BUILD_ONLY of a function with staged rows on this box until the path form is native) is met by construction: the order for the next build (TO-AR-y-392) uses that tool, and the failing form (a build run from the release worktree itself) is not used. NOT READ: the row's original failing invocation re-run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (rows IRPT_ANLREQ-D2-W290-S1 and -S2: worker 290's irpt-status build at HEAD)",
+      "org/critical_paths/change_management/20261016T0554Z_irpt-status-r35l-20261016_deploy_completion.md",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/LIVE_IRPT_STATUS_MEMBERS_20261017.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The build that failed in the row now completes twice, byte-identical, on this box; the tool's own throwaway-worktree form is the route and is the one the next release uses."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S205 -- W145-S8 disarmed: the irpt-status build and map state have caught up with the row
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S205",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:40:25Z",
+  "one_line": "W145-S8 DISARMED: the map at HEAD stages status_installed.py (a staged_from row from reports/status at pin c4c2afe896, packaged_as status_installed.py) and the live package holds it as a root member; the build that stopped on the missing file is superseded by builds that complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W145-S8"
+  ],
+  "spec_asserts": "Row W145-S8 (disarm owner 2.0.0_SA_COO~Y2): the three-row removal of AMENDMENT 1 (commit e008b6216a) leaves files[] of irpt-status naming status_installed.py as a member of source_dir ops/ while the only file is reports/status_installed.py, so the BUILD_ONLY build stopped PARTIAL with a File not found.",
+  "world_is": "MEASURED (git show HEAD of infra/aws/lambda/ci/function-map/irpt-status.json): `files` lists entry.py, owned_report.py and status_installed.py, and `staged_from` holds a row for repo_path `infra/aws/lambda/investor-reporting/reports/status` pinned at c4c2afe896 with packaged_as `status_installed.py`, so the member is staged, not read from ops/. The live zip (this seat's read) holds `status_installed.py` at the root; the Lambda handler is status_installed.lambda_handler. Worker 290's builds at HEAD completed with 49 members, the status_installed.py hash among the 49 equal to the live one. The state the row names (the intermediate map of e008b6216a) is not the state at HEAD. NOT READ: the map at e008b6216a re-built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (rows IRPT_ANLREQ-D2-W290-S1 and -S2: worker 290's irpt-status build at HEAD)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/LIVE_IRPT_STATUS_MEMBERS_20261017.json",
+      "git show HEAD:infra/aws/lambda/ci/function-map/irpt-status.json (files and staged_from rows for status_installed.py)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The file the row said could not be staged is staged in the current map and present in the live package; the failing build was of an intermediate commit."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S206 -- W145-S6 disarmed: the irpt-status build and map state have caught up with the row
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S206",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:40:25Z",
+  "one_line": "W145-S6 DISARMED: release 31 shipped (ledger CLOSED 2026-10-15) with the pending AR-y-71 and AR-y-32 hunks under the CTO's msg 8088, and the current map reproduces the live package member for member, so no pin that a later edit might drop is outstanding.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W145-S6"
+  ],
+  "spec_asserts": "Row W145-S6 (BLOCKING STOP under AMENDMENT 1, disarm owner 2.0.0_SA_COO~Y2): for entry.py and owned_report.py the diff from pin 361c44fa9d to the release input c4c2afe896 holds hunks belonging to AR-y-71 and AR-y-32 rather than AR-y-331; decide whether they ship in release 31 and either re-pin or ship them knowingly.",
+  "world_is": "MEASURED: the release was decided and shipped: ledger org/critical_paths/change_management/20261015T0503Z_irpt-status-r31-20261015_deploy_completion.md (release 31) is CLOSED, and worker 288's audit line for this row (AUDIT_b.json) records that it shipped with hunks attributed to AR-y-331, AR-y-71 and AR-y-32 under CTO msg 8088. The live package today equals a build of HEAD in all 49 members (worker 290's rows W290-S1 and -S2, this seat's own live read), so the map's pins for entry.py and owned_report.py are exactly what is deployed, with no divergence left to resolve. The only open movement in the package is the acceptance.py pin of the release now in build (TO-AR-y-392), which is a separate, CTO-authorized change. NOT READ: the three hunks individually (the decision was the CTO's and is recorded).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (rows IRPT_ANLREQ-D2-W290-S1 and -S2: worker 290's irpt-status build at HEAD)",
+      "org/critical_paths/change_management/20261015T0503Z_irpt-status-r31-20261015_deploy_completion.md (CLOSED)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~288/r47/AUDIT_b.json (W145-S6 line)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/LIVE_IRPT_STATUS_MEMBERS_20261017.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The question the row held for the issuer (do the pending hunks ship) was answered by the shipped, closed release; the map and the live package agree member for member today."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W291-S1 -- the order's commit range for the mover is empty by construction: the live build pin 90b69dcb12 postdates every acceptance.py commit, and the map stages acceptance.py from 361c44fa9d
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W291-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~291",
+  "surfaced_at": "2026-10-17T15:48:19Z",
+  "one_line": "live_diff.py prints NO-COMMIT-SINCE-90b69dcb12 for the mover acceptance.py, because 90b69dcb12 is later than all three acceptance.py commits; the blob at 90b69dcb12 already carries get_commentary_ref, so 90b69dcb12 is not the commit the live zip's acceptance.py was staged from.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-392 step 5 and worker face: live_diff.py prints, for each non-SAME member, the commits that moved it since the live build pin 90b69dcb12 (empty: NO-COMMIT-SINCE-90b69dcb12), and the mover is named as the commit that adds get_commentary_ref (06557b6618).",
+  "world_is": "MEASURED at ae2ab2072b: git log --oneline 90b69dcb12..ae2ab2072b -- infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py is empty; git merge-base --is-ancestor 90b69dcb12 ae2ab2072b and 06557b6618 90b69dcb12 both hold; the path's commits in 361c44fa9d..06557b6618 are 2f7cc7be42, 74bbdbb322 and 06557b6618 (the last adds get_commentary_ref); git show 90b69dcb12:<acceptance.py> is 11639 bytes, sha256 e8cbd46a8277..., and contains def get_commentary_ref (count 1). The live zip's acceptance.py (9393 bytes, sha256 06425d4731b7...) is the 361c44fa9d blob, which is what the map staged. live_diff.py also prints the map-pin range (MAPPIN line: 361c44fa9d40 -> 06557b66184a) which names the three commits. NOT READ: how the live zip was deployed; no inference beyond the staged pin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-status.json@ae2ab2072b (acceptance.py staged_from row, pin 06557b66184a after the edit; 361c44fa9d before it)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@90b69dcb12 (carries def get_commentary_ref, 11639 bytes)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py@06557b6618 (11034 bytes, the mover blob)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/LIVE_DIFF.txt (GITLOG and MAPPIN lines)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W291-S2 -- a second function map stages the superseded acceptance.py: irpt-commentary-draft-store-lambda.json still pins acceptance.py at 283f7e7700 with sha256 06425d47
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W291-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~291",
+  "surfaced_at": "2026-10-17T15:48:19Z",
+  "one_line": "irpt-commentary-draft-store-lambda.json stages acceptance.py from pin 283f7e7700 with the superseded sha256 06425d47 (no get_commentary_ref); the order's edit covered only the irpt-status map, so this holder is unedited and would package the old acceptance.py if that map is built.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "Order TO-AR-y-392 step 2: any OTHER place that names acceptance.py's old sha256 is reported in a row and not edited.",
+  "world_is": "MEASURED at ae2ab2072b: git grep -n for 06425d4731b7... under infra/aws/lambda/ci returns one line, infra/aws/lambda/ci/function-map/irpt-commentary-draft-store-lambda.json:27 (staged_from row, repo_path infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py, pin 283f7e770056467a3fd7a74efc1447fa4f843420, packaged_as acceptance.py, sha256 06425d4731b7...). The other 89 lines of the combined grep are the 361c44fa9d pin on other members, which stay by design. NOT READ: whether the commentary-draft-store Lambda is built, deployed or live; no edit was made to that map.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-commentary-draft-store-lambda.json@ae2ab2072b (line 27)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/MAP_EDIT.txt (after-edit grep)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W291-S3 -- the record does not name its stage folder, so live_diff.py takes it as --stage with a default device path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W291-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~291",
+  "surfaced_at": "2026-10-17T15:48:19Z",
+  "one_line": "The order names the stage zip only as <stage>/irpt-status.zip, but the r36s build record carries no --out path, so live_diff.py locates the zip through a --stage argument whose default is the order's C:/dev/irpt-release-r36s2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-392 step 5: live_diff.py opens <stage>/irpt-status.zip and checks acceptance.py; step 4 names the stage only as --out C:/dev/irpt-release-r36s2 on the build command.",
+  "world_is": "MEASURED: r36s_build.py writes the record with keys schema, pin, functions, live_read and no stage path; live_diff.py's invocations in AC1 and AC2 pass no stage argument, so the default C:/dev/irpt-release-r36s2 is used, which is outside the repository. A wrong folder fails loud: the zip sha256 is checked against the record's zip_sha256 (dbbe1d9766c2...), and a missing zip is LIVE-DIFF-BAD. The default is a device path inside a worker tool, not portal or workspace code. NOT READ: nothing beyond the stage folder listing used by AC1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/live_diff.py (STAGE_DEFAULT, --stage)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~291/r50/CHECK lines in LIVE_DIFF.txt (zip path and zip sha256)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
