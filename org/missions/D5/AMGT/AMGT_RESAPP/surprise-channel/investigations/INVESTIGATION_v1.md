@@ -29866,3 +29866,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   }
 }
 ```
+```json
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~502",
+  "surfaced_at": "2026-10-17T21:04:41Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-D1-W502-S2",
+  "one_line": "The worktree is a sparse checkout: the naming gate reads infra/aws/lambda/ci/function-map from disk, finds it absent, and prints NAMING ERROR at each commit, though the folder is in the worktree tree.",
+  "spec_asserts": "Preflight: the worktree carries the paths the order names and its commit gates run on it as on a checkout (TREE-OK; the order's paths are present).",
+  "world_is": "The worktree sets core.sparseCheckout=true with a cone that lists .tools, infra/logic/registry, lib, org/devices and org/missions/D5/AMGT/AMGT_RESAPP. The tree of its HEAD lists infra/aws/lambda/ci/function-map and tests, but neither folder is on disk (ls fails), and 9915 index entries under infra carry skip-worktree. At the portal commit and at the outer commit .tools/safe-commit.sh printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-resapp-502\\infra/aws/lambda/ci/function-map/'. The commit still landed (rc 0). The order's paths are all materialised, so the TREE-OK premise holds.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-502 git config core.sparseCheckout=true; git sparse-checkout list (.tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP, ...); git ls-files -v -- infra shows 9915 skip-worktree entries",
+      "git ls-tree -d --name-only HEAD infra/aws/lambda/ci/ at 0f691c6e0e lists infra/aws/lambda/ci/function-map and infra/aws/lambda/ci/tests; ls infra/aws/lambda/ci fails on disk",
+      "safe-commit.sh output at portal 4f8299bd and outer 0f691c6e0e: [naming-gate] NAMING ERROR function-map folder missing (commit rc 0)"
+    ]
+  }
+}
+```
