@@ -65,3 +65,28 @@ Checker `p139_cotapply.py` (selftest 14 arms). **Four-postulate record.** (i) Do
 | DBF139-1-AC3 | `python -I .../checks/r139/p139_split.py . DBF139-1-AC3` | FAIL (a planted edit to a shared member refuses) |
 
 Checker `p139_split.py` (selftest 8 arms); a reference manifest and `build_bundle(receipt)` put into the tree by the issuer made AC2 and AC3 PASS and were restored. Fan-out: 1 of 1 chains, cap 4.
+
+## Amendment 3 (2026-10-17 ~13:0xZ): route B for the Inflection pair -- a narrow role the runner assumes, and the launcher's flat-directory defect
+
+**Why.** The Inflection bucket's `DenyForeignFirmPrincipals` does not admit the runner role `inf-gold-layer-ec2-role` (record `deliverables/2.0.0_SA_COO~F2/R139_INFLECTION_BUCKET_FENCE_FINDING.md` @e2c69d8f08); the signed pair would fail at its write. The CTO ruled route B (msg 10542): the four-statement policy moves to a NEW role whose builder-made name matches `role/*-inf-*`; the runner role gets ONE `sts:AssumeRole` on it; the launcher assumes it. The fence, the registry and the bucket policy are not touched. Item 2's pair is re-cut as REVISION 2 after both cells merge; `DB-f-2702` stays HELD until its amendment.
+**A second defect, measured by the issuer:** in the runner's flat-directory layout `orion_prefix()` REFUSES ("the naming registry is read from the repo layout only") before the bundle is opened, so the release run cannot reach its first S3 call; the existing flat-directory test exercised only `plan()`. Cell `DB-f-2705` fixes it (the registry is read through the verified bundle) and adds a flat-directory dry run to its checks.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| The Terraform of the new role: `iam.tf` gains the role name and assume-policy name modules, the session-name and role-ARN locals, the role (trust: the runner role only, fixed session name), the existing four-statement policy re-pointed at it byte for byte, and the runner's one-statement assume policy; plan will read 3 add / 0 change / 0 destroy | `DB-f-2704` | FWD-5 | WORLD (`infra/` path floor) | `DB-f-2501`, `DB-f-2603` (merged) | R139-D |
+| The launcher assumes the role: `SESSION_NAME`, `assumed_s3_client(sts=None, client_factory=None)`, `main` uses it when no client is injected and prints the role and session, a failed assume REFUSES naming the role, the flat-directory naming refusal fixed, tests green | `DB-f-2705` | FWD-5 | LOCAL | `DB-f-2701` (merged) | R139-E |
+
+| criterion | invocation | base reading |
+|---|---|---|
+| DBF139-4-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r139/p139_inf_role.py . DBF139-4-AC1` | FAIL (iam.tf unchanged) |
+| DBF139-4-AC2 | `python -I .../checks/r139/p139_inf_role.py . DBF139-4-AC2` | FAIL (no role) |
+| DBF139-4-AC3 | `python -I .../checks/r139/p139_inf_role.py . DBF139-4-AC3` | FAIL (no assume policy) |
+| DBF139-5-AC1 | `python -I .../checks/r139/p139_assume.py . DBF139-5-AC1` | FAIL (no `assumed_s3_client`) |
+| DBF139-5-AC2 | `python -I .../checks/r139/p139_assume.py . DBF139-5-AC2` | FAIL (`main` builds a plain client) |
+| DBF139-5-AC3 | `python -I .../checks/r139/p139_assume.py . DBF139-5-AC3` | FAIL (flat-directory naming refusal) |
+
+Checkers: `p139_inf_role.py` (selftest 11 arms; its `reference()` made AC1 to AC3 PASS on the trunk and was restored) and `p139_assume.py` (selftest 8 arms; a reference launcher made AC1 to AC3 PASS and was restored with `git checkout`). **Four-postulate record.** (i) Domain: the inf-pipeline root's 47 files (46 untouched) and one launcher file with its test file. (ii) Same grain: a Terraform resource; a launcher function. (iii) One intent: the Inflection transaction write is made by a role the fence admits. (iv) Not moved: the four statements' text, the runner role's 14 other inline policies, the fence, the registry, the bucket policy, every other firm. Fan-out: 2 of 2 chains, cap 8.
+
+**Amendment 3a (2026-10-17 ~13:3xZ): the session-name literal.** Both workers (rows D2-W2704-S4, D2-W2705-S1) were refused by the commit-time naming limb: the literal `inf-g-01-account-transaction` is a NEW hand-kept carrier of the `inf` scope token. The issuer rules inside its own decomposition: the fixed session name is `g01-account-transaction` (no scope token; the role name stays builder-made, so the fence still admits the role). Measured: the naming gate PASSes the new literal in `iam.tf` text and REFUSEs the old one. Changed in the two orders, the three checkers and the reference launcher; selftests 11, 18 and 8 arms PASS. Gate limb that graded the amendment: none (an order amendment before any work landed).
+
+**Amendment 4 (2026-10-17 ~14:2xZ): the Inflection pair re-cut as REVISION 2; order DB-f-2702 re-pointed.** DB-f-2704 (merged @3dc5ee36ea) and DB-f-2705 (merged @beddfb340f) are complete. The packet is REVISION 2 (@b9b961b3da, sha256 `5bfd8e040939`): plan 3 add / 0 change / 0 destroy, the simulation of the new role WITH the live bucket policy, the runner assumes the role, a 40-minute stop on the dry run (one-hour credentials). The COO half is re-signed on those bytes; the CTO half must be re-signed (the REVISION 1 half does not cover them). `DB-f-2702` is amended in place (its criteria ids are unchanged; `p139_infapply.py` carries the REVISION 2 sha256 and the route-B clauses, selftest 18 arms) and stays HELD: no GO until the CTO half reads SIGNED at the new sha256 and Monday 2026-10-19s 49 Financial first-fire read has passed. Gate limb that graded the amendment: none (an apply order is not gate-graded on modification).

@@ -24950,3 +24950,34 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S196 -- W148-S1 disarmed: the tracked test login file is a fixture Andrew sanctioned
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S196",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T12:33:10Z",
+  "one_line": "W148-S1 DISARMED: the tracked portal-test-login.env is a fixture Andrew sanctioned in words ('that is not a real login, that is fine we can use that', 2026-08-06) and the CTO's sibling disarm of NFRA_OPSEC202609-Z-S50 already adjudicated this file; no value appears here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W148-S1"
+  ],
+  "spec_asserts": "Row W148-S1 (disarm owner 2.0.0_SA_COO~Y2): .claude/skills/frontend-dev/portal-test-login.env is tracked in git (not ignored) and its name suggests credentials.",
+  "world_is": "MEASURED 2026-10-17 ~12:4xZ: `git ls-files --error-unmatch .claude/skills/frontend-dev/portal-test-login.env` exits 0 (tracked). The file's own header, read at HEAD with the values redacted, says: 'NOT a real client credential. Andrew-direct 2026-08-06 (CRO terminal), VERBATIM: \"that is not a real login, that is fine we can use that\"' and 'Sanctioned for any agent doing frontend/portal verification work'; it holds four keys (PORTAL_TEST_EMAIL, PORTAL_TEST_PASSWORD, PORTAL_TEST_USER_DB, PORTAL_TEST_USER_KEY) and no value was printed or copied by this seat. Commit 60bdb15654 (1.0.0_SA_CTO~Z, 2026-09-03, disarming NFRA_OPSEC202609-Z-S50) re-read this exact file as 'the sanctioned fixture', left the four value lines byte-identical and added the measured MFA fact (the account is MFA-enabled; the login does not complete unattended; satisfying the second factor for that admin identity is credential-equivalent and not authorized by any standing ruling). So the tracked state is a decision, not a leak, and the one open caution (the MFA identity) is carried by the file's own header. NOT READ: whether the account has since been rotated, or whether a different home (portal/.frontend-dev/auth/credentials.json, inside the portal submodule) carries real client credentials; that is the CTO~Z row's own matter.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files --error-unmatch .claude/skills/frontend-dev/portal-test-login.env (tracked; header read at HEAD with values redacted)",
+      "git show 60bdb15654 (1.0.0_SA_CTO~Z: disarm of NFRA_OPSEC202609-Z-S50, 'the sanctioned fixture', values untouched)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The tracked file is a fixture Andrew sanctioned in his own words and the CTO already adjudicated it; tracked-by-decision is not a hazard. No value was read or copied by this row. Its MFA caution stays in the file header."
+}
+]
+```

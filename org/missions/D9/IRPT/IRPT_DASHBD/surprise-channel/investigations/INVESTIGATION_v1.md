@@ -25586,3 +25586,191 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm: after Monday 2026-10-19's 49 Financial fire, read the gold function's log for FILLED_CATCHUP_LIST_FAILED (none expected) and the filled table's day count; the line recurring is a new finding about the listing's prefix shape and goes to the CTO."
 }
 ```
+
+## IRPT_DASHBD-D2-W2704-S1 -- DB-f-2704's plan count (3 add, 0 change, 0 destroy) is asserted by the checker header but unmeasured: the edit moves an existing policy's role argument
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2704-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2704",
+  "surfaced_at": "2026-10-17T12:44:37Z",
+  "one_line": "The plan count the cell's checker header asserts (3 to add, 0 to change, 0 to destroy) is not measured by this cell. The edit changes the role argument of the existing aws_iam_role_policy inf_gold_layer_account_transaction from the runner role to the new role. Whether the AWS provider updates that argument in place or replaces the resource is not read here: no Terraform command and no provider schema are available to this worker.",
+  "class": "OBSERVATION",
+  "spec_asserts": "p139_inf_role.py header: 'The plan this makes: 3 to add (the role, its policy, the runner's assume policy), 0 to change, 0 to destroy.'",
+  "world_is": "The uncommitted edit changes base line 232 of infra/aws/terraform/inf-pipeline/iam.tf from 'role = aws_iam_role.inf_gold_layer.id' to 'role = aws_iam_role.inf_account_transaction.id'. If the provider marks that argument ForceNew, the plan reads a replacement, which adds one destroy on the runner role, not 0 destroy. Unmeasured here; the plan is a later act of the Inflection pair.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/terraform/inf-pipeline/iam.tf@80cdc1417a line 232 (base role line of inf_gold_layer_account_transaction, read by this worker)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r139/p139_inf_role.py header (the plan sentence)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm is not needed while INERT: nothing is planned or applied by this cell. The plan read at the Inflection pair's plan should be checked against the header's 3/0/0 count before the apply is signed."
+}
+```
+
+
+## IRPT_DASHBD-D2-W2704-S2 -- the 1b region header of iam.tf still says Pure insertion, no role changed, which DB-f-2704's own edit makes false
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2704-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2704",
+  "surfaced_at": "2026-10-17T12:44:38Z",
+  "one_line": "The 1b region header comment of infra/aws/terraform/inf-pipeline/iam.tf (base lines 204-205) states 'Pure insertion: no existing policy, statement or role changed.' The cell's required edit changes the role argument of the existing policy, so the header is no longer true. The cell grants edits to the role and policy lines and no comment edit, so the header was left as the base wrote it.",
+  "class": "OBSERVATION",
+  "spec_asserts": "iam.tf 1b region header at base (lines 204-205): 'Pure insertion: no existing policy, statement or role changed. Nothing is planned or applied here.'",
+  "world_is": "The order's own required edit (the role line of the existing inf_gold_layer_account_transaction policy now points at the new role) changes an existing policy's role, so the header's claim is false after the edit. No criterion of DB-f-2704 reads the comment; the region is one the checker allows to change.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/inf-pipeline/iam.tf@80cdc1417a lines 204-205 (the header text, read by this worker)",
+      "infra/aws/terraform/inf-pipeline/iam.tf worktree line 232 (uncommitted: role = aws_iam_role.inf_account_transaction.id)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not edited here: the header wording is for the CTO or the issuer to direct at the next edit of this region. Nothing is planned or applied, so nothing is misread by a plan today."
+}
+```
+
+
+## IRPT_DASHBD-D2-W2704-S3 -- the order's facts field resources_added (3) does not match the measured count of new resource blocks (2) in the edit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2704-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2704",
+  "surfaced_at": "2026-10-17T12:44:39Z",
+  "one_line": "The order asks the facts record to carry resources_added (3). The edit declares two new resource blocks: aws_iam_role.inf_account_transaction and aws_iam_role_policy.inf_gold_layer_assume_account_transaction. The third add in the checker's plan count is the existing policy inf_gold_layer_account_transaction, which keeps its address and is not a new block. The facts record carries the measured 2, with that note.",
+  "class": "OBSERVATION",
+  "spec_asserts": "TO-DB-f-2704 worker face, step 3: the facts record carries resources_added (3).",
+  "world_is": "Measured in the worktree after the edit: two resource blocks are new (grep of resource lines in infra/aws/terraform/inf-pipeline/iam.tf). The existing policy is re-attached, not declared anew.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/inf-pipeline/iam.tf worktree (uncommitted): resource aws_iam_role inf_account_transaction and resource aws_iam_role_policy inf_gold_layer_assume_account_transaction are new blocks",
+      "git diff --numstat HEAD -- infra/aws/terraform/inf-pipeline/iam.tf reads 54 added and 1 removed line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as measured in the facts record; the order's count is not written. The plan count itself is the row IRPT_DASHBD-D2-W2704-S1."
+}
+```
+
+
+## IRPT_DASHBD-D2-W2704-S4 -- BLOCKING for the commit: the naming gate refuses the fixed session-name literal that the order and the checker both require, so iam.tf cannot be committed as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2704-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2704",
+  "surfaced_at": "2026-10-17T12:49:20Z",
+  "one_line": "safe-commit's naming limb (LGIC_ENFORCE DEC-6, ENFORCE mode) refuses infra/aws/terraform/inf-pipeline/iam.tf line 245, txn_session_name = 'inf-g-01-account-transaction', as a NEW hand-kept carrier of 'inf' outside every permitted context, and says to read it through lookup('inflection'). The commit is aborted with files unstaged, HEAD unchanged at 80cdc1417a. The checker and the order both pin this literal, and the registry that would carry it is outside this grant, so the cell cannot commit as written. Not repaired here.",
+  "class": "BLOCKING",
+  "spec_asserts": "TO-DB-f-2704 worker face: iam.tf is committed by safe-commit (one commit with the facts record). Criteria DBF139-4-AC2 and AC3 require txn_session_name = 'inf-g-01-account-transaction' (checker SESSION_NAME, line 32 of p139_inf_role.py), and the order names that fixed session name as the trust's condition.",
+  "world_is": "The naming gate refuses that exact literal at iam.tf line 245 (NAMING REFUSE, 3 graded, 2 CONFORMANT: the role name at line 208 and the assume policy name at line 216 pass). The gate's advice is a registry read (lookup('inflection')), which needs a registry row under infra/logic/registry/. That path is outside this worker's grant and the order's refusal clause forbids a route it did not name. The three criteria PASS in the worktree; the commit does not land.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit naming-gate output, 2026-10-17 at HEAD 80cdc1417a: NAMING REFUSE infra/aws/terraform/inf-pipeline/iam.tf:245 inf-g-01-account-transaction -> lookup('inflection')",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r139/p139_inf_role.py line 32 (SESSION_NAME literal, read by this worker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks the iam.tf commit only; nothing is planned, applied or pushed. The direction (a registry row, an R20 register entry Andrew acknowledges, or a gate ruling on this literal) belongs to the CTO or the issuer. Rows S1 to S3 stand regardless."
+}
+```
+
+
+## IRPT_DASHBD-D2-W2704-S5 -- row S4 resolved by the coordinator's ruling: the fixed session name is now g01-account-transaction, amended in f6965003da
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2704-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2704",
+  "surfaced_at": "2026-10-17T13:02:30Z",
+  "one_line": "Row S4 (the naming limb refusing inf-g-01-account-transaction) is resolved by the ruling carried in commit f6965003da: the fixed session name is g01-account-transaction, the checker SESSION_NAME is amended to match, and the merge into this branch is ce9b599299. The worktree iam.tf literal at line 245 is changed to g01-account-transaction and the three criteria re-run PASS. Row S4 itself is not edited; this row is the resolution note.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W2704-S4: the naming limb refused the literal inf-g-01-account-transaction at iam.tf line 245 as a new hand-kept carrier of the inf token.",
+  "world_is": "The ruling amends the literal to g01-account-transaction (order DB-f-2704, checker p139_inf_role.py line 32, decomposition amendment 3a). The iam.tf change is the one literal; the three criteria PASS on the new bytes (sha256 04d22a42b9e8bcf2caa4b5a678c02650ed46f6af4c0fda196a93385d739c02c3). Whether the naming limb now passes the literal is read at the commit that carries iam.tf, not asserted here.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show f6965003da: amend(IRPT_DASHBD round 139, 2.0.0_SA_COO~F2), the fixed session name g01-account-transaction",
+      "git merge --no-edit f6965003da into wk-IRPT_DASHBD-2704 at ce9b599299; iam.tf line 245 reads g01-account-transaction in the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closes when the iam.tf commit lands and the naming limb's read of the new literal is printed in that commit's output. Rows S1 to S3 stand unchanged."
+}
+```
+
+## IRPT_DASHBD-D2-W2705-S1 -- the order's literal SESSION_NAME is refused by the commit-time naming limb as a new hand-kept carrier of 'inf'; the launcher and test commit is aborted (rc=1)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2705-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2705",
+  "surfaced_at": "2026-10-17T12:47:56Z",
+  "one_line": "The order's literal SESSION_NAME = \"inf-g-01-account-transaction\" is refused by the commit naming limb (LGIC_ENFORCE DEC-6, ENFORCE) as a new hand-kept carrier of inf, so the launcher and test commit is aborted (rc=1) and nothing lands.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face DB-f-2705 step 2 and checker DBF139-5-AC1 require the launcher to carry a module constant SESSION_NAME equal to the literal \"inf-g-01-account-transaction\", and the commit to pass the safe-commit gates. CLAUDE.md section 4 requires a builder refusal to be a missing registry row, never a hand-typed workaround.",
+  "world_is": "The commit gate's naming limb refused the diff at its first run (safe-commit.sh, worktree HEAD 3b3d3e9f94): NAMING REFUSE data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 inf-g-01-account-transaction -> lookup('inflection'), 'NEW hand-kept carrier (context rule); hand-kept carrier of inf outside every permitted context'. The role name built by name() at line 390 is CONFORMANT. The literal cannot land as written, and the order names no route that satisfies both the literal and the gate. Not repaired: the literal is kept, nothing is derived, no gate is bypassed, no override is used. The three checker criteria PASS on the uncommitted worktree bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run at worktree HEAD 3b3d3e9f94: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' rc=1",
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 (uncommitted worktree bytes, base 3b3d3e9f94): SESSION_NAME = \"inf-g-01-account-transaction\"",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-2705.inflection-launcher-assumes-transaction-role-flat-directory-naming.md (WORKER FACE step 2 and DBF139-5-AC1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced at the first commit attempt. The three criteria were run on the uncommitted bytes: DBF139-5-AC1 PASS, AC2 PASS, AC3 PASS; the launcher test file is 83 passed, 0 failed, 0 errors (77 at base). The proof instance cannot validate while its artifacts are uncommitted (artifact-resolution). Routing is the COO's and the CTO's: a registry row or a derived session name, under a decision on the literal."
+}
+```
+
+## IRPT_DASHBD-D2-W2705-S2 -- S1 resolved by the coordinator's ruling: the fixed session name is g01-account-transaction and the naming gate passes it; the launcher committed at 2231124c6b
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2705-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2705",
+  "surfaced_at": "2026-10-17T13:04:14Z",
+  "one_line": "S1 is resolved by the ruling: SESSION_NAME is g01-account-transaction (amended order and checker in f6965003da, merged at 69c26cdf29); the naming gate passes the literal and the launcher and test commit landed at 2231124c6b.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Surprise row IRPT_DASHBD-D2-W2705-S1 (BLOCKING): the literal SESSION_NAME from the order was refused by the commit naming limb, aborting the launcher commit.",
+  "world_is": "The coordinator's ruling (order and checker amended in f6965003da) fixed the session name at g01-account-transaction; the worker changed SESSION_NAME and the test literals, re-ran AC1, AC2, AC3 (PASS) and the launcher test file (83 passed, 0 failed, 0 errors), and the commit gate and naming gate passed at 2231124c6b.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 at 2231124c6b: SESSION_NAME = \"g01-account-transaction\"",
+      "safe-commit.sh of 2231124c6b: '[naming-gate] NAMING-GATE: PASS 1 graded' and rc=0",
+      "f6965003da (the ruling's amended order and checker), merged into the worktree branch at 69c26cdf29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Notes row. S1 keeps its own disposition; the adjudication belongs to the CVO."
+}
+```

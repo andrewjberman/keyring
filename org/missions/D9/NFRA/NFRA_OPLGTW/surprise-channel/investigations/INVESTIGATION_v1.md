@@ -27618,3 +27618,56 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The check's absence is a device fact, not a refusal; the issuer's text scan of the merged diff finds no long digit run and no e-mail, the fixtures are synthetic, and the code carries no client value. The commit is recorded as text-scanned, not as checked by the hashed list."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T13:14:00Z",
+  "id": "NFRA_OPLGTW-Z-S372",
+  "one_line": "OG-ap-36 Phase A addendum STOP on CT1: under a 0.5 s gate wait the second concurrent windowed call is refused at once (no rows, retry_after_seconds 0.5) but the tool answer's absent_reason reads null, so the word window_read_busy is not surfaced; the other CT1 limbs and the counts pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/CT1_CONCURRENT_OG-ap-36.json (release 948e8b47cc, a fresh process on the host through the candidate's own async wrapper, the one test account, the 13-month window, nothing but counts, outcome words and seconds)",
+      "Pair under a 0.5 s gate wait (a scratch-process override of bd.WINDOW_GATE_WAIT_SECONDS, no file changed): the first call returned rows equal to its solo run; the second call, started 0.3 s later, returned an empty list with retry_after_seconds 0.5 (set only by the adapter's window-busy body), done by the time the first call returned (both at 1.6 s); its absent_reason read null.",
+      "Pair under the real 15 s gate wait (page about 2 s): the first call equal to its solo run (1.43 s); the second waited for the gate, then returned rows equal to the solo rows (done at 2.77 s): waited_then_equal_solo. /health through both pairs: 98 probes every 0.05 s, longest 0.082 s, all 200. Process RSS 106 to 108 MB before, 232 to 245 after the solo call, 273 to 276 after the pair.",
+      "app/client_core.py _answer (lines 505 to 525): body is the adapter's non-underscore keys, then body.update sets absent_reason from meta['_absent_reason'] (the underscore key); the adapter's _absent() sets 'absent_reason' with no underscore, so the tool boundary overwrites it with null. tests/test_og_en21.py test_ogen21_ac02 asserts busy['absent_reason'] == 'window_read_busy' on the adapter's own return, not through the core."
+    ]
+  },
+  "spec_asserts": "The CTO's CT1 (half of 2026-10-17, msg 35473) and amendment A2 4a(iii): under a short gate wait the second concurrent call answers window_read_busy.",
+  "world_is": "The contention branch behaves as designed (the second call is refused while the first runs, does not queue, the loop stays free, the first call is unharmed), but the word the order and the test name is not what a caller of the tool reads: absent_reason is null and only retry_after_seconds and the empty list say 'busy'. The gap is not new: the same overwrite is in the live ref's client_core, and it was invisible because on the live code the sync tool holds the loop, so a second windowed call can never reach the gate. The record's second_short_gate therefore reads busy_reason_not_surfaced, not window_read_busy, and ap36.AC1 reads NOT OK on that limb by design. The counts limb passes: the candidate's six pages equal the live code's on rows, sha256, partition_rows and fence_excluded (6 of 6; fence_excluded is 0 on every page, so that count was equal but not exercised).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts, outcome words and seconds only. No deploy; the halves stay signed on the ask's bytes (this run adds records and changes no file of the release). The question for the issuer and the CTO: accept the outcome as the contention branch (the substance holds; the word is a pre-existing tool-boundary omission to repair in its own cell), or cut the one-line mapping in client_core._answer (and a test) before the release, which changes the release bytes and re-opens the halves."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-17T13:25Z",
+  "id": "NFRA_OPLGTW-Z-S373",
+  "one_line": "Z-S372's overwrite is wider than window_read_busy and is LIVE today: client_adapter_bd49f._absent sets absent_reason but never _absent_reason, and client_core._answer overwrites body.absent_reason with meta._absent_reason (None), so all five no_partition_at_as_of refusals (resolve_account, holdings, transactions, allocation, fees) already answer empty rows with absent_reason null on the live 9d5b712557.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "CTO msg 35486: a refused call that answers empty rows with absent_reason null reads as 'no transactions', a failed retrieval returning a value; the fix is the mapping in client_core._answer.",
+  "world_is": "Release 948e8b47cc (same lines at the live ref; neither file's _absent/_answer is in the 9d5b712557..948e8b47cc diff): client_adapter_bd49f.py:445-459 _absent sets out['absent_reason']=code and the underscore meta keys, but not '_absent_reason'; its callers are :382 (window_read_busy) and :477, :516, :583, :645, :726 (no_partition_at_as_of: candidates, positions/cash, transactions, weights, fees). client_core.py:506-524 _answer builds body from the non-underscore keys, then body.update({'absent_reason': meta['_absent_reason'], ...}), which replaces the adapter's code with None.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/og-rel-batch6 show 948e8b47cc:infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py lines 382, 445-459, 477, 516, 583, 645, 726",
+      "git -C C:/tmp/og-rel-batch6 show 948e8b47cc:infra/aws/ec2/opal-gateway/app/client_core.py lines 506-524",
+      "investigations/INVESTIGATION_v1.md#NFRA_OPLGTW-Z-S372; CTO msg 35486"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read in code, not exercised on the host. The CTO's cut should map the adapter's absent_reason through generally (for example keep out['absent_reason'] when meta['_absent_reason'] is None), not special-case window_read_busy, and its test should also assert one no_partition_at_as_of refusal (an as_of before the first partition) carries its word. My OG-ap-36 half (abb0e56d1a) called the busy branch reachable without reading how client_core projects it; this seat missed both."
+}
+```
