@@ -59,7 +59,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-db-2.reland-og-db-1-preflight-o
 - Spawn only after `OG-ap-33` merges: the pre-cell blob must be the live script. `risk` WORLD by the L6 floor (a gateway path); no deploy.
 - Pre-cut: `db2.AC1` base FAIL as expected (no commit by the serial); dry-run on a temp repo with synthetic history: PASS arm; controls FAIL (the block twice; a live line deleted too; the block in the wrong place; the block altered). `db2.AC2` PASS on the post-cell script, FAIL on the live script (block absent), and its control (empty root) refuses. The AC2 check never runs the deploy script: it extracts the block into a temp file.
 
-<status>staged</status>
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-Q</workstream>
 <slot>~133</slot>
