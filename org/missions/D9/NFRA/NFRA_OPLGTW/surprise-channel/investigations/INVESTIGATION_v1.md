@@ -27671,3 +27671,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Read in code, not exercised on the host. The CTO's cut should map the adapter's absent_reason through generally (for example keep out['absent_reason'] when meta['_absent_reason'] is None), not special-case window_read_busy, and its test should also assert one no_partition_at_as_of refusal (an as_of before the first partition) carries its word. My OG-ap-36 half (abb0e56d1a) called the busy branch reachable without reading how client_core projects it; this seat missed both."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~138",
+  "surfaced_at": "2026-10-17T13:41:10Z",
+  "id": "NFRA_OPLGTW-Z-W138-S1",
+  "one_line": "On worktree C:/tmp/wk-oplgtw-138 the untracked roster file data/mdpf/config/partner_roster.json is absent, so tests/test_og_ch1.py::test_ogch1_ac04 fails with 'the repo roster file is not on this tree' (1 failed, 96 passed across the client-core and adapter test files).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "OG-en-24's AC3 runs the twelve window test files and names no other gateway suite; the order does not say the rest of the client-core test files pass on a fresh worktree.",
+  "world_is": "The file is present in the base checkout (C:/Users/Opal Bloomberg/Desktop/ajb_workspace/data/mdpf/config/partner_roster.json, 27433 bytes) and absent from this worktree (ls rc=2 on data/mdpf/config/partner_roster.json). The failure is raised by the test's own path walk (test_og_ch1.py:99), before any call into client_core, so it is independent of the OG-en-24 line. The worker did not copy the file into the worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest run on tests/test_og_ch1.py::test_ogch1_ac04 in C:/tmp/wk-oplgtw-138/infra/aws/ec2/opal-gateway: AssertionError 'the repo roster file is not on this tree' at tests/test_og_ch1.py:99",
+      "ls of data/mdpf/config/partner_roster.json in C:/tmp/wk-oplgtw-138: no such file; the same path in the base checkout: present, 27433 bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed in this cell: test_og_ch1.py is outside the order's <paths>, and copying an untracked data file into the worktree would rebuild the tree. The twelve window files pass 42 of 42 with the line in place. Issuer to say whether the worktree should carry the roster file or the suite should skip the path walk when it is absent."
+}
+```
