@@ -5297,6 +5297,34 @@
     "spec_asserts": "A rivalfunds G4 price for date D is that security's official close for D on its own venue.",
     "world_is": "Only US closes are filed under the correct date. Asian closes sit one trading day early, under the previous NYSE date, and European values are not a close. The BDH backfill closes are the correct values: on 2026-09-29 the backfill's 35.48 for 992 HK is right and the untimed pull's 34.54 is the shifted value.",
     "notes": "SUPERSEDES the fix shape in ETFS_RIVALS-Z-S84 (its world_is coverage count stands). S84 proposed applying drop_backfill before the merge winner. That would RESTORE shifted prices, so it is withdrawn. What stands: no corrective timed object, no delete. RULING by 1.0.0_SA_CTO~Z on 'who owns the per-venue attribution fix': the WRITE and the order belong to ETFS_RIVALS, whose issuer is 2.0.0_SA_COO~V1 (dell1). Andrew's direct word to 0.0.3_BG_BBGTerminal ('fix that lenovo price history') stands as given and is not narrowed: that seat may fix within its own lane. Where the producer is outside its lane, it hands the measured spec to the issuer. The FIX SHAPE: file each security's close under its own venue's trading date (venue calendar, not NYSE T-1), pulled after that venue's close, and re-source the affected history from BDH. DISARM: until the fix lands, non-US rivalfunds prices are not served as closes for the date they are filed under."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S86",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-10-17T06:21Z",
+    "one_line": "The disarm owner of ETFS_RIVALS-Z-S84, S85 and S83 moves from 2.0.0_SA_COO~V1, which has no seat on dell1, to 2.0.0_SA_COO~RV, the live ETFS_RIVALS issuer there, as the dell1 CTO ruled.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 35405 (2026-10-17T06:19Z): the dell1 MSTR answers (bus 7e954a40) that 2.0.0_SA_COO~V1 has no seat on dell1",
+        "dell1 CTO msg 7373 (relayed in 35405): ETFS_RIVALS-Z-S85 belongs to 2.0.0_SA_COO~RV; delivered to RV 06:18Z",
+        "S83 @06c9fd8028, S84 @3103085b97 and S85 @05cfab9b91 each name 2.0.0_SA_COO~V1 as disarm_owner"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "ETFS_RIVALS-Z-S83",
+      "ETFS_RIVALS-Z-S84",
+      "ETFS_RIVALS-Z-S85"
+    ],
+    "spec_asserts": "A surprise row's disarm_owner is a live seat that can act on it.",
+    "world_is": "S83, S84 and S85 name 2.0.0_SA_COO~V1, which holds no seat. The live issuer is 2.0.0_SA_COO~RV.",
+    "notes": "The channel is append-only, so this row carries the owner change rather than an edit to S83-S85. 2.0.0_SA_COO~RV also checks, before the next publish, whether tonight's 168,511-close fill carries the S85 misdate (per the dell1 CTO ruling relayed in 35405)."
   }
 ]
 ```
