@@ -10381,5 +10381,59 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S40",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T11:40:08Z",
+     "one_line": "Issuer disposition of the HVST-cc-2 worker rows D1-W151-S1 to S5: the ticker guard the order first named is not buildable from a stored row, the CTO ruled a named exclusion list (erratum 2, msg 6843), and the served gateway now excludes both KMB Mexico reports (319c9413a2).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-2 (amended e3f05f3829): the two misfiled KMB reports are excluded from KMB's research_reports and named in the response.",
+     "world_is": "Read by the issuer at 2026-10-17T11:40:08Z: cc7_served.out line 24 reads fbd50086c4065785 ABSENT from research_reports and so is 1a3b56044db679a5; misfiled_reports_excluded names both (line 27) with correct_security_key null; denominator_note reads '2 misfiled report(s) excluded from KMB_US_Equity'. The order's own record (task face, COMPLETE 2026-10-16T16:41:26Z) answers S1 (stop at step 1g), S3 (the .pdf is now listed), S4 and S5 (notes on the order text). S2 (a strict title-ticker rule flags 22 same-issuer rows) is why the guard is an exact list, not a rule. What stays open is the dossier built from the excluded report, carried by D1-S38 and D1-S39 for the round-88 analysis.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_served.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-2.a-research-report-attaches-to-the-security-it-is-about.md"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W151-S1",
+      "AMGT_HARVST-D1-W151-S2",
+      "AMGT_HARVST-D1-W151-S3",
+      "AMGT_HARVST-D1-W151-S4",
+      "AMGT_HARVST-D1-W151-S5"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The blocking premise (a guard built from a stored row) was answered by the CTO's ruled exclusion list, which is merged (44a1048df9) and served (319c9413a2); the unfixed remainder is carried by D1-S38 and D1-S39."
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S41",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T11:40:08Z",
+     "one_line": "Issuer disposition of D1-W153-S3 (ARMED, worktree GC and the live runner's pin worktrees): on dell1 the three runner pin worktrees read SKIP in a dry run; the remediation row Z-S111 stays with 0.0.0_AB_MSTR~DELL1 (re-owned by HVST-cc-6) and is not closed here.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "An ARMED item carries a live disarm owner (CLAUDE.md section 2, surprise channel); .tools/worktree_gc.py SKIPs an in-use pin worktree.",
+     "world_is": "Issuer ran 'python .tools/worktree_gc.py' (dry run, nothing removed) on dell1 at 2026-10-17T11:40:08Z: C:/dev/wk-harvest-runner-pin-3c1e8bcdb1, -47c623dcf8 and -ddd7dcdc38 each read SKIP (locked); SUMMARY CLEAN=0 MERGED=0 SKIP=3. That is the git-lock fence, not the in-use read of lines 10-13, so it does not prove that second guard. Site Z, where Z-S111 was raised, is retired (ROUND_ANALYSIS.round85.ADDENDUM_4_Z_RETIRES_ALL). The dead disarm owner 0.0.0_AB_MSTR~Z is replaced by 0.0.0_AB_MSTR~DELL1 on the remediation row, which is the CVO's document.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       ".tools/worktree_gc.py dry run on dell1 at 2026-10-17T11:40:08Z",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-6.the-32-stale-open-remediation-rows-are-each-moved.md"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W153-S3"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The investigation row's complaint is the dead disarm owner; HVST-cc-6 re-owned Z-S111 to 0.0.0_AB_MSTR~DELL1 and the hazard itself lives on the remediation row, which only the CVO moves."
+    }
 ]
 ```
