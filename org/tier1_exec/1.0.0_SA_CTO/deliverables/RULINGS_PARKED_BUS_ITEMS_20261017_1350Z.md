@@ -68,8 +68,8 @@ sitez `4a14dc36`, sitez `b62dc039`, dell2 `4dee3af5`. Each item below is CONCLUS
 
 - Principals: laptop `user/Andrew_Berman` (measured, `sts get-caller-identity` at ~13:40Z); site Z
   `user/Andrew_Berman` (measured by site Z, XA-20261017T072107Z-0e3e); dell2 `user/cloudops-dell2-agent-user`
-  (from the ruling); dell1 `user/cloudops-dell1-agent-user` (the name is INFERRED; the user exists, because the
-  simulation resolved it; dell1's MSTR confirms it with one `sts get-caller-identity`).
+  (from the ruling); dell1 `user/cloudops-dell1-agent-user` (MEASURED by dell1's MSTR, `sts get-caller-identity` at 14:11Z,
+  dell1 msg 90c8a78d, relayed in laptop msg 109821).
 - `iam simulate-principal-policy` for each of the three distinct users: `s3:GetObject` on
   `opal-data-assets/globgrph/49financial/silver/account_id_list/hmac` = allowed; `secretsmanager:GetSecretValue` on
   `irpt/hmac-list/key-buIJuq` = allowed. Resource side: the `opal-data-assets` bucket policy has 2 statements; its
