@@ -132,3 +132,27 @@ one trading day, Europe intraday. At 14:35Z: **North America intraday as well.**
   using only US names on 11:00Z days passes while everything stands.
 - Section 3's point 3 is reinforced, not weakened: no single capture instant is correct for all venues,
   and an unpinned capture time is not correct for ANY venue reliably.
+
+## 8. A VERIFICATION TRAP: the defect is INVISIBLE on a weekend run
+
+**2026-10-17 is a Saturday, so today's ~11:00Z daily pull cannot exhibit this defect, and a check run
+against its output would return a FALSE PASS.**
+
+Mechanism: the defect needs a venue to have CLOSED between the attribution date and the capture instant.
+On a Saturday every exchange is shut, so `PX_LAST` at 11:00Z is Friday's close for every venue, and the
+T-1 frontier files it under Friday. Right answer, right date, wrong reason -- the capture happens to be
+after the last close and before the next open for ALL venues at once, which is exactly the condition
+section 7 says no weekday capture satisfies.
+
+**So "I checked and the prices are correct" is not evidence the fix landed if the data came from a
+Saturday or Sunday run.** The earliest informative run is the next WEEKDAY one: by 11:00Z on a weekday,
+Asia has closed that day and Europe is mid-session, and the shift reappears.
+
+This is the trading-calendar trap in its verification form. The usual version is a false ALARM -- calling
+a pipeline stale on a Monday because Friday is Monday's answer. This is the inverse and the more
+dangerous direction: a false ALL-CLEAR, because a weekend reading of a weekday defect looks healthy and
+nothing flags it.
+
+**Non-application:** a check against the BACKFILL/held-tr rows, which come from a dated historical
+request and are correct on any day of the week. Only the SNAPSHOT (`as_of_source` "pull") rows carry the
+weekday dependence.
