@@ -14895,3 +14895,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Owner of the sparse set: the issuer's provisioning (.tools/wk-provision.sh). The folder was added in this worktree only and named in the report. Counts only."
 }
 ```
+
+## NFRA_CTLPLN-S9138 -- the QA run's strata C and A read INSTRUMENT_FAILED; stratum C names a git ls-tree/log failure on the runner host
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9138",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T15:20:00Z",
+  "one_line": "In the TO-APPLY-33 QA run (start 2026-10-17T14:54:58Z) manifest/2026-10-17.json carries strata C and A as INSTRUMENT_FAILED; C's denominator reads 'git ls-tree/log FAILED' (no stderr kept), A reads 0 of 2 devices reporting (outset seam objects UNREAD). compile_resources is ok and status is PENDING, so the order's criteria are met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~NFRA1/deliverables/TO-APPLY-33_QA_manifest_2026-10-17.json: ai_funnel.groups.C stratum_status INSTRUMENT_FAILED, stratum_denominator 'git ls-tree/log FAILED'; groups.A INSTRUMENT_FAILED, '0 of 2 rostered device(s) reporting'",
+      "org/tier2_senior/0.7.0_AE_CloudOps~NFRA1/deliverables/TO-APPLY-33_QA_run_2026-10-17T151354Z-i-0584e17d283fa7ef4.log line 22: strata: D=OK, B=OK, C=INSTRUMENT_FAILED, A=INSTRUMENT_FAILED; no WARN line and no Traceback in the log"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The estate report writes a manifest with a status other than FAILED after the blob prefetch lands (TO-APPLY-33 AC3).",
+  "world_is": "AC3 holds (status PENDING). Two of four strata are unmeasured in the same run. Whether C is the same blobless-clone family as the checkout failure was not examined: the log keeps no stderr for it. A is the known outset seam (UNREAD objects), not examined here.",
+  "notes": "Decision owner: 2.0.0_SA_COO~C. The seat changed nothing for this row and made no second run. Counts only."
+}
+```

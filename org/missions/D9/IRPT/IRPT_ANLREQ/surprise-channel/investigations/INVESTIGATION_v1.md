@@ -25095,3 +25095,191 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S198 -- W144-S1 NOT dismissed: the live irpt-status acceptance.py predates get_commentary_ref
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S198",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:03:11Z",
+  "one_line": "W144-S1 STANDS on a live read: irpt-status (CodeSha256 +TcZDWmw...) packages acceptance.py at the zip root and that module has NO get_commentary_ref, so the ticket page's commentary-PDF read falls back and refuses COMMENTARY_PDF_NOT_RETAINED for every ticket; IB2's R3a ABSENT was checked against the repo path name and is not the evidence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W144-S1"
+  ],
+  "spec_asserts": "Row W144-S1 (disarm owner 2.0.0_SA_COO~Y2): the release-31 member set omits ycharts/generate/acceptance.py, which the AR-y-331 commentary route reads; the built package answers COMMENTARY_PDF_NOT_RETAINED on the two route cases.",
+  "world_is": "MEASURED 2026-10-17 ~15:0xZ by this seat (read-only get-function, code zip downloaded to a scratch folder and deleted; member names and one string search): irpt-status live CodeSha256 +TcZDWmwE7uv3sUwos2+jn1lbKyQikK+13nNBzD6q4A= (49 members) holds `acceptance.py` at the zip root (the function map's `packaged_as`), 9,393 bytes, and `def get_commentary_ref` is NOT in it; at HEAD ycharts/generate/acceptance.py defines it (added by 06557b6618, IB-pr-478, 2026-10-12 15:17Z). ops/owned_report.py reads `getattr(self.requests.acceptance, 'get_commentary_ref', None)` (line 350) and raises COMMENTARY_PDF_NOT_RETAINED when it is absent (lines 353 to 373). So the commentary PDF of a ticket cannot be opened through irpt-status as deployed: r35l (ledger 20261016T0554Z, CLOSED) moved the code sha but shipped the older acceptance module. IB2's line `R3a ... acceptance.py=ABSENT` named the repo path `ycharts/generate/acceptance.py`, but the member is packaged as `acceptance.py`; that line does not show absence. NOT READ: a live commentary-PDF request on a real ticket; which tickets carry a commentary ref today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function irpt-status (zip member list: acceptance.py present, no ycharts/generate/ prefix) and a string search for `def get_commentary_ref` in it (absent)",
+      "git show HEAD:infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py (defines get_commentary_ref); git log -S shows 06557b6618",
+      "git show HEAD:infra/aws/lambda/investor-reporting/ops/owned_report.py (lines 338 to 373)",
+      "git show HEAD:infra/aws/lambda/ci/function-map/irpt-status.json (acceptance.py, packaged_as acceptance.py)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_armed_reads/A_ARMED_READS.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (an irpt-status release that packages the current acceptance.py, a never-widen pair and an apply by 0.7.0_AE_CloudOps~IB2; or a re-scope of the route; asked of 1.0.0_SA_CTO~DELL2)"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S199 -- S26 disarmed on a measured depth of 0
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S199",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:03:11Z",
+  "one_line": "S26 DISARMED on its own stated condition: the commentary-ready queue reads depth 0 (nothing visible, nothing in flight, nothing delayed); the dead-letter queue holds 1, not claimed to be this message.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S26"
+  ],
+  "spec_asserts": "Row S26: ONE commentary_ready message for the synthetic request REQ-4b5155ac2ea9467ab771b414 sits on outlook-global-commentary-draft-commentary-ready-queue until about 2026-10-15T06:10Z (disarm owner 2.0.0_SA_COO~Y2: it disarms on a MEASURED depth of 0, CTO msg 4257).",
+  "world_is": "MEASURED by IB2 (A_ARMED_READS.txt, R1, 2026-10-17 ~14:5xZ): `R1 queue=0 notvisible=0 delayed=0 dlq=1`. The row's own condition (a measured depth of 0) is met; the 4-day retention (345,600 s) would also have expired the message by 2026-10-15T06:10Z. The DLQ reads 1: the dead-letter queue is a different object and may hold this message (moved there after three receives) or the window-2 message the later orders name; which one is NOT READ and is not claimed. This row is GRADUATED: its ARMED standing sits in the CVO's remediation entry, so this row is the evidence for the L8 packet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_armed_reads/A_ARMED_READS.txt (R1)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The disarm condition the row and the CTO named, a measured depth of 0, is read; the DLQ residue is a separate object and is recorded, not dismissed."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S200 -- W129-S1 disarmed: no stored ordinary owner carries home_firm_id
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S200",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:03:11Z",
+  "one_line": "W129-S1 DISARMED: a consistent count-only scan of irpt-requests finds 0 of 2,323 stored requests with a non-OPAL_GLOBAL owner carrying home_firm_id; the 851 that carry it are all OPAL_GLOBAL (positive control).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W129-S1"
+  ],
+  "spec_asserts": "Row W129-S1 (disarm owner 2.0.0_SA_COO~Y2): the premise that legacy retained owners carry home_firm_id and need a reader is unverified against stored data.",
+  "world_is": "MEASURED twice: by IB2 (R2: owners_with_home_firm_id_nonglobal=0 of scanned=2323) and re-run by this seat with controls (ConsistentRead, --select COUNT, nested names): owner.principal_class exists on 929 of 2,323; owner.home_firm_id exists on 851; home_firm_id AND principal_class = OPAL_GLOBAL is 851 (equal, so every stored owner carrying the attribute is global); home_firm_id AND principal_class <> OPAL_GLOBAL is 0. A single page covered all 2,323 (no LastEvaluatedKey). So the writer fix (D2-S173, the pop for non-global owners) leaves no stored ordinary owner needing a reader. No item content was read or printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_armed_reads/A_ARMED_READS.txt (R2)",
+      "aws dynamodb scan irpt-requests --select COUNT with three filters (counts 929, 851, 851, 0)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The stored-data premise is measured with a positive control and a complement: 0 non-global owners carry home_firm_id, so no legacy reader is owed."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S201 -- S118 disarmed: the staff form now chooses a firm and the directory map holds the firms a staff user can choose
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S201",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:03:11Z",
+  "one_line": "S118 DISARMED: the PROD staff form now reads the served firm list and carries a Firm control (D2-S190), and irpt-ycharts-generate's directory map holds 49financial, cottonwood and inflection, so a chosen firm no longer meets the 'no directory bucket for firm token' refusal; no global or staff key is held by design.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S118"
+  ],
+  "spec_asserts": "Row S118 (disarm owner 2.0.0_SA_COO~Y2, reads the firms path on the DEV build): the PROD Ticket Center staff form shows no models or firms because the comparison catalogue is refused FIRM_BINDING (no firm chosen and the Lambda's directory map holds no staff or Global token).",
+  "world_is": "MEASURED: IB2 R5 reads `directory_map_keys=49financial,cottonwood,inflection count=3 has_global_or_staff_key=no` on irpt-ycharts-generate (CodeSha256 kxOEgpbspky..., the r33 build). The cause the row named was that the staff form sent no firm; at origin/PROD (15bc21b304d4) and origin/DEV the staff form calls loadAllowedFirms for staff and holds the Firm control (D2-S190), so the catalogue request carries the chosen firm's token, which the map holds. A staff user who chooses no firm still gets FIRM_BINDING, which is the intended fail-closed refusal. NOT READ: a rendered staff page on PROD or DEV (no sanctioned staff login on this box; window 5's F8 and the CTO's own open of the ticket supply that).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_armed_reads/A_ARMED_READS.txt (R5)",
+      "D2-S190 (origin/PROD source: loadAllowedFirms for internal callers and the staff Firm control)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The two halves of the failure are both changed: the page now sends a chosen firm and the map holds the choosable firms. A rendered staff page is not claimed."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S202 -- W146-S4 disarmed while TICKET_DL_MAP is empty
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S202",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:03:11Z",
+  "one_line": "W146-S4 DISARMED: opal-ticket-api's TICKET_DL_MAP reads EMPTY (0 firms, 0 outside-domain recipients), so a CREATE sends no firm mail; window 5's R0g re-reads it and stops if it is non-empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W146-S4"
+  ],
+  "spec_asserts": "Row W146-S4 (disarm owner 2.0.0_SA_COO~Y2): a successful FWD-1 CREATE calls notify_dl_isolated and sends an SES message to the firm DL.",
+  "world_is": "MEASURED by IB2 (R6): `ticket_dl_map=EMPTY firms=0 recipient_domains_outside_opalinvest_com=0`. The send is conditional on a non-empty map entry for the filing firm, so the hazard is inert at this value. It is a property of a mutable environment variable, so it is not claimed closed for all time: the window-5 order reads it again at R0g (STOP if non-empty or any recipient outside @opalinvest.com) and counts WE_DL_SENT at F5; the standing law bars building a notification path unasked, and none is added here. NOT READ: the code path that would send if the map were filled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_armed_reads/A_ARMED_READS.txt (R6)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/task_orders/IRPT_ANLREQ.TO-RUN-FWD1.fwd1-staff-filing-window5-ib2.md (R0g and F5)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Inert at the measured value and guarded by the window order's own read and count; a later change of the map is a new state and a new read."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S203 -- W77-S3 disarmed as a dated limit carried to the enrichment list
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S203",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T15:03:11Z",
+  "one_line": "W77-S3 DISARMED as a time-bound limit: irpt-ycharts-generate packages no pandas_market_calendars (0 of 107 members), so the hardcoded NYSE fallback (to 2027) decides the default price date and raises from 2028-01-02; the regeneration duty and its owner are carried in the L10 enrichment list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W77-S3"
+  ],
+  "spec_asserts": "Row W77-S3 (disarm owner 2.0.0_SA_COO~Y2): the default price date computes prev_trading_day(today) and raises CalendarCoverageError once the year passes the calendar table; the function has no pandas_market_calendars member and no layer.",
+  "world_is": "MEASURED by IB2 (R3b): `irpt-ycharts-generate pandas_market_calendars=ABSENT members=107 sha=kxOEgpbspky...`; the same CodeSha256 the r33 ledger recorded. The fallback table spans 2010 to 2027 (lib/trading_calendar.py header; the r34k after-read prints the same WARN), so the failure cannot occur before 2028-01-02, 76 days after this reading. The hazard is therefore a dated limit, not a present defect; its regeneration (`lib/tests/gen_nyse_closures.py --write`) and the packaging choice are item 4 of the L10 enrichment candidates (deliverables/2.0.0_SA_COO~Y2/fwd1run/ENRICHMENT_CANDIDATES_FOR_L10_20261017.md), owner 2.0.0_SA_COO~G2 / the CTO. NOT READ: a live upload with a SHARES unit and no price date.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_armed_reads/A_ARMED_READS.txt (R3b)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/fwd1run/ENRICHMENT_CANDIDATES_FOR_L10_20261017.md (item 4)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A hazard that cannot occur for 76 days and has a named regeneration duty and owner in the next round's list is carried, not armed; if the date nears without the regeneration it is a new row."
+}
+]
+```
