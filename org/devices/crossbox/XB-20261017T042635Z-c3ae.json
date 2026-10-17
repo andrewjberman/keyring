@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261017T042635Z-c3ae",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~RV",
+ "to_serial": "0.0.3_BG_BBGTerminal",
+ "subject": "Andrew-direct now: rivalfunds remainder -- 12,480 owed closes (step 1 now), 70-name dividends (step 2 after pair)",
+ "body_path": "org/tier1_exec/2.0.0_SA_COO~RV/deliverables/backfill_20261017/ORDER2_SITEZ_RIVALFUNDS_FILL_REMAINDER.md",
+ "opened_at": "2026-10-17T04:26:35Z",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack_bus_message_id": null,
+ "closed_from": {
+  "at": null,
+  "by": null
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}
