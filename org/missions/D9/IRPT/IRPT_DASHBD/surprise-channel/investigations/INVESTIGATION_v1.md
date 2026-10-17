@@ -25613,3 +25613,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Surfaced at the first commit attempt. The three criteria were run on the uncommitted bytes: DBF139-5-AC1 PASS, AC2 PASS, AC3 PASS; the launcher test file is 83 passed, 0 failed, 0 errors (77 at base). The proof instance cannot validate while its artifacts are uncommitted (artifact-resolution). Routing is the COO's and the CTO's: a registry row or a derived session name, under a decision on the literal."
 }
 ```
+
+## IRPT_DASHBD-D2-W2705-S2 -- S1 resolved by the coordinator's ruling: the fixed session name is g01-account-transaction and the naming gate passes it; the launcher committed at 2231124c6b
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2705-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2705",
+  "surfaced_at": "2026-10-17T13:04:14Z",
+  "one_line": "S1 is resolved by the ruling: SESSION_NAME is g01-account-transaction (amended order and checker in f6965003da, merged at 69c26cdf29); the naming gate passes the literal and the launcher and test commit landed at 2231124c6b.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Surprise row IRPT_DASHBD-D2-W2705-S1 (BLOCKING): the literal SESSION_NAME from the order was refused by the commit naming limb, aborting the launcher commit.",
+  "world_is": "The coordinator's ruling (order and checker amended in f6965003da) fixed the session name at g01-account-transaction; the worker changed SESSION_NAME and the test literals, re-ran AC1, AC2, AC3 (PASS) and the launcher test file (83 passed, 0 failed, 0 errors), and the commit gate and naming gate passed at 2231124c6b.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py:63 at 2231124c6b: SESSION_NAME = \"g01-account-transaction\"",
+      "safe-commit.sh of 2231124c6b: '[naming-gate] NAMING-GATE: PASS 1 graded' and rc=0",
+      "f6965003da (the ruling's amended order and checker), merged into the worktree branch at 69c26cdf29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Notes row. S1 keeps its own disposition; the adjudication belongs to the CVO."
+}
+```
