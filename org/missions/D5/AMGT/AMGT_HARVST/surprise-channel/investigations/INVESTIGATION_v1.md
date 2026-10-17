@@ -10546,6 +10546,68 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W158-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~158",
+        "surfaced_at": "2026-10-17T15:56:37Z",
+        "one_line": "HVST-ce-6 AC2 is RED in this sparse worktree: 5 of 35 fail because the KPI census file org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json is not in the checkout; with its HEAD bytes staged in .scratch the same 35 pass.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "The order's preflight: a file a worker must READ but finds absent is read with git show HEAD:<path>, and the AC2 dry-run at base is 35 passed in 0.94s.",
+        "world_is": "Worktree C:/dev/wk-harvst-158 at 8005ccbacb has the sparse-checkout set without org/tier1_exec; git show HEAD:<census path> returns 53066 bytes. continuation.py:147 KPI_LEXICON_PATH is relative and _kpi_lexicon_bytes (:177-178) opens it; sector_template.py:107 KPI_CENSUS_ABS is read at :309-310. Literal AC2 (timeout 120): 5 failed, 30 passed, rc=1, every failure a FileNotFoundError on that census path. Diagnostic only, a plugin at .scratch/kpi_diag_plugin.py pointing both constants at .scratch/kpi_census.json: 35 passed, rc=0. No product file changed and nothing was materialized into org/.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/continuation.py@8005ccbacb:147-178 (KPI_LEXICON_PATH, _kpi_lexicon_bytes)",
+                "lib/research/corpus/sector_template.py@8005ccbacb:107,309-310 (KPI_CENSUS_ABS, _load_kpi_lexicon)",
+                "git show 8005ccbacb:org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json (53066 bytes)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W158-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~158",
+        "surfaced_at": "2026-10-17T15:56:37Z",
+        "one_line": "Two gold-object builders read silver through store.silver_latest directly, not through typed.reports_for, so the one exclusion in reports_for does not reach them: fund_form.py and sector_template.py. Both are outside this order's paths.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "HVST-ce-6 section 1.c(3): the gold dossier and continuation consumers feed reports_for, and any consumer that reads silver by another route is covered by the same exclusion or named in a surprise row.",
+        "world_is": "lib/research/corpus/fund_form.py:249 latest = store.silver_latest(typed.SOURCE, typed.TABLE, typed.RECORD_KEY_FIELDS, client=client) and lib/research/corpus/sector_template.py:446 return list(store.silver_latest(...).values()) -- neither calls typed.reports_for. continuation.py, report_input.py and substrate.py hold no silver_latest( call (arm (3) of test_typed_misfiled_reports.py). Whether a listed report reaches fund_form or sector_template output was not measured. Left alone, a rebuild of those objects reads the two Mexico reports; they are not in this order's <paths>.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/fund_form.py@8005ccbacb:249",
+                "lib/research/corpus/sector_template.py@8005ccbacb:446",
+                "lib/research/corpus/tests/test_typed_misfiled_reports.py arm (3) at this worktree, 5 passed in 0.56s"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W158-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~158",
+        "surfaced_at": "2026-10-17T15:56:37Z",
+        "one_line": "typed.py's two CLI diagnostics _run_census and _run_reports_for_first_multi read silver directly (the second through reports_for as well); the census counts include the listed Mexico rows. Order said change nothing else in typed.py, so left as is.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-ce-6 section 1.b: change nothing else in reports_for and nothing in typed.py's other functions.",
+        "world_is": "lib/research/corpus/typed.py:724 (_run_census) and :746 (_run_reports_for_first_multi) call store.silver_latest directly. Both only print counts or rows and write nothing; _run_census's silver_rows and k5 counts still include the two KMB Mexico rows, and _run_reports_for_first_multi's candidate scan does too.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/typed.py@8005ccbacb:724,746 (_run_census, _run_reports_for_first_multi)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
