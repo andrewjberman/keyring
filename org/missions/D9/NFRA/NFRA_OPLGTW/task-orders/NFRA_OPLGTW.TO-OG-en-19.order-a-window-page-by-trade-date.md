@@ -70,7 +70,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-19.order-a-window-page-by-tr
 - The arm `e1_newest_first` of `OG-ap-32` is reworded at the next release's amendment to: within each page the rows' dates are non-increasing; across pages the cursor moves back by PARTITION date.
 - Pre-cut: `en19.AC3` base FAIL as expected (the test file is absent); AC1 base FAIL (file absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>40</round>
 <workstream>ENRICH-R40-M</workstream>
 <slot>~131</slot>
