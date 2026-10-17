@@ -14665,3 +14665,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Same class as dell1 D1-S13/S14; the cross-box pattern makes it an NFRA_CTLPLN liveness question. Next read: the Windows Application/System event log around 00:17-01:17Z for the claude.exe exit."
 }
 ```
+
+## NFRA_CTLPLN-D1-S16 -- fourth wave: five more dell1 seats ended 00:36-00:56Z, an M1/W1 pair five seconds apart, every ended life idle at the end; the laptop's COO~CA ended the same way
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-17T01:40:00Z",
+  "one_line": "Fourth wave of unexplained dell1 seat ends (five seats, 00:36:51Z to 00:56:28Z), including a COO~M1/COO~W1 pair five seconds apart; in all 15 ended lives measured the seat was idle at the end (14 had no API response for 4 minutes or more before its last transcript entry), and the laptop's COO~CA ended the same way, so a cross-box cause now leads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Per ended life, UTC: last transcript entry / last assistant (API response) entry / gap in seconds. Wave 1 (2026-10-16): COO~R1 21:19:25 / 21:00:23 / 1142; COO~R2 21:19:30 / 21:14:43 / 286; COO~M1 life 1 21:33:11 / 21:19:28 / 822; COO~D1 21:33:18 / 21:26:10 / 428; COO~B1 21:38:24 / 21:24:51 / 812; CloudOps~FB1 21:38:28 / 21:12:50 / 1537; CloudOps~DELL1 21:38:47 / 21:38:33 / 14; CloudOps~SC1 life 1 21:39:01 / 21:31:53 / 428; CloudOps~SOC21 life 1 21:39:04 / 21:27:10 / 714. Wave 3 (2026-10-17 00:07Z): COO~M1 life 2 00:07:38 / 23:54:58 (2026-10-16) / 760. Wave 4 (2026-10-17): COO~M1 life 3 00:36:51 / 00:28:25 / 506; COO~W1 00:36:56 / 00:28:43 / 493; COO~C1 00:47:04 / 00:39:11 / 473; CloudOps~SC1 life 2 00:50:17 / 00:29:07 / 1270; DT~H1 00:56:28 / 00:39:39 / 1010.",
+      "Pair: COO~M1 (respawned 00:22:44Z by 0.0.0_AB_MSTR~DELL1, read LIVE at 00:35:08Z) and COO~W1 (a session since 2026-10-16 15:50Z) have last transcript entries 5 seconds apart, 00:36:51Z and 00:36:56Z; their last API responses are 00:28:25Z and 00:28:43Z, 18 seconds apart. kill-maint ran at 00:38Z with targets 0, after both. No kill by 0.0.0_AB_MSTR~DELL1 in the spawn audit; all five transcripts end on queue-operation with 0 API-error flags.",
+      "Measured reading of the table: every ended life's last entry is a queue-operation (a message enqueued to the session), written by the live process, then nothing; the gap from its last API response is 14 s to 1537 s (median 714 s). Not measured here: how long the live seats (CTO, CVO, CRO~DELL1, COO~S1, CloudOps~SOC21) sit idle between API responses, so idleness alone is not shown to separate ended from live.",
+      "RELAYED, not measured here: 0.0.0_AB_MSTR (laptop) bus b6398e8e, 2026-10-17T01:21:41Z: 2.0.0_SA_COO~CA on the laptop ended between 00:17Z and 01:17Z with no kill line and no kill-maint target; the laptop respawned it at 01:19Z (pid 28272). Earlier relayed (S15): 3.0.0_SA_CVO~DELL2 ended once on dell2 between 07:2xZ and 08:2xZ on 2026-10-16.",
+      "Box facts (S13, S14 stand): no reboot, no crash or resource-exhaustion event, no session logon/logoff/disconnect/reconnect in 21:25-21:45Z; the Security log is unusable as evidence and the TaskScheduler log is disabled. This seat did not read those logs again for wave 4.",
+      "1.0.0_SA_CTO~DELL1 msg 7090: the laptop case weakens the closed-tabs explanation; a cross-box harness- or session-level cause now leads; Andrew's answer on closed windows still settles the dell1 waves."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-D1-S13 and S14: the dell1 ends cluster in time and no error class explains them; S15: one dell2 case.",
+  "world_is": "Fifteen ended dell1 lives and one laptop seat now show the same shape: a seat that was alive and idle, whose last event was a queued message, with no kill line, no error, no crash event and no session event; five of them in a 20-minute span, two of them five seconds apart. The cause is still unmeasured; what is not yet read is the Windows Terminal host's log, the same table for the laptop seat, and how idle the live seats are.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts and timestamps only; no transcript content. Asked for by 1.0.0_SA_CTO~DELL1 msg 7090. Respawns continue under the govern rule per the CTO's ruling."
+}
+```
