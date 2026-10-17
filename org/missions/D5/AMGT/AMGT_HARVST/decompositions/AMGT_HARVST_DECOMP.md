@@ -4280,3 +4280,10 @@ The CTO's enrichment list (four items). Round 89 closed MAY-CLOSE (CVO `ADJUDICA
 - **Fan-out:** `N of M chains, N=0 workers (ce-4 is a seat order) of M=1 chain, cap 8`; `ce-4` is one chain behind the merged `ce-2` and `ce-6`.
 - **Check at the cut (dry-run at the base):** `ce-4` AC1 to AC3 FAIL as expected (`cat` of a file that does not exist).
 - **Armed rows still open:** `D1-W155-S1`, `D1-W155-S2`, `D1-W158-S2`; the issuer dispositions them when the served reads of `ce-4` are clean.
+
+### 120c. ROUND 90 -- the gateway base moved again; `HVST-ce-4` is running (2026-10-17 ~18:3xZ)
+
+- **Gateway base:** site Z reports (CTO msg 35550, relayed by `0.0.0_AB_MSTR~DELL1` msg 7704) ledger `nfra-oplgtw-gateway-release-batch6` CLOSED 2026-10-17T18:11:52Z; the live gateway is `efcc8ae19f7eebb04e2f45f45c0def28af037c24` on base `1753c741d9` (`TO-OG-ap-36`, re-cut on our commit). Our `app/harvest_research.py` is KEPT (the host's md5 equals its blob). A scratch ref `origin/rel-nfra-og-live-efcc8ae19f` holds it. **Consequence for `HVST-ce-5`** (the `ce-3` wording): its release is cut on `efcc8ae19f` (or the live commit read from the manifest and the instance at the cut), with `DEPLOY_BASE_REF` set, after a host-owner notice through MSTR; the signed-pair rule of `cd-2` (the pair binds the live deployed commit, no hash) carries over, and the `<merge>^1` equality is re-printed against the new live file.
+- **Live hazard named by site Z (row `Z-S375`, fix pending):** the gateway tool `etfs_compare_peers` can OOM the 1.8 GB host. No AMGT order calls it, and no served read of `HVST-ce-4` may call it.
+- **`HVST-ce-4`:** 39 manifest entries of 62 written by 18:33Z (UNH and KMB canary read served 17:30Z, branch X for KMB, no stop or branch-B line); the run ends about 19:20Z inside the 19:30Z window.
+- **Armed rows:** `D1-W155-S1`, `D1-W155-S2`, `D1-W158-S2` remain open until the served reads of `ce-4` close; the issuer dispositions them then.
