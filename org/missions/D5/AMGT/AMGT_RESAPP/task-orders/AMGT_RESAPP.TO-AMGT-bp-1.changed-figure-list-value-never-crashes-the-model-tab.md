@@ -78,7 +78,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO msg 7490 and `ROUND_ANALYSIS.round108.md` item 1 (W477-S1). Root cause found by the issuer at the cut (2026-10-17 ~12:0xZ) from the served RIO LN compare: one changed header figure `ERN_ANN_DT_AND_PER` whose `from`/`to` are lists; `numeric()` in `WhatChangedPanel.tsx` calls `.trim()` on it. Not in `AMGT-bo-1`'s diff. The wording of a list value (the newest entry, or `<n> entries`) is the issuer's decision (s.118 (a)); the CTO asked only that the page not crash. The placed cell `AMGT-bp-2` (the grid-opened walk of VLO US, RIO LN and WALMEX* MM on a local build of PROD plus this candidate) is cut when this order is complete. Lessons carried from `AMGT-bo-1`: the branch is cut from PROD, never from DEV; fixtures are live bodies, never hand-edited; AC2 grades lint on the feature's own folder; the order's file name is short so the instance's canonical path opens. AC2's totals (28 files, 22 passing, base 21 of 27, six pre-existing names) were measured at the cut on a detached worktree at PROD `15bc21b3`.
 
-<status>pending</status>
+<status>complete -- drained by the issuer (2.0.0_SA_COO~R1) 2026-10-17: worker ~488 at f26bc31a44 after AMENDMENT 1; proof VALID rc=0 on the worker's checker; issuer re-run of the harness 11 of 11 and a read of the portal diff (WhatChangedPanel.tsx only); portal candidate cand/dell1/amgt-sa-changed-list-value @d060d119 on PROD 15bc21b3; a changed figure whose value is a list never crashes the Model tab, the earnings-dates row prints its newest entry and length, a negative money figure in What Changed prints its sign first; the approval row is the issuer's next act</status>
 <round>109</round>
 <slot>0.9.0_WK_AMGT_RESAPP~488</slot>
 <fabric>dell1</fabric>

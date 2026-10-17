@@ -71,7 +71,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** PLACED cell of round 109 (decomposition s.118, edge `bp-1 -> bp-2`), cut STAGED at 2026-10-17 ~12:2xZ while `bp-1` (worker ~488) builds, so the GO needs only: (1) `AMGT-bp-1` complete and merged, with its candidate `cand/dell1/amgt-sa-changed-list-value` head named in the GO commit; (2) the issuer cuts `C:/dev/wk-resapp-491` with `.tools/wk-provision.sh provision AMGT_RESAPP 491 --path C:/dev/wk-resapp-491 --portal-ref cand/dell1/amgt-sa-changed-list-value --order <this order> --sparse-add .claude/skills/ui-walk`, starts `bun run dev:live --port 5174` in its nested portal, and confirms the walker account reads dormant (`ui_walker_account.py status`) and port 5174 free. CTO item 1 reads "re-run bo-3's AC5 walk on all 3 grids, on a local build of PROD first": read here as PROD plus the fix (s.118 (d)), because unpatched PROD is the known crash and PROD cannot carry the fix until Andrew promotes it; the walk on a candidate build is as close to PROD as the fix can be before that. The three names are bo-3 walk D's (VLO US, RIO LN, WALMEX* MM); the date-keyed draw does not apply (named names only). AC2 is JUDGMENT: the shot read, graded by the CVO and read by the CTO, never self-graded; the worker's one line per name is evidence for it. The pass for FWD-40 (d) needs this walk's AC1 count of 3 and the RIO LN Model tab rendering.
 
-<status>staged</status>
+<status>pending</status>
 <round>109</round>
 <slot>0.9.0_WK_AMGT_RESAPP~491</slot>
 <fabric>dell1</fabric>
