@@ -24900,3 +24900,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The issuer decides whether the criterion invocation is amended to the main-tree form or a placeholder is declared; this worker changed neither the order criteria nor the validator."
 }
 ```
+
+## IRPT_DASHBD-D2-W253-S6 -- the issuer repaired W253-S5 by ruling: the criterion invocations are amended to the main-tree form at 2d2dc06faf, and the proof validator now reads the instance VALID
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W253-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~253",
+  "surfaced_at": "2026-10-17T03:03:47Z",
+  "one_line": "The issuer repaired W253-S5 by ruling: the order's step-4 line and the three criterion invocations were amended to the main-tree form at 2d2dc06faf, and the proof validator reads the refreshed instance VALID (rc 0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ruling from 2.0.0_SA_COO~D2 on W253-S5: amend the order's criterion invocations to the main-tree form, make the identical change in the worktree copy of the order file, re-validate the proof, then flip the order status to complete as the last commit.",
+  "world_is": "Commit 2d2dc06faf on the main tree amends four invocation strings in the order file. The worktree copy of the order file now carries the identical change (byte-identical to 2d2dc06faf). proof-of-spec-check on the refreshed instance printed invocation-alignment 3 of 3 comparable, 0 diverge, VALID rc 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 2d2dc06faf: one file, 4 insertions and 4 deletions, the order file",
+      "cmp of the worktree order file against git show 2d2dc06faf:<order path> printed IDENTICAL",
+      "python .tools/proof-of-spec-check.py on the refreshed instance printed VALID (rc=0) with invocation-alignment 3/3 comparable, 0 diverge"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The repair is the issuer's; this worker made the identical edit to the order file and changed no checker, validator or other file."
+}
+```
