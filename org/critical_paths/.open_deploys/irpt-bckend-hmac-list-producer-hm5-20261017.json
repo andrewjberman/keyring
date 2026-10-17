@@ -12,40 +12,40 @@
       "kind": "s3-prefix",
       "target": "the runner bundle re-minted through safe-deploy (12 members, all equal to HEAD after the mint); Branch B version W2WragrP52i8M7MfL22oXVPuHsTjyVLO named",
       "proof_required": "version before and after, 12 of 12",
-      "proof": null,
-      "closed_at": null
+      "proof": "bundle re-minted through safe-deploy: version W2WragrP5.. -> 7ywFHFyM.. (128452 bytes); 12 of 12 members equal git show HEAD; trading_calendar tests 27 passed before the mint; Branch B = W2WragrP5.. (ETag 5547fa5e)",
+      "closed_at": "20261017T083753Z"
     },
     {
       "id": "L2",
       "kind": "s3-prefix",
       "target": "the refresh Lambda zip: built digest equals the pin I7T8wRYm.., uploaded and head-object verified; Branch B zip version named",
       "proof_required": "digest, head-object",
-      "proof": null,
-      "closed_at": null
+      "proof": "BUILD_ONLY digest I7T8wRYmv11nytYpD7i+4XCwwvy6JUaB3fdsgtHyXmA= equals the pin; uploaded, write VERIFIED (size 47627); Branch B zip version = the pre-upload latest whose content equals the old CodeSha256 6eOFTopG.. (1 of 39 versions matched)",
+      "closed_at": "20261017T083753Z"
     },
     {
       "id": "L3",
       "kind": "tf-lambda",
       "target": "ONE safe-apply of the directory root, plan 3 add 1 change 0 destroy at the named addresses, clean re-plan, three new environment keys",
       "proof_required": "plan counts, replan, key names",
-      "proof": null,
-      "closed_at": null
+      "proof": "plan 3 add 1 change 0 destroy at the four named addresses, ONE safe-apply, replan No changes; live CodeSha256 = I7T8wRYm..; env keys IRPT_HMAC_LIST_URI_MAP, IRPT_HMAC_ROLE_ARN, IRPT_HMAC_SECRET_ID present",
+      "closed_at": "20261017T083754Z"
     },
     {
       "id": "L4",
       "kind": "verify",
       "target": "the simulation battery: two allowed arms and five denied arms",
       "proof_required": "simulation table",
-      "proof": null,
-      "closed_at": null
+      "proof": "simulation battery on irpt-hmac-list-stage-role: get_the_one_secret allowed, put_each_of_the_three_list_keys allowed; get_object, list_bucket, delete_object, put_on_a_neighbouring_key, get_any_other_secret all implicitDeny",
+      "closed_at": "20261017T083754Z"
     },
     {
       "id": "L5",
       "kind": "activation",
       "target": "the secret value put ONCE (never printed), version count 1",
       "proof_required": "put count",
-      "proof": null,
-      "closed_at": null
+      "proof": "secret value put once (secrets.token_hex(32), in-process SDK call, never printed or written); version count 0 -> 1",
+      "closed_at": "20261017T083754Z"
     },
     {
       "id": "L6",
@@ -60,12 +60,18 @@
       "kind": "git",
       "target": "the record, proof and ledger committed with explicit paths",
       "proof_required": "commit ids",
-      "proof": null,
-      "closed_at": null
+      "proof": "the record IBhm5_apply_record.json, criteria output and proof committed with explicit paths at 212f39bdf0",
+      "closed_at": "20261017T090023Z"
     }
   ],
   "log": [
-    "20261017T080728Z OPENED by 0.7.0_AE_CloudOps~IB2 with 7 leg(s)"
+    "20261017T080728Z OPENED by 0.7.0_AE_CloudOps~IB2 with 7 leg(s)",
+    "20261017T083753Z LEG L1 closed: bundle re-minted through safe-deploy: version W2WragrP5.. -> 7ywFHFyM.. (128452 bytes); 12 of 12 members equal git show ",
+    "20261017T083753Z LEG L2 closed: BUILD_ONLY digest I7T8wRYmv11nytYpD7i+4XCwwvy6JUaB3fdsgtHyXmA= equals the pin; uploaded, write VERIFIED (size 47627); Br",
+    "20261017T083754Z LEG L3 closed: plan 3 add 1 change 0 destroy at the four named addresses, ONE safe-apply, replan No changes; live CodeSha256 = I7T8wRYm",
+    "20261017T083754Z LEG L4 closed: simulation battery on irpt-hmac-list-stage-role: get_the_one_secret allowed, put_each_of_the_three_list_keys allowed; ge",
+    "20261017T083754Z LEG L5 closed: secret value put once (secrets.token_hex(32), in-process SDK call, never printed or written); version count 0 -> 1",
+    "20261017T090023Z LEG L7 closed: the record IBhm5_apply_record.json, criteria output and proof committed with explicit paths at 212f39bdf0"
   ],
   "last_red_at": null,
   "device": "dell2"
