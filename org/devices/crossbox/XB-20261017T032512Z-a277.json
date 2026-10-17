@@ -11,8 +11,8 @@
  "body_path": "org/tier1_exec/2.0.0_SA_COO~RV/deliverables/backfill_20261017/ORDER_SITEZ_RIVALFUNDS_BACKFILL_365D.md",
  "opened_at": "2026-10-17T03:25:12Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-17T03:29:02Z",
+  "bus_message_id": "c99c10ff-96f5-415d-82b0-0ab1d5182e9f"
  },
  "ack_bus_message_id": null,
  "closed_from": {
