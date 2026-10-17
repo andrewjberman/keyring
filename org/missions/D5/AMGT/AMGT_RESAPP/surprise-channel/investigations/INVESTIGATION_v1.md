@@ -29116,3 +29116,125 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed on the CTO's instruction (msg 7490, ROUND_ANALYSIS.round108.md section 2) against the gate's lane (the owner of the to-pipeline status enum and round-close-check). Not a cell of this project."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W489-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~489",
+  "surfaced_at": "2026-10-17T12:11:58Z",
+  "one_line": "AMGT-bp-3: after the label change, the served period_note still says the columns not named by a year keep Bloomberg's own period numbers, while an untied figure column now reads 'Year not stated (column n)'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order section 1 item 3: period_note, and every key other than the one label, is byte-for-byte as today; the label of an unresolved figure-bearing column is the only value that changes. The served sentences in lib/research/api/segment_served.py (NOTE_SOME_NAMED, NOTE_NONE_TIE, NOTE_NO_REVENUE) say the columns not named by a year keep Bloomberg's own period numbers.",
+  "world_is": "After the change an untied column that carries a figure is served with label 'Year not stated (column n)' (RIO LN column 5, top_level_sum 106861.0). The period_note the portal prints beside the table still says those columns keep Bloomberg's own period numbers, so the page carries a sentence its own column head contradicts. Measured in the edited worktree: test_segment_unresolved_label.py U1 and U4 and the AC1 run (47 passed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/segment_served.py @46c09f960f (base) NOTE_SOME_NAMED and NOTE_NONE_TIE sentences; the label branch edited in the worktree",
+      "lib/research/api/tests/test_segment_unresolved_label.py U1 served label 'Year not stated (column 5)' with the period_note unchanged",
+      "AC1 run after the edit: 47 passed, exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed here: the order fixes period_note byte-for-byte, so the sentence is left for its owner to re-word. The label change itself is in scope."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W489-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~489",
+  "surfaced_at": "2026-10-17T12:11:58Z",
+  "one_line": "The worker worktree has no org/surprise_channel directory on disk, so the row schema could not be read from the worktree; the schema was read from HEAD through git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order section 1 requires each surprise row to follow the investigation item schema, and the row gate .tools/surprise-row-gate.py validates it. The schema path org/surprise_channel/schemas/investigation_item.schema.json is the one the channel names.",
+  "world_is": "In C:/dev/wk-resapp-489 the directory org/surprise_channel does not exist on disk (ls reports no such file), although git ls-files lists 43 tracked paths under it at HEAD 46c09f960f, including schemas/investigation_item.schema.json. git status --short shows nothing for that path. The base checkout C:/Dev/ajb_workspace holds the schema on disk. This row was checked against the HEAD copy of the schema, and the fields it needs are listed there. Not repaired: the path is outside the order's write surface.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json read in C:/dev/wk-resapp-489 (property keys listed, required fields id, surfaced_by, surfaced_at, one_line, class, grounding, disposition)",
+      "ls -la org/surprise_channel in C:/dev/wk-resapp-489: no such file or directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed. The row gate's own read of the schema is not confirmed from this worktree."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W490-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~490",
+  "surfaced_at": "2026-10-17T12:17:48Z",
+  "one_line": "AMGT-bp-4: components/model/WhatChangedPanel.tsx builds its own money string (inDisplayUnits) from currencyPrefix, so a negative figure there still prints the sign after the prefix; the file is outside this cell's write grant and is unedited on the bp-4 branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order AMGT-bp-4 section 1 item 1: a negative amount prints its minus sign BEFORE the currency prefix, in formatStatValue and anywhere else in src/pages/SecurityAnalysis/ that builds a signed money string from currencyPrefix. Item 2: WhatChangedPanel.tsx is not to be edited.",
+  "world_is": "At PROD 15bc21b3, portal/src/pages/SecurityAnalysis/components/model/WhatChangedPanel.tsx line 199 returns the template of currencyPrefix(currency) followed by displayAmount(n, ...). displayAmount (lines 184-188) keeps the minus sign, so a negative ABSOLUTE or MILLIONS figure with a currency and no HEADER_FORMATS entry prints as a dollar sign, a minus and the amount. Code read only; not rendered. Lines 209 and 230 call formatStatValue and do receive the sign fix.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/model/WhatChangedPanel.tsx lines 184-199 @15bc21b3 (code read by the worker, not rendered)",
+      "portal/src/pages/SecurityAnalysis/components/StatTile.tsx formatStatValue sign-first rule on cand/dell1/amgt-sa-money-display, harness moneyDisplay.harness.cjs S1 and S9 YES (24 of 24)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. Not graded here; whether a later cell carries WhatChangedPanel.tsx is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W490-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~490",
+  "surfaced_at": "2026-10-17T12:17:48Z",
+  "one_line": "AMGT-bp-4 AC2 (r107_feature_green_v3.sh on the bp-4 branch): the printed line reads harness 25 of 28 pass with three pre-existing names; the order's expect reads harness 22 of 28 pass with six names. Regressions 0 and rc 0 in both.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AC2 expect: R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness 22 of 28 pass, base 21 of 27, regressions 0, pre-existing: assembled.harness.cjs exportCompare.harness.cjs posture.harness.cjs posturePattern.harness.cjs tabs.harness.cjs timelineFourStates.harness.cjs).",
+  "world_is": "At cand/dell1/amgt-sa-money-display (commits 94c30e22 and the product edit on top of PROD 15bc21b3) the script printed: R103 FEATURE GREEN: YES (typecheck rc 0, lint rc 0, harness 25 of 28 pass, base 21 of 27, regressions 0, pre-existing: assembled.harness.cjs exportCompare.harness.cjs timelineFourStates.harness.cjs), exit 0. Run by hand at the same head: posture, posturePattern and tabs exit 0 with no FAIL or Error line; assembled exits 2, exportCompare exits 2, timelineFourStates exits 1. The base 21 of 27 is the script's own base run and was not re-measured by the worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 output line, bp-4 worker run at the head of cand/dell1/amgt-sa-money-display, rc 0 (the order's own invocation, timeout 590)",
+      "per-harness exit codes from node <harness>.harness.cjs at the same head, written to .scratch/h_<name>.txt in the worker worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker as the BLOCKING row on AC2. The worker did not reword the expect or the count. The difference may come from the cut's base run, not from this diff; not graded here."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W490-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~490",
+  "surfaced_at": "2026-10-17T12:17:48Z",
+  "one_line": "AMGT-bp-4 premise: the order says formatStatValue and currencyPrefix occur 24 times at PROD across five files; the file set is as stated, but the count does not reproduce under either counting method.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order AMGT-bp-4 section 1 item 3: formatStatValue and currencyPrefix are called from five files, 24 occurrences at PROD.",
+  "world_is": "At PROD 15bc21b3 the grep for either identifier, counting imports and comments, returns 26 lines in the non-harness page source (30 lines with four harness files). The harness census of call sites with an opening parenthesis, excluding imports and the two definitions, reads 14 at PROD. The file set is the five named.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis (non-harness) @15bc21b3, grep before the product edit, 26 lines in five files",
+      "portal/src/pages/SecurityAnalysis/__harness__/moneyDisplay.harness.cjs check C1 census output, 14 call sites in 5 files at the unedited page (the base run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker. The census check C1 asserts the file set, which is the part the order states as an assertion, and it passes."
+}
+```

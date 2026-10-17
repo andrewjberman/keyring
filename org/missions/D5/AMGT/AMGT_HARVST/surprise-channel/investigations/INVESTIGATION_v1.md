@@ -10435,5 +10435,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "The investigation row's complaint is the dead disarm owner; HVST-cc-6 re-owned Z-S111 to 0.0.0_AB_MSTR~DELL1 and the hazard itself lives on the remediation row, which only the CVO moves."
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S42",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-17T12:28:45Z",
+     "one_line": "HVST-cd-2 cannot start as signed: the live opal-gateway commit 9d5b712557 (and previous d3ae88be46) is not in dell1's object store and no ref on origin points to it, so the release cannot be cut on it; manifest, artifact plane and instance agree on 9d5b712557.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cd-2 step 1 and the COO half C-1: cut rel-amgt-harvst-cd2 from the live deployed commit read from EC2_MANIFEST.json and the instance, print the two-path diff against it and the <merge>^1 equality; a difference means STOP.",
+     "world_is": "EC2_MANIFEST.json at HEAD names services.opal-gateway.deployed_commit 9d5b7125571520b977401634a01935924f4c9787 (2026-10-17T05:19:28Z, 0.7.0_AE_CloudOps~NFRA1) and previous_deployed_commit d3ae88be463d88c6f4ea22fb297659bf44f43758; the artifact plane (git-ref metadata on opal-gateway-latest.tar.gz, LastModified 05:19:01Z, 897815 B) is the same 9d5b712557; the instance i-07dccb1615503ac99 (SSM 56c9bea1 at 12:25:02Z) shows the unit restarted 05:19:20Z, /health 200, 127 tools, names md5 9a593c84. So the three planes AGREE. But git cat-file answers 'Not a valid object name' for both hashes on dell1, git fetch origin <full hash> answers 'not our ref', and git ls-remote origin lists ten rel-* refs, none at either commit; the release was cut in a tree on another device and never pushed. The live bytes are retrievable (opal-gateway-9d5b712557.tar.gz, 897815 B), the commit is not. One file can be checked by md5: the host's app/harvest_research.py af2d662f9558e29de89c194f6de84eb0 equals the blob at 9784d58e12^1 and at 319c9413a2, so the live gateway still serves the file HVST-cd-1 started from; that does not prove the other 132 app files. Nothing was built, uploaded or deployed; no ledger was opened. The before-state and the UNH control read (dossier_fields 21 returned + 3 omitted, continuation_fields 4 + 1) are in cd2_before.out.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway at HEAD",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round89/cd2_before.out",
+       "git commit 013125d0b1 (NFRA1 manifest edit for 9d5b712557)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
