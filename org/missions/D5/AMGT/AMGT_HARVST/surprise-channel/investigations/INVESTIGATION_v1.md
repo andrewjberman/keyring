@@ -10694,5 +10694,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S44",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T19:36:14Z",
+     "one_line": "HVST-ce-4: the seat's serial gold-write driver (nohup python ce4_run.py rest, bash pid 3178395) died silently between 18:37:11Z and 18:45Z, leaving NOW_US_Equity a half pair; cause UNKNOWN, and the next long write run on this seat meets the same risk (CTO ask, msg 7713).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-ce-4 and the signed COO half C-5: the 29 other writes run serially, one security at a time, continuation then dossier, and any error is a STOP with its exact text; a half-written pair is a defect (NEVER-2).",
+     "world_is": "SC1 started the driver at 17:30:03Z under nohup with its stdout buffered. At 18:45Z the process was gone: no traceback, no error text, no crash event found on dell1 by SC1. The manifest's last line before the death was the NOW_US_Equity continuation (18:37:11Z); NOW_US_Equity had no dossier. The issuer ruled a resume (msg 7706): NOW_US_Equity's dossier was written in the foreground, unbuffered, at 18:50:15Z, its continuation was logged EXISTED-NOT-REWRITTEN (put_performed False, same VersionId), and the remaining names ran through the guarded resume-safe driver (skips done names) to 19:27:01Z with no further death. Final state: 31 continuation and 31 dossier keys, 62 distinct, none rewritten, none missing (manifest read by the issuer and by 1.0.0_SA_CTO~DELL1, msg 7713). Cause: UNKNOWN. Not established: whether the death was the shell session ending, the box, a kill of the process group, or the interpreter; the buffered stdout hid the last lines. Mitigations in force: foreground and unbuffered runs, the resume-safe driver, a manifest line per put. A long unattended write run should start from a detached, unbuffered, logged process whose exit status is recorded.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round90/ce4_written.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round90/ce4_resume_NOW.out",
+       "org/mcp/inbox/2.0.0_SA_COO/~W1/read/20261017T184626Z_0.7.0_AE_CloudOps_SC1_HVST-ce-4__run_DIED_silently_at_NOW_US__.md",
+       "org/mcp/inbox/2.0.0_SA_COO/~W1/read/20261017T193509Z_1.0.0_SA_CTO_DELL1_Re_7712__your_C-5_resume_ruling_stands_-.md"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
