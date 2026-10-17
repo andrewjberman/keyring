@@ -27724,3 +27724,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The list's absence is a device fact; the issuer's text scan finds one synthetic SYN- number already in an older test and no e-mail; the roster failure is a worktree fact on a test that is red at the base. The eight surfacing codes are named for the ask and widen no reach."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T17:38:00Z",
+  "id": "NFRA_OPLGTW-Z-S375",
+  "one_line": "OG-ap-36 Phase B served read: the 27-tool harness's etfs_compare_peers call (a module this release does not touch) took the 1.8 GB gateway host out of memory at 17:21Z; the kernel killed the gateway once (back in 3 s, health 200) and eight system daemons (restored); under a hard guard the same call raises MemoryError, so the served read is 26 of 27.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Host kernel log (dmesg -T over SSM, read 17:3xZ): 17:21:44Z uvicorn pid 1252977 (oom_score_adj 0) killed first; then irqbalance, chronyd, atd, acpid, lsmd, agetty, systemd-resolved, -logind, -networkd, -homed, -userdbd, gssproxy; last the harness python pid 1254493, anon-rss 1639160 kB. The harness process had oom_score_adj -900 (inherited from the SSM agent), so the kernel took everything else first.",
+      "systemd journal opal-gateway: 17:21:33Z 'killed by the OOM killer', 17:21:36Z scheduled restart, restart counter 1, 'Application startup complete' 17:21:38Z; ActiveEnterTimestamp 17:21:36Z; the read-back sampler: pid 1252977 at 17:21:23Z, pid 1254532 at 17:23:23Z, health 200 at every sample.",
+      "The call: ap23_served_harness.py line 228/259, etfs_rivals_flow.etfs_compare_peers('IDVZ', 'x', 'y'). app/etfs_rivals_flow.py is byte-equal on the host to both refs (host md5 walk 139 of 139 against 1753c741d9 before the deploy and against efcc8ae19f after); it imports none of the three app files this release changes (tools.py, client_core.py, client_adapter_bd49f.py): harvest_read, internal_role, typed_scope, harvest_typed, portal_index.",
+      "Control run, same harness under a hard guard (oom_score_adj 1000, address space capped at 1400 MB, W/ap36_guarded.py): finished in 30 s, the host untouched; etfs_compare_peers answered MemoryError at 0.91 s; the other 26 tools served (opal_served true, non-Opal refused, reads on refusal 0). With the harness made to await the two async client tools (W/ap36_served_harness.py; the original harness reads a coroutine as 'not refused' for client_get_transactions and client_get_fees) per_tool_good is 26 of 27; the five client tools refuse a non-admin 5 of 5; the two-firm arm and the real assume-role are true.",
+      "The same harness read 27 of 27 at the OG-ap-34 deploy (2026-10-17T05:19Z) with the same module bytes; what differs since is not measured here (the data behind the gold buying_trend and holding_contribution tables is the first suspect; unmeasured)."
+    ]
+  },
+  "spec_asserts": "ap36.AC2 and the order's step 6: the 27-tool served read passes 27 of 27, and a read-only check cannot take the gateway down.",
+  "world_is": "Two facts, kept apart. (1) The release is not implicated by code: the module that ran away is byte-equal on both refs and does not import a changed file; every release trigger of the ask stayed clear (health 200, host md5 139 of 139, marker equal to the release sha, harvest_research.py md5 6d9e0dd3 equal to its 1753c741d9 blob, the nine arms true, host memory 25 to 39 percent in the arms). (2) A caller of etfs_compare_peers with an unrecognised period and axis can take a 1.8 GB single-worker gateway out of memory TODAY, release or not: that is the ARMED hazard, and a client call would hit the service process (adj 0), not a harness. My unguarded harness run is what exposed it; the service restart and the loss of the system daemons are mine. I restored chronyd, atd, irqbalance, acpid, libstoragemgmt, gssproxy, systemd-userdbd and systemd-homed (all active); chronyd reads unsynchronised until it polls; init.scope shows 'failed' in systemctl --failed.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: (a) grade the served read as 26 of 27 with this row open, or give me a probe for etfs_compare_peers that is bounded (a valid period and axis, which the harness cannot derive today because its own discovery call is the one that runs away); (b) route the hazard to the owner of etfs_rivals_flow. The ledger stays OPEN until you rule. No rollback: no trigger of the ask fired and the release does not cause this."
+}
+```
