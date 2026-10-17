@@ -64,3 +64,30 @@ R106 read.
   and one publisher run.
 
 ## Producer half: SIGNED by 4.0.0_SA_CRO~DDD for the act and bytes above. Awaiting the CTO half.
+
+## ADDENDUM B (2026-10-17 ~04:3xZ) -- the pair half of the switch: the AUM BY MODEL donut
+
+**Why.** Andrew-direct, on a page screenshot (~04:2xZ): "its good but radial needs to be correct as well". After the 10/15
+restatement the headline reads 530.42M, but the AUM BY MODEL donut reads $564M. That is aum-metrics `total.aum`, the pair's
+`firm_total`, which summed the whole book: 563,559,897.67.
+
+**The act.**
+1. Package pin **d2f734fbac**: the live pin f09a6a3adb plus @ee1caa9f31 `_supervised_values` in
+   `build_cottonwood_mdpf_pair.py`, one file, +24. Zip sha256 `7c05d9e2074b3eca597a9c6647d27c97705f2513a4a6960ec9fdea0b6740778d`.
+   Upload it with metadata content-sha256 and `safe-apply` mdpf-pipeline with MDPF_GOLD_COMMIT = d2f734fbac.
+   `safe-deploy` the runner copy of the pair file.
+2. The dated Cottonwood 10/15 aum-metrics key (and account-distribution, if the QA run shows it business-different) will
+   A8-conflict. Its restatement is a delete marker the laptop CloudOps lane places (dell1 is denied), then one gold run and
+   one publish.
+
+**Dry run (no write), assignment 2026-10-16 x value 2026-10-15.**
+- firm aum 563,559,897.67 -> **530,421,988.14** (864 of 1,004 accounts; excluded 33,137,909.52).
+- model 268,523,373.04, unchanged. non_model 261,898,615.10.
+- Identities (i)-(iii) PASS; bridge 391/391.
+- The CLIENT HOLDINGS distribution covers model accounts only (378 funded) and does not move.
+
+**Branches.** (a) The flag is present: as above. (b) The flag is absent: `_supervised_values` raises SystemExit, the pair
+scope fails isolated, and the served bytes stay.
+
+**Rollback.** The package goes back to VersionId Fug5LxhL9UE3.vbgRA6vHnriMrbFJqJW with MDPF_GOLD_COMMIT f09a6a3adb. The
+laptop-placed marker on aum-metrics 10/15 is removed by its VersionId.

@@ -1022,6 +1022,27 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "The order's write grant (<paths>) admits every file the cell's required change must touch, so the cell lands without a file outside its grant.",
     "world_is": "The one-line fix is to drop the temperature key from the expected body of test_rest_client_request_shape (the cell's own rule: temperature is sent only for a gpt-5 model, and the test uses 'm'). The file is outside the grant, so the worker did not commit it and the rivalfunds net reads 57 failed until the issuer admits the path or applies the one-line fix.",
     "notes": "Blocking on the regression net only: AC1 and AC2 pass with the grant as written. The issuer adds data/etfs/scripts/rivalfunds/tests/test_r6ap1_ai_stage.py to <paths> (or applies the fix at the merge) before the net reads clean. The worker did not override the grant."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S20",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-17T04:30:00Z",
+    "one_line": "OBSERVATION: two securities in the rivalfunds universe carry a Bloomberg key with no yellow key ('HAL US', 'VLO US'), so no close is ever returned for them and each stays owed on 237 of 237 dates after batch rv-bf365-20261017.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO~RV/deliverables/backfill_20261017/owed_after_rv-bf365_20261017T04Z.csv @bc1c08e456: security_bloomberg 'HAL US' and 'VLO US' owed on 237 dates each outside 2026-09-29..2026-10-15, the same count as SBER RM and other never-priced keys",
+        "every other US key in the same file ends in ' Equity' (e.g. 'SPCX US Equity', 'JAN US Equity')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every security_bloomberg in gold security_universe is a full Bloomberg key (ticker, exchange, yellow key) the market and history readers can ask for.",
+    "world_is": "Two keys are 'HAL US' and 'VLO US' with no yellow key; ORDER 2 step 1 asks them and Bloomberg is expected to refuse them, so Halliburton's and Valero's curves stay empty until the key is repaired at its source (the holdings key mapping), not in the backfill.",
+    "notes": "Found reading the post-backfill owed set for Andrew-direct 'completely filled'. Not fixed here: the producer of the key is the holdings mapping, a cell for the round-N list."
   }
 ]
 ```
