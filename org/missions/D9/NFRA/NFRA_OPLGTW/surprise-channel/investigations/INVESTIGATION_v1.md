@@ -26865,3 +26865,59 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Disarm condition met: Andrew ran the browser check at the MC Portal terminal on 2026-10-17 ~04:4xZ (/sprint, /rivalfunds, /yearinreview) and answered verbatim 'they are all clear + go' (recorded by 2.0.0_SA_COO~MP in org/tier1_exec/2.0.0_SA_COO~MP/deliverables/ANDREW_DIRECT_20261017_044xZ_THREE_ROUTES_CLEAR_GO_MP_V_2.md). The owner principals were refused on the four browser routes after OG-mg-1 Phase B (the email_deny record carried no scope); OG-ap-30 deleted those records and the guard read back, and the owner's real browser run now reads clear on the three routes he opened. The hazard of Z-S312 is gone; the disarm word goes to the CVO, who writes the clock."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T05:28:58Z",
+  "id": "NFRA_OPLGTW-Z-S352",
+  "one_line": "Round-40 ruling on Z-S314: Ruled: transaction_id identifies a transaction, not a row, so no tool dedupes or joins on it alone. OG-en",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S314"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-en-15 (exact-duplicate removal), live since OG-ap-31",
+      "CVO half OG-ap-34 and row Z-S350 (tools.py registration and mcp 1.28 dispatch)"
+    ]
+  },
+  "spec_asserts": "An observation row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled: transaction_id identifies a transaction, not a row, so no tool dedupes or joins on it alone. OG-en-15 replaced the transaction_id dedupe with exact-duplicate removal on the whole item (live since OG-ap-31 and carried by every later release), and the cursor build keeps that rule; the allocation and overlap work read distinct-id SETS as the row says. Nothing is owed on this row.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: transaction_id identifies a transaction, not a row, so no tool dedupes or joins on it alone. OG-en-15 replaced the transaction_id dedupe with exact-duplicate removal on the whole item (live since OG-ap-31 and carried by every later release), and the cursor build keeps that rule; the allocation and overlap work read distinct-id SETS as the row says. Nothing is owed on this row."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T05:28:58Z",
+  "id": "NFRA_OPLGTW-Z-S353",
+  "one_line": "Round-40 ruling on Z-S350: Accepted as a finding, not a defect of this release: the client_* windowed tools are sync FastMCP tools a",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S350"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-en-15 (exact-duplicate removal), live since OG-ap-31",
+      "CVO half OG-ap-34 and row Z-S350 (tools.py registration and mcp 1.28 dispatch)"
+    ]
+  },
+  "spec_asserts": "An observation row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Accepted as a finding, not a defect of this release: the client_* windowed tools are sync FastMCP tools and run on the event loop, as at the live ref d3ae88be46, so WINDOW_READ_GATE never contends in the service and a page of 22 to 34 s holds up every other route, health included. Nobody grades window_read_busy as a served outcome (the CVO's note). The repair is a separate cell for the round-41 enrichment list: run the windowed client tools off the event loop in a worker thread (tools.py), so health answers during a page and the gate becomes real. Carried to the CTO's round analysis; not in OG-ap-34.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Accepted as a finding, not a defect of this release: the client_* windowed tools are sync FastMCP tools and run on the event loop, as at the live ref d3ae88be46, so WINDOW_READ_GATE never contends in the service and a page of 22 to 34 s holds up every other route, health included. Nobody grades window_read_busy as a served outcome (the CVO's note). The repair is a separate cell for the round-41 enrichment list: run the windowed client tools off the event loop in a worker thread (tools.py), so health answers during a page and the gate becomes real. Carried to the CTO's round analysis; not in OG-ap-34."
+}
+```
