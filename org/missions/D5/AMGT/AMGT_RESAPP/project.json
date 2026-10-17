@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-17T20:29:49Z (2.0.0_SA_COO~R1): ROUND 112 drained; PROD 856fb37b, DEV 61664837, DEV..PROD 0; L8 packet to the CVO",
+  "last_updated": "2026-10-17T20:43:07Z (2.0.0_SA_COO~R1): ROUND 113 issued (bt-1, bt-2, bt-3 to workers; bt-4, bt-5 placed)",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 112 DRAINED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.121; round-close-check MAY-CLOSE), awaiting the CVO's slug and the CTO's round-112 analysis. Shipped: bs-2 (one price-currency helper for the header and the Peers table, plus the Peers harness CRLF fix) on PROD 856fb37b (portal-v2.1.237, CI success, live site tied by bytes); bs-1 (the producer census and footer proof, harness and fixture only) on DEV; PROD folded back into DEV 61664837 (DEV..PROD 0) under the CTO's one-time named waiver; bs-3 (12 findings triaged, row S59) and bs-4 (earnings row read) recorded. Round 111 closed MAY-CLOSE.",
-  "blocking": "the CVO's slug and the CTO's round-112 analysis (carried to round 113: the padded-currency edge W497-S2, S59's candidates); G4's positive arm Mon 2026-10-19 07:30 ET (bp-5)",
+  "phase": "ROUND 113 ISSUED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.122): bt-1 (earnings dates in the long form), bt-2 (the Model tab tooltip z-order and the All figures grid clipping, one cell), bt-3 (the price-currency helper trims a padded code) cut to workers ~500/~501/~502; bt-4 (the item-4 reads) and bt-5 (landing + fold-back) placed. Round 112 closed MAY-CLOSE; PROD 856fb37b (portal-v2.1.237), DEV 61664837, DEV..PROD 0.",
+  "blocking": "the three round-113 candidates (bt-1/bt-2/bt-3) then their approval rows, merge-forward, the chosen-set promote, the byte tie and the fold-back under a CTO named waiver (bt-5); bt-4 (issuer reads); the issuer's walk grading bt-2; G4's positive arm Mon 2026-10-19 07:30 ET (bp-5)",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
