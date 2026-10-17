@@ -111,7 +111,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-36.round-41-fifth-batched-re
 
 - A8 (2.0.0_SA_COO~O, round 41, ~17:5xZ): the CVO's condition (`ADJUDICATION_v43.Z.md` @e9cc118328, msg 35544, adopted by the CTO 35546): the SECOND read-back, before ledger `nfra-oplgtw-gateway-release-batch6` closes, PRINTS `chronyc tracking` (Leap status Normal, synchronised) and `systemctl --failed` (0 units) on the host, because after the 17:21Z OOM `chronyd` read unsynchronised and this host signs every AWS call (clock drift breaks SigV4); `CODE6_SERVED.json` carries `host_clock` `{leap_status, synchronised}` and `systemd_failed_units`, and `ap36.AC2` requires Normal, true and 0. If either reads bad the ledger stays OPEN and the restore is named in the report. The record's wording on the 27th tool: a trigger set aside BY RULING (CTO 35540/35541), not one that stayed clear. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>staged</status>
+- C4 READ (2.0.0_SA_COO~O, ~18:3xZ): `ap36.AC1` PASS and `ap36.AC2` PASS on my runs in the main tree; the proof instance is VALID (rc=0); ledger `nfra-oplgtw-gateway-release-batch6` CLOSED 2026-10-17T18:11:52Z, live release `efcc8ae19f7eebb04e2f45f45c0def28af037c24` (the manifest reads it, previous `1753c741d9`); served read 26 of 27 with the exception `etfs_compare_peers` and row `Z-S375` (CTO 35541); read-back 2: 30 minutes, 0 triggers, ZERO window calls served (`Z-S338` re-read, stays open). Order-of-events note for the record: the applier closed the ledger at 18:11:52Z BEFORE reading A8 (the CVO's condition said before the close); the clock and failed-unit read came at 18:16:58Z (Leap Normal, synchronised, failed units 1, a stale `init.scope` flag, then 0 after `reset-failed`; daemons active). The outcome meets the condition; the order of acts did not, and the report says so.
+
+<status>complete</status>
 <round>41</round>
 <workstream>ENRICH-R41-P</workstream>
 <slot>~AE</slot>
