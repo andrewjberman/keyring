@@ -24072,6 +24072,146 @@
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W288-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~288",
+  "surfaced_at": "2026-10-17T10:07:25Z",
+  "one_line": "Three of the 21 listed rows (W133-S1, W133-S4, W150-S3) cite portal bytes; portal is a gitlink at HEAD, so the HEAD-only read rule cannot decide them and they are NEEDS-LIVE-READ in AUDIT_b.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-388 WORKER FACE: read the tree ONLY with git show HEAD:<path> or git grep HEAD; a verdict resting on a file read from the sparse disk is invalid; the 21 rows are decided on the tree at HEAD.",
+  "world_is": "portal is a submodule gitlink (160000 d1f9ca29675bd9012284272806afc9c587ef55f0) at HEAD 40534c9381; the TicketCenter bytes the rows cite (origin/PROD TicketCenter.tsx:306, analysisRequest.ts, the AR-y-325 test files) are not in this tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal (gitlink) @40534c9381: git ls-tree HEAD portal returns mode 160000 commit d1f9ca29675b",
+      "r47/AUDIT_b.json rows W133-S1, W133-S4, W150-S3 verdict NEEDS-LIVE-READ, each reason naming the portal read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W288-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~288",
+  "surfaced_at": "2026-10-17T10:07:25Z",
+  "one_line": "Rows W145-S6 and W145-S8 cite infra/aws/lambda/ci/lambda-source-map.json (functions.irpt-status, staged_from pins); that file is absent at HEAD, retired for the per-function folder infra/aws/lambda/ci/function-map/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The rows' cited instrument: the remedy for W145-S6 and W145-S8 is an edit to infra/aws/lambda/ci/lambda-source-map.json (TO-AR-y-339 AMENDMENT 1, commit e008b6216a); the TO's read rule is HEAD only.",
+  "world_is": "lambda-source-map.json does not exist at HEAD 40534c9381 (git cat-file rc 128); commit fb20cba7b3 retired the single map; the per-function irpt-status.json has no staged pin for ops/entry.py or ops/owned_report.py, and a staged row for reports/status_installed.py at line 158.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "HEAD @40534c9381: git cat-file -e HEAD:infra/aws/lambda/ci/lambda-source-map.json returns rc 128",
+      "fb20cba7b3: subject 'stage 2 -- the retired single map infra/aws/lambda/ci/lamb...'",
+      "infra/aws/lambda/ci/function-map/irpt-status.json:158 staged repo_path reports/status_installed.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S173 -- W128-S3 disarmed: the owner writer drops home_firm_id for every non-OPAL_GLOBAL owner and the r33 release that ships it is closed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S173",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:15:59Z",
+  "one_line": "W128-S3 DISARMED: a FIRM_ADVISOR's owned-input analysis is no longer refused at CompositionAdmission step 2; the prospect-owner writer pops home_firm_id for every non-OPAL_GLOBAL owner, and ledger irpt-ycg-r33-20261016 (CLOSED) deploys it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W128-S3"
+  ],
+  "spec_asserts": "Row W128-S3: a FIRM_ADVISOR's owned-input analysis is refused at step 2 of CompositionAdmission.validate because the request owner carries home_firm_id, which RequestComposition.schema.json forbids for any principal other than OPAL_GLOBAL (disarm owner 2.0.0_SA_COO~Y2).",
+  "world_is": "MEASURED now (git show): infra/aws/lambda/investor-reporting/_scope/interactive_access.py lines 137 and 138 at HEAD: `if owner.get('principal_class') != 'OPAL_GLOBAL': owner.pop('home_firm_id', None)` (remedy commit 5be427ba76). The r33 build pin 927337a741 descends from 5be427ba76 (ancestor check exit 0; control: 927337a741 is NOT an ancestor of 5be427ba76) and carries the same pop at line 138. The deploy ledger org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md reads CLOSED (closed 20261016T024904Z) and names irpt-ycharts-generate. Later releases are built from trunk, which holds the line. NOT READ: a live FIRM_ADVISOR upload through the deployed door; window 5 files as the staff filer on behalf of a synthetic advisor, so that path is exercised there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/_scope/interactive_access.py (lines 137 to 138)",
+      "git merge-base --is-ancestor 5be427ba76 927337a741 (exit 0), with the reverse control (non-zero)",
+      "org/critical_paths/change_management/20261016T0207Z_irpt-ycg-r33-20261016_deploy_completion.md (Status CLOSED; names irpt-ycharts-generate)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~288/r47/AUDIT_b.json (worker 288's audit line for this row; the issuer re-read the cited bytes)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The writer fix is in HEAD and in the closed r33 release; the refusal that the row names cannot occur for a non-OPAL_GLOBAL owner. A live advisor-path upload is window 5's, not this hazard."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S174 -- S100 disarmed: the ticket role now holds kms:Decrypt on the irpt-requests key, applied and read back
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S174",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:15:59Z",
+  "one_line": "S100 DISARMED: the ticket role's grant on irpt-requests is complete: kms:Decrypt on the table key (via DynamoDB only) was applied and read back in ledger irpt-ticket-r29b-kms-20261014 (CLOSED), after the GetItem statement of r29b.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S100"
+  ],
+  "spec_asserts": "Row S100: release 29b is live with an INCOMPLETE grant: opal-ticket-api-role may GetItem irpt-requests but holds no kms:Decrypt on the table's key, so every CLIENT SUBMIT owner read answers 503 (disarm owner 2.0.0_SA_COO~Y2: a rollback to the code version, or a new never-widen pair that adds the KMS statement).",
+  "world_is": "MEASURED now: infra/aws/terraform/ticket-center/main.tf at HEAD, lines 186 (Sid IrptRequestsInputOwnerRead: dynamodb:GetItem on irpt-requests) and 199 to 206 (Sid IrptRequestsDecryptViaDynamoOnly: Action [kms:Decrypt], Resource the table's kms_key_arn, ViaService dynamodb). The ledger org/critical_paths/change_management/20261014T1538Z_irpt-ticket-r29b-kms-20261014_deploy_completion.md reads Status CLOSED (closed 20261014T155027Z), leg A applied the saved plan with .tools/safe-apply.sh and leg S read the live policy back: Action exactly [kms:Decrypt], Resource the one key ARN. The GetItem statement was applied in 20261014T1459Z_irpt-ticket-r29b-20261014 (CLOSED). The new-pair route the row names is what the kms ledger is. NOT READ: a live CLIENT SUBMIT owner read after the apply (no 503 observed in a committed record); window 5 files as staff, so the client path is not exercised there either.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/terraform/ticket-center/main.tf (lines 186 and 199 to 206)",
+      "org/critical_paths/change_management/20261014T1538Z_irpt-ticket-r29b-kms-20261014_deploy_completion.md (CLOSED; leg S read-back)",
+      "org/critical_paths/change_management/20261014T1459Z_irpt-ticket-r29b-20261014_deploy_completion.md (CLOSED; the GetItem statement)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~288/r47/AUDIT_b.json (worker 288's audit line for this row; the issuer re-read the cited bytes)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The missing grant was added through a new never-widen pair, applied and read back from the live policy; the hazard (503 on every owner read for lack of kms:Decrypt) has its cause removed. A live client-path read is not claimed."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S175 -- W141-S1 disarmed: the branch-A test matches the builder, which writes both commentary keys together
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S175",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-17T10:15:59Z",
+  "one_line": "W141-S1 DISARMED: the test and the builder agree. build_resident_package.py (line 113 to 114) writes commentary_ready_queue_url and the packager block together, and test_resident_package_imports.py (lines 105 to 107) strips both for branch A and asserts both absent (commit 26b34d0449).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W141-S1"
+  ],
+  "spec_asserts": "Row W141-S1: the builder now writes commentary_ready_queue_url (AR-y-333 (a)) while the branch-A test asserts the builder omits it, so the test is red (disarm owner 2.0.0_SA_COO~Y2).",
+  "world_is": "MEASURED now (git show HEAD): infra/aws/lambda/investor-reporting/reports/build_resident_package.py lines 112 to 115 hold analysis_ready_queue_url, commentary_ready_queue_url and the packager block in one dict; reports/tests/test_resident_package_imports.py lines 105 to 107 pop commentary_ready_queue_url and packager from the document and assert both absent for the without-queue case. The AR-y-336 commit 26b34d0449 landed queue url and packager block together and changed the test helper in the same commit. The r34k release was built from this tree (package pin 1ad8bd8c1b) and its after-read shows V1 imports green. NOT READ: the test was read from bytes, not executed in this seat (the worker's sparse worktree runs only part of the portal and lambda suites); no deploy is involved.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/reports/build_resident_package.py (lines 112 to 115)",
+      "git show HEAD:infra/aws/lambda/investor-reporting/reports/tests/test_resident_package_imports.py (lines 105 to 107)",
+      "commit 26b34d0449 (AR-y-336)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~288/r47/AUDIT_b.json (worker 288's audit line for this row; the issuer re-read the cited bytes)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The test and the builder were reconciled in AR-y-336 and the bytes agree at HEAD; the red test the row names does not stand. The test was not run by this seat."
 }
 ]
 ```
