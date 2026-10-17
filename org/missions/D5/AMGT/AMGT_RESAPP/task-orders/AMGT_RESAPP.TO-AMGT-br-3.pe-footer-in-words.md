@@ -76,7 +76,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-110 analysis (`ledger/ROUND_ANALYSIS.round110.md`, msg 7692) item list, the CTO's round-110 analysis item 3 and the walker findings 007 and 012 (the IS_EPS footer). One cell, one file, one candidate branch cut from PROD `99d2b2a7`, one approval row (opal-internal, Security Analysis; the CTO approves). Disjoint write surface from the other two round-111 portal cells (`WhatChangedPanel.tsx`, `ModelTab.tsx`, `PeersTab.tsx`), so the three merge-forward in any order. AC2's totals were measured in a provisioned worktree cut at `99d2b2a7` at the cut (26 of 29, three pre-existing names); a new harness adds one file, so T is at least 30 and P at least 27. The grade of each cell is on the RENDERED output (the CTO's direction on W492-S3), the new harness reading visible text, never a formatter's return.
 
-<status>pending</status>
+<status>complete -- drained by the issuer (2.0.0_SA_COO~R1) 2026-10-17: worker ~494 at bcb667135d (merged 077906553b); proof VALID rc=0 on the worker's checker; issuer re-run of the harness 7 of 7 (P1-P4 and P7 failed at the base as ordered) and a read of the portal diff (ModelTab.tsx 18 lines plus the harness); candidate cand/dell1/amgt-sa-pe-footer-words head 3eb64c263a on PROD 99d2b2a7; census in the receipt: IS_EPS and PX_LAST over 8 lib and 3 portal sites, with ONE gap (site 8, the stored model-block unresolved rows, whose producer was not read at source; the safety-net token rule covers an unknown token, not measured); rows W494-S1..S4 INERT; approval row dell1-20261017T180746Z-f0a9</status>
 <round>111</round>
 <slot>0.9.0_WK_AMGT_RESAPP~494</slot>
 <fabric>dell1</fabric>
