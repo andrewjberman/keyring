@@ -25088,3 +25088,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only. The worker chose nulls for a since run so that an explicit range start reads nothing at the target and needs no new list permission on the gold prefix; the issuer or the CTO may rule the fields otherwise. No criterion reads the window fields on the since path: DBF138-2-AC3 checks the days written and the dry-run days."
 }
 ```
+
+## IRPT_DASHBD-D2-S133 -- TO-DB-b-323 Act 4: terraform fmt -check flags iam.tf of the reporting-read root (long-standing alignment); not edited, not part of the plan
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "id": "IRPT_DASHBD-D2-S133",
+  "surfaced_at": "2026-10-17T04:45Z",
+  "one_line": "TO-DB-b-323 Act 4: terraform fmt -check flags iam.tf of reporting-read (the alignment of two attribute lines in a statement, last touched by IB-pr-304); not edited, not part of the plan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check on infra/aws/terraform/investor-reporting/reporting-read printed iam.tf, rc 3; fmt -diff shows only sid and effect alignment in one statement; iam.tf is unmodified at HEAD (git log: 9eb6ed7dde, 8d08ee54e4); the plan read 1 add 1 change 0 destroy as the order gates; the reporting-read-iso root read fmt clean"
+    ]
+  },
+  "spec_asserts": "The issuer's note: fmt -check reported nothing on both roots (validate clean).",
+  "world_is": "iam.tf of reporting-read carries a formatting deviation that predates this order and was left untouched; the issuer's fmt read must have missed it or read another tree."
+}
+```
