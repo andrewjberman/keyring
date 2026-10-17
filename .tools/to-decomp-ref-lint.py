@@ -88,7 +88,7 @@ SERIAL_RE = re.compile(r"\b\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z][A-Za-z0-9_]*(?:~[A-Za
 # issuance 8ba8bf3ab0 was refused because 0.7.0_AE_CloudOps~A "held" AMGT_HARVST TO-HVST-n-4 and q-7,
 # both `<status>withdrawn</status>`.
 TERMINAL_STATUS = {"COMPLETE", "CLOSED", "SUPERSEDED", "CANCELLED", "DONE",
-                   "CLOSED-SUPERSEDED", "WITHDRAWN"}
+                   "CLOSED-SUPERSEDED", "WITHDRAWN", "NOT_MET"}
 # DELIVERABLES-GRANT WARN (row ETFS_RIVALS-Z-S40; 3.0.0_SA_CVO~Z verdict msg 29834, 2026-10-06: "a WARN line ... at the cut.
 # No refusing limb anywhere"). owned-paths-validate.py clause 4 admits a seat to deliverables/<SERIAL>/ only when <SERIAL> is
 # that seat (or its tilde-stripped base). An order seated on one serial that grants another serial's folder is unwritable by

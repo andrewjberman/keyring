@@ -305,6 +305,10 @@ def status_words() -> set:
 
 COMPLETE_WORDS = {"complete", "completed", "done", "closed"}
 OTHER_TERMINAL_WORDS = {"superseded", "cancelled", "canceled", "withdrawn", "retired", "parked"}
+# TERMINAL AND NOT CLEAN (row AMGT_RESAPP-D1-S55; 1.0.0_SA_CTO ruling
+# org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_PARKED_BUS_ITEMS_20261017_1350Z.md item 2): the order ended with at
+# least one criterion failed. Counted as orders_not_met, never as complete and never as proof_bad; it does not reopen.
+NOT_MET_WORDS = {"not_met"}
 
 
 def lead_word(text: str) -> str:
@@ -316,7 +320,7 @@ def lead_word(text: str) -> str:
 def last_status(text: str, words: set) -> str:
     """The LAST <status> tag whose LEADING word is a status word (CTO ruling msg 107528; R3: read the order, not a spelling)."""
     got = ""
-    known = set(words) | COMPLETE_WORDS | OTHER_TERMINAL_WORDS
+    known = set(words) | COMPLETE_WORDS | OTHER_TERMINAL_WORDS | NOT_MET_WORDS
     # leading whitespace admitted: an applier's flat-folder order indents its <status> line (TCKT_VNEXT TV2 orders), and
     # a line-anchored read returned '' for a `complete` order, so it was never counted as done (D2-S23, second limb)
     for m in re.finditer(r"^[ \t]*<status>(.*?)</status>", text, re.M):
@@ -694,10 +698,15 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
                                           ", ".join("%s<-%s" % (o["id"].split(".")[-1], o["issued_by"]) for o in foreign_untagged)))
     n_orders = len(orders)
     done = [o for o in orders if o["status"] in COMPLETE_WORDS]
-    open_ = [o for o in orders if o["status"] not in COMPLETE_WORDS and o["status"] not in OTHER_TERMINAL_WORDS]
+    not_met_orders = [o for o in orders if o["status"] in NOT_MET_WORDS]
+    open_ = [o for o in orders if o["status"] not in COMPLETE_WORDS and o["status"] not in OTHER_TERMINAL_WORDS
+             and o["status"] not in NOT_MET_WORDS]
     lines.append("ORDERS scope round=%s workstream=%s: %d order(s), %d complete, %d not complete and outside the verdict%s" % (
         rnd if rnd is not None else "all", ws if ws is not None else "all", n_orders, len(done), len(open_),
         (" (" + ", ".join(o["id"].split(".")[-1] for o in open_) + ")") if open_ else ""))
+    if not_met_orders:
+        lines.append("  NOT-MET orders (terminal, NOT clean; outside the proof count): %d (%s)" % (
+            len(not_met_orders), ", ".join(o["id"].split(".")[-1] for o in not_met_orders)))
     tree_dec = [o for o in orders if o.get("decomp_scoped") and not o.get("seat_dir")]
     lines.append("  TREE orders counted by decomposition round: %d (%s)" % (
         len(tree_dec), ", ".join(o["id"].split(".")[-1] for o in tree_dec)))
