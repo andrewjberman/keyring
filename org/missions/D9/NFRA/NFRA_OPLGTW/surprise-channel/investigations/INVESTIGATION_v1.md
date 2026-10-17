@@ -27351,3 +27351,111 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:59:22Z",
+  "id": "NFRA_OPLGTW-Z-S363",
+  "one_line": "Round-41 disposition of worker row Z-W136-S1: Test-premise note, accepted: on site Z the repo path holds a space and the marker line expands REMOT",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W136-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 1d3234ae24 (OG-db-3), a866c7c78c (OG-en-21), 8d2241ef81 (OG-en-22); the named tests pass and the twelve-file window set is 42 of 42 in both orders in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Test-premise note, accepted: on site Z the repo path holds a space and the marker line expands REMOTE_DIR unquoted, so the worker ran the UNCHANGED line with cwd set to a temp folder and REMOTE_DIR='.'. The host path (/opt/opal-gateway) has no space, and the line is the one the order named. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Test-premise note, accepted: on site Z the repo path holds a space and the marker line expands REMOTE_DIR unquoted, so the worker ran the UNCHANGED line with cwd set to a temp folder and REMOTE_DIR='.'. The host path (/opt/opal-gateway) has no space, and the line is the one the order named. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:59:22Z",
+  "id": "NFRA_OPLGTW-Z-S364",
+  "one_line": "Round-41 disposition of worker row Z-W136-S2: Worker environment note: org/surprise_channel/ is not materialized in the sparse cone; the worker re",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W136-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 1d3234ae24 (OG-db-3), a866c7c78c (OG-en-21), 8d2241ef81 (OG-en-22); the named tests pass and the twelve-file window set is 42 of 42 in both orders in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker environment note: org/surprise_channel/ is not materialized in the sparse cone; the worker read the schema with git show. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker environment note: org/surprise_channel/ is not materialized in the sparse cone; the worker read the schema with git show. Record only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:59:22Z",
+  "id": "NFRA_OPLGTW-Z-S365",
+  "one_line": "Round-41 disposition of worker row Z-W136-S3: The commit-time client-data check printed ABSENT (the device gap of Z-W94-S2); the commit is a shell",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W136-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 1d3234ae24 (OG-db-3), a866c7c78c (OG-en-21), 8d2241ef81 (OG-en-22); the named tests pass and the twelve-file window set is 42 of 42 in both orders in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "The commit-time client-data check printed ABSENT (the device gap of Z-W94-S2); the commit is a shell line and a test with no client data. Record only; not read as checked clean.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The commit-time client-data check printed ABSENT (the device gap of Z-W94-S2); the commit is a shell line and a test with no client data. Record only; not read as checked clean."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-17T09:59:22Z",
+  "id": "NFRA_OPLGTW-Z-S366",
+  "one_line": "Round-41 disposition of worker row Z-W135-S1: Worker environment note: .claude/agents/worker.md and the row schema are tracked at HEAD but not mat",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W135-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 1d3234ae24 (OG-db-3), a866c7c78c (OG-en-21), 8d2241ef81 (OG-en-22); the named tests pass and the twelve-file window set is 42 of 42 in both orders in the main tree (this seat's runs)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Worker environment note: .claude/agents/worker.md and the row schema are tracked at HEAD but not materialized in the sparse worktree; the worker took its rules from the order and read the schema from the main tree. Record only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Worker environment note: .claude/agents/worker.md and the row schema are tracked at HEAD but not materialized in the sparse worktree; the worker took its rules from the order and read the schema from the main tree. Record only."
+}
+```
