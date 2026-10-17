@@ -27125,3 +27125,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Form only. The reflex prints its state and does not block; a commit-time check that cannot decide a diff is recorded here, not read as checked clean. The main-tree danger map is the instrument the reflex names for the rebuild; this worker did not run it (the order bounds the graph and adversary lenses out)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~133",
+  "surfaced_at": "2026-10-17T09:01:53Z",
+  "id": "NFRA_OPLGTW-Z-W133-S4",
+  "one_line": "The naming limb refused the proof-and-status commit of OG-db-2: the function-map folder infra/aws/lambda/ci/function-map/ is outside this worktree's sparse cone, so the commit did not land.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: write the proof instance, validate it, flip the one status tag, and commit the instance, the deliverables and the flip together through safe-commit.sh.",
+  "world_is": "bash .tools/safe-commit.sh refused the set (instance, deliverables folder, task order): 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-oplgtw-133\\infra/aws/lambda/ci/function-map/'. The folder is not materialized in this sparse worktree. The proof-of-spec-check rc=0 VALID stands; the status flip is reverted in the worktree to staged; the proof instance and the flip are untracked and uncommitted. Not widened, not routed around.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- <proof instance> <task order> (rc=1): ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6); files unstaged; output at C:/tmp/wk-oplgtw-133/.scratch/commit_proof.out",
+      ".tools/naming-gate.py:1109 FUNCTION_MAP_DIR = infra/aws/lambda/ci/function-map/ and :1295-1299 the missing-folder NAMING ERROR (fail closed)",
+      "git sparse-checkout list in C:/tmp/wk-oplgtw-133 names no infra/aws/lambda path; the surprise-row commit be6b218289 and the deploy commit 83eb42b2ad passed the gate with the same cone"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The gate's refusal is fail-closed by design; the worktree cone omits the folder it reads. The fix is an environment choice for the issuer or the CTO: add the folder to the cone, or land the record from a materialized tree. This worker did not widen the cone, which would be a materialization act outside the order."
+}
+```
