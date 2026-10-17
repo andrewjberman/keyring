@@ -25283,3 +25283,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W290-S1 -- r35l_build.py refuses at its baseline census call; no R36S_BUILD record, so AR-y-391 cannot run past step 2
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W290-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~290",
+  "surfaced_at": "2026-10-17T15:17:20Z",
+  "one_line": "The release-35 build tool fails with a Python traceback (not an R35L-BUILD-BAD line) after both builds succeed: its baseline census call reads the function map at the pin 927337a741, which has no irpt-status entry, so no record is written and steps 3 to 5 of AR-y-391 cannot run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-AR-y-391 step 2: python -I org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r35/r35l_build.py --pin faf037e0d02c021c0717f051b01ec72ed0b063d2 --out C:/dev/irpt-release-r36s --record .../r49/R36S_BUILD.json ends with R35L-BUILD-OK, or with R35L-BUILD-BAD and one row; the tool's STATUS_BASELINE (line 19) is the pin the live package was built from.",
+  "world_is": "MEASURED at worktree HEAD f332b96a4d: run 1 (--out C:/dev/irpt-release-r36s) and run 2, the one retry the order allows (--out C:/dev/irpt-release-r36sb), each exit rc=1 with a traceback raised at r35l_build.py line 127 (census.build_members at the baseline) and release_census.CensusError: function 'irpt-status' is not in the source map at 927337a741. Both builds ran and the zip was written to the stage folder before the failure (tmp_irpt-status_a and _b, irpt-status.zip); the record was not written. Read-only: git show 927337a741:infra/aws/lambda/ci/function-map/irpt-status.json is absent (rc=128); the function-map folder holds 0 files at 927337a741 and at 90b69dcb12 and 242 at faf037e0d0. The tool's comment names 927337a741 as the release-33 live build; the order names 90b69dcb12 as the release-35 live pin. NOT READ: the live zip beyond the issuer's member file; no member diff; no upload, plan, apply or AWS call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r35/r35l_build.py@f332b96a4d (lines 19 and 127)",
+      "infra/aws/lambda/ci/release-census.py@f332b96a4d (build_members, line 65: function not in the source map at the pin)",
+      "C:/dev/irpt-release-r36s (stage folder left as the tool made it; run 1 output held in .scratch/r36s_build.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
