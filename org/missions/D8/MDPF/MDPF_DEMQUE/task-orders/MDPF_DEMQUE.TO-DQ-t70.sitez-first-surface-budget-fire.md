@@ -1,7 +1,7 @@
 # TO MDPF_DEMQUE.TO-DQ-t70 -- DQ-t-70: site Z runs the surface-budget drawer and the 2026-10-17 fire draws surface-tagged requests past the history ceiling
 <to_id>MDPF_DEMQUE.TO-DQ-t70</to_id>
 <project>MDPF_DEMQUE</project>
-<issued_to>0.7.0_AE_CloudOps~ZQ</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MDPF1</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-17</issued_date>
 <status>staged</status>
