@@ -41943,3 +41943,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Form only. A future check or a mirror of principal_49f.tf should decide whether a trust Sid is wanted; this file follows the check."
 }
 ```
+
+## IRPT_BCKEND-D2-S233 -- The firm tokens come from the registry's client rows and the trust statement has no Sid: both are label and de
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S233",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-17T05:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W454-S1 and IRPT_BCKEND-D2-W454-S2 (worker ~454, order TO-IB-hm-8). S1: module.irpt_scopes marks FOUR rows FIRM (demo included), so the firm tokens for the three list keys come from the client rows of data/firm_registry.json, each also tested against the FIRM class; the worker's file does this and no firm token is typed; the check re-runs the builder for the three tokens and AC2 passes. My order's wording (derive through module.irpt_scopes alone) was the defect. S2: AC1 counts every Sid label in the file, so the trust statement carries no Sid; a Sid is a label, not a grant, and the trust still names only local.irpt_runner_role_arn and sts:AssumeRole. Neither changes what the file declares.",
+  "one_line": "The firm tokens come from the registry's client rows and the trust statement has no Sid: both are label and derivation choices, the grants are as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p251_cells.py . IBHM8-AC1|AC2|AC3 re-run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-454 at f43e108861: PASS x3",
+      "infra/aws/terraform/investor-reporting/directory/hmac_list_stage.tf read whole by 2.0.0_SA_COO~P2"
+    ]
+  },
+  "spec_asserts": "The firm tokens derive through module.irpt_scopes alone, and the trust statement may carry a Sid (my order, mirroring principal_49f.tf).",
+  "world_is": "module.irpt_scopes FIRM holds four rows including demo, and the check counts every Sid, so the file derives from the registry's client rows and the trust has no Sid; the declared grants are exactly the ordered ones."
+}
+```
