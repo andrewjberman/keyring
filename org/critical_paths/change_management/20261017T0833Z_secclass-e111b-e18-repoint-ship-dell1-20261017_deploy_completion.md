@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T08:33:32.774570+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261017T085916Z
 **Deploy:** MDPF_SECCLASS TO-SC-e111b: ship TWO files s3://opal-data-bd/code/gold/E_18.detect_new_securities.py (ETag a7820a20 VersionId wb5QYkh7QEfrvMEscg.EgAui0MeBaNwB -> md5 f5c03ee6) and gold_dispatch.sh (ETag 882a910b VersionId .bNYVetB5sGV8bZki7EgXBfChCH_uPyE -> md5 165933f6), then leg Q E_18 single on the runner. Sentinel org/critical_paths/.open_deploys/secclass-e111b-e18-repoint-ship-dell1-20261017.json; entry org/critical_paths/change_management/ (name printed at open). Rollback: both files by the base VersionIds then safe-deploy of base bytes.
 **Authored by:** 0.7.0_AE_CloudOps~DELL1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -17,8 +17,8 @@
 | D1 | s3-prefix | s3://opal-data-bd/code/gold/E_18.detect_new_securities.py | safe-deploy comp-pipescript deployed MATCH line, served ETag f5c03ee6 | safe-deploy.sh E_18 rc 0 (HALT_ACK=1 for the already-read GO msg 7445): VERIFY OK comp-pipescript deployed data/black_diamond/scripts/gold/E_18.detect_new_securities.py; served ETag f5c03ee69eaa1810159aefb6e2145bb4, new VersionId ij219ZfHeFTL7H_e8evmlrOipp2QHz_c at 2026-10-17T08:36:35Z (rollback VersionId wb5QYkh7QEfrvMEscg.EgAui0MeBaNwB) | CLOSED 20261017T083901Z |
 | D2 | s3-prefix | s3://opal-data-bd/code/gold/gold_dispatch.sh | safe-deploy comp-pipescript deployed MATCH line, served ETag 165933f6 | safe-deploy.sh gold_dispatch.sh is a no-op (.sh outside its deploy scope: 'no deploy-scope script files detected'); shipped by aws s3 cp --sse AES256 as in FB-j-3/FB-j-7 at 08:38:26Z; served ETag 165933f6dd0068a649f9757d9b86f303 equals repo md5, 76036 bytes, new VersionId fzd8_e.BSTe4C757WgGhHx88DBf.v0iy (rollback VersionId .bNYVetB5sGV8bZki7EgXBfChCH_uPyE); comp-pipescript deployed finds the .sh ABSENT IN TREE [bd-gold] (it indexes scripts only), so the MATCH is by e108_shipped_check md5 | CLOSED 20261017T083901Z |
 | C | verify | e108_shipped_check.py reads E108-SHIPPED ok=True; pre/post code/gold census shows only the two moved | check line, census diff | e108_shipped_check.py: E108-SHIPPED ok=True e18=f5c03ee6\|f5c03ee6\|MATCH dispatch=165933f6\|165933f6\|MATCH e18_old_list_lines=0 dispatch_syntax=0 chain=True; code/gold census deliverables E111_LEGP_20261017.json 290 keys vs E111_LEGD_AFTER_20261017.json 290 keys: added=0 removed=0 moved=[E_18, gold_dispatch.sh] | CLOSED 20261017T083901Z |
-| Q | verify | Leg Q Branch 1: runner service stopped first, BD_PLATINUM_MODE=canonical gold_dispatch.sh --single E_18 no --upload; exit 0, no ERROR, 9 held-out unresolved, etf-classifications unchanged | CommandIds, lines, table diff |  | OPEN |
-| G | git | ledger, deliverables and logs committed | commit hash with push state |  | OPEN |
+| Q | verify | Leg Q Branch 1: runner service stopped first, BD_PLATINUM_MODE=canonical gold_dispatch.sh --single E_18 no --upload; exit 0, no ERROR, 9 held-out unresolved, etf-classifications unchanged | CommandIds, lines, table diff | ssm:30f4e4c3-07f7-4422-a2f0-516fd909d5ff (systemctl stop, first command, no gold process) then ssm:0b53294a-e25f-4896-9a16-c9fc8092c762 (BD_PLATINUM_MODE=canonical gold_dispatch.sh --single E_18): SINGLE-RC=0, 0 ERROR lines, wall 4.7s; etf-classifications before/after 11375 items, 13 seeded present, 9 held-out absent, first 200 keys equal. Deviations (E111_LEGQ_FINDINGS_20261017.md): nine held-out not listed unresolved (E_18 resolution filter, 'Already resolved: 9'); single ran with --upload (0 candidates, 0 writes). ACCEPTED by 2.0.0_SA_COO~M1 msg 7450 and the CTO (msg 7449): no restore | CLOSED 20261017T085915Z |
+| G | git | ledger, deliverables and logs committed | commit hash with push state | commit 3cef976ffb on box/dell1 (ledger, sentinel, deliverables, order status); push state LOCAL, origin box/dell1 40c081ab5a (ls-remote read 08:46Z) | CLOSED 20261017T085916Z |
 
 ## Log
 
@@ -28,3 +28,6 @@
 - 20261017T083901Z LEG D1 closed: safe-deploy.sh E_18 rc 0 (HALT_ACK=1 for the already-read GO msg 7445): VERIFY OK comp-pipescript deployed data/black_di
 - 20261017T083901Z LEG D2 closed: safe-deploy.sh gold_dispatch.sh is a no-op (.sh outside its deploy scope: 'no deploy-scope script files detected'); ship
 - 20261017T083901Z LEG C closed: e108_shipped_check.py: E108-SHIPPED ok=True e18=f5c03ee6|f5c03ee6|MATCH dispatch=165933f6|165933f6|MATCH e18_old_list_li
+- 20261017T085915Z LEG Q closed: ssm:30f4e4c3-07f7-4422-a2f0-516fd909d5ff (systemctl stop, first command, no gold process) then ssm:0b53294a-e25f-4896-9a
+- 20261017T085916Z LEG G closed: commit 3cef976ffb on box/dell1 (ledger, sentinel, deliverables, order status); push state LOCAL, origin box/dell1 40c081
+- 20261017T085916Z CLOSED -- all 7 legs proven
