@@ -10790,5 +10790,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W159-S3",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~159",
+     "surfaced_at": "2026-10-17T20:30:18Z",
+     "one_line": "HVST-cf-1 budget: the two census runs read 844 requests and 201751487 bytes in all (run 1 423 requests and 100909091 bytes, superseded by the exclusion correction; run 2 421 requests and 100842396 bytes, the counted run in cf1_census.out). The order's cap is 800 requests in all; the out file counts run 2 only.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cf-1 preflight (comp-iam): budget at most 800 requests and 500 MiB in all, counted in cf1_census.out.",
+     "world_is": "cf1_census.out at b5238574f8 prints BUDGET requests=421 bytes=100842396 for run 2. Run 1, the census at 6a2e2a49cd, printed BUDGET requests=423 bytes=100909091 and was replaced by run 2 after the MISFILED_REPORTS correction (see AMGT_HARVST-D1-W159-S2). Summed over both runs: 844 requests (above 800) and 201751487 bytes (below 500 MiB). No gold writer, put, copy or delete was run.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159/cf1_census.out@b5238574f8 (BUDGET line, run 2)",
+       "git show 6a2e2a49cd:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159/cf1_census.out (BUDGET line, run 1; superseded)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
