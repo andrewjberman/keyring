@@ -26969,3 +26969,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Source shape, not a gateway defect. One read answers it: the fees partition row counts by date over the 13-month window (a count per partition, no client rows). If the stretch is a source gap, the window_note or a source_coverage field should say so, so a 13-month fee total is not read as complete."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-17T07:13:00Z",
+  "id": "NFRA_OPLGTW-Z-S356",
+  "one_line": "OG-ap-33 STOP before any merge commit: resolving app/tools.py, app/destructive_ops.py and deploy-to-ec2.sh to the live blobs would drop trunk changes that are not deployed (trunk and live each carry lines the other lacks); the conflict set is 20 paths, not 18.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/AP33_STOP_NOTES.md and ap33_landing.json (merge_sha null, stop_row this id)",
+      "git merge-tree --write-tree --name-only dc076cc44f 319c9413a2 lists 20 conflicted paths (merge base 91811b648a); the order named 18; the two extra are tests/test_og_en13.py and infra/logic/registry/legacy_addresses.json",
+      "trunk blob vs the blob at release_sha 9d5b712557 (live), and trunk commits since the merge base that changed the path: app/tools.py cd37a28fb6 vs e335c267f5 (16); app/destructive_ops.py 3b2c845fe8 vs 3058b6a732 (14); deploy-to-ec2.sh 28ef9af407 vs 7385fbec55 (14); app/client_adapter_bd49f.py and app/refs/DATA_CATALOG.yaml are equal to live",
+      "lines trunk has that live lacks: tools.py 9 and destructive_ops.py 1 (the harvest_get_published_analysis registration, commit 1b89afbb62, OG-gt-11 hookup of OG-gt-5), deploy-to-ec2.sh 22 (the OG-db-1 preflight, commit 3a40dffdcc); lines live has that trunk lacks: 7, 1 and 35 (the HVST release's own)"
+    ]
+  },
+  "spec_asserts": "OG-ap-33 step 2 and the CTO's rule (msg 35311): every conflicted gateway path resolves to the live blob, and a STOP applies where that would drop a trunk change that is not deployed.",
+  "world_is": "For three of the five gateway live-byte paths the live blob (equal to the HVST side) is neither side's whole truth: trunk carries OG-gt-11 and OG-db-1 work the live release lacks, and live carries HVST work trunk lacks. The STOP in the order holds literally, so no merge commit was created and the order stays staged. Two further conflicts lie outside the order's paths: tests/test_og_en13.py (a gateway test file; the order's rule gives trunk's side) and infra/logic/registry/legacy_addresses.json (hvst side 209 rows, trunk 215, every hvst row identical in trunk's, 6 only in trunk: trunk's side loses nothing, but no rule names it).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts, blob prefixes and commit ids only. The question for the issuer: (a) a true three-way merge keeping both sides' lines for the three STOP paths, no live byte moving on the host; or (b) the order's live-blob rule with the trunk changes re-landed by their own order. And whether the two extra conflicts may be resolved here (trunk's side for both)."
+}
+```
