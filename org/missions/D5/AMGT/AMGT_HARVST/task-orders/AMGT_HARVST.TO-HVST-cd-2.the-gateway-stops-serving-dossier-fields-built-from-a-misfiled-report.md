@@ -80,7 +80,7 @@ This order touches none of them.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>89</round>
 <workstream>S29-SERVE-2</workstream>
 <slot>dell1</slot>

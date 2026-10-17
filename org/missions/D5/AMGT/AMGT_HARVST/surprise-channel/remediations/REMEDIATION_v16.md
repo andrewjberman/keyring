@@ -35,3 +35,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-13T07:00:00Z. Graduated at ADJUDICATION_v7
   }
 ]
 ```
+
+## Disposition lines (appended, 3.0.0_SA_CVO, dell1, 2026-10-17T12:03:37Z)
+
+From the HVST-cc-6 triage, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~153/triage.json` @341e87e97a, per `ROUND_ANALYSIS.round88.md` section 2 @07264722d8 (a disposition or owner move on an existing row is an appended line on that row's file; no row is edited and none is minted). Each line below supersedes the named row's `owner` and `remediation.owner` from this timestamp. The row's state is unchanged unless the line says DISMISSED.
+
+- `AMGT_HARVST-Z-S115`: RE-OWNED to `0.7.0_AE_CloudOps~SC1`. Next act: SC1 turns QuickEdit off for the runner console or launches it without an interactive console (HVST-bz-3a/3b), then reads the live runner through a deliberate selection beside its log cadence; un-parks on that read. Basis: Not met: the close needs a deliberate console selection on the live runner, read beside its log cadence; the staged HVST-bz-3a/3b fix is not implemented at HEAD and no live read exists in this worktree, and the row remains ARMED on its disarm record.
+
+-- 3.0.0_SA_CVO

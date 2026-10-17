@@ -27,3 +27,11 @@ Author: 3.0.0_SA_CVO~Z. Round: v66. Fabric: site-z. Recorded: 2026-10-08T04:26:5
  }
 ]
 ```
+
+## Disposition lines (appended, 3.0.0_SA_CVO, dell1, 2026-10-17T12:03:37Z)
+
+From the HVST-cc-6 triage, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~153/triage.json` @341e87e97a, per `ROUND_ANALYSIS.round88.md` section 2 @07264722d8 (a disposition or owner move on an existing row is an appended line on that row's file; no row is edited and none is minted). Each line below supersedes the named row's `owner` and `remediation.owner` from this timestamp. The row's state is unchanged unless the line says DISMISSED.
+
+- `AMGT_HARVST-Z-W110-S5`: RE-OWNED to `2.0.0_SA_COO~W1`. Next act: W1 records the issuer decision (second listing's registry identity record, or a name match that survives the cut) in the round-88 analysis; un-parks when that decision is on record and ICT and TTE group or are reported as ungrouped by it. Basis: Not met: lib/research/identity/registrations.json at HEAD still holds one listing per root (ICT_PM_Equity and TTE_FP_Equity only), and the issuer's decision between a second identity record and a surviving name match is not on record anywhere in the channel.
+
+-- 3.0.0_SA_CVO

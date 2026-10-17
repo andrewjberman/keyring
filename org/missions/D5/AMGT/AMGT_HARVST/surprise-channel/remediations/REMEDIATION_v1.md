@@ -1006,3 +1006,13 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
 ```
 
 -- 3.0.0_SA_CVO~O
+
+## Disposition lines (appended, 3.0.0_SA_CVO, dell1, 2026-10-17T12:03:37Z)
+
+From the HVST-cc-6 triage, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~153/triage.json` @341e87e97a, per `ROUND_ANALYSIS.round88.md` section 2 @07264722d8 (a disposition or owner move on an existing row is an appended line on that row's file; no row is edited and none is minted). Each line below supersedes the named row's `owner` and `remediation.owner` from this timestamp. The row's state is unchanged unless the line says DISMISSED.
+
+- `AMGT_HARVST-Z-S19`: DISMISSED (the row closes unremediated in this project). Dismissed: the misspelled name lives in the AMGT_RESAPP identity crosswalk's universe object, a surface this project does not write; the row's own successor AMGT_HARVST-Z-S20 hands the remedy to 2.0.0_SA_COO~Z, the AMGT_RESAPP lane under TO-AMGT-rj-4 and rk-4, so the owning surface is opened there.
+- `AMGT_HARVST-Z-S20`: DISMISSED (the row closes unremediated in this project). Dismissed: the open remedy (a structured company-name field in build_universe.py, identity lib under lib/research/identity) is AMGT_RESAPP's surface, handed off in this row's own notes to 2.0.0_SA_COO~Z under TO-AMGT-rj-4 and rk-4; this project's channel is not the carrier.
+- `AMGT_HARVST-Z-S21`: DISMISSED (the row closes unremediated in this project). Dismissed: the open item is a domain correction to ruling R-75 @791aa3e4af, which carried the EDGAR name-enrichment arm into AMGT_CORPUS identity recovery; that ruling is the record that opens the owning surface, in AMGT_CORPUS, not in this project.
+
+-- 3.0.0_SA_CVO
