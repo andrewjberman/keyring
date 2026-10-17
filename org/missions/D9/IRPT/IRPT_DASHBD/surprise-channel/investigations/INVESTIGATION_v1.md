@@ -25446,3 +25446,87 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-W258-S1 -- DBP196-1-AC3 cannot pass as written: the dsgn-irptv1 wire-regeneration tests fail on an autocrlf box
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W258-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~258",
+  "surfaced_at": "2026-10-17T07:23:58Z",
+  "one_line": "TO-DB-b-330 criterion DBP196-1-AC3 cannot pass as written on this box: the dsgn-irptv1 run reports 2 of 387 tests failing (core.autocrlf=true), in the wire-regeneration check and its content-pins subprocess, neither of which reads a file the cell changed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-330 criterion DBP196-1-AC3: every irpt-dashbd and dsgn-irptv1 test passes; the typecheck passes; the production build succeeds and carries neither the SYNTHETIC PREVIEW words nor the fixture.",
+  "world_is": "Measured at portal head 077be90c on this box. The checker's dsgn-irptv1 step fails: 385 pass, 2 fail of 387 across 239 files, rc 1. The two failures are the wire-regeneration test (iv-e-26.wire-regen, regeneration not byte-identical for the ExportBundle wire file) and the content-pins test it runs (fe-s-13), whose generator count check fails. The wire-regeneration test's own source states it assumes core.autocrlf=true, and git config core.autocrlf reads true here. Neither test imports DashboardPerformance.tsx or the cell's test file, and the portal diff against the pinned base names two files only. The checker stops at its first failing step, so its irpt-dashbd, typecheck and build steps did not run inside it; run by hand at the same head: irpt-dashbd 185 pass, 0 fail, 185 tests across 24 files, rc 0; typecheck rc 0; production build rc 0. Not measured: the base head's dsgn-irptv1 result (no base checkout was made), so the claim that the failure predates the cell rests on the by-construction argument above.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checker run at the workspace head, DBP196-1-AC3 FAIL: the failing step is run_tests on the dsgn-irptv1 directory, output tail 'the dsgn-irptv1 tests failed: ... 385 pass | 2 fail | Ran 387 tests across 239 files'",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.wire-regen.test.ts@38d4f947 lines 79 and 111: the autocrlf assumption comment, and the regeneration-not-byte-identical failure message",
+      "git -C portal config --get core.autocrlf reads true on this box (measured at portal head 077be90c)",
+      "git -C portal diff --name-only 38d4f947 077be90c lists two files: DashboardPerformance.tsx and dashboard-chart-breaks.test.ts",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/content-pins.test.ts@38d4f947 imports only the contract JSON and the generator, not DashboardPerformance.tsx"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order stays open: AC3 is FAIL as written. The cell's two changed files do not touch the failing tests. The checker orders its steps so the first failing one hides the irpt-dashbd, typecheck and build results; those were measured by hand and are recorded in the worker report, not as a verdict."
+}
+```
+
+## IRPT_DASHBD-D2-W258-S2 -- the break-note condition admits a gap-only span, where the no-return sentence would be false
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W258-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~258",
+  "surfaced_at": "2026-10-17T07:23:58Z",
+  "one_line": "The order's break-note condition ('the answered span holds a row with no value') admits a span holding only unreported trading days, where the sentence 'The curve breaks at N day(s) with no return.' would be false; the cell counts served no-return days only and prints the note only above zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-330 worker face, step 3: add, above the chart and only when the window's answered span holds a row with no value, one paragraph data-slot dashboard-chart-breaks reading 'The curve breaks at N day(s) with no return.'",
+  "world_is": "A gap row (an unreported trading day) has no value but is not a day with no return, so under the literal condition a span holding only gap rows would print 'breaks at 1 day with no return' for a day the source did not report. Implemented instead: N counts the served days inside the answered span whose value is null, and the paragraph prints when N is above zero. Gap rows get their own tooltip sentence, as the order also asks.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-330.performance-chart-draws-measured-segments-with-breaks.md, worker face step 3 (the quoted condition and sentence)",
+      "portal/src/pages/InvestorReporting/dashboard/DashboardPerformance.tsx@077be90c, function noReturnDays and the break note guarded by breakDays > 0",
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/dashboard-chart-breaks.test.ts@077be90c, the isolated and gap tests (no test pins the paragraph text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer to confirm the wording. If the literal condition is wanted, the sentence needs a gap-aware form before it is printed for a gap-only span."
+}
+```
+
+
+## IRPT_DASHBD-D2-S134 -- issuer's dispositions on worker 258's rows: the AC3 clause was the issuer's defect, fixed; the break note accepted
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S134",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-17T07:58:26Z",
+  "one_line": "Issuer's dispositions on worker 258's rows W258-S1 (BLOCKING, the AC3 clause) and W258-S2 (OBSERVATION, the break note): S1 was the issuer's checker defect, fixed; S2 accepted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-330 criterion DBP196-1-AC3 asked that every dsgn-irptv1 test pass.",
+  "world_is": "W258-S1: two dsgn-irptv1 tests (iv-e-26 wire-regen and iv-e-98 generators-drift, ExportBundle.ts regeneration drift) fail at the pinned DEV head 38d4f947 as well as at the worker's head 077be90c (issuer-measured in a detached portal worktree at the pin: 2 fail, the same two). The clause was the issuer's defect; the order and checker p196 are amended (6ba1dec99c) and the checker's summary read fixed (6a7d1feb56): AC3 allows exactly those two failures and no other. AC1, AC2 and AC3 PASS on the worker's tree under the amended checker (issuer run and worker run). W258-S2: the break note counts served no-return days only, so a span holding only unreported days prints no break sentence (the unreported days already have their own sentence); accepted. Landed: workspace merge 563969e8a8 (0 deletions); the portal change is on candidate cand/dell2/irpt-performance-chart-breaks-prodbase c95a3d65 (the same change cherry-picked onto PROD after the registrar refused the DEV-based branch for 98 overlap commits), approved on row 0c68 and merged to DEV at 588d869eb0 (pushed, ls-remote read). Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r150/p196_chart_breaks.py @6a7d1feb56; order amendment 6ba1dec99c",
+      "rows W258-S1 and W258-S2 in this channel; merge 563969e8a8",
+      "portal DEV 588d869eb0 (ls-remote read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: this seat (issuer); both rows dispositioned here, nothing armed. The browser walk (a gap day, an unreported day, an isolated day) is owed before PROD (CTO msg 10384)."
+}
+```
