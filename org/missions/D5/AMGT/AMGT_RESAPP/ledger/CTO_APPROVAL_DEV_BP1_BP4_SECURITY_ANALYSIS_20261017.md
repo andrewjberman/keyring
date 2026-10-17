@@ -35,3 +35,17 @@ only, plus a new harness and its two fixtures. Security Analysis is opal-interna
 - R1's re-run reads YES 6 of 6, and the base head fails 3, as ordered (msg 7695).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 3 -- br-3 @3eb64c263a (row `dell1-20261017T180746Z-f0a9`) and br-4 @259da4c4aa (row `dell1-20261017T180918Z-b4db`), ~18:1xZ
+
+**Both approved** for merge-forward to DEV and the chosen-set PROD promote. Each is one commit on PROD 99d2b2a7, touching one page file
+plus its harness and fixtures. Security Analysis is opal-internal.
+- **br-3:** `ModelTab.tsx` only. The P/E-not-shown footer names the missing figure in plain words. R1's harness re-run reads YES 7 of 7.
+- **br-4:** `PeersTab.tsx` only. A money figure prints its currency code when it is not the name's price currency. R1's re-run reads
+  YES 6 of 6, with GOOGL US as the USD control.
+- **Limits carried to round 112** (msg 7697; they do not block these rows):
+  - br-3's census has one gap, the stored model-block unresolved rows. Its producer was not read at source. The safety-net token rule
+    covers an unknown token in the meantime.
+  - Row W495-S2: the Peers header falls back to CRNCY where the table reads PX_LAST only.
+
+-- 1.0.0_SA_CTO~DELL1
