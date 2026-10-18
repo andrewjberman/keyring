@@ -82,12 +82,19 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 - **STAGED, not sent.** It waits on the CTO half, `HVST-cj-3` released and read (my four-spelling reads first), site Z's answer (the issuer asks through `0.0.0_AB_MSTR~DELL1`, C-10) and the issuer's GO. Receiving seat: `0.7.0_AE_CloudOps~SC1` (CLAUDE.md rule 34).
 - Authority: the CTO's round-94 analysis @428b762698 section 3 and item 3. Decomposition section 130.
 - **The CTO's S51 rules are applied:** every stop and expected question is section 3; I check SC1's READ ack within 10 minutes of the handing and type a nudge if there is none.
+
+
+**COMPLETE 2026-10-18T11:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** seat `0.7.0_AE_CloudOps~SC1`, GO 11:11:53Z with `GO_UTC` 11:15:00Z (site Z CLEAR 11:15Z-12:30Z, its CTO msg 35685 via MSTR msg 8013); SC1 was busy on the RESAPP `by-5` apply, so I typed the nudge when it was idle (11:22:25Z, READ 11:22:37Z); `BP/_LN_Equity` written 11:30:25Z (`as_of=2026-10-18.2d0238f7570cff0e.json`, 265,712 bytes) and `NG/_LN_Equity` 11:34:16Z (`as_of=2026-10-18.1af6506669c49a8a.json`), both under the ENCODED partition, none under the raw spelling; the CTO's model-block guard PASS for both (BP: stamp `20261017T130241Z` later than `20261011T130307Z`, 91 valued rows before and after); read-backs PASS; ledger `harvst-cj5-dossiers-slash` CLOSED 11:40:46Z, COMMITTED (`c199581bf6`); deliverables `4aa32e3e71`, `c9facabbb6`, `f7576dfed8` (the proof instance was INVALID twice on a row-pin class and fixed, stated in the ledger entry). Pair COO `1e2728c9...` + CTO `93f7352b2e` (citation fix `7de585d788`).
+- **Read by me (not SC1's word):** `deliverables/2.0.0_SA_COO_W1/round95/cj5_issuer_verify.out`: 1556 objects in the table (1554 + 2), 446 continuations (unchanged); both gateway picks name the manifest key; method `/15`, hash recomputed equal, `subject.security_key` the raw name; **the fields that moved against the dossier served before are exactly the census's list: BP `fund_form_ref` and `model_rows`, NG `model_rows`**; proof instance VALID rc 0 (re-run here). **My own gateway reads after:** `BP/_LN_Equity` (the raw spelling, read right after the canary: new `dossier_key`, `fund_form_ref` on the version-2 IDVZ form `fund=idvz/65a5baab3afd06f0.json`, listed 16, distinct `as_of` 8, continuation, ai_fill, 7 reports and roster equal to before), `NG/_LN_Equity` and `NG-SLASH-_LN_Equity` (both: the new `dossier_key` `as_of=2026-10-18.1af6506669c49a8a.json`, `content_sha256` `5863bdfb...` equal, listed 15, everything else equal to my reads before the write).
+- **SC1's plain limits:** BP was compared by script, NG by reading against its transcription (the tool results were inline); NG's pre-write gateway reads were not repeated (S3-level proof instead). My own reads of NG before the write (10:5xZ) and after cover the comparison. **Not read by me:** `BP-SLASH-_LN_Equity` after the write (SC1 read it; the raw spelling returned the same dossier); `model_rows` through the gateway for either name (the response-size cap omits it; BP's was compared at the S3 level by SC1 and by my script for both names).
+- **What this does NOT prove:** the effect on consumers of these two dossiers (the RESAPP COO's measurement of 101 names was taken before these two writes); the rollback (an S3 delete of the two keys, Andrew's act) was not taken.
 - **Own workstream** `DOSSIER-WRITE-SLASH`.
 - **Not covered, named:** any other name; the path-component spelling question.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>95</round>
 <workstream>DOSSIER-WRITE-SLASH</workstream>
 <slot>dell1</slot>
