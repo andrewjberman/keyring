@@ -12702,5 +12702,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W180-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~180",
+        "surfaced_at": "2026-10-18T17:42:15Z",
+        "one_line": "HVST-cn-2 BLOCKED: dossier.build(PBR_US_Equity) raises FileNotFoundError on a KPI census input that is tracked at HEAD but absent from this sparse worktree, so the one dropped PBR row cannot be named here.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cn-2 section 1b: dossier.build (in memory) runs for PBR_US_Equity in this worktree, so the BUILT model_rows exist to compare against the served dossier, and the census can name the one valued row the build drops with its cause.",
+        "world_is": "The worktree uses core.sparseCheckout=true and its sparse list excludes org/tier1_exec/ and org/surprise_channel/. The file org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json is tracked at HEAD (git ls-files: 1 path) but absent from the worktree, so substrate -> continuation.current_inputs -> _kpi_lexicon_bytes raises FileNotFoundError before any model_rows row is built. The base checkout C:/Dev/ajb_workspace carries the file. No source file was edited, the input was not copied or extracted, and no BUILT row exists to report.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/continuation.py@d4b82a35ec line 168 (KPI_LEXICON_PATH) and line 199 (_kpi_lexicon_bytes open)",
+                "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json@d4b82a35ec (tracked at HEAD, absent from the worktree)",
+                "org/surprise_channel/schemas/investigation_item.schema.json@d4b82a35ec (present at HEAD via git show, absent from the worktree)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W180-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~180",
+        "surfaced_at": "2026-10-18T17:49:54Z",
+        "one_line": "HVST-cn-2 finding: the one valued PBR_US_Equity model_rows row the build drops is typecast|BEST_DPS|FY1 (stored 9.546), because the 2026-10-18 Model block carries no BEST_DPS forecast figure and lists it as unresolved (SA fallback held off by --no-sa-fallback).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cn-2 section 0 and CTO round-98 item 2: a refresh that writes PBR_US_Equity would lose one valued model_rows entry, and that row is named with its cause decided from the two Model blocks the dossiers cite.",
+        "world_is": "Stored block derived/model_block/PBR_US_Equity/20261017T130744Z/model_block.json carries a FY1 forecast figure for BEST_DPS (scope forecast, fiscal_period FY1, value 9.546, unit PER SHARE). Built block derived/model_block/PBR_US_Equity/20261018T130759Z/model_block.json carries no figure for BEST_DPS (459 figures against 460) and lists BEST_DPS under unresolved with the reason HELD_OFF: SA fallback held off by --no-sa-fallback; gap left unfilled (text cut at 120 characters in the output). The build keeps the key: both dossiers carry 105 model_rows entries and only the figure moved. Cause by dossier._figure_for_row_key on the two blocks: field_absent_in_new_block. Controls: UNH_US_Equity rows_missed=0; a planted deletion is found.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~180/cn2_pbr.out@732727efc9 (ROWMISS, CAUSE, COUNTS and PBR-DROPPED-ROW lines)",
+                "lib/research/corpus/dossier.py@d4b82a35ec lines 1278-1315 (_figure_for_row_key: latest closed FY, then header, then FY1 forecast, then the block's unresolved record)",
+                "lib/research/corpus/dossier.py@d4b82a35ec lines 1338-1385 (_model_rows: the row keeps its key and takes its figure from the block; a miss stores the block's reason)",
+                "S3 objects derived/model_block/PBR_US_Equity/20261017T130744Z/model_block.json (277395 bytes) and derived/model_block/PBR_US_Equity/20261018T130759Z/model_block.json (276958 bytes), read by cn2_pbr.py"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
