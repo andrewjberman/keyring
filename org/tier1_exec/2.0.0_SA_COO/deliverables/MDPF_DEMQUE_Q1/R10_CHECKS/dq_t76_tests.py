@@ -13,6 +13,7 @@ TESTS = [
     "test_an_empty_probe_security_is_skipped_and_the_next_cusip_security_verifies_the_form",
     "test_three_empty_probes_leave_the_form_unverified_and_refuse_the_request",
     "test_a_probe_that_names_the_wrong_security_or_errors_still_leaves_the_form_unverified",
+    "test_the_history_probe_asks_the_previous_trading_day_not_the_first_undrawn_day",
     "test_the_skipped_probe_security_is_listed_in_the_receipt_and_cooled_for_seven_days",
 ]
 
