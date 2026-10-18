@@ -11211,5 +11211,110 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+         "id": "AMGT_HARVST-D1-W166-S1",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~166",
+         "surfaced_at": "2026-10-18T03:50:26Z",
+         "one_line": "The worktree carries no org/surprise_channel/ tree: the item schema the order names (org/surprise_channel/schemas/investigation_item.schema.json) is absent here and exists only at the base checkout.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row schema, in the worktree the order runs in (its TREE-OK check passed: org and .tools present).",
+         "world_is": "At HEAD 4fae3115a1 in C:/dev/wk-harvst-166, org/surprise_channel/ does not exist (ls and git ls-files both empty for it). The schema is present only at the base checkout C:/Dev/ajb_workspace/org/surprise_channel/schemas/. The enums this row uses were taken from the rows already in the channel (class BLOCKING or OBSERVATION; hazard_standing ARMED or INERT), not from the schema.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md@4fae3115a1 (in use: class BLOCKING 57, OBSERVATION 440; hazard_standing ARMED 110, INERT 387)",
+                   "C:/dev/wk-harvst-166 at HEAD 4fae3115a1: org/surprise_channel/ absent (ls exit non-zero)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+         "id": "AMGT_HARVST-D1-W166-S2",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~166",
+         "surfaced_at": "2026-10-18T03:50:26Z",
+         "one_line": "The census stdout is CRLF on this Windows box, so the AC3 pattern with a $ line anchor cannot match the raw file; the line terminators were normalised to LF after the single run, with the content unchanged.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "AC3 greps ch4_census.out for a line matching (?m)^CENSUS-FORMS ... bytes=\\d+$ -- the census run once in the foreground with python -u, stdout to ch4_census.out.",
+         "world_is": "python -u on this device wrote CRLF line endings to the redirected stdout: ch4_census.out held 10 CRLF lines before normalisation, and the AC3 pattern found no match in the raw bytes. The conversion was bytes.replace(b'\\r\\n', b'\\n') over the whole file, asserted to remove only the CR bytes (10 lines in, 10 lines out). The census numbers are unchanged; no second run was made.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~166/ch4_census.out (the one run, LF after normalisation)",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~166/ch4_census.py (the census script, run from the worktree root)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+         "id": "AMGT_HARVST-D1-W166-S3",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~166",
+         "surfaced_at": "2026-10-18T03:50:26Z",
+         "one_line": "Seven tests outside the order's named files fail identically at HEAD and with HVST-ch-4 applied: six in test_team_sheet_round44 and test_dossier::test_composed_document_with_every_section_present.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "The order's regression surface is the five files of AC2 (66 passed). The six corpus modules that also name fund_form were not named, and their state at HEAD was not a stated premise.",
+         "world_is": "Six-file run: 7 failed, 45 passed, both at the modified tree and at HEAD (fund_form.py swapped to git show HEAD and restored; cmp confirmed the restore). Six failures are FileNotFoundError on integrations/bloomberg/research/field_map.json, absent from this worktree. The seventh is an AssertionError on the citation key of a dossier absent field. Neither path touches fund_form.build or write. Not investigated further.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "lib/research/corpus/tests/test_team_sheet_round44.py (6 failures, FileNotFoundError on integrations/bloomberg/research/field_map.json)",
+                   "lib/research/corpus/tests/test_dossier.py::test_composed_document_with_every_section_present (1 failure, AssertionError)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+         "id": "AMGT_HARVST-D1-W166-S4",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~166",
+         "surfaced_at": "2026-10-18T03:50:26Z",
+         "one_line": "write() returns funds as the distinct stated funds (2) while it now writes a form for each of the three funds of FUNDS, so the returned list and the forms written disagree.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "Order 1a: write() iterates sorted(set(distinct_funds(...)) | set(FUNDS)) and everything else in write() stays, so the return value stays distinct_funds.",
+         "world_is": "After the change write() returns (results, funds, absent, total): results holds three entries (DIVZ, IDVZ, PFOE) and funds is ['IDVZ', 'PFOE']. The CLI prints 'funds 2' beside three 'fund ... put_performed' lines. test_fund_form.py pins funds == ['IDVZ', 'PFOE'] and the three-entry results. Not changed here.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "lib/research/corpus/fund_form.py write() (the loop and the return, this commit)",
+                   "lib/research/corpus/tests/test_fund_form.py::test_write_read_latest_and_compare_round_trip (funds assertion, unchanged)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+         "id": "AMGT_HARVST-D1-W166-S5",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~166",
+         "surfaced_at": "2026-10-18T03:50:26Z",
+         "one_line": "The absent reason says no holding report names the fund, but build() counts only classes A-D, so a fund whose only holding reports are OTHER-class gets reports 0 and an absent text that is then false.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "Order 1a: when the number of its reports is 0, build's fields gain the key absent with the text 'no report whose silver row states fund_relation == holding names <fund>'.",
+         "world_is": "build() filters to FUND_CLASSES (A, B, C, D) before counting, so an OTHER-class holding report leaves reports 0 while the report exists; test_fund_form.py::test_other_class_excluded_from_every_form pins that exclusion. Today's population does not hit the case: DIVZ has no holding report at all (census), and IDVZ and PFOE have A-D reports (82 and 33). The text was implemented as the order fixes it.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~166/ch4_census.out (IDVZ reports=82, PFOE reports=33, DIVZ reports=0)",
+                   "lib/research/corpus/fund_form.py build() (FUND_CLASSES filter, this commit)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
