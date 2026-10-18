@@ -28133,3 +28133,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S380 (the Phase A first stop) and Z-S382 (the first chain run over its limit, graded by the rule A2 fixed before any new run) are resolved by the release being live and measured. Z-S375 and Z-S338 stay ARMED and are not adjudicated here: Z-S375 is disarmed only on a call through the service (an organic etfs_compare_peers call, or the through-the-service probe proposed for round 42, item 8 of the slug draft), by the CVO's clock on this seat's word."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~143",
+  "surfaced_at": "2026-10-18T01:37:21Z",
+  "id": "NFRA_OPLGTW-Z-W143-S1",
+  "one_line": "OG-en-28: the spec asks for one docstring line per absent_reason code in the client_* tools, but each client docstring is a single line and the no-moved-lines rule forbids adding lines; the codes are carried as segments of each tool's one line (commit 8505559ca1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/tools.py:1583, 1589, 1595, 1604, 1610 @8505559ca1: client_resolve_account, client_get_holdings, client_get_transactions, client_get_allocation and client_get_fees each carry a one-line triple-quoted docstring; client_get_transactions (1596-1598) and client_get_fees (1611) carry body comment lines that are not docstring text.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-28.round-42-document-the-absent-reason-codes.md section 1 item 2 ('add ONE line per code') against item 3 ('ADD NO LINES to the file and DELETE NO LINES'; a same-count replacement is the only edit the check admits).",
+      "commit 8505559ca1 (LOCAL on wk-NFRA_OPLGTW-143): numstat 5 insertions, 5 deletions on tools.py; the file is 1896 lines before and after."
+    ]
+  },
+  "spec_asserts": "TO OG-en-28 section 1 item 2: add one docstring line per code, in the form '<code>: <what it means; what the caller does next>', in the client_* docstrings, while item 3 keeps tools.py at its line count.",
+  "world_is": "The client_* docstrings are one line each, so one line per code cannot be written without adding lines, and adding lines breaks the DATA_CATALOG definition: citations. The worker wrote every code as a segment of the one docstring line of the tool that returns it (shared codes once, the three window codes in both windowed tools). The form the spec names is not what is on disk; the count rule is kept.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: a consumer reads each tool's note as one long line, and the codes are findable by name but are not one line each. Whether the form should be relaxed to 'a segment per code', or the docstrings be made multi-line by a deliberate count-changing edit that re-cites DATA_CATALOG, is the issuer's call. No behaviour, name or tool count changed."
+}
+```
