@@ -75,9 +75,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~163, worktree `C:/dev/wk-harvst-163`, branch `wk-AMGT_HARVST-163`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159` and `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~161`.
 - **SENT:** with the round-92 recut.
 
+**COMPLETE 2026-10-18T00:0xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~163` (worker-light, haiku, high), branch `wk-AMGT_HARVST-163`, feature `82a71c1ed4`, proof `ccef24f33d`, AC2 regrade `3903da29ce`; merged `a9aecdd593` (safe-merge fast lane, index check 0 of 7). Diff read by this seat: `_HOLDING_WORD_RE` gains the whole words `adding` and `reduction`; a closed `_HEADER_ALIASES = ("RECOMMEDATION",)` searched only when the generic header does not start the evidence, as a whole word, only BEFORE the first fund token; no other change to `classify`; 5 new arms (22 tests) with a mutant.
+- **AC1 PASS:** `22 passed` (worker; re-run here). **AC2 PASS:** `58 passed` (re-run here; the worker's first reading `57 passed, 1 skipped` was MY omission, the gateway app folder missing from its sparse set; I widened the set and the worker regraded, the first reading is kept in the instance as history). **AC3 PASS:** `CENSUS-FUND-RELATION rows=355 reports=353 securities=94 holding=121 candidate=14 initiate=2 interest=2 template=1 unclassified=0 none=213 gets=6 bytes=133462` (the CTO's expected counts; **I re-ran `cg5_census.py` myself and its output is identical, line for line**). **AC4 PASS:** `MOVED_ROWS=4` (the 2 `ORA_FP` rows `unclassified` to `holding` and the 2 `CPA` rows `none` to `holding`; no other row moved). Proof instance VALID rc 0 (re-run here).
+- **The CTO's guard on `adding` (msg 7784), read by me:** the census prints every row whose evidence matches `adding`: exactly two, both `CPA_US_Equity` (`RECOMMEDATION: Consider adding 50-100bps in IDVZ taking it to 150-200b...`): a position the fund already holds, not a new one. No row names a new position. Nothing goes back to the issuer.
+- **Rows** `D1-W163-S1` (the AC2 skip, closed by the regrade; the row stays, append-only) and `-S2` (INERT: the surprise-channel schema path is absent in a sparse worktree): read and accepted. The instance's `declared_exclusions` item about AC2 reads stale after the regrade; accepted.
+- **What this does NOT prove:** a written silver row or a served `fund_relation` (`HVST-cg-2`, `HVST-cg-3`).
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>92</round>
 <workstream>FUNDREL-CLASSIFY</workstream>
 <slot>dell1</slot>
