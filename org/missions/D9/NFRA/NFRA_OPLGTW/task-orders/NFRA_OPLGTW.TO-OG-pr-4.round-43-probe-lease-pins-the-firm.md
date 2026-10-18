@@ -72,7 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-pr-4.round-43-probe-lease-pins-
 - Chain: `OG-pr-4` then `OG-en-31` (same two files, one worker queue, slot `~151`); both feed `OG-ap-42`.
 - Pre-cut: `AC1` base FAIL as expected (`ac11` and `ac12` are absent); `AC2` and `AC3` pass at the base only with a commit present.
 
-<status>staged</status>
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-A</workstream>
 <slot>~151</slot>
