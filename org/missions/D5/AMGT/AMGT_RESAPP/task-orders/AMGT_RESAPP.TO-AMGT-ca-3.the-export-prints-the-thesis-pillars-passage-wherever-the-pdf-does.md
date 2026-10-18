@@ -83,7 +83,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 3 of the CTO's round-119 analysis (carried from the CTO's bz-5 half, `ledger/NEVER_WIDEN_ROUND119_..._CTO_HALF.md`); the gap measured by the issuer in the round-119 packet. The PDF is the reference and must stay byte-identical (P2 and P3 control it). LOCAL code cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>120</round>
 <slot>0.9.0_WK_AMGT_RESAPP~522</slot>
 <fabric>dell1</fabric>

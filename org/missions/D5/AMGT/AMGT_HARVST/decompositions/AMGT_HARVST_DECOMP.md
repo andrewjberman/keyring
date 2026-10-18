@@ -4684,3 +4684,26 @@ The CTO accepted the narrow release (his msg 7978 supersedes his msg 7975 cut li
 - **Checks at the cut, dry-run at the base:** `cl-1` AC1 FAIL as expected (no test file), AC2 PASS as expected (`22 passed in 0.30s`); `cl-3` AC1 to AC3 FAIL as expected (no census file).
 - **Provisioning, checked against `<paths>` and the files each face names:** worker `~174` carries `.claude/agents`, `lib/research`, the `pull_enqueue` folder, `infra/aws/terraform/harvest`, the gateway `app` folder and the `tests/fixtures` folder, `integrations/bloomberg/research` and the RESAPP `~2` deliverables (the existing tier-fence test loads `check_e2e.py` from there); worker `~175` carries `.claude/agents`, `lib/research`, `integrations/bloomberg/research`, the gateway `app` folder, the CRO scan folder, and the `~170`, `~168`, `~165`, round-95 and `ledger/` folders.
 - **ARMED rows open (disarm owner me):** `D1-W171-S3` only (cross-adjudication); `D1-W173-S1` (graduated to REMEDIATION_v27 by the CVO) is the remediation `cl-1` and `cl-2` close.
+
+### 133. ROUND 97 -- `HVST-cl-4` CUT after its census (the cell's own condition in section 132 is met; not a second issuance)
+
+`HVST-cl-3` (merged `b8014771a1`; census re-run by the issuer, byte-identical) shows that a dossier rebuild of `BP/_LN_Equity` and `NG/_LN_Equity` would move exactly one served field for each name, `model_rows` (cause `model_block`: BP cites the block `20261017T130241Z`, the build `20261018T130249Z`; NG `20261017T130649Z` against `20261018T130703Z`), and the CTO's model-block guard passes for both (valued rows 91 and 91, 64 and 64). Section 132's condition ("cut only if a census shows a served field would move and the guard passes") is therefore met.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cl-4` | `cl-4` | 2 `research_dossier` objects are ADDED again (BP then NG, canary first, add-only, the guard, moved fields equal to `cl4_expected_moves.txt`: `model_rows` for both), through `dossier.write_one` from a tree pinned at `4c7a60cabe`, read back through the four spellings of the gateway; STAGED behind a signed never-widen pair (COO half `deliverables/2.0.0_SA_COO_W1/round97/NEVER_WIDEN_HALF_COO_CL4_DOSSIERS_SLASH_AFTER_1302Z.md`), site Z's answer and the issuer's GO. Workstream `DOSSIER-WRITE-SLASH-2`. | WORLD | seat SC1 | CUT, STAGED |
+
+- **Fan-out (this cut):** `N of M chains, N=1 seat order (cl-4) of M=3 chains (A: cl-1 merged, cl-2 held; B: cl-3 merged, cl-4 staged; C: items 3 to 5, carried), cap 8`.
+- **Dry run at the base:** `cl-4` AC1 to AC4 FAIL as expected (no served file).
+
+### 134. ROUND 97 -- `HVST-cl-2` CUT after `HVST-cl-1` merged (the cell's own condition in section 132 is met; not a second issuance)
+
+`HVST-cl-1` (merged `349e7ee0da`; AC1 `16 passed`, AC2 `22 passed`, re-run by the issuer; the whole diff read) is complete, so the Terraform deploy of the `opal-research-pull-enqueue` Lambda is cut and STAGED.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cl-2` | `cl-2` | The Lambda redeployed by Terraform only: `build-and-upload.sh` of the one-file zip, the saved plan read first (exactly ONE in-place update of the function, `s3_object_version` and `source_code_hash`, nothing else), `safe-apply` of that plan, the deployed bytes equal to the merged source (md5 `45c83ddf74640e90368e8bebf712b52c`), and ONE side-effect-free refusal probe (a ticker the shared rule refuses: 400, no S3 write, no SQS send), under a never-widen pair (COO half `deliverables/2.0.0_SA_COO_W1/round97/NEVER_WIDEN_HALF_COO_CL2_PULL_ENQUEUE_CANONICAL_STATUS_KEY.md`). Workstream `PULLENQ-DEPLOY`. | WORLD | seat SC1 | CUT, STAGED |
+
+- **Fan-out (this cut):** `N of M chains, N=1 seat order (cl-2) of M=3 chains (A: cl-1 merged, cl-2 staged; B: cl-3 merged, cl-4 staged; C: items 3 to 5, carried), cap 8`.
+- **Dry run at the base:** `cl-2` AC1 to AC4 FAIL as expected (no served file).
+- **One seat, two staged orders:** `cl-2` and `cl-4` go to the same seat (`0.7.0_AE_CloudOps~SC1`, rule 34); the seat serves one at a time, in the order the CTO halves arrive.
