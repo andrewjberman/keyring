@@ -12894,5 +12894,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W181-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~181",
+        "surfaced_at": "2026-10-18T18:46:42Z",
+        "one_line": "HVST-cn-4 finding: the dossier-refresh driver import closure measures 287.13 MB unzipped (third-party 286.40 MB, lib code 0.73 MB), verdict OVER the 250 MB Lambda limit; pyarrow 86.40, pandas 62.31 and pymupdf 53.14 MB are the three largest packages.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order HVST-cn-4 cell 0: a Lambda unzipped package, layers included, may not exceed 250 MB; the driver is to run as a scheduled Lambda with ECS Fargate as the fallback. The order measures the closure per package and asserts no size.",
+        "world_is": "On this box (Windows, Python 3.14.7, read-only, cn4_closure.out): 25 lib modules; 18 third-party distributions from 21 third-party top-level names (cython_runtime and swig_runtime_data5 carry no distribution); verdict OVER by 37.13 MB. The three largest, with the first lib module that pulls each in: pyarrow 86.40 MB (lib.trading_calendar, via pandas.compat.pyarrow); pandas 62.31 MB (lib.trading_calendar, via pandas_market_calendars.market_calendar); pymupdf 53.14 MB (lib.research.corpus.extract, via fitz). numpy 51.94 MB is pulled by lib.trading_calendar via pandas. removable_by_lazy=none: lib.trading_calendar imports pandas_market_calendars at module top level and lib.research.corpus.extract imports fitz, lxml and openpyxl at top level; no third-party top is imported only inside functions. Caveat: sizes are the Windows wheels installed on this box; a Linux Lambda build is not measured here.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.out (working file, committed with this row)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.py (working file, committed with this row)",
+                "lib/trading_calendar.py@366ba5228d static LIBIMPORT line: top=pandas_market_calendars",
+                "lib/research/corpus/extract.py@366ba5228d static LIBIMPORT line: top=fitz,lxml,openpyxl",
+                "lib/research/corpus/dossier_refresh.py@7cb6b9abec entry point of the closure"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W181-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~181",
+        "surfaced_at": "2026-10-18T18:46:42Z",
+        "one_line": "HVST-cn-4 instrument: the import hook attributes pytz to importlib._bootstrap (first_lib_importer=NONE), and the first draft of the child imported json before the hook, which made the json control hollow until corrected.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order HVST-cn-4 step 1a: the hook records, for each newly loaded module, the module whose import statement loaded it, and the first lib importer of a package is found by walking up the recorded chain. CONTROL-NEGATIVE target=json must report third_party_tops=0 as evidence that the finder sees nothing where there is nothing.",
+        "world_is": "The recorded caller of pytz is importlib._bootstrap, which is not a module that imports pytz; the chain stops at NONE, so the PKG line for pytz reads first_lib_importer=NONE. pytz is a dependency of pandas, which is first pulled by lib.trading_calendar, so the lib-side chain exists but the hook does not show it; the cause of the importlib._bootstrap attribution was not isolated and the method was not changed. Separately, the first draft's child imported json before the hook, so CONTROL-NEGATIVE read newly_loaded=0 and proved nothing. The child now imports json only after the measured import. The rerun gives newly_loaded=23 and third_party_tops=0; the verdict, the sizes and the third-party set did not move; the closure module count moved from 1020 to 1043 because json's own modules are now inside the measured closure.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.out PKG pytz line (working file, committed with this row)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.py CHILD block and the json import after the measured import (working file, committed with this row)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
