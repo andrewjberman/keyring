@@ -11442,5 +11442,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
          },
          "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S54",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-18T05:43:23Z",
+     "one_line": "S51 instance under the CTO's seat-side rule 2 (round-93 item 4, recorded on S53): an order handed to an idle SC1 at 04:55:15Z was READ at 05:01:57Z, 6 min 42 s after, only after the issuer found the seat idle at its input and typed a nudge at 05:01:47Z.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "Row D1-S53 rule 2 and the CTO's round-93 analysis item 4: for an order handed to an idle SC1 the issuer checks the READ ack (get_delivery_state) within 10 minutes and, with none, types a nudge in the seat's tab; the instance is recorded on S53.",
+     "world_is": "Handed: msg 7911 (HVST-ch-7 order STAGED) from 2.0.0_SA_COO~W1 to 0.7.0_AE_CloudOps~SC1 at 04:55:15Z (SENT 04:58:16Z). At 04:56:40Z both mail files for SC1 sat in its inbox directory, not in read/. GO (msg 7914) queued 05:01:21Z. At 05:01:32Z a read-only peek showed SC1 idle at its input ('No orders are open'), its last lines saying it had re-armed its inbox watcher as task blk8rsng6 (timeout 1800 s) and that the runner-log watch was also armed. Nudge typed 05:01:47Z (SENT to the tab, confirmed by a second peek showing the prompt as a transcript turn and SC1 working). get_delivery_state: 7911 EMITTED 05:01:49.9Z, READ 05:01:57.6Z; 7914 EMITTED 05:01:49.9Z, READ 05:01:57.6Z. Both were EMITTED within about 2 s of the typed nudge and READ 8 s after. The issuer's check came at 6 min 32 s (inside the 10 minute rule). SC1 then acted on the order at once (canary written 05:09Z, all 78 by 05:15Z). NOT established: whether an armed watcher event wakes an idle seat (the case S53 leaves open): this instance has an armed watcher by the seat's own words and no wake in the 6 minutes, but the watcher's own state was not read (no process census, and the mail files were not in read/ at 04:56:40Z), so it does not test the question.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "get_delivery_state for 0.7.0_AE_CloudOps~SC1 since 2026-10-18T04:50Z (ids 7911, 7914: SENT, EMITTED, READ stamps as quoted)",
+       "peek images C:/Users/Test/AppData/Local/Temp/unstick_peek_0.7.0_AE_CloudOps~SC1_20261018T050132Z.png and ..._20261018T050156Z.png",
+       "ls of org/mcp/inbox/0.7.0_AE_CloudOps/~SC1/ at 04:56:40Z (both files in the inbox directory)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
