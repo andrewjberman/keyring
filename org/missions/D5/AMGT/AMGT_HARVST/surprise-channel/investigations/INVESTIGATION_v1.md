@@ -13046,5 +13046,131 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T19:44:58Z",
+        "one_line": "HVST-cn-5 names: the order's list of builder names has no entry for the scheduler's inline IAM policy; the first draft typed a -run suffix that the naming gate could not place.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cn-5 b.: cn5_names.py calls lib/opal_naming.py name() for exactly the eleven listed names, and the names check reads eleven literals.",
+        "world_is": "The first draft (commit 232ff2b9bf) named the scheduler's aws_iam_role_policy with a typed suffix, \"${local.scheduler_role_name}-run\". The naming gate printed NAMING RAISE at dossier-refresh.tf:385 (rule or registry defect, G3). Commit 5a0fcc751b takes a twelfth builder name, amgt-dossier-refresh-scheduler-policy (kind policy, qualifier scheduler); the names check now reads twelve literals, all equal to builder output, and the naming gate grades PASS. The same gate run also RAISEd the derived log-group string /aws/codebuild/{x} (an interpolation, not a literal); it is a WARN and the commit was not refused.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/terraform/harvest/dossier-refresh.tf@232ff2b9bf line 385 (name = \"${local.scheduler_role_name}-run\") and the naming-gate output of that commit (NAMING RAISE, NAMING-GATE WARN 14 graded)",
+                "infra/aws/terraform/harvest/dossier-refresh.tf@5a0fcc751b line 40 (scheduler_policy_name = builder output) and the naming-gate output of that commit (NAMING-GATE PASS 1 graded)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T19:44:58Z",
+        "one_line": "HVST-cn-5 tags: the order asks every new resource to carry Name = its builder name, but aws_scheduler_schedule takes no tags in the pinned AWS provider.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cn-5 c.(9) and the Tags line: the schedule resource carries Name = the resource's builder name.",
+        "world_is": "terraform providers schema -json, run in infra/aws/terraform/harvest at HVST-cn-5 time, gives aws_scheduler_schedule no tags attribute (and no tags_all); default_tags does not reach it either. The schedule carries its builder name in its name argument only. Every other new resource type that takes tags carries Name. aws_iam_role_policy and aws_iam_role_policy_attachment take no tags either, so the Name rule reads for roles, log groups, the repository, the build project, the cluster, the security group and the task definition only.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/terraform/harvest/dossier-refresh.tf@5a0fcc751b schedule resource (aws_scheduler_schedule.dossier_refresh_daily) has name, description, state and target, and no tags argument",
+                "terraform providers schema -json (infra/aws/terraform/harvest, provider hashicorp/aws ~> 5.0): aws_scheduler_schedule block.attributes has no tags key"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T19:44:58Z",
+        "one_line": "HVST-cn-5 variables: the two required variables (no default) make every plan and apply of the harvest root fail unless both -var flags are passed, not only plans of the new resources.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cn-5 c.(5) and e.(3): dossier_refresh_image_digest and dossier_refresh_ecr_repository_name are REQUIRED variables with no default, passed with -var by the plan.",
+        "world_is": "Without the -var flags, terraform plan -lock=false -input=false -refresh=false -target=aws_ecs_cluster.dossier_refresh stops at once with 'No value for required variable' on the two declarations (dossier-refresh.tf lines 68 and 78 at 232ff2b9bf). The failure is loud and reads no state, and nothing is applied, so no served output moves. The effect is root-wide: a seat that plans or applies the harvest root for another change must pass both flags until a default or a -var-file exists.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/terraform/harvest/dossier-refresh.tf@232ff2b9bf lines 68 and 78 (variable declarations without default)",
+                "plan without -var, run in the worktree at HVST-cn-5 time: rc=1, two 'No value for required variable' errors (deliverables scratch transcript, not committed)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S4",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T19:44:58Z",
+        "one_line": "HVST-cn-5 build role: the buildspec reads the pushed digest back with aws ecr describe-images, which the order's ECR grant list (push only) did not allow.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cn-5 c.(2): the CodeBuild role's ECR grant is push to this repository only; the buildspec's post_build reads the digest and size back (HVST-cn-5 d.).",
+        "world_is": "The buildspec runs aws ecr describe-images for imageTag git-<12> to print IMAGE_DIGEST and IMAGE_SIZE_BYTES. That call needs ecr:DescribeImages, which the list (BatchCheckLayerAvailability, InitiateLayerUpload, UploadLayerPart, CompleteLayerUpload, PutImage) did not carry. ecr:DescribeImages is added to the same statement, on the same repository ARN only. No other grant is widened.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/harvest/dossier-refresh/buildspec.yml@a7c02aac7a post_build (describe-images for the digest and the size)",
+                "infra/aws/terraform/harvest/dossier-refresh.tf@5a0fcc751b aws_iam_role_policy.dossier_refresh_build statement EcrPushThisRepositoryOnly (the six actions, Resource = the repository ARN)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S5",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T19:44:58Z",
+        "one_line": "Harvest root s3.tf header says the version store is declared at opal-data-research; its resource and the chatter axis both say opal-data-harvest.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "infra/aws/terraform/harvest/s3.tf header lines 3-4: the store is declared at its current name opal-data-research, and stage 2 renames it to opal-data-harvest.",
+        "world_is": "s3.tf line 24 is bucket = \"opal-data-harvest\". The targeted plan of HVST-cn-5 includes aws_s3_bucket.harvest (the new task policy references it) and proposed no change to it. So the code and the state agree on opal-data-harvest, and the header describes a stage that is over. Seen while reading the root; not acted on.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/terraform/harvest/s3.tf@232ff2b9bf lines 3-4 (header) and line 24 (bucket = opal-data-harvest)",
+                "deliverables cn5_plan.out (targeted plan: 16 to add, 0 to change, 0 to destroy; the bucket is not in the change list)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S6",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T19:44:58Z",
+        "one_line": "This worktree is sparse: org/surprise_channel is in the index (43 files, skip-worktree) but absent from the checkout, so the channel schema is readable only from the CLOUD ref.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cn-5 preamble: the worker reads its surprise-channel schema and rows in its own worktree (every search names the worktree path).",
+        "world_is": "git sparse-checkout list in C:/dev/wk-harvst-183 names .tools, infra/aws, infra/logic, lib, org/devices, org/missions/D5/AMGT/AMGT_HARVST, org/modules/graph, org/ref, org/standards and org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922. org/surprise_channel is not among them: git ls-files shows 43 entries flagged S (skip-worktree) and the folder does not exist on disk. The investigation schema was read with git show CLOUD:org/surprise_channel/schemas/investigation_item.schema.json. Rows are appended to the AMGT_HARVST channel, which is in the checkout.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git sparse-checkout list and git ls-files -v org/surprise_channel (S flag on 43 entries), read in the worktree at HVST-cn-5 time",
+                "git show CLOUD:org/surprise_channel/schemas/investigation_item.schema.json (read for the row shape)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
