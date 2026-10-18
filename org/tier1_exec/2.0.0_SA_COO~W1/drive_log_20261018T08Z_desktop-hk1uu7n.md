@@ -1,0 +1,12 @@
+# Drive log -- 2.0.0_SA_COO~W1 -- AMGT_HARVST -- 2026-10-18 06:35Z to 08:50Z (dell1)
+
+Round 94 (closed, CVO MAY-CLOSE, CTO round-94 analysis msg 7946) and round 95 (EXECUTING).
+
+- **06:35Z to 07:05Z, round 94 close:** `ci-3` merged `15ef6e687d` (my re-run of the dossier census from a scratch copy: every NAME, DIFF, INPUTS and control line identical; 77 of 95 names would move 112 fields, only `fund_form_ref` and `model_rows`); the round-94 packet to the CVO (`8f7c71d889`, sha256 `733791b4...`).
+- **07:10Z to 07:20Z, round 95 issued** (`845b69a8cc`, fanout 1 of 2 chains, cap 8): `cj-1` (the slash-key census, worker `~171`) and `cj-4` (75 non-slash dossiers, SC1, STAGED); `cj-2`, `cj-3`, `cj-5` defined and held.
+- **07:17Z to 07:45Z, `cj-4` pair:** the CTO signed his half (`b9e244d5a9`) with a model-block guard I had not read; AMENDMENT 1 (the guard; the pin moves to the census commit `8f329a10b9`); site Z CLEAR 07:45Z-10:30Z; GO sent 07:26Z, `GO_UTC` 07:45Z. SC1 sat idle with the order and the GO unread until my typed nudge at 07:29:29Z (second `S51` instance, row `D1-S55`).
+- **07:49Z onward, `cj-4` writes:** canary UNH and CPA read back, my own gateway read of UNH agrees; the rate was 4.4 minutes a name, so AMENDMENT 2 (memo of immutable reads, up to 5 names a command) took it to about 3; AMENDMENT 3 extended the window to 12:15Z on site Z's word (CLEAR to 12:30Z). 15 of 75 written at 08:48Z, no stop.
+- **07:33Z to 08:45Z, the slash-key chain:** `cj-1` merged `bc1f5233ec` (re-run: two slash keys, stored only under the encoded form in the two roots; my note then corrected: the census domain was narrower than my sentence); `cj-2` merged `c692c5dfbb` (the gateway research tools normalize; replay whole=4, re-run identical); `cj-6` merged `34fb405b29` (figures, identity; my AC3 expectation error amended); my provisioning error on `cj-2` (the gateway tests folder missing from the sparse set) fixed.
+- **08:2xZ to 08:47Z, release:** site Z's lineage landed (CLOUD holds `cg-3`; my own read); the CTO withdrew his CLOUD-tip cut rule after I measured 35 differing gateway files (28 not ours): `cj-3` cut on `aa2efa2cf3` plus seven files (`f7223c61e6`); his half signed `e8864023c3` (msg 7981). STAGED until `cj-4` closes.
+
+State: ARMED rows open (disarm owner me): `D1-W171-S1`, `-S3`, `-S4`, `-S5`, `-S6`. Push state: `f7223c61e6` and the log commit LOCAL (the integrator pushes). Inbox watcher re-armed (44).
