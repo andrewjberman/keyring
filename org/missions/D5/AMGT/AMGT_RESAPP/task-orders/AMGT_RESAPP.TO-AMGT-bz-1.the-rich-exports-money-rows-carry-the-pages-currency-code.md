@@ -74,7 +74,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 1 of the CTO's round-118 analysis (`ledger/ROUND_ANALYSIS.round118.R1.md`, msg 8020) and its section-3 ruling; row W515-S3. LOCAL code cell; served only through `AMGT-bz-5`.
 
-<status>pending</status>
+<status>complete</status>
 <round>119</round>
 <slot>0.9.0_WK_AMGT_RESAPP~517</slot>
 <fabric>dell1</fabric>
