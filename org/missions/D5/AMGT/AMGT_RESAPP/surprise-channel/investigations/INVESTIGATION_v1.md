@@ -30706,3 +30706,288 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Whether the dead branch at line 155 should be removed rather than kept is the CTO's call. Round-115 harness D8e is the only render of it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W510-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~510",
+  "surfaced_at": "2026-10-18T04:24:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AMGT-bw-1 criteria C1 and C2 cannot both hold with C3: after the own-currency fix the CRNCY_ADJ_MKT_CAP line prints the same string as CUR_MKT_CAP for ICT PM and RIO LN, so the existing same-value dedup drops it, and the GOOGL US control (C3) already drops its alias at base.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@52a137e363 _header_figures_for_print (base lines 626-642): a CRNCY_ADJ_MKT_CAP whose formatted value equals CUR_MKT_CAP's formatted value is skipped (continue)",
+      "lib/research/print/tests/test_bw1_currency_labels.py C1 and C2 fail at the edited head only on the alias-count clause ('assert 1 == 2'); every other clause of C1 and C2 passes",
+      "lib/research/print/tests/fixtures/bw1_pack_text_base_GOOGL_US.txt: the base control prints one 'Market cap: USD 4,143,539.9 million' line and no alias line; C3 requires that text unchanged"
+    ]
+  },
+  "spec_asserts": "Order C1: 'CRNCY_ADJ_MKT_CAP prints PHP 1,735,465.1 million'. Order C2: 'CUR_MKT_CAP and CRNCY_ADJ_MKT_CAP ... print the page's unconfirmed words with the amount'. Order C3: GOOGL US lines UNCHANGED from base.",
+  "world_is": "After the edit the alias and the market cap print the same string in one code: ICT PM 'PHP 1,735,465.1 million' twice, RIO LN '115,578.9 million currency not stated' twice. The dedup keys on printed strings, so the alias is dropped for ICT PM and RIO LN, exactly as it already is for GOOGL US. Keeping the alias for ICT PM and RIO LN but not GOOGL US needs a rule that tells them apart, and none exists. Surfaced, not resolved: the CVO or CTO rules whether the dedup stays (and C1/C2 are amended) or the alias is kept (and C3 is amended). AC1 and AC2 stay FAILED until then.",
+  "notes": "Form only. The edit touches only the labelling functions; no dedup or comparison was changed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W510-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~510",
+  "surfaced_at": "2026-10-18T04:24:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The page's words for a money amount with no served currency are 'currency not stated' (StatTile.tsx moneyNoCode), not CURRENCY_UNCONFIRMED_WORDS as order rule (2) names; the unconfirmed words appear only for an UNMEASURED currency_basis, and that path withholds the amount.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/StatTile.tsx formatStatValue: `if (!currency) return moneyNoCode(amount)`, with moneyNoCode = `${amount} currency not stated`",
+      "portal/src/pages/SecurityAnalysis/components/StatTile.tsx: isUnmeasuredBasis(currencyBasis) && isMoneyFormat(format) returns null, and the tile's reason is CURRENCY_UNCONFIRMED_WORDS only in that case",
+      "lib/research/print/render_pack.py _money (AMGT-bw-1): '<amount><tail> currency not stated' for a figure with no own code"
+    ]
+  },
+  "spec_asserts": "Order rule (2): 'a money figure whose own currency is absent prints the page's unconfirmed words in place of a code'; the pre-read note: 'a figure that carries none prints the page's CURRENCY_UNCONFIRMED_WORDS'.",
+  "world_is": "The page prints 'currency not stated' beside the amount for a valued money figure with no code. CURRENCY_UNCONFIRMED_WORDS is the tile's reason only for an UNMEASURED currency_basis, and then the page withholds the number. The pack uses the amount-level words. The UNMEASURED withholding is not mirrored: it changes the value shown, which is outside the label-only bound.",
+  "notes": "Form only. Whether the pack should also withhold on UNMEASURED is the CVO's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W510-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~510",
+  "surfaced_at": "2026-10-18T04:24:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The committed bu3 block fixtures carried no per-figure currency on their money figures, so their base text codes came from the block-level CRNCY fallback; the fixtures gained a served-shape currency key on 10 money figures with no value changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bu3_block_ICT_PM.json and bu3_block_RIO_LN.json at 52a137e363: money figures (PRICE, PER SHARE, MILLIONS) carry no `currency` key",
+      "lib/research/print/tests/fixtures/bu3_pack_text_base_ICT_PM.txt and bu3_pack_text_base_RIO_LN.txt: 'GBP ...' and 'GBp ...' money lines, the codes the old fallback printed",
+      "lib/research/api/scoped_amgt.py reads the served figure key as fig.get('currency') (lines 2722, 2776, 2788); the portal ModelFigure type does not declare it and HeaderCards casts it"
+    ]
+  },
+  "spec_asserts": "Order bound 4: committed fixtures are SYNTHETIC or the issuer's quoted served values, and T6 of test_bu3_pack_long_dates is a control that the base text is reproduced.",
+  "world_is": "The bu3 fixtures were built without the served `currency` key, so under the rule the money lines lose their code. Adding `currency` with the same code the base printed (GBp for RIO LN, GBP for ICT PM) reproduces the base bytes and leaves T6 unchanged. The change is recorded here because it edits a committed fixture.",
+  "notes": "Form only."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W510-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~510",
+  "surfaced_at": "2026-10-18T04:24:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "test_av2 test_pdf_text_carries_no_field_code fails at base on line 175 before any currency assertion is reached, and its later 'local currency' expectations (lines 176-180) encode the fallback this cell removed; it was left untouched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/test_av2_export_equals_page.py:175 expects 'Share price (last close): local currency 100.00 per share - date not stored with this figure - Bloomberg'",
+      "lib/research/print/render_pack.py _header_print_lines (base line 594) removes ' - date not stored with this figure' from header lines, so that expectation cannot match at base or after the edit",
+      "the run at base and at the edited head both report that one FAILED line, at line 175"
+    ]
+  },
+  "spec_asserts": "Order AC2: exactly one FAILED line at the base, test_av2 test_pdf_text_carries_no_field_code_and_names_every_line_in_words, and P at least 132.",
+  "world_is": "The named failure is the same test and the same line; its cause is the stripped date segment, not currency. Its currency expectations are stale against the new rule. Changing them would edit a test outside this cell's scope, so they stay for the owner of that test.",
+  "notes": "Form only."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W510-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~510",
+  "surfaced_at": "2026-10-18T04:44:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 1 names Net debt as carrying no code on RIO LN, but the synthetic header-figure fixture carries no Net debt figure, so no test asserts it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bw1_header_figures.json@e288a1b0a6 RIO_LN figures: NAME, CRNCY, EQY_FUND_CRNCY, PX_LAST, CUR_MKT_CAP, CRNCY_ADJ_MKT_CAP, CURR_ENTP_VAL; no NET_DEBT figure",
+      "lib/research/print/tests/test_bw1_currency_labels.py@e288a1b0a6 C2 asserts Market cap and Enterprise value only; no assertion names Net debt"
+    ]
+  },
+  "spec_asserts": "Order AMENDMENT 1, RIO LN: Enterprise value and Net debt carry no code either (their own currency is none: the same words).",
+  "world_is": "The fixture has no Net debt figure, so the Net debt clause is not exercised by any test. The rule covers it by construction (_own_currency empty gives the words via _money), but it is unverified here. Adding a figure would edit the synthetic fixture beyond the order's stated facts, so it is left for the issuer.",
+  "notes": "Form only."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T04:26:33Z",
+  "one_line": "The order's premise that the page's CEO passage is a field of thesis_bundle['management'] or dossier_sections does not hold: the management object carries officers and the CEO profile reading, and the passages sit in dossier_fields.management and drafted_sections[ceo_bio].",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx@ff611566 lines 384-434: ResearchTeamManagement draws dossier.management (the served passage, status SERVED, value, citation)",
+      "portal/src/pages/SecurityAnalysis/components/ThesisCards.tsx@ff611566 line 387: the CEO bio is drafted_sections[section_id=ceo_bio], drawn in the investment-thesis window",
+      "lib/research/api/scoped_amgt.py@52a137e363 read_thesis_bundle (4214-4330): the bundle keys are drafted_sections, dossier_fields, dossier_sections, management, posture; management has officers, ceo_public_profile and ceo_profile_reading and no passage field",
+      "lib/research/print/render_pack.py (AMGT-bw-2 edit, uncommitted): _print_management prints both served passages under Management and one sentence when neither is served"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step B premise: the CEO passage is read from thesis_bundle['management'] or dossier_sections, and RIO LN's Management section must print it.",
+  "world_is": "No served management field carries a passage. The Exec Management tab's passage is dossier_fields.management.value; the CEO bio is drafted_sections ceo_bio. The pack prints both under Management. Which one the CVO read on RIO LN is not confirmed: no live payload was read in this cell.",
+  "notes": "Form only. If the CVO's passage is the machine mgmt_bio AI fill (ai_fill, AMGT-fa-8), it is out of scope here (inventory S13)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T04:26:33Z",
+  "one_line": "test_build_rich_text.py::test_build_pack_pdf_and_txt_byte_identical_with_and_without_bundles pins that build_pack's PDF is byte-identical with and without the optional bundles; round-116 Step B and Step C make the PDF print Management, Positioning and Peers from those bundles, so the test fails by design and is not edited (not in the test set the order permits).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/test_build_rich_text.py@52a137e363 lines 277-301: asserts sha256(pdf_neg) == sha256(pdf_pos) and the .md only with bundles",
+      "pytest run on the worktree after the edit: assertion 'build_pack's PDF changed when optional bundles were supplied' (sha256 mismatch); the form tests in test_bw2_pack_form.py pass",
+      "lib/research/print/render_pack.py (uncommitted): build_pack's Positioning and Peers print posture and peer_set when supplied, and Management prints thesis_bundle's served passages"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-rl-10 AC2 negative control: the PDF and txt are byte-identical whether or not the optional bundles are supplied; only the .md appears.",
+  "world_is": "The round-116 form requires the PDF to print the bundles' narrative (Step C), so the contract cannot hold for these inputs. AC2 of the order (exactly one FAILED line) reads 2 FAILED: av2 (fails at base) and this test.",
+  "notes": "Needs a CTO or COO ruling: re-scope the test to the figure lines (identical with and without bundles) plus the .md rule, or name the owner that re-records it. This cell did not edit the test."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T04:26:33Z",
+  "one_line": "Step B makes the served PDF route (scoped_amgt._print_pack, format=pdf) read the thesis bundle, the peer set and the posture, where it read only the model block before; its latency and failure modes on the served route are not measured in this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py@52a137e363 _print_pack pdf branch: build_pack(display_form, block, write_text=False) read only the model block and the drafted sections",
+      "lib/research/api/scoped_amgt.py (uncommitted): the pdf branch now also calls read_thesis_bundle, read_peer_set and read_posture, the same reads the rich branch makes for the same name",
+      "no live call was made in this cell (order bounds: no deploy, no store read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step B: the PDF path is handed the same served objects the rich route reads, with no store read of the cell's own.",
+  "world_is": "The PDF route now performs the full thesis-bundle read on each print. The rich route already does so; the PDF route's timing against the gateway limit is unknown until the round-116 redeploy (AMGT-bw-5) is measured.",
+  "notes": "Form only. The build_rich_text markdown write is skipped on the PDF route by write_rich=False, so the PDF route writes no .md."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T04:26:33Z",
+  "one_line": "The T6 re-record premise (the sorted old lines are a subset of the new lines) fails by exactly four old section headings, which the form renames or folds: Recommendation and Investment thesis (into Summary), Model figures (into Appendix: model figures) and Management/Board (into Management).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bu3_pack_text_base_RIO_LN.txt@52a137e363 and bu3_pack_text_base_ICT_PM.txt@52a137e363: the base texts before the edit",
+      ".scratch/bu3_rerecord_proof.py run output (printed before --write): REMOVED lists exactly the four headings for both blocks; every other old logical line survives in the new text",
+      "lib/research/print/tests/test_bu3_pack_long_dates.py T6 passes after the re-record (test not edited)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Re-record a base text only after proof that the new text is the old lines reordered plus the new headings and narrative sentences.",
+  "world_is": "The proof holds except for the four renamed or folded headings, which are listed. The base was re-recorded with them absent, and the printed proof is the record.",
+  "notes": "Form only. The re-recorded base files are ISO-form logical lines (the T6 mapping), as the original base files were."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T04:26:33Z",
+  "one_line": "The order's premise that the worktree is clean at the cut does not hold: git status --short shows the nested portal worktree as modified (' M portal') before any edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-resapp-511 status --short at the first act: ' M portal' (the nested portal worktree at ff611566 is the read-only checkout the pack tests read)",
+      "git -C C:/dev/wk-resapp-511 rev-parse --short HEAD: 52a137e363 (the issuance commit, as the order names)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 5 step 1: confirm a clean git status --short before the work.",
+  "world_is": "The nested portal path is listed as modified by the outer repository. It was not touched by this cell and is not staged or committed.",
+  "notes": "Form only. The commit names its paths explicitly and never stages portal."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T04:44:08Z",
+  "one_line": "The pack's Positioning comparable label reads only the posture's comparable_identity and comparable_name; the page also falls back to the comparable's own thesis identity, which the PDF route never reads, so the printed verdict can name 'a comparable the research team has not identified' where the page names the comparable's display ticker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@e0c8b25368 _comparable_label (line 763): reads posture comparable_identity (RESOLVED display_ticker) then comparable_name, else the words 'a comparable the research team has not identified'",
+      "portal/src/pages/SecurityAnalysis/tabs/PostureTab.tsx@ff611566 lines 147-155 comparableText(posture, fallbackIdentity): the fallback is the comparable's thesis identity; line 395 passes comparable.thesis?.identity",
+      "portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json thesis.posture: comparable 'DE_US_Equity', comparable_identity null, comparable_name absent; the pack prints the 'not identified' words for this fixture (txt build of 2026-10-18, Positioning section)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step C: Positioning prints the posture verdict and claims as the Posture tab carries them, the comparable named as the page names it.",
+  "world_is": "On the fixture the pack's verdict sentence reads 'HOLD -- neither BOEING CO/THE nor a comparable the research team has not identified looks clearly the better pick' while the posture names DE_US_Equity; the page's fallback identity (the comparable's own thesis identity) is not read on the PDF route, so the pack cannot reproduce the page's display ticker. No live payload was read in this cell.",
+  "notes": "Form only. Whether the PDF route should read the comparable's thesis identity (a store read this cell may not add) or the words should change is the issuer's call; the wording 'a comparable the research team has not identified ... looks' is also not grammatical and is a candidate for the same call."
+}
+```

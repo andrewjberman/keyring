@@ -11400,5 +11400,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
          },
          "disposition": "UNDER_INVESTIGATION"
     }
+,
+    {
+         "id": "AMGT_HARVST-D1-W168-S1",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~168",
+         "surfaced_at": "2026-10-18T04:40:42Z",
+         "one_line": "The gateway reads the underscored continuation prefix research_continuation first and falls back to the hyphenated research-continuation prefix; the underscored prefix holds no partition, so every served continuation the census reads sits under the hyphenated prefix.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ch-8 section 1b: the SERVED object is the gateway's pick (harvest_research.py line 349) over the partitions under amgt/harvest/gold/research-continuation/.",
+         "world_is": "harvest_research.py:46 defines P_CONTINUATION with the segment research_continuation (underscore); _live_listing (lines 76-88) lists that canonical prefix first and only when it holds no key lists the hyphenated form. ch8_census.out line PROBE-UNDERSCORE-PREFIX lists amgt/harvest/gold/research_continuation/ and reports partitions=0, so for all 95 partitions the served object is the hyphenated partition's object, as the census assumed. The fallback is a live path of the gateway that the order did not name; the census result does not depend on it.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "infra/aws/ec2/opal-gateway/app/harvest_research.py:46,76-88,343 (worktree HEAD ac20d27c69)",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~168/ch8_census.out (committed with this row; PROBE-UNDERSCORE-PREFIX line)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+         "id": "AMGT_HARVST-D1-W168-S2",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~168",
+         "surfaced_at": "2026-10-18T04:40:42Z",
+         "one_line": "The gateway builds its continuation prefix from the raw security key, but the partition of a key holding a slash is slash-safe encoded; for the two slash names the object the census compares (BP/_LN_Equity, NG/_LN_Equity) is not the object a raw-key listing reaches.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ch-8 section 1b: for each security with a continuation partition, the served object is the gateway's rule applied to that partition, and the census names each security by its partition.",
+         "world_is": "lib/research/identity/crosswalk.py security_key_partition returns 'security_key=BP-SLASH-_LN_Equity' for BP/_LN_Equity and 'security_key=NG-SLASH-_LN_Equity' for NG/_LN_Equity (no S3 read). harvest_research.py:46 and :343 build the listing prefix as P_CONTINUATION % key from the raw key that harvest_get_research receives (lines 438-446, no encoding), so a raw key 'BP/_LN_Equity' lists security_key=BP/_LN_Equity/, a different prefix from the partition the census reads. Both names are among the 78 not at current (ch8_census.out NAME lines: served 66be623e/3 and 20e91bdc/3) and both compare fields_changed=0. Which key form callers pass to the gateway was not measured.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "infra/aws/ec2/opal-gateway/app/harvest_research.py:46,343,438-446 (worktree HEAD ac20d27c69)",
+                   "lib/research/identity/crosswalk.py security_key_partition (no-S3 call at worktree HEAD ac20d27c69)",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~168/ch8_census.out (committed with this row; NAME lines for BP/_LN_Equity and NG/_LN_Equity)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
