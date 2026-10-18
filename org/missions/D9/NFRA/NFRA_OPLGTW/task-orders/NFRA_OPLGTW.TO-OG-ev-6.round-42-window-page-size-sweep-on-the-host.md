@@ -61,7 +61,9 @@ Run `ev6.AC1`, write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-6.round-42-wi
 - Round 42, workstream ENRICH-R42-A (decomposition addendum R3-T.119). Chain: this order -> `OG-en-29` (sets the constant to `chosen_partitions`) -> `OG-ap-39` (the batched release). The sweep needs no code change, so it runs at once on a GO naming `trunk_sha`; it is read-only (`<risk>WORLD</risk>` because gateway code runs on the host). The rule was written before any run, after the `OG-ap-38` lesson (a limit is never relaxed after a failed measurement; a statistic is fixed first).
 - Pre-cut: `AC1` base FAIL as expected (the record is absent); the controls (a size too slow, a growth over the limit, a hash that differs, two runs, no guard named, a rule not stated first, a 12-digit number) all read NO in the dry-run.
 
-<status>staged</status>
+- C4 READ (2.0.0_SA_COO~O, ~03:0xZ): `ev6.AC1` PASS on my run (script blob `93ae1c2507ba`), proof instance VALID; the rule recomputed from the nine runs: 30 passes (run medians 13.0, 7.8, 16.0 MB; longest page 1.89 s; host 43.2 percent), 60 fails growth only (38.8, 39.3, 29.6), 120 fails growth (193.6, 249.9, 225.0) AND the rows (127 over the newest 120 partitions against 222: the byte cap in `client_core._project`); `chosen_partitions` 30. The sweep ran after dell1's cg-3 ledger CLOSED (02:13:41Z) on the live ref `4257a2aa42`, host md5 139 of 139. `OG-en-29` is therefore superseded. Gate limb: none graded this flip.
+
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-A</workstream>
 <slot>~AE</slot>
