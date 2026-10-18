@@ -31088,3 +31088,128 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Whether the naming gate should refuse or skip when the folder is absent in a sparse worktree is the issuer's and the gate owner's call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "AC1 premise: the order says S1 to S5 must fail at the base, but the S5 absent-position arm passes at the base because the unedited renderer already prints the absence sentence for an absent bundle.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/test_bx1_summary_positioning.py@wk-AMGT_RESAPP-512 test_S5_absent_position_and_no_drafted_recommendation_prints_the_absence_sentence_once: base run 14 failed, 4 passed (the four passes: this S5 absent arm and S6 x3)",
+      "lib/research/print/render_pack.py@51cbf82b4f build_pack: _print_drafted(p, drafted, 'recommendation', NOT_WRITTEN['recommendation']) printed the absence sentence when no drafted sentence was served, whatever the position"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 step A: S1 to S5, S7 and S8 must fail on the unedited head; S6 and the controls pass.",
+  "world_is": "The S5 absent-position arm is a control for the new rule (it must keep printing the sentence once), and the unedited head already satisfies it. The S5 drafted-recommendation arm fails at the base as the order expects. The base count is 14 failed, 4 passed.",
+  "notes": "Form only. The absent arm is kept as a regression guard and is recorded in the receipt as passing at the base."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "The order says an absent posture prints the new positioning sentence, but posture=None is pinned to the old No analyst posture sentence by an api test outside this order's write surface, so the None arm keeps the old sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/tests/test_bw4_print_pack_degrades.py@51cbf82b4f line 39 POSTURE_ABSENT = 'Positioning No analyst posture is on file for this company yet.' asserted by test D3 when read_posture raises (build_pack receives posture=None)",
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-512 _print_positioning: the None arm still prints NO_POSTURE_SENTENCE; the status ABSENT arm prints POSITIONING_ABSENT_SENTENCE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1: an absent posture prints ONE plain sentence, No positioning view is on file for this name. (exactly that text).",
+  "world_is": "Two absent states exist. A posture object with status ABSENT now prints the new sentence; a missing posture (None, the route's read-raised case) prints the old sentence, because changing it breaks test D3 in lib/research/api/tests, which this order does not grant. The two Positioning sentences differ for the two absent states.",
+  "notes": "ARMED: until the None arm is ruled, a reader of a raised posture read sees a different absence sentence from one of a served ABSENT posture. Disarm: the issuer rules whether the None arm joins the new sentence and re-scopes test D3 in the full tree."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "The census finds a reason-bearing state print in the Management builder (the CEO profile sentence prints the reading's reason raw), which this order excludes from its region and assigns to AMGT-bx-3; it carries none for the three names but would print a storage path if a served reason carried one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-512 _ceo_profile_sentence: the non-CONFIRMED arm prints reading.reason verbatim (default 'no public profile is on file yet.'); the reading of the three served bodies is UNREADABLE_OBJECT with reason null",
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-512 _print_management: the Management builder, named by the order as AMGT-bx-3's region (section 1, Region you own; bound 2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1: census every string of render_pack.py a pack can print from a served state, including management; the Management builder is not touched by this cell.",
+  "world_is": "The management state sentence site is in the census but in the excluded builder. Left unchanged here, it prints nothing unsafe for the three names; a served reason with a path would print it verbatim until AMGT-bx-3 or a ruling covers it.",
+  "notes": "ARMED: disarm is AMGT-bx-3's Management builder change, or a CTO ruling that the census extends into the Management builder for this cell."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "The census finds the same served reasons printed with storage paths and vendor error text by the rich markdown export (build_rich_text), which the order's PDF/txt surface does not cover and whose pinned tests live outside this cell's re-scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-512 _undrafted_thesis_markdown prints the bundle's drafting_reason verbatim (a NoSuchKey text beside s3://); _posture_markdown prints posture reason verbatim; _peers_markdown prints peer reason verbatim",
+      "lib/research/print/tests/test_posture_markdown.py and test_build_rich_text.py pin the markdown wording (Posture: ABSENT -- <reason>, Exec Management: ABSENT (<reason>)); changing it is a multi-assertion re-scope beyond the one-assertion bound"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1: CENSUS EVERY STRING of render_pack.py that a pack can print from a served state, and make each free of a storage path, key, object name, cell or order id, vendor error text and UPPER_SNAKE code.",
+  "world_is": "The PDF/txt pack is clean for the three names after this cell. The markdown rich export of the same build still prints served reasons verbatim, so the export and the PDF differ. The export mirrors the page's own tab wording (C-EXPORT-ADDS-NOTHING), so a change to it is a ruling on the page's wording, not a print-only fix.",
+  "notes": "ARMED: the export carries the storage paths until ruled. Disarm: CTO ruling on whether the export takes the plain-sentence wording, then a re-scoped test pair in print/tests."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "The sparse worktree has no org/surprise_channel/schemas/investigation_item.schema.json, the schema the row form names; the schema was read from the base checkout to shape these rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of C:/dev/wk-resapp-512/org/surprise_channel/schemas/investigation_item.schema.json returned 'File does not exist' at 2026-10-18T06:3xZ; the same path read under C:/dev/ajb_workspace returned the schema (229 lines)",
+      "lib/research/print/tests/test_bx1_summary_positioning.py@wk-AMGT_RESAPP-512 not affected: the test file reads only its own fixtures"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 5: rows are filed in the investigation file the order names, in the form the channel defines.",
+  "world_is": "The worktree lacks the schema file the channel form names, so row form was checked against the base copy only. The surprise-row gate's own read of the schema is not established from this worktree.",
+  "notes": "Form only. Whether the sparse worktree should carry the schema is the issuer's call."
+}
+```
