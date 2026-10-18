@@ -12595,5 +12595,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     },
     "disposition": "UNDER_INVESTIGATION"
 }
+    ,
+{
+    "id": "AMGT_HARVST-D1-S64",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+    "surfaced_at": "2026-10-18T16:50:34Z",
+    "one_line": "HVST-cm-1 STOP at step 0: dell1 has no Bloomberg Terminal, no PY_AWS interpreter and no blpapi, so the consumer cannot run here and the one queued BP pull stays queued.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-1 section 2 step 0 (v) and section 3: the act runs on dell1 under PY_AWS (blpapi + boto3 + pyarrow); STOP when the interpreter cannot import blpapi, boto3 or pyarrow. The CTO half: 'the Bloomberg Terminal session dell1's harvest tooling already holds'.",
+    "world_is": "Measured at 2026-10-18T16:50:34Z on dell1 (hostname DESKTOP-HK1UU7N), read only. The interpreter the order and both halves name, PY_AWS = C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe (integrations/bloomberg/pipeline/scheduled_daily_pull.cmd lines 143 and 427), DOES NOT EXIST here: C:\\Users holds only Test and Public. The two interpreters present (Python 3.14 on PATH and Python 3.12) import boto3 and pyarrow and do NOT import blpapi. TCP port 8194 has no listener; no process named bbcomm, wintrv, blp or bloomberg (589 processes read, control 21 powershell.exe rows). 207 scheduled tasks read (control OPAL_autolaunch_agents found): none runs scheduled_daily_pull, pull_consumer or bbg_signin; the one match is the sa lane's 'Opal Data Harvest - Continuous Cycle'. The queue still holds its one message (counts 1/0/0 at 16:46Z) and packs/BP-SLASH-_LN_Equity/status.json still reads REQUESTED (190 bytes, sha256 2587af21f9e5e213d9e42b773e333ebe8a06ec935e7775bcb614167ac07cce88). The BP refdata, histdata and bestdata objects at 2026-10-18T13:02:48Z in opal-data-harvest were written by something that has a Terminal; this box has none (INFERRED, not looked for). I ran nothing beyond step 0: no health read, no consumer, no sign-in, no Bloomberg call, no queue receive. Also: the order's 'model_block_pull.bloomberg_health()' is not a function in model_block_pull.py; the consumer calls mbp._load_blp_client().health().",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round98/cm1_before.out (queue, status body and sha256, keys, interpreter imports, scheduled-task and process reads with controls, the STOP statement)",
+            "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd lines 143 and 427 (the PY_AWS path)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
