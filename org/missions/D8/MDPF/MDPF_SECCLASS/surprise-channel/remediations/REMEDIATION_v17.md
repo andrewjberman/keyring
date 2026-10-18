@@ -21,15 +21,15 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-17T07:34:38Z. Graduated at ADJUDICATION_v2
     "owner": "2.0.0_SA_COO~M1",
     "round": "v27",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~M1",
       "round": "v27"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~M1",
-      "at": null
+      "at": "2026-10-18T01:54:47Z"
     }
   },
   {
@@ -47,11 +47,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-17T07:34:38Z. Graduated at ADJUDICATION_v2
     "owner": "2.0.0_SA_COO~M1",
     "round": "v27",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~M1",
       "round": "v27"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_SECCLASS-D1-S42",
