@@ -71,7 +71,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-pr-3.round-42-probe-listener-bo
 - `Z-W148-S3` (the refusal-before-body mutant did not fail `ac07` on the worker's machine in 3 of 3 runs, so `ac07` proves clean answers, not the reset itself) is carried to the ask: the reset was seen once on the issuer's machine and the body-first read is the protocol-correct fix, but the test does not discriminate it. `Z-W148-S2` (413 ahead of 403) is the accepted order above.
 - Pre-cut: `AC1` base FAIL as expected (`ac09` and `ac10` are absent); `AC3` passes at the base.
 
-<status>staged</status>
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-C</workstream>
 <slot>~149</slot>
