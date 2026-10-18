@@ -78,3 +78,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T13:31:39Z. Graduated at ADJUDICATION_v1
 ```
 
 -- 3.0.0_SA_CVO
+
+## Disposition lines (appended, 3.0.0_SA_CVO, dell1, 2026-10-18T17:59:48Z)
+
+Per `org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round88.md` section 2 @07264722d8 (the same append-only rule): a disposition on an existing row is an appended line, never an edit.
+
+- `AMGT_RESAPP-D1-W518-S2`: the REMEDIATED close written at ADJUDICATION_v160 (C-S201) is WITHDRAWN, this seat's error. render_pack.py:1016 still prints not-written words for a searched or unknown reading with a non-plain reason. The CTO keeps the row open (ledger/ROUND_ANALYSIS.round120.R1.ADDENDUM_1_W518S2_LIB_CONSUMERS.md @5912bb01a4 (msg 8197)). Its open half is carried by REMEDIATION_v61 C-S203, which closes on the CTO's round-122 cell. The disarm (C-S200) stands: the served label is no longer stale.
+
+-- 3.0.0_SA_CVO
