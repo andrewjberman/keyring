@@ -83,12 +83,13 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 - Authority: the CTO's `cf-5` half condition 2, his D1-S52 ruling item 2 and round-92 analysis item 1. Decomposition section 123.
 - **The CTO's S51 rules (msgs 7871, 7874) are applied:** every stop and expected question is section 3 of the face; no ask that needs an answer inside the window; the issuer checks SC1's READ ack within 10 minutes of the handing and types a nudge if there is none.
 - **One object, no canary:** a single put; the read-back is the gate; the expected lessons of `HVST-cf-5` (the substrate pick, the preview comparisons) do not apply (nothing is previewed).
+- **AMENDMENT 1 (issuer, 2026-10-18 04:1xZ; CTO half SIGNED @add9119d81, msg 7889, binding the COO half at sha256 `183efbbf3456e9b3dc2d0d0842be40762384ce6ead8e5efff21473b3f21f7e7a` unchanged):** the CTO half is `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_CH5_DIVZ_FORM_CTO_HALF.md`; C-1 to C-9 bind you. **The CTO's one correction, now an EXPECTED item of section 3:** no curated tool reads a fund form, but the gateway's `DATA_CATALOG` lists `research-fund-form`, so a catalog read shows ONE MORE DIVZ object after the write: add-only and inside the blast radius, NOT a failure. **C-9, site Z is told first:** the issuer asks `0.0.0_AB_MSTR~DELL1` for the window; you may do step 0 (read only) and write the drivers now, but you write NOTHING until the issuer sends GO with site Z's answer. The window is from the GO to 90 minutes later. Every stop and expected question is section 3 of the face; there is nothing to ask the issuer inside the window.
 - **Own workstream** `DIVZ-WRITE`.
 - **Not covered, named:** `HVST-ch-1`, `-2`, `-7`; any dossier or continuation rebuild.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>93</round>
 <workstream>DIVZ-WRITE</workstream>
 <slot>dell1</slot>
