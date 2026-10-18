@@ -60,7 +60,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sec-3.round-43-complete-the-ssr
 - Read-only, no product path in `<paths>`: `<risk>LOCAL</risk>`.
 - Pre-cut: `AC1` base FAIL as expected (the record is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-A</workstream>
 <slot>~153</slot>
