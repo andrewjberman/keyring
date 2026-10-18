@@ -30601,3 +30601,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Re-pointing C-103 to C-107 is a one-field change per entry if the CTO assigns another cell."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W508-S8",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~508",
+  "surfaced_at": "2026-10-18T02:53:06Z",
+  "one_line": "The REFUSED branch of ModelTab ModelCell (line 155) cannot be reached by a page render: rowRefusal collapses every row that holds a REFUSE figure before any ModelCell is built, and a team cell is routed to TeamModelCell, which reads no verdict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:379-390 rowRefusal: a REFUSE check on any non-team cell marks the row refused",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:635, 801, 807, 813, 890-912: the summary, team-sheet, gap and grid paths filter or collapse a refused row (RefusedRowCells) before SheetCellView runs",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:312 SheetCellView routes every team cell to TeamModelCell, which has no verdict branch",
+      "portal/src/pages/SecurityAnalysis/__harness__/dateBypass.harness.cjs D8e renders ModelCell itself through a test-only export appended to the transpiled ModelTab (the page reaches no such render)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's census item (c): the REFUSED cell around ModelTab.tsx line 155 prints the check reason raw, so route it through daysInWords (census entry C-107).",
+  "world_is": "The line is reachable only by a direct render of ModelCell; no page path reaches it, so the raw print never reaches a reader. The line is routed as ordered (display only); C-107 reads fixed_here on the strength of that route, graded by D8e on the component itself.",
+  "notes": "Form only. Whether the dead branch at line 155 should be removed rather than kept is the CTO's call. Round-115 harness D8e is the only render of it."
+}
+```
