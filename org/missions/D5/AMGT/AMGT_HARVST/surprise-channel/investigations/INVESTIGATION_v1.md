@@ -12213,6 +12213,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ],
         "disposition": "DISMISSED_WITH_REASON",
         "dismissal_reason": "The hazards are removed in the live gateway by HVST-ck-3 (deployed 14:07:06Z, ledger CLOSED 14:17:24Z, 922ee425fe): for a slash key in either spelling the path-component tools serve the canonical object (the union of the canonical and the legacy raw prefix, the canonical winning a same-name collision) and the coverage tool returns equal objects per dataset, shown by my own served reads of BP/_LN_Equity and BP-SLASH-_LN_Equity (same peers object, same scores and posture, same coverage counts, stored_spelling canonical) and by SC1's reads of NG. What the reads do NOT show: the two peers pairs (name 2026-09-24T2252Z.json, BP and NG) are not served by name by any tool, so they rest on the offline arm of ck-2 (the canonical object wins a collision, with its mutant); the pull_enqueue Lambda still writes the raw spelling of a slash ticker (D1-W173-S1 and -S3, INERT, no raw status object stored) and is the round-97 Terraform cell; no migration of legacy raw objects was made. This dismissal restates the evidence of world_is."
+    },
+    {
+        "id": "AMGT_HARVST-D1-W174-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~174",
+        "surfaced_at": "2026-10-18T14:47:03Z",
+        "one_line": "AC2 reads '1 failed, 21 passed in 0.33s' (rc=1) in this worktree: the sparse checkout omits org/missions/D5/AMGT/AMGT_RESAPP, so the existing e2e arm of test_bx1_tier_fence.py cannot load check_e2e.py.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cl-1 proof_of_spec AC2: python -m pytest test_bx1_tier_fence.py test_by1_refusal_logged.py expects '22 passed in' (base count, issuer dry run 2026-10-18); the face says do not edit the expectation, a test or the code to match, but print the actual line, add a row and report.",
+        "world_is": "In C:/dev/wk-harvst-174 (branch wk-AMGT_HARVST-174, HEAD 4c7a60cabe) git sparse-checkout list names 14 entries and not org/missions/D5/AMGT/AMGT_RESAPP. test_bx1_tier_fence.py::test_e2e_check_payload_carries_internal_context loads org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/check_e2e.py, which is tracked at HEAD but absent from the worktree: FileNotFoundError. Output verbatim: '1 failed, 21 passed in 0.33s' rc=1. The other 21 arms pass with the HVST-cl-1 change in place. The sparse set is outside the <paths> grant and was not widened.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "pytest run of test_bx1_tier_fence.py and test_by1_refusal_logged.py in C:/dev/wk-harvst-174 on 2026-10-18 (output '1 failed, 21 passed in 0.33s', rc=1)",
+                "git -C C:/dev/wk-harvst-174 sparse-checkout list at HEAD 4c7a60cabe (14 entries, AMGT_RESAPP absent)",
+                "git cat-file -e HEAD:org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/check_e2e.py (exit 0: tracked at 4c7a60cabe)",
+                "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cl-1.the-pull-enqueue-lambda-writes-a-slash-ticker-status-under-the-canonical-prefix.md@4c7a60cabe"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W174-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~174",
+        "surfaced_at": "2026-10-18T14:47:03Z",
+        "one_line": "A slash-free ticker that the copied key rule refuses (for example 'BP-SLASH- LN Equity', or a ticker with a non-ASCII character) now returns 400 with zero writes; the unchanged code wrote its status object and sent the SQS message (202).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cl-1 section 0 ruling: 'a key without a slash is byte-equal to today'; section 1.b: the copy carries the crosswalk refusals (non-ASCII, the token inside a value) and a refused key returns 400 before any S3 or SQS call.",
+        "world_is": "The copied shape checks refuse the token and non-ASCII in ANY key, slash or not, so a slash-free key containing '-SLASH-' or a non-ASCII character is refused rather than byte-equal. Measured in the new test file: test_refused_ticker_returns_400_with_zero_calls (BP-SLASH- LN Equity) and test_slash_free_key_the_rule_refuses_returns_400_with_zero_calls both pass with zero S3 and zero SQS calls. The 95-key fixture has no such key; the slash-free positive arms are byte-equal to the unchanged code.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/lambda/research/pull_enqueue/test_cl1_status_key_canonical.py in C:/dev/wk-harvst-174 (python -m pytest: 16 passed in 0.23s)",
+                "infra/aws/lambda/research/pull_enqueue/lambda_function.py _slash_safe_key and the 400 branch of lambda_handler, C:/dev/wk-harvst-174, the commit that carries this row",
+                "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cl-1.the-pull-enqueue-lambda-writes-a-slash-ticker-status-under-the-canonical-prefix.md@4c7a60cabe"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
