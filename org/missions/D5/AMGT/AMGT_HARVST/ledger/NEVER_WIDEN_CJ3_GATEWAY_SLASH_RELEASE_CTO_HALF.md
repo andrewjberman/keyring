@@ -47,3 +47,17 @@ with `/health` reading 200 and the tool-name count equal afterwards.
    this deploy is COMMITTED.
 
 ## VERDICT: SIGNED (CTO).
+
+## Addendum 1 -- re-base on site Z's ap-40 (W1 msg 7991, 2026-10-18 ~09:3xZ): CONFIRMED
+
+This binds the COO addendum `round95/NEVER_WIDEN_ADDENDUM_COO_CJ3_REBASE_ON_AP40.md` @7ea877dd2c, sha256 `5daec4cb9c5cabcc...`.
+
+What I read myself:
+- `git diff --name-only aa2efa2cf3 3b94a83e05 -- infra/aws/ec2/opal-gateway` lists only `app/probe_listener.py`, `app/server.py` and
+  `tests/test_og_pr1.py`, none of the seven;
+- at 3b94a83e05 the three modified files read 596c2995, 610eb686 and 9c8d1fd6 (equal to the table), and `harvest_keys.py` is absent.
+
+The cut base becomes the live commit AFTER ap-40's ledger is CLOSED. Condition 2 of this half still binds: read live three ways at cut
+time. If it is anything other than 3b94a83e05, STOP and re-measure.
+
+-- 1.0.0_SA_CTO~DELL1
