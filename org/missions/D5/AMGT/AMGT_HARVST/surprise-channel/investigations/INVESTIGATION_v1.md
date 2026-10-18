@@ -11657,5 +11657,93 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+,
+    {
+        "id": "AMGT_HARVST-D1-W171-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T07:46:49Z",
+        "one_line": "HVST-cj-2 is BLOCKED at its first act: the worktree C:/dev/wk-harvst-171 does not carry infra/aws/ec2/opal-gateway/tests/, which the order names in <paths> and in AC1-AC2; the tests folder is excluded by the sparse checkout and I stopped without rebuilding it.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-cj-2 worker face, first act: the worktree carries the paths the order names (<paths> includes infra/aws/ec2/opal-gateway/tests/ and the test file is created there); if it does not, file a BLOCKING row and STOP, and never rebuild, extract or reconstruct the tree.",
+        "world_is": "git sparse-checkout list in the worktree (HEAD 11de82105f, branch wk-AMGT_HARVST-171) lists .tools, infra/aws/ec2/opal-gateway/app and no tests path. git ls-files -v -- infra/aws/ec2/opal-gateway/tests prints 319 entries, every one with the skip-worktree flag S (for example tests/test_cc2_research_misfiled.py, tests/test_og_gt1.py and tests/acceptance/conftest.py). The directory infra/aws/ec2/opal-gateway/tests is absent from the worktree. Present and readable: app/harvest_research.py, app/harvest_typed.py, deploy-to-ec2.sh and requirements.txt. No file was created, copied or restored, and the sparse list was not changed.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git sparse-checkout list (worktree C:/dev/wk-harvst-171, HEAD 11de82105f): .tools, infra/aws/ec2/opal-gateway/app, no tests path",
+                "git ls-files -v -- infra/aws/ec2/opal-gateway/tests (worktree, HEAD 11de82105f): 319 entries with flag S, none without",
+                "test -d infra/aws/ec2/opal-gateway/tests (worktree, 2026-10-18): absent; test -f app/harvest_research.py: present"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+,
+    {
+        "id": "AMGT_HARVST-D1-W171-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T07:58:37Z",
+        "one_line": "The deployed gateway cannot import lib/research/identity/crosswalk.py (the artifact lib/ carries trading_calendar.py and opal_naming.py only), so HVST-cj-2 carries a COPY of the module's slash-key rule in app/harvest_research.py, and the copy can drift from the module.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "TO-HVST-cj-2 step 1b: if the deployed gateway cannot import crosswalk, add a small function in the app with the module's rule, a test asserting it equals the module, and file a row naming the duplicate (the CTO decides whether the module moves).",
+        "world_is": "deploy-to-ec2.sh (worktree HEAD 11de82105f) stages lib/trading_calendar.py and lib/opal_naming.py into bundle/lib and tars lib from that bundle; there is no lib/research in the artifact. app/harvest_research.py now defines slash_safe_key, security_key_from_slash_safe and canonical_security_key (a copy of the rule of crosswalk.py lines 196-247). tests/test_cj2_slash_key_one_form.py arm 7 asserts the copy equals the module on 105 keys (the 95 decoded continuation keys from the bucket listing and 10 synthetic keys): that equality is the only thing that holds the copy to the module. The module's rule is unchanged.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (worktree, HEAD 11de82105f): the cp lines into bundle/lib and the tar -C bundle lib line",
+                "lib/research/identity/crosswalk.py:196-247 @845b69a8cc: _check_key_shape, slash_safe_key, security_key_from_slash_safe, security_key_partition",
+                "infra/aws/ec2/opal-gateway/tests/test_cj2_slash_key_one_form.py test_arm7 (committed with this row): the equality over 105 keys"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W171-S4",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T07:58:37Z",
+        "one_line": "The peers, posture, scores, filings and management prefixes hold objects under BOTH spellings of a slash key (peers/v1: BP raw 7, encoded 10; NG raw 7, encoded 10); HVST-cj-2 normalizes the security_key= partitions and the silver comparison only, so for those tools a raw and an encoded request read different sets.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "TO-HVST-cj-2 step 1b: every P_* % key prefix that addresses a security_key= partition is built from the partition form. The order does not say which spelling the non-partition prefixes take.",
+        "world_is": "cj2_replay.out (committed with this row), REPLAY-PREFIX lines: peers/v1/BP/_LN_Equity/ objects=7 and peers/v1/BP-SLASH-_LN_Equity/ objects=10; NG 7 and 10; posture/v1 1 and 1 for each key; scores/v1 1 and 1; filings/v1 1 and 1; management/v1 0 for all four spellings; drafting/v1 0 for all four. The tools keep the requested spelling (app/harvest_research.py P_PEERS, P_POSTURE, P_SCORES, P_FILINGS, P_DRAFTING, P_MANAGEMENT), so a raw request reads 7 peer objects and an encoded one reads 10. Which spelling is the stored form of those objects is not read here.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~171/cj2_replay.out (committed with this row): REPLAY-PREFIX lines for peers, posture, scores, filings, management, drafting",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py (worktree, committed with this row): the non-partition prefix sites keep the spelled key"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W171-S5",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T07:58:37Z",
+        "one_line": "Two gateway modules outside this order's paths build security_key= partitions from the raw key (harvest_figures.py for bestdata, refdata, histdata and segments; harvest_identity.py), and the census measured those tables holding the encoded spelling only, so those tools reach no stored object for BP or NG; not changed here.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "TO-HVST-cj-2 step 1b: the normalizer applies to every harvest tool that takes a security_key; the order's paths name app/harvest_research.py and app/harvest_typed.py only.",
+        "world_is": "cj1_census.out (committed at 7e7a254fc3): bloomberg/harvest/bronze/bestdata BP encoded 15, NG 15; refdata 16 and 16; histdata 16 and 16; segments 1 and 1; the raw form 0 in each. infra/aws/ec2/opal-gateway/app/harvest_figures.py lines 186-192, 228, 248, 259, 278 and 440 build 'security_key=%s/' % key from the caller's key, and infra/aws/ec2/opal-gateway/app/harvest_identity.py line 454 does the same. Those tools were not changed.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~171/cj1_census.out (committed at 7e7a254fc3): SLASHKEY lines for bronze/bestdata, refdata, histdata, segments",
+                "infra/aws/ec2/opal-gateway/app/harvest_figures.py (worktree, HEAD 11de82105f): the security_key=%s/ prefix sites",
+                "infra/aws/ec2/opal-gateway/app/harvest_identity.py (worktree, HEAD 11de82105f): line 454"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
