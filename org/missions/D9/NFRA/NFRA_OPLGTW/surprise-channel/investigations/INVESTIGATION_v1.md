@@ -28526,3 +28526,27 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Every row is either repaired (Z-W147-S1 for the probe, Z-W148-S1), resolved (Z-W147-S2), an accepted order of refusal (Z-W148-S2, Z-W149-S1), a stated test limit (Z-W148-S3) or a design fact disclosed to the signers (Z-W146-S1 to S3). None changes a verdict now; the signers of OG-ap-40 may re-arm any of them. Z-S375 and Z-S338 stay ARMED and are disarmed only through the listener by the CVO's clock on this seat's word."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~150",
+  "surfaced_at": "2026-10-18T04:39:25Z",
+  "id": "NFRA_OPLGTW-Z-W150-S1",
+  "one_line": "The OG-en-30 audit premise says 'the other eleven notes OG-en-28 wrote'; the client_* docstrings of app/tools.py hold 15 absent_reason codes across 5 functions, so 14 codes sit outside the fee note.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/tools.py @279749fa11 (base) -- client_resolve_account 4 codes (firm_not_canonical, firm_not_served, last4_malformed, no_candidate_for_last4), client_get_holdings 3, client_get_transactions 3, client_get_allocation 1, client_get_fees 4 (window_read_busy, window_required, window_too_long, no_fee_rows_in_window); 15 in total, 14 outside no_fee_rows_in_window",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-30.round-42-fee-note-claims-only-what-is-measured.md section 1 item 2 -- says 'the other eleven notes'"
+    ]
+  },
+  "spec_asserts": "Audit the other eleven notes OG-en-28 wrote: read every client_* docstring in app/tools.py and reword any completeness, certainty or absence-of-error sentence; list what changed, or none.",
+  "world_is": "The five client_* docstrings carry 15 absent_reason codes, 14 besides the fee note. I read all five docstrings as the order directs and did not count notes to eleven. Changed: 2 sentences (client_resolve_account firm_not_served and no_candidate_for_last4, plus the fee note). The count in the order does not match any unit I could read from the file, so the audit covered every docstring rather than a set of eleven.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the count is a premise mismatch in the order, not a blocker. Confirm the audit scope (all five docstrings) is the intent; no code outside the docstrings was touched."
+}
+```

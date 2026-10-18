@@ -62,7 +62,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-30.round-42-fee-note-claims-
 - The check's sentence slicing stops the fee note at the next code word; the bare-"zero" rule is on the note only (other notes may use the word where it is true, for example a count).
 - Pre-cut: `AC1` base FAIL as expected (the base reads "true zero", "report zero"); the dry-run controls (a banned phrase re-added, a bare "zero" in the note, a line added) read NO, the corrected copy reads PASS; `AC3` passes at the base.
 
-<status>staged</status>
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-D</workstream>
 <slot>~150</slot>
