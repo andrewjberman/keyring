@@ -12702,5 +12702,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W180-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~180",
+        "surfaced_at": "2026-10-18T17:42:15Z",
+        "one_line": "HVST-cn-2 BLOCKED: dossier.build(PBR_US_Equity) raises FileNotFoundError on a KPI census input that is tracked at HEAD but absent from this sparse worktree, so the one dropped PBR row cannot be named here.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cn-2 section 1b: dossier.build (in memory) runs for PBR_US_Equity in this worktree, so the BUILT model_rows exist to compare against the served dossier, and the census can name the one valued row the build drops with its cause.",
+        "world_is": "The worktree uses core.sparseCheckout=true and its sparse list excludes org/tier1_exec/ and org/surprise_channel/. The file org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json is tracked at HEAD (git ls-files: 1 path) but absent from the worktree, so substrate -> continuation.current_inputs -> _kpi_lexicon_bytes raises FileNotFoundError before any model_rows row is built. The base checkout C:/Dev/ajb_workspace carries the file. No source file was edited, the input was not copied or extracted, and no BUILT row exists to report.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/continuation.py@d4b82a35ec line 168 (KPI_LEXICON_PATH) and line 199 (_kpi_lexicon_bytes open)",
+                "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json@d4b82a35ec (tracked at HEAD, absent from the worktree)",
+                "org/surprise_channel/schemas/investigation_item.schema.json@d4b82a35ec (present at HEAD via git show, absent from the worktree)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
