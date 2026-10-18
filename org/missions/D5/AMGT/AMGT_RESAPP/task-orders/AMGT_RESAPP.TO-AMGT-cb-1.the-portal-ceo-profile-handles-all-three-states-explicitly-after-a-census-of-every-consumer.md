@@ -78,7 +78,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-120 analysis item 1 (msg 8147, `@4bae75b9e6`) and the CVO's question ruled yes (one cell, census first); row `W518-S2` closes when the census reads every consumer as handling all three states. THE FLOW is `portal/CONTRIBUTING-BOXES.md`: branch `cand/<box>/<slug>` cut from PROD (`ff611566`, portal-v2.1.240; DEV `3a7791c1` holds the fold-back, DEV..PROD 0), the approval row (the issuer registers it in the shared tree; the CTO approves an Opal-internal page), the merge-forward by `.tools/portal-merge-forward.sh`, ONE chosen-set promote by the portal release seat (a DT seat, `AMGT-cb-3`, the `PROMOTE_SA` workstream), the byte tie and the fold-back under a named waiver. The grade is ON THE RUNNING PAGE (the CTO): TSM US shows the not-written sentence, a forced corrupt fixture shows `could not be read`, HD US shows its searched sentence: the harness is the worker's proxy and the issuer reads the page after the landing (`AMGT-cb-2`). The census of `lib/` consumers is read-only for the worker: the PDF and rich routes were changed by `AMGT-ca-1` (merged `a1eb3b86ce`, live since 16:12Z). The fixtures are the served `management` objects of `GET /thesis` taken after `AMGT-ca-5` (`round121_prep/fixtures/`).
 
-<status>pending</status>
+<status>complete</status>
 <round>121</round>
 <slot>0.9.0_WK_AMGT_RESAPP~523</slot>
 <fabric>dell1</fabric>
