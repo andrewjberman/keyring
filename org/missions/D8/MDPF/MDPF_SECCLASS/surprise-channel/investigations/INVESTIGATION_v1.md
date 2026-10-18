@@ -8862,3 +8862,28 @@ by dell1 or by this seat.
   "world_is": "The 2026-10-16 row is absent from the served version and appears only after the next run that follows the 00:17Z transaction landing (the 04:00Z fire of 2026-10-18 is the first). This is the order of the schedule (bronze transactions land after the 23:00Z fallback fire's A_03), not a code fault; the CTO asked for it as a row (msg 7844). Whether the 04:00Z fire writes the date is read at the round-29 close."
 }
 ```
+
+## MDPF_SECCLASS-D1-S55 -- the shipped held-out display shows 14 real tickers hidden by the April resolution table, not 9 (five new names)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S55",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-18T07:04Z",
+  "one_line": "Leg Q of TO-SC-e116b (0.7.0_AE_CloudOps~DELL1, a --dry-run single of the shipped E_18, 2026-10-18 ~06:50Z, msg 7939) printed 'Held out by the resolution table (real ticker absent from the canonical table): 14': the nine named tickers (BALCX, CIMAX, DODBX, FSNQX, HBLFX, JBAWX, KAMIX, PCEF, TRRNX) plus FPE, TRRJX, VTTVX, WTM and XPMIX, on holdings_lots/2026-10-16.parquet (the 23:00Z fire read 2026-10-09 and counted 9). Candidates 0, written 0/0, etf-classifications unchanged (11,375 items, 13 seeded present, 9 held-out absent). CloudOps's local plan-form A/B on the 2026-10-16 file gives the base and the new E_18 identical counts, so the 14 is the input, not the display.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/E116_LEGQ_FINDINGS_20261018.md (CommandId 75cf5f38-62e1-4e32-9824-1942a7340bcd, exit 0, 0 ERROR, no --upload; the 14 lines and the 'Already resolved 14' figure)",
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R29_CHECKS/e116_shipped_check.py -> E116-SHIPPED ok=True e18=197eac28|197eac28|MATCH display=1 (run by this seat 2026-10-18 06:48Z and 07:0xZ)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D1-S52: the April resolution table hides the nine held-out names from E_18; the display shows them.",
+  "world_is": "The display works and shows more than the nine: five further real tickers absent from the canonical table are also hidden by the April table (name-to-ticker rows from 2026-04-07) and are therefore never candidates. S52's latent defect is wider than the nine and the set grows with the holdings. Whether the resolution table should still gate candidacy once a ticker is absent from etf-classifications is the design question already carried; these five names are its first new evidence. Not read: which of the five are held out on purpose (none is in the seed's nine)."
+}
+```
