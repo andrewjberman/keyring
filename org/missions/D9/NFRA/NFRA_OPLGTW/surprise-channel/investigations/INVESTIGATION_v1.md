@@ -28368,3 +28368,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: supersede or archive the ~146 instance of OG-pr-1 (it grades the pre-amendment criteria), then flip the status tag of the order. The ~147 instance is committed without the flip, which stays staged until the gate can grade it."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-18T04:15Z",
+  "id": "NFRA_OPLGTW-Z-S385",
+  "one_line": "OG-ap-39's client_get_fees description tells a calling model that no_fee_rows_in_window means 'the empty list is a true zero, not an error, so report zero', while the source's completeness for the window is the open question of Z-S355/Z-S368/Z-S369 (109 fee partition rows firm-wide over 2026-08-17..09-15; the REST-vs-silver probe pending).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "A VALUE MUST CARRY ITS CLAIM (CLAUDE.md section 4): an absence reported to a caller states what was measured; Z-S355: a 13-month fee total can be incomplete without the answer saying so.",
+  "world_is": "Release 43a6659615 app/tools.py client_get_fees docstring: 'no_fee_rows_in_window: the window holds no fee row for this account; the empty list is a true zero, not an error, so report zero or widen the window.' client_adapter_bd49f.py:764 emits the code when the account has no fee row in the source partitions read; the source's coverage of the window is unmeasured (Z-S368/Z-S369 open, laptop CTO's probe pending).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/og-rel-batch8 diff 4257a2aa42 43a6659615 -- infra/aws/ec2/opal-gateway/app/tools.py",
+      "C:/tmp/og-rel-batch8 infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py:764",
+      "investigations/INVESTIGATION_v1.md rows Z-S355, Z-S368, Z-S369; CTO msg 35498"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Text only; no answer or reach changes. Remedy: in the next release, word it as 'the account has no fee row in the source for this window', or keep the wording if the Z-S368/Z-S369 probe reads REST equal to silver on its sample days, closing this row on that result."
+}
+```
