@@ -11826,5 +11826,55 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S56",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-18T10:56:34Z",
+     "one_line": "Rows D1-W171-S1 and D1-W171-S5 are disarmed: after the gateway release HVST-cj-3 (10:52:49Z) the raw spelling BP/_LN_Equity and NG/_LN_Equity returns the whole research record and the raw BP/_LN_Equity fundamentals consensus read returns the bestdata object, through the live gateway, by my own reads.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "D1-W171-S1 (disarm owner 2.0.0_SA_COO~W1): the gateway's raw-key prefixes match 0 stored objects of the slash keys BP/_LN_Equity and NG/_LN_Equity (stored only under the encoded partition); D1-W171-S5: harvest_figures.py and harvest_identity.py build raw security_key= partitions from the caller's key, so those tools reach no stored object for the two keys.",
+     "world_is": "BEFORE (my own gateway reads, 2026-10-18 ~10:33Z): harvest_get_research BP/_LN_Equity returned 7 reports and dossier_key, continuation_key, ai_fill_key, management_roster all null ('no research_dossier object for this security'); BP-SLASH-_LN_Equity returned the dossier (as_of 2026-10-12, listed 15), continuation 4ecc7216257f7d08, ai_fill and the exec-officer roster with research_reports null ('no silver research_report row'). AFTER the release (HVST-cj-3: rel-amgt-harvst-cj3 @6575999df5, parent 3b94a83e05, deployed 10:52:49Z by 0.7.0_AE_CloudOps~SC1, ledger harvst-cj3-gateway-slash-release; SC1: /health 200, tools 127 names md5 equal, controls UNH, CPA, KMB, MNST and UNH fundamentals x5 equal): my own reads at 10:56Z through the live gateway: harvest_get_research BP/_LN_Equity returns dossier_key as_of=2026-10-12.7daf292c4fb81806.json (the encoded-partition dossier), continuation 4ecc7216257f7d08, ai_fill, 7 reports and the roster; NG/_LN_Equity returns dossier_key as_of=2026-10-12.e4d725c0d1090a3e.json, continuation cb76efa8bfd9173f, ai_fill, 1 report and the roster, and NG-SLASH-_LN_Equity returns the same record (content_sha256 43c14ec1... equal); harvest_get_fundamentals kind consensus for BP/_LN_Equity returns bestdata_key bloomberg/harvest/bronze/bestdata/security_key=BP-SLASH-_LN_Equity/20261017T130234Z.json (before, SC1 read it refused by an argument guard). NOT read by me: BP-SLASH-_LN_Equity after the release (SC1 read it), the other fundamentals kinds and the bestdata and coverage tools (SC1 read the controls and the consensus); the path-component tools (peers, posture, scores, filings), which stay on the caller's spelling and are the CTO's rows D1-W171-S4 and S6.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round95/cj3_deploy.out and cj3_hostowner_note.out (SC1's deploy record)",
+       "SC1 msg 8005 (DEPLOYED 10:52:49Z)",
+       "my own harvest_get_research reads of BP/_LN_Equity, BP-SLASH-_LN_Equity (before) and BP/_LN_Equity, NG/_LN_Equity, NG-SLASH-_LN_Equity (after), and harvest_get_fundamentals BP/_LN_Equity (after), 2026-10-18 10:33Z to 10:57Z",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cj-3.the-gateway-reads-a-slash-key-from-its-one-stored-form.md"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W171-S1",
+      "AMGT_HARVST-D1-W171-S5"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The hazard (the gateway's raw-key prefixes reach no stored object of the two slash keys, in the research tools and in the figures tools) is removed in the live gateway by HVST-cj-3: the raw spelling now returns the whole research record and the raw consensus read returns the stored bestdata object, shown by my own served reads (the CTO's two halves reproduced BEFORE). The path-component tools are the CTO's separate rows (S4, S6) and the app's copy of the rule is D1-W171-S3 (open call dell1-20261018T093742Z-48ae)."
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S57",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-18T10:56:34Z",
+     "one_line": "S51 third instance (recorded with D1-S54 and D1-S55): the cj-3 order and GO handed to an idle SC1 at 10:38:54Z were READ at 10:39:50Z, 29 seconds after my typed nudge, 56 seconds after the handing; I nudged before the 10 minute mark because the pattern had held twice.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "Row D1-S53 rule 2: the issuer checks the READ ack within 10 minutes and, with none, types a nudge in the seat's tab.",
+     "world_is": "Handed: msg 8000 (HVST-cj-3 GO) 2.0.0_SA_COO~W1 to 0.7.0_AE_CloudOps~SC1 at 10:38:54.7Z (SENT 10:39:03.5Z). A read-only peek at 10:39:05Z showed SC1 idle at its input ('no order is open'; its last lines: it had re-armed an inbox watcher as task b4o19ti66 and a runner-log watch). Nudge typed 10:39:21Z (SENT; a second peek showed the prompt as a transcript turn and SC1 working). get_delivery_state: EMITTED and READ 10:39:50.7Z. SC1 then cut the release by 10:45:56Z and deployed at 10:52:49Z. Instances so far (D1-S54, D1-S55, this): mail unread until a typed nudge in three of three idle cases; in the one busy case (the cj-4 window message while SC1 ran pairs) READ came 22 minutes after the handing at a leg boundary without a nudge. Whether an armed watcher wakes an idle seat remains untested: the seat's own last lines say a watcher was armed in all three cases and no wake occurred before the nudge, but the watcher's state itself was not read.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "get_delivery_state for 0.7.0_AE_CloudOps~SC1 since 2026-10-18T10:30Z (id 8000: SENT, EMITTED, READ stamps as quoted)",
+       "peek images C:/Users/Test/AppData/Local/Temp/unstick_peek_0.7.0_AE_CloudOps~SC1_20261018T103904Z.png and ..._20261018T103929Z.png",
+       "rows AMGT_HARVST-D1-S54 and AMGT_HARVST-D1-S55"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
