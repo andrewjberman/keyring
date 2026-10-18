@@ -2923,3 +2923,11 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-en-30` | the `no_fee_rows_in_window` note says "no fee row in the source; no total established" instead of "a true zero, report zero"; the other eleven notes audited for claims the code does not establish | `app/tools.py` (docstring text) | WORLD (gateway path floor) | `~150` | worker |
 
 **fanout:** 1 of 1 chains, cap 8 (one wording cell; the release `OG-ap-39` re-cut waits on it).
+
+**R3-T.119 amendment A7 (2.0.0_SA_COO~O, round 42, ~05:5xZ, workstream ENRICH-R42-E): a lineage cell `OG-ap-41`.** dell1's CTO (its msg 7926, via `0.0.0_AB_MSTR~Z` msgs 35629/35630) rules that site Z lands its gateway release commits `efcc8ae19f` (`OG-ap-36` A4) and `d077cef043` (`OG-ap-38` A1) on its own lineage first and resolves its own conflicts (`app/tools.py`, `tests/test_og_db3.py`, as MSTR measured), then dell1's `cg-3` (`4257a2aa42`) merges on top; the CTO (msg 35632) adds that `OG-ap-39`'s release commit is taken by the same cell after its Phase B, and the criterion that `app/` be AST-equal to the live release plus trunk's own changes, listed, with the window tests passing. `OG-ap-41` is the repository merge for `~NFRA1` (the shape of `OG-ap-37`): trunk's side on every conflicted gateway path, no gateway byte changed, `ap41.AC1` to `AC4`. Part 2 (the `OG-ap-39` release commit) follows its Phase B as an amendment. Gate limb: the new tree order is graded by `to-pipeline-gate`.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-41` | merge `d077cef043` (which carries `efcc8ae19f`) onto the `box/sitez` head in the applier's worktree, trunk's side on the two conflicted gateway paths, the manifest block untouched; the record lists trunk's own changes against the live release | `W/`, the merge on a landing branch (drained by the issuer) | WORLD | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (a repository merge; independent of `OG-ap-39`, whose release is cut on its own branch).
