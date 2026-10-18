@@ -4393,3 +4393,17 @@ The CTO accepted the recommendation: a gateway consumer still reading `fund` as 
 
 - **Fan-out (this recut):** `N of M chains, N=0 workers (cg-3 is a seat order) of M=1 chain, cap 8`.
 - **Check at the cut (dry-run at the base):** `cg-3` AC1 to AC4 FAIL as expected (no `cg3_served.out`).
+
+### 122c. ROUND 92 -- `HVST-cg-1` merged (`ad116e0037`); the CTO ruled two classification gaps (msg 7782); `HVST-cg-5` CUT before the silver rewrite (2026-10-18 ~00:0xZ)
+
+`HVST-cg-1` merged: census over 353 stored reports (`holding=117 candidate=14 initiate=2 interest=2 template=1 unclassified=2 none=215`), the CTO's proof line equal, re-run by the issuer identical; the dry run plans 3 new parts (353 rows, nothing put). Two holdings read wrong: `ORA_FP` (`Consider size reduction in IDVZ`, `unclassified`) and `CPA` (header misspelled `RECOMMEDATION`, `none`). **Ruled (CTO, msg 7782):** (a) `reduction` is a holding word; (b) `RECOMMEDATION` is accepted as one closed-list alias, no fuzzy matching; re-run the census before the rewrite; expected `holding=121 unclassified=0 none=213`. **The issuer adds `adding`** (CPA's line reads `Consider adding ... in IDVZ taking it to 150-200bps`; `add` is whole-word, so without it the two CPA rows would read `unclassified`); named to the CTO.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cg-5` | `cg-5` | **`fund_relation` reads `reduction` and `adding` as holding words and accepts the alias `RECOMMEDATION`** (before the fund token, closed list), offline arms with a mutant, and a re-run of the census (`MOVED_ROWS=4`: the 2 ORA and the 2 CPA rows). Workstream `FUNDREL-CLASSIFY`. | LOCAL | worker `~163` (light) | CUT |
+| `HVST-cg-2` | -- | The silver rewrite (section 122). | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cg-5` merged (the classifier is fixed into the rows) |
+| `HVST-cg-3` | `cg-3` | The gateway release (section 122b). | WORLD | seat SC1 | CUT, STAGED (waits on `cg-2` and the pair) |
+| `HVST-cf-3`, `HVST-cf-5` | -- | The `fund_form` chain. | LOCAL, then WORLD | worker, then SC1 | DEFINED, NOT CUT: wait on `cg-2` |
+
+- **Fan-out (this recut):** `N of M chains, N=1 worker (cg-5) of M=1 chain, cap 8` (the silver chain `cg-5` then `cg-2` then `cf-3` then `cf-5`; `cg-3` is a seat order).
+- **Check at the cut (dry-run at the base):** `cg-5` AC1 FAIL as expected (`17 passed` does not match `22 or more`), AC2 PASS as expected (`58 passed`), AC3 and AC4 FAIL as expected (no census file).
