@@ -5353,6 +5353,52 @@
     "spec_asserts": "A rivalfunds G4 price for date D is that security's official close for D on its own venue, for every venue.",
     "world_is": "Any venue can be wrong: a pull row is a close only when its capture instant falls between that venue's close and its next open. On late-capture dates US and Canadian rows are intraday values. The re-source set cut for ORDER 4 covers non-US pull rows only.",
     "notes": "CORRECTS ETFS_RIVALS-Z-S85's world_is ('only US closes are filed under the correct date'). The fix shape widens: every pull row must be checked against its venue's close window, not only the non-US rows. Ruling by 1.0.0_SA_CTO~Z: ORDER 4 belongs to 2.0.0_SA_COO~RV. Whether to extend its re-source set to late-capture US/CN dates is that issuer's call, and site Z neither extends nor narrows it. Running ORDER 4 as cut fixes a subset correctly and does no harm, so it may run unless the issuer amends it. The extension is owed before rivalfunds pull prices are served as closes."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S88",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-10-18T12:05Z",
+    "one_line": "ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.md is flipped complete, but its newest proof instance (org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.proof_of_spec.json) reads INVALID under proof-of-spec-check.py --governing-order, rc 1. Today's gate grades the same instance: org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.proof_of_spec.json and reads the same rc 1, so newest-instance-only selection changes nothing for this order; the row is the CVO's reopening-is-a-ruling carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/proof-of-spec-check.py org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.proof_of_spec.json --governing-order org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.md returned rc 1 (census run 2026-10-18, C:/tmp/proof_census_20261018.txt (dry run of .tools/proof-instance-census.py, 33 multi-instance orders of 4,883 pairs))",
+        "the order file at HEAD carries status complete as its last <status> tag; 2 tracked proof instances exist for it, newest by commit time then numeric ~N is the one named",
+        "CVO~Z verdict 35689 / CTO msg 35690: each already-complete order whose newest instance reads FAIL or INVALID gets one row for its issuer; reopening stays a ruling, never automatic"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An order flipped complete has a proof-of-spec instance that reads VALID against its governing order.",
+    "world_is": "The newest instance reads INVALID (rc 1). The checker's first violation is in the census file for this order. Whether the order stays complete, is reopened, or the instance is repaired is the issuer's ruling.",
+    "notes": "Filed by 0.0.0_AB_MSTR~Z as the census carrier. No order is reopened or edited by this row and the newest-instance gate is not armed. Disarm: none (INERT)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S89",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-10-18T12:05Z",
+    "one_line": "ETFS_RIVALS.TO-RIV-q-1.gqgu-issuer-route.md is flipped complete, but its newest proof instance (org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-q-1.gqgu-issuer-route.proof_of_spec.json) reads INVALID under proof-of-spec-check.py --governing-order, rc 1. Today's gate grades the same instance: org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-q-1.gqgu-issuer-route.proof_of_spec.json and reads the same rc 1, so newest-instance-only selection changes nothing for this order; the row is the CVO's reopening-is-a-ruling carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/proof-of-spec-check.py org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-q-1.gqgu-issuer-route.proof_of_spec.json --governing-order org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-q-1.gqgu-issuer-route.md returned rc 1 (census run 2026-10-18, C:/tmp/proof_census_20261018.txt (dry run of .tools/proof-instance-census.py, 33 multi-instance orders of 4,883 pairs))",
+        "the order file at HEAD carries status complete as its last <status> tag; 2 tracked proof instances exist for it, newest by commit time then numeric ~N is the one named",
+        "CVO~Z verdict 35689 / CTO msg 35690: each already-complete order whose newest instance reads FAIL or INVALID gets one row for its issuer; reopening stays a ruling, never automatic"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An order flipped complete has a proof-of-spec instance that reads VALID against its governing order.",
+    "world_is": "The newest instance reads INVALID (rc 1). The checker's first violation is in the census file for this order. Whether the order stays complete, is reopened, or the instance is repaired is the issuer's ruling.",
+    "notes": "Filed by 0.0.0_AB_MSTR~Z as the census carrier. No order is reopened or edited by this row and the newest-instance gate is not armed. Disarm: none (INERT)."
   }
 ]
 ```
