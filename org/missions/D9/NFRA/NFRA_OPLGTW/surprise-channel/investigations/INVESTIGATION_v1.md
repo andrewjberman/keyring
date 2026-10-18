@@ -28316,3 +28316,55 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the CTO: confirm the address, or name a non-Opal principal and change the client-tool gate by its own order."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~147",
+  "surfaced_at": "2026-10-18T02:51:04Z",
+  "id": "NFRA_OPLGTW-Z-W147-S1",
+  "one_line": "The probe handler writes its audit record inline on the shared event loop: audit._emit appends the JSONL floor and, when AUDIT_S3_BUCKET is set, calls boto3 put_object with default timeouts, and probe_call calls it without a threadpool.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/audit.py:40-64 @8d76ae9045 -- _emit writes the local JSONL floor under a lock, then calls s3.put_object on the S3 audit lake with no botocore Config (default timeouts and retries), in the caller's thread",
+      "app/probe_listener.py probe_call, _audit and _refuse @wk-NFRA_OPLGTW-147 (repair of b02e088805) -- every served and refused probe call calls audit.log_call directly inside the async handler; only the tool call itself goes through run_in_threadpool",
+      "app/*.py @wk-NFRA_OPLGTW-147 -- 82 audit.log_call sites across 25 files: the same inline pattern is the gateway-wide audit path, so the probe inherits it rather than introducing it"
+    ]
+  },
+  "spec_asserts": "OG-pr-1 AMENDMENT A1: the defect class is a blocking call on the shared event loop; the repair names the lease read as its instance and moves it off the loop, and says the probe's requests must not stall /health.",
+  "world_is": "The audit write is a second blocking call on the same loop, outside the lease read. A slow or unreachable S3 put_object stalls every request on the gateway loop, /health included, for as long as it blocks. This order does not move it (audit.py is outside its write surface), and the stall was not measured here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer before OG-ap-40 and the CTO: decide whether the gateway audit write moves off the loop (run_in_threadpool or a bounded botocore Config) by its own order, which would cover the probe and the 82 existing sites together. Not repaired here; no test in this order exercises a slow audit write."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~147",
+  "surfaced_at": "2026-10-18T03:12:59Z",
+  "id": "NFRA_OPLGTW-Z-W147-S2",
+  "one_line": "The to-pipeline gate refuses the status flip of OG-pr-1 on the proof instance of the superseded worker ~146: its two violations are the ~146 record's own, while the ~147 instance for the same amended order is VALID (rc=0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the flip commit of TO-OG-pr-1 (status staged to complete, instance deliverables/0.9.0_WK_NFRA_OPLGTW~147) was REFUSED by .tools/to-pipeline-gate.py: 'instance VIOLATION: invocation-alignment[AC1]' and '[AC2]', 'INVALID (rc=1)' @6da9925fe7 + worktree",
+      "proof-of-spec-check.py on deliverables/0.9.0_WK_NFRA_OPLGTW~146/NFRA_OPLGTW.TO-OG-pr-1.round-42-loopback-probe-listener.proof_of_spec.json with the same --governing-order org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-pr-1.round-42-loopback-probe-listener.md prints the same two violations and INVALID (rc=1)",
+      "proof-of-spec-check.py on deliverables/0.9.0_WK_NFRA_OPLGTW~147/NFRA_OPLGTW.TO-OG-pr-1.round-42-loopback-probe-listener.proof_of_spec.json with the same governing order: 'violations=0', VALID (rc=0) @6da9925fe7"
+    ]
+  },
+  "spec_asserts": "The task-order issuance gate grades the proof instance of the order being flipped and refuses only when that order's own instance is invalid; TO-OG-pr-1 was amended at b02e088805 (six probe tests, AC2 without server.py) after worker ~146 wrote its instance against the four-test order.",
+  "world_is": "Two proof instances name the same task order (~146 and ~147), and the gate's refusal reads the superseded ~146 record, so no instance written against the amended order can flip the status while that record stands. The ~146 record is outside this worker's write grant and was not edited; no pipeline override was used.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: supersede or archive the ~146 instance of OG-pr-1 (it grades the pre-amendment criteria), then flip the status tag of the order. The ~147 instance is committed without the flip, which stays staged until the gate can grade it."
+}
+```
