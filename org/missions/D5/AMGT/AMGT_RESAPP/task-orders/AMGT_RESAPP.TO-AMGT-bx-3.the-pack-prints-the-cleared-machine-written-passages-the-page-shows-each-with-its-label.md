@@ -1,0 +1,78 @@
+# AMGT_RESAPP task order -- `AMGT-bx-3` -- THE PACK PRINTS THE CLEARED MACHINE-WRITTEN PASSAGES THE PAGE SHOWS, EACH WITH ITS 'MACHINE-DRAFTED, CLEARED <DATE>' LABEL, AND NEVER AN UNCLEARED ONE
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
+<owned_cells>AMGT-bx-3</owned_cells>
+</decomp_ref>
+<issued_to>0.9.0_WK_AMGT_RESAPP~514</issued_to>
+<issued_by>2.0.0_SA_COO~R1</issued_by>
+<to_id>AMGT_RESAPP.TO-AMGT-bx-3.the-pack-prints-the-cleared-machine-written-passages-the-page-shows-each-with-its-label</to_id>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, alarm, monitor or cadence; a renderer change and its tests.
+comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call, no read or write path changes.
+comp-adversary: RUN at the cut (2026-10-18): AC1 at the base fails (the test file is absent); AC2 at the base reads `1 failed, 146 passed` (the one known failure) and its floor P is unmet there as expected. EGRESS CLASS, declared: NONE (the tests build packs from committed fixtures; no HTTP, no S3, no Bloomberg).
+</preflight>
+
+**Your worktree:** `C:/dev/wk-resapp-514` (branch `wk-AMGT_RESAPP-514`, cut from the issuance commit; its nested `portal/` is read-only and carries the page's source at `origin/DEV` `3a7791c1`, which you READ for the page's rule and never edit). Work and commit only in the outer worktree. The shell's working directory resets between calls: start EVERY shell call with `cd C:/dev/wk-resapp-514`.
+
+**THREE ROUND-116 LESSONS THAT BIND YOUR TESTS.** (1) Two cells of this round edit `lib/research/print/render_pack.py` in different regions and are merged by the issuer; **a test of yours that compares a pack's WHOLE text to a recorded text fails the moment another cell's section lands.** Compare a SECTION (the lines between two headings) or the FIGURE lines (the `Appendix: model figures` block) or a named line, never the whole text. (2) Read `lib/research/print/tests/test_bw2_pack_form.py` and `test_bw1_currency_labels.py` first: they build a pack from committed fixtures with `build_pack` and read its text; copy their way, change nothing in them unless an assertion of theirs pins the exact old behaviour your cell changes: then re-scope that ONE assertion with a hand-written expectation, name it in the receipt (`## Tests re-scoped`: old and new), and the issuer re-runs the whole print plus api folders in the full tree after the merge. (3) A new check is dry-run at the base first: your test file runs ONCE on the unedited head and must fail on the new behaviour and pass on every control; record the counts.
+
+**THE SERVED INPUTS (read-only fixtures; COPY them into `lib/research/print/tests/fixtures/` under the same names, your `<paths>` grants that folder):** `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round117_prep/fixtures/bx_served_thesis_RIO_LN.json`, `..._ICT_PM.json`, `..._GOOGL_US.json`. Each is the served `GET /thesis` body of `opal-amgt-scoped-api` for that name on 2026-10-18 (CodeSha256 `lNWo6Cm6..`), trimmed to `header_figures`, `dossier_fields`, `ai_fill`, `drafted_sections`, `drafting_*`, `posture`, `management`, `identity`. The pack route hands `build_pack` this bundle as `thesis_bundle`, and the model block carries the same `header_figures`; the existing bw fixtures show how a test assembles a block and a bundle. You call no AWS, no HTTP and no vendor.
+
+## 1. THE CELL -- `AMGT-bx-3` (round 117, decomposition s.126, item 4 of the CTO's round-116 analysis and the CVO's question)
+
+**The ruling (CTO, round 116, section 2): the pack prints a machine-written passage exactly where the page shows it, only when it is CLEARED, and each printed passage carries a one-line label `machine-drafted, cleared <date>` under it. An uncleared or draft passage never prints.** The reason: the pack must be the page's document; a machine-written passage printed unlabelled would pass for analyst prose.
+
+**What the page does (read it, it is the specification):** `portal/src/pages/SecurityAnalysis/components/AiFillBlock.tsx` (the only place the fill's wording is drawn: `servedBlock`, `sourceWords`, the captions `TEAM_VIEW_CAPTION` and `PILLARS_CAPTION`, the `always` and gap modes, the citation lines, `daysInWords`), and where each block is drawn: `tabs/ExecManagementTab.tsx` (`mgmt_bio`, `mgmt_recent` always; `mgmt_team_view` a gap fill), `tabs/ThesisTab.tsx` (`thesis_pillars`) and `components/SecurityOverlay.tsx` (`identity_description`, only when the served description line is empty). The served `ai_fill` of the `/thesis` body has `status` (`SERVED`), `as_of`, `producer`, and `blocks`: five blocks, each `{block_id, text, source_class (OPAL_SOURCE | WEB_SEARCH | NONE), citations[{quote, title, url, source_kind, ref}], machine_written, reason, validation{state, verdict, checked_at, contract, version}}`. **The served data of the three names (fixtures; hand-written expectations): `validation.state` is `CLEARED` (verdict `PASS`) on all five blocks of all three names; the blocks carrying TEXT are RIO LN `mgmt_team_view` only (the Simon Trott profile, one web citation); ICT PM `mgmt_bio`, `mgmt_recent`, `thesis_pillars`; GOOGL US `mgmt_bio`, `mgmt_recent`, `mgmt_team_view`, `thesis_pillars`; `identity_description` has no text on any of them.** A block with `text: null` (source class NONE) is a withheld block: the page draws nothing for a gap block and a plain sentence for an `always` block.
+
+**The rule to build:** (1) a block prints ONLY when `ai_fill.status` is `SERVED`, the block has non-empty `text`, and its `validation.state` is `CLEARED` (any other state, an absent `validation`, or `verdict` not `PASS`: nothing prints, no label, no placeholder); (2) placement follows the page: `mgmt_bio`, `mgmt_recent` and `mgmt_team_view` print inside the `Management` section, after the roster, in that order; `thesis_pillars` prints as its own section `Thesis pillars`, placed between `Summary` and `Risks and considerations` (the section list of the pack gains this one heading, present only when the block prints); `identity_description` prints under `Company description` only when the served company-description line is empty; (3) each printed passage is followed, on the next line, by its label `machine-drafted, cleared <date>`, where `<date>` is the block's `validation.checked_at` day in the house long form (`October 16th, 2026`: use `lib/research/freshness/long_day.py` `long_day`, already in the Lambda package; never an ISO day) and, in the same line, the source words the page uses (`From Opal sources` / `From a web search`) and the page's caption where the page has one (`Machine-written summary, not the research team's view.`; `Machine-written, not the research team's pillars.`): read the exact strings from `AiFillBlock.tsx`; (4) a passage's citations print as the page prints them (a title and a host, never a full URL path or an object key); (5) the passage text is carried as the served prose: it is a machine-written block and not a source quotation, so it is wrapped and long-dated like any prose line, but never reworded; (6) the existing line `CEO public profile: no public profile is on file yet.` stays when no `mgmt_team_view` passage prints and is not printed when one does.
+
+**Do this in order.** (A) `cd C:/dev/wk-resapp-514`; `git log -1 --format=%h`; copy the three fixtures; build the CENSUS TABLE first: for each of the five blocks and each of the three names, the served `text` present (y/n), `validation.state`, `source_class`, what the PAGE draws (read the five components above; hand-written), what the PACK prints today; write it as the fixture `lib/research/print/tests/fixtures/bx3_page_draw_table.json` and as the receipt's `## Census` (denominator 15 block-name pairs). (B) Write `lib/research/print/tests/test_bx3_cleared_machine_passages.py` FIRST and run it ONCE on the unedited head (M1 to M5 must fail; M6 and M7 pass: record the counts). (C) Build the rule in the Management builder, a new helper for the label, and the new `Thesis pillars` section only; re-run. (D) AC1, AC2, then the receipt, instance and proof-of-spec-check.
+
+**Tests (`test_bx3_cleared_machine_passages.py`; hand-written expectations; models are the bw tests):** M1 RIO LN: the `Management` section contains the opening words of the served `mgmt_team_view` text (copy the first 60 characters from the fixture by hand), and the next line reads `machine-drafted, cleared October 16th, 2026` followed by `From a web search` or `From Opal sources` as the block's `source_class` says, and the caption; M2 ICT PM: `Management` carries `mgmt_bio` and `mgmt_recent` passages in that order, each followed by its label, and a `Thesis pillars` section carries the `thesis_pillars` passage and its label, placed between `Summary` and `Risks and considerations`; M3 GOOGL US: all four text blocks print, four labels, and no `CEO public profile: no public profile` line; M4 a synthetic bundle whose block text is present but `validation.state` is `PENDING` (or the validation is absent) prints NOTHING of that block: not the text, not a label, not a heading; M5 a synthetic block with `text: null` prints nothing and no label, and a synthetic `ai_fill` with `status` `ABSENT` prints no label anywhere; M6 CONTROL: for the three names every passage line is followed by exactly one label line (labels = passages), and no label line appears anywhere else; M7 the three names' packs have no ISO day, no `url` text beyond a host, and no raw field or class token (`mgmt_team_view`, `OPAL_SOURCE`, `WEB_SEARCH`, `source_class`).
+
+**Region you own in `render_pack.py`:** the `Management` builder, the new `Thesis pillars` section and its one call in `build_pack`'s section list, the `Company description` identity fallback, and a new helper for the label. You do NOT touch the `Summary` and `Positioning` builders (cell `AMGT-bx-1`) or the figure-line functions (cell `AMGT-bx-2`). Add the new section's call as ONE line in `build_pack` so the three cells merge cleanly.
+
+## 2. BOUNDS
+
+1. Write only the paths below. No deploy, no Terraform, no store write, no schedule, no SEC, vendor, model or Bloomberg call; no `pip install`, `bun` or `npm`; nothing is fetched from the internet. No push; never touch `DEV` or `PROD`; commit nothing under `portal/` or `org/devices/`.
+2. Product edit: `lib/research/print/render_pack.py` ONLY, and ONLY the region this cell names (two other cells edit other regions of the same file in parallel). Do NOT edit `lib/research/api/scoped_amgt.py`, `render_print.py`, `long_day.py` or the portal.
+3. A served state sentence or reason the pack prints never carries a storage path, a bucket key, an object name, an order or cell id (`AMGT-...`) or an UPPER_SNAKE field code: say it in one plain sentence.
+
+## 3. SURFACES
+
+<paths>
+lib/research/print/render_pack.py
+lib/research/print/tests/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~514/
+org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+## 4. PROOF OF SPEC (literal; each invocation bounded by its own `timeout`; set your shell tool's timeout to 600000 ms)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="AMGT-bx-3"><invocation>cd C:/dev/wk-resapp-514 &amp;&amp; timeout 300 python -m pytest lib/research/print/tests/test_bx3_cleared_machine_passages.py -q -p no:cacheprovider --color=no; echo "exit=$?"</invocation><expect>the pytest summary line reads `7 passed` or more with 0 failed and 0 skipped, M1 to M7 each present by name, and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-bx-3"><invocation>cd C:/dev/wk-resapp-514 &amp;&amp; timeout 580 python -m pytest lib/research/print/tests -q -p no:cacheprovider --color=no 2&gt;&amp;1 | grep -E "^FAILED|passed|failed" | sed "s/ - .*//"</invocation><expect>exactly one FAILED line, `FAILED lib/research/print/tests/test_av2_export_equals_page.py::test_pdf_text_carries_no_field_code_and_names_every_line_in_words` (it fails at the base as well: the base reads `1 failed, 146 passed`), and the summary reads `1 failed, P passed` with P at least 153</expect></criterion>
+</proof_of_spec>
+
+## 5. WHEN YOU ARE DONE
+
+Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~514 <0.9.0_WK_AMGT_RESAPP~514@opal.agent>" -F <msgfile> -- <paths>` (message file written with the Write tool, never a shell heredoc; confirm with `git log -1`). Receipt `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~514/BX3_RECEIPT.md` with the sections `## What changed` (every path, with line counts), `## Census` (the table the cell's Step A asks for, with its denominator), `## Tests re-scoped` (or `none`) and `## Not verified` (the deployed Lambda serves the old renderer until `AMGT-bx-5`; the whole api folder is not run in this sparse worktree: the issuer runs it in the full tree). Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~514/AMGT_RESAPP.TO-AMGT-bx-3.the-pack-prints-the-cleared-machine-written-passages-the-pag.proof_of_spec.json` (the invocations are recorded as the order's literal text; a re-run in another tree goes in `output_evidence` and `status_reason`, never in `invocation`). Run `python .tools/proof-of-spec-check.py <instance> --governing-order <this order's path>` on the committed bytes and report its verdict line. Do not stage `portal`.
+
+Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W514-S<k>`, **`disarm_owner` `2.0.0_SA_COO~R1` on EVERY row (a row without it is refused by the gate; round 116's rows S7 to S10 omitted it)**.
+
+Report once: the commit hash and the base; the test run at the base and after; AC1 and AC2 output lines; the census table; every existing test you re-scoped (old and new assertion); the proof verdict line; any row. The `<status>` flip is the issuer's.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER NOTES:** Item 4 of the CTO's round-116 analysis and its section-2 ruling (cleared passages the page shows, labelled; uncleared never). The `ai_fill` blocks of the three names read CLEARED on all five; the page draws mgmt_bio and mgmt_recent in every state, the other blocks as gap fills. The grade the CTO names: the RIO LN Trott profile prints, labelled, and a name with an uncleared passage prints none (the synthetic M4). LOCAL code cell; served only through `AMGT-bx-5`. The new `Thesis pillars` heading is the one change to the pack's section list: the issuer's `r116_pack_form_check.py` is updated for it at `AMGT-bx-4`.
+
+<status>pending</status>
+<round>117</round>
+<slot>0.9.0_WK_AMGT_RESAPP~514</slot>
+<fabric>dell1</fabric>
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
