@@ -11635,5 +11635,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+,
+    {
+        "id": "AMGT_HARVST-D1-W171-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T07:46:49Z",
+        "one_line": "HVST-cj-2 is BLOCKED at its first act: the worktree C:/dev/wk-harvst-171 does not carry infra/aws/ec2/opal-gateway/tests/, which the order names in <paths> and in AC1-AC2; the tests folder is excluded by the sparse checkout and I stopped without rebuilding it.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-cj-2 worker face, first act: the worktree carries the paths the order names (<paths> includes infra/aws/ec2/opal-gateway/tests/ and the test file is created there); if it does not, file a BLOCKING row and STOP, and never rebuild, extract or reconstruct the tree.",
+        "world_is": "git sparse-checkout list in the worktree (HEAD 11de82105f, branch wk-AMGT_HARVST-171) lists .tools, infra/aws/ec2/opal-gateway/app and no tests path. git ls-files -v -- infra/aws/ec2/opal-gateway/tests prints 319 entries, every one with the skip-worktree flag S (for example tests/test_cc2_research_misfiled.py, tests/test_og_gt1.py and tests/acceptance/conftest.py). The directory infra/aws/ec2/opal-gateway/tests is absent from the worktree. Present and readable: app/harvest_research.py, app/harvest_typed.py, deploy-to-ec2.sh and requirements.txt. No file was created, copied or restored, and the sparse list was not changed.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git sparse-checkout list (worktree C:/dev/wk-harvst-171, HEAD 11de82105f): .tools, infra/aws/ec2/opal-gateway/app, no tests path",
+                "git ls-files -v -- infra/aws/ec2/opal-gateway/tests (worktree, HEAD 11de82105f): 319 entries with flag S, none without",
+                "test -d infra/aws/ec2/opal-gateway/tests (worktree, 2026-10-18): absent; test -f app/harvest_research.py: present"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
