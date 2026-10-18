@@ -32250,3 +32250,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The issuer rules the sentence for this shape; the branch keeps the order's rule until then."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W524-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~524",
+  "surfaced_at": "2026-10-18T18:25:03Z",
+  "one_line": "A NOT_SEARCHED basis that carries the status word ABSENT is returned verbatim by the reader and prints through the plain branch as 'CEO public profile (name): ABSENT, the CEO web search returned 10 url(s).'; the plain branch does not screen for a status word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py@db4fbe1394 lines 4973-4979: status ABSENT with query null returns NOT_SEARCHED and reason = basis verbatim (no _plain_searched_reason rebuild on this branch)",
+      "lib/research/print/render_pack.py@db4fbe1394 lines 856-867: _NOT_PLAIN_PATTERNS carries no status-word pattern, so _plain_reason returns the basis unchanged",
+      "census at db4fbe1394 (python .scratch/cd1_census.py, run before the edit): row 'NOT_SEARCHED | status-token' prints 'CEO public profile (Jane Doe): ABSENT, the CEO web search returned 10 url(s).'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-cd-1 rule (c): no branch prints a state word. AMGT-cd-1 rule (a): a plain reason prints byte-identically to today.",
+  "world_is": "The two rules disagree for a plain reason that carries a status word: rule (a) keeps it as served and rule (c) forbids the state word. No fixture of the eight names carries this shape. This worker kept rule (a) and changed no plain branch.",
+  "notes": "Form only. The issuer rules whether a served status word is non-plain, which is a change to the mapper's pattern set in _NOT_PLAIN_PATTERNS, outside this cell's region."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W524-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~524",
+  "surfaced_at": "2026-10-18T18:25:03Z",
+  "one_line": "The surprise-channel schema org/surprise_channel/schemas/investigation_item.schema.json is tracked at HEAD but absent on disk in this sparse worktree, so the row was checked against it through git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files at db4fbe1394 lists org/surprise_channel/schemas/investigation_item.schema.json; the worktree path C:/dev/wk-resapp-524/org/surprise_channel returns 'No such file or directory'",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json read to .scratch/investigation_item.schema.json (10462 bytes, rc=0); the required keys and enums of this row were taken from that read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-cd-1 surprise rows: the id form, disarm_owner on every row, and the row written to org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "The schema is not on disk in this worktree (sparse checkout). Its form was read from HEAD with git show, and the row follows its required keys.",
+  "notes": "Form only. The issuer decides whether the sparse worktree should carry org/surprise_channel/schemas for workers."
+}
+```
