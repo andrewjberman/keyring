@@ -30836,3 +30836,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The commit names its paths explicitly and never stages portal."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T04:44:08Z",
+  "one_line": "The pack's Positioning comparable label reads only the posture's comparable_identity and comparable_name; the page also falls back to the comparable's own thesis identity, which the PDF route never reads, so the printed verdict can name 'a comparable the research team has not identified' where the page names the comparable's display ticker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@e0c8b25368 _comparable_label (line 763): reads posture comparable_identity (RESOLVED display_ticker) then comparable_name, else the words 'a comparable the research team has not identified'",
+      "portal/src/pages/SecurityAnalysis/tabs/PostureTab.tsx@ff611566 lines 147-155 comparableText(posture, fallbackIdentity): the fallback is the comparable's thesis identity; line 395 passes comparable.thesis?.identity",
+      "portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json thesis.posture: comparable 'DE_US_Equity', comparable_identity null, comparable_name absent; the pack prints the 'not identified' words for this fixture (txt build of 2026-10-18, Positioning section)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step C: Positioning prints the posture verdict and claims as the Posture tab carries them, the comparable named as the page names it.",
+  "world_is": "On the fixture the pack's verdict sentence reads 'HOLD -- neither BOEING CO/THE nor a comparable the research team has not identified looks clearly the better pick' while the posture names DE_US_Equity; the page's fallback identity (the comparable's own thesis identity) is not read on the PDF route, so the pack cannot reproduce the page's display ticker. No live payload was read in this cell.",
+  "notes": "Form only. Whether the PDF route should read the comparable's thesis identity (a store read this cell may not add) or the words should change is the issuer's call; the wording 'a comparable the research team has not identified ... looks' is also not grammatical and is a candidate for the same call."
+}
+```
