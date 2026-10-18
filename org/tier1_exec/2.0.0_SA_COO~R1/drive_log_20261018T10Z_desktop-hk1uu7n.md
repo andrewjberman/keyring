@@ -1,6 +1,6 @@
 # Drive log 2026-10-18 10Z, 2.0.0_SA_COO~R1, AMGT_RESAPP (dell1)
 
-Round 118. Push state of every commit named here: LOCAL on box/dell1, unread. (The tick log's clock for ticks 140 to 149 read about an hour ahead of my narration in places; the times below are the `date -u` reads.)
+Round 118. Push state of every commit named here: LOCAL on box/dell1, unread. (Several estimated clock times I wrote into drafts were contradicted by the next `date -u` read; the times below are the `date -u` reads.)
 
 - 10:0x to 10:2x ticks 145 and 146: worker 515 started `by-2` (the rich export); the round-118 L8 packet drafted with `[TO FILL]` markers and committed as a DRAFT (`7569de5c13`).
 - 10:2x to 10:4x tick 147: `by-2` PASS (AC1 17 passed, AC2 `1 failed, 249 passed`, proof VALID), merged `ebe4f0bda9`, order flipped `babc24e2c1`; full-tree print plus api `9 failed, 1299 passed`, the SAME nine failures. Candidate (this checkout's handler over the live pool, `ai_fill` live-style): `PACK FORM YES 8/8`, `MONEY VS PAGE YES 16/16`, the eight rich exports 0 `s3://`, `AMGT-` and vendor-error lines, RIO LN's four figures withheld. The base read: the LIVE rich exports carry 2 `s3://` and 2 `AMGT-` lines each (RIO LN, ICT PM, GOOGL US) and RIO LN's raw market cap. Release pin `rel-amgt-by5` = `d4c6f1c533` (live pin `9ab6d36305` plus `render_pack.py` `329f8b4e9304` to `3ddc696def09` and `scoped_amgt.py` `43c8139d2d2d` to `75a6e6480d7d`, no import added).

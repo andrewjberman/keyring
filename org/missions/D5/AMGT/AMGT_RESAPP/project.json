@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-18T09:45Z (2.0.0_SA_COO~R1): ROUND 118 issued (by-1, by-2, by-4), decomposition s.127; FWD-5 MET (CTO, round 117)",
+  "last_updated": "2026-10-18T11:35Z (2.0.0_SA_COO~R1): ROUND 118 drained; scoped-api H3dCSGL.. (plain reasons in the pack, a clean rich export); round-close-check MAY-CLOSE; L8 packet to the CVO and the CTO",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 118 EXECUTING on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.127 from the CTO's round-117 R1-track analysis, msg 7986, and the CVO's slug, msg 7985): by-1 (every served reason the printed pack can print goes through one plain-sentence mapper), by-2 (the rich export under the pack's rules, after by-1, same worker slot) and by-4 (a read: the producer step leaving RIO LN's per-figure currency basis UNMEASURED) cut; by-3 (the C-S189 census, the issuer's read) and by-5 (the pack and rich-export redeploy, a fresh never-widen pair) placed. FWD-5 MET (round 117 closed MAY-CLOSE; live scoped-api Rycs0LV..).",
-  "blocking": "the round-118 workers (~515 by-1 then by-2, ~516 by-4), the issuer's by-3 census, then a release pin and a fresh never-widen pair for by-5 and the CVO's reads of the three rich exports and one PDF; SC1's close of the bx-5 ledger (nudged); bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
+  "phase": "ROUND 118 DRAINED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.127; round-close-check MAY-CLOSE), awaiting the CVO's slug and L9 read of the three rich exports and the CTO's round-118 analysis. FWD-5 MET at round 117. Shipped: by-1 (every served reason the printed pack can print goes through one plain-sentence mapper), by-2 (the rich export under the pack's rules), by-3 (the C-S189 census: 73 of 73 served positions print; 28 names serve none), by-4 (a read: the producer step leaving RIO LN's currency basis UNMEASURED is a per-security census row held before the reporting branch) and the live redeploy by-5 (opal-amgt-scoped-api CodeSha256 H3dCSGLEs4abPk0alOWclPZX1U6lYrxEXkhGZOAJ434=, release pin d4c6f1c533); live reads: PACK FORM YES 8/8, MONEY VS PAGE YES 16/16, all-names leak scan 101 of 101 clean, the eight rich exports 0 s3:// or AMGT- lines (before: 2 each), print route worst 7.8 s (pdf) and 2.0 s (rich). Round 117 closed MAY-CLOSE (Rycs0LV..).",
+  "blocking": "the CVO's slug and L9 read of the three live rich exports (round118/packs) and the CTO's round-118 analysis (round 119); SC1's close of the by-5 ledger (on the issuer's keep word, sent); bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
