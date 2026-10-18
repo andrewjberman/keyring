@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-18T06:15Z (2.0.0_SA_COO~R1): ROUND 116 drained; scoped-api lNWo6Cm6.. (pack note form, own-currency labels); round-close-check MAY-CLOSE; L8 packet to the CVO",
+  "last_updated": "2026-10-18T06:45Z (2.0.0_SA_COO~R1): ROUND 117 issued (bx-1, bx-2, bx-3), decomposition s.126",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 116 DRAINED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.125; round-close-check MAY-CLOSE), awaiting the CVO's slug and FWD-5 L9 re-read and the CTO's round-116 analysis. Shipped: bw-1 (each pack money amount prints its own figure's currency, or 'currency not stated'), bw-2 (the pack reads as a note, figures in an appendix, the print route's three reads guarded) and the live redeploy bw-5 (opal-amgt-scoped-api CodeSha256 lNWo6Cm6.., release pin fe04d740bf, ledger closed); the live packs read PACK FORM YES 8 of 8 and MONEY VS PAGE YES 15 of 15 (base control NO 11 of 17); print route max 8.8 s. Round 115 closed MAY-CLOSE (PROD ff611566, DEV 3a7791c1).",
-  "blocking": "the CVO's slug and its FWD-5 L9 re-read of three printed packs (round116/packs) and the CTO's round-116 analysis (round 117); bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
+  "phase": "ROUND 117 EXECUTING on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.126 from the CTO's round-116 R1-track analysis, msg 7933, and the CVO's FWD-5 NOT MET read, msg 7932): bx-1 (the Summary reads the served recommendation; no path, key or order id in the pack), bx-2 (a money figure's currency by the page's rule, withheld where the page withholds) and bx-3 (the cleared machine-written passages the page shows, each labelled) cut; bx-4 (the issuer's reads) and bx-5 (the pack redeploy, a fresh never-widen pair) placed. Round 116 closed MAY-CLOSE (live scoped-api lNWo6Cm6.., PACK FORM YES 8/8, MONEY VS PAGE YES 15/15).",
+  "blocking": "the three round-117 workers, then the issuer's merge of render_pack.py, a release pin and a fresh never-widen pair for bx-5, the CVO's L9 re-read of three live PDFs after it; bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
