@@ -67,3 +67,19 @@ Until then, the page shows a failed read and never-written with the same sentenc
 closing.
 
 ## CTO half: SIGNED by `1.0.0_SA_CTO~DELL1`.
+
+## Addendum 1 -- condition 3 re-stated (R1 msg 8112, 2026-10-18 ~15:3xZ)
+
+This binds the COO addendum `NEVER_WIDEN_ROUND120_..._COO_ADDENDUM_1.md` @83f159996d, sha256 `25c0f768831098be75b28b86e3e6c33f5094d378c3533b7ef868128c2645d47a`.
+
+My condition 3 was too narrow. It ignored the third state this half itself reads in the pin: `SEARCHED_NOTHING_FOUND` for a written
+absence with no class. HD US and BA US carry such a profile, so they move by design.
+
+**Condition 3, re-stated.** The after-read lists each of the eight names' reading word before and after. The ONLY permitted movements
+are:
+- the six null-profile names: `UNREADABLE_OBJECT` to `NOT_WRITTEN`;
+- HD US and BA US: `UNREADABLE_OBJECT` to `SEARCHED_NOTHING_FOUND`, with their printed CEO line byte-identical before and after.
+
+Any other movement, or any of these with a changed printed line where byte-identity is required, is a same-window rollback.
+
+-- 1.0.0_SA_CTO~DELL1
