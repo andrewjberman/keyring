@@ -4535,3 +4535,22 @@ The CTO read `harvest_research.py` lines 409-417 and confirmed that `truncated: 
 
 - **Fan-out (this recut):** `N of M chains, N=0 workers, 1 seat order (ch-7) of M=1 chain, cap 8`.
 - **Check at the cut, dry-run at the base:** `ch-7` AC1 to AC4 FAIL as expected (no `ch7_served.out`).
+
+### 124. ROUND 94 -- the CTO's round-93 analysis (`ledger/ROUND_ANALYSIS.round93.md` @5ef0dd0efd, msg 7921; round 93 MAY-CLOSE per the CVO's msg 7919) read; ONE issuance (2026-10-18 ~05:5xZ)
+
+The enrichment list (the round's rectangle): item 1 `W165-S3` (the substrate's second fallback), item 2 the dossier rebuild decision (a no-write census first), item 3 the `cg-3` release lineage, item 4 `S51` exercised once, item 5 the dell1 harvest cycles keep running.
+
+**One correction I make to the list:** item 1 says "every stored table the substrate reads (continuation, fund form, dossier)"; `substrate.py` calls `_pick_stored` for continuation, sector_template, fund_form and typecast (lines 216, 250, 270, 282), not the dossier. The census order reads those four; the CTO is told.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-ci-1` | `ci-1` | A read-only census of every stored partition of the four tables the substrate reads: whether any object's `inputs` match today's; for each partition with none, the key-order pick against the rule pick (the highest `method_version`, then the last written); positive and negative controls. Workstream `PICK2-CENSUS`. | LOCAL | worker `~169` | CUT |
+| `HVST-ci-2` | `ci-2` | `substrate._pick_stored`'s fallback (line 158) calls `continuation._select_stored` over all the partition's objects, still `current` False; a difference-controlled offline test with a mutant; the census re-run after the change (`module_equals_rule` for every fallback partition). Workstream `PICK2-FIX`. Depends on `ci-1` (same worker queue `~169`). | LOCAL | worker `~169` | CUT, queued behind `ci-1` |
+| `HVST-ci-3` | `ci-3` | A no-write census of what a dossier rebuild of the 95 names would move: each dossier built in memory (`dossier.build`, never `write_one`) against the dossier the gateway serves (its `_pick_dossier` rule), field by field, with the cause decided from the `inputs` that differ (`other` is a row); controls. Workstream `DOSSIER-CENSUS`. | LOCAL | worker `~170` | CUT |
+| `HVST-ci-4` | -- | The `cg-3` release lineage: `4257a2aa42` is on origin as `rel-amgt-harvst-cg3` (ls-remote read 05:3xZ), contained in neither `origin/CLOUD` nor `origin/box/sitez`; the integrator `0.0.0_AB_MSTR~DELL1` decides the merge into the shared lineage and tells site Z; its ack is recorded. A coordination act with the integrator, no task order (no seat but the integrator may write the shared lineage; an order may not be issued to a Tier-0 seat). | -- | issuer, by message to MSTR | DIRECT (message sent with the issuance) |
+| item 4 | -- | `S51` exercised once: the next order I hand to an idle SC1 records the READ-ack time. **Already exercised by `HVST-ch-7`:** handed 04:55:15Z, found idle by a peek at 05:01Z, nudge typed 05:01:47Z, READ ack 05:01:57Z (6 min 42 s after the handing, inside 10 minutes; delivery state read). Recorded as an instance row on `D1-S53`. | -- | issuer | DONE, row filed |
+| item 5 | -- | The harvest cycles keep running under the S44 rule: a standing instruction, no cell. | -- | -- | STANDING |
+
+- **Fan-out (this issuance):** `N of M chains, N=2 workers (ci-1 then ci-2 in one queue ~169; ci-3 at ~170) of M=3 chains (A: ci-1 then ci-2; B: ci-3; C: ci-4, a message to the integrator), cap 8`.
+- **Checks at the cut, dry-run at the base:** `ci-1` AC1 to AC3 FAIL as expected (no census file); `ci-2` AC1 FAIL as expected (no test file), AC2 PASS as expected (`96 passed in 1.09s` over nine files), AC3 FAIL as expected; `ci-3` AC1 to AC3 FAIL as expected.
+- **Not cut (named):** the dossier rebuild itself (the CTO: "not ordered this round"; with the census in hand it goes under its own pair naming the served moves).
