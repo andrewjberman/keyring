@@ -66,9 +66,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~169, worktree `C:/dev/wk-harvst-169` (the same as `ci-1`), branch `wk-AMGT_HARVST-169`.
 - **SENT:** with the round-94 issuance (the order is cut now; the worker starts it after `ci-1`).
 
+**COMPLETE 2026-10-18T06:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~169`, fix `9ebf5ef8c7`, proof `da024d88f7`; merged `6837f7c754`. The diff I read: `substrate._pick_stored`'s input-matching branch unchanged; the fallback builds `[(key, last_modified, docs[key]) ...]` over ALL the partition's objects and calls `continuation._select_stored` (not a copy of its rule), returns `current` False; the docstring amended as ordered; `1 file changed, 8 insertions(+), 6 deletions(-)` in `substrate.py`; one new test file (244 lines, 10 tests).
+- **AC1 PASS:** `10 passed in 0.40s` (re-run here `0.40s`; includes the mutant arm). **AC2 PASS:** `96 passed in 1.03s` (the nine existing files, unchanged; re-run here). **AC3 PASS:** `CONTROL-DIFFERENCE module_pick=rule_pick old_pick_differs=yes` and `CENSUS-FALLBACK-AFTER fallback_partitions=0 module_equals_rule=0 moved_from_old=0 gets=4655 bytes=384039907`; the control detail reads `module=4d837586/4 rule=4d837586 old=f174f709 current=False`; **I re-ran `ci2_census_after.py` myself: identical to the worker's.** Proof instance VALID rc 0 (re-run here).
+- **No partition moves** (fallback_partitions=0, as `ci-1` read), so nothing served or buildable moves from this change today; the change proves itself on the synthetic UNH-shaped four through the real function (it returns the highest method version, where the old rule returned the last key).
+- **A difference between the face I sent the worker (in my resume message) and the order file on its branch, mine:** the message added "(your census read 0 of 109 today; ...)" to section 0 and "(there may be none)" to step c; no criterion text differs. The worker disclosed its first census run crashed in its control helper before any line printed (a `utc()` argument bug), fixed and re-run once; row `D1-W169-S2` (OBSERVATION, INERT: no partition moved) read and accepted.
+- **What this does NOT prove:** the behaviour for a partition that really falls to the fallback beyond the synthetic arms (none exists today).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>94</round>
 <workstream>PICK2-FIX</workstream>
 <slot>dell1</slot>
