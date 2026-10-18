@@ -4524,3 +4524,14 @@ The CTO read `harvest_research.py` lines 409-417 and confirmed that `truncated: 
 
 - **Fan-out (this recut):** `N of M chains, N=1 worker (ch-8) of M=2 chains, cap 8` (chain A: `ch-8` then `ch-7`; chain C: `ch-5`, a seat order already written).
 - **Check at the cut (dry-run at the base):** `ch-8` AC1 to AC3 FAIL as expected (no census file).
+
+### 123e. ROUND 93 -- `HVST-ch-8` complete; the `ch-7` pair signed; `HVST-ch-7` CUT (2026-10-18 ~04:5xZ)
+
+`HVST-ch-8` merged `091ebacda9`, re-run by the issuer: `CENSUS-CONT-REBUILD partitions=95 at_current=17 names=78 unchanged=78 changed=0 fields_changed=0 inputs_equal=78 name_exists=0`; controls 0 and 1. The pair of `HVST-ch-7`: COO half sha256 `19d80c8bf6bafa94157d1152cc2bcf9f8a11a58fe0c21dc877c49f0dbf8f213c` (`dc5611d194`), CTO half SIGNED `5d4e716fd1` (msg 7909), with one correction applied in the order: the worktree is AT `091ebacda9` exactly (HEAD differs by 22 files under `lib/research`).
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-ch-7` | `ch-7` | The `/5` rebuild: 78 `research-continuation` objects, add-only, canary UNH then CPA read through the gateway before the other 76, under the signed pair. Workstream `CONT-M5`. | WORLD | seat SC1 | CUT, STAGED: waits on site Z's answer (C-10) and my GO |
+
+- **Fan-out (this recut):** `N of M chains, N=0 workers, 1 seat order (ch-7) of M=1 chain, cap 8`.
+- **Check at the cut, dry-run at the base:** `ch-7` AC1 to AC4 FAIL as expected (no `ch7_served.out`).

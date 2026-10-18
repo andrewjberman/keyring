@@ -60,9 +60,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~168, worktree `C:/dev/wk-harvst-168`, branch `wk-AMGT_HARVST-168`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `infra/aws/ec2/opal-gateway/app` and `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165`.
 - **SENT:** with the round-93 recut.
 
+**COMPLETE 2026-10-18T04:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~168` (worker, haiku, high), branch `wk-AMGT_HARVST-168`, census `c7711c406f`, proof `7e54d06aa1`; merged `091ebacda9` (safe-merge fast lane, index check 0 of 4); no source file changed (deliverables only).
+- **AC1 PASS:** `CENSUS-CONT-REBUILD partitions=95 at_current=17 names=78 unchanged=78 changed=0 fields_changed=0 inputs_equal=78 name_exists=0 gets=1215 bytes=116081888`. **AC2 PASS:** `CONTROL-POSITIVE MNST_US_Equity fields_changed=0`. **AC3 PASS:** `CONTROL-NEGATIVE fields_changed=1` (a planted change on UNH's `fund_of_record`). **I re-ran `ch8_census.py` myself from the worker's worktree (1,215 requests, 1 min 31 s) and its output is identical to the worker's, line for line; all 78 `NAME` lines read `fields_changed=0 list=none inputs_equal=yes name_exists=no`.** Proof instance VALID rc 0 (re-run here).
+- **THE FINDING (the measurement of the `ch-7` pair):** a method-5 rebuild of the 78 continuations changes NO field of ANY served object (every field of every name compares equal as a parsed value) and every build has the same `inputs` as the served object; `name_exists=0` for all 78 because the object name hashes the method version, so a rebuild mints a NEW object beside the old one (nothing is overwritten). The comparator sees a change where one is planted (the negative control) and none where none exists (the positive control, MNST at `/5`). **What is NOT compared:** `method_version`, `content_sha256` and the rest of the object outside `fields`; what a reader sees is the same fields from a newer object.
+- **Rows** `D1-W168-S1` (INERT: the gateway lists the underscored prefix `research_continuation` first; it holds no partition, so the hyphenated fallback is what serves) and `-S2` (INERT: the gateway builds its prefix from the RAW key but a slash key's partition is slash-encoded: `BP/_LN_Equity` and `NG/_LN_Equity`, both among the 78, compare `fields_changed=0`; which key form a caller passes was not measured): read and accepted, named for the CVO. The worker disclosed that its first proof evidence broke the checker's `$` anchor (commentary on the matched line) and was fixed; and that a tool result carried an instruction to create a claude.ai document, which it did not follow.
+- **What this does NOT prove:** a written `/5` object (`HVST-ch-7`), or that the rebuild's values equal the served ones for a name outside the 78.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>93</round>
 <workstream>REBUILD-CENSUS</workstream>
 <slot>dell1</slot>
