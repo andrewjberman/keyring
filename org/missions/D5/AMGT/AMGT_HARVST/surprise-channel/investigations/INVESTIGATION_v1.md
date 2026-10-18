@@ -11166,5 +11166,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S52",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-18T03:23:21Z",
+     "one_line": "substrate._continuation_member picks an OLDER continuation for a security with none at the current method version: a UNH dossier or continuation rebuild today would serve fund_of_record ABSENT (the /3 object), not PFOE (the /4 object the gateway serves).",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "1.0.0_SA_CTO~DELL1",
+     "spec_asserts": "lib/research/corpus/substrate.py::_pick_stored docstring (lines 121-134): among the objects whose inputs equal the current inputs, the one carrying the current method version, written last; when none carries it, an input-matching object is still served.",
+     "world_is": "Read by the seat 0.7.0_AE_CloudOps~SC1 (cf5_before.out and cf5_served.out line 15) and re-stated by the issuer. UNH_US_Equity has 4 stored continuations, all with inputs equal to the current: 98a4883c1b099e6b (method /1), f174f7092a2d358e (/2), 28404359eb0645c4 (/3, 2026-09-29, fund_of_record ABSENT) and 4d837586380648bd (/4, 2026-10-17T17:22Z, PFOE, written by HVST-ce-4); none is at the current method /5 (only the 17 HVST-cf-4 names were rebuilt at /5). The substrate picks 28404359 (/3); the gateway serves 4d837586 (/4). An in-memory dossier.build of UNH at 2026-10-18 therefore builds fund_of_record ABSENT ('no report's RECOMMENDATION line names a fund token') and last_stated_position ABSENT, and fund_form_ref absent, against the stored served dossier's PFOE; nothing was written. Only UNH was read. A name in the same state (no continuation at /5: 77 of the 94 securities were not rebuilt at /5 by HVST-cf-4) would be picked the same way IF the picker behaves the same there; that was not read for any other name. The reason it picks the older object is not read. ARMED because a rebuild that is ordered for any such name would write a gold object that withdraws a correct fund_of_record.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round92/cf5_served.out (lines 14-15 and 22)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round92/cf5_before.out",
+       "lib/research/corpus/substrate.py lines 121-159 and 213-219"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
