@@ -21,15 +21,15 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T09:14:15Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v117",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v117"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-18T11:14:27Z"
     }
   },
   {
@@ -47,15 +47,15 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T09:14:15Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v117",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v117"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-18T11:14:27Z"
     }
   },
   {
@@ -73,15 +73,15 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T09:14:15Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v117",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v117"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-18T11:14:27Z"
     }
   },
   {
@@ -99,11 +99,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T09:14:15Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v117",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v117"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
