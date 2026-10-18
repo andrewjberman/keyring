@@ -72,7 +72,7 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 
 **ISSUER NOTES:** the placed cell `AMGT-bx-5` (decomposition s.126), the served half of the CTO's round-116 items 1 to 4. Pair signed on both halves (CTO half @2a3c57d709, msg 7956). Applier: the one AMGT CloudOps lane on dell1 (CLAUDE.md rule 34, `0.7.0_AE_CloudOps~SC1`); a SEAT order, not a worker order. SC1 may need a screen nudge to read it (`/unstick --peek`, then a typed prompt). The issuer reads the result only after the applier's report, never during. Risk class WORLD. The REDEPLOY workstream carries it beside the round's issuance, as `bv-5` and `bw-5` did. The CTO's passages control: the pool read gave 95 documents, 475 blocks, none uncleared with text; HD US and TSM US are the live negative arm.
 
-<status>pending</status>
+<status>complete</status>
 <round>117</round>
 <workstream>REDEPLOY</workstream>
 <slot>0.7.0_AE_CloudOps~SC1</slot>
