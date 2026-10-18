@@ -4486,3 +4486,14 @@ The CTO read `harvest_research.py` lines 409-417 and confirmed that `truncated: 
 - **Fan-out line of section 123 amended:** `N of M chains, N=2 workers (ch-1, ch-4) of M=2 chains, cap 8` (chain A: `ch-1` then `ch-2` then `ch-7`; chain C: `ch-4` then `ch-5`); chain B is withdrawn.
 - **Cells left:** `ch-1` (worker `~165`) and `ch-4` (worker `~166`) CUT; `ch-2`, `ch-5`, `ch-7` DEFINED, NOT CUT as in section 123.
 - **Row `D1-S50`:** closes as already stated (the CVO dispositions it).
+
+### 123b. ROUND 93 -- `HVST-ch-4` merged (`2e0dc6af2e`); `HVST-ch-5` CUT, STAGED behind its pair; `HVST-ch-1`'s census budget was the issuer's miscount (2026-10-18 ~04:1xZ)
+
+`HVST-ch-4` (worker `~166`) merged: AC1 `7 passed`, AC2 `66 passed`, AC3 `CENSUS-FORMS forms=3 idvz=equal pfoe=equal divz=absent divz_reports=0` (re-run by the issuer, identical); IDVZ and PFOE are byte-equal to the stored version-2 objects, DIVZ `a181f84957dbb8b7.json` is the one new object (0 reports, an absent reason). `HVST-ch-1` (worker `~165`): code and tests done (AC1 `14 passed`, AC2 `82 passed`); its census aborted at request 1501 of my 1500-request budget after 67 of 95 partitions (about 22 requests per security): **my miscount**; AMENDMENT 1 raised it to 3500 requests and 600 MiB and the worker reruns and regrades (it also fixed a defect of its own, the `PICK` line prefix).
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-ch-5` | `ch-5` | **The ONE DIVZ `research-fund-form` object (method version 2, 0 reports, an absent reason) is written;** read back; `read_latest("DIVZ")` and the substrate pick resolve it current; `fund_form --compare` runs over three funds; the UNH gateway read is equal. A seat order under its own never-widen pair (COO half written, sha256 `183efbbf...7e7a`; the CTO half is next); the CTO's S51 rules are applied (section 3 of the order holds every stop and expected question). Workstream `DIVZ-WRITE`. | WORLD | seat SC1 | CUT, STAGED: waits on the CTO half, site Z's answer and the issuer's GO |
+
+- **Fan-out (this recut):** `N of M chains, N=0 workers (ch-5 is a seat order) of M=1 chain, cap 8`.
+- **Check at the cut (dry-run at the base):** `ch-5` AC1 to AC4 FAIL as expected (no `ch5_served.out`).
