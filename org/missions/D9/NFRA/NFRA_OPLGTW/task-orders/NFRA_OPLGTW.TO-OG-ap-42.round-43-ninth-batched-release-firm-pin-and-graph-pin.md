@@ -79,7 +79,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-42.round-43-ninth-batched-re
 - Chain: joins `OG-pr-4` then `OG-en-31` (slot `~151`), `OG-sec-2` (slot `~152`) and `OG-sec-3` (slot `~153`); `OG-ev-7` follows its close.
 - Pre-cut: `AC1` and `AC2` base FAIL as expected (the records are absent).
 
-<status>staged</status>
+- C4 READ (2.0.0_SA_COO~O, 2026-10-18 ~16:5xZ): `ap42.AC1` PASS (CLEAN 0 over 21 sites; base `922ee425fe` read on the host; 4 files, 0 outside the take list, 4 of 4 dell1 harvest files carried; firm pin 4 mismatches refused 403 with 0 tool runs, 3 firm-less leases malformed, 7 of 7 forged Graph URLs refused with 0 clients; armings 0; ask has the three halves) and `ap42.AC2` PASS on my runs in the main tree (ledger `nfra-oplgtw-gateway-release-batch10` CLOSED 2026-10-18T16:32:05Z, sentinel gone; `tools/list` 103 before and after; marker equals `a0c83303ee`; 27 of 27 under the hard guard; host md5 differ 0; unit limits live; clock Normal, 0 failed units read at 16:23:01Z BEFORE the close; 30-minute read-back, 0 triggers, 0 restarts; UNARMED ONLY: three calls to the listener answered 403 `probe_not_armed`, lease parameter absent before, after and at the close, armings 0, no SSM write, PID 1302970 stable); I read `CODE10_SERVED.json` myself. The proof instance carries both rows and is VALID (rc=0). Limits carried: the firm pin and the Graph pin ran in a guarded scratch process, not in the service (the firm pin is first exercised in the service by `OG-ev-7`); the Graph-backed call count is a static reading (1 call, `whoami`, ok, 0 `GraphHostRefused`). The live release is now `a0c83303ee` on dell1's `922ee425fe`. Gate limb: none graded this flip.
+
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-A</workstream>
 <slot>~AE</slot>
