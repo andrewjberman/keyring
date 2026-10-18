@@ -11464,5 +11464,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
          },
          "disposition": "UNDER_INVESTIGATION"
     }
+,
+    {
+         "id": "AMGT_HARVST-D1-W169-S2",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~169",
+         "surfaced_at": "2026-10-18T06:20:21Z",
+         "one_line": "After the fallback change the census found NO partition that falls to the fallback (0 of 109 partitions have no input-matching object), so no partition moves from the key-order pick; the changed rule is exercised only by the CONTROL-DIFFERENCE line.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ci-2 step 1c: after the change, print AFTER lines for every fallback partition and file ONE surprise row listing the partitions whose pick moves from OLD (or saying none), with the reason.",
+         "world_is": "ci2_census_after.out (committed with this row): CENSUS-FALLBACK-AFTER fallback_partitions=0 module_equals_rule=0 moved_from_old=0 gets=4655 bytes=384039907; TABLE lines continuation 95 of 95, sector_template 10 of 10, fund_form 3 of 3, typecast 1 of 1 have an input-matching object. The reason readable from the output: every stored partition holds an object whose inputs equal today's, so _pick_stored never reaches its fallback at this data. CONTROL-DIFFERENCE module_pick=rule_pick old_pick_differs=yes: on the UNH-shaped four the changed module returns 4d837586/4 (RULE) where the key-order rule returns f174f709/2. The changed branch is therefore live but unexercised on the stored partitions.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "lib/research/corpus/substrate.py:158-159 (worktree, committed with this row): the fallback now calls continuation._select_stored over every object of the partition",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~169/ci2_census_after.out (committed with this row): CONTROL-DIFFERENCE and CENSUS-FALLBACK-AFTER lines",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~169/ci1_census.out (committed at 7c459a7522): no_input_match=0 on the same four tables"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
