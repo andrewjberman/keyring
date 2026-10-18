@@ -28937,3 +28937,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Each of the five is either a stated limit of a measurement, a device condition outside the gateway, or covered by the pin OG-sec-2 adds; none changes a verdict of the round. Z-W153-S2 and Z-W155-S1 are NOT dismissed by this row; they are carried with the conditions above."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-18T15:29:23Z",
+  "id": "NFRA_OPLGTW-Z-S393",
+  "one_line": "OG-ap-43: ap43.AC1 cannot read PASS on a merge that follows the order: _ap43_check.py's DELL_OWN pattern treats EVERY file under gateway tests/ as dell1-own, so it demands dell1's blob on tests/test_og_pr1.py, a site-Z file that the order's step 2 and the GO (35724) say takes TRUNK's side; the merge follows the order and the issuer rules on the check.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Merge eb9a60c0ac8ca30bb08bc0d9a9d36f2ec0ac8c98 on branch land-sitez-rel-nfra1-43: parents trunk_base 011a4c7bdef79b44ba1551821c0f70394e956e8c and dell_sha 922ee425fea4b2cbce2beb8ca7930f3a474d877a; the resolved tree 9e4a4a5155 equals trunk_base's tree. merge-tree lists 2 conflicted paths, both add/add: app/probe_listener.py (trunk 7e6d33a77c61, dell c30a6ee857e0) and tests/test_og_pr1.py (trunk cdec9d4b544d, dell af1a4a04ceeb); both resolved to TRUNK's blob, as the order's step 2 and the GO say.",
+      "ap43.AC1 prints 'the 2 conflicted gateway paths resolved (dell1-own to dell1's blob, any other to trunk's): no'. org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r43/checks/_ap43_check.py line 24: DELL_OWN = ^<gateway>/(app/harvest_[a-z_]+\\.py|tests/.+)$, so tests/test_og_pr1.py matches and the check requires dell's blob af1a4a04ceeb there. The order names dell1's own paths as the four harvest files, their two tests and the fixture; test_og_pr1.py is the OG-ap-40 and OG-pr-4 test file (site Z).",
+      "The eight paths that ARE dell1's (app/harvest_research.py, harvest_figures.py, harvest_identity.py, harvest_keys.py, tests/test_cj6_slash_key_other_tools.py, tests/test_ck2_path_component_union_read.py, tests/test_cj2_slash_key_one_form.py, tests/fixtures/cj2_continuation_keys.txt) hold the same blob on trunk_base and at dell_sha (printed beside each), so the dell1-side clause of the order is idle.",
+      "AC2 PASS (manifest pair 922ee425fe / 6575999df5 from dell1's commit 52b93de111) and AC3 PASS (125 app files compared with the live release, 5 listed: admin_people_access, destructive_ops, family_depth, graph, probe_listener, all SITE-Z-OWN) on the committed record."
+    ]
+  },
+  "spec_asserts": "ap43.AC1 expects 'the N conflicted gateway paths resolved (dell1-own to dell1's blob, any other to trunk's): yes'; the order's step 2 and the GO 35724: every conflicted gateway path takes TRUNK's side except dell1's own harvest paths (the four harvest files, their two tests and the fixture); the GO names probe_listener.py and tests/test_og_pr1.py as 'my own newer OG-pr-4 files: take TRUNK's side on both'.",
+  "world_is": "The check's DELL_OWN class is wider than the order's list (all of tests/), so a merge that follows the order's text reads 'no' on one clause of AC1. Taking dell's older tests/test_og_pr1.py instead would meet the check and break the order: it would put the OG-ap-40 test file beside trunk's probe_listener with the OG-pr-4 firm pin (the old tests write a lease without a firm); that consequence is reasoned, NOT measured. The applier did not change the check, the merge or the record to fit each other.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: narrow DELL_OWN to the named paths (or rule that tests/test_og_pr1.py takes dell1's blob and say why), then I re-run the unmodified script. AC4 and the proof instance follow your ruling; the proof carries AC1 as measured until the check is amended."
+}
+```
