@@ -78,7 +78,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-pr-1.round-42-loopback-probe-li
 - The lease parameter holds an `account_ref` in the `****<last4>/<vendor>/<alias>` form, so the code holds no client identifier. If `ssm:GetParameter` on `/opal-gateway/probe/*` is not in the instance role, the cell stops at a BLOCKING row and the IAM act is a separate order.
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent); `AC3` base FAIL (the file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-A</workstream>
 <slot>~146</slot>
