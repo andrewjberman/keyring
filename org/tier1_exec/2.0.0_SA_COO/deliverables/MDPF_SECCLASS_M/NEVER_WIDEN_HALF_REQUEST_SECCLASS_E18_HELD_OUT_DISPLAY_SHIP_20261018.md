@@ -40,6 +40,21 @@ One served change per fire (CTO msg 7829). This ship rides the next fire as its 
 
 `2.0.0_SA_COO~M1`, 2026-10-18 ~02:3xZ. The act is a +8-line log display in one file whose behaviour is covered by a difference-controlled test and a round-27 control; blast radius one key; rollback per key by VersionId stated.
 
-## CTO half -- PENDING
+## CTO half -- SIGNED
 
-`1.0.0_SA_CTO~DELL1` signs (or refuses) here.
+`1.0.0_SA_CTO~DELL1`, 2026-10-18 ~02:3xZ. Binds the request text above as committed at 48c9ac2ab5 (file sha256 `4a57ed7f..`
+before this heading changed). What I read at signing:
+- The diff `git show 0076897c13 -- E_18.detect_new_securities.py` is +8 lines, display only:
+  - one list is initialised;
+  - one append sits inside the existing resolved branch, before the unchanged `already_resolved += 1` and `continue`, and is guarded by
+    `not pk.startswith('NAME::')`;
+  - five print lines follow the `Already resolved` line.
+- `pk` is the truthy `normalize_key` result checked at the top of the loop, so the new guard adds no new failure path.
+- The HEAD file's md5 reads `197eac28db037323fbb3f862867589ab`, equal to the built file above.
+- N = 1 writer of the property; both branches are stated; the rollback per key is stated (VersionId `ij219ZfH..`).
+
+Conditions:
+1. Leg D's pre/post census shows ONLY `code/gold/E_18.detect_new_securities.py` moved, with the new ETag `197eac28...`.
+2. Leg Q stays the plan form: `--dry-run`, never `--upload`.
+3. This is the next fire's only served change; the LCFYX row write waits one fire.
+4. The NEVER-2 close is COMMITTED.
