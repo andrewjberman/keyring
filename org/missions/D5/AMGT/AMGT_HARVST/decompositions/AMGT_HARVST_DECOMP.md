@@ -4623,3 +4623,15 @@ The enrichment list (the round's rectangle): item 1 `W170-S3` (one key form for 
 
 - **Fan-out:** none this recut (no cuttable cell without an unmet dependency; `cj-4` runs).
 - **ARMED rows open (disarm owner me):** `D1-W171-S1`, `-S3`, `-S4`, `-S5`, `-S6`.
+
+### 129. ROUND 95 -- the CTO's cut rule (msg 7978: `aa2efa2cf3` plus exactly the seven files); `HVST-cj-3` CUT, STAGED (2026-10-18 ~08:5xZ)
+
+The CTO accepted the narrow release (his msg 7978 supersedes his msg 7975 cut line; he asked MSTR to tell site Z that `origin/CLOUD` holds about 28 gateway files that are not live). **The COO half** (`deliverables/2.0.0_SA_COO_W1/round95/NEVER_WIDEN_HALF_COO_CJ3_GATEWAY_SLASH_RELEASE.md`) lists the seven paths with the md5 proof for the three modified files (the live file and the pre-change base `845b69a8cc` are byte-equal, so the carried files apply clean).
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cj-3` | `cj-3` | ONE gateway release carrying `cj-2` and `cj-6`: cut on the live commit `aa2efa2cf3` plus the seven files, the equality and seven-path proofs, 75 tests, site Z told first, `DEPLOY_BASE_REF=aa2efa2cf3`, the control reads (nothing moves for a key without a slash), and the four slash-key spellings read whole through the live gateway. Workstream `SLASH-RELEASE`. | WORLD | seat SC1 | CUT, STAGED: waits on the CTO half, SC1 being free after `cj-4` (about 11:35Z), site Z's answer and my GO |
+| `HVST-cj-5` | -- | The two slash-key dossiers. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cj-3` released and read |
+
+- **Fan-out (this cut):** `N of M chains, N=0 workers, 1 seat order (cj-3) of M=2 cuttable chains (A: cj-3 then cj-5; B: cj-4, running), cap 8`.
+- **Checks at the cut, dry-run at the base:** `cj-3` AC1 to AC4 FAIL as expected (no `cj3_served.out`).
