@@ -31088,3 +31088,282 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Whether the naming gate should refuse or skip when the folder is absent in a sparse worktree is the issuer's and the gate owner's call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "AC1 premise: the order says S1 to S5 must fail at the base, but the S5 absent-position arm passes at the base because the unedited renderer already prints the absence sentence for an absent bundle.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/test_bx1_summary_positioning.py@wk-AMGT_RESAPP-512 test_S5_absent_position_and_no_drafted_recommendation_prints_the_absence_sentence_once: base run 14 failed, 4 passed (the four passes: this S5 absent arm and S6 x3)",
+      "lib/research/print/render_pack.py@51cbf82b4f build_pack: _print_drafted(p, drafted, 'recommendation', NOT_WRITTEN['recommendation']) printed the absence sentence when no drafted sentence was served, whatever the position"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 step A: S1 to S5, S7 and S8 must fail on the unedited head; S6 and the controls pass.",
+  "world_is": "The S5 absent-position arm is a control for the new rule (it must keep printing the sentence once), and the unedited head already satisfies it. The S5 drafted-recommendation arm fails at the base as the order expects. The base count is 14 failed, 4 passed.",
+  "notes": "Form only. The absent arm is kept as a regression guard and is recorded in the receipt as passing at the base."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "The order says an absent posture prints the new positioning sentence, but posture=None is pinned to the old No analyst posture sentence by an api test outside this order's write surface, so the None arm keeps the old sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/tests/test_bw4_print_pack_degrades.py@51cbf82b4f line 39 POSTURE_ABSENT = 'Positioning No analyst posture is on file for this company yet.' asserted by test D3 when read_posture raises (build_pack receives posture=None)",
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-512 _print_positioning: the None arm still prints NO_POSTURE_SENTENCE; the status ABSENT arm prints POSITIONING_ABSENT_SENTENCE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1: an absent posture prints ONE plain sentence, No positioning view is on file for this name. (exactly that text).",
+  "world_is": "Two absent states exist. A posture object with status ABSENT now prints the new sentence; a missing posture (None, the route's read-raised case) prints the old sentence, because changing it breaks test D3 in lib/research/api/tests, which this order does not grant. The two Positioning sentences differ for the two absent states.",
+  "notes": "ARMED: until the None arm is ruled, a reader of a raised posture read sees a different absence sentence from one of a served ABSENT posture. Disarm: the issuer rules whether the None arm joins the new sentence and re-scopes test D3 in the full tree."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "The census finds a reason-bearing state print in the Management builder (the CEO profile sentence prints the reading's reason raw), which this order excludes from its region and assigns to AMGT-bx-3; it carries none for the three names but would print a storage path if a served reason carried one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-512 _ceo_profile_sentence: the non-CONFIRMED arm prints reading.reason verbatim (default 'no public profile is on file yet.'); the reading of the three served bodies is UNREADABLE_OBJECT with reason null",
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-512 _print_management: the Management builder, named by the order as AMGT-bx-3's region (section 1, Region you own; bound 2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1: census every string of render_pack.py a pack can print from a served state, including management; the Management builder is not touched by this cell.",
+  "world_is": "The management state sentence site is in the census but in the excluded builder. Left unchanged here, it prints nothing unsafe for the three names; a served reason with a path would print it verbatim until AMGT-bx-3 or a ruling covers it.",
+  "notes": "ARMED: disarm is AMGT-bx-3's Management builder change, or a CTO ruling that the census extends into the Management builder for this cell."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "The census finds the same served reasons printed with storage paths and vendor error text by the rich markdown export (build_rich_text), which the order's PDF/txt surface does not cover and whose pinned tests live outside this cell's re-scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-512 _undrafted_thesis_markdown prints the bundle's drafting_reason verbatim (a NoSuchKey text beside s3://); _posture_markdown prints posture reason verbatim; _peers_markdown prints peer reason verbatim",
+      "lib/research/print/tests/test_posture_markdown.py and test_build_rich_text.py pin the markdown wording (Posture: ABSENT -- <reason>, Exec Management: ABSENT (<reason>)); changing it is a multi-assertion re-scope beyond the one-assertion bound"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1: CENSUS EVERY STRING of render_pack.py that a pack can print from a served state, and make each free of a storage path, key, object name, cell or order id, vendor error text and UPPER_SNAKE code.",
+  "world_is": "The PDF/txt pack is clean for the three names after this cell. The markdown rich export of the same build still prints served reasons verbatim, so the export and the PDF differ. The export mirrors the page's own tab wording (C-EXPORT-ADDS-NOTHING), so a change to it is a ruling on the page's wording, not a print-only fix.",
+  "notes": "ARMED: the export carries the storage paths until ruled. Disarm: CTO ruling on whether the export takes the plain-sentence wording, then a re-scoped test pair in print/tests."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W512-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~512",
+  "surfaced_at": "2026-10-18T06:38:11Z",
+  "one_line": "The sparse worktree has no org/surprise_channel/schemas/investigation_item.schema.json, the schema the row form names; the schema was read from the base checkout to shape these rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of C:/dev/wk-resapp-512/org/surprise_channel/schemas/investigation_item.schema.json returned 'File does not exist' at 2026-10-18T06:3xZ; the same path read under C:/dev/ajb_workspace returned the schema (229 lines)",
+      "lib/research/print/tests/test_bx1_summary_positioning.py@wk-AMGT_RESAPP-512 not affected: the test file reads only its own fixtures"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 5: rows are filed in the investigation file the order names, in the form the channel defines.",
+  "world_is": "The worktree lacks the schema file the channel form names, so row form was checked against the base copy only. The surprise-row gate's own read of the schema is not established from this worktree.",
+  "notes": "Form only. Whether the sparse worktree should carry the schema is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W513-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~513",
+  "surfaced_at": "2026-10-18T06:44:50Z",
+  "one_line": "The pack's rich-text document (pack_<sec>.md) still prints the raw served amount for a withheld header money figure, because its Header figure table renders render_figure_line verbatim; that table sits outside the figure-line functions AMGT-bx-2 owns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@0eb6290a5e:1867 is lines.extend(_figures_table(header_figs)) in build_rich_text; :1253 is _figures_table, whose Rendered column is render_figure_line(fig) verbatim (its docstring says so). Base 51cbf82b4f: the same call at :1814 and the def at :1200.",
+      "Run at HEAD 0eb6290a5e (python .scratch/bx2_md_check.py, exit 0, build_pack with write_rich=True on bx_served_thesis_RIO_LN.json): pack_RIO_LN_Equity.md rows read CUR_MKT_CAP | ... | 115578925918.1821 ABSOLUTE (full currency units) and NET_DEBT | ... | 14512.0 MILLIONS and CURR_ENTP_VAL | ... | 173616.0345711613 MILLIONS.",
+      "The same commit's txt for the same pack (python .scratch/bx2_census.py, exit 0) prints Market cap, Net debt and Enterprise value as the withheld line, so the two artifacts of one pack disagree on the same figures."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1, the rule to build: a header money figure is printed by the page's rule, and an UNMEASURED money figure's amount is NOT printed. Order section 1, the region owned: the figure-line functions of lib/research/print/render_pack.py.",
+  "world_is": "The PDF and the .txt withhold RIO LN's Market cap, Net debt and Enterprise value after 0eb6290a5e, but the .md document written beside them still prints each raw served amount with its unit, through _figures_table, which is not one of the owned functions.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Form only. Whether the rich document should read the page's rule too is the issuer's call; it is not changed in this cell."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W513-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~513",
+  "surfaced_at": "2026-10-18T06:44:50Z",
+  "one_line": "The order's sentence 'there is no served USD for RIO LN's market cap, net debt or enterprise value' holds for each figure's own currency field, but the same served header carries EQY_FUND_CRNCY = USD, which the page never attaches to a money figure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bx_served_thesis_RIO_LN.json header_figures: CUR_MKT_CAP, NET_DEBT, CURR_ENTP_VAL and CRNCY_ADJ_MKT_CAP each carry currency None and a currency_basis beginning UNMEASURED (census table lib/research/print/tests/fixtures/bx2_page_rule_table.json, the RIO_LN rows).",
+      "The same fixture's header_figures carry EQY_FUND_CRNCY with value USD; the base Header prints it as 'Reporting currency: USD - Bloomberg' (base census, .scratch/bx2_base_census.json, RIO_LN).",
+      "lib/research/print/render_pack.py@0eb6290a5e: _currency_of (CRNCY, EQY_FUND_CRNCY) feeds only the Currency and Reporting currency lines; _format_figure_value takes the two currency arguments and ignores them for every money label (AMGT-bw-1 docstring)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1, the census paragraph: there is no served USD for RIO LN's market cap, net debt or enterprise value; the pack's correct behaviour is the page's, which is to withhold them.",
+  "world_is": "The figure-level part holds: none of the four figures carries its own currency. The sentence is absolute over the served header, and the served header does hold a reporting currency of USD for the same security; the page does not attach it to any money figure, so the withholding is unaffected. The CTO's grade reads that reporting-currency domain.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Form only. Recorded so the CTO's round-116 item 3 reading can be checked against the reporting-currency field; not acted on in this cell."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W514-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~514",
+  "surfaced_at": "2026-10-18T06:45:13Z",
+  "one_line": "The identity fallback reads the header CIE_DES line as the served company-description line; the page's identity fill reads top_band.description_line or bundle.description.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx:125-134 at 3a7791c1 (identityDescriptionLine reads top_band.description_line, else bundle.description)",
+      "lib/research/print/tests/fixtures/bx_served_thesis_RIO_LN.json carries no top_band and no description key (probe at base 51cbf82b4f)",
+      "lib/research/print/render_pack.py build_pack Company description reads _description_figure(header_figs), the CIE_DES figure, at base 51cbf82b4f lines 967-968"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (2): identity_description prints under Company description only when the served company-description line is empty. The order does not say which served line is meant.",
+  "world_is": "The page reads top_band.description_line, else bundle.description, for its identity fill. The pack reads the header CIE_DES figure as the served company-description line, which is what I implemented. None of the three served bodies carries top_band or description, and no identity block carries text on any of the three names, so the choice changes no printed output here.",
+  "notes": "Form only. The two readings can disagree on a name whose header carries no CIE_DES but whose description line is served; no round-117 fixture has that case."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W514-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~514",
+  "surfaced_at": "2026-10-18T06:45:13Z",
+  "one_line": "I applied the page's gap-fill condition to mgmt_team_view and thesis_pillars; the order's rule (2) states no such condition for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx:392 and 415 at 3a7791c1 (mgmt_team_view drawn as a gap fill, not beside a served management passage)",
+      "portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx:121 and 150 at 3a7791c1 (thesis_pillars drawn as a gap fill when the pillar list is empty)",
+      "lib/research/print/tests/fixtures/bx_served_thesis_RIO_LN.json, ICT_PM and GOOGL_US: dossier_fields.management status ABSENT and dossier_fields.thesis_pillars empty on all three"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (2): mgmt_bio, mgmt_recent and mgmt_team_view print inside the Management section after the roster; thesis_pillars prints as its own section. The rule states no gap condition for either fill.",
+  "world_is": "The page draws mgmt_team_view only when no served management passage stands and the read did not fail, and thesis_pillars only when the served pillar list is empty and the read did not fail. I implemented both conditions (_team_view_gap_open, _pillars_gap_open). All three fixtures meet them, so no printed output of the three names changes; a served dossier passage now suppresses the fill, as on the page.",
+  "notes": "Form only. Whether the gap condition belongs in the order's rule, or is already implied by placement follows the page, is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W514-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~514",
+  "surfaced_at": "2026-10-18T06:45:13Z",
+  "one_line": "A captioned label runs 115 to 120 characters, past the pack's 92-character body width, so it prints on two physical lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py LINE_WRAP_CHARS = 92 and Paginator.line at base 51cbf82b4f (every body line is wrapped at this width)",
+      "measured at 93edac99e4: the captioned label for mgmt_team_view is 120 characters and the thesis_pillars label is 115; the uncaptioned label is 63 (render_pack._machine_label)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (3): each printed passage is followed, on the next line, by its label; the source words and the page's caption are in the same line.",
+  "world_is": "A captioned label is wider than the body width, so the paginator wraps it and the caption's tail prints on a continuation line. The paginator is outside this cell's region and is unchanged. The test reads the label joined over its physical lines.",
+  "notes": "Form only. A label that stays on one physical line needs the caption moved or the body width changed; both are outside this order's grant."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W514-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~514",
+  "surfaced_at": "2026-10-18T06:45:13Z",
+  "one_line": "The page draws mgmt_bio and mgmt_recent above the roster; the order says placement follows the page and also puts them after the roster.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx:472-474 at 3a7791c1 (the two always blocks are placed above the roster, per the page's own comment)",
+      "lib/research/print/tests/fixtures/bx3_page_draw_table.json rows ICT_PM and GOOGL_US for mgmt_bio and mgmt_recent (page column: above the roster)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (2): placement follows the page; mgmt_bio, mgmt_recent and mgmt_team_view print inside the Management section, after the roster, in that order.",
+  "world_is": "The page draws mgmt_bio and mgmt_recent above the roster and mgmt_team_view as a gap fill beneath it. The order's instruction places all three after the roster, and I followed the instruction, so the pack's order differs from the page for the two always blocks.",
+  "notes": "Form only. The census records this difference per row; the placement is the order's stated rule and is not changed here."
+}
+```
