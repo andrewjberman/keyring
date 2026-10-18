@@ -71,7 +71,7 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 
 **ISSUER NOTES:** the placed cell `AMGT-bz-5` (decomposition s.128), the served half of the CTO's round-118 items 1 to 4. Pair signed on both halves (CTO half @318bedccc3). Applier: the one AMGT CloudOps lane on dell1 (CLAUDE.md rule 34, `0.7.0_AE_CloudOps~SC1`); a SEAT order, not a worker order. SC1 reads mail only when nudged (it is often inside another COO's batch: peek, then a queued nudge, with that COO's consent for a break between pairs). The issuer reads the result only after the applier's report, never during, and reads nothing during its pre-act print and apply (three early reads of mine in earlier rounds are on record: do not repeat). Risk class WORLD. The REDEPLOY workstream carries it beside the round's issuance, as `bv-5` to `by-5` did. The CTO half's condition 3 (the cause of C-S195 NAMED in the round-119 record) is met by `deliverables/0.9.0_WK_AMGT_RESAPP~518/BZ2_RECEIPT.md` `## Cause` (62 of 62 citations resolve) and by the round-119 L8 packet: both routes read ONE management object; the export printed the reader's label (`UNREADABLE_OBJECT`, mapped to `the object could not be read`) through a words table and never called the PDF's `_ceo_profile_sentence`.
 
-<status>pending</status>
+<status>complete</status>
 <round>119</round>
 <workstream>REDEPLOY</workstream>
 <slot>0.7.0_AE_CloudOps~SC1</slot>

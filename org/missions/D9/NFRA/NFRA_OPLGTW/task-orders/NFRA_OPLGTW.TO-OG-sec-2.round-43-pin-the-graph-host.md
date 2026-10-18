@@ -69,7 +69,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sec-2.round-43-pin-the-graph-ho
 - Chain: independent; feeds `OG-ap-42`. Slot `~152`.
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-A</workstream>
 <slot>~152</slot>
