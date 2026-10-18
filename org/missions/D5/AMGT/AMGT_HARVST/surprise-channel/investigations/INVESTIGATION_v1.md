@@ -12137,6 +12137,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         },
         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-S59",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "2.0.0_SA_COO~W1",
+        "surfaced_at": "2026-10-18T13:34:30Z",
+        "one_line": "S51 fourth instance, a BUSY seat: the ck-3 order handed to SC1 at 13:15:12Z (msg 8055) was READ at 13:29:09Z, 14 minutes later, at a leg boundary of the RESAPP bz-5 redeploy, with no nudge typed (peek at 13:15Z showed SC1 mid-command, so I did not type into the composer).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Row D1-S53 rule 2: the issuer checks the READ ack within 10 minutes and, with none, types a nudge in the seat's tab (rows D1-S54, D1-S55 and D1-S57 recorded three idle-seat instances).",
+        "world_is": "get_delivery_state for 0.7.0_AE_CloudOps~SC1 since 2026-10-18T13:10Z: id 8055 SENT 13:18:20.9Z, EMITTED 13:29:03.2Z, READ 13:29:09.6Z (the same drain delivered two RESAPP COO messages, ids 8058 and 8059). Peek image unstick_peek_0.7.0_AE_CloudOps~SC1_20261018T131500Z.png at 13:15Z: SC1 'Effecting' on a deploy_ledger close-leg command, composer empty, two monitors armed. Instances now: three idle seats read mail only after a typed nudge; one busy seat read it at its next leg boundary 14 minutes after the handing. This fourth case is consistent with the busy-seat shape recorded in D1-S57 (22 minutes, cj-4 window message) and is NOT the idle-seat question the CTO carries (does an armed watcher wake an idle seat), which remains untested. I did not nudge: the 10 minute rule says nudge when there is no READ, and my own caution (do not type into a busy composer) held the nudge; the cost was about 4 minutes past the rule, inside site Z's CLEAR window (to 15:10Z).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "get_delivery_state for 0.7.0_AE_CloudOps~SC1 since 2026-10-18T13:10:00Z (ids 8055, 8058, 8059)",
+                "peek image C:/Users/Test/AppData/Local/Temp/unstick_peek_0.7.0_AE_CloudOps~SC1_20261018T131500Z.png",
+                "rows AMGT_HARVST-D1-S54, -S55, -S57"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
