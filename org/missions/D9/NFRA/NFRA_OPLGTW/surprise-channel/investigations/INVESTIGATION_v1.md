@@ -28133,3 +28133,78 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S380 (the Phase A first stop) and Z-S382 (the first chain run over its limit, graded by the rule A2 fixed before any new run) are resolved by the release being live and measured. Z-S375 and Z-S338 stay ARMED and are not adjudicated here: Z-S375 is disarmed only on a call through the service (an organic etfs_compare_peers call, or the through-the-service probe proposed for round 42, item 8 of the slug draft), by the CVO's clock on this seat's word."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~143",
+  "surfaced_at": "2026-10-18T01:37:21Z",
+  "id": "NFRA_OPLGTW-Z-W143-S1",
+  "one_line": "OG-en-28: the spec asks for one docstring line per absent_reason code in the client_* tools, but each client docstring is a single line and the no-moved-lines rule forbids adding lines; the codes are carried as segments of each tool's one line (commit 8505559ca1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/tools.py:1583, 1589, 1595, 1604, 1610 @8505559ca1: client_resolve_account, client_get_holdings, client_get_transactions, client_get_allocation and client_get_fees each carry a one-line triple-quoted docstring; client_get_transactions (1596-1598) and client_get_fees (1611) carry body comment lines that are not docstring text.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-28.round-42-document-the-absent-reason-codes.md section 1 item 2 ('add ONE line per code') against item 3 ('ADD NO LINES to the file and DELETE NO LINES'; a same-count replacement is the only edit the check admits).",
+      "commit 8505559ca1 (LOCAL on wk-NFRA_OPLGTW-143): numstat 5 insertions, 5 deletions on tools.py; the file is 1896 lines before and after."
+    ]
+  },
+  "spec_asserts": "TO OG-en-28 section 1 item 2: add one docstring line per code, in the form '<code>: <what it means; what the caller does next>', in the client_* docstrings, while item 3 keeps tools.py at its line count.",
+  "world_is": "The client_* docstrings are one line each, so one line per code cannot be written without adding lines, and adding lines breaks the DATA_CATALOG definition: citations. The worker wrote every code as a segment of the one docstring line of the tool that returns it (shared codes once, the three window codes in both windowed tools). The form the spec names is not what is on disk; the count rule is kept.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: a consumer reads each tool's note as one long line, and the codes are findable by name but are not one line each. Whether the form should be relaxed to 'a segment per code', or the docstrings be made multi-line by a deliberate count-changing edit that re-cites DATA_CATALOG, is the issuer's call. No behaviour, name or tool count changed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~145",
+  "surfaced_at": "2026-10-18T01:43:49Z",
+  "id": "NFRA_OPLGTW-Z-W145-S1",
+  "one_line": "The OG-sec-1 pattern does not match the two outbound JWKS fetches made through PyJWKClient in identity.py (lines 44 and 115), so the 18-site denominator does not cover every outbound HTTP call; both targets are config-sourced and the CLEAN verdict stands for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PATTERN: the task order section 1 pattern, grep -nE over infra/aws/ec2/opal-gateway/app/identity.py @2550dab3df -- the only match in identity.py is line 77 (httpx.get); lines 44 and 115 carry no matching verb.",
+      "SITES: infra/aws/ec2/opal-gateway/app/identity.py:44 (_verify_cf_jwt, PyJWKClient(jwks_url).get_signing_key_from_jwt(token)) and :115 (_verified_access_identity, the same construct) @2550dab3df -- each fetches a JWKS over HTTP.",
+      "TARGETS: identity.py:42 builds the CF jwks_url from the config team domain; identity.py:104 reads VA_JWKS_URL from config. Neither is a request value (traced by the worker; the SSRF_AUDIT.json rows cover the pattern's sites only)."
+    ]
+  },
+  "spec_asserts": "The task order measures the outbound call-site denominator for the SSRF question with the one pattern over the five modules, and states that the CRO count of 18 is the denominator of every outbound HTTP call the question covers.",
+  "world_is": "The pattern misses outbound fetches made through the PyJWKClient construct, which the pattern's verbs do not name. Two such lines exist in identity.py. Both take their target from config, so neither is controllable and the verdict is unchanged; they are not rows of the record because the record is pattern-scoped.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: both targets are config-sourced, so no request value reaches them. OBSERVATION: no criterion of OG-sec-1 is blocked. The issuer decides whether the pattern is widened before the next audit of this kind."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~145",
+  "surfaced_at": "2026-10-18T01:43:49Z",
+  "id": "NFRA_OPLGTW-Z-W145-S2",
+  "one_line": "graph.call sends the caller's bearer token to any absolute URL it is given; its no-verdict at graph.py:63 rests on caller discipline, and two callers follow @odata.nextLink with no host check, outside the five modules the pattern covers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SINK: infra/aws/ec2/opal-gateway/app/graph.py:52 and :62-63 @2550dab3df -- url = path if path.startswith('http') else GRAPH_BASE + path; the client sends the Authorization bearer of the caller token and follow_redirects=True.",
+      "UNGUARDED CALLERS: infra/aws/ec2/opal-gateway/app/tools.py:1158-1161 (_read_members) and infra/aws/ec2/opal-gateway/app/asker_scope.py:276-279 (read_chat_members) pass @odata.nextLink straight to graph.call with no host check; tools.py:584 and :1294 check the link against GRAPH_BASE first.",
+      "GUARDED CALLERS: infra/aws/ec2/opal-gateway/app/transcript_route.py:58-74 (_path_of plus an allowlist anchored on /me/onlineMeetings), teams_route.py:110-118 (allowlist anchored on ^/), mail_route.py:327-331 (link must start with GRAPH_BASE + LIST_PATH), ms_ingest.py:197-203 (literal paths)."
+    ]
+  },
+  "spec_asserts": "OG-sec-1 AC1 calls a site controllable when a request value reaches the scheme, host, port or a host-deciding path, and the five-module pattern is the denominator.",
+  "world_is": "No caller passes a request value as an absolute URL today, so graph.py:63 is no. The sink has no host guard of its own: a future caller that passed request text to graph.call would send the user's Graph token to that host. The two unguarded nextLink callers rely on Graph's reply alone. Those callers sit outside the five modules, so the pattern-scoped record can say no without showing the guard.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer and the CTO before OG-pr-1: a host check at graph.call, or at the two unguarded nextLink sites, would make the sink safe by construction rather than by caller discipline. Not a cell of this order; no product file was changed."
+}
+```
