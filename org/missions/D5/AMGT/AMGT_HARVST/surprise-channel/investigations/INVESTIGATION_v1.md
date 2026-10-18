@@ -12322,5 +12322,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S62",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+        "surfaced_at": "2026-10-18T15:32:55Z",
+        "one_line": "HVST-cl-2: the opal-research-pull-enqueue Lambda has no source-map row, so record-terraform-deploy.sh refused to stamp its deploy; the deploy itself is verified.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "cloud-ops Rule 4: every Lambda has an entry in the source map (infra/aws/lambda/ci/function-map/); record-terraform-deploy.sh is run after every successful terraform apply and stamps the applied function's row. The order HVST-cl-2 (step 7) asks for the ledger close, not the stamp.",
+        "world_is": "Measured at 2026-10-18T15:32:55Z. After the apply of HVST-cl-2 (15:24Z), `bash infra/aws/lambda/ci/record-terraform-deploy.sh harvest --plan cl2.tfplan --deploy-ledger harvst-cl2-pull-enqueue-canonical-status --code-sha256 7c4gYrZHxrNDhf2bqv3wo2JTUWdUxt/BeDFQsp33fx4= --author ...` REFUSED with rc=2 at 15:28:59Z: 'REFUSE: 1 applied address(es) have NO source-map row under harvest: module.harvest_enqueue.aws_lambda_function.this. Add the entry (cloud-ops Rule 4) or pass --function explicitly.' Nothing was written. A glob of infra/aws/lambda/ci/function-map/*pull* lists 8 files, none for opal-research-pull-enqueue; a content search of infra/aws/lambda/ci for the string opal-research-pull-enqueue finds no file. The same recorder stamped opal-amgt-scoped-api at bz-5 (13:14Z), so the recorder works and this one function has no row. The function itself is deployed and verified (CodeSha256 7c4gYrZHxrNDhf2bqv3wo2JTUWdUxt/BeDFQsp33fx4=, deployed code equals the source byte for byte, plan after: No changes); only the source-map provenance for it does not exist, so a drift check over the map cannot see this function's deployed commit. Not fixed here: a new function-map row is a new carrier file outside the order's paths.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round97/cl2_record.out (the refusal text and rc=2)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round97/cl2_after.out (CodeSha256 equal to the new zip; plan after: No changes)",
+                "glob of infra/aws/lambda/ci/function-map/*pull* and a content search of infra/aws/lambda/ci for opal-research-pull-enqueue (both empty for this function)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S63",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+        "surfaced_at": "2026-10-18T15:33:55Z",
+        "one_line": "HVST-cl-2 step 5b: the one queued BP pull request had not been received by the box consumer 6.5 minutes after the invoke; the status stays REQUESTED.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "CTO half @5e345c92f5 (C-7 ruling): the invoke must show the status object under the canonical prefix, the queue showing one entry for the name, and the drained pull landing normally. The order's step 5b grades the write (202, canonical status.json, nothing raw, the message enqueued); the later states belong to the box consumer (step 6).",
+        "world_is": "Measured at 2026-10-18T15:33:55Z. HVST-cl-2 step 5b: the one real invoke for BP/ LN Equity at 15:26:59Z returned 202, wrote packs/BP-SLASH-_LN_Equity/status.json (state REQUESTED, security_key BP/_LN_Equity) and nothing under packs/BP/_LN_Equity/status.json, and enqueued one message {\"ticker\": \"BP/ LN Equity\", \"security_key\": \"BP/_LN_Equity\"} on opal-research-pull-requests (no redrive policy, visibility timeout 120 s, retention 86400 s). At 15:33:26Z, about 6.5 minutes later, the status object still reads REQUESTED (updated_at 15:26:59Z) and the queue still shows ApproximateNumberOfMessages 1, NotVisible 0; the message's ApproximateReceiveCount was 1 at the 15:30:58Z read, which was this seat's own non-destructive peek (visibility timeout 0), so the box consumer had not received it by then. The seat did not look at the consumer (box-side, not this order's surface) and did not invoke again.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round97/cl2_slash_write.out (the invoke, the status reads at 15:27, 15:30 and 15:33Z, the queue counts, the peek)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
