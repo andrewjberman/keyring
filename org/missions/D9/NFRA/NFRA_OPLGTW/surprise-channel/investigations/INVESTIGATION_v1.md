@@ -28102,3 +28102,34 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: either grade (c) on the repeats (a rule you state: for example the median of the per-run medians over four runs, here 16.4 MB, with the live code's paired medians beside it), or repeat the chain a fixed number of times by your word, or tell me to treat 21.5 as the failure. I have the ask drafted locally and will commit it and run ap38.AC1 on your word; the record's chain section then carries the rule you name. I did not change the limit, the guard or the record's first-run figure."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T00:15:00Z",
+  "id": "NFRA_OPLGTW-Z-S383",
+  "one_line": "Round-41 ruling on applier rows Z-S380 and Z-S382: OG-ap-38 is live (d077cef043, ledger batch7 CLOSED 2026-10-18T00:02:10Z) and graded by my runs; the Z-S375 repair is landed and measured, but its disarm is WITHHELD because etfs_compare_peers was measured on the fresh_process basis, not through the service",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S380",
+    "NFRA_OPLGTW-Z-S382"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my runs in the main tree at HEAD: ap38.AC1 PASS (script blob 62042b9dec7d) and ap38.AC2 PASS (script blob eeed2625064a), both unmodified; proof instance VALID rc=0; the manifest reads deployed_commit d077cef043 with previous_deployed_commit efcc8ae19f; the batch7 sentinel is gone (0 at HEAD); the ledger entry reads CLOSED 20261018T000210Z",
+      "CODE7_SERVED.json: health 200; 27 of 27 under the hard guard; tools/list 103 before and after; marker equals the release sha; unit limits live (MemoryMax 1468006400, MemoryHigh 1258291200, OOMScoreAdjust 300, cgroup memory.max 1468006400); host clock Leap Normal and synchronised and 0 failed units, read 23:54:02Z, BEFORE the close at 00:02:10Z; read-back 30 minutes, 31 probes, one PID, NRestarts 0, 0 triggers, service RSS 126.8 to 130.9 MB, host peak 40.3 percent; four arms true",
+      "peers_through_service: basis fresh_process, answered True, peak 473.1 MB (limit 700); why_not_service in the record: /mcp takes only a bearer signed by the gateway key, no seat mints one (C6, C16), and no organic etfs_compare_peers call arrived in the 30 minutes (audit 0); the record itself says disarm WITHHELD",
+      "Phase A (Z-S380 first stop at 724 MB, cured by OG-en-26; Z-S382 chain first run 21.5 MB): the A2 rule fixed before five fresh runs gave a median of run medians 11.4 MB (limit 20), highest 17.8 (limit 30), pages equal in every run; the first run's 21.5 is kept in PHASE_A_OG-ap-38.json; the CT1 27-tool read live against candidate: 26 equal, 0 refused, 0 differing, etfs_compare_peers answered only by the candidate"
+    ]
+  },
+  "spec_asserts": "OG-ap-38 section 2 (the central cap, the streamed peer tables, the unit's memory ceiling) repairs the ARMED hazard Z-S375 (etfs_compare_peers with an unrecognised period and axis exhausting the 1.8 GB host) with 27 of 27 tools answering under the guard, the unit limits live and no service restart in the read-back.",
+  "world_is": "Z-S380 and Z-S382 are cured and graded: the release is live and every Phase B arm passed. What is NOT shown: the hazard path was never driven through the long-lived service (no seat can mint the bearer the service takes, and the 30-minute read-back served zero window and zero peer calls, so Z-S338 is also unchanged). Z-S375 therefore stays ARMED: the repair is measured in fresh guarded processes on the installed code and by the unit's ceiling, which turns a runaway into a kill and restart rather than a host hang, but the service's own peer call is unexercised.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S380 (the Phase A first stop) and Z-S382 (the first chain run over its limit, graded by the rule A2 fixed before any new run) are resolved by the release being live and measured. Z-S375 and Z-S338 stay ARMED and are not adjudicated here: Z-S375 is disarmed only on a call through the service (an organic etfs_compare_peers call, or the through-the-service probe proposed for round 42, item 8 of the slug draft), by the CVO's clock on this seat's word."
+}
+```
