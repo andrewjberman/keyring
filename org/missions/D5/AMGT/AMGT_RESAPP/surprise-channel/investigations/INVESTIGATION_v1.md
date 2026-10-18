@@ -31265,3 +31265,105 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Recorded so the CTO's round-116 item 3 reading can be checked against the reporting-currency field; not acted on in this cell."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W514-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~514",
+  "surfaced_at": "2026-10-18T06:45:13Z",
+  "one_line": "The identity fallback reads the header CIE_DES line as the served company-description line; the page's identity fill reads top_band.description_line or bundle.description.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx:125-134 at 3a7791c1 (identityDescriptionLine reads top_band.description_line, else bundle.description)",
+      "lib/research/print/tests/fixtures/bx_served_thesis_RIO_LN.json carries no top_band and no description key (probe at base 51cbf82b4f)",
+      "lib/research/print/render_pack.py build_pack Company description reads _description_figure(header_figs), the CIE_DES figure, at base 51cbf82b4f lines 967-968"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (2): identity_description prints under Company description only when the served company-description line is empty. The order does not say which served line is meant.",
+  "world_is": "The page reads top_band.description_line, else bundle.description, for its identity fill. The pack reads the header CIE_DES figure as the served company-description line, which is what I implemented. None of the three served bodies carries top_band or description, and no identity block carries text on any of the three names, so the choice changes no printed output here.",
+  "notes": "Form only. The two readings can disagree on a name whose header carries no CIE_DES but whose description line is served; no round-117 fixture has that case."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W514-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~514",
+  "surfaced_at": "2026-10-18T06:45:13Z",
+  "one_line": "I applied the page's gap-fill condition to mgmt_team_view and thesis_pillars; the order's rule (2) states no such condition for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx:392 and 415 at 3a7791c1 (mgmt_team_view drawn as a gap fill, not beside a served management passage)",
+      "portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx:121 and 150 at 3a7791c1 (thesis_pillars drawn as a gap fill when the pillar list is empty)",
+      "lib/research/print/tests/fixtures/bx_served_thesis_RIO_LN.json, ICT_PM and GOOGL_US: dossier_fields.management status ABSENT and dossier_fields.thesis_pillars empty on all three"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (2): mgmt_bio, mgmt_recent and mgmt_team_view print inside the Management section after the roster; thesis_pillars prints as its own section. The rule states no gap condition for either fill.",
+  "world_is": "The page draws mgmt_team_view only when no served management passage stands and the read did not fail, and thesis_pillars only when the served pillar list is empty and the read did not fail. I implemented both conditions (_team_view_gap_open, _pillars_gap_open). All three fixtures meet them, so no printed output of the three names changes; a served dossier passage now suppresses the fill, as on the page.",
+  "notes": "Form only. Whether the gap condition belongs in the order's rule, or is already implied by placement follows the page, is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W514-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~514",
+  "surfaced_at": "2026-10-18T06:45:13Z",
+  "one_line": "A captioned label runs 115 to 120 characters, past the pack's 92-character body width, so it prints on two physical lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py LINE_WRAP_CHARS = 92 and Paginator.line at base 51cbf82b4f (every body line is wrapped at this width)",
+      "measured at 93edac99e4: the captioned label for mgmt_team_view is 120 characters and the thesis_pillars label is 115; the uncaptioned label is 63 (render_pack._machine_label)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (3): each printed passage is followed, on the next line, by its label; the source words and the page's caption are in the same line.",
+  "world_is": "A captioned label is wider than the body width, so the paginator wraps it and the caption's tail prints on a continuation line. The paginator is outside this cell's region and is unchanged. The test reads the label joined over its physical lines.",
+  "notes": "Form only. A label that stays on one physical line needs the caption moved or the body width changed; both are outside this order's grant."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W514-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~514",
+  "surfaced_at": "2026-10-18T06:45:13Z",
+  "one_line": "The page draws mgmt_bio and mgmt_recent above the roster; the order says placement follows the page and also puts them after the roster.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx:472-474 at 3a7791c1 (the two always blocks are placed above the roster, per the page's own comment)",
+      "lib/research/print/tests/fixtures/bx3_page_draw_table.json rows ICT_PM and GOOGL_US for mgmt_bio and mgmt_recent (page column: above the roster)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (2): placement follows the page; mgmt_bio, mgmt_recent and mgmt_team_view print inside the Management section, after the roster, in that order.",
+  "world_is": "The page draws mgmt_bio and mgmt_recent above the roster and mgmt_team_view as a gap fill beneath it. The order's instruction places all three after the roster, and I followed the instruction, so the pack's order differs from the page for the two always blocks.",
+  "notes": "Form only. The census records this difference per row; the placement is the order's stated rule and is not changed here."
+}
+```
