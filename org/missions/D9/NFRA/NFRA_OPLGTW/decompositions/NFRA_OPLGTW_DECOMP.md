@@ -2915,3 +2915,11 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-pr-3` | the probe listener streams the request body with a byte count, stops reading past 65536 and refuses a declared over-length body unread | `app/probe_listener.py`, `tests/test_og_pr1.py` | WORLD (gateway path floor) | `~149` | worker |
 
 **fanout:** 1 of 1 chains, cap 8 (one repair on the state `OG-pr-2` leaves).
+
+**R3-T.119 amendment A6 (2.0.0_SA_COO~O, round 42, ~04:3xZ, workstream ENRICH-R42-D): a wording cell `OG-en-30`.** The CVO's half for `OG-ap-39` (SIGNED at ask `942adaf1e59e`) carries row `Z-S385`: the `client_get_fees` note written by `OG-en-28` tells a calling model that an empty fee list is "a true zero ... report zero" while the source's completeness for the window is unmeasured (`Z-S355`/`Z-S368`/`Z-S369`). The issuer rules it before the release rather than after: `OG-en-30` rewords the note to say what was measured (no fee row in the source; no total established) and audits the eleven other notes for the same class; docstring text only, line count held at 1896; worker `~150`. `OG-ap-39` is re-cut after it drains (amendment A4 of that order). Gate limb: the new tree order is graded by `to-pipeline-gate`.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-en-30` | the `no_fee_rows_in_window` note says "no fee row in the source; no total established" instead of "a true zero, report zero"; the other eleven notes audited for claims the code does not establish | `app/tools.py` (docstring text) | WORLD (gateway path floor) | `~150` | worker |
+
+**fanout:** 1 of 1 chains, cap 8 (one wording cell; the release `OG-ap-39` re-cut waits on it).
