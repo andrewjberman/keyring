@@ -100,7 +100,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-115 analysis item 1 (`ledger/ROUND_ANALYSIS.round115.R1.md`, msg 7887), the CVO's FWD-5 read (msg 7886). LOCAL code cell; served only through `AMGT-bw-5` (placed: a never-widen pair cut after this cell and bw-2 merge). Runs in parallel with `bw-2` on the same file in a different region (currency functions, lines ~410-640, against `build_pack`, lines ~689-976); the merge may need one hand resolution. The faces' served-value table was read by the issuer from `/thesis` `header_figures` on 2026-10-18. The issuer's real grade after the redeploy: each currency-labelled figure of the live ICT PM, RIO LN and GOOGL packs against the page's served figure in currency and magnitude.
 
-<status>pending</status>
+<status>complete</status>
 <round>116</round>
 <slot>0.9.0_WK_AMGT_RESAPP~510</slot>
 <fabric>dell1</fabric>
