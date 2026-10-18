@@ -71,7 +71,7 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 
 **ISSUER NOTES:** the placed cell `AMGT-bw-5` (decomposition s.125), the served half of the CTO's round-115 items 1 to 3. Pair signed on both halves (CTO half @aaa5219ad5). Applier: the one AMGT CloudOps lane on dell1 (CLAUDE.md rule 34, `0.7.0_AE_CloudOps~SC1`); a SEAT order, not a worker order. SC1 may need a screen nudge to read it (`/unstick --peek`, then a typed prompt). The issuer reads the result only after the applier's report, never during. Risk class WORLD. The REDEPLOY workstream carries it beside the round's issuance, as `bv-5` did.
 
-<status>pending</status>
+<status>complete</status>
 <round>116</round>
 <workstream>REDEPLOY</workstream>
 <slot>0.7.0_AE_CloudOps~SC1</slot>
