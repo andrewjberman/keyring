@@ -63,7 +63,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-28.round-42-document-the-abs
 - A cell of the batched release `OG-ap-39`: `tools/list` descriptions change, names and count (103) do not.
 - Pre-cut: `AC1` base FAIL as expected (the record is absent); `AC3` base: the five files pass.
 
-<status>staged</status>
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-A</workstream>
 <slot>~143</slot>
