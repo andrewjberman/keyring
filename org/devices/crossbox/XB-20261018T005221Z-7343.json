@@ -11,8 +11,8 @@
  "body_path": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round33/ORDER5_SITEZ_READERS_THEN_PUBLISH.md",
  "opened_at": "2026-10-18T00:52:21Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-18T00:54:51Z",
+  "bus_message_id": "6337dba1-720d-46ff-9867-b71b55812792"
  },
  "ack_bus_message_id": null,
  "closed_from": {
