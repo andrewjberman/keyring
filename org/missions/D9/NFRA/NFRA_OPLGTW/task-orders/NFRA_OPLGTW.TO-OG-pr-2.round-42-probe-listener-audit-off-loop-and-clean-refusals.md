@@ -70,7 +70,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-pr-2.round-42-probe-listener-au
 - Review that produced this cell: the issuer read the merged module and found (1) the lease read blocking the loop (repaired by `~147`), (2) the audit write blocking the loop (worker row `Z-W147-S1`), (3) a refusal answered before the body is read (a flaky `ConnectionResetError` on the issuer's machine, 1 of 3 forward runs of the both-orders set). Items 2 and 3 are this cell.
 - Pre-cut: `AC1` base FAIL as expected (`ac07` and `ac08` are absent); `AC3` passes at the base.
 
-<status>staged</status>
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-B</workstream>
 <slot>~148</slot>
