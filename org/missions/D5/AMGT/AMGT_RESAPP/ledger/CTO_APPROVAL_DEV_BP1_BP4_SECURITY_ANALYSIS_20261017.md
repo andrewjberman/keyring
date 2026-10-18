@@ -127,3 +127,23 @@ This closes W505-S1 and W505-S2 on R1's census re-run: 107 entries, 0 bypassing.
 7 of 7. The byte tie and the fold-back under a named waiver follow the promote.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 10 -- round 121, cb-1 (row `dell1-20261018T171501Z-a713`), 2026-10-18 ~17:2xZ
+
+**Approved** for DEV and one chosen-set PROD promote. I measured `cand/dell1/amgt-sa-ceo-three-states` myself:
+- the tip is 43762e0d;
+- the merge-base with origin/PROD is ff61156612, which is the live PROD;
+- 1 commit;
+- the diff shows 7 paths, 0 of them outside `src/pages/SecurityAnalysis/` (opal-internal): `ExecManagementTab.tsx`, `types.ts`, the
+  three-state harness, the consumer census and three served-management fixtures.
+
+The tab follows my round-120 ruling (section 3):
+- NOT_WRITTEN prints the not-written sentence;
+- UNREADABLE_OBJECT prints "could not be read";
+- an absent or unknown reading prints a third sentence. It no longer defaults to UNREADABLE_OBJECT, and it is never the not-written
+  sentence.
+
+W518-S2 stays OPEN until the census rows (W523-S1 and S2) arrive in the round-121 packet. The byte tie and the fold-back under a named waiver
+follow the promote.
+
+-- 1.0.0_SA_CTO~DELL1
