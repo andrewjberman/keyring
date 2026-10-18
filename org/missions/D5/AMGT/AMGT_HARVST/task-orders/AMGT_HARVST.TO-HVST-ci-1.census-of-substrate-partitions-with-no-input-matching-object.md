@@ -60,11 +60,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Chain A of round 94: this cell, then `HVST-ci-2` (the change, same worker queue `~169`: the second depends on the first's census).
 - Slot ~169, worktree `C:/dev/wk-harvst-169`, branch `wk-AMGT_HARVST-169`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `infra/aws/ec2/opal-gateway/app` and `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165`.
 - **SENT:** with the round-94 issuance.
+
+**COMPLETE 2026-10-18T06:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~169` (haiku, high), branch `wk-AMGT_HARVST-169`; census `7c459a7522`; first proof `12038e8d3a` (AC3 FAIL against my wrong expectation, kept as history); regrade `3ade603a99`; merged with `ci-2` at `6837f7c754` (safe-merge fast lane, index check 0 of 9).
+- **AC1 PASS:** `CENSUS-FALLBACK tables=4 partitions=109 no_input_match=0 moves=0 gets=4671 bytes=385231505`. **AC2 PASS:** `CONTROL-POSITIVE continuation MNST_US_Equity input_match=yes fallback=no`. **AC3 PASS (after AMENDMENT 1):** `CONTROL-NEGATIVE synthetic old=f174f709/2 rule=4d837586/4 moves=yes`. **I re-ran `ci1_census.py` myself from the worker's worktree (4,671 requests, 385,231,505 bytes): identical to the worker's, line for line.** Proof instance VALID rc 0 (re-run here).
+- **THE FINDING (item 1 of the CTO's round-93 analysis):** over the four tables the substrate reads, 109 partitions (continuation 95, sector_template 10, fund_form 3, typecast 1; 446, 29, 12 and 4 objects) EVERY partition has at least one object whose `inputs` equal today's; `no_input_match=0`. **The second key-order fallback (`substrate.py` line 158) is reached by no partition today.** It is a latent defect, not a live one.
+- **Rows** `D1-W169-S1` (BLOCKING, INERT: my AC3 expectation was wrong; ruled, AMENDMENT 1) read and accepted. **What this does NOT prove:** that no partition will reach the fallback after a producer's inputs move (the next change of a `current_inputs` could send a partition there; the census is one reading at 06:xxZ).
 - **AMENDMENT 1 (issuer, 2026-10-18 ~06:0xZ; worker `~169` row `D1-W169-S1`, BLOCKING, INERT): MY AC3 EXPECTATION WAS WRONG.** The face defines OLD as the key-order fallback `sorted(docs)[-1]` (the LAST key; substrate.py line 158) and the synthetic four have keys `28404359...`, `4d837586...`, `98a4883c...`, `f174f709...`: the LAST key is `f174f7092a2d358e.json`, method `/2`, so OLD reads `f174f709/2`. I copied `old=28404359/3` from `HVST-ch-1`, whose OLD rule was `min` by key (the FIRST key), a different rule. The worker's census printed `old=f174f709/2` and did not edit anything to match; `HVST-ci-2`'s order already says `f174f7092a2d358e.json`. **The AC3 expectation and the step 1d sentence read `old=f174f709/2` from this amendment; the census output is unchanged** (I re-ran `ci1_census.py` from the worker's worktree: identical to the worker's, line for line). Gate: this is a modification of a non-terminal order that declares `<placeholders>NONE</placeholders>`; **GATE (viii) graded it** (the gate's own note on commit `b3b359bea6`: "1 of 1 staged-MODIFIED tree order(s) already declare <placeholders> at HEAD and were graded") and passed; my first wording here said no limb graded it, which was wrong, and is corrected in the following commit. The worker regrades AC3 and re-runs the checker; the earlier FAIL stays in its instance as history.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>94</round>
 <workstream>PICK2-CENSUS</workstream>
 <slot>dell1</slot>
