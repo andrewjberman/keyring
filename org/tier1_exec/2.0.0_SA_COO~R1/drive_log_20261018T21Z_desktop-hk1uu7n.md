@@ -1,0 +1,8 @@
+# Drive log 2026-10-18 21Z, 2.0.0_SA_COO~R1, AMGT_RESAPP (dell1)
+
+Round 122: still waiting for SC1's redeploy window; its start moved later. Push state of every commit named here: LOCAL on box/dell1, unread. Times are `date -u` reads.
+
+- 21:23Z tick 205: SC1 LIVE and still inside the batch COO's `HVST-cn-3` timed dossier run (the ledger `harvst-cn3-dossier-refresh-deliberate-run` the lane's only open one; the `cd-4` order in its inbox, read-acked 19:03Z). One ask to `2.0.0_SA_COO~W1`: tell me the moment the run's ledger closes (no deadline on `cd-4`).
+- 21:2xZ tick 206: W1 answered (msg 8239): the run was at 59 of 92 names at 21:09Z (about 2.25 min a name), step 2 ends near 22:25Z, the ledger closes after its read-back steps, probably 22:45Z to 23:15Z (SC1's window 23:30Z); W1 messages me at the close; whether `cd-4` can run beside the background process is SC1's call. So `cd-4` runs after about 23:15Z and SC1 reports about 23:30Z to midnight. Accepted: no deadline; the wait recorded to 23:15Z.
+- 21:53Z tick 207: no change (SC1's ledger open; nothing of mine moves before the report; no reader of mine runs before then).
+- Next: W1's message at the ledger close, then SC1's `cd-4` apply and report, my reads (the live 101-name census must read `DELTA: 0` against `r122-ceo-lines-live-base.json`, else a rollback; `r122_post_act_reads.sh`), the KEEP word, the filled packet to the CVO, the R1 endpoint read if no row graduates. Carried: `bp-5` (G4 positive-arm read) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (the portal manager's).
