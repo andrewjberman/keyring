@@ -94,16 +94,16 @@ The v20 row `NFRA_OPLGTW-Z-S312` is superseded in place (DISARMED, REMEDIATED, c
     "owner": "2.0.0_SA_COO~O",
     "round": "v39",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~O",
-      "at": null
+      "at": "2026-10-18T10:53:32Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v39"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
