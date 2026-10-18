@@ -12702,5 +12702,110 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W179-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~179",
+        "surfaced_at": "2026-10-18T17:57:25Z",
+        "one_line": "HVST-cn-1 premise: this worktree's sparse checkout omitted org/tier1_exec/, so every dossier build raised FileNotFoundError on research_docx_kpi_census.json (first dry run: errors=95 of 95); the issuer added the folder and the re-run measured errors=0.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order step e: run the real deps over the real bucket; 'If the real deps cannot be built read-only, STOP and file a row'. Worktree premise: the paths the order names are carried (TREE-OK).",
+        "world_is": "dossier.build reads org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json through sector_template.KPI_CENSUS_ABS. The file is tracked (blob 79407b95451d) but outside this worktree's sparse set (11 entries, none tier1_exec); worktree 178 carries it. Pre-fix dry run: refresh_run_dry.out had errors=95.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/sector_template.py@d4b82a35ec lines 101-107 (KPI_CENSUS_PATH and KPI_CENSUS_ABS)",
+                "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/research_docx_kpi_census.json@d4b82a35ec blob 79407b95451d49db7448c8df22625186db43585e"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W179-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~179",
+        "surfaced_at": "2026-10-18T17:57:25Z",
+        "one_line": "HVST-cn-1 status gap: the order's status list has no entry for a name with no stored dossier; the driver reports SKIPPED_ALLOWED with reason no-stored-dossier (a refresh does not create a first build). No such name in the 95-name dry run.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order section 1b names the statuses WRITTEN, WOULD_WRITE, UNCHANGED, SKIPPED_ALLOWED, SKIPPED_GUARD, NO_NEW_MODEL_BLOCK and ERROR; it names no status for a name whose gateway pick finds no stored object.",
+        "world_is": "A name with no stored dossier is reachable (the census counts it as NO-STORED-DOSSIER); refresh_one returns SKIPPED_ALLOWED for it, the nearest skip label in the closed set, and writes nothing.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/dossier_refresh.py@ff3f1e9527 refresh_one, the served-is-None branch",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_census.out@b95f09c090 (census NO-STORED-DOSSIER form; no_stored_dossier=0 in its final line)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W179-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~179",
+        "surfaced_at": "2026-10-18T17:57:25Z",
+        "one_line": "HVST-cn-1 status precedence: the order does not rank NO_NEW_MODEL_BLOCK against an allowed non-model-block move (a fund_form input change on a name whose stored dossier already cites the newest block); the driver ranks NO_NEW first, so such a name is skipped and reported with no write.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order 1b: NO_NEW_MODEL_BLOCK means 'the stored dossier already cites the newest model block: skip and report'; WRITTEN and WOULD_WRITE mean 'allowed moves only, guard PASS'. No precedence is stated between them.",
+        "world_is": "One name can satisfy both readings. The two statuses give opposite instructions (write or skip), so the text does not decide it. Offline arm 4 pins the chosen order. The measured 95-name dry run has no NO_NEW_MODEL_BLOCK row, so the choice did not bite on the real names.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/dossier_refresh.py@ff3f1e9527 refresh_one, the NO_NEW_MODEL_BLOCK branch",
+                "lib/research/corpus/tests/test_dossier_refresh.py@ff3f1e9527 test_arm4_stored_dossier_already_cites_newest_block_is_no_new_model_block"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W179-S4",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~179",
+        "surfaced_at": "2026-10-18T17:57:25Z",
+        "one_line": "HVST-cn-1 trading-day gate: the order says 'today' without a zone; --require-trading-day reads the UTC date. For the 13:0xZ schedule this is the same NY date. Not exercised by the dry run.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order 1c: --require-trading-day refuses to run 'when lib/trading_calendar.py says today is not a trading day'. No timezone is named.",
+        "world_is": "main() passes the UTC date to trading_calendar.is_trading_day, which takes a bare date and has no zone parameter. A run whose New York date differs from its UTC date would test the other day.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/dossier_refresh.py@ff3f1e9527 main(), the --require-trading-day branch",
+                "lib/trading_calendar.py@d4b82a35ec is_trading_day (line 178): takes a date object, no zone argument"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W179-S5",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~179",
+        "surfaced_at": "2026-10-18T17:57:25Z",
+        "one_line": "HVST-cn-1 dry-run finding: BP_LN_Equity reads WOULD_WRITE (model_rows moved, guard PASS), not NO_NEW_MODEL_BLOCK or UNCHANGED as the order expected. Its guard passes only when the newest landed block is later than the stored stamp, so a block landed after the census.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order step e: the issuer expects BP/_LN_Equity NO_NEW_MODEL_BLOCK or UNCHANGED, 'depending on the 17:06Z block that landed after that census'.",
+        "world_is": "BP's guard reads PASS, which needs a built stamp later than the stored stamp 20261018T130249Z and a valued count not lower. The line is WOULD_WRITE with moved=model_rows. The counts are reported as measured: would_write=93, unchanged=1 (NG), skipped_guard=1 (PBR), errors=0 over 95 names.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_census.out@b95f09c090 (NAME and GUARD lines for BP/_LN_Equity: stored_stamp=20261018T130249Z)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~179/refresh_run_dry.out (working file, committed with this row): REFRESH BP/_LN_Equity line"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
