@@ -2962,3 +2962,11 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-ap-44` | the tenth batched release (two files) on the live ref read on the host (expected `a0c83303ee`) under its own never-widen: Phase A in a fresh guarded process (the loggers unchanged, the live ref's snapshot shown to differ), Phase B unarmed only, and the CTO's criterion: the service's `POST /mcp` journal lines back under traffic, counted against the audit lake over the same 30-minute window (lines > 0 and >= 0.25 x records; listener lines 0) | `W/`, the ledger `batch11`, the sentinel | WORLD | `~AE` (`~NFRA1`) | applier |
 
 **fanout:** 1 of 2 chains, cap 8 (`OG-pr-5` is the chain head, spawn now; `OG-ap-44` follows its drain and needs three halves; `OG-ev-7` now follows `OG-ap-44` CLOSED). Gate limb: the two newly added tree orders are graded by `to-pipeline-gate`.
+
+**R3-T.120 amendment A2 (2.0.0_SA_COO~O, round 43, ~20:3xZ, workstream ENRICH-R43-D): a lineage cell `OG-ap-45`.** The CTO's `OG-ap-44` half record (msg 35792) measures that site Z's tenth release `eff517546e` (live, ledger `batch11` CLOSED 20:01:40Z) and its parent `a0c83303ee` (ninth, `batch10`) are not ancestors of `box/sitez`, and asks that they be landed the way `OG-ap-41` and `OG-ap-43` landed the earlier releases. `OG-ap-45` is the repository merge for `~NFRA1` (the shape of `OG-ap-43`): one merge of `eff517546e` onto the `box/sitez` head; the issuer's merge-tree at the cut reads CLEAN (no conflicted path); no gateway byte changes; `ap45.AC1` to `AC4`, graded through the repaired `_ap43_check.py`.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-45` | merge `eff517546e` (carrying `a0c83303ee`) onto the `box/sitez` head in the applier's worktree, trunk's side on any conflict, the manifest block `eff517546e` / previous `a0c83303ee` from the applier's own Phase B commit; the record lists trunk's own changes against the live release | `W/`, the merge on a landing branch (drained by the issuer) | WORLD | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (a repository merge; independent of `OG-ev-7`). Gate limb: the newly added tree order is graded by `to-pipeline-gate`.
