@@ -76,7 +76,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's round-120 analysis item 1 and msg 8168 (the row approved: "merge-forward and one chosen-set promote may proceed, then the byte tie and the fold-back under a named waiver"). Cut as `bv-4` was (the step-6/step-7 split: the waiver's shas exist only after the promote), with the merge-forward INCLUDED as step 3 because the issuer cannot push DEV (the hook refused my own `portal-merge-forward.sh --push` and the branch push at 17:2xZ: DT or integrator only; nothing was pushed). The fold-back's overlap: `origin/PROD..origin/DEV` reads 131 at the cut (DEV carries other approved features), so the fold-back needs a NEW named CTO waiver as in round 115 ("never a precedent for a feature branch"). Seat `~H2` (live, IDLE since `bv-4`); the order carries `<workstream>PROMOTE_SA</workstream>`. The grade ON THE RUNNING PAGE is the issuer's (`AMGT-cb-2`) after the landing and the byte tie.
 
-<status>pending</status>
+<status>complete</status>
 <round>121</round>
 <workstream>PROMOTE_SA</workstream>
 <slot>0.4.0_DT_ClientPlatform~H2</slot>
