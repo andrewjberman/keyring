@@ -4434,3 +4434,17 @@ The CTO accepted the recommendation: a gateway consumer still reading `fund` as 
 
 - **Fan-out (this recut):** `N of M chains, N=1 worker (cf-3) of M=2 chains, cap 8` (the fund-form chain `cf-3` then `cf-5`; the gateway chain, a seat order; the two chains share no write set).
 - **Check at the cut (dry-run at the base):** `cf-3` AC1 FAIL as expected (no test file), AC2 PASS as expected (`80 passed`), AC3 FAIL as expected (no census file).
+
+### 122f. ROUND 92 -- `HVST-cg-3` DEPLOYED and complete; `HVST-cf-5` CUT, STAGED behind its pair (2026-10-18 ~02:3xZ)
+
+`HVST-cg-3` landed 02:06:03Z (release `4257a2aa42`, ledger closed `ee508eb3cb`, ref pushed): `harvest_get_research` now serves `fund_relation` in each `research_reports[]` entry; I read MNST, ML_FP, CLX and UNH through it myself (`candidate`, `template`, `candidate` x2, `holding`); SC1 read ADBE and SNPS; gold values unchanged. One effect the COO half did not name: the tool caps `research_reports[]` by response size, so the added key shows one fewer entry for a security with many reports (CPA 10 to 9 of 37; row `D1-S50`).
+
+**A CORRECTION to sections 121, 122e and the `cf-3` notes:** the hazard of changing `fund_form.gather_items` is NOT that a dossier build finds no stored fund form; `substrate._pick_stored` (lines 121-159) falls back to the lexicographically last stored object with `current` False and returns an absence only when the partition is empty. A dossier built between the `cf-3` merge and `cf-5` would SILENTLY cite the stale version-1 form. The precaution (no dossier or continuation build between the two) stands for that reason.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cf-5` | `cf-5` | **Two `research-fund-form` objects (method version 2) are written: PFOE (33 reports, the canary) then IDVZ (82), each its own foreground command with a read-back;** then `read_latest` and the substrate view resolve them as current, an in-memory dossier preview differs from the stored dossier only in `fund_form_ref`, and the served reads of UNH and CPA are equal. DIVZ gets no form. A seat order under its own never-widen pair (COO half written, sha256 `a7c7f05e...8b6f`; the CTO half is next). Workstream `FUNDFORM-REBUILD`. | WORLD | seat SC1 | CUT, STAGED: waits on the CTO half, site Z's answer and the issuer's GO |
+
+- **Fan-out (this recut):** `N of M chains, N=0 workers (cf-5 is a seat order) of M=1 chain, cap 8`.
+- **Check at the cut (dry-run at the base):** `cf-5` AC1 to AC4 FAIL as expected (no `cf5_served.out`).
+- **Round 92 cells:** `cg-1`, `cg-2`, `cg-3`, `cg-4`, `cg-5`, `cf-3` complete; `cf-5` staged. When `cf-5` closes the round's enrichment list (items 1 and 2) is done; item 3 (`ce-5`) was folded into `cg-3`; item 4 (the cycles) is SC1's.

@@ -8710,3 +8710,105 @@ by dell1 or by this seat.
   "world_is": "For the nine it does not: the April name table suppresses them first. No write happened and none is owed to the nine now (they are held out on purpose). The latent defect is the suppression itself; whether the resolution table should still gate candidacy once a ticker exists is a design question for the round after this one, with the table's writer already named. The next served single runs the plan step first and with --dry-run."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W104-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~104",
+  "surfaced_at": "2026-10-18T02:19:52Z",
+  "one_line": "The partners-data Lambda source sits under infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/, not directly under infra/aws/lambda/ as the cell's known-facts state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "SC-e-115 WORKER FACE, 'What is already known': the repo does NOT hold the Lambda under infra/aws/lambda/ (that folder has partner-etl-ops-sqs-consumer and others, not this one); the portal repo and lambda/-style folders elsewhere are candidates.",
+  "world_is": "The source is tracked at HEAD 964be4af93 under infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/ (lambda_function.py, etf_classifier.py, etf_classification.py, served_seam.py, pseudonymizer.py, platinum_dest_view.py, deploy.sh). infra/aws/lambda/ci/function-map/opal-partners-data.json names that folder as source_dir and records artifact_sha256 equal to the live CodeSha256. The live zip from aws lambda get-function (35752 bytes) hashes to the same value, and its lambda_function.py and etf_classifier.py are byte-identical to the HEAD blobs. portal/ is a submodule; a glob for lambda_function.py under it returns three files, none of them opal-partners-data.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py@964be4af93 (git ls-tree -r HEAD, 8 members under partners/)",
+      "infra/aws/lambda/ci/function-map/opal-partners-data.json@964be4af93 artifact_sha256 = c9FXD84szSBD5oSukUi8sCA6szY/LYiHpRYBWXnOBv4= = aws lambda get-function-configuration CodeSha256 (us-east-1)",
+      "aws lambda get-function Code.Location zip, 35752 bytes, sha256 base64 c9FXD84szSBD5oSukUi8sCA6szY/LYiHpRYBWXnOBv4=, 6 members, extracted under .scratch/partners_deployed",
+      "read this session in worktree 0.9.0_WK_MDPF_SECCLASS~104 (HEAD 964be4af93)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W104-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~104",
+  "surfaced_at": "2026-10-18T02:19:52Z",
+  "one_line": "The round-28 pre-read states the partners-data classifier returns three classes plus empty; the code returns the matched table's asset_class verbatim, so the returnable set is wider.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "spec_asserts": "ROUND28_PREREAD_PARTNERS_DATA_REPOINT_20261016.md, held reading point 1: 'The reader's output contract has three classes plus empty (equity | fixed_income | alternatives | ''), with hedge mapped to alternatives.' The SC-e-115 cell asks contract.returns to list the class strings the module can return today.",
+  "world_is": "etf_classifier.py classify() (lines 64-107) returns item.get('asset_class') verbatim from the ticker map (line 81) and the name-alias map (line 90), mapping only 'hedge' to 'alternatives'; the returnable set is the table's raw asset_class values plus '' and the layer-3/4 constants. lambda_function.py line 1040 lists 'cash' among the top-level classes. The pre-read's held counts put cash on 15 bd-securities rows, so 'cash' is returnable today; that count is held, not re-read here (a DynamoDB scan is outside this worker's read grant). Canonical structured and commodities would pass through unchanged once a repoint reaches the table: neither the classifier nor the consumer has a fold for them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classifier.py@964be4af93 lines 64-107 (classify) and lines 81, 90 (verbatim return)",
+      "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py@964be4af93 lines 1040 (top-level class list) and 1079 (empty maps to other)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/ROUND28_PREREAD_PARTNERS_DATA_REPOINT_20261016.md (held counts, cited not re-measured)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## MDPF_SECCLASS-D1-W102-S1 -- SC-e-113 chain order: the dispatcher runs A_03 before B_00, so A_03 is the first step lacking 2026-10-16
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W102-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~102",
+  "surfaced_at": "2026-10-18T02:19:52Z",
+  "one_line": "SC-e-113 premise order: the order lists the chain as B_00, A_03, B_01, C_06. The dispatcher runs A_03 in the dimensions phase (PHASE_A1) before B_00 (PHASE_B1), so the first step whose output lacks 2026-10-16 is A_03, not B_00. B_00 lacks the date only because it takes its dates from the positions_cube listing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/gold_dispatch.sh@964be4af93 line 142 (CHAIN_DIMENSIONS=\"A_00 A_01 A_02 A_03 A_04\"), line 162 (CHAIN_CANONICAL=\"B_00 B_01 ...\"), lines 547-548 (PHASE_A1 run_background A_00, A_02, A_03), lines 568-569 (PHASE_B1 run_background B_00)",
+      "data/black_diamond/scripts/gold/B_00.canonical_holdings.py@964be4af93 list_cube_dates (line 369) lists gold/timeseries/positions_cube/ and sets the B_00 date window from it (line 1082)",
+      "aws s3api list-object-versions opal-data-bd gold/timeseries/positions_cube/2026-10-16.parquet: no version (positive control 2026-10-15: two versions, latest 2026-10-17T23:14:24Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-113 order, worker face: the chain is listed as B_00, A_03, B_01, C_06, and the first step lacking 2026-10-16 is named from the listed order.",
+  "world_is": "In the dispatcher order A_03 runs first (dimensions), then B_00, B_01 and C_06. A_03 is the first step lacking 2026-10-16. Its output stops at 2026-10-15 because its window end is the newest silver/transactions trade_date (A_03.positions_cube.py@964be4af93 lines 1669-1671), and that date was 2026-10-15 when it ran."
+}
+```
+
+## MDPF_SECCLASS-D1-W102-S2 -- SC-e-113 positive control: gold/holdings_lots is not a daily object; its snapshot is keyed on the latest silver/allocations partition
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W102-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~102",
+  "surfaced_at": "2026-10-18T02:19:52Z",
+  "one_line": "SC-e-113 premise: the order says gold/holdings_lots/<date>.parquet exists per date and gives it as a positive control. No 2026-10-15 lots object exists; lots objects exist only for 2026-10-02 and 2026-10-09 in October, and the lots writer keys its snapshot date on the latest silver/allocations partition. The control was therefore taken at 2026-10-09.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 opal-data-bd prefix gold/holdings_lots/2026-10: 2026-10-02.parquet (LastModified 2026-10-11T00:05:55Z) and 2026-10-09.parquet (LastModified 2026-10-18T00:04:49Z) only; prefix gold/holdings_lots/2026-10-1 returned none",
+      "aws s3api list-object-versions opal-data-bd gold/holdings_lots/2026-10-16.parquet: none; 2026-10-09.parquet: three versions, latest 2026-10-18T00:04:49Z",
+      "data/black_diamond/scripts/gold/B_01.holdings_lots.py@964be4af93 lines 2492-2506 and 3291-3309: snapshot_date from the latest silver/allocations key; aws s3api list-objects-v2 silver/allocations/2026-1: 2026-10-16.parquet written 2026-10-18T00:18:12Z, after the lots write at 00:04:49Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-113 order, worker face: gold/holdings_lots/<date>.parquet is one of the producer outputs, and a listing of an existing date is a valid positive control for it.",
+  "world_is": "The lots writer writes one object per silver/allocations partition date (weekly in October), not per calendar date. A missing 2026-10-16 lots object is therefore expected at this run and is not evidence of a dropped write; the 2026-10-16 allocations partition landed after the lots write."
+}
+```

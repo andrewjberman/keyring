@@ -11122,5 +11122,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S50",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-18T02:17:37Z",
+     "one_line": "harvest_get_research truncates research_reports[] to a response-size cap, so adding a key to every entry (fund_relation, HVST-cg-3) shows one fewer entry for a security with many reports: CPA 10 of 37 before, 9 of 37 after.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cg-3 COO half: no existing key or value changes in research_reports[]; every entry gains one key, fund_relation.",
+     "world_is": "Read by the seat 0.7.0_AE_CloudOps~SC1 at 02:10Z after the release and recorded in cg3_served.out line 10: CPA_US_Equity shows 9 of 37 research_reports entries after the release against 10 of 37 before, omitted_items.research_reports 28 against 27, total 37 equal; the last entry shown before (report 4816fe6d87f0fc59) is among the omitted now. The cap is by response size, so the added key moves it for any security with many reports; no value is wrong. The omitted entries were not read. Not measured: how many securities hold enough reports to be capped, and whether a consumer reads the omitted entries by another route.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round92/cg3_served.out (line 10)",
+       "infra/aws/ec2/opal-gateway/app/harvest_research.py (the caps table, line 194: research_reports 6000)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
