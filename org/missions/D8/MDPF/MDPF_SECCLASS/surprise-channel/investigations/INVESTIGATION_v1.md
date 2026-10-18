@@ -8812,3 +8812,53 @@ by dell1 or by this seat.
   "world_is": "The lots writer writes one object per silver/allocations partition date (weekly in October), not per calendar date. A missing 2026-10-16 lots object is therefore expected at this run and is not evidence of a dropped write; the 2026-10-16 allocations partition landed after the lots write."
 }
 ```
+
+## MDPF_SECCLASS-D1-S53 -- the S48 served-vs-canonical residue is about -$32k on 8 of 14 dates, and the 8 are exactly the Monday-to-Thursday dates
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S53",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-18T02:32Z",
+  "one_line": "Cell SC-e-114 (worker ~103, S48_RANGE_RECON.json, merged @c7b4f72556, AC1 R29-s48-range ok=True) reconciles the served TOTAL delta (mix_daily_summary 87CvfcFp... to l2Wqoi6i...) against the canonical-holdings delta (the 23:15Z to 04:16Z versions) for 2026-10-01 to 2026-10-14: the residue (served minus canonical) is 0.00 on 10-02, 10-03, 10-04, 10-09, 10-10, 10-11 and between -31,616.79 and -32,192.93 on 10-01, 10-05, 10-06, 10-07, 10-08, 10-12, 10-13, 10-14. By calendar, the zero dates are Friday, Saturday and Sunday and the non-zero dates are all Monday to Thursday; no positive residue. The cause is not named.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~103/S48_RANGE_RECON.json (rows: date, served_delta, canonical_delta, residue; each recomputed by the checker within 0.01), e.g. 2026-10-01 served 407,148.67 canonical 438,765.46 residue -31,616.79; 2026-10-05 served 398,523.52 canonical 430,597.44 residue -32,073.92",
+      "weekday of each date computed from 2026-10-18 being a Sunday (10-01 Thursday, 10-02 Friday, 10-05 to 10-08 Monday to Thursday, 10-09 Friday, 10-12 to 10-14 Monday to Wednesday)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO msg 7442 and round-28 analysis item 6: the 14-date ranges are reconciled per date and a non-zero residue becomes a row.",
+  "world_is": "Non-zero: on weekdays the served TOTAL rose by about $32k less than the canonical holdings did, on Friday to Sunday it rose by exactly as much. The two measures are two objects with a weekday-dependent gap; what C_06 leaves out of the TOTAL on Monday to Thursday dates is not read. Carried to the CVO slug as a row, not a fault (CTO msg 7844)."
+}
+```
+
+## MDPF_SECCLASS-D1-S54 -- 2026-10-16 is absent from the 00:24Z served mix because the positions cube is written before that day's transactions land (a schedule-order finding)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S54",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-18T02:32Z",
+  "one_line": "Cell SC-e-113 (worker ~102, D1016_ABSENCE.json, merged @c7045f5b61, AC1 R29-calendar ok=True): version 0IrqqSvy... of mix_daily_summary.json (2026-10-18T00:24:42Z) ends at 2026-10-15 while the calendar frontier is 2026-10-16. The first step lacking 2026-10-16 is A_03.positions_cube.py: its window ends at the newest silver/transactions trade_date, the 2026-10-16 trades first appear at silver/transactions/2026-10-18.parquet (2026-10-18T00:17:36Z), and A_03 wrote its partitions at 23:14:24Z of the 23:00Z Saturday fire, 63 minutes earlier. B_00 (window = cube dates) and C_06 (keys = canonical holdings) inherit the gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~102/D1016_ABSENCE.json and D1016_EVIDENCE.json (tail date and frontier recomputed by the checker from the served version and lib/trading_calendar.py; the positions_cube and canonical-holdings 2026-10-15 objects exist with 2 versions each, 2026-10-16 returned no version and no delete marker)",
+      "A_03.positions_cube.py lines 1669-1671 (global_end_date) as read by the worker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served mix carries the last trading day (T-1) at the frontier: 2026-10-16 for a run on Saturday 2026-10-17 into Sunday 2026-10-18.",
+  "world_is": "The 2026-10-16 row is absent from the served version and appears only after the next run that follows the 00:17Z transaction landing (the 04:00Z fire of 2026-10-18 is the first). This is the order of the schedule (bronze transactions land after the 23:00Z fallback fire's A_03), not a code fault; the CTO asked for it as a row (msg 7844). Whether the 04:00Z fire writes the date is read at the round-29 close."
+}
+```
