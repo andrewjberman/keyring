@@ -28633,3 +28633,55 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T13:10:00Z",
+  "id": "NFRA_OPLGTW-Z-S390",
+  "one_line": "Round-43 ruling on worker row Z-W152-S1 (OG-sec-2 AC3 cannot read failed 0): the defect is the issuer's criterion, not the worker's work; AC3 amended to a set that passes at the base, and the five failing route-test cases are carried as an observation",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W152-S1",
+    "NFRA_OPLGTW-Z-W152-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my runs in the main tree at HEAD: test_transcript_route.py 1 failed 9 passed; test_teams_route.py 2 failed 19 passed; test_mail_route.py 2 failed 9 passed (the five cases the worker names); test_transcript_tools.py 8 passed; test_taxsma_workbook.py 21 passed; test_og_en9.py 3 passed; test_og_cl2.py 9 passed; so the five failures exist with no change of the order's",
+      "my run in the worker's tree of the amended AC3 set (tests/test_og_sec2.py, test_transcript_tools.py, test_taxsma_workbook.py, test_og_en9.py, test_og_cl2.py) through _bothorders.sh: forward 43 passed 0 failed, reverse 43 passed 0 failed, RESULT: PASS"
+    ]
+  },
+  "spec_asserts": "A criterion cut at L6 must pass at the base for the regression files it names, so that a failure after the change is attributable to the change.",
+  "world_is": "I chose the three route test files for AC3 without running them at the base (the order's issuer note recorded AC1 at the base only). Five of their cases fail at the base on trunk: each expects a 405 method refusal and receives 404. The worker found this, proved it with the pin disabled and filed the row instead of editing the tests, which is the correct behaviour. The route-test failures predate the order; whether they are a routing-library version effect or a real routing defect is NOT established here and is carried as Z-S391. Z-W152-S2 (the line-52 branch test made case-insensitive to match the pin) is accepted: under the old case-sensitive branch an uppercase HTTPS URL would have been appended to GRAPH_BASE; now it is pinned; no other branch moved.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-W152-S1 is repaired by amending AC3 (order amendment in this commit; gate limb: none graded, the order declares no placeholder change); Z-W152-S2 is a harmless consequence of the pin and is accepted."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T13:11:00Z",
+  "id": "NFRA_OPLGTW-Z-S391",
+  "one_line": "Five route-test cases fail at the base on trunk: each expects a 405 and receives a 404 (test_transcript_route.py::test_bearer_constant_time_own_prefix_only; test_teams_route.py::test_methods_and_unknown_routes and ::test_new_routes_are_get_only_and_allowlist_still_refuses_neighbours; test_mail_route.py::test_transcript_and_ms_bearers_refused_on_mail_prefix and ::test_graph_get_only_fails_closed)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my runs at HEAD in the main tree: test_transcript_route.py 1 failed, test_teams_route.py 2 failed, test_mail_route.py 2 failed; worker row Z-W152-S1 reports the same five with graph.py swapped to its base bytes"
+    ]
+  },
+  "spec_asserts": "A method the route does not allow is refused 405 (the tests' premise); the get-only allowlist fails closed.",
+  "world_is": "The routing layer answers 404 where the five cases expect 405. Not established: whether the cause is the installed starlette version, a route-table change, or a real defect in how an unsupported method is refused; the refusal still refuses (404 is also a refusal), so the fail-closed property the tests name holds in answer and differs only in status. These are mail, teams and transcript route tests, owned by other cells of this project's history. Carry to the round-43 analysis; no hazard is armed on it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
