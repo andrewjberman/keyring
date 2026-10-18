@@ -74,7 +74,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 2 of the CTO's round-117 analysis and its section-2 ruling. Depends on `AMGT-by-1` (the mapper): the one worker slot ~515 runs `by-1`, the issuer merges it, then the same slot is re-seated for this order on the merged tree. The rich export is read by the CVO at L9 after `by-5`. LOCAL code cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>118</round>
 <slot>0.9.0_WK_AMGT_RESAPP~515</slot>
 <fabric>dell1</fabric>
