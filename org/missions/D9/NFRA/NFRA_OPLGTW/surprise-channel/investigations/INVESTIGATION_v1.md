@@ -29019,3 +29019,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: a fix lives in app/probe_listener.py make_server (build the Config so it leaves the global uvicorn.access logger as the service configured it, or restore it after), and needs a release under its own never-widen; not done here. Until then, count traffic from the audit lake, not the journal. Not urgent for safety; it is an observability loss."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T17:45:00Z",
+  "id": "NFRA_OPLGTW-Z-S396",
+  "one_line": "Round-43 ruling on the applier's row Z-S395 (since the OG-ap-40 deploy the gateway service's own access log is silent: the listener's uvicorn.Config configures process-wide loggers): GRADUATED to a repair cell OG-pr-5 and a tenth release OG-ap-44, ahead of OG-ev-7 (CTO ruling msg 35769)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S395"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the applier's measurement (msgs 35766 and 35767): the journal's POST /mcp count fell from 157-171 per 30 minutes to 0 at the OG-ap-40 deploy (09:51Z) while the audit lake shows 291-300 records per window; the cause shown on the host (the process-wide uvicorn.access logger empty after the listener's Config)",
+      "the code, read by me: app/probe_listener.py make_server builds uvicorn.Config(probe_app, ..., log_level='warning', access_log=False, lifespan='off', ...); uvicorn 0.51.0 (local) Config.configure_logging applies LOGGING_CONFIG, sets the levels of the uvicorn loggers from log_level and, for access_log False, empties uvicorn.access handlers and sets propagate False; the host's installed version is for the worker to confirm",
+      "the CTO's ruling, msg 35769: cut a repair cell in round 43 and ship it in a batched release under its own never-widen ahead of OG-ev-7"
+    ]
+  },
+  "spec_asserts": "A side server added to the gateway process must not change the service's own logging: the access log of POST /mcp keeps reaching the journal.",
+  "world_is": "Since 2026-10-18 09:51Z the service's HTTP access lines do not reach the journal; anything that counts or reads them reads zero (the OG-ap-40 and OG-ap-42 reports of '0 /mcp requests' meant the log was silent, not that traffic stopped). The audit lake, the tools and the answers are unaffected, so this is a visibility loss, not a served-data fault. It is MY cell's regression (OG-pr-1 to OG-pr-3 built the listener) that the asks and the reviews did not name: the disclosure list described what the listener adds and not what constructing its Config changes in the process. Repair: OG-pr-5 (snapshot and restore of the four uvicorn loggers) and the release OG-ap-44, with the CTO's criterion made mechanical in ap44.AC2.",
+  "disposition": "GRADUATED"
+}
+```
