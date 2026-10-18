@@ -72,7 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-pr-5.round-43-listener-leaves-t
 - Chain: `OG-pr-5` then `OG-ap-44` (the tenth release), ahead of `OG-ev-7`. Slot `~156`.
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-B</workstream>
 <slot>~156</slot>
