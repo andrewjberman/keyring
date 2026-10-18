@@ -12446,5 +12446,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W176-S5",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:34:59Z",
+        "one_line": "The naming gate grades the row's pipeline value harvest as a NEW hand-kept carrier (NAMING REFUSE at function-map line 6) in its WARN window; the commit went through and the live read it needs was blocked in this sparse tree.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 section 1b and the commit rule: commit with .tools/safe-commit.sh; if the naming gate refuses, report the refusal and its exact text and do NOT force it.",
+        "world_is": "The commit a94e7cbdb2 passed with a WARN. The gate printed NAMING REFUSE infra/aws/lambda/ci/function-map/opal-research-pull-enqueue.json:6 harvest -> lookup('harvest'), with why: NEW hand-kept carrier (context rule); hand-kept carrier of 'harvest' outside every permitted context, and LIVE-READ-FAILED: CensusError (the served-graph client reported BLOCKED). The gate reported 1 REFUSE verdict that did not block, and said ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce. Not forced; the value was not changed. Under ENFORCE this commit's row would refuse.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "safe-commit output for commit a94e7cbdb2, the [naming-gate] NAMING REFUSE and WARN lines",
+                "infra/aws/lambda/ci/function-map/opal-research-pull-enqueue.json@a94e7cbdb2 line 6 (pipeline harvest)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
