@@ -66,7 +66,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 4 of the CTO's round-117 analysis: a READ (row W513-S2); it changes no product file and decides whether a later cell can carry the fund currency onto the figures under the page's rule. The issuer's citation check `round118_prep/checks/r118_receipt_cites_check.py` verifies that each `path:line` the receipt cites exists and that the five sections are present; it does not grade whether the reading is right (the CTO reads it). AC2 is a REGRESSION control only: the cell writes no code, so the print folder must read exactly as at the base. LOCAL read cell; `<risk>LOCAL</risk>`.
 
-<status>pending</status>
+<status>complete</status>
 <round>118</round>
 <slot>0.9.0_WK_AMGT_RESAPP~516</slot>
 <fabric>dell1</fabric>
