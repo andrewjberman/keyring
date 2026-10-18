@@ -63,7 +63,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-9.round-43-trace-the-per-ide
 - Read-only, no product path in `<paths>`: `<risk>LOCAL</risk>`.
 - Pre-cut: `AC1` base FAIL as expected (the record is absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-A</workstream>
 <slot>~155</slot>
