@@ -1,0 +1,2 @@
+key	name	action	asset_class	sub_asset_class	current_class	rule	evidence
+NAME::LORD ABBETT CONVERTIBLE I	LORD ABBETT CONVERTIBLE I	REMAP	fixed_income		cash	agree with the ticker row LCFYX (fixed_income, seed 2026-10-16)	LCFYX NAME row reads cash/Cash (mdpf-secclass-old-list-reclassify 2026-10-07); ticker row LCFYX reads fixed_income (mdpf-secclass-seed22 2026-10-16T06:27:07Z); consistent get_item 2026-10-18
