@@ -28992,3 +28992,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The defect is the issuer's check, repaired before the applier ran it; the merge follows the order; AC1 reads PASS with the repaired check."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-18T17:19:06Z",
+  "id": "NFRA_OPLGTW-Z-S395",
+  "one_line": "Since the OG-ap-40 deploy (09:51Z) the gateway service's own uvicorn access log is silent: the journal holds 0 'POST /mcp' lines in every window after it (157 to 171 per 30 minutes before) while the audit lake shows tool traffic continuing; the probe listener's uvicorn.Config(access_log=False), built in the same process, empties the global uvicorn.access logger. My earlier reports of '0 /mcp requests' for OG-ap-40 and OG-ap-42 meant 'the access log is silent', not 'no traffic'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "journalctl -u opal-gateway, 'POST /mcp' lines per window, read over SSM: 05:30-06:00Z 171; 06:23:45-06:54Z 157 (the OG-ap-39 read-back); 09:20-09:50Z 168 (before the OG-ap-40 deploy, 09:50:14Z to 09:52:22Z); 09:53:19-10:24:30Z 0 (the OG-ap-40 read-back); 15:50:20-16:21:30Z 0 (the OG-ap-42 read-back). The last 'POST /mcp' line in the journal is at 09:51:27Z. Total journal lines per 30-minute window fell from about 1150 to about 680.",
+      "The audit lake in the two silent windows holds 300 and 291 records (W/ap40_pb/wincalls.json, W/ap42_pb/graphcounts.json), so the traffic continued; the 291 include 272 Graph-backed tool calls (hx_teams 103, hx_msgs 30, poll_addressed_teams_messages 69, read_channel_messages 69, whoami 1, all outcome ok).",
+      "Mechanism, READ and then SHOWN: /opt/opal-gateway/.venv/lib64/python3.11/site-packages/uvicorn/config.py lines 421 to 423 (uvicorn 0.52.3): 'if self.access_log is False: logging.getLogger(\"uvicorn.access\").handlers = []; ...propagate = False'. app/probe_listener.py line 359 builds uvicorn.Config(probe_app, ..., log_level=\"warning\", access_log=False) inside the service process. A fresh script on the host with the service's own uvicorn printed: before any Config, handlers 0; after a main-server-style Config (default log config), handlers 1, level INFO; after the probe-listener-style Config, handlers 0, level WARNING. The unit's ExecStart runs the service with default logging (uvicorn app.server:app --workers 1).",
+      "NOT shown: that the running service's handlers are empty right now (no probe of the live logger); the evidence is the journal counts and the reproduction of the call that empties the handlers."
+    ]
+  },
+  "spec_asserts": "OG-ap-40's ask section 2 and the disclosure list state what the listener adds (a loopback server in the same process, off by default); neither names any effect on the service's own logging. The OG-ap-39, OG-ap-40 and OG-ap-42 read-backs count 'POST /mcp' lines from the journal (ap38_wincalls.py, ap42_graphcounts.py).",
+  "world_is": "The listener's Config is the first uvicorn.Config built after the service's own and it resets the process-wide uvicorn.access logger. Effect: the service's HTTP access lines no longer reach the journal; the audit lake is unaffected; anything that counts or reads access lines in the journal reads zero. CODE9_SERVED.json (OG-ap-40) fields service_window_calls_note and mcp_requests_served, and my OG-ap-40 and OG-ap-42 reports that said '0 /mcp requests', read 0 for this reason and are not evidence of no traffic. CODE10_SERVED.json now names the field post_mcp_access_log_lines and carries a note. The CT4 count in OG-ap-42 was a separate error of mine (a first classifier counted 1 Graph-backed call; the corrected count is 272, all ok) and is superseded in CODE10_SERVED.json, the manifest release note and the proof instance.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: a fix lives in app/probe_listener.py make_server (build the Config so it leaves the global uvicorn.access logger as the service configured it, or restore it after), and needs a release under its own never-widen; not done here. Until then, count traffic from the audit lake, not the journal. Not urgent for safety; it is an observability loss."
+}
+```
