@@ -13193,5 +13193,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S8",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T20:17:15Z",
+        "one_line": "HVST-cn-5 amendment 3: a refused plan on an input variable (schedule_state=ON, a validation failure) also prints a partial 'Plan: 15 to add' summary before its error, so a refusal of either kind carries a Plan: line that is not the verdict.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Amendment 3, section 1C: BAD-STATE-REFUSED passes -var dossier_refresh_schedule_state=ON and shows the validation error; the plan is refused and nothing is applied.",
+        "world_is": "The BAD-STATE-REFUSED plan (both flags and the digest placeholder, schedule_state=ON, the 16 -target flags) exits 1 and prints 'Plan: 15 to add, 0 to change, 0 to destroy.' before 'Error: Invalid value for variable' on dossier-refresh.tf line 97. The schedule is the one resource missing from the summary (it depends on the invalid variable). This is the same class as row S7 (a refused plan prints a Plan: summary before its error), with a validation refusal in place of a precondition refusal. Neither refusal may be read from its Plan: line.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/terraform/harvest/dossier-refresh.tf@fc90547a26 line 97 (variable dossier_refresh_schedule_state) and line 102 (its validation rule)",
+                "terraform plan -lock=false -input=false -no-color (16 -target flags, both flags, digest placeholder, -var dossier_refresh_schedule_state=ON) in the worktree at amendment 3: rc 1, a Plan: 15 to add line, then Error: Invalid value for variable"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
