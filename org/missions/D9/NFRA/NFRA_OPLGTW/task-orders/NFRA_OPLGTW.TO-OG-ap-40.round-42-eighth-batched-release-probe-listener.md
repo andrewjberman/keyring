@@ -1,0 +1,82 @@
+# NFRA_OPLGTW task order -- `OG-ap-40` -- APPLY: the round-42 eighth batched gateway release -- the loopback probe listener, under its own never-widen, and the first calls THROUGH THE RUNNING SERVICE (the disarm evidence for `Z-S375` and `Z-S338`)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the applier's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md</decomp_doc>
+<owned_cells>OG-ap-40</owned_cells>
+</decomp_ref>
+<to_id>NFRA_OPLGTW.TO-OG-ap-40</to_id>
+<issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
+<issued_by>2.0.0_SA_COO~O</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule or trigger is added or changed; you still run `comp-schedule --drift` at the act and record what it scanned.
+comp-iam: DECLARED-NOT-APPLICABLE -- the release changes NO IAM. The arming act writes ONE SSM parameter (`/opal-gateway/probe/lease`, a lease of 60 minutes or less holding an order id, a `****<last4>/<vendor>/<alias>` reference and two times, no secret) with YOUR OWN role; if the gateway's instance role cannot read it (`ssm:GetParameter`), STOP at Phase A and file a BLOCKING row: the IAM act is a separate order, never an edit here.
+comp-adversary: DECLARED-NOT-APPLICABLE -- the act is the CTO's decision 35584 (option A: a loopback listener; B, C and D refused).
+EGRESS CLASS, declared: NONE beyond Opal's own AWS (the listener binds the loopback interface only).
+</preflight>
+
+## 1. THE CELL -- `OG-ap-40` (decomposition addendum R3-T.119, round 42)
+
+**METHOD = `OG-ap-38`'s, AS AMENDED (A1 to A3), read in `org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-38.round-41-sixth-batched-release-hazard-repair.md` and followed step by step; this order states only what differs.** That includes the HARD-GUARD RULE for every fresh-process run, the live-ref re-read, the re-cut in a clean sparse tree with the overlay disclosure, the three-half ask, the ledger opened with entry AND sentinel first, no `HALT_OVERRIDE`, the 30-minute read-back, and the host clock and `systemctl --failed` read and PRINTED BEFORE THE LEDGER IS CLOSED.
+
+⛔ **STAGED BEHIND TWO GATES, both mechanical:** `OG-sec-1`'s `W145/SSRF_AUDIT.json` reads `CLEAN` with 0 controllable (`org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~145/SSRF_AUDIT.json`; `ap40.AC1` refuses otherwise) and `OG-pr-1` has drained to trunk. The GO names `trunk_sha`.
+
+APPLY: ONE code release on the live ref (read `services.opal-gateway.deployed_commit` at HEAD; if another seat has moved it, STOP and file a row). No Terraform, no IAM, no env key, no change to the unit file, `deploy-to-ec2.sh` or `EC2_MANIFEST.json` by hand, one deploy, ledger `nfra-oplgtw-gateway-release-batch9`. The take list is THREE files taken whole from trunk at `trunk_sha`, each byte-equal to trunk's blob: `infra/aws/ec2/opal-gateway/app/probe_listener.py` (new), `infra/aws/ec2/opal-gateway/app/server.py` (its diff against the live ref must be exactly the `lifespan` hookup of `OG-pr-1`; any other hunk is a STOP and a row), `infra/aws/ec2/opal-gateway/tests/test_og_pr1.py` (new). NOT in this release (the check counts them at 0): `tools.py`, every `client_*.py`, `typed_scope.py`, `etfs_rivals_flow.py`, `destructive_ops.py`, `deploy-to-ec2.sh`, the unit file, `EC2_MANIFEST.json`, the catalog and `app/refs/`, Terraform.
+
+### PHASE A (only on the issuer's GO): re-cut, HOST MEASUREMENTS UNDER THE GUARD, ask. NO deploy IN ANY FORM
+
+Steps 1 and 2 as `OG-ap-38`, in `C:/tmp/og-rel-batch9`, branch `rel-nfra-oplgtw-batch9`; write `W/ap40_release.json` = `{"base_sha", "release_sha", "trunk_sha"}` (FULL 40-character shas). In the release tree: the taken test file; the thirteen window test files plus `test_og_en9.py`, `test_og_cl2.py` in BOTH orders; the full suite's failing set compared with the live ref's (name each difference); `bash -n deploy-to-ec2.sh` and `--preflight-only`; the host-shaped import check.
+3. **THE HOST MEASUREMENTS** (candidate staged in a scratch folder on the host, removed after; every gateway-code run in a fresh process under the HARD GUARD; stop at 75 percent host used). The listener is exercised IN A FRESH GUARDED PROCESS here (the running service is not touched in Phase A) with a fake lease source for the test, and the host facts are read from the live service: write `W/PHASE_A_OG-ap-40.json` = `{"body": {"release_sha", "listener": {"bound_host": "127.0.0.1", "reachable_from_outside": false, "in_alb_target_group": false, "off_by_default": true, "lease_minutes": <the lease you will arm, 60 or less>, "expires_closed": true, "tools_served": ["client_get_transactions", "etfs_compare_peers"], "other_tool_refused": true, "other_account_refused": true, "audit_label_on_every_call": true, "guard": "<named guard>"}, "heap_read": {"method": "proc_status_signal", "before_mb": x, "after_mb": y, "service_pid_stable": true}, "tests": {"arm_call_expiry_passed": true, "window_set_passed": n, "window_set_failed": 0}}}`: `reachable_from_outside` and `in_alb_target_group` are READ (a connection attempt to the listener port on the host's private address is refused; `describe-target-health` / the target group's port list does not name the listener port), never asserted; `bound_host` is read from `ss -ltn` for the running candidate in the scratch process; `heap_read` is the `SIGUSR2` line of the module read twice around a call. Anything that fails: STOP, file a BLOCKING row with the numbers, write NO ask, report.
+4. **The ask**, `W/NEVER_WIDEN_ASK_OG-ap-40.md`, for THREE halves, each under a heading containing its word: the `diff` by file with the hunk attribution; the `widening`, stated plainly (a NEW listener on `127.0.0.1:<port>` inside the running gateway process, off by default; it can serve `etfs_compare_peers` and `client_get_transactions` for ONE fixed probe principal and ONE test account while a lease of 60 minutes or less is valid in SSM; the SSRF audit `OG-sec-1` read CLEAN, its table cited; no change to the ALB, OAuth, IAM or any route; what a process on the host could do with the listener while armed; the honest limits); the `order` of acts (the arming, the probes, the disarm); `both branches` (armed, unarmed); the `rollback` (redeploy the live ref's tree; delete the lease parameter); the `triggers` (health not 200 in 60 s; a tool of the 27 not answering under the guard; the `.env` key count not 65; `tools/list` changing; md5 beyond the released paths; host memory above 85 percent; `NRestarts` above 0; the listener answering with no lease; the marker not equal to the release sha); the gate lines. Commit, run AC1 (`org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r42/checks/ap40.AC1.sh`), REPORT, STOP.
+
+### PHASE B (only on the issuer's GO, which names all three halves signed at `release_sha`)
+
+5. As `OG-ap-38` step 5 with ledger `nfra-oplgtw-gateway-release-batch9`, deploy from `C:/tmp/og-rel-batch9`, `DEPLOY_BASE_REF=<the live ref>`.
+6. **The probes THROUGH THE SERVICE**, writing `W/CODE9_SERVED.json` (fields as in `ap40.AC2.sh`'s header). With the lease PARAMETER ABSENT first: a connection to the listener answers 403 `probe_not_armed` (record it; the listener is closed at rest). ARM: write the lease parameter (order `OG-ap-40`, the test account reference, 45 minutes), then, with the service PID's `VmRSS`/`VmHWM` read BEFORE by sending `SIGUSR2` over SSM and reading the log line: (a) ONE `etfs_compare_peers` call with a VALID period and axis through the listener (this is the `Z-S375` evidence), then `SIGUSR2` again (AFTER); (b) the window chain of the test account through the listener, page after page for the newest partitions, with the heap read before and after the chain and per page (this is the `Z-S338` evidence: `heap_growth_median_mb` is the median of the per-page growths); (c) a third tool name (refused), another account reference (refused). DISARM by deleting the parameter and show the next call is refused; also show a call after the lease would have expired is refused (set a 2-minute lease for this check, then let it lapse). The service PID is the same before and after every probe, `NRestarts` is 0 after the probes, and the 27-tool read passes 27 of 27 under the hard guard in a fresh process.
+7. Standing clauses as `OG-ap-38` step 7; the host clock and failed units read BEFORE the ledger closes; the lease parameter DELETED before the close (`listener_closed_at_rest` read after); close the ledger; commit; run `ap40.AC2`; report once per phase; send me the ledger CLOSED time (I tell the CTO). The `Z-S375` and `Z-S338` rows are disarmed by the CVO's clock on my word after my own run of `ap40.AC2`; you do not disarm them.
+
+## 2. BOUNDS
+
+- The release's files only. No IAM or Terraform change, no env key, no deploy-script, unit or manifest edit by hand; the only write outside the deploy is the lease parameter (and its deletion). No account number, person's name, credential or object content in any record (`****<last4>` form only).
+- Never: push, `git stash`, rebase, `checkout --` or `clean`; merge box/sitez into the release branch; bare `terraform apply`; leave the lease parameter in place after the close; set `MUSE_CLIENT_ID`; **run gateway code on the host without the hard guard** (the probes in Phase B go to the RUNNING service, which carries the unit's memory ceiling, only through the listener and only the two tools).
+- REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
+
+## 3. SURFACES
+
+<paths>
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-batch9.json
+org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+`W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/` (the tree convention grants it). Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
+
+## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="OG-ap-40"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r42/checks/ap40.AC1.sh; echo "exit=$?"</invocation><expect>(?s)SSRF audit \(OG-sec-1\) verdict and controllable count: CLEAN 0 \(want CLEAN 0\).*is the live ref before this release: yes.*outside the take list 0 \(want 0\); take-list files missing 0 \(want 0\); not byte-equal to trunk's 0 \(want 0\).*listener: bound 127\.0\.0\.1, reachable from outside False, in the ALB target group False, off by default True.*ask has the three halves yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ap-40"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r42/checks/ap40.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0; landed=(current|superseded).*the 27-tool read 27 of 27 under the hard guard yes.*read BEFORE the ledger closed True: ok.*THROUGH THE LISTENER.*etfs_compare_peers answered True.*window chain \d+ pages answered True.*listener closed at rest True.*served verdict: OK.*RESULT: PASS.*exit=0</expect></criterion>
+</proof_of_spec>
+
+- `AC1` (Phase A) is graded by me on my run before any GO to Phase B; `AC2` (Phase B) after the ledger closes.
+
+## 5. WHEN YOU ARE DONE
+
+Report once per phase (counts, seconds, megabytes, hashes and booleans only). Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-40.round-42-eighth-batched-release-probe-listener.proof_of_spec.json` after Phase B and validate it with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>`. The `<status>` flip is mine.
+
+<!-- ===================== RECORD FACE ===================== -->
+
+**ISSUER NOTES:**
+- Round 42, workstream ENRICH-R42-A (decomposition addendum R3-T.119). The CTO's cell 5 release (msg 35584): "ships after cell 4 reads clean, in a batched release under its own never-widen"; `Z-S375` disarms on `etfs_compare_peers` answering through the listener with the service heap and `NRestarts` printed, `Z-S338` closes on a full window chain through it with the service heap flat by the limits in force. A separate release from `OG-ap-39` so either can be rolled back alone.
+- The listener opens an unauthenticated-on-loopback path guarded by the SSM lease, the binding and the audit label (the CRO's research). The risk the CTO named, a host-local SSRF reaching it, is what `OG-sec-1` audits. The lease holds an account reference in the `****<last4>/<vendor>/<alias>` form, so no client identifier is in code or in a record.
+- Pre-cut: `ap40.AC1` and `ap40.AC2` base FAIL as expected (no records); the record controls (bound to 0.0.0.0, reachable from outside, on by default, a 120-minute lease, three tools served; and for AC2 a +800 MB peer heap, a 25 MB chain growth, an expired lease not refused, the listener left open, a 90-minute lease, a wrong label, a restart after the probes) all read NO in the dry-run.
+
+<status>staged</status>
+<round>42</round>
+<workstream>ENRICH-R42-A</workstream>
+<slot>~AE</slot>
+<fabric>site-z</fabric>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
