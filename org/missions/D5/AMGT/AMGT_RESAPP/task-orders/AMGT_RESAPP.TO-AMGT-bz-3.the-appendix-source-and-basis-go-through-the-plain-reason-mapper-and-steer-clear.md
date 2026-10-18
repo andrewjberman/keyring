@@ -73,7 +73,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Items 3 and 4 of the CTO's round-118 analysis (batched: one region, the pack's appendix figure-line sites and one constant); rows W515-S2 and the CTO's by-5 row. The issuer's measurement behind the 'latent' reading: `r118_leak_scan.py live` over 101 names reads 0 leaking lines. LOCAL code cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>119</round>
 <slot>0.9.0_WK_AMGT_RESAPP~519</slot>
 <fabric>dell1</fabric>
