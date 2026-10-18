@@ -30810,3 +30810,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W510-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~510",
+  "surfaced_at": "2026-10-18T04:44:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 1 names Net debt as carrying no code on RIO LN, but the synthetic header-figure fixture carries no Net debt figure, so no test asserts it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bw1_header_figures.json@e288a1b0a6 RIO_LN figures: NAME, CRNCY, EQY_FUND_CRNCY, PX_LAST, CUR_MKT_CAP, CRNCY_ADJ_MKT_CAP, CURR_ENTP_VAL; no NET_DEBT figure",
+      "lib/research/print/tests/test_bw1_currency_labels.py@e288a1b0a6 C2 asserts Market cap and Enterprise value only; no assertion names Net debt"
+    ]
+  },
+  "spec_asserts": "Order AMENDMENT 1, RIO LN: Enterprise value and Net debt carry no code either (their own currency is none: the same words).",
+  "world_is": "The fixture has no Net debt figure, so the Net debt clause is not exercised by any test. The rule covers it by construction (_own_currency empty gives the words via _money), but it is unverified here. Adding a figure would edit the synthetic fixture beyond the order's stated facts, so it is left for the issuer.",
+  "notes": "Form only."
+}
+```
