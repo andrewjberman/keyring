@@ -28964,3 +28964,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: narrow DELL_OWN to the named paths (or rule that tests/test_og_pr1.py takes dell1's blob and say why), then I re-run the unmodified script. AC4 and the proof instance follow your ruling; the proof carries AC1 as measured until the check is amended."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T15:45:00Z",
+  "id": "NFRA_OPLGTW-Z-S394",
+  "one_line": "Round-43 ruling on the applier's row Z-S393 (OG-ap-43 AC1 cannot read PASS: _ap43_check.py's DELL_OWN pattern covered every file under tests/): the defect was the issuer's check, already narrowed in a24674dd4d after the applier's branch was cut; the merge follows the order and AC1 reads PASS with the fixed check",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S393"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the applier's merge eb9a60c0ac (branch land-sitez-rel-nfra1-43 e31407d225; parents 011a4c7bde and 922ee425fe): my run of ap43.AC1 with the FIXED _ap43_check.py (a24674dd4d) on the applier's record: parents exact, dell1's release an ancestor, conflicted paths 2 (probe_listener.py, test_og_pr1.py), 0 conflict markers, gateway paths differing from trunk_base 0, the 2 conflicted gateway paths resolved (non-dell1 paths to TRUNK's blob), terraform 0, outside the allowed set 0: RESULT PASS",
+      "ap43.AC2 PASS (manifest 922ee425fe, previous 6575999df5, source dell1's own commit 52b93de111, an ancestor of the merge); ap43.AC3 PASS (125 app/ files compared with live 922ee425fe, 5 trunk-own files listed with owners and none unlisted, tools.py code-equal); the applier reports AC4 PASS (66 passed, both orders)"
+    ]
+  },
+  "spec_asserts": "A grading check must encode the order it grades: trunk-own gateway tests take trunk's side on a conflict and only dell1's own paths take dell1's.",
+  "world_is": "My first _ap43_check.py named dell1-own as app/harvest_*.py plus ALL of tests/, so it demanded dell1's blob on tests/test_og_pr1.py, which the order and the GO say takes trunk's side. I found it while preparing the GO and narrowed the pattern to dell1's c?N-named tests and fixtures (a24674dd4d, committed minutes after the GO and after the applier's branch base 011a4c7bde, so the applier's tree held the old script). The applier read the contradiction, did not bend the check or the merge, filed the row and stopped, which is the correct behaviour. The merge itself is as ordered.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The defect is the issuer's check, repaired before the applier ran it; the merge follows the order; AC1 reads PASS with the repaired check."
+}
+```
