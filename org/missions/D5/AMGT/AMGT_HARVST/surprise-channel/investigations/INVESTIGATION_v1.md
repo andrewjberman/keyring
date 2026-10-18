@@ -13172,5 +13172,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S7",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T20:07:55Z",
+        "one_line": "HVST-cn-5 amendment 2: a refused plan (run flag on, build flag off) still prints a 'Plan: N to add' summary before the precondition error, so the first Plan: line of a refused plan reads as adds.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Amendment 2, section 1B: the RUN-ONLY-REFUSED plan shows the precondition refusal (the plan ends in the program's own error), and the BUILD and BOTH plans end in their Plan: lines.",
+        "world_is": "The refused run-only plan (-target for the 16 resources, -var dossier_refresh_run_enabled=true and the digest placeholder, no build flag) exits 1 and prints 'Plan: 9 to add, 0 to change, 0 to destroy.' before 'Error: Resource precondition failed' on the cluster. The nine adds are the run-half resources that do not depend on the cluster; the summary is printed before the error. A reader that takes the first Plan: line as the verdict reads nine adds for a refused plan. Nothing is applied, and the error is what refuses it.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/terraform/harvest/dossier-refresh.tf@b67e2eec2f line 267 (the cluster precondition: condition = var.dossier_refresh_build_enabled)",
+                "terraform plan -lock=false -input=false -no-color (16 -target flags, -var dossier_refresh_run_enabled=true, -var dossier_refresh_image_digest=sha256:0{64}) in the worktree at amendment 2: rc 1, a Plan: 9 to add line, then Error: Resource precondition failed"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
