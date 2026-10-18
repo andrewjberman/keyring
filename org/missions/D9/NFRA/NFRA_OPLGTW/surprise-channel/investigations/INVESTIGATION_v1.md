@@ -28905,3 +28905,35 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T14:05:00Z",
+  "id": "NFRA_OPLGTW-Z-S392",
+  "one_line": "Round-43 rulings on five OBSERVATION rows of the first six round-43 orders (Z-W151-S1, Z-W153-S1, Z-W154-S1, Z-W154-S2, Z-W155-S2); two rows are CARRIED, not closed (Z-W153-S2 closes when OG-ap-42 is live; the ARMED Z-W155-S1 stays ARMED with an owner and a cell)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W151-S1",
+    "NFRA_OPLGTW-Z-W153-S1",
+    "NFRA_OPLGTW-Z-W154-S1",
+    "NFRA_OPLGTW-Z-W154-S2",
+    "NFRA_OPLGTW-Z-W155-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my runs on the drained trunk and in the workers' trees: OG-pr-4 AC1 12 of 12 and AC3 30 passed both orders; OG-en-31 AC1 13 of 13 and the mutant check FAILED/PASSED/restored byte-equal; OG-sec-2 AC1 2 of 2 and AC3 43 passed both orders; sec3.AC1 PASS (21 of 21, CLEAN 0); ev8.AC1 PASS (81 of 81, frequency ABSENT on every site with the record-level reason); ev9.AC1 PASS (limit 120 per 60 s equal to the config defaults); every proof instance VALID (rc=0)",
+      "the same WARN (client-data-check: hashed account-id list ABSENT at the home .opal path) prints on every safe-commit on this device, mine included"
+    ]
+  },
+  "spec_asserts": "A worker's observation is ruled by the issuer inside its own decomposition, with what it changes and what it does not.",
+  "world_is": "Ruled: (1) Z-W151-S1 the missing hashed account-id list is a DEVICE condition on this box (every commit here is unchecked for client account ids), not a gateway or project defect; the two files of OG-pr-4 hold only test fixtures that were already at base; it is for the device owner (0.0.0_AB_MSTR~Z) and goes to the round-43 slug as an item, not a cell. (2) Z-W153-S1 the SSRF pattern does not match graph.call(: the worker traced all 63 Graph call lines through the ONE sink graph.py (record row 4, controllable no), and OG-sec-2 now pins that sink; ruled harmless for the verdict. (3) Z-W154-S1 twelve of 81 audit-write sites stay 'unknown' for the event loop because the sync tool dispatch lives in the pinned mcp SDK; a stated limit of the table, to be resolved only if the round-44 repair decision needs it. (4) Z-W154-S2 and (5) Z-W155-S2 the audit lake bucket (opal-mcp-audit) has no row in the infra/logic registry and comp-estate does not name it: the registry gap goes to the round-43 slug for the CTO. CARRIED, NOT closed: Z-W153-S2 (two nextLink loops in tools.py and asker_scope.py follow the link without the base check; the pin in graph.call refuses a foreign host before any request once OG-ap-42 is live; until then the residual is real and the link comes from a Graph reply, not a caller); Z-W155-S1 (ARMED, owner 2.0.0_SA_COO~O: the lake holds no gw_ratelimit row for the 2026-10-18 429 although the lake kept writing; the refusal-audit write is best-effort and swallows failures; the cell that explains it is a round-44 candidate: measure whether that write fails, before any change to the limiter, with the Z-S177 trace's recommendation 'no change').",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Each of the five is either a stated limit of a measurement, a device condition outside the gateway, or covered by the pin OG-sec-2 adds; none changes a verdict of the round. Z-W153-S2 and Z-W155-S1 are NOT dismissed by this row; they are carried with the conditions above."
+}
+```
