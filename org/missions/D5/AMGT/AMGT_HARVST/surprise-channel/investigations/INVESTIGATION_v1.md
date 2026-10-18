@@ -12159,5 +12159,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S60",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+        "surfaced_at": "2026-10-18T13:51:15Z",
+        "one_line": "HVST-ck-3, the CTO's condition 2: four same-name object pairs differ in bytes between the legacy raw prefix and the canonical prefix of a slash key; after the release the canonical object, the newer in all four, is served by name in both spellings; nothing is deleted or moved.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Round 96 CTO half (NEVER_WIDEN_CK3_GATEWAY_UNION_READ_RELEASE_CTO_HALF.md @379693fc5b, condition 2): the four byte-different same-name pairs are filed as ONE surprise row before the deploy, naming each pair, both sizes and timestamps, and which object is served after; a row, not a STOP.",
+        "world_is": "Measured by head-object on opal-data-harvest at 2026-10-18T13:51:15Z. PEERS BP: peers/v1/BP/_LN_Equity/2026-09-24T2252Z.json 9252 B, LastModified 2026-09-24T22:53:31Z, ETag 0c51ed0e3912d580cd2485d3d599cfcf; peers/v1/BP-SLASH-_LN_Equity/2026-09-24T2252Z.json 10732 B, 2026-10-02T08:34:19Z, ETag 7765ac6ac55d22498f5c22a0f6a462d6. PEERS NG: peers/v1/NG/_LN_Equity/2026-09-24T2252Z.json 9252 B, 2026-09-24T22:53:57Z, ETag 19d35cc1fac444489e254459f9e2528e; peers/v1/NG-SLASH-_LN_Equity/2026-09-24T2252Z.json 10732 B, 2026-10-02T08:34:29Z, ETag 922f5a1ab6e17698803fc919ddcffc99. LEDGER BP: packs/BP/_LN_Equity/input_ledger.json 1654 B, 2026-09-25T04:26:05Z, ETag 7fc3f73394f76283ec92fb051c7885cd; packs/BP-SLASH-_LN_Equity/input_ledger.json 7335 B, 2026-10-18T13:02:50Z, ETag 6f9eacdc3160516075a627ae8bd98b61. LEDGER NG: packs/NG/_LN_Equity/input_ledger.json 1654 B, 2026-09-25T04:29:21Z, ETag 3d344802b9c2dd1180b412dea7546dd6; packs/NG-SLASH-_LN_Equity/input_ledger.json 7335 B, 2026-10-18T13:07:04Z, ETag aceb48eee4fc2979a15930f192acd6b8. In all four pairs the canonical object is the newer and the larger. SERVED BEFORE the release (gateway reads of 13:50Z to 13:53Z): a raw-spelling request reads the raw prefix (peers 7 objects, member_count 0; ledger 4 entries), an encoded request reads the canonical prefix (peers 10 objects, member_count 12; ledger 17 entries). SERVED AFTER (the pair's rule, tested offline and replayed read-only by the issuer): both spellings serve the canonical object by name, each response carrying a stored_spelling map; the raw objects stay stored, no longer reachable by name where a canonical one exists; nothing is written, moved or deleted. The canonical ledger grows as the runner appends (4 to 17 entries so far), so its size and time will move; the peers pair matters only to a by-name read (the tool serves the newest peers object, 2026-10-11T1125Z, canonical).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "head-object of the eight keys in bucket opal-data-harvest at 2026-10-18T13:51:15Z",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round96/ck3_before.out (the BEFORE gateway reads of the four spellings)",
+                "org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_CK3_GATEWAY_UNION_READ_RELEASE_CTO_HALF.md @379693fc5b (the condition)",
+                "rows AMGT_HARVST-D1-W172-S2, -S3, -S4, -S5"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
