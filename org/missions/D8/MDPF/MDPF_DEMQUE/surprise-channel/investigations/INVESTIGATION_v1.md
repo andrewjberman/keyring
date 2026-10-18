@@ -3613,6 +3613,29 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/standing_drawer.py@69b52bb6cf _draw_history chunk cap = min(CHUNK_ROWS, avail // per_row)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-Z-S8",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MDPF1",
+    "surfaced_at": "2026-10-18T14:08:08Z",
+    "one_line": "The 2026-10-18 14:00Z fire drew 0 history cells (every history request REFUSED on an empty probe), and DQ9-t70-AC2 is hard-dated to 2026-10-17 so no later fire can turn it to FIRE-OK.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t70: AC2 dq_t70_fire.py reads FIRE-OK from the rows of the 2026-10-17 14:00Z fire (surface-tagged cells more than 5858, within each surface budget and the daily total, no vendor-limit stop); the order stays open until it reads FIRE-OK. Rows Z-S6 and Z-S7 stay open until the 2026-10-18 fire.",
+    "world_is": "MEASURED: dq_t70_fire.py carries DAY = '2026-10-17' as a constant and prints 'FIRE-BAD surface-tagged cells 5618 are not past the 5858 history ceiling' (B 4614, D 1004; the 10-17 fire stopped on an empty window, Z-S6); that fire cannot recur, so AC2 as written cannot read FIRE-OK. The 2026-10-18 fire (receipt.2026-10-18.json, task result 0) recorded outcome DRAWN, cells_drawn 51 (reference only: MDPF_SECHIST-CARD-A-B1-FUND-TYPE 1 cell REFUSED, AMGT_RESAPP-S14-CRNCY-SCANNER-US-SLICE1 50 cells COMPLETE), history rows 0; every history request in the queue was REFUSED with 'identifier form /cusip/ UNVERIFIED (probe response empty)': the one-row probe of /cusip/662858FV6 returned 0 rows, where the 2026-10-17 fire's probe of the same identifier read VERIFIED with 1 row. empty_windows is empty, so the DQ-t-75 cooldown was not exercised; the AMGT COMPLETE line shows DQ-t-74's per-request outcome recorded while other requests were refused. CAUSE NOT MEASURED: whether the empty probe is a vendor or Terminal state or a probe-window effect is unread. TR (remaining_cells 0) was correctly skipped, and TO-DQ-t34's CLOSE-OK still holds. Surface C has no open request (draw_hold), as the AC2 amendment states. The next draw-capable fire is Saturday 2026-10-24 14:00Z: 10-19 to 10-23 are trading days and draw nothing. ASK: the issuer amends AC2's date (or accepts the 10-17 reading as final and cuts a follow-up), and rules whether the empty history probe on 10-18 needs a cause read. Nothing was changed at site Z and no draw was run by hand.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/receipt.2026-10-18.json (probes[0] verdict UNVERIFIED, requests[*] outcome REFUSED)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/ledger/BBG_ACTUALS.jsonl (2 rows dated 2026-10-18, channel reference)",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R10_CHECKS/dq_t70_fire.py line 21 (DAY constant)",
+        "data/mdpf/scripts/demque/standing_drawer.py@eb9921cf9a lines 696-721 (_probe_history)"
+      ]
+    }
   }
 ]
 ```
