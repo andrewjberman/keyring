@@ -76,12 +76,13 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 - **STAGED, not sent.** It waits on the CTO half of the pair, site Z's answer (the issuer asks through `0.0.0_AB_MSTR~DELL1`) and the issuer's GO. Receiving seat: `0.7.0_AE_CloudOps~SC1` (CLAUDE.md rule 34).
 - Authority: the CTO's round-91 analysis item 2 ("cf-3 then cf-5 ... rebuilt under its own pair; the code lands only together with newly written fund forms"). The correction to the hazard (a stale citation, not an absence) is in the COO half.
 - **Why two commands, PFOE first:** `fund_form.write()` writes both funds in one call; two commands bound the first exposure to the 33-report form and put a read-back between the writes (the S44 rule).
+- **AMENDMENT 1 (issuer, 2026-10-18 02:2xZ; CTO half SIGNED @78b98db60d, msg 7837, binding the COO half at sha256 `a7c7f05e961dc30f778d7cb3e9b9444ae4ef54bf4b53f3dded854c46ffad8b6f` @87eb5b095d unchanged):** the CTO half is `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_CF5_FUND_FORM_V2_CTO_HALF.md`; C-1 to C-9 of the COO half bind you. **The CTO adds one rule that outlives this order (his condition 2):** after this act DIVZ still resolves to the STALE version-1 form (it counts candidate and misfiled reports), so C-6 (no dossier or continuation `write_one`) stays in force for any build that reads DIVZ's form EVEN AFTER your ledger closes; say so in the ledger close. **C-9, site Z is told first:** the issuer asks `0.0.0_AB_MSTR~DELL1` to tell site Z the window (2026-10-18 02:45Z to 04:30Z) and the two fund partitions; you may do step 0 (all read only) and write `cf5_build.py` and `cf5_run.py` now, but you write NOTHING to the bucket until the issuer sends GO with site Z's answer. The ledger close is COMMITTED with the manifest. If the run passes 04:30Z, stop at a fund boundary and tell the issuer. Row `D1-S50` and the DIVZ cell are round-93 rows of the CTO's; not yours.
 - **Own workstream** `FUNDFORM-REBUILD`.
 - **Not covered, named:** a rebuild of any dossier or continuation (the CTO's call), a DIVZ form, the shared classifier (row `D1-S49`, round 93).
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>92</round>
 <workstream>FUNDFORM-REBUILD</workstream>
 <slot>dell1</slot>
