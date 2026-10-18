@@ -79,7 +79,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 1 of the CTO's round-121 analysis (`ledger/ROUND_ANALYSIS.round121.R1.md`, msg 8200, `@48c576b954`) and its addendum `@5912bb01a4`; the CVO's finding C-S203 (`ADJUDICATION_v161`); rows W518-S2 and W523-S1. The issuer's design inside the ruling: a plain reason prints exactly as today so a name with a plain reason is DELTA=0 (HD US and BA US); the fixed sentence is used only for a NON-plain reason; the document wording of the third sentence is `...not recognised by this document`. The 101-name census (`AMGT-cd-2`) is the issuer's. LOCAL code cell; served only through `AMGT-cd-4` (a pair only if a printed line moves).
 
-<status>pending</status>
+<status>complete</status>
 <round>122</round>
 <slot>0.9.0_WK_AMGT_RESAPP~524</slot>
 <fabric>dell1</fabric>
