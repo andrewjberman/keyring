@@ -4607,3 +4607,19 @@ The enrichment list (the round's rectangle): item 1 `W170-S3` (one key form for 
 - **Fan-out (this recut):** `N of M chains, N=1 worker (cj-6, the same queue as cj-2) of M=2 cuttable chains (A: cj-6 then cj-3, cj-5; B: cj-4, in its window), cap 8`.
 - **Checks at the cut, dry-run at the base:** `cj-6` AC1 FAIL as expected (no test file), AC2 PASS as expected (`56 passed in 3.04s` over ten files), AC3 FAIL as expected (no replay file).
 - **ARMED rows open (disarm owner me):** `D1-W171-S1`, `-S3`, `-S4`, `-S5`: the round 95 L10 close needs them dispositioned.
+
+### 128. ROUND 95 -- `HVST-cj-6` complete (merged `34fb405b29`); round-94 item 3 CLOSED; the release cut question (2026-10-18 ~08:4xZ)
+
+`HVST-cj-6` merged: one normalizer in `app/harvest_keys.py`, imported by `harvest_research.py`, `harvest_figures.py` and `harvest_identity.py`; the fundamentals kinds, the bestdata query and coverage read the partition form; replay re-run by me, identical (12 of 14 cells equal; the two coverage cells differ by the path-component prefixes this cell keeps, CTO decision). New rows: `D1-W171-S6` (ARMED, the coverage cells), `-S7` (INERT: the encoded spelling already reached the objects; only the raw one was refused: corrects the worker's S5 and my sentence in the `cj-6` order), `-S8` (INERT: `test_og_gt8.py` fails before and after; it reads `deploy-to-ec2.sh`), `-S9` (INERT: `publication-links/v1/BP//`).
+
+**Round-94 item 3 is CLOSED** (CTO msg 7975, MSTR msg 7974; my own read: `4257a2aa42` is an ancestor of `origin/CLOUD` at `2ae0766ad1`).
+
+**The release (`HVST-cj-3`):** the CTO's rule (msg 7975): cut from the CLOUD tip with `DEPLOY_BASE_REF=aa2efa2cf3`, under the pair of this cell, which lists every file in the live-to-cut diff. **I measured that diff: 35 files under `infra/aws/ec2/opal-gateway/` (`git diff --name-status aa2efa2cf3 origin/CLOUD`), of which 7 are ours** (`app/harvest_research.py`, `harvest_figures.py`, `harvest_identity.py`, `harvest_keys.py` NEW, `tests/test_cj2_slash_key_one_form.py`, `tests/test_cj6_slash_key_other_tools.py`, `tests/fixtures/cj2_continuation_keys.txt`); the other 28 include `server.py`, `destructive_ops.py`, `family_depth.py`, `probe_listener.py`, `admin_people_access.py`, `refs/partner_roster.json` and `refs/silver_families.json`. The three modified files are md5-equal at `aa2efa2cf3` and at the pre-change base `845b69a8cc` (`596c299597067fe5a8afb8e3493a0ed9`, `610eb6862918d2c6695c10d2de58734f`, `9c8d1fd69ffe0594968b4acd2751fba9`), so they apply clean on the live commit. **I asked the CTO (one ask, REC yes) whether the release is cut on `aa2efa2cf3` plus those 7 files only (as `cg-3` was), instead of the CLOUD tip.** `cj-3` is not written until he answers.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cj-3` | -- | ONE gateway release carrying `cj-2` and `cj-6`, `DEPLOY_BASE_REF=aa2efa2cf3`, under its own pair, with the served reads of `BP/_LN_Equity` and `NG/_LN_Equity` in both spellings (the disarm test of the ARMED rows `D1-W171-S1` and `-S5`). | WORLD | seat SC1 | DEFINED, NOT CUT: waits on the CTO's answer on the cut and on SC1 being free (`HVST-cj-4` runs to about 11:35Z) |
+| `HVST-cj-5` | -- | The two slash-key dossiers under the same pair shape as `cj-4`. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cj-3` released and read |
+
+- **Fan-out:** none this recut (no cuttable cell without an unmet dependency; `cj-4` runs).
+- **ARMED rows open (disarm owner me):** `D1-W171-S1`, `-S3`, `-S4`, `-S5`, `-S6`.
