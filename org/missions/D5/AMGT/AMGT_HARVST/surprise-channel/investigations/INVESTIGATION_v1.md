@@ -12364,5 +12364,87 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W176-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:30:51Z",
+        "one_line": "HVST-cm-2 step 1a/1b: the order takes the recorder's 'pipeline' value from the function-map row's pipeline key; the recorder selects by the tf_file prefix, and no reader of the row's pipeline key was found.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 step 1a asks what pipeline value the recorder expects for a harvest-folder function; step 1b sets the row's pipeline to that value, and says STOP and file a row only if the recorder cannot name the function by any pipeline value.",
+        "world_is": "record-deploy-scope.py rows_under() selects every row whose tf_file starts with infra/aws/terraform/<pipeline>/, and <pipeline> is the Terraform folder name, so the recorder names this function by the value harvest. The row's pipeline key is read by no code found in lib/opal_lambda_map.py or infra/aws/lambda/ci. The only other row under terraform/harvest/ (opal-amgt-scoped-api) carries no pipeline key. The selection is not blocked, so the row was written with pipeline harvest and there was no STOP.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/lambda/ci/record-deploy-scope.py@be8f6dc8ee rows_under() lines 67-70 and the selection branches lines 131-175",
+                "infra/aws/lambda/ci/record-terraform-deploy.sh@be8f6dc8ee SCOPE_ARGS block and the TF_PREFIX line",
+                "infra/aws/lambda/ci/function-map/opal-amgt-scoped-api.json@be8f6dc8ee (tf_file under terraform/harvest/, no pipeline key)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W176-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:30:51Z",
+        "one_line": "comp-lambdamap check (read-only, run for HVST-cm-2) names MISSING_ENTRY amgt-resapp-chatter-axis: TF-backed in terraform/harvest but with no function-map row. Not this order's function; not edited.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 step 1c(6) runs comp-lambdamap check and sha read-only and prints their lines for opal-research-pull-enqueue only; AC3 grades the drift line for that one function.",
+        "world_is": "The same check run names one MISSING_ENTRY, for amgt-resapp-chatter-axis (TF-backed in infra/aws/terraform/harvest/chatter-axis-schedule.tf, no functions entry). I did not measure whether that resource is a Lambda; INERT because the recorder refuses an applied address with no row loudly (rc=2) rather than writing a silent record. No function-map row was added for it.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                ".scratch/lm_check.txt in the worktree, line 237 (comp-lambdamap check output at be8f6dc8ee)",
+                "infra/aws/lambda/ci/record-deploy-scope.py@be8f6dc8ee applied-address REFUSE branch (lines 155-165)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W176-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:30:51Z",
+        "one_line": "The dell1 worktree is a sparse checkout that omits org/surprise_channel and org/critical_paths: the drift tool reports 465 sparse-tree findings, and the deploy ledger named in the row is not readable here.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 preflight and the worker face's sparse set name the paths the order needs (function-map, pull_enqueue, terraform/harvest, the AMGT_HARVST folders) and the order reads the drift tool's output in this worktree as the repository's own answer.",
+        "world_is": "The worktree sets core.sparseCheckout true and omits org/surprise_channel/ and org/critical_paths/. The row gate reads its schema from the index, so the channel row path still works. In this tree comp-lambdamap check prints 233 WRONG_SOURCE_DIR and 232 ORPHAN_ENTRY ('source_dir absent on disk', 'TF lambdas: 3'), most of them sparse-tree absences, not drift at HEAD. AC3 reads only this function's line. The ledger harvst-cl2-pull-enqueue-canonical-status (under org/critical_paths/change_management) is not readable from this worktree and was not checked.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git config core.sparseCheckout = true, and the sparse list omits org/surprise_channel and org/critical_paths (git sparse-checkout list)",
+                ".scratch/lm_check.txt in the worktree, lines 2-3 (the DRIFT counts)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W176-S4",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:30:51Z",
+        "one_line": "With .tools on sys.path, import lib.opal_lambda_map fails: .tools/lib (a regular package) shadows the repo lib/ directory, which is a namespace package. The checker loads .tools/git_bash_resolver.py by file path instead.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 step 1c: the checker imports lib.opal_lambda_map.load_entry from the repository root and the Git Bash resolver from .tools.",
+        "world_is": "Both imports cannot share one sys.path. Measured at be8f6dc8ee: with ROOT inserted at index 0 and ROOT/.tools appended, lib.__path__ reads ['.tools/lib'] and 'import lib.opal_lambda_map' raises ModuleNotFoundError; with .tools inserted at index 0, the same failure. The first attempt failed on this and was fixed in the checker by loading the resolver by path. Any script that imports both trips it.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "ls .tools/lib/__init__.py exists at be8f6dc8ee; lib/ has no __init__.py (ls lib/)",
+                "deliverables/0.9.0_WK_AMGT_HARVST~176/cm2_row_check.py (the loader comment) and its failed first run in this worktree"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
