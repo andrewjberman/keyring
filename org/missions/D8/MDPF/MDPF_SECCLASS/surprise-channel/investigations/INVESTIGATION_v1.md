@@ -8711,6 +8711,56 @@ by dell1 or by this seat.
 }
 ```
 
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W104-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~104",
+  "surfaced_at": "2026-10-18T02:19:52Z",
+  "one_line": "The partners-data Lambda source sits under infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/, not directly under infra/aws/lambda/ as the cell's known-facts state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "SC-e-115 WORKER FACE, 'What is already known': the repo does NOT hold the Lambda under infra/aws/lambda/ (that folder has partner-etl-ops-sqs-consumer and others, not this one); the portal repo and lambda/-style folders elsewhere are candidates.",
+  "world_is": "The source is tracked at HEAD 964be4af93 under infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/ (lambda_function.py, etf_classifier.py, etf_classification.py, served_seam.py, pseudonymizer.py, platinum_dest_view.py, deploy.sh). infra/aws/lambda/ci/function-map/opal-partners-data.json names that folder as source_dir and records artifact_sha256 equal to the live CodeSha256. The live zip from aws lambda get-function (35752 bytes) hashes to the same value, and its lambda_function.py and etf_classifier.py are byte-identical to the HEAD blobs. portal/ is a submodule; a glob for lambda_function.py under it returns three files, none of them opal-partners-data.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py@964be4af93 (git ls-tree -r HEAD, 8 members under partners/)",
+      "infra/aws/lambda/ci/function-map/opal-partners-data.json@964be4af93 artifact_sha256 = c9FXD84szSBD5oSukUi8sCA6szY/LYiHpRYBWXnOBv4= = aws lambda get-function-configuration CodeSha256 (us-east-1)",
+      "aws lambda get-function Code.Location zip, 35752 bytes, sha256 base64 c9FXD84szSBD5oSukUi8sCA6szY/LYiHpRYBWXnOBv4=, 6 members, extracted under .scratch/partners_deployed",
+      "read this session in worktree 0.9.0_WK_MDPF_SECCLASS~104 (HEAD 964be4af93)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W104-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~104",
+  "surfaced_at": "2026-10-18T02:19:52Z",
+  "one_line": "The round-28 pre-read states the partners-data classifier returns three classes plus empty; the code returns the matched table's asset_class verbatim, so the returnable set is wider.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "spec_asserts": "ROUND28_PREREAD_PARTNERS_DATA_REPOINT_20261016.md, held reading point 1: 'The reader's output contract has three classes plus empty (equity | fixed_income | alternatives | ''), with hedge mapped to alternatives.' The SC-e-115 cell asks contract.returns to list the class strings the module can return today.",
+  "world_is": "etf_classifier.py classify() (lines 64-107) returns item.get('asset_class') verbatim from the ticker map (line 81) and the name-alias map (line 90), mapping only 'hedge' to 'alternatives'; the returnable set is the table's raw asset_class values plus '' and the layer-3/4 constants. lambda_function.py line 1040 lists 'cash' among the top-level classes. The pre-read's held counts put cash on 15 bd-securities rows, so 'cash' is returnable today; that count is held, not re-read here (a DynamoDB scan is outside this worker's read grant). Canonical structured and commodities would pass through unchanged once a repoint reaches the table: neither the classifier nor the consumer has a fold for them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classifier.py@964be4af93 lines 64-107 (classify) and lines 81, 90 (verbatim return)",
+      "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py@964be4af93 lines 1040 (top-level class list) and 1079 (empty maps to other)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/ROUND28_PREREAD_PARTNERS_DATA_REPOINT_20261016.md (held counts, cited not re-measured)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## MDPF_SECCLASS-D1-W102-S1 -- SC-e-113 chain order: the dispatcher runs A_03 before B_00, so A_03 is the first step lacking 2026-10-16
 
 ```json
