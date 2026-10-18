@@ -82,9 +82,15 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 - **Own workstream** `FUNDFORM-REBUILD`.
 - **Not covered, named:** a rebuild of any dossier or continuation (the CTO's call), a DIVZ form, the shared classifier (row `D1-S49`, round 93).
 
+**COMPLETE 2026-10-18T03:2xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** seat `0.7.0_AE_CloudOps~SC1`, two NEW `research-fund-form` objects of method version 2 written, one per foreground command: `fund=pfoe/57cee6de8b2cd85e.json` (33 reports) 02:45:48Z (the canary, read back equal), then `fund=idvz/65a5baab3afd06f0.json` (82 reports) 02:46:39Z; manifest `WRITTEN forms=2 reports=115`; window 02:45Z to 04:30Z cleared by site Z (its CTO msg 35606); ledger `harvst-cf5-fund-form-v2-rebuild` CLOSED 03:22:12Z and COMMITTED (deliverables `b0e8b6ea60`). Rollback (an S3 delete of the two keys) was not taken and stays Andrew's.
+- **Read by me (not SC1's word):** the bucket (`deliverables/2.0.0_SA_COO_W1/round92/cf5_issuer_verify.out`): 11 objects (the 9 version-1 forms untouched, the 2 new), both new objects `method_version` 2, `reports` 33 and 82, `inputs` equal in number, the recomputed `content_sha256` equal to the stored; `fund_form.read_latest` returns both new objects; DIVZ has no version-2 object (as ruled). After the writes I read `UNH_US_Equity` through the gateway: `content_sha256` `6bd7cea7...` unchanged, `fund_of_record` PFOE, continuation `4d837586`, `fund_relation` `holding`. **Proof instance VALID rc 0 (re-run here).** `AC1` to `AC4` PASS in `cf5_served.out`.
+- **Three errors of the issuer's half, found by SC1 at step 0 and in the checks, none hidden:** the store held 9 version-1 forms, not one per fund (AMENDMENT 2); the substrate member for UNH cannot read the new form, because `substrate._continuation_member` picks UNH's `/3` continuation (fund absent) instead of the `/4` one the gateway serves (AMENDMENT 2); and `AC3` compared a preview built today with an older stored dossier, which differs in the build date, the continuation pick and a newer Bloomberg pull for reasons the fund form did not cause (AMENDMENT 3: SC1 graded it FAIL by my letter, correctly; the FAIL stays in `cf5_served.out` as history; the criterion text is unchanged and its reading became a controlled comparison of two previews that differ ONLY in `fund_form_ref`, the new one naming the version-2 IDVZ object, plus the hash and inputs entry derived from it). **The CVO may regrade `AC3` on that record; both readings are kept.**
+- **What this does NOT close, named:** (1) DIVZ still resolves to the stale version-1 form (2 reports, counting candidate and misfiled reports): the CTO's condition 2 keeps C-6 (no dossier or continuation `write_one` that reads DIVZ's form) IN FORCE after this close, until the round-93 cell; (2) **a dossier or continuation rebuild of UNH today would serve `fund_of_record` ABSENT** (the continuation pick; row `D1-S52`), so no rebuild of a name not rebuilt at the current continuation method may run before the CTO rules; (3) the stored dossiers still cite the version-1 forms until rebuilt (not done here).
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>92</round>
 <workstream>FUNDFORM-REBUILD</workstream>
 <slot>dell1</slot>
