@@ -69,9 +69,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~167, worktree `C:/dev/wk-harvst-167`, branch `wk-AMGT_HARVST-167`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `infra/aws/ec2/opal-gateway/app`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159`, `...~160` and `...~165` (the censuses' sources and the phrase file).
 - **SENT:** with the round-93 recut.
 
+**COMPLETE 2026-10-18T04:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~167` (worker, haiku, high), branch `wk-AMGT_HARVST-167`, build `73da5b759d`, proof `e8933013c5`; merged `766b8e25e0` (safe-merge fast lane, index check 0 of 7). Diff read by this seat: the new `line_words.py` holds the three patterns exactly as `fund_relation.py` had them (the superset, `adding` and `reduction` included); `continuation.py` and `fund_relation.py` delete their copied literals and bind the SAME objects (`_HOLDING_WORD_RE = line_words.HOLDING_WORD_RE` and the other two); `METHOD_VERSION` NOT bumped; nothing else in either file changed; 5 new offline arms with a mutant (identity of all three patterns in both modules; `Consider size reduction in IDVZ` and `Consider adding ... in IDVZ` read `holding` by gold; the 22 phrases agree; old phrases keep their class).
+- **AC1 PASS:** `5 passed` (worker; re-run here). **AC2 PASS:** `137 passed` (re-run here). **AC3 PASS:** `CENSUS-SHARED-DRIFT rows=140 drift=0` (140 header-bearing rows of the 353 kept reports). **AC4 (the shape of the gold census; its count is the finding):** `CENSUS-GOLD-MOVE securities=95 moved=0 fields_moved=0 moved_at_current=0 gets=363 bytes=99793955`: of the 95 securities with a continuation partition NONE has a `fund_of_record` or `last_stated_position` value that moves under the shared list, none at the current method. **I re-ran `ch2_census.py` myself from the worker's worktree (363 requests, 35 seconds) and its output is identical to the worker's, line for line.** Proof instance VALID rc 0 (re-run here).
+- **The worker's own control, NOT verified by me:** a scratch control (`.scratch/ch2/`, not committed) found 4 stored lines in 2 securities (`ORA_FP_Equity` x2, `CPA_US_Equity` x2) that move from `unclassified` to `holding` under the shared list; each is a SECONDARY candidate, and the first candidate sets `fund_of_record` and `last_stated_position`, so no output field moves. The worker also made one whitespace-only edit to the `RELATIONS` line of `fund_relation.py` after the census; the census was not re-run by the worker (declared in the instance); my re-run ran the merged-equivalent code and is identical. No rows filed.
+- **The CTO's measure for item 4 is now met:** `HVST-ch-1` (picker: 0 of 78 differ from the gateway) and this cell (gold: 0 of 95 values move) both read 0 differing. The standing instruction (section 122g) does NOT lift yet: the CTO ruled it lifts when the `/5` rebuild of the exposed names lands under its own pair, not before.
+- **What this does NOT prove:** a rebuild at `/5` (none is ordered), or that a rebuilt value equals the served one (the next cell measures that).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>93</round>
 <workstream>SHARED-CLASSIFIER</workstream>
 <slot>dell1</slot>

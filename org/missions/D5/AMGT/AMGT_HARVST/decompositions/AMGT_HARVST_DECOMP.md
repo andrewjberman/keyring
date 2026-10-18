@@ -4510,3 +4510,17 @@ The CTO read `harvest_research.py` lines 409-417 and confirmed that `truncated: 
 
 - **Fan-out (this recut):** `N of M chains, N=1 worker (ch-2) of M=2 chains, cap 8` (chain A: `ch-2` then `ch-7`; chain C: `ch-5`, a seat order).
 - **Check at the cut (dry-run at the base):** `ch-2` AC1 FAIL as expected (no test file), AC2 PASS as expected (`137 passed`), AC3 and AC4 FAIL as expected (no census file).
+
+### 123d. ROUND 93 -- `HVST-ch-2` merged (`766b8e25e0`); `HVST-ch-5` written; the CTO ruled the scope of item 4 (msg 7903); `HVST-ch-8` CUT (2026-10-18 ~04:3xZ)
+
+`HVST-ch-2` (worker `~167`) merged: AC1 `5 passed`, AC2 `137 passed`, AC3 `CENSUS-SHARED-DRIFT rows=140 drift=0`, AC4 `CENSUS-GOLD-MOVE securities=95 moved=0 fields_moved=0 moved_at_current=0` (re-run by the issuer, identical). **The CTO's measure for item 4 is met:** `ch-1` (the new picker equals the gateway for 78 of 78 names) and `ch-2` (0 of 95 gold values move). `HVST-ch-5`: the DIVZ `research-fund-form` object `a181f84957dbb8b7.json` (method 2, 0 reports) was written 04:29:21Z and read back (the issuer's own bucket read agrees: 12 objects, `read_latest` returns a version-2 form for all three funds); SC1 is on the after-checks.
+
+**Ruled (CTO, msg 7903): the `/5` rebuild writes the 78 CONTINUATIONS ONLY; dossiers stay as served** (a dossier rebuild moves `model_rows` and `as_of`: a separate decision under its own pair, not ordered). The standing instruction (section 122g) **lifts for those 78 continuations** once `ch-1` and `ch-2` are merged (met); it does NOT lift for dossiers. The pair of `HVST-ch-7` must print, per name, every field where the in-memory `/5` continuation differs from the served one: each difference is explained by the method change or is a STOP; the gateway serves continuations, so the pair names that served move and covers both branches.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-ch-8` | `ch-8` | **A read-only census of what a `/5` continuation rebuild of the 78 names would change:** each continuation built in memory (`continuation.build`, never `write_one`) and compared FIELD BY FIELD with the one the gateway serves (the gateway's pick rule copied from line 349); a positive control (MNST, at `/5`: 0 changed) and a negative control (a planted change: exactly 1); per-name per-field `DIFF` lines. Workstream `REBUILD-CENSUS`. | LOCAL | worker `~168` | CUT |
+| `HVST-ch-7` | -- | The `/5` rebuild: 78 continuation objects, add-only, under its own never-widen pair written FROM `ch-8`'s census. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `ch-8` merged and read, and the pair |
+
+- **Fan-out (this recut):** `N of M chains, N=1 worker (ch-8) of M=2 chains, cap 8` (chain A: `ch-8` then `ch-7`; chain C: `ch-5`, a seat order already written).
+- **Check at the cut (dry-run at the base):** `ch-8` AC1 to AC3 FAIL as expected (no census file).
