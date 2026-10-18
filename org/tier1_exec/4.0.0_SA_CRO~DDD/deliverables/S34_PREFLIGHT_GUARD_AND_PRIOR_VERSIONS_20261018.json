@@ -1,0 +1,106 @@
+{
+ "2026-09-30": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 20842,
+  "rows_new_key": 20844,
+  "prior_silver_version": "NFSOMVP_C.y4dwkKP1lhzcuq.DDZWvo4",
+  "ok": true
+ },
+ "2026-10-01": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 20890,
+  "rows_new_key": 20892,
+  "prior_silver_version": "BuE8yBEs6aDN7lcGE4BEq5gpxwxryNJ0",
+  "ok": true
+ },
+ "2026-10-02": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 20919,
+  "rows_new_key": 20921,
+  "prior_silver_version": "A09dxt6hhIZevAh9vvFE4Q3NlPCfn2Vd",
+  "ok": true
+ },
+ "2026-10-05": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 20944,
+  "rows_new_key": 20946,
+  "prior_silver_version": "8MYDynU0fBSavlfAYn.9mVlg.7Yx.ToW",
+  "ok": true
+ },
+ "2026-10-06": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 20976,
+  "rows_new_key": 20981,
+  "prior_silver_version": "l1jfbqcC9mGe6k_gzhaCT1XRxClpMltf",
+  "ok": true
+ },
+ "2026-10-07": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 21024,
+  "rows_new_key": 21026,
+  "prior_silver_version": "rPADODaNjC.gQzU.Qp_hMXYidkVmD_lk",
+  "ok": true
+ },
+ "2026-10-08": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 21282,
+  "rows_new_key": 21284,
+  "prior_silver_version": "4WltFmWQH0upd7p.k0sMgVEcxgeoNblM",
+  "ok": true
+ },
+ "2026-10-09": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 21299,
+  "rows_new_key": 21301,
+  "prior_silver_version": "O02DFZu.ntJpI5X2X9tqgoNcyYIVmeYX",
+  "ok": true
+ },
+ "2026-10-12": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 21301,
+  "rows_new_key": 21303,
+  "prior_silver_version": "XKcIUbCD.oKu53Trv1ucmHFY0g_gpzpt",
+  "ok": true
+ },
+ "2026-10-13": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 21308,
+  "rows_new_key": 21310,
+  "prior_silver_version": "CZBusUx.cjgP7hj.dmt3PdLwosWjm7oW",
+  "ok": true
+ },
+ "2026-10-14": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 21378,
+  "rows_new_key": 21380,
+  "prior_silver_version": "HbPJ8iQ6QW0PHgCJJjKiX9C6TKW9VCmv",
+  "ok": true
+ },
+ "2026-10-15": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 21510,
+  "rows_new_key": 21512,
+  "prior_silver_version": "kVdqSXEbpGpZuCBBXTNeimH6ZD7AWaEq",
+  "ok": true
+ },
+ "2026-10-16": {
+  "blank_asset_id_rows": 0,
+  "max_blank_per_account": 0,
+  "rows_old_key": 21518,
+  "rows_new_key": 21520,
+  "prior_silver_version": "KCqCDLamNqNh89Fo0KEUqMWdmZwlbhD7",
+  "ok": true
+ }
+}
