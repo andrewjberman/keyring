@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-18T14:05Z (2.0.0_SA_COO~R1): ROUND 120 issued (ca-1, ca-2, ca-3), decomposition s.129; round 119 closed MAY-CLOSE; the CTO's round-118 rulings MET (CVO)",
+  "last_updated": "2026-10-18T16:05Z (2.0.0_SA_COO~R1): ROUND 120 cells ca-1, ca-2, ca-3 merged and complete (round-close-check MAY-CLOSE); ca-5 (the redeploy, pin 107fae40e9) with SC1 since 16:00Z on the signed pair",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 120 EXECUTING on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.129 from the CTO's round-119 R1-track analysis, msg 8062, and the CVO's slug, msg 8061): ca-1 (the CEO-profile reader's three states, NOT_WRITTEN and a narrowed UNREADABLE_OBJECT, PDF and export print from the state; W518-S2/S3), ca-2 (a blank, absent or ? source reads 'source not stated'; W519-S5), ca-3 (the export prints the thesis-pillars passage wherever the PDF does); ca-4 the issuer's reads (101-name source census, three-state fixtures, cross-surface); ca-5 the redeploy under a fresh pair. Live scoped-api VQ9zM6r48RqTxezOFpLMz/Y+Jev13eSEriPmw96NbIU= (release pin 2771164d0d).",
-  "blocking": "the three round-120 workers (~520 ca-1, ~521 ca-2, ~522 ca-3), then the issuer's merge of render_pack.py and scoped_amgt.py, a release pin and a fresh never-widen pair for ca-5 and the CVO's L9 read of the three exports and one PDF; bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
+  "phase": "ROUND 120 EXECUTING on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.129): ca-1 (the CEO-profile reader's three states; NOT_WRITTEN; W518-S2/S3), ca-2 (a blank, absent or ? source reads 'source not stated'; W519-S5) and ca-3 (the export prints the thesis-pillars passage; AMENDMENT 1) are merged and complete; the merged tree reads 9 failed 1662 passed (the known nine); ca-5, the one redeploy from release pin rel-amgt-ca5 107fae40e9 under the signed pair (COO half 6e6aa93be6, CTO half b0823ed515, addenda 83f159996d and 501157597d), is with 0.7.0_AE_CloudOps~SC1; the issuer's reads follow its report. Live scoped-api still VQ9zM6r48RqTxezOFpLMz/Y+Jev13eSEriPmw96NbIU= (the bz-5 build) at this stamp.",
+  "blocking": "SC1's ca-5 apply and report, then the issuer's reads (reading words per name against the CTO's restated movement, live PDFs and exports, the 101-name source census, the leak scan, cross-surface, latency), SC1's ledger close on the issuer's keep word, the round-120 packet to the CVO (a DRAFT is committed, 679d99a43e) and the CVO's L9 read; bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager); the CTO's round-121 row (the portal page renders the three states and types.ts)",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
