@@ -32150,3 +32150,103 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The amendment's premise names a second row that the measured bytes do not hold. The issuer rules whether the amendment text is corrected; the test change does not depend on it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W523-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~523",
+  "surfaced_at": "2026-10-18T16:57:15Z",
+  "one_line": "The lib consumer render_pack.py _ceo_profile_sentence has no explicit branch for SEARCHED_NOTHING_FOUND: it prints the object's own reason through _plain_reason, not a state sentence of its own.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@a8aca1e9f1 lines 1007-1010: explicit branches for CEO_READING_NOT_WRITTEN and CEO_READING_UNREADABLE_OBJECT; lines 1013-1014: CONFIRMED with a url; lines 1016-1017: the fall-through to _plain_reason(reading reason)",
+      "portal/src/pages/SecurityAnalysis/__harness__/ceoConsumerCensus.json@43762e0d: the render_pack row, handles.SEARCHED_NOTHING_FOUND false, evidence cites the fall-through"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-cb-1 section 1 (1): every consumer of the served CEO reading, lib/ included, handles the three states explicitly; SEARCHED_NOTHING_FOUND gets its existing searched sentence.",
+  "world_is": "The PDF and rich routes print the reader's own searched reason for SEARCHED_NOTHING_FOUND ('CEO public profile (name): The CEO web search returned N url(s)...'), not a state sentence of their own. The page prints 'searched, nothing found -- ' and the reason. The lib file is read-only for this worker and is not changed.",
+  "notes": "Form only. The issuer rules whether the lib consumer needs its own branch for this state; W523 census row is the evidence."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W523-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~523",
+  "surfaced_at": "2026-10-18T16:57:15Z",
+  "one_line": "lib/research/aifill/block_mgmt_bio.py reads the served ceo_public_profile object and prints no CEO state sentence for any of the states: it draws a fact only when status is RESOLVED, so this consumer of the object handles none of the three states.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/block_mgmt_bio.py@a8aca1e9f1 lines 116-127: profile = _as_dict(management.get('ceo_public_profile')); facts drawn only when profile status is RESOLVED",
+      "portal/src/pages/SecurityAnalysis/__harness__/ceoConsumerCensus.json@43762e0d: the block_mgmt_bio row, handles false for all four states, evidence 'no state branch'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-cb-1 census: every consumer of the served CEO reading word and of the object it reads handles all three states explicitly; W518-S2 closes when the census reads every consumer as handling all three states.",
+  "world_is": "The bio input is a machine-writer input, not a display of the state. The page and the PDF carry the state sentences. Whether a non-display consumer of the object owes state sentences is not stated by the round-120 ruling, which says 'every consumer'.",
+  "notes": "Form only. Without an issuer ruling the literal census reading counts this consumer as not handling the states, so W518-S2 would not close on it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W523-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~523",
+  "surfaced_at": "2026-10-18T16:57:15Z",
+  "one_line": "The order's Step B premise that a harness pins today's CEO sentence does not hold: no harness asserts the no-public-profile sentence or that UNREADABLE_OBJECT prints for a null profile.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__ (*.cjs, grep at portal ff611566 for 'no public profile|could not be read|UNREADABLE|data-ceo-profile|CEO public profile'): hits only in execText.harness.cjs:124,139,163 (regex and reason reads on the CONFIRMED-free NOT_SEARCHED fixtures) and tabs.harness.cjs:377-378 (count of data-ceo-profile equal to the served word)",
+      "portal/src/pages/SecurityAnalysis (grep over all of portal/src): no assertion of the no-public-profile sentence in __tests__, __rendercheck__ or scripts/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-cb-1 Step B: list each harness that PINS today's words, including any assertion that UNREADABLE_OBJECT or the no-public-profile sentence prints for a null profile; re-scope each by one hand-written assertion.",
+  "world_is": "No such assertion exists. The reading-word assertion at tabs.harness.cjs:377-378 counts data-ceo-profile equal to the served word, which the page still carries for every state, so it holds unchanged and is not re-scoped. The receipt's Pins section records this. The lib tests pin the PDF words; they are lib, outside this grant, and unchanged.",
+  "notes": "Form only. The order's Step B expectation was written against a harness set that does not carry the sentence."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W523-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~523",
+  "surfaced_at": "2026-10-18T16:57:15Z",
+  "one_line": "A CONFIRMED reading served with no url has no page branch: it prints the third sentence ('the state of this profile is not recognised by this page') with data-ceo-profile CONFIRMED, a word the page does recognise; the PDF prints its fall-through reason for the same shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx@43762e0d line 203: the CONFIRMED branch requires profile.url; line 271: the third sentence",
+      "lib/research/print/render_pack.py@a8aca1e9f1 line 1013: CONFIRMED prints only with a url; lines 1016-1017: the fall-through"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-cb-1 section 1 (2): SERVED gets the text; an unknown word and an absent reading print the third sentence, and the third sentence is never the not-written one.",
+  "world_is": "No served object in the three fixtures or the six exec fixtures carries CONFIRMED without a url, so the case is not measured. The order does not name this shape. The page's third sentence is the one the order's rule gives an unknown word; the PDF's fall-through prints the reader's reason for it instead.",
+  "notes": "Form only. The issuer rules the sentence for this shape; the branch keeps the order's rule until then."
+}
+```
