@@ -28368,3 +28368,76 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: supersede or archive the ~146 instance of OG-pr-1 (it grades the pre-amendment criteria), then flip the status tag of the order. The ~147 instance is committed without the flip, which stays staged until the gate can grade it."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~148",
+  "surfaced_at": "2026-10-18T03:52:46Z",
+  "id": "NFRA_OPLGTW-Z-W148-S1",
+  "one_line": "The body-first read of OG-pr-2 is not bounded: request.body() buffers the whole request body before the 65536-byte check runs, so the check bounds the answer and not the read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Starlette requests.py:254-260 @site-z installed package -- async def body() iterates self.stream() and joins every chunk before returning; no size cap",
+      "infra/aws/ec2/opal-gateway/app/probe_listener.py probe_call @7fdca1f628 -- line 277 body_bytes = await request.body(); line 280 len(body_bytes) > _MAX_BODY_BYTES answers 413 after the full read"
+    ]
+  },
+  "spec_asserts": "OG-pr-2 DEFECT 2 REPAIR: read the request body FIRST in probe_call, bounded: body_bytes = await request.body(); if it is longer than 65536 bytes answer 413 probe_body_too_large.",
+  "world_is": "await request.body() buffers the full body in memory before the length check. A local caller can send an arbitrarily large body to the armed listener and the gateway holds all of it before the 413. The memory peak was not measured. The read runs before the lease check, so it happens on every request, armed or unarmed. The listener binds 127.0.0.1 only.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: decide whether the cap moves into the read (a streamed read stopped at 65536 bytes) by its own order. This cell wrote the order's literal invocation and did not widen its write grant."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~148",
+  "surfaced_at": "2026-10-18T03:52:46Z",
+  "id": "NFRA_OPLGTW-Z-W148-S2",
+  "one_line": "The order does not place the 413 oversized-body answer against the not-armed 403; this cell answers 413 first, so an oversized body to an unarmed probe reads probe_body_too_large.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/probe_listener.py probe_call @7fdca1f628 -- lines 280-283: the 413 check precedes the lease is None check; the label is taken from the lease read before the 413, so the audit record names probe:unarmed",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-pr-2.round-42-probe-listener-audit-off-loop-and-clean-refusals.md section 1 DEFECT 2 -- says the refusal order after the body read is not armed, tool, body shape, account; silent on 413 against not armed"
+    ]
+  },
+  "spec_asserts": "The order of refusals after that is unchanged: not armed, then tool, then body shape, then account, after the body read and the 413 answer.",
+  "world_is": "The order is silent on an oversized body to an unarmed probe. This cell returns 413 probe_body_too_large there. Reversing the two checks would return 403 probe_not_armed for the same request. No test in this order covers an oversized body while unarmed; ac07 sends oversized bodies only while armed.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: ratify or reverse the position. The code change is two lines in probe_call."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~148",
+  "surfaced_at": "2026-10-18T03:52:46Z",
+  "id": "NFRA_OPLGTW-Z-W148-S3",
+  "one_line": "The refusal-before-body mutant (not-armed and tool refusals answered before the body read) did not fail test_ogpr1_ac07 on this machine in 3 of 3 runs, so ac07 does not discriminate the reset defect here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_og_pr1.py @7fdca1f628 -- test_ogpr1_ac07 runs 40 refused calls per loop against the real loopback server, twice",
+      "mutant B applied to app/probe_listener.py (working tree only), then python -m pytest -k ac07 run 3 times: '1 passed, 7 deselected' each run; the file was restored byte-equal (cmp) to the committed version"
+    ]
+  },
+  "spec_asserts": "Mutant control: answering a refusal before reading the body makes ac07 fail (if it does not on your machine, say so; the connection reset is timing-dependent).",
+  "world_is": "On this machine the mutant passed ac07 3 of 3 times. The reset did not reproduce here, so this run gives no evidence that the body-first repair changes the outcome; the test passes with or without it. The reset the issuer saw was in test_ogpr1_ac02 (1 of 3 forward runs), and 3 of 3 AC3 forward and reverse runs passed here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the connection-reset defect has no reproducing test on this machine. Decide whether a test that forces unread bytes (a refusal answered with a multi-kilobyte body on a keep-alive connection) is worth its own order."
+}
+```
