@@ -46,3 +46,11 @@
 5. **The dell1 harvest cycles keep running**, under the S44 rule: foreground, with a manifest check after every write.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 1 -- item 3 withdrawn (W1 msg 7875, 2026-10-18 ~03:4xZ)
+
+My S50 framing ("drops entries silently") was wrong. `infra/aws/ec2/opal-gateway/app/harvest_research.py:409-417`, read by me, sets
+`truncated: true` and `omitted_items.research_reports: k` whenever a list is cut, so the response already states the truncation, and
+shown-of-total is shown plus omitted. Also, ce-5's wording already rode cg-3.
+- **Item 3 is withdrawn. ch-3 is not cut.** S50 closes as already stated.
+- A shown-of-total sentence in `denominator_note` rides only a gateway release that is due for another reason.

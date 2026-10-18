@@ -11189,5 +11189,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S53",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+     "surfaced_at": "2026-10-18T03:39:08Z",
+     "one_line": "S51 (an idle CloudOps seat does not read its inbox): the MSTR measurement and the dell1 CTO's ruling (seat-side, no nudger); the idle-at-input case stays OPEN with its cause untested.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "The watcher doctrine (.claude/skills/watcher): a lane's inbox watcher delivers one [INBOX] event per message and the seat reads and acts; REMEDIATION_v23 @44e57223b3 asks MSTR to name why an idle seat does not read its inbox and fix the delivery path, closing when a message to an idle SC1 is acked within its watcher's cadence.",
+     "world_is": "MEASURED by 0.0.0_AB_MSTR~DELL1 at 2026-10-18T03:35Z from get_delivery_state for 0.7.0_AE_CloudOps~SC1 (11 messages since 00:00Z): SENT to EMITTED lag 44.8, 38.9, 21.8, 7.7, 6.6, 6.4, 6.1 and 5.5 minutes on eight, under 1 minute on three; EMITTED to READ 4-9 seconds on all 11. SC1's inbox watcher was alive (one inbox-watch row, pid 22936, armed 03:07Z). So mail waits before the seat's next broker call, not in a dead watcher and not after emission. CORRECTION to my own earlier statement to the CTO: SC1 is NOT headless; row D1-S51 records two peeks and typed nudges that worked. RULING (dell1 CTO 1.0.0_SA_CTO~DELL1, msgs 7870 and 7873, in this seat's words): seat-side, no nudger (the moratorium bars it). Rule 1: every stop condition and every expected question goes in the order itself, before the run; the issuer sends no ask that needs an answer inside a write window (S44 keeps SC1 in a foreground run, where a busy seat cannot read mid-run by design); outside a write window SC1 reads its mail at each leg boundary. Rule 2, for an issuer that hands an order to an idle seat: check the seat's READ ack (get_delivery_state) within 10 minutes; with none, type a nudge in the seat's tab. This is issuer discipline, not a monitor. OPEN CASE, NOT RESOLVED: in S51 cases 1 and 3 SC1 was idle at input ('there is no open order') with its watcher armed, which a busy-mid-run rule does not explain. Cause UNTESTED: a watcher event on an idle seat with no open order may not start a turn. Nobody has tested whether an idle seat wakes on a watcher event; the open case stays until someone does. This row does not adjudicate S51 (the L9 fields are the CVO's) and S51 stays undispositioned.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "get_delivery_state for 0.7.0_AE_CloudOps~SC1 since 2026-10-18T00:00Z (11 of 11 READ; SENT/EMITTED/READ stamps as quoted)",
+       "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/remediations/REMEDIATION_v23.md @44e57223b3 (row D1-S51 graduated to 0.0.0_AB_MSTR~DELL1)",
+       "dell1 broker messages 7868, 7870 and 7873 from 1.0.0_SA_CTO~DELL1 (the ruling and the added rule)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
