@@ -31672,3 +31672,180 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The issuer rules whether the export's management section counts the ceo_bio sentences the PDF prints, which AMGT-ro-1 excludes for the page."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W517-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~517",
+  "surfaced_at": "2026-10-18T12:03:31Z",
+  "one_line": "Order AC1 clause Z1 expects an AVG_DAILY_VALUE_TRADED_3M row carrying GBp in the rich export; the export prints no row for that mnemonic, so the clause is graded as an absence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@8e81e269f7 lines 1385-1400 PAGE_HEADER_MNEMONICS: the seven Stat tiles and three identity scalars; AVG_DAILY_VALUE_TRADED_3M and CRNCY_ADJ_MKT_CAP are not among them",
+      "lib/research/print/render_pack.py@8e81e269f7 lines 1403-1477 SHEET_ROWS: no row names AVG_DAILY_VALUE_TRADED_3M or CRNCY_ADJ_MKT_CAP, so no fiscal or forecast table prints them",
+      "lib/research/print/tests/fixtures/bz_served_thesis_RIO_LN.json header_figures carries AVG_DAILY_VALUE_TRADED_3M (unit ABSOLUTE (full currency units), currency GBp): the served figure is money, the export does not print it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 4 AC1 clause Z1: the RIO LN PX_LAST and AVG_DAILY_VALUE_TRADED_3M rows of the rich export carry GBp.",
+  "world_is": "The rich export has no AVG_DAILY_VALUE_TRADED_3M row before or after this cell, so no code can be printed on it. PX_LAST carries GBp as Z1 expects. The test asserts the absence of that row (test_Z1 in lib/research/print/tests/test_bz1_rich_money_codes.py) and does not grade a GBp row.",
+  "notes": "Form only. The issuer rules whether the Header table gains AVG_DAILY_VALUE_TRADED_3M (a PAGE_HEADER_MNEMONICS change, a page-scope question) or the clause stays an absence."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W517-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~517",
+  "surfaced_at": "2026-10-18T12:03:31Z",
+  "one_line": "The money rule reaches fiscal-year and forecast money rows, which the served census did not show: the RIO bu3 block's IS_EPS fiscal row and consensus IS_EPS row now carry GBp, and rule (1) for an UNMEASURED fiscal money row was read as no code, since fiscal rows are not withheld today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py _figures_table: the fiscal call passes withhold=False, and every row of _figures_table and _forecast_table now goes through _export_money_cell (AMGT-bz-1)",
+      "lib/research/print/tests/test_bv2_rich_dates_and_quotes.py test_Q3 re-scoped: the base lines for the Header PX_LAST, the fiscal IS_EPS and the consensus IS_EPS map to GBp 6.4 and GBp 6.9 PER SHARE (local)",
+      "lib/research/print/tests/fixtures/bu3_block_RIO_LN.json carries the fiscal and forecast IS_EPS figures that the Q3 export is built from; the served bz bodies carry no fiscal_year_figures and no forecast_figures"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (1): a money figure whose currency_basis begins UNMEASURED stays withheld exactly as now; rules (2) to (4) on measured money rows; the census covers the Header table and any fiscal-year or forecast table.",
+  "world_is": "Fiscal-year and forecast tables print money rows (IS_EPS, PER SHARE) and none of them is withheld today. The served eight bodies carry no fiscal or forecast figures, so their census is empty for those tables. This cell gives an UNMEASURED fiscal or forecast money row its amount and no code, and gives a measured one its own code. Q3 is re-scoped on three lines, not one.",
+  "notes": "Form only. The issuer rules whether an UNMEASURED fiscal money row should be withheld as the Header's is, and whether the fiscal and forecast money rows of the export carry the code (this cell applies it)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W519-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~519",
+  "surfaced_at": "2026-10-18T12:08:33Z",
+  "one_line": "The order's premise that a normal served figure source is one-word provenance fails for fiscal-period figures: the served source is 'bloomberg-dapi (fiscal-period join, model_block_fye)', which the mapper judges not plain as served.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bu3_block_ICT_PM.json@8e81e269f7 carries the fiscal-period source 'bloomberg-dapi (fiscal-period join, model_block_fye)'",
+      "lib/research/print/tests/test_bu3_pack_long_dates.py@8e81e269f7 test T6 failed when the source was judged before the existing clean-up (AC2 folder run in wk-AMGT_RESAPP-519)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 Item 3 Care: a figure's normal source is the word Bloomberg (and similar one-word provenance); the mapper must leave every such value byte-identical.",
+  "world_is": "The fiscal-period source is a parenthetical that carries the field code model_block_fye. The base cut that code and rewrote bloomberg-dapi to Bloomberg before printing; judged as served it fails the token rule. This cell judges the source after the same cut, so the printed text is byte-identical (T6, Q4 and the eight-name control pass).",
+  "notes": "Form only. Fixed in this cell: render_pack.py _plain_figure_line judges the source after the existing clean-up. The issuer may restate the premise as 'Bloomberg, or Bloomberg with a parenthetical'."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W519-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~519",
+  "surfaced_at": "2026-10-18T12:08:33Z",
+  "one_line": "The verdict sentence has a second spelling, 'Verdict <x> is not one of better, worse, hold or steer_clear', which the order did not name (it names only UNKNOWN_VERDICT_SENTENCE); changed in the same cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@8e81e269f7 line 1114 _verdict_sentence formats a plain unknown verdict with the spelling steer_clear",
+      "lib/research/print/tests/test_by1_reason_mapper.py@8e81e269f7 line 57 pins the constant UNKNOWN_VERDICT only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 Item 4: UNKNOWN_VERDICT_SENTENCE must read steer clear; the order names the constant and the tests that pin it.",
+  "world_is": "The same sentence template in _verdict_sentence prints a plain unknown verdict with the field-code spelling steer_clear, so a verdict outside the served enum still printed the underscore form. Changed to steer clear in the same cell; no test pins the line-1114 form.",
+  "notes": "Form only. Fixed in this cell; the re-scoped assertion is test_by1_reason_mapper.py UNKNOWN_VERDICT (named in the receipt)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W519-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~519",
+  "surfaced_at": "2026-10-18T12:08:33Z",
+  "one_line": "A served basis definition that carries the provenance separator (middle dot) splits its own figure line, so its fragments print raw in the appendix; no served definition of the eight names carries it (0 of 194 figures).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@8e81e269f7 lines 571-572 _plain_figure_line removes the code segment by equality with the definition as written only",
+      "lib/research/print/tests/test_bz3_appendix_plain_and_verdict.py W1 site definition-middle-dot prints the base fragment 'EQY_BETA (Beta - s3://opal-data-harvest/x/y.json)' (fails at base)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 Item 3: the appendix's served basis definition goes through _plain_reason, or the appendix's own fixed sentence.",
+  "world_is": "The code segment is removed only when the split part equals the code text, so a definition containing the separator leaves fragments; the base printed 'Beta: 1.06x - EQY_BETA (Beta - s3://...) - Bloomberg'. Routed in this cell: a non-plain or separator-bearing definition is replaced by the appendix's fixed line before the split.",
+  "notes": "Form only. Fixed in this cell (render_pack.py _render_fig_for_appendix)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W519-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~519",
+  "surfaced_at": "2026-10-18T12:08:33Z",
+  "one_line": "The appendix label built from a served definition upper-cases its first letter, so a definition that opens with a storage path prints as 'S3://opal-data-harvest/x/y.json'; a case-sensitive check reads that line clean.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@8e81e269f7 lines 419-436 _plain_label labels from formula_words(definition) with words[0].upper()",
+      "lib/research/print/tests/test_bz3_appendix_plain_and_verdict.py W1 site label-definition (base output 'S3://opal-data-harvest/x/y.json: GBp 6,816.00 per share - Bloomberg')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 Tests W1: a served definition carrying s3:// prints its fixed sentence and neither string.",
+  "world_is": "At base the label of a definition that opens with the path is 'S3://...', so a lower-case test reads it clean. The cell's W1 and W6 checks are case-insensitive, and the label takes the fixed line when the served definition is not plain.",
+  "notes": "Form only. Fixed in this cell (render_pack.py _definition_plain in _plain_label)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W519-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~519",
+  "surfaced_at": "2026-10-18T12:08:33Z",
+  "one_line": "A figure with no served source prints a bare '?' as its source in the appendix; the order's fixed-sentence rule has no sentence for an absent source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bz_served_thesis_RIO_LN.json@8e81e269f7 header SHORT_INT_RATIO carries no source key; the same is true of IN CURR_ENTP_VAL, IN SHORT_INT_RATIO and PM SHORT_INT_RATIO (four figures in the eight names)",
+      "lib/research/print/tests/fixtures/bz3_appendix_base_RIO_LN.txt@8e81e269f7 line 'Short interest ratio (days to cover): not reported - ?' (the W2 control holds it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 Item 3: the served source prints through _plain_reason, or the site's own fixed sentence.",
+  "world_is": "An absent source takes render_figure_line's '?' fallback, which the token rule keeps as plain words, so the appendix prints a bare question mark. The W2 control holds the eight names' base lines byte-identical, so this cell does not change it.",
+  "notes": "Form only. Not changed: the order's byte-identical control covers the line. The issuer rules whether an absent source takes the fixed sentence."
+}
+```
