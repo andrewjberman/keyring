@@ -21,11 +21,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-17T22:22:35Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v113",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v113"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-W503-S1",
@@ -71,5 +71,13 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-17T22:22:35Z. Graduated at ADJUDICATION_v1
   }
 ]
 ```
+
+-- 3.0.0_SA_CVO
+
+## Disposition lines (appended, 3.0.0_SA_CVO, dell1, 2026-10-18T01:34:53Z)
+
+Per `org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round88.md` section 2 @07264722d8 (the same append-only rule): a disposition on an existing row is an appended line, never an edit.
+
+- `AMGT_RESAPP-D1-W503-S1`: NOT A DEFECT (closes unremediated). The CTO ruled it latent (msg 7777) and set the read: ICICIBC IN, the covered name with the fewest figure mnemonics, renders 113 table rows in the All figures fold, so no covered name has a grid under 20 rows (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round114/DRAIN_END_PACKET.md @0229f8da66 section 1); see ADJUDICATION_v152 C-S182.
 
 -- 3.0.0_SA_CVO
