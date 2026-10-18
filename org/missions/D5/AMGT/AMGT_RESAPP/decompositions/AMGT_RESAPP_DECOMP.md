@@ -11361,3 +11361,25 @@ fanout: 3 of 3 chains, cap 8, reason: three write regions of one Python file, di
 **Not this round's:** the fund-currency carry (the `by-4` reading); the posture reader's landing; the AIFILL workstream (`~R2`); `bp-5`'s read; A4; the Lusha tier; row `S57`.
 
 fanout: 1 of 1 chains, cap 8, reason: one portal feature cell (a candidate branch from PROD ff611566 under src/pages/SecurityAnalysis/); cb-2 (the issuer's reads) and cb-3 (the landing) are not worker cells; portal_ref: ff611566.
+
+---
+
+## s.131 -- ROUND 122, R1 track (`2.0.0_SA_COO~R1`), issued 2026-10-18 ~18:2xZ from the CTO's round-121 analysis (`ledger/ROUND_ANALYSIS.round121.R1.md`, msg 8200, `@48c576b954`) and the CVO's slug (msg 8199, `ADJUDICATION_v160` and its correction `v161`)
+
+**Input.** The portal three-state cell is MET on the running page (the CVO's caveat stands: a stubbed session fed the served body grades the page's wording, not the live login hop); the CTO's addendum `@5912bb01a4` ruled that `W518-S2` stays OPEN and `W523-S2` closes (`block_mgmt_bio.py` is not a state consumer). Graduated: the CVO's finding **C-S203** (the PDF's `_ceo_profile_sentence` falls back to `no public profile is on file yet` for a non-plain reason, which reads as never written while the page prints a third sentence), the only open row on the R1 track. The CVO's question, ruled yes: round 122 grades C-S203 and W518-S2 closes with it. Round 121 closed MAY-CLOSE (PROD `d729ee6d`, DEV `f7074536`, `DEV..PROD` 0).
+
+**Measured by the issuer before the cut (read-only):** the base print tests `1 failed, 432 passed`; `_ceo_profile_sentence` (`render_pack.py` about lines 998 to 1017) has branches only for `NOT_WRITTEN`, `UNREADABLE_OBJECT` and `CONFIRMED` with a url, and prints the reader's `reason` for every other reading when it is plain words and `no public profile is on file yet` when it is not (the live HD US and BA US lines are the plain case); the walker procedure for a real-login read is the `/ui-walk` skill (the dormant UI walker account, a lease, a localhost `dev:live` build of the exact PROD head against the live front door, `OK: DISARMED`).
+
+| item | cell | what | worker | risk | edges |
+|---|---|---|---|---|---|
+| 1 | `AMGT-cd-1` | a branch for every known state in `_ceo_profile_sentence` (a fixed per-state sentence only for a NON-plain reason; a plain reason prints byte-identically), the third sentence worded for the document for an unknown reading, the fixed fallback never reads as not-written; the per-state test with non-plain reasons | worker ~524 | LOCAL | none |
+| (reads) | `AMGT-cd-2` | the issuer: the 101-name census of printed CEO lines (PDF and export), live against the candidate: DELTA=0 or the moved names listed | the issuer | LOCAL (read-only) | cd-1 |
+| 2 | `AMGT-cd-3` | the issuer: the live hop, one read of TSM US and HD US on the PROD Security Analysis page and in the PDF under a real staff login (no stub), by the `/ui-walk` walker on a local build of PROD `d729ee6d`; the corrupt case stays a fixture | the issuer | LOCAL (read-only; arms and disarms the walker account) | none (independent of cd-1) |
+| 3 | `AMGT-cd-4` | the pack redeploy: a CloudOps order from a release pin; a never-widen pair only if the census moves a line (DELTA=0 needs none) | CloudOps (REDEPLOY workstream) | WORLD | cd-1, cd-2 |
+| carried | `AMGT-bp-5` | the G4 positive-arm read, Mon 2026-10-19 after the 11:30Z fire | the issuer | LOCAL (read-only) | none |
+
+**Decisions this decomposition takes (the issuer's, inside the CTO's ruling).** (a) The design that keeps HD US and BA US byte-identical: a PLAIN reason prints exactly as today; only a NON-plain reason (where `_plain_reason` returns its fixed argument) gets the state's own fixed sentence, so the change moves a line only for a name whose reason is not plain; the census names them. (b) The fixed sentences are the issuer's wording, worded for the document and never containing the words `not on file`, `no public profile`, `never written` or `has been written`; the third sentence is `the state of this profile is not recognised by this document`. (c) The live hop is cut as the issuer's read and runs NOW, in parallel with `cd-1`: it grades the live login hop of the page that is already live (PROD `d729ee6d`) and the live PDF, independent of the builder fix. (d) The cell id prefix is `cd`: `cc` is taken by an older round's orders in this project (`AMGT-cc-1.the-segment-reader-finds-a-stored-table`).
+
+**Not this round's:** the fund-currency carry (the `by-4` reading); the posture reader's landing; the AIFILL workstream (`~R2`); `bp-5`'s read; A4; the Lusha tier; row `S57`.
+
+fanout: 1 of 1 chains, cap 8, reason: one write region of one Python file (the sentence builder); cd-2 and cd-3 (the issuer's reads) and cd-4 (a redeploy, a pair only if a line moves) are not worker cells.
