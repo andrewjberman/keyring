@@ -11143,5 +11143,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S51",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-18T02:34:45Z",
+     "one_line": "The CloudOps seat 0.7.0_AE_CloudOps~SC1 does not consume inbox mail while idle between its interim loops: three times in 2.5 hours an order and a GO sat unread (47 minutes, then 8 minutes at the third) until a tab peek and a typed nudge.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "The watcher doctrine (.claude/skills/watcher): a lane's inbox watcher delivers one [INBOX] event per message and the seat reads and acts; an unread file in the lane's inbox means the seat did not act.",
+     "world_is": "Read by the issuer 2026-10-18. (1) HVST-cg-2 order and GO sent 00:06Z and 00:12Z: get_delivery_state OFFER-EXHAUSTED, 0 READ at 00:54Z; a peek showed SC1 idle at input saying 'there is no open order'; after a typed nudge by this seat and one by 2.0.0_SA_COO~R1 it read them and wrote the canary at 01:00Z. (2) HVST-cg-3 order sent 01:28Z: READ at 01:36:49Z (8 minutes). (3) HVST-cf-5 order sent 02:24Z and GO 02:32Z: 0 READ at 02:33Z, four unread files in SC1's inbox directory (including a message of 01:51Z never read), SC1 idle at input saying 'No open orders' with its inbox watcher armed; nudge typed 02:34Z. In each case SC1's own report then stated the work correctly, so the fault is receiving, not acting. Cause unknown: not read whether the watcher's [INBOX] event reaches an idle session or only an active turn. Cost so far: a 47 minute delay inside a 2 hour window, and two seats having to type into its tab.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/mcp/inbox/0.7.0_AE_CloudOps/~SC1/ (the unread files at 02:33Z)",
+       "get_delivery_state for 0.7.0_AE_CloudOps~SC1 since 2026-10-18T00:00Z and since 02:20Z (OFFER-EXHAUSTED, READ coverage 0)",
+       "peek images C:/Users/Test/AppData/Local/Temp/unstick_peek_0.7.0_AE_CloudOps~SC1_20261018T005410Z.png and ..._20261018T023328Z.png",
+       "2.0.0_SA_COO~R1 msg 7806 (its own nudge of 00:55Z)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
