@@ -28808,3 +28808,52 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~154",
+  "surfaced_at": "2026-10-18T12:44:29Z",
+  "id": "NFRA_OPLGTW-Z-W154-S1",
+  "one_line": "OG-ev-8: 12 of 81 audit-write sites (tools.py _run x9, _opal_users_send_gate, _reply_unbound, and harvest_read._audit) reach the event loop only through sync @mcp.tool bodies, whose FastMCP 1.28.0 dispatch is outside the gateway source the cell reads, so their on_event_loop is unknown",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/tools.py@581ee61977:127 def _run is a sync function; its callers at tools.py:216-1731 are sync @mcp.tool bodies (tools.py:212-1896)",
+      "infra/aws/ec2/opal-gateway/app/tools.py@581ee61977:82-106 _PolicyGuardedMCP.call_tool awaits super().call_tool(name, arguments) for the tool body; the gateway adds no thread hop around a sync body",
+      "infra/aws/ec2/opal-gateway/requirements.txt@581ee61977:4 pins mcp==1.28.0; the package is not installed in the worktree and was not read"
+    ]
+  },
+  "spec_asserts": "OG-ev-8 reads on_event_loop from the enclosing function in app/: async def is yes, a sync function only reached from a thread or at import is no, and a site that cannot be told is unknown with its reason.",
+  "world_is": "The 12 unknown sites sit under sync @mcp.tool bodies. Whether FastMCP 1.28.0 runs a sync tool body on the event loop is decided by the pinned mcp SDK, which is not in this worktree and is outside the gateway source the cell reads, so those verdicts stay unknown and are not inferred.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~154",
+  "surfaced_at": "2026-10-18T12:44:29Z",
+  "id": "NFRA_OPLGTW-Z-W154-S2",
+  "one_line": "OG-ev-8: the audit-lake bucket has no row in the infra/logic registry; its name was read from the terraform declaration instead of the registry the cell names",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep at 581ee61977 of opal-mcp-audit over infra/logic: no hit; a positive control of opal- over infra/logic/registry returns hits in scopes.json, systems.json and tiers.json",
+      "infra/aws/terraform/opal-gateway/audit-lake.tf@581ee61977:18 declares bucket = \"opal-mcp-audit\"; app/config.py@581ee61977:387 reads AUDIT_S3_BUCKET from the environment with no default"
+    ]
+  },
+  "spec_asserts": "Find where the lake is from app/audit.py (_lake_key, AUDIT_S3_BUCKET) and comp-estate / infra/logic (use the registry, do not guess a bucket name).",
+  "world_is": "app/audit.py names no bucket; the bucket is set by the environment. The name opal-mcp-audit comes from the terraform declaration, not a guess. The infra/logic registry carries no row for it, so no registry entry was used or added; the lake listing used only that declared name.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
