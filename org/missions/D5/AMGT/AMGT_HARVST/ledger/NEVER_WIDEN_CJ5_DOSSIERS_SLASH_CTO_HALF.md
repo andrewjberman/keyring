@@ -10,7 +10,7 @@
 - **The guard:** the half carries my model-block guard verbatim (SERVED, a later stamp, valued rows not lower).
 - **The partition:**
   - both objects land under the ENCODED partition, where the census finds the stored 15 and 14 objects (0 under the raw spelling);
-  - `_model_block_read` also lists by `slash_safe_key` (`dossier.py:1214-1215`);
+  - `_model_block_read` also lists by `slash_safe_key` (`dossier.py:1217-1218`);
   - so this write adds no second form, and the W170-S3 split is not reintroduced.
 - **The start condition** is right: cj-3 is deployed and the issuer's own four-spelling reads come back whole. That was my round-94
   ruling: slash-key dossiers come only after W170-S3 lands.
