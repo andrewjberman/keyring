@@ -4448,3 +4448,14 @@ The CTO accepted the recommendation: a gateway consumer still reading `fund` as 
 - **Fan-out (this recut):** `N of M chains, N=0 workers (cf-5 is a seat order) of M=1 chain, cap 8`.
 - **Check at the cut (dry-run at the base):** `cf-5` AC1 to AC4 FAIL as expected (no `cf5_served.out`).
 - **Round 92 cells:** `cg-1`, `cg-2`, `cg-3`, `cg-4`, `cg-5`, `cf-3` complete; `cf-5` staged. When `cf-5` closes the round's enrichment list (items 1 and 2) is done; item 3 (`ce-5`) was folded into `cg-3`; item 4 (the cycles) is SC1's.
+
+### 122g. ROUND 92 -- `HVST-cf-5` complete (ledger closed `334218577d`); round-92 packet sent; the CTO ruled `D1-S52` (msg 7864, `ledger/CTO_RULING_D1_S52_CONTINUATION_PICK_20261018.md` @162d5a6934) (2026-10-18 ~03:3xZ)
+
+All 7 round-92 orders are `complete` (`cg-1`, `cg-2`, `cg-3`, `cg-4`, `cg-5`, `cf-3`, `cf-5`); `round-close-check` round 92 = `orders=7 verdict=MAY-CLOSE`; the L8 packet is `ledger/ROUND92_L8_PACKET_20261018.md` (`bf48426b91`).
+
+**STANDING INSTRUCTION OF THIS DECOMPOSITION'S ISSUER (the CTO's ruling; it IS the disarm of the ARMED row `D1-S52`):** no dossier or continuation rebuild is ORDERED for any security whose newest stored continuation is below the current continuation method (`/5`; 77 of the 94 securities today; the `HVST-cf-4` names are the 17 at `/5`) until round-93 cell 1 lands, and none is ordered that reads DIVZ's stale fund form (C-6). Cause, read by the CTO: when no stored continuation is at the current method, `continuation._select_stored` (line 1103) returns the FIRST key in sort order, so the pick follows the object-name hash (UNH: `28404359`, method `/3`, fund absent, not the `/4` PFOE object the gateway serves). **Round-93 cell 1 (with DIVZ), the CTO's:** the fallback picks the highest `method_version`, then the last written; graded by a difference test (UNH picks `/4`) and a census of the substrate's pick against the object the gateway serves. The CVO's remediation row carries `disarms: AMGT_HARVST-D1-S52`.
+
+| cell | state |
+|---|---|
+| round 93 cell 1 (the continuation pick and DIVZ) | the CTO's round-92 analysis item; cut when the analysis arrives |
+| round 93 other items | `D1-S49` (one shared classifier), `D1-S50` (the response-size cap), `D1-S51` (idle seat and unread mail), the standing candidates |
