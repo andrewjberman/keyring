@@ -4695,3 +4695,15 @@ The CTO accepted the narrow release (his msg 7978 supersedes his msg 7975 cut li
 
 - **Fan-out (this cut):** `N of M chains, N=1 seat order (cl-4) of M=3 chains (A: cl-1 merged, cl-2 held; B: cl-3 merged, cl-4 staged; C: items 3 to 5, carried), cap 8`.
 - **Dry run at the base:** `cl-4` AC1 to AC4 FAIL as expected (no served file).
+
+### 134. ROUND 97 -- `HVST-cl-2` CUT after `HVST-cl-1` merged (the cell's own condition in section 132 is met; not a second issuance)
+
+`HVST-cl-1` (merged `349e7ee0da`; AC1 `16 passed`, AC2 `22 passed`, re-run by the issuer; the whole diff read) is complete, so the Terraform deploy of the `opal-research-pull-enqueue` Lambda is cut and STAGED.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cl-2` | `cl-2` | The Lambda redeployed by Terraform only: `build-and-upload.sh` of the one-file zip, the saved plan read first (exactly ONE in-place update of the function, `s3_object_version` and `source_code_hash`, nothing else), `safe-apply` of that plan, the deployed bytes equal to the merged source (md5 `45c83ddf74640e90368e8bebf712b52c`), and ONE side-effect-free refusal probe (a ticker the shared rule refuses: 400, no S3 write, no SQS send), under a never-widen pair (COO half `deliverables/2.0.0_SA_COO_W1/round97/NEVER_WIDEN_HALF_COO_CL2_PULL_ENQUEUE_CANONICAL_STATUS_KEY.md`). Workstream `PULLENQ-DEPLOY`. | WORLD | seat SC1 | CUT, STAGED |
+
+- **Fan-out (this cut):** `N of M chains, N=1 seat order (cl-2) of M=3 chains (A: cl-1 merged, cl-2 staged; B: cl-3 merged, cl-4 staged; C: items 3 to 5, carried), cap 8`.
+- **Dry run at the base:** `cl-2` AC1 to AC4 FAIL as expected (no served file).
+- **One seat, two staged orders:** `cl-2` and `cl-4` go to the same seat (`0.7.0_AE_CloudOps~SC1`, rule 34); the seat serves one at a time, in the order the CTO halves arrive.
