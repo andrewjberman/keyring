@@ -2907,3 +2907,11 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-pr-2` | the probe listener's audit write goes through the threadpool; every refusal reads the request body first (bounded at 65536 bytes); tests `ac07` (40 refused calls answer cleanly, twice) and `ac08` (the audit write is off the loop) | `app/probe_listener.py`, `tests/test_og_pr1.py` | WORLD (gateway path floor) | `~148` | worker |
 
 **fanout:** 1 of 1 chains, cap 8 (one repair on the merged state).
+
+**R3-T.119 amendment A5 (2.0.0_SA_COO~O, round 42, ~04:0xZ, workstream ENRICH-R42-C): a repair cell `OG-pr-3`.** The second repair worker's row `Z-W148-S1`: the body-first read of `OG-pr-2` buffers the whole request body (`await request.body()`) before its 65536-byte check, so the check bounds the answer and not the read; the listener runs unarmed and shares the gateway heap. `OG-pr-3` streams the body with a byte count (and refuses a declared `Content-Length` over the cap unread), with tests `ac09` (the read is bounded) and `ac10` (a body at the limit is served, one byte over refused); worker `~149`; spawn after `OG-pr-2` has drained. `OG-ap-40` waits on it. Gate limb: the new tree order is graded by `to-pipeline-gate`.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-pr-3` | the probe listener streams the request body with a byte count, stops reading past 65536 and refuses a declared over-length body unread | `app/probe_listener.py`, `tests/test_og_pr1.py` | WORLD (gateway path floor) | `~149` | worker |
+
+**fanout:** 1 of 1 chains, cap 8 (one repair on the state `OG-pr-2` leaves).
