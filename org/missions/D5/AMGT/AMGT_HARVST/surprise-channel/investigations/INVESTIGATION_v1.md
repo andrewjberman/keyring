@@ -12939,5 +12939,91 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~182",
+        "surfaced_at": "2026-10-18T19:09:57Z",
+        "disposition": "UNDER_INVESTIGATION",
+        "id": "AMGT_HARVST-D1-W182-S1",
+        "one_line": "HVST-cn-6 probe: the refresh opens continuation.KPI_LEXICON_PATH, a path relative to the working directory; it resolves in the image only because the Lambda working directory is /var/task, and the probe added its COPY line.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order HVST-cn-6 step e and its adversary list: the minimal-root probe copies exactly the Dockerfile COPY set into a fresh image root and runs the handler from that root, so a COPY set that works only because the probe ran from the repo root is refused.",
+        "world_is": "The refresh opens continuation.KPI_LEXICON_PATH (lib/research/corpus/continuation.py lines 169-171), os.path.join('org', 'tier1_exec', '4.0.0_SA_CRO', 'deliverables', 'RESEARCH_CORPUS_SCAN_20260922', 'research_docx_kpi_census.json'): a path relative to the process working directory, not anchored to the module. The first probe run (child cwd = the temporary image root, call 2) ended errors=2 with FileNotFoundError on that path for both names. It resolves in the image only because the Lambda working directory is /var/task (the image root). The probe added the one COPY line for it (ROOTFS-FIX added=...) and the second run passed with errors=0. sector_template.KPI_CENSUS_ABS is anchored to the module file and is not affected. A miss in the image is loud (an ERROR per name, census errors above 0, the invocation fails), not silent.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/continuation.py@ac2fc0e108 lines 169-171 (KPI_LEXICON_PATH, relative os.path.join)",
+                "lib/research/corpus/sector_template.py@ac2fc0e108 lines 101-107 (the module-anchored counterpart)",
+                "infra/aws/lambda/research/dossier_refresh/Dockerfile (working file, committed with this row): the COPY line for research_docx_kpi_census.json",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~182/cn6_rootfs.out (working file, committed with this row): ROOTFS-FIX line and ROOTFS-DRY line"
+            ]
+        }
+    }
+    ,
+    {
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~182",
+        "surfaced_at": "2026-10-18T19:09:57Z",
+        "disposition": "UNDER_INVESTIGATION",
+        "id": "AMGT_HARVST-D1-W182-S2",
+        "one_line": "HVST-cn-6 probe: the minimal-root run used the box's Python 3.14.7 on Windows, not the Python 3.12 Linux image the Dockerfile names; the pins were measured on that same Windows 3.14 install.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order HVST-cn-6 step e and the spawn face: the minimal-root probe is the substitute proof that the COPY set is sufficient for the image; the Dockerfile base is public.ecr.aws/lambda/python:3.12 and requirements.txt pins the versions measured in HVST-cn-4.",
+        "world_is": "The probe ran under the local interpreter (ROOTFS-SYSPATH shows Python314 on Windows). The image runs Python 3.12 on Linux. The pinned versions (pyarrow 25.0.1, pandas 3.0.6, numpy 2.5.3, pymupdf 1.28.2 and the rest of the 18 PKG distributions) were measured from that Windows 3.14 installation in cn4_closure.out. The probe therefore proves the import graph and the COPY set; it does not prove that these pins install or import under a cp312 Linux wheel set. The order says so for wheels; the interpreter version is the same gap. Not tested here, and no image is built here. The image build cell must verify it before the image is built.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~182/cn6_rootfs.out (working file, committed with this row): ROOTFS-SYSPATH line",
+                "infra/aws/lambda/research/dossier_refresh/Dockerfile (working file, committed with this row): FROM public.ecr.aws/lambda/python:3.12",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.out@a34c1a6873 PKG lines and the interpreter named in its proof"
+            ]
+        }
+    }
+    ,
+    {
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~182",
+        "surfaced_at": "2026-10-18T19:09:57Z",
+        "disposition": "UNDER_INVESTIGATION",
+        "id": "AMGT_HARVST-D1-W182-S3",
+        "one_line": "HVST-cn-6 image recipe: the lib/research/ COPY carries the whole subtree, 483 of its 747 tracked files being test files; the order's adversary list asks that the image carry only what the refresh needs.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order HVST-cn-6 step c and its adversary list: the image carries only what the refresh needs; the order names the lib/research/ tree as one COPY line.",
+        "world_is": "The lib/research/ COPY line copies the whole subtree as tracked at ac2fc0e108: 747 files, of which 483 sit under a tests/ directory, plus data files (about 13 MB on disk). The image would carry test code the refresh never imports. The probe copied the subtree verbatim with __pycache__ excluded, so the probe's root is the same size as the image's. A narrower COPY set (the modules the closure imports) is a follow-up for the image build cell; this cell keeps the tree the order names.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git ls-files lib/research at ac2fc0e108: 747 tracked files, 483 under a /tests/ path",
+                "infra/aws/lambda/research/dossier_refresh/Dockerfile (working file, committed with this row): the COPY lib/research/ line"
+            ]
+        }
+    }
+    ,
+    {
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~182",
+        "surfaced_at": "2026-10-18T19:09:57Z",
+        "disposition": "UNDER_INVESTIGATION",
+        "id": "AMGT_HARVST-D1-W182-S4",
+        "one_line": "HVST-cn-6 order: the title line names workstream REFRESH-HOST; the front matter and the spawn face name REFRESH-IMAGE.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order HVST-cn-6 front matter and spawn face: workstream REFRESH-IMAGE, slot 182, round 99.",
+        "world_is": "The on-disk order (org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cn-6.the-dossier-refresh-lambda-handler-and-container-image-recipe-run-from-a-minimal-root.md, line 1) reads REFRESH-HOST in its title. Its front matter and the issuer note say REFRESH-IMAGE, and so does the spawn face. The worker followed the front matter and the spawn face. No write surface depends on the title.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cn-6.the-dossier-refresh-lambda-handler-and-container-image-recipe-run-from-a-minimal-root.md@ac2fc0e108 line 1 and front matter <workstream>"
+            ]
+        }
+    }
 ]
 ```
