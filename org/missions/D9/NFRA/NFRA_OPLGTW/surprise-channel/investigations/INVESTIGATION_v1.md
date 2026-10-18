@@ -28633,3 +28633,26 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~151",
+  "surfaced_at": "2026-10-18T12:40:06Z",
+  "id": "NFRA_OPLGTW-Z-W151-S1",
+  "one_line": "OBSERVATION: the safe-commit client-data-check could not check the OG-pr-4 commit for client account ids; the hashed account-id list is absent on this device",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "The commit gate checks each commit for client account ids before it lands (the client-data-check limb run by .tools/safe-commit.sh).",
+  "world_is": "On this device the hashed account-id list is absent at C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt. The limb printed WARN that the commit was NOT checked for client account ids, and the commit landed (81dacc3bc7, two gateway files). The check did not run for that commit. The only account literals in the two files are test fixtures already present at base.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 81dacc3bc7 (.scratch/commit1.out in the worker worktree): 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
