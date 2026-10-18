@@ -4497,3 +4497,16 @@ The CTO read `harvest_research.py` lines 409-417 and confirmed that `truncated: 
 
 - **Fan-out (this recut):** `N of M chains, N=0 workers (ch-5 is a seat order) of M=1 chain, cap 8`.
 - **Check at the cut (dry-run at the base):** `ch-5` AC1 to AC4 FAIL as expected (no `ch5_served.out`).
+
+### 123c. ROUND 93 -- `HVST-ch-1` merged (`bec8a53981`); `HVST-ch-5` PENDING at SC1 with its pair signed (CTO half @add9119d81); `HVST-ch-2` CUT (2026-10-18 ~04:2xZ)
+
+`HVST-ch-1` (worker `~165`) merged: AC1 `14 passed`, AC2 `82 passed`, AC3/AC4 `CENSUS-PICKER securities=95 with_current=17 no_current=78 new_equals_gateway=78 new_differs_from_gateway=0 old_equals_gateway=26 old_differs_from_gateway=52` and `PICK UNH_US_Equity candidates=4 old=28404359/3 new=4d837586/4 gateway=4d837586/4` (re-run by the issuer, identical). **The hazard of `D1-S52` was not UNH-only: the old rule differed from the served object for 52 of the 78 names with no `/5` continuation.** `no_input_match=0`. The standing instruction (section 122g) lifts when `ch-1` AND `ch-2` are merged with their censuses reading 0 differing; `ch-1`'s reads 0.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-ch-2` | `ch-2` | **One shared word-list module `line_words.py`** read by gold `continuation._line_stance` and silver `fund_relation.classify` (the three patterns are the SAME objects, no copy); an offline test with a mutant; **two read-only censuses:** the drift over every stored report line (expected `drift=0`) and the gold census (every gold value the shared list would move, the baseline pinned at `bec8a53981`; a non-zero count goes under its own pair). `METHOD_VERSION` is NOT bumped. Workstream `SHARED-CLASSIFIER`. | LOCAL | worker `~167` | CUT |
+| `HVST-ch-5` | `ch-5` | The DIVZ form written (section 123b). | WORLD | seat SC1 | PENDING at SC1 for preparation (handed 04:08:41Z); the CTO half is signed; waits on site Z's answer and the issuer's GO |
+| `HVST-ch-7` | -- | The `/5` rebuild, under its own pair. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `ch-2` merged and both censuses reading 0 differing |
+
+- **Fan-out (this recut):** `N of M chains, N=1 worker (ch-2) of M=2 chains, cap 8` (chain A: `ch-2` then `ch-7`; chain C: `ch-5`, a seat order).
+- **Check at the cut (dry-run at the base):** `ch-2` AC1 FAIL as expected (no test file), AC2 PASS as expected (`137 passed`), AC3 and AC4 FAIL as expected (no census file).
