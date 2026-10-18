@@ -31367,3 +31367,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The census records this difference per row; the placement is the order's stated rule and is not changed here."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W515-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~515",
+  "surfaced_at": "2026-10-18T09:42:45Z",
+  "one_line": "The order's census names the posture basis field, but this cell routes only reasons: a basis claim is analyst text, so a claim that carries a path or field code prints raw in Positioning.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@afcd188f9b line 1094 _print_positioning: p.line(str(claim.get('claim'))) prints each basis claim unchanged",
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-515 _print_positioning: the claim loop is unchanged by AMGT-by-1; the fixtures carry no SERVED posture, so no claim text is exercised by the controls"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 (B) and (C): every pdf site that can print text taken from a served reason, status, state, error, absent_because, source or basis field goes through _plain_reason, with a fixed sentence for a non-plain value.",
+  "world_is": "A basis claim is the analyst's own sentence (posture.basis[].claim), not a served reason or state sentence; a fixed sentence per claim would replace the claim's content. The claim loop prints it unchanged, so a claim carrying a storage path or an UPPER_SNAKE field code reaches the pack as written.",
+  "notes": "Routing decision, not a fix: the cell's census records the claim site as content, not routed. The issuer rules whether claims join the mapper (a per-claim fixed sentence) or stay analyst text under rule 3's reason scope."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W515-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~515",
+  "surfaced_at": "2026-10-18T09:42:45Z",
+  "one_line": "The Appendix figure lines print a served source and a served basis definition raw: the figure-line functions sit outside AMGT-by-1's region and were not routed through the mapper.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@afcd188f9b lines 563-603 _plain_figure_line: a source segment other than BBG passes through _long_days only, so a served source prints as served",
+      "lib/research/print/render_pack.py@afcd188f9b lines 642-654 _source_words and _withheld_line: a withheld money figure prints its served source as served when the source is not BBG",
+      "lib/research/print/render_pack.py@afcd188f9b lines 410-437 _plain_label: a figure with no mapped name takes its label from basis.definition as served",
+      "probe at afcd188f9b, python .scratch/by1_census.py figline: 'Synthetic definition: 1.50x - s3://opal-data-harvest/bronze/x.json' and 'Market cap: Bloomberg does not confirm this figure's currency - AMGT-rj-11 feed'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 2 bound 3: a served state sentence or reason the pack prints never carries a storage path, a bucket key, an object name, an order or cell id or an UPPER_SNAKE field code.",
+  "world_is": "The pack's Appendix prints a served source and a served basis definition unchanged. Those segments are not reasons and sit in the figure-line functions, which the order excludes from this cell's region, so no mapper covers them. The served values were not read here (no AWS call), so whether a live source carries a path is unmeasured; the hazard is armed until the issuer rules.",
+  "notes": "ARMED: a served source or definition carrying a path reaches the printed Appendix raw. Disarm: the issuer rules whether the figure-line segments join _plain_reason in a later cell, and measures the served source values before that cell."
+}
+```
