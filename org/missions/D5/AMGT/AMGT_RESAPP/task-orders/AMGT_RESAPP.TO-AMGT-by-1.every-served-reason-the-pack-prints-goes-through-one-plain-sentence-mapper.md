@@ -71,7 +71,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 1 of the CTO's round-117 analysis (`ledger/ROUND_ANALYSIS.round117.R1.md`, msg 7986). Disarms rows W512-S2 and W512-S3 (disarm owner this seat). The rich-markdown sites are listed in the census and left to `by-2`, which starts after this cell merges (it reuses `_plain_reason`; one worker slot, ~515, runs both in order). LOCAL code cell; served only through `AMGT-by-5`.
 
-<status>pending</status>
+<status>complete</status>
 <round>118</round>
 <slot>0.9.0_WK_AMGT_RESAPP~515</slot>
 <fabric>dell1</fabric>
