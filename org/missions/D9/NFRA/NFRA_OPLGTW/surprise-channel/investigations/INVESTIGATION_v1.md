@@ -29121,3 +29121,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Phase A continues: the ask is written with this disclosed; Phase B needs your ruling on AC2."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T19:00:00Z",
+  "id": "NFRA_OPLGTW-Z-S398",
+  "one_line": "Round-43 ruling on the applier's row Z-S397 (OG-ap-44 AC2 'listener lines 0' cannot hold: uvicorn logs the listener's own requests by hasHandlers(), whatever Config.access_log says): the criterion was the issuer's premise; AC2 amended so the listener's access lines are counted separately and must EQUAL the requests made; no further repair",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S397"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the applier's Phase A measurement (msg 35779; ask section 2): in a fresh guarded process on the host (uvicorn 0.52.3), one unarmed request to the candidate listener produced one access line in the capture handler; uvicorn's h11_impl.py line 57 and httptools_impl.py line 61 decide per connection by access_logger.hasHandlers(), and Config.access_log is consulted only when logging is configured; a line holds the loopback address and port, the request line (POST /probe/<tool>) and the status, no body, argument or account",
+      "my run of ap44.AC1 in the main tree on the applier's records: PASS (loggers unchanged over the four names, the access record reaches the handler, restore on a raising Config, listener access_log False, armings 0, 2 files, 0 outside the take list, 4 of 4 harvest files carried)",
+      "my controls on the amended ap44.AC2 logic: a good record (3 listener access lines of 3 requests made) OK; 2 of 3 NO; 1 of 1 under the minimum of 3 NO; zero POST /mcp lines NO"
+    ]
+  },
+  "spec_asserts": "The CTO's criterion (msg 35769): the journal shows POST /mcp lines again under traffic, counted against the audit lake over the same window, and the listener's lines are distinguishable.",
+  "world_is": "My order wrote 'the listener's own lines in the journal: 0' on the premise that Config.access_log=False silences the listener; that holds only because the first listener Config emptied the global handlers, which is the defect itself. With the loggers restored the listener's requests are logged like the service's, which is the CTO's own 'distinguishable' clause satisfied by the path (/probe/...) and the client (127.0.0.1). It is also a visibility gain: any process on the host that calls the listener now leaves a journal line. The amended AC2 counts those lines separately and requires them to equal the applier's own requests (at least three unarmed), which shows nothing else touched the listener in the window. No further repair is needed; the signers read the amended criterion in the order (A1 note) and the ask section 2.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The finding is true and the criterion was wrong; the amended AC2 states the correct property and the release needs no further change."
+}
+```
