@@ -12031,5 +12031,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W172-S8",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~172",
+        "surfaced_at": "2026-10-18T12:42:49Z",
+        "one_line": "After the amendment-2 edit of test_cj6 arm3 (the two superseded asserts replaced, the print tail changed), the test file still carries the superseded rule in three places outside the one edit: the arm3 comment at line 259 (the coverage path components keep the caller's own spelling), the arm3 comment at line 264 (the templates cut the caller's own spelling), and the module docstring's statement that the path components and the non-partition prefixes keep the caller's spelling; not edited, the order allows one edit only.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-ck-2 step c2 (amendment 2): replace ONLY the two superseded assert lines of test_arm3 (and the trailing words of its print line); touch nothing else in that file and no other existing test.",
+        "world_is": "infra/aws/ec2/opal-gateway/tests/test_cj6_slash_key_other_tools.py: the assertions now read the new rule (any BP/ and any BP-SLASH- among the coverage path parts; every part is one of the two spellings); the pytest run of the file is 19 passed (AC2 of the eleven files: 75 passed in 3.83s); the stale wording is at lines 259 and 264 (comments) and in the module docstring lines 1 to 5 (the path components keep the caller's spelling). The docstring and the two comments describe the superseded rule and will mislead a reader of arm3.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/tests/test_cj6_slash_key_other_tools.py lines 1-5, 259 and 264 (read after the edit)",
+                "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ck-2.the-path-component-tools-resolve-a-slash-key-and-read-the-union-of-both-prefixes.md step c2 (amendment 2, commit e8e8bb0941)",
+                "pytest of the eleven files after the edit: 75 passed in 3.83s"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
