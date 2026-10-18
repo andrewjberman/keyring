@@ -11987,5 +11987,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W172-S6",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~172",
+        "surfaced_at": "2026-10-18T12:34:17Z",
+        "one_line": "HVST-ck-2 AC2 is not met: the eleven existing gateway test files give 1 failed and 74 passed (the base is 75 passed); the failing test is test_cj6_slash_key_other_tools.py arm3, which asserts that every coverage path-component prefix carries the caller's spelling and none carries BP-SLASH-; the order's change set makes the coverage tool read the canonical prefix, so the test cannot pass with the change; the test is not edited.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-ck-2 AC2 (the amended order): the eleven existing gateway test files must still pass, 75 passed at the base; change nothing in any existing test. Amendment 1: the change set is the eleven named prefixes in five tools, the coverage tool's KEYED path-component templates included.",
+        "world_is": "Measured with the order's AC2 invocation on the worktree after the change: `1 failed, 74 passed in 4.10s` (the base, before the change: `75 passed in 4.37s`). The failing assertion is infra/aws/ec2/opal-gateway/tests/test_cj6_slash_key_other_tools.py:265, `assert path_parts and all(\"BP/\" in t for t in path_parts)`; the coverage calls of harvest_security_coverage(BP/_LN_Equity) now list derived/model_block/BP-SLASH-_LN_Equity/, derived/model_block_fye/BP-SLASH-_LN_Equity/ and the other canonical path-component prefixes, which the test asserts are absent (`assert all(\"BP-SLASH-\" not in t ...)`). Both arms are the cj-6 contract the order's cell changes. Disposition for the issuer: amend the arm3 expectation in the round that owns it, or amend AC2 (the eleven files) to exclude arm3; the order is not edited to match.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck2_replay.out and the pytest run of the eleven files (output above, worktree wk-AMGT_HARVST-172 after the change)",
+                "infra/aws/ec2/opal-gateway/tests/test_cj6_slash_key_other_tools.py lines 258-266 (arm3)",
+                "infra/aws/ec2/opal-gateway/app/harvest_identity.py harvest_security_coverage (the path-component union for a slash key)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W172-S7",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~172",
+        "surfaced_at": "2026-10-18T12:34:17Z",
+        "one_line": "harvest_query_columns (dataset model_block, the _groups reader) builds derived/model_block/<caller key>/ from the caller's spelling; the ck-1 census attributed that prefix to five tools and did not name this site, so this change reads it as a sixth tool (cells = 6 tools x 2 keys = 12).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-ck-2 step b: wherever a tool builds one of the eleven path-component prefixes from a caller's key, it reads the union; the five tools named by the census are research, filings, peers/scores/posture, fundamentals and coverage.",
+        "world_is": "infra/aws/ec2/opal-gateway/app/harvest_figures.py _groups (the keys branch, model_block dataset) read MODEL_PREFIX + <caller key> + / before this change; it is now the union of the canonical and the legacy raw prefix (site listed in ck2_sites.out as harvest_query_columns). The replay adds it as a sixth tool: REPLAY-UNION-WHOLE cells=12 equal=12.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/app/harvest_figures.py _groups (grep of MODEL_PREFIX, the cj-6 SITE list in cj6_sites.out line 'fn=_groups')",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck2_sites.out (CHANGED harvest_figures.py:490 tool=harvest_query_columns)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck2_replay.out (REPLAY-CELL harvest_query_columns rows)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
