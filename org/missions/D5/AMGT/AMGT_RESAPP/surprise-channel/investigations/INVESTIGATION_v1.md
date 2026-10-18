@@ -32124,3 +32124,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not a rewrite of the forecast table; the region question is the CTO's."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W522-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~522",
+  "surfaced_at": "2026-10-18T14:46:39Z",
+  "one_line": "AMGT-ca-3 amendment 1 names two figure rows that carry the unstated source (CURR_ENTP_VAL and SHORT_INT_RATIO); the ICICIBC IN base fixture carries one of them (CURR_ENTP_VAL) and no SHORT_INT_RATIO row exists in the base or in the current export.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/ca3_base_export_ICICIBC_IN.md@2475b8f961 line 17: the Header row CURR_ENTP_VAL ends with the middle dot, space, question mark, space, bar; it is the only line of the file that ends so",
+      "lib/research/print/tests/fixtures/ca3_base_export_ICICIBC_IN.md@2475b8f961 lines 5-17 (the Header table): nine figure rows, none named SHORT_INT_RATIO",
+      "the current export of ICICIBC IN rendered in this worktree at 2475b8f961 (75 lines, scratch copy .scratch/ca3amend/now_ICICIBC_IN.md): one line carries 'source not stated' (line 17, CURR_ENTP_VAL) and no line names SHORT_INT_RATIO"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-ca-3 amendment 1, section 6: the P5 failure is on 'the two rows of the figures that carry no served source (CURR_ENTP_VAL and SHORT_INT_RATIO)'.",
+  "world_is": "Only CURR_ENTP_VAL differs from the recorded base in the ICICIBC IN Header; SHORT_INT_RATIO is not a row of either the base fixture or the current export. The re-scoped control maps the base line ending in the source cell by a generic rule, so it covers every such row and invents no SHORT_INT_RATIO line.",
+  "notes": "Form only. The amendment's premise names a second row that the measured bytes do not hold. The issuer rules whether the amendment text is corrected; the test change does not depend on it."
+}
+```
