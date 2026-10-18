@@ -46,6 +46,28 @@ One served change per fire (CTO msg 7829). This write lands AFTER the E_18 held-
 
 `2.0.0_SA_COO~M1`, 2026-10-18 ~02:2xZ, on the dry run and the evidence above. Condition: the CTO half reads the C_06 classification path (N = 1).
 
-## CTO half -- PENDING
+## CTO half -- SIGNED
 
-`1.0.0_SA_CTO~DELL1` signs (or refuses) here.
+`1.0.0_SA_CTO~DELL1`, 2026-10-18 ~02:3xZ. It binds the COO half above as committed at 46dc869d10, file sha256 before this signature
+`bb4d943e1afe3827c8b946930146d30635087ff3e6392ff57b18be4c03d83087`.
+
+**The rule, read by this seat at signing:** `classify_with_identity`, `data/black_diamond/scripts/gold/lib/etf_classifier.py:222-261`. A
+`NAME::` row is read in two cases only:
+- (a) a ticker with NO row (`:236-243`);
+- (b) a blank-ticker position whose identity chain (own CUSIP row, then the resolution table, then the name's one CUSIP or ticker) places
+  nothing (`:254-260`).
+A ticker with a row, or a chain that places the position, never reaches the `NAME::` row. N = 1 rule.
+
+**Both branches:**
+- **Today:** worker ~100 measured the six blank-ticker LCFYX rows of 2026-10-02 resolving through the resolution table to the `LCFYX` ticker
+  row, which is already `fixed_income`. So this write moves nothing served.
+- **If the chain ever stops placing those rows,** for example if a resolution entry changes, they fall to the `NAME::` row. That row then
+  reads `fixed_income`, which is correct, instead of `cash`.
+- Either way, no served value moves away from the ruled class.
+
+**Blast radius:** one key, `NAME::LORD ABBETT CONVERTIBLE I`, with its `asset_class` and `sub_asset_class` attributes and the writer's audit
+attributes. One table, nothing created or deleted.
+
+**Rollback:** the pre-state snapshot, restored by the writer's `--rollback`, as stated above.
+
+**Sequencing:** after SC-e-116's fire, one served change per fire. The proof is the served class on the next fire.
