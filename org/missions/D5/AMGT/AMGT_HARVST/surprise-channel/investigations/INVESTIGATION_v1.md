@@ -13214,5 +13214,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S9",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-18T21:55:46Z",
+        "one_line": "HVST-cn-5 amendment 4 premise: NAMING_SCHEMA v1.18 (kind repo) is not on wk-AMGT_HARVST-183, so name('amgt', None, 'dossier-refresh', 'repo') is refused in this worktree and the names check cannot print its 13-literal result.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Amendment 4, section 1D: name('amgt', None, 'dossier-refresh', 'repo') returns amgt-dossier-refresh-repo in the cell's worktree, and cn5_names.py prints the ECR line with no refusal caught; the names check counts 13 literals.",
+        "world_is": "The commit that adds NAMING_SCHEMA v1.18 (3224040862) is reachable from box/dell1 only; it is not an ancestor of wk-AMGT_HARVST-183 at d8f3448b9b. The schema in this worktree is v1.17, where kind repo is not in kind.by_type.ECR_REPOSITORY. cn5_names.py now raises ValueError at the ECR line, writes its transcript with NAMES-ABORTED and exits 1; build-image.sh exits 1 at its name() line. The Terraform side (fmt, validate, the six labelled plans) is unaffected: the ECR name is a literal in the first locals block. The fix is for v1.18 to reach this branch by an integrator's merge or a box sync; this worker does not merge, rebase or check out.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git branch --contains 3224040862 (run in the worktree): box/dell1 only; git merge-base --is-ancestor 3224040862 HEAD: not an ancestor",
+                "org/standards/NAMING_SCHEMA.json in the worktree at d8f3448b9b: version v1.17; kind.by_type.ECR_REPOSITORY has no repo entry; git show 3224040862:org/standards/NAMING_SCHEMA.json has version v1.18 with repo",
+                "deliverables cn5_names.out at d8f3448b9b: last line NAMES-ABORTED builder name() refused: ValueError: kind 'repo' is neither a NAMING_SCHEMA.json kind nor a cadence"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
