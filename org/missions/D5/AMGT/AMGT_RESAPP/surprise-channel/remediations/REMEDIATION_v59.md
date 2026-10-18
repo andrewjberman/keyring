@@ -27,9 +27,9 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T13:31:39Z. Graduated at ADJUDICATION_v1
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-18T16:12:11Z"
     }
   },
   {
@@ -47,11 +47,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T13:31:39Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v119",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v119"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-W519-S5",
@@ -68,11 +68,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T13:31:39Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v119",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v119"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
