@@ -28158,3 +28158,53 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: a consumer reads each tool's note as one long line, and the codes are findable by name but are not one line each. Whether the form should be relaxed to 'a segment per code', or the docstrings be made multi-line by a deliberate count-changing edit that re-cites DATA_CATALOG, is the issuer's call. No behaviour, name or tool count changed."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~145",
+  "surfaced_at": "2026-10-18T01:43:49Z",
+  "id": "NFRA_OPLGTW-Z-W145-S1",
+  "one_line": "The OG-sec-1 pattern does not match the two outbound JWKS fetches made through PyJWKClient in identity.py (lines 44 and 115), so the 18-site denominator does not cover every outbound HTTP call; both targets are config-sourced and the CLEAN verdict stands for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PATTERN: the task order section 1 pattern, grep -nE over infra/aws/ec2/opal-gateway/app/identity.py @2550dab3df -- the only match in identity.py is line 77 (httpx.get); lines 44 and 115 carry no matching verb.",
+      "SITES: infra/aws/ec2/opal-gateway/app/identity.py:44 (_verify_cf_jwt, PyJWKClient(jwks_url).get_signing_key_from_jwt(token)) and :115 (_verified_access_identity, the same construct) @2550dab3df -- each fetches a JWKS over HTTP.",
+      "TARGETS: identity.py:42 builds the CF jwks_url from the config team domain; identity.py:104 reads VA_JWKS_URL from config. Neither is a request value (traced by the worker; the SSRF_AUDIT.json rows cover the pattern's sites only)."
+    ]
+  },
+  "spec_asserts": "The task order measures the outbound call-site denominator for the SSRF question with the one pattern over the five modules, and states that the CRO count of 18 is the denominator of every outbound HTTP call the question covers.",
+  "world_is": "The pattern misses outbound fetches made through the PyJWKClient construct, which the pattern's verbs do not name. Two such lines exist in identity.py. Both take their target from config, so neither is controllable and the verdict is unchanged; they are not rows of the record because the record is pattern-scoped.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: both targets are config-sourced, so no request value reaches them. OBSERVATION: no criterion of OG-sec-1 is blocked. The issuer decides whether the pattern is widened before the next audit of this kind."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~145",
+  "surfaced_at": "2026-10-18T01:43:49Z",
+  "id": "NFRA_OPLGTW-Z-W145-S2",
+  "one_line": "graph.call sends the caller's bearer token to any absolute URL it is given; its no-verdict at graph.py:63 rests on caller discipline, and two callers follow @odata.nextLink with no host check, outside the five modules the pattern covers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SINK: infra/aws/ec2/opal-gateway/app/graph.py:52 and :62-63 @2550dab3df -- url = path if path.startswith('http') else GRAPH_BASE + path; the client sends the Authorization bearer of the caller token and follow_redirects=True.",
+      "UNGUARDED CALLERS: infra/aws/ec2/opal-gateway/app/tools.py:1158-1161 (_read_members) and infra/aws/ec2/opal-gateway/app/asker_scope.py:276-279 (read_chat_members) pass @odata.nextLink straight to graph.call with no host check; tools.py:584 and :1294 check the link against GRAPH_BASE first.",
+      "GUARDED CALLERS: infra/aws/ec2/opal-gateway/app/transcript_route.py:58-74 (_path_of plus an allowlist anchored on /me/onlineMeetings), teams_route.py:110-118 (allowlist anchored on ^/), mail_route.py:327-331 (link must start with GRAPH_BASE + LIST_PATH), ms_ingest.py:197-203 (literal paths)."
+    ]
+  },
+  "spec_asserts": "OG-sec-1 AC1 calls a site controllable when a request value reaches the scheme, host, port or a host-deciding path, and the five-module pattern is the denominator.",
+  "world_is": "No caller passes a request value as an absolute URL today, so graph.py:63 is no. The sink has no host guard of its own: a future caller that passed request text to graph.call would send the user's Graph token to that host. The two unguarded nextLink callers rely on Graph's reply alone. Those callers sit outside the five modules, so the pattern-scoped record can say no without showing the guard.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer and the CTO before OG-pr-1: a host check at graph.call, or at the two unguarded nextLink sites, would make the sink safe by construction rather than by caller discipline. Not a cell of this order; no product file was changed."
+}
+```

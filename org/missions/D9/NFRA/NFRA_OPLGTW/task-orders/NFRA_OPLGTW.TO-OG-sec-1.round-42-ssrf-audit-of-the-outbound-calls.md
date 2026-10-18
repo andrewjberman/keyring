@@ -58,7 +58,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sec-1.round-42-ssrf-audit-of-th
 - Round 42, workstream ENRICH-R42-A (decomposition addendum R3-T.119). The CTO's cell 4 (msg 35584): the audit is the precondition of `OG-pr-1` and `OG-ap-40`; `ap40.AC1` reads `SSRF_AUDIT.json` and refuses unless the verdict is `CLEAN` with 0 controllable. A `yes` is a STOP on the listener chain and a row for the CTO; it is not a finding the worker fixes. Read-only, so `<risk>LOCAL</risk>`.
 - Pre-cut: `AC1` base FAIL as expected (the record is absent); the pattern matches 18 lines in the five modules at the base (the CRO's count).
 
-<status>staged</status>
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-A</workstream>
 <slot>~145</slot>
