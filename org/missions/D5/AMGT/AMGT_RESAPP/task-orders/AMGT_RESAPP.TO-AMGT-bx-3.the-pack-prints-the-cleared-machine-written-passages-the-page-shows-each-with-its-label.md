@@ -62,6 +62,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-bx-3"><invocation>cd C:/dev/wk-resapp-514 &amp;&amp; timeout 300 python -m pytest lib/research/print/tests/test_bx3_cleared_machine_passages.py -q -p no:cacheprovider --color=no; echo "exit=$?"</invocation><expect>the pytest summary line reads `7 passed` or more with 0 failed and 0 skipped, M1 to M7 each present by name, and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-bx-3"><invocation>cd C:/dev/wk-resapp-514 &amp;&amp; timeout 580 python -m pytest lib/research/print/tests -q -p no:cacheprovider --color=no 2&gt;&amp;1 | grep -E "^FAILED|passed|failed" | sed "s/ - .*//"</invocation><expect>exactly one FAILED line, `FAILED lib/research/print/tests/test_av2_export_equals_page.py::test_pdf_text_carries_no_field_code_and_names_every_line_in_words` (it fails at the base as well: the base reads `1 failed, 146 passed`), and the summary reads `1 failed, P passed` with P at least 183</expect></criterion>
+  Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~514/AMGT_RESAPP.TO-AMGT-bx-3.the-pack-prints-the-cleared-machine-written-passages-the-page-shows-each-with-its-label.proof_of_spec.json`.
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -76,7 +77,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 4 of the CTO's round-116 analysis and its section-2 ruling (cleared passages the page shows, labelled; uncleared never). The `ai_fill` blocks of the three names read CLEARED on all five; the page draws mgmt_bio and mgmt_recent in every state, the other blocks as gap fills. The grade the CTO names: the RIO LN Trott profile prints, labelled, and a name with an uncleared passage prints none (the synthetic M4). LOCAL code cell; served only through `AMGT-bx-5`. The new `Thesis pillars` heading is the one change to the pack's section list: the issuer's `r116_pack_form_check.py` is updated for it at `AMGT-bx-4`.
 
-<status>pending</status>
+<status>complete</status>
 <round>117</round>
 <slot>0.9.0_WK_AMGT_RESAPP~514</slot>
 <fabric>dell1</fabric>
