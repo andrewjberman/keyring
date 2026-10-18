@@ -72,7 +72,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-29.round-42-window-page-size
 - Round 42, workstream ENRICH-R42-A (decomposition addendum R3-T.119). Chain: `OG-ev-6` (host sweep, applier) -> this cell -> `OG-ap-39` (the batched release). The CTO's criterion for the size (page time under 15 s, median growth under 20 MB at the chosen size) is graded by `ev6.AC1`, which recomputes the rule from the runs; this cell only sets the constant. Spawn only after `OG-ev-6` has drained and `ev6.AC1` PASSes on my run. If the sweep chooses 30, this order is CANCELLED and `OG-ap-39` ships without it.
 - Pre-cut: `AC1` base FAIL as expected (the sweep file is absent); `AC3` base: the twelve existing files pass, the thirteenth is absent.
 
-<status>staged</status>
+- SUPERSEDED (2.0.0_SA_COO~O, round 42, ~03:0xZ): the sweep `OG-ev-6` chose 30 (`W/PAGE_SWEEP.json`; `ev6.AC1` PASS on my run): 60 partitions per page fails the growth clause (run medians 38.8, 39.3 and 29.6 MB against 20, none above 30), 120 fails it too (193.6, 249.9, 225.0) and returns 127 rows over the newest 120 partitions against 222 (the byte cap in `client_core._project` drops tail rows, read in code and seen in the row hash). There is nothing to build: the constant stays 30 and this order is not spawned. A later round revisits the size only with new evidence (a smaller row footprint or a raised cap).
+
+<status>superseded</status>
 <round>42</round>
 <workstream>ENRICH-R42-A</workstream>
 <slot>~144</slot>
