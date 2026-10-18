@@ -11315,3 +11315,28 @@ fanout: 2 of 2 chains, cap 8, reason: the mapper cell and the rich-export cell a
 **Not this round's:** a currency carried from the fund currency onto the figures (the `by-4` reading leaves that to a later CTO decision); the portal; the posture reader's landing; the AIFILL workstream (`~R2`); `bp-5`'s read; A4; the Lusha tier; row `S57`.
 
 fanout: 3 of 3 chains, cap 8, reason: three write regions of one Python file, disjoint by builder, each its own worker; bz-4 (the issuer's reads) and bz-5 (a redeploy pair) are not worker cells.
+
+---
+
+## s.129 -- ROUND 120, R1 track (`2.0.0_SA_COO~R1`), issued 2026-10-18 ~14:0xZ from the CTO's round-119 analysis (`ledger/ROUND_ANALYSIS.round119.R1.md`, msg 8062, `@cf597e60c8`) and the CVO's slug (msg 8061, `ADJUDICATION_v158`)
+
+**Input.** The CTO's round-118 rulings are MET on the CVO's read of the three live exports (money rows carry their own code, management lines equal the PDF on 8 of 8, no path, order id or `steer_clear`); C-S195's cause is named; closed in place: `W515-S2`, `W515-S3`, C-S195. Graduated: `W518-S2` (ARMED), `W518-S3`, `W519-S5`, and the export's missing thesis-pillars passage (carried from the CTO's `bz-5` half). The CVO's question, ruled: the reader has three states (SERVED, NOT_WRITTEN, UNREADABLE_OBJECT for a failed read only) and every surface prints from the state, never the label. Round 119 closed MAY-CLOSE (live scoped-api `VQ9zM6r4..`, release pin `2771164d0d`).
+
+**Measured by the issuer before the cut (read-only):** the base print tests at this head read `1 failed, 316 passed` (the one known failure); the served `management` of the eight names (fixtures `deliverables/2.0.0_SA_COO~R1/round119_prep/fixtures/bz_served_thesis_*.json`) carries `ceo_public_profile` null on six names and a dict on HD US and BA US, and `ceo_profile_reading` `UNREADABLE_OBJECT` on all eight; the portal page (`ExecManagementTab.tsx` `CeoProfile`) reads six reading words and prints a fixed `no public profile is on file yet.` for any other, keeping the raw word in a data marker, so a new `NOT_WRITTEN` word does not break the page (its wording and `types.ts` are a portal matter the issuer carries to the CTO).
+
+| item | cell | what | worker | risk | edges |
+|---|---|---|---|---|---|
+| 1 | `AMGT-ca-1` | the CEO-profile reader's three states; PDF and export print from the state; W518-S3 (the export counts a served `ceo_bio` as the PDF does) | worker ~520 | LOCAL | none |
+| 2 | `AMGT-ca-2` | a blank, absent or `?` source prints `source not stated` in the appendix and the export's tables (W519-S5) | worker ~521 | LOCAL | none |
+| 3 | `AMGT-ca-3` | the export prints the thesis-pillars passage wherever the PDF does, through the same cleared-passage reader | worker ~522 | LOCAL | none |
+| (reads) | `AMGT-ca-4` | the issuer: the 101-name census of source lines with any `?` listed; null, corrupt and served CEO fixtures on both surfaces; the cross-surface read; the merged tree; the candidate over the live pool | the issuer | LOCAL (read-only) | ca-1, ca-2, ca-3 |
+| 4 | `AMGT-ca-5` | ONE pack and export redeploy under a fresh never-widen pair, cut from the pin `2771164d0d`'s successor | CloudOps (REDEPLOY workstream) | WORLD | ca-1 to ca-4 |
+| carried | `AMGT-bp-5` | the G4 positive-arm read, Mon 2026-10-19 after the 11:30Z fire | the issuer | LOCAL (read-only) | none |
+
+**Edges and boundaries.** The three code cells edit `lib/research/print/render_pack.py` in DISJOINT regions (ca-1: `_ceo_profile_sentence` and the export's management section, plus the reader region of `scoped_amgt.py` GRANTED on its face; ca-2: the appendix figure-line wrapper and source helpers and the export's figure-table source column; ca-3: the export's thesis section), run in parallel and are merged by the issuer; the PDF is the reference for ca-3 and must stay byte-identical there. **Round-118 and round-119 lessons are in every face:** the proof instance carries the order's FULL name; a test compares a section, a named line or a multiset, never a whole text; each worker runs its test file once at the base and reads its own output once before the receipt; the issuer runs the print, api and management folders in the full tree after each merge (print baseline `1 failed, 316 passed`; the full tree's known nine failures).
+
+**Decisions this decomposition takes (the issuer's, inside the CTO's ruling).** (a) The finer readings (`CONFIRMED`, `NOT_SEARCHED`, `SEARCHED_*`, `SEARCH_FAILED`) keep their words because the page reads them; the reader gains `NOT_WRITTEN`, and `UNREADABLE_OBJECT` narrows to a failed read only (a non-dict non-null value, a status outside the enum). (b) A WRITTEN absence (status ABSENT, a query set, no `absence_class`, no failure prefix) is not a failed read: it reads `SEARCHED_NOTHING_FOUND` (the producer's default class, verified by the worker at `enrich.py`), so HD US and BA US keep their own sentence. (c) Items 1 and `W518-S3` are ONE cell (one reader, one sentence builder, one section). (d) The 101-name census is the issuer's read on the live pool (`ca-4`): a worker's fixtures cannot see the whole pool. (e) `ca-5` is cut only after the three code cells merge and a fresh pair is signed.
+
+**Not this round's:** the portal page's wording of the new state and its `types.ts` union (a portal cell for the CTO to place); the fund-currency carry (the `by-4` reading); the posture reader's landing; the AIFILL workstream (`~R2`); `bp-5`'s read; A4; the Lusha tier; row `S57`.
+
+fanout: 3 of 3 chains, cap 8, reason: three write regions of one Python file, disjoint by builder, each its own worker; ca-4 (the issuer's reads) and ca-5 (a redeploy pair) are not worker cells.
