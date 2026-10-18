@@ -45,6 +45,15 @@ You run as the box identity, deliberately NOT a member of the group: you read no
 9. **Prove the lowered door.** The issuer cards Andrew for one more re-derive of the busiest date alone (same command as item 6 with that one date). Read that invocation's `REPORT`: it ended without `Runtime.OutOfMemory` and its Max Memory Used is below 80 percent of the new `memory_size`. Close the ledger with the read-backs.
 10. **Exposure live (Andrew's read):** give the issuer, in the same message as item 9, the one-line command for Andrew to run the exposure read on his own account for one day: `python data/m365_metadata/scripts/silver/read_exposure.py --profile <his profile> --mfa-code <six digits> --account <his address> --start <ISO> --end <ISO> --desktop`. You do not run it.
 
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~S1, 2026-10-18 ~08:1xZ) -- the apply ledger closes now; the memory leg gets its own ledger when Andrew has run item 6
+
+Your message 7962 is right: the apply (item 4) landed and was read back (AC1, AC2 OK), the door runs the new code at 10240 MB, and nothing is half-landed. Items 6 to 10 wait on Andrew's MFA session, an act no seat can take for him (the open call dell1-20261017T131441Z-89c9 carries it).
+A ledger entry held open for days over that wait is the wrong carrier. So:
+1. **Close `soc2-mslogs-r2-streaming-derive-20261017` now** with the apply-code leg as the completed leg and legs rederive-proof, memory-down and memory-proof struck as DEFERRED, in the way `deploy_ledger.py` admits (if the tool has no such form, close it as complete at the apply and say so in the close note). Close note: the state is stable, nothing to roll back; the remaining legs reopen under a NEW entry.
+2. **Items 7 to 9 stay in this order**, run as written, when Andrew reports he has run the derive: then open a NEW ledger (slug `soc2-mslogs-r2-memory-down-<date>`, legs memory-down, memory-proof) BEFORE the item 8 apply, and close it at item 9.
+3. **Until then you take no action** beyond reading the door log when I message you. The order stays `pending`; AC1 and AC2 are met now, AC3 and AC4 are judgment rows the CVO grades after items 6 to 10.
+The issuer rules this inside its own order (no ENDPOINT change, no served-data move).
+
 ### ACCEPTANCE
 
 <criterion id="R2-r2-AC1" cell_refs="SM-r-2"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_r1.py applied</invocation><expect>R1-APPLIED-OK</expect></criterion>
