@@ -4574,3 +4574,36 @@ The enrichment list (the round's rectangle): item 1 `W170-S3` (one key form for 
 - **Fan-out (this issuance):** `N of M chains, N=1 worker (cj-1) plus 1 seat order (cj-4) of M=2 cuttable chains (A: cj-1 then cj-2, cj-3, cj-5; B: cj-4), cap 8`. The second chain has no worker; its executor is the CloudOps seat under a pair.
 - **Checks at the cut, dry-run at the base:** `cj-1` AC1 to AC3 FAIL as expected (no census file); `cj-4` AC1 to AC4 FAIL as expected (no `cj4_served.out`).
 - **The `KMB_US_Equity` note:** the 18 names whose build moves no field include `KMB_US_Equity`, whose `inputs` differ from the stored dossier's by the continuation key only; `write_one` would write it. The ruling names the 77 moved names; KMB is outside `cj-4` and is named in the pair.
+
+### 126. ROUND 95 -- `HVST-cj-1` complete; `HVST-cj-2` CUT; the slash-key hold; the ARMED row (2026-10-18 ~07:5xZ)
+
+`HVST-cj-1` merged `bc1f5233ec`, re-run by the issuer (identical): the corpus holds exactly two slash keys, stored ONLY under the encoded partition in every keyed table (214 objects), the silver column holds the raw spelling, and the gateway's raw-key prefixes match 0 objects of either key. The direction of the fix follows: the gateway normalizes (the partition form for prefixes, the raw key for the silver column); no writer and no stored object changes.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cj-2` | `cj-2` | The gateway's harvest tools resolve a slash key to its one stored form at the entry of every harvest tool: a difference-controlled offline test with a mutant, the unchanged existing tests (48), and a read-only replay of the changed tool code against the real stored objects for both keys in both spellings (expected `whole=4`). Code and tests only, no release. Workstream `SLASH-FIX`. | WORLD (the gate floors `infra/`; no deploy) | worker `~171` | CUT (queued behind `cj-1` in the same worker queue) |
+| `HVST-cj-3` | -- | The gateway release of `cj-2` (`DEPLOY_BASE_REF=aa2efa2cf3`), under its own pair. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cj-2` merged |
+| `HVST-cj-5` | -- | The two slash-key dossiers under the same pair shape as `cj-4`. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cj-2` merged (the CTO: "after item 1 is merged and its census reads every slash key whole") |
+
+- **Standing hold (mine, recorded here):** NO `write_one` (dossier or continuation) runs for `BP/_LN_Equity` or `NG/_LN_Equity` until `cj-2` is merged and its replay reads `whole=4`. It is mechanical in `cj-4` (the 75-name list excludes both; the driver refuses a name outside the list) and `cj-5` is not cut.
+- **The ARMED row `AMGT_HARVST-D1-W171-S1` (disarm owner `2.0.0_SA_COO~W1`) is NOT disarmed today.** It names the served incompleteness for the two keys, which is the live condition and not an act hazard: it stays ARMED until `cj-3` is released, when I disarm it with my own served read of `BP/_LN_Equity` and `NG/_LN_Equity` in both spellings through the live gateway, each returning the dossier, continuation, ai_fill and reports (a dismissal row of mine that `adjudicates` it, as `D1-S47` did for `D1-W159-S1`). **A consequence the round 95 packet states:** the L10 close needs every ARMED row dispositioned, so round 95 cannot close before `cj-3`.
+- **Fan-out (this recut):** `N of M chains, N=1 worker (cj-2, the same queue as cj-1) of M=2 cuttable chains (A: cj-2 then cj-3, cj-5; B: cj-4, in its window), cap 8`.
+- **Checks at the cut, dry-run at the base:** `cj-2` AC1 FAIL as expected (no test file), AC2 PASS as expected (`48 passed in 2.91s` over nine files), AC3 FAIL as expected (no replay file).
+
+### 127. ROUND 95 -- `HVST-cj-2` complete (merged `c692c5dfbb`); `HVST-cj-6` CUT; three ARMED rows named; the site Z lineage landed (2026-10-18 ~08:1xZ)
+
+`HVST-cj-2`: the three tools of `harvest_research.py` read a slash key from its one stored form; replay `whole=4`, identical on my re-run. The worker's rows found (a) the app holds a COPY of the module's rule (`D1-W171-S3`, ARMED: arm 7 of the test is the only drift guard), (b) the peers, posture, scores, filings, drafting and management prefixes hold BOTH spellings and stay on the caller's spelling (`D1-W171-S4`, ARMED: the CTO decides the spelling), (c) `harvest_figures.py` and `harvest_identity.py` build raw `security_key=` partitions from the caller's key (`D1-W171-S5`, ARMED).
+
+**A correction of my own `cj-1` note:** its sentence said the corpus holds the two slash keys only under the encoded form in every keyed table; the census domain (two roots, `security_key=` partitions) was narrower than the sentence; the peers, posture, scores and filings tables outside it hold both spellings. The note is corrected.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cj-6` | `cj-6` | The same normalizer applied to every other gateway harvest module that builds a `security_key=` partition from a caller's key (`harvest_figures.py`, `harvest_identity.py`, any other the audit finds): one definition in the app, a difference-controlled test with a mutant, the ten existing test files (56), and a read-only replay. Workstream `SLASH-OTHER`. | WORLD (the `infra/` floor; no deploy) | worker `~171` | CUT (same worker queue) |
+| `HVST-cj-3` | -- | ONE gateway release carrying `cj-2` and `cj-6` (`DEPLOY_BASE_REF=aa2efa2cf3`), under its own pair. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cj-6` merged |
+| `HVST-cj-5` | -- | The two slash-key dossiers. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cj-3` released and read |
+
+- **For the CTO (the packet, not an inbox ask):** `D1-W171-S3` (whether the module moves where the artifact ships it) and `D1-W171-S4` (which spelling a reader takes for the path-keyed tables); neither blocks `cj-3`.
+- **Site Z's lineage landed** (MSTR msg 7965): `cg-3`, `aa2efa2cf3`, `d077cef043` and `efcc8ae19f` are ancestors of `origin/box/sitez` (merge `105647b69d`); none is on `origin/CLOUD` yet; item 3 of round 94 closes when CLOUD holds `cg-3`.
+- **Fan-out (this recut):** `N of M chains, N=1 worker (cj-6, the same queue as cj-2) of M=2 cuttable chains (A: cj-6 then cj-3, cj-5; B: cj-4, in its window), cap 8`.
+- **Checks at the cut, dry-run at the base:** `cj-6` AC1 FAIL as expected (no test file), AC2 PASS as expected (`56 passed in 3.04s` over ten files), AC3 FAIL as expected (no replay file).
+- **ARMED rows open (disarm owner me):** `D1-W171-S1`, `-S3`, `-S4`, `-S5`: the round 95 L10 close needs them dispositioned.
