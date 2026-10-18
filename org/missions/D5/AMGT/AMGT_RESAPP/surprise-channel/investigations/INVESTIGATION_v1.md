@@ -31367,3 +31367,80 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The census records this difference per row; the placement is the order's stated rule and is not changed here."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W516-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~516",
+  "surfaced_at": "2026-10-18T09:39:58Z",
+  "one_line": "The header currency_basis writer is integrations/bloomberg/research/model_block_pull.py, which this sparse worktree does not carry; the order's search premise (lib/research) finds only the readers and the tests.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-resapp-516 names .tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP, org/modules/graph, org/ref, org/standards; integrations/ is absent on disk",
+      "integrations/bloomberg/research/model_block_pull.py:1201-1244@afcd188f9b (_figure_currency, the writer); :1699@afcd188f9b (currency_basis set on the header figure)",
+      "lib/ outside tests and fixtures: the only currency_basis writer is lib/research/corpus/dossier.py:1027 (case fields), not the header figures"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 step (1): find where a header figure's currency and currency_basis are WRITTEN, most likely in lib/research/ under the model-block or provenance code.",
+  "world_is": "The writer is in integrations/bloomberg/research/model_block_pull.py at afcd188f9b, outside this worktree's sparse checkout. I read it with git show and kept a byte copy at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~516/producer_model_block_pull_at_afcd188f9b.txt so the receipt's path:line citations resolve for the issuer's checker.",
+  "notes": "Form only. No product file changed; the byte copy is a deliverable, not a product file. The sparse checkout is the issuer's setting; the producer's location is recorded, not changed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W516-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~516",
+  "surfaced_at": "2026-10-18T09:39:58Z",
+  "one_line": "The order says the served route copies the currency basis in lib/research/api/scoped_amgt.py; that file writes no currency_basis and passes the stored header figures through.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py:2869-2905 (_header_figures: the stored figures, plus reasoned nulls for any of the seven without a value)",
+      "grep of currency_basis and EQY_FUND_CRNCY across lib/ excluding fixtures and tests: no hit in lib/research/api/scoped_amgt.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 step (1): the served route copies it in lib/research/api/scoped_amgt.py.",
+  "world_is": "scoped_amgt.py serves the header figures as stored in the model block; the currency_basis value is set upstream, in the producer named in AMGT_RESAPP-D1-W516-S1. Nothing in the route reads EQY_FUND_CRNCY.",
+  "notes": "Form only. The receipt records the route's pass-through; no route tracing beyond _header_figures was done (see the receipt's Not verified section)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W516-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~516",
+  "surfaced_at": "2026-10-18T09:39:58Z",
+  "one_line": "The UNMEASURED hold for RIO LN is a static per-security table whose reasons cite a census file outside this sparse worktree, so the table cannot be checked against its census from here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/model_block_pull.py:1047-1052@afcd188f9b names the census as org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/DENOMINATION_CENSUS_ROUND25.json",
+      "git sparse-checkout list in C:/dev/wk-resapp-516 names org/missions/D5/AMGT/AMGT_RESAPP only under org/missions/D5; AMGT_CORPUS is not checked out",
+      "integrations/bloomberg/research/model_block_pull.py:1091-1125@afcd188f9b (the per-security hold table; the function reads no price, share count or market cap at run time, :1227-1230)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 step (2): read the rule that chooses between the basis values, what condition makes a figure UNMEASURED, and what inputs it reads.",
+  "world_is": "The UNMEASURED condition for RIO LN is a row in a hand-recorded census table, not a computation over the price, share count, market cap or currency fields. The census file that records the measurements is outside this worktree, so the reasons on the RIO LN rows were read from the producer's comments and not verified.",
+  "notes": "Form only. The receipt reports the table and the reasons as the producer states them; the census was not read and nothing was re-measured."
+}
+```
