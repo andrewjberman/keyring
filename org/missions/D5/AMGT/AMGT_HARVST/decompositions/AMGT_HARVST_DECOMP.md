@@ -4635,3 +4635,16 @@ The CTO accepted the narrow release (his msg 7978 supersedes his msg 7975 cut li
 
 - **Fan-out (this cut):** `N of M chains, N=0 workers, 1 seat order (cj-3) of M=2 cuttable chains (A: cj-3 then cj-5; B: cj-4, running), cap 8`.
 - **Checks at the cut, dry-run at the base:** `cj-3` AC1 to AC4 FAIL as expected (no `cj3_served.out`).
+
+### 130. ROUND 95 -- `HVST-cj-4` complete; the CTO confirmed the `cj-3` re-base; `HVST-cj-5` CUT, STAGED (2026-10-18 ~09:4xZ)
+
+`HVST-cj-4` complete (merged deliverables `a50b7a5b09`, ledger closed `863e40977d`, my close `360867f0a0`): 75 `research_dossier` objects added (07:49Z to 09:26Z), my own read of the bucket: 75 of 75 picks name the manifest key, the moves equal the census for 75 of 75, 1554 objects, 446 continuations. **`HVST-cj-3` is re-based on site Z's ap-40 release `3b94a83e05`** (site Z msg 35664 and 35667 via MSTR 7990 and 7992: ap-40 deploys first, about 1.5 hours, closing near 10:55Z; the CTO's addendum 1 `@6fbe19a62c`, msg 7993). `cj-3` is handed to SC1 only after ap-40's ledger CLOSED time reaches me.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cj-3` | `cj-3` | The one gateway release (cut on the live commit after ap-40, `3b94a83e05`, plus the seven files). | WORLD | seat SC1 | STAGED: waits on ap-40 CLOSED, site Z's GO |
+| `HVST-cj-5` | `cj-5` | The two slash-key dossiers (`BP/_LN_Equity` then `NG/_LN_Equity`), add-only, canary BP read through all four spellings before NG, the CTO's model-block guard, the same pair shape as `cj-4` (COO half `NEVER_WIDEN_HALF_COO_CJ5_DOSSIERS_SLASH.md`, lists `cj5_names.txt` sha256 `1e857087...`, `cj5_expected_moves.txt` sha256 `726cbde1...`). Workstream `DOSSIER-WRITE-SLASH`. | WORLD | seat SC1 | CUT, STAGED: waits on `cj-3` released and read by me, the CTO half, site Z's answer and my GO |
+
+- **Fan-out (this cut):** `N of M chains, N=0 workers, 1 seat order (cj-5) of M=1 cuttable chain (A: cj-3 then cj-5), cap 8`; `cj-5` is cut now because its inputs (the two-name list, the expected moves) exist and its start condition is `cj-3` read.
+- **Checks at the cut, dry-run at the base:** `cj-5` AC1 to AC4 FAIL as expected (no `cj5_served.out`).
+- **ARMED rows open (disarm owner me):** `D1-W171-S1`, `-S3`, `-S4`, `-S5`, `-S6`.

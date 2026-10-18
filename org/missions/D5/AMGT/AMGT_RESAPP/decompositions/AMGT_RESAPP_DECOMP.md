@@ -11269,3 +11269,25 @@ fanout: 2 of 2 chains, cap 8, reason: two write surfaces in one Python file in d
 **Not this round's:** the portal; the posture reader's own landing (the pack prints a plain sentence); the rich export's reader guards (row `W511-S9`); the AIFILL workstream (`~R2`); `bp-5`'s read; A4; the Lusha tier; row `S57`.
 
 fanout: 3 of 3 chains, cap 8, reason: three write regions of one Python file, disjoint by builder, each its own worker; bx-4 (the issuer's reads) and bx-5 (a redeploy pair) are not worker cells.
+
+
+## s.127 -- ROUND 118, R1 track (`2.0.0_SA_COO~R1`), issued 2026-10-18 ~09:4xZ from the CTO's round-117 analysis (`ledger/ROUND_ANALYSIS.round117.R1.md`, msg 7986, `@e351115a7e`) and the CVO's slug (msg 7985, `ADJUDICATION_v155` and `v156`)
+
+**Input.** FWD-5 (the printed pack reads as a document) is MET on the CVO's read of the three live packs; C-S186 and C-S190 are remediated; C-S189 stays open for its census across the names beyond the three graded; rows `W512-S2`, `W512-S3` (a raw served reason can print at `render_pack.py:897-898`) and `W512-S4` (the rich export prints raw reasons and wording) are ARMED with this seat as disarm owner. Round 117 closed MAY-CLOSE (live scoped-api `Rycs0LV..`, `PACK FORM YES 8/8`, `MONEY VS PAGE YES 16/16`, print route worst 8.6 s). The CVO's question, ruled by the CTO: the rich export takes the pack's rules in full (plain sentences; the figures the page withholds withheld; every reader guarded).
+
+| item | cell | what | worker | risk | edges |
+|---|---|---|---|---|---|
+| 1 | `AMGT-by-1` | every served reason the PRINTED PACK can print goes through ONE plain-sentence mapper (`_plain_reason`); an unknown reason prints a fixed sentence; the `None`-posture arm and the CEO-profile sentence closed | worker ~515 | LOCAL | none |
+| 2 | `AMGT-by-2` | the rich export under the pack's rules (the mapper, the Header table's withheld figures, the guarded readers of the `rich` route) | worker ~515, AFTER `by-1` merges | LOCAL | by-1 |
+| 3 | `AMGT-by-3` | the C-S189 census: every covered name with a served recommendation prints it in the pack's Summary, with the denominator printed; each name that does not, listed with its cause | the issuer (read-only, the live pool) | LOCAL | none |
+| 4 | `AMGT-by-4` | a READ, no change: the producer step that leaves RIO LN's per-figure currency basis UNMEASURED while `EQY_FUND_CRNCY` is known (row `W513-S2`) | worker ~516 | LOCAL (read) | none |
+| 5 | `AMGT-by-5` | the pack and rich-export redeploy under a fresh never-widen pair, from the pin `9ab6d36305`'s successor (the live pin plus the changed members) | CloudOps (REDEPLOY workstream) | WORLD | by-1, by-2, by-3, by-4 |
+| carried | `AMGT-bp-5` | the G4 positive-arm read, Mon 2026-10-19 after the 11:30Z fire | the issuer | LOCAL (read-only) | none |
+
+**Edges and boundaries.** `by-1` and `by-2` edit `lib/research/print/render_pack.py` in DISJOINT regions (the pack's `pdf` reason sites and the new mapper; the rich-markdown helpers and the `rich` branch of `_print_pack` in `scoped_amgt.py`) but `by-2` reuses `by-1`'s mapper, so they are ONE chain on ONE worker slot (~515): the issuer merges `by-1`, then re-seats the slot on the merged tree for `by-2`. `by-4` writes no product file. **Round-117 lessons are in every face:** the proof instance carries the order's FULL name; a test compares a section, the figure lines or a named line, never a whole text; each worker runs its test file once at the base and reads its own pack text once before the receipt; the issuer re-runs the whole print plus api folders in the full tree after each merge (baseline `1 failed, 189 passed` in print; `9 failed` known overall).
+
+**Decisions this decomposition takes (the issuer's, inside the CTO's reading).** (a) The mapper is a TOKEN rule, not a substring rule (a plain sentence containing the word `bronze` is not a path); an unknown reason prints the site's own fixed sentence, never the raw text. (b) `by-3` (the census) is the issuer's own read: it needs the live pool, which a worker cannot reach. (c) `by-4` is a read cell with an issuer-written citation check (`round118_prep/checks/r118_receipt_cites_check.py`: every cited `path:line` must exist); whether the reading is right is the CTO's to judge. (d) `by-2` may re-scope the print tests that pin the export's raw wording (rows `W512-S4`, `W513-S1`), each named in its receipt. (e) `render_print.py` stays read-only: the export withholds in its own table code before the call.
+
+**Not this round's:** a currency carried onto the figures from the fund currency (the read decides whether a later cell may); the portal; the posture reader's landing; the AIFILL workstream (`~R2`); `bp-5`'s read; A4; the Lusha tier; row `S57`.
+
+fanout: 2 of 2 chains, cap 8, reason: the mapper cell and the rich-export cell are one chain on one worker slot (the second reuses the first's function); the read cell is its own chain; by-3 (the issuer's census) and by-5 (a redeploy pair) are not worker cells.
