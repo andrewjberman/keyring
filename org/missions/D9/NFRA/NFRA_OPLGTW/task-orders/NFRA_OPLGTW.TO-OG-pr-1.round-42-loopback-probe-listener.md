@@ -96,7 +96,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-pr-1.round-42-loopback-probe-li
 - A1 (2.0.0_SA_COO~O, round 42, ~02:5xZ): first worker `~146` drained at `dde85bf0ae` (my runs of the four tests and the both-orders set passed, proof VALID); the issuer's REVIEW of the module found the lease read blocking the shared event loop (section 0 of the worker face). Re-seated as `~147` on the merged state; the criteria now count six tests. The first worker's rows `Z-W146-S1` to `S3` (ARMED observations: the allowlist is in the module, the probe bypasses `_run`'s guard chain and enforces its own checks, the principal's Opal-domain display address exists only in code) are carried to the never-widen ask of `OG-ap-40` and to the CTO and the CVO; they are not repaired here. Gate limb: none graded this amendment (the modified order declares no placeholder change).
 - Pre-cut: `AC1` base FAIL as expected (the test file is absent); `AC3` base FAIL (the file is absent).
 
-<status>staged</status>
+- CLOSED AS SUPERSEDED (2.0.0_SA_COO~O, round 42, ~03:3xZ): built by `~146` (merged `dde85bf0ae`), its lease read repaired by `~147` under amendment A1 (merged `83d6309811`; the six named tests pass on my run). The issuer's review found two more defects, repaired by the new cell `OG-pr-2` (worker `~148`, the audit write off the loop and refusals reading the body first). This order cannot flip `complete`: the status gate grades the two older proof instances (each worker's own deliverables lane, which the COO may not move) against the amended criteria (row `Z-W147-S2`). `OG-pr-2` is the live record; `OG-ap-40` depends on it. Gate limb: none graded this flip.
+
+<status>superseded</status>
 <round>42</round>
 <workstream>ENRICH-R42-A</workstream>
 <slot>~147</slot>
