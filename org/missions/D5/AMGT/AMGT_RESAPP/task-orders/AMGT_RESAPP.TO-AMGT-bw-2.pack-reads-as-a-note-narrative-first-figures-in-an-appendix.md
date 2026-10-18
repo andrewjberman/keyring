@@ -1,0 +1,92 @@
+# AMGT_RESAPP task order -- `AMGT-bw-2` -- THE PRINTED PACK LEADS WITH THE PAGE'S NARRATIVE SECTIONS AND ENDS WITH A FIGURE APPENDIX, NO SECTION PRINTS EMPTY WHEN THE PAGE HOLDS CONTENT FOR IT, AND RIO LN'S MANAGEMENT SECTION PRINTS THE PAGE'S CEO PASSAGE (FWD-5)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
+<owned_cells>AMGT-bw-2</owned_cells>
+</decomp_ref>
+<issued_to>0.9.0_WK_AMGT_RESAPP~511</issued_to>
+<issued_by>2.0.0_SA_COO~R1</issued_by>
+<to_id>AMGT_RESAPP.TO-AMGT-bw-2.pack-reads-as-a-note-narrative-first-figures-in-an-appendix</to_id>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, alarm, monitor or cadence; renderer edits, one test file and fixtures.
+comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call, no read or write path changes.
+comp-adversary: RUN at the cut -- the live packs (same capture) open with the ~830-line figure listing, and their `Management/Board` block prints the placeholder constant; AC1 FAILS at the base (the new test file does not exist, exit 1). AC2 at the base reads `1 failed, 125 passed` (the one failure named below), so its expectation of P at least 133 is unmet there as expected: it is a regression guard plus a count.
+EGRESS CLASS, declared: NONE (the tests build packs from committed fixtures; no HTTP, no S3, no Bloomberg).
+</preflight>
+
+**Your worktree:** `C:/dev/wk-resapp-511` (branch `wk-AMGT_RESAPP-511`, cut from the issuance commit; its nested portal worktree is cut at PROD `ff611566` and is READ-ONLY for you: the pack tests read the page's fixtures from it). Work and commit only in the outer worktree. The shell's working directory resets between calls: start EVERY shell call with `cd C:/dev/wk-resapp-511`; a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout and answers about the wrong tree.
+
+## 1. THE CELL -- `AMGT-bw-2` (round 116, decomposition s.125)
+
+The CVO graded FWD-5 (the printed pack reads as a DOCUMENT) NOT MET (`3.0.0_SA_CVO` msg 7886, round 115) on a read of three live printed packs (RIO LN, ICT PM, GOOGL US, about 830 lines each, 24 to 25 pages): "NOT a research note: each pack is about 830 lines of `label: value - Bloomberg`", and "RIO LN's Management section is EMPTY, although the page carries a CEO passage". The CTO's round-115 analysis items 2 and 3 (`ledger/ROUND_ANALYSIS.round115.R1.md`) are this cell: **the pack leads with the page's narrative sections, then a figure appendix; no section prints empty when the page holds content for it; RIO LN's Management section prints the page's CEO passage.** The currency labels (C-S186) are a SEPARATE cell run by another worker on the figure-line functions: do NOT touch `_format_figure_value`, `_money`, `_currency_of`, `_plain_figure_line`'s currency handling or `_header_figures_for_print`.
+
+**What the pack does today** (`lib/research/print/render_pack.py` `build_pack`, around lines 689-976; read it whole first): BLOCK 1 `Model figures`: the `Header` figure listing then one `Fiscal year <Y>` listing per year (the ~830 lines); BLOCK 2 (own page) `Recommendation` and `Company description`; BLOCK 3 (own page) `Investment thesis` and `Risks and considerations`; BLOCK 4 (own page) **`Management/Board` prints the constant `NOT_WRITTEN["bio"]` unconditionally** (a template placeholder: that is why the section is empty). `build_pack` takes `thesis_bundle`, `peer_set` and `posture` as OPTIONAL inputs, today used only to also write the rich markdown (`build_rich_text`); the drafted sections come from `_drafted_for_print`. The pack is built for the served print route by `lib/research/api/scoped_amgt.py` `_print_pack` (around lines 7831-7903): **read what it passes to `build_pack` for `format=pdf`** (it may pass none of `thesis_bundle`, `peer_set`, `posture`).
+
+**The page's narrative sources (read them, the page is the truth the CVO compares):** the Security Analysis page's tabs under `portal/src/pages/SecurityAnalysis/` (a read-only PROD checkout in your worktree): `tabs/ThesisTab.tsx` (recommendation, investment thesis, risks, company description), `tabs/ExecManagementTab.tsx` (the officers and the CEO passage: find which served field the CEO passage reads, e.g. in `thesis_bundle["management"]` or `dossier_sections`; `lib/research/print/render_pack.py` `_management_markdown(bundle)` at around line 1112 already reads the management bundle for the rich export), `tabs/PostureTab.tsx` (positioning: the judge's verdict and claims; `_posture_markdown(posture)` around line 1228), `tabs/PeersTab.tsx`, and the Model tab's What Changed (it needs two stored versions of the model block, which `build_pack` is never given).
+
+**Step A, the inventory FIRST (a deliverable: the receipt's `## Inventory` section and a committed fixture `lib/research/print/tests/fixtures/bw2_sections.json`).** For each narrative section the page shows (Thesis tab sections, Management, Peers, Posture, What Changed, Model notes), list: the section name, the served field(s) the page reads, whether `build_pack` has that input today (and from which argument), what the PDF prints for it today (content, a placeholder, or nothing), and the disposition: `render` (the pack prints the page's content), `state_absent` (the pack prints one sentence saying why the section has nothing: the page's own absence wording if it has one), or `out_of_scope` with a reason (for example What Changed: the pack has no two-version input). Print the denominator (sections listed).
+
+**Step B, wiring (only if Step A shows an input is missing).** If `_print_pack` does not hand `build_pack` the `thesis_bundle` / `peer_set` / `posture` the narrative needs on the PDF path, make `_print_pack` pass the SAME objects the page's routes serve (read how `format=rich` obtains them in the same function and reuse that; do not add a store read of your own): you may edit `lib/research/api/scoped_amgt.py` `_print_pack` ONLY and no other function of that file. Report exactly what you changed there.
+
+**Step C, the form.** In `render_pack.py` (and `_print_pack` if Step B applies): the printed pack reads, in this order, (1) page 1: the title, the `Printed` day and, under a heading `Summary`, the page's thesis or summary (the Recommendation and Investment thesis the drafted sections already carry); (2) the remaining narrative sections in the page's order where the page holds content: Risks and considerations, Company description, **Management** (the officers and the page's CEO passage, rendered from the same served field the page reads: for RIO LN this must print the CEO passage), Positioning (the posture verdict and claims), Peers (a short reading only if the page carries one and the pack has the input), **What changed** (state in one sentence that the printed pack does not carry it and why, unless Step A finds an input); (3) then a heading `Appendix: model figures` and, under it, the existing `Header` listing and the `Fiscal year <Y>` listings exactly as they print today (the figure lines are not edited by this cell), each section keeping its own heading ("grouped by section"). **No section prints empty when the page holds content for it:** a section with no content prints either the page's passage or one sentence stating why it is absent (never a bare heading, never `NOT_WRITTEN["bio"]` when the page has management content). Sentences already printed are not reworded; the long-date and verbatim-quote rules of rounds 114 and 115 (`_long_days`, `_Verbatim`) stay on for every line you move.
+
+**Existing tests.** Reordering changes pinned text. You update ONLY tests that pin the order, the headings or the position of a block (name each in your report with the reason); a test that pins a figure line's own text is not touched. Two base-text controls of earlier rounds (`lib/research/print/tests/test_bu3_pack_long_dates.py` T6 with `fixtures/bu3_pack_text_base_*.txt`, and `test_bv2_rich_dates_and_quotes.py` Q3 with `fixtures/bv2_rich_text_base_RIO_LN.txt`) compare a whole text to a recorded base: where the reorder moves lines, re-record that fixture ONLY after proving the new text is the old text's lines reordered plus the new headings and narrative sentences (print the proof: the sorted multiset of the old lines is a subset of the new lines, and list the added lines).
+
+**The grade is on the RENDERED text.** The new test `lib/research/print/tests/test_bw2_pack_form.py` (YOURS: create it; build packs on the pattern of `test_bu3_pack_long_dates.py` from synthetic blocks, bundles and postures you add as fixtures, labelled synthetic) checks, each named: F1 the page-1 order: title, `Printed <long day>`, `Summary`, then the narrative sections in the order of Step C, and the `Appendix: model figures` heading comes AFTER every narrative section; F2 the figure listing (`Header` and every `Fiscal year <Y>`) sits wholly after the appendix heading and its lines equal the base text's figure lines (record the base figure lines BEFORE the edit; compare as a multiset after normalising `\r\n` to `\n`); F3 a bundle whose management carries an officer list and a CEO passage prints that passage under `Management` (a hand-written expected sentence from the fixture) and never prints `NOT_WRITTEN["bio"]`'s text; F4 a bundle with NO management content prints one sentence stating why under `Management`, not a bare heading; F5 NO section heading in the whole pack is followed directly by another heading or the end of the page text (the no-empty-section rule, checked over the pack of F3 and F4); F6 a posture with a verdict and claims prints them under `Positioning`; F7 the pack's `What changed` section states why it is absent in one sentence (or renders the content if Step A found an input), and the long-form dates and the verbatim-quote exemption still hold (a fixture passage with an ISO day stays byte-faithful, a served sentence beside it prints the long form); F8 the inventory fixture exists, its printed denominator equals its entry count, and no entry has a disposition other than `render`, `state_absent` or `out_of_scope` with a reason. Expected strings are written by hand from the fixtures; use `pypdf` or `fitz` for the PDF text where one imports and say which, else the renderer's pre-PDF line list.
+
+**Do this in order.** (1) `cd C:/dev/wk-resapp-511`; confirm `git log -1 --format=%h` and a clean `git status --short`. (2) Write the inventory (Step A). (3) Create the test file FIRST (record the base figure lines), run it ONCE on the unedited head: it must fail on F1 to F4, F6 and F8-if-unfixed, pass on F2 (the base order has the figures first: say how F2 reads at the base, it may need to read NO there: state which) and record that run. (4) Make the Step B and Step C edits. (5) Run AC1 and AC2. (6) Write the receipt `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~511/BW2_RECEIPT.md` with the sections `## Inventory`, `## What changed` (every path, with line counts, and what `_print_pack` passes before and after), `## Tests changed` (each, or `none`) and `## Not verified` (the deployed Lambda serves the old renderer until the round-116 redeploy `AMGT-bw-5`; no live pack is looked at here; the visual page layout is not looked at).
+
+Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W511-S<k>`, `disarm_owner` `2.0.0_SA_COO~R1` (a null `disarm_owner` is refused by the surprise-row gate).
+
+## 2. BOUNDS
+
+1. Write only the paths below. No deploy, no Terraform, no store write, no schedule, no SEC, vendor, model or Bloomberg call; no `pip install`, `bun` or `npm`; nothing is fetched from the internet. No push; never touch `DEV` or `PROD`.
+2. `render_pack.py` (`build_pack` and new helper functions) and, ONLY if Step B shows it is needed, `lib/research/api/scoped_amgt.py` `_print_pack` are the product files you edit; do NOT edit `render_print.py`, `long_day.py`, the portal, or the currency-labelling functions of `render_pack.py` (another worker edits them in this round). Standing: no S3 delete, no push of shared branches.
+3. Commit nothing under `portal/` or `org/devices/`.
+4. **Committed fixtures are SYNTHETIC or the issuer's quoted served values** (the figures this face prints are what the page serves to staff on 2026-10-18); never read a live store, never copy a landed model block into the repository.
+
+## 3. SURFACES
+
+<paths>
+lib/research/print/render_pack.py
+lib/research/api/scoped_amgt.py
+lib/research/print/tests/
+lib/research/api/tests/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~511/
+org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+## 4. PROOF OF SPEC (literal; each invocation bounded by its own `timeout`; set your shell tool's timeout to 600000 ms)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="AMGT-bw-2"><invocation>cd C:/dev/wk-resapp-511 &amp;&amp; timeout 300 python -m pytest lib/research/print/tests/test_bw2_pack_form.py -q -p no:cacheprovider --color=no; echo "exit=$?"</invocation><expect>the pytest summary line reads `8 passed` or more with 0 failed and 0 skipped, F1 to F8 each present by name, and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-bw-2"><invocation>cd C:/dev/wk-resapp-511 &amp;&amp; timeout 580 python -m pytest lib/research/print/tests -q -p no:cacheprovider --color=no 2&gt;&amp;1 | grep -E "^FAILED|passed|failed" | sed "s/ - .*//"</invocation><expect>exactly one FAILED line, `FAILED lib/research/print/tests/test_av2_export_equals_page.py::test_pdf_text_carries_no_field_code_and_names_every_line_in_words` (it fails at the base as well: the base reads `1 failed, 125 passed`), and the summary reads `1 failed, P passed` with P at least 133</expect></criterion>
+</proof_of_spec>
+
+## 5. WHEN YOU ARE DONE
+
+Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~511 <0.9.0_WK_AMGT_RESAPP~511@opal.agent>" -F <msgfile> -- <paths>` (message file written with the Write tool, never a shell heredoc; confirm with `git log -1`). Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~511/AMGT_RESAPP.TO-AMGT-bw-2.pack-reads-as-a-note-narrative-first-figures-in-an-appendix.proof_of_spec.json` (the invocations are recorded as the order's literal text; any re-run in another tree goes in `output_evidence` and `status_reason`, never in `invocation`). Run `python .tools/proof-of-spec-check.py <instance> --governing-order <this order's path>` on the committed bytes and report its verdict line. Do not stage `portal`.
+
+Report once:
+- the commit hash and the base;
+- the test run at the unedited head (the line and the failing checks) and the run after;
+- AC1's and AC2's output lines;
+- the receipt's census section, verbatim;
+- any existing test you changed, named, with the reason;
+- any row.
+
+The `<status>` flip is the issuer's.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER NOTES:** the CTO's round-115 analysis items 2 and 3 (msg 7887), the CVO's FWD-5 read (msg 7886). LOCAL code cell; items 2 and 3 are ONE cell because the management section is a section of the same restructure (the placeholder constant is why it prints empty). Served only through `AMGT-bw-5` (placed; a pair cut after this cell and bw-1 merge; the pair must cover `scoped_amgt.py` too if Step B edits it). The faces' AC2 is the print folder only (a sparse worktree cannot run the api folder: row W506-S1); the issuer re-runs print plus api in the full tree at the drain (baseline there 9 failed, 1160 passed). The CVO re-reads three live PDFs at L9 against the FWD-5 ACCEPT line after the redeploy; the issuer's mechanical pre-read (section order, no empty section) is not that grade.
+
+<status>pending</status>
+<round>116</round>
+<slot>0.9.0_WK_AMGT_RESAPP~511</slot>
+<fabric>dell1</fabric>
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>

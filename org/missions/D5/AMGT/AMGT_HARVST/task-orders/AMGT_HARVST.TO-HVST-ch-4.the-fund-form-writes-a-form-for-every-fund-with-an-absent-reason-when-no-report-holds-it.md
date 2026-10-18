@@ -68,9 +68,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~166, worktree `C:/dev/wk-harvst-166`, branch `wk-AMGT_HARVST-166`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922` and `infra/aws/ec2/opal-gateway/app` (the AC2 list reads the gateway file).
 - **SENT:** with the round-93 issuance.
 
+**COMPLETE 2026-10-18T04:0xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~166` (worker, haiku, high), branch `wk-AMGT_HARVST-166`, feature `3f1bc8352e`, proof `b18ebcceeb`; merged `2e0dc6af2e` (safe-merge fast lane, index check 0 of 8). Diff read by this seat: `FUNDS = ("DIVZ", "IDVZ", "PFOE")`; `build` adds ONE key `absent` only when a fund has 0 reports (a fund with reports returns exactly what it returned); `write()` iterates `sorted(set(funds) | set(FUNDS))`; `METHOD_VERSION` stays `"2"`; one assertion in `test_fund_form.py` (`stored_funds` now lists DIVZ); 7 new offline arms with a mutant.
+- **AC1 PASS:** `7 passed` (worker; re-run here). **AC2 PASS:** `66 passed` (re-run here). **AC3 PASS:** `CENSUS-FORMS forms=3 idvz=equal pfoe=equal divz=absent divz_reports=0 gets=374 bytes=35669637` (the issuer's expectation held): IDVZ `65a5baab3afd06f0.json` 82 reports and PFOE `57cee6de8b2cd85e.json` 33 reports are BYTE-EQUAL to the stored version-2 objects (`stored=equal`, same names and `content_sha256`), DIVZ `a181f84957dbb8b7.json` 0 reports `stored=absent` (the one new object). **I re-ran `ch4_census.py` myself and its output is identical to the worker's (ignoring line endings and one `SOURCE` path comment).** Proof instance VALID rc 0 (re-run here).
+- **Rows** `D1-W166-S1` (INERT: no surprise-channel schema in the sparse worktree), `-S2` (INERT: the census stdout is CRLF so the `$` anchor of `AC3` cannot match; the worker normalised its file to LF without re-running; I re-ran and the content is identical), `-S3` (INERT: seven tests outside the named files fail identically at HEAD, the sparse worktree's missing untracked files), `-S4` (INERT: `write()` still RETURNS two funds in its `funds` value and prints `funds 2` while writing three forms; cosmetic, SC1's write uses a per-fund driver, not `write()`), `-S5` (INERT: the `absent` text would be false for a fund held only by OTHER-class reports; not hit today; named for the CTO). Read and accepted.
+- **What this does NOT prove:** a written DIVZ object (`HVST-ch-5`); `read_latest("DIVZ")` returning a current form (it will, once the object is written).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>93</round>
 <workstream>DIVZ-FORM</workstream>
 <slot>dell1</slot>
