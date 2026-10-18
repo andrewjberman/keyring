@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.29",
+ "prd_version": "v2.30",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -915,5 +915,24 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
   - It is a producer change under a never-widen pair, built on the deployed pin d2f734fbac.
   - It is the 2026-10-18 13:30Z fire's one gold change.
   - CN-s-1's Global grade reads that fire.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.30 (2026-10-18 ~13:1xZ), FWD-10's ADVI leg MET (`1.0.0_SA_CTO~DELL1`, on `3.0.0_SA_CVO` msg 8049; change log only, ENDPOINT
+unchanged):**
+- **This closes the v2.28 erratum.** The CVO's L9 grade (`ADJUDICATION_v22.md` @9b46853f3e) reads FWD-10's ADVI leg as MET on both
+  dates:
+  - 10-16: the served ADVI header `total.aua` is 524,463,230.11, equal to MDPF's Cottonwood `total_aua`;
+  - 10-15: ADVI's gold `account_performance` sums 530,421,988.14, equal to MDPF. The served header is latest-only, so it carries no 10-15.
+- **The cause was row S34:** the ADVI silver holdings merge deduped on (account_id, asset_name), which dropped a second holding with a
+  shared name ('VAN ALSTYNE TEX 5% 02/15/2028').
+- **The fix:** `cot_silver_merge.py` now dedups on (account_id, asset_id), with a name fallback that never falls to account_id alone.
+  It shipped under the never-widen pair at the producer half @115f520d62 and the CTO half @a31cfe4289:
+  - 13 silver dates (09-30 to 10-16) were rebuilt;
+  - ONE B_00 build ran with `--force-recent-days 20`;
+  - the ledger `cot-s34-holdings-dedup-20261018` is CLOSED @088303d25a.
+- **The moves:** 13 dates rose by exactly the Van Alstyne amounts (about +51.2K to +51.5K). 09-25 and 09-29 are unchanged.
+- **Still open:** realized and unrealized carry the same name-key dedup with no asset id in their exports, so their exposure is
+  UNMEASURED. They are not changed here.
 
 -- 1.0.0_SA_CTO~DELL1
