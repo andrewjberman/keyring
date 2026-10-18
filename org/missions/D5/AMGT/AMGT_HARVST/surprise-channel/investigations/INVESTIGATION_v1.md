@@ -11876,5 +11876,116 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W172-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~172",
+        "surfaced_at": "2026-10-18T12:08:36Z",
+        "one_line": "HVST-ck-1 census matrix (round 96): 2 slash keys, 13 distinct path-component prefixes, 26 cells; distinct objects 38 raw and 78 canonical; 38 same-name pairs of which 34 are equal and 4 differ in bytes (rows S2-S5); no raw-only object in any template; the census final line counts the two input_ledger.json objects twice (40/80/40/6).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "CTO round-95 analysis section 3 item 3 and enrichment item 1: the path-component readers (harvest_research.py, harvest_figures.py, harvest_identity.py) build their prefix from the caller's spelling; the stored tables hold both spellings; readers will resolve to the canonical spelling and read the union of the canonical prefix and the legacy raw prefix, canonical winning a same-name collision; no stored object is renamed or deleted; a read-only census comes first.",
+        "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out (read-only list and get on opal-data-harvest, rc=0, one foreground run): 913 requests and 4902522 GET bytes against a budget of 4000 requests and 400 MiB. Prefixes READ from the modules: 21 sites, 13 distinct templates (PREFIX lines). KEYSCAN lists 12 layers and finds exactly BP/_LN_Equity and NG/_LN_Equity (KEYSCAN-SLASH-SET match=yes). Per template, objects raw/canonical, same-name, differ: drafting/v1/%s.json 0/0/0/0; filings/v1/%s/ 2/2/2/0; management/v1/%s/ 0/0/0/0; peers/v1/%s/ 14/20/14/2 (6 canonical-only); posture/v1/%s/ 2/2/2/0; scores/v1/%s.json 2/2/2/0; derived/model_block_fye/%s/ 0/0/0/0; derived/model_block/%s/ 12/46/12/0 (34 canonical-only); packs/%s/ 2/2/2/2; publication-links/v1/<root>/ 0/0/0/0; raw/bloomberg/%s/ 4/4/4/0; raw/seekingalpha/<cc>/ 0/0/0/0; packs/%s/input_ledger.json 2/2/2/2 (the same two objects as packs/%s/). Controls: CONTROL-POSITIVE UNH_US_Equity raw_equals_canonical=yes; CONTROL-NEGATIVE equal=equal differ=differ raw_only=raw_only canonical_only=canonical_only. Reading of harvest_identity.py _segment: the _ROOT template builds publication-links/v1/BP// from the raw spelling (double slash); both spellings list 0 objects there. Distinct totals: raw 38, canonical 78, same-name 38, differ 4, raw-only 0, canonical-only 40.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.py (run once in the foreground with python -u from the worktree root, rc=0)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~171/cj1_census.out (SLASHKEY-FOUND lines: BP/_LN_Equity, NG/_LN_Equity)",
+                "infra/aws/ec2/opal-gateway/app/harvest_identity.py lines 455-466 (_segment) and 476-537 (_ledger and the coverage composition)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W172-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~172",
+        "surfaced_at": "2026-10-18T12:08:36Z",
+        "one_line": "Same-name pair with differing bytes under BP/_LN_Equity: peers/v1/BP/_LN_Equity/2026-09-24T2252Z.json and peers/v1/BP-SLASH-_LN_Equity/2026-09-24T2252Z.json are two different objects claiming one name.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "CTO round-95 analysis section 3 item 3: a same-name pair whose bytes differ is a row (two different objects claiming one name); readers resolve to the canonical spelling and canonical wins a same-name collision; no stored object is renamed or deleted.",
+        "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out PAIR line (both bodies GET whole, full SHA-256 compared, equal=no): raw peers/v1/BP/_LN_Equity/2026-09-24T2252Z.json raw_sha256=639d94f701e0 raw_bytes=9252 raw_last_modified=2026-09-24T22:53:31Z; canonical peers/v1/BP-SLASH-_LN_Equity/2026-09-24T2252Z.json canonical_sha256=dba3fedd457a canonical_bytes=10732 canonical_last_modified=2026-10-02T08:34:19Z. Of the 7 raw and 10 canonical peers objects for BP, 6 same-name pairs are equal and the canonical spelling holds 3 names the raw spelling does not. Reason for the difference: not read by this census (the two objects differ in LastModified and content; the writer of either object is not read).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out (PAIR line)",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py and harvest_identity.py (the caller-spelling composition of the raw prefix)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W172-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~172",
+        "surfaced_at": "2026-10-18T12:08:36Z",
+        "one_line": "Same-name pair with differing bytes under NG/_LN_Equity: peers/v1/NG/_LN_Equity/2026-09-24T2252Z.json and peers/v1/NG-SLASH-_LN_Equity/2026-09-24T2252Z.json are two different objects claiming one name.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "CTO round-95 analysis section 3 item 3: a same-name pair whose bytes differ is a row (two different objects claiming one name); readers resolve to the canonical spelling and canonical wins a same-name collision; no stored object is renamed or deleted.",
+        "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out PAIR line (both bodies GET whole, full SHA-256 compared, equal=no): raw peers/v1/NG/_LN_Equity/2026-09-24T2252Z.json raw_sha256=6dad9f83d8f3 raw_bytes=9252 raw_last_modified=2026-09-24T22:53:57Z; canonical peers/v1/NG-SLASH-_LN_Equity/2026-09-24T2252Z.json canonical_sha256=43148c93ab83 canonical_bytes=10732 canonical_last_modified=2026-10-02T08:34:29Z. Of the 7 raw and 10 canonical peers objects for NG, 6 same-name pairs are equal and the canonical spelling holds 3 names the raw spelling does not. Reason for the difference: not read by this census (the two objects differ in LastModified and content; the writer of either object is not read).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out (PAIR line)",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py and harvest_identity.py (the caller-spelling composition of the raw prefix)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W172-S4",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~172",
+        "surfaced_at": "2026-10-18T12:08:36Z",
+        "one_line": "Same-name pair with differing bytes under BP/_LN_Equity: packs/BP/_LN_Equity/input_ledger.json and packs/BP-SLASH-_LN_Equity/input_ledger.json are two different objects claiming one name.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "CTO round-95 analysis section 3 item 3: a same-name pair whose bytes differ is a row (two different objects claiming one name); readers resolve to the canonical spelling and canonical wins a same-name collision; no stored object is renamed or deleted.",
+        "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out PAIR line (both bodies GET whole, full SHA-256 compared, equal=no): raw packs/BP/_LN_Equity/input_ledger.json raw_sha256=2956f6ca32d4 raw_bytes=1654 raw_last_modified=2026-09-25T04:26:05Z; canonical packs/BP-SLASH-_LN_Equity/input_ledger.json canonical_sha256=1ad08c8dfb71 canonical_bytes=6898 canonical_last_modified=2026-10-17T13:02:42Z. This object is the one the packs/%s/ template lists too (counted under both templates). By code reading, harvest_identity.py _ledger (line 482, called at line 537 with the caller's spelling) reads packs/<spelling>/input_ledger.json, so a coverage call with the raw spelling and one with the canonical spelling read different bodies today; the served answers were not read. Reason for the difference: not read by this census (the two objects differ in LastModified and content; the writer of either object is not read).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out (PAIR line)",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py and harvest_identity.py (the caller-spelling composition of the raw prefix)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W172-S5",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~172",
+        "surfaced_at": "2026-10-18T12:08:36Z",
+        "one_line": "Same-name pair with differing bytes under NG/_LN_Equity: packs/NG/_LN_Equity/input_ledger.json and packs/NG-SLASH-_LN_Equity/input_ledger.json are two different objects claiming one name.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "CTO round-95 analysis section 3 item 3: a same-name pair whose bytes differ is a row (two different objects claiming one name); readers resolve to the canonical spelling and canonical wins a same-name collision; no stored object is renamed or deleted.",
+        "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out PAIR line (both bodies GET whole, full SHA-256 compared, equal=no): raw packs/NG/_LN_Equity/input_ledger.json raw_sha256=98b758abf9ab raw_bytes=1654 raw_last_modified=2026-09-25T04:29:21Z; canonical packs/NG-SLASH-_LN_Equity/input_ledger.json canonical_sha256=bf539477d4b5 canonical_bytes=6898 canonical_last_modified=2026-10-17T13:06:50Z. This object is the one the packs/%s/ template lists too (counted under both templates). By code reading, harvest_identity.py _ledger (line 482, called at line 537 with the caller's spelling) reads packs/<spelling>/input_ledger.json; the served answers were not read. Reason for the difference: not read by this census (the two objects differ in LastModified and content; the writer of either object is not read).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out (PAIR line)",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py and harvest_identity.py (the caller-spelling composition of the raw prefix)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
