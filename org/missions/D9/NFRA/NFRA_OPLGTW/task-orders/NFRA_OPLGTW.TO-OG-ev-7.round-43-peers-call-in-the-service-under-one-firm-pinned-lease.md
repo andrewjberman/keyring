@@ -74,6 +74,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-7.round-43-peers-call-in-the
 - Pre-cut: `AC1` base FAIL as expected (the record is absent).
 
 <status>staged</status>
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-A</workstream>
 <slot>~AE</slot>
