@@ -11611,5 +11611,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
          },
          "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S55",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-18T07:33:57Z",
+     "one_line": "S51 second instance under the CTO's seat-side rule 2 (recorded with D1-S54): an order and a GO handed to an idle SC1 at 07:19:56Z and 07:26:15Z were READ at 07:29:46Z, after the issuer found the seat idle at its input and typed a nudge at 07:29:29Z; two of two instances, the mail waited until the typed nudge.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "Row D1-S53 rule 2 and the CTO's round-94 analysis item 4: for an order handed to an idle SC1 the issuer checks the READ ack within 10 minutes and, with none, types a nudge in the seat's tab.",
+     "world_is": "Handed: msg 7951 (HVST-cj-4 order STAGED) 2.0.0_SA_COO~W1 to 0.7.0_AE_CloudOps~SC1 at 07:19:56.4Z (SENT 07:23:00.5Z); msg 7954 (the GO) queued 07:26:15.5Z (SENT 07:29:21.5Z). At 07:29:16Z (9 min 20 s after the handing, inside the 10 minute rule) get_delivery_state showed READ coverage 0 of 2 and a read-only peek showed SC1 idle at its input: 'No order is open', its last lines saying it had re-armed its inbox watcher as task bnbra0bge (timeout 1800 s) and that interim 39 was already read. Nudge typed 07:29:29Z (SENT; a second peek showed the prompt as a transcript turn and SC1 working). get_delivery_state: both messages EMITTED 07:29:37.985Z (8.5 s after the typed nudge) and READ 07:29:46.570Z (17 s after it). First instance (D1-S54): both EMITTED 2 s after its nudge and READ 8 s after; the handing to READ was 6 min 42 s there and 9 min 50 s here. In both instances the mail sat unread, EMITTED only after the typed nudge, and SC1 acted at once. NOT established: whether an armed watcher event wakes an idle seat; in both instances the seat's own last lines say a watcher was armed and there was no wake, but the watcher's own state (a process census, whether the mail files had moved to read/) was not read at the time, so the question S53 leaves open is still untested.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "get_delivery_state for 0.7.0_AE_CloudOps~SC1 since 2026-10-18T07:15Z (ids 7951, 7954: SENT, EMITTED, READ stamps as quoted), read at 07:29Z and 07:33Z",
+       "peek images C:/Users/Test/AppData/Local/Temp/unstick_peek_0.7.0_AE_CloudOps~SC1_20261018T072915Z.png and ..._20261018T072935Z.png",
+       "row AMGT_HARVST-D1-S54 (the first instance) and row D1-S53 (MSTR's measurement and the CTO's rule 2)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
