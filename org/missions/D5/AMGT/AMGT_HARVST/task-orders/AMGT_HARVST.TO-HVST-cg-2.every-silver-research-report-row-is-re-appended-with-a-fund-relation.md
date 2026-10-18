@@ -70,6 +70,7 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 <!-- ===================== RECORD FACE -- does NOT travel to the seat ===================== -->
 
 **ISSUER NOTES:**
+- **AMENDMENT 1 (issuer, 2026-10-18 00:1xZ; CTO half SIGNED @b4aac7476a, msg 7791, binding the COO half at sha256 `11cf6bd0...9158` unchanged):** the CTO half is `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_CG2_SILVER_FUND_RELATION_CTO_HALF.md`; C-1 to C-9 of the COO half bind you. **Where the two halves differ, the COO half governs:** the CTO half lists the row counts in size order (84, 121, 148) against the dates; the pairing is `2026-09-23` 121 rows, `2026-09-24` 148 rows, `2026-09-25` 84 rows (the dry run, `deliverables/2.0.0_SA_COO_W1/round92/cg2_dryrun_at_a9aecdd593.out`). **C-9, site Z is told first:** the issuer has asked `0.0.0_AB_MSTR~DELL1` to tell site Z the window (2026-10-18 00:30Z to 02:30Z); you may do step 0 (all read only) and write the driver `cg2_run.py` now, but you write NOTHING to the bucket until the issuer sends GO with site Z's answer. The ledger close is COMMITTED with the manifest. If the run passes 02:30Z, stop at a date boundary and tell the issuer.
 - **STAGED, not sent.** It waits on the CTO half of the pair, site Z's answer (the issuer asks through `0.0.0_AB_MSTR~DELL1`), and the issuer's GO. Receiving seat: `0.7.0_AE_CloudOps~SC1` (CLAUDE.md rule 34).
 - Authority: the CTO's round-91 analysis item 1 and msgs 7771, 7775, 7782, 7784. Sequence (CTO msg 7775): this cell, then `HVST-cg-3` (the gateway release), then the proof read through the gateway; `HVST-cf-3` and `-5` follow this cell.
 - **Why three commands, smallest date first:** `silver_append` writes one part per date partition in one call; the three calls bound the first exposure to the 84-row partition, and each part is read back before the next. Nothing served changes in the meantime.
@@ -78,7 +79,7 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>92</round>
 <workstream>SILVER-REWRITE</workstream>
 <slot>dell1</slot>
