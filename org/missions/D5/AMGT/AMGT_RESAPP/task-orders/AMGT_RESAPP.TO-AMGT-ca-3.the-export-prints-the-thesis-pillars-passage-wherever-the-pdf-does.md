@@ -73,11 +73,17 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 
 Report once: the commit hash and the base; the test run at the base and after; AC1 and AC2 output lines; the census table; every existing test you re-scoped (old and new assertion); the proof verdict line; any row. The `<status>` flip is the issuer's.
 
+## 6. AMENDMENT 1 (issuer, 2026-10-18 ~14:5xZ) -- ONE test repair, nothing else
+
+**What happened.** Your merge (`dda778e2f8`) and the other two cells of the round (`ca-1` `a1eb3b86ce`, `ca-2` `f64668f0e8`) are in the shared tree. In the merged tree ONE test of yours fails: `lib/research/print/tests/test_ca3_export_thesis_pillars.py::test_P5_control_export_outside_the_pillars_section_equals_the_base_export[ICICIBC_IN]`. Its `## Header` section differs from your recorded base fixture `lib/research/print/tests/fixtures/ca3_base_export_ICICIBC_IN.md` on the two rows of the figures that carry no served source (`CURR_ENTP_VAL` and `SHORT_INT_RATIO`): the recorded base row ends with the middle dot U+00B7, a space, a question mark and a bar, and the export now prints `source not stated` in its place, which is `AMGT-ca-2`'s intended change (an absent, blank or `?` source prints `source not stated`). Your section edit did not move those rows: a control that compares another cell's region to a recorded base text fails the moment that cell lands (the round-116 lesson (1) above).
+
+**What to do (your `<paths>` already grant the test and its fixtures again: this order is `pending`).** (1) `cd C:/dev/wk-resapp-522` (a NEW worktree cut from the shared head, which already carries all three cells; your earlier commits are inherited state, do not redo them). (2) Run the one failing test and the whole file ONCE and record the counts (expect `1 failed, 25 passed`). (3) Re-scope THAT ONE control with a hand-written expectation: before comparing a section, map each BASE line whose last cell ends with the four characters space, question mark, space, bar, preceded by the middle dot U+00B7 (copy the exact characters from the fixture: do not retype them; build the pattern in Python with `chr(183)`) to the same line with `source not stated` in place of the question mark, through a small named constant `CA2_BASE_TO_NOW_SOURCE` with a comment saying that `AMGT-ca-2` changed it on purpose; compare `now[heading]` to the mapped base. The map is applied to the base side only, to the lines of `## Header` and any other KEPT heading that carries such a row; every other line stays exactly compared. Do NOT edit the fixture, any product file, or any other test. (4) Re-run the file (all 26 pass) and the whole print folder ONCE (`1 failed` the known one, and at least 375 passed). (5) Commit in your worktree, update your receipt `CA3_RECEIPT.md` with a `## Amendment 1` section (old assertion, new assertion, the two counts), refresh your proof instance if its output text changed, run `python .tools/proof-of-spec-check.py <instance> --governing-order <this order's path>` on the committed bytes and report the verdict line and the commit.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** Item 3 of the CTO's round-119 analysis (carried from the CTO's bz-5 half, `ledger/NEVER_WIDEN_ROUND119_..._CTO_HALF.md`); the gap measured by the issuer in the round-119 packet. The PDF is the reference and must stay byte-identical (P2 and P3 control it). LOCAL code cell.
 
-<status>complete</status>
+<status>pending</status>
 <round>120</round>
 <slot>0.9.0_WK_AMGT_RESAPP~522</slot>
 <fabric>dell1</fabric>
