@@ -11917,6 +11917,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W173-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~173",
+      "surfaced_at": "2026-10-18T12:48:40Z",
+      "one_line": "The raw-spelling packs/ writer is deployed: the enqueue Lambda's live code hash equals its stored artifact, and that artifact is byte-identical to the source that writes packs/<ticker as typed>/status.json.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-ck-4 cell sections 1.c and 1.g and the CTO round-95 ruling: a writer that writes the raw spelling of a slash key is changed under its own pair; ARMED only for a raw writer that the NEWEST listing shows writing today.",
+      "world_is": "Read-only check (ck4_lambda_check.out, run at HEAD ed29939a37 vintage): Lambda opal-research-pull-enqueue, python3.11, handler lambda_function.lambda_handler, CodeSha256 cWiraC3EeuTU9WDIpc5RXzpw6+RT9WxoeqfH/eZiaxo=, last modified 2026-10-12T15:38Z, environment HARVEST_BUCKET and RESEARCH_BUCKET both opal-data-harvest. Stored artifact research/opal-research-pull-enqueue.zip in opal-313476888478-lambda-artifacts: 2690 bytes, one entry lambda_function.py, byte-identical to infra/aws/lambda/research/pull_enqueue/lambda_function.py, and it carries no crosswalk or slash_safe_key copy (needle search of the zip, none). The route POST /api/private/research/pull reaches it (infra/aws/terraform/harvest/api-gateway.tf:104-107). The source writes packs/<ticker with ' ' replaced by '_'>/status.json with no slash_safe_key (lambda_function.py:45, :129). NEWEST shows no raw write after 2026-09-25, so the ARMED test is not met.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_lambda_check.out (lambda configuration, artifact head and bytes, in-memory zip listing, source-versus-deployed sha256)",
+          "infra/aws/terraform/harvest/build-and-upload.sh (zips lambda_function.py alone into research/opal-research-pull-enqueue.zip)",
+          "infra/aws/terraform/harvest/api-gateway.tf:68-90 and :104-107 (module harvest_enqueue, environment, route POST /api/private/research/pull)",
+          "infra/aws/lambda/research/pull_enqueue/lambda_function.py:45,129@8f45e32674 (raw sec_key and raw status key)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
