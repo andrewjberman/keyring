@@ -32049,3 +32049,78 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. No behaviour depends on the pointer; the fact it verifies holds."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W521-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~521",
+  "surfaced_at": "2026-10-18T14:10:59Z",
+  "one_line": "The rich export's figure tables carry no separate source column: the source is the last '·' segment inside each Rendered cell, so the round-120 rule is applied at the render call, not to a column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@62d2e724a3:1590-1610 _figures_table: the table is '| Mnemonic | Line | Rendered |' and the Rendered cell is render_figure_line(fig) verbatim",
+      "lib/research/provenance/render_print.py@62d2e724a3:221 source = figure.get('source') or '?' -- the one origin of the bare question mark; the cell's last segment is that source"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 (Step B census): 'the rich export's figure-table source column (_figures_table and its helpers)' and 'census whether they print ? too'.",
+  "world_is": "The rich export's figure tables have three columns and no source column. The source is written by render_print.py as the final '·' segment of the Rendered cell. The fix therefore hands render_figure_line a copy whose source is the words, and the cell's last segment reads them.",
+  "notes": "Form only. The census table in the receipt measures the Rendered cell before and after; the rule's result is the same as a column would carry."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W521-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~521",
+  "surfaced_at": "2026-10-18T14:10:59Z",
+  "one_line": "A blank (whitespace-only) source on an appendix figure line printed the fixed sentence 'The source is on file but is not stated in plain words.', not a bare '?'; the order's premise that _source_words already reads a blank source as 'source not stated' holds for the withheld Header line only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@62d2e724a3:674-681 _source_words reads an empty source as 'source not stated' (the withheld line only)",
+      "lib/research/print/render_pack.py@62d2e724a3:627-631 _plain_figure_line passes a served source equal to the cell's source to _plain_reason(p, SOURCE_NOT_PLAIN_SENTENCE); a whitespace source returns the fixed sentence (measured: blank variant, pdf-header-listing and pdf-fiscal-listing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1: 'The pack's own _source_words(fig) already reads a missing or blank source as source not stated, so the ? is produced where the figure line is built.'",
+  "world_is": "_source_words gives 'source not stated' for a missing or blank source, but the figure line (_plain_figure_line) gives the fixed sentence for a blank source and '?' for an absent one, and the rich export printed the whitespace verbatim. The round-120 rule now maps absent, blank and '?' to 'source not stated' on every figure line and every rich cell.",
+  "notes": "Form only. The receipt's census records the before and after of the blank variant at every site."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W521-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~521",
+  "surfaced_at": "2026-10-18T14:10:59Z",
+  "one_line": "_forecast_table, the rich export's forecast rows, prints the same render_figure_line source segment and is inside the rule's census, but the order names only _figures_table as the export's region; its one render call was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@62d2e724a3:2137-2148 _forecast_table calls render_figure_line(fig) for each served forecast figure",
+      "measured at base: a BEST_EPS forecast figure with no source printed '· ?' in its 2026E row (census_base, rich-forecast absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 region: '_figures_table and its helpers', and the census rule 'every print site of a figure's source ... in the rich export's tables'.",
+  "world_is": "_forecast_table is a table helper of the same export and carries the same bare question mark. Its single render call is wrapped in the round-120 copy; no other line of _forecast_table changed. The CTO may rule the region; the change is one call.",
+  "notes": "Form only. Not a rewrite of the forecast table; the region question is the CTO's."
+}
+```

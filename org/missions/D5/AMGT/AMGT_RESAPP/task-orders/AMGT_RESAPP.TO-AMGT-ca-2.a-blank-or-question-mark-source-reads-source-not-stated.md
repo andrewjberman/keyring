@@ -77,7 +77,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 2 of the CTO's round-119 analysis; row W519-S5 (the `bz-3` worker's). The 101-name census of source lines is the issuer's read at the drain (`ca-4`, the live pool through the candidate handler); a worker's fixtures cannot see the whole pool. LOCAL code cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>120</round>
 <slot>0.9.0_WK_AMGT_RESAPP~521</slot>
 <fabric>dell1</fabric>
