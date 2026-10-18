@@ -3701,6 +3701,30 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-DQ-t76 item 2: the probed security is recorded as an empty window (COOLED_NEW, seven days); item 3: the third distinct empty caches UNVERIFIED and the request is refused as today.",
     "world_is": "A one-day empty answer cools every owed day of that security's run for seven days (the run is the window the DQ-t-75 record keys), so the skip is wider than the day it asked. The third empty security is listed and counted toward the more-than-five stop like the first two, because the order does not say otherwise. Both readings are the ones built; neither is asserted by the order."
+  },
+  {
+    "id": "MDPF_DEMQUE-Z-S9",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MDPF1",
+    "surfaced_at": "2026-10-18T14:48:18Z",
+    "one_line": "The 10-18 history probe came back empty because it asks for the first undrawn day of a thinly priced CUSIP (2013-05-21), a day the vendor has no row for; the day never gets stored, so the probe repeats it every fire and refuses every history request.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t56 / standing_drawer._probe_history: a one-row probe of a /cusip/ identifier decides whether the identifier form is usable, and VERIFIED only when the response carries a row for the probed day. Z-S8 asked why the 2026-10-18 probe of /cusip/662858FV6 returned 0 rows; Q1's read-only measurement ordered: Terminal sign-in, entitlement, the probe's own request.",
+    "world_is": "MEASURED: (1) Terminal sign-in and entitlement are not the cause: bloomberg_health reads ok true on 127.0.0.1:8194 //blp/refdata; the same fire's reference probe returned a row and 50 reference cells drew; the 10-17 fire drew 5,115 history rows through the same session. (2) The probe's own request (receipt.2026-10-18.json attempts[0]): security /cusip/662858FV6, field PX_LAST, start = end = 2013-05-21, max_rows 1, diagnostics [] , rows 0. The 10-17 probe asked the same security and field for 2013-05-20 and got 1 row. (3) The day is not chosen to have data: standing_drawer.py line 886 passes str(runs[0][0]), the first undrawn trading day of the security, and undrawn_runs (line 442) counts a day undrawn until a stored row holds it. (4) The security is thinly priced: the 10-17 draw stored 159 rows over 1,159 weekdays from 2013-05-20 to 2017-10-26 (14 percent), and the 10-17 window request 2013-05-20..2013-11-18 returned 30 rows and none for 2013-05-21 (history-2026-10-17.parquet, 2013-05-22 stored, 2013-05-21 not). (5) An empty probe is read as UNVERIFIED and cached per run for the channel (lines 757-778), so one empty day refuses every /cusip/ history request of the run, which the 10-18 receipt shows (all REFUSED, 0 history cells). INFERRED, not measured by a live call (none was made): the vendor holds no 2013-05-21 row, so the same probe repeats on each fire (2013-05-21 stays the first undrawn day) and history stays refused until the probe's day or verdict rule changes; the DQ-t-75 cooldown covers draw windows, not the probe. A live known-good-security comparison would be a Bloomberg data call outside the standing drawer, which the order's bounds bar; none was made. Nothing changed at site Z. SITE-Z RECOMMENDATION (not a ruling): probe a day the security is known to hold (a stored date, or the next day after the last stored row) or treat an empty probe as inconclusive and try the next owed day before refusing.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/receipt.2026-10-18.json (attempts[0], probes[0])",
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/receipt.2026-10-17.json (attempts for /cusip/662858FV6: probe 2013-05-20 rows 1; window 2013-05-20..2013-11-18 rows 30)",
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/history-2026-10-17.parquet (662858FV6: 159 rows, 2013-05-21 absent, 2013-05-22 present)",
+        "data/mdpf/scripts/demque/standing_drawer.py@d52fc6b570 lines 442-456, 696-727, 757-778, 884-890",
+        "mcp bloomberg_health at 2026-10-18T14:48:18Z: ok true"
+      ]
+    }
   }
 ]
 ```
