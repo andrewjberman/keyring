@@ -12364,5 +12364,257 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W176-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:30:51Z",
+        "one_line": "HVST-cm-2 step 1a/1b: the order takes the recorder's 'pipeline' value from the function-map row's pipeline key; the recorder selects by the tf_file prefix, and no reader of the row's pipeline key was found.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 step 1a asks what pipeline value the recorder expects for a harvest-folder function; step 1b sets the row's pipeline to that value, and says STOP and file a row only if the recorder cannot name the function by any pipeline value.",
+        "world_is": "record-deploy-scope.py rows_under() selects every row whose tf_file starts with infra/aws/terraform/<pipeline>/, and <pipeline> is the Terraform folder name, so the recorder names this function by the value harvest. The row's pipeline key is read by no code found in lib/opal_lambda_map.py or infra/aws/lambda/ci. The only other row under terraform/harvest/ (opal-amgt-scoped-api) carries no pipeline key. The selection is not blocked, so the row was written with pipeline harvest and there was no STOP.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/lambda/ci/record-deploy-scope.py@be8f6dc8ee rows_under() lines 67-70 and the selection branches lines 131-175",
+                "infra/aws/lambda/ci/record-terraform-deploy.sh@be8f6dc8ee SCOPE_ARGS block and the TF_PREFIX line",
+                "infra/aws/lambda/ci/function-map/opal-amgt-scoped-api.json@be8f6dc8ee (tf_file under terraform/harvest/, no pipeline key)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W176-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:30:51Z",
+        "one_line": "comp-lambdamap check (read-only, run for HVST-cm-2) names MISSING_ENTRY amgt-resapp-chatter-axis: TF-backed in terraform/harvest but with no function-map row. Not this order's function; not edited.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 step 1c(6) runs comp-lambdamap check and sha read-only and prints their lines for opal-research-pull-enqueue only; AC3 grades the drift line for that one function.",
+        "world_is": "The same check run names one MISSING_ENTRY, for amgt-resapp-chatter-axis (TF-backed in infra/aws/terraform/harvest/chatter-axis-schedule.tf, no functions entry). I did not measure whether that resource is a Lambda; INERT because the recorder refuses an applied address with no row loudly (rc=2) rather than writing a silent record. No function-map row was added for it.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                ".scratch/lm_check.txt in the worktree, line 237 (comp-lambdamap check output at be8f6dc8ee)",
+                "infra/aws/lambda/ci/record-deploy-scope.py@be8f6dc8ee applied-address REFUSE branch (lines 155-165)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W176-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:30:51Z",
+        "one_line": "The dell1 worktree is a sparse checkout that omits org/surprise_channel and org/critical_paths: the drift tool reports 465 sparse-tree findings, and the deploy ledger named in the row is not readable here.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 preflight and the worker face's sparse set name the paths the order needs (function-map, pull_enqueue, terraform/harvest, the AMGT_HARVST folders) and the order reads the drift tool's output in this worktree as the repository's own answer.",
+        "world_is": "The worktree sets core.sparseCheckout true and omits org/surprise_channel/ and org/critical_paths/. The row gate reads its schema from the index, so the channel row path still works. In this tree comp-lambdamap check prints 233 WRONG_SOURCE_DIR and 232 ORPHAN_ENTRY ('source_dir absent on disk', 'TF lambdas: 3'), most of them sparse-tree absences, not drift at HEAD. AC3 reads only this function's line. The ledger harvst-cl2-pull-enqueue-canonical-status (under org/critical_paths/change_management) is not readable from this worktree and was not checked.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git config core.sparseCheckout = true, and the sparse list omits org/surprise_channel and org/critical_paths (git sparse-checkout list)",
+                ".scratch/lm_check.txt in the worktree, lines 2-3 (the DRIFT counts)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W176-S4",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:30:51Z",
+        "one_line": "With .tools on sys.path, import lib.opal_lambda_map fails: .tools/lib (a regular package) shadows the repo lib/ directory, which is a namespace package. The checker loads .tools/git_bash_resolver.py by file path instead.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 step 1c: the checker imports lib.opal_lambda_map.load_entry from the repository root and the Git Bash resolver from .tools.",
+        "world_is": "Both imports cannot share one sys.path. Measured at be8f6dc8ee: with ROOT inserted at index 0 and ROOT/.tools appended, lib.__path__ reads ['.tools/lib'] and 'import lib.opal_lambda_map' raises ModuleNotFoundError; with .tools inserted at index 0, the same failure. The first attempt failed on this and was fixed in the checker by loading the resolver by path. Any script that imports both trips it.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "ls .tools/lib/__init__.py exists at be8f6dc8ee; lib/ has no __init__.py (ls lib/)",
+                "deliverables/0.9.0_WK_AMGT_HARVST~176/cm2_row_check.py (the loader comment) and its failed first run in this worktree"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W176-S5",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~176",
+        "surfaced_at": "2026-10-18T16:34:59Z",
+        "one_line": "The naming gate grades the row's pipeline value harvest as a NEW hand-kept carrier (NAMING REFUSE at function-map line 6) in its WARN window; the commit went through and the live read it needs was blocked in this sparse tree.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cm-2 section 1b and the commit rule: commit with .tools/safe-commit.sh; if the naming gate refuses, report the refusal and its exact text and do NOT force it.",
+        "world_is": "The commit a94e7cbdb2 passed with a WARN. The gate printed NAMING REFUSE infra/aws/lambda/ci/function-map/opal-research-pull-enqueue.json:6 harvest -> lookup('harvest'), with why: NEW hand-kept carrier (context rule); hand-kept carrier of 'harvest' outside every permitted context, and LIVE-READ-FAILED: CensusError (the served-graph client reported BLOCKED). The gate reported 1 REFUSE verdict that did not block, and said ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce. Not forced; the value was not changed. Under ENFORCE this commit's row would refuse.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "safe-commit output for commit a94e7cbdb2, the [naming-gate] NAMING REFUSE and WARN lines",
+                "infra/aws/lambda/ci/function-map/opal-research-pull-enqueue.json@a94e7cbdb2 line 6 (pipeline harvest)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S1",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "HVST-cm-3 census re-run: writers=16 raw_writers=0 canonical_writers=16 unknown_writers=0; one WRITER-CHANGED (pull_enqueue packs/ raw to canonical), NEW 0, GONE 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 (round 98) section 1 and PROOF AC1: the re-run grades the writers of the 13 path-component prefixes; the CTO round-97 item 3 asks for 0 raw-spelling writers. Round 96 graded raw_writers=1 (the pull_enqueue Lambda).",
+    "world_is": "Measured by org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py at 1564c2d60a (CENSUS-WRITERS prefixes=13 occurrences=4992 writers=16 raw_writers=0 canonical_writers=16 unknown_writers=0 files_scanned=108256 gets=52). The 16 writer lines are the round-96 16 (15 sites). WRITER-CHANGED: infra/aws/lambda/research/pull_enqueue/lambda_function.py:150 lambda_handler packs/ was=raw now=canonical. NEWEST packs/ BP/_LN_Equity: canonical newest 2026-10-18T15:27:00Z, raw newest 2026-09-25T04:26:05Z (no raw write since 09-25). Of the 16 canonical lines, 12 call slash_safe_key in the enclosing function (cm3_basis.out); 4 are canonical by identity, see the row on those 4. Controls: positive reader_found in harvest_research.py; negative run-time token occurrences=0.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (CENSUS-WRITERS line, WRITER-CHANGED and WRITER-DIFF lines, NEWEST lines, CONTROL lines)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_basis.out@1564c2d60a (the enclosing-function slash_safe_key check, 16 lines)",
+            "infra/aws/lambda/research/pull_enqueue/lambda_function.py@e97c43e97b (_SLASH_SAFE_TOKEN :50, _slash_safe_key :53, status key :150, put_object :162)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S2",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "The round-96 census classifier pinned pull_enqueue lambda_handler to raw in a hand-read table; a re-run with that row unchanged grades the code's history, not its present bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1a: start from the round-96 script; change the classifier only for the one case where it cannot classify a writer that carries its own verified copy of the rule; the spelling is read from the code.",
+    "world_is": "The round-96 VERDICTS table carried ('infra/aws/lambda/research/pull_enqueue/lambda_function.py', 'lambda_handler') = raw, with a basis text read at that commit. The table is not re-derived from the source, so an unchanged re-run prints raw for the Lambda whatever its bytes say. org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py removes that row and derives the spelling at run time (verify_lambda_copy): the copy _slash_safe_key (ast, :53) with its module constant (:50), the call site on the packs status line (:150), put_object (:162), and equality with lib/research/identity/crosswalk.py slash_safe_key over 97 keys and 6 refusal probes (key_mismatches=0, probe_mismatches=0). The rule for every other site is unchanged.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py@1564c2d60a (verify_lambda_copy and the lambda_handler branch in classify_py)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (OCCURRENCE packs/ lambda_function.py:150 basis, the verified copy line)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_writers.py (round-96 VERDICTS row for lambda_handler)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S3",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "4 of the 16 canonical writer lines carry the canonical grade with no slash_safe_key call on the cited line; the grade rests on an identity-key claim measured in round 96, not re-measured here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1e and the adversary list: a writer classified canonical must rest on a verified key builder or be printed with its basis; a spelling unknown must not hide inside canonical.",
+    "world_is": "cm3_basis.out (NO-slash_safe_key-call): management/v1 lib/research/management/enrich.py:782 pool_key (the _pool aggregate, no security key in the path, canonical by identity); publication-links/v1 lib/opal_data_harvest/catalog.py:74 store (key security['key'] = the opaque 'security-<hash>' identity, no slash); lib/opal_data_harvest/uploads.py:165 and :180 run (the outbox key inherited from catalog.store). Their canonical grade is a fixed VERDICTS entry, so the census would keep printing canonical if one of these keys ever carried a slash. The 'no slash' claim is round-96 evidence (0 of 242 identity records) and was not re-measured this round.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_basis.out@1564c2d60a (4 NO-slash_safe_key-call lines)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py@1564c2d60a (VERDICTS entries for enrich.py pool_key, catalog.py store, uploads.py run)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S4",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "The round-96 negative control counted its own typed literal: CONTROL-NEGATIVE occurrences=2 were hits in the task order and the deliverable script, not absence.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1c: the NEGATIVE control is a token the script generates at run time, scanned by the same walker, and never typed in a file the scan reads.",
+    "world_is": "Round 96 (deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_writers.out, lines 4860 to 4862) printed CONTROL-NEGATIVE ZZ_NO_SUCH_PREFIX_ZZ/v1/ occurrences=2, with both hits in ck4 task-order text and ck4 deliverable text that the scan reads. The round-96 control was not a clean negative. org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py drops the typed literal; the round-98 run prints CONTROL-NEGATIVE-2 token=ZZ_NO_SUCH_<16 hex, generated per run>_ZZ/v1/ occurrences=0.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_writers.out lines 4860-4862 (the typed literal and its two hits)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (CONTROL-NEGATIVE-2 line)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S5",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "The NEWEST probe builds a double slash for the publication-links ROOT template, so its zero counts are not evidence about publication-links writers.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1d: the NEWEST lines are the S3 lists of the newest object under each prefix for the two measured slash keys, RAW and CANONICAL spelling.",
+    "world_is": "cm3_writers.out NEWEST-LISTED publication-links/v1/: raw=s3://opal-data-harvest/publication-links/v1/BP// and canonical=.../BP-SLASH-/ (the ROOT template: seg() returns the first underscore segment plus a slash, and the template adds one more). Both list 0 objects, so the zero is not evidence for publication-links writers. seg() says it mirrors harvest_identity._segment; that mirror was not verified this round.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (NEWEST-LISTED publication-links/v1 lines)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py@1564c2d60a (seg, ROOT branch)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S6",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "The shared checkout the census reads moved during this worker's session; the census grades a snapshot, and its denominator moved with it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1a and the census header: the scan walks the SHARED checkout C:/Dev/ajb_workspace read-only, and the header records the HEAD of that checkout at the run.",
+    "world_is": "The shared checkout HEAD read at successive points of the session: 9788683325, 6683c373ba, b62d60943c, 1b5c221637 (run 1 header), e97c43e97b (run 3, the graded header), 68baa5a8e9 (after the grade). files_scanned moved 107151 (round 96) to 108190 (run 1) to 108252 (run 2) to 108256 (run 3, graded). A re-run can grade differently with no writer changed. The header prints HEAD at each run.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (header line 2 and SCAN-DENOM total_files line)",
+            "git -C C:/Dev/ajb_workspace rev-parse --short HEAD, read at each step of the session (values above)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-S64",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+    "surfaced_at": "2026-10-18T16:50:34Z",
+    "one_line": "HVST-cm-1 STOP at step 0: dell1 has no Bloomberg Terminal, no PY_AWS interpreter and no blpapi, so the consumer cannot run here and the one queued BP pull stays queued.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-1 section 2 step 0 (v) and section 3: the act runs on dell1 under PY_AWS (blpapi + boto3 + pyarrow); STOP when the interpreter cannot import blpapi, boto3 or pyarrow. The CTO half: 'the Bloomberg Terminal session dell1's harvest tooling already holds'.",
+    "world_is": "Measured at 2026-10-18T16:50:34Z on dell1 (hostname DESKTOP-HK1UU7N), read only. The interpreter the order and both halves name, PY_AWS = C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe (integrations/bloomberg/pipeline/scheduled_daily_pull.cmd lines 143 and 427), DOES NOT EXIST here: C:\\Users holds only Test and Public. The two interpreters present (Python 3.14 on PATH and Python 3.12) import boto3 and pyarrow and do NOT import blpapi. TCP port 8194 has no listener; no process named bbcomm, wintrv, blp or bloomberg (589 processes read, control 21 powershell.exe rows). 207 scheduled tasks read (control OPAL_autolaunch_agents found): none runs scheduled_daily_pull, pull_consumer or bbg_signin; the one match is the sa lane's 'Opal Data Harvest - Continuous Cycle'. The queue still holds its one message (counts 1/0/0 at 16:46Z) and packs/BP-SLASH-_LN_Equity/status.json still reads REQUESTED (190 bytes, sha256 2587af21f9e5e213d9e42b773e333ebe8a06ec935e7775bcb614167ac07cce88). The BP refdata, histdata and bestdata objects at 2026-10-18T13:02:48Z in opal-data-harvest were written by something that has a Terminal; this box has none (INFERRED, not looked for). I ran nothing beyond step 0: no health read, no consumer, no sign-in, no Bloomberg call, no queue receive. Also: the order's 'model_block_pull.bloomberg_health()' is not a function in model_block_pull.py; the consumer calls mbp._load_blp_client().health().",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round98/cm1_before.out (queue, status body and sha256, keys, interpreter imports, scheduled-task and process reads with controls, the STOP statement)",
+            "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd lines 143 and 427 (the PY_AWS path)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
