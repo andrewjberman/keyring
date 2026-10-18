@@ -74,7 +74,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-41.round-42-land-site-z-rele
 - Independent of `OG-ap-39`: that release is cut on `4257a2aa42` from its own branch and compares blobs with trunk at its `trunk_sha` (an immutable commit), so the landing moves the trunk head and no blob. The later landing of `OG-ap-39`'s and `OG-ap-40`'s release commits is a follow-up order of the same shape.
 - Pre-cut: `ap41.AC1` and `ap41.AC2` base FAIL as expected (the record is absent); the synthetic dry-run on a plumbing merge commit (parents trunk and `d077cef043`, trunk's tree) passes both; controls FAIL: one parent (no merge), the manifest pair not what the record expects.
 
-<status>staged</status>
+- C4 READ (2.0.0_SA_COO~O, ~08:2xZ 2026-10-18): `ap41.AC1` PASS (merge `105647b69d`, parents `e0c3273410` and `aa2efa2cf3`, 0 conflicted paths, no gateway byte changed), `ap41.AC2` PASS (the manifest reads `aa2efa2cf3`, previous `4257a2aa42`; source the applier's own Phase B manifest commit `6d98c6a326`), `ap41.AC3` PASS (124 `app/` files compared with the live release; the five trunk-own changes listed with their attribution: MP-pd-3 `admin_people_access`, the OG-gt-11 allowlist position in `destructive_ops`, OG-cd-1 `family_depth`, OG-pr-1 to OG-pr-3 `probe_listener` and the `server.py` hookup, which `OG-ap-40` releases) and `ap41.AC4` PASS (the sixteen window test files, 63 passed forward and reverse) on my runs in the main tree; the proof instance carries all four rows and is VALID (rc=0). Drained as `01fc792760`, `211ff02b2d`, `c5d520e0ac`; `aa2efa2cf3`, `4257a2aa42`, `d077cef043` and `efcc8ae19f` are ancestors of `box/sitez`. `0.0.0_AB_MSTR~Z` carries it to origin and tells dell1 (live ref `aa2efa2cf3`). Gate limb: none graded this flip.
+
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-E</workstream>
 <slot>~AE</slot>
