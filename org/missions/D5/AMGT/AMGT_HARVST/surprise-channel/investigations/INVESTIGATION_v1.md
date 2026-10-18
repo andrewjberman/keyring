@@ -12467,5 +12467,133 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S1",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "HVST-cm-3 census re-run: writers=16 raw_writers=0 canonical_writers=16 unknown_writers=0; one WRITER-CHANGED (pull_enqueue packs/ raw to canonical), NEW 0, GONE 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 (round 98) section 1 and PROOF AC1: the re-run grades the writers of the 13 path-component prefixes; the CTO round-97 item 3 asks for 0 raw-spelling writers. Round 96 graded raw_writers=1 (the pull_enqueue Lambda).",
+    "world_is": "Measured by org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py at 1564c2d60a (CENSUS-WRITERS prefixes=13 occurrences=4992 writers=16 raw_writers=0 canonical_writers=16 unknown_writers=0 files_scanned=108256 gets=52). The 16 writer lines are the round-96 16 (15 sites). WRITER-CHANGED: infra/aws/lambda/research/pull_enqueue/lambda_function.py:150 lambda_handler packs/ was=raw now=canonical. NEWEST packs/ BP/_LN_Equity: canonical newest 2026-10-18T15:27:00Z, raw newest 2026-09-25T04:26:05Z (no raw write since 09-25). Of the 16 canonical lines, 12 call slash_safe_key in the enclosing function (cm3_basis.out); 4 are canonical by identity, see the row on those 4. Controls: positive reader_found in harvest_research.py; negative run-time token occurrences=0.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (CENSUS-WRITERS line, WRITER-CHANGED and WRITER-DIFF lines, NEWEST lines, CONTROL lines)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_basis.out@1564c2d60a (the enclosing-function slash_safe_key check, 16 lines)",
+            "infra/aws/lambda/research/pull_enqueue/lambda_function.py@e97c43e97b (_SLASH_SAFE_TOKEN :50, _slash_safe_key :53, status key :150, put_object :162)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S2",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "The round-96 census classifier pinned pull_enqueue lambda_handler to raw in a hand-read table; a re-run with that row unchanged grades the code's history, not its present bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1a: start from the round-96 script; change the classifier only for the one case where it cannot classify a writer that carries its own verified copy of the rule; the spelling is read from the code.",
+    "world_is": "The round-96 VERDICTS table carried ('infra/aws/lambda/research/pull_enqueue/lambda_function.py', 'lambda_handler') = raw, with a basis text read at that commit. The table is not re-derived from the source, so an unchanged re-run prints raw for the Lambda whatever its bytes say. org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py removes that row and derives the spelling at run time (verify_lambda_copy): the copy _slash_safe_key (ast, :53) with its module constant (:50), the call site on the packs status line (:150), put_object (:162), and equality with lib/research/identity/crosswalk.py slash_safe_key over 97 keys and 6 refusal probes (key_mismatches=0, probe_mismatches=0). The rule for every other site is unchanged.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py@1564c2d60a (verify_lambda_copy and the lambda_handler branch in classify_py)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (OCCURRENCE packs/ lambda_function.py:150 basis, the verified copy line)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_writers.py (round-96 VERDICTS row for lambda_handler)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S3",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "4 of the 16 canonical writer lines carry the canonical grade with no slash_safe_key call on the cited line; the grade rests on an identity-key claim measured in round 96, not re-measured here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1e and the adversary list: a writer classified canonical must rest on a verified key builder or be printed with its basis; a spelling unknown must not hide inside canonical.",
+    "world_is": "cm3_basis.out (NO-slash_safe_key-call): management/v1 lib/research/management/enrich.py:782 pool_key (the _pool aggregate, no security key in the path, canonical by identity); publication-links/v1 lib/opal_data_harvest/catalog.py:74 store (key security['key'] = the opaque 'security-<hash>' identity, no slash); lib/opal_data_harvest/uploads.py:165 and :180 run (the outbox key inherited from catalog.store). Their canonical grade is a fixed VERDICTS entry, so the census would keep printing canonical if one of these keys ever carried a slash. The 'no slash' claim is round-96 evidence (0 of 242 identity records) and was not re-measured this round.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_basis.out@1564c2d60a (4 NO-slash_safe_key-call lines)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py@1564c2d60a (VERDICTS entries for enrich.py pool_key, catalog.py store, uploads.py run)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S4",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "The round-96 negative control counted its own typed literal: CONTROL-NEGATIVE occurrences=2 were hits in the task order and the deliverable script, not absence.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1c: the NEGATIVE control is a token the script generates at run time, scanned by the same walker, and never typed in a file the scan reads.",
+    "world_is": "Round 96 (deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_writers.out, lines 4860 to 4862) printed CONTROL-NEGATIVE ZZ_NO_SUCH_PREFIX_ZZ/v1/ occurrences=2, with both hits in ck4 task-order text and ck4 deliverable text that the scan reads. The round-96 control was not a clean negative. org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py drops the typed literal; the round-98 run prints CONTROL-NEGATIVE-2 token=ZZ_NO_SUCH_<16 hex, generated per run>_ZZ/v1/ occurrences=0.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_writers.out lines 4860-4862 (the typed literal and its two hits)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (CONTROL-NEGATIVE-2 line)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S5",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "The NEWEST probe builds a double slash for the publication-links ROOT template, so its zero counts are not evidence about publication-links writers.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1d: the NEWEST lines are the S3 lists of the newest object under each prefix for the two measured slash keys, RAW and CANONICAL spelling.",
+    "world_is": "cm3_writers.out NEWEST-LISTED publication-links/v1/: raw=s3://opal-data-harvest/publication-links/v1/BP// and canonical=.../BP-SLASH-/ (the ROOT template: seg() returns the first underscore segment plus a slash, and the template adds one more). Both list 0 objects, so the zero is not evidence for publication-links writers. seg() says it mirrors harvest_identity._segment; that mirror was not verified this round.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (NEWEST-LISTED publication-links/v1 lines)",
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.py@1564c2d60a (seg, ROOT branch)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+    ,
+{
+    "id": "AMGT_HARVST-D1-W177-S6",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~177",
+    "surfaced_at": "2026-10-18T16:38:11Z",
+    "one_line": "The shared checkout the census reads moved during this worker's session; the census grades a snapshot, and its denominator moved with it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO HVST-cm-3 section 1a and the census header: the scan walks the SHARED checkout C:/Dev/ajb_workspace read-only, and the header records the HEAD of that checkout at the run.",
+    "world_is": "The shared checkout HEAD read at successive points of the session: 9788683325, 6683c373ba, b62d60943c, 1b5c221637 (run 1 header), e97c43e97b (run 3, the graded header), 68baa5a8e9 (after the grade). files_scanned moved 107151 (round 96) to 108190 (run 1) to 108252 (run 2) to 108256 (run 3, graded). A re-run can grade differently with no writer changed. The header prints HEAD at each run.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~177/cm3_writers.out@1564c2d60a (header line 2 and SCAN-DENOM total_files line)",
+            "git -C C:/Dev/ajb_workspace rev-parse --short HEAD, read at each step of the session (values above)"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
