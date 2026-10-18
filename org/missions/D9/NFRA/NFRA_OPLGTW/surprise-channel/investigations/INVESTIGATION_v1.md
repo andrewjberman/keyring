@@ -28467,3 +28467,26 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: the connection-reset defect has no reproducing test on this machine. Decide whether a test that forces unread bytes (a refusal answered with a multi-kilobyte body on a keep-alive connection) is worth its own order."
 }
 ```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~149",
+  "surfaced_at": "2026-10-18T04:39:51Z",
+  "id": "NFRA_OPLGTW-Z-W149-S1",
+  "one_line": "The order requires the oversized-body 413 to be audited like every refusal and answered before the lease is consulted, but a refusal decided before the lease read has no lease order to label it with; the cell labels it probe:unarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/probe_listener.py probe_call @adf7f1cfd0 -- the body is read by _read_body_bounded and the body_bytes-is-None branch answers _refuse(tool, 413, UNARMED_LABEL, probe_body_too_large) before current_lease() runs; the lease label is computed only after that branch",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-pr-3.round-42-probe-listener-bounded-body-read.md section 1, step 1 ('audited like every refusal') and step 3 ('the oversized body is refused before the lease is consulted')"
+    ]
+  },
+  "spec_asserts": "OG-pr-3 step 1: an oversized Content-Length is answered 413 probe_body_too_large, audited like every refusal, without reading the body. Step 3: the 413 comes ahead of the not-armed 403, because the oversized body is refused before the lease is consulted. The order does not say which audit label such a refusal carries.",
+  "world_is": "A refusal decided before the lease read cannot take the probe:<order> label that OG-pr-2 gave a 413 on an armed probe. The cell writes probe:unarmed with code=probe_body_too_large, so an oversized body sent to an armed probe is audited as unarmed. The refusal code is correct; the label is not the lease state.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: choose the label. Either the 413 consults the lease for its label before it answers (a cached SSM read, which the step-3 order says not to make), or an oversized refusal gets a label of its own. The cell took the order's literal sequence, changed nothing else, and did not widen its write grant."
+}
+```
