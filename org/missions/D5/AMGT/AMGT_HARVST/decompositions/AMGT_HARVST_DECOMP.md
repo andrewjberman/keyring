@@ -4421,3 +4421,16 @@ The CTO accepted the recommendation: a gateway consumer still reading `fund` as 
 - **Fan-out (this recut):** `N of M chains, N=0 workers (cg-2 is a seat order) of M=1 chain, cap 8`.
 - **Check at the cut (dry-run at the base):** `cg-2` AC1 to AC3 FAIL as expected (no `cg2_served.out`).
 - **Gold effect named in the pair:** none; the gateway reads silver rows through a fixed tuple that does not carry the key yet (`cg-4` merged, not released), so UNH and CPA read equal before and after.
+
+### 122e. ROUND 92 -- `HVST-cg-2` WRITTEN (01:00Z, 3 parts, 353 rows), the CTO signed `cg-3` (`48d6e4e72b`); `HVST-cf-3` CUT (2026-10-18 ~01:2xZ)
+
+`HVST-cg-2` wrote its three parts (84 + 121 + 148 = 353 rows) 01:00:35Z to 01:01:14Z; SC1 read each back (PASS) and the issuer re-read the bucket by the gateway's newest-part rule: 353 of 353 from the new parts, all with `fund_relation`, counts equal the census, 0 mismatches against the superseded rows. **C-7 ruled (issuer, accepted by the CTO msg 7813):** the `part` pointer and `source_keys` naming the new parts are the expected consequence of add-only parts; my COO half said they would stay equal and was wrong (AMENDMENT 2 of `cg-2`). The ledger close of `cg-2` is SC1's, pending. The CTO signed the `cg-3` half (`48d6e4e72b`, binds `29d9e1b9...87c4`): the order is SC1 commits `cg-2`'s close, then site Z is told, then the cut and deploy, then the proof, then the ref to the shared lineage.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cf-3` | `cf-3` | **`fund_form.gather_items` counts only reports whose silver row states `fund_relation == holding` and never the misfiled reports; a row without the key raises; `METHOD_VERSION` `2`;** offline tests with a mutant; a read-only census with a pinned baseline (`a9aecdd593`), expected `funds=2 reports_after=115 dropped_nonholding=22` (IDVZ 82, PFOE 33; DIVZ has no holding report). Workstream `FUNDFORM-CODE`. | LOCAL | worker `~164` | CUT |
+| `HVST-cf-5` | -- | The fund-form rebuild: `fund_form.write()` once, IDVZ and PFOE, two NEW `v2` objects, then one dossier-build probe on a holding name and the control, under its own pair; no dossier build is run by anyone between the `cf-3` merge and this write. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cf-3` merged |
+| `HVST-cg-3` | `cg-3` | The gateway release (sections 122b and 122c). | WORLD | seat SC1 | CUT, STAGED: pair SIGNED both halves; waits on `cg-2`'s ledger close COMMITTED, site Z and GO |
+
+- **Fan-out (this recut):** `N of M chains, N=1 worker (cf-3) of M=2 chains, cap 8` (the fund-form chain `cf-3` then `cf-5`; the gateway chain, a seat order; the two chains share no write set).
+- **Check at the cut (dry-run at the base):** `cf-3` AC1 FAIL as expected (no test file), AC2 PASS as expected (`80 passed`), AC3 FAIL as expected (no census file).
