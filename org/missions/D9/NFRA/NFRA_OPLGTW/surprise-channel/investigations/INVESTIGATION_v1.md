@@ -28579,3 +28579,57 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S385 is repaired on the live text and Z-W150-S1 is a harmless count. The CVO closes its own row on this evidence; the fees-source completeness question stays on Z-S368/Z-S369 and is not adjudicated here."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T10:50:00Z",
+  "id": "NFRA_OPLGTW-Z-S388",
+  "one_line": "Round-42 ruling on the two ARMED memory rows Z-S375 (etfs_compare_peers OOM under the 27-tool harness) and Z-S338 (paging read-back reached 87.1 percent): both measured through the RUNNING SERVICE by OG-ap-40 Phase B (release 3b94a83e05 live, ledger batch9 CLOSED 2026-10-18T10:31:55Z) and both disarmed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S375",
+    "NFRA_OPLGTW-Z-S338"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my run in the main tree at HEAD: ap40.AC2 PASS ('served verdict: OK'); ledger CLOSED 1 of 1, sentinel at HEAD 0; tools/list 103 before and 103 after; marker equals the release sha 3b94a83e05; host md5 differ 0 (140 of 140 expected files equal); 27 of 27 under the hard guard oom_score_adj_1000_rlimit_as_1400mb; unit limits live; host clock Normal and synchronised, failed units 0, read 10:26:20Z BEFORE the close at 10:31:55Z; 30-minute read-back with 0 restarts",
+      "CODE9_SERVED.json read by me: ONE arming (lease 25 minutes, label probe:OG-ap-40); etfs_compare_peers answered through the running service, 57 rows, service heap 134 -> 260 MB (limit 700), VmRSS after 260 MB, peak (HWM) 513 MB, one PID 1290868 before and after; the 12-page client_get_transactions window chain: first page 1.7 s (bound 15), median heap growth 1.65 MB (bound 20), highest VmRSS 392.1 MB (bound 1200), pid stable, never stopped over 1200",
+      "the lease lapsed on its own at 10:23:18Z, the call at 10:23:38Z was refused, the delete at 10:23:38Z then read ParameterNotFound, and the listener was closed at rest at 10:23:48Z; the unarmed listener answered 403 probe_not_armed; another tool and another account were refused; NRestarts 0 after the probes",
+      "the CTO's read (msg 35671) agrees: CT3 and CT4 MET, Z-S375 disarm condition met, Z-S338 closes on CT4"
+    ]
+  },
+  "spec_asserts": "A memory hazard disarms on a measurement of the SERVED path under the real call, not on a fresh-process or a rolled-back read: etfs_compare_peers and the paged window read stay within the host's headroom when run in the running single-worker service.",
+  "world_is": "Both calls were run once each in the running service at the live release: the peers call peaked at 513 MB and the window chain at 392 MB against a 1468006400-byte (1400 MB) unit limit, one PID throughout. What this does NOT show: a second concurrent client (the service is single-worker and the probe made one call at a time), an account larger than the one armed, or a repeat of the 17:21Z harness condition (27 tools run back to back with the other daemons busy); the 27-tool harness under the hard guard passed 27 of 27 and the guard, the unit limits and PAGE_PARTITIONS 30 stay. The disarm is therefore for the two named calls at one account and one arming, which is what each row asserted.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S375 and Z-S338 each named a single call (the peers call; the paged read-back) as the hazard and the listener measured exactly those calls in the running service within the limits. The standing guards remain; a larger account or a concurrent client is a new measurement under a new row, not these two."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T10:51:00Z",
+  "id": "NFRA_OPLGTW-Z-S389",
+  "one_line": "OBSERVATION for round 43 (CTO msg 35671): etfs_compare_peers took 17.9 s in the running service through the probe listener against 4.5 s in a fresh process, 57 rows each way",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE9_SERVED.json probe.peers.wall_s 17.89 with rows_matched 57 in the service (heap 134 -> 260 MB, one PID); the CTO's figure of 4.5 s for a fresh process is from his message and is not re-measured by me"
+    ]
+  },
+  "spec_asserts": "A tool call answers in a time that does not depend on whether it runs in a fresh process or in the long-running service.",
+  "world_is": "The service call was 4 times slower. Not explained: the probe is the first call after a restart (cold caches and a cold Kuzu or parquet read), the listener shares one event loop with the service, or the heap signal wait is inside the wall. One reading, one arming: this is a candidate for a round-43 measurement cell (a second call in the same service, and a call with the heap signal off), not a finding that the service is slow. No hazard is armed on it; the 12-page window chain ran at 1.7 s a page.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
