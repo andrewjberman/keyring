@@ -31672,3 +31672,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The issuer rules whether the export's management section counts the ceo_bio sentences the PDF prints, which AMGT-ro-1 excludes for the page."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W517-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~517",
+  "surfaced_at": "2026-10-18T12:03:31Z",
+  "one_line": "Order AC1 clause Z1 expects an AVG_DAILY_VALUE_TRADED_3M row carrying GBp in the rich export; the export prints no row for that mnemonic, so the clause is graded as an absence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@8e81e269f7 lines 1385-1400 PAGE_HEADER_MNEMONICS: the seven Stat tiles and three identity scalars; AVG_DAILY_VALUE_TRADED_3M and CRNCY_ADJ_MKT_CAP are not among them",
+      "lib/research/print/render_pack.py@8e81e269f7 lines 1403-1477 SHEET_ROWS: no row names AVG_DAILY_VALUE_TRADED_3M or CRNCY_ADJ_MKT_CAP, so no fiscal or forecast table prints them",
+      "lib/research/print/tests/fixtures/bz_served_thesis_RIO_LN.json header_figures carries AVG_DAILY_VALUE_TRADED_3M (unit ABSOLUTE (full currency units), currency GBp): the served figure is money, the export does not print it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 4 AC1 clause Z1: the RIO LN PX_LAST and AVG_DAILY_VALUE_TRADED_3M rows of the rich export carry GBp.",
+  "world_is": "The rich export has no AVG_DAILY_VALUE_TRADED_3M row before or after this cell, so no code can be printed on it. PX_LAST carries GBp as Z1 expects. The test asserts the absence of that row (test_Z1 in lib/research/print/tests/test_bz1_rich_money_codes.py) and does not grade a GBp row.",
+  "notes": "Form only. The issuer rules whether the Header table gains AVG_DAILY_VALUE_TRADED_3M (a PAGE_HEADER_MNEMONICS change, a page-scope question) or the clause stays an absence."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W517-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~517",
+  "surfaced_at": "2026-10-18T12:03:31Z",
+  "one_line": "The money rule reaches fiscal-year and forecast money rows, which the served census did not show: the RIO bu3 block's IS_EPS fiscal row and consensus IS_EPS row now carry GBp, and rule (1) for an UNMEASURED fiscal money row was read as no code, since fiscal rows are not withheld today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py _figures_table: the fiscal call passes withhold=False, and every row of _figures_table and _forecast_table now goes through _export_money_cell (AMGT-bz-1)",
+      "lib/research/print/tests/test_bv2_rich_dates_and_quotes.py test_Q3 re-scoped: the base lines for the Header PX_LAST, the fiscal IS_EPS and the consensus IS_EPS map to GBp 6.4 and GBp 6.9 PER SHARE (local)",
+      "lib/research/print/tests/fixtures/bu3_block_RIO_LN.json carries the fiscal and forecast IS_EPS figures that the Q3 export is built from; the served bz bodies carry no fiscal_year_figures and no forecast_figures"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (1): a money figure whose currency_basis begins UNMEASURED stays withheld exactly as now; rules (2) to (4) on measured money rows; the census covers the Header table and any fiscal-year or forecast table.",
+  "world_is": "Fiscal-year and forecast tables print money rows (IS_EPS, PER SHARE) and none of them is withheld today. The served eight bodies carry no fiscal or forecast figures, so their census is empty for those tables. This cell gives an UNMEASURED fiscal or forecast money row its amount and no code, and gives a measured one its own code. Q3 is re-scoped on three lines, not one.",
+  "notes": "Form only. The issuer rules whether an UNMEASURED fiscal money row should be withheld as the Header's is, and whether the fiscal and forecast money rows of the export carry the code (this cell applies it)."
+}
+```
