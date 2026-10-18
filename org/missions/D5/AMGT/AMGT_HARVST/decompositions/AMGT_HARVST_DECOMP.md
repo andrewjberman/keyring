@@ -4407,3 +4407,17 @@ The CTO accepted the recommendation: a gateway consumer still reading `fund` as 
 
 - **Fan-out (this recut):** `N of M chains, N=1 worker (cg-5) of M=1 chain, cap 8` (the silver chain `cg-5` then `cg-2` then `cf-3` then `cf-5`; `cg-3` is a seat order).
 - **Check at the cut (dry-run at the base):** `cg-5` AC1 FAIL as expected (`17 passed` does not match `22 or more`), AC2 PASS as expected (`58 passed`), AC3 and AC4 FAIL as expected (no census file).
+
+### 122d. ROUND 92 -- `HVST-cg-5` merged (`a9aecdd593`); `HVST-cg-2` CUT, STAGED behind the CTO half, site Z and GO (2026-10-18 ~00:2xZ)
+
+`HVST-cg-5` merged: the re-census reads `holding=121 candidate=14 initiate=2 interest=2 template=1 unclassified=0 none=213` (the CTO's expected counts; re-run by the issuer, identical to the worker's); `MOVED_ROWS=4`; the CTO's guard on `adding` (msg 7784) is clear: two rows match, both `CPA`, a held position. The dry run at `a9aecdd593` (issuer): 353 rows, 3 new parts (121, 148, 84), nothing put.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cg-2` | `cg-2` | **Every stored silver `research-report` row (the newest per report, 353) is re-appended with `fund_relation`** as 3 NEW parts, one date partition per foreground command, smallest (`2026-09-25`, 84 rows) first, each part read back before the next; nothing served changes until `cg-3`. A seat order under its own never-widen pair (COO half written, sha256 `11cf6bd0...9158`; the CTO half is next). Workstream `SILVER-REWRITE`. | WORLD | seat SC1 | CUT, STAGED: waits on the CTO half, site Z's answer and the issuer's GO |
+| `HVST-cg-3` | `cg-3` | The gateway release (section 122b). | WORLD | seat SC1 | CUT, STAGED (waits on `cg-2` complete and its own pair) |
+| `HVST-cf-3`, `HVST-cf-5` | -- | The `fund_form` chain. | LOCAL, then WORLD | worker, then SC1 | DEFINED, NOT CUT: wait on `cg-2` |
+
+- **Fan-out (this recut):** `N of M chains, N=0 workers (cg-2 is a seat order) of M=1 chain, cap 8`.
+- **Check at the cut (dry-run at the base):** `cg-2` AC1 to AC3 FAIL as expected (no `cg2_served.out`).
+- **Gold effect named in the pair:** none; the gateway reads silver rows through a fixed tuple that does not carry the key yet (`cg-4` merged, not released), so UNH and CPA read equal before and after.
