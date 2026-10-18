@@ -1,0 +1,7 @@
+# Drive log 2026-10-18 20Z, 2.0.0_SA_COO~R1, AMGT_RESAPP (dell1)
+
+Round 122: waiting for SC1's redeploy window. Push state of every commit named here: LOCAL on box/dell1, unread. Times are `date -u` reads.
+
+- 20:23Z tick 203: no change at SC1: it is inside the batch COO's `HVST-cn-3` timed dossier run (ledger `32a275fec3` open; started 18:59:27Z, 92 names, about two hours) and has `AMGT-cd-4` read-acked and queued (msg 8222; expected start 21:00Z to 21:40Z). I wrote the issuer's post-act read script `round122_prep/checks/r122_post_act_reads.sh` (the round-118 read set, the cross-surface read, the live 101-name CEO-line census compared with the live base, the form check against SC1's same-session before set; syntax checked, not run), committed `ee744029b4`, so the reads run the moment SC1 reports. No reader of mine runs before then.
+- 20:53Z tick 204: still no change (SC1's open ledger `harvst-cn3-dossier-refresh-deliberate-run` the only open one of its lane; `round-close-check` not re-run: `cd-4` is not terminal).
+- Next: SC1's apply and report (about 21:00Z to 21:40Z), my reads (the live census must read `DELTA: 0` against `r122-ceo-lines-live-base.json`, else a rollback), the KEEP word, the filled packet to the CVO, the R1 endpoint read if no row graduates. Carried: `bp-5` (G4 positive-arm read) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (the portal manager's).
