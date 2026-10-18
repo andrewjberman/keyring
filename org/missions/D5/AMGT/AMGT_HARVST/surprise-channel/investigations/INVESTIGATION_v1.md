@@ -11723,5 +11723,86 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+,
+    {
+        "id": "AMGT_HARVST-D1-W171-S6",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T08:28:52Z",
+        "one_line": "harvest_security_coverage reads 12 of 14 cells equal across the two spellings: every partition dataset matches (BP 109 and 109, NG 89 and 89), and the gap is in path components (derived/model_block, peers/v1, posture, filings, packs, raw/bloomberg, scores) that keep the caller's spelling as the order requires.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "TO-HVST-cj-6 step 1b: every security_key= partition is built from the partition form; a path component (not a partition) stays on the caller's spelling and is named in a row, not changed. The replay expects reached_both_forms_equal equal to cells.",
+        "world_is": "cj6_replay.out (committed with this row): REPLAY-OTHER-WHOLE cells=14 reached_both_forms_equal=12; REPLAY-OTHER-SPLIT coverage BP/_LN_Equity partition_objects=109 path_component_objects=20, BP-SLASH-_LN_Equity 109 and 41; NG/_LN_Equity 89 and 20, NG-SLASH-_LN_Equity 89 and 39. The breakdown by template (a scratch read of the same listing) puts the path-component gap in derived/model_block (BP raw 6, encoded 24) and peers/v1 (BP raw 7, encoded 10). The two cells that differ are the coverage cells.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~171/cj6_replay.out (committed with this row): REPLAY-OTHER-SPLIT and REPLAY-OTHER-WHOLE lines",
+                "infra/aws/ec2/opal-gateway/app/harvest_identity.py (committed with this row): _segment, the coverage tool's path components keep the spelled key"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W171-S7",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T08:28:52Z",
+        "one_line": "Correction to my row AMGT_HARVST-D1-W171-S5: the encoded spelling DID reach the figures and coverage objects before this change; the raw spelling was refused (harvest_bad_argument, or the coverage tool's not-a-key envelope), so S5's 'no stored object' holds for the raw spelling only.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-cj-6 step 1a: the audit names the sites the cell changes; S5 stated the figures and identity tools reach no stored object for BP or NG.",
+        "world_is": "cj6_replay.out (committed with this row), REPLAY-OLD lines: fundamentals consensus, reference, valuation_history and segments reach 1 object for the encoded spelling and 0 for the raw spelling; query:bestdata reaches 1 and 0; coverage reaches 150 (BP-SLASH-_LN_Equity) and 0 (BP/_LN_Equity). fundamentals:price reaches 0 for both spellings before the change (the series name of the encoded spelling is not a series). The figures tools answered the raw key with harvest_bad_argument (figures _key_error) and the coverage tool with its not-a-security_key envelope.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~171/cj6_replay.out (committed with this row): REPLAY-OLD lines for all seven tool cells",
+                "infra/aws/ec2/opal-gateway/app/harvest_figures.py (base 11de82105f): _key_error refuses a key with a slash"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W171-S8",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T08:28:52Z",
+        "one_line": "test_og_gt8.py::test_oggt8_ac03_deploy_stages_lib fails in this worktree before and after this change: the deploy script's tar lines do not match the test's pattern; deploy-to-ec2.sh is not changed by any HVST-cj row.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-cj-6 criterion AC2 runs the ten gateway test files of the order; test_og_gt8.py is outside that set and touches the deploy script, which is outside <paths>.",
+        "world_is": "pytest infra/aws/ec2/opal-gateway/tests/test_og_gt8.py (worktree, HEAD 9703580644 + this change): 1 failed, 2 passed; the failing assertion is tar_lib == 1 with the tar lines of deploy-to-ec2.sh (lines 302-306). The test reads only deploy-to-ec2.sh, which this cell did not change; the same file is at base 11de82105f.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/tests/test_og_gt8.py:98 (worktree): assert len(tar_lib) == 1",
+                "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh lines 302-306 (worktree, unchanged since base 11de82105f)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W171-S9",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T08:28:52Z",
+        "one_line": "The coverage tool's root template cuts a raw slash key at its first underscore and keeps the slash, so the publication-links probe for BP/_LN_Equity is 'publication-links/v1/BP//'; the raw spelling reaches this probe only now that it is accepted.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-cj-6 step 1b: a path component stays on the caller's spelling and is named in a row, not changed.",
+        "world_is": "infra/aws/ec2/opal-gateway/app/harvest_identity.py _segment (the ROOT template, '%s/' % key.split('_')[0]) returns 'BP//' for BP/_LN_Equity; the probe is one of the KEYED rows of the coverage body (publication-links/v1/). It finds no object in the replay (the replay's publication-links row is not present). Left unchanged.",
+        "grounding": {
+            "status": "INFERRED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/app/harvest_identity.py:_segment (worktree, committed with this row): the ROOT template"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
