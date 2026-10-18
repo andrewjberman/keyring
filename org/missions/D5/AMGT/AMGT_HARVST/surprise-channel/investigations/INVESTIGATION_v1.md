@@ -11079,5 +11079,48 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W164-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~164",
+      "surfaced_at": "2026-10-18T01:16:18Z",
+      "one_line": "The two misfiled Mexico reports are counted in IDVZ's form at the baseline, not in a KMB form: their silver rows name security_key KMB_US_Equity and carry fund IDVZ.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cf-3 section 0: the two misfiled Mexico reports (typed.MISFILED_REPORTS) are counted in KMB's fund form.",
+      "world_is": "At baseline a9aecdd593 the census (cf3_census.out, MISFILED-DROPPED lines) finds report_ids fbd50086c4065785 and 1a3b56044db679a5 under security_key KMB_US_Equity, report_class B, fund=IDVZ. They sit in IDVZ reports_before=94, which is 92 without them (the cg5 figure). No KMB fund appears in distinct_funds at the baseline or after the rule. The rule drops both reports either way, so dropped_misfiled=2 holds; only the fund named in the premise is wrong. No code or expectation was changed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~164/cf3_census.out (uncommitted at filing; MISFILED-DROPPED and FUND IDVZ lines)",
+          "lib/research/corpus/typed.py@d256d3835a:101-110 (MISFILED_REPORTS, security_key KMB_US_Equity)",
+          "lib/research/corpus/fund_form.py@a9aecdd593 (baseline gather_items: fund = row fund, no misfiled filter)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W164-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~164",
+      "surfaced_at": "2026-10-18T01:16:18Z",
+      "one_line": "The two misfiled Mexico silver rows carry no fund_relation key; the new gather_items skips them before the key check, so no ValueError fires and the exclusion is the only thing keeping a rebuild from raising on them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cg-2 rewrote the silver so every typed research-report row carries fund_relation (HVST-cf-3 section 0), and a fund-form row without the key must raise ValueError.",
+      "world_is": "The census reads fund_relation absent on both KMB_US_Equity misfiled rows (fbd50086c4065785, 1a3b56044db679a5; cf3_census.out MISFILED-DROPPED lines, relation=absent). The other 353 kept rows all carry the key: the new gather_items completed over them with no raise. If typed.MISFILED_REPORTS were ever emptied, a rebuild would raise on these two rows.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~164/cf3_census.out (uncommitted at filing; relation=absent on the two MISFILED-DROPPED lines; CENSUS line gets=364)",
+          "lib/research/corpus/fund_form.py@d256d3835a gather_items (misfiled skip precedes the fund_relation check)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

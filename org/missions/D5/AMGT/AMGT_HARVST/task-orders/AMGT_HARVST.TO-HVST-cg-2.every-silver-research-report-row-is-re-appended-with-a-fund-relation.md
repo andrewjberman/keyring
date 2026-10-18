@@ -78,9 +78,16 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 - **Own workstream** `SILVER-REWRITE` (each issuance of a round holds its own workstream).
 - **Not covered, named:** the gateway release, the `fund_form` rebuild, gold, the shared classifier (row `D1-S49`).
 
+**COMPLETE 2026-10-18T01:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** seat `0.7.0_AE_CloudOps~SC1`, three NEW silver parts written 01:00:35Z (`date=2026-09-25`, 84 rows, the canary), 01:00:57Z (`2026-09-23`, 121) and 01:01:14Z (`2026-09-24`, 148): 353 rows, each as one foreground command, read back `equal=PASS` before the next; window 00:30Z to 02:30Z cleared by site Z (its CTO msg 35578). Ledger `harvst-cg2-silver-fund-relation-rewrite` CLOSED 01:25:39Z, 5 legs, COMMITTED (`8225380445`); deliverables `5576a9c77b`; the manifest `cg2_written.out` (3 keys with VersionIds) is the rollback list.
+- **Read by me (not SC1's word):** the bucket by the gateway's newest-part rule (`deliverables/2.0.0_SA_COO_W1/round92/cg2_issuer_verify.out`): 8 parts (5 old, 3 new), 353 of 353 reports from the new parts, 353 carry `fund_relation`, counts `holding 121 candidate 14 initiate 2 interest 2 template 1 none 213` (the census), 0 mismatches of any other column against the superseded rows. **Proof instance VALID rc 0 (re-run here).** `AC1 PASS`, `AC2 PASS`, `AC3 PASS` in `cg2_served.out`.
+- **AMENDMENT 2 (C-7):** the `part` pointer and `source_keys` naming the new parts are the EXPECTED consequence; my COO half said they would stay equal and was wrong; SC1 found it, refused to self-grade and asked; the CTO accepted the ruling (msg 7813).
+- **Seat note, accepted:** SC1's first scheduled-task read returned 0 rows with its control and was voided; it redid the read with `Get-ScheduledTask` (207 tasks, control found), both in `cg2_before.out`.
+- **What this does NOT prove:** a served `fund_relation` (`HVST-cg-3`, the gateway release, next).
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>92</round>
 <workstream>SILVER-REWRITE</workstream>
 <slot>dell1</slot>
