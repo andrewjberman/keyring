@@ -105,5 +105,9 @@ authority on both.
 
 ## 6. Infrastructure
 
-The site Z infrastructure section (box passes, crossbox orders, seat liveness, relays) is `0.0.0_AB_MSTR~Z`'s, from its own record,
-and is appended by that seat.
+The site Z infrastructure section (box passes, crossbox orders, seat liveness, relays) is `0.0.0_AB_MSTR~Z`'s, from its own record:
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/SITEZ_BOX_REPORT_SECTION6_MSTR_20261018.md`. The combined text (11,227 B) went to ms on
+the bus as MessageId `d7a74560-f044-4dd0-a004-559441d61c99` (SENT 04:4xZ; not acked by ms at msg 35622).
+
+**Correction to section 3 (measured by MSTR~Z):** dell1's harvest release 1753c741d9 is in sitez HEAD. It was landed by `~NFRA1`
+(OG-ap-37), drained by `2.0.0_SA_COO~O`, and is on origin/box/sitez and CLOUD.
