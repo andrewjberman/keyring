@@ -11875,6 +11875,70 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W173-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~173",
+      "surfaced_at": "2026-10-18T12:38:57Z",
+      "one_line": "Census of the path-component prefix writers: 13 prefixes, 16 writer sites; 15 write the canonical spelling, 1 writes the raw spelling (pull_enqueue Lambda, no raw status object stored), 3 gateway-read prefixes have no writer in the checkout.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "CTO round-95 analysis section 3 item 1 (HVST-ck-4 cell section 0): writers of the path-component prefixes write the canonical spelling of a slash key (slash_safe_key); a writer that writes the raw spelling today is changed under its own pair.",
+      "world_is": "ck4_writers.out at shared HEAD 8f45e32674: canonical (15): management/v1 enrich.py:778 and :782 (the _pool aggregate, no security key); filings/v1 fetch.py:482; drafting/v1 analyze.py:1946 and drafting_build.py:606; peers/v1 engine.py:1181; posture/v1 judge.py:250; scores/v1 run_scores.py:336; packs/ ledger.py:72 and pull_consumer.py:58; derived/model_block model_block_pull.py:1811 and derived/model_block_fye derive_fye_fixed.py:131 (f-string placeholders, found by reading); publication-links catalog.py:74 and uploads.py:165,180 (opaque security-<hash> keys, no slash). RAW (1): infra/aws/lambda/research/pull_enqueue/lambda_function.py:129 writes packs/<ticker with a slash as typed>/status.json, sec_key at :45 is not slash-safe; no raw status object is stored for BP or NG. STORED OBJECTS (NEWEST, list only): canonical newest 2026-10-17 for packs and derived/model_block, 2026-10-11 peers, 2026-09-30 filings, scores, posture; raw-spelling objects are legacy (newest 2026-09-16 to 2026-09-25); the one raw packs object is an input_ledger.json from the ledger.py before 8d9adec9f4 (raw form from 9e2fc941be). No raw-spelling writer wrote after 2026-09-25. NO WRITER IN THE CHECKOUT: raw/bloomberg/ (objects exist, raw newest 2026-09-16), raw/seekingalpha/, amgt/security/. LIMITS: the literal scan cannot match f-string placeholders (two sites found by reading, listed as ADDENDUM in the census script); writers outside the repository are invisible.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_writers.out (census run, shared checkout HEAD 8f45e32674; NEWEST and OCCURRENCE lines)",
+          "infra/aws/lambda/research/pull_enqueue/lambda_function.py:45,129@8f45e32674 (sec_key without slash_safe_key; raw status key)",
+          "lib/research/ledger/ledger.py@8d9adec9f4 (canonical key from this commit; raw form before it at 9e2fc941be)",
+          "lib/opal_data_harvest/__main__.py:16-49 and org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_identity_20261008.json (242 records, 0 publication-link keys with a slash)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W173-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~173",
+      "surfaced_at": "2026-10-18T12:38:57Z",
+      "one_line": "CONTROL-NEGATIVE of the writer census did not return 0: the control literal ZZ_NO_SUCH_PREFIX_ZZ/v1/ occurs twice, both in the task order's own text, so AC3 fails as written.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-ck-4 cell section 0(e) and AC3: the negative control scans for a literal that exists nowhere, with the same scan code, and must print CONTROL-NEGATIVE ZZ_NO_SUCH_PREFIX_ZZ/v1/ occurrences=0.",
+      "world_is": "The shared checkout holds the literal in the task order file itself: org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ck-4.census-of-the-writers-of-the-path-component-prefixes-and-the-spelling-each-writes.md at lines 30 (the control text of the cell) and 44 (the AC3 expect). The scan reads .md files, which are classed DOC, so the literal is counted. The census prints occurrences=2 with both locations; the literal, the expectation and the code were not edited, so AC3 is FAIL.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_writers.out (CONTROL-NEGATIVE and CONTROL-NEGATIVE-HIT lines)",
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ck-4.census-of-the-writers-of-the-path-component-prefixes-and-the-spelling-each-writes.md:30 and :44 (the literal as text)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W173-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~173",
+      "surfaced_at": "2026-10-18T12:48:40Z",
+      "one_line": "The raw-spelling packs/ writer is deployed: the enqueue Lambda's live code hash equals its stored artifact, and that artifact is byte-identical to the source that writes packs/<ticker as typed>/status.json.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-ck-4 cell sections 1.c and 1.g and the CTO round-95 ruling: a writer that writes the raw spelling of a slash key is changed under its own pair; ARMED only for a raw writer that the NEWEST listing shows writing today.",
+      "world_is": "Read-only check (ck4_lambda_check.out, run at HEAD ed29939a37 vintage): Lambda opal-research-pull-enqueue, python3.11, handler lambda_function.lambda_handler, CodeSha256 cWiraC3EeuTU9WDIpc5RXzpw6+RT9WxoeqfH/eZiaxo=, last modified 2026-10-12T15:38Z, environment HARVEST_BUCKET and RESEARCH_BUCKET both opal-data-harvest. Stored artifact research/opal-research-pull-enqueue.zip in opal-313476888478-lambda-artifacts: 2690 bytes, one entry lambda_function.py, byte-identical to infra/aws/lambda/research/pull_enqueue/lambda_function.py, and it carries no crosswalk or slash_safe_key copy (needle search of the zip, none). The route POST /api/private/research/pull reaches it (infra/aws/terraform/harvest/api-gateway.tf:104-107). The source writes packs/<ticker with ' ' replaced by '_'>/status.json with no slash_safe_key (lambda_function.py:45, :129). NEWEST shows no raw write after 2026-09-25, so the ARMED test is not met.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~173/ck4_lambda_check.out (lambda configuration, artifact head and bytes, in-memory zip listing, source-versus-deployed sha256)",
+          "infra/aws/terraform/harvest/build-and-upload.sh (zips lambda_function.py alone into research/opal-research-pull-enqueue.zip)",
+          "infra/aws/terraform/harvest/api-gateway.tf:68-90 and :104-107 (module harvest_enqueue, environment, route POST /api/private/research/pull)",
+          "infra/aws/lambda/research/pull_enqueue/lambda_function.py:45,129@8f45e32674 (raw sec_key and raw status key)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
     ,
     {
