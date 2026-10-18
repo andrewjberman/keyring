@@ -84,7 +84,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 1 of the CTO's round-119 analysis (`ledger/ROUND_ANALYSIS.round119.R1.md`, msg 8062, `@cf597e60c8`) and its section-3 ruling; rows W518-S2 (ARMED) and W518-S3. The issuer's decisions inside the ruling: (1) the finer readings keep their words (the page, ExecManagementTab.tsx, reads six words and prints a fixed no-profile sentence for any other, so the new `NOT_WRITTEN` word does not break the page; its wording and `types.ts` are a portal matter the issuer carries to the CTO); (2) a WRITTEN absence with no class reads `SEARCHED_NOTHING_FOUND`, so HD US and BA US keep their own sentence. This cell GRANTS the reader region of `scoped_amgt.py` (the common bound that forbids the file is overridden on the face, the by-2 / W515-S5 lesson). LOCAL code cell; served only through `AMGT-ca-5`.
 
-<status>pending</status>
+<status>complete</status>
 <round>120</round>
 <slot>0.9.0_WK_AMGT_RESAPP~520</slot>
 <fabric>dell1</fabric>
