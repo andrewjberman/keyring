@@ -3638,6 +3638,71 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     }
   },
   {
+    "id": "MDPF_DEMQUE-D1-W66-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~66",
+    "surfaced_at": "2026-10-18T14:48:46Z",
+    "one_line": "DQ-t-76 records an INCONCLUSIVE probe security as an empty window by the DQ-t-75 mechanism, but the reference channel has no day-keyed window record, so a skipped reference security is recorded nowhere and is probed again on the next fire (at most three probes per channel per run).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py@6c71bea6bc lines 813-847 (DQ-t-75 record: _window_key and _empty_window are day-keyed; _empty_window is called from the history channel only)",
+        "data/mdpf/scripts/demque/standing_drawer.py@6c71bea6bc lines 965-995 (_draw_reference and its reference probe: no window or cooldown record on the reference channel)",
+        "worktree data/mdpf/scripts/demque/standing_drawer.py _draw_reference while loop (TO-DQ-t76): an INCONCLUSIVE reference security is removed from this fire's todo and writes no record",
+        "scratch check .scratch/ref_probe_check.py (uncommitted): one EMPTY reference probe is skipped, the next probe VERIFIED, two securities drawn, 4 cells, outcome DRAWN"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-DQ-t76 item 2: the probed security is skipped for this fire and recorded as an empty window by the DQ-t-75 mechanism (COOLED_NEW, seven days, listed in empty_windows).",
+    "world_is": "The DQ-t-75 record is keyed by (request_id, identifier, first owed day, last owed day) of a history run; the reference channel has no days and so no record. Built as: a reference INCONCLUSIVE probe skips its security for the fire and writes nothing, so the same reference security is probed again on each later fire until its probe verifies or the three-probe cap caches UNVERIFIED for that fire. Each such fire spends one reference probe cell (the cap bounds it at three per run)."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W66-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~66",
+    "surfaced_at": "2026-10-18T14:48:46Z",
+    "one_line": "The order makes the probe the FIRST /cusip/ security; the pre-existing probe site asked a COOLED window (DQ-t-75: no call, no cell), so the probe now asks the first undrawn run that is not cooled, the reading the no-second-call criterion requires.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py@6c71bea6bc lines 884-890 (the probe ran before the cooldown gate of the run loop, on runs[0][0] whatever its gate)",
+        "data/mdpf/scripts/demque/standing_drawer.py@6c71bea6bc lines 891-896 (the DQ-t-75 gate: a COOLED window is not asked, no call and no cell)",
+        "worktree data/mdpf/scripts/demque/standing_drawer.py _probe_run (TO-DQ-t76): the probe asks the first run whose gate is '' or RETRY; a security whose every run is cooled is not probed",
+        "worktree data/mdpf/scripts/demque/test_demque_probe_empty.py test_the_skipped_probe_security_is_listed_in_the_receipt_and_cooled_for_seven_days (a second fire makes no vendor call for the skipped security)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-DQ-t76 criterion 4: a second fire inside seven days makes no vendor call for the skipped security; DQ-t-75: a window cooled by an earlier EMPTY return is not asked (no call, no cell).",
+    "world_is": "At base the probe ran before the cooldown gate, so a cooled first /cusip/ security was probed on every fire and each probe was a call on a window already known empty. Built: the probe skips a security whose runs are all cooled and asks the first run that is not. The probe's cell count and the verdict rule are unchanged; only which security the probe asks differs, and only when the first /cusip/ security is cooled."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W66-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~66",
+    "surfaced_at": "2026-10-18T14:48:46Z",
+    "one_line": "The probe asks one day, but an INCONCLUSIVE answer cools the WHOLE undrawn run of that security for seven days, and the third INCONCLUSIVE security is recorded as an empty window as well; the order states neither reading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree data/mdpf/scripts/demque/standing_drawer.py _skip_empty_probe (TO-DQ-t76): _empty_window receives the probed run, the whole undrawn run from its first to its last owed day",
+        "worktree data/mdpf/scripts/demque/standing_drawer.py _identifier_form (TO-DQ-t76): on_empty runs for every INCONCLUSIVE probe, including the PROBE_EMPTY_MAX-th, before the form caches UNVERIFIED",
+        "data/mdpf/scripts/demque/standing_drawer.py@6c71bea6bc lines 696-727 (_probe_history asks max_data_points=1 on one day: start = end = the first owed day)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-DQ-t76 item 2: the probed security is recorded as an empty window (COOLED_NEW, seven days); item 3: the third distinct empty caches UNVERIFIED and the request is refused as today.",
+    "world_is": "A one-day empty answer cools every owed day of that security's run for seven days (the run is the window the DQ-t-75 record keys), so the skip is wider than the day it asked. The third empty security is listed and counted toward the more-than-five stop like the first two, because the order does not say otherwise. Both readings are the ones built; neither is asserted by the order."
+  },
+  {
     "id": "MDPF_DEMQUE-Z-S9",
     "project": "MDPF_DEMQUE",
     "fabric": "site-z",
