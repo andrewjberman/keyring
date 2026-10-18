@@ -31597,3 +31597,78 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The issuer rules whether the rich Rendered cell drops its code segment, as the PDF does, or keeps it as the figure's own code."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W518-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~518",
+  "surfaced_at": "2026-10-18T12:01:59Z",
+  "one_line": "The order's M3 premise does not hold for BA US: its PDF prints no CEO-profile line, because a cleared team-view passage holds that place, so the export carries none either.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@8e81e269f7 _print_management: the CEO-profile line prints only when no team-view, bio or recent passage prints (base lines 1081-1084)",
+      "lib/research/print/tests/fixtures/bz_served_thesis_BA_US.json: ai_fill.blocks.mgmt_team_view is CLEARED with source WEB_SEARCH"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 Tests, M3: BA US the export prints its CEO reading and the web-search sentence, as the PDF does (the same as M2 for HD US).",
+  "world_is": "BA US's PDF Management section carries the team-view passage, its roster and no CEO-profile line. The export now matches the PDF (no line). M3 is written to the PDF's rule and asserts the equality; the reading's words are absent from both routes.",
+  "notes": "Form only. The issuer rules whether M3 should assert the CEO line for BA US (which would mean changing the PDF's AMGT-bx-3 R6 gate, outside this cell) or the equality the test now asserts."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W518-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~518",
+  "surfaced_at": "2026-10-18T12:01:59Z",
+  "one_line": "The reader classes a null ceo_public_profile as UNREADABLE_OBJECT ('the object is not a dict'), so six of the eight names read 'could not be read' for an object that was never written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py@8e81e269f7 ceo_profile_reading: a non-dict profile returns UNREADABLE_OBJECT (lines 4938-4944)",
+      "lib/research/print/tests/fixtures/bz_served_thesis_RIO_LN.json: management.ceo_public_profile is null and ceo_profile_reading.reading is UNREADABLE_OBJECT"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 finding C-S195: the export must print the words the PDF prints for the same reading, never the state word.",
+  "world_is": "The state word is the reader's catch-all for a null object. The export no longer prints it (AMGT-bz-2); the PDF never printed it. The served label is unchanged and remains in the management object for any other consumer, whose use of it is not read in this cell.",
+  "notes": "Form only. ARMED because a consumer that prints the served label would state 'could not be read' for an unwritten object; the portal's use of the label was not verified here. Disarm owner is the issuer."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W518-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~518",
+  "surfaced_at": "2026-10-18T12:01:59Z",
+  "one_line": "The export's no-bio fallback cannot see served ceo_bio sentences, which the PDF counts as printed, so a name with management not SERVED and a served drafted bio prints the no-bio sentence in the export and the bio in the PDF.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@8e81e269f7 _print_management: a served ceo_bio sentence sets printed (base lines 1062-1065)",
+      "lib/research/print/render_pack.py@8e81e269f7 build_rich_text: ceo_bio is skipped by the drafted loop (AMGT-ro-1), so the export never sees it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule: the rich export's management lines come from the same function and the same input as the PDF's.",
+  "world_is": "None of the eight names reaches the state (management SERVED for all eight, so the fallback never applies). The divergence is inert for the eight and is not tested.",
+  "notes": "Form only. The issuer rules whether the export's management section counts the ceo_bio sentences the PDF prints, which AMGT-ro-1 excludes for the page."
+}
+```
