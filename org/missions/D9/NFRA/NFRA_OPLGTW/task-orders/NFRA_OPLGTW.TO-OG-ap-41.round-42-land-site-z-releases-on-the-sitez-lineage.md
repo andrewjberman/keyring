@@ -65,7 +65,7 @@ The tree convention grants `W`. Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), f
 
 ## 5. WHEN YOU ARE DONE
 
-Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-41.round-42-land-site-z-releases-on-the-sitez-lineage.proof_of_spec.json`. Validate it after your last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>`, flip the ONE `<status>` tag to `complete` only if both PASS, and report once (the merge sha, the conflicted-path denominator, the AC lines, the listed trunk changes, the push state as a measured `ls-remote` value). PART 2 (a later GO, after `OG-ap-39`'s Phase B has closed its ledger): the same merge for `OG-ap-39`'s release commit `aa2efa2cf3dee82030c00f85425f686132adcf4a`, issued as an amendment of this order; do not start it on this GO.
+Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-41.round-42-land-site-z-releases-on-the-sitez-lineage.proof_of_spec.json`. Validate it after your last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4 --governing-order <this order>` (the instance carries ALL FOUR criteria rows), flip the ONE `<status>` tag to `complete` only if all four PASS, and report once (the merge sha, the conflicted-path denominator, the AC lines, the listed trunk changes, the push state as a measured `ls-remote` value). PART 2 (a later GO, after `OG-ap-39`'s Phase B has closed its ledger): the same merge for `OG-ap-39`'s release commit `aa2efa2cf3dee82030c00f85425f686132adcf4a`, issued as an amendment of this order; do not start it on this GO.
 
 <!-- ===================== RECORD FACE ===================== -->
 
