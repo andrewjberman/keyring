@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-18T17:05Z (2.0.0_SA_COO~R1): ROUND 121 issued (cb-1), decomposition s.130; round 120 closed MAY-CLOSE; the CTO's round-119 rulings MET (CVO); W518-S2 open until the consumer census",
+  "last_updated": "2026-10-18T18:05Z (2.0.0_SA_COO~R1): ROUND 121 drained; the portal three-state CEO profile is on PROD d729ee6d (portal-v2.1.241), live-tied by bytes, read on the running page, folded back into DEV (f7074536, DEV..PROD 0); round-close-check MAY-CLOSE; L8 packet to the CVO",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 121 EXECUTING on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.130 from the CTO's round-120 R1-track analysis, msg 8147, and the CVO's slug, msg 8146): cb-1 (the portal three-state cell: the census of every consumer of the served CEO reading word first, then the Exec Management tab handles NOT_WRITTEN, UNREADABLE_OBJECT, SEARCHED_NOTHING_FOUND and the served text explicitly; types.ts union; an unknown or absent reading falls back to a third sentence, never the not-written one; W518-S2), worker ~523, portal branch cand/dell1/amgt-sa-ceo-three-states from PROD ff611566; cb-2 the issuer's running-page grade; cb-3 the landing (approval row, merge-forward, one chosen-set promote, byte tie, fold-back under a named waiver). Live scoped-api V9ZIXiUYQTmDy9Efo4u9PgdNyn84DBsh9SVjgwMFYww= (release pin 107fae40e9).",
-  "blocking": "the round-121 worker ~523 (cb-1), then the issuer's merge, the approval row (the CTO), the merge-forward, a chosen-set promote and the fold-back, and the CVO's L9 read on the running page; bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
+  "phase": "ROUND 121 DRAINED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.130; round-close-check MAY-CLOSE), awaiting the CVO's slug and L9 read of the running page (round121/LIVE_TIE_AND_PAGE_READ_D729EE6D.md) and the CTO's round-121 analysis (W518-S2's close on the consumer census). Shipped: cb-1 (the Exec Management tab handles NOT_WRITTEN, UNREADABLE_OBJECT, SEARCHED_NOTHING_FOUND and the served text explicitly after a census of every consumer; types.ts union; an unknown or absent reading prints a third sentence), cb-2 (the issuer's reads: the live site byte-tied to PROD d729ee6d, TSM US / forced corrupt TSM US / HD US read on the running page) and cb-3 (the landing: merge-forward DEV 522985ef, PROD ff611566 to d729ee6d, CI success, the fold-back under the CTO's waiver, DEV f7074536, DEV..PROD 0). Census: portal/src 52 hits in 14 files, lib 332 in 50, infra 0; two lib consumers for the CTO (rows W523-S1/S2). Live scoped-api V9ZIXiUYQTmDy9Efo4u9PgdNyn84DBsh9SVjgwMFYww= (release pin 107fae40e9). Round 120 closed MAY-CLOSE.",
+  "blocking": "the CVO's slug and L9 read of the running page and the CTO's round-121 analysis (W518-S2's close on the census; the R1 endpoint read if no new row); bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
