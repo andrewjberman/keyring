@@ -12257,5 +12257,70 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W175-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~175",
+        "surfaced_at": "2026-10-18T14:51:15Z",
+        "one_line": "HVST-cl-3 census result: BP/_LN_Equity and NG/_LN_Equity would each move exactly one served field, model_rows, after the 13:02Z model blocks; the only input kind that differs is model_block; the model-block guard is PASS for both; cause=other count is 0.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "CTO round-96 analysis item 2 (cut only if a census shows a served field would move): for BP/_LN_Equity and NG/_LN_Equity, the served research_dossier object compared field by field with an in-memory dossier.build, with each cause and the model-block guard (order section 1, steps a-g).",
+        "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~175/cl3_census.out@ed5d5db57e: CENSUS-DOSSIER-MOVE-97 names=2 no_stored_dossier=0 unchanged=0 moved=2 fields_moved=2 cause_other=0 guard_pass=2 guard_stop=0 gets=768 bytes=131390058. BP: served object as_of=2026-10-18.2d0238f7570cff0e.json (method v15), fields_moved=1, list=model_rows, input_kinds_differ=model_block only (continuation and fund_form entries equal); stored model block derived/model_block/BP-SLASH-_LN_Equity/20261017T130241Z/model_block.json, built 20261018T130249Z; GUARD PASS (status SERVED, valued rows 91 built and 91 stored). NG: served object as_of=2026-10-18.1af6506669c49a8a.json (v15), fields_moved=1, list=model_rows, input_kinds_differ=model_block only; stored derived/model_block/NG-SLASH-_LN_Equity/20261017T130649Z/model_block.json, built 20261018T130703Z; GUARD PASS (SERVED, valued rows 64 and 64). Controls: UNH_US_Equity stored_vs_stored fields_moved=0, planted fields_moved=1. No write, no gateway call, no Bloomberg or model call.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~175/cl3_census.out@ed5d5db57e (the census output, 21 lines, LF, last line CENSUS-DOSSIER-MOVE-97)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~175/cl3_census.py@ed5d5db57e (the census script; dossier.build in memory, Guarded client refuses writes)",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py@4c7a60cabe lines 270-287 (_pick_dossier, the rule the census copies)",
+                "lib/research/corpus/dossier.py@4c7a60cabe lines 1479-1551 (build) and 1185-1249 (_model_block_read)",
+                "order AMGT_HARVST.TO-HVST-cl-3 section 0 and 1 (the BP and NG dossiers, 13:02Z model blocks)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W175-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~175",
+        "surfaced_at": "2026-10-18T14:51:15Z",
+        "one_line": "HVST-cl-3 premise drift: the order's gateway pick lines 239-255 hold MISFILED_REPORTS at HEAD (_pick_dossier is at 270-287), and dossier.build() returns no model-block record field, so the order's NOT_EXPOSED-then-STOP rule was read against the record build() consumes, not a field of its document.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order section 1a and 1d: copy _pick_dossier from harvest_research.py lines 239-255; the guard reads the build's model-block record, and if the build exposes no such record, print model_block_status=NOT_EXPOSED and verdict=STOP.",
+        "world_is": "At worktree HEAD 4c7a60cabe: infra/aws/ec2/opal-gateway/app/harvest_research.py lines 239-255 are the MISFILED_REPORTS table and its validator; _pick_dossier is at lines 270-287; the dossier read is _pick_dossier(_list_json(P_DOSSIER % slash_safe_key(key)), as_of) at line 352 (canonical partition only). lib/research/corpus/dossier.py build() (lines 1479-1551) returns artifact, method_version, subject, as_of, inputs, fields and content_sha256; no model-block record field. build() reads the model block through _model_block_read (line 1511); the census calls that same function on its memoised client and prints the status it returns (SERVED for both names) with a GUARD-NOTE line naming the source. Under the literal NOT_EXPOSED rule both names would have been STOP; the census did not apply that reading. For the CTO to rule: whether the record read through _model_block_read counts as the build's exposed record.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py@4c7a60cabe lines 233-287 and 352",
+                "lib/research/corpus/dossier.py@4c7a60cabe lines 1479-1551 and 1511",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~175/cl3_census.out@ed5d5db57e (GUARD-NOTE lines)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W175-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~175",
+        "surfaced_at": "2026-10-18T14:51:15Z",
+        "one_line": "HVST-cl-3 provenance: the census's served rule is the worktree HEAD gateway (4c7a60cabe), not the live gateway; the live gateway was not called (order), and the HVST-ck-3 release (deployed 14:07Z) changed path-component reads, which the HEAD dossier read does not use.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order section 1c: the SERVED dossier is the object the gateway's _pick_dossier rule chooses; the order says do not call the gateway.",
+        "world_is": "infra/aws/ec2/opal-gateway/app/harvest_research.py at 4c7a60cabe reads the dossier with _list_json over the canonical partition (line 352); _union_json (line 106), which unions the canonical and legacy raw prefixes, serves management, peers and posture (filings use union_rows, line 528), not the dossier. The deployed gateway commit was not measured, so the served rule read here is HEAD's, not the live process's. The ck-3 release and its 14:07Z deploy are recorded in channel row AMGT_HARVST-D1-S61 (grounding: its change_management ledger, CLOSED 14:17:24Z). If the live gateway differs from HEAD on the dossier pick, the census's SERVED side is unverified for those two names.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py@4c7a60cabe lines 87-88, 106-108, 352",
+                "channel row AMGT_HARVST-D1-S61 (ck-3 release, deploy 14:07:06Z) in org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
