@@ -72,7 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-31.round-43-test-discriminat
 - Chain: second order of slot `~151` (after `OG-pr-4`, same file); feeds `OG-ap-42`. Cases 5 and 6 need `OG-pr-4`'s firm pin: spawn this order only after `OG-pr-4` has drained.
 - Pre-cut: `AC1` base FAIL as expected (`ac13` is absent); `AC3` base FAIL (no `ac13` to fail under the mutant is a different failure: the check reports it).
 
-<status>staged</status>
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-A</workstream>
 <slot>~151</slot>
