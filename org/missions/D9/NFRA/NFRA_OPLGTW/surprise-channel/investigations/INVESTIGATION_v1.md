@@ -29150,3 +29150,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The finding is true and the criterion was wrong; the amended AC2 states the correct property and the release needs no further change."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T22:56:46Z",
+  "id": "NFRA_OPLGTW-Z-S399",
+  "one_line": "The land45set both-orders check (_bothorders.sh) reads forward 'passed 0; failed 0' on the FIRST run after a checkout or merge and 71/0 on every later run: the applier saw it 3 times in 8, I saw it once in 4 (my first run after the OG-ap-45 drain); cause unproven",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my first _bothorders.sh run on box/sitez after the drain 4ae39a3ab1: 'land45set forward: passed 0; failed 0 / reverse: passed 71; failed 0 / RESULT: FAIL'",
+      "then the forward pytest command by hand, 3 runs, each rc=0 '71 passed' in ~17 s; then the script 3 more times: 71/0 and 71/0, RESULT PASS each",
+      "the applier's own report (msg 35803): three earlier script runs read forward 0/0, 68/3, 69/2, then five later runs 71/0"
+    ]
+  },
+  "spec_asserts": "AC4 of OG-ap-45 (and its ancestors): the named test files pass together in both orders with the same count.",
+  "world_is": "The criterion holds once the tree is warm (8 of 8 later runs between us), but the first run after a change to the tree can read a forward line with no 'N passed' (the script's tail -1 is not a pass line) or a partial count. The script discards the forward output, so the failing text is not on record. The first-run and warm-run split fits a cold-start cause (bytecode or an antivirus scan of changed files, shared-box load) but nothing here measured it. A grader reading one first run can read FAIL on a correct tree, and a grader reading one warm run can read PASS on a tree that fails cold.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. A one-line change would keep the forward text in a file when the tail line has no 'passed'; not made here, since the check is shared by the order set and no order needs it this round."
+}
+```

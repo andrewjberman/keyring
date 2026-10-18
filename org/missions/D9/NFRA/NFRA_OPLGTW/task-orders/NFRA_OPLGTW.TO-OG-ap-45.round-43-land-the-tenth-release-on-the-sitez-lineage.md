@@ -72,6 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-45.round-43-land-the-tenth-r
 - Pre-cut: `ap45.AC1` and `AC2` base FAIL as expected (the record is absent); the synthetic dry-run on a plumbing merge (parents trunk and `eff517546e`, trunk's tree) passes `AC1` and `AC2`.
 
 <status>staged</status>
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-D</workstream>
 <slot>~AE</slot>
