@@ -28316,3 +28316,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the CTO: confirm the address, or name a non-Opal principal and change the client-tool gate by its own order."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~147",
+  "surfaced_at": "2026-10-18T02:51:04Z",
+  "id": "NFRA_OPLGTW-Z-W147-S1",
+  "one_line": "The probe handler writes its audit record inline on the shared event loop: audit._emit appends the JSONL floor and, when AUDIT_S3_BUCKET is set, calls boto3 put_object with default timeouts, and probe_call calls it without a threadpool.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/audit.py:40-64 @8d76ae9045 -- _emit writes the local JSONL floor under a lock, then calls s3.put_object on the S3 audit lake with no botocore Config (default timeouts and retries), in the caller's thread",
+      "app/probe_listener.py probe_call, _audit and _refuse @wk-NFRA_OPLGTW-147 (repair of b02e088805) -- every served and refused probe call calls audit.log_call directly inside the async handler; only the tool call itself goes through run_in_threadpool",
+      "app/*.py @wk-NFRA_OPLGTW-147 -- 82 audit.log_call sites across 25 files: the same inline pattern is the gateway-wide audit path, so the probe inherits it rather than introducing it"
+    ]
+  },
+  "spec_asserts": "OG-pr-1 AMENDMENT A1: the defect class is a blocking call on the shared event loop; the repair names the lease read as its instance and moves it off the loop, and says the probe's requests must not stall /health.",
+  "world_is": "The audit write is a second blocking call on the same loop, outside the lease read. A slow or unreachable S3 put_object stalls every request on the gateway loop, /health included, for as long as it blocks. This order does not move it (audit.py is outside its write surface), and the stall was not measured here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer before OG-ap-40 and the CTO: decide whether the gateway audit write moves off the loop (run_in_threadpool or a bounded botocore Config) by its own order, which would cover the probe and the 82 existing sites together. Not repaired here; no test in this order exercises a slow audit write."
+}
+```
