@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-18T13:40Z (2.0.0_SA_COO~R1): ROUND 119 drained; scoped-api VQ9zM6r4.. (rich export codes, management parity, plain appendix); round-close-check MAY-CLOSE; L8 packet to the CVO and the CTO",
+  "last_updated": "2026-10-18T14:05Z (2.0.0_SA_COO~R1): ROUND 120 issued (ca-1, ca-2, ca-3), decomposition s.129; round 119 closed MAY-CLOSE; the CTO's round-118 rulings MET (CVO)",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 119 DRAINED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.128; round-close-check MAY-CLOSE), awaiting the CVO's slug and L9 read of the three live rich exports and the CTO's round-119 analysis. Shipped: bz-1 (the rich export's measured money rows carry the figure's own currency code), bz-2 (C-S195: the export prints the PDF's CEO-profile sentence and management passages; the cause named: the export printed the reader's UNREADABLE_OBJECT label through a words table), bz-3 (the PDF appendix's served source and definition through the plain-reason mapper; 'steer clear'), bz-4 (the issuer's cross-surface read) and the live redeploy bz-5 (opal-amgt-scoped-api CodeSha256 VQ9zM6r48RqTxezOFpLMz/Y+Jev13eSEriPmw96NbIU=, release pin 2771164d0d); live reads: CROSS SURFACE YES 8/8 (before: NO 0/8), MONEY VS PAGE YES 16/16, all-names leak scan 101 of 101 clean, the eight exports 0 s3:// / AMGT- / could-not-be-read lines, print route worst 8.3 s (pdf) and 1.6 s (rich). Round 118 closed MAY-CLOSE (H3dCSGL..).",
-  "blocking": "the CVO's slug and L9 read of the three live rich exports (round119/packs) and the CTO's round-119 analysis (round 120); SC1's close of the bz-5 ledger (on the issuer's keep word, sent); bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
+  "phase": "ROUND 120 EXECUTING on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.129 from the CTO's round-119 R1-track analysis, msg 8062, and the CVO's slug, msg 8061): ca-1 (the CEO-profile reader's three states, NOT_WRITTEN and a narrowed UNREADABLE_OBJECT, PDF and export print from the state; W518-S2/S3), ca-2 (a blank, absent or ? source reads 'source not stated'; W519-S5), ca-3 (the export prints the thesis-pillars passage wherever the PDF does); ca-4 the issuer's reads (101-name source census, three-state fixtures, cross-surface); ca-5 the redeploy under a fresh pair. Live scoped-api VQ9zM6r48RqTxezOFpLMz/Y+Jev13eSEriPmw96NbIU= (release pin 2771164d0d).",
+  "blocking": "the three round-120 workers (~520 ca-1, ~521 ca-2, ~522 ca-3), then the issuer's merge of render_pack.py and scoped_amgt.py, a release pin and a fresh never-widen pair for ca-5 and the CVO's L9 read of the three exports and one PDF; bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
