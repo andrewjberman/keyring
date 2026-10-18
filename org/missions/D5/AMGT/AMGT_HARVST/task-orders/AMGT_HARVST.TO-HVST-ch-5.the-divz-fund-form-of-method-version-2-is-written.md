@@ -87,9 +87,16 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 - **Own workstream** `DIVZ-WRITE`.
 - **Not covered, named:** `HVST-ch-1`, `-2`, `-7`; any dossier or continuation rebuild.
 
+**COMPLETE 2026-10-18T04:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** seat `0.7.0_AE_CloudOps~SC1`: ONE `research-fund-form` object written 04:29:21Z, `fund=divz/a181f84957dbb8b7.json` (method version 2, 0 reports, an `absent` reason, `inputs` `[]`, 369 bytes), by a driver with a plan mode that refuses outside GO to GO+90 minutes (`GO_UTC` 04:25:00Z, window to 05:55Z, cleared by site Z, its CTO msg 35617); read back `equal=PASS`; ledger `harvst-ch5-divz-form-v2` CLOSED 04:35:50Z, COMMITTED (`6e7feb1736`); pair COO `183efbbf...7e7a` + CTO `add9119d81`. Rollback (an S3 delete of the one key) not taken; stays Andrew's.
+- **Read by me (not SC1's word):** the bucket (`deliverables/2.0.0_SA_COO_W1/round93/ch5_issuer_verify.out`): 12 objects (the 11 earlier and the new DIVZ one); the new object `method_version` 2, `reports` 0, `inputs` 0, the recomputed `content_sha256` equal to the stored; `fund_form.read_latest` returns a version-2 form for DIVZ (0 reports), IDVZ (82) and PFOE (33). SC1's after-checks (read in `ch5_served.out`): the substrate pick for `fund=divz` returns the NEW object, `current` True (before: the stale version-1 `e19a2eb0`, `current` False); `fund_form --compare` RAN TO COMPLETION over three funds (it raised before); the UNH gateway read is equal before and after. **Proof instance VALID rc 0 (re-run here).** `AC1` to `AC4` PASS in `ch5_served.out`; "nothing differs that the order did not name".
+- **The DIVZ hazard of the `cf-5` pair (condition 2) is CLOSED:** no reader resolves the stale version-1 DIVZ form any more. The stale object stays stored (add-only).
+- **Not seen in the record:** the CTO's expected catalog line (a gateway `DATA_CATALOG` read showing one more DIVZ object) was not exercised by SC1; it is an expected item, not a check, and nothing depends on it.
+- **C-6 now:** its DIVZ-form part is lifted by this close; for the 78 names with no `/5` continuation it lifts under the CTO's ruling (msg 7903) once `HVST-ch-7` lands under its own pair (continuations only; dossiers stay as served).
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>93</round>
 <workstream>DIVZ-WRITE</workstream>
 <slot>dell1</slot>
