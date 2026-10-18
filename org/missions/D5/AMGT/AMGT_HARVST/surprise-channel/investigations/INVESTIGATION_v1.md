@@ -12211,7 +12211,8 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             "AMGT_HARVST-D1-W172-S4",
             "AMGT_HARVST-D1-W172-S5"
         ],
-        "disposition": "DISMISSED_WITH_REASON"
+        "disposition": "DISMISSED_WITH_REASON",
+        "dismissal_reason": "The hazards are removed in the live gateway by HVST-ck-3 (deployed 14:07:06Z, ledger CLOSED 14:17:24Z, 922ee425fe): for a slash key in either spelling the path-component tools serve the canonical object (the union of the canonical and the legacy raw prefix, the canonical winning a same-name collision) and the coverage tool returns equal objects per dataset, shown by my own served reads of BP/_LN_Equity and BP-SLASH-_LN_Equity (same peers object, same scores and posture, same coverage counts, stored_spelling canonical) and by SC1's reads of NG. What the reads do NOT show: the two peers pairs (name 2026-09-24T2252Z.json, BP and NG) are not served by name by any tool, so they rest on the offline arm of ck-2 (the canonical object wins a collision, with its mutant); the pull_enqueue Lambda still writes the raw spelling of a slash ticker (D1-W173-S1 and -S3, INERT, no raw status object stored) and is the round-97 Terraform cell; no migration of legacy raw objects was made. This dismissal restates the evidence of world_is."
     }
 ]
 ```
