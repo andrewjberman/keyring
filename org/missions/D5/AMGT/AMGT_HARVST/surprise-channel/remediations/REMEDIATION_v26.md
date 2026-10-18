@@ -47,15 +47,15 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T11:51:23Z. Graduated at ADJUDICATION_v8
     "owner": "2.0.0_SA_COO~W1",
     "round": "v95",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~W1",
       "round": "v95"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~W1",
-      "at": null
+      "at": "2026-10-18T14:07:06Z"
     }
   },
   {
@@ -73,15 +73,15 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T11:51:23Z. Graduated at ADJUDICATION_v8
     "owner": "2.0.0_SA_COO~W1",
     "round": "v95",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~W1",
       "round": "v95"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~W1",
-      "at": null
+      "at": "2026-10-18T14:07:06Z"
     }
   }
 ]
