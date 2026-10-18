@@ -29094,3 +29094,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-18T18:41:06Z",
+  "id": "NFRA_OPLGTW-Z-S397",
+  "one_line": "OG-ap-44: the order's 'listener lines in the journal 0' (step 6 and ap44.AC2) cannot hold once the repair restores the service's uvicorn.access handlers: uvicorn's HTTP protocol logs by access_logger.hasHandlers(), not by Config.access_log, so every request to the listener writes one access line into the journal; measured on the host in Phase A (1 unarmed request, 1 line).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W/ap44_pa/loggers.json (a fresh process on the host under oom_score_adj_1000_cgroup_memmax_1400mb, uvicorn 0.52.3): the service-style Config is built, a capturing handler attached to uvicorn.access, then the CANDIDATE's make_server (OG-pr-5): the four loggers are unchanged and an INFO record on uvicorn.access reaches the handler (the repair works). The candidate's listener was then started on the test port 18099 and answered ONE unarmed POST (403 probe_not_armed): the service-side access handler captured 1 access line for it (listener_access_lines_in_handler 1).",
+      "Mechanism, read on the host: uvicorn/protocols/http/h11_impl.py line 57 and httptools_impl.py line 61: 'self.access_log = self.access_logger.hasHandlers()', per connection; Config.access_log is consulted only in configure_logging (config.py lines 421 to 423), where False empties the global uvicorn.access handlers. With the handlers restored by OG-pr-5, hasHandlers() is True for the listener's connections, so they log like the service's.",
+      "The order: OG-ap-44 step 6 and ap44.AC2: 'the listener's own ACCESS lines in the journal (POST /probe/...): 0, because its Config keeps access_log=False'; the AC2 expect pattern requires 'listener lines in the journal 0: ok'. Phase B reads the listener unarmed with 3 calls, so it would write 3 lines.",
+      "What such a line holds (uvicorn's access format): the client loopback address and port, the request line (method, path = the tool name, HTTP version) and the status; no body, no query and no argument value (a POST's arguments are in its body). It is therefore not a secret leak, but it is not 'none'."
+    ]
+  },
+  "spec_asserts": "The listener writes no access line of its own (ap44 step 6: 'because its Config keeps access_log=False'); ap44.AC2 requires 'listener lines in the journal 0'.",
+  "world_is": "The repair does what it is for (AC1 passes; the service's access log is restored), but the listener is no longer silent: its requests write ordinary access lines. The AC2 premise is wrong, not the release. Options for the issuer, not chosen here: (a) amend AC2 to expect the listener's lines to equal the number of calls this seat makes to it (3 in the unarmed read) and to count them; (b) cut a further repair so the listener's protocol does not log (for example a logger filter or a handler that drops /probe/ lines), as a new cell under its own never-widen; (c) accept the lines and say so in the never-widen ask. Phase A is not blocked; Phase B waits for the ruling. The ask discloses it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Phase A continues: the ask is written with this disclosed; Phase B needs your ruling on AC2."
+}
+```
