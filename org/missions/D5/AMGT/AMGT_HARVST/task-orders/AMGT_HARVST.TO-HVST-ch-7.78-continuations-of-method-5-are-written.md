@@ -88,9 +88,16 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 - **Own workstream** `CONT-M5`.
 - **Not covered, named:** any dossier rebuild; the 17 names already at `/5`; the `substrate.py` line 158 fallback.
 
+**COMPLETE 2026-10-18T05:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** seat `0.7.0_AE_CloudOps~SC1`, GO 05:02Z (site Z CLEAR for 05:00Z-07:30Z, msg 7913): canary UNH `b89177eb` and CPA `96cd31de` written 05:09Z and read back, gateway before and after equal but the two pointers; the other 76 in batches of 10; last name 05:15:16Z, inside the window, no STOP; manifest 78 `WROTE` lines; ledger `harvst-ch7-continuations-m5` CLOSED 05:21:55Z, COMMITTED (`1996542f8c`); deliverables `1ef5c34de1`. Pair COO `19d80c8b` + CTO `5d4e716fd1`. SC1 had not read the staged order or the GO until I typed a nudge at 05:01Z (the D1-S51 lapse again); it then read and acted.
+- **Read by me (not SC1's word):** `deliverables/2.0.0_SA_COO_W1/round93/ch7_issuer_verify.out`: 95 partitions, 446 objects (368 + 78); all 78 manifest names distinct and equal to the list; each new object is the newest of its partition by the gateway's rule, method `/5`, recomputed `content_sha256` equal, `fields` and `inputs` EQUAL to the previous newest object (56 previous at `/3`, 22 at `/4`, as the census said); `BP/_LN_Equity` and `NG/_LN_Equity` under their slash-encoded partitions; dossier objects 1479, unchanged. **The picker census re-run by me** (`ch7_ch1_census_issuer.out`): `securities=95 with_current=95 no_current=0 new_differs_from_gateway=0`. **A gateway read of a NON-canary name** (`GPN_US_Equity`): `continuation_key` is the manifest key `e03d0e939d3c000b.json`. **Proof instance VALID rc 0 (re-run here).** `ch7_served.out` AC1 to AC4 PASS.
+- **Standing instruction (section 122g / CTO round-92 ruling) is LIFTED for these 78 continuations** (CTO msg 7903) and stays in force for DOSSIERS. Every continuation of the 95 now has a current-method object; the picker and the gateway agree for all 95.
+- **Not seen:** the gateway was read for 3 names (UNH, CPA by SC1; GPN by me), not for all 78; the other 75 are proven by the bucket (the manifest key is the gateway's newest), not by a served read.
+
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>93</round>
 <workstream>CONT-M5</workstream>
 <slot>dell1</slot>

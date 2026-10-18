@@ -21,11 +21,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T03:30:08Z. Graduated at ADJUDICATION_v8
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v92",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v92"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
       "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~DELL1",
@@ -47,11 +47,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T03:30:08Z. Graduated at ADJUDICATION_v8
     "owner": "2.0.0_SA_COO~W1",
     "round": "v92",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~W1",
       "round": "v92"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_HARVST-D1-S50",
