@@ -4554,3 +4554,23 @@ The enrichment list (the round's rectangle): item 1 `W165-S3` (the substrate's s
 - **Fan-out (this issuance):** `N of M chains, N=2 workers (ci-1 then ci-2 in one queue ~169; ci-3 at ~170) of M=3 chains (A: ci-1 then ci-2; B: ci-3; C: ci-4, a message to the integrator), cap 8`.
 - **Checks at the cut, dry-run at the base:** `ci-1` AC1 to AC3 FAIL as expected (no census file); `ci-2` AC1 FAIL as expected (no test file), AC2 PASS as expected (`96 passed in 1.09s` over nine files), AC3 FAIL as expected; `ci-3` AC1 to AC3 FAIL as expected.
 - **Not cut (named):** the dossier rebuild itself (the CTO: "not ordered this round"; with the census in hand it goes under its own pair naming the served moves).
+
+### 125. ROUND 95 -- the CTO's round-94 analysis (`ledger/ROUND_ANALYSIS.round94.md` @428b762698, msg 7946; round 94 MAY-CLOSE per the CVO's msg 7945); ONE issuance (2026-10-18 ~07:3xZ)
+
+The enrichment list (the round's rectangle): item 1 `W170-S3` (one key form for slash keys; census first), item 2 the non-slash dossier rebuild under its own pair, item 3 the slash-key dossiers after item 1, item 4 carried (the `cg-3` lineage, base ref `aa2efa2cf3`; `S51`'s one idle-seat READ-ack instance), item 5 the harvest cycles continue.
+
+**The CTO's RULING (section 3):** the rebuild runs for every name WITHOUT a slash in its key (75 of the 77 names whose build moves a served field), under its own never-widen pair; the two slash-key names wait for item 1.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cj-1` | `cj-1` | A read-only census of every slash key in the corpus: which tables hold it under which spelling (raw `security_key=BP/_LN_Equity/` or encoded `BP-SLASH-_LN_Equity`), the denominator printed, with a positive control (a non-slash key: one spelling) and a classifier control. Workstream `SLASH-CENSUS`. | LOCAL | worker `~171` | CUT |
+| `HVST-cj-2` | -- | One key form for slash keys: every writer and reader of the harvest tables resolves a slash key through the ONE function `write_one` partitions with (`crosswalk.security_key_partition`); the gateway's harvest tools normalize the requested key through it; `BP/_LN` and `NG/_LN` return the full record whichever form is requested; any stored object under the wrong form is a row, never a rename or a delete. | WORLD (the gateway code is under `infra/`; the gate floors it) | worker, then a release | DEFINED, NOT CUT: waits on `cj-1`'s census (the direction of the fix depends on which tables hold which spelling: the stored reports may sit under the RAW form while the writers partition by the ENCODED one; the CTO's spec says one function, the census says where the stored objects are) |
+| `HVST-cj-3` | -- | The gateway release of `cj-2` (DEPLOY_BASE_REF=`aa2efa2cf3`), under its own pair. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cj-2` merged |
+| `HVST-cj-4` | `cj-4` | The non-slash dossier rebuild: 75 `research_dossier` objects, add-only, canary UNH then CPA read through the gateway before the other 73, batches of at most 10, S44, no continuation written, site Z told first, under the pair (COO half `deliverables/2.0.0_SA_COO_W1/round95/NEVER_WIDEN_HALF_COO_CJ4_DOSSIERS_NONSLASH.md`). Workstream `DOSSIER-WRITE`. | WORLD | seat SC1 | CUT, STAGED: waits on the CTO half, site Z's answer (C-10) and my GO |
+| `HVST-cj-5` | -- | The slash-key dossiers (`BP/_LN_Equity`, `NG/_LN_Equity`), under the same pair shape. | WORLD | seat SC1 | DEFINED, NOT CUT: waits on `cj-2` merged and `cj-1`'s census reading every slash key whole |
+| item 4 | -- | The `cg-3` lineage waits on site Z (CTO msg 7943; item closes when `cg-3` is contained in `CLOUD`); `S51` is exercised again at `cj-4`'s handing (row `D1-S54` holds the first instance). | -- | -- | CARRIED |
+| item 5 | -- | The harvest cycles keep running under the S44 rule: standing. | -- | -- | STANDING |
+
+- **Fan-out (this issuance):** `N of M chains, N=1 worker (cj-1) plus 1 seat order (cj-4) of M=2 cuttable chains (A: cj-1 then cj-2, cj-3, cj-5; B: cj-4), cap 8`. The second chain has no worker; its executor is the CloudOps seat under a pair.
+- **Checks at the cut, dry-run at the base:** `cj-1` AC1 to AC3 FAIL as expected (no census file); `cj-4` AC1 to AC4 FAIL as expected (no `cj4_served.out`).
+- **The `KMB_US_Equity` note:** the 18 names whose build moves no field include `KMB_US_Equity`, whose `inputs` differ from the stored dossier's by the continuation key only; `write_one` would write it. The ruling names the 77 moved names; KMB is outside `cj-4` and is named in the pair.
