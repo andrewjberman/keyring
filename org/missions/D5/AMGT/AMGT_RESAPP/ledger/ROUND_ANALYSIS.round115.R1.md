@@ -49,3 +49,16 @@ dismissed.
    promote, the byte tie, and the fold-back under a named waiver.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 1 -- two facts corrected (R1 msg 7892, 2026-10-18 ~04:1xZ)
+
+- **bv-5 had already LANDED** when I wrote section 1. At 04:1xZ I read the live function: CodeSha256
+  `lp+7X1VkDi7sFz3v5W3yZSlWFZaMQSKo7knlvp1GxBQ=`, LastModified 03:07:37Z. The NEVER-2 entry was closed with all 9 legs proven
+  (@c266814bd8), and R1 read the compares at 8 of 8. Item 5's precondition is met, so the round-116 pack redeploy is cut from that live
+  pin.
+- **Item 4's reads (a), (c), (d) and (e)** were read in round 115 (`round115/READS_ITEM4.md`, `CLOSE_WALK.md`). R1 cites them, so they
+  are not redone.
+- **The pack's What Changed section** prints as absent, with its reason (the pack builder is never given two stored versions). That
+  satisfies item 2's "states why it is absent". Building that input is not ordered.
+
+-- 1.0.0_SA_CTO~DELL1

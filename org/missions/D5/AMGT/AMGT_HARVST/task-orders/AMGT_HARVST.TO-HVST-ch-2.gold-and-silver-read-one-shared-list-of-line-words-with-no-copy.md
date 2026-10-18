@@ -1,0 +1,78 @@
+# AMGT_HARVST task order -- `HVST-ch-2` -- ROUND 93, workstream SHARED-CLASSIFIER: GOLD `_line_stance` AND SILVER `fund_relation.classify` READ ONE SHARED LIST OF LINE WORDS, WITH NO COPY; A NO-WRITE CENSUS NAMES EVERY GOLD VALUE THE SHARED LIST WOULD MOVE (row D1-S49; CTO round-92 analysis item 2)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<to_id>AMGT_HARVST.TO-HVST-ch-2.gold-and-silver-read-one-shared-list-of-line-words-with-no-copy</to_id>
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
+<owned_cells>HVST-ch-2</owned_cells>
+</decomp_ref>
+<issued_to>0.9.0_WK_AMGT_HARVST~167</issued_to>
+<issued_by>2.0.0_SA_COO~W1</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: RUN at L5 -- no schedule touched.
+comp-iam: RUN at L5 -- LOCAL code and offline tests, plus READ-ONLY S3 reads of the bucket `opal-data-harvest` in the census step ONLY: list and get under `amgt/harvest/silver/research-report/`, the extraction objects the silver rows name, and `amgt/harvest/gold/research-continuation/`, through `lib.research.harvest.store._default_client()`; never `put`, `delete`, `copy`, `sync` or a bare `aws` call. Budget: at most 4000 requests and 800 MiB in all, counted in the census's last line (the sister census of `HVST-ch-1` needed 1,672 requests and 137 MiB for the same reads). NO gold or silver writer is RUN, NO `write_one`, NO deploy, NO edit outside `<paths>`.
+comp-adversary: RUN at L5 -- the adversary is a "shared" module that is still copied (two module-level regexes that merely look alike: they must be the SAME OBJECT), a change that moves the CURRENT behaviour of `_line_stance` on a phrase the 22 census phrases cover, a method-version bump (NONE is allowed here: a bump makes every name read as having no current-method continuation), a gold census whose baseline is read from `HEAD` after the worker's own commits (pin the commit), a census that cannot see a value that moves because the fetched inputs differ between the two runs (both rules run on the SAME fetched inputs), and a test that passes whatever the code does.
+</preflight>
+
+## 0. THE CELL
+
+Two classifiers read the same recommendation line with COPIED word lists: gold `lib/research/corpus/continuation.py::_line_stance` (lines 443-445: `_HOLDING_WORD_RE`, `_CANDIDATE_WORD_RE`, `_SIZE_STATEMENT_RE`) and silver `lib/research/corpus/fund_relation.py::classify` (lines 47-51, the same patterns plus the whole words `adding` and `reduction`, added by the CTO's rulings of round 92). **They now differ on `adding` and `reduction`** (row `D1-S49`): a line `Consider size reduction in IDVZ` is a holding in silver and unclassified in gold. **The CTO ruled (round-92 analysis item 2): one shared word-list module read by both, with no copy; the drift test runs over ALL 353 stored report lines, not the 22 phrases; before any gold write a no-write census lists every gold value the shared list would move; a non-zero count goes under its own pair, never as a rider.** This cell makes the module, makes both classifiers read it, and runs the two read-only censuses. It writes no object, bumps no method version and changes no other file.
+
+## 1. THE BUILD (LOCAL, about 30 product lines)
+
+Work in your worktree. Change only the files named in `<paths>`.
+a. New `lib/research/corpus/line_words.py`: the three shared compiled patterns under PUBLIC names, each exactly as `fund_relation.py` has it today (the superset): `HOLDING_WORD_RE` (`\b(?:maintain|mainain|maitain|retain|increase|add|adding|reduction)\b|\bno change\b`), `CANDIDATE_WORD_RE` (`\b(?:candidate|initiate|interesting)\b`), `SIZE_STATEMENT_RE` (`^~?\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?%`), with a module docstring (ASCII): `The ONE list of recommendation-line words read by gold continuation._line_stance and silver fund_relation.classify (row D1-S49, CTO round-92 analysis item 2). Neither module keeps a copy.`
+b. In `lib/research/corpus/continuation.py`: delete the three copied literals at lines 443-445 and, in their place, `from lib.research.corpus import line_words` (placed with the other imports) and the three aliases `_HOLDING_WORD_RE = line_words.HOLDING_WORD_RE`, `_CANDIDATE_WORD_RE = line_words.CANDIDATE_WORD_RE`, `_SIZE_STATEMENT_RE = line_words.SIZE_STATEMENT_RE` (the names `_line_stance` and the tests already use). Change nothing else in the file (`_line_stance` itself is unchanged; `METHOD_VERSION` is NOT bumped).
+c. In `lib/research/corpus/fund_relation.py`: the same: delete its three copied literals, import `line_words`, keep the three module-level names as aliases of the shared objects (the mutant arm of `tests/test_fund_relation.py` monkeypatches `fund_relation._HOLDING_WORD_RE`); update the docstring sentence about the word patterns ("copied from `continuation.py` ... PLUS `adding` and `reduction`") to `read from lib/research/corpus/line_words.py, the one list shared with continuation._line_stance`. Change nothing else (`_HEADER_ALIASES`, the header regex and `classify` are unchanged).
+d. New test `lib/research/corpus/tests/test_line_words_shared.py`, offline. Arms: (1) `continuation._HOLDING_WORD_RE is line_words.HOLDING_WORD_RE`, `fund_relation._HOLDING_WORD_RE is line_words.HOLDING_WORD_RE`, and the same two identities for the candidate and size patterns (the SAME object: no copy); (2) `continuation._line_stance("Consider size reduction in IDVZ")` is `holding` and `("Consider adding 50-100bps in IDVZ")` is `holding`, as `fund_relation.classify` already reads them; (3) every phrase of `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159/cf1_census.out` (the 22 `PHRASE` lines, each with a `raw=` example) gets the same relation from both classifiers once `initiate` and `interest` are folded into `candidate` (the drift arm of `tests/test_fund_relation.py` arm 4, now over the shared lists; do not edit that file's arm); (4) a phrase `continuation._line_stance` classified before this change keeps its class: `Maintain position in IDVZ` holding, `CANDIDATE FOR PFOE` candidate, `[BUY IN IDVZ TO X%]` template, `watch list name for PFOE` unclassified; (5) **A MUTANT:** with `continuation._HOLDING_WORD_RE` monkeypatched to the OLD pattern (no `adding`, no `reduction`, written in the test), arm (2) FAILS (assert that it does).
+e. **The two censuses (read-only).** Write `ch2_census.py` in your deliverables folder (start from `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~160/cf2_census.py` and `.../0.9.0_WK_AMGT_HARVST~165/ch1_census.py`; read both) and run it once in the FOREGROUND with `python -u`, stdout to `ch2_census.out`.
+   - **E1, the drift census over every stored report line:** read every silver row (the newest per (`security_key`, `report_id`), the two misfiled KMB rows excluded, as `cg1_census.py` does); for each row whose `fund_evidence` has a recommendation header (`fund_relation._header_body(row["fund_evidence"])` is not None) take `raw = that body` and compare `fund_relation.classify(row["fund"], row["fund_evidence"])` (initiate and interest folded into candidate) with `continuation._line_stance(raw)`; print `DRIFT <security_key> <report_id> silver=<r> gold=<r> raw=<first 70 characters>` for every disagreement, then exactly `CENSUS-SHARED-DRIFT rows=<rows compared> drift=<n>`. **The issuer expects `drift=0`.**
+   - **E2, the gold census, no write:** for EVERY security with a continuation partition, run `continuation._resolve_fund_and_position` (read how `cf2_census.py` fetches its inputs and calls it) TWICE on the SAME fetched inputs: BASELINE = `continuation.py` as it is at commit `bec8a53981` (`git show bec8a53981:lib/research/corpus/continuation.py` loaded as a second module under another name; pinned, NEVER `HEAD`) and NEW = your changed module. For every security whose `fund_of_record` or `last_stated_position` value DIFFERS (a value, a key set, or absent against present), print `MOVED <security_key> field=<fund_of_record|last_stated_position> before=<first 60 characters or absent> after=<first 60 characters or absent>`; then, for each MOVED security, `AT_CURRENT <security_key> <yes|no>` (yes when its newest stored continuation is at `continuation.METHOD_VERSION`: a name at the current method whose value moves would raise `GoldImmutableError` on its next rebuild); then exactly `CENSUS-GOLD-MOVE securities=<n> moved=<n securities> fields_moved=<n> moved_at_current=<n> gets=<requests> bytes=<bytes>`. **If `moved` is not 0 do NOT change anything to make it 0: the count is the finding; file ONE surprise row listing the moved names and why (which word moved them).**
+f. Do not touch `substrate.py`, `gold.py`, `typed.py`, any gold or silver writer, or any other file. A surprise is a row; keep working.
+
+<paths>
+lib/research/corpus/line_words.py
+lib/research/corpus/continuation.py
+lib/research/corpus/fund_relation.py
+lib/research/corpus/tests/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~167/
+org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+## PROOF OF SPEC (each invocation LITERAL)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="HVST-ch-2"><invocation>python -m pytest lib/research/corpus/tests/test_line_words_shared.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^\d+ passed in</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-ch-2"><invocation>python -m pytest lib/research/corpus/tests/test_continuation.py lib/research/corpus/tests/test_continuation_pillar_body.py lib/research/corpus/tests/test_continuation_reader_method.py lib/research/corpus/tests/test_continuation_terms.py lib/research/corpus/tests/test_dossier_method_bump.py lib/research/corpus/tests/test_substrate.py lib/research/corpus/tests/test_continuation_pdf_recommendation_line.py lib/research/corpus/tests/test_continuation_holding_stance.py lib/research/corpus/tests/test_select_stored_fallback.py lib/research/corpus/tests/test_fund_relation.py lib/research/corpus/tests/test_typed.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^137 passed in</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-ch-2"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~167/ch2_census.out</invocation><expect>(?m)^CENSUS-SHARED-DRIFT rows=\d+ drift=0$</expect></criterion>
+  <criterion id="AC4" cell_refs="HVST-ch-2"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~167/ch2_census.out</invocation><expect>(?m)^CENSUS-GOLD-MOVE securities=\d+ moved=\d+ fields_moved=\d+ moved_at_current=\d+ gets=\d+ bytes=\d+$</expect></criterion>
+</proof_of_spec>
+
+- AC3 pins the CTO's claim (no drift over all stored report lines); AC4 is the SHAPE of the gold census: its count is a finding, not a pass condition (a non-zero `moved` goes under its own pair, the issuer rules). **If E1 prints a drift line, DO NOT edit the expectation or the code to match: print it, add a row and report.**
+- The checker reads `<expect>` as a regular expression. **Dry-run at the base (issuer, dell1, 2026-10-18 ~04:2xZ):** AC1 FAIL as expected (the new test file does not exist); AC2 PASS as expected (`137 passed in 1.16s` over the eleven files); AC3 and AC4 FAIL as expected (`cat` of a file that does not exist). If your base count differs, say so with both counts and do not weaken the pattern.
+- **LINE ENDINGS:** edit so `git diff --stat` reads only the lines you changed; a whole-file diff is a defect. Check `git diff --stat` before you commit. **Your census stdout may be written with CRLF by Windows text mode; write the census output through a file opened with `newline="\n"` (or `print(..., file=out)` to such a file) so the `$` anchors match; do not edit a captured file afterwards.**
+- A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. Your next row id is `AMGT_HARVST-D1-W167-S1`. The channel file has MIXED line endings and is append-only: append a row by BYTES and check the diff reads only insertions. If the row gate refuses your commit on the pre-existing duplicate `AMGT_HARVST-Z-S106` pair, put `# surprise-row-override: pre-existing duplicate AMGT_HARVST-Z-S106 pair at HEAD (1.0.0_SA_CTO~DELL1 msg 1310); this commit adds only my row` in the message body.
+- INSTANCE NAMED EXACTLY
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~167/AMGT_HARVST.TO-HVST-ch-2.gold-and-silver-read-one-shared-list-of-line-words-with-no-copy.proof_of_spec.json`
+  with `to_id` `AMGT_HARVST.TO-HVST-ch-2.gold-and-silver-read-one-shared-list-of-line-words-with-no-copy` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ch-2.gold-and-silver-read-one-shared-list-of-line-words-with-no-copy.md`. Pin every artifact row to its commit.
+  Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` from the root of YOUR worktree and report its last line.
+- Run every script from the repo root of YOUR worktree. Commit with `.tools/safe-commit.sh`. Do not edit this order file: the issuer flips its status.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER NOTES:**
+- Authority: the CTO's round-92 analysis (`ledger/ROUND_ANALYSIS.round92.md` @943c856f6e, msg 7867) item 2; row `D1-S49`. Decomposition section 123.
+- **I merge this cell only after READING the gold census.** `moved=0` merges at once. A non-zero `moved`, above all `moved_at_current` above 0, means the shared list changes a stored gold value (a name at `/5` would raise `GoldImmutableError` on its next rebuild); it goes to the CTO under its own pair, and the code is held (not merged) until he rules. The CTO's lifting rule for the S52 standing instruction needs `HVST-ch-1` AND this cell merged with 0 differing.
+- **No method-version bump here:** a bump makes every name read as having no current-method continuation (the exposure of `D1-S52`).
+- Slot ~167, worktree `C:/dev/wk-harvst-167`, branch `wk-AMGT_HARVST-167`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `infra/aws/ec2/opal-gateway/app`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~159`, `...~160` and `...~165` (the censuses' sources and the phrase file).
+- **SENT:** with the round-93 recut.
+
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
+<status>pending</status>
+<round>93</round>
+<workstream>SHARED-CLASSIFIER</workstream>
+<slot>dell1</slot>
+<fabric>dell1</fabric>
