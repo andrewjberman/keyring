@@ -11441,6 +11441,109 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
               ]
          },
          "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+         "id": "AMGT_HARVST-D1-W170-S1",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~170",
+         "surfaced_at": "2026-10-18T06:31:00Z",
+         "one_line": "91 DIFF lines (56 names) carry cause other: the one moved input family outside the cell's named causes is model_block, which the module names and inputs_bloomberg does not.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ci-3 section 1d: cause is decided from the inputs that differ; a cause token is inputs_continuation, inputs_fund_form, inputs_bloomberg, as_of, or a comma-joined set; other is for a moved field with NO input kind differing, or a differing kind that is not one of those four (named).",
+         "world_is": "dossier._build_inputs (lib/research/corpus/dossier.py:1394-1416) gives each inputs entry only {key, sha256}; the module input families are continuation, sector_template, fund_form, typecast, model_block (_model_block_entry, :1265-1275, derived/model_block/ prefix per lib/research/api/scoped_amgt.py:204) and the picked reports. No module family is Bloomberg, so inputs_bloomberg is never assigned and model_block is named other:model_block. Readable reason: the 56 names whose model_block entry differs carry other:model_block on their model_rows lines. No DIFF line has an input-free cause: every moved name (77) has a differing input entry; the as_of stamp (the build date) was not assigned as a cause, because the cell's as_of rule and its other rule overlap when no entry differs, and the census resolved that overlap to other.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "lib/research/corpus/dossier.py:1265-1275 and :1394-1416 at worktree HEAD 1386eb78b9",
+                   "lib/research/api/scoped_amgt.py:204 (MODEL_BLOCK_POOL_PREFIX) at worktree HEAD 1386eb78b9",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.out (DIFF and INPUTS lines; CENSUS-DOSSIER-MOVE cause_other=91)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+         "id": "AMGT_HARVST-D1-W170-S2",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~170",
+         "surfaced_at": "2026-10-18T06:31:00Z",
+         "one_line": "The worktree is a sparse checkout that excludes integrations/, so team_sheet's field map is absent from the tree; the census pinned the tracked HEAD blob, and the base checkout copy has different bytes.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ci-3 section 1c: the BUILT dossier is dossier.build run in memory from the worktree the order names, and the build reads what that tree carries.",
+         "world_is": "git sparse-checkout list (worktree) omits integrations/. integrations/bloomberg/research/field_map.json is tracked at HEAD (git blob 3b2829c3aa7ce572bea37a10b9bce8879cf13a96, 8988980 bytes, sha256 5bcecc026887348b57ff8a06b589fd542fd29511fb6a75e4fe8f65e343ec52be) but absent from the working tree. lib/research/corpus/team_sheet.py:131 is its only reader in lib/research/corpus; with it absent team_sheet.rows_for raises FileNotFoundError, which dossier._team_sheet_field stores as a reason, so every name showed a false team_sheet move in a first probe. The census read the HEAD blob with git show into .scratch and pinned team_sheet._FIELD_MAP_PATH in memory after verifying the git blob id (FIELD-MAP line in ci3_census.out). The base checkout copy C:/Dev/ajb_workspace/integrations/bloomberg/research/field_map.json is 9219984 bytes, sha256 ac77cf969ef6b18cc84cd28ecc7a254b59ed5dad88dce8b4bc0b853e807a6241, both at last commit 7580fe909c; the census cannot say which bytes the served dossiers were built against. With the pin no team_sheet field moved for any of the 95 names.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "git sparse-checkout list and git rev-parse HEAD:integrations/bloomberg/research/field_map.json at worktree HEAD 1386eb78b9",
+                   "lib/research/corpus/team_sheet.py:126,131 at worktree HEAD 1386eb78b9",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.out (FIELD-MAP line)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+         "id": "AMGT_HARVST-D1-W170-S3",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~170",
+         "surfaced_at": "2026-10-18T06:31:00Z",
+         "one_line": "The stored research_dossier objects of the two slash names (BP/_LN_Equity, NG/_LN_Equity) sit under the slash-safe partition; a raw-key listing finds none, the same mechanism W168-S2 records for the continuation prefix.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ci-3 section 1c: the SERVED dossier is the stored object that the gateway's pick chooses for the name's partition.",
+         "world_is": "A first pass listed the raw-key prefix for BP/_LN_Equity and got dossier_objects_listed=0 (NO-STORED-DOSSIER, before the fix; that slice was rolled back and re-run). The census then lists the slash-safe partition (crosswalk.security_key_partition: BP-SLASH-_LN_Equity and NG-SLASH-_LN_Equity), where 15 and 14 dossier objects are stored. The gateway literal P_DOSSIER % key (harvest_research.py:45, used at :316) is a raw-key prefix, so for BP/_LN_Equity it would serve no dossier; the census did not run the gateway, and NG/_LN_Equity was not probed raw.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "infra/aws/ec2/opal-gateway/app/harvest_research.py:45,316 at worktree HEAD 1386eb78b9",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.out (INPUTS lines for BP/_LN_Equity and NG/_LN_Equity)",
+                   "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md AMGT_HARVST-D1-W168-S2 (the continuation-prefix form of this mechanism)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+         "id": "AMGT_HARVST-D1-W170-S4",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~170",
+         "surfaced_at": "2026-10-18T06:31:00Z",
+         "one_line": "The NAME line's served identifier (first 8 characters of the object name) reads as_of=20 for every stored dossier, because dossier object names begin with the as_of stamp; the INPUTS line carries the full object name.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ci-3 section 1c: each NAME line prints served=<first 8 characters of the object name>/<method_version integer>.",
+         "world_is": "dossier.py write path (:1651-1665) names each object as_of=<YYYY-MM-DD>.<inputs_sha16>.json, so the first 8 characters are the constant as_of=20 for all 95 served objects. The census printed the literal form as the cell asks; each INPUTS line gives served_object=<full key>, and the served method_version integer is 15 for every name (served=as_of=20/15 on all 95 NAME lines).",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "lib/research/corpus/dossier.py:1651-1665 at worktree HEAD 1386eb78b9",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.out (NAME and INPUTS lines)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+         "id": "AMGT_HARVST-D1-W170-S5",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~170",
+         "surfaced_at": "2026-10-18T06:31:00Z",
+         "one_line": "dossier.build reads the team-sheet master template for every name (about 850 requests and 130 MB per name without a memo); the first ten names cost 8484 requests and 1.32 GB, and a process-scoped read-through memo brought each later slice to about 880 requests and 147 MB.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ci-3 sections 1b and 1g: the 95-name census fits the budget of 30000 requests and 3 GiB, judged from the continuation census cost of 1215 requests and 116 MiB.",
+         "world_is": "team_sheet._master_reading and the template listing (lib/research/corpus/team_sheet.py:624-644, :709-717) run inside every rows_for call, and with a client passed nothing is cached. Slice 0-10 ran with no memo (gets=8484 bytes=1321571601, not comparable). Slices 10-95 ran with a read-through memo of identical reads inside one process (memo hits are not S3 requests and are not counted in gets or bytes; SLICE-CACHE lines). Totals: gets=16321 bytes=2646018948, inside the budget. The guard refused no call and BUILD-ERRORS n=0, so no non-read, other-bucket or Bloomberg-path call was attempted by dossier.build.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "lib/research/corpus/team_sheet.py:624-644 and :709-717 at worktree HEAD 1386eb78b9",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.out (SLICE, SLICE-CACHE and CENSUS-DOSSIER-MOVE lines; BUILD-ERRORS n=0)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
     }
     ,
     {
