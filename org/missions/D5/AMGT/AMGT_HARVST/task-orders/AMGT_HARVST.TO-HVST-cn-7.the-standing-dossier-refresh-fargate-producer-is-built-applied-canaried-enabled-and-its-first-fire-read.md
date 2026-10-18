@@ -1,0 +1,96 @@
+# AMGT_HARVST task order -- `HVST-cn-7` -- ROUND 99, workstream REFRESH-STANDING: THE STANDING DAILY DOSSIER-REFRESH PRODUCER IS STOOD UP ON FARGATE: BUILD HALF APPLIED, IMAGE BUILT BY CODEBUILD AND READ BY DIGEST, RUN HALF APPLIED, A DRY CANARY FIRED, THE SCHEDULE ENABLED, THE FIRST SCHEDULED FIRE READ (STAGED behind a signed never-widen pair and the host owner's CLEAR for the standing producer) (CTO round-98 addenda 1 to 4)
+
+<!-- ===================== SEAT FACE -- read by the CloudOps seat that receives it ===================== -->
+
+<to_id>AMGT_HARVST.TO-HVST-cn-7.the-standing-dossier-refresh-fargate-producer-is-built-applied-canaried-enabled-and-its-first-fire-read</to_id>
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
+<owned_cells>HVST-cn-7</owned_cells>
+</decomp_ref>
+<issued_to>0.7.0_AE_CloudOps~SC1</issued_to>
+<issued_by>2.0.0_SA_COO~W1</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: RUN at L5 -- this order CREATES one EventBridge Scheduler schedule (stage 3, DISABLED) and ENABLES it (stage 5, only after the host owner's CLEAR and my stage-5 message). The harvest runner's tasks and `amgt-induction-daily` (site Z, 09:00 America/New_York) are not touched.
+comp-iam: RUN at L5 -- the apply creates FOUR new IAM roles (build, task, execution, scheduler) with inline policies exactly as in `dossier-refresh.tf` at sha256 `9eaee2540170af334305e38b4ec2b1e16260365dc89f50e7da14171ac47a152e`; no existing role or policy is changed. The task role may `s3:PutObject` only under `amgt/harvest/gold/research_dossier/` and has no delete. The BLAST RADIUS (16 resources, a standing writer of served data from stage 5) and the rollback are in the signed pair.
+comp-adversary: RUN at L5 -- the adversary is an apply from a tree whose `dossier-refresh.tf` is not the pinned bytes, a full-root plan that proposes ANYTHING beyond our additions (foreign drift applied around, a change or destroy), an apply with a `-target` that hides the rest of the root's plan, an image referenced by tag, a digest read from one route only, a CodeBuild build that fails and is retried until it passes without a report, a task definition or schedule created before the digest is read, the schedule ENABLED before site Z's CLEAR, a manual fire that WRITES (the stage-4 canary is a dry run), a first-fire grade taken from the container exit code (the driver exits 0 whatever the census says), a half-landed stage (NEVER-2), and a deletion.
+</preflight>
+
+## 0. THE CELL
+
+`HVST-cn-1` built the refresh driver; `HVST-cn-3` ran it once (93 dossiers, `STEP2_WALL_SECONDS=12187` from dell1: over 600 s, so the CTO ruled **ECS Fargate**, addendum 4); `HVST-cn-5` authored and planned the Terraform; `HVST-cn-6` the image recipe. **This order stands the producer up**, in the stages below, under the signed never-widen pair: COO half `org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round99/NEVER_WIDEN_HALF_COO_CN7_DOSSIER_REFRESH_STANDING_FARGATE_PRODUCER.md` (sha256 `b03a84913b86befccdb963eecfb55790798164951ca9dee58725d5d9d830a782`, commit `aa4957d34d`) and CTO half `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_CN7_DOSSIER_REFRESH_STANDING_FARGATE_PRODUCER_CTO_HALF.md` (`abf1c19474`). **Read both first: they are the specification of this act and their conditions bind you.** This section and the pair differ in nothing; where wording differs, the pair wins.
+
+## 1. START CONDITIONS (any false: DO NOT START, file one row, and the issuer reads it)
+
+(a) `HVST-cn-1` to `HVST-cn-6` are complete and merged. (b) The pair is SIGNED at the bytes above. (c) The GO names the commit you work from; your worktree is AT that commit; `sha256sum infra/aws/terraform/harvest/dossier-refresh.tf` prints `9eaee2540170af334305e38b4ec2b1e16260365dc89f50e7da14171ac47a152e` and `python -c "import lib.opal_naming as n; print(n.name('amgt', None, 'dossier-refresh', 'repo'))"` prints `amgt-dossier-refresh-repo` (print both; any other value is a STOP). (d) The image inputs equal the code `HVST-cn-3` ran: `git diff 56bacbc853 <pin> -- lib/research/corpus lib/research/harvest lib/research/identity lib/research/coverage lib/trading_calendar.py` prints EMPTY (other differences under `lib/research/` belong to other projects and are printed, not a STOP). (e) Before stage 0, print the union of `org/critical_paths/.open_deploys/` over EVERY live worktree (`git worktree list --porcelain`, then `git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/`) with the per-tree denominator; an open entry for the harvest root or the ECR/CodeBuild/ECS names of this order is a STOP.
+Every stage below is its OWN deploy-ledger entry (NEVER-2), opened at its start and CLOSED and COMMITTED at its end: slugs `harvst-cn7-s1-build-half`, `harvst-cn7-s2-image-build`, `harvst-cn7-s3-run-half`, `harvst-cn7-s4-canary`, `harvst-cn7-s5-enable`. The image act (`s2`) names in its entry EVERY task family that pulls the repository: there is exactly ONE, `amgt-dossier-refresh-task`; print that count.
+
+## 2. THE STAGES (each ends with a read; a failed read is a STOP: write nothing further, file one row, tell me; nothing is retried and nothing is deleted)
+
+Work in a worktree of your own cut at the GO's commit. Write every output file under `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round99/cn7/`. `terraform` is run as `terraform -chdir=infra/aws/terraform/harvest ...`; every apply is `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/harvest apply ...` in your usual gated form (never a bare apply).
+0. **Stage 0, before-state (`cn7_s0.out`), read only.** `terraform init -input=false`; print the account, region and caller identity; the FULL-ROOT plan, NOT a `-target` plan: `terraform plan -lock=false -input=false -no-color -var dossier_refresh_build_enabled=true`. It must end `Plan: 5 to add, 0 to change, 0 to destroy.` and list ONLY the five build-half resources (the ECR repository `amgt-dossier-refresh-repo` with IMMUTABLE tags, the CodeBuild log group, the build role, the build policy, the CodeBuild project `amgt-dossier-refresh-build`). ANY other proposed change (foreign drift of other resources) is printed and is a STOP, never an apply around it.
+1. **Stage 1, the build half (`cn7_s1.out`).** Apply with `-var dossier_refresh_build_enabled=true`. Read back: the repository exists, tag mutability IMMUTABLE, scan on push; the project exists; the build role's policy allows ECR push to THIS repository only and logs to its own group only (its one `Resource: "*"` is `ecr:GetAuthorizationToken`).
+2. **Stage 2, the image (`cn7_s2.out`).** From your pinned worktree, `bash infra/aws/harvest/dossier-refresh/build-image.sh --go`: it cuts the source zip from the Dockerfile's COPY lines (print the file count and that the zip set equals the pin), uploads it, starts the CodeBuild build and polls to a TERMINAL status (print it). The build's SMOKE step (`docker run --entrypoint python ... -m lib.research.corpus.dossier_refresh --help`) must have passed in the build log (print its lines). Read the digest and the size by TWO routes that must AGREE: the build log's `IMAGE_DIGEST=` and `IMAGE_SIZE_BYTES=` lines, and `aws ecr describe-images` by the tag `git-<first 12 of the pin>`; print both and `routes_agree=yes|no`; print the size in MB as the measured replacement for `HVST-cn-4`'s 287 MB. A build failure (a pin that does not install on `python:3.12` Linux, a failed smoke step, a COPY source missing) is a STOP: nothing else is touched; the remedy is a recipe change that is a new cell of mine.
+3. **Stage 3, the run half (`cn7_s3.out`).** Full-root plan with `-var dossier_refresh_build_enabled=true -var dossier_refresh_run_enabled=true -var dossier_refresh_image_digest=<the digest of stage 2>`: it must end `Plan: 11 to add, 0 to change, 0 to destroy.` (the cluster, the security group, the task log group, the task role and its policy, the execution role and its attachment, the task definition, the scheduler role and its policy, the schedule) and propose nothing else. Apply it (the schedule state stays at its default, DISABLED). Read back: the task definition's container image is `<account>.dkr.ecr.us-east-1.amazonaws.com/amgt-dossier-refresh-repo@<digest>` (a digest, no tag); its command is `--write --require-trading-day --manifest /tmp/dossier_refresh_manifest.txt`; the task role's policy allows `s3:PutObject` ONLY under `amgt/harvest/gold/research_dossier/` and has no `s3:Delete*`; the schedule reads `DISABLED`, `cron(0 10 ? * MON-FRI *)`, timezone `America/New_York`.
+4. **Stage 4, the dry canary (`cn7_s4.out`).** `aws ecs run-task` on the cluster `amgt-dossier-refresh-cluster` with the task definition, `--launch-type FARGATE`, the subnet `subnet-023db8cbfd99ffff2` and the security group `amgt-dossier-refresh-sg` (read its id), public IP assigned, and a container command override `["--only","UNH_US_Equity"]` (NO `--write`, NO `--require-trading-day`: it is a DRY RUN that runs on any day). Wait for STOPPED; print the container exit code, `startedAt` and `stoppedAt`, and the task's CloudWatch log lines. Required: exit code 0 and a log line `REFRESH-CENSUS names=1 ... errors=0 mode=dry-run` (today `UNH_US_Equity` reads UNCHANGED: the dossiers are level after `HVST-cn-3`). A non-zero exit, `errors>0`, `AccessDenied`, an image-pull failure or a missing log is a STOP (print the exact text).
+5. **Stage 5, enable the schedule (`cn7_s5.out`). DO NOT START until I send you the stage-5 message** (it cites this order and the host owner's CLEAR for the standing producer; the CTO half, condition 5, requires it). Then apply with the same three `-var`s plus `-var dossier_refresh_schedule_state=ENABLED`: the full-root plan must end `Plan: 0 to add, 1 to change, 0 to destroy.` and the change is the schedule's `state` only. Read back: the schedule reads `ENABLED`.
+6. **Stage 6, the first scheduled fire's read (`cn7_s6.out`).** The first scheduled fire after stage 5 is the next MON-FRI 10:00 America/New_York (14:00Z while US daylight time runs). Read it after the task is STOPPED (the induction task writes the day's model blocks at 09:00 America/New_York: a fire that finds no block for the day skips and says so). Print: the task's STOPPED reason and container exit code (**NOT the oracle**: the driver exits 0 whatever the census says), `startedAt`, `stoppedAt` and the WALL TIME in seconds, the log's final `REFRESH-CENSUS` line, and the manifest-equivalent per-name `REFRESH` lines counted by status. Grade on the census: `mode=write`, `errors=0`, `written` equal to the number of names whose model block moved that day (compute it: the names whose newest model block stamp is later than 09:00 America/New_York of the fire's local date, print the list), `skipped_guard` accounted for (a guard stop is reported, not a failure). Sample AT LEAST 10 written names plus `BP/_LN_Equity` (its object under `security_key=BP-SLASH-_LN_Equity/`): read each new object back and through the gateway's pick, and print `samples_ok=<n of N>`. If the wall time exceeds 6 hours in-region, file a row to me (the CTO half: half the gap to the next fire; disabling is the response if runs would overlap).
+7. **Write `cn7_served.out`** ending with exactly these lines: `STAGES_1_TO_3_APPLIED_AND_IMAGE_BY_DIGEST=PASS|FAIL`, `STAGES_4_AND_5_CANARY_THEN_ENABLED=PASS|FAIL`, `STAGE_6_FIRST_FIRE_CENSUS=PASS|FAIL`, then `IMAGE_DIGEST=...`, `IMAGE_SIZE_BYTES=...`, `FIRST_FIRE_WALL_SECONDS=...`. Commit each stage's ledger close WITH its output file. Tell me when each stage ends (stage 2's digest and size; stage 4's canary; stage 6's census).
+
+## 3. STOPS AND EXPECTED QUESTIONS (the CTO's S51 rules: they live here, before the run; do not ask me for an answer inside the window)
+
+- **STOP, write nothing further, file one row and tell me:** the pins of start condition (c) or (d) differ; the open-deploys union shows an open entry on the harvest root or on these names; a full-root plan shows ANY change, destroy or addition beyond the stage's resources; a build that fails or a digest the two routes do not agree on; a plan or read that contradicts a stage's expectation; a task definition that names a tag; the schedule reading ENABLED before stage 5; AccessDenied, throttle, image-pull failure or a missing log (print its exact text); a stage-4 canary that wrote anything (it is a dry run: a `written` above 0 is a STOP and a disable).
+- **After the last write of a stage, a difference not named here:** write it plainly, do NOT self-grade, finish the read-only steps, close the ledger as written and tell me; I rule. Nothing is retried and nothing is deleted. **A wrong first fire is answered by `-var dossier_refresh_schedule_state=DISABLED` (an apply), not by a deletion.**
+- **Expected and NOT a failure:** `Plan:` lines printed before an `Error:` on a refused plan (the exit code and the `Error:` line are the oracle); the stage-4 canary reading `status=UNCHANGED` (the dossiers are level); a first fire that reads `REFRESH-SKIPPED not_a_trading_day` or `no_today_model_block` counts on a day the model blocks did not land (it is the correct behaviour: wait for the next fire); the container exit code 0 beside a census with errors (grade on the census); `PBR_US_Equity` as `SKIPPED_GUARD` while its `BEST_DPS` FY1 figure is absent; the ECR image scan on push reporting findings (print the counts; they are not a stop).
+- **The standing writer is yours to disable on your own sight of a wrong fire**: an apply with `schedule_state=DISABLED`, then tell me.
+- **Window:** stages 0 to 4 in one sitting from my GO (about 60 to 90 minutes, longer if the CodeBuild build is slow); stage 5 on my second message; stage 6 after the first scheduled fire. The host owner's CLEAR bound for stages 0 to 4 is the same CLEAR as `HVST-cn-3`'s (to 2026-10-19 12:30Z) for anything that touches the gold prefix (stages 0 to 4 write none).
+
+<paths>
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round99/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/
+org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
+org/critical_paths/.open_deploys/harvst-cn7-s1-build-half.json
+org/critical_paths/.open_deploys/harvst-cn7-s2-image-build.json
+org/critical_paths/.open_deploys/harvst-cn7-s3-run-half.json
+org/critical_paths/.open_deploys/harvst-cn7-s4-canary.json
+org/critical_paths/.open_deploys/harvst-cn7-s5-enable.json
+org/critical_paths/change_management/
+</paths>
+
+## PROOF OF SPEC (each invocation LITERAL, on dell1, from the repo root)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="HVST-cn-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round99/cn7/cn7_served.out</invocation><expect>(?m)^STAGES_1_TO_3_APPLIED_AND_IMAGE_BY_DIGEST=PASS$</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-cn-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round99/cn7/cn7_served.out</invocation><expect>(?m)^STAGES_4_AND_5_CANARY_THEN_ENABLED=PASS$</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-cn-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round99/cn7/cn7_served.out</invocation><expect>(?m)^STAGE_6_FIRST_FIRE_CENSUS=PASS$</expect></criterion>
+</proof_of_spec>
+
+- AC1 is the 16 resources applied in two steps and the image read by digest by two routes; AC2 is the dry canary and the enabling; AC3 is the first scheduled fire graded on its census line (not the exit code). The order stays open until the first scheduled fire is read (the next MON-FRI 10:00 America/New_York after stage 5).
+- The checker reads `<expect>` as a regular expression. At the base the file does not exist (all FAIL as expected).
+- INSTANCE NAMED EXACTLY `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/AMGT_HARVST.TO-HVST-cn-7.the-standing-dossier-refresh-fargate-producer-is-built-applied-canaried-enabled-and-its-first-fire-read.proof_of_spec.json` with `to_id` `AMGT_HARVST.TO-HVST-cn-7.the-standing-dossier-refresh-fargate-producer-is-built-applied-canaried-enabled-and-its-first-fire-read` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cn-7.the-standing-dossier-refresh-fargate-producer-is-built-applied-canaried-enabled-and-its-first-fire-read.md`. Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` and report its last line.
+- A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. The channel file has MIXED line endings and is append-only: append a row by BYTES and check the diff reads N insertions and 0 deletions; run the row gate against your row WITHOUT any override first (the `Z-S106` override must cover that pre-existing pair only).
+- **Long runs and detached processes (CTO round-90 item 3, row `D1-S44`):** a foreground command is capped at 10 minutes by your tool; run the CodeBuild poll and the Fargate waits as polling loops of short commands, each printing its status, and write every output file from the program's own output.
+- Do not edit this order file: the issuer flips its status.
+- The hourly `sa` reads (Branch F stands) continue beside this order until the issuer says stop.
+
+## STANDING CONDITIONS (every order to a 0.7.0_AE_CloudOps lane)
+
+1. A send that writes a firm data bucket, or assumes the 49F principal outside the runner's own job, is told to the laptop FIRST.
+2. Every send to mdpf-daily-runner is reported after the fact. 3. 49 Financial data never goes into another firm's tree.
+This order touches none of them (the bucket and prefix are AMGT's own).
+
+<!-- ===================== RECORD FACE -- does NOT travel to the seat ===================== -->
+
+**ISSUER NOTES:**
+- **STAGED, then sent with the GO.** Receiving seat: `0.7.0_AE_CloudOps~SC1` (CLAUDE.md rule 34). Authority: the CTO's round-98 addenda 1 to 4 and msgs 8228, 8246; pair COO half `b03a8491...a782` (`aa4957d34d`) and CTO half (`abf1c19474`, msg 8255; its seven conditions are all in this face). Decomposition sections 136 to 140. Risk WORLD.
+- **Two GOs:** the first (stages 0 to 4) after this order is committed; the stage-5 message after the host owner's CLEAR for the STANDING producer (asked through `0.0.0_AB_MSTR~DELL1`); SC1 may also be busy on `AMGT-cd-4` (the AMGT_RESAPP COO's order) when the first GO arrives.
+- **The first-fire read is organic (the negative arm):** the next scheduled fire. The deliberate arm is stage 4's canary (a dry run of the same task definition). A deliberate real-write fire would write nothing today (the dossiers are level); after the 13:00Z model blocks of the next day it would, but that is the scheduled fire's read.
+- Dry run at the base (issuer, dell1, 2026-10-18 ~22:5xZ): all three criteria FAIL as expected (the file does not exist).
+
+<risk>WORLD</risk>
+<worker_class>seat</worker_class>
+<status>pending</status>
+<round>99</round>
+<workstream>REFRESH-STANDING</workstream>
+<slot>dell1</slot>
+<fabric>dell1</fabric>
