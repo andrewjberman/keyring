@@ -28633,3 +28633,54 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~152",
+  "surfaced_at": "2026-10-18T12:38:55Z",
+  "id": "NFRA_OPLGTW-Z-W152-S1",
+  "one_line": "OG-sec-2 AC3 cannot read failed 0 as written: five existing route-test cases in test_transcript_route.py, test_teams_route.py and test_mail_route.py fail at the base commit 581ee61977 and with the new pin disabled, in both orders, with the same counts",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC3 three runs @7820a6b72b (worktree wk-NFRA_OPLGTW-152, _bothorders.sh sec2set): forward passed 68 failed 5; reverse passed 68 failed 5; RESULT FAIL, each run",
+      "FAILED infra/aws/ec2/opal-gateway/tests/test_transcript_route.py::test_bearer_constant_time_own_prefix_only -- asserts POST on the LIST route == 405, gets 404",
+      "FAILED infra/aws/ec2/opal-gateway/tests/test_teams_route.py::test_methods_and_unknown_routes (POST /hx/teams/me 404, asserted 405) and ::test_new_routes_are_get_only_and_allowlist_still_refuses_neighbours",
+      "FAILED infra/aws/ec2/opal-gateway/tests/test_mail_route.py::test_transcript_and_ms_bearers_refused_on_mail_prefix and ::test_graph_get_only_fails_closed",
+      "Base control: app/graph.py swapped to its HEAD~1 bytes (581ee61977) for the three route files only: 5 failed, 37 passed; file restored byte-equal (sha256 f7dd576f...); pin replaced by a no-op in-process with the new graph.py for the five files: 5 failed, 66 passed"
+    ]
+  },
+  "spec_asserts": "OG-sec-2 AC3: the two new tests and the five existing Graph-calling test files (route modules, transcript and tax-workbook tools) pass together in both orders with the same count, failed 0.",
+  "world_is": "The five named cases fail identically at the base and with the change; each asserts a 405 method refusal and receives 404 from the routing layer. None of the five reaches graph.call, and the pin is not their cause. AC3 is FAIL as written; this order does not set the five cases' status. The base failure predates the order.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~152",
+  "surfaced_at": "2026-10-18T12:38:55Z",
+  "id": "NFRA_OPLGTW-Z-W152-S2",
+  "one_line": "OG-sec-2 order is silent on the case of the absolute-URL branch in graph.call: the pin is case-insensitive, and the existing line-52 test path.startswith('http') would have built GRAPH_BASE + an uppercase absolute URL; the branch test was made case-insensitive to match the pin",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/graph.py @581ee61977 line 52 before the change: url = path if path.startswith('http') else GRAPH_BASE + path",
+      "app/graph.py @7820a6b72b: absolute = path.lower().startswith('http'); the same absolute flag selects url = path; test_ogsec2_ac02 HTTPS://Graph.Microsoft.Com/v1.0/me reaches the stub with the URL as passed (PASS, 3 of 3 runs)"
+    ]
+  },
+  "spec_asserts": "OG-sec-2 step 1: the pin applies to an absolute URL that starts with http case-insensitively; relative paths and absolute URLs on graph.microsoft.com behave exactly as today.",
+  "world_is": "Under the old case-sensitive branch an uppercase HTTPS URL that the pin accepted would have been sent as GRAPH_BASE + the URL. The change affects only absolute paths whose leading text is not lowercase http, and nothing else. The CTO is asked to confirm this reading of the cell; no other host or branch moved.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
