@@ -12364,5 +12364,91 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W178-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~178",
+        "surfaced_at": "2026-10-18T16:56:07Z",
+        "one_line": "HVST-cm-4 part A: a dossier refresh measured today would move model_rows on 93 of 95 names (92 by the model block alone, KMB_US_Equity also by continuation); no field outside the allowed set moves, 2 names are unchanged, and the model-block guard stops PBR_US_Equity (built valued rows 55 < stored 56).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order section 1b and 1d: for every continuation-partition name, build the dossier in memory and print what a refresh would move, the cause and the guard per name, and CENSUS-DOSSIER-MOVE-98 counts; a name whose build moves a field outside {fund_form_ref, model_rows} is skipped and reported (CTO NEVER_WIDEN_CJ4 condition 1 for the guard).",
+        "world_is": "Measured 2026-10-18 at b95f09c090 (research code identical to shared e8583524b3): names=95, no_stored_dossier=0, unchanged=2 (BP/_LN_Equity and NG/_LN_Equity, inputs equal, rebuilt today), moved=93, fields_moved=93 (all model_rows), cause_model_block_only=92, cause_other=0, skip_names=0 (every moved field and differing input kind is inside the allowed sets), guard_pass=92, guard_stop=1 (PBR_US_Equity), GUARD-UNMOVED-NOT-SERVED n=0. Controls: positive fields_moved=0, negative fields_moved=1. Reads gets=5720 bytes=919000570 against budget 14000 requests and 1.8 GiB. Full table: org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_census.out.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_census.out@b95f09c09003229f9c42cb9ed93c91dd136ea319",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_census.parts.out@b95f09c09003229f9c42cb9ed93c91dd136ea319 (SLICE and COST lines)",
+                "lib/research/corpus/dossier.py@be8f6dc8ee60b689e5a4982410819936e44b0be4 lines 1479-1551 (build) and 1185-1249 (_model_block_read)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W178-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~178",
+        "surfaced_at": "2026-10-18T16:56:07Z",
+        "one_line": "HVST-cm-4 part B: the model-block landing is the amgt-induction-daily fire at 13:00Z (induction, then model_block_pull admit and refresh); no scheduled task writes research_dossier (4 writer functions, none scheduled); the sitez live trigger of amgt-induction-daily is unread from this box.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order section 1e: for each scheduled task or register entry that runs the model-block pull or derive, print its trigger and source; for each code path that calls dossier.write_one or gold_put on research_dossier, print callers and whether it is scheduled; print the newest derived/model_block stamp for ten names, the spread, and the build cost per name.",
+        "world_is": "Register lib/research/corpus/schedule_induction.ps1 line 43 AtUtc 13:00; the fire action sets OPAL_INDUCTION_FIRE=1 (line 116); the chain runs induction_run then model_block_pull.py cmd_admit (2256) and cmd_refresh (2366), which write derived/model_block/<key>/<utc_stamp>/model_block.json (1811). Corroborated by org/devices/crossbox/XB-20261009T054248Z-aff1.json:10 and org/devices/state/sitez/open_calls.json:1841. The dell1 schtasks export (400 parsed rows) has no induction task; the sitez registration is unread. OPAL_BBGTML_daily_pull (07:00 America/New_York, register_daily_task.ps1:32) runs scheduled_daily_pull.cmd, which names no model-block script. Ten sampled newest stamps land 13:00:15Z to 13:10:25Z (spread 10 minutes). dossier.write_one (dossier.py:1651, gold_put at :1684) is called from _write_one_captured (2174), _run_write_all (2200) and _run_write_one_twice (2212, 2213), reached from the dossier main (2297, 2298); no scheduling-type file names a write entry point (infra/aws/terraform/harvest/scoped-amgt-api.tf:224 is a comment naming the reader read_dossier). Build cost per name: median 13 requests and 1,225,373 bytes; maximum 751 requests (RMS_FP_Equity, first name of its slice, cold memo). Denominator: 10,298 files walked in lib, integrations, infra and .tools (5,798 .py). Full table: org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_inventory.out.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_inventory.out@b95f09c09003229f9c42cb9ed93c91dd136ea319",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_inventory.py@b95f09c09003229f9c42cb9ed93c91dd136ea319",
+                "integrations/bloomberg/research/model_block_pull.py@be8f6dc8ee60b689e5a4982410819936e44b0be4 lines 1811, 2256, 2366"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W178-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~178",
+        "surfaced_at": "2026-10-18T16:56:07Z",
+        "one_line": "HVST-cm-4 premise: the order's round-94 read figure (8,699 requests and 1.4 GiB after memoising) does not match ci3_census.parts.out, whose ten SLICE lines sum to 16,321 requests and 2,646,018,948 bytes; the first slice ran before the memo existed.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order section 0 and 1b: the round-94 census of 95 names read 8,699 requests and 1.4 GiB after memoising, the reference the budget of this census is read against.",
+        "world_is": "ci3 parts file: SLICE start=0 stop=10 gets=8484 bytes=1321571601 has no SLICE-CACHE line (the memo was added after that slice); slices 10 to 95 each read about 800 to 900 requests and about 147 MB with memo hits. The ten SLICE lines sum to 16,321 requests and 2,646,018,948 bytes. The cm4 census read 5,720 requests and 919,000,570 bytes in six slices with the memo in every process, inside the stated budget.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.parts.out@be8f6dc8ee60b689e5a4982410819936e44b0be4 (SLICE lines)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~178/cm4_census.parts.out@b95f09c09003229f9c42cb9ed93c91dd136ea319 (SLICE lines)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W178-S4",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~178",
+        "surfaced_at": "2026-10-18T16:56:07Z",
+        "one_line": "HVST-cm-4 premise: ci3_census.py says the worktree is a sparse checkout that excludes integrations/, but this worktree carries integrations/bloomberg/research/field_map.json (blob 3b2829c3, verified), so the census read the worktree copy, not the pinned one.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order section 1a: start from ci3_census.py; its FIELD-MAP pin (lines 63-68) applies when the worktree copy of the field map is absent.",
+        "world_is": "At be8f6dc8ee the sparse checkout list includes integrations/bloomberg and integrations/bloomberg/research/field_map.json exists with git hash-object 3b2829c3aa7ce572bea37a10b9bce8879cf13a96. cm4_census.py field_map_line() verifies that blob and does not use the pin fallback.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.py@be8f6dc8ee60b689e5a4982410819936e44b0be4 lines 63-68",
+                "integrations/bloomberg/research/field_map.json@be8f6dc8ee60b689e5a4982410819936e44b0be4"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
