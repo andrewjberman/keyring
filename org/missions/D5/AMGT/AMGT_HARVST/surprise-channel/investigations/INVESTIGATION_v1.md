@@ -11610,6 +11610,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
               ]
          },
          "disposition": "UNDER_INVESTIGATION"
+    },
+{
+        "id": "AMGT_HARVST-D1-W171-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~171",
+        "surfaced_at": "2026-10-18T07:33:13Z",
+        "one_line": "Slash keys BP/_LN_Equity and NG/_LN_Equity are stored ONLY under the encoded partition in the 13 of 15 keyed-by-security tables that hold either key (raw form: 0 objects in all 30 keyed cells); the silver research-report holds the raw spelling in its security_key column; the gateway raw-key prefixes match 0 stored objects of either key.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "2.0.0_SA_COO~W1",
+        "spec_asserts": "TO-HVST-cj-1 steps 1d-1g: find the slash keys by listing and print the SLASHKEY matrix for every keyed table; step 1h: file ONE row giving which tables hold which keys under which form, and which stored objects sit under a form the gateway's raw-key prefixes would not reach.",
+        "world_is": "cj1_census.out (committed with this row): CENSUS-SLASH slash_keys=2 tables=15 cells=32 raw=2 encoded=26 both=0 none=4 gets=135 bytes=247364. Encoded object counts per table (BP/_LN_Equity, then NG/_LN_Equity; raw is 0 in every keyed table): amgt/harvest/bronze/research-report-extract 14, 2; amgt/harvest/bronze/research-report 7, 1; amgt/harvest/gold/ai_fill 1, 1; amgt/harvest/gold/research-continuation 5, 5; amgt/harvest/gold/research-dossier 9, 10; amgt/harvest/gold/research_dossier 15, 14; amgt/harvest/state/filing_attempt 1, 1; amgt/harvest/state/pull_log 15, 15; bloomberg/harvest/bronze/bestdata 15, 15; bloomberg/harvest/bronze/exec_officers 1, 1; bloomberg/harvest/bronze/histdata 16, 16; bloomberg/harvest/bronze/refdata 16, 16; bloomberg/harvest/bronze/segments 1, 1. bloomberg/harvest/bronze/histdata_daily_px (2 security partitions) and bloomberg/harvest/bronze/identity (68) hold NEITHER form for either key (none). Silver: amgt/harvest/silver/research-report (3 date partitions, 8 parquet parts, 708 rows) holds BP/_LN_Equity as the RAW value in 14 rows and NG/_LN_Equity in 2 rows, and the encoded value in 0 rows. STORED OBJECTS UNDER A FORM THE RAW-KEY PREFIXES DO NOT REACH: 214 encoded objects (BP 116, NG 98) in the 13 tables above. Gateway constants (harvest_research.py 40-60): P_DOSSIER (gold/research_dossier, listed), P_AI_FILL (gold/ai_fill, listed) and P_EXEC (bronze/exec_officers, listed) build security_key=<raw key>/ prefixes that match 0 objects of either key. P_CONTINUATION names gold/research_continuation, which is NOT listed; the stored table is gold/research-continuation, where the raw prefix matches 0 objects. P_REPORT names silver/research_report, which is NOT listed (stored: silver/research-report), and builds no key. Two dossier tables of 95 security partitions each exist under two spellings (gold/research-dossier and gold/research_dossier); both hold encoded objects for both keys. The bronze research-report and research-report-extract tables also hold a 16-hex source folder under each security_key=<KEY>/ (NESTED-OTHER, counted as no key). The reason for any of this is not read by this census.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~171/cj1_census.out (committed with this row): SLASHKEY, COLUMN-READ, CONTROL and CENSUS-SLASH lines",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~171/cj1_census.py (committed with this row): listing, classifier and matrix",
+                "lib/research/identity/crosswalk.py:242-247 @845b69a8cc: security_key_partition returns 'security_key=' + slash_safe_key(key)",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py:40-60 @845b69a8cc: P_DOSSIER, P_CONTINUATION, P_AI_FILL, P_REPORT, P_EXEC constants",
+                "Session listing, 0.9.0_WK_AMGT_HARVST~171, 2026-10-18: security_key=BP/ and security_key=NG/ prefixes under the 15 keyed tables (60 prefixes, 60 calls): no object under the raw prefix"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
