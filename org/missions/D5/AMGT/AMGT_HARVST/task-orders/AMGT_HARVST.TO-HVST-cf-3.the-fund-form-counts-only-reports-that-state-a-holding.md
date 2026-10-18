@@ -68,9 +68,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~164, worktree `C:/dev/wk-harvst-164`, branch `wk-AMGT_HARVST-164`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~163`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~161` and `infra/aws/ec2/opal-gateway/app` (the AC2 list reads the gateway file; its omission skipped a test in `cg-5`).
 - **SENT:** with the round-92 recut.
 
+**COMPLETE 2026-10-18T01:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~164` (worker, haiku, high), branch `wk-AMGT_HARVST-164`, feature `807907d445`, proof `c2392557c9`; merged `04be089e13` (safe-merge fast lane, index check 0 of 7). Diff read by this seat: `gather_items` skips a row listed in `typed.MISFILED_REPORTS` (both keys), raises `ValueError` for any other row without `fund_relation`, and gives an item the row's fund only when `fund_relation == "holding"` (None otherwise); `METHOD_VERSION` `"2"`; the docstrings; one fixture line in `test_fund_form.py` (`"fund_relation": "holding"`); 7 new offline arms with a mutant.
+- **AC1 PASS:** `7 passed` (worker; re-run here). **AC2 PASS:** `80 passed` (re-run here). **AC3 PASS:** `CENSUS-FUND-FORM funds=2 reports_before=139 reports_after=115 dropped_nonholding=22 dropped_misfiled=2 absent_before=210 absent_after=232 gets=364 bytes=25629575` (the issuer's expectation `funds=2 reports_after=115 dropped_nonholding=22` held; **I re-ran `cf3_census.py` myself and its output is identical, line for line**): IDVZ 94 to 82 (the 94 includes the 2 misfiled), PFOE 43 to 33, DIVZ 2 to 0; the 22 non-holding drops are `candidate` 14, `initiate` 2, `interest` 2, `template` 1, `none` 3. Proof instance VALID rc 0 (re-run here).
+- **Rows** `D1-W164-S1` (INERT) corrects a premise of MY order: it said the two misfiled Mexico reports are counted "in KMB's form"; a fund form is per FUND, and their silver rows carry fund `IDVZ` under security key `KMB_US_Equity`, so the baseline counts them in IDVZ (94 before, 92 without them); the cell's effect is unchanged (`dropped_misfiled=2`); `-S2` (INERT): the two misfiled silver rows carry no `fund_relation` key (the rewrite did not re-append them), so the exclusion before the key check is what stops a rebuild raising on them. Both read and accepted.
+- **Named for `HVST-cf-5` and the CTO:** DIVZ gets no `v2` form (no holding report names it); the stored `v1` DIVZ object stays, so `read_latest("DIVZ")` raises `LookupError` and `_run_compare` iterates the stored funds; no dossier build may run between this merge and the `cf-5` write.
+- **What this does NOT prove:** a written fund form or a dossier build that finds one (`HVST-cf-5`).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>92</round>
 <workstream>FUNDFORM-CODE</workstream>
 <slot>dell1</slot>
