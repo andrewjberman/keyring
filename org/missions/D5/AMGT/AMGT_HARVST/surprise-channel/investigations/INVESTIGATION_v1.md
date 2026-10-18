@@ -11316,5 +11316,89 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
          },
          "disposition": "UNDER_INVESTIGATION"
     }
+,
+    {
+         "id": "AMGT_HARVST-D1-W165-S1",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~165",
+         "surfaced_at": "2026-10-18T03:51:22Z",
+         "one_line": "HVST-ch-1 census exhausted the 1500-request budget (guard aborted at 1501 requests, 125,032,896 bytes) before UNH_US_Equity and before the CENSUS-PICKER line; the census is incomplete and AC3 and AC4 cannot be met within the preflight budget.",
+         "class": "BLOCKING",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ch-1 preflight (comp-iam): the census reads bucket opal-data-harvest READ-ONLY within a budget of at most 1500 requests and 500 MiB in all, counted in the census's last line; AC3 needs the CENSUS-PICKER line and AC4 needs the UNH_US_Equity PICK line.",
+         "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165/ch1_census.out holds 67 PICK lines in sorted partition order; the last printed is UBER_US_Equity. The run ends with 'BUDGET-EXCEEDED requests=1501 bytes=125032896 -- aborted'. The count is the wrapper's own (every get, list page and head); 1501 is one request past the cap. No UNH line and no CENSUS-PICKER line were printed. Partitions with a current-version candidate print nothing, so the number of partitions processed is not printed and the per-partition cost is not separately measured. The census wrapper refuses every write and none was issued. Budget remaining for this worker: zero; no further S3 read was made after the abort. The 95 partitions (PARTITIONS n=95) were not all processed.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165/ch1_census.out (worktree; uncommitted at filing, base 4fae3115a1)",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165/ch1_census.py (worktree; uncommitted at filing, base 4fae3115a1)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
+,
+    {
+         "id": "AMGT_HARVST-D1-W165-S2",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~165",
+         "surfaced_at": "2026-10-18T03:51:22Z",
+         "one_line": "ch1_census.py prints key[:8] of the full S3 key (amgt/har) in every PICK line instead of the first 8 characters of the object name; the old=, new= and gateway= identifiers are unusable as printed, while the version integers and new_equals_gateway (compared on full keys) are not affected.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ch-1 cell (c): each PICK line shows old=<first 8 characters of the key>/<method_version integer>, the key being the object's content-hash name (example: UNH old=28404359/3).",
+         "world_is": "Every PICK line in org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165/ch1_census.out reads old=amgt/har/..., new=amgt/har/... and gateway=amgt/har/... because the script slices the full S3 key, not its basename. Defect in the census script, not in the library or the data. A corrected re-run needs budget this worker no longer has.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165/ch1_census.py (worktree; uncommitted at filing, base 4fae3115a1)",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165/ch1_census.out (worktree; uncommitted at filing, base 4fae3115a1)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
+,
+    {
+         "id": "AMGT_HARVST-D1-W165-S3",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~165",
+         "surfaced_at": "2026-10-18T03:51:22Z",
+         "one_line": "substrate._pick_stored keeps a second fallback by key order, sorted(docs)[-1] (line 158), when no stored object's inputs match; it is outside CTO ruling @162d5a6934 and was not changed; the count of securities that reach it is NOT MEASURED because the census aborted.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ch-1 cell (d): name the second fallback by key order in substrate._pick_stored (line 158) in one INERT row and print no_input_match=<n> over the census partitions.",
+         "world_is": "lib/research/corpus/substrate.py:158 reads 'key = sorted(docs)[-1]' at base 4fae3115a1; left unchanged by this order. Among the 67 partitions the census printed, no NOINPUT line appeared, so zero of those had no input-matching object. The census aborted (see AMGT_HARVST-D1-W165-S1) before the NO-INPUT-MATCH line, so no_input_match is NOT MEASURED for the full set of 95 partitions.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "lib/research/corpus/substrate.py:158 (base 4fae3115a1)",
+                   "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~165/ch1_census.out (worktree; uncommitted at filing)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
+,
+    {
+         "id": "AMGT_HARVST-D1-W165-S4",
+         "project": "AMGT_HARVST",
+         "fabric": "dell1",
+         "surfaced_by": "0.9.0_WK_AMGT_HARVST~165",
+         "surfaced_at": "2026-10-18T03:51:22Z",
+         "one_line": "The investigation schema named by the channel rule, org/surprise_channel/schemas/investigation_item.schema.json, is not present in this worktree; this row follows the shape of the rows already in the file.",
+         "class": "OBSERVATION",
+         "hazard_standing": "INERT",
+         "spec_asserts": "TO-HVST-ch-1 surprise rule: a row per org/surprise_channel/schemas/investigation_item.schema.json.",
+         "world_is": "At base 4fae3115a1 the worktree has no org/surprise_channel/ directory (ls returns 'No such file or directory' for the folder and its schemas/ subfolder). The row is written in the fields and class/hazard values already used by the rows of this file (class OBSERVATION or BLOCKING; hazard INERT or ARMED). The gate .tools/surprise-row-gate.py is present and validates the row at commit.",
+         "grounding": {
+              "status": "GROUNDED",
+              "evidence": [
+                   "org/surprise_channel/ (absent at worktree base 4fae3115a1)",
+                   "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md (rows AMGT_HARVST-D1-S52 and earlier)"
+              ]
+         },
+         "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
