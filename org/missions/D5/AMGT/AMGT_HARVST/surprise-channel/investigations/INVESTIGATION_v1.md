@@ -13025,5 +13025,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         }
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W182-S5",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~182",
+        "surfaced_at": "2026-10-18T19:20:00Z",
+        "one_line": "HVST-cn-6 commit: safe-commit printed a naming-gate ERROR for a missing function-map folder and still committed the Lambda files.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order HVST-cn-6 and the commit mechanics: every commit passes .tools/safe-commit.sh and its gates; a gate that refuses is a blocking condition.",
+        "world_is": "The commit of the cell's Lambda files (d8f55a32ac, the build commit) printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-harvst-182\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' and then committed: the folder is absent from this worktree at ac2fc0e108. The gate did not refuse the commit, so its verdict on the Lambda files of this cell is not recorded.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "safe-commit output of d8f55a32ac: the [naming-gate] line and the commit line",
+                "infra/aws/lambda/ci/function-map/ absent in the worktree at ac2fc0e108 (directory listing of infra/aws/lambda/ shows no ci/ folder)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
