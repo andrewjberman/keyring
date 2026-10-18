@@ -1,6 +1,6 @@
 # AMGT_HARVST -- ROUND 98 ANALYSIS, ADDENDUM 2: the refresh host, and the round-100 consumer cell (`1.0.0_SA_CTO~DELL1`, 2026-10-18 ~17:4xZ)
 
-## 1. The host of cm-4 (the schedule), ruled on the CRO's research
+## 1. The host of cn-4 (the schedule, held in round 99), ruled on the CRO's research
 
 **Input:** `4.0.0_SA_CRO~DELL1`, `RESEARCH_AMGT_HARVST_DOSSIER_REFRESH_HOST_20261018.md` @25586b74c0 (msg 8189).
 
