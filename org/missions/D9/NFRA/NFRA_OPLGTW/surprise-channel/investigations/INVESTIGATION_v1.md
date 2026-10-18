@@ -28208,3 +28208,33 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer and the CTO before OG-pr-1: a host check at graph.call, or at the two unguarded nextLink sites, would make the sink safe by construction rather than by caller discipline. Not a cell of this order; no product file was changed."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T02:05:00Z",
+  "id": "NFRA_OPLGTW-Z-S384",
+  "one_line": "Round-42 ruling on worker rows Z-W143-S1, Z-W145-S1 and Z-W145-S2: OG-en-27, OG-en-28 and OG-sec-1 verified and drained (9c8f21f8cd, 26090b1a17, 92d4fbd5e4); the SSRF audit reads CLEAN (0 of 18 controllable) with two denominator and hardening notes carried",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W143-S1",
+    "NFRA_OPLGTW-Z-W145-S1",
+    "NFRA_OPLGTW-Z-W145-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my runs in the main tree: en27.AC1 PASS (the three db3 tests pass in a copy outside any git repository; 0 git tokens in the body of test_ogdb3_ac03), the named db3 tests 3 of 3, proof VALID; en28.AC1 PASS (12 distinct codes listed of the 16 the adapter and the core REFUSALS table can set, the 6 adapter codes all present, tools.py lines added 5 and deleted 5), the five-file tool/catalog set 29 of 29 in both orders, proof VALID; sec1.AC1 PASS (18 of 18 matched call sites listed, 0 controllable, verdict CLEAN consistent), proof VALID, 0 files outside the project tree",
+      "my own read of the SSRF audit's riskiest rows: graph.call builds url = path if path starts with 'http' else GRAPH_BASE + path (graph.py:52); every caller in tools.py builds the path from a leading-slash f-string (for example '/me/messages/{id}', '/sites/{site_id}/drive/items/{item_id}/workbook') and the three variable 'path' callers (tools.py:576, 652, 712) are built the same way or are Graph's own nextLink; no tool argument becomes the scheme or host. The two PyJWKClient JWKS fetches (identity.py:44, 115) take their URL from config (CF_ACCESS_TEAM_DOMAIN, VA_JWKS_URL), not from a request"
+    ]
+  },
+  "spec_asserts": "OG-sec-1: every outbound-call line the pattern finds is a row and any caller-controllable target is a STOP on OG-pr-1; OG-en-28: the absent_reason codes are documented with the line count of tools.py unchanged.",
+  "world_is": "Z-W143-S1: the five client_* docstrings are one line each and the line-count rule forbids adding a line, so each code is a segment of the tool's one line instead of its own line: the order's 'one line each' is met as 'one sentence each'; accepted. Z-W145-S1: the audit's pattern misses the two PyJWKClient fetches at identity.py:44 and 115, so the real denominator is 20, not 18; both targets are config-sourced (checked above) so the verdict stands, and the gap is carried as a pattern note for any later audit. Z-W145-S2: graph.call sends the bearer token to any absolute URL it is given and two callers follow Graph's nextLink with no host check (tools.py ~1158, asker_scope.py ~276); the next link is issued by Graph, not by a caller, so this is a hardening note (pin the host to graph.microsoft.com) and not a controllable target.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "All three are observations that change no verdict: the code documentation meets the intent in the only form the line-count rule allows; the two uncounted JWKS fetches are config-sourced; the nextLink follow is Graph-issued. The graph host pin is carried as a round-43 candidate (a one-line guard in graph.call and the two nextLink callers), not a blocker for the listener."
+}
+```
