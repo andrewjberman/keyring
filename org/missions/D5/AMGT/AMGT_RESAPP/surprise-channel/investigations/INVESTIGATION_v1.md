@@ -31874,3 +31874,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not changed in this receipt-only re-seat. The issuer rules whether M6 should keep the real read_thesis_bundle path and whether M7 should raise inside read_management."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W522-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~522",
+  "surfaced_at": "2026-10-18T13:56:13Z",
+  "one_line": "AMGT-ca-3 places the export's Thesis pillars section after 'the export's own summary section', but the rich export has no summary section: its drafted sections are Recommendation, Company Description, Investment Thesis and Risks and Considerations.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@129afa54ec (line 1391, _DRAFTED_SECTIONS: recommendation, company_description, investment_thesis, risks, ceo_bio; no summary entry)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round119_prep/fixtures/bz_served_thesis_ICT_PM.json@129afa54ec (drafting_status ABSENT and drafted_sections [] on the printing names; the same on all eight names in the census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order AMGT-ca-3 section 1, the rule to build: the export prints a Thesis pillars section after the export's own summary section and before its risks section, the position the PDF has (Summary, Thesis pillars, Risks and considerations).",
+  "world_is": "The export has no summary heading. Placed as built: when drafting is SERVED, the section sits immediately before the '## Risks and Considerations' heading (after the Investment Thesis section); when drafting is not SERVED, which is every fixture, it sits immediately after the single '## Investment Thesis' block that says no drafted prose is yet on file, and before '## Management/Board'. The PDF's Summary has no export counterpart to measure against.",
+  "notes": "Form only. Not changed: the section takes the order's stated position (before Risks); the Summary wording is the order's, which the export does not carry. The issuer rules whether a summary heading is expected in the export."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W522-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~522",
+  "surfaced_at": "2026-10-18T13:56:13Z",
+  "one_line": "The census field 'the thesis_pillars block's status' names a key the served block does not carry: the thesis_pillars block has no status key on any of the eight names; the fill's own status is SERVED on all eight.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round119_prep/fixtures/bz_served_thesis_ICT_PM.json@129afa54ec (ai_fill.blocks.thesis_pillars keys: block_id, citations, grounding, machine_written, model_call, opal_inputs, reason, source_class, text, validation; no status key)",
+      "lib/research/print/render_pack.py@129afa54ec (line 993, _cleared_passage gates on ai_fill.status == SERVED, source_class, text and validation, never on a block status)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order AMGT-ca-3 section 1 step B: the census records, for each of the eight names, the thesis_pillars block's status, source_class and validation state, verdict and checked_at.",
+  "world_is": "The block has no status field, so the census reads the fill's status (SERVED on all eight), the block's source_class (WEB_SEARCH on ICT PM, GOOGL US and ICICIBC IN; NONE on the other five) and validation (CLEARED, PASS, 2026-10-16T16:52:04Z on all eight). The census table in the receipt states this in its header.",
+  "notes": "Form only. Not changed: the census records the fields the gate reads; the order's word 'status' is taken as the fill's status. The issuer rules whether the census should name a different key."
+}
+```
