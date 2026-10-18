@@ -10,7 +10,7 @@
   "coo_lane": "2.0.0_SA_COO~R1",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
-  "last_updated": "2026-10-17T22:41Z (2.0.0_SA_COO~R1): ROUND 114 issued (bu-1..bu-4), decomposition s.123",
+  "last_updated": "2026-10-18T01:32Z (2.0.0_SA_COO~R1): ROUND 114 drained; PROD 26d998f7, DEV 2612bd72, DEV..PROD 0; pack live; L8 packet to the CVO",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -56,8 +56,8 @@
     "MACRO AMGT ratified 2026-09-10 -- Andrew-direct at the 1.0.0_SA_CTO~Z terminal: 'AMGT is a new macro, short for Asset Management' / 'can get that registered.' / 'AMGT can definitely hold all of this, all of that research and analysis and etc is Asset Management'. Record @1f89e24eac; enum record MACRO_ENUM_RULE24_D5_20260910.md, amended @dfe562ff6c; ratification by 0.0.0_AB_MSTR~Z @1d9e731ba5 on his later imperative word to the register holder.",
     "L1 4.0.0_SA_CRO~Z @19ce7d5b4d (v2). L2 endpoint 1.0.0_SA_CTO~Z @3bc8f5f2c4 -- FWD-13 and FWD-14 ADDED at L2 and accepted without reservation by the brief's author (msg 21001) as its own gaps. L3+L4 this commit."
   ],
-  "phase": "ROUND 114 EXECUTING on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.123 from the CTO's round-113 R1-track analysis, msg 7763): bu-1 (Peers subject currency), bu-2 (page dates, census first), bu-3 (pack dates), bu-4 (grid scroll cue) cut from PROD d1bed0fb; bu-5 (landing) and bu-7 (the pack served, a never-widen pair) placed; W503-S1 not cut (decision b). Round 113 closed MAY-CLOSE (PROD d1bed0fb, DEV eb2c7b20, DEV..PROD 0).",
-  "blocking": "the four round-114 workers, then the CTO's approval rows, merge-forward, one chosen-set promote (H2), the byte tie and the fold-back waiver; the never-widen pair for bu-7; bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
+  "phase": "ROUND 114 DRAINED on dell1 (issuer 2.0.0_SA_COO~R1; decomposition s.123; round-close-check MAY-CLOSE), awaiting the CVO's slug and the CTO's round-114 analysis. Shipped: the three Security Analysis features on PROD 26d998f7 (portal-v2.1.239, DEV 2612bd72, DEV..PROD 0, live site tied by bytes) and the printed pack's long-form dates live on opal-amgt-scoped-api (CodeSha256 RY998VO4.., the issuer's own 8-pack comparison YES).",
+  "blocking": "the CVO's slug and the CTO's round-114 analysis (carried to round 115: W506-S5's verbatim-quote census, the four deferred date bypasses, the rich export's ISO days); bp-5 (G4) Mon 2026-10-19 after the 11:30Z fire; A4 step 1 not before Tue 2026-10-20; the Lusha plan tier (Andrew); row S57 (portal manager)",
   "threads": [],
   "thread_counter": 0,
   "placement": "DELL1",
