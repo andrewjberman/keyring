@@ -60,11 +60,12 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Authority: the CTO's round-95 analysis (`ledger/ROUND_ANALYSIS.round95.md` @031ac46589, msg 8025) section 3 item 3 and enrichment item 1.
 - Chain A of round 96: this cell, then `HVST-ck-2` (the union-read change, same worker queue `~172`), then the release `HVST-ck-3` (seat SC1, DEFINED and held).
 - Slot ~172, worktree `C:/dev/wk-harvst-172`, branch `wk-AMGT_HARVST-172`. **Sparse set at provision (checked against `<paths>` and the files named in the face this time): `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `infra/aws/ec2/opal-gateway/app`, `infra/aws/ec2/opal-gateway/tests` and `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~171`** (for the `cj1`, `cj2` and `cj6` scripts and outputs).
+- **COMPLETE (issuer, 2026-10-18 ~12:3xZ):** worker `~172` merged-pending on `wk-AMGT_HARVST-172` (`c151b694b1`, proof `9766f0c1cf`, VALID). I RE-RAN `ck1_census.py` myself from the worker's worktree (913 requests, read-only): the output is byte-identical to the committed `ck1_census.out` (git reports no change), final line `CENSUS-PATHKEY slash_keys=2 prefixes=13 cells=26 raw_objects=40 canonical_objects=80 same_name=40 same_name_differ=6 gets=913 bytes=4902522`. Read: 13 distinct prefixes (not 8); raw is a subset by name of canonical in every cell (raw_only=0); the line double-counts `input_ledger.json` (distinct 38/78/38/4 per the worker's disclosure; I read the PAIR lines: 4 distinct differing pairs, each with the CANONICAL object newer: peers `2026-09-24T2252Z.json` raw 09-24 vs canonical 10-02; `input_ledger.json` raw 09-25 vs canonical 10-17). Rows `D1-W172-S1` (INERT) and `-S2` to `-S5` (ARMED, disarm owner me): they stay ARMED until the union read is SERVED and shows the canonical object for each pair. Not established: WHY the pairs differ (the worker read no reason); that a differing legacy object holds nothing the canonical lacks (the union serves canonical only for these names).
 - **SENT:** with the round-96 issuance.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>96</round>
 <workstream>PATHKEY-CENSUS</workstream>
 <slot>dell1</slot>
