@@ -1,9 +1,9 @@
-"""MDPF_DEMQUE DQ-t-70 criterion AC2 (site Z; date-gated to the 2026-10-17 fire of the standing drawer task, 14:00Z): read the real actuals ledger.
-Amended 2026-10-17 ~04:4xZ by the issuer: every ETFS_RIVALS-C1 request carries a draw_hold (CTO msg 7279), so surface C has no open request; the fire is graded on
+"""MDPF_DEMQUE DQ-t-70 criterion AC2 (site Z; date-gated to the 2026-10-24 fire of the standing drawer task, 14:00Z): read the real actuals ledger.
+Amended 2026-10-18 ~14:2xZ by the issuer: DATE-GATE MOVED from the 2026-10-17 fire to the 2026-10-24 fire (14:00Z). The 10-17 fire read FIRE-BAD (stopped on an empty window; Z-S6) and the 10-18 fire drew 0 history cells (the history probe of /cusip/662858FV6 returned 0 rows, so every history request was refused; Z-S8): the property this arm grades, a surface-budget fire drawing past the history ceiling, was stopped upstream both times. Both FIRE-BAD reads stay recorded on the order. Earlier amendment 2026-10-17 ~04:4xZ by the issuer: every ETFS_RIVALS-C1 request carries a draw_hold (CTO msg 7279), so surface C has no open request; the fire is graded on
 the surfaces that do draw. FIRE-OK when, over the rows dated 2026-10-17 on channel history: (1) the rows of surface-tagged jobs (a row's own "surface" member,
 else the surface of the request file of the job) sum to MORE than 5858; (2) each surface's cells are at most its budget in bbg_allowance.json budgets.surfaces;
 (3) all rows of the day (every job, history and reference) sum to at most budgets.daily_total; (4) no row of the day carries a stop_reason naming a vendor limit
-(the words limit or warning, any case). Else FIRE-BAD <why>. At the base (no fire yet): FIRE-BAD no surface-tagged cells drawn on 2026-10-17.
+(the words limit or warning, any case). Else FIRE-BAD <why>. At the base (no fire yet): FIRE-BAD no surface-tagged cells drawn on 2026-10-24.
 Run from the repository root.
 """
 from __future__ import annotations
@@ -15,7 +15,7 @@ import sys
 MISSION = os.path.join("org", "missions", "D8", "MDPF", "MDPF_DEMQUE")
 LEDGER = os.path.join(MISSION, "ledger", "BBG_ACTUALS.jsonl")
 ALLOW = os.path.join("data", "mdpf", "scripts", "demque", "bbg_allowance.json")
-DAY = "2026-10-17"
+DAY = "2026-10-24"
 
 
 def surface_of(row: dict):

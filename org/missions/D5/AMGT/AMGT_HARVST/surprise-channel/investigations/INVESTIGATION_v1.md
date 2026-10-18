@@ -12181,6 +12181,38 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         },
         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-S61",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "2.0.0_SA_COO~W1",
+        "surfaced_at": "2026-10-18T14:20:15Z",
+        "one_line": "Rows D1-W171-S4, D1-W171-S6 and the four census rows D1-W172-S2 to -S5 are disarmed: after HVST-ck-3 (deployed 14:07:06Z, ledger CLOSED 14:17:24Z) the path-component tools serve the canonical object for a slash key in either spelling and the coverage tool returns equal objects per dataset for both spellings, by my own reads of BP/_LN_Equity and BP-SLASH-_LN_Equity and SC1's reads of NG.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "D1-W171-S4 (disarm owner 2.0.0_SA_COO~W1): the peers, posture, scores, filings, drafting, management, model-block and publication-link tools read the caller's spelling and both spellings are stored; D1-W171-S6: coverage differs between the spellings; D1-W172-S2 to -S5: four same-name pairs (peers 2026-09-24T2252Z.json and packs/<key>/input_ledger.json, BP and NG) differ in bytes between the raw and the canonical spelling.",
+        "world_is": "My own reads through the live gateway after the ck-3 deploy, 14:10Z to 14:13Z: harvest_get_peers_and_scores for BP/_LN_Equity and BP-SLASH-_LN_Equity returned the SAME peers_key peers/v1/BP-SLASH-_LN_Equity/2026-10-11T1125Z.json (12 members), scores scores/v1/BP-SLASH-_LN_Equity.json and posture posture/v1/BP-SLASH-_LN_Equity/2026-09-16.json, with stored_spelling canonical for all three; harvest_security_coverage for both spellings returned the SAME objects per dataset (peers 10, derived/model_block 25, packs 1 with ledger_entries 17 and stored_spelling packs/input_ledger.json canonical, scores 2, posture 1, filings 1, raw/bloomberg 2; gold 39, bronze 73, derived 25, state 19); harvest_get_filing_analysis returned the same absent record (no analysis object; stored_spelling empty) for both. SC1's ck3_served.out reads the same for NG and the four spellings of the research record whole. WHAT EACH ROW'S EVIDENCE IS: S4 and S6: the readers; the coverage equality is read directly. The two ledger pairs (packs input_ledger.json for BP and NG): coverage serves the canonical ledger in both spellings (stored_spelling canonical, 17 entries). The two peers pairs (name 2026-09-24T2252Z.json): that name is not the newest in either spelling, so no tool serves it in either spelling; the only reader of the pair by name is the union rule (canonical wins), proved by the offline test of ck-2 (arm 2 and its mutant) and not by a served read. NOT CLOSED, carried: the writer side of the CTO's ruling: the pull_enqueue Lambda writes packs/<raw key>/status.json (D1-W173-S1 and -S3, INERT; no raw status object is stored, no raw-spelling write after 2026-09-25) is the round-97 Terraform cell; no migration of the legacy raw objects was made or proposed; the 13:02Z BP bestdata, model block and ledger writes are not this release's.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "my harvest_get_peers_and_scores and harvest_security_coverage reads of BP/_LN_Equity and BP-SLASH-_LN_Equity, 2026-10-18 14:10Z to 14:13Z",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round96/ck3_served.out and ck3_deploy.out",
+                "org/critical_paths/change_management/20261018T1334Z_harvst-ck3-gateway-union-read-release_deploy_completion.md (CLOSED 14:17:24Z)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out and ck2_replay.out",
+                "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ck-3.the-gateway-reads-the-path-component-prefixes-of-a-slash-key-as-a-union.md"
+            ]
+        },
+        "adjudicates": [
+            "AMGT_HARVST-D1-W171-S4",
+            "AMGT_HARVST-D1-W171-S6",
+            "AMGT_HARVST-D1-W172-S2",
+            "AMGT_HARVST-D1-W172-S3",
+            "AMGT_HARVST-D1-W172-S4",
+            "AMGT_HARVST-D1-W172-S5"
+        ],
+        "disposition": "DISMISSED_WITH_REASON",
+        "dismissal_reason": "The hazards are removed in the live gateway by HVST-ck-3 (deployed 14:07:06Z, ledger CLOSED 14:17:24Z, 922ee425fe): for a slash key in either spelling the path-component tools serve the canonical object (the union of the canonical and the legacy raw prefix, the canonical winning a same-name collision) and the coverage tool returns equal objects per dataset, shown by my own served reads of BP/_LN_Equity and BP-SLASH-_LN_Equity (same peers object, same scores and posture, same coverage counts, stored_spelling canonical) and by SC1's reads of NG. What the reads do NOT show: the two peers pairs (name 2026-09-24T2252Z.json, BP and NG) are not served by name by any tool, so they rest on the offline arm of ck-2 (the canonical object wins a collision, with its mutant); the pull_enqueue Lambda still writes the raw spelling of a slash ticker (D1-W173-S1 and -S3, INERT, no raw status object stored) and is the round-97 Terraform cell; no migration of legacy raw objects was made. This dismissal restates the evidence of world_is."
     }
 ]
 ```

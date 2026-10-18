@@ -31874,3 +31874,178 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not changed in this receipt-only re-seat. The issuer rules whether M6 should keep the real read_thesis_bundle path and whether M7 should raise inside read_management."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W522-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~522",
+  "surfaced_at": "2026-10-18T13:56:13Z",
+  "one_line": "AMGT-ca-3 places the export's Thesis pillars section after 'the export's own summary section', but the rich export has no summary section: its drafted sections are Recommendation, Company Description, Investment Thesis and Risks and Considerations.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@129afa54ec (line 1391, _DRAFTED_SECTIONS: recommendation, company_description, investment_thesis, risks, ceo_bio; no summary entry)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round119_prep/fixtures/bz_served_thesis_ICT_PM.json@129afa54ec (drafting_status ABSENT and drafted_sections [] on the printing names; the same on all eight names in the census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order AMGT-ca-3 section 1, the rule to build: the export prints a Thesis pillars section after the export's own summary section and before its risks section, the position the PDF has (Summary, Thesis pillars, Risks and considerations).",
+  "world_is": "The export has no summary heading. Placed as built: when drafting is SERVED, the section sits immediately before the '## Risks and Considerations' heading (after the Investment Thesis section); when drafting is not SERVED, which is every fixture, it sits immediately after the single '## Investment Thesis' block that says no drafted prose is yet on file, and before '## Management/Board'. The PDF's Summary has no export counterpart to measure against.",
+  "notes": "Form only. Not changed: the section takes the order's stated position (before Risks); the Summary wording is the order's, which the export does not carry. The issuer rules whether a summary heading is expected in the export."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W522-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~522",
+  "surfaced_at": "2026-10-18T13:56:13Z",
+  "one_line": "The census field 'the thesis_pillars block's status' names a key the served block does not carry: the thesis_pillars block has no status key on any of the eight names; the fill's own status is SERVED on all eight.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round119_prep/fixtures/bz_served_thesis_ICT_PM.json@129afa54ec (ai_fill.blocks.thesis_pillars keys: block_id, citations, grounding, machine_written, model_call, opal_inputs, reason, source_class, text, validation; no status key)",
+      "lib/research/print/render_pack.py@129afa54ec (line 993, _cleared_passage gates on ai_fill.status == SERVED, source_class, text and validation, never on a block status)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order AMGT-ca-3 section 1 step B: the census records, for each of the eight names, the thesis_pillars block's status, source_class and validation state, verdict and checked_at.",
+  "world_is": "The block has no status field, so the census reads the fill's status (SERVED on all eight), the block's source_class (WEB_SEARCH on ICT PM, GOOGL US and ICICIBC IN; NONE on the other five) and validation (CLEARED, PASS, 2026-10-16T16:52:04Z on all eight). The census table in the receipt states this in its header.",
+  "notes": "Form only. Not changed: the census records the fields the gate reads; the order's word 'status' is taken as the fill's status. The issuer rules whether the census should name a different key."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W520-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~520",
+  "surfaced_at": "2026-10-18T14:06:46Z",
+  "one_line": "The order's premise that the six null-profile names print `CEO public profile: no public profile is on file yet.` does not hold: at the base only TSM US prints that line; the other five print a cleared machine passage, which holds the CEO line's place by rule R6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@62d2e724a3 _print_management: the CEO-profile line prints only when no machine-written passage printed (base lines 1110-1117)",
+      "lib/research/print/tests/fixtures/bz_served_thesis_ICT_PM.json: ai_fill.blocks.mgmt_bio source_class WEB_SEARCH, validation CLEARED; the same holds for GOOGL_US, ICICIBC_IN, KMB_US (mgmt_recent) and RIO_LN (mgmt_team_view)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 (AMGT-ca-1): the six names RIO LN, ICT PM, GOOGL US, ICICIBC IN, KMB US and TSM US print the CEO line `CEO public profile: no public profile is on file yet.`.",
+  "world_is": "Only TSM US prints that line at the base. RIO LN, ICT PM, GOOGL US, ICICIBC IN and KMB US print a cleared machine passage and no CEO line. The cell's test C1 asserts the new sentence for TSM US and the no-line rule for the five; no expectation was moved.",
+  "notes": "Form only. The rule (R6) is unchanged by this cell. The issuer rules whether the six-name premise is restated in the CTO's analysis."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W520-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~520",
+  "surfaced_at": "2026-10-18T14:06:46Z",
+  "one_line": "The pack takes the CEO-profile state from the object (the reader called on ceo_public_profile), not from the served ceo_profile_reading label, because the served label is the old reader's output and says UNREADABLE_OBJECT for a null profile.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py (this cell) _ceo_profile_sentence: calls scoped_amgt.ceo_profile_reading(management.get('ceo_public_profile')) and ignores management.ceo_profile_reading",
+      "lib/research/print/tests/fixtures/bz_served_thesis_RIO_LN.json: management.ceo_public_profile null and ceo_profile_reading.reading UNREADABLE_OBJECT (served before this cell)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 (c): _ceo_profile_sentence prints FROM THE STATE; the reader's served label is the state the reader serves.",
+  "world_is": "The served label is stale until AMGT-ca-5 redeploys the reader. The pack and the export agree with each other now; the served label and the pack disagree until ca-5. The portal page reads the served label, so it shows the old wording for a null profile until the page carries the NOT_WRITTEN word (the issuer carries the page wording to the CTO).",
+  "notes": "Form only. ARMED: the disarm owner is the issuer, who decides the page wording and the redeploy order. The served label is not edited here (no deploy)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W520-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~520",
+  "surfaced_at": "2026-10-18T14:06:46Z",
+  "one_line": "At the base, the pack raises AttributeError on a served ceo_public_profile that is a string: _ceo_profile_sentence calls .get on it, so the PDF and the export both fail for that name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@62d2e724a3 _ceo_profile_sentence (base line 971-973): profile = management.get('ceo_public_profile') or {}; profile.get('ceo_name') raises for a str",
+      "lib/research/print/tests/test_ca1_ceo_three_states.py C2 at the base: AttributeError: 'str' object has no attribute 'get' (dry run, .scratch/ac1_base.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1: the reader returns UNREADABLE_OBJECT for any non-dict, and the sentence prints the state (a failed read prints 'could not be read').",
+  "world_is": "A non-dict, non-null profile crashes the pack at the base instead of printing a state. This cell's render change removes the crash (the state is read before any field is taken). No served object of that shape was observed in the eight fixtures.",
+  "notes": "Form only. Fixed in this cell by the state read; recorded because the order did not name the crash."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W520-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~520",
+  "surfaced_at": "2026-10-18T14:06:46Z",
+  "one_line": "Order item (e) prints the served ceo_bio sentences in the rich export, which the AMGT-ro-1 comment in render_pack.py said the page has no surface for; the export now prints them as the PDF does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@62d2e724a3 _management_markdown docstring (base lines 1754-1762): NO ceo_bio drafted-section narrative here (AMGT-ro-1)",
+      "lib/research/print/tests/test_ca1_ceo_three_states.py C8: a served ceo_bio sentence prints in the export and the no-bio sentence does not"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 (e) W518-S3: the export's management section counts the served ceo_bio the PDF counts, so the bio prints on both surfaces.",
+  "world_is": "The export now prints the served ceo_bio sentences inside its Management section. The ro-1 rationale (the page has no surface for the narrative) is not met by this change, and the PDF already prints the same sentences.",
+  "notes": "Form only. The issuer rules whether the ro-1 exclusion stands for the export generally or only for the no-bio gate."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W520-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~520",
+  "surfaced_at": "2026-10-18T14:06:46Z",
+  "one_line": "The order's pointer for the producer's default absence_class (enrich.py about lines 417-436) is elsewhere: that range is the SERP-module loader; the default is CEO_PROFILE_NOTHING_FOUND at enrich.py:517, set at :536-538.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/management/enrich.py@62d2e724a3 line 517: CEO_PROFILE_NOTHING_FOUND = 'NOTHING_FOUND'",
+      "lib/research/management/enrich.py@62d2e724a3 lines 536-538: ceo_public_profile initialises absence_class to CEO_PROFILE_NOTHING_FOUND"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 (a)-(b): verify at enrich.py about lines 417-436 that the producer's default absence_class is NOTHING_FOUND.",
+  "world_is": "The default is NOTHING_FOUND, as the order assumed, at lines 517 and 536-538. The verification was made at those lines; R4 of the new reader tests asserts the default's consequence.",
+  "notes": "Form only. No behaviour depends on the pointer; the fact it verifies holds."
+}
+```
