@@ -31496,3 +31496,104 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "ARMED: a served source or definition carrying a path reaches the printed Appendix raw. Disarm: the issuer rules whether the figure-line segments join _plain_reason in a later cell, and measures the served source values before that cell."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W515-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~515",
+  "surfaced_at": "2026-10-18T10:12:00Z",
+  "one_line": "Order R2 expects the export's ICT PM Market cap and Enterprise value lines to print PHP and USD; the export table prints a measured money amount with no currency code, and rule (2) with control R3 leave measured rows unchanged, so the code cannot be added to them without a ruling.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/test_by2_rich_export_rules.py@wk-AMGT_RESAPP-515 test R2: asserts the measured ICT PM Market cap and Enterprise value lines keep their amounts and carry no PHP or USD code",
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-515 _figures_table: a measured row renders render_figure_line(fig) verbatim; the ICT PM row reads 1735465117699.9998 ABSOLUTE (full currency units) with no code",
+      "lib/research/print/tests/fixtures/by2_base_pdf_figure_lines_ICT_PM.json: the PDF prints Market cap: PHP 1,735,465.1 million, so the PHP and USD expectation is the PDF's, not the export table's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 4 R2: ICT PM -- Net debt withheld, Market cap prints PHP, Enterprise value prints USD (the rich export).",
+  "world_is": "The export table prints measured money rows as render_figure_line gives them, with no currency code (base and after). Rule (2) keeps every row other than the withheld ones unchanged, and control R3 requires the GOOGL US money rows byte-identical to base, so a PHP or USD code on a measured row is not reachable within the order's bounds.",
+  "notes": "Form only. R2 is graded on what the table can carry: Net debt withheld, the measured amounts unchanged, no code the figure does not carry. The issuer rules whether measured money rows of the export take the figure's own code."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W515-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~515",
+  "surfaced_at": "2026-10-18T10:12:00Z",
+  "one_line": "Order rule (4) names _model_cases_markdown among the export's currency-labelled texts; its case lines take the header CRNCY as the case currency when a case carries no quote_currency (the page's caseCurrency rule, AMGT-rs-1), and no export path calls it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-515 _case_currency: returns the CRNCY passed by the caller when the case carries no own quote_currency (AMGT-rs-1 wording, byte-identical to the page's caseCurrency)",
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-515 build_rich_text: no call to _model_cases_markdown or _model_case_line (AMGT-av-2 class 4 removed the cases section from the export)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 rule (4): the export's currency-labelled text (_model_cases_markdown and the table) names no currency code the figure does not carry.",
+  "world_is": "The case rule is the page's own (AMGT-rs-1). Changing it here would alter pinned case lines outside the one-assertion re-scope bound. The export carries no case line, so no export text borrows a code through this function.",
+  "notes": "Form only. Export unaffected in this cell. The issuer rules whether the case rule is amended (the page's caseCurrency) or the function is kept for its own tests only."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W515-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~515",
+  "surfaced_at": "2026-10-18T10:12:00Z",
+  "one_line": "Order section 2 bound 2 says do not edit lib/research/api/scoped_amgt.py, while section 1 and the paths block name the rich branch of _print_pack as this cell's region; the rich branch was edited and no other function of the module was.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-by-2.the-rich-export-follows-the-packs-rules-plain-sentences-withheld-figures-guarded-readers.md section 2 bound 2 and section 1 Region you own",
+      "lib/research/api/scoped_amgt.py@wk-AMGT_RESAPP-515 _print_pack: only the fmt == rich branch changed (four guarded reads)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 2 bound 2 (do not edit scoped_amgt.py) and section 1 region (the rich branch of _print_pack in scoped_amgt.py).",
+  "world_is": "The two statements conflict on that file; the paths block grants it. The rich branch was edited under the region reading, and the PDF branch was not touched.",
+  "notes": "Form only. Recorded so the issuer confirms the reading. The description read is the fourth reader the rich branch calls and is guarded too (rule 3: every reader the rich route calls)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W515-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~515",
+  "surfaced_at": "2026-10-18T10:12:00Z",
+  "one_line": "Order R5 bars an UPPER_SNAKE field code outside a figure's own mnemonic column; every measured Header and fiscal row still carries its own code segment in the Rendered cell, and the Model Notes REFUSED line starts with the row mnemonic. R5 is graded with the own code treated as legitimate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@wk-AMGT_RESAPP-515 _figures_table: the Rendered cell is render_figure_line(fig) verbatim for every row not withheld",
+      "lib/research/print/tests/test_by2_rich_export_rules.py@wk-AMGT_RESAPP-515 test R5: the Mnemonic cell and the row's own code are the only UPPER_SNAKE tokens allowed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 4 R5: no UPPER_SNAKE token in the export outside a figure's own mnemonic column (state which columns legitimately carry a mnemonic and test that).",
+  "world_is": "The rich Rendered cell keeps the figure's code segment (for example CUR_MKT_CAP (definition)), which the PDF's _plain_figure_line removes. Nothing else in the export carries a field code for the three names after this cell.",
+  "notes": "Form only. The issuer rules whether the rich Rendered cell drops its code segment, as the PDF does, or keeps it as the figure's own code."
+}
+```
