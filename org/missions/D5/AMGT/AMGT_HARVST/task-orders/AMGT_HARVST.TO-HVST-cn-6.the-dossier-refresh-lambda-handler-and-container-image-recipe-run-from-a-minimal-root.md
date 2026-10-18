@@ -1,0 +1,73 @@
+# AMGT_HARVST task order -- `HVST-cn-6` -- ROUND 99, workstream REFRESH-HOST: THE DOSSIER-REFRESH LAMBDA HANDLER AND ITS CONTAINER-IMAGE RECIPE (A DOCKERFILE AND PINNED REQUIREMENTS) ARE BUILT AND PROVEN TO RUN FROM A MINIMAL ROOT (NO IMAGE IS BUILT, NOTHING IS DEPLOYED) (CTO round-98 addendum 3 @7b67389f70: a container-image Lambda, no import surgery)
+
+<!-- ===================== WORKER FACE -- the worker's whole context ===================== -->
+
+<to_id>AMGT_HARVST.TO-HVST-cn-6.the-dossier-refresh-lambda-handler-and-container-image-recipe-run-from-a-minimal-root</to_id>
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
+<owned_cells>HVST-cn-6</owned_cells>
+</decomp_ref>
+<issued_to>0.9.0_WK_AMGT_HARVST~182</issued_to>
+<issued_by>2.0.0_SA_COO~W1</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: RUN at L5 -- no schedule is created, changed or run; the handler is called by tests and by one local probe only.
+comp-iam: RUN at L5 -- LOCAL code and OFFLINE tests, plus ONE READ-ONLY S3 probe (step e) through `lib.research.harvest.store._default_client()`: list and get under `amgt/harvest/` in `opal-data-harvest`, never a `put`. NO `docker`, NO image build or push (this box has no Docker), NO ECR or Lambda call, NO `terraform`, NO `pip install`, NO write outside `<paths>`, NO Bloomberg, NO model call. You do NOT edit any file outside `<paths>`, in particular no file under `lib/`.
+comp-adversary: RUN at L5 -- the adversary is a handler that WRITES by default (the default is a dry run; a write needs the event to say so), a handler that swallows a failing census (a non-zero return or an `errors>0` census must make the invocation FAIL, not return 200), a Dockerfile that uses `:latest` or an unpinned requirement, a Dockerfile that copies the whole repository (the image carries only what the refresh needs), a COPY set that works only because the probe ran from the repo root (the probe runs from a MINIMAL ROOT that holds only the COPY'd files), a hand-typed S3 address or resource name (this cell adds NONE), a test that passes whatever the code does (it has a mutant), and a handler that triggers itself or loops.
+</preflight>
+
+## 0. THE CELL
+
+The CTO ruled that the daily dossier refresh runs as a **container-image AWS Lambda** (the driver's import closure is 287 MB, over a zip Lambda's 250 MB cap; `HVST-cn-4`, `deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.out`). This cell builds the three LOCAL pieces: the **handler**, the **Dockerfile** and the **pinned requirements**, and proves the handler runs from a **minimal root** holding only what the image would COPY. It builds no image and deploys nothing: the image build, the ECR repository, the function and the schedule are later cells (a seat's, under their own pair). The driver is `lib/research/corpus/dossier_refresh.py` (merged `56bacbc853`, amended by `HVST-cn-1`): read its module docstring, `main(argv)`, `census_line` and the flags `--only`, `--write`, `--require-trading-day`, `--manifest`; its final lines are `REFRESH-CENSUS names=<n> written=<n> would_write=<n> unchanged=<n> no_new_model_block=<n> no_today_model_block=<n> skipped_allowed=<n> skipped_guard=<n> errors=<n> mode=<dry-run|write>` or `REFRESH-SKIPPED not_a_trading_day`, or `REFRESH-STOPPED budget-exceeded ...` with exit code 2.
+
+## 1. THE BUILD (LOCAL code; about 120 product lines)
+
+Work in your worktree. Change only the files named in `<paths>`. Run every script from the repo root of YOUR worktree.
+a. **Read first:** `lib/research/corpus/dossier_refresh.py` (the whole `main`), `infra/aws/lambda/research/pull_enqueue/lambda_function.py` (the estate's Lambda handler shape in this folder family), `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.out` (the `PKG` lines name each third-party distribution with its version and the `lib` modules in the closure), and `infra/aws/terraform/ycharts-pipeline/lambdas.tf` lines 60-100 (a container-image Lambda in this estate; you write NO Terraform).
+b. **Write `infra/aws/lambda/research/dossier_refresh/handler.py`** with `lambda_handler(event, context)`: it builds the argument list for `dossier_refresh.main`: **the default is a DRY RUN** (no `--write`); `--write` is added ONLY when `event.get("mode") == "write"`; it always adds `--require-trading-day` and `--manifest /tmp/dossier_refresh_manifest.txt`; `event.get("trading_day_check", True)` false drops `--require-trading-day` (for tests and canaries only; the scheduled event never sets it); `event.get("only")`, a list of names, adds `--only <comma-joined>` (for tests and canaries). It runs `main(argv)` with stdout teed to a buffer AND to the real stdout (Lambda logs capture stdout), takes the LAST line of the buffer that starts with `REFRESH-CENSUS` or `REFRESH-SKIPPED` or `REFRESH-STOPPED`, and returns `{"rc": <int>, "mode": "write"|"dry-run", "census": "<that line>"}`. **It RAISES `RuntimeError` carrying the census line** when `main` returns a non-zero code, when no such final line exists, or when the census has `errors` above 0 (a failing invocation, never a quiet 200). No other behaviour: no loop, no self-trigger, no retry.
+c. **Write `infra/aws/lambda/research/dossier_refresh/Dockerfile`** (text only; nothing is built): `FROM public.ecr.aws/lambda/python:3.12` (a pinned tag, never `latest`); `COPY` the requirements and `RUN pip install --no-cache-dir -r requirements.txt`; `COPY` the handler to `${LAMBDA_TASK_ROOT}/handler.py`; `COPY` ONLY what the refresh reads (see e: `lib/trading_calendar.py` and the `lib/research/` tree, plus every non-Python data file the run reads, found by the probe); `CMD ["handler.lambda_handler"]`. The Docker build context is the REPOSITORY ROOT (state that in a comment: the build is run as `docker build -f infra/aws/lambda/research/dossier_refresh/Dockerfile .`). Every `COPY` source line must be one line with a plain relative path (the probe reads them).
+d. **Write `infra/aws/lambda/research/dossier_refresh/requirements.txt`**: one `name==version` line per third-party DISTRIBUTION in `cn4_closure.out`'s `PKG` lines (a distribution once, with that exact version), EXCEPT `boto3` and `botocore` (the Lambda base image provides them). Add NO line that the `PKG` lines do not name.
+e. **Write `infra/aws/lambda/research/dossier_refresh/cn6_rootfs_probe.py`** and run it once (foreground): it reads the Dockerfile's `COPY` lines (the ones whose destination is under `${LAMBDA_TASK_ROOT}` or `/var/task`), copies exactly those sources into a fresh temporary directory laid out as the image root (`handler.py` at its top, `lib/...` beneath), then runs, in a SUBPROCESS whose current directory is that temporary directory, whose `PYTHONPATH` is that directory alone, and which is started with `python -I`-style isolation of the repository (the repository root must NOT be on `sys.path`; print `sys.path` and `os.getcwd()` as the first line of the probe's output, as `ROOTFS-ENV cwd=<dir> repo_on_path=<yes|no>`; `yes` is a STOP): `import handler; print(handler.lambda_handler({"mode": "dry-run", "only": ["UNH_US_Equity", "PBR_US_Equity"]}, None))`. This is a READ-ONLY dry run against the real bucket for TWO names. A `FileNotFoundError` or `ImportError` names a file or module the COPY set lacks: add that file to the Dockerfile's COPY lines (a data file) and re-run, until it passes; print every such iteration as `ROOTFS-FIX added=<path>`. The probe makes TWO calls and prints both. Call 1: `{"mode": "dry-run", "only": ["UNH_US_Equity", "PBR_US_Equity"]}` (the handler passes `--require-trading-day`; on a non-trading day such as a Sunday it correctly ends `census=REFRESH-SKIPPED not_a_trading_day` with `rc=0`, which is a valid result for that call). Call 2: the same event plus `"trading_day_check": false` (which drops `--require-trading-day`), so that the real dry-run path is exercised on any day; call 2 must end `ROOTFS-DRY rc=0 census=REFRESH-CENSUS names=2 written=0 ... errors=0 mode=dry-run`. Stdout of the probe goes to `cn6_rootfs.out` (open it with `newline="\n"`).
+f. **Write `infra/aws/lambda/research/dossier_refresh/test_cn6_handler.py`** (offline, `main` monkeypatched, no S3): arms: (1) an empty event gives a DRY RUN (the argv has no `--write`); (2) `{"mode": "write"}` adds `--write`; (3) `{"mode": "WRITE"}` or any other value is a DRY RUN; (4) `--require-trading-day` and the `/tmp` manifest are always present, and `trading_day_check: false` drops only the former; (5) `only` becomes `--only a,b`; (6) a `main` returning 2 raises `RuntimeError` carrying the last census line; (7) a census with `errors=1` raises; (8) no final census line raises; (9) the return value for a good run is `{"rc": 0, "mode": ..., "census": ...}`; (10) the Dockerfile text has no `:latest`, has exactly one `CMD ["handler.lambda_handler"]`, no `COPY . ` or `COPY ./ ` of the whole repository, and `requirements.txt` has no line without `==` and no `boto3`/`botocore`; (11) **A MUTANT:** with the handler's default flipped to write (the test patches the function that builds the argv), arm (1) FAILS (assert that it does).
+g. Do not edit `dossier_refresh.py`, any file under `lib/`, any existing file, or the order. A surprise is a row; keep working.
+
+<paths>
+infra/aws/lambda/research/dossier_refresh/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~182/
+org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+## PROOF OF SPEC (each invocation LITERAL)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="HVST-cn-6"><invocation>python -m pytest infra/aws/lambda/research/dossier_refresh/test_cn6_handler.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^\d+ passed in</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-cn-6"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~182/cn6_rootfs.out</invocation><expect>(?s)ROOTFS-ENV cwd=\S+ repo_on_path=no.*ROOTFS-DRY rc=0 census=REFRESH-CENSUS names=2 written=0 .* errors=0 mode=dry-run</expect></criterion>
+</proof_of_spec>
+
+- AC1 is the built behaviour with its mutant (arm 11 is part of the criterion). AC2 is the minimal-root run: `repo_on_path=no` proves the repository root was not on the path and `written=0 ... mode=dry-run` proves the default writes nothing. **If a line reads otherwise (for example `errors` above 0), DO NOT edit the expectation, the code or the run to match: print the actual line, add a row and report.**
+- The checker reads `<expect>` as a regular expression. **Dry-run at the base (issuer, dell1, 2026-10-18 ~19:1xZ):** both FAIL as expected (no test file, no output file). If your base differs, say so and do not weaken a pattern.
+- **LINE ENDINGS:** edit so `git diff --stat` reads only what you changed; check it before you commit. The commit gate (ruff and the naming gate) may refuse a file; fix the file, never force the commit. Write ASCII only.
+- A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. Your first row id is `AMGT_HARVST-D1-W182-S1`. The channel file has MIXED line endings and is append-only: READ ITS TAIL for the id sequence, append a row by BYTES and check the diff reads only insertions. If the row gate refuses your commit on the pre-existing duplicate `AMGT_HARVST-Z-S106` pair, put `# surprise-row-override: pre-existing duplicate AMGT_HARVST-Z-S106 pair at HEAD (1.0.0_SA_CTO~DELL1 msg 1310); this commit adds only my row` in the message body AND run the gate against your row WITHOUT the override first.
+- INSTANCE NAMED EXACTLY
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~182/AMGT_HARVST.TO-HVST-cn-6.the-dossier-refresh-lambda-handler-and-container-image-recipe-run-from-a-minimal-root.proof_of_spec.json`
+  with `to_id` `AMGT_HARVST.TO-HVST-cn-6.the-dossier-refresh-lambda-handler-and-container-image-recipe-run-from-a-minimal-root` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cn-6.the-dossier-refresh-lambda-handler-and-container-image-recipe-run-from-a-minimal-root.md`. Pin every artifact row to its commit.
+  Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` from the root of YOUR worktree and report its last line.
+- Put commentary on its own line in the instance's `output_evidence`, never on the matched line.
+- Run every script from the repo root of YOUR worktree. Commit with `.tools/safe-commit.sh`. Do not edit this order file: the issuer flips its status.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER NOTES:**
+- Authority: the CTO's round-98 addendum 3 (@7b67389f70, msg 8215): a container-image Lambda, run by digest, names from the builder, the image size printed at build, the same image ports to Fargate. THIS cell is the LOCAL half: handler, Dockerfile, requirements, a minimal-root proof. THE REST IS NOT THIS CELL'S AND IS NOT YET CUT: the image BUILD (this box has no Docker; the estate's pattern for a build without a local daemon is CodeBuild, `infra/aws/globgrph/build-derive-image.sh` and `derive-build.tf`; the digest and the printed size come from that act), the ECR repository and the function and the EventBridge schedule `cron(0 10 ? * MON-FRI *)` America/New_York (Terraform, `safe-apply`, names from `lib/opal_naming.py`), under their own never-widen pair (cell `HVST-cn-5`, a seat), after `cn-3`'s wall time.
+- Decomposition section 138 gave `cn-6` the handler and zip build; the CTO's ruling changes zip to image: the cell's content is this order's (an issuer's re-cut of its own held cell; the section is appended in the commit that cuts this order).
+- A worker cannot run Docker here; the minimal-root probe is the substitute proof that the COPY set is sufficient. It does NOT prove the Linux wheels work (not tested here).
+- **Risk class WORLD by the gate's floor, not by effect:** the gate infers a floor from `<paths>` and refuses LOCAL for a path under `infra/` (spine v3.19 L6); the cell DEPLOYS nothing and calls no AWS write. The workstream is `REFRESH-IMAGE`, not `REFRESH-HOST`, because the gate keys one issuer per (round, workstream) and `REFRESH-HOST` already holds `cn-4`; the two have disjoint write surfaces. The class asks me for the one real run of the outcome at close: I re-run the minimal-root probe myself.
+- Dry run at the base: both criteria FAIL as expected.
+
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
+<status>pending</status>
+<round>99</round>
+<workstream>REFRESH-IMAGE</workstream>
+<slot>182</slot>
+<fabric>dell1</fabric>
