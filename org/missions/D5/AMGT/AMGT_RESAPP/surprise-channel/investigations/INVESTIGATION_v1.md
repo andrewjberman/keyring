@@ -31849,3 +31849,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not changed: the order's byte-identical control covers the line. The issuer rules whether an absent source takes the fixed sentence."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W518-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~518",
+  "surfaced_at": "2026-10-18T12:40:37Z",
+  "one_line": "The tests M6 and M7 of AMGT-bz-2 cannot fail on the reader they name: M6 stubs read_thesis_bundle to return one bundle object for both routes, and M7 raises at read_thesis_bundle, one call above read_management.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/tests/test_bz2_rich_route_management_input.py@e65cd904da (line 56) the stub replaces read_thesis_bundle with a lambda that returns the one bundle object for both routes, so the M6 equality holds by construction",
+      "lib/research/api/tests/test_bz2_rich_route_management_input.py@e65cd904da (line 115) M7 replaces read_thesis_bundle with a raising function; the call that reaches read_management is lib/research/api/scoped_amgt.py@e65cd904da (line 4321), one level below it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 tests M6 (the rich and pdf routes hand the builder the SAME management object: monkeypatch the readers, compare the objects the two builders receive) and M7 (with the management reader raising, both routes print the same absence sentence).",
+  "world_is": "M6 cannot detect a divergence between the two routes' reads: the stub gives both routes one object and the spy compares that object with itself. M7 raises above read_management, so the management reader's own raise is not run; the guard both routes share (lib/research/api/scoped_amgt.py at 7877-7881 and 7927-7931) is what it exercises. Both tests pass at HEAD (42 passed in the AC1 run).",
+  "notes": "Form only. Not changed in this receipt-only re-seat. The issuer rules whether M6 should keep the real read_thesis_bundle path and whether M7 should raise inside read_management."
+}
+```
