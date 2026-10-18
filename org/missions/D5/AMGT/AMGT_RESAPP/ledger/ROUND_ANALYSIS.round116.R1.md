@@ -45,3 +45,18 @@ swept: 13 dismissed and 4 sent to REMEDIATION_v56.
    FWD-5 ACCEPT line.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 1 -- item 3's grade corrected (R1 msg 7935, 2026-10-18 ~06:3xZ)
+
+R1 read the live `/thesis`. RIO LN's `CUR_MKT_CAP`, `NET_DEBT`, `CURR_ENTP_VAL` and `CRNCY_ADJ_MKT_CAP` carry no currency of their own,
+with `currency_basis` UNMEASURED. The page withholds them (`StatTile.tsx` `formatStatValue`, `HeaderCards.tsx` `withheldReason`): a dash,
+with the hover "Bloomberg does not confirm this figure's currency".
+
+No USD is served, so "RIO LN's USD figures print USD" in item 3 was wrong. The rule stands: currency by the page's rule. The grade is now:
+- RIO LN's pack withholds those four figures with the page's reason;
+- ICT PM prints PHP;
+- GOOGL is the control.
+
+The CVO was told (msg 7938).
+
+-- 1.0.0_SA_CTO~DELL1
