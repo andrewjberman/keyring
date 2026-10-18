@@ -28633,3 +28633,51 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~155",
+  "surfaced_at": "2026-10-18T12:34:09Z",
+  "id": "NFRA_OPLGTW-Z-W155-S1",
+  "one_line": "OG-ev-9: the audit lake holds one gw_ratelimit row in the last 24 h (2026-10-17T17:21:43Z) and none dated 2026-10-18 through 12:13Z, though the cell reports an identity 429 on 2026-10-18",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lake count run at 2026-10-18T12:13Z by 0.9.0_WK_NFRA_OPLGTW~155 (boto3 list and get_object, read-only; script .scratch/ev9_count.py): 11301 record objects in the window, 0 failed, 1 gw_ratelimit row, principal hash 9e7f3e39, ts 2026-10-17T17:21:43.844740+00:00, count_in_window 120, retry_after_s 57; a cross-check over every record found the same single rate_limited row",
+      "dt=2026-10-18 partition: 5717 keys listed; latest key audit/dt=2026-10-18/2026-10-18T12:06:18.960977+00:00-0b53d443.jsonl; 0 gw_ratelimit rows",
+      "writer at infra/aws/ec2/opal-gateway/app/ratelimit.py@581ee61977:245-248 swallows a failed refusal write and counts it in process memory only (audit_failure_count at lines 202-204)"
+    ]
+  },
+  "spec_asserts": "Every per-identity 429 writes one gw_ratelimit audit row through the same sink as every other record (ratelimit.record_identity_refusal -> audit.log_ratelimit -> _emit, which ships to the S3 lake when AUDIT_S3_BUCKET is set), so a refusal the issuer saw on 2026-10-18 is countable in the lake.",
+  "world_is": "The lake holds one gw_ratelimit row in the 24 h window and none dated 2026-10-18 through 12:13Z, while the lake keeps writing that day (latest key 12:06Z). The 2026-10-18 identity 429 that the cell reports is not in the lake. Not explained: a failed best-effort S3 put (counted in process memory only, with no lake-side counter), a refusal served by a gateway host whose AUDIT_S3_BUCKET differs, or a different refusal from the one reported. The trace records the lake count as read and does not infer the 429 from it; no change made.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~155",
+  "surfaced_at": "2026-10-18T12:34:09Z",
+  "id": "NFRA_OPLGTW-Z-W155-S2",
+  "one_line": "OG-ev-9: comp-estate names no audit-lake bucket (resource audit resolves to m365-mcp and observability chains only, opal-mcp is SUBJECT_ABSENT); the bucket was read from the repository",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-estate --resource audit -> 2 chains (m365-mcp-gateway-ec2 in-scope, ops-infrastructure-monitors explicit-out); comp-estate --resource opal-mcp -> SUBJECT_ABSENT_FROM_CORPUS over 135 chains; comp-estate --definitions -> registry unreadable, infra/system/ontology/SYSTEM_DEFINITIONS.yaml absent from this worktree",
+      "bucket opal-mcp-audit read at infra/aws/ec2/opal-gateway/deploy-to-ec2.sh@581ee61977:512 (AUDIT_S3_BUCKET) and infra/aws/terraform/opal-gateway/audit-lake.tf@581ee61977:18"
+    ]
+  },
+  "spec_asserts": "The audit lake is findable through the project registry (comp-estate), so the cell's trace names it without guessing a bucket.",
+  "world_is": "The registry holds no row for the audit lake; the name comes from the deploy environment and the Terraform declaration. The bucket name is not yet confirmed against a registry row. Not a hazard: the lake read used the repository's declared name and printed counts only.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
