@@ -64,6 +64,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-bx-1"><invocation>cd C:/dev/wk-resapp-512 &amp;&amp; timeout 300 python -m pytest lib/research/print/tests/test_bx1_summary_positioning.py -q -p no:cacheprovider --color=no; echo "exit=$?"</invocation><expect>the pytest summary line reads `8 passed` or more with 0 failed and 0 skipped, S1 to S8 each present by name, and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-bx-1"><invocation>cd C:/dev/wk-resapp-512 &amp;&amp; timeout 580 python -m pytest lib/research/print/tests -q -p no:cacheprovider --color=no 2&gt;&amp;1 | grep -E "^FAILED|passed|failed" | sed "s/ - .*//"</invocation><expect>exactly one FAILED line, `FAILED lib/research/print/tests/test_av2_export_equals_page.py::test_pdf_text_carries_no_field_code_and_names_every_line_in_words` (it fails at the base as well: the base reads `1 failed, 146 passed`), and the summary reads `1 failed, P passed` with P at least 183</expect></criterion>
+  Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~512/AMGT_RESAPP.TO-AMGT-bx-1.the-pack-summary-reads-the-served-recommendation-and-no-state-sentence-names-a-path-or-an-order.proof_of_spec.json`.
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -78,7 +79,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Items 1 and 2 of the CTO's round-116 analysis (`ledger/ROUND_ANALYSIS.round116.R1.md`). The served source is read from the live `/thesis` of the three names at ~06:3xZ (`dossier_fields.last_stated_position` SERVED with a cited extract on all three); the gateway's `harvest_get_research` reads the same served field. LOCAL code cell; served only through `AMGT-bx-5`.
 
-<status>pending</status>
+<status>complete</status>
 <round>117</round>
 <slot>0.9.0_WK_AMGT_RESAPP~512</slot>
 <fabric>dell1</fabric>
