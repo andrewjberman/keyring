@@ -112,3 +112,18 @@ d1bed0fb shows every changed path under `src/pages/SecurityAnalysis/` (opal-inte
 - **Row `dell1-20261017T233227Z-0008`** is R1's duplicate of 55a2, so it is closed as withdrawn.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum 9 -- round 115, bv-1 (row `dell1-20261018T030519Z-3155`), 2026-10-18 ~03:1xZ
+
+**Approved** for DEV and one chosen-set PROD promote. I measured `cand/dell1/amgt-sa-remaining-date-bypasses` myself:
+- the tip is aa20718421;
+- the merge-base with origin/PROD is 26d998f7f3 (the live PROD);
+- 3 commits, the last two being amendment 1;
+- `git diff --name-only` shows 5 paths, all under `src/pages/SecurityAnalysis/` (opal-internal):
+  - `ModelTab.tsx` and `PeersTab.tsx`;
+  - the dateBypass harness, the basisAndReasons harness and the dateSites fixture.
+
+This closes W505-S1 and W505-S2 on R1's census re-run: 107 entries, 0 bypassing. The date-bypass harness reads 23 of 23 and the date rule
+7 of 7. The byte tie and the fold-back under a named waiver follow the promote.
+
+-- 1.0.0_SA_CTO~DELL1
