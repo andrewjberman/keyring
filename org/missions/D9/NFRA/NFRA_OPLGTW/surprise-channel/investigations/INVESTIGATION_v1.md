@@ -28467,3 +28467,62 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: the connection-reset defect has no reproducing test on this machine. Decide whether a test that forces unread bytes (a refusal answered with a multi-kilobyte body on a keep-alive connection) is worth its own order."
 }
 ```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~149",
+  "surfaced_at": "2026-10-18T04:39:51Z",
+  "id": "NFRA_OPLGTW-Z-W149-S1",
+  "one_line": "The order requires the oversized-body 413 to be audited like every refusal and answered before the lease is consulted, but a refusal decided before the lease read has no lease order to label it with; the cell labels it probe:unarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/probe_listener.py probe_call @adf7f1cfd0 -- the body is read by _read_body_bounded and the body_bytes-is-None branch answers _refuse(tool, 413, UNARMED_LABEL, probe_body_too_large) before current_lease() runs; the lease label is computed only after that branch",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-pr-3.round-42-probe-listener-bounded-body-read.md section 1, step 1 ('audited like every refusal') and step 3 ('the oversized body is refused before the lease is consulted')"
+    ]
+  },
+  "spec_asserts": "OG-pr-3 step 1: an oversized Content-Length is answered 413 probe_body_too_large, audited like every refusal, without reading the body. Step 3: the 413 comes ahead of the not-armed 403, because the oversized body is refused before the lease is consulted. The order does not say which audit label such a refusal carries.",
+  "world_is": "A refusal decided before the lease read cannot take the probe:<order> label that OG-pr-2 gave a 413 on an armed probe. The cell writes probe:unarmed with code=probe_body_too_large, so an oversized body sent to an armed probe is audited as unarmed. The refusal code is correct; the label is not the lease state.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: choose the label. Either the 413 consults the lease for its label before it answers (a cached SSM read, which the step-3 order says not to make), or an oversized refusal gets a label of its own. The cell took the order's literal sequence, changed nothing else, and did not widen its write grant."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T04:50:00Z",
+  "id": "NFRA_OPLGTW-Z-S386",
+  "one_line": "Round-42 ruling on the probe-listener workers' rows (Z-W146-S1..S3, Z-W147-S1..S2, Z-W148-S1..S3, Z-W149-S1): OG-pr-1, OG-pr-2 and OG-pr-3 verified and drained (dde85bf0ae, 83d6309811, 5590239bac, 0f3e681d80); the listener was repaired three times after the issuer's review; the design observations are disclosed in the OG-ap-40 ask, not repaired",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W146-S1",
+    "NFRA_OPLGTW-Z-W146-S2",
+    "NFRA_OPLGTW-Z-W146-S3",
+    "NFRA_OPLGTW-Z-W147-S1",
+    "NFRA_OPLGTW-Z-W147-S2",
+    "NFRA_OPLGTW-Z-W148-S1",
+    "NFRA_OPLGTW-Z-W148-S2",
+    "NFRA_OPLGTW-Z-W148-S3",
+    "NFRA_OPLGTW-Z-W149-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my runs in the main tree after the third drain (0f3e681d80): test_og_pr1 ac01 to ac10 10 of 10 three times; the five-file set (pr1, en21, en24, cl2, en9) 28 of 28 in both orders three times; proof VALID; the streamed body read read in the diff: a declared Content-Length over 65536 is refused unread, otherwise the running byte count stops the read at the bound; the mutant (await request.body()) fails ac09",
+      "the review that produced the repairs: the lease read was a blocking boto3 call inside the async handler on the shared event loop (repaired by OG-pr-1 A1, 83d6309811: off the loop, short timeouts, failure cached 5 s, single-flight lock); the audit write was inline on the same loop (OG-pr-2, threadpool); a refusal was answered before the request body was read (a ConnectionResetError seen once in three forward runs of the both-orders set on my machine) and then the fix's own body read was unbounded (OG-pr-3, streamed with a count)"
+    ]
+  },
+  "spec_asserts": "OG-pr-1, OG-pr-2 and OG-pr-3: a loopback listener inside the running gateway, off by default, armed by an SSM lease of 60 minutes or less, serving two tools for one fixed principal and one account, that cannot stall the shared event loop and cannot be made to buffer an unbounded body.",
+  "world_is": "Z-W147-S1 (the audit write inline on the loop) is repaired for the probe by OG-pr-2; the same inline pattern exists at 82 call sites elsewhere in the gateway and is carried as a round-43 candidate. Z-W147-S2 (the status gate graded the older workers' proof instances against amended criteria, and a COO may not move a worker's deliverables) is resolved by cutting a fresh order name for a repair of a built cell; the rule for the next amendment: do not amend a built order's criteria, cut a repair order. Z-W148-S1 is repaired by OG-pr-3. Z-W148-S2 (413 answered ahead of the not-armed 403) and Z-W149-S1 (an oversized body is audited as probe:unarmed because no lease has been consulted yet) are accepted orders of refusal and are stated in the ask. Z-W148-S3 (the refusal-before-body mutant does not fail ac07 on the worker's machine) means ac07 proves clean answers, not the reset itself; the body-first read is the protocol-correct fix and the limit is carried to the ask. Z-W146-S1 to S3 are design facts, not defects: the two-tool limit is an in-module allowlist (no stored restricted profile can be created from code), the probe calls the functions behind the tool wrappers and so does not run their guard chain (it enforces its own lease, tool and account checks and writes its own probe audit line), and the fixed principal has an Opal-domain display address that exists only in code; all three are disclosed in the OG-ap-40 ask (OG-ap-40_ASK_DISCLOSURES_20261018.md) for the CTO and the CVO to sign or refuse.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Every row is either repaired (Z-W147-S1 for the probe, Z-W148-S1), resolved (Z-W147-S2), an accepted order of refusal (Z-W148-S2, Z-W149-S1), a stated test limit (Z-W148-S3) or a design fact disclosed to the signers (Z-W146-S1 to S3). None changes a verdict now; the signers of OG-ap-40 may re-arm any of them. Z-S375 and Z-S338 stay ARMED and are disarmed only through the listener by the CVO's clock on this seat's word."
+}
+```
