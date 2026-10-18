@@ -12116,6 +12116,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         },
         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-S58",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "2.0.0_SA_COO~W1",
+        "surfaced_at": "2026-10-18T13:02:02Z",
+        "one_line": "Four same-name pairs of the two slash keys differ in bytes between the raw and the canonical spelling (peers/v1 2026-09-24T2252Z.json for BP and NG; packs/<key>/input_ledger.json for BP and NG); in all four the canonical object is NEWER; the union read of HVST-ck-3 serves the canonical object in both spellings and deletes nothing (the CTO's condition, ONE row before the deploy).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "CTO round-95 analysis section 3 item 3: a same-name pair whose bytes differ is a row (two different objects claiming one name); CTO half of the ck-3 pair (msg 8040): file the four pairs as ONE row before the deploy; a row, not a STOP.",
+        "world_is": "ck1_census.out (re-run by the issuer, byte-identical): BP peers 2026-09-24T2252Z.json raw sha256 639d94f701e0 (9252 bytes, written 2026-09-24T22:53:31Z) against canonical dba3fedd457a (10732 bytes, 2026-10-02T08:34:19Z); NG peers raw 6dad9f83d8f3 (9252, 2026-09-24T22:53:57Z) against canonical 43148c93ab83 (10732, 2026-10-02T08:34:29Z); BP packs input_ledger.json raw 2956f6ca32d4 (1654 bytes, 2026-09-25T04:26:05Z) against canonical 1ad08c8dfb71 (6898, 2026-10-17T13:02:42Z); NG packs input_ledger.json raw 98b758abf9ab (1654, 2026-09-25T04:29:21Z) against canonical bf539477d4b5 (6898, 2026-10-17T13:06:50Z). The worker's rows D1-W172-S2 to -S5 carry one pair each (ARMED, disarm owner the issuer). The reason the pairs differ was NOT read: only that the canonical object is the later write in all four and that the ledger writer ledger.py changed its key form at 8d9adec9f4 (ck4_writers.out), which accounts for the ledger pair only as a reading, not a measurement. The union read (ck-2, merged 5e026fa7f4) serves the canonical object for these names in both spellings; the legacy raw object stays in the bucket and is no longer reachable by name through the gateway. Disarm: the four worker rows are disarmed by the issuer's served read after the ck-3 release, quoting the object_key served for each pair.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~172/ck1_census.out (PAIR lines; issuer re-run, git reports no change)",
+                "org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_CK3_GATEWAY_UNION_READ_RELEASE_CTO_HALF.md @379693fc5b (the condition)",
+                "rows AMGT_HARVST-D1-W172-S2, -S3, -S4, -S5"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
