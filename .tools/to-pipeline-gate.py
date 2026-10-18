@@ -3188,9 +3188,24 @@ def _proof_instance_candidates(root, rel, staged):
         return tagged, None
     if tree:
         import glob as _glob
-        return [c for n in names
-                for c in _glob.glob(os.path.join(root, to_dir[:-len("/task-orders")], "deliverables", "*", n))], None
+        found = [c for n in names
+                 for c in _glob.glob(os.path.join(root, to_dir[:-len("/task-orders")], "deliverables", "*", n))]
+        return _newest_instance_only(root, found), None
     return [os.path.join(root, to_dir.replace("task_orders", "deliverables"), n) for n in names], None
+
+
+def _newest_instance_only(root, found):
+    """The instances to grade. INERT unless armed (flag file org/mcp/proof-newest-instance.enforce, or PROOF_NEWEST_INSTANCE=1):
+    unarmed, `found` comes back unchanged, in the glob's own order, and the first one that exists is graded as it always was.
+    Armed, with two or more, the ONE newest by .tools/proof_instance_select.py (uncommitted, then latest commit time, then ~N)."""
+    import importlib.util
+    helper = os.path.join(os.path.dirname(os.path.abspath(__file__)), "proof_instance_select.py")
+    if not os.path.isfile(helper):
+        return found   # this script was copied away from .tools (a test, a mutant control): grade as before, never crash
+    spec = importlib.util.spec_from_file_location("proof_instance_select", helper)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.select(root, found)
 
 
 def check_complete_flip(root, rel):
