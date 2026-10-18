@@ -53,11 +53,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T14:31:23Z. C-S74 is the disarm row for 
     "owner": "2.0.0_SA_COO~W1",
     "round": "v96",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~W1",
       "round": "v96"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
