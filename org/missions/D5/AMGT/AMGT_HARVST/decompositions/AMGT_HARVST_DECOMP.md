@@ -4478,3 +4478,11 @@ Round 92 closed MAY-CLOSE (CVO `ADJUDICATION_v86.md`, `REMEDIATION_v23.md` @44e5
 - **Fan-out:** `N of M chains, N=2 workers (ch-1, ch-4) of M=3 chains, cap 8`: A (`ch-1` then `ch-2` then `ch-7`), B (`ch-3` then `ch-6`, held on the CTO's answer), C (`ch-4` then `ch-5`). The two worker cells share no write set (`continuation.py` and its tests against `fund_form.py` and its tests).
 - **Checks at the cut (dry-run at the base):** `ch-1` AC1 FAIL as expected (no test file), AC2 PASS as expected (`82 passed`), AC3 and AC4 FAIL as expected (no census file); `ch-4` AC1 FAIL as expected, AC2 PASS as expected (`66 passed`), AC3 FAIL as expected.
 - **Not cut (named):** `ch-2`, `ch-3`, `ch-5`, `ch-6`, `ch-7` as above; the second key-order fallback `substrate._pick_stored` line 158 (outside the CTO's ruling; `ch-1` files a row); the standing candidates of `ledger/ROUND88_ENRICHMENT_CANDIDATES_20261017.md`.
+
+### 123a. ROUND 93 -- item 3 WITHDRAWN by the CTO (addendum 1 of `ledger/ROUND_ANALYSIS.round92.md` @e2dd469994; msg 7877); `HVST-ch-3` and `HVST-ch-6` are not cut (2026-10-18 ~03:4xZ)
+
+The CTO read `harvest_research.py` lines 409-417 and confirmed that `truncated: true` and `omitted_items` already state a truncation; his "silent" framing was wrong; **item 3 is withdrawn, `D1-S50` closes as already stated, `HVST-ch-3` (the new field) and `HVST-ch-6` (its gateway release) leave the round's cell set.** The shown-of-total sentence rides ONLY a gateway release that is due for another reason. (`ce-5`'s wording already rode `HVST-cg-3`; nothing remains to ride.)
+
+- **Fan-out line of section 123 amended:** `N of M chains, N=2 workers (ch-1, ch-4) of M=2 chains, cap 8` (chain A: `ch-1` then `ch-2` then `ch-7`; chain C: `ch-4` then `ch-5`); chain B is withdrawn.
+- **Cells left:** `ch-1` (worker `~165`) and `ch-4` (worker `~166`) CUT; `ch-2`, `ch-5`, `ch-7` DEFINED, NOT CUT as in section 123.
+- **Row `D1-S50`:** closes as already stated (the CVO dispositions it).
