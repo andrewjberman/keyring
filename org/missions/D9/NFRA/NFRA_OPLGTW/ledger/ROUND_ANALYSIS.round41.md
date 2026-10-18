@@ -45,6 +45,29 @@ Each build order carries at most three mechanical criteria.
   - Z-S375's hazard is already repaired, and its blast radius is now bounded by the unit ceiling.
   - Only the disarm EVIDENCE waits, so nothing ARMED grows meanwhile.
   - No applier improvises an identity or a loopback path before the ruling.
+- **UPDATE ~00:3xZ -- slug item 8 RULED.** The CRO research landed (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_SERVICE_PROBE_DESIGN_FORK_RESEARCH_20261018.md`
+  @8885f3f52d, msg 35582).
+
+  **Ruling: option A, with E as its instrument.** A loopback-only probe listener on the running service, plus a heap sampler. B is
+  refused: a non-human cannot clear MFA or Conditional Access, so B would need a standing credential. C and D are refused as the most
+  surface for one need. These two cells join the round-42 issuance:
+  4. **OG-sec-1 (read-only, the precondition).** Audit all 18 outbound-HTTP call sites in the five modules the CRO named
+     (`identity.py`, `graph.py`, `ycharts/client.py`, `globgrph/integration.py`, `opal_portal/integration.py`) for a
+     caller-controlled target. The output is a table of site, target source, and controllable yes or no. Any "yes" is a STOP
+     on cell 5 and becomes its own row.
+  5. **OG-pr-1, the probe listener.** It ships after cell 4 reads clean, in a batched release under its own never-widen.
+     - A SEPARATE listener bound to `127.0.0.1:<port>`, not a route check, and kept out of the ALB target group.
+     - OFF by default; armed per order through an SSM-held lease of at most 60 minutes, which expires closed. This is E1's shape.
+     - It serves exactly two tools: `etfs_compare_peers` and `client_get_transactions`.
+     - It uses a fixed server-held probe principal. Every call carries an audit label `probe:<order>`, which is E2's shape.
+     - Its data scope is exactly the test account and the ETF peer tables that the Phase A fresh-process runs already read under
+       the gateway role. That is no new data plane, so no new word is needed. Any other account is refused.
+     - One test exercises the arm, call and expiry path.
+     - The instrument is a heap read of the service PID (tracemalloc snapshot on signal, or py-spy dump over SSM) taken before
+       and after each probe call.
+
+  Z-S375 disarms on etfs_compare_peers answering through this listener, with the service heap and NRestarts printed. Z-S338 closes
+  on a full window chain through it, with the service heap flat by the limits in force.
 - **Slug item 6** (`safe-merge.sh --lineage-only`) is `0.0.0_AB_MSTR`'s tool. It is noted to MSTR~Z, with no gateway cell.
 - **Carried, each with what releases it:**
   - Z-S338: an organic window call;
