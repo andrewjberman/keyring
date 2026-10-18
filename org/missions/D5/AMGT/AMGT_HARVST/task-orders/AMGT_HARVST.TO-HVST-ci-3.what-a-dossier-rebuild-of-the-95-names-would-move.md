@@ -1,0 +1,72 @@
+# AMGT_HARVST task order -- `HVST-ci-3` -- ROUND 94, workstream DOSSIER-CENSUS: A NO-WRITE CENSUS OF EVERY SERVED FIELD THAT A DOSSIER REBUILD OF THE 95 NAMES WOULD MOVE, WITH EACH CAUSE (CTO round-93 analysis item 2)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<to_id>AMGT_HARVST.TO-HVST-ci-3.what-a-dossier-rebuild-of-the-95-names-would-move</to_id>
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
+<owned_cells>HVST-ci-3</owned_cells>
+</decomp_ref>
+<issued_to>0.9.0_WK_AMGT_HARVST~170</issued_to>
+<issued_by>2.0.0_SA_COO~W1</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: RUN at L5 -- no schedule touched.
+comp-iam: RUN at L5 -- READ-ONLY S3 reads of the bucket `opal-data-harvest` ONLY: list and get under `amgt/harvest/gold/research_dossier/`, `amgt/harvest/gold/research-continuation/`, `amgt/harvest/gold/research-fund-form/`, the silver and bronze objects a dossier build reads, through `lib.research.harvest.store._default_client()`; never `put`, `delete`, `copy`, `sync` or a bare `aws` call. Budget: at most 30000 requests and 3 GiB in all, counted in the census's totals (the continuation census of 78 builds needed 1,215 requests and 116 MiB; a dossier build reads more). NO gold or silver writer is RUN: `dossier.write_one`, `continuation.write_one`, `gold_put` and every `--write` are NEVER run; only `dossier.build` (in memory). NO Bloomberg, NO model call, NO network beyond the S3 client: if `dossier.build` tries one, STOP, file a row and report. NO deploy, NO edit of any source file, NO edit outside `<paths>`.
+comp-adversary: RUN at L5 -- the adversary is a comparator that cannot see a changed field (it has a negative control), a comparator that reports a move where only key order or whitespace differs (compare parsed values, not bytes), a census that compares the build with an object that is NOT the one the gateway serves (use the gateway's `_pick_dossier` rule, copied from `infra/aws/ec2/opal-gateway/app/harvest_research.py` lines 239-255), a `write_one` that slips in beside `build`, a cause assigned from the field's name instead of from the inputs that differ, a census run in one go that dies at the tool's time limit with its output lost (use the slices of step b), and a census whose expectation is edited to match.
+</preflight>
+
+## 0. THE CELL
+
+A dossier (`lib/research/corpus/dossier.py`, `TABLE` `research_dossier`, `METHOD_VERSION` `amgt-corpus-dossier/15`) is built from the substrate's picks and from reads of the harvest; the gateway serves the NEWEST stored dossier of a security (`_pick_dossier`: the greatest `as_of` stamp in the object name, then the greatest `LastModified`, then the key). The dossier object count stayed 1479 through the writes of `HVST-ch-7` (no dossier was written), while the continuation objects of 78 securities were rewritten at method 5 (`HVST-ch-7`), the DIVZ fund form of method 2 was written (`HVST-ch-5`) and the fund forms of IDVZ and PFOE were rewritten at method 2, so a rebuild today may move served fields. **The CTO needs the facts before deciding a rebuild: for each of the 95 securities that have a continuation partition, build the dossier IN MEMORY and list every served field that would move against the stored dossier the gateway serves, with the cause.** This cell writes nothing and changes no source file.
+
+## 1. THE BUILD (a read-only script; no product code)
+
+Work in your worktree. Change only the files named in `<paths>`.
+a. Read `lib/research/corpus/dossier.py` first: `current_inputs(security_key, client=None)` (line 1419), `build(security_key, client=None)` (line 1479) and what the `inputs` of a stored dossier list (each entry's kind or key). Read `deliverables/0.9.0_WK_AMGT_HARVST~168/ch8_census.py` (a read-only census that builds 78 continuations in memory and compares them field by field with the served object): start from it.
+b. Write `ci3_census.py` in your deliverables folder. It takes `--start S --stop E` (a slice of the 95 names, the names sorted, taken from the continuation partition listing under `amgt/harvest/gold/research-continuation/`) and appends its lines to `ci3_census.parts.out`, and `--final`. **Run the slices in the FOREGROUND with `python -u`, at most 20 names per command (5 commands), so no command nears the tool's time limit; run `--final` last.**
+c. Per name (the slice): the SERVED dossier = the stored object of `research_dossier/security_key=<KEY>/` chosen by the gateway's `_pick_dossier` rule (copy it from lines 239-255; read them first; do not call the gateway); the BUILT dossier = `dossier.build(security_key)` in memory (NEVER `write_one`). Compare the two `fields` objects FIELD BY FIELD over the union of the two key sets, as parsed values with `==` (never bytes), and compare `as_of` and the `inputs` lists. Print one line per name: `NAME <security_key> served=<first 8 characters of the object name>/<method_version integer> as_of_served=<date> as_of_built=<date> fields_moved=<n> list=<comma-separated field names or none> input_kinds_differ=<comma-separated kinds or none>` where an input KIND is the dossier's own name for an inputs entry (read `build`; for example a continuation key, a fund-form reference, a Bloomberg pull, an ai_fill object; print the kind exactly as the module names it) and an entry differs when the built list holds an entry the served list does not, or the reverse. Then, for every moved field, one line `DIFF <security_key> <field> cause=<cause> served=<first 70 characters of the served value or absent> built=<first 70 characters of the built value or absent>`.
+d. **The cause** of a moved field is decided from the INPUTS that differ for that name, never from the field's name: `inputs_continuation` when the only differing kinds name the continuation key, `inputs_fund_form` when they name the fund-form reference, `inputs_bloomberg` when they name a newer Bloomberg pull, `as_of` when only the `as_of` stamp differs, a comma-joined set when several kinds differ at once (print them all; do not pick one), and `other` when a field moves and NO input kind differs, or the differing kind is not one of those four (name it). **Every `cause=other` is a row** (file ONE surprise row summarising them, with the reason you can read). Do not guess a reason you cannot read.
+e. **The controls (rule 22: a census needs both).** POSITIVE: print `CONTROL-POSITIVE UNH_US_Equity stored_vs_stored fields_moved=0` after comparing UNH's served dossier with a deep copy of itself by the SAME comparator. NEGATIVE: copy it, change ONE field's value in the copy, compare by the same comparator and print `CONTROL-NEGATIVE UNH_US_Equity planted fields_moved=1`. Print both in `--final`.
+f. `--final` reads `ci3_census.parts.out`, checks that every one of the names appears exactly once (a missing or duplicate name is a STOP: print `PARTS-GAP` and the names), writes the whole result to `ci3_census.out` (open it with `newline="\n"`; the parts file's NAME and DIFF lines, then the controls) and prints as its LAST line, exactly: `CENSUS-DOSSIER-MOVE names=<n> no_stored_dossier=<n> unchanged=<names with fields_moved=0> moved=<names with fields_moved>0> fields_moved=<total> cause_other=<count of DIFF lines with cause=other> gets=<requests over all slices> bytes=<bytes over all slices>` (each slice prints `SLICE start=S stop=E gets=G bytes=B` into the parts file; the totals are their sums). **The issuer expects `names=95`.** The counts are the FINDING: do NOT change anything to make them read 0; print every moved name and field plainly. A name with no stored dossier is counted under `no_stored_dossier` and printed.
+g. If the total would exceed the budget, STOP at the budget, print `BUDGET-EXCEEDED gets=<n>` and file a row. Do not touch any source file. A surprise is a row; keep working.
+
+<paths>
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/
+org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+## PROOF OF SPEC (each invocation LITERAL)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="HVST-ci-3"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.out</invocation><expect>(?m)^CENSUS-DOSSIER-MOVE names=95 no_stored_dossier=\d+ unchanged=\d+ moved=\d+ fields_moved=\d+ cause_other=\d+ gets=\d+ bytes=\d+$</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-ci-3"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.out</invocation><expect>(?m)^CONTROL-POSITIVE UNH_US_Equity stored_vs_stored fields_moved=0$</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-ci-3"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/ci3_census.out</invocation><expect>(?m)^CONTROL-NEGATIVE UNH_US_Equity planted fields_moved=1$</expect></criterion>
+</proof_of_spec>
+
+- AC1 is the shape (and the 95 the issuer expects); its counts are the finding. AC2 and AC3 are the controls: the comparator sees no move where there is none and exactly one where one is planted. **If a control prints another number, DO NOT edit the expectation or the comparator to match: print the actual line, add a row and report.**
+- The checker reads `<expect>` as a regular expression. **Dry-run at the base (issuer, dell1, 2026-10-18 ~05:5xZ):** all three FAIL as expected (`cat` of a file that does not exist). If a base state differs, say so and do not weaken a pattern.
+- A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. Your next row id is `AMGT_HARVST-D1-W170-S1`. The channel file has MIXED line endings and is append-only: append a row by BYTES and check the diff reads only insertions. If the row gate refuses your commit on the pre-existing duplicate `AMGT_HARVST-Z-S106` pair, put `# surprise-row-override: pre-existing duplicate AMGT_HARVST-Z-S106 pair at HEAD (1.0.0_SA_CTO~DELL1 msg 1310); this commit adds only my row` in the message body.
+- INSTANCE NAMED EXACTLY
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~170/AMGT_HARVST.TO-HVST-ci-3.what-a-dossier-rebuild-of-the-95-names-would-move.proof_of_spec.json`
+  with `to_id` `AMGT_HARVST.TO-HVST-ci-3.what-a-dossier-rebuild-of-the-95-names-would-move` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ci-3.what-a-dossier-rebuild-of-the-95-names-would-move.md`. Pin every artifact row to its commit.
+  Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` from the root of YOUR worktree and report its last line.
+- Put commentary on its own line in the instance's `output_evidence`, never on the matched line (a commentary on the matched line breaks the `$` anchor).
+- Run every script from the repo root of YOUR worktree. Commit with `.tools/safe-commit.sh`. Do not edit this order file: the issuer flips its status.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER NOTES:**
+- Authority: the CTO's round-93 analysis (`ledger/ROUND_ANALYSIS.round93.md` @5ef0dd0efd, msg 7921) item 2 ("a no-write census before any decision ... list every served field that would move against the stored dossier, with the cause: a newer Bloomberg pull, as_of, the new continuation key in `inputs`, or other. 'Other' is a row. The rebuild itself is not ordered this round"). The rebuild, if the CTO decides one, goes under its own never-widen pair naming the served moves; this census is that pair's measurement.
+- **The comparison object is the dossier the gateway serves** (the CTO's "stored dossier"); the CTO reads the fields that would move as the gateway's `dossier_fields` entries, and `as_of`, `dossier_key` and `content_sha256` move with any rebuild (a new object). The census compares `fields`, `as_of` and `inputs`; it does not compare `content_sha256` (it changes with any field).
+- Chain B of round 94 (its own worker `~170`: no dependency on chain A; disjoint write set). Slot ~170, worktree `C:/dev/wk-harvst-170`, branch `wk-AMGT_HARVST-170`. Widen the sparse set at provision with `lib/research`, `.claude/agents`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922`, `infra/aws/ec2/opal-gateway/app`, `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~168` and `.../0.9.0_WK_AMGT_HARVST~165`.
+- **Budget reasoning (mine, unmeasured):** 30000 requests and 3 GiB is a ceiling set from the continuation census's 15 requests and 1.5 MiB per name times a guessed factor of 10 for a dossier; the first slice's `SLICE` line measures it, and a worker that sees the first slice would exceed the ceiling stops and reports.
+- **SENT:** with the round-94 issuance.
+
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
+<status>pending</status>
+<round>94</round>
+<workstream>DOSSIER-CENSUS</workstream>
+<slot>dell1</slot>
+<fabric>dell1</fabric>
