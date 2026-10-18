@@ -12807,5 +12807,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W179-S6",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~179",
+        "surfaced_at": "2026-10-18T18:14:40Z",
+        "one_line": "HVST-cn-1 amendment 1 placement: the amendment ranks NO_TODAY_MODEL_BLOCK before NO_NEW_MODEL_BLOCK but does not rank it against the model-block guard; the driver evaluates the guard first, so a name whose guard STOPs reads SKIPPED_GUARD, not NO_TODAY_MODEL_BLOCK.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order 1b (amendment 1): NO_TODAY_MODEL_BLOCK is 'skip and report, write nothing', ranked BEFORE NO_NEW_MODEL_BLOCK. No order text ranks it against SKIPPED_GUARD.",
+        "world_is": "Both statuses skip and write nothing, so the choice changes the label, never the write. Offline arm 3 keeps the guard reading for stamp-not-later and lower-count cases even when the built block is older than today. The measured 95-name run has no NO_TODAY row, so the choice did not bite on the real names.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/dossier_refresh.py@7cb6b9abec refresh_one: the guard STOP branch precedes the today_block_missing branch",
+                "lib/research/corpus/tests/test_dossier_refresh.py@7cb6b9abec test_arm3_guard_stop_skips_and_never_writes"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W179-S7",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~179",
+        "surfaced_at": "2026-10-18T18:14:40Z",
+        "one_line": "HVST-cn-1 amendment 1 gap: the order's NO_TODAY test presumes a landed newest block; a name with no readable block (guard status ABSENT or READ_FAILED) is not NO_TODAY in the driver and is left to the guard, which decides it.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order 1b (amendment 1): 'the name's newest model block is OLDER than 09:00 America/New_York of the run's local date ... skip and report'. No text covers a name with no readable block.",
+        "world_is": "When the record is ABSENT or READ_FAILED the built stamp is None, so today_block_missing returns False. A name that moves model_rows is then SKIPPED_GUARD; a name that moves nothing in model_rows with a SERVED record is not affected. No such name appears in the measured run (every guard status SERVED).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/research/corpus/dossier_refresh.py@7cb6b9abec today_block_missing: returns False when no built_stamp",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~179/refresh_run_dry.out (working file, committed with these rows): no status=SKIPPED_GUARD line carries a missing record"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
