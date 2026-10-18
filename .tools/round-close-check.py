@@ -379,6 +379,20 @@ def read_orders(src, proj_dir: str, rnd, ws) -> list:
     return out
 
 
+def _newest_instance_only(root: str, paths: list) -> list:
+    """The instances proof_state grades. INERT unless armed (flag file org/mcp/proof-newest-instance.enforce, or
+    PROOF_NEWEST_INSTANCE=1): unarmed, `paths` is returned unchanged and the first instance that passes still passes the order.
+    Armed, with two or more, only the ONE newest is graded (.tools/proof_instance_select.py), so an older VALID instance can no
+    longer mask a newer FAILING one."""
+    helper = os.path.join(os.path.dirname(os.path.abspath(__file__)), "proof_instance_select.py")
+    if not os.path.isfile(helper):
+        return paths   # this script was copied away from .tools (a test, a mutant control): grade as before, never crash
+    spec = importlib.util.spec_from_file_location("proof_instance_select", helper)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.select(root, paths)
+
+
 def proof_state(src, order: dict, proj_dir: str, root: str, deep: bool) -> tuple:
     """(ok, reason). Structural by default; --deep adds proof-of-spec-check.py (rc 0 = VALID)."""
     paths = src.glob(pj(proj_dir, "deliverables", "*", order["stem"] + ".proof_of_spec.json"))
@@ -389,6 +403,7 @@ def proof_state(src, order: dict, proj_dir: str, root: str, deep: bool) -> tuple
     if not paths:
         return False, "no proof instance named %s.proof_of_spec.json under deliverables/%s" % (
             order["stem"], " (project tree or the seat's own)" if order.get("seat_dir") else "")
+    paths = _newest_instance_only(root, paths)
     reasons = []
     want = [c["id"] for c in order["criteria"]]
     for path in paths:
