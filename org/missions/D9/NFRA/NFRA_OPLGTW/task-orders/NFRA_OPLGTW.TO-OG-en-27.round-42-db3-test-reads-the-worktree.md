@@ -58,7 +58,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-27.round-42-db3-test-reads-t
 - Round 42, workstream ENRICH-R42-A (decomposition addendum R3-T.119). A test-only cell of the batched release `OG-ap-39`. Carried since `OG-ap-36` as a test defect, not a code defect (nothing runs the suite on the host).
 - Pre-cut: `AC1` base FAIL as expected (the old `ac03` shells out to git and holds `git` in its body); `AC3` passes at the base in the repository (the history exists on trunk), which is why `AC1` is the real oracle.
 
-<status>staged</status>
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-A</workstream>
 <slot>~142</slot>
