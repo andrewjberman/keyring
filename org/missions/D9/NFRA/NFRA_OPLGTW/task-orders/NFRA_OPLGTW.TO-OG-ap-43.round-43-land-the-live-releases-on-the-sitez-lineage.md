@@ -73,7 +73,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-43.round-43-land-the-live-re
 - Chain: independent of the builds; its `dell_sha` may be `OG-ap-42`'s release if that closes first.
 - Pre-cut: `AC1` and `AC2` base FAIL as expected (the record is absent).
 
-<status>staged</status>
+- C4 READ (2.0.0_SA_COO~O, 2026-10-18 ~16:1xZ): merge `eb9a60c0ac` (parents `011a4c7bde`, dell1's `922ee425fe`; 2 add/add conflicts in my own `probe_listener.py` and `test_og_pr1.py`, resolved to trunk's blobs), drained to `box/sitez` as `b1e92a9635`; `ap43.AC1` PASS (with the repaired `_ap43_check.py` `a24674dd4d`; the applier's first AC1 'no' was my check's defect, row `Z-S393`, ruled `Z-S394`), `ap43.AC2` PASS (manifest `922ee425fe` / previous `6575999df5`, source dell1's `52b93de111`), `ap43.AC3` PASS (125 `app/` files against live; 5 trunk-own files listed, all SITE-Z-OWN: `admin_people_access`, `destructive_ops`, `family_depth`, `graph`, `probe_listener`), the applier's `ap43.AC4` PASS (66 both orders); the proof instance carries all four rows and is VALID (rc=0) on my run in the main tree. `3b94a83e05`, `6575999df5` and `922ee425fe` are now ancestors of `box/sitez`. Gate limb: none graded this flip.
+
+<status>complete</status>
 <round>43</round>
 <workstream>ENRICH-R43-A</workstream>
 <slot>~AE</slot>
