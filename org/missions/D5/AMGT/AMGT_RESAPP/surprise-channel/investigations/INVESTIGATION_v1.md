@@ -30422,3 +30422,81 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. If the CTO rules served prose out of scope, the census's S08 and S09 become no_date_shown and the guard is narrowed."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W509-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~509",
+  "surfaced_at": "2026-10-18T01:59:01Z",
+  "one_line": "The order's Step B premise does not hold at the base: build_pack prints no evidence passage, so the pack path has no verbatim quotation block of that kind to route around _wrap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py at e58e97c92e: _print_drafted (line 650) and the company_description loop in build_pack (line 768) read only sentence text; no pack-path function reads evidence[].passage",
+      "lib/research/print/render_pack.py at e58e97c92e: _drafted_section_markdown line 1038 is the only printed passage, in build_rich_text",
+      "lib/research/print/tests/fixtures/bv2_quote_blocks.json: census blocks K05, K08, K10, K12 (pack, exempt) and X09 (rich export, exempt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order Step A/B and the CTO ruling W506-S5: the pack's _wrap guard rewrites an ISO day inside a verbatim source quotation, 'including a verbatim source quotation (a filing excerpt or an evidence passage ...)', and BA, HD and KMB 'print quoted passages in the live packs'. Step B: route the pack's exempt blocks around the wrap.",
+  "world_is": "At the base, the pack's only verbatim source text is a served sentence that IS the filing's own text (generated false, quoted_spans equal to [text], the drafting_build filing-sentence branch). It is exempt in this cell. No pack-path function prints an evidence passage. The live packs of BA, HD and KMB were not read in this cell, so the cited passages are unverified in the pack path. The Q2 pack arm therefore rides on the filing sentence.",
+  "notes": "Form only. The census (bv2_quote_blocks.json) gives the denominator: 30 blocks, 6 exempt."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W509-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~509",
+  "surfaced_at": "2026-10-18T01:59:01Z",
+  "one_line": "The order's Q3 control cannot hold line for line for a correct product: the base export's ISO timestamps reduce to their day, and the inverse cannot restore the time.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bv2_rich_text_base_RIO_LN.txt line 53: 'vintages 2026-10-17T01:02:03Z' and the header cells 'as of 2026-10-17T01:02:03Z'",
+      "lib/research/print/render_pack.py _long_days (line 134 at e58e97c92e): a timestamp keeps its day only",
+      "lib/research/print/tests/test_bv2_rich_dates_and_quotes.py test_Q3 applies _day_only to both sides"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order Q3: 'the rich export text with every long-form date mapped back to ISO by a hand-written inverse ... equals the export RECORDED AT THE BASE HEAD, line for line after collapsing whitespace'.",
+  "world_is": "The recorded base export carries full ISO timestamps, which the house day-only rule (the order's own 'a timestamp keeps its day only') cannot reproduce on the inverse. Q3 cuts each timestamp to its day on both sides, the one difference the day-only rule makes. The recorded base text is not edited.",
+  "notes": "Form only. Q3 passes at the base head and after the edit, so it is a control of the day mapping, not of the timestamp."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W509-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~509",
+  "surfaced_at": "2026-10-18T01:59:01Z",
+  "one_line": "An accession number carries a day-shaped run that the un-bounded house day pattern would rewrite once the export's long-form pass covers the citation line; caught before it was armed and fixed in this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/test_bv2_rich_dates_and_quotes.py Q2: accession 0001234567-12-150001 in the citation line",
+      "lib/research/print/render_pack.py _DAY_IN_TEXT at e58e97c92e: r\"\\d{4}-\\d{2}-\\d{2}...\" with no digit boundary; '4567-12-15' inside the accession reads as December 15th, 4567",
+      "lib/research/print/render_pack.py at this cell: _DAY_IN_TEXT takes (?<!\\d) and (?!\\d), so the accession survives the export's long-form pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order Step C: 'Route every date the rich export shows in a NON-quote line through _long_days', including the evidence citation's accession and location, which the export carried verbatim before this cell.",
+  "world_is": "The house day pattern has no digit boundary, so a 4-2-2 run inside an accession number (a 10-digit first block) is matched. long_day accepts a valid run and returns a wrong year. This cell adds the digit boundary to the one shared pattern; Q2 asserts the accession survives whole. The pack path shares the pattern and carries no accession line.",
+  "notes": "Form only. The hazard was found before it was armed (no export of the new pass has run on a live accession)."
+}
+```
