@@ -83,9 +83,16 @@ This order touches none of them.
 - **Own workstream** `FUNDREL-RELEASE`: each issuance of this round holds its own workstream (the gate refuses a second order into a workstream that already has an issuance at HEAD).
 - **Not covered, named:** any other gateway change; the `fund_form` rebuild (`HVST-cf-3`, `-5`).
 
+**COMPLETE 2026-10-18T02:2xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** seat `0.7.0_AE_CloudOps~SC1`: release `rel-amgt-harvst-cg3` @`4257a2aa42e5366270b3652f21dba90872dbb1e0` (parent `d077cef043`, the live commit; three paths, two hunks; release `harvest_research.py` md5 `596c2995...`, blob `574959b682d4a13a0a429c45fa00b77b6caa2ab5`) deployed 02:06:03Z (restart 02:05:55Z) inside the window site Z cleared (its CTO msg 35599); manifest recorded `22214e3c4a`; ledger `harvst-cg3-gateway-fundrel-release` CLOSED, 6 legs, COMMITTED (`ee508eb3cb`); the release ref is pushed (`origin/rel-amgt-harvst-cg3` = `4257a2aa42`, read by MSTR and again by me by `ls-remote`); the release commit and blob went to site Z through MSTR. Rollback (ruled in AMENDMENT 2: `d077cef043`) was not exercised.
+- **Read by me (not SC1's word):** I verified the cut from the git store before the GO (parent, md5, 3 paths, 2 hunks) and, after the deploy, read through the redeployed gateway in my own session: `MNST_US_Equity` `fund: PFOE` `fund_relation: candidate`; `ML_FP_Equity` report `615fde65...` `fund: IDVZ` `template`; `CLX_US_Equity` both class A reports `DIVZ` `candidate`; the control `UNH_US_Equity` `holding`, its `content_sha256` `6bd7cea7...` and gold fields unchanged. SC1 read ADBE and SNPS (`candidate`). **Proof instance VALID rc 0 (re-run here).** `AC1` to `AC4` PASS in `cg3_served.out`.
+- **One effect my COO half did not name (SC1 found it, stated it plainly and did not hide it):** the tool caps `research_reports[]` by RESPONSE SIZE, and the added key makes each entry larger, so a security with many reports shows one fewer entry under the cap (`CPA` 10 of 37 shown before, 9 of 37 after; omitted 27 to 28; the total is equal). The half said no existing key or value changes, which holds; it did not say the cap moves. Row `D1-S50` (INERT, for the CVO).
+- **The `ce-3` wording** rode this release; no live read triggers it (its proof is the offline test), as stated in `cg3_before.out`.
+- **What this does NOT prove:** a consumer that reads `fund_relation = holding` (none is known besides `fund_form`, `HVST-cf-3`, merged, whose rebuild is `HVST-cf-5`).
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>92</round>
 <workstream>FUNDREL-RELEASE</workstream>
 <slot>dell1</slot>
