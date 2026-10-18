@@ -11013,5 +11013,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S49",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-17T23:49:43Z",
+     "one_line": "Two classifiers of the same line: silver's lib/research/corpus/fund_relation.py and gold's continuation._line_stance carry copied word lists that now differ (adding, reduction); the CTO ruled one shared classifier for round 93.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "CTO msg 7784: the divergence between silver's classifier and continuation._line_stance in gold is a row for round 93: one classifier, shared by both; it does not block round 92 since ORA and CPA gold already come from holding reports.",
+     "world_is": "fund_relation.py copied _HOLDING_WORD_RE, _CANDIDATE_WORD_RE and _SIZE_STATEMENT_RE from continuation.py lines 443-445 (HVST-cg-1, ad116e0037), with a drift test over the 22 round-91 census phrases that holds them in step on those phrases only. HVST-cg-5 (CTO msg 7782 and 7783) adds the whole words adding and reduction to the silver list only; continuation._line_stance does not read them, so for a line like 'Consider size reduction in IDVZ' silver says holding and gold says unclassified. No gold value changes today: ORA and CPA gold fund_of_record come from another report whose line is a holding. The next gold rebuild that reads such a line as the first candidate would serve the unclassified value. Not measured: the number of gold objects whose first candidate line holds one of the new words.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/research/corpus/fund_relation.py (ad116e0037)",
+       "lib/research/corpus/continuation.py:443-445",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cg-5.the-fund-relation-reads-reduction-adding-and-the-recommedation-alias-as-holdings.md"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
