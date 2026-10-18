@@ -28238,3 +28238,81 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "All three are observations that change no verdict: the code documentation meets the intent in the only form the line-count rule allows; the two uncounted JWKS fetches are config-sourced; the nextLink follow is Graph-issued. The graph host pin is carried as a round-43 candidate (a one-line guard in graph.call and the two nextLink callers), not a blocker for the listener."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~146",
+  "surfaced_at": "2026-10-18T02:20:47Z",
+  "id": "NFRA_OPLGTW-Z-W146-S1",
+  "one_line": "The probe's 'restricted profile that allows only those two tools' is not a stored record: code cannot write one, so the two-tool restriction is an allowlist inside the probe module.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/data_entitlement.py:519-535 @eaac07d0e5 -- current_access reads the principal_profile record and its grant; no writer of that record exists in app/",
+      "app/context.py:41-48 @eaac07d0e5 -- Principal is the NamedTuple every restricted principal uses (tid, oid, email)",
+      "app/probe_listener.py PROBE_TOOLS and probe_call @8d76ae9045 -- the two-tool restriction, enforced before dispatch"
+    ]
+  },
+  "spec_asserts": "OG-pr-1 section 1 item 4: the probe call runs as ONE server-held principal, 'a restricted profile that allows only those two tools'; read the restricted principal type and reuse it, with no new identity provider.",
+  "world_is": "The stored restricted profile is a principal_profile record plus a data_entitlement grant (app/data_entitlement.py:71-72, :519-535). The probe may not create it (no store write, no new grant, paths limited to three files). The fixed principal is the Principal NamedTuple with no stored profile, and the two-tool restriction is the PROBE_TOOLS allowlist in app/probe_listener.py, checked before any dispatch.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer before OG-ap-40: accept the in-module allowlist as the restriction, or order the stored profile and grant as a separate act."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~146",
+  "surfaced_at": "2026-10-18T02:20:47Z",
+  "id": "NFRA_OPLGTW-Z-W146-S2",
+  "one_line": "The probe calls the functions behind the two MCP tools directly, so the tool wrappers' guard chain and their per-user Graph token step never run for probe calls.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/tools.py:112-116 and :127-184 @eaac07d0e5 -- _run runs the identity, tier, guard, write-class and blast-cap gates, then _user_token() for the caller's Graph token",
+      "app/tools.py:1557-1559 and :1594-1599 @eaac07d0e5 -- the etfs_compare_peers and client_get_transactions wrappers hand off to _run and to the underlying functions",
+      "app/probe_listener.py _call_peers and _call_transactions @8d76ae9045 -- the probe calls etfs_rivals_flow.etfs_compare_peers and client_core.client_get_transactions directly"
+    ]
+  },
+  "spec_asserts": "OG-pr-1 section 1 item 3: the two tools are 'called through the SAME functions the MCP path calls (do not copy logic)', and a response is 'the tool's own answer JSON'.",
+  "world_is": "A service principal has no delegated Graph token, so a wrapper call cannot answer the probe. The probe calls the functions the wrapper lambdas call, so _run's guard chain and its audit line do not run for probe calls. The probe enforces its own lease, two-tool and account checks and writes its own audit line labelled probe:<order>.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer and the CTO before OG-ap-40: confirm that bypassing _run for the probe principal is the intended scope."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~146",
+  "surfaced_at": "2026-10-18T02:20:47Z",
+  "id": "NFRA_OPLGTW-Z-W146-S3",
+  "one_line": "The fixed probe principal carries an Opal-domain display address, opal-gateway-probe@opalinvest.com, because client_get_transactions is served only to Opal-domain emails; that address exists only in code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/typed_scope.py:65-81 @eaac07d0e5 -- admit_scope refuses a non-Opal principal with typed_opal_only, using tools._is_opal_user(principal.email)",
+      "app/tools.py:1054-1060 @eaac07d0e5 -- _is_opal_user accepts only the exact opalinvest.com domain, not guest form",
+      "app/probe_listener.py PROBE_EMAIL @8d76ae9045 -- the fixed display address of the probe principal"
+    ]
+  },
+  "spec_asserts": "OG-pr-1 section 1 item 4: the principal is built in the module, 'not from a token, a header or a request value', with no new identity provider.",
+  "world_is": "The client tools admit on the Opal email domain alone, so the probe principal needs an Opal-domain display address to be served. That address is a string in code and in no directory. Any future code that admits on the Opal domain alone would also admit the probe principal.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: confirm the address, or name a non-Opal principal and change the client-tool gate by its own order."
+}
+```
