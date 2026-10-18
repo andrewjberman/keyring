@@ -30422,3 +30422,182 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. If the CTO rules served prose out of scope, the census's S08 and S09 become no_date_shown and the guard is narrowed."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W508-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~508",
+  "surfaced_at": "2026-10-18T01:59:21Z",
+  "one_line": "ModelTab prints a served gap reason raw in two captions outside the census: the summary dash (withheld or cellReasons) and the grid dash (cellReasons). The gap list (C-20) is the only one routed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:697 {withheld ?? row.cellReasons[at] ?? NOT_SERVED_WORDS} inside span data-model-summary-reason @26d998f7 (read, not rendered)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:932 {row.cellReasons[index] ?? ...} inside span data-model-grid-reason @26d998f7 (read, not rendered)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:973 gap list item, routed to daysInWords by AMGT-bv-1 (the only routed site of this served text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-114 census (102 sites), with the four AMGT-bv-1 sites, is the whole set of date bypasses in ModelTab.tsx and PeersTab.tsx and re-runs to zero.",
+  "world_is": "The re-run finds two more visible prints of a served reason with no date routing: ModelTab.tsx:697 (summary dash) and ModelTab.tsx:932 (grid dash). Both print the same served text that C-20 routes in the gap list. The committed fixtures carry no ISO day on this path, so this is read from code and not measured in a render. The grant names two ModelTab sites, so these are not edited here.",
+  "notes": "Display only. Filed as census entries C-103 and C-105, each deferred_to this row with a reason. The fix is one daysInWords wrap at each site, for the cell that owns ModelTab after this round."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W508-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~508",
+  "surfaced_at": "2026-10-18T01:59:21Z",
+  "one_line": "ModelTab prints two served reasons raw in visible text outside the census: the P/E-not-shown sentence (plainPeReason rewrites vendor tokens only) and the team-sheet reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:710 {`P/E not shown: ${peReasons.join('; ')}`} with peReasons = plainPeReason(served) @26d998f7 (read, not rendered)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:214-222 plainPeReason: replaces PX_LAST, IS_EPS and SNAKE_CASE tokens; no date handling @26d998f7",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:832 {teamSheetReason} from data.model.team_sheet.reason, printed as served @26d998f7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-114 census, with the four AMGT-bv-1 sites, is the whole set of date bypasses in ModelTab.tsx and PeersTab.tsx and re-runs to zero.",
+  "world_is": "Both sentences print served text with no daysInWords routing, so a served ISO day would print raw. The committed fixtures carry none on these paths (read from code, not measured in a render). The grant names two ModelTab sites, so these are not edited here.",
+  "notes": "Display only. Filed as census entries C-104 and C-106, each deferred_to this row with a reason."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W508-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~508",
+  "surfaced_at": "2026-10-18T01:59:21Z",
+  "one_line": "A REFUSED figure cell prints its check reason raw: displayValue returns the text REFUSED with the reason inside square brackets, and the cell shows it in visible text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:155 {isRefusal(check?.verdict) ? displayValue(figure.value, check?.verdict, check?.reason) : ...} @26d998f7",
+      "portal/src/pages/SecurityAnalysis/refusalPresentation.ts:42 returns the bracketed REFUSED text with the raw check reason @26d998f7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-114 census, with the four AMGT-bv-1 sites, is the whole set of date bypasses in ModelTab.tsx and PeersTab.tsx and re-runs to zero.",
+  "world_is": "A check reason is served text and is printed raw inside the visible REFUSED text, so a served ISO day in a check reason would print raw. Not measured in a render. The grant names two ModelTab sites, so this is not edited here.",
+  "notes": "Display only. Filed as census entry C-107, deferred_to this row with a reason."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W508-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~508",
+  "surfaced_at": "2026-10-18T01:59:21Z",
+  "one_line": "The premise of census site C-34 fails at the base: a Peers column tooltip never receives a served reason. The PRESENT_NOT_CARRIED reason is fixed text in cscTable.ts, so D4 of the new harness injects a served-shaped reason at the buildCscTable boundary.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/cscTable.ts:188-196 PRESENT_NOT_CARRIED column: reason is the fixed sentence 'This column is not reported for each of these peers.' @26d998f7",
+      "portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx:235 HelperTip content is guardedReason(column.reason, NOT_CARRIED_FALLBACK) for that state only @26d998f7",
+      "portal/src/pages/SecurityAnalysis/__harness__/dateBypass.harness.cjs D4: the injected reason is a harness-side input, not a served value"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A Peers tab column reason shown in its tooltip is served prose that may carry an ISO day (census site C-34, order section 1, step 'a column reason shown in a tooltip').",
+  "world_is": "At the base, no served value reaches that tooltip: the state's reason is a fixed string. The route at PeersTab.tsx:235 (daysInWords around guardedReason) is applied as the order asks and is a no-op on today's data. D4 exercises the route with an injected reason. A served reason on that state would need a producer change in cscTable.ts, which is not in this grant.",
+  "notes": "Form only. The census entry C-34 is fixed_here with graded_by D4 (rendered, injected reason)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W508-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~508",
+  "surfaced_at": "2026-10-18T01:59:21Z",
+  "one_line": "The schema path the order names for the row form, org/surprise_channel/schemas/investigation_item.schema.json, is absent in the worktree. Rows follow the channel's existing fenced-block form instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-508/org/surprise_channel/schemas/ : no such directory at the issuance commit of this worktree (ls error, read by this worker)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md : existing rows AMGT_RESAPP-D1-W506-S5 and earlier use one fenced json block per row with these keys"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The row form is validated against org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "The schema path is absent in this worktree, so the row was not validated against it. The row carries the keys of the channel's existing rows.",
+  "notes": "Form only. The issuer may point the order at the schema's live path."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W508-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~508",
+  "surfaced_at": "2026-10-18T01:59:21Z",
+  "one_line": "The order's D5 census rule (deferred_to a named cell) cannot pass for the five residual ModelTab entries the re-run found, because this round owns no ModelTab cell beyond the two named sites.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order, section 1: a bypass found outside the four is a surprise row and a census entry deferred_to with a named reason",
+      "the order, section 1: in ModelTab.tsx ONLY the two sites change",
+      "portal/src/pages/SecurityAnalysis/__harness__/dateBypass.harness.cjs D5a: accepts deferred_to a named cell, or deferred_to a surprise row id with a reason (the extension is recorded in the receipt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D5 of the new harness: every bypass entry is fixed_here or deferred_to a named cell.",
+  "world_is": "The five residual entries (C-103 to C-107) carry deferred_to set to this round's surprise rows, not to a cell. Under a strict reading of D5 they fail. The harness reads the order's own 'named reason' wording and accepts a row id with a reason. The CTO decides which cell owns them.",
+  "notes": "Form only. If the CTO rules that a cell must own them, C-103 to C-107 are re-pointed and D5a is narrowed back."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W508-S7",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~508",
+  "surfaced_at": "2026-10-18T02:05:40Z",
+  "one_line": "An older census harness hard-codes the owners a bypass may defer to (AMGT-bu-1 or AMGT-bu-4). A residual deferral to a surprise row fails it, so the five residual ModelTab entries defer to AMGT-bu-4 with the surprise row as the reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/dateRule.harness.cjs:256-258 E5 accepts deferred_to only from CELL_OWNERS (AMGT-bu-1, AMGT-bu-4); the first run of the new harness read dateRule 6 of 7 with E5 FAIL (107 sites, undispositioned 5)",
+      "portal/src/pages/SecurityAnalysis/__harness__/dateSites.fixture.json C-103 to C-107 now deferred_to AMGT-bu-4, the census owner of ModelTab.tsx (note of the round-114 census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Supersedes the world_is of AMGT_RESAPP-D1-W508-S6 (row S6 is not edited). The order's D5 is read as deferred_to a named cell, and the five residual entries are deferred_to a named cell.",
+  "world_is": "AMGT-bu-4 is the census owner of ModelTab.tsx, so the five residual entries (C-103 to C-107) defer to it, each with its surprise row (S1, S2, S3) as the reason. D5a of the new harness is the strict cell rule, and dateRule E5 passes. Whether AMGT-bu-4 (a round-114 cell) is the live owner of the residual ModelTab sites is the CTO's call.",
+  "notes": "Form only. Re-pointing C-103 to C-107 is a one-field change per entry if the CTO assigns another cell."
+}
+```
