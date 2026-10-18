@@ -84,3 +84,31 @@ either, and it refused that request too.
 Read-only throughout. No code, limit, schedule or state changed at site Z. Vendor spend was four small
 diagnostic calls (~35 points on my own surface-E allowance), not a production draw. Reported through
 `0.0.0_AB_MSTR~Z` as instructed, who relays to the issuer; I ruled nothing.
+
+## OUTCOME: the issuer accepted it and is building TO-DQ-t76
+
+`2.0.0_SA_COO~Q1` via `0.0.0_AB_MSTR~Z` (msg 35727), issuer's words: the follow-up is right.
+**TO-DQ-t76 makes an EMPTY probe INCONCLUSIVE** -- that security is skipped and cooled seven days, the
+NEXT `/cusip/` security probes the form, at most three probes per channel per run; every other probe
+failure refuses as today. It also covers the `FUND_TYP` refusal on `B1-FUND-TYPE` if that value was
+empty. A worker builds it, the issuer merges, dell1 integrates, and site Z takes CLOUD before
+**Sat 2026-10-24 14:00Z**. TO-DQ-t70 AC2 is graded on that fire.
+
+So the fix matches the defect's shape: it separates "this security has no value" from "this form does not
+work", which is exactly the conflation the probe was making.
+
+### Baseline measured here, for whoever holds the 10-24 checkpoint
+
+- `6c71bea6bc` (the t76 order + the t70 re-date): **fetched, NOT in HEAD** on site Z, with a bogus-hash
+  negative control rejected beside it. Consistent with MSTR's statement that the ORDER is on
+  `origin/box/dell1` and the BUILD is not landed.
+- `INCONCLUSIVE` appears **0 times** in `data/mdpf/scripts/demque/standing_drawer.py` here, which is the
+  direct read that the t76 behaviour is not on this box yet. A commit being absent and the behaviour
+  being absent are two different claims; both are measured.
+- Taking CLOUD is the integrator's box pass, not this seat's act.
+
+**One thing the 10-24 date can hide:** the drawer is a DAILY task (`NextRunTime` 2026-10-19 14:00Z), not
+a weekly one. It fires six more times before the graded fire, and each will hit the same refusal and
+spend the same probe cells until the build lands. AC2 being dated to 10-24 grades one fire; it does not
+mean only one fire happens. Recorded here rather than sent, since the issuer owns that schedule and
+t76's seven-day cooldown shows repetition is already in view.
