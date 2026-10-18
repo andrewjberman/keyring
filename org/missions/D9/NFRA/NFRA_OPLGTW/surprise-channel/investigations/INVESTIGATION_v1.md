@@ -29047,3 +29047,50 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "GRADUATED"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~156",
+  "surfaced_at": "2026-10-18T17:48:33Z",
+  "id": "NFRA_OPLGTW-Z-W156-S1",
+  "one_line": "OG-pr-5: the task order's ac03 names config.log_level 'equal to the WARNING level'; uvicorn 0.51.0 stores log_level as the string given ('warning'), so a raw compare to logging.WARNING is False; the test resolves the string through uvicorn.config.LOG_LEVELS",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "uvicorn/config.py:261 @installed 0.51.0 (C:/Users/Opal Bloomberg/AppData/Roaming/Python/Python314/site-packages/uvicorn/config.py): self.log_level = log_level (stored as given); :412-416 resolves a str through LOG_LEVELS only inside configure_logging",
+      "infra/aws/ec2/opal-gateway/tests/test_og_pr5.py@0d49aa5387 test_ogpr5_ac03: level = LOG_LEVELS[server.config.log_level.lower()] when a str, then assert level == logging.WARNING; the test ran 3 passed (pytest tests/test_og_pr5.py, Python 3.14.8)"
+    ]
+  },
+  "spec_asserts": "The listener's server object has config.log_level equal to the WARNING level (ac03, as written: config.log_level equal to the WARNING level).",
+  "world_is": "The Config keeps the value the caller passed, which is the string 'warning'; the WARNING level is the value that string resolves to. The listener's effective level is unchanged by this: uvicorn applies it inside configure_logging. The test asserts the resolved level, so the criterion's meaning is kept and only the literal comparison differs.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~156",
+  "surfaced_at": "2026-10-18T17:48:33Z",
+  "id": "NFRA_OPLGTW-Z-W156-S2",
+  "one_line": "OG-pr-5: the uvicorn mechanism was read from uvicorn 0.51.0 on the worker's Windows interpreter; the gateway's requirements pin uvicorn[standard]>=0.30.0, and the deployed host's installed version was not measured from this worktree",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/requirements.txt@0d49aa5387:8 reads 'uvicorn[standard]>=0.30.0' (a floor, not a pin)",
+      "uvicorn 0.51.0 Config.__init__ calls self.configure_logging() (config.py:296) and configure_logging sets the uvicorn.error, uvicorn.access and uvicorn.asgi levels and, for access_log False, uvicorn.access handlers and propagate (config.py:412-422), as the task order describes",
+      "the host's version is not read by this order: its cells are read-only offline tests, and the host is not in the write set"
+    ]
+  },
+  "spec_asserts": "The task order's mechanism (uvicorn's Config configures the four process-wide loggers) holds for the installed uvicorn, which the order asks the worker to confirm.",
+  "world_is": "Confirmed for 0.51.0, the only version read. The host's version is not measured here; the snapshot and restore wrap the Config constructor, so it holds for any version whose constructor touches these four loggers; the host's installed version is not checked by this cell.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
