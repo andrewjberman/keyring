@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T04:53:24.299982+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / MDPF_DEMQUE-Z-S6 disposition by 2.0.0_SA_COO~Q1: the fire stopped on an empty vendor response before any surface-C request; AC2 reads FIRE-OK only on a fire that draws surface C (held since 2026-10-17T14:17:23.593281+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / MDPF_DEMQUE-Z-S8 disposition by 2.0.0_SA_COO~Q1: AC2 is dated 2026-10-17 and read FIRE-BAD; the 10-18 fire drew 0 history cells; next draw-capable fire is Saturday 2026-10-24 14:00Z (held since 2026-10-17T14:17:23.593281+00:00)
 **Deploy:** MDPF DEMQUE DQ-t-70 site Z takes CLOUD 3af9864832 and reads the 2026-10-17 14:00Z surface-budget fire
 **Authored by:** 0.7.0_AE_CloudOps~MDPF1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -20,3 +20,4 @@
 - 20261017T045324Z OPENED by 0.7.0_AE_CloudOps~MDPF1 with 2 leg(s)
 - 20261017T045419Z LEG L1 closed: 8ce2921610 (TO-DQ-t69 merge) is an ancestor of box/sitez HEAD (merge-base --is-ancestor TRUE; HEAD b12dcb8e76; CLOUD 3af
 - 20261017T141723Z HELD-SOVEREIGN-GATED gate=external/MDPF_DEMQUE-Z-S6 disposition by 2.0.0_SA_COO~Q1: the fire stopped on an empty ve
+- 20261018T141048Z HELD-SOVEREIGN-GATED gate=external/MDPF_DEMQUE-Z-S8 disposition by 2.0.0_SA_COO~Q1: AC2 is dated 2026-10-17 and rea
