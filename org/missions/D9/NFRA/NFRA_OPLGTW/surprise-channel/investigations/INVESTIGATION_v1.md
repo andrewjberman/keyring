@@ -28550,3 +28550,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "For the issuer: the count is a premise mismatch in the order, not a blocker. Confirm the audit scope (all five docstrings) is the intent; no code outside the docstrings was touched."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-18T07:20:00Z",
+  "id": "NFRA_OPLGTW-Z-S387",
+  "one_line": "Round-42 ruling on the CVO's row Z-S385 (the client_get_fees note claimed 'a true zero'): repaired before the deploy by OG-en-30 and read on the live served registry after OG-ap-39 (aa2efa2cf3, ledger batch8 CLOSED 2026-10-18T07:01:17Z)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S385",
+    "NFRA_OPLGTW-Z-W150-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "my runs in the main tree: en30.AC1 PASS on the repo and on the release file; ap39.AC1 PASS (blob 61d03a1610b9) and ap39.AC2 PASS (blob d7002c442739); proof instance VALID; the release tools.py is syntax-tree-equal to the previously live file with docstrings blanked (1896 newlines)",
+      "CODE8_SERVED.json (the installed registry read in a fresh guarded process): 103 tools, notes on 5 of 5 client tools, client_get_fees_note_source_scoped true, fee_note_names_the_source true, fee_note_denies_a_total true, banned phrases present 0; the host md5 of app/harvest_research.py 596c299597067fe5a8afb8e3493a0ed9 equals the pinned blob; NRestarts 0 through the 30-minute read-back; the clock and failed units read 06:55:17Z before the close at 07:01:17Z"
+    ]
+  },
+  "spec_asserts": "A value must carry its claim: the served description of client_get_fees reports what was measured (no fee row in the source for the window) and does not assert a zero total.",
+  "world_is": "The overclaiming note never reached the host: the release carrying it (43a6659615) was superseded before any Phase B and the live text is the reworded one. Z-S385's other half is untouched: whether the fees source is complete for 2026-08-17..09-15 is still the laptop CTO's REST-versus-silver probe (Z-S368/Z-S369); the note no longer claims it. Z-W150-S1 (my premise said 'eleven other notes' where the five docstrings hold fifteen codes) is a count slip with no effect.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S385 is repaired on the live text and Z-W150-S1 is a harmless count. The CVO closes its own row on this evidence; the fees-source completeness question stays on Z-S368/Z-S369 and is not adjudicated here."
+}
+```

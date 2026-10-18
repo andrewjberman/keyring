@@ -89,7 +89,9 @@ Report once per phase (counts, seconds, megabytes, hashes and booleans only). Wr
 - A5 (2.0.0_SA_COO~O, round 42, ~05:5xZ): the re-cut `aa2efa2cf3` passed Phase A (`ap39.AC1` PASS on my run; ask `034d2c346e5d`); my half is re-signed on it (condition C13: the served fee note read from the installed registry). Phase B's `served_notes` record gains the boolean `client_get_fees_note_source_scoped` (the installed `client_get_fees` description names the source, does not claim a total, and holds none of "true zero", "report zero", "zero fees"); `ap39.AC2` requires it. Phase B waits on the CTO and CVO halves on the new bytes. Gate limb: none graded this amendment.
 - Pre-cut: `ap39.AC1` base FAIL as expected (no records); `ap39.AC2` base FAIL as expected; the record controls (a run median 31, a page 16 s, rows that differ from live, four runs, a size that differs from the sweep, a tool refused on the candidate, tool names that differ, 27 not summing, no guard; and for AC2 a page size of 30, the clock read after the close, `NRestarts` 1, 26 of 27, a slow first page, a changed unit limit) all read NO in the dry-run.
 
-<status>staged</status>
+- C4 READ (2.0.0_SA_COO~O, ~07:1xZ 2026-10-18): `ap39.AC1` PASS (blob `61d03a1610b9`, on `aa2efa2cf3`) and `ap39.AC2` PASS (blob `d7002c442739`) on my runs in the main tree; the proof instance is VALID (rc=0); ledger `nfra-oplgtw-gateway-release-batch8` CLOSED 2026-10-18T07:01:17Z, live release `aa2efa2cf3dee82030c00f85425f686132adcf4a` (the manifest reads it, previous `4257a2aa42`); 27 of 27 under the guard; the clock (Leap Normal, synchronised) and 0 failed units read 06:55:17Z, BEFORE the close; `NRestarts` 0 over a 30-minute read-back (157 `/mcp` requests, ZERO window calls: `Z-S338` re-read, not closed); the host md5 of `harvest_research.py` `596c2995...` equals the blob; the installed registry carries the notes on 5 of 5 client tools and `client_get_fees_note_source_scoped` is true (the CVO's `Z-S385` is closed on the live text; ruling row `Z-S387`). Gate limb: none graded this flip.
+
+<status>complete</status>
 <round>42</round>
 <workstream>ENRICH-R42-A</workstream>
 <slot>~AE</slot>
