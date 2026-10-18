@@ -31088,3 +31088,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Whether the naming gate should refuse or skip when the folder is absent in a sparse worktree is the issuer's and the gate owner's call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W513-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~513",
+  "surfaced_at": "2026-10-18T06:44:50Z",
+  "one_line": "The pack's rich-text document (pack_<sec>.md) still prints the raw served amount for a withheld header money figure, because its Header figure table renders render_figure_line verbatim; that table sits outside the figure-line functions AMGT-bx-2 owns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@0eb6290a5e:1867 is lines.extend(_figures_table(header_figs)) in build_rich_text; :1253 is _figures_table, whose Rendered column is render_figure_line(fig) verbatim (its docstring says so). Base 51cbf82b4f: the same call at :1814 and the def at :1200.",
+      "Run at HEAD 0eb6290a5e (python .scratch/bx2_md_check.py, exit 0, build_pack with write_rich=True on bx_served_thesis_RIO_LN.json): pack_RIO_LN_Equity.md rows read CUR_MKT_CAP | ... | 115578925918.1821 ABSOLUTE (full currency units) and NET_DEBT | ... | 14512.0 MILLIONS and CURR_ENTP_VAL | ... | 173616.0345711613 MILLIONS.",
+      "The same commit's txt for the same pack (python .scratch/bx2_census.py, exit 0) prints Market cap, Net debt and Enterprise value as the withheld line, so the two artifacts of one pack disagree on the same figures."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1, the rule to build: a header money figure is printed by the page's rule, and an UNMEASURED money figure's amount is NOT printed. Order section 1, the region owned: the figure-line functions of lib/research/print/render_pack.py.",
+  "world_is": "The PDF and the .txt withhold RIO LN's Market cap, Net debt and Enterprise value after 0eb6290a5e, but the .md document written beside them still prints each raw served amount with its unit, through _figures_table, which is not one of the owned functions.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Form only. Whether the rich document should read the page's rule too is the issuer's call; it is not changed in this cell."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W513-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~513",
+  "surfaced_at": "2026-10-18T06:44:50Z",
+  "one_line": "The order's sentence 'there is no served USD for RIO LN's market cap, net debt or enterprise value' holds for each figure's own currency field, but the same served header carries EQY_FUND_CRNCY = USD, which the page never attaches to a money figure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/tests/fixtures/bx_served_thesis_RIO_LN.json header_figures: CUR_MKT_CAP, NET_DEBT, CURR_ENTP_VAL and CRNCY_ADJ_MKT_CAP each carry currency None and a currency_basis beginning UNMEASURED (census table lib/research/print/tests/fixtures/bx2_page_rule_table.json, the RIO_LN rows).",
+      "The same fixture's header_figures carry EQY_FUND_CRNCY with value USD; the base Header prints it as 'Reporting currency: USD - Bloomberg' (base census, .scratch/bx2_base_census.json, RIO_LN).",
+      "lib/research/print/render_pack.py@0eb6290a5e: _currency_of (CRNCY, EQY_FUND_CRNCY) feeds only the Currency and Reporting currency lines; _format_figure_value takes the two currency arguments and ignores them for every money label (AMGT-bw-1 docstring)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1, the census paragraph: there is no served USD for RIO LN's market cap, net debt or enterprise value; the pack's correct behaviour is the page's, which is to withhold them.",
+  "world_is": "The figure-level part holds: none of the four figures carries its own currency. The sentence is absolute over the served header, and the served header does hold a reporting currency of USD for the same security; the page does not attach it to any money figure, so the withholding is unaffected. The CTO's grade reads that reporting-currency domain.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Form only. Recorded so the CTO's round-116 item 3 reading can be checked against the reporting-currency field; not acted on in this cell."
+}
+```
