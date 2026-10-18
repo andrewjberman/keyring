@@ -28759,3 +28759,52 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~153",
+  "surfaced_at": "2026-10-18T12:40:16Z",
+  "id": "NFRA_OPLGTW-Z-W153-S1",
+  "one_line": "The OG-sec-3 denominator pattern does not match the gateway's Graph egress: the graph.call( and graph_call( invocations (63 lines in 10 files) sit outside the six-module count of 21.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/graph.py:63 @581ee61977 -- the Graph egress is client.request, and the pattern matches it only through the client prefix; the calls that reach it are graph.call( in tools.py (50 lines), asker_scope.py (4), site_to_s3.py (2), mail_route.py, ms_ingest.py, otp.py, taxsma_workbook.py, transcript_route.py, teams_route.py, graph_scope_map.py (1 each), 63 occurrences in 10 files by a count of graph.call( or graph_call(",
+      "The pattern has no alternative for graph.call( or graph_call( (the OG-sec-3 order's pattern, quoted in the task order section 1)"
+    ]
+  },
+  "spec_asserts": "The OG-sec-3 audit answers whether any outbound HTTP call of the gateway takes its target from a caller-controlled value, and its denominator is every matching outbound call line of the six modules.",
+  "world_is": "Measured count: 21 pattern lines in the six modules, none of them a graph.call( line outside graph.py. The 63 Graph-call lines in the other gateway modules are not in the denominator. Their path arguments were traced through the one sink, graph.py:63 (record row 4, controllable no), so the Graph egress is covered by that trace and not by the count. Not armed; a candidate for the round-43 analysis to decide whether the pattern should carry graph.call and graph_call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~153",
+  "surfaced_at": "2026-10-18T12:40:16Z",
+  "id": "NFRA_OPLGTW-Z-W153-S2",
+  "one_line": "Two Graph paging loops follow an @odata.nextLink with graph.call and no GRAPH_BASE prefix check, where the sibling loops refuse any link off Graph's own base before the bearer token is sent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/tools.py:1155-1161 @581ee61977 -- _read_members calls graph.call(t, GET, nxt) on the nextLink with no startswith check",
+      "infra/aws/ec2/opal-gateway/app/asker_scope.py:269-279 @581ee61977 -- read_chat_members calls graph_call(token, GET, nxt) on the nextLink with no startswith check",
+      "infra/aws/ec2/opal-gateway/app/tools.py:578-585 and 1290-1295 @581ee61977 -- the sibling loops refuse a nextLink that does not start with graph.GRAPH_BASE and carry the comment that the bearer token goes to the link host"
+    ]
+  },
+  "spec_asserts": "Every paging loop that sends the bearer token follows only a nextLink on Graph's own base; the sibling loops in tools.py state this rule in their comment.",
+  "world_is": "The two unchecked loops take the link from a Graph reply, so no caller value reaches them (record row 4 and the OG-sec-3 verdict stand: controllable no). Their nextLink is still followed with the bearer token without the base check the siblings apply, so a reply carrying a foreign link would send the token off Graph's base. Not armed; no request value reaches it. Disposition under investigation for the round-43 analysis.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
