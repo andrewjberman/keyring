@@ -30991,3 +30991,100 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Whether the PDF route should read the comparable's thesis identity (a store read this cell may not add) or the words should change is the issuer's call; the wording 'a comparable the research team has not identified ... looks' is also not grammatical and is a candidate for the same call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S7",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T05:10:16Z",
+  "one_line": "Three api tests in lib/research/api/tests/test_fiscal_scope_contract.py fail in this sparse worktree: a 173-of-183 fiscal figure count, a 186-of-196 check-face count, and a producer source path that is absent from the worktree although the commit carries it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/tests/test_fiscal_scope_contract.py@9590e6e5a5 lines 51 and 86-125: the producer path integrations/bloomberg/research/model_block_pull.py is read by the test; the count assertions read read_thesis_bundle",
+      "git cat-file -e 9590e6e5a5:integrations/bloomberg/research/model_block_pull.py: PRODUCER-IN-HEAD; the file is absent from C:/dev/wk-resapp-511 (AssertionError: producer source not found)",
+      "run at the cell's head with this cell's edits: lib/research/api/tests (five api files) 3 failed, 38 passed; the three failures are the three test_fiscal_scope_contract.py tests above; this cell edits only _print_pack and no read_thesis_bundle code"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 2 bounds: a test that cannot run for a missing fixture in this sparse worktree is named, its row filed, and the print-folder criteria are run regardless.",
+  "world_is": "The three test_fiscal_scope_contract.py tests fail on a path the commit carries and this worktree does not hold, and on fiscal counts the cell did not change. Whether the counts are also a sparse-tree effect is not established: the base was not re-run in a full tree in this re-seat.",
+  "notes": "Form only. The full print folder (AC2) and the route and degrade tests (AC3) pass in this tree; the api folder is not an acceptance criterion of this order and was run only for the five files that call _print_pack or build_pack."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S8",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T05:10:16Z",
+  "one_line": "Part 2 names the nested portal at portal_ref 3a7791c107 for its fixture; the nested portal is checked out at ff61156612, and the harness fixture the route test reads is present at that checkout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse HEAD = ff61156612682ec15c67d79c92f6ce30a1d95a4f; git -C portal cat-file -e 3a7791c107ce891af3eaf2a22c390893f80e5003 = PORTAL-3a77-IN-NESTED (the named ref exists in the nested portal but is not checked out)",
+      "lib/research/api/tests/test_print_format_rich.py@9590e6e5a5 line 27-35: FIXTURE_PATH portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json, read by the Part 2 test and by the new route file, which passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 Part 2: if a portal fixture is needed, the nested portal is at portal_ref 3a7791c107ce891af3eaf2a22c390893f80e5003.",
+  "world_is": "The nested portal is at ff61156612 (the PROD checkout the order's preflight names), not 3a7791c107. The fixture the tests read exists at the checked-out head, so no test result depends on the difference. No portal file was edited.",
+  "notes": "Form only. The issuer should confirm which portal ref the round-116 pair is meant to read."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S9",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T05:10:16Z",
+  "one_line": "The fmt=rich branch of scoped_amgt _print_pack calls the same three served readers (thesis bundle, peer set, posture) unguarded, so a raising reader there still propagates and the rich export fails; Part 3 guards the PDF branch only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py@9590e6e5a5 lines 7866-7889 (the fmt==rich branch): read_thesis_bundle, read_peer_set and read_posture called without a guard, and read_description as well; this cell did not edit that branch",
+      "lib/research/api/scoped_amgt.py PDF branch after this cell: the three reads are each guarded (try/except, _LOG.warning, absent input = None)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 Part 3: guard each of the three reads in _print_pack's PDF branch; edit _print_pack only; no other function.",
+  "world_is": "The rich export still answers 500 when one of its readers raises, while the PDF route degrades to an absent section. The two routes now differ on the same failure.",
+  "notes": "Form only. Extending the guard to the rich branch is outside this order's PDF-branch scope and is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W511-S10",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~511",
+  "surfaced_at": "2026-10-18T05:12:59Z",
+  "one_line": "safe-commit's naming gate printed NAMING ERROR for a missing infra function-map folder in this sparse worktree; the commit still passed (rc 0) and the gate's denominator was four staged paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 678906f036 on wk-AMGT_RESAPP-511: [naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-resapp-511\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)",
+      "same commit: [msg-verify] MATCH, 4 files changed, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 2 bounds and section 5: the commit goes through safe-commit.sh with the commit-gate clean; a gate that cannot read its input is named.",
+  "world_is": "The naming gate could not read the Lambda function-map folder in this sparse worktree and reported an error without refusing the commit. The commit did not touch any Lambda source; the gate's grading of this commit is therefore not established by the printed output.",
+  "notes": "Form only. Whether the naming gate should refuse or skip when the folder is absent in a sparse worktree is the issuer's and the gate owner's call."
+}
+```
