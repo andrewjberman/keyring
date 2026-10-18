@@ -154,3 +154,12 @@
 - `fcbf2bcecb45eb502da8517c0933aafee68a688c`
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Approval of row `dell1-20261018T173859Z-c00d` (2026-10-18 ~17:5xZ)
+
+**Approved** (opal-internal, pages none). I re-measured before approving:
+- the branch is still at d8473c5b4634;
+- `git diff origin/DEV <branch>` is empty, so TREE-EQUALS-DEV;
+- origin/DEV and origin/PROD are unchanged since the waiver.
+
+-- 1.0.0_SA_CTO~DELL1
