@@ -42207,3 +42207,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The fire ran at 11:30Z on the new grant and finished clean; the day it wrote is the Friday frontier."
 }
 ```
+
+## IRPT_BCKEND-D2-S238 -- The Inflection gold chain has stopped at INF_C_01 on three runs in a row (NNA coverage-regression guard), no sentinel since 2026-10-16
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S238",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-19T13:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The Inflection gold chain (chain:full) has stopped at step INF_C_01 on three consecutive scheduled runs (2026-10-17, -18, -19) on its NNA PARTITION COVERAGE REGRESSION guard, so no pipeline-complete.json sentinel has been written since 2026-10-16T12:56:43Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/gold/logs/chain_full_20261019_113300.log: CHAIN chain:full FAILED at INF_C_01 (exit=1); the INF_C_01 error line reads I_C01 failed: NNA PARTITION COVERAGE REGRESSION -- 2 account(s), 2 (partition, account) row(s) of SERVED NNA ...; read by 0.7.0_AE_CloudOps~IB2 on dell2 2026-10-19",
+      "the same FAILED at INF_C_01 (exit=1) line in chain_full_20261018_113300.log (line 37189) and chain_full_20261017_113309.log; chain_full_20261015 and _20261016 carry no such line",
+      "s3://opal-data-inf/gold/meta/pipeline-complete.json LastModified 2026-10-16T12:56:43Z; gold/meta/pipeline-failed.json LastModified 2026-10-19T12:41:49Z with run_date 2026-10-19, failed_at 2026-10-19T12:41:48Z, exit_code 1 (keys only read)"
+    ]
+  },
+  "spec_asserts": "The scheduled Inflection gold chain completes each day and writes the pipeline-complete sentinel (it did on 2026-10-15 and 2026-10-16).",
+  "world_is": "On 2026-10-17, 2026-10-18 and 2026-10-19 the chain stopped at INF_C_01 (exit 1) on a data guard (a coverage regression of 2 accounts / 2 rows of served NNA), wrote pipeline-failed.json and NOT the sentinel; steps after INF_C_01 did not run. This seat did not examine the guard's cause and found no link to the Scope feed step, which ran earlier in the same chain and finished clean on 2026-10-18; the owner of the INF gold chain is not known to this seat.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
