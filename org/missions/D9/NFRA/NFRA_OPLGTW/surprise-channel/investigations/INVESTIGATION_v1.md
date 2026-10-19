@@ -29176,3 +29176,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. A one-line change would keep the forward text in a file when the tail line has no 'passed'; not made here, since the check is shared by the order set and no order needs it this round."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~160",
+  "surfaced_at": "2026-10-19T02:03:52Z",
+  "id": "NFRA_OPLGTW-Z-W160-S1",
+  "one_line": "The commit gate on the OG-en-34 worktree printed 'WARN: client-data-check: hashed account-id list ABSENT' and states that the commit was NOT checked for client account ids; the commit went through on the WARN",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of 7def46ea34 at C:/tmp/wk-og-160 (branch wk-NFRA_OPLGTW-160), comment-only change to infra/aws/ec2/opal-gateway/app/probe_listener.py: output line 'WARN: client-data-check: hashed account-id list ABSENT at ... -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there)'",
+      "the same run printed '[commit-gate] OK: pre-commit gate clean for 1 of 1 file(s)' and '[surprise-row-gate] OK' and then '[msg-verify] committed 7def46ea34'; the WARN is the only line that names the client-data check"
+    ]
+  },
+  "spec_asserts": "safe-commit's client-data-check checks each commit for client account ids; the gate's own message says a commit made while the hashed list is absent is not checked, and names OPAL_ACCOUNT_ID_HASHES or the default list path as the remedy.",
+  "world_is": "On this Site Z worktree the hashed account-id list the check reads is not present, so the check grades nothing here and the commit proceeds on a WARN. This commit is a comment-only edit with no account data in it, so no client value is at stake in it; whether other commits on this device have gone through unchecked is not measured here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking for OG-en-34. Not fixed here: the list is an environment input outside this order's paths. Filed for the CVO's read of the device state."
+}
+```
