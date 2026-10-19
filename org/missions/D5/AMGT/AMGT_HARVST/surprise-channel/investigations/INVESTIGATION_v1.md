@@ -13494,5 +13494,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "In this sparse worktree the Lambda function-map folder is absent, so the naming gate printed NAMING ERROR and did not grade the names; the risk reflex answered from the main tree's danger map (0.9h old) and returned HOLD on the tf citing a change-management entry that is outside this worktree. The commit landed rc 0 on the commit-gate OK line. This worker did not read the cited entry (it is outside the worktree) and did not widen the lane to reach it.",
       "notes": "Same root cause as AMGT_HARVST-D1-W184-S1 (the sparse lane). The client-data-check WARN on the same commit is the already-filed condition AMGT_HARVST-D1-W183-S16 on this device; it is not re-filed here."
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S67",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "2.0.0_SA_COO~W1",
+        "surfaced_at": "2026-10-19T18:28:18Z",
+        "one_line": "The gold chatter and article-mention tables stopped on 2026-10-08 and nothing on dell1 schedules their rebuild; the dell1 runner collects bronze and silver only.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "PRD AMGT_HARVST FWD-3..FWD-5 (the daily chatter series and the event spine are kept current for the Chatter axis); CLAUDE.md: production pipelines MUST be scheduled, ad-hoc gold runs are QA only.",
+        "world_is": "Read 2026-10-19 ~18:1xZ by 2.0.0_SA_COO~W1 on dell1: s3://opal-data-harvest/amgt/harvest/gold/chatter_daily/ newest partition is date=2026-10-08, chatter_event date=2026-10-03, no article_mention prefix listed; the task '\\Opal Data Harvest - Continuous Cycle' is Running (wsj barrons sa, --refresh-once) and wrote Barron's bronze and silver listing_hit for 2026-10-19 (.runtime/harvest-cycle/runtime/last-harvest-upload.json); the gold writer is lib/research/harvest/publication_gold.py and I found no schedule that calls it (schtasks on dell1 lists no gold task; chatter-axis-schedule.tf schedules the axis Lambda, not the gold tables). Site Z reported the same lag (CTO~Z msg 36036, relayed as msg 8416). Not read: any site Z scheduler; the CRO audit file section 2 (not on this tree).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "comp-freshness artifact s3://opal-data-harvest/amgt/harvest/gold/ (gold prefix last modified 2026-10-18T22:22Z is the dossier writes, not chatter)",
+                "aws s3 ls of gold/chatter_daily/ and gold/chatter_event/ on 2026-10-19",
+                "schtasks query on dell1, 2026-10-19"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
