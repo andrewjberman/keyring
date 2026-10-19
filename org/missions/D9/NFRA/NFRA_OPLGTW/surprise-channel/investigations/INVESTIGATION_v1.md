@@ -29431,3 +29431,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Blocks the order's flip only; the record AUDIT_SITES_SIZED.json and the four rows stand. The validator verdict is reported, not worked around: the criterion text and the check's output are both verbatim."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T02:49:47Z",
+  "id": "NFRA_OPLGTW-Z-S401",
+  "one_line": "Round-44 ruling on the worker's BLOCKING row Z-W157-S5 (OG-ev-11: the proof validator's count-bar limb refused AC1 because the order's own expect asserted 'unknown on 0 site(s)' beside a nonzero '29 site(s)' in the same run): the defect was the issuer's wording; the check line and the expect are amended; the worker's record stands",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W157-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check on the worker's instance: VIOLATION count-bar[AC1], the bar asserts ZERO of 'site' and the evidence also carries '29 site(s)' (RULING M(ii) @23af9479ab: a pass decided by a substring of a contradicting summary is not a pass)",
+      "my amendment 08da80ff93 (main tree) and 61a96725e9 (worker branch): ev11.AC1.sh now prints 'event-loop column unknown: 0 (want 0)' and the order's AC1 expect matches it; synthetic arms re-run (good PASS, an unknown row FAIL, 20000 objects FAIL)",
+      "the worker re-ran AC1 and AC2 on the amended text and its proof instance validates (rc=0); I re-ran ev11.AC1 in its tree: RESULT PASS, 81 of 81 sites listed, 0 unknown, mcp 1.28.0 dispatch rule with 5 evidence lines, 7 days listed (68643 keys), every 6th read (11441 objects, 0 errors)"
+    ]
+  },
+  "spec_asserts": "A criterion's expect must not assert a zero count of a noun that the same run reports nonzero elsewhere (count-bar limb).",
+  "world_is": "The check printed the event-loop column's unknown count as 'site(s)' and the frequency column's counted number as 'site(s)'; the validator reads the two as one noun. The worker's measurement was not wrong. Carried for future checks of this project: print each count under its own noun.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The finding is true and the fault was the issuer's criterion wording; it is amended and the order completes on the amended text."
+}
+```
