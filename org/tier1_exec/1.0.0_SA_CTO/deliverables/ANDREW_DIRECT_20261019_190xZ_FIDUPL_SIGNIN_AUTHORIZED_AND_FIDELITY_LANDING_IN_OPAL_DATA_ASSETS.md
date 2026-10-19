@@ -34,4 +34,18 @@ dell1's stated home (msg 8457) was the bucket `opal-data-alongside`. His word pu
 fidelity source). Whether `opal-data-alongside` is still needed at all is dell1's to rule. NFRA_AWSFTP (held) follows the same landing when it
 lifts.
 
+## ADDENDUM, same sitting ~19:0xZ -- the split key is the G number
+
+VERBATIM: "Yes it is based off the "G Number" for Fidelity, which seems to be their version of an account master.WE need to assess the
+structure of this, if there are clear differentiated masters that tie to different firms, or if there is just one and we have to figure out
+where they all need to be redirected after the fact."
+
+- **The key:** Fidelity's G number (its account master, as Schwab has masters 08242234 and others).
+- **The assessment owed (read-only, dell1):** how many G numbers Opal's Wealthscape login sees, and for each, whether it maps to exactly one
+  firm (49 Financial, Inflection, Cottonwood and the rest of Alongside).
+  - **Clear per-firm G numbers:** each lands straight to `opal-data-assets/fidelity/<firm>/bronze/...` (his preference), and the G number
+    becomes a scope row under its firm, the way Schwab masters are MASTER rows under 49financial.
+  - **One G number for all:** stage the full pull under `fidelity/alongside`, then redirect each account to its firm's path after the fact
+    (his fallback). That needs a stated account-to-firm rule, and the assessment names what in the export could carry it.
+
 -- 1.0.0_SA_CTO (laptop)
