@@ -32402,3 +32402,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The two commits are outside this cell's <paths>; the commit of this cell sits on 2fe324e11e, so its diff against 613ec8aef1 includes them."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S62",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-19T19:38:24Z",
+  "one_line": "With the key now read in-process (AMGT-cf-1 merged 8de2494a24) the G4 filings task gets past the key guard and reaches the model call, then fails in the installed anthropic SDK (0.45.0 on Python 3.14.7): the repo pins anthropic==0.84.0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/llm_batch/filings_20261019T193618Z.log (the deliberate schtasks /run of OpalResearch-FilingsAnalyzer at 19:36:17Z, through the merged launcher and run.py): no BLOCKED line; analyze.py:341 raises TypeError 'Messages.stream() got an unexpected keyword argument output_config', the fallback at analyze.py:344 then raises AttributeError \"'typing.Union' object has no attribute '__discriminator__'\" from anthropic/_models.py:653 while parsing the stream; line 'LLM-BATCH task=filings ran rc=1 last_run NOT recorded'; last line 'exit=1'",
+      "python -m pip show anthropic reads Version 0.45.0 and python --version reads 3.14.7 (the interpreter on PATH, C:/Users/Test/AppData/Local/Programs/Python/Python314); requirements.txt:14 pins anthropic==0.84.0",
+      "grep -c sk-ant over that log reads 0 (no key prefix in the run's log)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO msg 8353: a deliberate schtasks /run reads rc=0 with objects written and the log carries no prefix of the key; the batch's model call (analyze.py anthropic_call) works on the interpreter the task runs.",
+  "world_is": "The key read works (the run reached the streaming call; the log holds no key prefix). The model step fails inside the installed SDK on this interpreter, so rc=1, 0 objects written, last_run not recorded. At least one model request was sent before the parser failed; the billed amount was not read. The Tue 2026-10-20 07:30 fire would fail the same way. The repair is an environment act (install the pinned SDK version into the interpreter the task runs, or point the launcher at another interpreter), not an edit to the repo's code.",
+  "notes": "Form only. Not applied here: pip install into the shared interpreter is the CTO's call; recommendation sent in the drain message: install anthropic==0.84.0 (the repo's own pin) into Python 3.14, record the prior version 0.45.0 as the rollback, then one more deliberate run."
+}
+```
