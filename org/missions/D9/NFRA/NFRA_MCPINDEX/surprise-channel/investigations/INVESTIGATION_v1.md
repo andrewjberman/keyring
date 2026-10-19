@@ -10285,6 +10285,295 @@ carries none.
         "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml silver_datasets entity opal_data_portal_v2_served_security_scanner (prefix json/security_scanner/latest/) @060b3afa809"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "MX-k-3 AC2 cannot pass as written: h_check.py classes schwab_prepare_download as a reader (write_class UNCLASSIFIED, not in MUTATING_UNCLASSIFIED), so it needs a nonempty or empty answer case, but the tool mints a single-use download ticket record on every successful call; the face's sender rule (can write or send: preview only) forbids that case, and the tool has no read-only definition line to cite.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 step 1 and decomposition R23.4 ruling 6: a tool is a sender if it can write or send, and gets preview cases only; an UNCLASSIFIED tool is a reader only when its definition shows it only reads. h_check.py is_sender() names opal_data_refresh_upload as the one mutating UNCLASSIFIED tool, and k3.AC2 requires every reader to have a nonempty or empty case.",
+    "world_is": "schwab_prepare_download (integration.py:792-886) builds a ticket request and, inside schwab_audit.release, calls the wired ticket_issuer (make_ticket_issuer at integration.py:1112), whose mint() calls store.put_runtime(..., condition=IF_ABSENT) at export.py:122 and returns a download URL. The tool declares class SAFE (integration.py:107-108) and the census reads write_class UNCLASSIFIED. Its only non-writing path is the catalog_id format refusal (integration.py:803-805), which yields no answer. Measured on 0.9.0_WK_NFRA_MCPINDEX~69: k3.AC1 RESULT PASS; k3.AC2 RESULT FAIL, readers without an answer case [schwab_prepare_download], 1 of 11 tools. ARMED hazard: a nonempty case for this tool at the drain mints a ticket; disarm by keeping it preview-only or by a ruling on the class.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:792-886 @060b3afa80 (prepare_download body; ticket request 854-859; issuer call 867; release 878)",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/export.py:105-125 @060b3afa80 (mint(); store.put_runtime with IF_ABSENT at line 122)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/checks/h_check.py:418-422 @060b3afa80 (MUTATING_UNCLASSIFIED and is_sender)",
+        "k3.AC2 run 2026-10-19 on org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~69/cases_assets.json: 'RESULT: FAIL ... readers without: [schwab_prepare_download]'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "Census links schwab_dim_asset to schwab_describe_dataset, but the tool reads no bucket or prefix: it answers from the pinned schema (DATASET_SCHEMAS and datasets.json) after the grant check, so the linked row names a source this code path does not read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Routing rule (k3 cell section 1 step 1): the linked catalog rows are the census indexes; a link that names a source the code does not read is filed as one OBSERVATION row.",
+    "world_is": "describe_dataset (integration.py:504-548) calls _grant and _scope, reads self.rules.fields, qry.DATASET_SCHEMAS and sem.describe_field, and sets type_basis to the producer schema source (data/assets/scripts/silver/schwab_schemas.py). It calls neither _availability nor _entries, so no snapshot object is read. The catalog row schwab_dim_asset names read_tool schwab_query only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:504-548 @060b3afa80",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml schwab_dim_asset row (silver_datasets; read_tool schwab_query) @060b3afa80",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[schwab_describe_dataset].indexes = [schwab_dim_asset]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "Census gives schwab_get_access no linked catalog row (indexes empty), but the tool reads the availability of every granted master and dataset through the Schwab catalog, which reads the completion prefixes and the dataset snapshots.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Routing rule (k3 cell section 1 step 1): a source the code reads that no linked row names is filed as one OBSERVATION row.",
+    "world_is": "get_access (integration.py:423-455) loops every granted master and dataset through _availability (integration.py:282-292), which calls the catalog. The catalog header assigns the CATALOG role to the two completion prefixes and the DATA role to the six data prefixes (org/standards/NFRA_OPLGTW_CONTRACT.json data_prefixes at lines 302-311). The census link list for this tool is empty and no catalog row carries a prefix.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:423-455 @060b3afa80",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:282-292 @060b3afa80",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py (module header, CATALOG and DATA roles) @060b3afa80",
+        "org/standards/NFRA_OPLGTW_CONTRACT.json lines 302-315 (data_prefixes, completion_prefixes) @060b3afa80",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[schwab_get_access].indexes = []"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "Census links only schwab_dim_asset to schwab_list_files, but the tool reads whichever dataset its argument names; a call for dim_position, dim_balance or dim_transaction reads a prefix that no list_files link names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Routing rule (k3 cell section 1 step 1): the code decides the source; a link covering one of the sources the code reads is a routing finding for the round.",
+    "world_is": "list_files (integration.py:460-499) validates dataset against the four contract datasets, then calls _availability for that master and dataset (integration.py:484). The three other schwab_dim_* rows are linked only to schwab_query.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:460-499 @060b3afa80",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[schwab_list_files].indexes = [schwab_dim_asset]; tools[schwab_query].indexes = four schwab_dim_* rows"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "Census links opal_data_assets_silver_49f_dim_advisor_fee_role to client_get_fees, but the 49F Black Diamond fee branch reads only the live fees table (silver/fees); the adapter states that dim_advisor_fee_role is a fee schedule and not a fee-row source, and does not read it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Routing rule (k3 cell section 1 step 1): a linked row whose source the code does not read is filed as one OBSERVATION row naming the tool, the row and the line.",
+    "world_is": "get_fees (app/client_adapter_bd49f.py:702-769) reads only _live_prefix(ctx, segment, \"fees\") (line 712). The comment at line 704 says dim_advisor_fee_role is a fee schedule, not a fee-row source. The row names read_tool client_get_fees, so the link and the code disagree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py:702-769 @060b3afa80 (get_fees; line 704 comment; line 712 live prefix)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml opal_data_assets_silver_49f_dim_advisor_fee_role row (read_tool client_get_fees) @060b3afa80",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[client_get_fees].indexes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "The catalog rows the Schwab and Black Diamond tools link (schwab_dim_asset, schwab_dim_balance, schwab_dim_position, schwab_dim_transaction, blackdiamond_fees) carry a bucket and no prefix or key, so the expect_source for those tools cannot be read off the row and comes from the code's own constant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Cases rule (k3 cell section 1 step 1): expect_source is taken from the catalog row's bucket and prefix or key, or from the code's bucket_source line, never from the tool's name.",
+    "world_is": "The schwab_dim_* rows and blackdiamond_fees carry keys bucket, read_tool, tools, vendor and similar, with no prefix or key. The code addresses schwab/<master>/silver/<dataset>/ from the contract data_prefixes (org/standards/NFRA_OPLGTW_CONTRACT.json lines 302-311) and silver/fees from integration.py:69 (SOURCE = bucket plus /silver/fees). Those code sources were used for the expect_source values of K3-06 to K3-10.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml silver_datasets rows schwab_dim_asset, schwab_dim_balance, schwab_dim_position, schwab_dim_transaction, blackdiamond_fees @060b3afa80",
+        "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py:69 @060b3afa80",
+        "org/standards/NFRA_OPLGTW_CONTRACT.json lines 302-311 @060b3afa80"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_fund_holdings reads the gold book table (opal_data_etfs_gold_book) for its book totals, and no census link names that row for this tool; the census links gold_holding and silver_holdings only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_funds.py:426 calls _book_totals() on the holdings path; :386 reads rows[ENTITY_GOLD_BOOK]; :454-458 reads the book part and filters it by FUND_COLUMN[ENTITY_GOLD_BOOK].",
+        "CENSUS @060b3afa809: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_fund_holdings].indexes = [opal_data_etfs_gold_holding, opal_data_etfs_silver_holdings].",
+        "CATALOG @060b3afa809: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 14556, opal_data_etfs_gold_book, tools = [etfs_get_positioning]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_fund_holdings names one of those linked rows.",
+    "world_is": "The holdings code also reads the gold book for the same date, which no linked row names. K1-09 carries expect_source opal-data-etfs/gold/holding/, the linked table that answers the holding rows.",
+    "notes": "Routing finding of round 23 (contract: keep expect_source on what the code reads and file one OBSERVATION row). No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_fund_trades reads the gold peer_group_map on its peer_group path, and no census link names that row for this tool; the census links trade_schedule only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:449 calls _peer_funds() when peer_group is given; _peer_funds reads rows[ENTITY_PEERS] at :403.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_fund_trades].indexes = [opal_data_etfs_gold_trade_schedule]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_fund_trades names one of those linked rows.",
+    "world_is": "The peer_group path reads the gold peer_group_map, which no linked row names. K1-14 (peer_group PFOE) carries expect_source opal-data-etfs/rivalfunds/etfs/gold/trade_schedule/, the linked table that answers the trade rows.",
+    "notes": "Routing finding of round 23. The fund_ticker path (K1-15) reads trade_schedule only. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_compare_peers reads the gold peer_group_map on every call, and no census link names that row for this tool; the census links buying_trend and holding_contribution.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:576 calls _peer_funds() unconditionally; _peer_funds reads rows[ENTITY_PEERS] at :403.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_compare_peers].indexes = [opal_data_etfs_gold_buying_trend, opal_data_etfs_gold_holding_contribution]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_compare_peers names one of those linked rows.",
+    "world_is": "The compare path reads the gold peer_group_map on every call, which no linked row names. K1-01 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/buying_trend/, a linked table.",
+    "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_rival_page_status reads the gold canonical_shape on every call, and no census link names that row for this tool; the census links rivalfunds_page only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:735 calls _canonical_latest() unconditionally; _canonical_latest reads rows[ENTITY_CANON] at :675.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_rival_page_status].indexes = [opal_data_etfs_platinum_rivalfunds_page]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_rival_page_status names one of those linked rows.",
+    "world_is": "The page status code reads the gold canonical_shape for each fund's gold latest report, which no linked row names. K1-25 carries expect_source opal-data-etfs/rivalfunds/etfs/platinum/page/, the linked page prefix.",
+    "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_who_holds reads the gold canonical_shape on every call, and no census link names that row for this tool; the census links security_universe only. Its peer_group_map read occurs only with a peer_group argument.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals.py:506 reads rows[ENTITY_CANON]; :529-538 partitions and reads canonical_shape on every call; :508 and :542 read the peer_group_map only when peer_group is given.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_who_holds].indexes = [opal_data_etfs_gold_security_universe]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_who_holds names one of those linked rows.",
+    "world_is": "The holders code reads the gold canonical_shape for the matched rows, which no linked row names. K1-29 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/, the table that holds the holder rows.",
+    "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_security_reference reads the gold security_universe on every call to resolve the security, and no census link names that row for this tool; the census links security_market, corporate_actions and security_names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals.py:573 reads rows[ENTITY_UNIVERSE]; :583 calls _latest() on it unconditionally.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_security_reference].indexes = [opal_data_etfs_gold_corporate_actions, opal_data_etfs_gold_security_market, opal_data_etfs_gold_security_names]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_security_reference names one of those linked rows.",
+    "world_is": "The reference code reads the gold security_universe to resolve identifiers, which no linked row names. K1-27 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/security_market/, a linked table.",
+    "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_coverage reads the gold canonical_shape on every call for each fund's latest report date, and no census link names that row for this tool; the census links holdings_coverage and input_census. Its peer_group_map read occurs only when fund_ticker is omitted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals.py:624 reads rows[ENTITY_CANON]; :635 partitions it and :644 reads its latest reports on every call; :627 and :641 read the peer_group_map only when fund_ticker is None.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_coverage].indexes = [opal_data_etfs_gold_holdings_coverage, opal_data_etfs_gold_input_census]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_coverage names one of those linked rows.",
+    "world_is": "The coverage code reads the gold canonical_shape for the report date of each fund, which no linked row names. K1-03 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/, the table that answers the report date.",
+    "notes": "Routing finding of round 23. No change to the gateway."
   }
 ]
 ```

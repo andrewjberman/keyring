@@ -1,0 +1,6 @@
+# Drive log 2026-10-19 15Z -- 2.0.0_SA_COO~D2 (IRPT_DASHBD, DSGN_IRPTV1 second project)
+
+Substantive ticks of the hour, copied from the runtime tick file (counts, hashes and words only). Push state: LOCAL.
+
+- 2026-10-19T15:40Z | IRPT_DASHBD | ANDREW-DIRECT promote | PROD recut of the dell2 portal set done (CTO msgs 10707, 10727, 10752): cand/dell2/irpt-promote-all-dell2-ir-set-20261019 @8c52f547 on portal origin, 3 commits / 49 files on PROD d729ee6d, 5 dell1 files out, Trade Request revealed in the New Ticket list per ruling; gates tsc 0, eslint 0 errors, tests no failure DEV lacks (15 vs 17), trade+meeting 32/0, build green; approval row c38f registered (b085 withdrawn); DT order IRPT_DASHBD.TO-DB-b-336 on file @37b8930fa8, holding at its step 2; CTO asked to close c38f on Andrew's record; fold stays mine (10617) | outcome: DRIVE FORWARD (waiting on the CTO's close of c38f)
+- 2026-10-19T15:49Z | IRPT_DASHBD | GO | CTO closed approval row c38f approved on Andrew's record (msg 10765); approval-status APPROVED valid yes head 8c52f547 commits 3; PROD tip still d729ee6d; GO sent to the DT for IRPT_DASHBD.TO-DB-b-336; waiting on the DT's ledger irpt-portal-promote-all-dell2-20261019, then the fold (mine) and the live time to V2 | outcome: DRIVE FORWARD
