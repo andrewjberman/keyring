@@ -5,10 +5,10 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.22",
+ "prd_version": "v0.23",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
  "status": "DRAFT"
 }
 ```
@@ -28,22 +28,29 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
   FWD-1  One Analysis Request goes from the Ticket Center form to FOUR attachments on the same open ticket, with no person in between
          DONE WHEN  EXERCISED -- on DEV, a SYNTHETIC Opal staff user (minted and deleted under a never-widen pair) signs in, opens the Ticket
                     Center (shown to Opal users only), CHOOSES the partner firm the request is filed under, fills the
-                    Analysis Request form and uploads a holdings CSV or XLSX. The form carries the variant chosen
-                    (Overview, Comparison, Multi-Comp) and the report produced is that variant, the Opal-model checkboxes and other tickers. Every
+                    Analysis Request form and uploads a holdings CSV or XLSX. The form asks no report type and no email: the variant is
+                    DERIVED from the comparables picked (none: Overview; one: Comparison; two or more: Multi-Comp), and the report produced
+                    is that variant, with the Opal-model checkboxes and other tickers. Every request gets commentary (no checkbox). The
+                    staff filer is never refused for want of an advisor, a directory row or a firm-list membership (C-FIRM). Every
                     downstream hop binds to the chosen firm. Nobody touches anything after Submit. The still-OPEN ticket then carries four attachments, each opened from the ticket
                     page by an Opal person: (1) the original holdings upload, (2) the form selections as filed, (3) the Opal-generated report (the Opal
                     producer, not YCharts), (4) the AI commentary as a STANDALONE branded Opal PDF, marked DRAFT. A partner-firm filing (Alyssa's first real request) grades it again (the
                     organic arm, never the gate; it waits on the Ticket Center being shown to client users)
          ACCEPT     an Opal person opens the still-open ticket and finds the four items, without asking anyone and without anyone having forwarded
-                    a file; each of the four is its own attachment (the commentary is not a page inside the report PDF)
+                    a file; each of the four is its own attachment (the commentary is not a page inside the report PDF); a commentary failure
+                    never withholds the other three (they attach when the report completes; the ticket names a failed step, FWD-4). The bar
+                    is Andrew, signed in as himself, filing his own sample with nothing seeded; a synthetic advisor or a pre-seeded directory
+                    row does not meet it
          SOURCE     Andrew 2026-10-08 ~22:3xZ; Andrew's dell2 voice memo 2026-10-13 ("they should see the CSV or XLSX that the advisor uploaded.
                     They should see the form ... the generated report ... the commentary that we AI generated ... That is the deliverable");
                     call 2 approved ~17:4xZ (synthetic advisor); pivot direction XB-20261013T180328Z-d4a5 O1; the filer is re-pointed
                     to Opal staff by Andrew-direct 2026-10-14 ~15:2xZ (ADDENDUM v0.6)
 
   FWD-2  The form fits the request and catches a bad request before it files
-         DONE WHEN  EXERCISED -- the form offers the analysis types and the Opal models as checkboxes plus a field for other ETFs; a mistyped ETF is caught
-                    and a correction offered, and a swap is accepted, before the ticket is created
+         DONE WHEN  EXERCISED -- the form shows the five Opal models as checkboxes at first paint, in readable text, with no network wait, plus a field
+                    for other ETFs; no report-type dropdown, no advisor-email field, no commentary checkbox; a mistyped ETF is caught and a
+                    correction offered, and a swap is accepted, before the ticket is created; every wait left on the form or the ticket
+                    page gates something the person needs from the network at that moment (only the other-ETF check needs the catalogue)
          ACCEPT     a person who types an ETF wrong is told before filing and can pick the right one; a holding that is unknown or cannot be priced is
                     kept if Opal or yfinance can price it, and otherwise replaced before filing by a proxy ETF chosen from Opal's own registry for
                     its asset class and sub-class (the security swap, C-SWAP), never by an unverified guess; the advisor sees and can change it
@@ -83,6 +90,14 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
          SOURCE     Andrew 2026-10-09 ~04:4xZ ("I do not think we actually need YCHARTS for anything"); relaxed for pricing data by Andrew-direct
                     2026-10-14 ~15:5xZ ("I am ok with a single data call to YCharts for pricing data."), SUPERSEDED by Andrew-direct
                     2026-10-14 ~17:5xZ ("we use Yahoo as first round pick, we use Ycharts as second round pick")
+
+  FWD-8  "Open report" on the ticket shows the report, never its construction log
+         DONE WHEN  EXERCISED -- for FWD-1's request, "Open report" on the ticket shows the report's own pages and figures; the element trace
+                    (every layout element as a card) is not the default view, and appears only behind "Technical details" for an Opal
+                    operator; the Analysis tab's manual path is not regressed
+         ACCEPT     a person who opens a report reads the report, not a list of hundreds of cards it cannot interpret
+         SOURCE     Andrew's 2026-10-19 Ticket Center walk (CRO~TCKT brief @b01824a2a1, O6; G6: 427 cards, 3 with values, for
+                    REQ-d6231c013ae90519c67d18e9)
 ```
 
 ## 1. What exists (the CRO's nine-hop trace @9076346655, plus this session's measured changes)
@@ -105,8 +120,8 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 |---|---|---|
 | C-ONE-JOURNEY: FWD-1 is driven, never waited on | this project | Round 1 decomposes over the nine hops of FWD-1. A hop that waits on another box parks that ONE hop in STATUS.md with its owner and un-park condition, and the driver moves to the next hop in the same tick (the CRO's no-stop rule). Alyssa's own filing is the organic arm, never the gate; it waits on the Ticket Center being shown to client users. |
 | C-SOURCES: contracts are cited, not copied | this project | C-PACKAGE, C-ONE-DOOR and C-TYPE live in `org/missions/D7/TCKT/TCKT_VNEXT/prd/TCKT_VNEXT_PRD.md`. C-KIMI and C-WIPE-GATE live in `org/missions/D9/NFRA/NFRA_TRNSPT/prd/NFRA_TRNSPT_PRD.md`. The upload door and E5 live in IRPT_BCKEND. This PRD cites each at its path and never restates it, so each rule has one home. |
-| C-PACKAGER: one principal attaches the package | this project | The package is four STANDALONE items: the original holdings upload, the form selections as filed, the Opal report, and the AI commentary as a standalone branded Opal PDF marked DRAFT. Its last hop attaches them after the commentary. The combined package PDF (the report with a commentary page inside) is never posted as an attachment. That hop's principal is the ONE `package_principal` named in the type definition. It is firm-bound by its PROFILE row (internal-caller narrowing, IB-pr-387), and never ALL. |
-| C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the packager by its row. FWD-1's filer, an Opal staff principal, CHOOSES the firm from the served partner tenants, and the choice must be in its explicit `allowedFirmIds` (the CREATE path's server check); every hop binds to that choice. A partner-firm user's firm is the signed-in user's and is never a choice. ALL never admits and never substitutes for the choice. |
+| C-PACKAGER: one principal attaches the package | this project | The package is four STANDALONE items: the original holdings upload, the form selections as filed, the Opal report, and the AI commentary as a standalone branded Opal PDF marked DRAFT. The packager is triggered by the report's READY, never by the commentary flag: the first three attach when the report completes, the commentary when it is drafted, and a commentary failure withholds nothing else (v0.23). The combined package PDF (the report with a commentary page inside) is never posted as an attachment. That hop's principal is the ONE `package_principal` named in the type definition. It is firm-bound by its PROFILE row (internal-caller narrowing, IB-pr-387), and never ALL. |
+| C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the packager by its row. FWD-1's filer, an Opal staff principal, CHOOSES ANY firm from the served partner tenants and is never refused for want of an advisor, a directory row or an `allowedFirmIds` membership: the staff principal is the request's owner (`access.prospect_owner()`), and every hop binds to that choice (v0.23, superseding the `allowedFirmIds` clause of v0.7). A partner-firm user's firm is the signed-in user's and is never a choice. ALL never admits and never substitutes for the choice. |
 | C-ABSORB: what MOVES into this project (the brief's "compress into ONE project") | this project | **Moves in, owned and issued here.** (a) IRPT_BCKEND `~Y2`'s Analysis lane: the upload door and resolution `infra/aws/lambda/investor-reporting/intake/{uploads,upload_resolution,upload_suggestions,resolution_kimi}.py`, the security swap (today `KIMI_WEB_SEARCH_UNVERIFIED`, `resolution_kimi.py:159-165`; candidates from `etf-classifications`, ex-IRPT_YCDGEN FWD-16), and generation submit. (b) IRPT_YCDGEN whole: the Opal engine and brand `ycharts/generate/{resident_worker,durable_job,comparison_catalogue,publication_worker}.py`, `ycharts/research/{opal_producer,layout_overview}.py`, report types and vendor retirement. (c) NFRA_TRNSPT FWD-10 and FWD-11: the commentary drafter `data/transcripts/scripts/commentary/*` and its Lambda `commentary.tf`. (d) The READY event H1 (from `~P2`'s queue). (e) TCKT_VNEXT's Analysis Request scope: the `analysis_request` type definition, `POST /tickets/{id}/package`, `portal/src/pages/TicketCenter/` Analysis Request parts. **Keeps the remainder:** IRPT_BCKEND (`~P2`: auth, routes, directory, holdings, `irpt-export-render` as the shared renderer); NFRA_TRNSPT (FWD-1..9: transcripts, company read, mail); TCKT_VNEXT (non-analysis types). **Lanes:** `~Y2` is the ONE driver, issuing the FWD-1 thread and the round analysis. `~G2` (engine and brand), `~T2` (commentary) and `~V2` (ticket) continue as this project's workstreams with disjoint write surfaces, each issuing only into its own workstream scope (rule 27). No hop of FWD-1 parks on another project's cell. Each source PRD gains a one-line addendum pointing here at its next round boundary; in-flight orders and signed pairs complete where they are. |
 | C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2; restated v0.14 to the CTO replacement ruling @5deb868819) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; the form's typo hint is C-FILING-HINT, verified against the registry and yfinance, never YCharts. (2) PRICED: Yahoo, then YCharts per symbol (C-PRICES); if either has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. Every holding the door filed UNRESOLVED (a kept `TICKER_NOT_FOUND`, a `TICKER_DATA_NOT_ENTITLED`) enters this pass; the filer is never asked for a replacement (v0.18). (3) CLASSIFY only if neither has prices: SECCLASS's classifier on kimi-k2.6 with a web-search tool and the tool-call loop, output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) REPLACE: from the class-matched pool (registry rows plus model proposals that pass the class match and have Yahoo history), the longest Yahoo history wins, ties by ticker. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`, and the report names the replacement. No designated-proxy table exists (provider QA @30ceaa97fa, finding 9). |
 | C-PRICES: where prices come from (restated v0.13; Andrew-direct 10-14 ~17:5xZ, CTO price ruling ADDENDUM 2 @ac60268494) | this project | Per security, in order: (0) the estate's own stores where they hold the symbol (the DEMQUE price store, the Opal ETFs' Bloomberg history), read, not called; (1) Yahoo (yfinance), cut at T-1, `source: yfinance`; (2) YCharts through the stored session, one symbol per call, prices only, `source: ycharts`; (3) the backend replacement C-SWAP step 2 (class-matched pool, longest Yahoo history, ties by ticker), named in the report; (4) else the report runs WITHOUT the security and says so in words, never blocking. Bloomberg is OUT of this chain. Every price carries its source as a claim field. **There is no price-date input (v0.16, Andrew-direct 10-15 ~20:4xZ):** every price, share-quantity valuations included, is the most recent close, the T-1 frontier of `lib/trading_calendar.py`, stated in the report as the as-of. The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts report, figure or PDF. |
@@ -150,6 +165,9 @@ on its own artifact.
 | S5 | FWD-1, 3 | the commentary Lambda and its READY trigger (H1) | this project, workstream `~T2` (C-ABSORB c, d) | SERVED at deploy |
 | S6 | FWD-1, 5 | the ticket page's package files, opened through IRPT's signed-link reader | this project, portal | product file |
 | S7 | FWD-6 | the Analysis tab under `portal/src/pages/InvestorReporting/`, the manual path | this project, after FWD-1 | product file |
+| S8 | FWD-1 (C-FIRM) | `infra/aws/lambda/investor-reporting/_authz/served.py` owner resolution only (`_create_owner`, `_advisor_owner`, :1069-1111), C-ABSORB (f); `~P2` reviews | this project, `~Y2`, one release with S1's email-field removal | SERVED at deploy |
+| S9 | FWD-8 | the ticket's "Open report" entry into `portal/src/pages/InvestorReporting/render/NativeSections.tsx` (report view default; element trace behind "Technical details") | this project, portal; the Analysis tab is a regression test | product file |
+| S10 | FWD-1 (C-PACKAGER) | the packager trigger in `ycharts/generate/resident_worker.py` (:254, the `commentary_requested` gate) | this project, workstream `~G2` | resident release |
 
 ## 6. BRIEF COVERAGE (one row per brief item; brief @2b21a349d1, 14 items)
 
@@ -534,5 +552,57 @@ lookups per several minutes from this host, whether 1.5 s or 90 s apart, so ever
    a bot-detection cutoff. The bounded WAF backoff (AR-g-129) stays as the fallback.
 5. **Run 3** proceeds on the current resident only within its signed amendments. The release carrying (1) to (3) is its own resident
    pair, which this seat signs.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.23 (2026-10-19 ~19:5xZ, 1.0.0_SA_CTO~DELL2) -- Andrew's Ticket Center walk: the flow cleaned to what it needs (ENDPOINT and CONTRACTS change; both halves re-open)
+
+**Brief:** `4.0.0_SA_CRO~TCKT`, midstream, `docs/briefs/irpt-anlreq-ticket-center-flow-cleanup-brief-20261019.md` @b01824a2a1.
+**Andrew's records:**
+- `org/tier1_exec/4.0.0_SA_CRO~TCKT/deliverables/ANDREW_DIRECT_20261019_165xZ_TCKT_ANALYSIS_REQUEST_FLOW_BREAKS.md` @018f22da23;
+- `org/tier1_exec/4.0.0_SA_CRO~TCKT/deliverables/ANDREW_DIRECT_20261019_18xxZ_TCKT_NO_ADVISOR_EMAIL_COMMENTARY_DEFAULT_ON.md` @c15be009b2.
+
+**Gaps:** G1 to G10, in `TCKT_ANLREQ_FLOW_GAPS_20261019.md` @c15be009b2.
+
+**What was wrong on PROD today (measured by the CRO, Part VI):**
+- Andrew's own filing was refused NOT_AUTHORIZED by the advisor lookup (`_authz/served.py:1089-1091`).
+- The form asked a report type and an advisor email.
+- The models waited on a four-step network chain.
+- No ticket has carried a package since 2026-10-10, because the packager is reached only when `commentary_requested` is
+  True (`resident_worker.py:254`).
+- "Open report" shows 427 element cards.
+
+**This seat's 13:3xZ "READY" for his PROD smoke was WRONG for filing.** It read the code paths, not a real staff filing.
+
+**Restated (above):**
+- **FWD-1:** the variant is derived from the count; commentary always; the staff filer is never refused; a commentary
+  failure withholds nothing; the bar is Andrew with nothing seeded.
+- **FWD-2:** no type, email or commentary fields; the models at first paint; the waits swept.
+- **FWD-8 (new):** "Open report" shows the report.
+- **C-FIRM:** Opal staff choose any firm and own the request through `prospect_owner()`; the `allowedFirmIds` clause is
+  superseded.
+- **C-PACKAGER:** triggered by READY, never by the commentary flag.
+- FWD-7's O7 (the Multi-Comp comparison figures) stays FWD-7's.
+
+**Placement (the brief's Part II ask):**
+- **O1's backend half** is the owner resolution in `infra/aws/lambda/investor-reporting/_authz/served.py` (`_create_owner` and
+  `_advisor_owner`, lines 1069-1111). It is ABSORBED into this project by C-ABSORB amendment (f): this ONE function family.
+  The rest of the file stays IRPT_BCKEND's (`~P2`), and `~P2` reviews the hunk.
+  - It lands in the SAME release as the portal half that removes the email field. The field alone makes staff hit
+    "must name the firm advisor".
+  - Its pair names the readers of the owner value.
+- **The ticket service is unchanged:** `report_type` is derived by the client from the count.
+- **The render change (FWD-8)** touches the shared `NativeSections.tsx` only through the ticket's entry. The Analysis
+  tab's manual path is a regression test.
+- **Portal class:** the Ticket Center is internal-only (v0.6), so this seat approves it.
+
+**Order (Andrew, laptop relay ~18:4xZ: drain, then the Ticket Center state, Analysis Request FIRST):**
+- Cells are cut by `2.0.0_SA_COO~Y2` at the pause DONE line, as ONE issuance.
+- First: O1 (backend and portal together) and O2 (no type, email or commentary fields), which is the filing path.
+- Then: O5 (the packager on READY) and FWD-8.
+- Then: O3 and O4 (the waits).
+
+**Sign-off:** ENDPOINT and CONTRACTS changed, so `3.0.0_SA_CVO~DELL2` signs the ratified-text half. The brief half is
+accepted because the CRO wrote the brief (proportionate sign-off).
 
 -- 1.0.0_SA_CTO~DELL2
