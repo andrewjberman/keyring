@@ -59,6 +59,20 @@ Claim: M = measured (code read or live read), I = inferred.
   ~IB2 notes.
 - Fix (I): package unconditionally on generation complete; commentary PDF is the optional fourth item.
 
+## G9 Typed "Advisor login email" field (Andrew-direct 18:xxZ: remove; the signed-in email is known)
+- M: field `AnalysisRequestParts.tsx:172` (origin/DEV), added by AR-y-378; validated by `advisorEmailRefusal`
+  (`analysisRequest.ts:83`), sent as query `advisor_email` (`investor-reporting.ts:1233`). It is the input G1's
+  `served.py:1109` lookup refuses on.
+- Coupling (M): removing the field alone makes a staff filing hit `served.py:1089-1091` ("must name the firm
+  advisor"). The field and G1's backend fix land together: the owner is the signed-in principal.
+
+## G10 "Add commentary" checkbox (Andrew-direct 18:xxZ: remove; commentary on by default)
+- M: checkbox `AnalysisRequestParts.tsx:227-229`, default `add_commentary: false` (`:71`), sent at
+  `analysisRequest.ts:313`, echoed in the form-as-filled table (`AnalysisRequestParts.tsx:593`).
+- Effect (M via G7): with `commentary_requested` True on every request, `resident_worker.py:254` stops skipping, so the
+  packager is reached on every run. G7's decoupling (package on generation complete) still stands so a commentary
+  failure cannot withhold the other three files (I).
+
 ## G8 Report link written two days late; no vendor calls on a Multi-Comp
 - M: request accepted 2026-10-17 05:14:30Z; ticket `report_ref` written 2026-10-19 13:42Z.
 - M: run.json `calls: []` on a Multi-Comp; I: comparison figures in the PDF are likely empty (144 vendor elements
