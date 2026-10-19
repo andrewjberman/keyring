@@ -87,6 +87,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rz-2.round-46-resize-the-gatewa
 - Z-S420 (the CRO's row on the outage) is disarmed by this issuer when the `read-back` leg shows the two large replies complete under the limit.
 
 <status>staged</status>
+<status>pending</status>
 <round>46</round>
 <workstream>ENRICH-R46-E</workstream>
 <slot>~AE</slot>
