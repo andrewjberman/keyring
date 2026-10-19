@@ -52,16 +52,16 @@
       "kind": "verify",
       "target": "live reader census re-run: errors 0, hits_reading_key 0",
       "proof_required": "CENSUS_RERUN.json denominators",
-      "proof": null,
-      "closed_at": null
+      "proof": "2026-10-19T14:11Z door6_live_reader_census.py rerun: functions_listed=245 zip=241 image_not_scanned=4 scanned_ok=241 errors=0; 16 hit functions all read line by line (7 docstring/comment hits, 8 registry-JSON), hits_reading_key=0; runner listing crashed in the tool (rc=3221225477) so code/runner/ read directly: 2 objects, 0 hits; door6/CENSUS_RERUN.json + CENSUS_RERUN_HIT_READS_20261019.txt",
+      "closed_at": "20261019T142343Z"
     },
     {
       "id": "L6",
       "kind": "s3-prefix",
       "target": "opal-data-inf code/gold/orion-gold-dispatch.sh: marker success-branch write removed in deployed bytes only, diff touches that block alone, safe-deploy, S3 sha256 equals file",
       "proof_required": "sha256 before and after",
-      "proof": null,
-      "closed_at": null
+      "proof": "2026-10-19T14:22:09Z code/gold/orion-gold-dispatch.sh VersionId JjTLNaZeRRAQn342RRa7qEHSR0AUf1FV sha256 e9aef66b.. -> hK5vY2H31oT3NHmoiArlZ00ra8gkuDaO sha256 9495cd56228b0b5a4fe8d7d2ce4e22fc3a540fbedf9af02ccdbbee484e069013 = edited file (get-object read-back); diff = one hunk 1903,1912c1903,1905, marker block alone; safe-deploy no-ops on .sh (py only) so put-object used, deviation recorded in door6/STEP5_WRITER_STOP_20261019.txt",
+      "closed_at": "20261019T142344Z"
     },
     {
       "id": "L7",
@@ -86,7 +86,9 @@
     "20261017T144955Z LEG L1 closed: ORGANIC, no dispatch by this order (COO amendment 3 @fe85fd1ba4): 12:52Z backstop dispatched 2026-10-17, ssm:d2809357-f7",
     "20261018T131539Z LEG L2 closed: safe-apply 2026-10-18T13:10:48Z-13:14:35Z (window opens 13:09:00Z): Apply complete 1 added 0 changed 0 destroyed rc=0; p",
     "20261019T140900Z LEG L3 closed: read by this seat 2026-10-19T14:05Z, /aws/lambda/mdpf-feeder-trigger, window 12:45Z-13:20Z (2 invocations): 13:08:25Z se",
-    "20261019T140900Z LEG L4 closed: 2026-10-19T14:07Z-14:08Z plan add=0 change=1 destroy=0 (only aws_cloudwatch_event_rule.mdpf_feeder_accelerator state ENA"
+    "20261019T140900Z LEG L4 closed: 2026-10-19T14:07Z-14:08Z plan add=0 change=1 destroy=0 (only aws_cloudwatch_event_rule.mdpf_feeder_accelerator state ENA",
+    "20261019T142343Z LEG L5 closed: 2026-10-19T14:11Z door6_live_reader_census.py rerun: functions_listed=245 zip=241 image_not_scanned=4 scanned_ok=241 err",
+    "20261019T142344Z LEG L6 closed: 2026-10-19T14:22:09Z code/gold/orion-gold-dispatch.sh VersionId JjTLNaZeRRAQn342RRa7qEHSR0AUf1FV sha256 e9aef66b.. -> hK"
   ],
   "last_red_at": null,
   "device": "dell1"
