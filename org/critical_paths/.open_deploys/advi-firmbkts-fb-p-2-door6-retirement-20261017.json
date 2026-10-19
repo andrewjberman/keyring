@@ -2,7 +2,7 @@
   "slug": "advi-firmbkts-fb-p-2-door6-retirement-20261017",
   "title": "ADVI_FIRMBKTS FB-p-2 Door 6 retirement (WORLD): current-date catch-up, 13:08Z second-look schedule, accelerator disable after first live fire, Inflection done-marker writer stopped in the deployed orion-gold-dispatch.sh. GO msg 7553; pair COO @8e1b650b9e / CTO @156165f766",
   "author": "0.7.0_AE_CloudOps~FB1",
-  "status": "OPEN",
+  "status": "HELD-SOVEREIGN-GATED",
   "opened_at": "2026-10-17T14:18:05.582876+00:00",
   "window_hours": 120.0,
   "entry_path": "org/critical_paths/change_management/20261017T1418Z_advi-firmbkts-fb-p-2-door6-retirement-20261017_deploy_completion.md",
@@ -89,8 +89,18 @@
     "20261019T140900Z LEG L4 closed: 2026-10-19T14:07Z-14:08Z plan add=0 change=1 destroy=0 (only aws_cloudwatch_event_rule.mdpf_feeder_accelerator state ENA",
     "20261019T142343Z LEG L5 closed: 2026-10-19T14:11Z door6_live_reader_census.py rerun: functions_listed=245 zip=241 image_not_scanned=4 scanned_ok=241 err",
     "20261019T142344Z LEG L6 closed: 2026-10-19T14:22:09Z code/gold/orion-gold-dispatch.sh VersionId JjTLNaZeRRAQn342RRa7qEHSR0AUf1FV sha256 e9aef66b.. -> hK",
-    "20261019T142423Z LEG L7 closed: repo source data/inf/scripts/gold/orion-gold-dispatch.sh success-branch marker block changed, committed 9bfa23498977c8ad"
+    "20261019T142423Z LEG L7 closed: repo source data/inf/scripts/gold/orion-gold-dispatch.sh success-branch marker block changed, committed 9bfa23498977c8ad",
+    "20261019T184738Z HELD-SOVEREIGN-GATED gate=external/2.0.0_SA_COO~B1 step-6 read of the pipeline-complete.json version history after "
   ],
   "last_red_at": null,
-  "device": "dell1"
+  "device": "dell1",
+  "gate": {
+    "type": "external",
+    "ref": "2.0.0_SA_COO~B1 step-6 read of the pipeline-complete.json version history after the 2026-10-20 gold chain day (L8); object write path closed to this order per XA-20261019T143617Z-d9a9, dell1 CTO msg 8317",
+    "reread": {
+      "kind": "date",
+      "value": "2026-10-21"
+    }
+  },
+  "held_at": "2026-10-19T18:47:38.589632+00:00"
 }
