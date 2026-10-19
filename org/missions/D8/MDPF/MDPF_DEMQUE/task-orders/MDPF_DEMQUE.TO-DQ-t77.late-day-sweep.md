@@ -4,13 +4,14 @@
 <issued_to>0.9.0_WK_MDPF_DEMQUE~67</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>9</round>
 <workstream>SWEEP</workstream>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-19 ~17:2xZ (worker rows MDPF_DEMQUE-D1-W67-S1 to S4):** (S1, an issuer defect) the `pass` member is written by `bbg_quote.record_actual`, which the first `<paths>` did not grant: `data/mdpf/scripts/demque/bbg_quote.py` is now GRANTED for exactly one change, an optional keyword `pass_=None` on `record_actual` (the member `"pass"` written only when not None, as the `surface` keyword already does); nothing else in that file moves. (S2, ruled) the sweep is ONE pool: the reference channel's held ceiling (52) is waived in the sweep exactly like the history ceiling, so reference requests draw from `daily_total_left` too. (S3) accepted: listing `bbgtml-unmetered` in `unconverted_modes` is true (the terminal agent's spend is unmetered). (S4) accepted: an absent `daily_total` fails closed with `NO_ALLOWANCE`. Criteria unchanged.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-77` (`decompositions/MDPF_DEMQUE_DECOMP.md`, amendment 38) |
 **outcome_ref:** C-PRICES, C-RESERVE | **depends_on:** DQ-t-69, DQ-t-74, DQ-t-75, DQ-t-76 (merged)
 
@@ -30,7 +31,7 @@ Andrew ruled (record `org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_
    - the production budget ledger for that UTC day (`bbg_budget_<day>.jsonl` in `bbg_budget.ledger_dir()`, read with `bbg_ledger_upload.rows_for_day`), EXCLUDING the drawer's own modes `demque-backfill` and `demque-backfill-reference` (those cells are already in the actuals ledger); a row whose `cells` is None counts its `rows` as a floor, and its mode is listed in the result as `unconverted_modes`;
    - plus every `cells_drawn` of the actuals ledger dated that day (history and reference, every job, both passes).
    - If that day's budget ledger file is ABSENT or unreadable, the sweep has room 0 and stops with `PRODUCTION_SPEND_UNREAD` (fail closed: production's spend is unknown). An existing EMPTY file is a valid read of 0.
-5. **Waived in the sweep only:** the per-surface rooms (A to E) and the untagged history ceiling plus carry-over. Each drawable request draws up to `min(its remaining, daily_total_left)` in the order `open_requests` already gives; subtract each draw from `daily_total_left`.
+5. **Waived in the sweep only:** the per-surface rooms (A to E), the untagged history ceiling plus carry-over, and the reference channel's ceiling (amendment S2). Each drawable request draws up to `min(its remaining, daily_total_left)` in the order `open_requests` already gives; subtract each draw from `daily_total_left`.
 6. **Kept in the sweep:** `draw_hold` (held requests are not drawable, as today); the tier floor; the probe rules (DQ-t-76); the empty-window cooldown and its stop (DQ-t-75); the outcome per request (DQ-t-74); the stop on any vendor limit, refusal or diagnostic.
 7. **Separate outputs:** the sweep writes `receipt.<day>.sweep.json`, `history-<day>.sweep.parquet` and `reference-<day>.sweep.parquet` (never overwriting the default pass's files); its actuals rows carry `"pass": "sweep"` (the default pass's rows carry no `pass` member, unchanged). The receipt and result carry `"pass": "sweep"`, `daily_total_left` at the start, `spent_today` as `{"production": n, "drawer": n}`, and `unconverted_modes`.
 8. **Read-only views:** `--room --sweep --day D [--actuals PATH]` prints ONE JSON line `{"day", "pass": "sweep", "trading_day", "daily_total_left", "spent_today", "unconverted_modes"}`, plus `"reason": "PRODUCTION_SPEND_UNREAD"` and `daily_total_left` 0 when the day's budget ledger is absent; it writes nothing and calls nothing. `--task-name --sweep` prints the builder's name `name(lookup('mdpf')['short'], None, 'demque-sweep', 'daily')` (= `mdpf-demque-sweep-daily`; never typed). The existing `--task-name` and `--room` are unchanged.
@@ -66,6 +67,7 @@ Read first, in full: `standing_drawer.py` (module docstring, `task_name`, `_draw
 
 <paths>
 data/mdpf/scripts/demque/standing_drawer.py
+data/mdpf/scripts/demque/bbg_quote.py
 data/mdpf/scripts/demque/test_demque_sweep.py
 data/mdpf/scripts/demque/test_demque_*.py
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md
