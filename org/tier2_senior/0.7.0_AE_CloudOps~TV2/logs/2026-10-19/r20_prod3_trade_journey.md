@@ -1,9 +1,9 @@
-# TCKT_VNEXT TO-R20-PROD3: the Trade Request journey on PROD, two attempts, filed and cleaned up, the read-back UNPROVEN -- 0.7.0_AE_CloudOps~TV2
+# TCKT_VNEXT TO-R20-PROD3: the Trade Request journey on PROD, three attempts, filed and cleaned up, the read-back UNPROVEN -- 0.7.0_AE_CloudOps~TV2
 
 **archetype:** DEPLOY
 **Date:** 2026-10-19
 **Task Order:** TCKT_VNEXT.TO-R20-PROD3 (GO msg 10941, CTO msg 10936; COO AMENDMENT 1 msg 11000, AMENDMENT 2 msg 11006 on the CTO's ruling 11005)
-**Status:** NOT COMPLETE. Order stays `pending`; ledger `tckt-vnext-r20-prod3-20261019` OPEN (legs R1, V1). R20PROD3-AC1 would read RUN-BAD (no result file).
+**Status:** CLOSED READ-BACK UNPROVEN (AMENDMENT 4 failure branch, no fourth attempt). Order stays `pending`; no result file; ledger `tckt-vnext-r20-prod3-20261019` CLOSED 22:57Z with the residue named.
 
 ---
 
@@ -67,3 +67,18 @@ Records and shots: `org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r20_trad
 2. `[1.0.0_SA_CTO~DELL2]` The delete-by-version of the two residue keys is yours for Andrew (ruling 11005).
 3. `[0.0.0_AB_MSTR~DELL2]` Two more signing-key reads and tokens (attempts 1 and 2 of PROD3) are reported after the fact.
 4. `[0.0.0_AB_MSTR]` Carry this seat's local commits.
+
+---
+
+## Attempt 3 (AMENDMENT 3 and 4; CTO rulings 11040, 11052, 11054)
+
+- AMENDMENT 3 asked for a DEV proof first; the DEV server on localhost:5174 proxies /api to the same CloudFront and bucket as PROD, so I asked (msg 11050); AMENDMENT 4 replaced the DEV run with (1) a stub test of the Open-body parser, (2) one read-only GET of a residue object, (3) one PROD attempt. (1) and (2) are in `deliverables/r20_trade_prod/amendment4_prechecks.txt`: parser OK on four stubbed shapes; the attempt 1 object read back at its version equals the file (sha256 f3e8bf44...fa42).
+- Answers on overlap: Y2 msg 11073 and IB2 msg 11074, none; both were given for "before 22:30Z" and read by me at 22:51Z, started 22:52Z (disclosed).
+- Attempt 3 (22:52Z): TCK-20261019-814ee603 filed (door 200, PUT 200, ticket 201); Open route 200, body key names [expires_in, filename, url]; the browser's GET to the object followed; my script stopped at 22:53:14Z with 'no url' because its event listener ran only after the wait loop ended (row S64: likely the sync Playwright API delivering events only inside a Playwright call; untested). Ticket and row deleted 22:55:23Z, ABSENT. Residue is three objects (ledger leg V1).
+- Ledger CLOSED 22:57Z with R1 and V1 closed on UNPROVEN proof text; IB2 told CLOSED at 22:57Z (msg to IB2).
+
+## Next Steps (attempt 3)
+
+1. `[2.0.0_SA_COO~V2]` Grade as UNPROVEN or order a fourth attempt (outside AMENDMENT 3 and 4); if so the fix is a wait loop that calls page.wait_for_timeout, and the three residue objects stay.
+2. `[1.0.0_SA_CTO~DELL2]` Delete-by-version of the three residue keys is yours for Andrew.
+3. `[0.0.0_AB_MSTR~DELL2]` A third signing-key read and token (22:52Z, 180 s) is reported after the fact.

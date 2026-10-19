@@ -3236,3 +3236,29 @@ used as fixtures is a different read with a different denominator.
   "world_is": "Two stops on the one step that is this seat's own instrument; the door, the PUT, the ticket, the delete of ticket and row all behave. The read-back equality is UNPROVEN, not failed. The result file was not written, so R20PROD3-AC1 would read RUN-BAD. A third attempt needs a new GO, and the first act of it should log the key set (not values) of the open route's body. Not claimed: that the bytes differ, or that the open route is wrong."
 }
 ```
+
+## TCKT_VNEXT-D2-S64 -- TO-R20-PROD3 attempt 3: the Open route's body is {expires_in, filename, url} and the browser reads the object, but the seat's own listener ran only after its wait loop gave up; the likely cause is the sync Playwright API delivering page events only while the script is inside a Playwright call.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-19T22:58:00Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S64",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-R20-PROD3 attempt 3: the Open route's body is {expires_in, filename, url} and the browser reads the object, but the seat's own listener ran only after its wait loop gave up; the likely cause is the sync Playwright API delivering page events only while the script is inside a Playwright call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "attempt 3 run log (deliverables/r20_trade_prod/attempt3/attempt3_run_events.txt): 'Open route body key set (names only, no values): [expires_in, filename, url]' is stamped 22:53:14Z, AFTER the line 'STOP: the open route returned no url' stamped 22:53:14Z, which came from a 40 s wait loop begun about 22:52:34Z; R20_TRADE_TRACE.json statuses show 'GET open route' 200, and the request census shows a GET to s3 opal-data-cottonwood on the exact key (path only)",
+      "the same ordering in attempt 2 (STOP 21:24:48Z, 'GET open route' 200 recorded) and attempt 1 (route handler error 'Request context disposed' at the browser close): in all three the wait was a time.sleep loop with no Playwright call inside it",
+      "ticket TCK-20261019-814ee603 and the filer row deleted by key 22:55:23Z, ConsistentRead ABSENT; residue object three key .../trade-form/35d50c93f92248ada98b38133110b471/tckt-r20-trade-synthetic.csv version buga8yTbgDfVr7JaiKO677cwBwrgMFWA"
+    ]
+  },
+  "spec_asserts": "TO-R20-PROD3 step (c) and AMENDMENT 4: the Open body's key names are printed before parsing, the url is downloaded and its SHA-256 compared with the file uploaded; on failure the ledger closes read-back UNPROVEN with the key-name dump.",
+  "world_is": "The key names are measured: expires_in, filename, url. The ordering of the log lines is measured; the cause (event delivery waiting on a Playwright call, so a wait loop should call page.wait_for_timeout and not time.sleep) is INFERRED and untested. The read-back SHA-256 comparison through the Open route stays UNPROVEN; the stored bytes were separately read from the attempt 1 object with a read-only GET and equal the file. No fourth attempt is allowed by AMENDMENT 3 and 4. Not claimed: that the Open route returns the right bytes, or that it returns wrong ones."
+}
+```
