@@ -66,3 +66,49 @@ disarmed. Round 46 is small on purpose: the remaining candidates are a comment a
   - No cell of this fabric can perform it.
 - The issuer should list in its next slug every FWD that does not yet grade REALIZED, so that this seat can tell whether round 47
   has build work at all or waits on that act.
+
+## Amendment A1 (2026-10-19 ~08:5xZ): the FWD state changes round 46
+
+The source is 2.0.0_SA_COO~O's `deliverables/2.0.0_SA_COO~O/FWD_STATE_20261019.md` @b2096831dd (msg 35922). **No FWD reads REALIZED
+in any record.** 8 are HELD since 2026-10-07, FWD-21 is NOT MET, FWD-20 is built but not exercised, and 11 are ungraded. Round 36
+promised a grade of the 2026-10-13 grade read at round 37, and it was never given. That lapse is this seat's.
+
+### Grades given now (CTO), from `deliverables/0.9.0_WK_NFRA_OPLGTW~66/GD1_GRADE_READ.json` @123bf2d8ec
+
+- **FWD-1 to FWD-8: NOT_REALIZED.**
+  - On every one, at least one arm is a person-act not yet run: the owner and member walkthrough.
+  - `tests/acceptance/A_ROWS.json` reads **20 of 20 NOT_EXERCISED**: 14 rows have a person half, 5 are person-only.
+  - Every machine arm carries `claim: inferred`, from offline fixtures, never a served read.
+  - Named gaps, from the record:
+    - FWD-1: no member walkthrough, no fresh connection by the pilot user;
+    - FWD-4: 0 `delivery_finished`, no opened download;
+    - FWD-6: no grant change or revocation run;
+    - FWD-7: no controlled load;
+    - FWD-8: the rollback arm needs the operator and Andrew's word.
+  - **The walkthrough cannot start yet:** `WALKTHROUGH_PROTOCOL.md` section 1 requires two input records, and neither exists:
+    - `G-C_CONTROLLED_IDENTITY_AND_GRANT.md` (the controlled walkthrough);
+    - `G-E_PILOT_IDENTITY_AND_GRANT.md` (the pilot user's tenant and object id, and his grant).
+
+### The round-46 list, amended (ONE issuance; replaces the one-cell list above)
+
+1. **OG-ev-13: unchanged.** The 24-hour lake re-read; GO no earlier than 2026-10-20 07:45Z.
+2. **OG-gd-2: grade read for FWD-10 to FWD-19 and FWD-22.** Read-only, in the shape of GD1.
+   - Per FWD and per proof arm: `ran`, `claim` (`measured` / `inferred` / `absent`), evidence paths, and the owed act with its
+     operator.
+   - No grade word: the grade is this seat's, at the round-46 analysis.
+3. **OG-cd-2: mount the `family_depth` route and apply its read IAM** (`family_depth_read_iam.tf`, through `safe-apply`).
+   - Then OG-ap-50, a release under its own never-widen: a NEW served route, so the ask names the widening and the process-wide
+     state.
+   - Then ONE driven read for FWD-20 (proof by a served read, per the PRD's FWD-20 line).
+   - FWD-20 is the outcome that needs the route, which round 45 carried the mount for.
+4. **G-C: the controlled-identity and grant record.**
+   - This seat writes it, as the CTO act that protocol names: the principal class, the approved grant revision, the operator.
+   - It is due before the round-46 analysis.
+
+### Listed for Andrew (acts only he can do; each is on the open-calls list)
+
+- **G-E, the Schwab pilot.** Name the pilot user's work identity and approve his grant, and sit the owner walkthrough as owner
+  with the pilot user as member (A1-A20, `WALKTHROUGH_PROTOCOL.md`).
+  - Citation: a person's identity and an entitlement grant beyond the existing grants, plus his own participation.
+  - This is what stands between FWD-1 to FWD-8 and a grade.
+- **FWD-21:** row 5b35, unchanged.
