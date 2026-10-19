@@ -70,3 +70,22 @@
 
 **Out of this round:** grant changes. The six WIDENS and the eight unrecorded roles in the CRO roster are Andrew's, and they
 are put to him in the live `1.0.0_SA_CTO~Z` session.
+
+## Amendment A1 (2026-10-19 ~16:0xZ): the census is corrected, so section 1 is wrong in three places
+
+Source: `2.0.0_SA_COO~MI` msg 36001,
+`deliverables/2.0.0_SA_COO~MI/round22/evidence/CORRECTION_CENSUS_V1_UNDERCOUNT_20261019.md`. The first census's host program
+never registered the integration tools.
+
+The corrected census was read at 16:02:52Z:
+- **14 channels:** bucket 5, store 1, integration 7, native 1.
+- **127 tools:** 60 have no catalog index.
+- **Coverage:** 104 member-(b) tools, and 91 rows without a served `read_tool`. All 91 rows already carry `gap_owner`
+  NFRA_OPLGTW.
+
+Section 1's "the served page lists NO `integration` channel today" is withdrawn. The seven integration channels are in the
+denominator.
+
+Section 4's E2 and E3 take one cell per integration channel, within the cap.
+
+The denominator is held at this corrected census.
