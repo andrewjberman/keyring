@@ -26932,3 +26932,60 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W308-S2 -- TO-AR-g-170 Part B arm 1 cannot run as written: deleting lo.PRICE_TABLE makes the layout's own code raise NameError, so the producer run never completes
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W308-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~308",
+    "surfaced_at": "2026-10-19T21:45:29Z",
+    "one_line": "The order's guard arm monkeypatch.delattr(lo, 'PRICE_TABLE') breaks the layout module itself: layout_overview.py reads the bare global PRICE_TABLE in _price_based (line 764) and in compute_element (line 917), so the producer's run raises NameError inside the layout, not in the producer's guard; AC1 FAILs on that NameError.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-g-170 Part B(1): delete PRICE_TABLE from the layout module (monkeypatch.delattr(lo, 'PRICE_TABLE')), set op._LAYOUT_HAS_PRICE_PAGES false, and replace lo.compute_all by a wrapper that raises TypeError on a prices keyword; the producer's run then completes and its element list does not contain opal.prices.holdings. AC1 expects ^[0-9]+ passed in.",
+    "world_is": "With PRICE_TABLE deleted, layout_overview.py:764 (_price_based: 'or src.get(\"computed\") == PRICE_TABLE') and layout_overview.py:917 (compute_element: 'elif method == PRICE_TABLE') still read the module global. Measured at e65a1596a2 with the guard file written as the order specifies: python -m pytest ycharts/research/tests/test_producer_held_layout_guard.py -> 1 failed, 2 passed; the failure is 'NameError: name PRICE_TABLE is not defined' at layout_overview.py:764. The other two tests pass (arm 2 difference control and the refusing-wrapper check). A layout built before AR-g-163 would have no such line, so the simulation, not the producer, is what fails.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@e65a1596a2 line 764 (_price_based) and line 917 (compute_element, elif method == PRICE_TABLE)",
+        "direct probe at e65a1596a2: lo.PRICE_TABLE deleted, lo.compute_element(OWN_SERIES element, pricing False) returned not_available; a second non-series element raised NameError: name 'PRICE_TABLE' is not defined",
+        "python -m pytest --color=no -q -p no:cacheprovider ycharts/research/tests/test_producer_held_layout_guard.py in the worktree -> 1 failed, 2 passed in 0.57s; FAILED test_a_layout_without_the_price_pages_completes_and_lists_no_price_table; E NameError at layout_overview.py:764"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not disarmed and not worked around: the arm, the layout and its assertions are unchanged, and no substitute simulation was written. The issuer chooses the fix (a simulation that removes the layout's price branches, or dropping arm 1 with a recorded reason). Parts A and C are independent and committed."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W308-S3 -- the naming gate printed a NAMING ERROR for a missing function-map folder during the producer commit; the commit still landed, because the sparse worktree does not carry that folder
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W308-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~308",
+    "surfaced_at": "2026-10-19T21:45:29Z",
+    "one_line": "safe-commit of e65a1596a2 printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-irpt-anlreq-308\\infra/aws/lambda/ci/function-map/' and then committed; the sparse worktree does not carry infra/aws/lambda/ci/function-map.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-g-170 worker face: commit with .tools/safe-commit.sh; the order's <paths> block is the only write grant and the commit should pass its gates.",
+    "world_is": "The commit of opal_producer.py (one file, 9 insertions, 3 deletions) printed the naming-gate ERROR line, the commit-gate line 'All checks passed', and msg-verify MATCH; the commit landed as e65a1596a2 on wk-IRPT_ANLREQ-308. The naming gate reads the Lambda source map from that folder and grades nothing from a copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of the commit of e65a1596a2 on branch wk-IRPT_ANLREQ-308: '[naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-irpt-anlreq-308\\infra/aws/lambda/ci/function-map/'",
+        "git log --oneline -1 -> e65a1596a2 code(IRPT_ANLREQ TO-AR-g-170, 0.9.0_WK_IRPT_ANLREQ~308): producer runs against a layout without the AR-g-166 price pages"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. The worker did not add the folder to the sparse set, did not run git sparse-checkout, and did not copy the map from the main tree."
+  }
+]
+```
