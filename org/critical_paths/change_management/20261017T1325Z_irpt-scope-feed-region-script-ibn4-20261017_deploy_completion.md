@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T13:25:49.012136+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261019T130814Z
 **Deploy:** IRPT_BCKEND TO-IB-pn-4 (ADDENDUM 4 + AMENDMENT 1): replace code/manual_api/pull_inflection_scope_account_returns.py (live ab5905d7, version FaHfnhIltMRNABo2GyALh7uzo4y7fOaZ) with the region-named script a92589d6, three-part smoke on the live prefixes, then add the feed row and chain entries to code/gold/orion-gold-dispatch.sh (live d6b00f6f, version L8GGxBIUqBl.XlBkXVcWuvhHb9YjrnaO; file at commit e7d5361cf9); saved copies first
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -26,3 +26,4 @@
 - 20261017T133039Z LEG L3 closed: three-part smoke clean on Python 3.9.25 over 209 flat files from the live prefixes: import and source_prefixes 0 socket 
 - 20261017T133039Z LEG L4 closed: dispatch from commit e7d5361cf9 (AMENDMENT 1) uploaded 2026-10-17T13:29:03Z as version JjTLNaZe.., read back sha256 e9ae
 - 20261019T125930Z LEG L5 closed: first scheduled chain (2026-10-18 11:33Z) read from the step log: exit 0, no TOLERATING, no SKIPPED, DAYS complete=1 ski
+- 20261019T130814Z CLOSED -- all 5 legs proven
