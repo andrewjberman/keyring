@@ -26872,3 +26872,33 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S216 -- the producer reads a price-page layout that a release may not carry, and 8 tests are red on trunk
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-S216",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~G2",
+    "surfaced_at": "2026-10-19T21:06:30Z",
+    "one_line": "Trunk's opal_producer.py (AR-g-166, merged 3b589f17ea) reads layout_overview.PRICE_TABLE at two places and passes prices= to lo.compute_all at two calls; a release that takes the producer without the AR-g-163..166 layout raises at report time (CTO msg 11012, ~Y2 msg 11010 and amendment 003fae44dd of TO-AR-g-406). The same merge, after AR-y-408, leaves 8 tests red on trunk.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G2",
+    "spec_asserts": "CTO msg 11012: the producer runs without the held price-page layout (guard the read) or lands with it; the price pair ships opal_producer.py, layout_overview.py and the map together. AR-g-166 AC3 spec: the producer and layout test files pass.",
+    "world_is": "opal_producer.py at HEAD reads lo.PRICE_TABLE in _price_table_element (about line 112) and _opal_map (about line 130) and calls lo.compute_all(..., prices=prices) at about lines 428 and 513, unguarded. At the base pytest on test_opal_producer_not_in_this_version.py reads 5 failed, 4 passed (the report document drops the NOT_IN_THIS_VERSION price table and counts it, AR-y-408); test_price_pages_table.py, test_price_pages_series.py and test_price_pages_text.py each read 1 failed (KeyError on the pricing-off element, now absent from the document); the four files together read 8 failed, 24 passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py@HEAD lines 108-133 (_price_table_element, _opal_map) and lines 428-429 and 513-514 (compute_all with prices=prices)",
+        "python -m pytest --color=no -q on the four test files at the base printed '8 failed, 24 passed in 1.92s'; the six existing producer and layout files print '146 passed in 13.88s'",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-406.resident-release-r34l-build-only-two-movers.md amendment 003fae44dd (r34l rebuilt at a producer-only pin)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: TO-AR-g-170 (a producer flag _LAYOUT_HAS_PRICE_PAGES plus a held-layout guard test, and the 8 stale tests repaired to the AR-y-408 rule). The disarm word goes to the CVO with the merged hash."
+  }
+]
+```
