@@ -10906,6 +10906,48 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:08:41Z",
+    "one_line": "safe-commit's naming gate printed NAMING ERROR 'function-map folder missing' for infra/aws/lambda/ci/function-map/ on the work commit 144def74b7e (the source-sets JSON and the investigation file), and the commit still returned rc=0; the same message as the sibling rows NFRA_MCPINDEX-Z-W61-S1 and Z-W63-S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project. Face section 3: the <paths> grant names the deliverables folder, the task order file and the investigation file; infra/aws/lambda/ci is not in it.",
+    "world_is": "The commit log .scratch/commit1.log of wk-mcpindex-72 prints '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-72\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' at line 12, and '[msg-verify] committed 144def74b7e' at line 42. git show --stat 144def74b7e lists 2 files.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/commit1.log lines 12 and 42 (wk-mcpindex-72), the safe-commit output of commit 144def74b7e",
+        "git show --stat 144def74b7e: source_sets_etfs.json and INVESTIGATION_v1.md, 601 insertions"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:08:41Z",
+    "one_line": "safe-commit's client-data leg printed WARN: the hashed account-id list is ABSENT on this device, and the commit gate printed 'checked 0 of 2 file(s) -- NOTHING WAS CHECKED'; commit 144def74b7e landed rc=0 with no client-data check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "CLAUDE.md section 5 and the commit gate: a commit is checked by the commit gate's client-data leg. The face's BOUNDS 2 names py_compile, the naming gate and ruff for the commit path, and does not name the client-data leg.",
+    "world_is": "The commit log .scratch/commit1.log of wk-mcpindex-72 prints '[commit-gate] WARN: commit-gate checked 0 of 2 file(s) -- NOTHING WAS CHECKED.' at line 9, and 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids' at line 37. The committed files are a JSON array of gateway source paths and line numbers and a markdown investigation file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/commit1.log lines 9 and 37 (wk-mcpindex-72), the safe-commit output of commit 144def74b7e",
+        "the same message as the sibling row NFRA_MCPINDEX-Z-W63-S2 (commit 0a2fb26fd8, 2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
