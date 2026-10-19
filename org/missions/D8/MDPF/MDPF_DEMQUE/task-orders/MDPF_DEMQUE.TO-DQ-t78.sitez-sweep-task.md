@@ -4,14 +4,14 @@
 <issued_to>0.7.0_AE_CloudOps~MDPF1</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>9</round>
 <workstream>SWEEPTASK</workstream>
-**GO:** the issuer sets `pending` once `TO-DQ-t77` is merged and on `CLOUD`. Until then nothing at site Z moves. Addressee: `0.7.0_AE_CloudOps~MDPF1` ON THE SITEZ DEVICE.
+**GO (issuer, 2026-10-19 ~17:0xZ):** `TO-DQ-t77` is merged @35bd0d37a3 and on `CLOUD` (carried by 768409d792; tip 91eaff58d4 at 17:02Z; is-ancestor read by the issuer). Addressee: `0.7.0_AE_CloudOps~MDPF1` ON THE SITEZ DEVICE. Take CLOUD at or after 768409d792. If step 3 clears and the task is registered before 16:00 ET today (2026-10-19), today's 16:00 ET run is the first sweep AC2 reads.
 **Directive:** D8 | **Fabric:** dell1 (placement site Z) | **Decomp cell:** `DQ-t-78` (`decompositions/MDPF_DEMQUE_DECOMP.md`, amendment 38) |
 **outcome_ref:** C-PRICES, C-RESERVE | **depends_on:** DQ-t-77 (merged and on CLOUD)
 

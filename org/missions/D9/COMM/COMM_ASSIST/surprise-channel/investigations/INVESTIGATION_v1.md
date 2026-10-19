@@ -1960,3 +1960,58 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Later COMM deploy orders that plan this root from a clean checkout should name the transcripts-pull build in their steps. No hazard is live."
 }
 ```
+
+## COMM_ASSIST-W33-S1 -- the commit gates ran partly blind on this sparse worktree (client-data check absent, naming folder missing, danger map stale)
+
+```json
+{
+  "id": "COMM_ASSIST-W33-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~33",
+  "surfaced_at": "2026-10-19T16:48:13Z",
+  "one_line": "The commit that carries the CA-p-1 change passed safe-commit with three gate lines that did not check it: the client account-id check was ABSENT on this box (WARN), the naming gate printed NAMING ERROR for a missing function-map folder in this worktree, and the risk-reflex read a STALE danger map (ANSWER STATE PARTIAL_OR_BLIND).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 41a287b94b (wk-COMM_ASSIST-33) safe-commit output: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\AndrewBerman\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "commit 41a287b94b safe-commit output: '[naming-gate] NAMING ERROR function-map folder missing: ...\\wk-COMM_ASSIST-33\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)'",
+      "commit 41a287b94b safe-commit output: '[risk-reflex] ... danger map: 92.8h old  !! STALE ... ANSWER STATE: PARTIAL_OR_BLIND ... WITHIN BUDGET: scanned 0 of 4 file(s)'",
+      "commit 41a287b94b safe-commit output, same run: '[commit-gate] OK: pre-commit gate clean for 4 of 4 file(s)' and '[msg-verify] MATCH len=859'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A commit of a tree change is checked by the commit gates (commit-gate, client-data check, naming gate, risk-reflex) before it lands.",
+  "world_is": "The commit-gate checks that ran (py_compile, ds-precommit, ruff, strict-utf8 read) passed on all four files. The client-data check, the naming gate and the risk-reflex did not check this commit in this worktree on this box. The change touches no account id and no name, so the blind spots did not bear on it; the commit landed on the partial pass.",
+  "notes": "Not this worker's to fix and not widened here: the gates and the account-id list belong to their owners. Recorded so the gate's partial pass on a sparse worktree is visible in the channel. No override was taken."
+}
+```
+
+## COMM_ASSIST-W33-S2 -- the task order's attribution line (Sonnet 5.5) differs from the harness attribution for this worker (Haiku 5.5); the commit carries the Haiku line
+
+```json
+{
+  "id": "COMM_ASSIST-W33-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~33",
+  "surfaced_at": "2026-10-19T16:48:13Z",
+  "one_line": "The task order's ACCEPTANCE paragraph asks the commit message to end with the line 'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'; the attribution rule the harness gave this worker names Claude Haiku 5.5 as the model it runs on. The code commit 41a287b94b carries the Haiku line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-p-1.no-draft-on-his-own-mail.md, ACCEPTANCE paragraph: 'ending with the line Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>'",
+      "commit 41a287b94b message (.scratch/msg_ca_p1.txt, the last line): 'Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>'",
+      "the session's attribution instruction for git commits names Claude Haiku 5.5 and states that the user's own instructions take precedence over it; the task order is not a user instruction"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit message of the CA-p-1 code change ends with the line Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com> (task order ACCEPTANCE).",
+  "world_is": "The commit ends with the Haiku 5.5 line, which is the attribution the harness supplied for this worker. The mismatch is one attribution line in one commit message; no mechanism reads it and the change is unaffected.",
+  "notes": "The COO may amend the attribution line in the issuance if it wants the Sonnet line on this round's commits. The worker did not amend or rewrite the commit to change it."
+}
+```
