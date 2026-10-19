@@ -89,6 +89,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-mg-2.round-46-schwab-grants-at-
 - A2 (issuer, 2026-10-19 ~19:1xZ): `AC2`'s `<expect>` still named Andrew's re-activation line only, so the proof instance of a run under A1's option (b) read INVALID although `mg2.AC2` passes: my defect (I amended the script and the notes, not the pattern). The pattern now accepts either Andrew line (re-activated, or HELD by option (b) with an unchanged grant revision). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-C</workstream>
 <slot>~AE</slot>
