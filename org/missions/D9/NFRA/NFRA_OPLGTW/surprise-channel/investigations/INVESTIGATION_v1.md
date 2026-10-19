@@ -30429,3 +30429,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Ask sent to 4.0.0_SA_CRO~Z to confirm or correct before the 2026-10-20 06:00Z window; the batch15 release takes scopes.json whole, so a correction before then rides it."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T21:38:04Z",
+  "id": "NFRA_OPLGTW-Z-S428",
+  "one_line": "Issuer disposition of NFRA_OPLGTW-Z-S427 (firm for master 08403355): CONFIRMED by the CRO as 49financial; and the CRO's measure that all 30 accounts of 08403355 are also held under 08335338 means OG-ms-2 adds no account Alyssa cannot already read, only the master's own tables",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S427"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`4.0.0_SA_CRO~Z` msg 36138 (reply to the issuer's ask 36137), measured on opal-data-assets dim_balance for 2026-10-16: master 08403355 holds 30 accounts; all 30 are also held under 08335338 (the 49F BlackDiamond master); none under 08242234; none appears under this master alone; 6 of the 30 appear in the 49F Black Diamond crosswalk (blackdiamond/49f/silver/dim_account_xref, 2026-09-28). The CRO allowed citing it in Z-S427.",
+      "OG-ms-2 Phase A (ask sha256 30351bdddf2d): the candidate adds master 08403355 and its 30 accounts; her 7,599 and 7,690 accounts on the other two masters untouched."
+    ]
+  },
+  "spec_asserts": "Z-S427: the registry row for 08403355 states firm 49financial, unconfirmed by the registry owner.",
+  "world_is": "The attribution is confirmed by the registry's compiler. Separately, the CRO's measure changes what OG-ms-2 grants: in account terms nothing new (30 of 30 accounts are already in her 08335338 list), but the grant is per master, so she gains the 0840 master's own silver tables (dim_position, dim_balance, dim_asset, dim_transaction) as a separate read path. NOT CLAIMED: whether those tables hold values that differ from 08335338's for the same accounts (the CRO read account membership, not table contents); the CVO and CTO signed OG-ms-2 on its stated counts and are told this fact.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S427's question is answered by the registry's compiler and the row is inert; the subset fact does not change OG-ms-2's signed scope, it only sharpens what the halves read, and it is recorded here for them."
+}
+```
