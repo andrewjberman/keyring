@@ -29639,3 +29639,51 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. The cell's test shape is kept; the added owner_gate._cfg patch is the only deviation, and it is test-only. Not graded by this worker."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~163",
+  "surfaced_at": "2026-10-19T10:20:00Z",
+  "id": "NFRA_OPLGTW-Z-W163-S3",
+  "one_line": "The naming gate printed NAMING ERROR (function-map folder missing) on the commit 26e2894302 and the commit still landed at rc=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of commit 26e2894302 (LOCAL on wk-NFRA_OPLGTW-163), line 14: '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-og-163\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)'",
+      "the same commit's safe-commit exit was rc=0 and the staged paths were infra/aws/ec2/opal-gateway/app/admin_api.py, infra/aws/ec2/opal-gateway/tests/test_og_cd2.py and this channel file; none is a Lambda source-map path"
+    ]
+  },
+  "spec_asserts": "The naming gate refuses a commit whose names fail its check (LGIC_ENFORCE; CLAUDE.md section 4, the commit-time naming gate REFUSES names today).",
+  "world_is": "The naming gate printed NAMING ERROR for a missing function-map folder on this worktree and the commit landed. Whether that folder is meant to exist in a worktree was not measured by this worker.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. The three staged paths carry no Lambda name; the error is recorded, not graded by this worker."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~163",
+  "surfaced_at": "2026-10-19T10:24:00Z",
+  "id": "NFRA_OPLGTW-Z-W163-S4",
+  "one_line": "The worker face asks for the one <status> tag of the order to be flipped to complete, but that tag sits in the order file below its RECORD FACE marker and the order file is outside this worker's <paths>; the flip was not made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cd-2.round-46-mount-the-family-depth-route-behind-the-owner-gate.md @5b26fdd4c6 line 63 is the RECORD FACE marker and line 70 is <status>pending</status>",
+      "the order's <paths> block (line 42) names app/admin_api.py, tests/test_og_cd2.py and the investigation channel only"
+    ]
+  },
+  "spec_asserts": "The worker flips the order's one <status> tag to complete when both criteria PASS, in the same commit as the deliverables (worker face section 5).",
+  "world_is": "The <status> tag is in the RECORD FACE portion of the order, and the order file is not in the worker's write grant. Both criteria PASS by output; the flip was not made by this worker, and the issuer places it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking to the proof: the instance validates on its own. Same shape as NFRA_OPLGTW-Z-W161-S1."
+}
+```
