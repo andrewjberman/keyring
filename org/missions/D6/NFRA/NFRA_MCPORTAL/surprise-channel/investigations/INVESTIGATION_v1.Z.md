@@ -3420,3 +3420,29 @@
   "notes": "Filed by the issuer, the disarm_owner of record. The old profile folder (deliverables/0.9.0_WK_NFRA_MCPORTAL~3/.scratch/profile-edge, git-ignored) holds the owner's session cookies; it is left in place and a redo uses a different profile folder."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T17:42:37Z",
+  "one_line": "MP-z-6 cannot run its reads: the order names read paths (infra/aws/ec2/EC2_MANIFEST.json, infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py, infra/aws/ec2/opal-gateway/app/integrations/) that the sparse worktree C:/tmp/mp-gw-16 does not materialise; the worker stopped at the first act and did not reconstruct them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/mp-gw-16 sparse-checkout list (rc=0) prints .tools, infra/logic/registry, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/modules/graph, org/ref, org/standards; no infra/aws entry.",
+      "ls C:/tmp/mp-gw-16/infra/aws/ fails with 'No such file or directory'; ls of infra/aws/ec2/opal-gateway/app/ fails likewise.",
+      "git ls-files infra/aws/ec2/opal-gateway at HEAD 9722e32fce3 lists 494 tracked paths; git ls-files --error-unmatch infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py passes: tracked at HEAD, absent on disk.",
+      "timeout 120 bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/z6.AC1.sh; echo exit=$? -> 'no run: org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~16/z6_run.json missing or unreadable' / 'RESULT: FAIL' / exit=1 (recorded verbatim in the instance)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MP-z-6 section 3 names infra/aws/ec2/EC2_MANIFEST.json, infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py and infra/aws/ec2/opal-gateway/app/integrations/ as read-only paths of this worker, and steps 2 and 3 read the deployed code and the grant store through them; the first-act bar requires the worktree to carry the paths the order names.",
+  "world_is": "The worktree is a cone sparse-checkout carrying .tools, infra/logic/registry, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/modules/graph, org/ref and org/standards only. infra/aws/ is not on disk, though those files are tracked at HEAD 9722e32fce3. The quote's source record under org/tier1_exec/ is also absent from the worktree.",
+  "notes": "NFRA_MCPORTAL-Z-W3-S5 recorded the same absence and read the app path from HEAD with git show. This worker did not: the first-act bar says STOP, and reading the named paths out of HEAD is the extraction the bar does not allow. Not repaired here; the cone is the issuer's worktree configuration. No gateway read, store read, vendor call, write or deploy was attempted. AC2 is judgment and is left for 3.0.0_SA_CVO~Z; the verbatim quote is in deliverables/0.9.0_WK_NFRA_MCPORTAL~16/z6_andrew_read.md."
+}
+```
