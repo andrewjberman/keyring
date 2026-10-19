@@ -82,6 +82,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-48.round-45-twelfth-batched-
 - Pre-cut: `AC1` and `AC2` base FAIL as expected (the records are absent).
 
 <status>staged</status>
+<status>complete</status>
 <round>45</round>
 <workstream>ENRICH-R45-B</workstream>
 <slot>~AE</slot>
