@@ -42234,3 +42234,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W490-S1 -- The worktree's sparse set lacks data/inf/scripts/gold and data/inf/scripts/bronze, which the order names as present: the test import of rate_limiter fails until they are added locally
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W490-S1",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~490",
+  "surfaced_at": "2026-10-19T13:47:54Z",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "one_line": "The worktree's sparse set lacks data/inf/scripts/gold and data/inf/scripts/bronze, which the order names as present: the test import of rate_limiter fails until they are added locally (git sparse-checkout add, not committed).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-pn-5 WORKER FACE: the worktree is cut sparse with data/inf/scripts/gold/, data/inf/scripts/silver/ and data/inf/scripts/bronze/ present; a test import that fails for a missing directory is fixed by git sparse-checkout add, locally, never committed.",
+  "world_is": "At base d5794f4cce the sparse list was .tools, data/inf/manual_api, infra/logic/registry, lib and the org folders. data/inf/scripts/gold and data/inf/scripts/bronze were absent from the worktree; the baseline pytest of data/inf/manual_api ran 47 failed and 2 passed, all ModuleNotFoundError rate_limiter (rate_limiter.py lives under data/inf/scripts/bronze). data/inf/scripts/silver is also absent from the sparse set; no test of this order imports from it. All three directories exist at HEAD. After git sparse-checkout add of gold and bronze, the baseline ran 49 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-IRPT_BCKEND-490 before the add (no scripts/gold, no scripts/bronze) and after it",
+      "python -m pytest -q -p no:cacheprovider data/inf/manual_api before the add: 47 failed, 2 passed, ModuleNotFoundError rate_limiter; after the add: 49 passed",
+      "git ls-tree -d --name-only d5794f4cce data/inf/scripts/ lists bronze, gold and silver"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The sparse directories are a local worktree setting; nothing under data/inf/scripts was committed by this worker."
+}
+```
