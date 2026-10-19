@@ -76,6 +76,49 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No action taken: the worker did not change the sparse-checkout definition, did not force the stage and did not rebuild the tree. The two files exist untracked on disk and passed FU1-AC1 (R1-FU1-OK passed=14) and FU1-AC2 (QUO-PROBE-OK line=PNEJ5tafLm sender_messages=4) in the worktree. A COO-side cut that adds the directory to the sparse definition, or a re-cut of this worktree, is the unblock; the worker's branch then commits the two paths and the proof instance."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S3",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-19T20:51:22Z",
+    "one_line": "Every selector and request field name in PlaywrightDriver, PlaywrightGUI and ContextSession that no capture measured is listed here for FU-x-1 to prove live: the page selectors, the factor token source, the G-selector dialog, and the status.json and downloadExport.do bodies.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FU-s-2 WHAT TO BUILD A: PlaywrightDriver drives the real Wealthscape pages; its live selectors and request bodies are UNMEASURED and FU-x-1 proves them (worker reference section 9, signin.py).",
+    "world_is": "Unmeasured assumptions in the round-1 code. Login page: input[name='username'], input[type='password'], button[type='submit'] (username, password and next steps), button[data-action='authorize'] and input[name='securityCode'] (authorize and code entry). Factor: the factor name is read from the authenticators[].uri key of the POST /user/session/login response and clicked by [data-authenticator='<name>']; the HAR shows the keys authenticators[].uri and authenticators[].title but the value token OTPSMS was not read (values are never printed). G-selector dialog: text=User Options, text=G Number Selection, select[name='gNumber'] with option values, button:has-text('Save'); the dialog's current-G read and its Set As Default checkbox were never observed. status.json body {iEtype, dateString, startPage, pageLength} and the downloadExport.do params are the reference values, not captured in the HAR. accountList.json length value '300' is assumed (the key name length is measured).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/c/Users/Test/Downloads/wealthcentral.advisorchannel.com2.har (98 MB, 441 entries) read by a stdlib script that printed only method, URL path and JSON or form key names (.scratch/har/har_keys.py, not committed), 2026-10-19 ~20:50Z",
+        "key names measured: POST /auth/login form username, productId, wealthscapeDomain; POST ecaap /user/factor/password/authentication json username, password; POST ecaap /user/session/login response authenticators[].uri and authenticators[].title; POST ecaap /user/factor/otp/sms/authentication json phone, template; PUT the same path json securityCode; POST /ssc/platform-authorization/api/v2/authorize json loginType, loginSite, appName",
+        "no status.json or downloadExport.do entry appears in the HAR (zero matches for those paths in the key-name output)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken. FU-x-1 owns the proof: a live run that finds a selector, token or body different from the list above files its own row and does not guess."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S4",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-19T20:51:22Z",
+    "one_line": "The HAR's accountList.json request carries an accountNumber form field that the cell's probe does not send, and the HAR holds no status.json or downloadExport.do entry, so the account.txt read and the probe's request shape are not HAR-proven.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FU-s-2 WHAT TO BUILD B: probe_g_switch posts accountList.json with form fields length, sourceCode=BROK, custodianCode=FID; main reads account.txt through one status.json list and one downloadExport.do (worker reference section 4).",
+    "world_is": "The captured accountList.json POST carries four form fields: length, accountNumber, sourceCode, custodianCode. The probe sends three (no accountNumber), which is the cell's specified shape, so the server's acceptance of the three-field form is UNMEASURED. ContextSession duplicates the session surface that fetch.PlaywrightSession (FU-s-3) owns; it is a stand-in until FU-s-3 lands and is to be replaced by that adapter.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "key-name output of the Downloads HAR (.scratch/har/keys.txt, not committed): POST /ssc/accountsearch/wc/channel/accountList.json form:length, form:accountNumber, form:sourceCode, form:custodianCode; response accountListResponse.numberOfAccounts",
+        "signin_recon.py _count_accounts sends fields {length, sourceCode, custodianCode} and reads accountListResponse.numberOfAccounts (commit ccd25ab7db)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken. The FU-x-1 live run of --run-live is the proof of the three-field form and of the status.json and downloadExport.do shapes."
   }
 ]
 ```
