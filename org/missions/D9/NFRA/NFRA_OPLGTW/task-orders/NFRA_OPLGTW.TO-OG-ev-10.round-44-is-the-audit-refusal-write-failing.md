@@ -92,6 +92,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-10.round-44-is-the-audit-ref
 - Pre-cut: `AC1` base FAIL as expected (the record is absent). Synthetic arms: a `NOT_EXPOSED` record with a matching 10-record account passes; a wrong verdict, a record count of 9, and a `FAILS` record are each judged against the rule.
 
 <status>staged</status>
+<status>complete</status>
 <round>44</round>
 <workstream>ENRICH-R44-A</workstream>
 <slot>~AE</slot>
