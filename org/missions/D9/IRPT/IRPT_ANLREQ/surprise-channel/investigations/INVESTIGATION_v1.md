@@ -26412,3 +26412,80 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W300-S1 -- the TO expects the last wait of a never-resolving upload to be truncated, but the ladder sums to exactly 240000 ms, so the cap never bites
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~300",
+  "surfaced_at": "2026-10-19T16:57:16Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W300-S1",
+  "one_line": "TO-AR-y-410 criterion (iii) says the last wait is truncated; with the ladder 3,3,6,6,12,12,24,24 s then 30 s, the thirteen waits sum to exactly 240000 ms, so min(uploadWaitMs, total minus waited) never truncates on the shipped ladder.",
+  "spec_asserts": "TO-AR-y-410 THE CELL step 2 caps each wait at min(uploadWaitMs(attempt), UPLOAD_MAX_TOTAL_WAIT_MS - waitedSoFar); criterion (iii) expects 'the last wait truncated'.",
+  "world_is": "Candidate c8fefec6909cbdf1502028952f2e38789109962f, analysisRequest.ts: the ladder sums to 90000 for attempts 1 to 8, then 5 x 30000 = 150000, total 240000; the 13th wait is 30000, not truncated. The cap is kept as a guard for any other ladder; the new test asserts 13 waits summing to 240000 with the last at 30000.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts uniquely at c8fefec6909cbdf1502028952f2e38789109962f (uploadWaitMs and the loop)",
+      "portal/src/pages/TicketCenter/__tests__/upload-resolving-backoff.test.tsx case (iii), 7 pass at c8fefec6909cbdf1502028952f2e38789109962f"
+    ]
+  },
+  "notes": "Not a defect of the candidate: the sum and the exact-240000 ask agree; only the word 'truncated' in criterion (iii) does not describe the shipped ladder."
+}
+```
+
+## IRPT_ANLREQ-D2-W300-S2 -- the TO says the new test file FAILS on origin/DEV without the change; it fails 4 of 7 cases, and the three NEEDS_CORRECTION or REFUSED guards pass there
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~300",
+  "surfaced_at": "2026-10-19T16:57:16Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W300-S2",
+  "one_line": "Before-arm on origin/DEV f70745362d8b: the new file runs 7 cases, 3 pass and 4 fail; the three (iv) guards pass because the base already ends the loop at once on a non-RESOLVING answer.",
+  "spec_asserts": "TO-AR-y-410 DOING 3(b): run the new test file on origin/DEV WITHOUT the change; it FAILS (the exports are absent).",
+  "world_is": "Measured before the source change, on f70745362d8baa34d78c50b8246a5f98ba7c8862: bun test reports 3 pass, 4 fail, 7 tests across 1 file. The failing cases are (i) the ladder, (ii) the progress pair, (iii) the 240000 total and (v) the checkingMessage text; the module is imported as a namespace, so each missing export is a per-case failure, not a load error.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/upload-resolving-backoff.test.tsx run on base f70745362d8b, bun test output 3 pass 4 fail",
+      "portal/src/pages/TicketCenter/analysisRequest.ts at f70745362d8b lines 96-98 and 411-415"
+    ]
+  },
+  "notes": "The file does fail on the base, as the TO asks; the three passing cases are behaviour the base already has, so they are not a before-arm failure."
+}
+```
+
+## IRPT_ANLREQ-D2-W300-S3 -- the sibling Investor Reporting composer keeps the old bound outside the grant: it re-POSTs a RESOLVING upload every 3 s for up to 40 polls (about 2 min)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~300",
+  "surfaced_at": "2026-10-19T16:57:16Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W300-S3",
+  "one_line": "The Investor Reporting composer has its own RESOLVING re-post loop with the old bound (3 s, 40 polls, about 2 minutes), which AR-y-410 does not touch because it is outside the Ticket Center grant.",
+  "spec_asserts": "TO-AR-y-410 scopes the RESOLVING re-post change to the Ticket Center (analysisRequest.ts and TicketCenter.tsx) and changes no other file's behaviour.",
+  "world_is": "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:306-309 at f70745362d8baa34d78c50b8246a5f98ba7c8862 re-POSTs the same body every 3 s, up to 40 polls, then offers 'Retry same upload'; it is not changed by candidate c8fefec6909cbdf1502028952f2e38789109962f.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:306-309 read at f70745362d8baa34d78c50b8246a5f98ba7c8862"
+    ]
+  },
+  "notes": "Recorded for the CTO's read; not changed here. A second page with the old bound would meet the same slow resolve."
+}
+```
