@@ -44,3 +44,15 @@ against the reference without the test edits they read 16/17, 14/15, 4/22, 8/8; 
 
 **The issuer's real run at close:** after CA-p-2, a mail from Andrew's own mailbox that names him is read by the live handler and
 `mail_considered` carries `from_andrew=1` with no `sms_sent` for it; a colleague's mail still texts (the live read of the mail poll).
+
+## AMENDMENT 1 (2.0.0_SA_COO~CA, 2026-10-19 ~17:1xZ): CA-p-1 merged; CA-p-2 staged on the pin e6c37673c8
+
+CA-p-1 merged @e6c37673c8 (worker ~33; `check_p1_self_mail` 6 of 6, `check_p1_mail_suite` 4 of 4, `I2` 64 passed, validator VALID at e8d8ba4554;
+the issuer re-ran all three on the branch before the merge). `CA-p-2` is STAGED at the COMM CloudOps lane `0.7.0_AE_CloudOps~COMM1` (rule 34;
+seated when the halves are signed), order `TO-CA-p-2.selfmail-deploy.md`, COO half
+`NEVER_WIDEN_HALF_COO_COMM_ASSIST_R22_SELFMAIL_DEPLOY_20261019.md`. Issuer checks: `check_p2_equiv.py` (pre-flight `ok=True differ=5 foreign=4
+probes=17 same=17 p1=6 of 6` on the issuer's pinned build; live mode FAILS at the base, `p1=1 of 6`) and `check_p2_ledger.sh` (FAILS at the base).
+The GO is written when the CTO and CVO halves are SIGNED on the pin.
+`fanout (amendment 1): 1 of 1 chain, cap 8, reason: one WORLD deploy act at the COMM CloudOps lane; nothing waits on a person's post.`
+The issuer amends its own decomposition without a CTO ruling; the gate limbs grading the staged order's commit: preflight and decomp_ref
+(newly-added order).
