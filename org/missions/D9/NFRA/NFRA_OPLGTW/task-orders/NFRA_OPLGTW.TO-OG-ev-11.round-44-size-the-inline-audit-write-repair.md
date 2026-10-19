@@ -48,7 +48,7 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-ev-11"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r44/checks/ev11.AC1.sh; echo "exit=$?"</invocation><expect>(?s)call sites at base 581ee61977 matched by the pattern: 81 .*listed: 81; missing from the record 0 \(want 0\); not at that sha 0 \(want 0\); malformed rows 0 \(want 0\); event-loop column unknown on 0 site\(s\) \(want 0\).*mcp 1\.28\.0 dispatch rule with \d+ evidence lines: ok.*ranked proposals \d+: ok; email-shaped strings 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-ev-11"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r44/checks/ev11.AC1.sh; echo "exit=$?"</invocation><expect>(?s)call sites at base 581ee61977 matched by the pattern: 81 .*listed: 81; missing from the record 0 \(want 0\); not at that sha 0 \(want 0\); malformed rows 0 \(want 0\); event-loop column unknown: 0 \(want 0\).*mcp 1\.28\.0 dispatch rule with \d+ evidence lines: ok.*ranked proposals \d+: ok; email-shaped strings 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-ev-11"><invocation>git log --author='0.9.0_WK_NFRA_OPLGTW~157 <' --name-only --format= | grep -v '^org/missions/D9/NFRA/NFRA_OPLGTW/' | grep -c . ; echo "exit=$?"</invocation><expect>(?s)^0\s*exit=[01]\s*$</expect></criterion>
 </proof_of_spec>
 
