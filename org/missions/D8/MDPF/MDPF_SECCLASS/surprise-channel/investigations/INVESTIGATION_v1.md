@@ -8887,3 +8887,28 @@ by dell1 or by this seat.
   "world_is": "The display works and shows more than the nine: five further real tickers absent from the canonical table are also hidden by the April table (name-to-ticker rows from 2026-04-07) and are therefore never candidates. S52's latent defect is wider than the nine and the set grows with the holdings. Whether the resolution table should still gate candidacy once a ticker is absent from etf-classifications is the design question already carried; these five names are its first new evidence. Not read: which of the five are held out on purpose (none is in the seed's nine)."
 }
 ```
+
+## MDPF_SECCLASS-D1-W107-S1 -- the proof-of-spec per-id validation (one id per run, as the TO face words it) exits rc=1 on a correct three-row instance; only the full expected set exits rc=0
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W107-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~107",
+  "surfaced_at": "2026-10-19T15:27:03Z",
+  "one_line": "TO-SC-e117 (worker ~107, round 30, base bb1b988f11): the face validates the proof_of_spec instance per criterion id (instance then SC30-e117-AC1, and AC2, AC3). Each single-id run exits rc=1 INVALID, because the checker reports the other two instance rows as unexpected additions to the TO expected set. The run with all three ids comma-joined (SC30-e117-AC1,SC30-e117-AC2,SC30-e117-AC3) exits rc=0 VALID.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e117.april-table-candidacy.md @bb1b988f11 line 88 (the per-id validation instruction, read at HEAD bb1b988f11)",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~107/MDPF_SECCLASS.TO-SC-e117.april-table-candidacy.proof_of_spec.json (three acceptance rows, one per expected id; checker at worktree HEAD 1ce5ba67ad: single-id rc=1 with \"coverage: instance row SC30-e117-AC2 is NOT in the TO's expected set\"; comma-joined rc=0 VALID)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Validate the proof_of_spec instance BEFORE the flip with python .tools/proof-of-spec-check.py <instance> SC30-e117-AC1 (and AC2, AC3), each id as its own verdict.",
+  "world_is": "The checker takes the ids as one expected set (<expected_criteria>). With one id it reports the instance two other rows as unexpected additions and exits 1, so no per-id run can exit 0 for a valid three-row instance. The worker validated with the full set and got rc=0; the three criteria are the grade."
+}
+```
