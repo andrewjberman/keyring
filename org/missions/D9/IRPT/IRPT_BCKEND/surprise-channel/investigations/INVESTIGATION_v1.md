@@ -42371,3 +42371,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W457-S3 -- the worker commit bb4a07c694 rewrote 78 CRLF lines of another seat's rows (W481-S3 to S5, lines 42106 to 42183 at 1855ec7d0b) to LF in this append-only file; the text is unchanged
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W457-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~457",
+  "surfaced_at": "2026-10-19T14:40:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Commit bb4a07c694 changed the line endings of 78 existing lines in INVESTIGATION_v1.md (CRLF to LF, the W481-S3 to S5 rows); the diff stat shows them as 72 deletions and re-added rows, and the rows' text is byte-identical once CR is stripped.",
+  "spec_asserts": "The surprise channel is append-only: a worker's commit adds rows to INVESTIGATION_v1.md and leaves every existing row's bytes as they were (TO IB-cw-2 contract: append one row, never edit an existing row).",
+  "world_is": "Against HEAD~1 (1855ec7d0b) the worker commit bb4a07c694 changes exactly 78 CR-bearing lines (42106 to 42183, the W481-S3 to S5 block) to LF and adds two rows at the end; with CR stripped from both versions the only difference is the two appended rows. The cause is not established by this seat: the candidates are the whole-file write of the Edit tool on this file or the safe-commit path. Not repaired: a corrective commit would be a second commit, which the order forbids and which would break the HEAD~1..HEAD and HEAD check ranges.",
+  "notes": "Issuer to decide the repair (restore those 78 lines from 1855ec7d0b in a separate commit, or accept the byte change). The row is written in the worker worktree and left uncommitted; see the worker's post-commit record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1855ec7d0b:org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md: 78 CR bytes, all on lines 42106 to 42183",
+      "git show bb4a07c694:org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md: 0 CR bytes; git diff --numstat 1855ec7d0b bb4a07c694 for the file: 133 insertions, 78 deletions",
+      "difflib over both versions with CR stripped: one insert block at lines 42293 to 42347 (the two worker rows), no other difference"
+    ]
+  }
+}
+```
