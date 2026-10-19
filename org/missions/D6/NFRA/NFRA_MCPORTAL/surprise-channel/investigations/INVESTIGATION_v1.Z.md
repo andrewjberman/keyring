@@ -3446,3 +3446,28 @@
   "notes": "NFRA_MCPORTAL-Z-W3-S5 recorded the same absence and read the app path from HEAD with git show. This worker did not: the first-act bar says STOP, and reading the named paths out of HEAD is the extraction the bar does not allow. Not repaired here; the cone is the issuer's worktree configuration. No gateway read, store read, vendor call, write or deploy was attempted. AC2 is judgment and is left for 3.0.0_SA_CVO~Z; the verbatim quote is in deliverables/0.9.0_WK_NFRA_MCPORTAL~16/z6_andrew_read.md."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T17:48:29Z",
+  "one_line": "The commit-time naming gate printed NAMING ERROR (function-map folder missing) on the proof-instance commit in the sparse worktree and the commit still landed at rc=0; the gate's error does not refuse.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of 0.9.0_WK_NFRA_MCPORTAL~16 proof instance and session.log (commit 4290f5ef4b4): log line '[naming-gate] NAMING ERROR function-map folder missing: C:/tmp/mp-gw-16/infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)'; the same call returned rc=0 and the commit landed (git log --oneline -3 shows 4290f5ef4b4).",
+      "The folder sits under infra/aws/, which the sparse cone of C:/tmp/mp-gw-16 does not carry (see NFRA_MCPORTAL-Z-W16-S1). The commit paths were JSON and a text log only; no Lambda source was staged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A commit through .tools/safe-commit.sh is refused when a commit-time gate cannot read the source map it grades against; the naming gate is a gate, not a notice.",
+  "world_is": "In this sparse worktree the naming gate reports NAMING ERROR for the missing function-map folder and the commit proceeds with rc=0. Any later commit from this worktree that stages a Lambda name would pass this gate ungraded. The commit itself touched no named resource.",
+  "notes": "Filed with the proof instance commit, which the surprises list of that instance cites. Not repaired here: the sparse cone is the issuer's worktree configuration, and no gate was edited."
+}
+```
