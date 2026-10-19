@@ -238,6 +238,20 @@ The CTO asked for ONE read cell: the live silver and wrapper output, rows counte
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (one new script and its record); worker `0.9.0_WK_IRPT_DASHBD~319` (`DB-i-19`).
 
+## 19. ROUND 133, WORKSTREAM B-IN (2026-10-19, issuer 2.0.0_SA_COO~I2, on the CTO's round-132 analysis @14e06e4b55 (msg 10703; slug 10702, ADJUDICATION_v154))
+
+Round 132 proved the wrapper on the feed's first landed silver day (the silver agrees with the feed's own manifest, 0 unaccounted) and showed three limits the CTO ruled on: (a) the boundary measure pairs calendar days, so every Friday-to-Monday and holiday-eve boundary is never measured; (b) the chain check needs a 238-day window, reached by the history backfill and not by waiting; (c) the null-start count differs, 39 in the feed against 40 in the round-119 roster. The enrichment list is cut in one issuance: E1 to E3 below; E4 is carried as gated.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-20` | E1: `measure_boundary` pairs each landed day with the next TRADING day from `lib/trading_calendar.py` (a new `next_trading_day`, an injectable `next_day`), with tests built on the feed's own writer for a Friday-to-Monday pair and a holiday-eve pair, and a mutant (the calendar rule finds 0) | FWD-2 | LOCAL (one module edit and a test file; no AWS) | `DB-i-19` (merged) | I-S |
+| `DB-i-21` | E2: the S60 membership read: which account moves between the 39 `NO_START_DATE_AT_SOURCE` rows of the landed feed and the 40 null-start accounts of the round-119 roster, and the feed class of S60's account; sha256 of the id string and counts only | FWD-2 | LOCAL (GET and LIST of Opal's own silver plus one local private file; no write) | `DB-i-19` (merged), the round-119 private roster response | I-T |
+| `DB-i-22` | E3: the re-read of every landed day with E1 in place; the boundary measure must report its pair count (at least 1), recounted from a private `boundary_rows` extract | FWD-2 | LOCAL (GET and LIST; private folder only) | `DB-i-20` merged AND a second landed day | I-S (second order of worker ~320) |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) `DB-i-22` is cut now, in this issuance, as the second order of worker ~320's queue, and is HANDED to that worker only when both preconditions hold: `DB-i-20` is merged and the silver table lists at least two partitions. At the cut the table lists ONE (a LIST, measured), because a day is written only when it is complete and the next chain adds the second; the order's face tells the worker to stop on fewer than two. (b) The checkers recount rather than trust: AC1 of `DB-i-20` writes its own partitions with the feed's `run()` in two runs (a Friday and a Monday) because a multi-day window carries the end value only on its last day, so only separate daily pulls give a boundary pair; the holiday-eve case uses a calendar double passed as `next_day`, because the feed's harness is pinned to October 2026, which has no market holiday. (c) `DB-i-21` hashes every id with the same id-to-string rule as the round-119 read so that its hashes equal the recorded S60 hash; it reads one local private file and makes no vendor call. (d) **E4 (the chain check on the backfilled window) is NOT cut**: it is gated on IB-pn-5 (the bronze-writer fix, its ADDENDUM 5 pair, then the backfill run) and is carried as owed on that dependency, never stated as a date.
+
+**fanout:** 2 of 2 chains, cap 8, reason: two independent write sets: chain I-S (`DB-i-20` then `DB-i-22`, one worker queue, ~320) and chain I-T (`DB-i-21`, ~321).
+
 ## Cells
 
 | cell id | owner |
@@ -261,3 +275,6 @@ The CTO asked for ONE read cell: the live silver and wrapper output, rows counte
 | DB-i-17 | 0.9.0_WK_IRPT_DASHBD~317 |
 | DB-i-18 | 0.9.0_WK_IRPT_DASHBD~318 |
 | DB-i-19 | 0.9.0_WK_IRPT_DASHBD~319 |
+| DB-i-20 | 0.9.0_WK_IRPT_DASHBD~320 |
+| DB-i-21 | 0.9.0_WK_IRPT_DASHBD~321 |
+| DB-i-22 | 0.9.0_WK_IRPT_DASHBD~320 |
