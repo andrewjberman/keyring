@@ -3236,3 +3236,55 @@ used as fixtures is a different read with a different denominator.
   "world_is": "Two stops on the one step that is this seat's own instrument; the door, the PUT, the ticket, the delete of ticket and row all behave. The read-back equality is UNPROVEN, not failed. The result file was not written, so R20PROD3-AC1 would read RUN-BAD. A third attempt needs a new GO, and the first act of it should log the key set (not values) of the open route's body. Not claimed: that the bytes differ, or that the open route is wrong."
 }
 ```
+
+## TCKT_VNEXT-D2-W53-S1 -- The package route's test harness cannot load in this worktree: test_package_route.py reads org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json at import, and that file is absent here, so the issuer's Lambda check R20LM7-AC1 cannot run and the ticket_center folder fails collection.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~53",
+  "surfaced_at": "2026-10-19T23:03:34Z",
+  "class": "BLOCKING",
+  "id": "TCKT_VNEXT-D2-W53-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The package route's test harness cannot load in this worktree: test_package_route.py reads org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json at import, and that file is absent here, so the issuer's Lambda check R20LM7-AC1 cannot run and the ticket_center folder fails collection.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-tckt-vnext-53 @d2f482c9678 (branch wk-TCKT_VNEXT-53): git config core.sparseCheckout = true, cone mode; git ls-files -v marks org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json with the S (skip-worktree) flag; ls org/missions/D9 -> No such file or directory; the file is tracked (git ls-files lists it, 1 entry)",
+      "timeout 120 python -m pytest C:/dev/wk-tckt-vnext-53/org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R20_CHECKS/test_r20_package_commentary_null.py -q -p no:cacheprovider --color=no -> rc 2, collection error: FileNotFoundError on C:\\dev\\wk-tckt-vnext-53\\org\\missions\\D9\\IRPT\\IRPT_ANLREQ\\deliverables\\2.0.0_SA_COO~G2\\I7_SAMPLE.json, raised at test_package_route.py line 41 (_i7_canonical at line 37)",
+      "timeout 120 python -m pytest infra/aws/lambda/ticket_center/tests -q -p no:cacheprovider --color=no -> rc 2, Interrupted: 8 errors during collection (test_no_row_refuses, test_package_409_codes, test_package_env_firms, test_package_i5p_i7, test_package_principal, test_package_request_id, test_package_route, test_status_active), all the same FileNotFoundError",
+      "sibling row TCKT_VNEXT-D2-W49-S1 (worker 49, worktree 430b378b8f) records the same eight collection errors for the same missing path"
+    ]
+  },
+  "spec_asserts": "TO-R20-LM7 ACCEPTANCE R20LM7-AC1: the issuer's Lambda check file runs from C:/dev/wk-tckt-vnext-53 and passes 5 of 5; the drain check runs the whole infra/aws/lambda/ticket_center/tests/ folder once. The worker's grant is exactly the <paths> the order names, and a path the worker needs that it lacks is a BLOCKING row on that criterion, never an override.",
+  "world_is": "The worktree carries the order's named paths (the Lambda source, the portal files, the D7 task order and the issuer check file) but not the D9 fixture the harness reads at import, because the sparse checkout omits it. The worker did not copy the fixture into the worktree and did not change the sparse-checkout settings: both are outside the grant. AC1 and the drain check are therefore NOT RUN to a verdict; the Lambda change is committed on the branch, unverified by the check. Not claimed: that the Lambda change is wrong."
+}
+```
+
+## TCKT_VNEXT-D2-W53-S2 -- The order names the surprise schema at org/surprise_channel/schemas/investigation_item.schema.json, but org/surprise_channel is outside this worktree's sparse checkout, so the schema was read from the HEAD blob with git show.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~53",
+  "surfaced_at": "2026-10-19T23:03:34Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-W53-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the surprise schema at org/surprise_channel/schemas/investigation_item.schema.json, but org/surprise_channel is outside this worktree's sparse checkout, so the schema was read from the HEAD blob with git show.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-tckt-vnext-53 @d2f482c9678: cat org/surprise_channel/schemas/investigation_item.schema.json -> No such file or directory; git config core.sparseCheckout = true (cone)",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json returned 10462 bytes, rc 0; the required fields and the class enum (OBSERVATION, BLOCKING) were read from that blob"
+    ]
+  },
+  "spec_asserts": "Surprise section of the task order: a row is appended to the investigation file, per org/surprise_channel/schemas/investigation_item.schema.json, and the schema is the reference for its fields.",
+  "world_is": "The schema path the order names is absent from this worktree, the same sparse-checkout cause as TCKT_VNEXT-D2-W53-S1. The worker read the schema from the committed blob and wrote the row to it. Not claimed: that the schema at the base checkout differs from the blob."
+}
+```
