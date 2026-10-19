@@ -9860,6 +9860,271 @@ carries none.
         "round21/post_release/anchor_host_check_after_batch5.txt: ANCHORS 127 of 127; round21/post_release/r13.AC3_monotone_after_batch5.txt: monotone PASS (37 equal, 2 behind and tolerated); discover_buckets_host_after_batch5.txt: 8 of 8"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W61-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~61",
+    "surfaced_at": "2026-10-19T15:24:24Z",
+    "one_line": "safe-commit's naming gate printed NAMING ERROR 'function-map folder missing' for infra/aws/lambda/ci/function-map/ in this sparse worktree, and the commit still returned rc=0; the naming gate's function-map leg read no folder for commit ae2110a3a3d.",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project; BOUNDS 2: the commit gate runs py_compile, the naming gate and ruff for py39. The face's <paths> grant names only workflows/gateway_battery/cheatsheet.py, its tests, the deliverables folder and this investigation file.",
+    "world_is": "The commit of workflows/gateway_battery/cheatsheet.py and workflows/gateway_battery/tests/test_cheatsheet.py printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-61\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' and then '[msg-verify] committed ae2110a3a3'. git sparse-checkout list in the worktree names workflows/gateway_battery, org/missions/D9/NFRA/NFRA_MCPINDEX, lib, org/ref and others, and does not name infra/aws/lambda/ci.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author ... -F .scratch/msg_commit1.txt -- workflows/gateway_battery/cheatsheet.py workflows/gateway_battery/tests/test_cheatsheet.py: rc=0, output in .scratch/commit1.out of wk-NFRA_MCPINDEX-61 (printed 2026-10-19T15:2xZ)",
+        "git -C C:/tmp/wk-mcpindex-61 sparse-checkout list (read 2026-10-19T15:24Z): workflows/gateway_battery, org/missions/D9/NFRA/NFRA_MCPINDEX, lib, org/ref, org/standards, .tools, infra/logic/registry, org/devices, org/modules/graph; infra/aws/lambda/ci not listed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W61-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~61",
+    "surfaced_at": "2026-10-19T15:24:24Z",
+    "one_line": "safe-commit's client-data check printed WARN that the hashed account-id list is ABSENT on this device, so commit ae2110a3a3d was not checked for client account ids.",
+    "spec_asserts": "The commit path (.tools/safe-commit.sh) runs the client-data check on the staged paths of every commit; the face names no exemption from it for this order. A missing reference list is absent, not empty.",
+    "world_is": "The hashed account-id list is not at the user's .opal folder on this device (test -f rc=1). The commit printed 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids'. The two committed files are Python source and a pytest file over synthetic tmp_path inputs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test -f <user home>/.opal/account_id_hashes.txt in the worktree shell at 2026-10-19T15:24Z: rc=1; ls of the .opal folder lists only ps-lock",
+        ".scratch/commit1.out of wk-NFRA_MCPINDEX-61: the WARN line for client-data-check, printed on commit ae2110a3a3d"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W61-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~61",
+    "surfaced_at": "2026-10-19T15:24:24Z",
+    "one_line": "The face's step 5.2 asks for <status>complete</status> appended to the task order itself, but the order file is not in the face's <paths> grant, so this worker does not flip it.",
+    "spec_asserts": "Face section 5, step 2: append <status>complete</status> to this order if all three criteria PASS. Face section 3 <paths>: workflows/gateway_battery/cheatsheet.py, workflows/gateway_battery/tests/test_cheatsheet.py, the deliverables folder for 0.9.0_WK_NFRA_MCPINDEX~61, and the investigation file. Worker rule: edit only the <paths> a non-terminal order names.",
+    "world_is": "The task order NFRA_MCPINDEX.TO-MX-g-5.fwd25-cheat-sheet-generator.md is not among the <paths> entries, so the status flip is outside this worker's write grant. All three criteria PASS, so the flip is the only remaining act of step 5.2. The flip is left for the issuer to make.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-g-5.fwd25-cheat-sheet-generator.md (face lines 83-88 <paths>; line 109 step 5.2) read in wk-NFRA_MCPINDEX-61 at 2026-10-19T15:24Z",
+        "g5.AC1, g5.AC2, g5.AC3 each RESULT: PASS in wk-NFRA_MCPINDEX-61 at 2026-10-19T15:2xZ (output in the proof instance)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W58-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~58",
+    "surfaced_at": "2026-10-19T15:25:25Z",
+    "one_line": "The commit gate printed NAMING ERROR (function-map folder missing from this sparse worktree) on commit 00c51aac7c and the commit landed anyway, so the naming gate graded nothing for the two staged files.",
+    "spec_asserts": "The task order (section 2, bound 5, and section 5.3) routes the commits through .tools/safe-commit.sh, which runs py_compile, the naming gate and ruff for py39; the order states no failure mode for the naming gate.",
+    "world_is": "safe-commit output of 00c51aac7c: [naming-gate] NAMING ERROR function-map folder missing at infra/aws/lambda/ci/function-map/ (not in this sparse checkout); the commit then landed with rc 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit 00c51aac7c, line 14: [naming-gate] NAMING ERROR function-map folder missing; git log --oneline -1 00c51aac7c shows the commit landed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W58-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~58",
+    "surfaced_at": "2026-10-19T15:25:25Z",
+    "one_line": "The pre-commit risk reflex on commit 00c51aac7c read a danger map 91.4h old, answered PARTIAL_OR_BLIND and scanned 0 of 2 files, so the reflex cleared nothing in this diff.",
+    "spec_asserts": "The task order (section 5.3) names .tools/safe-commit.sh as the commit path and states no risk-reflex result; the order does not say the reflex runs or what answer state a commit must carry.",
+    "world_is": "safe-commit output of 00c51aac7c: [risk-reflex] ANSWER STATE PARTIAL_OR_BLIND; NOT-DECIDABLE: danger map STALE; WITHIN BUDGET scanned 0 of 2 file(s). Its REBUILD line points at the main tree's org/modules/graph/nerves-risk-edges.json, which this sparse worktree does not carry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit 00c51aac7c: [risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND; NOT-DECIDABLE: danger map STALE; WITHIN BUDGET: scanned 0 of 2 file(s)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W58-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~58",
+    "surfaced_at": "2026-10-19T15:25:25Z",
+    "one_line": "The client-data check on commit 00c51aac7c read WARN: the hashed account-id list is ABSENT on this device, so the commit was not checked for client account ids.",
+    "spec_asserts": "The task order names no client-data check; it prescribes the commit path (section 5.3, .tools/safe-commit.sh), and an absent check is not a clean check.",
+    "world_is": "safe-commit output of 00c51aac7c: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt; this commit was NOT checked for client account ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit 00c51aac7c: WARN: client-data-check: hashed account-id list ABSENT; this commit was NOT checked for client account ids"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W58-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~58",
+    "surfaced_at": "2026-10-19T15:25:25Z",
+    "one_line": "Section 5.2 of the face asks the worker to flip this order's status to complete, but the task-order file is not among the four <paths> the worker is granted, so the flip is not written by this worker.",
+    "spec_asserts": "Section 5.2 of the face: append <status>complete</status> to the order if all three criteria PASS, committed in commit (ii); section 3 <paths> is the write grant.",
+    "world_is": "All three criteria PASS (AC1, AC2, AC3), so the flip is owed; the task-order file NFRA_MCPINDEX.TO-MX-g-1.census-reducer-and-grants-extractor.md is not in <paths>, and the status remains issued in the proof commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task order section 3 <paths> lists workflows/gateway_battery/gateway_census.py, its test file, the 0.9.0_WK_NFRA_MCPINDEX~58 deliverables folder and INVESTIGATION_v1.md; the order file itself is not among them (order at issuance commit 490631f349)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W60-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~60",
+    "surfaced_at": "2026-10-19T15:23:53Z",
+    "one_line": "The commit-time naming gate printed NAMING ERROR (function-map folder missing) on the sparse worktree and the commit still landed rc 0 with the staged names ungraded: infra/aws/lambda/ci/function-map/ is not in this worktree's sparse set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-g-4 commits two .py files through .tools/safe-commit.sh with rc 0 as the clean outcome, and gives no sparse-set condition for the naming gate.",
+    "world_is": "safe-commit.sh of e3bd819412 (workflows/gateway_battery/tool_battery.py and its tests) printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-60\\infra/aws/lambda/ci/function-map/' and then the commit line '[wk-NFRA_MCPINDEX-60 e3bd819412]' with rc 0; the naming check graded no name. The sparse checkout is .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/gateway_battery.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at C:/tmp/wk-mcpindex-60/.scratch/commit1.out (untracked, worktree): line containing [naming-gate] NAMING ERROR function-map folder missing, then [wk-NFRA_MCPINDEX-60 e3bd819412] and msg-verify MATCH",
+        "git sparse-checkout list in C:/tmp/wk-mcpindex-60 (read 2026-10-19T15:23Z): the nine entries named in world_is; infra/aws/lambda/ci is not among them"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W60-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~60",
+    "surfaced_at": "2026-10-19T15:23:53Z",
+    "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on this commit: its danger map is 91.4h old (STALE) and it scanned 0 of 2 files, so it could not clear the staged diff.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-g-4 declares comp-adversary DECLARED-NOT-APPLICABLE and asserts no lens beyond the criteria, so no reflex answer is expected in the commit path.",
+    "world_is": "safe-commit.sh of e3bd819412 printed a risk-reflex block: 'danger map: 91.4h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'NOT-DECIDABLE: danger map STALE', 'WITHIN BUDGET: scanned 0 of 2 file(s)'; its REBUILD line names the MAIN tree's map and builds nothing here. The commit landed rc 0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at C:/tmp/wk-mcpindex-60/.scratch/commit1.out (untracked, worktree): the [risk-reflex] block printed before the gates run",
+        "commit e3bd819412 on branch wk-NFRA_MCPINDEX-60 (LOCAL, not pushed): the diff the reflex scanned was 0 of 2 files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W60-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~60",
+    "surfaced_at": "2026-10-19T15:23:53Z",
+    "one_line": "The order's step 5.2 asks for the status flip on the task order file itself, which is not in the order's <paths> grant, so the flip is not made by this worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-g-4 section 5 step 2: append <status>complete</status> to this order when all three criteria PASS; section 3 <paths> is the complete write surface and lists the two script files, the deliverables folder and this investigation file.",
+    "world_is": "The task order file NFRA_MCPINDEX.TO-MX-g-4.fwd24-tool-battery.md is not in <paths>. Section 2 bound 1 limits writes to <paths>. The worker leaves the <status> tag at issued and reports the flip for the issuer to make.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task order file in worktree C:/tmp/wk-mcpindex-60 at HEAD 490631f349 (issuance commit): section 3 <paths> lists four entries and no task-orders path",
+        "task order file section 5 step 2 names the status append on this order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W60-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~60",
+    "surfaced_at": "2026-10-19T15:23:53Z",
+    "one_line": "The row schema the order names (org/surprise_channel/schemas/investigation_item.schema.json) is not in this sparse worktree, so the row shape was copied from the rows already in this channel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-g-4 section 3 and the worker face name org/surprise_channel/schemas/investigation_item.schema.json as the row schema, to be read before appending a row.",
+    "world_is": "In C:/tmp/wk-mcpindex-60 the path org/surprise_channel/ does not exist: the sparse set is .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/gateway_battery. The row fields used are those of the rows already in INVESTIGATION_v1.md; the row gate is the commit-time check.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cat of org/surprise_channel/schemas/investigation_item.schema.json in C:/tmp/wk-mcpindex-60 returned 'No such file or directory' (read 2026-10-19T15:23Z)",
+        "git sparse-checkout list in C:/tmp/wk-mcpindex-60 (2026-10-19T15:23Z): the nine entries named in world_is"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W59-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~59",
+    "surfaced_at": "2026-10-19T15:26:39Z",
+    "one_line": "The naming gate printed NAMING ERROR (function-map folder missing) on the TO-MX-g-2 commit and still returned rc=0; in this sparse worktree the Lambda source map is not checked out, so the naming check did not grade the staged files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at commit 3c59e5bc20d (worktree C:/tmp/wk-mcpindex-59): '[naming-gate] NAMING ERROR function-map folder missing: ...infra/aws/lambda/ci/function-map/ (nothing is graded from a copy)', then 'committed 3c59e5bc20d' and rc=0.",
+        "git cat-file -e 3c59e5bc20d:infra/aws/lambda/ci/function-map returns rc=0 (the folder is tracked at HEAD); ls -d infra/aws/lambda/ci/function-map in the worktree returns no such file; git sparse-checkout list names no infra/aws/lambda/ci entry."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MX-g-2 section 2 bound 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project; CLAUDE.md rule 30 says the commit-time naming gate refuses names. The order expects the gate to grade the staged names before the commit lands.",
+    "world_is": "The naming gate could not read its function-map source and reported that it graded nothing from a copy; safe-commit still returned rc=0 and landed commit 3c59e5bc20d (2 files, the two workflows/gateway_battery files). The fail-open path reads as a grade of the names when none was made.",
+    "notes": "Recorded, not acted on. The worker's sparse grant covers only the round22 and workflows/gateway_battery folders, so the function-map folder is out of reach for this worktree. The two committed files carry no Lambda name; the naming gate's silence on them is not a verdict. Disarm and owner: the issuer 2.0.0_SA_COO~MI decides whether the gate should refuse on an unreadable map or whether the worktree needs the folder."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W59-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~59",
+    "surfaced_at": "2026-10-19T15:31:19Z",
+    "one_line": "The order asks me to append the complete status to the task order and commit the flip, but the order file is not named in its own <paths> grant, so this worker did not flip it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_MCPINDEX.TO-MX-g-2.fwd23-coverage-gate.md <paths> block (lines 60-65): workflows/gateway_battery/index_coverage.py, workflows/gateway_battery/tests/test_index_coverage.py, org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~59/**, and INVESTIGATION_v1.md; the order file itself is not among them.",
+        "NFRA_MCPINDEX.TO-MX-g-2.fwd23-coverage-gate.md section 5 step 2 (line 86): 'Append <status>complete</status> to this order only if all three criteria PASS'; the order's status line is at line 96 and reads issued."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 5 steps 2 and 3 of the order: append the complete status to this order when the three criteria PASS, and commit that flip with the proof instance. Section 2 bound 1 and the <paths> block name the only files this worker may change.",
+    "world_is": "The three criteria PASS and the proof instance validates (rc 0), but the order file is outside the <paths> grant, so the flip is not made and the order's status line stays at issued. The flip is an edit the grant does not admit.",
+    "notes": "Not flipped and not committed; the order file was not edited. Disarm and owner: the issuer 2.0.0_SA_COO~MI decides whether to add the order path to the grant or to flip the order itself. The proof instance records the criteria result without the flip."
   }
 ]
 ```
