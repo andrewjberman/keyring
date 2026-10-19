@@ -84,7 +84,7 @@ run `proof-of-spec-check.py` on it as the worker rules say, and report once, wit
 
 **ISSUER NOTES:** cut at the GWZ round-1 issuance (decomposition v19) from the CTO's round analysis `ledger/ROUND_ANALYSIS.z-round1.md` @11c572fef9, item 1 (defect P1, class display). Queued second on slot ~41 behind MP-z-7 (same files; one chain).
 The `index_pairs` shape is the issuer's contract (decomposition GWZ1.1), sent to `2.0.0_SA_COO~O` for NFRA_OPLGTW round 47; if that round lands a different shape, the issuer amends this order and the check, not the worker. Fixtures only: no seam probe against the real handler is possible until the field is live (owner-gated). The change reaches the host only with the next mcportal bundle release AND the handler's field; nothing in this order deploys. The status flip is the issuer's.
-Check dry-run at the base: see the issuance commit.
+z8.AC1 base: FAIL as expected (`bun test src` 73 pass, 0 fail; named tests present in sources 0 of 5; min 79), run in the provisioned slot-41 worktree at mcportal 59e802a, 2026-10-19 ~20:1xZ.
 
 <status>pending</status>
 <round>1</round>
