@@ -13324,5 +13324,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S66",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+        "surfaced_at": "2026-10-19T14:38:14Z",
+        "one_line": "HVST-cn-7 stage 3 STOP: safe-apply's naming plan limb REFUSED the saved run-half plan because the ECS task log group is /ecs/amgt-dossier-refresh-task and the canon places it at /aws/ecs/amgt-dossier-refresh-task; nothing was applied.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO HVST-cn-7 section 2 stage 3 and the CTO half: the full-root plan ends Plan: 11 to add, 0 to change, 0 to destroy and is applied by safe-apply, on dossier-refresh.tf at sha256 9eaee2540170af334305e38b4ec2b1e16260365dc89f50e7da14171ac47a152e; CLAUDE.md rule 30: every resource name is name() output and the commit-time and apply-time naming gate REFUSES names (LGIC_ENFORCE).",
+        "world_is": "At 2026-10-19T14:34:41Z `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/harvest apply <saved plan>` (worktree C:/tmp/cn7-build at 1dda9cc0a2) exited 7: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=1), before terraform apply. The same gate re-run read-only on the saved plan JSON prints one refusal of 79 graded lines: NAMING REFUSE aws_cloudwatch_log_group.dossier_refresh_task[0] /ecs/amgt-dossier-refresh-task -> /aws/ecs/amgt-dossier-refresh-task (NEW name the canon places as FIX). The name comes from local.task_log_group at dossier-refresh.tf line 67 (/ecs/ plus the task family). The other ten run-half resources grade CONFORMANT. The saved plan itself graded as expected (69 resource_changes: 58 no-op, 11 create; image by digest; command --write --require-trading-day --manifest; schedule DISABLED cron(0 10 ? * MON-FRI *) America/New_York). Nothing from stage 3 exists: 0 ECS clusters naming dossier, 0 log groups under /ecs/amgt-dossier. The fix edits the Terraform bytes the CTO half binds (any edit voids the pair), so it is the issuer's cell and a re-bound pair; no override was used, nothing retried, nothing deleted.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round99/cn7/cn7_s3.out (the plan grade, the apply transcript ending APPLY_RC=7, and the naming gate re-run lines)",
+                "infra/aws/terraform/harvest/dossier-refresh.tf line 67 at 1dda9cc0a2; .tools/safe-apply.sh lines 328-394 (the naming plan limb)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

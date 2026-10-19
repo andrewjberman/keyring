@@ -2970,3 +2970,28 @@
   "notes": "Tooling state for the worker path, not a verdict on the diff. Every L7 worker commit runs in a linked worktree, so the reflex is blind on each of them until the limb or the map is refreshed."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S36",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-19T14:37:10Z",
+  "one_line": "The 2026-10-19 13:30Z scheduled fire wrote 49financial and inflection dated 2026-10-16 (both legs now end 2026-10-16 with values, as does Cottonwood), but Global's axis still drops 2026-10-16 (CN-s-6, GLOBAL_AXIS_DROP_DATES), so Global stays at as_of 2026-10-15 and its 2026-10-15 keys conflict again: the premise of the drop (no catch-up fills 10-16) no longer holds.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msgs 7594 and 7600 and PRD v2.29: 'no catch-up fills 2026-10-16' (msg 6986), so 10-16 is taken off Global's axis as an enumerated date; CN-s-1's Global grade reads the first scheduled fire whose Global as_of is a new date.",
+  "world_is": "MEASURED by the issuer 2026-10-19 14:3xZ. Manifest s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-15/20261019T133153Z.json: scheduled, code 128fce3524, a4 16 of 16, errors [], writes written 9 / staged 4 / conflict 8; written: 49financial and inflection aggregate-aua-timeseries, aum-metrics and category-views at 2026-10-16, 49financial account-distribution 2026-10-19, Global account-distribution 2026-10-19, the TaxSMA control; conflict: Global aggregate-aua-timeseries/aum-metrics/category-views 2026-10-15 (94, 21, 13 business diffs) and Cottonwood's 2026-10-16 keys. The three staged legs read from s3://opal-data-assets/gold/mdpf_revamp/{49financial,inflection,cottonwood}/aggregate_aua_timeseries.json (490, 490, 499 dates): every leg's last date and as_of_last is 2026-10-16 and model_aua is present on 2026-10-16 and 2026-10-15. Offline, the tree's build_global_artifact (HEAD, with CN-s-6) over these legs EMITS 498 dates, as_of_last 2026-10-15 as deployed; with GLOBAL_AXIS_DROP_DATES emptied it EMITS 499 dates, as_of_last 2026-10-16, last-row headline present, no refusal. So while the drop stands Global is held one date behind its legs on every fire until a leg date after 2026-10-16 exists, and 2026-10-16 would then be a hole in Global's series. NOT read: whether the 2026-10-16 values at 49financial and inflection are the final catch-up (B1's FB-p-2) or the organic run; the D4 bodies of a build without the drop.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-15/20261019T133153Z.json (copy at C:/dev/_deploy_artifacts/canon_s6/fire_20261019/manifest.json, outside the repo)",
+      "the three staged legs, copies at C:/dev/_deploy_artifacts/canon_s6/fire_20261019/leg_*.json, outside the repo, client-scale",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py L1744 (GLOBAL_AXIS_DROP_DATES) and L2377 (the axis subtraction) at HEAD 0495a1544a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the remedy: the CTO (a producer change to a SERVED object, rulings 7594/7600 named the drop). Recommendation sent with this row: empty GLOBAL_AXIS_DROP_DATES (a one-line change to the constant), under a new never-widen pair, D4 ref/new before the 2026-10-20 13:30Z fire. CN-s-1's Global grade is not graded here."
+}
+```
