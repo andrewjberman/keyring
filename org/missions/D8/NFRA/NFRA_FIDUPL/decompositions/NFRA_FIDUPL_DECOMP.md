@@ -1,10 +1,11 @@
-# NFRA_FIDUPL -- L5 decomposition, ROUND 1 (the FWD-1 thread) -- DRAFT v0.2, NOT CUT
+# NFRA_FIDUPL -- L5 decomposition, ROUND 1 (the FWD-1 thread) -- DRAFT v0.3, NOT CUT
 
 **Author:** `2.0.0_SA_COO~P1` | 2026-10-19 ~18:4xZ | spine `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md` L5, cited by path, read at HEAD.
 **Status:** DRAFT, on the CTO's word (msg 8430, "read now, cut nothing yet"; msg 8435, "re-base the decomp on v0.2"). **No task order is cut by this file.**
 Nothing is cut until L4-R signs both halves of the PRD, which waits on Andrew confirming the DONE WHEN lines. Not frozen: it versions until the cut.
 **Input:** PRD v0.2 `../prd/NFRA_FIDUPL_PRD.md` @c09ae3894a (LOCAL when read); endpoint FWD-1..FWD-8; brief `docs/briefs/auto-fidelity-uploader-brief-20261019.md` @ea34e538ae; fork research `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261019_NFRA_FIDUPL_L4_FORKS.md` @b99a64cd4e (cited by the PRD, not read in full).
 **Row:** `../project.json`, `dep_stage: PRD`. This file does not flip it (row owner: the CTO).
+**v0.3 (this edit):** fork (d) is RULED (CTO msg 8445, executing the CVO verdict `org/tier1_exec/3.0.0_SA_CVO/deliverables/GOVERNANCE_VERDICT_NFRA_FIDUPL_TENANCY_20261019.md` @bc07810172): a FIRM-tenancy `alongside` scope, bucket `opal-data-alongside`, `bucket_provisioned: false`, the cross-firm gate edit in the same commit. The COMPOSITE REC is withdrawn. Effect on cells: the bronze landing is a NEW bucket nobody has provisioned (FU-s-5, FU-s-6), and G-1 widens to the row plus the gate edit.
 **v0.2 vs v0.1 (@a9bfb78e16):** forks (a) Playwright, (b) new SSM-only Linux box started on demand, (c) Secrets Manager per-secret grants are ruled. The scope row is no longer a cell: `4.0.0_SA_CRO~FIDELITY` lands it (C-NAMES) the turn the CVO rules tenancy (fork (d), REC: a COMPOSITE `alongside` scope). Cells renumbered; a Windows box is gone.
 
 ## 0. What I measured (2026-10-19, HEAD of box/dell1)
@@ -25,8 +26,9 @@ NOT READ: the Terms of Use; the fork research doc in full; the HAR captures (not
 | gate | holder | holds |
 |---|---|---|
 | L4-R sign-off, both halves | CVO (ratified text), CRO (brief half) | every cut |
-| **G-1** the Fidelity scope row(s) | `4.0.0_SA_CRO~FIDELITY`, the turn `3.0.0_SA_CVO~DELL1` rules tenancy (fork (d)) | FU-s-3 (landing addresses), FU-s-5 (IAM scope on the bronze prefix), FU-s-6 |
-| **G-2** C-TOU: Andrew's word on Wealthscape Terms of Use | Andrew | the live arm of FU-s-2, FU-s-3, FU-s-6's on-demand run, and FU-x-1. Authoring and unit proof proceed |
+| **G-1** one commit by `4.0.0_SA_CRO~FIDELITY` (C-NAMES, msg 8445): the FIRM scope row `alongside` plus the `_CROSS_FIRM_FOREIGN_{BUCKETS,KEY_PREFIXES}` entries in both directions, with `address('fidelity', ...)` printed resolving | the CRO; the tenancy verdict is in, the commit is not read yet | FU-s-3 (landing addresses), FU-s-5 (the bucket and its grant), FU-s-6 |
+| **G-2** C-TOU: Andrew's word on Wealthscape Terms of Use (open call `c3a6`) | Andrew | the live arm of FU-s-2, FU-s-3, FU-s-6's on-demand run, and FU-x-1. Authoring and unit proof proceed |
+| **G-4** Andrew's confirmation of the DONE WHEN lines (open call `e141`) | Andrew | L4-R, so every cut. The CVO's verdict says that before `e141` or `c3a6` closes, no landing cell runs |
 | **G-3** the Wealthscape credential written into its Secrets Manager secret | Andrew (never in repo or chat, per the Schwab precedent `secrets.tf:30`) | the live arm of FU-s-2 |
 
 ## 2. The rectangle (round 1 = the thread's hops)
@@ -42,8 +44,8 @@ Cell ids: `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1, `FU-s-<n>` (thre
 | **FU-s-2** | The session mint: Playwright signs in (password, `OTPSMS`, code from FU-s-1, authorize), keeps a persistent profile or saved state, hands back a signed-in context; distinct failures for sign-in refused and code never arrived; exercises once whether a persisted device cookie skips the SMS step and records the result | `infra/aws/ec2/canonical-fidelity/signin.*` | C-SIGNIN (ruling (a)) | WORLD |
 | **FU-s-3** | The pull, inside the minted context: status list for the day, `downloadExport.do` for each of the six files, raw land at the scope row's addresses, sha256 per file, business date from file content checked against `lib/trading_calendar.py`, one run record with the four failure classes | `infra/aws/ec2/canonical-fidelity/fidelity-daily-pull.*` | C-PULL, C-RAW, C-DATE, C-RECORD | WORLD |
 | **FU-s-4** | The box runtime: bootstrap that installs Chromium, Playwright and the runtime on a Linux image, the persistent-profile directory, and a run wrapper that calls the puller at the path fixed in section 3, fails loud on every "nothing to do" path, and takes no secret from an environment variable | `infra/aws/ec2/canonical-fidelity/box/` | C-SIGNIN, C-ISOLATION (ruling (b)) | LOCAL |
-| **FU-s-5** | The Terraform root beside `canonical-schwab-ec2/`: EventBridge schedule, the on-demand start and stop of the box, the box, its SSM-only security group, the Wealthscape secret (metadata only, `prevent_destroy`), per-secret grants (no prefix wildcard), bronze write grant; every name from `name()`; `terraform plan` only | `infra/aws/terraform/<root named by the builder>/` | C-TF, C-WINDOW (cron stated, not fixed), ruling (c) | LOCAL |
-| **FU-s-6** | Apply FU-s-5 under `safe-apply` with a change-management ledger opened at start and closed at completion; deploy FU-s-1..4's files to the box by a code deploy, never a hand edit | the root's state; the box's code path | C-TF | SERVED |
+| **FU-s-5** | The Terraform root beside `canonical-schwab-ec2/`: EventBridge schedule, the on-demand start and stop of the box, the box, its SSM-only security group, the Wealthscape secret (metadata only, `prevent_destroy`), per-secret grants (no prefix wildcard), the `opal-data-alongside` bucket (it is `bucket_provisioned: false`, so nothing else creates it) with its write grant to the box role only; every name from `name()`; `terraform plan` only | `infra/aws/terraform/<root named by the builder>/` | C-TF, C-WINDOW (cron stated, not fixed), ruling (c) | LOCAL |
+| **FU-s-6** | Apply FU-s-5 under `safe-apply` with a change-management ledger opened at start and closed at completion; deploy FU-s-1..4's files to the box by a code deploy, never a hand edit | the root's state; the box's code path; the `bucket_provisioned` flag flip in the registry (a hookup, added at the merge) | C-TF | SERVED |
 | **FU-x-1** | Closing pass for FWD-1: one on-demand run through the real chain (start, SSM, wrapper, sign-in, pull, stop); six files listed, downloaded, landed; an analyst-side read opens them; the record shows no person signed in | none (read and run only) | FWD-1 | WORLD |
 
 Hookups that belong to no cell, added by the COO at the merge: the `project.json` `decompositions` line; any registry-generated target the lint demands.
@@ -82,4 +84,5 @@ Maximal paths: `s-1 > s-2 > s-3 > s-6 > x-1`, `s-4 > s-6 > x-1`, `s-5 > s-6 > x-
 1. **FU-s-6 is an AWS apply.** CLAUDE.md rule 34 routes every CloudOps order of a macro's projects to `0.7.0_AE_CloudOps~NFRA<n>`. If FU-s-6 is a CloudOps order it goes there, not to a worker. Confirm at L6.
 2. **A build TO carries at most three mechanical criteria** (spine v3.16-3.18); FU-s-3 has four contract rows (C-PULL, C-RAW, C-DATE, C-RECORD). The cut splits them between the TO and the drain's hygiene run, or the CTO rules FU-s-3 into two cells.
 3. **Start-on-demand mechanism.** The PRD says started on demand and stopped after the run. Whether the start is a trigger Lambda via an SSM document (the `cot-exporter` shape) or EventBridge calling SSM Automation is a FU-s-5 design choice; the lead time between the start and the 05:45 ET window is C-WINDOW's, set after the first recurring row.
-4. **The CRO's and CVO's turn order.** G-1 reads LANDED only after the CVO rules tenancy and the CRO lands the row; if the REC is not taken, FU-s-3's landing path and FU-s-5's bronze grant change shape.
+4. **Who owns the new bucket.** The verdict gives `opal-data-alongside` as the FIRM bucket with `bucket_provisioned: false` and says nothing of who creates it. This draft puts it in FU-s-5's root; if a per-firm bucket module already exists elsewhere, the CTO moves it. Not found in this read (I did not search for one).
+5. **The cross-firm gate edit** (`.tools/ds-precommit-check.py`) is in G-1 and the CRO's commit, not a worker cell.
