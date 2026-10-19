@@ -10717,6 +10717,2133 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W65-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~65",
+    "surfaced_at": "2026-10-19T18:11:28Z",
+    "one_line": "The census links news_trending_topics to the S3 gold row opal_data_news_v2_gold_trending_reports (bucket opal-data-news-v2, prefix trending_reports/), but the tool's code reads only the DynamoDB table named by NEWS_TRENDING_TABLE, so the linked row names a source the code does not read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/news_typed.py:394 at worktree HEAD 18949a78ed: table = _table(\"trending\"), and :407 _query_pages(table, ...) queries that one DynamoDB table; no S3 read of opal-data-news-v2 appears in news_typed.py for this tool.",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:16388 at HEAD 18949a78ed: entity opal_data_news_v2_gold_trending_reports, bucket opal-data-news-v2, prefix trending_reports/, tools: news_trending_topics.",
+        "GATEWAY_SURFACE_CENSUS_20261019_v2.json: news_trending_topics indexes = [dynamodb_dynamodb_opal_news_trending_daily, opal_data_news_v2_gold_trending_reports]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "KNOWN k-4 routing rule (round 23, PRD v0.19 FWD-24 misrouted): for a reader, EVERY linked catalog row is its indexes; the CODE decides which source a case reads, and a linked row naming a source the code does not read is one OBSERVATION row naming the tool, the row and the line of the code.",
+    "world_is": "news_trending_topics reads the opal-news-trending-daily DynamoDB table only. Its second linked row, the gold trending_reports JSON in opal-data-news-v2, is not read by this tool at any line of the gateway code.",
+    "notes": "Recorded, not acted on. The k4 case K4-08 carries expect_source dynamodb:opal-news-trending-daily, the source the code reads. The issuer decides whether the gold row link is wrong or the tool should read the gold table."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W65-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~65",
+    "surfaced_at": "2026-10-19T18:11:28Z",
+    "one_line": "mdpf_get_security_classification reads the etf-classifications DynamoDB table, but the census links it to no catalog row (indexes empty), so the source the code reads has no linked row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/mdpf_classification.py:34 at worktree HEAD 18949a78ed: TABLE = \"etf-classifications\"; :197 ts.admit_scope(sc, TOOL, TABLE) and the one get_item read by ticker key.",
+        "GATEWAY_SURFACE_CENSUS_20261019_v2.json: mdpf_get_security_classification indexes = [] (0 linked rows).",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:2391 at HEAD 18949a78ed: the tool appears in a tool list with bucket dynamodb, but no entity row links it, so the census count of 0 holds."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "KNOWN k-4 routing rule (round 23, PRD v0.19 FWD-24 misrouted): expect_source is the source the tool's OWN CODE reads; if the code reads a source that no linked row names, keep expect_source on what the code reads and add one OBSERVATION row naming the tool, the row and the line of the code.",
+    "world_is": "mdpf_get_security_classification reads the etf-classifications table by ticker, and no catalog entity row names that table or links the tool.",
+    "notes": "Recorded, not acted on. The k4 case K4-03 carries expect_source dynamodb:etf-classifications, the source the code reads. The issuer decides whether a catalog row for etf-classifications should exist and be linked."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W66-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~66",
+    "surfaced_at": "2026-10-19T18:10:24Z",
+    "one_line": "Routing: the census links 0 catalog indexes to each of the six ycharts tools, yet each tool's code reads the YCharts API store at its definition; the cases carry expect_source ycharts, and this row names the gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GATEWAY_SURFACE_CENSUS_20261019_v2.json (round22/evidence): tools[].indexes is [] for ycharts_freshness, ycharts_fund_series, ycharts_risk_return_scatter, ycharts_search, ycharts_snapshot_metrics and ycharts_time_series (read 2026-10-19 in worktree C:/tmp/wk-mcpindex-66).",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:3301-3356 (under tool_index, starting line 1349): one tool entry per ycharts tool with bucket ycharts and source_group kind store; e.g. ycharts_time_series at line 3347 with definition integration.py:146.",
+        "infra/aws/ec2/opal-gateway/app/integrations/ycharts/integration.py: def lines 125, 134, 147, 160, 173, 187 call client.freshness_probe, indices_table_data, general_data, fund_data, scatter_plot_data and search (the YCharts API)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face (section 1, ROUTING) says a reader of a store channel carries expect_source for each answer case, and that a source the code reads which no linked row names gets one OBSERVATION row naming the tool, the row and the line of the code.",
+    "world_is": "The census links no index to the six ycharts tools, while DATA_CATALOG.yaml tool_index holds a bucket ycharts row for each. The code reads the YCharts API at integration.py 125, 134, 147, 160, 173 and 187. expect_source is set to ycharts on all seven cases, from the catalog bucket.",
+    "notes": "Recorded, not acted on. The cases file does not depend on which instrument is right; the issuer decides whether the census indexes or the tool_index rows govern the routing. Disarm and owner: the issuer 2.0.0_SA_COO~MI."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W66-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~66",
+    "surfaced_at": "2026-10-19T18:10:24Z",
+    "one_line": "The DATA_CATALOG live_error for E-19 (measured 2026-10-09) records ycharts_time_series HTTP 403 with 0 points and ycharts_snapshot_metrics keyed to symbol None, so the nonempty expectations of K5-02, K5-03 and K5-04 may not hold on a live run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:18784-18786 (row E-19, status PARTIAL): live_error 'Measured 2026-10-09 ~03:4xZ (row NFRA_MCPINDEX-Z-S85) ... ycharts_time_series returns HTTP 403 with 0 points; ycharts_snapshot_metrics returns HTTP 200 with its value keyed to symbol None'.",
+        "The k5 cases K5-02, K5-03 and K5-04 expect nonempty (cases_ycharts.json at worktree deliverables/0.9.0_WK_NFRA_MCPINDEX~66)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face (section 1) says a nonempty case is for an example that surely returns rows, and the catalog's own example_questions for the dataset are the source for examples.",
+    "world_is": "The catalog's measured live note for E-19 says the time-series call returned HTTP 403 with 0 points, and the snapshot call returned values keyed to None, on the last measured session. A nonempty expectation on those calls is not surely met.",
+    "notes": "Recorded, not acted on. The cases keep their nonempty expectation because the contract asks for one; the live run decides. The measurement is 2026-10-09 and predates the current session. Disarm and owner: the issuer 2.0.0_SA_COO~MI."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "send_email is documented as a confirm=false preview but sends at once when its recipient and external-domain counts are under the blast cap, so a confirm=false call to send_email is a live send, not a preview.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/blast_cap.py:107-139 evaluate() returns allow under the cap for a COUNTABLE tool whatever confirm is; blast_cap.py:_COUNTABLE maps send_email to recipients and external_domains (seed caps 25 standard, 5 external domains).",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:469-485 send_email posts to /me/sendMail and passes confirm only to _run; its docstring says ONLY call after the user has explicitly confirmed.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/destructive_ops.py:140-145 classes send_email IRREVERSIBLE_SEND."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "send_email has no non-sending path at confirm=false under the cap. K6-51 uses an argument refusal (no to) as its preview, so the battery never sends. The live hazard is that any caller using confirm=false with a small recipient list sends mail.",
+    "notes": "ARMED because the send is reachable today from any principal below the cap. The cheat sheet must not show confirm=false as a preview for send_email. Disarm is the issuer's."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "create_draft writes a draft to the mailbox at once (WRITE_REVERSIBLE, no confirm argument, no dry-run flag), so the definition offers no non-sending path for its preview case.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:455-465 create_draft posts to /me/messages and has no confirm or dry-run parameter.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/destructive_ops.py:134-139 classes create_draft WRITE_REVERSIBLE; blast_cap.py evaluate() allows WRITE_REVERSIBLE at once."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "create_draft has neither. K6-46 uses an argument refusal (no to, refused before the function runs) as its preview, so no draft is written by the battery.",
+    "notes": "Routing and form finding of round 23, not a defect in the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "save_email_attachment_to_site writes a file to a SharePoint site at once (WRITE_REVERSIBLE, no confirm argument, no dry-run flag); its only non-writing path is the empty folder_path refusal.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:372-399 save_email_attachment_to_site has no confirm or dry-run parameter; the write is graph.upload_large at :393.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:380-382 returns invalid folder_path before any Graph call, which is the probe K6-48 uses."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "save_email_attachment_to_site has no such path. K6-48 uses the empty folder_path refusal as its preview.",
+    "notes": "Form finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "upload_text_to_site writes a text file to a SharePoint site at once (WRITE_REVERSIBLE, no confirm argument, no dry-run flag); its only non-writing path is the unsafe filename refusal.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:820-840 upload_text_to_site has no confirm or dry-run parameter; the write is graph.upload_large in fn.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:826-827 raises ValueError unsafe filename before _run, which is the probe K6-52 uses."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "upload_text_to_site has no such path. K6-52 uses the unsafe filename refusal as its preview.",
+    "notes": "Form finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "copy_site_file_to_s3 writes an object to S3 at once (WRITE_REVERSIBLE, no confirm argument, no dry-run flag); its only non-writing path is the extension refusal before any read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:843-862 copy_site_file_to_s3 has no confirm or dry-run parameter.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/integrations/advi_billing/site_to_s3.py:86-90 _pair refuses any extension outside the admitted pairs before any read, which is the probe K6-45 uses."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "copy_site_file_to_s3 has no such path. K6-45 uses the extension refusal as its preview.",
+    "notes": "Form finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:21:33Z",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-r-1 step 6 says 'The checks are .../round23/checks/h1.AC1.sh, .AC2.sh and .AC3.sh (they run h_check.py)'. The same order's section 4 proof_of_spec names r1.AC1.sh, r1.AC2.sh and r1.AC3.sh as the criteria of MX-r-1.",
+    "world_is": "h1.AC1-3 grade partition_windows.py (cell MX-h1: h_check.py h1_ac1, h1_ac2 and the pytest arm on test_partition_windows.py), not the routing table emitter. The r1 checks are the MX-r-1 criteria. I ran the proof's r1.AC1, r1.AC2 and r1.AC3 and did not run h1.",
+    "one_line": "Step 6 of TO-MX-r-1 names the h1 checks, which belong to another cell; the proof names the r1 checks. The worker ran the r1 checks.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 2 step 6 (line 71) names checks/h1.AC1.sh, h1.AC2.sh and h1.AC3.sh",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/checks/h_check.py@55588caa6e7 lines 88-89 (h1_ac1 grades partition windows) and line 721 (h1.AC3 pytest on test_partition_windows.py)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 4 proof_of_spec lines 93-96 name r1.AC1.sh, r1.AC2.sh and r1.AC3.sh"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:21:33Z",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-r-1 section 2 bound 1 says 'the measurer's live S3 path is written but never run by you; you test it with --fake'.",
+    "world_is": "The cell contract (section 1, ROUTING TABLE) defines the emitter flags, inputs and outputs with no measurer and no --fake option, and the section 3 grant names no measurer file. The emitter reads local files only and has no live S3 path; I wrote none and added no --fake option.",
+    "one_line": "Bound 2.1 refers to a measurer and a --fake test path that the MX-r-1 contract never specifies; no criterion needs one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 2 bound 1 (line 66) mentions the measurer and --fake",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 1 contract (lines 38-50) and section 3 paths (lines 76-82) name no measurer file and no --fake flag"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:33:10Z",
+    "spec_asserts": "MX-r-1 face, section 1 and section 2 bound 2: 'The commit gate runs py_compile, the naming gate and ruff for py39' (the naming gate is part of the commit gate a worker's commit must pass).",
+    "world_is": "The safe-commit naming gate printed 'NAMING ERROR function-map folder missing' for infra/aws/lambda/ci/function-map/ (the Lambda source map it reads). That folder is outside this worktree's sparse checkout (11 folders; infra/aws/lambda is absent), so the gate could not grade the naming input. The commit still landed (msg-verify committed 60058aca164). I did not widen the sparse checkout, since the cell needs no infra folder.",
+    "one_line": "The naming gate could not read its function-map input in the sparse worktree and printed ERROR; the commit landed anyway, so the naming half of the gate was not graded.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit 60058aca164: [naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-70\\infra/aws/lambda/ci/function-map/ followed by msg-verify committed 60058aca16",
+        "git sparse-checkout list at 55588caa6e7 lists 11 folders and no infra/aws/lambda path; ls infra/aws/lambda reports absent in the worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_get_allocation: the census links three smartx rows that no smartx function reads, and omits the schwab, orion and smartx-positions reads the code does make.",
+    "spec_asserts": "Census tools[client_get_allocation].indexes (round22 GATEWAY_SURFACE_CENSUS_20261019_v2.json) links 14 rows, including opal_data_assets_silver_smartx_fact_model_aum_daily, _fact_model_changerequests and _fact_model_performance.",
+    "world_is": "app/client_adapter_smartx.py:40-44 defines five table constants (roster, account map, allocation positions, allocation valuation, model holdings); get_allocation (:334-389) reads only roster, map, positions and fact_model_holdings, so the three linked smartx rows are not read. Read by get_allocation but not linked: schwab dim_position and dim_balance for 08242234, 08335338 and 08403355 (app/client_adapter_schwab.py:223-233 via _account_view, called from get_allocation at :294); orion fact_positions (app/client_adapter_orion.py:329-331 via _account_rows); smartx fact_allocation_positions (app/client_adapter_smartx.py:334-389).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_smartx.py:40-44 and :334-389 (2026-10-19)",
+        "Read app/client_adapter_schwab.py:223-233 and :294 (2026-10-19)",
+        "Census tools[client_get_allocation].indexes, 14 entries (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_get_fees: the census links a fee-schedule row that the adapter's own docstring says it never reads, and omits the two fee-branch reads of transaction tables.",
+    "spec_asserts": "Census tools[client_get_fees].indexes links blackdiamond_live_fees and opal_data_assets_silver_49f_dim_advisor_fee_role (2 rows).",
+    "world_is": "app/client_adapter_bd49f.py:704-705 (docstring): dim_advisor_fee_role is a fee schedule, never read here; get_fees reads only the live fees table (:712). Not linked: cottonwood fact_transactions, read by app/client_adapter_bdcottonwood.py:321-327 (TABLE_TXN in _window_rows with fee_only=True, called from get_fees at :385-414); orion fact_transactions, read by app/client_adapter_orion.py:193-200 (_tx_rows, called from get_fees at :358-372).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_bd49f.py:704-712 (2026-10-19)",
+        "Read app/client_adapter_bdcottonwood.py:321-327 and :385-414 (2026-10-19)",
+        "Read app/client_adapter_orion.py:193-200 and :358-372 (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_get_holdings: three read surfaces the code takes are missing from the census link list (cottonwood fact_allocations, smartx roster and account map).",
+    "spec_asserts": "Census tools[client_get_holdings].indexes links 13 rows.",
+    "world_is": "app/client_adapter_bdcottonwood.py:265-275 reads fact_allocations (p_a, TABLE_ALLOC) as well as fact_holdings. app/client_adapter_smartx.py:293-294 calls _firm_allocations (fact_model_allocation_roster) and _account_map (fact_allocation_account_map) before the positions read. Neither smartx table and not the cottonwood allocations table is linked to client_get_holdings. The other 13 linked rows are read by the trace.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_bdcottonwood.py:265-275 (2026-10-19)",
+        "Read app/client_adapter_smartx.py:127-151 and :286-294 (2026-10-19)",
+        "Census tools[client_get_holdings].indexes, 13 entries (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_get_transactions: the schwab account-index scan reads three dim_position tables that the census does not link.",
+    "spec_asserts": "Census tools[client_get_transactions].indexes links 7 rows: blackdiamond_live_transactions, commonwealth_cottonwood_transactions, cottonwood_fact_transactions, orion_inflection_fact_transactions and the three schwab dim_transaction rows.",
+    "world_is": "app/client_adapter_schwab.py:325 calls _index, which reads dim_position of every master in ctx.firm_segments (app/client_adapter_schwab.py:166-183, read at :183) before the entry master's dim_transaction (:329). The three schwab dim_position rows are read but not linked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_schwab.py:166-183 and :319-340 (2026-10-19)",
+        "Census tools[client_get_transactions].indexes, 7 entries (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_resolve_account: four linked rows are not read (one commonwealth row, three schwab fact_acc rows) and four resolve reads are not linked, one of them an eclipse branch that reads the Orion table.",
+    "spec_asserts": "Census tools[client_resolve_account].indexes links 7 rows, including opal_data_assets_silver_commonwealth_cottonwood_account_links and the three schwab fact_acc rows.",
+    "world_is": "app/client_adapter_commonwealth.py:120 and :165 read crosswalk only; no commonwealth function reads account_links. app/client_adapter_schwab.py:275-281 refuses no_resolve_source with zero reads. Read but not linked: orion fact_positions (app/client_adapter_orion.py:222-229); the eclipse module's resolve reads the Orion table (app/client_adapter_eclipse.py:146-151, ORION constant at :23); cottonwood fact_allocations (app/client_adapter_bdcottonwood.py:206-216); smartx fact_model_allocation_roster (app/client_adapter_smartx.py:244-252).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_commonwealth.py:120 and :165 (2026-10-19)",
+        "Read app/client_adapter_schwab.py:275-281 (2026-10-19)",
+        "Read app/client_adapter_eclipse.py:23 and :146-151 (2026-10-19)",
+        "Census tools[client_resolve_account].indexes, 7 entries (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "schwab_get_access: the members.yaml bucket_source names a deploy/ path that is absent from this checkout, and the tool reads the four contract datasets while its links name none.",
+    "spec_asserts": "members.yaml (schwab_get_access): bucket_source deploy/NFRA_OPLGTW_CONTRACT.json:301 in opal-data-assets; census links none.",
+    "world_is": "The named path is not in this checkout (no deploy/ directory). The gateway loads org/standards/NFRA_OPLGTW_CONTRACT.json (app/integrations/schwab/catalog.py:87-88); its line 301 is the source_bucket key with value opal-data-assets, read at catalog.py:224. The value agrees, the path does not. The trace: get_access calls _availability for every master and dataset (app/integrations/schwab/integration.py:431-445 and :282-292), which reads the snapshot and verifies the contract data_prefixes (catalog.py:901, :806-849) under the two completion prefixes and eight data prefixes. Links none under-states it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/integrations/schwab/catalog.py:87-88 and :224 (2026-10-19)",
+        "Read org/standards/NFRA_OPLGTW_CONTRACT.json:301 (2026-10-19)",
+        "Read app/integrations/schwab/integration.py:282-292 and :431-445 (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "schwab_list_files: linked to one dataset row, the code reads the snapshot that verifies all four contract datasets of the master.",
+    "spec_asserts": "Census tools[schwab_list_files].indexes links schwab_dim_asset only.",
+    "world_is": "app/integrations/schwab/integration.py:484 calls _availability for the requested master and dataset (:282-292), which reads the snapshot for the master and date; catalog.py:806-849 verifies the master's contract data_prefixes (:847-849). The four dataset rows (dim_asset, dim_balance, dim_position, dim_transaction) are read for any dataset argument; the link names one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/integrations/schwab/integration.py:282-292 and :484 (2026-10-19)",
+        "Read app/integrations/schwab/catalog.py:806-849 (2026-10-19)",
+        "Census tools[schwab_list_files].indexes (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "schwab_describe_dataset: linked to four silver dataset rows, the code reads no S3 object and describes the integration's own in-code schema.",
+    "spec_asserts": "Census tools[schwab_describe_dataset].indexes links schwab_dim_asset, schwab_dim_balance, schwab_dim_position and schwab_dim_transaction.",
+    "world_is": "app/integrations/schwab/integration.py:504-543: the body checks the grant and scope, then reads the integration's in-code schema qry.DATASET_SCHEMAS[d] (:516) and sem.describe_field (:530). No S3 or store read of those rows occurs. The schema is declared from the producer's pinned silver schema (the text at :543), not read from the rows at call time.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/integrations/schwab/integration.py:504-543 (2026-10-19)",
+        "Census tools[schwab_describe_dataset].indexes (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "schwab_prepare_download: the members.yaml bucket_source names a deploy/ path absent from this checkout, and the tool reads the same snapshot closure while its links name none.",
+    "spec_asserts": "members.yaml (schwab_prepare_download): bucket_source deploy/NFRA_OPLGTW_CONTRACT.json:301 in opal-data-assets; census links none.",
+    "world_is": "Same path finding as schwab_get_access (S6): the path is absent here; catalog.py:87-88 names the loaded file, whose line 301 is the source_bucket key with value opal-data-assets. The trace: prepare_download calls _availability for each master and download_filtered dataset (app/integrations/schwab/integration.py:802-815) and reads the same snapshot closure and data prefixes. Links none under-states it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/integrations/schwab/catalog.py:87-88 (2026-10-19)",
+        "Read org/standards/NFRA_OPLGTW_CONTRACT.json:301 (2026-10-19)",
+        "Read app/integrations/schwab/integration.py:802-815 (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "Contract master 08335338 is labelled BlackDiamond, and the four schwab tools read its schwab/ prefixes under vendor schwab: a Black Diamond label on a Schwab read path.",
+    "spec_asserts": "org/standards/NFRA_OPLGTW_CONTRACT.json:6-8 (masters) maps 08335338 to BlackDiamond and 08242234 to SmartX.",
+    "world_is": "The schwab tools read schwab/08335338/ (its completion prefix and four data prefixes; app/integrations/schwab/catalog.py:779-787 and the fetcher at app/integrations/schwab/integration.py:193-206). The catalog rows opal_data_assets_silver_schwab_08335338_* carry vendor schwab. The trace assigns vendor schwab, the owner by prefix and catalog. The label conflict is recorded here; the vendor owner of that master is not decided in this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read org/standards/NFRA_OPLGTW_CONTRACT.json:6-8 (2026-10-19)",
+        "Read app/integrations/schwab/catalog.py:779-787 and integration.py:193-206 (2026-10-19)",
+        "DATA_CATALOG silver rows opal_data_assets_silver_schwab_08335338_* vendor schwab (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "The bucket of every client_* source comes from catalog rows, so no client-layer .py names opal-data-assets: 33 client sources ground on the proxy line admin_gateway_breakdown.py:164, and 58 schwab sources on schwab integration.py:84.",
+    "spec_asserts": "Round23 cell section 1: a cite is the line that names the source or selects the branch, and the cited file must contain the bucket string.",
+    "world_is": "app/client_core.py:263-275 (Ctx.prefix) selects each key from DATA_CATALOG rows at call time; the file header (:17-20) says no bucket literal is typed there. The .py files under app/ that name opal-data-assets are two: app/admin_gateway_breakdown.py:164 and app/integrations/schwab/integration.py:84. The bd49f module names opal-data-bd only in comments (:11-12, :43). The cites therefore name a bucket by proxy, not the selecting line, for 33 client sources (blackdiamond cottonwood, commonwealth, orion, smartx and eclipse) and the bd49f resolve and fact_bd_allocation reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_core.py:17-20 and :263-275 (2026-10-19)",
+        "Grep app/*.py for opal-data-assets: 2 files, admin_gateway_breakdown.py:164 and integrations/schwab/integration.py:84 (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_compare_peers: the census links opal_data_etfs_gold_buying_trend and opal_data_etfs_gold_holding_contribution only; the code also reads opal_data_etfs_gold_peer_group_map on every call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim (GATEWAY_SURFACE_CENSUS_20261019_v2.json, tool etfs_compare_peers, indexes): opal_data_etfs_gold_buying_trend, opal_data_etfs_gold_holding_contribution. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals_flow.py:576 calls _peer_funds(scope, rows, home, tool) unconditionally, and _peer_funds binds rows[ENTITY_PEERS] at app/etfs_rivals_flow.py:403 and reads the newest peer_group_map part through _read_dates at :409. The trace source set carries 3 s3 sources: peer_group_map (403), buying_trend (577), holding_contribution (578).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:403 (row, why = rows[ENTITY_PEERS]); :576 (funds, keys = _peer_funds(...)); :577-578 (_peer_section with ENTITY_BUYING and ENTITY_CONTRIB)",
+        "source_sets_etfs.json (deliverables/0.9.0_WK_NFRA_MCPINDEX~72) tool etfs_compare_peers, 3 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_coverage: the census links opal_data_etfs_gold_holdings_coverage and opal_data_etfs_gold_input_census only; the code also reads opal_data_etfs_gold_canonical_shape on every call and opal_data_etfs_gold_peer_group_map when fund_ticker is absent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_coverage, indexes: opal_data_etfs_gold_holdings_coverage, opal_data_etfs_gold_input_census. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals.py:624 binds rows[ENTITY_CANON] and :644 calls _latest_reports over its partitions on every call, so canonical_shape is read whatever the arguments. :627 binds rows[ENTITY_PEER]; the read at :641 runs only when fund_ticker is None. input_census (:625, read at :648) runs only when a fund is behind (lag above 0). The trace carries 4 s3 sources.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals.py:624-627 (the four rows bound), :641 (peer read, fund_ticker None branch), :644 (_latest_reports), :648 (census read, lag branch)",
+        "source_sets_etfs.json tool etfs_get_coverage, 4 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_fund_holdings: the census links opal_data_etfs_gold_holding and opal_data_etfs_silver_holdings only; the code also reads opal_data_etfs_gold_book (the book totals of the same date) on every call that reaches the holdings read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_fund_holdings, indexes: opal_data_etfs_gold_holding, opal_data_etfs_silver_holdings. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_funds.py:386 binds rows[ENTITY_GOLD_BOOK]; _holdings calls _book_totals after the gold-or-silver branch, and _book_totals reads the same-date book part through ts.read_parquet at app/etfs_funds.py:454. The response names it in source_keys and the body's book_totals field.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_funds.py:385-387 (three rows bound), :426 (_book_totals call), :446-454 (book read)",
+        "source_sets_etfs.json tool etfs_get_fund_holdings, 3 sources (gold holding, gold book, silver holdings)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_fund_trades: the census links opal_data_etfs_gold_trade_schedule only; the code also reads opal_data_etfs_gold_peer_group_map when peer_group is given.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_fund_trades, indexes: opal_data_etfs_gold_trade_schedule. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals_flow.py:448-449 calls _peer_funds(...) only when home (peer_group) is not None; _peer_funds binds rows[ENTITY_PEERS] at :403 and reads the newest peer_group_map part. The trade_schedule read (:456) runs on both branches.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:403 (row bound in _peer_funds), :448-449 (peer_group branch), :442 and :456 (trade_schedule)",
+        "source_sets_etfs.json tool etfs_get_fund_trades, 2 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_rival_page_status: the census links opal_data_etfs_platinum_rivalfunds_page only; the code also reads opal_data_etfs_gold_canonical_shape on every call (the gold latest report beside the published one).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_rival_page_status, indexes: opal_data_etfs_platinum_rivalfunds_page. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals_flow.py:735 calls _canonical_latest(scope, rows, tickers, tool) on every call that finds a page day; _canonical_latest binds rows[ENTITY_CANON] at :675 and reads canonical_shape partitions.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:675 (row bound in _canonical_latest), :735 (call), :714 (page row)",
+        "source_sets_etfs.json tool etfs_get_rival_page_status, 2 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_security_reference: the census links opal_data_etfs_gold_corporate_actions, opal_data_etfs_gold_security_market and opal_data_etfs_gold_security_names only; the code also reads opal_data_etfs_gold_security_universe on every call to resolve identifiers.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_security_reference, indexes: opal_data_etfs_gold_corporate_actions, opal_data_etfs_gold_security_market, opal_data_etfs_gold_security_names. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals.py:573 binds rows[ENTITY_UNIVERSE]; :583 calls _latest(scope, TOOL_SECURITY, uni, sources) before any section is read, so security_universe is read on every call. The three linked tables are read by _section at :594-596.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals.py:573-576 (four rows bound), :583 (universe read), :594-596 (three sections)",
+        "source_sets_etfs.json tool etfs_get_security_reference, 4 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_who_holds: the census links opal_data_etfs_gold_security_universe only; the code also reads opal_data_etfs_gold_canonical_shape on every call and opal_data_etfs_gold_peer_group_map when peer_group is given.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_who_holds, indexes: opal_data_etfs_gold_security_universe. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals.py:506-508 bind canonical_shape, security_universe and peer_group_map; the read at :538 (_read of canonical_shape for the date) runs on every call, and the peer read at :542 runs only when peer_group is not None. The security_universe read is at :520.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals.py:506-508 (rows bound), :520 (universe read), :538 (canonical read), :542 (peer read, peer_group branch)",
+        "source_sets_etfs.json tool etfs_who_holds, 3 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "The vendor field is null on all 27 opal_data_etfs_* rows of the catalog, so the vendor of each etfs source was taken from the row's business_meaning, producer and platform fields, not from the catalog.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 contract: vendor is the data's owner, drawn from the catalog's own vendor values or the closed list opal, ycharts, microsoft, bloomberg, other.",
+    "world_is": "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml: all 27 entities with entity prefix opal_data_etfs_ carry vendor null (silver_datasets section, measured by a yaml load). Every one of the 27 business_meaning fields says 'Opal-internal'; the producer or source fields name Bloomberg for the security_market, corporate_actions and bbg_* rows, and daily_partner_ownership names the platform fields schwab, blackdiamond and orion.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "yaml load of infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml, silver_datasets rows with entity prefix opal_data_etfs_ (27 rows, vendor null on each), run by 0.9.0_WK_NFRA_MCPINDEX~72 at 2026-10-19T19:03:56Z",
+        "source_sets_etfs.json: vendor values schwab, blackdiamond, orion (partner ownership), bloomberg (bbg and security market and corporate actions), opal (the rest)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "The face's premise that the bucket of each s3 source is a constant or config key the code uses does not hold for the 27 catalog-routed etfs entities: no etfs .py names the bucket, which is read from the entity's DATA_CATALOG row; s2.AC2 grounding passes through the entity-name token opal_data_etfs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 step 1: resolve the bucket id from the constant or config key the code uses (app/config.py and the module constants). Face section 1 contract: the cited file must contain the bucket, store, integration or graph string.",
+    "world_is": "Only infra/aws/ec2/opal-gateway/app/etfs_silver.py contains the literal opal-data-etfs (its docstring, line 2); app/config.py names no etfs bucket. etfs_funds.py, etfs_ownership.py, etfs_rivals.py and etfs_rivals_flow.py read bucket and prefix from the row (usable[0]['bucket'] at etfs_funds.py:112). h_check s2.AC2 accepts a cited file that contains opal_data_etfs, which the ENTITY_ constants of those modules carry.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep of infra/aws/ec2/opal-gateway/app for opal-data-etfs and opal_data_etfs in *.py: etfs_silver.py:2 (literal) and the ENTITY_ constants of etfs_funds.py:32-35, etfs_rivals.py:31-38, etfs_rivals_flow.py:43-50, etfs_silver.py:30-35, etfs_ownership.py:38-40",
+        "infra/aws/ec2/opal-gateway/app/etfs_funds.py:109-115 (_scope takes the bucket of the usable rows)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:08:41Z",
+    "one_line": "safe-commit's naming gate printed NAMING ERROR 'function-map folder missing' for infra/aws/lambda/ci/function-map/ on the work commit 144def74b7e (the source-sets JSON and the investigation file), and the commit still returned rc=0; the same message as the sibling rows NFRA_MCPINDEX-Z-W61-S1 and Z-W63-S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project. Face section 3: the <paths> grant names the deliverables folder, the task order file and the investigation file; infra/aws/lambda/ci is not in it.",
+    "world_is": "The commit log .scratch/commit1.log of wk-mcpindex-72 prints '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-72\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' at line 12, and '[msg-verify] committed 144def74b7e' at line 42. git show --stat 144def74b7e lists 2 files.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/commit1.log lines 12 and 42 (wk-mcpindex-72), the safe-commit output of commit 144def74b7e",
+        "git show --stat 144def74b7e: source_sets_etfs.json and INVESTIGATION_v1.md, 601 insertions"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:08:41Z",
+    "one_line": "safe-commit's client-data leg printed WARN: the hashed account-id list is ABSENT on this device, and the commit gate printed 'checked 0 of 2 file(s) -- NOTHING WAS CHECKED'; commit 144def74b7e landed rc=0 with no client-data check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "CLAUDE.md section 5 and the commit gate: a commit is checked by the commit gate's client-data leg. The face's BOUNDS 2 names py_compile, the naming gate and ruff for the commit path, and does not name the client-data leg.",
+    "world_is": "The commit log .scratch/commit1.log of wk-mcpindex-72 prints '[commit-gate] WARN: commit-gate checked 0 of 2 file(s) -- NOTHING WAS CHECKED.' at line 9, and 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids' at line 37. The committed files are a JSON array of gateway source paths and line numbers and a markdown investigation file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/commit1.log lines 9 and 37 (wk-mcpindex-72), the safe-commit output of commit 144def74b7e",
+        "the same message as the sibling row NFRA_MCPINDEX-Z-W63-S2 (commit 0a2fb26fd8, 2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W73-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~73",
+    "surfaced_at": "2026-10-19T19:04:09Z",
+    "one_line": "etfs_get_positioning reads the gold holding table (bucket opal-data-etfs, prefix gold/holding/) on its fund_ticker branch for an as_of other than the object's own date, but the census and members.yaml link this tool to the gold book (or to no gold table) and never to gold/holding/.",
+    "spec_asserts": "GATEWAY_SURFACE_CENSUS_20261019_v2.json lists the linked rows of etfs_get_positioning as opal_data_etfs_gold_book, opal_data_portal_v2_platinum_etfs_positioning_data and portal_etfs_positioning (face section 1, table row 1); members.yaml lists portal_etfs_positioning and etfs.01.positioning-data for it.",
+    "world_is": "app/integrations/portal_index/integration.py:292 hands a fund_ticker request with another as_of to _history_answer; lines 319 and 321 of the same file read rows[ef.ENTITY_GOLD_HOLDING] and name both gold entities in the answer's source list; app/etfs_funds.py:33 defines ENTITY_GOLD_HOLDING = opal_data_etfs_gold_holding, a row whose bucket is opal-data-etfs and prefix is gold/holding/. The gold holding row is not among the census linked rows of this tool. The trace source set (source_sets_portal.json) carries it as a separate s3 source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 292p app/integrations/portal_index/integration.py in C:/tmp/wk-mcpindex-73: 'return _history_answer(ef, tool, ticker, as_of)' (read 2026-10-19T19:04Z)",
+        "sed -n 33p app/etfs_funds.py in C:/tmp/wk-mcpindex-73: 'ENTITY_GOLD_HOLDING = \"opal_data_etfs_gold_holding\"' (read 2026-10-19T19:04Z)",
+        "census row list for etfs_get_positioning: 3 linked rows, none is opal_data_etfs_gold_holding (GATEWAY_SURFACE_CENSUS_20261019_v2.json, read 2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W73-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~73",
+    "surfaced_at": "2026-10-19T19:04:09Z",
+    "one_line": "news_market_mood reads only the two sentiment singletons under json/sentiment/, but the census links it to opal_data_portal_v2_served_news_trending_and_sentiment, whose prefix list names json/trending/latest.json; this tool never reads that object.",
+    "spec_asserts": "The census row list for news_market_mood (face section 1, table row 36) names opal_data_portal_v2_served_news_trending_and_sentiment and opal_data_portal_v2_served_sentiment_singletons.",
+    "world_is": "app/news_typed.py:26-28 names SENTIMENT_PREFIX json/sentiment/, FEAR_GREED_KEY and KEYWORD_SENTIMENTS_KEY; line 493 admits exactly those two keys and lines 497-498 read exactly those two. json/trending/latest.json is read by portal_get_trending (app/portal_json_served.py:499), not by news_market_mood.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 26,28p app/news_typed.py in C:/tmp/wk-mcpindex-73: SENTIMENT_PREFIX, FEAR_GREED_KEY, KEYWORD_SENTIMENTS_KEY (read 2026-10-19T19:04Z)",
+        "sed -n 493,498p app/news_typed.py in C:/tmp/wk-mcpindex-73: admission and the two ts.read_json calls, no trending key (read 2026-10-19T19:04Z)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W73-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~73",
+    "surfaced_at": "2026-10-19T19:04:09Z",
+    "one_line": "12 of the 32 source citations in source_sets_portal.json name a file that holds the bucket only in its entity-name form, so s3.AC2 grounds them through the underscore variant of a catalog entity name; a catalog-resolved bucket is declared in app/refs/DATA_CATALOG.yaml, which the cite grammar app/<file>.py cannot name.",
+    "spec_asserts": "Face section 1: the cited file must contain the bucket, store, integration or graph string, and the cite is app/<file>.py:<line>. h_check.py line 709 also accepts key.replace('-', '_') found in the cited text.",
+    "world_is": "Measured with .scratch/ground.py in C:/tmp/wk-mcpindex-73: 20 of 32 sources cite a file that contains the literal bucket; 12 do not: portal_json_served.py (7 cites), portal_served.py (2), etfs_funds.py (2), portal_mdpf.py (1). The literal bucket is in DATA_CATALOG.yaml:53 and in per-row bucket fields, not in a .py file; the .py cites carry the entity name (for example portal_json_served.py:52 E_CORRELATIONS = opal_data_portal_v2_served_correlation_data).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .scratch/ground.py in C:/tmp/wk-mcpindex-73: 'sources 32 cited file has literal bucket 20 underscore-variant only 12' (read 2026-10-19T19:04Z)",
+        "sed -n 52p app/portal_json_served.py in C:/tmp/wk-mcpindex-73: E_CORRELATIONS = opal_data_portal_v2_served_correlation_data (read 2026-10-19T19:04Z)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W73-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~73",
+    "surfaced_at": "2026-10-19T19:11:44Z",
+    "one_line": "safe-commit printed NAMING ERROR function-map folder missing and the commit landed anyway (70f76b50ca): the naming gate graded nothing on this commit, and the commit gate checked 0 of 2 files because neither file suffix is one it reads.",
+    "spec_asserts": "CLAUDE.md section 14a: a commit goes through .tools/safe-commit.sh, which runs the commit gate and the naming gate; face BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home, which is the case here.",
+    "world_is": "commit log .scratch/commit1.log in C:/tmp/wk-mcpindex-73 line 12: '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-73\\infra/aws/lambda/ci/function-map/'; line 9: '[commit-gate] WARN: commit-gate checked 0 of 2 file(s) -- NOTHING WAS CHECKED'; the commit was written as 70f76b50ca (msg-verify MATCH). The worktree sparse list does not carry infra/aws/lambda. The same message is recorded as NFRA_MCPINDEX-Z-W61-S1 and NFRA_MCPINDEX-Z-W63-S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -n naming-gate .scratch/commit1.log in C:/tmp/wk-mcpindex-73 (read 2026-10-19T19:11:44Z): NAMING ERROR function-map folder missing",
+        "git sparse-checkout list in C:/tmp/wk-mcpindex-73 (read 2026-10-19T19:11:44Z): no infra/aws/lambda entry",
+        "git log --oneline -1 in C:/tmp/wk-mcpindex-73: 70f76b50caa NFRA_MCPINDEX r23 MX-s-3 (read 2026-10-19T19:11:44Z)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_article: the census links no row and members.yaml carries bucket opal-data-harvest (app/harvest_read.py:26), but the code reads the article_security_mention gold part and one of five silver article prefixes chosen by its publisher argument (six sources).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_press.py:38 GOLD_MENTION, :43-47 SILVER dict, :478-512 harvest_get_article reads mention_key then _silver_join on SILVER[publisher]",
+        "CENSUS @46dba0930f: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_article].indexes = []"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_get_article to no catalog row (indexes empty), and members.yaml bucket_source names app/harvest_read.py:26; the index expects no silver or gold row behind this tool.",
+    "world_is": "harvest_get_article reads amgt/harvest/gold/article_security_mention/ (harvest_press.py:38) and, by the publisher argument, one of seeking-alpha, bloomberg, wsj, ft or barrons silver article prefixes (harvest_press.py:43-47). The bucket claim agrees; the linked-row claim does not. The silver catalog rows name harvest_search_articles as their read_tool, not this tool."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_chatter: members.yaml carries no bucket or bucket_source for this tool, while the code reads three gold prefixes of opal-data-harvest (harvest_press.py:35-37); the three linked rows agree with the trace.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_press.py:35-37 GOLD_DAILY, GOLD_WINDOW, GOLD_EVENT; :283-349 harvest_get_chatter reads all three (ht.newest_part, ht.read_parquet, _parquets)",
+        "MEMBERS @46dba0930f: workflows/atom_decomposition/tool_index/members.yaml carries {tool: harvest_get_chatter, member: b, owner: AMGT_HARVST} with no bucket or bucket_source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "members.yaml records a bucket or bucket_source for each harvest tool that reads the harvest bucket (the census bucket column reads none for this tool).",
+    "world_is": "The tool reads s3 opal-data-harvest prefixes amgt/harvest/gold/chatter_daily/, chatter_window/ and chatter_event/ on every call. The index carries no bucket for it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_filing_analysis: the census links harvest_issuer_site_harvest_silver_filing_source, which no branch reads; the code reads filings/v1, drafting/v1 and sec/harvest/silver/filing_source, and members.yaml has no bucket claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_research.py:58-60 P_FILINGS, P_DRAFTING, P_FILING_SOURCE; :514-625 _filings and harvest_get_filing_analysis read them (drafting and filing_source whenever an analysis is selected, :569-597)",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_filing_analysis].indexes includes harvest_issuer_site_harvest_silver_filing_source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_get_filing_analysis to the issuer-site filing source row (issuer-site/harvest/silver/filing_source/).",
+    "world_is": "No constant or read in harvest_research.py names issuer-site/. The three prefixes read are filings/v1/, drafting/v1/ and sec/harvest/silver/filing_source/. The issuer-site row is linked on a tool that never reaches it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_fundamentals: the census links exec_officers, histdata_daily_px and price_history_tot_return, which this tool does not read (exec_officers is read by harvest_get_research); the code's seven prefixes are not all linked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_figures.py:37-43 prefix constants, :219-231 _kind_ref, :271-338 _fund_* readers; harvest_research.py:57 P_EXEC read by harvest_get_research",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_fundamentals].indexes (10 rows) includes harvest_bloomberg_harvest_bronze_exec_officers, _histdata_daily_px, _price_history_tot_return"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links ten catalog rows to harvest_get_fundamentals, including exec_officers, histdata_daily_px and price_history_tot_return.",
+    "world_is": "harvest_figures.py names derived/model_block/ and _fye/, bestdata, refdata, histdata, segments and price_history_px_last. histdata_daily_px and price_history_tot_return appear in no read of this module; exec_officers is read by harvest_get_research (harvest_research.py:57)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_peers_and_scores: the linked rows agree with the trace (peers, posture, scores), but members.yaml carries no bucket or bucket_source for this tool, while the code reads opal-data-harvest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_research.py:61-63 P_PEERS, P_SCORES, P_POSTURE; :662-714 _peers_scores reads each (_union_json, object_pick)",
+        "MEMBERS @46dba0930f: workflows/atom_decomposition/tool_index/members.yaml carries {tool: harvest_get_peers_and_scores, member: b, owner: AMGT_HARVST} with no bucket or bucket_source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "members.yaml records the bucket for each harvest tool that reads it (census bucket column none for this tool).",
+    "world_is": "The tool reads s3 opal-data-harvest peers/v1/, scores/v1/ and posture/v1/ on every call. The index carries no bucket for it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_published_analysis: the census indexes none, but the code's one source is an integration, the AMGT scoped-API Lambda named by the environment key AMGT_SCOPED_API_FUNCTION; the index carries no source for it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_published.py:41 FUNCTION_ENV, :89-91 _function_name (env read at call time), :121 admit_typed on amgt/security/<key>, :135 one RequestResponse invoke",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_published_analysis].indexes = []"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census gives harvest_get_published_analysis no linked row and no bucket claim, so the index names no source for the tool.",
+    "world_is": "The tool's only source is the Lambda invoke. The function name is not held in the gateway code; the trace records the environment key that carries it. No bucket or table is read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_research: the census links six rows the code reads, but the code also reads bloomberg exec_officers (harvest_research.py:57), which the census does not link to this tool; members.yaml has no bucket claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_research.py:52-57 P_DOSSIER, P_CONTINUATION, P_AI_FILL, P_REPORT, P_MANAGEMENT, P_EXEC; :334-474 _research reads all six unconditionally",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_research].indexes (6 rows) does not include harvest_bloomberg_harvest_bronze_exec_officers"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_get_research to six rows and no bloomberg exec_officers row.",
+    "world_is": "_research reads bloomberg/harvest/bronze/exec_officers/ (harvest_research.py:57) in every call. The index carries no bucket for the tool and no link to that row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_list: the census indexes none and members.yaml carries no bucket, but the code lists under any of the 24 served prefixes of opal-data-harvest (harvest_read.py:31-33), admitted at :64 and :78.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_read.py:26 BUCKET, :30-34 SERVED_PREFIXES, :64 _served, :105-126 harvest_list (list_objects_v2 with Bucket=BUCKET at :110)",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_list].indexes = []"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census gives harvest_list no linked row and no bucket claim.",
+    "world_is": "harvest_list lists any caller-named prefix that starts with one of the 24 served prefixes. The trace records all 24 as sources, so the index's none does not describe what the tool can list."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_query_columns: the census links only harvest_candidate_universe, but the code's allow-list has seven dataset branches (harvest_figures.py:95-107), each a distinct prefix of the bucket; six reachable datasets are unlinked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_figures.py:94-110 _DATASETS and ALLOW; :572-625 harvest_query_columns takes dataset as the branch selector and reads spec[prefix]",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_query_columns].indexes = [harvest_candidate_universe]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_query_columns to one catalog row, harvest_candidate_universe.",
+    "world_is": "The allow-list has seven datasets: chatter_daily, chatter_window, article_security_mention, article_sentiment, candidate_universe, model_block (derived/model_block/) and bestdata. Six of them are reachable by this tool and unlinked to it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_read: the census links 39 catalog rows, but the code reads any key under the 24 served prefixes, which hold all 78 harvest_datasets rows; the 39 rows not linked to this tool sit under the same prefixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_read.py:26, :30-34 SERVED_PREFIXES, :64 _served, :78 admit, :130 get_object(Bucket=BUCKET, Key=key)",
+        "CATALOG @46dba0930f: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml harvest_datasets (78 rows), every prefix under one of the 24 served prefixes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_read to 39 rows, the catalog rows whose read_tool is harvest_read; the index treats the remaining harvest rows as unreachable by this tool.",
+    "world_is": "harvest_read accepts any key under a served prefix, so every harvest_datasets row is reachable by it. The 39 unlinked rows are reachable and not indexed to this tool."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_resolve_security: the census links harvest_identity_v1 (identity/v1/), which the code never reads; the code reads the amgt research_dossier prefix (harvest_identity.py:43, :300-309), which the census does not link to this tool.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_identity.py:40-43 CROSSWALK_PREFIX, UNIVERSE_PREFIX, IDENTITY_PREFIX, DOSSIER_PREFIX; :375 admit_typed on all four; :300-309 covered_keys reads DOSSIER_PREFIX",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_resolve_security].indexes includes harvest_identity_v1 and excludes the amgt research_dossier rows"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_resolve_security to harvest_identity_v1 (identity/v1/).",
+    "world_is": "No constant or read in harvest_identity.py names identity/v1/ (the only identity prefix is bloomberg/harvest/bronze/identity/, :42). The resolve path reads the amgt research_dossier prefix when several listings share one CIK, and the census does not link it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_search_articles: the seven linked rows agree with the trace, but members.yaml carries no bucket or bucket_source for this tool, while the code reads opal-data-harvest gold and silver prefixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_press.py:38-39 GOLD_MENTION, GOLD_SENTIMENT; :43-47 SILVER; :357-478 harvest_search_articles reads them",
+        "MEMBERS @46dba0930f: workflows/atom_decomposition/tool_index/members.yaml carries {tool: harvest_search_articles, member: b, owner: AMGT_HARVST} with no bucket or bucket_source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "members.yaml records the bucket for each harvest tool that reads it (census bucket column none for this tool).",
+    "world_is": "The tool reads opal-data-harvest mention and sentiment gold prefixes and up to five silver article prefixes, chosen by the publisher of each mention row. The index carries no bucket for it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_security_coverage: the census links only harvest_packs, but the code lists all 31 keyed dataset prefixes of opal-data-harvest (harvest_identity.py:58-88) on every call; 30 datasets are reachable by this tool and unlinked, and members.yaml has no bucket claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_identity.py:58-88 KEYED (31 entries); :546-547 composed and admitted; :559-601 each entry listed and reported",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_security_coverage].indexes = [harvest_packs]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_security_coverage to one catalog row, harvest_packs.",
+    "world_is": "The coverage tool reads all 31 keyed dataset prefixes (gold, bronze, state and derived, across amgt, bloomberg, seeking-alpha, derived, filings, management, packs, peers, posture, scores, drafting, publication-links and raw). Only packs is linked."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "mdpf_get_security_classification: the census indexes none, but the code reads one DynamoDB table, etf-classifications (mdpf_classification.py:34, get_item at :160), which no index carries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/mdpf_classification.py:34 TABLE, :160 get_item(TableName=TABLE, Key ticker), :197 admit_scope on TABLE",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[mdpf_get_security_classification].indexes = [] (channel dynamodb lists the tool)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census places mdpf_get_security_classification in the dynamodb channel with no linked row.",
+    "world_is": "The tool's one source is the etf-classifications table, read by a single get_item per call. The index names no store for it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "news_for_security: the census indexes none, but the code reads the harvest article_security_mention index and, on a text fallback, the NEWS_ARTICLES_TABLE store; the members.yaml bucket claim (app/harvest_read.py:26) agrees with the S3 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/news_typed.py:29 MENTION_PREFIX, :579 admit_scope(HARVEST), :587 newest_part on MENTION_PREFIX, :617-619 _table('articles') on the fallback path",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[news_for_security].indexes = []; members.yaml bucket_source app/harvest_read.py:26"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census gives news_for_security no linked row; members.yaml names the harvest bucket for it.",
+    "world_is": "The tool reads the harvest article_security_mention index (catalog row harvest_article_security_mention, which the census does not link to this tool) and, when a ticker or security key is given, the NEWS_ARTICLES_TABLE store as a text fallback. The store is not indexed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S16",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "news_trending_topics: the census links a second row, opal_data_news_v2_gold_trending_reports (bucket opal-data-news-v2, trending_reports/), which no gateway code reads; the code reads only the NEWS_TRENDING_TABLE store.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/news_typed.py:376-430 news_trending_topics; :394 _table('trending') is its only read target; infra/aws/ec2/opal-gateway/app/ holds no reference to opal-data-news-v2 outside refs/DATA_CATALOG.yaml",
+        "CATALOG @46dba0930f: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:16388-16400 opal_data_news_v2_gold_trending_reports, bucket opal-data-news-v2, prefix trending_reports/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links news_trending_topics to two rows: dynamodb_dynamodb_opal_news_trending_daily and opal_data_news_v2_gold_trending_reports.",
+    "world_is": "The tool reads the trending store only. The second linked row is an S3 prefix in a bucket the gateway code does not name, so the link is not backed by a read this tool makes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, graph_cypher (round 23 MX-s-5): members.yaml names the kuzu bucket at globgrph integration.py:156, but the code there is a thin in-VPC HTTP proxy call; the gateway reads no kuzu store or bucket.",
+    "spec_asserts": "members.yaml, tool graph_cypher: member b, owner NFRA_CLDGRPH, bucket kuzu, bucket_source app/integrations/globgrph/integration.py:156. Census linked rows for graph_cypher: none.",
+    "world_is": "app/integrations/globgrph/integration.py:156 is 'lambda _credential: query(statement)'; query() (lines 108-116) POSTs the statement to http://projection.opal-globgrph.local:8181/cypher via _request (lines 73-105). The module docstring (lines 9-14) says the gateway never reads S3 and holds nothing on the globgrph bucket. Trace source set: one integration source, integration globgrph, vendor opal, cite app/integrations/globgrph/integration.py:156. Recorded in source_sets_integrations.json (W75 deliverable) at commit of this row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/globgrph/integration.py lines 9-14, 108-116, 149-157 read before 2026-10-19T18:19:29Z (worktree wk-NFRA_MCPINDEX-75 at box/sitez base)",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 206-210 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, graph_status (round 23 MX-s-5): members.yaml names the kuzu bucket at globgrph integration.py:164, but the code there calls the in-VPC projection health endpoint; the gateway reads no kuzu store or bucket.",
+    "spec_asserts": "members.yaml, tool graph_status: member c, bucket kuzu, bucket_source app/integrations/globgrph/integration.py:164. Census linked rows for graph_status: none.",
+    "world_is": "app/integrations/globgrph/integration.py:164 is 'lambda _credential: health()'; health() (lines 119-121) GETs /health on the in-VPC projection service via _request. No store or bucket name appears on that path. Trace source set: one integration source, integration globgrph, vendor opal, cite app/integrations/globgrph/integration.py:164.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/globgrph/integration.py lines 119-121, 159-165 read before 2026-10-19T18:19:29Z (worktree wk-NFRA_MCPINDEX-75)",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 211-215 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, opal_data_refresh_status (round 23 MX-s-5): members.yaml names bucket portal-refresh at opal_portal integration.py:418, but that line is a GET on the portal front-door status route; the string portal-refresh occurs nowhere in the gateway's opal_portal integration.",
+    "spec_asserts": "members.yaml, tool opal_data_refresh_status: member b, owner unowned, bucket portal-refresh, bucket_source app/integrations/opal_portal/integration.py:418. Census linked rows: none.",
+    "world_is": "app/integrations/opal_portal/integration.py:418 is httpx.get(PORTAL_FRONT_DOOR + STATUS_PATH.format(...)) against https://www.opalinvest.dev (line 70). The served manifest read (line 428, MANIFEST_PATH line 75) is the same portal front door. grep of 'portal-refresh' in that file returns 0 lines. Trace source set: one integration source, integration opal_portal, vendor opal, cite app/integrations/opal_portal/integration.py:418.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py lines 70, 75, 405-440 read before 2026-10-19T18:19:29Z; grep -c portal-refresh = 0 (read before 2026-10-19T18:19:29Z)",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 367-371 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, opal_data_refresh_upload (round 23 MX-s-5): members.yaml names bucket opal-data-portal-v2 at opal_portal integration.py:109, a comment line; the tool reads its two PKLs from SharePoint through Microsoft Graph, and the bucket is only a presigned-PUT write target.",
+    "spec_asserts": "members.yaml, tool opal_data_refresh_upload: member c, bucket opal-data-portal-v2, bucket_source app/integrations/opal_portal/integration.py:109. Census linked rows: none.",
+    "world_is": "integration.py:109 is a comment in the SPEC hosts block (host tuple at line 112). The read path is the Graph SharePoint locate and download (_graph_find_pkl lines 239-258, _graph_download lines 261-268; the content GET at line 263). The bucket is written only through the presigned URLs returned by upload-urls (lines 352-366), so the code names no bucket it reads. Trace source set: graph source (graph.microsoft.com/v1.0/sites, vendor opal, cite integration.py:263) and integration source (opal_portal, vendor opal, cite integration.py:196, the post-trigger status read).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py lines 105-112, 196, 239-268, 337-366 read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 372-376 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, opal_describe (round 23 MX-s-5): members.yaml names only the gateway at opal_discover integration.py:194; the code also reads served objects from S3 bucket opal-data-portal-v2 (line 398, from the catalog's bucket key).",
+    "spec_asserts": "members.yaml, tool opal_describe: member b, owner NFRA_MCPINDEX, bucket gateway, bucket_source app/integrations/opal_discover/integration.py:194. Census linked rows: catalog:app/refs/DATA_CATALOG.yaml.",
+    "world_is": "integration.py:194 is query_v0._catalog(), which loads the gateway's own app/refs/DATA_CATALOG.yaml (vendor gateway). The same discover() path then reads the served object of each servable portal row: bucket from loaded['catalog'].get('bucket') (line 398), one GetObject (line 414) and one HeadObject (line 491). The catalog's top-level bucket is opal-data-portal-v2 (DATA_CATALOG.yaml line 53). Trace source set: store (app/refs/DATA_CATALOG.yaml, vendor gateway, cite :194) and s3 (opal-data-portal-v2, prefix empty, vendor opal, cite :398).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py lines 191-194, 398-401, 407-418, 486-500 read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 53 (bucket: opal-data-portal-v2) read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 377-381 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, opal_discover (round 23 MX-s-5): members.yaml names only the gateway at opal_discover integration.py:194; the code also reads served objects from S3 bucket opal-data-portal-v2 (line 398, from the catalog's bucket key).",
+    "spec_asserts": "members.yaml, tool opal_discover: member b, owner NFRA_MCPINDEX, bucket gateway, bucket_source app/integrations/opal_discover/integration.py:194. Census linked rows: catalog:app/refs/DATA_CATALOG.yaml.",
+    "world_is": "Same code path as opal_describe (discover() with exact=False; opal_discover/integration.py lines 941-948). integration.py:194 loads app/refs/DATA_CATALOG.yaml (vendor gateway); line 398 names the bucket opal-data-portal-v2 read by GetObject (414) and HeadObject (491) for each servable portal row. Trace source set: store (app/refs/DATA_CATALOG.yaml, vendor gateway, cite :194) and s3 (opal-data-portal-v2, prefix empty, vendor opal, cite :398).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py lines 191-194, 398-401, 407-418, 486-500, 941-948 read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 53 read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 382-386 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for create_draft claims graph app/tools.py:461, which is a recipient-list element inside the message dict; the graph POST that names the source is app/tools.py:465 (/me/messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for create_draft = graph app/tools.py:461; the m365 trace checks each bucket_source claim against the line that names the source (contract step 1).",
+    "world_is": "app/tools.py:461 is the toRecipients comprehension in create_draft. The source call is app/tools.py:465, graph POST /me/messages. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 461p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: toRecipients comprehension (read 2026-10-19T18:28Z)",
+        "app/tools.py:465 in the same tree: lambda t: graph.call(t, POST, /me/messages, json_body=msg)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for find_online_meeting claims graph app/tools.py:547, the join_url validation return; the graph GET that names the source is app/tools.py:551 (/me/onlineMeetings).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for find_online_meeting = graph app/tools.py:547; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:547 is the invalid join_url error return. The source call is app/tools.py:551, graph GET /me/onlineMeetings. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 547p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: invalid join_url return (read 2026-10-19T18:28Z)",
+        "app/tools.py:551: raw = graph.call(t, GET, /me/onlineMeetings, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for find_sharepoint_site claims graph app/tools.py:697, the @mcp.tool() decorator above the function; the graph GET that names the source is app/tools.py:701 (/sites).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for find_sharepoint_site = graph app/tools.py:697; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:697 is the decorator line of find_sharepoint_site. The source call is app/tools.py:701, graph GET /sites. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 697p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool() (read 2026-10-19T18:28Z)",
+        "app/tools.py:701: lambda t: graph.call(t, GET, /sites, params={search: name})"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for get_item claims graph app/tools.py:925, the def header of get_item; the graph GET that names the source is app/tools.py:929 (/me/drive).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for get_item = graph app/tools.py:925; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:925 is def get_item(item_id). The source call is app/tools.py:929, graph GET /me/drive/items. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 925p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def get_item (read 2026-10-19T18:28Z)",
+        "app/tools.py:929: lambda t: graph.call(t, GET, /me/drive/items/{item_id}, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for get_site_item claims graph app/tools.py:934, the def header of get_site_item; the graph GET that names the source is app/tools.py:938 (/sites).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for get_site_item = graph app/tools.py:934; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:934 is def get_site_item(site_id, item_id). The source call is app/tools.py:938, graph GET /sites/{site_id}/drive/items. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 934p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def get_site_item (read 2026-10-19T18:28Z)",
+        "app/tools.py:938: lambda t: graph.call(t, GET, /sites/{site_id}/drive/items/{item_id}, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for inspect_email_attachment claims graph app/tools.py:428, a docstring line of the tool; the graph GET that names the source is app/tools.py:432 (/me/messages attachment metadata, with the $value fetch at 438).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for inspect_email_attachment = graph app/tools.py:428; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:428 is a docstring line of inspect_email_attachment. The source call is app/tools.py:432, graph GET /me/messages/{id}/attachments/{id}. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 428p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:432: meta = graph.call(t, GET, /me/messages/{message_id}/attachments/{attachment_id}, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_calendar claims graph app/tools.py:513, the else branch of the start_date default; the graph GET that names the source is app/tools.py:517 (/me/calendarView).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_calendar = graph app/tools.py:513; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:513 is the else branch that defaults start to now. The source call is app/tools.py:517, graph GET /me/calendarView. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 513p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: else: (read 2026-10-19T18:28Z)",
+        "app/tools.py:517: lambda t: graph.call(t, GET, /me/calendarView, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for list_channels claims graph app/tools.py:1667, which is a docstring line of portal_get_peer_performance (another tool); list_channels reaches graph /teams at app/tools.py:1788.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_channels = graph app/tools.py:1667; the claim must name the source of list_channels itself.",
+    "world_is": "app/tools.py:1667 is inside portal_get_peer_performance (defined at 1666). The source of list_channels is app/tools.py:1788, graph GET /teams/{team_id}/channels. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1667p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring of portal_get_peer_performance (read 2026-10-19T18:28Z)",
+        "app/tools.py:1788: lambda t: graph.call(t, GET, /teams/{team_id}/channels, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_chats claims graph app/tools.py:981, the def header of list_chats; the graph GET that names the source is app/tools.py:985 (/me/chats).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_chats = graph app/tools.py:981; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:981 is def list_chats(top). The source call is app/tools.py:985, graph GET /me/chats. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 981p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def list_chats (read 2026-10-19T18:28Z)",
+        "app/tools.py:985: lambda t: graph.call(t, GET, /me/chats, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_email_attachments claims graph app/tools.py:360, the def header; the graph GET that names the source is app/tools.py:364 (/me/messages attachments).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_email_attachments = graph app/tools.py:360; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:360 is def list_email_attachments(message_id). The source call is app/tools.py:364, graph GET /me/messages/{id}/attachments. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 360p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def list_email_attachments (read 2026-10-19T18:28Z)",
+        "app/tools.py:364: lambda t: graph.call(t, GET, /me/messages/{message_id}/attachments, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_email_filtered claims graph app/tools.py:326, the invalid page_token return; the graph GET that names the source is app/tools.py:330 (/me/messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_email_filtered = graph app/tools.py:326; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:326 is the invalid page_token error return. The source call is app/tools.py:330, graph GET /me/messages. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 326p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: invalid page_token return (read 2026-10-19T18:28Z)",
+        "app/tools.py:330: res = graph.call(t, GET, /me/messages, params=params)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_meeting_transcripts claims graph app/tools.py:572, the rows initialiser inside the page loop; the graph path that names the source is app/tools.py:573 (/me/onlineMeetings).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_meeting_transcripts = graph app/tools.py:572; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:572 is rows: list = []. The source path is app/tools.py:573, graph /me/onlineMeetings/{id}/transcripts. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 572p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: rows: list = [] (read 2026-10-19T18:28Z)",
+        "app/tools.py:573: path: Optional[str] = f/me/onlineMeetings/{meeting_id}/transcripts"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_recent_email claims graph app/tools.py:235, the closing brace of the params dict; the graph GET that names the source is app/tools.py:239 (/me/messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_recent_email = graph app/tools.py:235; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:235 is the closing brace of the params dict. The source call is app/tools.py:239, graph GET /me/messages. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 235p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: closing brace (read 2026-10-19T18:28Z)",
+        "app/tools.py:239: lambda t: graph.call(t, GET, /me/messages, params=params)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_shared_folder claims graph app/tools.py:1264, a blank line inside the tool; the graph GET that names the source is app/tools.py:1268 (/shares).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_shared_folder = graph app/tools.py:1264; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:1264 is a blank line inside list_shared_folder. The source call is app/tools.py:1268, graph GET /shares/{tok}/driveItem. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1264p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: blank (read 2026-10-19T18:28Z)",
+        "app/tools.py:1268: item = graph.call(t, GET, /shares/{tok}/driveItem, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_site_drives claims graph app/tools.py:944, a docstring line of the tool; the graph GET that names the source is app/tools.py:948 (/sites drives).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_site_drives = graph app/tools.py:944; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:944 is a docstring line of list_site_drives. The source call is app/tools.py:948, graph GET /sites/{site_id}/drives. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 944p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:948: lambda t: graph.call(t, GET, /sites/{site_id}/drives, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S16",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for list_teams claims graph app/tools.py:1659, which is the @mcp.tool() decorator of portal_get_model_portfolio_timeseries (another tool); list_teams reaches graph /me/joinedTeams at app/tools.py:1780.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_teams = graph app/tools.py:1659; the claim must name the source of list_teams itself.",
+    "world_is": "app/tools.py:1659 is the decorator of portal_get_model_portfolio_timeseries (defined at 1660). The source of list_teams is app/tools.py:1780, graph GET /me/joinedTeams. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1659p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool() (read 2026-10-19T18:28Z)",
+        "app/tools.py:1660: def portal_get_model_portfolio_timeseries() -> dict:",
+        "app/tools.py:1780: lambda t: graph.call(t, GET, /me/joinedTeams, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S17",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for poll_addressed_teams_messages claims graph app/tools.py:1707, which is a docstring line of read_chat_message_images (another tool); the poll reaches graph /me/chats at app/tools.py:1828.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for poll_addressed_teams_messages = graph app/tools.py:1707; the claim must name the source of the poll tool itself.",
+    "world_is": "app/tools.py:1707 is inside the docstring of read_chat_message_images (defined at 1702). The source of poll_addressed_teams_messages is app/tools.py:1828, graph GET /me/chats via poll_addressed_impl. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1707p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring of read_chat_message_images (read 2026-10-19T18:28Z)",
+        "app/tools.py:1828: resp = graph.call(token, GET, /me/chats, params=...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S18",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for profile_site_file claims graph app/tools.py:744, the import hashlib line inside the tool; the graph GET that names the source is app/tools.py:748 (/sites).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for profile_site_file = graph app/tools.py:744; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:744 is import hashlib inside profile_site_file. The source call is app/tools.py:748, graph GET /sites/{site_id}/drive/items/{item_id}/content. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 744p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: import hashlib (read 2026-10-19T18:28Z)",
+        "app/tools.py:748: raw = graph.call(t, GET, /sites/{site_id}/drive/items/{item_id}/content)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S19",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_channel_messages claims graph app/tools.py:1013, a docstring line of the shared helper _get_messages; the tool's graph path that names the source is app/tools.py:1798 (/teams channel messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_channel_messages = graph app/tools.py:1013; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:1013 is a docstring line of the shared helper _get_messages (defined at 1010). The tool's source path is app/tools.py:1798, graph /teams/{team_id}/channels/{channel_id}/messages, passed into the helper. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1013p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line of _get_messages (read 2026-10-19T18:28Z)",
+        "app/tools.py:1798: _get_messages(t, f/teams/{team_id}/channels/{channel_id}/messages, top)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S20",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for read_chat_message_images claims graph app/tools.py:1591, a blank line inside client_get_holdings (another tool); the tool reaches graph /chats hostedContents at app/tools.py:1711.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_chat_message_images = graph app/tools.py:1591; the claim must name the source of read_chat_message_images itself.",
+    "world_is": "app/tools.py:1591 is a blank line inside client_get_holdings (defined at 1588). The source of read_chat_message_images is app/tools.py:1711, graph GET /chats/{chat_id}/messages/{message_id}/hostedContents. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1591p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: blank line (read 2026-10-19T18:28Z)",
+        "app/tools.py:1588: def client_get_holdings(firm, account, ...)",
+        "app/tools.py:1711: base = f/chats/{chat_id}/messages/{message_id}/hostedContents"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S21",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_chat_messages claims graph app/tools.py:1013, a docstring line of the shared helper _get_messages; the tool's graph path that names the source is app/tools.py:1697 (/chats messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_chat_messages = graph app/tools.py:1013; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:1013 is a docstring line of the shared helper _get_messages (defined at 1010). The tool's source path is app/tools.py:1697, graph /chats/{chat_id}/messages, passed into the helper. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1013p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line of _get_messages (read 2026-10-19T18:28Z)",
+        "app/tools.py:1697: _shape_teams_page(t, _get_messages(t, f/chats/{chat_id}/messages, top), ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S22",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_document claims graph app/tools.py:960, the import base64 line; the branch that names the sources is app/tools.py:961 (two graph sources: /sites when site_id is set, /me/drive otherwise).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_document = graph app/tools.py:960; the trace checks the claim against the line that names the source or selects its branch.",
+    "world_is": "app/tools.py:960 is import base64. The branch at app/tools.py:961 selects between graph /sites/{site_id}/drive and graph /me/drive. Kind agrees (graph); the claimed line does not name either endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 960p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: import base64 (read 2026-10-19T18:28Z)",
+        "app/tools.py:961: drive = f/sites/{site_id}/drive if site_id else /me/drive"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S23",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_email claims graph app/tools.py:351, the def header; the graph GET that names the source is app/tools.py:355 (/me/messages by id).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_email = graph app/tools.py:351; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:351 is def read_email(message_id). The source call is app/tools.py:355, graph GET /me/messages/{message_id}. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 351p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def read_email (read 2026-10-19T18:28Z)",
+        "app/tools.py:355: lambda t: graph.call(t, GET, /me/messages/{message_id}, params=...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S24",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_file claims graph app/tools.py:682, the def header; the graph GET that names the source is app/tools.py:686 (/me/drive items content).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_file = graph app/tools.py:682; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:682 is def read_file(item_id, max_chars). The source call is app/tools.py:686, graph GET /me/drive/items/{item_id}/content. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 682p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def read_file (read 2026-10-19T18:28Z)",
+        "app/tools.py:686: raw = graph.call(t, GET, /me/drive/items/{item_id}/content)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S25",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_meeting_transcript claims graph app/tools.py:606, the invalid limit return; the graph GET that names the source is app/tools.py:610 (/me/onlineMeetings transcript content).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_meeting_transcript = graph app/tools.py:606; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:606 is the invalid limit error return. The source call is app/tools.py:610, graph GET /me/onlineMeetings/{id}/transcripts/{id}/content. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 606p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: invalid limit return (read 2026-10-19T18:28Z)",
+        "app/tools.py:610: raw = graph.call(t, GET, /me/onlineMeetings/{meeting_id}/transcripts/{transcript_id}/content, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S26",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_site_file claims graph app/tools.py:719, a docstring line of the tool; the graph GET that names the source is app/tools.py:723 (/sites drive item content).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_site_file = graph app/tools.py:719; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:719 is a docstring line of read_site_file. The source call is app/tools.py:723, graph GET /sites/{site_id}/drive/items/{item_id}/content. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 719p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:723: raw = graph.call(t, GET, /sites/{site_id}/drive/items/{item_id}/content)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S27",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_site_workbook claims graph app/tools.py:871, a docstring line of the tool; the workbook base path that names the source is app/tools.py:872 (/sites workbook).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_site_workbook = graph app/tools.py:871; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:871 is a docstring line of read_site_workbook. The source base path is app/tools.py:872, graph /sites/{site_id}/drive/items/{item_id}/workbook. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 871p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:872: base = f/sites/{site_id}/drive/items/{item_id}/workbook"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S28",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_teams_attachment claims graph app/tools.py:1220, the content_url validation return; the graph GET that names the source is app/tools.py:1224 (/shares driveItem).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_teams_attachment = graph app/tools.py:1220; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:1220 is the content_url validation error return. The source call is app/tools.py:1224, graph GET /shares/{tok}/driveItem. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1220p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: content_url error return (read 2026-10-19T18:28Z)",
+        "app/tools.py:1224: item = graph.call(t, GET, /shares/{tok}/driveItem, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S29",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_workbook claims graph app/tools.py:897, a docstring line of the tool; the workbook base path that names the source is app/tools.py:898 (/me/drive workbook).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_workbook = graph app/tools.py:897; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:897 is a docstring line of read_workbook. The source base path is app/tools.py:898, graph /me/drive/items/{item_id}/workbook. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 897p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:898: base = f/me/drive/items/{item_id}/workbook"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S30",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for reply_email claims graph app/tools.py:490, a docstring line of the tool; the graph POST that names the source is app/tools.py:494 (/me/messages reply).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for reply_email = graph app/tools.py:490; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:490 is a docstring line of reply_email. The source call is app/tools.py:494, graph POST /me/messages/{message_id}/reply. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 490p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:494: lambda t: graph.call(t, POST, /me/messages/{message_id}/reply, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S31",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for save_email_attachment_to_site claims graph app/tools.py:384, the invalid filename return; the graph read that names the source is app/tools.py:388 (/me/messages attachment $value).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for save_email_attachment_to_site = graph app/tools.py:384; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:384 is the invalid filename error return. The source read is app/tools.py:388, graph GET /me/messages/{id}/attachments/{id}/$value. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 384p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: invalid filename return (read 2026-10-19T18:28Z)",
+        "app/tools.py:388: raw = graph.call(t, GET, /me/messages/{message_id}/attachments/{attachment_id}/$value)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S32",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for search_email claims graph app/tools.py:340, the @mcp.tool() decorator of search_email; the graph GET that names the source is app/tools.py:344 (/me/messages search).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for search_email = graph app/tools.py:340; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:340 is the decorator line above search_email. The source call is app/tools.py:344, graph GET /me/messages with $search. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 340p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool() (read 2026-10-19T18:28Z)",
+        "app/tools.py:344: lambda t: graph.call(t, GET, /me/messages, params={$search: ...})"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S33",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for search_files claims graph app/tools.py:656, the @mcp.tool() decorator of search_files; the graph GET that names the source is app/tools.py:660 (/me/drive search).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for search_files = graph app/tools.py:656; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:656 is the decorator line above search_files. The source call is app/tools.py:660, graph GET /me/drive/root/search. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 656p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool() (read 2026-10-19T18:28Z)",
+        "app/tools.py:660: lambda t: graph.call(t, GET, /me/drive/root/search(q=...), ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S34",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for search_site_files claims graph app/tools.py:916, the def header; the graph GET that names the source is app/tools.py:920 (/sites search).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for search_site_files = graph app/tools.py:916; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:916 is def search_site_files(site_id, query). The source call is app/tools.py:920, graph GET /sites/{site_id}/drive/root/search. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 916p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def search_site_files (read 2026-10-19T18:28Z)",
+        "app/tools.py:920: lambda t: graph.call(t, GET, /sites/{site_id}/drive/root/search(q=...), ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S35",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for send_channel_message claims graph app/tools.py:1697, which is the read_chat_messages lambda (another tool, a /chats path); send_channel_message posts to graph /teams at app/tools.py:1818.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for send_channel_message = graph app/tools.py:1697; the claim must name the source of send_channel_message itself.",
+    "world_is": "app/tools.py:1697 belongs to read_chat_messages (a /chats/{chat_id}/messages read). The source of send_channel_message is app/tools.py:1818, graph POST /teams/{team_id}/channels/{channel_id}/messages. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1697p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: read_chat_messages lambda (read 2026-10-19T18:28Z)",
+        "app/tools.py:1818: lambda t: graph.call(t, POST, /teams/{team_id}/channels/{channel_id}/messages, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S36",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for send_chat_message claims graph app/tools.py:1648, which is the def header of portal_get_etf_returns (another tool); send_chat_message posts to graph /chats at app/tools.py:1769.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for send_chat_message = graph app/tools.py:1648; the claim must name the source of send_chat_message itself.",
+    "world_is": "app/tools.py:1648 is def portal_get_etf_returns. The source of send_chat_message is app/tools.py:1769, graph POST /chats/{chat_id}/messages. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1648p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def portal_get_etf_returns (read 2026-10-19T18:28Z)",
+        "app/tools.py:1769: lambda t: graph.call(t, POST, /chats/{chat_id}/messages, json_body=payload)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S37",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for send_email claims graph app/tools.py:481, the closing of the message dict; the graph POST that names the source is app/tools.py:485 (/me/sendMail).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for send_email = graph app/tools.py:481; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:481 is the closing of the send_email message dict. The source call is app/tools.py:485, graph POST /me/sendMail. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 481p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: closing brace (read 2026-10-19T18:28Z)",
+        "app/tools.py:485: lambda t: graph.call(t, POST, /me/sendMail, json_body=msg)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S38",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for upload_text_to_site claims graph app/tools.py:830, the unsafe folder_path raise; the graph upload that names the source is app/tools.py:834 (/sites drive upload).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for upload_text_to_site = graph app/tools.py:830; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:830 is the unsafe folder_path raise. The source call is app/tools.py:834, graph upload to /sites/{site_id}/drive/root. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 830p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: raise ValueError unsafe folder_path (read 2026-10-19T18:28Z)",
+        "app/tools.py:834: item = graph.upload_large(t, f/sites/{site_id}/drive/root:/{folder}/{filename}, data)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S39",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for validate_ssavail_attachment claims graph app/tools.py:801, a blank line inside the tool; the graph GET that names the source is app/tools.py:806 (/me/messages attachment $value).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for validate_ssavail_attachment = graph app/tools.py:801; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:801 is a blank line inside validate_ssavail_attachment. The source call is app/tools.py:806, graph GET /me/messages/{id}/attachments/{id}/$value. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 801p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: blank (read 2026-10-19T18:28Z)",
+        "app/tools.py:806: /me/messages/{message_id}/attachments/{attachment_id}/$value"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S40",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for whoami claims graph app/tools.py:212, the @mcp.tool(meta=...) decorator above whoami; the graph GET that names the source is app/tools.py:217 (/me).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for whoami = graph app/tools.py:212; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:212 is the decorator line above whoami. The source call is app/tools.py:217, graph GET /me. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 212p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool(meta=...) (read 2026-10-19T18:28Z)",
+        "app/tools.py:217: t, GET, /me, params=...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S41",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:54:46Z",
+    "one_line": "the work commit b5595abaa1 printed NAMING ERROR 'function-map folder missing' for C:/tmp/wk-mcpindex-76/infra/aws/lambda/ci/function-map/ and WARN 'client-data-check: hashed account-id list ABSENT', and the commit still returned rc=0; the same two conditions as the sibling rows NFRA_MCPINDEX-Z-W63-S1 and NFRA_MCPINDEX-Z-W63-S2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project; the face's <paths> grant does not name infra/aws/lambda/ci, and the worktree sparse list does not carry it.",
+    "world_is": "bash .tools/safe-commit.sh --author ... -F .scratch/msg_s6_work.txt -- org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~76/source_sets_m365.json org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md printed the naming-gate NAMING ERROR for the missing function-map folder and the client-data WARN (account-id list absent), then '[msg-verify] committed b5595abaa1' with rc=0. The commit-gate line read 'checked 0 of 2 file(s) -- NOTHING WAS CHECKED' (the two staged files are a JSON and a markdown file).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... -- (2 paths): rc=0; output in C:/tmp/wk-mcpindex-76/.scratch/commit_work.log lines 9, 12, 36-37, 42 (read 2026-10-19T18:40Z)",
+        "git -C C:/tmp/wk-mcpindex-76 log --oneline -1: b5595abaa1 NFRA_MCPINDEX MX-s-6 (0.9.0_WK_NFRA_MCPINDEX~76): source sets of the 43 m365 tools"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
