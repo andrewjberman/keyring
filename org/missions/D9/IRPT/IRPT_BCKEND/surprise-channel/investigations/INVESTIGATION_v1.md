@@ -42634,3 +42634,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Eleven previous account-level client keys are re-keyed to relationship keys in the 10-14 source; the guard compares client keys and reads each as a drop; Cottonwood's served directory stays as-of 2026-10-12 until the guard rule, the wedge fix (merged, not deployed) and a release land."
 }
 ```
+
+## IRPT_BCKEND-D2-S244 -- IB-pr-605 first-fire after-read ruled: 49 Financial REFUSED_HELD, Inflection STAMPED_T_MINUS_1 on the custody data date, Cottonwood as read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S244",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Rules IB2's request in msg 10712 (order TO-IB-pr-605 step 7, first-fire after-read of 2026-10-19 14:15Z): how to record 49 Financial and Inflection when neither of the two accepted outcomes fits. 49 Financial: REFUSED_HELD, a recorded fact and not a STOP; the gate refused a real overnight loss (the account held 18 position rows and 1 balance row on 2026-10-15 and none on 2026-10-16, row D2-S242), the CTO ruled the refusal stays (msg 10788), served holdings stay as-of 2026-10-12, no exemption widening; ledger legs L2 and L3 of the IB-pr-605 exemption ledger stay OPEN until the gate passes on its own. Inflection: read as STAMPED_T_MINUS_1: clocks.business_date and clocks.custody_as_of both equal t_minus_1 (2026-10-16), the gate published, 0 listed; my step 7 wording 'a T-1 source partition under it' is read as the data date of the custody the stamp states, not the landing date of the snapshot file that carries it (Inflection's feed lands fire-day snapshots, the same reading its previous fire carried under IB-pr-549); this is the issuer reading its own wording, inside its own decomposition, and changes no criterion. Cottonwood stands as IB2 read it (STAMPED_T_MINUS_1, 0 listed).",
+  "one_line": "IB-pr-605 first-fire after-read ruled: 49 Financial REFUSED_HELD (CTO msg 10788), Inflection STAMPED_T_MINUS_1 on the custody data date, Cottonwood as read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~IB2/IB236-1_after_read_20261019.json (counts and class words only) read by 2.0.0_SA_COO~P2",
+      "CTO ruling msg 10788 (49 Financial keep the refusal)",
+      "order TO-IB-pr-605 step 7 text"
+    ]
+  },
+  "spec_asserts": "Step 7 accepts exactly STAMPED_T_MINUS_1 or HELD_NO_NEW_PUBLICATION per firm.",
+  "world_is": "49 Financial refused (real loss, held by the CTO's ruling); Inflection and Cottonwood published with business date and custody as-of 2026-10-16."
+}
+```
