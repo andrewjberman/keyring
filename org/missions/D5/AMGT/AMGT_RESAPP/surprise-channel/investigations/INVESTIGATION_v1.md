@@ -32454,3 +32454,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The edit stays inside the order's surface lib/research/llm_batch/tests/ and sits in the AMGT-cf-6 commit. Whether the issuer names test_run.py in the order is the issuer's call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S63",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-19T20:33:09Z",
+  "one_line": "The other scheduled llm_batch task that can call the model, OpalResearch-ExecManagement, still runs its launcher on Python 3.14 with anthropic 0.45.0, the same SDK mismatch that broke the filings task (row S62); only run_filings.cmd was moved to py -3.12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/llm_batch/launchers/run_management.cmd still calls `python -m lib.research.llm_batch.run management` (byte-identical to the base: AMGT-cf-6 test T4 holds its sha256 bdece8d76866..); `python` resolves to C:/Users/Test/AppData/Local/Programs/Python/Python314 with anthropic 0.45.0 (python -m pip show anthropic) while Python312 holds 0.84.0",
+      "lib/research/management/ceo_search.py imports anthropic (native Grep over lib/ lists it with lib/research/filings/analyze.py, lib/research/posture/judge.py and lib/research/aifill/model.py); lib/research/scores/ and lib/opal_data_harvest/ import none",
+      "the CTO's msg 8499 ruling: the other llm_batch launchers on 3.14 take a surprise row naming the same SDK mismatch and the cf-6 cell does not widen"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-bn-6 (G4): each scheduled LLM-tier batch task runs on an interpreter whose installed SDK is the repo's pin (requirements.txt:14 anthropic==0.84.0).",
+  "world_is": "The management task, if its batch reaches a model call, would fail the way the filings task did on 2026-10-19 19:36Z (an SDK TypeError on output_config, then an AttributeError in the stream parser). It has not been run on demand; whether its path calls the model on a due day was not read. Its launcher and the ExecManagement scheduled task are untouched by this round.",
+  "notes": "Form only. Not applied: widening cf-6 to this launcher is the CTO's call (msg 8499 kept it out); a later cell would move run_management.cmd to py -3.12 the same way, with its own test."
+}
+```
