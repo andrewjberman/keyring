@@ -4768,3 +4768,19 @@ Next, by the verdict: `SOURCE_ABSENT_BUT_EXEMPTION_TESTS_FAIL` or `HAS_POSITIONS
 | `IB-hx-1` | READ: why the 49F gate refuses on a third lost account | FWD-3 | WORLD | none | PM15-a |
 
 fanout: 1 of 1 chains cut this round, cap 8, reason: one read; the fix cell or the addendum waits on its verdict.
+
+## 253. ROUND 16, WORKSTREAM ~PM (Cottonwood's re-keyed accounts trip the runner's drop guard: cells 3 and 4; 2026-10-19 ~21:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 10788 (S239 yes to a retained-key guard under a pair) and msg 11047 (the Andrew-direct pause is DONE, the two cells are released), ruling `deliverables/1.0.0_SA_CTO~DELL2/RULING_481D_COTTONWOOD_CELLS_WAIT_FOR_PAUSE_DONE_20261019.md`, rows `IRPT_BCKEND-D2-S239` and `IRPT_BCKEND-D2-S243`)
+
+Round 14's read (IB-cw-1, stopped by its own clause, notes merged) found that the 11 Cottonwood previous keys the runner's guard refuses are accounts re-keyed from an account-level client key to a relationship-level one: every account is still served under the new key, and the guard (`carry_forward_removed`, which compares client keys) reads the re-key as a dropped client. The CTO approved a guard that counts a previous key RETAINED when every account id of its entry is present in ONE current entry, any missing account failing closed, and asked that the never-widen pair list every reader of the client key and what the re-key moves for each. The wedge fix (IB-cw-2, `refresh.py`) is merged and not deployed. The two cells are independent and are cut in ONE issuance; the pair, the release by `0.7.0_AE_CloudOps~IB2` and the first Cottonwood refresh follow them.
+
+- `IB-cw-3` (READ, worker ~459): every reader of the directory's client key in this repository (pages, HMAC lists, exports, the refresh compare, the runner), with file:line, what it does with the key and what a re-key moves for it, a cited release path; at least four readers including a REFRESH_COMPARE, an HMAC_LIST and a RUNNER. The portal submodule is NOT READ and the notes say so. Check `IBCW3` (`r259`): findings shape and citation validity, a privacy scan, the commit surface; control passes the clean cases and each of 22 AC1, 5 AC2 and 3 AC3 negatives fails its own arm, 0 unexpected; dry-run at the base: AC1 to AC3 FAIL. The substance is a JUDGMENT the issuer grades by re-reading the cited lines.
+- `IB-cw-4` (BUILD, worker ~460): `rekeyed_keys` and the retained-key rule in `carry_forward_removed`; every other path byte-equal; `run_firm` records the count. Source and tests in a worktree; deploys nothing. Check `IBCW4` (`r260`): eight named tests pass, a base-versus-new differential and scenarios (the re-key fixture retained, the split, account-less and mixed fixtures failing closed), the commit surface; control passes the issuer's reference implementation and each of 6 AC2, 3 AC1 and 3 AC3 negatives fails its own arm, 0 unexpected; dry-run at the base: AC1 to AC3 FAIL.
+
+`IB-cw-3` is LOCAL (a repository read, no client data, no AWS); `IB-cw-4` is WORLD (once released the code changes what the served Cottonwood directory holds). After both are graded: the never-widen pair for the guard (readers from `IB-cw-3`), then one Lambda and bundle release by IB2 carrying the wedge fix and the guard, outside the 11:30Z to 14:15Z band, with my extra scenarios (`checks/r256/extra_scenarios_cw2.py`) and the first live Cottonwood fire read.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-cw-3` | READ: every reader of the client key, what a re-key moves for each, the release path | FWD-7 | LOCAL | none | PM16-a |
+| `IB-cw-4` | BUILD: the retained-key rule in the runner's drop guard | FWD-7 | WORLD | none | PM16-b |
+
+fanout: 2 of 2 chains cut this round, cap 8, reason: the two cells touch disjoint surfaces (a findings file; `directory_runner.py` and its tests) and neither needs the other's result; the pair waits on both.
