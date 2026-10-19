@@ -28,6 +28,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~302`.
 
 ### THE CELL (`AR-g-164`, inlined)
 
+**AMENDMENT 1 (issuer, 2026-10-19, on worker ~302's row IRPT_ANLREQ-D2-W302-S1; gate limb: none graded, an in-decomposition amendment of a grant):** `infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py` line 754 pins the number of `OWN_SERIES` elements of the real map: `assert len(res) == len(series) == 9`. Your cell adds 5, so it must read `14` on YOUR branch (the three round-57 cells that add `OWN_SERIES` elements each move it by their own delta, 163 by 8, 164 by 5, 165 by 4; the issuer reconciles the line to 26 at the merge). That file is now in your `<paths>`. Change ONLY that number (and, if the line wraps, nothing else); do not weaken the assertion, do not touch any other line of the file. Then re-run AC3.
+
 Files: `infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py` (read it first: `statistic_of` at about line 477 is the statistic engine; `_compute_own_series` at about line 595 feeds it the buy-and-hold level series `points` [(ms, level)] plus `acc["benchmark"]` and `acc["risk_free"]` named series, and `acc["kind"]` the element kind; `_column_statistics` shows how a table gets `{label: value}` and a chart gets a list; `_chart_svg` renders a list of numbers or of `[x, y]` pairs; `_table_html` renders a dict) and `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json`.
 
 Five map elements read NOT_IN_THIS_VERSION with pricing on. Re-point each `source` to `OWN_SERIES` (copy the shape of the existing `p7.e05`: `{"call": "portfolio_level_series", "columns": [], "computed": "OWN_SERIES", "field": "$.chart_data[0][0].raw_data", "sleeve": null, "statistic": "<name>"}`) and give the engine the three statistics it lacks. The statistic name goes in `source.statistic`:
@@ -73,6 +75,7 @@ infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_seri
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~302/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-164.price-pages-series-forms.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py
 </paths>
 
 <decomp_ref>
