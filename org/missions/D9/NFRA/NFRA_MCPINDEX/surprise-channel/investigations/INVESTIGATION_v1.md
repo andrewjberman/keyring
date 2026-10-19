@@ -10203,6 +10203,27 @@ carries none.
     "spec_asserts": "MX-h-4 section 1: classify each of the 13 tools by its definition; c when the tool lists names, probes a status, passes a vendor call through or reads only the caller's own data; b when it reads a dataset a catalog row should describe.",
     "world_is": "The pending record (MX-c-11) says b for harvest_list, the source is a names-and-sizes listing that the contract names c, and the disposition file therefore says c. Both records are present; the applier reads the disposition only for tools with no catalog index.",
     "notes": "Recorded, not acted on. The disposition file follows the contract text, the one place the face was explicit. The issuer decides whether the pending entry or the disposition governs harvest_list at the drain."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W66-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~66",
+    "surfaced_at": "2026-10-19T17:04:05Z",
+    "one_line": "The naming gate printed NAMING ERROR (function-map folder missing) on the MX-h-5 work commit 4fb2a7cf224 and still returned rc=0; this sparse worktree does not carry infra/aws/lambda/ci, so the naming check did not grade the staged file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at commit 4fb2a7cf224 (worktree C:/tmp/wk-mcpindex-66): '[naming-gate] NAMING ERROR function-map folder missing: ...infra/aws/lambda/ci/function-map/ (nothing is graded from a copy)', then '[wk-NFRA_MCPINDEX-66 4fb2a7cf22] ...' and rc=0.",
+        "ls -d infra/aws/lambda/ci/function-map in the worktree returns No such file or directory; git cat-file -e HEAD:infra/aws/lambda/ci/function-map returns rc=0 (the folder is tracked at HEAD); git sparse-checkout list names no infra/aws/lambda entry."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face (section 2, bound 5) says a commit through the naming gate needs a staged .json under this project's home if it must derive the project; CLAUDE.md rule 30 says the commit-time naming gate refuses names. The expectation is that the gate grades the staged name before the commit lands.",
+    "world_is": "The naming gate could not read its function-map source, reported that it graded nothing from a copy, and safe-commit still returned rc=0 and landed commit 4fb2a7cf224 (1 file, the disposition JSON). The fail-open path reads as a grade of the name when none was made.",
+    "notes": "Recorded, not acted on. Same observation as NFRA_MCPINDEX-Z-W59-S1 (filed by 0.9.0_WK_NFRA_MCPINDEX~59 on its TO-MX-g-2 commit), now on a second commit in a second worktree. The committed file carries no Lambda name, so the naming gate's silence on it is not a verdict. Disarm and owner: the issuer 2.0.0_SA_COO~MI decides whether the gate should refuse on an unreadable map or whether the worktree needs the folder."
   }
 ]
 ```
