@@ -26381,3 +26381,352 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W297-S1 -- TO-AR-y-406 build refused: the r34l build at the pin moves a fifth member, lib/trading_calendar.py, against the four-member expectation
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W297-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~297",
+  "surfaced_at": "2026-10-19T16:00:57Z",
+  "one_line": "TO-AR-y-406 build refused: the r34l build at pin f7d0b5ad04 moves a fifth member, lib/trading_calendar.py (14 inserted lines of trunk), against the four-member expectation SHA256SUMS, reports/resident_bindings.json, ycharts/research/opal_producer.py, reports/resident_installed.py; the driver stopped before the record, the scripts and the smoke, and nothing was uploaded, installed or run.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO-AR-y-406 step 2 (WORKER FACE) and ACCEPTANCE AR406-y-AC1: the member difference of the r34l build at pin f7d0b5ad044f6f299938230a5f2b79869dfc7fef against the r34k tarball 64f5567dddbd7e96a955410e7e12c5fb3f319551fbe9ce1527cdefdfe8f18a0c is exactly the four members SHA256SUMS, reports/resident_bindings.json, ycharts/research/opal_producer.py and reports/resident_installed.py, with added and removed empty; a fifth mover is a BLOCKING surprise row naming it, and the expectation is not loosened.",
+  "world_is": "MEASURED 2026-10-19 by 0.9.0_WK_IRPT_ANLREQ~297 in the worktree at HEAD 5660dc8c5e: the driver org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~297/r55/r34l_build.py run with --pin f7d0b5ad044f6f299938230a5f2b79869dfc7fef printed R34L-BUILD-BAD with changed [SHA256SUMS, lib/trading_calendar.py, reports/resident_bindings.json, reports/resident_installed.py, ycharts/research/opal_producer.py], added [], removed []. The two builds at the pin were identical (317 of 317 files, measured on the stage folder). The fifth mover is lib/trading_calendar.py, read at the pin by its --member entry: blob c9859686bf at f7d0b5ad04 against blob 72178007dd at the 1ad8bd8c1b scratch pin (read-only git rev-parse); the diff is 14 inserted lines. The 1ad8bd8c1b commit message says the scratch pin put that file back to the r34e bytes because the DASHBD hunk f25618c0b4 rides only its own pair, and f25618c0b4 is the most recent trunk commit to that file at the pin. The refusal fired before the record, the host scripts and the import smoke, so no RESIDENT_R34L_BUILD.json exists. The stage folder C:/dev/irpt-release-r35a was created by this run (it did not exist before) and holds build_a, build_b, x32, x34, the scripts folder is absent, and an r34l-named tarball (sha256 5347ced3aeaf7b69fa2f281672e3e8479d0ab5eed02fd7eb4f810447d2b37bbe, 317 members) that carries the fifth mover; a re-run refuses while that folder exists. Removing it is a recursive deletion and waits on the issuer's or Andrew's word. NOT READ: the live host, the live root, any AWS object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~297/r55/r34l_build.py (the driver; its delta check prints the changed list above)",
+      "git rev-parse 1ad8bd8c1bb83ecc35d9489014a42c53812f4424:lib/trading_calendar.py = 72178007dd037995ac4a391a9ad81c4348b9721e; f7d0b5ad044f6f299938230a5f2b79869dfc7fef:lib/trading_calendar.py = c9859686bf12adbf8481d09c6e08a0336735bfe7 (read-only)",
+      "git diff --stat 1ad8bd8c1bb83ecc35d9489014a42c53812f4424 f7d0b5ad044f6f299938230a5f2b79869dfc7fef -- lib/trading_calendar.py: 1 file changed, 14 insertions(+)",
+      "git log -3 f7d0b5ad044f6f299938230a5f2b79869dfc7fef -- lib/trading_calendar.py: first line f25618c0b4 (IRPT_DASHBD DB-f-1801, one business_date for all three firms)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-406.resident-release-r34l-build-only-two-movers.md (step 2: a fifth mover is a BLOCKING row, not a loosened expectation)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W300-S1 -- the TO expects the last wait of a never-resolving upload to be truncated, but the ladder sums to exactly 240000 ms, so the cap never bites
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~300",
+  "surfaced_at": "2026-10-19T16:57:16Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W300-S1",
+  "one_line": "TO-AR-y-410 criterion (iii) says the last wait is truncated; with the ladder 3,3,6,6,12,12,24,24 s then 30 s, the thirteen waits sum to exactly 240000 ms, so min(uploadWaitMs, total minus waited) never truncates on the shipped ladder.",
+  "spec_asserts": "TO-AR-y-410 THE CELL step 2 caps each wait at min(uploadWaitMs(attempt), UPLOAD_MAX_TOTAL_WAIT_MS - waitedSoFar); criterion (iii) expects 'the last wait truncated'.",
+  "world_is": "Candidate c8fefec6909cbdf1502028952f2e38789109962f, analysisRequest.ts: the ladder sums to 90000 for attempts 1 to 8, then 5 x 30000 = 150000, total 240000; the 13th wait is 30000, not truncated. The cap is kept as a guard for any other ladder; the new test asserts 13 waits summing to 240000 with the last at 30000.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts uniquely at c8fefec6909cbdf1502028952f2e38789109962f (uploadWaitMs and the loop)",
+      "portal/src/pages/TicketCenter/__tests__/upload-resolving-backoff.test.tsx case (iii), 7 pass at c8fefec6909cbdf1502028952f2e38789109962f"
+    ]
+  },
+  "notes": "Not a defect of the candidate: the sum and the exact-240000 ask agree; only the word 'truncated' in criterion (iii) does not describe the shipped ladder."
+}
+```
+
+## IRPT_ANLREQ-D2-W300-S2 -- the TO says the new test file FAILS on origin/DEV without the change; it fails 4 of 7 cases, and the three NEEDS_CORRECTION or REFUSED guards pass there
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~300",
+  "surfaced_at": "2026-10-19T16:57:16Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W300-S2",
+  "one_line": "Before-arm on origin/DEV f70745362d8b: the new file runs 7 cases, 3 pass and 4 fail; the three (iv) guards pass because the base already ends the loop at once on a non-RESOLVING answer.",
+  "spec_asserts": "TO-AR-y-410 DOING 3(b): run the new test file on origin/DEV WITHOUT the change; it FAILS (the exports are absent).",
+  "world_is": "Measured before the source change, on f70745362d8baa34d78c50b8246a5f98ba7c8862: bun test reports 3 pass, 4 fail, 7 tests across 1 file. The failing cases are (i) the ladder, (ii) the progress pair, (iii) the 240000 total and (v) the checkingMessage text; the module is imported as a namespace, so each missing export is a per-case failure, not a load error.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/upload-resolving-backoff.test.tsx run on base f70745362d8b, bun test output 3 pass 4 fail",
+      "portal/src/pages/TicketCenter/analysisRequest.ts at f70745362d8b lines 96-98 and 411-415"
+    ]
+  },
+  "notes": "The file does fail on the base, as the TO asks; the three passing cases are behaviour the base already has, so they are not a before-arm failure."
+}
+```
+
+## IRPT_ANLREQ-D2-W300-S3 -- the sibling Investor Reporting composer keeps the old bound outside the grant: it re-POSTs a RESOLVING upload every 3 s for up to 40 polls (about 2 min)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~300",
+  "surfaced_at": "2026-10-19T16:57:16Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W300-S3",
+  "one_line": "The Investor Reporting composer has its own RESOLVING re-post loop with the old bound (3 s, 40 polls, about 2 minutes), which AR-y-410 does not touch because it is outside the Ticket Center grant.",
+  "spec_asserts": "TO-AR-y-410 scopes the RESOLVING re-post change to the Ticket Center (analysisRequest.ts and TicketCenter.tsx) and changes no other file's behaviour.",
+  "world_is": "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:306-309 at f70745362d8baa34d78c50b8246a5f98ba7c8862 re-POSTs the same body every 3 s, up to 40 polls, then offers 'Retry same upload'; it is not changed by candidate c8fefec6909cbdf1502028952f2e38789109962f.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:306-309 read at f70745362d8baa34d78c50b8246a5f98ba7c8862"
+    ]
+  },
+  "notes": "Recorded for the CTO's read; not changed here. A second page with the old bound would meet the same slow resolve."
+}
+```
+
+## IRPT_ANLREQ-D2-W62-S5 -- BLOCKING: a holds-only build of irpt-holdings at base 9e58503be1 ran the UPLOAD path and overwrote the live artifact object (the live Lambda is unchanged)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T07:46:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A BUILD_ONLY=1 holds-only build of irpt-holdings in a throwaway worktree at 9e58503be1 ran the upload branch: it wrote s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-holdings.zip (write VERIFIED) over the key the live package was built from. The live Lambda CodeSha256 is unchanged (SWRfUf).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-213 says nothing is uploaded, deployed or applied, and the BUILD_ONLY branch of infra/aws/lambda/ci/build-and-upload.sh (trunk HEAD ccacbb0f15, lines 687-696) builds the zip after every gate and exits before any aws call and before the source-map write.",
+  "world_is": "At base 9e58503be1 the build script has no BUILD_ONLY branch (a Grep for BUILD_ONLY in the throwaway worktree's build-and-upload.sh, 649 lines, returns no match), so the holds-only invocation ran the full path: staging, gates, 'aws s3 cp' of the zip to the key, head-object verify, source-map write. Log: .scratch/r20/tmp/ho_c1_lastdep.log ends 'write VERIFIED: size=294243, sha256 metadata match' and 'Complete -- 1 function(s) built and uploaded'. Measured after the write (read-only calls): head-object VersionId T1NEd9G.pJu3H8SlT4x0K4K7WGk8K3_O, LastModified 2026-10-13T07:42:43Z, ContentLength 294243, content-sha256 tS/APci3Mz/YRDP7pJboAVqKabShek9jYUqvQDIYwwE=. The version immediately before it (list-object-versions, prefix investor-reporting/irpt-holdings.zip) is dWoiYeH9MSXq9yOuQkApr2h_XxwrvVi8, LastModified 2026-10-12T13:51:17Z, Size 299273, which equals the live zip's byte count; its sha256 was not re-read (a download is outside the grant). get-function irpt-holdings CodeSha256 after the write: SWRfUfHdJarO2Rhbxw/KQK88DeDNorQujkaR1jUuZc0= (unchanged). The map artifact_sha256 change is in the throwaway worktree only; the product tree was not written. A later terraform plan or apply that reads the latest version of this key would deploy the new bytes. The worker made no further S3 write; restoring dWoiYe... over the key is not done by this seat (read-only grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk62-base/hold/infra/aws/lambda/ci/build-and-upload.sh at 9e58503be1: Grep BUILD_ONLY no match (throwaway worktree, read-only)",
+      ".scratch/r20/tmp/ho_c1_lastdep.log (worker scratch, log of the upload run)",
+      "aws s3api head-object and list-object-versions on opal-313476888478-lambda-artifacts investor-reporting/irpt-holdings.zip, and lambda get-function irpt-holdings CodeSha256, read by this seat at 2026-10-13T07:4xZ"
+    ]
+  },
+  "notes": "Form only; the restore decision is the issuer's. The act-4 ledger names 0.7.0_AE_CloudOps~FB1 as the rollback actor for IRPT artifact keys; the key was not restored by the worker. Cause of the BUILD_ONLY miss: see IRPT_ANLREQ-D2-W62-S6."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S6 -- BUILD_ONLY is not a universal switch: the build script at 9e58503be1 predates the branch, and the candidate-base method has no guard for it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T07:46:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The candidate-base method assumes a BUILD_ONLY-capable build script at every candidate base; the script at 9e58503be1 (the last_deployed_commit of irpt-holdings) has no BUILD_ONLY branch, so the same invocation that was safe at 6a0226dc02 and at e274a0e60c uploaded at 9e58503be1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "The order's method (BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting <fn> prints the CodeSha256 and uploads nothing) holds at each candidate base the order names.",
+  "world_is": "BUILD_ONLY lines printed and nothing uploaded at 4850c85632, 35a7cad5b9, e274a0e60c, 06557b66, 4650422c34, 69679b90e3, 5d8b0390ed, 6a0226dc02 and 1f14f0db5e (each log carries 'BUILD_ONLY:' and 'Complete (BUILD_ONLY)'). At 9e58503be1 the same invocation printed no BUILD_ONLY line and ran the upload (IRPT_ANLREQ-D2-W62-S5). The candidate list of the order (last_deployed_commit, its parent, e274a0e60c, 69679b90e3, 5d8b0390ed, then git log) has no step that checks the script carries the branch. The worker guards each later build by grepping the candidate's build script for BUILD_ONLY before the build.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk62-base/hold/infra/aws/lambda/ci/build-and-upload.sh (9e58503be1): no BUILD_ONLY match; trunk HEAD ccacbb0f15 carries the branch at lines 687-696",
+      ".scratch/r20/tmp/ds1.log, ds_c3_repin.log, yc_c5_r19base.log, ex_c3_repin.log: BUILD_ONLY lines and 'Complete (BUILD_ONLY)'"
+    ]
+  },
+  "notes": "Armed until the issuer states which candidate bases are BUILD_ONLY-capable or adds the guard to the order. Any worker that runs the order's candidate list as written can reach the upload path at a base older than the branch."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S7 -- the ycharts holds-only control does not reproduce live CodeSha256 with no patch at any of five candidates; it reproduces at 5d8b0390ed with the r19 R2 map patch
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T07:46:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "For irpt-ycharts-generate the live CodeSha256 bNPCG2Oe1oQM/ztjggmrdDbdl83CAmUEcPnBFxlj2Rk= is not reproduced by a BUILD_ONLY build of the unpatched map at any of the five candidates (last_deployed_commit 06557b66, its parent 4650422c34, e274a0e60c, 69679b90e3, 5d8b0390ed); it is reproduced at 5d8b0390ed with RELEASE_MAP_PATCH_R2.diff applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell's holds-only control is a BUILD_ONLY build that prints the live CodeSha256 with NO patch; a NOTE in the same cell says the control for this function is the trunk map at 5d8b0390ed plus the R2 patch.",
+  "world_is": "Unpatched BUILD_ONLY sha256 (base64): 06557b66 p/pwRXJd+daoVKIhRimGzlxhHHLs2E4lGsz+eZVNBns=; 4650422c34 and e274a0e60c p+17dqD9luDDeXGWiXcQvtZqh+bPmD0k9PBXFfLl/Ro=; 69679b90e3 u0YnPLPQ2E08RFAbiDHxCErVhW5NLCpz9qZ9JZ3bKHY=; 5d8b0390ed p/pwRXJd+daoVKIhRimGzlxhHHLs2E4lGsz+eZVNBns= (same as 06557b66). At 5d8b0390ed with the R2 patch (git hash-object df4d740e08c54566819a1b37942563df32f5a80e, git apply --check clean): bNPCG2Oe1oQM/ztjggmrdDbdl83CAmUEcPnBFxlj2Rk= equal to live. The worker used the NOTE's control and labels it so in the record; the no-patch control is not reproduced at the five candidates and was not searched further (a sixth candidate is out of bounds).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".scratch/r20/tmp/yc_c1_lastdep.log, yc_c2_parent.log, yc_c3_repin.log, yc_c4_flip.log, yc_c5_r19base.log, yc_c6.log (BUILD_ONLY lines)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~56/r19/RELEASE_MAP_PATCH_R2.diff at trunk HEAD ccacbb0f15 (hash-object df4d740e08c54566819a1b37942563df32f5a80e)"
+    ]
+  },
+  "notes": "Form only. The control's definition (patch or no patch) is the issuer's to state; the record names both."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S8 -- the source map's deployed_code_sha256 differs from live for four group B functions; each live CodeSha256 equals the map's artifact_sha256
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T07:46:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "At trunk HEAD ccacbb0f15, the map's deployed_code_sha256 for irpt-directory-search, irpt-export-render, irpt-holdings and irpt-49f-reporting-read-lambda is not the live CodeSha256; the live value equals each function's artifact_sha256 in the same map entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The map entry's deployed_code_sha256 is the CodeSha256 the function runs, read at the last deploy (the field the order's candidate list reads its last_deployed_commit beside).",
+  "world_is": "Map deployed_code_sha256 vs live CodeSha256 (read by this seat): directory-search IV7P2AL43cGo9VfyY2ku0zEFAhQWq9BPxge754UynM8= vs TefVhmGStCRorgQFrQFCS0lVUC+pXrWJYfdUCEExqe4=; export-render 7T29wPhzbU/FlJpeT3MNSJ5jFWcEmi7bvHiSKECkyns= vs dCzMEt04dtBAlvkj+2rZMGZaU30kY+7leZxN00dbxH8=; holdings SRANzIGzWj0cR9dl4YOuLVOECV9dt9omPQZ80uzoR5g= vs SWRfUfHdJarO2Rhbxw/KQK88DeDNorQujkaR1jUuZc0=; 49f cou/Td9ydDrn9rQPT4hfa1n04eb54VXqnWaq4+N4FTI= vs IhlTVtU9yYVskJ3PUOcoOKp1HnE2WAW5V8X31IwKkTc=. The ycharts entry agrees (bNPCG2). The directory value IV7P2AL equals the holds-only build at 4850c85632, the map's last_deployed_commit; the live directory-search and export-render packages equal their builds at e274a0e60c, not at their last_deployed_commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json at trunk HEAD ccacbb0f15, functions[<fn>].deployed_code_sha256 and artifact_sha256",
+      "lambda get-function Configuration.CodeSha256 for the five group B functions, read by this seat at 2026-10-13T03:2xZ to 07:xxZ"
+    ]
+  },
+  "notes": "Form only. Not used as evidence for any base; the bases were proved by build equality with the live CodeSha256."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S9 -- the release served.py (564e604838 bytes) fails function tests that pass with the live-pin served.py: directory-search and export-render
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T12:23:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Staged against each function's own test folder, the release served.py (sha256 30c0eb88ec38a7ddfc410e4ae1c06ee7a9e77661812ba666a45ffcf5552c2475) fails tests that pass with the live-pin served.py (74a62fb4, sha256 87d9ecc4...): directory-search 207 passed / 4 failed at the live pin, 173 passed / 10 failed and 28 errors at the release; export-render 307 passed / 6 failed at the live pin, 300 passed / 13 failed at the release.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-213 criterion AR213-y-AC1: for every function of the group the function's own tests pass against the release served.py; the release differs from live in served.py only.",
+  "world_is": "Measured in throwaway base worktrees (served.py swapped and restored): directory-search release: test_opal_context.py 6 failures (UNAVAILABLE or PARTIAL where COMPLETE was expected, KeyError 'data') and test_custody_owner.py 28 errors (KeyError 'data'); test_read_once.py 4 failures also occur at the live pin. export-render release: test_custody_writer_composed.py 7 failures (KeyError 'data', AssertionError on ok False) that do not occur at the live pin. Holdings (182 passed) and 49f reporting (21 passed) pass both ways. The status-rule tests pass 28 of 28 against the release for all five functions. Record: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~62/r20/STATUS_RULE_REBASE_GROUP_B.json (tests block). Nothing was shipped; the release packages are not uploaded. The test expectations were not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest runs in C:/dev/wk62-base/dirrel and C:/dev/wk62-base/exp, infra/aws/lambda/investor-reporting/<fn>/tests, control and release outputs under C:/dev/wk62-stage/<fn>/orig/control_run.txt and release_run.txt",
+      "infra/aws/lambda/investor-reporting/_authz/tests at trunk HEAD ccacbb0f15 (the two status-rule tests)"
+    ]
+  },
+  "notes": "Form only. Whether the release may be built with the tests moved is the issuer's call (the cell says the suites run what ships; a test edit was not made). Probably the e274a0e60c-era tests assume a served.py from before 564e604838; the record names the failing tests, not the cause."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S10 -- the worker python has no fitz (PyMuPDF) or pypdf, so the ycharts and export suites cannot run here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T12:23:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The worker's python (3.14.7) lacks the fitz (PyMuPDF) and pypdf modules: irpt-ycharts-generate's suite stops at 12 collection errors (ModuleNotFoundError fitz) with both served.py versions, and export-render's 6 live-pin failures (and 6 of its release failures) are ModuleNotFoundError pypdf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The function test folders can run in the worker environment so that AC1 reads pass or fail on served.py alone.",
+  "world_is": "pytest in ycharts/generate/tests: 12 errors, ImportError while importing test modules, ModuleNotFoundError fitz. export/tests: 'render.ValidationUnavailable: pypdf is not importable' and ModuleNotFoundError pypdf in 6 live-pin failures. These do not depend on served.py. The record keeps them as environment failures; they are counted in the release run totals.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk62-base/c4850c85 ycharts/generate/tests pytest collection output (fitz)",
+      "C:/dev/wk62-stage/irpt-export-render/orig/control_run.txt (pypdf)"
+    ]
+  },
+  "notes": "Form only. Installing packages is outside this worker's grant."
+}
+```
+
+## IRPT_ANLREQ-D2-W302-S1 -- AR-g-164: the five re-pointed elements make the real map hold 14 OWN_SERIES elements; test_layout_overview.py pins 9 and fails, and that file is outside the grant
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W302-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~302",
+  "surfaced_at": "2026-10-19T16:13:01Z",
+  "one_line": "The cell re-points five overview elements to the OWN_SERIES shape, so the real overview map holds 14 OWN_SERIES elements; test_layout_overview.py pins 9 and fails (assert 14 == 9). That file is outside the cell's grant, so AC3 cannot pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "AR-g-164 AC3: the regress arm runs six existing producer and layout test files and they pass. The cell's grant (<paths>) names layout_overview.py, the overview map and test_price_pages_series.py; it does not name test_layout_overview.py.",
+  "world_is": "At commit e30ac4e52a (on c016f7e2bb plus the cell): ar_price_checks.py 164 build OK and guard OK; regress FAIL with 'test_layout_overview.py: rc=1 1 failed, 49 passed'. The failing test test_not_in_this_version_every_price_based_element_is_not_available asserts len(series) == 9 at test_layout_overview.py:754, where series = the real map's elements with computed == OWN_SERIES; the value is 14. The base passes it (nine). The other five regress files pass. compute_all selects elements by the computed key, so the count cannot stay at nine while the five elements carry the OWN_SERIES source the cell prescribes. Not edited: the file is outside the grant. The issuer must widen the grant or amend the pin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py@e30ac4e52a (lines 731-754, the pin of nine)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json@e30ac4e52a (the five source blocks now carry computed OWN_SERIES)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_price_checks.py (regress arm, TEST_FILES)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W302-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~302",
+  "surfaced_at": "2026-10-19T16:13:01Z",
+  "one_line": "With pricing off, the five re-pointed elements print the NOT_IN_THIS_VERSION page line instead of the generic 'Not available in this version.' line; their record status and reason are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-164 AC2: with pricing off every element reads exactly as at the base.",
+  "world_is": "The run record is identical to the base (status NOT_AVAILABLE, reason NOT_IN_THIS_VERSION; the guard arm passes). The printed line changes: at the base the five had no computed source, so with pricing off the layout printed OPAL_NOT_IN_VERSION_LINE ('Not available in this version.') from its outside_budget path. With the OWN_SERIES source they take the computed path and print NOT_IN_THIS_VERSION_LINE, the line the nine computed price elements already print. Measured at e30ac4e52a: a pricing-off produce renders 'Not available: not in this version of the report. Reason: NOT_IN_THIS_VERSION' for p7.e15 and p6.e21 (scratch script .scratch/html_check_164.py). The base line is read from layout_overview.py _element_html, not measured at the base.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@e30ac4e52a (_element_html, the computed path and the outside_budget path)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/price_pages_base_status.json (base record for the five at pricing off)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W302-S3 -- AR-g-165: with pricing off the four text elements print the NOT_IN_THIS_VERSION line instead of the generic line (the S2 pattern, four more elements)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W302-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~302",
+  "surfaced_at": "2026-10-19T17:29:03Z",
+  "one_line": "With pricing off, the four re-pointed text elements (p2.e07, p2.e16, p2.e03, p6.e20) print the NOT_IN_THIS_VERSION page line instead of 'Not available in this version.'; their record status and reason are unchanged. Same observation as IRPT_ANLREQ-D2-W302-S2, for the text elements.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-165 AC2: with pricing off every element reads exactly as at the base.",
+  "world_is": "The run record is identical to the base (status NOT_AVAILABLE, reason NOT_IN_THIS_VERSION; the 165 guard arm passes). The printed line changes for the four: at the base the source named a vendor call (portfolio_info or the level series' last point), so with pricing off the layout took the outside_budget path and printed 'Not available in this version.'; with the OWN_SERIES source they take the computed path and print NOT_IN_THIS_VERSION_LINE. The base line is read from layout_overview.py _element_html, not measured at the base. Measured at dbbe251592 only that the record carries NOT_IN_THIS_VERSION for the four (test_pricing_off_reads_not_in_this_version_for_the_four).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@dbbe251592 (_element_html: the computed path and the outside_budget path)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_text.py@dbbe251592 (pricing-off test for the four)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/price_pages_base_status.json (base record for the four at pricing off)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
