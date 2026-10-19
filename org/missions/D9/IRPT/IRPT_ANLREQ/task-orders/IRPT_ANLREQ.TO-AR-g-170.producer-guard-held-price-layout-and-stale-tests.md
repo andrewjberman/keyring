@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-g-170</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~307</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~308</issued_to>
 <issued_by>2.0.0_SA_COO~G2</issued_by>
 <issued_date>2026-10-19</issued_date>
 <status>pending</status>
@@ -20,10 +20,10 @@
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~307`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-307` (branch `wk-IRPT_ANLREQ-307`), provisioned by the issuer. Work only there. First confirm `org/` and `.tools/` exist in it.
-- Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~307 <0.9.0_WK_IRPT_ANLREQ~307@opal.agent>" -F <msgfile> -- <paths>`. Write the message file with the Write tool. Do not pre-`git add`. The worktree may show ` M portal` and a modified `.parquet` fixture: never commit either.
-- A row id has the form `IRPT_ANLREQ-D2-W307-S<k>` (check the channel file for `W307` first); `surfaced_at` of any row = `date -u +%FT%TZ` at filing.
+You are `0.9.0_WK_IRPT_ANLREQ~308`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-308` (branch `wk-IRPT_ANLREQ-308`), provisioned by the issuer. Work only there. First confirm `org/` and `.tools/` exist in it.
+- Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~308 <0.9.0_WK_IRPT_ANLREQ~308@opal.agent>" -F <msgfile> -- <paths>`. Write the message file with the Write tool. Do not pre-`git add`. The worktree may show ` M portal` and a modified `.parquet` fixture: never commit either.
+- A row id has the form `IRPT_ANLREQ-D2-W308-S<k>` (check the channel file for `W308` first); `surfaced_at` of any row = `date -u +%FT%TZ` at filing.
 - Python 3.9 syntax, ruff clean, ASCII only. Run tests with plain `python -m pytest --color=no -q -p no:cacheprovider` from `infra/aws/lambda/investor-reporting` (the producer's tests need `pypdf`, which `python -I` cannot see). Do not touch anything outside the `<paths>` block.
 
 ### THE CELL (`AR-g-170`, inlined)
@@ -72,7 +72,7 @@ infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_no
 infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_table.py
 infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_series.py
 infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_text.py
-org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~307/
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~308/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-170.producer-guard-held-price-layout-and-stale-tests.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -84,7 +84,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Criterion ids: AR170-g-AC1, AR170-g-AC2, AR170-g-AC3. Instance at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~307/IRPT_ANLREQ.TO-AR-g-170.producer-guard-held-price-layout-and-stale-tests.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~308/IRPT_ANLREQ.TO-AR-g-170.producer-guard-held-price-layout-and-stale-tests.proof_of_spec.json`.
 - Set its `to_id` to exactly `IRPT_ANLREQ.TO-AR-g-170`, and its `decomp_ref` to the order's `<decomp_ref>` block (the proof gate requires it).
 - Each acceptance entry's `invocation` is the criterion's text EXACTLY (put any `timeout` bound in the evidence line, not in the invocation).
 - In `artifacts_produced`, name each file with the hash of the commit that holds it, never a placeholder: the code first, then the tests, then the proof and the status flip.
