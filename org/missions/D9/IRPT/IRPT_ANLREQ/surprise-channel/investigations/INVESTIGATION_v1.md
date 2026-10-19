@@ -26009,3 +26009,32 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-S215 -- the fix removes 65 builder-only sections from the overview report; Andrew saw 425 cards and no map has 425 builder-only elements
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S215",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-19T15:08:00Z",
+  "one_line": "The AR-y-404 fix removes 65 builder-only sections from one overview report, but Andrew's page showed 425 cards; no single layout map has 425 builder-only elements, so the fix may leave empty cards on a comparison or multi-comparison report.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "CTO msg 10696: the report page shows 425 cards titled text (BUILDER_ONLY, NOT_IN_THIS_VERSION); the cause is opal_producer.py:531 listing every layout entry in sections[]; removing the builder-only ones clears them.",
+  "world_is": "MEASURED 2026-10-19 by this seat from worker 296's merged work (TO-AR-y-404, merged 3676d5836b; both criteria re-run by the issuer: 2 passed and 48 passed): one producer run over the committed overview map gives 257 entries, 257 sections before and 192 after, so 65 builder-only entries are dropped, and no builder-only entry is a VALUE. The three layout maps in org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/ carry: overview 254 elements (65 BUILDER_ONLY, 189 with a source object), comparison 574 (223 BUILDER_ONLY, 351 object), multi 424 (280 BUILDER_ONLY, 144 object). None is 425, and the 425 is not reproduced. If Andrew's report was a multi-comparison (424 elements) the fix drops at most 280 and leaves 144 sections whose status the offline run did not compute; if any of those are NOT_AVAILABLE with a text kind they still show as empty cards. Two worker observations ride here (the worker's own rows could not be committed by the seat under the gate): the real maps are not on disk in a sparse worktree (a committed blob was read into scratch), and the fixture's non-builder NOT_AVAILABLE elements read NOT_IN_THIS_VERSION rather than OUTSIDE_TIME_BUDGET. NOT READ: the report Andrew viewed (its variant, its section count by method and status), and any producer run over the comparison and multi maps.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py (the filtered comprehension after the merge) and its new test test_opal_producer_builder_only_sections.py",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~296/ (the worker's proof instance, counts 257 before and 192 after)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json, comparison_map.json, multi_map.json (element counts by source, read by the issuer)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
