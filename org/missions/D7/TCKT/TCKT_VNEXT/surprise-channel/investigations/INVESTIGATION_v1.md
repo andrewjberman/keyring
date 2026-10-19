@@ -3184,3 +3184,29 @@ used as fixtures is a different read with a different denominator.
   "world_is": "A GO sent to an IDLE TV2 seat does not reach it unless something wakes it: the watcher event did not fire for the message, and the 'run check-inbox first' line in the GO is read only after the seat has read the GO. This seat's practice is to read get_delivery_state about ten minutes after each GO sent to TV2 and to peek and nudge when it reads OFFER-EXHAUSTED. Cost this time: about 12 minutes of the run's start. Cause not measured; not claimed: that the watcher script is at fault rather than the seat's monitor lifecycle, or that other seats are affected."
 }
 ```
+
+## TCKT_VNEXT-D2-S62 -- The CloudOps applier identity cannot delete the Trade Request test object on PROD: s3:DeleteObject on opal-data-cottonwood is an EXPLICIT DENY in cloudops-dell-agent-deploy-policy, so TO-R20-PROD3 left one 31-byte synthetic object under the trade-form prefix.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-19T20:50:00Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S62",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The CloudOps applier identity cannot delete the Trade Request test object on PROD: s3:DeleteObject on opal-data-cottonwood is an EXPLICIT DENY in cloudops-dell-agent-deploy-policy, so TO-R20-PROD3 left one 31-byte synthetic object under the trade-form prefix.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-R20-PROD3 attempt 1, 20:37Z: upload door 200, PUT 200, ticket 201 (TCK-20261019-2d6d1a25); head-object read at 20:49Z of s3://opal-data-cottonwood/portal/cottonwood/state/ticket_attachments/trade-form/8b46f05593e643f0bb229023841d2a4a/tckt-r20-trade-synthetic.csv: ContentLength 31, text/csv, LastModified 2026-10-19T20:37:24Z, VersionId U2wA9rMN_iqdUnci740XcsAfyvgsTK3h (bucket versioning Enabled)",
+      "20:45:22Z delete-object by that exact key answered AccessDenied: 'User arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform s3:DeleteObject on resource ... with an explicit deny in an identity-based policy: arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy' (deliverables/r20_trade_prod/attempt1/attempt1_run_events.txt)",
+      "the same run deleted its opal-tickets item by key (ConsistentRead ABSENT) and, at 20:49:11Z by the CLI after the script crashed on the denial, its opal-users-v2 row (ConsistentRead ABSENT)"
+    ]
+  },
+  "spec_asserts": "TO-R20-PROD3 and the CTO's msg 10936 bound the run to delete the ONE uploaded object by exact key with aws s3api delete-object; the order named the S3 role scope as unread. The object is invented numbers only (symbol,qty,px and one row SYN1,100,12.34).",
+  "world_is": "The applier cannot do the order's S3 delete: an explicit deny, which a policy edit or another identity would be needed to get around. This seat did not try either. One synthetic 31-byte object stays under the firm's trade-form prefix until a seat that may delete does it (the key and version id are above); the ticket and the filer row are gone. Not claimed: that the deny is a mistake (it may be deliberate), or that any other prefix or bucket is affected."
+}
+```
