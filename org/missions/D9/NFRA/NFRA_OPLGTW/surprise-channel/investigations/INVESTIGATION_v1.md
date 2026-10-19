@@ -29176,3 +29176,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. A one-line change would keep the forward text in a file when the tail line has no 'passed'; not made here, since the check is shared by the order set and no order needs it this round."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~158",
+  "surfaced_at": "2026-10-19T02:04:18Z",
+  "id": "NFRA_OPLGTW-Z-W158-S1",
+  "one_line": "OG-en-32: the five route-test cases fail at base because the gateway's trailing catch-all Route('/{path:path}', dashboard_deep_link) at app/server.py:1198 matches every method on every path, so a POST to an hx route answers its 404 instead of the 405 that the route's own methods list gives on the installed starlette",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/server.py:1198 (worktree wk-NFRA_OPLGTW-158): Route('/{path:path}', dashboard_deep_link, methods=['GET','HEAD','POST','PUT','PATCH','DELETE','OPTIONS']), the last entry of the app routes list; server.py:1197 comment says it is reached only by a path nothing above matches",
+      "installed starlette 1.3.1, routing.py:251: Route.matches returns Match.PARTIAL on a method mismatch; routing.py:682-690: Router.app hands a PARTIAL to the 405 handler only when no route is a FULL match",
+      "one-request run, installed starlette 1.3.1, python .scratch/en32_method_repro.py: bare Route POST /hx/teams/me -> 405 allow='HEAD, GET'; the same route with the trailing catch-all -> 404 body='Not Found'",
+      "git: e42d2c35c3 (2026-10-13) added the catch-all; db92656c72 (2026-10-02) added the hx routes whose tests expect 405; pytest of the five cases at base: 5 failed, each assert status == 405 got 404 (rc=1)"
+    ]
+  },
+  "spec_asserts": "OG-en-32 (round 44, R3-T.121): the five named route-test cases pass together; each asserts that a method the route does not allow is refused with 405 (tests/test_teams_route.py:364 and :515, tests/test_mail_route.py:282 and :309, tests/test_transcript_route.py:134).",
+  "world_is": "The refusal is closed (404, no body served, handler not run), but the status is 404 not 405. The catch-all at server.py:1198 sits in the same route list as the hx routes and FULL-matches their mismatched methods, so the router never reaches their PARTIAL 405. The installed library is not the cause: a bare Route answers 405 on starlette 1.3.1. The 404 is the application's own route table.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Holds OG-en-32 AC1 red; the cause is recorded as real_routing_defect in W/ROUTE_404_CAUSE.json (change kind none, no product change made: app/ is not granted in this order). Not run against starlette 0.37.0 (egress NONE declared for this order); the 1.3.1 one-request run is the basis for refuting routing_library_version. The product fix needs its own cell; it is not this worker's to choose."
+}
+```
