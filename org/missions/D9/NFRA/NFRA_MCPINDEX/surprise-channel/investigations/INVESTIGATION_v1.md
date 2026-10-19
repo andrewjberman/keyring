@@ -11206,6 +11206,237 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_compare_peers: the census links opal_data_etfs_gold_buying_trend and opal_data_etfs_gold_holding_contribution only; the code also reads opal_data_etfs_gold_peer_group_map on every call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim (GATEWAY_SURFACE_CENSUS_20261019_v2.json, tool etfs_compare_peers, indexes): opal_data_etfs_gold_buying_trend, opal_data_etfs_gold_holding_contribution. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals_flow.py:576 calls _peer_funds(scope, rows, home, tool) unconditionally, and _peer_funds binds rows[ENTITY_PEERS] at app/etfs_rivals_flow.py:403 and reads the newest peer_group_map part through _read_dates at :409. The trace source set carries 3 s3 sources: peer_group_map (403), buying_trend (577), holding_contribution (578).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:403 (row, why = rows[ENTITY_PEERS]); :576 (funds, keys = _peer_funds(...)); :577-578 (_peer_section with ENTITY_BUYING and ENTITY_CONTRIB)",
+        "source_sets_etfs.json (deliverables/0.9.0_WK_NFRA_MCPINDEX~72) tool etfs_compare_peers, 3 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_coverage: the census links opal_data_etfs_gold_holdings_coverage and opal_data_etfs_gold_input_census only; the code also reads opal_data_etfs_gold_canonical_shape on every call and opal_data_etfs_gold_peer_group_map when fund_ticker is absent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_coverage, indexes: opal_data_etfs_gold_holdings_coverage, opal_data_etfs_gold_input_census. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals.py:624 binds rows[ENTITY_CANON] and :644 calls _latest_reports over its partitions on every call, so canonical_shape is read whatever the arguments. :627 binds rows[ENTITY_PEER]; the read at :641 runs only when fund_ticker is None. input_census (:625, read at :648) runs only when a fund is behind (lag above 0). The trace carries 4 s3 sources.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals.py:624-627 (the four rows bound), :641 (peer read, fund_ticker None branch), :644 (_latest_reports), :648 (census read, lag branch)",
+        "source_sets_etfs.json tool etfs_get_coverage, 4 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_fund_holdings: the census links opal_data_etfs_gold_holding and opal_data_etfs_silver_holdings only; the code also reads opal_data_etfs_gold_book (the book totals of the same date) on every call that reaches the holdings read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_fund_holdings, indexes: opal_data_etfs_gold_holding, opal_data_etfs_silver_holdings. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_funds.py:386 binds rows[ENTITY_GOLD_BOOK]; _holdings calls _book_totals after the gold-or-silver branch, and _book_totals reads the same-date book part through ts.read_parquet at app/etfs_funds.py:454. The response names it in source_keys and the body's book_totals field.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_funds.py:385-387 (three rows bound), :426 (_book_totals call), :446-454 (book read)",
+        "source_sets_etfs.json tool etfs_get_fund_holdings, 3 sources (gold holding, gold book, silver holdings)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_fund_trades: the census links opal_data_etfs_gold_trade_schedule only; the code also reads opal_data_etfs_gold_peer_group_map when peer_group is given.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_fund_trades, indexes: opal_data_etfs_gold_trade_schedule. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals_flow.py:448-449 calls _peer_funds(...) only when home (peer_group) is not None; _peer_funds binds rows[ENTITY_PEERS] at :403 and reads the newest peer_group_map part. The trade_schedule read (:456) runs on both branches.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:403 (row bound in _peer_funds), :448-449 (peer_group branch), :442 and :456 (trade_schedule)",
+        "source_sets_etfs.json tool etfs_get_fund_trades, 2 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_rival_page_status: the census links opal_data_etfs_platinum_rivalfunds_page only; the code also reads opal_data_etfs_gold_canonical_shape on every call (the gold latest report beside the published one).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_rival_page_status, indexes: opal_data_etfs_platinum_rivalfunds_page. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals_flow.py:735 calls _canonical_latest(scope, rows, tickers, tool) on every call that finds a page day; _canonical_latest binds rows[ENTITY_CANON] at :675 and reads canonical_shape partitions.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:675 (row bound in _canonical_latest), :735 (call), :714 (page row)",
+        "source_sets_etfs.json tool etfs_get_rival_page_status, 2 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_get_security_reference: the census links opal_data_etfs_gold_corporate_actions, opal_data_etfs_gold_security_market and opal_data_etfs_gold_security_names only; the code also reads opal_data_etfs_gold_security_universe on every call to resolve identifiers.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_get_security_reference, indexes: opal_data_etfs_gold_corporate_actions, opal_data_etfs_gold_security_market, opal_data_etfs_gold_security_names. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals.py:573 binds rows[ENTITY_UNIVERSE]; :583 calls _latest(scope, TOOL_SECURITY, uni, sources) before any section is read, so security_universe is read on every call. The three linked tables are read by _section at :594-596.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals.py:573-576 (four rows bound), :583 (universe read), :594-596 (three sections)",
+        "source_sets_etfs.json tool etfs_get_security_reference, 4 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "ROUTING OBSERVATION etfs_who_holds: the census links opal_data_etfs_gold_security_universe only; the code also reads opal_data_etfs_gold_canonical_shape on every call and opal_data_etfs_gold_peer_group_map when peer_group is given.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Census claim, tool etfs_who_holds, indexes: opal_data_etfs_gold_security_universe. Face section 1 step 1: a disagreement with a linked row is one OBSERVATION row.",
+    "world_is": "app/etfs_rivals.py:506-508 bind canonical_shape, security_universe and peer_group_map; the read at :538 (_read of canonical_shape for the date) runs on every call, and the peer read at :542 runs only when peer_group is not None. The security_universe read is at :520.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_rivals.py:506-508 (rows bound), :520 (universe read), :538 (canonical read), :542 (peer read, peer_group branch)",
+        "source_sets_etfs.json tool etfs_who_holds, 3 sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "The vendor field is null on all 27 opal_data_etfs_* rows of the catalog, so the vendor of each etfs source was taken from the row's business_meaning, producer and platform fields, not from the catalog.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 contract: vendor is the data's owner, drawn from the catalog's own vendor values or the closed list opal, ycharts, microsoft, bloomberg, other.",
+    "world_is": "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml: all 27 entities with entity prefix opal_data_etfs_ carry vendor null (silver_datasets section, measured by a yaml load). Every one of the 27 business_meaning fields says 'Opal-internal'; the producer or source fields name Bloomberg for the security_market, corporate_actions and bbg_* rows, and daily_partner_ownership names the platform fields schwab, blackdiamond and orion.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "yaml load of infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml, silver_datasets rows with entity prefix opal_data_etfs_ (27 rows, vendor null on each), run by 0.9.0_WK_NFRA_MCPINDEX~72 at 2026-10-19T19:03:56Z",
+        "source_sets_etfs.json: vendor values schwab, blackdiamond, orion (partner ownership), bloomberg (bbg and security market and corporate actions), opal (the rest)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:02:37Z",
+    "one_line": "The face's premise that the bucket of each s3 source is a constant or config key the code uses does not hold for the 27 catalog-routed etfs entities: no etfs .py names the bucket, which is read from the entity's DATA_CATALOG row; s2.AC2 grounding passes through the entity-name token opal_data_etfs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 step 1: resolve the bucket id from the constant or config key the code uses (app/config.py and the module constants). Face section 1 contract: the cited file must contain the bucket, store, integration or graph string.",
+    "world_is": "Only infra/aws/ec2/opal-gateway/app/etfs_silver.py contains the literal opal-data-etfs (its docstring, line 2); app/config.py names no etfs bucket. etfs_funds.py, etfs_ownership.py, etfs_rivals.py and etfs_rivals_flow.py read bucket and prefix from the row (usable[0]['bucket'] at etfs_funds.py:112). h_check s2.AC2 accepts a cited file that contains opal_data_etfs, which the ENTITY_ constants of those modules carry.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep of infra/aws/ec2/opal-gateway/app for opal-data-etfs and opal_data_etfs in *.py: etfs_silver.py:2 (literal) and the ENTITY_ constants of etfs_funds.py:32-35, etfs_rivals.py:31-38, etfs_rivals_flow.py:43-50, etfs_silver.py:30-35, etfs_ownership.py:38-40",
+        "infra/aws/ec2/opal-gateway/app/etfs_funds.py:109-115 (_scope takes the bucket of the usable rows)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:08:41Z",
+    "one_line": "safe-commit's naming gate printed NAMING ERROR 'function-map folder missing' for infra/aws/lambda/ci/function-map/ on the work commit 144def74b7e (the source-sets JSON and the investigation file), and the commit still returned rc=0; the same message as the sibling rows NFRA_MCPINDEX-Z-W61-S1 and Z-W63-S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project. Face section 3: the <paths> grant names the deliverables folder, the task order file and the investigation file; infra/aws/lambda/ci is not in it.",
+    "world_is": "The commit log .scratch/commit1.log of wk-mcpindex-72 prints '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-72\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' at line 12, and '[msg-verify] committed 144def74b7e' at line 42. git show --stat 144def74b7e lists 2 files.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/commit1.log lines 12 and 42 (wk-mcpindex-72), the safe-commit output of commit 144def74b7e",
+        "git show --stat 144def74b7e: source_sets_etfs.json and INVESTIGATION_v1.md, 601 insertions"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W72-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~72",
+    "surfaced_at": "2026-10-19T19:08:41Z",
+    "one_line": "safe-commit's client-data leg printed WARN: the hashed account-id list is ABSENT on this device, and the commit gate printed 'checked 0 of 2 file(s) -- NOTHING WAS CHECKED'; commit 144def74b7e landed rc=0 with no client-data check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "CLAUDE.md section 5 and the commit gate: a commit is checked by the commit gate's client-data leg. The face's BOUNDS 2 names py_compile, the naming gate and ruff for the commit path, and does not name the client-data leg.",
+    "world_is": "The commit log .scratch/commit1.log of wk-mcpindex-72 prints '[commit-gate] WARN: commit-gate checked 0 of 2 file(s) -- NOTHING WAS CHECKED.' at line 9, and 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids' at line 37. The committed files are a JSON array of gateway source paths and line numbers and a markdown investigation file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/commit1.log lines 9 and 37 (wk-mcpindex-72), the safe-commit output of commit 144def74b7e",
+        "the same message as the sibling row NFRA_MCPINDEX-Z-W63-S2 (commit 0a2fb26fd8, 2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
