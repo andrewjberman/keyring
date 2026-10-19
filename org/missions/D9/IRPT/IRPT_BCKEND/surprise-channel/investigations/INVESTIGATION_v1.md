@@ -42316,3 +42316,78 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A third served account is gone from the candidate and not exempt, so the gate refuses; the served holdings are unchanged since 2026-10-12."
 }
 ```
+
+## IRPT_BCKEND-D2-W458-S1 -- The TO premise that 49 Financial marks no closures is not the live state: the lost account refuses on the marks-false branch
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W458-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~458",
+  "surfaced_at": "2026-10-19T15:41:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-hx-1 cell text says the lost account refuses because 49 Financial marks no closures; the live flag is False (80 account ids under TERMINATED directory entries), so the refusal takes the else branch at holdings_snapshot.py 3424-3425.",
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-hx-1 WORKER FACE cell text: what stays lost refuses because 49 Financial marks no closures (lines 3421-3425 read as the marks-true case).",
+  "world_is": "Live read at base 2d46c0f6f1: directory_marks_no_closures returned False, so the gate adds account_lost (3425). With the flag True the account would have been listed not refused (3422-3423). The refused account is not in the 80 closed entries.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@2d46c0f6f1 lines 3014-3021 and 3421-3425 read by 0.9.0_WK_IRPT_BCKEND~458",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~458/IBhx1_notes.md section 5 (counts only)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W458-S2 -- The replay harness cannot run from a copy outside a checkout unless GIT_DIR is exported
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W458-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~458",
+  "surfaced_at": "2026-10-19T15:41:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says copy the replay harness to a scratch directory outside the repository and run it; the harness calls git rev-parse in its own folder and fails there unless GIT_DIR is set, and its siblings resolve relative to its folder.",
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-hx-1 step 2: copy IB233-1_49f_transplant_reread_harness.py into a scratch directory outside the repository and run it, unmodified.",
+  "world_is": "The harness runs git rev-parse --absolute-git-dir and git rev-parse HEAD with cwd set to its own folder (holdings harness lines 73-74, 113, 124). Outside a checkout that fails; the run exported GIT_DIR to the worktree git directory and copied the sibling deliverable folders (~434, ~426, ~422, ~437) beside it. Nothing was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~437/IB233-1_49f_transplant_reread_harness.py@2d46c0f6f1 lines 27-31, 73-74, 113, 124, read by 0.9.0_WK_IRPT_BCKEND~458",
+      "scratch run log (outside the repository): rc=0 after GIT_DIR export"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W458-S3 -- The worktree sparse set omits org/surprise_channel, so the row schema is not in the worktree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W458-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~458",
+  "surfaced_at": "2026-10-19T15:41:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree sparse set does not include org/surprise_channel, so org/surprise_channel/schemas/investigation_item.schema.json is absent in the worktree although tracked at HEAD; the row gate cannot read it from this worktree.",
+  "spec_asserts": "The worker face files surprise rows in the order's investigation file, graded at commit against the row schema.",
+  "world_is": "git sparse-checkout list of the worktree lists no org/surprise_channel entry; the schema file is absent from the worktree and present in HEAD (read by git show into a scratch directory).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-IRPT_BCKEND-458 at base 2d46c0f6f1 (no org/surprise_channel entry)",
+      "git show 2d46c0f6f1:org/surprise_channel/schemas/investigation_item.schema.json read into a scratch directory (present)"
+    ]
+  }
+}
+```
