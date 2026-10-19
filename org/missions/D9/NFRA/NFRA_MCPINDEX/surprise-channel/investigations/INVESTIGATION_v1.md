@@ -10717,6 +10717,848 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for create_draft claims graph app/tools.py:461, which is a recipient-list element inside the message dict; the graph POST that names the source is app/tools.py:465 (/me/messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for create_draft = graph app/tools.py:461; the m365 trace checks each bucket_source claim against the line that names the source (contract step 1).",
+    "world_is": "app/tools.py:461 is the toRecipients comprehension in create_draft. The source call is app/tools.py:465, graph POST /me/messages. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 461p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: toRecipients comprehension (read 2026-10-19T18:28Z)",
+        "app/tools.py:465 in the same tree: lambda t: graph.call(t, POST, /me/messages, json_body=msg)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for find_online_meeting claims graph app/tools.py:547, the join_url validation return; the graph GET that names the source is app/tools.py:551 (/me/onlineMeetings).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for find_online_meeting = graph app/tools.py:547; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:547 is the invalid join_url error return. The source call is app/tools.py:551, graph GET /me/onlineMeetings. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 547p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: invalid join_url return (read 2026-10-19T18:28Z)",
+        "app/tools.py:551: raw = graph.call(t, GET, /me/onlineMeetings, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for find_sharepoint_site claims graph app/tools.py:697, the @mcp.tool() decorator above the function; the graph GET that names the source is app/tools.py:701 (/sites).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for find_sharepoint_site = graph app/tools.py:697; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:697 is the decorator line of find_sharepoint_site. The source call is app/tools.py:701, graph GET /sites. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 697p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool() (read 2026-10-19T18:28Z)",
+        "app/tools.py:701: lambda t: graph.call(t, GET, /sites, params={search: name})"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for get_item claims graph app/tools.py:925, the def header of get_item; the graph GET that names the source is app/tools.py:929 (/me/drive).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for get_item = graph app/tools.py:925; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:925 is def get_item(item_id). The source call is app/tools.py:929, graph GET /me/drive/items. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 925p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def get_item (read 2026-10-19T18:28Z)",
+        "app/tools.py:929: lambda t: graph.call(t, GET, /me/drive/items/{item_id}, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for get_site_item claims graph app/tools.py:934, the def header of get_site_item; the graph GET that names the source is app/tools.py:938 (/sites).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for get_site_item = graph app/tools.py:934; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:934 is def get_site_item(site_id, item_id). The source call is app/tools.py:938, graph GET /sites/{site_id}/drive/items. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 934p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def get_site_item (read 2026-10-19T18:28Z)",
+        "app/tools.py:938: lambda t: graph.call(t, GET, /sites/{site_id}/drive/items/{item_id}, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for inspect_email_attachment claims graph app/tools.py:428, a docstring line of the tool; the graph GET that names the source is app/tools.py:432 (/me/messages attachment metadata, with the $value fetch at 438).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for inspect_email_attachment = graph app/tools.py:428; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:428 is a docstring line of inspect_email_attachment. The source call is app/tools.py:432, graph GET /me/messages/{id}/attachments/{id}. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 428p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:432: meta = graph.call(t, GET, /me/messages/{message_id}/attachments/{attachment_id}, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_calendar claims graph app/tools.py:513, the else branch of the start_date default; the graph GET that names the source is app/tools.py:517 (/me/calendarView).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_calendar = graph app/tools.py:513; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:513 is the else branch that defaults start to now. The source call is app/tools.py:517, graph GET /me/calendarView. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 513p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: else: (read 2026-10-19T18:28Z)",
+        "app/tools.py:517: lambda t: graph.call(t, GET, /me/calendarView, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for list_channels claims graph app/tools.py:1667, which is a docstring line of portal_get_peer_performance (another tool); list_channels reaches graph /teams at app/tools.py:1788.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_channels = graph app/tools.py:1667; the claim must name the source of list_channels itself.",
+    "world_is": "app/tools.py:1667 is inside portal_get_peer_performance (defined at 1666). The source of list_channels is app/tools.py:1788, graph GET /teams/{team_id}/channels. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1667p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring of portal_get_peer_performance (read 2026-10-19T18:28Z)",
+        "app/tools.py:1788: lambda t: graph.call(t, GET, /teams/{team_id}/channels, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_chats claims graph app/tools.py:981, the def header of list_chats; the graph GET that names the source is app/tools.py:985 (/me/chats).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_chats = graph app/tools.py:981; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:981 is def list_chats(top). The source call is app/tools.py:985, graph GET /me/chats. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 981p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def list_chats (read 2026-10-19T18:28Z)",
+        "app/tools.py:985: lambda t: graph.call(t, GET, /me/chats, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_email_attachments claims graph app/tools.py:360, the def header; the graph GET that names the source is app/tools.py:364 (/me/messages attachments).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_email_attachments = graph app/tools.py:360; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:360 is def list_email_attachments(message_id). The source call is app/tools.py:364, graph GET /me/messages/{id}/attachments. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 360p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def list_email_attachments (read 2026-10-19T18:28Z)",
+        "app/tools.py:364: lambda t: graph.call(t, GET, /me/messages/{message_id}/attachments, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_email_filtered claims graph app/tools.py:326, the invalid page_token return; the graph GET that names the source is app/tools.py:330 (/me/messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_email_filtered = graph app/tools.py:326; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:326 is the invalid page_token error return. The source call is app/tools.py:330, graph GET /me/messages. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 326p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: invalid page_token return (read 2026-10-19T18:28Z)",
+        "app/tools.py:330: res = graph.call(t, GET, /me/messages, params=params)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_meeting_transcripts claims graph app/tools.py:572, the rows initialiser inside the page loop; the graph path that names the source is app/tools.py:573 (/me/onlineMeetings).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_meeting_transcripts = graph app/tools.py:572; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:572 is rows: list = []. The source path is app/tools.py:573, graph /me/onlineMeetings/{id}/transcripts. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 572p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: rows: list = [] (read 2026-10-19T18:28Z)",
+        "app/tools.py:573: path: Optional[str] = f/me/onlineMeetings/{meeting_id}/transcripts"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_recent_email claims graph app/tools.py:235, the closing brace of the params dict; the graph GET that names the source is app/tools.py:239 (/me/messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_recent_email = graph app/tools.py:235; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:235 is the closing brace of the params dict. The source call is app/tools.py:239, graph GET /me/messages. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 235p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: closing brace (read 2026-10-19T18:28Z)",
+        "app/tools.py:239: lambda t: graph.call(t, GET, /me/messages, params=params)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_shared_folder claims graph app/tools.py:1264, a blank line inside the tool; the graph GET that names the source is app/tools.py:1268 (/shares).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_shared_folder = graph app/tools.py:1264; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:1264 is a blank line inside list_shared_folder. The source call is app/tools.py:1268, graph GET /shares/{tok}/driveItem. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1264p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: blank (read 2026-10-19T18:28Z)",
+        "app/tools.py:1268: item = graph.call(t, GET, /shares/{tok}/driveItem, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for list_site_drives claims graph app/tools.py:944, a docstring line of the tool; the graph GET that names the source is app/tools.py:948 (/sites drives).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_site_drives = graph app/tools.py:944; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:944 is a docstring line of list_site_drives. The source call is app/tools.py:948, graph GET /sites/{site_id}/drives. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 944p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:948: lambda t: graph.call(t, GET, /sites/{site_id}/drives, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S16",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for list_teams claims graph app/tools.py:1659, which is the @mcp.tool() decorator of portal_get_model_portfolio_timeseries (another tool); list_teams reaches graph /me/joinedTeams at app/tools.py:1780.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for list_teams = graph app/tools.py:1659; the claim must name the source of list_teams itself.",
+    "world_is": "app/tools.py:1659 is the decorator of portal_get_model_portfolio_timeseries (defined at 1660). The source of list_teams is app/tools.py:1780, graph GET /me/joinedTeams. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1659p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool() (read 2026-10-19T18:28Z)",
+        "app/tools.py:1660: def portal_get_model_portfolio_timeseries() -> dict:",
+        "app/tools.py:1780: lambda t: graph.call(t, GET, /me/joinedTeams, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S17",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for poll_addressed_teams_messages claims graph app/tools.py:1707, which is a docstring line of read_chat_message_images (another tool); the poll reaches graph /me/chats at app/tools.py:1828.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for poll_addressed_teams_messages = graph app/tools.py:1707; the claim must name the source of the poll tool itself.",
+    "world_is": "app/tools.py:1707 is inside the docstring of read_chat_message_images (defined at 1702). The source of poll_addressed_teams_messages is app/tools.py:1828, graph GET /me/chats via poll_addressed_impl. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1707p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring of read_chat_message_images (read 2026-10-19T18:28Z)",
+        "app/tools.py:1828: resp = graph.call(token, GET, /me/chats, params=...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S18",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for profile_site_file claims graph app/tools.py:744, the import hashlib line inside the tool; the graph GET that names the source is app/tools.py:748 (/sites).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for profile_site_file = graph app/tools.py:744; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:744 is import hashlib inside profile_site_file. The source call is app/tools.py:748, graph GET /sites/{site_id}/drive/items/{item_id}/content. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 744p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: import hashlib (read 2026-10-19T18:28Z)",
+        "app/tools.py:748: raw = graph.call(t, GET, /sites/{site_id}/drive/items/{item_id}/content)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S19",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_channel_messages claims graph app/tools.py:1013, a docstring line of the shared helper _get_messages; the tool's graph path that names the source is app/tools.py:1798 (/teams channel messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_channel_messages = graph app/tools.py:1013; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:1013 is a docstring line of the shared helper _get_messages (defined at 1010). The tool's source path is app/tools.py:1798, graph /teams/{team_id}/channels/{channel_id}/messages, passed into the helper. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1013p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line of _get_messages (read 2026-10-19T18:28Z)",
+        "app/tools.py:1798: _get_messages(t, f/teams/{team_id}/channels/{channel_id}/messages, top)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S20",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for read_chat_message_images claims graph app/tools.py:1591, a blank line inside client_get_holdings (another tool); the tool reaches graph /chats hostedContents at app/tools.py:1711.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_chat_message_images = graph app/tools.py:1591; the claim must name the source of read_chat_message_images itself.",
+    "world_is": "app/tools.py:1591 is a blank line inside client_get_holdings (defined at 1588). The source of read_chat_message_images is app/tools.py:1711, graph GET /chats/{chat_id}/messages/{message_id}/hostedContents. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1591p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: blank line (read 2026-10-19T18:28Z)",
+        "app/tools.py:1588: def client_get_holdings(firm, account, ...)",
+        "app/tools.py:1711: base = f/chats/{chat_id}/messages/{message_id}/hostedContents"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S21",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_chat_messages claims graph app/tools.py:1013, a docstring line of the shared helper _get_messages; the tool's graph path that names the source is app/tools.py:1697 (/chats messages).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_chat_messages = graph app/tools.py:1013; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:1013 is a docstring line of the shared helper _get_messages (defined at 1010). The tool's source path is app/tools.py:1697, graph /chats/{chat_id}/messages, passed into the helper. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1013p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line of _get_messages (read 2026-10-19T18:28Z)",
+        "app/tools.py:1697: _shape_teams_page(t, _get_messages(t, f/chats/{chat_id}/messages, top), ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S22",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_document claims graph app/tools.py:960, the import base64 line; the branch that names the sources is app/tools.py:961 (two graph sources: /sites when site_id is set, /me/drive otherwise).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_document = graph app/tools.py:960; the trace checks the claim against the line that names the source or selects its branch.",
+    "world_is": "app/tools.py:960 is import base64. The branch at app/tools.py:961 selects between graph /sites/{site_id}/drive and graph /me/drive. Kind agrees (graph); the claimed line does not name either endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 960p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: import base64 (read 2026-10-19T18:28Z)",
+        "app/tools.py:961: drive = f/sites/{site_id}/drive if site_id else /me/drive"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S23",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_email claims graph app/tools.py:351, the def header; the graph GET that names the source is app/tools.py:355 (/me/messages by id).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_email = graph app/tools.py:351; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:351 is def read_email(message_id). The source call is app/tools.py:355, graph GET /me/messages/{message_id}. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 351p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def read_email (read 2026-10-19T18:28Z)",
+        "app/tools.py:355: lambda t: graph.call(t, GET, /me/messages/{message_id}, params=...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S24",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_file claims graph app/tools.py:682, the def header; the graph GET that names the source is app/tools.py:686 (/me/drive items content).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_file = graph app/tools.py:682; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:682 is def read_file(item_id, max_chars). The source call is app/tools.py:686, graph GET /me/drive/items/{item_id}/content. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 682p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def read_file (read 2026-10-19T18:28Z)",
+        "app/tools.py:686: raw = graph.call(t, GET, /me/drive/items/{item_id}/content)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S25",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_meeting_transcript claims graph app/tools.py:606, the invalid limit return; the graph GET that names the source is app/tools.py:610 (/me/onlineMeetings transcript content).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_meeting_transcript = graph app/tools.py:606; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:606 is the invalid limit error return. The source call is app/tools.py:610, graph GET /me/onlineMeetings/{id}/transcripts/{id}/content. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 606p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: invalid limit return (read 2026-10-19T18:28Z)",
+        "app/tools.py:610: raw = graph.call(t, GET, /me/onlineMeetings/{meeting_id}/transcripts/{transcript_id}/content, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S26",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_site_file claims graph app/tools.py:719, a docstring line of the tool; the graph GET that names the source is app/tools.py:723 (/sites drive item content).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_site_file = graph app/tools.py:719; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:719 is a docstring line of read_site_file. The source call is app/tools.py:723, graph GET /sites/{site_id}/drive/items/{item_id}/content. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 719p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:723: raw = graph.call(t, GET, /sites/{site_id}/drive/items/{item_id}/content)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S27",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_site_workbook claims graph app/tools.py:871, a docstring line of the tool; the workbook base path that names the source is app/tools.py:872 (/sites workbook).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_site_workbook = graph app/tools.py:871; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:871 is a docstring line of read_site_workbook. The source base path is app/tools.py:872, graph /sites/{site_id}/drive/items/{item_id}/workbook. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 871p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:872: base = f/sites/{site_id}/drive/items/{item_id}/workbook"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S28",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_teams_attachment claims graph app/tools.py:1220, the content_url validation return; the graph GET that names the source is app/tools.py:1224 (/shares driveItem).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_teams_attachment = graph app/tools.py:1220; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:1220 is the content_url validation error return. The source call is app/tools.py:1224, graph GET /shares/{tok}/driveItem. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1220p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: content_url error return (read 2026-10-19T18:28Z)",
+        "app/tools.py:1224: item = graph.call(t, GET, /shares/{tok}/driveItem, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S29",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for read_workbook claims graph app/tools.py:897, a docstring line of the tool; the workbook base path that names the source is app/tools.py:898 (/me/drive workbook).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for read_workbook = graph app/tools.py:897; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:897 is a docstring line of read_workbook. The source base path is app/tools.py:898, graph /me/drive/items/{item_id}/workbook. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 897p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:898: base = f/me/drive/items/{item_id}/workbook"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S30",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for reply_email claims graph app/tools.py:490, a docstring line of the tool; the graph POST that names the source is app/tools.py:494 (/me/messages reply).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for reply_email = graph app/tools.py:490; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:490 is a docstring line of reply_email. The source call is app/tools.py:494, graph POST /me/messages/{message_id}/reply. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 490p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: docstring line (read 2026-10-19T18:28Z)",
+        "app/tools.py:494: lambda t: graph.call(t, POST, /me/messages/{message_id}/reply, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S31",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for save_email_attachment_to_site claims graph app/tools.py:384, the invalid filename return; the graph read that names the source is app/tools.py:388 (/me/messages attachment $value).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for save_email_attachment_to_site = graph app/tools.py:384; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:384 is the invalid filename error return. The source read is app/tools.py:388, graph GET /me/messages/{id}/attachments/{id}/$value. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 384p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: invalid filename return (read 2026-10-19T18:28Z)",
+        "app/tools.py:388: raw = graph.call(t, GET, /me/messages/{message_id}/attachments/{attachment_id}/$value)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S32",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for search_email claims graph app/tools.py:340, the @mcp.tool() decorator of search_email; the graph GET that names the source is app/tools.py:344 (/me/messages search).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for search_email = graph app/tools.py:340; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:340 is the decorator line above search_email. The source call is app/tools.py:344, graph GET /me/messages with $search. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 340p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool() (read 2026-10-19T18:28Z)",
+        "app/tools.py:344: lambda t: graph.call(t, GET, /me/messages, params={$search: ...})"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S33",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for search_files claims graph app/tools.py:656, the @mcp.tool() decorator of search_files; the graph GET that names the source is app/tools.py:660 (/me/drive search).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for search_files = graph app/tools.py:656; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:656 is the decorator line above search_files. The source call is app/tools.py:660, graph GET /me/drive/root/search. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 656p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool() (read 2026-10-19T18:28Z)",
+        "app/tools.py:660: lambda t: graph.call(t, GET, /me/drive/root/search(q=...), ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S34",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for search_site_files claims graph app/tools.py:916, the def header; the graph GET that names the source is app/tools.py:920 (/sites search).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for search_site_files = graph app/tools.py:916; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:916 is def search_site_files(site_id, query). The source call is app/tools.py:920, graph GET /sites/{site_id}/drive/root/search. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 916p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def search_site_files (read 2026-10-19T18:28Z)",
+        "app/tools.py:920: lambda t: graph.call(t, GET, /sites/{site_id}/drive/root/search(q=...), ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S35",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for send_channel_message claims graph app/tools.py:1697, which is the read_chat_messages lambda (another tool, a /chats path); send_channel_message posts to graph /teams at app/tools.py:1818.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for send_channel_message = graph app/tools.py:1697; the claim must name the source of send_channel_message itself.",
+    "world_is": "app/tools.py:1697 belongs to read_chat_messages (a /chats/{chat_id}/messages read). The source of send_channel_message is app/tools.py:1818, graph POST /teams/{team_id}/channels/{channel_id}/messages. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1697p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: read_chat_messages lambda (read 2026-10-19T18:28Z)",
+        "app/tools.py:1818: lambda t: graph.call(t, POST, /teams/{team_id}/channels/{channel_id}/messages, ...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S36",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "ROUTING: members.yaml bucket_source for send_chat_message claims graph app/tools.py:1648, which is the def header of portal_get_etf_returns (another tool); send_chat_message posts to graph /chats at app/tools.py:1769.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for send_chat_message = graph app/tools.py:1648; the claim must name the source of send_chat_message itself.",
+    "world_is": "app/tools.py:1648 is def portal_get_etf_returns. The source of send_chat_message is app/tools.py:1769, graph POST /chats/{chat_id}/messages. Kind agrees (graph); the claimed line lands in another tool's code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 1648p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: def portal_get_etf_returns (read 2026-10-19T18:28Z)",
+        "app/tools.py:1769: lambda t: graph.call(t, POST, /chats/{chat_id}/messages, json_body=payload)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S37",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for send_email claims graph app/tools.py:481, the closing of the message dict; the graph POST that names the source is app/tools.py:485 (/me/sendMail).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for send_email = graph app/tools.py:481; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:481 is the closing of the send_email message dict. The source call is app/tools.py:485, graph POST /me/sendMail. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 481p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: closing brace (read 2026-10-19T18:28Z)",
+        "app/tools.py:485: lambda t: graph.call(t, POST, /me/sendMail, json_body=msg)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S38",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for upload_text_to_site claims graph app/tools.py:830, the unsafe folder_path raise; the graph upload that names the source is app/tools.py:834 (/sites drive upload).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for upload_text_to_site = graph app/tools.py:830; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:830 is the unsafe folder_path raise. The source call is app/tools.py:834, graph upload to /sites/{site_id}/drive/root. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 830p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: raise ValueError unsafe folder_path (read 2026-10-19T18:28Z)",
+        "app/tools.py:834: item = graph.upload_large(t, f/sites/{site_id}/drive/root:/{folder}/{filename}, data)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S39",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for validate_ssavail_attachment claims graph app/tools.py:801, a blank line inside the tool; the graph GET that names the source is app/tools.py:806 (/me/messages attachment $value).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for validate_ssavail_attachment = graph app/tools.py:801; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:801 is a blank line inside validate_ssavail_attachment. The source call is app/tools.py:806, graph GET /me/messages/{id}/attachments/{id}/$value. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 801p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: blank (read 2026-10-19T18:28Z)",
+        "app/tools.py:806: /me/messages/{message_id}/attachments/{attachment_id}/$value"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S40",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:28:39Z",
+    "one_line": "members.yaml bucket_source for whoami claims graph app/tools.py:212, the @mcp.tool(meta=...) decorator above whoami; the graph GET that names the source is app/tools.py:217 (/me).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "members.yaml bucket_source for whoami = graph app/tools.py:212; the trace checks the claim against the line that names the source.",
+    "world_is": "app/tools.py:212 is the decorator line above whoami. The source call is app/tools.py:217, graph GET /me. Kind agrees (graph); the claimed line does not name the endpoint.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 212p C:/tmp/wk-mcpindex-76/infra/aws/ec2/opal-gateway/app/tools.py: @mcp.tool(meta=...) (read 2026-10-19T18:28Z)",
+        "app/tools.py:217: t, GET, /me, params=...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
