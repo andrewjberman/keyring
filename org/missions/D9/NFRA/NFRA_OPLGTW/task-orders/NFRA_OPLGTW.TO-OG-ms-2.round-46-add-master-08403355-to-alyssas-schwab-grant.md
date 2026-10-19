@@ -81,6 +81,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ms-2.round-46-add-master-084033
 - Round 46, a mid-round cell (CTO ruling (B) msg 36104), amendment A7 of R3-T.123. The pair of cells: `OG-ms-1` (the code, complete) and this grant write; the release between them is `OG-rz-2`'s batch15.
 - Phase A runs now, on trunk code, so the three halves can be signed before tonight's window; Phase B waits for the batch15 ledger to close (the grant names a master the live gateway does not know until the release is live).
 - Pre-cut: `ms2.AC1` and `ms2.AC2` base FAIL as expected.
+- A1 (issuer, 2026-10-19 ~21:4xZ), on the COO half's condition J4: the read-back `decide()` runs against the DEPLOYED tree on the host (a guarded fresh process importing the deployed `app/`, not the repo), because the question is whether the RUNNING code accepts her grant; `W/MS2_READBACK_DECIDE.json` carries `"tree": "deployed"` and `"code_sha"` (the live marker) beside the five answers, and `ms2.AC2` requires both. The expected output text is unchanged. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>staged</status>
 <status>pending</status>
