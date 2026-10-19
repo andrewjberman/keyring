@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-19T20:33:53.615078+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261019T213013Z
 **Deploy:** AMGT_RESAPP AMGT-cf-4: ONE code leg redeploying opal-amgt-scoped-api from release pin 08b8ea9f8c (parent 9281d3c0b2; ONE member lib/research/print/render_pack.py blob 023406bfda53 -> 57160d25953f, file sha256 6e381fd6386e; under the signed never-widen pair COO 58aa7802b5 + CTO 5cf6ab5fe1); live must read JQxImXOr.. first (rev 737e72b2.., LastModified 2026-10-19T17:14:27Z); AMGT_AIFILL_ROOT stays absent; code-only saved plan on the harvest root, exactly 1 change 0 add 0 destroy; rollback = ce-4 artifact VersionId lAqLJzsuCCyjqF8whHTeBiOOBLd.HKaR by the same saved-plan route; no close before the issuer word
 **Authored by:** 0.7.0_AE_CloudOps~SC1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -19,7 +19,7 @@
 | H5 | activation | safe-apply of the saved plan after get_delivery_state all READ; CodeSha256 after differs from JQxImXOr.. | apply output + config | PASS. cf4_apply.out 20:51Z to 20:56Z: get_delivery_state 5 READ + 8527 (this order's GO, opened, acked READ); config re-read equal 20:51:59Z; safe-apply of the saved plan 20:52:00Z to 20:54:22Z rc 0 (HALT_ACK=1): Apply complete! Resources: 0 added, 1 changed, 0 destroyed. CodeSha256 after keJ3wDa8.. differs from JQxImXOr.. (rev cdab5595-577d-4afe-8d31-1b39f08a88e9, modified 2026-10-19T20:54:16.000+0000) | CLOSED 20261019T210326Z |
 | H6 | verify | post-act AC1 pack form, AC2 rich word swap, AC3 config, AC4 pin diff; environment unchanged | AC outputs | PASS. cf4_post_act.out 20:55Z to 20:56Z: AC3 config as above, mem 1769 timeout 29, ENV keys HARVEST_ARTICLES_TABLE and HARVEST_METRICS_TABLE, AMGT_AIFILL_ROOT absent; AC1 PACK CAPTURE 8 of 8 (0 not 200) and PACK FORM YES (8 of 8 names); AC2 RICH CAPTURE 8 of 8 (0 not 200) and PACK WORD SWAP YES (8 of 8 names; 86 words moved in total); AC4 pin diff 1 member render_pack.py 023406bfda53 -> 57160d25953f; plan after the apply (ENABLED var): No changes | CLOSED 20261019T210326Z |
 | H7 | git | record-terraform-deploy.sh harvest; source-map entry equal to live CodeSha256 | record output + entry | PASS. record-terraform-deploy.sh harvest --plan cf4.tfplan RECORD_RC=0 (cf4_record.out): commit bcaf1f92e0, reconcile artifact_sha256 -> keJ3wDa8..; follow-up commit 7729ddd79b set deployed_code_sha256 and deploy_ledger; function-map entry deployed_code_sha256 = artifact_sha256 = live CodeSha256 keJ3wDa8zRMFzSIiXmTc6mmcD/U+sYUFgiekdQurFjE= | CLOSED 20261019T210327Z |
-| H8 | verify | issuer reads and KEEP word; proof_of_spec instance VALID on committed bytes; report to the issuer once | issuer word + checker last line |  | OPEN |
+| H8 | verify | issuer reads and KEEP word; proof_of_spec instance VALID on committed bytes; report to the issuer once | issuer word + checker last line | PASS. Issuer 2.0.0_SA_COO~R1 KEEP at 21:16Z (msg 8544, acked READ): config keJ3wDa8.. rev cdab5595; leak scan 101 of 101; money vs page 16 of 16; cross-surface 8 of 8; worst route 9.3 s of 20 s; live rich export holds exactly the pair's 1128 Peers lines and 9 chart lines as Not available, 0 still ABSENT; PDF unchanged; word swap vs seat before sets YES 8 of 8; proof_of_spec instance VALID rc=0 on committed bytes (5bd5b2699c). Rollback target lAqLJzsuCCyjqF8whHTeBiOOBLd.HKaR recorded, unused | CLOSED 20261019T213013Z |
 
 ## Log
 
@@ -31,3 +31,5 @@
 - 20261019T210326Z LEG H5 closed: PASS. cf4_apply.out 20:51Z to 20:56Z: get_delivery_state 5 READ + 8527 (this order's GO, opened, acked READ); config re-
 - 20261019T210326Z LEG H6 closed: PASS. cf4_post_act.out 20:55Z to 20:56Z: AC3 config as above, mem 1769 timeout 29, ENV keys HARVEST_ARTICLES_TABLE and H
 - 20261019T210327Z LEG H7 closed: PASS. record-terraform-deploy.sh harvest --plan cf4.tfplan RECORD_RC=0 (cf4_record.out): commit bcaf1f92e0, reconcile ar
+- 20261019T213013Z LEG H8 closed: PASS. Issuer 2.0.0_SA_COO~R1 KEEP at 21:16Z (msg 8544, acked READ): config keJ3wDa8.. rev cdab5595; leak scan 101 of 101
+- 20261019T213013Z CLOSED -- all 8 legs proven
