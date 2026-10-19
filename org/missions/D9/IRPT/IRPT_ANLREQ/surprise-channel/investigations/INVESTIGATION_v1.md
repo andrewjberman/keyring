@@ -26038,3 +26038,84 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W298-S1 -- the TO places the upload route's serving Lambda in intake/upload_entry.py; the deployed route is served from reports/generate_installed.py
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~298",
+  "surfaced_at": "2026-10-19T15:45:10Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W298-S1",
+  "one_line": "The AR-y-407 cell names intake/upload_entry.py as the Lambda that serves the upload route; the deployed route is served by irpt-ycharts-generate through reports/generate_installed.py, which imports only upload_csv from intake/upload_entry.py.",
+  "spec_asserts": "AR-y-407 THE CELL: 'the Lambda that serves the upload route (intake/upload_entry.py)'.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/generate_installed.py:464-467 defines upload() as compose_upload (generate_installed.py:401-443, which passes send into deferred_upload_service at :440-442) followed by upload_csv imported at :458 from intake/upload_entry.py (upload_csv at upload_entry.py:33-60); build_upload_entry (upload_entry.py:63-73) is not on the deployed path; the function is infra/aws/terraform/investor-reporting/ycharts/generate.tf:35 with handler generate_installed.lambda_handler at generate.tf:394.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py:458 and :464-467, read at HEAD of wk-IRPT_ANLREQ-298",
+      "infra/aws/lambda/investor-reporting/intake/upload_entry.py:33-73",
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf:35 and :394"
+    ]
+  },
+  "notes": "X1 and X3 were answered from the deployed path (generate_installed.py), not from the premise path. No live read was made."
+}
+```
+
+## IRPT_ANLREQ-D2-W298-S2 -- ycharts/generate/job.py:610 calls irpt-ycharts-generate a consumer of irpt-generation; Terraform says the Lambda has no event source mapping
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~298",
+  "surfaced_at": "2026-10-19T15:45:10Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W298-S2",
+  "one_line": "The job.py lambda_handler docstring says irpt-ycharts-generate is a consumer of irpt-generation; the Terraform for that Lambda says it has no event source mapping and that the resident host is the one consumer.",
+  "spec_asserts": "infra/aws/lambda/investor-reporting/ycharts/generate/job.py:610: 'Deployed entry point: irpt-ycharts-generate, a consumer of irpt-generation.'",
+  "world_is": "infra/aws/terraform/investor-reporting/ycharts/generate.tf:9-11 says NO EVENT SOURCE MAPPING IS CREATED HERE; generate.tf:127-128 says the resident service is the ONE consumer of irpt-generation and this function has NO event source mapping; infra/aws/terraform/investor-reporting/ycharts/resident.tf:2-3 names the resident host as the single consumer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/job.py:610, read at HEAD of wk-IRPT_ANLREQ-298",
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf:9-11 and :127-128",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf:2-3"
+    ]
+  },
+  "notes": "The docstring is stale against the Terraform. X3 relies on the Terraform and the resident loop, not on the docstring."
+}
+```
+
+## IRPT_ANLREQ-D2-W298-S3 -- the resident role's only KMS grant is conditioned on ViaService s3, while the generation queue is KMS-encrypted and the resident receives from it
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~298",
+  "surfaced_at": "2026-10-19T15:45:10Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W298-S3",
+  "one_line": "The resident role's only kms statement (ViaService s3) does not visibly cover an SQS receive from irpt-generation, which is SSE-KMS encrypted; the live answer is not read.",
+  "spec_asserts": "infra/aws/terraform/investor-reporting/ycharts/resident.tf:74-78 grants the resident ReceiveMessage, DeleteMessage, ChangeMessageVisibility and SendMessage on the irpt-generation ARN, and infra/aws/terraform/investor-reporting/core/sqs.tf:35 encrypts that queue with aws_kms_key.irpt.",
+  "world_is": "infra/aws/terraform/investor-reporting/ycharts/resident.tf:173-181 is the only kms statement in the resident policy as grepped, and its condition is kms:ViaService = s3; infra/aws/terraform/investor-reporting/core/kms.tf:11 says roles grant kms through their own policies. Whether the live resident receives without AccessDenied is NOT READ (live plane, not read by this order).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf:173-181 and :74-78, read at HEAD of wk-IRPT_ANLREQ-298",
+      "infra/aws/terraform/investor-reporting/core/sqs.tf:35",
+      "infra/aws/terraform/investor-reporting/core/kms.tf:11"
+    ]
+  },
+  "notes": "The 45 POLL lines in window 4 would show a receive refusal as retained_for_retry (resident_main.py:71) if one happened; that count was not read."
+}
+```
