@@ -923,22 +923,44 @@ ENDPOINT changed (FWD-23, FWD-24, FWD-25 added): the ratified-text half re-signs
 > deep audit for the functionality of every single tool-call, starting with everything for opal-data-assets. i need to know that
 > every tool call works and is routed to the right location."
 
-**ENDPOINT changes:**
+**ENDPOINT changes** (cures V1-V3 of `3.0.0_SA_CVO~Z`'s refusal
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.19_RATIFIED_TEXT_20261019_Z.md` @879f78e642 applied):
 
-- **FWD-23** adds a ROUTING arm. Every index link a tool carries (`index`, `links`) names a catalog row whose source (bucket,
-  prefix, or store or integration) is the one the tool's own code reads. This is read from the code (`bucket_source` and the
-  row's key), never from the tool's name.
-  - A link to a row the tool does not read is a defect. The Black Diamond rows on Schwab tools are the first named case.
-  - Proof: a per-tool routing table (tool, the code's source line, the linked rows, and the verdict `ROUTED` or `MISROUTED`),
-    plus one planted wrong link, which must read `MISROUTED`.
-- **FWD-24** adds to `PASS` that the answer came from the routed source: the response's own source or as-of fields match the
-  row. A correct-looking answer from the wrong source is `FAIL` (class `misrouted`).
+- **FWD-23 adds a ROUTING arm, graded per (tool, linked row) pair.**
+  - **Source SET:** for every census tool, the set of sources its code can read (bucket and prefix, store, or integration
+    endpoint). Each dispatch branch is cited `<path>:<line>`. A multi-vendor `client_*` tool has one member per vendor branch.
+    - The instrument is a TRACE of the tool's read path in the deployed gateway code.
+    - `bucket_source` and `index` are index CLAIMS checked against that trace, never the oracle.
+  - **Link check:** each (tool, linked row) pair is `ROUTED` when the row's source is in the tool's source set, and `MISROUTED`
+    otherwise.
+  - **Intent check:** the tool's source set must agree with its DECLARED scope: its `serves` pairs, its integration spec and its
+    registered description. Its name is never the scope.
+    - A disagreement is `MISROUTED`.
+    - It catches a Schwab tool whose code reads Black Diamond, which the link check alone cannot.
+  - **Defect class**, on every MISROUTED pair or tool:
+    - `link`: the index row is wrong; NFRA_MCPINDEX fixes it;
+    - `code`: the tool reads outside its declared scope; a defect cell in NFRA_OPLGTW;
+    - `display`: /gateway lists the tool under a segment or index it does not serve; the C-GROUP grouping, NFRA_MCPORTAL with
+      this PRD.
+  - **Andrew's case is classified first, by measurement:** Black Diamond indexes shown on Schwab tools.
+  - **Proof:** the routing table is EMITTED by ONE committed, re-runnable script (the emitter or a sibling of the battery, not a
+    second tester). It is re-run after every fix. One planted wrong link must read `MISROUTED (link)`, and one planted
+    out-of-scope read must read `MISROUTED (code)`.
+- **FWD-24 adds to `PASS` that the answer came from a routed source:**
+  - Where the response names its source or as-of, the field must match a row in the tool's routed set. The record says
+    `route: response-cited`.
+  - Where the response carries no source field, routing is proven by the tool's FWD-23 routing-table row, which cites the code.
+    The record says `route: code-cited`.
+  - A response field naming a source outside the routed set is `FAIL`, class `misrouted`.
 
 **Order:** opal-data-assets and its vendor/firm segments first, then the integration channels (Schwab, Black Diamond, YCharts
 and the rest), then the others.
 
-**One auditor, one instrument:** `4.0.0_SA_CRO~Z` runs the read-only research audit (why the page shows Black Diamond on
-Schwab, and the routing table). Its findings are this round's routing evidence and arrive as surprise rows. The battery stays
-FWD-24's one script. No second tester and no parallel comparator.
+**One auditor, one instrument:**
+- `4.0.0_SA_CRO~Z` runs the read-only research audit (why the page shows Black Diamond on Schwab). It is evidence, and the seed
+  of the defect rows, which arrive as surprise rows.
+- The routing table's proof is the committed script above.
+- The battery stays FWD-24's one script.
+- There is no second tester and no parallel comparator.
 
 ENDPOINT changed (FWD-23 and FWD-24 refined): the ratified-text half re-signs.
