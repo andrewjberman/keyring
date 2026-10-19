@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.23",
+ "prd_version": "v0.24",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -39,12 +39,15 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
          ACCEPT     an Opal person opens the still-open ticket and finds the four items, without asking anyone and without anyone having forwarded
                     a file; each of the four is its own attachment (the commentary is not a page inside the report PDF); a commentary failure
                     never withholds the other three (they attach when the report completes; the ticket names a failed step, FWD-4). The bar
-                    is Andrew, signed in as himself, filing his own sample with nothing seeded; a synthetic advisor or a pre-seeded directory
-                    row does not meet it
+                    is a real Opal staff identity with nothing seeded: no advisor, no directory row, no firm-list entry. The DONE WHEN's
+                    synthetic staff user, unseeded, meets it; a synthetic advisor or a pre-seeded directory row does not. Andrew filing
+                    his own sample is the organic arm, never the gate
          SOURCE     Andrew 2026-10-08 ~22:3xZ; Andrew's dell2 voice memo 2026-10-13 ("they should see the CSV or XLSX that the advisor uploaded.
                     They should see the form ... the generated report ... the commentary that we AI generated ... That is the deliverable");
-                    call 2 approved ~17:4xZ (synthetic advisor); pivot direction XB-20261013T180328Z-d4a5 O1; the filer is re-pointed
-                    to Opal staff by Andrew-direct 2026-10-14 ~15:2xZ (ADDENDUM v0.6)
+                    call 2 approved ~17:4xZ (synthetic advisor; superseded for the filer by v0.23); pivot direction
+                    XB-20261013T180328Z-d4a5 O1; the filer is re-pointed to Opal staff by Andrew-direct 2026-10-14 ~15:2xZ (ADDENDUM
+                    v0.6); Andrew-direct 2026-10-19 ~16:5xZ (`ANDREW_DIRECT_20261019_165xZ_TCKT_ANALYSIS_REQUEST_FLOW_BREAKS.md`
+                    @018f22da23) and ~18:xxZ (`ANDREW_DIRECT_20261019_18xxZ_TCKT_NO_ADVISOR_EMAIL_COMMENTARY_DEFAULT_ON.md` @c15be009b2)
 
   FWD-2  The form fits the request and catches a bad request before it files
          DONE WHEN  EXERCISED -- the form shows the five Opal models as checkboxes at first paint, in readable text, with no network wait, plus a field
@@ -173,11 +176,11 @@ on its own artifact.
 
 | # | Brief item | Carried as (content, path, guard, proof gap) |
 |---|---|---|
-| 1 | the type of analysis | FWD-2. The form offers the report types the engine serves (Overview, Comparison, Multi-Comp; `ycharts/generate/comparison_catalogue.py`). S1 |
+| 1 | the type of analysis | FWD-1 and FWD-2. The form asks no report type: the variant is DERIVED from the comparables picked (none: Overview; one: Comparison; two or more: Multi-Comp), per Andrew 2026-10-19 ~16:5xZ ("implicit"; midstream brief O2). S1 |
 | 2 | Opal-model checkboxes and an other-ETF input | FWD-2. Model checkboxes from the comparison catalogue; free ETF tickers, each resolved before filing. S1 and S3 |
 | 3 | the holdings Excel attached | FWD-1. Through the upload door (C-ONE-DOOR, TCKT_VNEXT); the ticket stores the handle, never the bytes. S3 |
 | 4 | typo check and swap, frontend and backend | FWD-2. The form shows one catalogue "Did you mean" hint (C-FILING-HINT); swaps are never offered on the form. In the backend an unknown or unpriceable holding takes C-SWAP's one pass: KNOWN, then Yahoo, then YCharts, then classify with web search (kimi-k2.6, with the tool-call loop), then the replacement from the class-matched pool (registry rows plus model proposals that pass the class match and Yahoo), longest Yahoo history, ties by ticker, then RECORD with `proxy_for` / `method` / `confidence`, named in the report. The frontend is S1. Proof gap: one unknown holding (BREIT, SREIT or KPEC) through that pass |
-| 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands, filed by an Opal staff user who chooses the partner firm (the Ticket Center is shown to Opal users only; ADDENDUM v0.6). The driven arm is a synthetic Opal staff user; `2e30` stays SUPERSEDED. S2. Proof gap: the synthetic staff user's filing end to end; that identity is never minted or left live outside its never-widen pair |
+| 5 | a ticket in the open Ticket Center page | FWD-1 and C-FIRM. An `analysis_request` ticket, open until the package lands, filed by an Opal staff user who chooses ANY partner firm and is never refused (the Ticket Center is shown to Opal users only; ADDENDUM v0.6; v0.23). The bar is a real staff identity with nothing seeded: the driven arm is a synthetic Opal staff user with no advisor, directory row or firm-list entry; Andrew's own filing is the organic arm; `2e30` stays SUPERSEDED. S2 and S8. Proof gap: the unseeded synthetic staff user's filing end to end; that identity is never minted or left live outside its never-widen pair |
 | 6 | the backend generates the full report | FWD-1. Generation submit and the Opal engine (C-ABSORB a, b). S3 and S4 |
 | 7 | commentary from the report's key surfaces | FWD-3. The drafter reads the report's composition through `get()`, tenant-bound, with abstract fields only (C-KIMI). S5 |
 | 8 | the package attached | FWD-1 carries the four items of the 10-13 memo: the original upload, the form selections as filed (J6, a new package kind), the Opal report and the commentary as a standalone branded Opal PDF (Andrew-direct 2026-10-14 ~16:0xZ, ADDENDUM v0.10), each a pointer through `POST /tickets/{id}/package` (C-PACKAGE) by the one packager (J5). S2 and S6. Proof gap: four pointers set on one ticket, each opened from the ticket page |
@@ -187,6 +190,18 @@ on its own artifact.
 | 12 | the closer-style trace, then the frontend | Section 1 (the CRO trace @9076346655) and the backlog order: backend hops before the Analysis tab |
 | 13 | COMPRESS into ONE project | C-ABSORB. The cells and paths that move in, the remainder per source project, one driver plus workstream lanes |
 | 14 | the defect: stopping on another agent's or box's deliverable | FWD-4, C-ONE-JOURNEY, and C-ABSORB (no hop parks on another project's cell; a cross-box wait is a pre-arranged input with owner and date) |
+
+**Midstream brief** `docs/briefs/irpt-anlreq-ticket-center-flow-cleanup-brief-20261019.md` @b01824a2a1 (`4.0.0_SA_CRO~TCKT`, 7 outcomes):
+
+| # | Brief outcome | Carried as (content, path, guard, proof gap) |
+|---|---|---|
+| O1 | an Opal staff member files for any partner firm without being stopped | FWD-1 and C-FIRM. The owner falls back to the staff principal (`access.prospect_owner()`); C-ABSORB (f) moves `_create_owner` / `_advisor_owner` (`_authz/served.py:1069-1111`) in, `~P2` reviews the hunk; it ships in the SAME release as O2's email-field removal. S8 and S1. Proof gap: the unseeded synthetic staff user files for a firm it has no list entry for |
+| O2 | the filer answers only what the system cannot infer | FWD-1 and FWD-2. No report type (derived from the count), no email, no commentary checkbox (commentary always). S1 |
+| O3 | the Opal models on the form the moment it opens, readable at a glance | FWD-2. The models at first paint with no network wait. S1 |
+| O4 | nothing on the form waits on a static or unused connection | FWD-2. The waits swept; every remaining wait gates a real network need. S1 |
+| O5 | an Opal person opens the still-open ticket and finds the four attachments | FWD-1 and C-PACKAGER. The packager is triggered by the report's READY, never by `commentary_requested` (`resident_worker.py:254`); a commentary failure withholds nothing. S10 and S6. Proof gap: four pointers on one ticket from a request filed after the release |
+| O6 | "Open report" shows the report, not its construction log | FWD-8. The ticket's entry into `NativeSections.tsx` shows the report; the element trace sits behind "Technical details"; the Analysis tab is the regression arm. S9 |
+| O7 | a Multi-Comp report shows each chosen comparable against the portfolio | FWD-7 (unchanged; v0.23 places it there) |
 
 ## v0.2 (2026-10-09 ~04:4xZ, `1.0.0_SA_CTO~DELL2`) -- on `4.0.0_SA_CRO~DELL2`'s brief-half refusal (msg 2416, review @5e8b383ce6)
 
@@ -604,5 +619,17 @@ lookups per several minutes from this host, whether 1.5 s or 90 s apart, so ever
 
 **Sign-off:** ENDPOINT and CONTRACTS changed, so `3.0.0_SA_CVO~DELL2` signs the ratified-text half. The brief half is
 accepted because the CRO wrote the brief (proportionate sign-off).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## v0.24 (2026-10-19 ~20:1xZ, 1.0.0_SA_CTO~DELL2) -- on both v0.23 refusals (text only)
+
+- **CVO ratified-text half** (`3.0.0_SA_CVO~DELL2`, msg 10966, review @89f1eec5f1): FWD-1's ACCEPT made the bar Andrew's own
+  login, a wait the DONE WHEN contradicts. The ACCEPT now reads the review's sentence verbatim (a real staff identity with
+  nothing seeded; the unseeded synthetic staff user meets it; Andrew's filing is the organic arm). SOURCE adds the two
+  10-19 records and marks call 2's synthetic advisor superseded for the filer.
+- **CRO brief half** (`4.0.0_SA_CRO~PRFRPT`, review @115e85c6bd): BRIEF COVERAGE row 1 no longer offers report types; row 5
+  carries the any-firm, never-refused, unseeded bar; the midstream brief's O1-O7 have their own rows.
+- Nothing else moves: no outcome, contract or surface changes.
 
 -- 1.0.0_SA_CTO~DELL2
