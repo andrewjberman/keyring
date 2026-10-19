@@ -32,7 +32,9 @@ Accounts 9237 (BD `z0926705231`) and 9238 (BD `z0926819471`).
    landed 2026-10-17 14:16Z; gold was never rebuilt.
 4. **History starts 2026-07-10:** `FLOOR_DAY = "2026-07-10"` at
    `infra/aws/lambda/investor-reporting/reporting-publish-cot/handler.py:33`. Gold holds her Commonwealth history
-   (2013 to 2026-06-22) under Commonwealth ids `0QF879237/0QF879238`; no crosswalk joins them to the BD z-ids.
+   (2013 to 2026-06-22) under Commonwealth account numbers, and the publish step does not join them to the BD z-ids.
+   CORRECTED same day: her Commonwealth numbers end 7492/7491 and are named by BD's own `NFS Account Number` field.
+   The `0QF879237/0QF879238` guess was wrong. See `PRFRPT_FIDELITY_VS_BD_STITCH_BASE_20261019.md` section 2.
 5. **Data through 10-15:** `irpt-cot-reporting-publish-daily` and `irpt-cot-reporting-gold-daily` are DISABLED
    (NY 09:30 / 09:15 Mon-Fri); last publish was manual 2026-10-16T23:25Z. Lag grows one trading day per day.
 
