@@ -1922,3 +1922,31 @@ Criteria: AC1 the named test and `bun test src` 73 or more pass; AC2 the cue rea
 ## PF8.2 WHAT THIS CUT DOES NOT CLAIM
 
 The cue is graded on the fixture's planted 65-character name, never imaged on real data (the real index names carry Schwab master numbers). The look at it on the served page is Andrew's (call 21d9). Like MP-pf-8 it reaches the host only with the next mcportal bundle release (a new `mcportal_commit` in EC2_MANIFEST); nothing here deploys it.
+
+
+# v19 -- WORKSTREAM GWZ, ROUND 1: a /gateway segment table lists only its own indexes, and one line explains the Schwab master that Black Diamond reports (2026-10-19 ~19:5xZ, 2.0.0_SA_COO~MP)
+
+Source: the CTO's round analysis `ledger/ROUND_ANALYSIS.z-round1.md` @11c572fef9 (answering the CVO's slug, msg 36090, `adjudications/ADJUDICATION_v11.Z.md`: MP-z-6 AC2 NOT MET -- Andrew sees Black Diamond indexes on Schwab tools) and the routing ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md` @473f5177a8 (defect P1, class `display`). PRD v0.9 unchanged; ENDPOINT unchanged.
+
+## GWZ1.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~19:5xZ)
+
+At mcportal 59e802a (origin DEV): `SegmentSection` in `src/pages/gateway/GatewayView.tsx` renders `ToolRow`, and `ToolRow` prints `listOrNone(tool.indexes)` unchanged, so a tool that serves several (vendor, firm) pairs lists ALL its indexes under EVERY segment. The breakdown payload carries `tool.indexes: string[]` and no pair per index (`GatewayTool` in `src/api/admin.ts`), so the page cannot filter today. The CRO's audit (@216dfc8144, section 1, item 1) counts it: `client_get_holdings` lists 13 indexes under "Schwab / 49 Financial": 6 Schwab, 2 Black Diamond, 2 Commonwealth, 1 Orion, 2 SmartX.
+
+## GWZ1.1 THE INTERFACE (issuer's contract, sent to 2.0.0_SA_COO~O; the issuer amends it if NFRA_OPLGTW's round 47 lands a different shape)
+
+Each tool object in the breakdown may carry `index_pairs: [{ "index": <name>, "vendor": <segment vendor key>, "firm": <segment firm key> }, ...]`, one entry per (index, pair) the index serves, in the server's own order. The keys are the same strings a `segments[]` entry carries. The page's rule, in a segment section: show the tool's `index` names whose entry matches that segment's vendor and firm, each once, in the order sent; show `none` if there are none. If a tool has NO `index_pairs` key (an older payload), the page keeps listing `tool.indexes` unchanged. An EMPTY `index_pairs` means the tool has no index for any pair: every segment shows `none` for it.
+
+## GWZ1.2 CELL `MP-z-7` -- one line of context on the Schwab master that Black Diamond reports  (view; one chain; LOCAL)
+
+`GatewayView.tsx` states once, near the top of the page and not per segment, the line `Schwab master 08335338 is the one Black Diamond reports.` (the CTO's words; the master number already appears in the real index names on the page). ONE test in `gateway.test.tsx`, by the name `the page states once that Schwab master 08335338 is the one Black Diamond reports`. Criteria: AC1 the named test and `bun test src` 74 or more pass, 0 fail.
+
+## GWZ1.3 CELL `MP-z-8` -- a segment table lists only the indexes of its own (vendor, firm)  (view; same chain as MP-z-7, queued after it; LOCAL)
+
+`src/api/admin.ts` gains the `index_pairs` field of GWZ1.1 on `GatewayTool` (optional); `SegmentSection`/`ToolRow` apply the rule of GWZ1.1. FIVE tests in `gateway.test.tsx`, by name: `a segment table lists only the indexes whose vendor and firm are that segment's`; `a tool serving two pairs shows each pair its own indexes`; `a tool with no index_pairs keeps listing its indexes unchanged`; `a tool with an empty index_pairs lists none under any segment`; `the audit case: client_get_holdings shows 6 of its 13 indexes under Schwab / 49 Financial` (synthetic index names, the audit's counts 6/2/2/1/2). Criteria: AC1 the five named tests and `bun test src` 79 or more pass, 0 fail.
+
+## GWZ1.4 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+- MP-z-7 and MP-z-8 write the same files (`GatewayView.tsx`, `gateway.test.tsx`), so they are ONE chain, ONE worker (slot ~41), z-7 first. The fan-out is 1 of 1 chains.
+- The seam probe against the real neighbour is NOT possible: the breakdown handler is owner-gated and `2.0.0_SA_COO~O` has not yet landed `index_pairs` (NFRA_OPLGTW round 47). Both cells are graded on fixtures. That is stated, not a gap hidden.
+- NEITHER cell reaches the host: the page change rides the next mcportal bundle release (a new `mcportal_commit` in `EC2_MANIFEST.json`), a separate release cell cut when the bundle is ready, and the handler's `index_pairs` must be live for the served page to filter. The CVO's re-grade of MP-z-6 AC2 (all indexes under every segment belong to it; MCPINDEX's routing table reads 0 `MISROUTED (display)` for `/gateway`) is on the served page after that release. Andrew's read is welcome evidence, never the gate.
+- Not claimed: that the `index_pairs` shape above is `2.0.0_SA_COO~O`'s final shape.
