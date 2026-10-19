@@ -29176,3 +29176,53 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. A one-line change would keep the forward text in a file when the tail line has no 'passed'; not made here, since the check is shared by the order set and no order needs it this round."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~160",
+  "surfaced_at": "2026-10-19T02:03:52Z",
+  "id": "NFRA_OPLGTW-Z-W160-S1",
+  "one_line": "The commit gate on the OG-en-34 worktree printed 'WARN: client-data-check: hashed account-id list ABSENT' and states that the commit was NOT checked for client account ids; the commit went through on the WARN",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of 7def46ea34 at C:/tmp/wk-og-160 (branch wk-NFRA_OPLGTW-160), comment-only change to infra/aws/ec2/opal-gateway/app/probe_listener.py: output line 'WARN: client-data-check: hashed account-id list ABSENT at ... -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there)'",
+      "the same run printed '[commit-gate] OK: pre-commit gate clean for 1 of 1 file(s)' and '[surprise-row-gate] OK' and then '[msg-verify] committed 7def46ea34'; the WARN is the only line that names the client-data check"
+    ]
+  },
+  "spec_asserts": "safe-commit's client-data-check checks each commit for client account ids; the gate's own message says a commit made while the hashed list is absent is not checked, and names OPAL_ACCOUNT_ID_HASHES or the default list path as the remedy.",
+  "world_is": "On this Site Z worktree the hashed account-id list the check reads is not present, so the check grades nothing here and the commit proceeds on a WARN. This commit is a comment-only edit with no account data in it, so no client value is at stake in it; whether other commits on this device have gone through unchecked is not measured here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking for OG-en-34. Not fixed here: the list is an environment input outside this order's paths. Filed for the CVO's read of the device state."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~160",
+  "surfaced_at": "2026-10-19T02:15:06Z",
+  "id": "NFRA_OPLGTW-Z-W160-S2",
+  "one_line": "proof-of-spec-check.py ran in structural FALLBACK mode on this device ('jsonschema not installed -- structural coverage PARTIAL'), and its pre-flip VALID rc=0 on the instance did not carry the schema finding that the commit-time to-pipeline-gate then raised on the same instance",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .tools/proof-of-spec-check.py on the OG-en-34 instance, status still pending, rc=0, 'VALID (rc=0)'; its first line reads 'structural=FALLBACK (jsonschema not installed -- structural coverage PARTIAL; install for full)'",
+      "the same instance after the one-field status flip, at the commit attempt on 0.9.0_WK_NFRA_OPLGTW~160: to-pipeline-gate REFUSED with 'instance VIOLATION: schema: artifacts_produced/0/introduces: [] should be non-empty' and 'flips to complete but its instance is NOT VALID (rc=1)'; the field was then set to a non-empty list and the standalone checker re-run rc=0"
+    ]
+  },
+  "spec_asserts": "The proof-of-spec checker validates an instance against the PROOF_OF_SPEC schema, so a VALID verdict on an instance means the schema holds for it.",
+  "world_is": "On this Site Z worktree the checker has no jsonschema library, so its schema coverage is partial and it said VALID on an instance the commit gate then refused on a schema field. The standalone VALID verdict was not, by itself, a reliable read of the schema on this device; the commit-time gate was the check that caught the field. Not measured: how many other instances passed the standalone checker here in fallback mode.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking for OG-en-34: the commit-time gate refused the bad field and the field is fixed. Not fixed here: the library install is an environment input outside this order's paths. Filed for the CVO's read of the device state."
+}
+```
