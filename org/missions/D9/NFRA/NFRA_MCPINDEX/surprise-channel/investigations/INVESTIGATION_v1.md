@@ -10761,6 +10761,49 @@ carries none.
     "spec_asserts": "KNOWN k-4 routing rule (round 23, PRD v0.19 FWD-24 misrouted): expect_source is the source the tool's OWN CODE reads; if the code reads a source that no linked row names, keep expect_source on what the code reads and add one OBSERVATION row naming the tool, the row and the line of the code.",
     "world_is": "mdpf_get_security_classification reads the etf-classifications table by ticker, and no catalog entity row names that table or links the tool.",
     "notes": "Recorded, not acted on. The k4 case K4-03 carries expect_source dynamodb:etf-classifications, the source the code reads. The issuer decides whether a catalog row for etf-classifications should exist and be linked."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W66-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~66",
+    "surfaced_at": "2026-10-19T18:10:24Z",
+    "one_line": "Routing: the census links 0 catalog indexes to each of the six ycharts tools, yet each tool's code reads the YCharts API store at its definition; the cases carry expect_source ycharts, and this row names the gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GATEWAY_SURFACE_CENSUS_20261019_v2.json (round22/evidence): tools[].indexes is [] for ycharts_freshness, ycharts_fund_series, ycharts_risk_return_scatter, ycharts_search, ycharts_snapshot_metrics and ycharts_time_series (read 2026-10-19 in worktree C:/tmp/wk-mcpindex-66).",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:3301-3356 (under tool_index, starting line 1349): one tool entry per ycharts tool with bucket ycharts and source_group kind store; e.g. ycharts_time_series at line 3347 with definition integration.py:146.",
+        "infra/aws/ec2/opal-gateway/app/integrations/ycharts/integration.py: def lines 125, 134, 147, 160, 173, 187 call client.freshness_probe, indices_table_data, general_data, fund_data, scatter_plot_data and search (the YCharts API)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face (section 1, ROUTING) says a reader of a store channel carries expect_source for each answer case, and that a source the code reads which no linked row names gets one OBSERVATION row naming the tool, the row and the line of the code.",
+    "world_is": "The census links no index to the six ycharts tools, while DATA_CATALOG.yaml tool_index holds a bucket ycharts row for each. The code reads the YCharts API at integration.py 125, 134, 147, 160, 173 and 187. expect_source is set to ycharts on all seven cases, from the catalog bucket.",
+    "notes": "Recorded, not acted on. The cases file does not depend on which instrument is right; the issuer decides whether the census indexes or the tool_index rows govern the routing. Disarm and owner: the issuer 2.0.0_SA_COO~MI."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W66-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~66",
+    "surfaced_at": "2026-10-19T18:10:24Z",
+    "one_line": "The DATA_CATALOG live_error for E-19 (measured 2026-10-09) records ycharts_time_series HTTP 403 with 0 points and ycharts_snapshot_metrics keyed to symbol None, so the nonempty expectations of K5-02, K5-03 and K5-04 may not hold on a live run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:18784-18786 (row E-19, status PARTIAL): live_error 'Measured 2026-10-09 ~03:4xZ (row NFRA_MCPINDEX-Z-S85) ... ycharts_time_series returns HTTP 403 with 0 points; ycharts_snapshot_metrics returns HTTP 200 with its value keyed to symbol None'.",
+        "The k5 cases K5-02, K5-03 and K5-04 expect nonempty (cases_ycharts.json at worktree deliverables/0.9.0_WK_NFRA_MCPINDEX~66)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face (section 1) says a nonempty case is for an example that surely returns rows, and the catalog's own example_questions for the dataset are the source for examples.",
+    "world_is": "The catalog's measured live note for E-19 says the time-series call returned HTTP 403 with 0 points, and the snapshot call returned values keyed to None, on the last measured session. A nonempty expectation on those calls is not surely met.",
+    "notes": "Recorded, not acted on. The cases keep their nonempty expectation because the contract asks for one; the live run decides. The measurement is 2026-10-09 and predates the current session. Disarm and owner: the issuer 2.0.0_SA_COO~MI."
   }
 ]
 ```
