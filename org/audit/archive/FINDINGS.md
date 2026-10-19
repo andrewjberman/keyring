@@ -648,3 +648,14 @@ ERROR: safe-commit did NOT commit (rc=1). The refusal text is printed above.
        Two-phase path: everything was staged in a PRIVATE index, so the shared index holds nothing from this call.
 
 - note: distinct from DEATH: the invoker RAN, the commit failed
+
+## 2026-10-19T123636Z -- SNAPSHOT-FAILURE -- COMMIT-FAILED
+<!-- sig: SNAPSHOT-FAILURE|COMMIT-FAILED||safe-commit rc=# (non-lane): ipeline-gate] OK: no task_orders/*.md in this commit (denominator: # dispatched path(s), # staged-added).
+ERROR: safe-commit did NOT commit (rc=#). The refusal text is printed above.
+       Two-phase path: everything was staged in a PRIVATE index, so the shared index holds nothing from this call.
+ -->
+- detail: safe-commit rc=1 (non-lane): ipeline-gate] OK: no task_orders/*.md in this commit (denominator: 24 dispatched path(s), 24 staged-added).
+ERROR: safe-commit did NOT commit (rc=1). The refusal text is printed above.
+       Two-phase path: everything was staged in a PRIVATE index, so the shared index holds nothing from this call.
+
+- note: distinct from DEATH: the invoker RAN, the commit failed
