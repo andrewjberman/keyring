@@ -30403,3 +30403,57 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The hazard (the client tools silently reading a master Andrew did not name) did not reach any release: it was caught by test_ogcl1_ac12 in the worker's tree and cured before the drain; the cured adapter is what batch15 carries."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T21:34:55Z",
+  "id": "NFRA_OPLGTW-Z-S427",
+  "one_line": "CVO note on OG-ms-2 (carried as a row naming its owner): the registry row OG-ms-1 added for master 08403355 in infra/logic/registry/scopes.json states firm 49financial; the registry's owner has not confirmed that attribution, and the gateway's own catalog notes the master has no registry row and no contract label before this release",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CVO half of OG-ms-2 (`3.0.0_SA_CVO~Z` @10dfd87598), relayed by `1.0.0_SA_CTO~Z` msg 36134: 'the 0840 registry row's firm 49financial is for the registry owner to confirm'; the CTO asked this seat to carry it as a row naming that owner.",
+      "OG-ms-1 (drained 9095ce68f3) copied the 08335338 MASTER row's shape for 08403355 with firm 49financial; app/client_adapter_schwab.py's header (read by the issuer) states the three masters 08242234, 08335338, 08403355 are ONE firm (49financial) and DATA_CATALOG.yaml lists 08403355 beside them; neither is the registry owner's confirmation.",
+      "owner named for the confirmation: `4.0.0_SA_CRO~Z`, as the compiler of infra/logic/registry/ per infra/logic/ORDER_OF_OPERATIONS.md (section B rows owned by the CRO); `1.0.0_SA_CTO~Z` may name another."
+    ]
+  },
+  "spec_asserts": "OG-ms-1: the registry row for 08403355 mirrors the 08335338 row with firm 49financial.",
+  "world_is": "The attribution rests on the adapter's own header and the catalog, not on the registry owner. It is inert: the registry row grants nothing, and OG-ms-2's grant names the master by its own key, independent of the firm. NOT CLAIMED: that the registry owner agrees (not asked until now). If the owner says another firm, the row's firm field and the batch15 staged copy app/refs/scopes.json change, which is a release, so it is cheaper to confirm before batch15's window than after.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Ask sent to 4.0.0_SA_CRO~Z to confirm or correct before the 2026-10-20 06:00Z window; the batch15 release takes scopes.json whole, so a correction before then rides it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T21:38:04Z",
+  "id": "NFRA_OPLGTW-Z-S428",
+  "one_line": "Issuer disposition of NFRA_OPLGTW-Z-S427 (firm for master 08403355): CONFIRMED by the CRO as 49financial; and the CRO's measure that all 30 accounts of 08403355 are also held under 08335338 means OG-ms-2 adds no account Alyssa cannot already read, only the master's own tables",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S427"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`4.0.0_SA_CRO~Z` msg 36138 (reply to the issuer's ask 36137), measured on opal-data-assets dim_balance for 2026-10-16: master 08403355 holds 30 accounts; all 30 are also held under 08335338 (the 49F BlackDiamond master); none under 08242234; none appears under this master alone; 6 of the 30 appear in the 49F Black Diamond crosswalk (blackdiamond/49f/silver/dim_account_xref, 2026-09-28). The CRO allowed citing it in Z-S427.",
+      "OG-ms-2 Phase A (ask sha256 30351bdddf2d): the candidate adds master 08403355 and its 30 accounts; her 7,599 and 7,690 accounts on the other two masters untouched."
+    ]
+  },
+  "spec_asserts": "Z-S427: the registry row for 08403355 states firm 49financial, unconfirmed by the registry owner.",
+  "world_is": "The attribution is confirmed by the registry's compiler. Separately, the CRO's measure changes what OG-ms-2 grants: in account terms nothing new (30 of 30 accounts are already in her 08335338 list), but the grant is per master, so she gains the 0840 master's own silver tables (dim_position, dim_balance, dim_asset, dim_transaction) as a separate read path. NOT CLAIMED: whether those tables hold values that differ from 08335338's for the same accounts (the CRO read account membership, not table contents); the CVO and CTO signed OG-ms-2 on its stated counts and are told this fact.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S427's question is answered by the registry's compiler and the row is inert; the subset fact does not change OG-ms-2's signed scope, it only sharpens what the halves read, and it is recorded here for them."
+}
+```
