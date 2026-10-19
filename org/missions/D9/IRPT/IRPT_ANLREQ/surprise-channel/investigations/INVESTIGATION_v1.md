@@ -27063,3 +27063,32 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W309-S4 -- after the issuer added data/ to the sparse set, the owner tests pass and the S2 flip is measured; AC2 still stops at collection because infra/aws/terraform/ is still absent
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W309-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~309",
+  "surfaced_at": "2026-10-19T23:01:12Z",
+  "one_line": "Re-run at HEAD 5811e72ffc after the issuer added data/ to the sparse set: AR415-y-AC1 prints 9 passed; AR415-y-AC2 still exits rc=2 at collection (infra/aws/terraform/ still absent); with --continue-on-collection-errors the folder reads 17 failed, 310 passed, 3 errors, and the 9 failures are the pinned on-behalf cases of IRPT_ANLREQ-D2-W309-S2 (measured now, not read) plus 8 census cases from the missing terraform tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-415 WORKER FACE: re-run the criteria with their literal invocations after a sparse-set change; AR415-y-AC2 expects ^[0-9]+ passed.",
+  "world_is": "Literal invocations at HEAD 5811e72ffc: AC1 rc=0 '9 passed in 0.12s'; AC2 rc=2 '3 errors in 2.50s' with three 'published guarded directory-search operation missing' assertions (routetable Unresolved for infra/aws/terraform/investor-reporting/directory/lambda.tf, the one remaining gap). Supplementary, not the verdict: --continue-on-collection-errors gives 'cont rc=1 17 failed, 310 passed, 3 errors'. The 9 failures in _authz/tests/test_served_on_behalf_create.py (test_served_refuses_advisor_email_absent, _profile_absent, _profile_disabled, _of_other_firm and five _advisor_email_malformed cases) return data with state NORMALIZED where the refusal is asserted: the staff fallback admits them, as the change intends and as S2 predicted. The 8 failures in _authz/tests/test_unguarded_census.py name Unresolved tf_file entries, the terraform gap. No REGISTRY_UNREADABLE line remains.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree pytest output .scratch/rerun_ac2.txt (literal AC2 invocation, rc=2) and .scratch/rerun_ac2_cont.txt (supplementary continued run, rc=1)",
+      "worktree pytest output .scratch/rerun_ac1.txt (literal AC1 invocation, rc=0, 9 passed)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_served_on_behalf_create.py:217-265 @992923c429f (the pinned assertions the flipped cases read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This row narrows IRPT_ANLREQ-D2-W309-S1 (the registry gap is closed; the terraform gap remains) and measures IRPT_ANLREQ-D2-W309-S2 (9 cases) rather than reading it. Neither prior row is edited."
+}
+]
+```
