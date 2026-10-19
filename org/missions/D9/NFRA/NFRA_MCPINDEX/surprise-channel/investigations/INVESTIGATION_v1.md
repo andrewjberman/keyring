@@ -10161,6 +10161,130 @@ carries none.
         "deliverables/2.0.0_SA_COO~MI/round22/checks g1.AC1..g5.AC3 run on the merged tree at a6b6d88ffbd: 12 of 12 RESULT: PASS"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W64-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~64",
+    "surfaced_at": "2026-10-19T17:02:42Z",
+    "one_line": "safe-commit's naming gate printed NAMING ERROR 'function-map folder missing' for infra/aws/lambda/ci/function-map/ in this sparse worktree; commit 58d423c75a8 returned rc=0 and the naming gate's function-map leg read no folder.",
+    "spec_asserts": "Face section 2, BOUNDS 2: the commit gate runs py_compile, the naming gate and ruff for py39 on the commit. Face section 1 step 0: the worktree's sparse set is workflows/gateway_battery, its tests, workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app; the face names no infra/aws/lambda/ci folder.",
+    "world_is": "The worktree sparse list (git sparse-checkout list, read 2026-10-19T17:02Z) is .tools, infra/aws/ec2/opal-gateway/app, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery; infra/aws/lambda/ci is not in it. The commit printed the naming-gate ERROR beside 'commit-gate OK: pre-commit gate clean for 3 of 3 file(s)' and landed with rc=0, so the naming leg graded nothing for these three files. The risk-reflex PARTIAL_OR_BLIND and the client-data WARN printed in the same run are device facts, not filed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author ... -F .scratch/msg_work_h3.txt -- workflows/gateway_battery/index_coverage.py workflows/gateway_battery/tests/test_index_coverage.py workflows/gateway_battery/tests/test_index_coverage_explained.py: rc=0, output in .scratch/commit_work.log of wk-NFRA_MCPINDEX-64 (read 2026-10-19T17:02Z); line 16 is the NAMING ERROR",
+        "git -C C:/tmp/wk-mcpindex-64 sparse-checkout list (read 2026-10-19T17:02Z): infra/aws/lambda/ci not listed; the same finding is NFRA_MCPINDEX-Z-W61-S1, which the issuer dispositioned in the round-22 ISSUER DISPOSITION row"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W65-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~65",
+    "surfaced_at": "2026-10-19T17:01:10Z",
+    "one_line": "The pending tool-index record classes harvest_list as member b, owner AMGT_HARVST (the MX-c-11 cell), but the gateway source lists object keys and sizes, which the MX-h-4 contract names as member c; the disposition file classes it c, so the two records disagree until the issuer rules.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tool_index/pending_members.yaml lines 8-12 at worktree HEAD 77df1c53cc: the comment 'classed member b, owner AMGT_HARVST, as the MX-c-11 cell states' and the entry tool harvest_list member b owner AMGT_HARVST.",
+        "infra/aws/ec2/opal-gateway/app/harvest_read.py:113 at HEAD 77df1c53cc: resp = _client().list_objects_v2(**kw), building keys of object name, size and last_modified under a served prefix; the contract (decomposition R23.2) names c for a tool that lists names.",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~65/disposition_non_m365.json at commit 77df1c53cc: harvest_list member c, no owner, reason ends [app/harvest_read.py:113]; h4.AC1 and h4.AC2 both RESULT: PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-h-4 section 1: classify each of the 13 tools by its definition; c when the tool lists names, probes a status, passes a vendor call through or reads only the caller's own data; b when it reads a dataset a catalog row should describe.",
+    "world_is": "The pending record (MX-c-11) says b for harvest_list, the source is a names-and-sizes listing that the contract names c, and the disposition file therefore says c. Both records are present; the applier reads the disposition only for tools with no catalog index.",
+    "notes": "Recorded, not acted on. The disposition file follows the contract text, the one place the face was explicit. The issuer decides whether the pending entry or the disposition governs harvest_list at the drain."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W66-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~66",
+    "surfaced_at": "2026-10-19T17:04:05Z",
+    "one_line": "The naming gate printed NAMING ERROR (function-map folder missing) on the MX-h-5 work commit 4fb2a7cf224 and still returned rc=0; this sparse worktree does not carry infra/aws/lambda/ci, so the naming check did not grade the staged file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at commit 4fb2a7cf224 (worktree C:/tmp/wk-mcpindex-66): '[naming-gate] NAMING ERROR function-map folder missing: ...infra/aws/lambda/ci/function-map/ (nothing is graded from a copy)', then '[wk-NFRA_MCPINDEX-66 4fb2a7cf22] ...' and rc=0.",
+        "ls -d infra/aws/lambda/ci/function-map in the worktree returns No such file or directory; git cat-file -e HEAD:infra/aws/lambda/ci/function-map returns rc=0 (the folder is tracked at HEAD); git sparse-checkout list names no infra/aws/lambda entry."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face (section 2, bound 5) says a commit through the naming gate needs a staged .json under this project's home if it must derive the project; CLAUDE.md rule 30 says the commit-time naming gate refuses names. The expectation is that the gate grades the staged name before the commit lands.",
+    "world_is": "The naming gate could not read its function-map source, reported that it graded nothing from a copy, and safe-commit still returned rc=0 and landed commit 4fb2a7cf224 (1 file, the disposition JSON). The fail-open path reads as a grade of the name when none was made.",
+    "notes": "Recorded, not acted on. Same observation as NFRA_MCPINDEX-Z-W59-S1 (filed by 0.9.0_WK_NFRA_MCPINDEX~59 on its TO-MX-g-2 commit), now on a second commit in a second worktree. The committed file carries no Lambda name, so the naming gate's silence on it is not a verdict. Disarm and owner: the issuer 2.0.0_SA_COO~MI decides whether the gate should refuse on an unreadable map or whether the worktree needs the folder."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W68-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~68",
+    "surfaced_at": "2026-10-19T17:18:00Z",
+    "one_line": "ROUTING (MX-k-2): the census links news_market_mood to the catalog row opal_data_portal_v2_served_news_trending_and_sentiment, whose prefix names json/trending/latest.json as well as json/sentiment/, but the tool's code reads only the two sentiment singletons under json/sentiment/ and never the trending object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The census entry for news_market_mood links the news trending and sentiment row, so the linked source is the one the tool answers from (cell MX-k-2 step 1, ROUTING: expect_source is what the code reads, and a linked row the code does not read is one observation row).",
+    "world_is": "news_typed.py:497-498 reads FEAR_GREED_KEY and KEYWORD_SENTIMENTS_KEY (both under SENTIMENT_PREFIX json/sentiment/, news_typed.py:26-28); json/trending/latest.json is not read by news_market_mood. Case K2-17 carries expect_source opal-data-portal-v2/json/sentiment/ (what the code reads), not the linked trending key.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/news_typed.py:491-498 (def news_market_mood; the two reads at 497 and 498) @060b3afa809 (worktree HEAD)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json: tools[name=news_market_mood].indexes = opal_data_portal_v2_served_news_trending_and_sentiment, opal_data_portal_v2_served_sentiment_singletons",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:17517 (entity opal_data_portal_v2_served_news_trending_and_sentiment, prefix json/trending/latest.json; json/sentiment/) @060b3afa809"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W68-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~68",
+    "surfaced_at": "2026-10-19T17:18:00Z",
+    "one_line": "PREMISE (MX-k-2): opal_asker_query has no static argument that surely returns an answer or a refusal; its nonempty case K2-18 carries placeholder strings for a live Teams chat_id and message_id, and no refused case is written for it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Cell MX-k-2 step 1 asks each reader to get a case that expects an answer, with real, valid example values for its args, and a placeholder only for an id returned by an earlier case of this file.",
+    "world_is": "tools.py:1887 opal_asker_query(chat_id, message_id, key) answers through asker_scope.handle_asker_query, which refuses a message with no resolvable Entra sender (NO-SENDER), a message older than the recency window (STALE-MESSAGE), and an asker with no profile. Those ids are live Teams identifiers that no case of this file can produce, so K2-18 is runnable only in a signed-in session with ids filled in.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/tools.py:1887-1896 (opal_asker_query and its _run call) @060b3afa809",
+        "infra/aws/ec2/opal-gateway/app/asker_scope.py:305-330 (handle_asker_query: sender resolution, recency window, profile check) @060b3afa809"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W68-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~68",
+    "surfaced_at": "2026-10-19T17:18:00Z",
+    "one_line": "PREMISE (MX-k-2): no universe name or factor code for portal_get_security_scan is held in the catalog or the gateway code, so K2-31 is an empty case by construction (an absent universe folder) and no nonempty scan case is written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Cell MX-k-2 step 1 asks for real, valid example values, and to read the catalog example_questions where one exists; the scan's example question names a universe in words ('S&P 500') and no key.",
+    "world_is": "portal_macro.py:43-44 and :287-304 read json/security_scanner/latest/universes/<universe>/scanner_data.json with the universe folder name taken from the caller; the catalog row for the scanner (entity opal_data_portal_v2_served_security_scanner) names only the prefix json/security_scanner/latest/. The universe and factor values that exist are not in any file this cell reads.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/portal_macro.py:43-44 and :287-304 (PREFIX_UNIVERSES; _scan key construction; absent_reason on a missing universe) @060b3afa809",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml silver_datasets entity opal_data_portal_v2_served_security_scanner (prefix json/security_scanner/latest/) @060b3afa809"
+      ]
+    }
   }
 ]
 ```

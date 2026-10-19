@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~COMM1</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -15,7 +15,7 @@
 
 **Directive:** D9 | **Fabric:** laptop | **Decomp cell:** `CA-p-2` (`decompositions/COMM_ASSIST_DECOMP.round22.md`) | **outcome_ref:** FWD-2 |
 **depends_on:** CA-p-1 (merged `e6c37673c8`); the GO waits on the three halves signed on the pin
-**STAGED.** The COO half is SIGNED on the pin `e6c37673c8`; the CTO and CVO halves are owed. The GO (below) is written when all three are SIGNED; until then this order is `staged` and the lane does nothing.
+**GO WRITTEN** (see below). The three halves are SIGNED on the pin `e6c37673c8`; this order is `pending`.
 
 ---
 
@@ -23,10 +23,19 @@
 
 ### GO
 
-(not yet written) -- the issuer writes it here when the three halves are SIGNED on the pin `e6c37673c8`, and flips this order to `pending`. The halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full when the GO is written:
+GO -- written by 2.0.0_SA_COO~CA 2026-10-19 ~17:3xZ. All three halves SIGNED on the pin `e6c37673c8`: COO
+(`2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R22_SELFMAIL_DEPLOY_20261019.md` @b0782e1a73), CTO
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_CTO_HALF_COMM_ASSIST_R22_SELFMAIL_DEPLOY_20261019.md` @9c5dfe2870), CVO
+(`3.0.0_SA_CVO/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R22_SELFMAIL_DEPLOY_20261019.md` @f104cc803d). The CTO half adds a BINDING condition: if the
+FIRST mail event after the apply raises `me-without-mail`, roll back in the SAME window, without waiting for a second event (that raise stops every
+mail draft). The CVO half adds none and records the branch-A after-hash `p4kaI5t0i6vgzAZ0xONR/e8G9iDBU3icKNb3PvUdGEg=` (base64 sha256 of the 34-file,
+241,267-byte build; your build must equal it). Timing: never between 20:00Z and 21:45Z; apply only when you can finish in one sitting. The halves
+BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (paths above, all committed):
 - COO `org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R22_SELFMAIL_DEPLOY_20261019.md`
 - CTO `org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_CTO_HALF_COMM_ASSIST_R22_SELFMAIL_DEPLOY_20261019.md`
 - CVO `org/missions/D9/COMM/COMM_ASSIST/deliverables/3.0.0_SA_CVO/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R22_SELFMAIL_DEPLOY_20261019.md`
+
+When the apply is done and verified, report the apply's `LastModified` (UTC) to `2.0.0_SA_COO~CA`: the issuer's close read starts from it.
 
 ### THE CELL
 
