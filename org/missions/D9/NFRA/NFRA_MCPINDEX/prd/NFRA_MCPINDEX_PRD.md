@@ -811,3 +811,84 @@ GO at ~19:2xZ (relayed by `4.0.0_SA_CRO~Z` msg 34543): "We have usage, run it no
 - `opal_discover` returns one row per bucket by plain words, recorded.
 
 CONTRACTS-side under FWD-22; ENDPOINT unchanged.
+
+### v0.18 addendum (2026-10-19 ~14:4xZ, 1.0.0_SA_CTO~Z) -- ENDPOINT: every /gateway surface indexed, every listed tool tested, a cheat sheet per employee (Andrew-direct)
+
+**Andrew, verbatim** (`1.0.0_SA_CTO~Z` terminal, ~14:1xZ; record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_141xZ_GATEWAY_INDEXED_ALL_MCPORTAL_SURFACES_TOOLS_TESTED_PER_EMPLOYEE_CHEAT_SHEETS.md` @4a337dec2e):
+
+> "1.) Opalgateway needs to be properly connected and indexed across all the surfaces currently listed in the MCPORTAL. 2.) All
+> those tools need to be tested so we can be sure they actually work. 3.) We need to be able to provide a "cheat sheet" or some
+> kind of instructional document that can be provided to the team so they know how to query. These cheat sheets should be broken
+> out by employee so they focus on the tooling that is actually relevant to their job (e.g. all the opal-data-assets for the
+> operational team versus opal-data-harvest for the asset management team vs opal-data-etfs for the CFO, etc etc)."
+
+**Ground truth at authorship (repository source files, claim: measured from source, NOT the served catalog):**
+- 319 catalog rows in `workflows/atom_decomposition/catalog_entries/`, of which 192 carry a `read_tool` (61 distinct tools);
+- 57 rows carry no `bucket`, or a non-C-GROUP spelling;
+- `tool_index/members.yaml` holds 91 members: 11 (a), 68 (b), 12 (c).
+- The served gateway registers 103 tools (`CODE13_SERVED.json`, release 6b1a9bd292).
+- The first act of round 22 re-measures all of these from the SERVED artifacts.
+
+#### ENDPOINT -- three new outcomes (no FWD is a wait: each is proven by an act a seat runs on demand)
+
+**THE DENOMINATOR (frozen at the cut, both FWDs read it):** every segment `/gateway` on mcp.opalinvest.dev lists at the cut, and
+every tool listed under it.
+- A segment is a `bucket`, or a (`bucket`, `vendor`, `firm`) pair for opal-data-assets and opal-data-bd (C-GROUP item 3).
+- It is read from the SERVED page by one census, printed with its count, and committed as `GATEWAY_SURFACE_CENSUS_<date>.json`.
+- A segment added later enters by addendum, never silently.
+
+- **FWD-23 -- Indexed across every surface.**
+  - Every catalog row under every census segment carries C-GROUP and a `read_tool` naming a tool the deployed gateway serves.
+  - Every census tool is either (a) linked to at least one such row, or (c) with its stated reason. Member (b) is 0 inside the
+    denominator.
+  - `opal_discover` answers each segment by a plain-words subject.
+  - Proof: the emitter's refusal set is empty against the census, plus one `opal_discover` call per segment through the served
+    gateway, recorded. The negative arm is one segment planted with no row, which must refuse.
+- **FWD-24 -- Every listed tool tested.**
+  - Every census tool has a recorded live call through the SERVED gateway by a real signed-in principal. The verdict per tool is
+    one of:
+    - `PASS`: a correct non-empty answer, checked against the row's source;
+    - `EMPTY-CORRECT`: an empty answer the source confirms is empty;
+    - `REFUSED-CORRECT`: an entitlement refusal for a principal not granted;
+    - `FAIL`: with its class.
+  - A member-(c) tool that sends or writes is exercised only on its non-sending path (the `confirm=false` preview, or a dry-run
+    flag). It NEVER sends.
+  - The battery is ONE committed, re-runnable script. It is the per-tool test, not a standing monitor: it runs on demand and at
+    each gateway release, and never on a timer.
+  - Every `FAIL` becomes a defect cell in NFRA_OPLGTW (the gateway's code) or here (a catalog row). FWD-24 is REALIZED at 0 FAIL
+    on a run after the last fix.
+  - Proof: the battery's own run plus one planted broken tool, which must read FAIL.
+- **FWD-25 -- A cheat sheet per employee.**
+  - Every Opal employee on the approved roster gets ONE instructional document. It holds only the tools their gateway grant
+    reaches, grouped by the buckets relevant to their job.
+  - Each tool carries 2 to 3 example plain-English questions, and every example is a query FWD-24's battery ran and passed. No
+    untested example ships.
+  - Each sheet opens with how to connect (the Claude connector, first sign-in) and how to tell a refusal from an empty answer.
+  - Generated from the catalog plus the battery plus the grant. NEVER hand-typed per person. A second run reproduces the same
+    sheet.
+  - Proof: the generator run for one employee whose grant spans two buckets, read by that person.
+  - Negative arm: an employee without a bucket's grant gets no tool from that bucket on their sheet.
+
+#### What only Andrew decides (FWD-25)
+
+- **The role-to-bucket mapping per employee IS an entitlement decision.** A sheet that lists a tool the person cannot reach
+  misleads, and granting it widens access. `4.0.0_SA_CRO~Z` drafts the roster with a proposed mapping:
+  - the source is each internal user's Entra job title and department, plus their current gateway grants;
+  - his three examples are the seed: opal-data-assets to the operational team, opal-data-harvest to asset management,
+    opal-data-etfs to the CFO.
+- **Andrew approves the mapping. NFRA_OPLGTW then applies the grants under never-widen, and the sheets follow the approved
+  grants.**
+- **Delivery format:** one document per person in a SharePoint folder he names, unless he says otherwise.
+
+#### Placement
+
+- **Owner:** NFRA_MCPINDEX, `2.0.0_SA_COO~MI` issuer, for FWD-23, FWD-24 (the battery) and FWD-25 (the generator).
+- **NFRA_OPLGTW** (`2.0.0_SA_COO~O`) takes:
+  - every FWD-24 `FAIL` in the gateway's code, as a defect cell in its batched releases;
+  - the approved grants for FWD-25.
+- **NFRA_MCPORTAL** (`2.0.0_SA_COO~MP`) supplies the census read of `/gateway` and makes no page change for these outcomes.
+- **Round 22 builds the thread:** ONE segment (opal-data-harvest), end to end. Census, then indexed (FWD-23), then battery
+  (FWD-24), then one employee's sheet (FWD-25). The next rounds enrich segment by segment.
+
+ENDPOINT changed (FWD-23, FWD-24, FWD-25 added): the ratified-text half re-signs.
