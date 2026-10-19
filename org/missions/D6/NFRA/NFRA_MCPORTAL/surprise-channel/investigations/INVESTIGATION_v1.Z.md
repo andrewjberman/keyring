@@ -3617,3 +3617,28 @@
   "notes": "Not repaired: no edit to the order file was made. The instance records the flip as the issuer's. AC2 is judgment and is left for 3.0.0_SA_CVO~Z."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S75",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-19T19:18:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DISARMS NFRA_MCPORTAL-Z-W16-S2 (owner this seat) and records the issuer's own cause for Z-W16-S1, S3 and S4: the MP-z-6 worktree was provisioned without the order's read paths (S1), and the order's pick rule and store read were wrong as written (S3, S4); AMENDMENT 1 (2e6385a297) fixed all three and AC1 then passed 4 of 4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S2 (naming gate printed NAMING ERROR and the commit landed): the branch wk-NFRA_MCPORTAL-16 changed exactly 8 paths against its base 9722e32fce (git diff --name-only), all deliverables, the investigation file, the order, and two issuer check files; none names a Lambda or any other resource the naming gate grades, so nothing passed ungraded. The worktree C:/tmp/mp-gw-16 is removed at this drain, so no later commit can come from it.",
+      "S1: the issuer provisioned C:/tmp/mp-gw-16 with --order, which adds only the folders the order's <paths> names; the order's read-only paths (infra/aws/ec2/...) were not in <paths>, so the cone lacked them. Fixed by adding infra/aws/ec2 to the cone; the worker then read all three.",
+      "S3 and S4: the order text said 'the channel with the most tools' (a bucket with no module) and named a store reader that has only writers. Amended in 2e6385a297; the worker's redo ran AC1 to PASS (RESULT: PASS, exit 0, recorded in the proof instance)."
+    ]
+  },
+  "spec_asserts": "NFRA_MCPORTAL-Z-W16-S2 is ARMED with this seat as disarm_owner.",
+  "world_is": "S2's hazard cannot fire here: the worktree is gone and the branch staged no graded name. The residue is the gate's behaviour in any SPARSE worktree whose cone omits infra/aws/lambda/ci/function-map: it prints NAMING ERROR and does not refuse. That is carried to the naming gate's owner (0.0.0_AB_MSTR) by this row; this seat builds no gate. Provisioning lesson for the issuer: a read-only path an order names must be added with --sparse-add, because --order adds only <paths>.",
+  "notes": "The first spawn stopped at its first act on S1, as the worker bar says it must; the issuer's own mistake cost one worker pass and about 25 minutes."
+}
+```
