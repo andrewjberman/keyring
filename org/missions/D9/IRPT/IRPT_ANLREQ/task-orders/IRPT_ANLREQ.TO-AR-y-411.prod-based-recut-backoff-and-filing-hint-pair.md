@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-411</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~303</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~305</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-19</issued_date>
 <status>pending</status>
@@ -20,9 +20,9 @@
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~303`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-303` (branch `wk-IRPT_ANLREQ-303`), with a portal worktree `C:/dev/wk-irpt-anlreq-303/portal` (branch `wk-IRPT_ANLREQ-303-portal`) provisioned by the issuer AT `origin/PROD` (8cd45f623bdf). Commit the WORKSPACE files with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~303 <0.9.0_WK_IRPT_ANLREQ~303@opal.agent>" -F <msgfile> -- <paths>` (a commit can take up to 400 s: wait and check `git log` before retrying). The PORTAL source is committed INSIDE the portal worktree, which has no committer identity: for a cherry-pick or commit run `GIT_COMMITTER_NAME="0.9.0_WK_IRPT_ANLREQ~303" GIT_COMMITTER_EMAIL="0.9.0_WK_IRPT_ANLREQ~303@opal.agent" git -C C:/dev/wk-irpt-anlreq-303/portal ...` (and `--author "0.9.0_WK_IRPT_ANLREQ~303 <0.9.0_WK_IRPT_ANLREQ~303@opal.agent>"` on a commit; write no git config).
-- Write every message file with the Write tool. APPEND rows only to `INVESTIGATION_v1.md` (0 deletions), class OBSERVATION, and COMMIT them. `surfaced_at` = `date -u +%FT%TZ`; a row id has the form `IRPT_ANLREQ-D2-W303-S<k>`. The workspace worktree shows ` M portal`: never commit it. Every `.py` you add passes `bash .tools/commit-gate.sh <file>`. No non-ASCII in what you add.
+You are `0.9.0_WK_IRPT_ANLREQ~305`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-305` (branch `wk-IRPT_ANLREQ-305`), with a portal worktree `C:/dev/wk-irpt-anlreq-305/portal` (branch `wk-IRPT_ANLREQ-305-portal`) provisioned by the issuer AT `origin/PROD` (8cd45f623bdf). Commit the WORKSPACE files with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~305 <0.9.0_WK_IRPT_ANLREQ~305@opal.agent>" -F <msgfile> -- <paths>` (a commit can take up to 400 s: wait and check `git log` before retrying). The PORTAL source is committed INSIDE the portal worktree, which has no committer identity: for a cherry-pick or commit run `GIT_COMMITTER_NAME="0.9.0_WK_IRPT_ANLREQ~305" GIT_COMMITTER_EMAIL="0.9.0_WK_IRPT_ANLREQ~305@opal.agent" git -C C:/dev/wk-irpt-anlreq-305/portal ...` (and `--author "0.9.0_WK_IRPT_ANLREQ~305 <0.9.0_WK_IRPT_ANLREQ~305@opal.agent>"` on a commit; write no git config).
+- Write every message file with the Write tool. APPEND rows only to `INVESTIGATION_v1.md` (0 deletions), class OBSERVATION, and COMMIT them. `surfaced_at` = `date -u +%FT%TZ`; a row id has the form `IRPT_ANLREQ-D2-W305-S<k>`. The workspace worktree shows ` M portal`: never commit it. Every `.py` you add passes `bash .tools/commit-gate.sh <file>`. No non-ASCII in what you add.
 - The proof instance: copy the shape of `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~300/IRPT_ANLREQ.TO-AR-y-410.upload-resolving-wait-bounded-backoff-four-minutes.proof_of_spec.json` (read it first; `git show HEAD:<path>` if absent); `controls.mutant` must FIRE and `controls.determinism` must really run. No live call, NO PUSH of any branch, no deploy. Run the proof-of-spec check with THIS worktree's own `.tools/proof-of-spec-check.py`. Scratch outside the product tree.
 
 ### THE CELL (`AR-y-411`, inlined)
@@ -34,22 +34,22 @@ You are `0.9.0_WK_IRPT_ANLREQ~303`.
 3. **The payload check.** Write `r58/payload_check.py`. It prints for the recut against `origin/PROD`: the commit list (`git log --reverse --format='%h %an %s' origin/PROD..cand/dell2/anlreq-prod-recut-v3`), the file list (`git diff --name-status origin/PROD cand/dell2/anlreq-prod-recut-v3`), and then lines that must all read ABSENT: `ABSENT non-TicketCenter-path` (every changed path is under `src/pages/TicketCenter/`), `ABSENT trade-path-change` (no changed path matches `trade` case-insensitively), `ABSENT commentary-always` (no changed line makes `commentary_requested` a constant `true`), and `ABSENT UPLOAD_MAX_TRIES` (the string `UPLOAD_MAX_TRIES` and `UPLOAD_WAIT_MS` appear in no added or remaining line of the recut's `src/` tree: the backoff replaced them). A present item prints `PRESENT <what> <path or sha>` and the script exits 1; it ends with `PAYLOAD-OK <n> commits <m> files` only when every line is ABSENT.
 4. **The gates.** In the portal worktree on the recut: `bun run typecheck`, `eslint` on every changed file, and `bun test src/pages/TicketCenter` for the recut AND for `origin/PROD` the same way in the same worktree (check out `origin/PROD` detached for the baseline, then return). The test gate is the DELTA: the set of failing test lines at the recut must EQUAL the set at `origin/PROD`, and the new backoff test file's cases must all pass (7 expected); a test file that errors to load at the recut but not at `origin/PROD` is named with its cause read. Do NOT run the vite build (the DT seat does at promote). Record each rc, count and the delta in `r58/GATES.json`.
 5. **Record the head.** Print the full sha of `cand/dell2/anlreq-prod-recut-v3`, `git diff --stat origin/PROD <head>`, the applied commits (with their cherry-pick shas) and any left out. Never push.
-6. **Write `r58/PROD_RECUT_V3_CANDIDATE.json`** in `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~303/`: `base_sha`, `head`, `applied`, `left_out`, `files_changed`, `tests`, `claim`, `not_read` (the vite build, the rendered page, the live door's timing). Write the checker scripts named in ACCEPTANCE.
+6. **Write `r58/PROD_RECUT_V3_CANDIDATE.json`** in `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~305/`: `base_sha`, `head`, `applied`, `left_out`, `files_changed`, `tests`, `claim`, `not_read` (the vite build, the rendered page, the live door's timing). Write the checker scripts named in ACCEPTANCE.
 7. **In your report:** the head, the applied and left-out commits, the payload check output, the gates and the delta, the controls, the commit hashes, the rows filed.
 
 ### ACCEPTANCE
 
-<criterion id="AR411-y-AC1" cell_refs="AR-y-411"><invocation>python C:/dev/wk-irpt-anlreq-303/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~303/r58/payload_check.py</invocation><expect>^PAYLOAD-OK </expect></criterion>
+<criterion id="AR411-y-AC1" cell_refs="AR-y-411"><invocation>python C:/dev/wk-irpt-anlreq-305/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~305/r58/payload_check.py</invocation><expect>^PAYLOAD-OK </expect></criterion>
 `AR411-y-AC1`: the payload check of step 3; it exits 0 and prints `PAYLOAD-OK <n> commits <m> files` only when every item reads ABSENT.
 
-<criterion id="AR411-y-AC2" cell_refs="AR-y-411"><invocation>python C:/dev/wk-irpt-anlreq-303/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~303/r58/gates_check.py</invocation><expect>^GATES-OK </expect></criterion>
+<criterion id="AR411-y-AC2" cell_refs="AR-y-411"><invocation>python C:/dev/wk-irpt-anlreq-305/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~305/r58/gates_check.py</invocation><expect>^GATES-OK </expect></criterion>
 `AR411-y-AC2`: you write `gates_check.py`: it reads `r58/GATES.json` and re-runs `bun test src/pages/TicketCenter/__tests__/upload-resolving-backoff.test.tsx` in the portal worktree on the recut; it prints `GATES-OK typecheck 0 eslint 0 new-tests <n> passed failing-lines-equal-PROD <k> new-load-errors <e> explained` only when typecheck and eslint hold, the new cases pass, the failing test lines equal `origin/PROD`'s and every new load error is explained in `GATES.json`; otherwise `GATES-BAD <why>`, exit 1. Its control: with the backoff file temporarily swapped for `origin/PROD`'s version of `analysisRequest.ts` (restored with a sha256 check) the new test run must FAIL (`CONTROL-FIRES`).
 
 <expected_criteria>AR411-y-AC1 AR411-y-AC2</expected_criteria>
 
 ## BOUNDS
 
-- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~303/` and this order's file (status flip only), and INSIDE the portal worktree: the LOCAL branch `cand/dell2/anlreq-prod-recut-v3` and the paths the two commits touch under `src/pages/TicketCenter/`.
+- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~305/` and this order's file (status flip only), and INSIDE the portal worktree: the LOCAL branch `cand/dell2/anlreq-prod-recut-v3` and the paths the two commits touch under `src/pages/TicketCenter/`.
 - READ only: everything else. NO push of any branch.
 
 <paths>
@@ -63,7 +63,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Criterion ids: see ACCEPTANCE. The instance is at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~303/IRPT_ANLREQ.TO-AR-y-411.prod-based-recut-backoff-and-filing-hint-pair.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~305/IRPT_ANLREQ.TO-AR-y-411.prod-based-recut-backoff-and-filing-hint-pair.proof_of_spec.json`.
 Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-411`. Validate it AFTER its commit with
 `python .tools/proof-of-spec-check.py <instance> "AR411-y-AC1,AR411-y-AC2"`; flip `<status>` to `complete` only when it prints VALID.
 </proof_of_spec>
