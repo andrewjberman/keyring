@@ -68,6 +68,7 @@ Report once in your final message: the commit hash, the output of both checks, a
 - The applier cell `OG-rz-2` takes this worker's commit whole into the release; the Terraform edit and the live instance change are its own.
 
 <status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-E</workstream>
 <slot>~164</slot>

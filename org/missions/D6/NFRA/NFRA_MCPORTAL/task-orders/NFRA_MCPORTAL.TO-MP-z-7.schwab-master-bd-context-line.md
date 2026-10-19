@@ -79,7 +79,7 @@ run `proof-of-spec-check.py` on it as the worker rules say, and report once, wit
 **ISSUER NOTES:** cut at the GWZ round-1 issuance (decomposition v19) from the CTO's round analysis `ledger/ROUND_ANALYSIS.z-round1.md` @11c572fef9, item 2. The CTO's line carries the master number in full; it already appears in the real index names on the same owner-only page, and the line is the CTO's wording. The cell does not reach the host: it rides the next mcportal bundle release.
 z7.AC1 base: FAIL as expected (`bun test src` 73 pass, 0 fail; named test present in sources 0 of 1; min 74), run in the provisioned slot-41 worktree at mcportal 59e802a, 2026-10-19 ~20:1xZ.
 
-<status>pending</status>
+<status>complete -- drained f1ecb7e89fc (worker 0.9.0_WK_NFRA_MCPORTAL~41); AC1 PASS: named test 1 of 1, bun test src 74 pass 0 fail at worker report, mcportal cb17848 (LOCAL on branch wk-NFRA_MCPORTAL-41-mcportal until MSTR~Z pushes DEV); issuer re-ran AC1 at the worker head. Not on the host: rides the next mcportal bundle release.</status>
 <round>1</round>
 <workstream>GWZ</workstream>
 <slot>~41</slot>
