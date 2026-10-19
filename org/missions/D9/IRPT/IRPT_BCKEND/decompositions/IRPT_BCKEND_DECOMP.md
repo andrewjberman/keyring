@@ -4784,3 +4784,17 @@ Round 14's read (IB-cw-1, stopped by its own clause, notes merged) found that th
 | `IB-cw-4` | BUILD: the retained-key rule in the runner's drop guard | FWD-7 | WORLD | none | PM16-b |
 
 fanout: 2 of 2 chains cut this round, cap 8, reason: the two cells touch disjoint surfaces (a findings file; `directory_runner.py` and its tests) and neither needs the other's result; the pair waits on both.
+
+## 254. ROUND 17, WORKSTREAM ~PM (Cottonwood's re-keyed accounts trip the refresh Lambda's own drop guard too: cell 5; 2026-10-19 ~22:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the reader census `deliverables/0.9.0_WK_IRPT_BCKEND~459/IBcw3_findings.json` (readers R02, R03, R15), the CTO's rule (msg 10788, S239) and row `IRPT_BCKEND-D2-S245`)
+
+Round 16's read (IB-cw-3, graded complete) found that the guard the CTO approved a fix for exists TWICE. The runner's `carry_forward_removed` (cell IB-cw-4, in flight) compares client keys; the refresh Lambda re-checks the SAME thing on the runner's output in `refresh.py`: `disappeared_entries` and `resolve_disappeared` hold every previous key still in the source snapshot, and `compute_delta` counts `set(prev) - set(cur)` as the disappearances `refresh_firm` fails the build on. The runner mints `source_client_ids` over every raw source key, relationship and account alike, so a re-keyed account's OLD account-level key stays in the source set: the runner fix alone lands a directory that the Lambda then fails (REFRESH_FAILED). The Cottonwood build goes READY only when both surfaces carry the CTO's rule, and only one release of the Lambda zip and the runner bundle moves them together.
+
+- `IB-cw-5` (BUILD, worker ~461): `rekeyed_keys` in `refresh.py`, `disappeared_entries` and `compute_delta` leaving a retained key out; the same fail-closed rule as IB-cw-4 (every account id of the previous entry in ONE current entry, no account-less entry, none split); the delta gains no key; every other path byte-equal; source and tests in a worktree, deploys nothing. Check `IBCW5` (`r261`): eight named tests pass, a base-versus-new differential and scenarios over `disappeared_entries`, `resolve_disappeared` and `compute_delta`, the commit surface; control passes the issuer's reference implementation and each of 9 AC2, 3 AC1 and 3 AC3 negatives fails its own arm, 0 unexpected; dry-run at the base: AC1 to AC3 FAIL.
+
+After IB-cw-4 and IB-cw-5 are graded: ONE never-widen pair for the release (the wedge fix of IB-cw-2, the runner rule of IB-cw-4, the Lambda rule of IB-cw-5; every reader of the client key from `IBcw3_findings.json` with its `rekey_effect`, five of them ENTRY_LOST or KEY_CHANGES_ENTRY_REMAINS at the page and API tiers), then one release by `0.7.0_AE_CloudOps~IB2`, outside the 11:30Z to 14:15Z band, with the first live Cottonwood fire read.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-cw-5` | BUILD: the refresh Lambda's drop guard counts a re-keyed previous key as retained | FWD-7 | WORLD | none (shares the rule with IB-cw-4, not its files) | PM17-a |
+
+fanout: 1 of 1 chains cut this round, cap 8, reason: one cell on one file (`refresh.py` and its tests); IB-cw-4 is round 16's and touches the runner only.

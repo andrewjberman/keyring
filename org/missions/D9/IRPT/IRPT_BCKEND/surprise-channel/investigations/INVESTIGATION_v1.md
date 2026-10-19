@@ -42736,3 +42736,105 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "This worktree tracks org/surprise_channel in the index but has no such directory on disk (sparse checkout); the schema was read from the base checkout instead."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W460-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~460",
+  "surfaced_at": "2026-10-19T22:05:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-cw-4 order says record AC1 and AC2 output before the commit, but AC2 reads committed HEAD against HEAD~1, so it cannot pass before the commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r260/p260_cells.py@5390480a9c1 (ac2: git show HEAD~1:RUNNER and git show HEAD:RUNNER; fails when the two are byte-identical)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-cw-4.a-rekeyed-previous-client-key-is-retained-not-dropped.md@5390480a9c1 (criteria section, AC2 and AC3 both name HEAD~1)",
+      "pre-commit run on worktree base 66ac649890f: AC2 prints 'FAIL: directory_runner.py is identical to the base' (recorded verbatim in deliverables/0.9.0_WK_IRPT_BCKEND~460/IBcw4_criteria_output.txt)"
+    ]
+  },
+  "spec_asserts": "Worker face step 2: run AC1 and AC2 and record their output BEFORE the single commit; run AC3 after it.",
+  "world_is": "AC2 grades the committed change (HEAD against HEAD~1), so before the commit it can only FAIL by construction. AC2's verdict exists only after the commit; the pre-commit FAIL is recorded verbatim and the post-commit AC2 run is reported separately."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W460-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~460",
+  "surfaced_at": "2026-10-19T22:05:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-cw-4 rule 1 unions the account ids of ALL a key's previous entries, while rule 3 says a previous entry with no account ids is NOT retained; the two disagree for a key with one account-less previous entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-cw-4.a-rekeyed-previous-client-key-is-retained-not-dropped.md@5390480a9c1 (worker face rules 1 and 3)",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py@66ac649890f (base, carry_forward_removed and entry_key)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_directory_runner_retained_key.py (worktree; test_a_previous_entry_with_no_account_ids_is_held, third arm)"
+    ]
+  },
+  "spec_asserts": "Rule 1: a key is retained iff A (the union of account ids over ALL its previous entries) is non-empty and a subset of ONE current entry. Rule 3: a previous entry with no account_ids is NOT retained.",
+  "world_is": "For a key with one account-bearing previous entry and one account-less previous entry, rule 1 alone would retain it and rule 3 forbids it. The worker implemented the fail-closed reading (any account-less previous entry of the key means not retained) and pinned it in a test. The CTO should confirm this reading."
+}
+```
+
+## IRPT_BCKEND-D2-S245 -- IB-cw-3 graded: 15 readers of the client key read and re-read; the refresh Lambda carries its own copy of the drop guard, so the runner fix alone leaves the Cottonwood build failed (cell IB-cw-5 cut, round 17)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S245",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T22:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W459-S1, W459-S2 and W459-S3 (worker ~459, order TO-IB-cw-3). S1: the BUILD_DROPS_SOURCE_ENTRY refusal is raised in run_firm (about 1282-1292), not in carry_forward_removed; carry_forward_removed only returns the held keys, so the fix in IB-cw-4 reaches the refusal through the held list: no change to my order. S2: no writer of the bundle object is in the repository (the release path ends at bundle_uri, refresh.py 714-768): the pair must name the bundle's producer from the build host side, which IB2 holds. S3: org/surprise_channel is absent on disk in the worktree (a sparse set); no effect. THE FINDING (re-read by me at the cited lines, refresh.py 421-499 and 1125-1175, handler.py 96-340): the refresh Lambda re-checks the runner's output with the same key-level comparison, and source_client_ids (minted by the runner over every raw source key, relationship and account alike) keeps a re-keyed account's old account-level key in the source set, so resolve_disappeared HOLDS it and refresh_firm fails the build. Fixing only the runner (IB-cw-4) would land a directory that the Lambda then fails. Cell IB-cw-5 (BUILD, refresh.py, same fail-closed rule) is cut in round 17. The census also gives the pair its reader list: refresh compare 4 (2 ENTRY_LOST), runner 4 (2 ENTRY_LOST), the served entry_id (hash includes client_id and relationship_id; changes on a re-key, R04, R05), the resolve API by client_id (ENTRY_LOST, R06; by relationship_id unaffected, R07), the HMAC list (NONE, R12, R13: it hashes account ids only), the filled-report reader (UNKNOWN, R14: not readable from the file; the pair must say so). The portal submodule was NOT READ.",
+  "one_line": "IB-cw-3 complete; the census shows the Lambda side re-checks the same client keys (refresh.py disappeared_entries, resolve_disappeared, compute_delta), so a second guard change is needed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r259/p259_cells.py . IBCW3-AC1|AC2|AC3 run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-459 at fa37e280df: PASS x3",
+      "python .tools/proof-of-spec-check.py on the worker's instance in the main tree after the merge (a8f92812346): VALID (rc=0)",
+      "refresh.py 421-499 and 1125-1175, handler.py 96-110 and 326-340, directory_runner.py 1275-1292, re-read at the merged HEAD by 2.0.0_SA_COO~P2; findings IBcw3_findings.json (15 readers, census 3323 files scanned, 369 with hits)"
+    ]
+  },
+  "spec_asserts": "The retained-key guard needs to exist in the runner only (round 16).",
+  "world_is": "The guard exists twice: the runner's carry_forward_removed and the refresh Lambda's disappeared_entries / compute_delta; both read a re-keyed account as a dropped client."
+}
+```
+
+## IRPT_BCKEND-D2-S246 -- IB-cw-4 graded: the runner's retained-key rule passes its checks and my folder comparison; the worker's whole-file CRLF rewrite of the shared channel was fixed forward, net 48 appended lines
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S246",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T22:52:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W460-S1 and W460-S2 (worker ~460, order TO-IB-cw-4). S1: my check IBCW4 AC2 and AC3 read git (HEAD~1..HEAD), so they cannot pass before the worker's one commit: my wording defect, the same one as IBCW2; the worker recorded it. S2: the worker read rule 1 (the union over a key's previous entries) and rule 3 (an account-less previous entry is not retained) as: any account-less previous entry makes its key NOT retained; that is the stricter, fail-closed reading and I accept it; the same reading is written into TO-IB-cw-5. The finding set: IBCW4 AC1 to AC3 PASS x3 run by me in C:/dev/wk-IRPT_BCKEND-460 at 2df15b0ee9; the diff read whole (rekeyed_keys above carry_forward_removed, a retained filter before the source test, carry_info['rekeyed'] in run_firm, no other line); the folder run in two identical scratch copies (git archive of the base 5390480a9c1 and of the branch): failing and error sets identical (75 ids), passed 63 to 71 (the eight new tests). THE INCIDENT: the worker's build commit 2df15b0ee9 stored the shared surprise channel file with CRLF line endings (all 42711 lines changed); the worker fixed forward in aa455cdb9ea so the net change against the base is 48 appended lines, LF kept (main has 0 CR after the merge). The same trap is now written into the next order (TO-IB-cw-5, step 3). Not measured by me: the live behaviour on a real directory history (the release order reads it).",
+  "one_line": "IB-cw-4 complete; the runner counts a re-keyed previous key as retained, fails closed otherwise; nothing deployed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r260/p260_cells.py . IBCW4-AC1|AC2|AC3 run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-460 at 2df15b0ee9: PASS x3",
+      "pytest of data/assets/scripts/gold/investor_reporting/tests in two identical scratch copies: 42 failed 63 passed 33 errors (base) versus 42 failed 71 passed 33 errors (new); failing and error sets identical",
+      "python .tools/proof-of-spec-check.py on the worker's instance in the main tree: VALID (rc=0); merge landed (branch wk-IRPT_BCKEND-460 at aa455cdb9ea)"
+    ]
+  },
+  "spec_asserts": "A previous client key counts as retained when every account id of its entry is present in one current entry; any missing account fails closed (CTO msg 10788).",
+  "world_is": "directory_runner.py implements it (rekeyed_keys, carry_forward_removed); the refresh Lambda does not yet (IB-cw-5)."
+}
+```
