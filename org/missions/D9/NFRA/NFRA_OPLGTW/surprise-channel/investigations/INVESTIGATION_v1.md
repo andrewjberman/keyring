@@ -30265,3 +30265,82 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "This seat touched nothing on the host and has stopped all audit calls. Disarm: the owner reads the journal, restores the service, and states the cause; if the cause is oversize replies, Z-S413 (P4-P7) is its fix."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T19:33:00Z",
+  "id": "NFRA_OPLGTW-Z-S424",
+  "one_line": "ADDENDUM to NFRA_OPLGTW-Z-S413 (P4-P7 size handling): three more uncapped replies of the same class, and the measured outage cause makes uncapped replies a host-availability risk",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Cites NFRA_OPLGTW-Z-S413 (unchanged; the row gate refuses in-place edits). search_files 75.9 KB and search_site_files 80.9 KB (neither takes a result cap); ycharts_fund_series 59 KB (DIVZ, 1,255 daily points).",
+      "Outage 17:30Z-18:51Z (Z-S420), cause measured by 2.0.0_SA_COO~O msg 36075: MemoryCurrent 1.28 GB vs MemoryHigh 1.26 GB on the t4g.small host.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART3_M365_INTEGRATIONS_20261019.md @df8a98cbed; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @9e74fee971 (Part 3 routing)"
+    ]
+  },
+  "spec_asserts": "Every typed answer fits the projection it declares.",
+  "world_is": "Three more replies exceed the client limit; an uncapped reply is also a load risk on the small host.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Per the CTO routing these fold into Z-S413's fix; filed as a NEW citing row because the gate refuses a mutated row."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T19:33:00Z",
+  "id": "NFRA_OPLGTW-Z-S422",
+  "one_line": "Y2: ycharts_time_series and ycharts_risk_return_scatter get an upstream HTTP 403 and answer an empty series with no reason field",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live 2026-10-19 ~19:0xZ (Andrew@): ycharts_time_series(DIVZ, price, 2026-10-14..2026-10-16) -> http_status 403, points 0, series []; ycharts_risk_return_scatter([DIVZ, SPY], annualized_volatility, annualized_total_return) -> http_status 403, series [].",
+      "Same session: ycharts_freshness ok (HTTP 200), ycharts_search 200, ycharts_snapshot_metrics 200, ycharts_fund_series 200 -- the credential is live, so the 403 is per endpoint (entitlement or endpoint change, not read).",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART3_M365_INTEGRATIONS_20261019.md @df8a98cbed; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @9e74fee971 (Part 3 routing)"
+    ]
+  },
+  "spec_asserts": "A YCharts tool answers its series, or a refusal naming why.",
+  "world_is": "Two tools answer an empty series that a caller can read as 'no data'; only the http_status field says otherwise.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: read whether the 403 is an entitlement or an endpoint change; surface it as an absent_reason either way."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T19:33:00Z",
+  "id": "NFRA_OPLGTW-Z-S423",
+  "one_line": "Y1+R1+T1: ycharts_snapshot_metrics keys the value under 'None' instead of the symbol; opal_data_refresh_status answers an unknown execution id as non-terminal UNKNOWN forever; poll_addressed_teams_messages ignores `top`",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Y1 live: ycharts_snapshot_metrics(['^SPX'], ['ytd_total_return']) -> values {ytd_total_return: {'None': 12.91}}.",
+      "R1 live: opal_data_refresh_status('audit-nonexistent-execution') -> status UNKNOWN, terminal false, status_note 'status HTTP 404'; the tool's description tells a caller to poll until a terminal status.",
+      "T1 live: poll_addressed_teams_messages(since 18:30Z, top=2) -> count 4.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART3_M365_INTEGRATIONS_20261019.md @df8a98cbed; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @9e74fee971 (Part 3 routing)"
+    ]
+  },
+  "spec_asserts": "Each answer names what it answers for (Y1), reaches a terminal state on an unknown id (R1), and honours its page bound (T1).",
+  "world_is": "A multi-symbol snapshot cannot be attributed; a poller loops on a typo'd id; the poll returns more than asked.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Three small defects in one row per the CTO routing."
+}
+```
