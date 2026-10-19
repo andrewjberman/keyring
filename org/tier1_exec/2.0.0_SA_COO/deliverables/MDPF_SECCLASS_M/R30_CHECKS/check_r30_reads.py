@@ -23,7 +23,7 @@ import sys
 import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, *(['..'] * 5)))
+ROOT = os.path.abspath(os.path.join(HERE, *(['..'] * 6)))   # <repo>/org/tier1_exec/<serial>/deliverables/<folder>/R30_CHECKS
 CAUSE = os.path.join(ROOT, 'org', 'missions', 'D8', 'MDPF', 'MDPF_SECCLASS', 'deliverables',
                      '0.9.0_WK_MDPF_SECCLASS~106', 'S53_CAUSE.json')
 RECON = os.path.join(ROOT, 'org', 'missions', 'D8', 'MDPF', 'MDPF_SECCLASS', 'deliverables',
@@ -128,6 +128,7 @@ def selftest():
         neg('unnamed-without-not-read', lambda d, r: d.update(cause_named=False))
         neg('too-few-weekdays', lambda d, r: d.update(dates=d['dates'][:2] + d['dates'][3:]))
         neg('short-summary', lambda d, r: d.update(summary='short'))
+    arms.append(('root-is-the-repo-root', os.path.isdir(os.path.join(ROOT, '.tools')) and os.path.isdir(os.path.join(ROOT, 'lib'))))
     ok = all(a[1] for a in arms)
     print('R30-SELFTEST ok=%s arms=%s' % (ok, ','.join('%s:%s' % (n, 'ok' if v else 'FAIL') for n, v in arms)))
     return ok
