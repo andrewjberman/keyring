@@ -167,6 +167,29 @@
     "spec_asserts": "The order: the bucket, prefix and key are address() output, and the role widens to that one prefix; AC1 simulates the role against the manifest's key.",
     "world_is": "The builder-correct address sits behind a fence the role is not in. Admitting the role is a bucket-policy change on a firm bucket (exemptions.json row plus a never-widen CTO and COO signoff), which the order's paths do not grant. The simulation in AC1 ignores the resource policy, so AC1 would read EWS-PIAM-OK while the live Put is denied.",
     "notes": "The lane applied nothing. Two ways out, both a ruling: (A) keep the 49financial address and obtain the fence admission with a Get/Put-only scoped exemption on the one key; (B) a registry deviation (R20) homing this state in opal-data-assets. The launcher change (items_opened lines, persist code) is independent of the bucket and proceeds. AC3 must be graded by the object's existence, not by AC1."
+  },
+  {
+    "id": "TCKT_EARLYWARN-D1-S8",
+    "project": "TCKT_EARLYWARN",
+    "fabric": "dell1",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-10-19T12:55:00Z",
+    "one_line": "The TO-EWS-d1 deploy sentinel org/critical_paths/.open_deploys/ews-d1-one-container-20261017.json still reads status OPEN with legs L1 and L6 unclosed at origin/box/dell1 HEAD, although the order was flipped complete 10-17 03:22Z and the service runs task definition :3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.7.0_AE_CloudOps~TM1 (ledger author): close it SUPERSEDED after measuring the artifact (CLAUDE.md NEVER-2)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show origin/box/dell1:org/critical_paths/.open_deploys/ews-d1-one-container-20261017.json read 2026-10-19 12:5xZ: status OPEN; L1 closed_at null, L6 closed_at null; L2-L5 closed 10-17 05:07Z-05:26Z",
+        "aws ecs describe-services opal-clientops-ews-cluster read 2026-10-19 12:5xZ: ACTIVE, desired 1, running 1, task-definition opal-clientops-ews-task:3",
+        "commit 7d64231f73 (10-17 03:22): TO-EWS-d1 flipped complete; commit e22baafdd1 closed the d2 ledger only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A confirmed deploy's ledger sentinel is closed at completion (CLAUDE.md NEVER-2).",
+    "world_is": "The d1 work is world-done and superseded by d2, but its sentinel stays OPEN, so any reader of .open_deploys on dell1 sees a half-landed deploy that is not one.",
+    "notes": "Surfaced during an Andrew-direct read-only research pass (client-ops scanners). Nothing was edited outside this row."
   }
 ]
 ```
