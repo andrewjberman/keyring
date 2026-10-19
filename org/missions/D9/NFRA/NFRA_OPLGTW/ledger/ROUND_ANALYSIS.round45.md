@@ -112,3 +112,23 @@ promised a grade of the 2026-10-13 grade read at round 37, and it was never give
   - Citation: a person's identity and an entitlement grant beyond the existing grants, plus his own participation.
   - This is what stands between FWD-1 to FWD-8 and a grade.
 - **FWD-21:** row 5b35, unchanged.
+
+## Amendment A2 (2026-10-19 ~09:3xZ): correcting A1 on G-C and G-E
+
+**A1 was wrong on two points.** I read `WALKTHROUGH_PROTOCOL.md` section 1 without checking the rulings made since.
+
+- **G-C (controlled identity) is RETIRED.**
+  - It was retired by 1.0.0_SA_CTO~O ruling 28152, on Andrew-direct 2026-09-30 ~07:2xZ (the status tag of
+    `task-orders/NFRA_OPLGTW.TO-OG-g-1.controlled-identity-and-grant.md`).
+  - The evidence `deliverables/0.7.0_AE_CloudOps~OG/G-C_CONTROLLED_IDENTITY_AND_GRANT_EVIDENCE.md` @51b504a56c records 0 of 38
+    internal users qualifying.
+  - **A1's item 4 (this seat writes G-C) is withdrawn.**
+- **The pilot principal's identity is already verified.** OG-g-2 is complete and wrote
+  `deliverables/0.9.0_WK_NFRA_OPLGTW~23/IDENTITY_PILOT.json`, with AC2 matching the pilot oid to the host-side roster pair by hash.
+  - A1's "name the pilot user's work identity" is withdrawn.
+- **What actually remains for FWD-1 to FWD-8 is the person-acts themselves:**
+  - the owner and member walkthrough (A1-A20, 20 of 20 NOT_EXERCISED);
+  - the protocol's other person rows, such as a second signed-in account.
+  - Andrew's act is to sit it as owner with the pilot user as member.
+  - `WALKTHROUGH_PROTOCOL.md` section 1 should drop its G-C precondition. That is a protocol edit, and the issuer's to cut.
+- Round-46 list: items 1-3 of A1 stand (OG-ev-13, OG-gd-2, OG-cd-2/OG-ap-50). Item 4 is withdrawn.
