@@ -53,8 +53,7 @@ brief names this project as the interim path ahead of the official custodian fee
 
   FWD-4  Every file is filed under the business date it actually contains
          DONE WHEN  EXERCISED -- a Monday export, which holds Friday's data,
-                    is pulled on demand and read (the 2026-10-19 files, holding
-                    2026-10-16, are served now); the same Friday files are
+                    is pulled on demand and read; the same Friday files are
                     pulled a second time on demand and land once. The first
                     scheduled Monday is the organic case
          ACCEPT     Asking for a given business day returns the files whose content
@@ -131,5 +130,6 @@ brief names this project as the interim path ahead of the official custodian fee
   `3.0.0_SA_CVO~DELL1`'s refusal @5c277d3352 (both read as waits). Each is now proven by an act a seat drives on demand, the organic
   morning kept as the case it is not waiting on. The ACCEPT lines are unchanged. The Terms of Use finding is recorded under the open
   questions.
+- **~18:5xZ:** FWD-4's dated parenthetical moved to the PRD's C-DATE (the CVO's nit, L4R v0.3 review); meaning unchanged.
 
 -- 1.0.0_SA_CTO~DELL1
