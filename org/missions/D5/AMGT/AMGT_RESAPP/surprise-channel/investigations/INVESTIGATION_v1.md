@@ -32480,3 +32480,79 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not applied: widening cf-6 to this launcher is the CTO's call (msg 8499 kept it out); a later cell would move run_management.cmd to py -3.12 the same way, with its own test."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W531-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~531",
+  "surfaced_at": "2026-10-19T22:23:37Z",
+  "one_line": "The page-vs-export harness exportCompare.harness.cjs aborts at load on the PROD vintage (facddeb6): its stub set is an older copy of tabs.harness.cjs, so the page's new imports are unresolved before any artifact is read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "node src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs --rich .../richBA.old.md at portal facddeb6 (unrepaired): rc=1, Error: Cannot find module '@/ui/components/PageEnd' (SecurityAnalysis.tsx:38 import). After the PageEnd line: Cannot find module '@/lib/dateUtils' (PageEnd.tsx:14); after that '@/ui/components/graphic/GraphicCard' (LeadPanel.tsx:107); after that 'useCollectedChatter is not a function' and the hooks useModelVersions, useModelCompare, useInputLedger missing from the hook stub.",
+      "node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs at the same portal tree: rc=0, CHECKS-OK 21 of 21 (the loader it copies from carries all of those entries)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cg-2 order runs exportCompare.harness.cjs --rich on the unchanged harness and reads its verdict lines for the old and new export; the order names the harness as the parity instrument and states its loader as tabs.harness.cjs's own.",
+  "world_is": "The harness does not load at portal facddeb6. Its loader is a stale copy: the missing entries were copied from tabs.harness.cjs (PageEnd, dateUtils, GraphicCard, react-query, api-client, and four idle hook stubs) so it reaches the page. Its comparison logic is unchanged apart from the cg-2 vintage rule. The repair sits in the harness folder, the order's own surface.",
+  "notes": "Form only. The stale loader is a harness defect, not a page defect; a later cell may replace the copied stub set with a shared loader."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W531-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~531",
+  "surfaced_at": "2026-10-19T22:23:37Z",
+  "one_line": "The cg-2 rule scopes the uppercase state word to 'a reader sentence', but the check-face badge prints the uppercase label REFUSED as a badge, not as a sentence; the order does not say which.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/CheckFaceBadge.tsx:42 at facddeb6: VERDICT_CONFIG REFUSE label 'REFUSED' (the badge also carries the words PASS and PROVISIONAL at :35 and :48); rendered at :65 beside the value of every REFUSE figure (ProvenanceLine.tsx:60, ModelTab.tsx:158).",
+      "the harnesses drafting.harness.cjs:261 and thesisLadder.harness.cjs:302 pin the badge text '>REFUSED</span>' (unchanged by this cell).",
+      "census row recorded with edited: false and the reason, in readerWordsPageCensus.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "cg-2 Census rule (1): any further VISIBLE site that prints an UPPERCASE state word in a reader sentence is EDITED the same way (its plain words in the receipt); the badge label is outside the order's named sites.",
+  "world_is": "CheckFaceBadge.tsx:42 prints the uppercase state word REFUSED as a visible badge label. It is a verdict label beside a value, not a sentence, and the AMGT-s-10 three-state labels are pinned by two harnesses. It was not edited; the decision whether a badge label falls under the sentence rule is left to the issuer.",
+  "notes": "Form only. No page text changed by this row."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W531-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~531",
+  "surfaced_at": "2026-10-19T22:23:37Z",
+  "one_line": "exportCompare's rich parser reads every ABSENT and REFUSED line of the export generically, not only the three kinds the order names, so the three-kind vintage rule leaves the other kinds of the new export unread.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "exportCompare.harness.cjs (rich parser, generic rule, unchanged): line 'const absent = line.match(/ABSENT\\s*--\\s*(.+)$/)' and the REFUSED rule '^\\S+:\\s*REFUSED\\s*--' read every such line in the export regardless of its kind.",
+      "richBA.old.md (the r123 export) carries 1 of the three kinds (line 747, y/y growth rows) and 12 other ABSENT lines (lines 710 to 721: Shares, Debt, Preferred, ...), read by the generic rule; the old and new verdict lines are identical after the change (measured, 4 runs)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "cg-2 rule (4): exportCompare accepts both vintages of the export's words for the three line kinds it reads (the y/y-growth note, the estimate-years note, the Model Cases lines); nothing else in it changes.",
+  "world_is": "The harness reads the Posture (K1), no-call (K2), Description (K5), Exec Management (K6) and MNEMONIC REFUSED (K8) lines of the export too, through its generic ABSENT and REFUSED rules. The cg-1 vocabulary (Not available) on those kinds is not read by the three-kind rule, so an export that carries them in the new words would list their page absences as missing. Not tested: no fixture in the tree carries those kinds in the new words.",
+  "notes": "Form only. The three-kind rule was implemented as ordered; widening it to the other kinds is the issuer's call."
+}
+```
