@@ -26902,3 +26902,33 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W308-S1 -- the worker worktree is a sparse checkout without ycharts/session, so every research test errors at collection and the TO-AR-g-170 criteria cannot run here
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W308-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~308",
+    "surfaced_at": "2026-10-19T21:19:38Z",
+    "one_line": "The worktree C:/dev/wk-irpt-anlreq-308 carries org/ and .tools/ and the ycharts/research folder the order names, but core.sparseCheckout is on and ycharts/session is not materialized; runner.py (imported by opal_producer.py at line 60) does 'from operation_lease import OperationRefused' and ycharts/session/operation_lease.py is tracked at HEAD but absent on disk, so the producer and every research test fail at import.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-g-170 worker face: 'Run tests with plain python -m pytest ... from infra/aws/lambda/investor-reporting'; the three acceptance invocations must produce a pytest summary line (AC1 expect ^[0-9]+ passed in, AC2 and AC3 likewise).",
+    "world_is": "In the worktree, 'git sparse-checkout list' names .tools, infra/aws/lambda/investor-reporting/ycharts/research, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref and org/standards; infra/aws/lambda/investor-reporting/ycharts/session is absent on disk (ls: cannot access). Measured at base: AC1 rc=4 'no tests ran' (the guard test file does not exist yet); AC2 rc=2 '4 errors during collection' with ModuleNotFoundError: No module named 'operation_lease' from runner.py:28; AC3 rc=2 '5 errors during collection' with the same error. No criterion can be measured in this worktree as provisioned.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/dev/wk-irpt-anlreq-308 config core.sparseCheckout = true; git sparse-checkout list (output above)",
+        "git ls-tree HEAD infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py = 100644 blob 54f4dd1a823bbeafd4f537df1823009da6d0cb45 (positive control: the file is tracked at HEAD 6b9d741e44)",
+        "infra/aws/lambda/investor-reporting/ycharts/research/runner.py lines 10-28: sys.path inserts ycharts/session only if the directory exists, then 'from operation_lease import OperationRefused'",
+        "pytest run of the four AC2 files from the worktree root of investor-reporting: 4 errors during collection, ModuleNotFoundError No module named 'operation_lease' (ycharts/research/opal_producer.py:60 -> runner.py:28)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a grant question for the TO's own paths: ycharts/session is outside the order's <paths> and was not touched. The worker did not run git sparse-checkout add, did not copy operation_lease.py from another checkout, and did not set PYTHONPATH, since each would change the tree or the verdict's provenance. The issuer should re-provision the worktree with ycharts/session in its sparse set (or confirm the research tests need a different path set) before the order can be measured."
+  }
+]
+```
