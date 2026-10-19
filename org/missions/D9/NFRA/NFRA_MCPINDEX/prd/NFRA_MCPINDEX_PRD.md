@@ -832,61 +832,80 @@ CONTRACTS-side under FWD-22; ENDPOINT unchanged.
 
 #### ENDPOINT -- three new outcomes (no FWD is a wait: each is proven by an act a seat runs on demand)
 
-**THE DENOMINATOR (frozen at the cut, both FWDs read it):** every segment `/gateway` on mcp.opalinvest.dev lists at the cut, and
-every tool listed under it.
-- A segment is a `bucket`, or a (`bucket`, `vendor`, `firm`) pair for opal-data-assets and opal-data-bd (C-GROUP item 3).
-- It is read from the SERVED page by one census, printed with its count, and committed as `GATEWAY_SURFACE_CENSUS_<date>.json`.
-- A segment added later enters by addendum, never silently.
+Cures R1-R3 of `3.0.0_SA_CVO~Z`'s refusal
+(`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.18_RATIFIED_TEXT_20261019_Z.md` @efdb1d6b00) are applied
+below.
+
+**THE DENOMINATOR (frozen at the cut, all three FWDs read it):** every CHANNEL `/gateway` on mcp.opalinvest.dev lists at the cut,
+of EVERY kind, and every tool listed under it.
+- The kinds are `bucket`, `store`, `integration` (YCharts, Schwab, Black Diamond, globgrph, opal_portal, portal_index,
+  advi_billing, opal_discover), `native` (Microsoft 365) and `undeclared`. The source is `GatewayChannel.kind` and
+  `admin_gateway_breakdown.py`.
+- The denominator also includes the (`vendor`, `firm`) segments inside opal-data-assets and opal-data-bd (C-GROUP item 3).
+- It is read from the SERVED page by one census, printed with its count per kind, and committed as
+  `GATEWAY_SURFACE_CENSUS_<date>.json`.
+- A channel added later enters by addendum, never silently.
+- `undeclared` is not a surface to index. It is the residue FWD-23 empties.
 
 - **FWD-23 -- Indexed across every surface.**
-  - Every catalog row under every census segment carries C-GROUP and a `read_tool` naming a tool the deployed gateway serves.
+  - Every catalog row under every census channel carries C-GROUP and a `read_tool` naming a tool the deployed gateway serves.
   - Every census tool is either (a) linked to at least one such row, or (c) with its stated reason. Member (b) is 0 inside the
     denominator.
-  - `opal_discover` answers each segment by a plain-words subject.
-  - Proof: the emitter's refusal set is empty against the census, plus one `opal_discover` call per segment through the served
-    gateway, recorded. The negative arm is one segment planted with no row, which must refuse.
+  - An integration or native channel with no catalog rows is read PER TOOL, (a) or (c), never per row.
+  - The `undeclared` channel holds 0 tools, or each remaining tool is listed as (c) with its stated reason.
+  - `opal_discover` answers each bucket and store channel by a plain-words subject.
+  - Proof: the emitter's refusal set is empty against the census, plus one `opal_discover` call per bucket and store channel
+    through the served gateway, recorded. The negative arm is one channel planted with no row and no (c) reason, which must
+    refuse.
 - **FWD-24 -- Every listed tool tested.**
-  - Every census tool has a recorded live call through the SERVED gateway by a real signed-in principal. The verdict per tool is
-    one of:
-    - `PASS`: a correct non-empty answer, checked against the row's source;
+  - Every census tool, under EVERY channel, has a recorded live call through the SERVED gateway by a real signed-in principal.
+    The verdict per tool is one of:
+    - `PASS`: a correct non-empty answer, checked against the row's or the integration's source;
     - `EMPTY-CORRECT`: an empty answer the source confirms is empty;
     - `REFUSED-CORRECT`: an entitlement refusal for a principal not granted;
+    - `PREVIEW-ONLY`: a tool that sends or writes passed its non-sending path (the `confirm=false` preview, or a dry-run flag).
+      Its send leg is UNEXERCISED and is named as such;
     - `FAIL`: with its class.
-  - A member-(c) tool that sends or writes is exercised only on its non-sending path (the `confirm=false` preview, or a dry-run
-    flag). It NEVER sends.
+  - **CTO narrowing, labelled as such:** the battery never exercises a send leg. That is this seat's safety default, not
+    Andrew's word ("All those tools need to be tested so we can be sure they actually work"). Whether a send leg runs against a
+    sink the principal owns (their own mailbox or chat) is Andrew's call, and is put to him as ONE open call. Until he widens it,
+    sending tools grade `PREVIEW-ONLY`.
   - The battery is ONE committed, re-runnable script. It is the per-tool test, not a standing monitor: it runs on demand and at
     each gateway release, and never on a timer.
-  - Every `FAIL` becomes a defect cell in NFRA_OPLGTW (the gateway's code) or here (a catalog row). FWD-24 is REALIZED at 0 FAIL
-    on a run after the last fix.
+  - Every `FAIL` becomes a defect cell in NFRA_OPLGTW (the gateway's code) or here (a catalog row).
+  - FWD-24 is REALIZED at 0 FAIL on a run after the last fix. The REALIZED line lists every `PREVIEW-ONLY` tool by name.
   - Proof: the battery's own run plus one planted broken tool, which must read FAIL.
 - **FWD-25 -- A cheat sheet per employee.**
-  - Every Opal employee on the approved roster gets ONE instructional document. It holds only the tools their gateway grant
-    reaches, grouped by the buckets relevant to their job.
+  - Every Opal employee with a live gateway grant gets ONE instructional document. It holds only the tools their CURRENT grant
+    reaches, grouped by bucket (and by channel for integration and native tools).
   - Each tool carries 2 to 3 example plain-English questions, and every example is a query FWD-24's battery ran and passed. No
     untested example ships.
   - Each sheet opens with how to connect (the Claude connector, first sign-in) and how to tell a refusal from an empty answer.
-  - Generated from the catalog plus the battery plus the grant. NEVER hand-typed per person. A second run reproduces the same
-    sheet.
-  - Proof: the generator run for one employee whose grant spans two buckets, read by that person.
+  - Generated from the catalog plus the battery plus the grant as it stands. NEVER hand-typed per person. A second run reproduces
+    the same sheet, and a sheet follows whatever grant is live when it is generated.
+  - Proof: the generator run for one employee whose CURRENT grant spans two buckets. Every example on that sheet is re-run as
+    that principal through the served gateway and reads PASS.
   - Negative arm: an employee without a bucket's grant gets no tool from that bucket on their sheet.
+  - No human read is on the proof path.
 
-#### What only Andrew decides (FWD-25)
+#### Proposed to Andrew (off every proof path; proposing is legal, no gate is implemented)
 
-- **The role-to-bucket mapping per employee IS an entitlement decision.** A sheet that lists a tool the person cannot reach
-  misleads, and granting it widens access. `4.0.0_SA_CRO~Z` drafts the roster with a proposed mapping:
-  - the source is each internal user's Entra job title and department, plus their current gateway grants;
+- **Who reaches what.** Cheat sheets follow grants, so a sheet scoped to a person's job needs that job's buckets granted.
+  `4.0.0_SA_CRO~Z` drafts the roster with a proposed role-to-bucket mapping:
+  - the source is each internal user's Entra job title and department, plus their current gateway grant;
   - his three examples are the seed: opal-data-assets to the operational team, opal-data-harvest to asset management,
     opal-data-etfs to the CFO.
-- **Andrew approves the mapping. NFRA_OPLGTW then applies the grants under never-widen, and the sheets follow the approved
-  grants.**
-- **Delivery format:** one document per person in a SharePoint folder he names, unless he says otherwise.
+  - Every proposal that WIDENS a current grant is marked. A widening is applied by NFRA_OPLGTW under never-widen on his word.
+- **Send legs:** the one open call named under FWD-24.
+- **Delivery:** one document per person, in a folder on the Opal SharePoint site the gateway's `upload_text_to_site` writes. The
+  folder is named at the cut, and he may name another.
 
 #### Placement
 
 - **Owner:** NFRA_MCPINDEX, `2.0.0_SA_COO~MI` issuer, for FWD-23, FWD-24 (the battery) and FWD-25 (the generator).
 - **NFRA_OPLGTW** (`2.0.0_SA_COO~O`) takes:
   - every FWD-24 `FAIL` in the gateway's code, as a defect cell in its batched releases;
-  - the approved grants for FWD-25.
+  - any grant widening Andrew approves.
 - **NFRA_MCPORTAL** (`2.0.0_SA_COO~MP`) supplies the census read of `/gateway` and makes no page change for these outcomes.
 - **Round 22 builds the thread:** ONE segment (opal-data-harvest), end to end. Census, then indexed (FWD-23), then battery
   (FWD-24), then one employee's sheet (FWD-25). The next rounds enrich segment by segment.
