@@ -79,7 +79,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 1 of the CTO's round-124 analysis (`ledger/ROUND_ANALYSIS.round124.R1.md`, msg 8560, `@e8adcc7300`). The CTO's "one cell" is one enrichment item: it is cut by write set into `cg-1` (this file, the workspace repo) and `cg-2` (the portal repo). The redeploy `cg-4` goes under its own never-widen pair that names the moved lines (live: 290 `ABSENT` lines on 101 names, 27 `REFUSED` lines on 16 names, by kind in the census) and both branches of each writer; the expected moved set is exactly the census table. K7 has no live line; its change is graded by the test only. LOCAL code cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>125</round>
 <slot>0.9.0_WK_AMGT_RESAPP~530</slot>
 <fabric>dell1</fabric>
