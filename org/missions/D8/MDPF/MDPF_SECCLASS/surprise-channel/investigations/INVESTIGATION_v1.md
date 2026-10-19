@@ -9006,3 +9006,28 @@ by dell1 or by this seat.
   "world_is": "The checker takes the ids as one expected set (<expected_criteria>). With one id it reports the instance two other rows as unexpected additions and exits 1, so no per-id run can exit 0 for a valid three-row instance. The worker validated with the full set and got rc=0; the three criteria are the grade."
 }
 ```
+
+## MDPF_SECCLASS-D1-S57 -- C_06 drops the canonical holdings of 126 accounts that are missing from accounts_dimension: about $23.5M a day on Monday-to-Thursday dates, none on Friday to Sunday; the "$32k" of D1-S53 is the day-over-day change in that excluded mass
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S57",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-19T15:37:01Z",
+  "one_line": "Cell SC-e-118 (worker ~106, S53_CAUSE.json, drained @9ca78b1073, AC1 R30-s53-cause ok=True on main) names the step: data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py line 813 `pos = pos.dropna(subset=['relationship_id'])` drops every canonical holdings row whose account_id has no relationship_id in accounts_dimension. I recomputed 2026-10-05 from S3 (read-only; canonical holdings versions 6cZGJKLg... before and MPkQQMxb... after, accounts_dimension_latest.parquet at its current version, 11,175 accounts all with a relationship_id): 126 accounts absent from the dimension carry 1,870 rows and 23,462,451.06 before and 1,883 rows and 23,494,524.98 after, a change of +32,073.92, which equals the S48 residue of that date (-32,073.92) to the cent. Total canonical market value that day is 2,034,178,999.86 (after), so the excluded mass is about 1.2 percent. The worker found the same on 10-06 and 10-07 and zero excluded rows on 10-09 and 10-10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~106/S53_CAUSE.json (step file, line and quote verified by the checker against the repo; residues equal S48_RANGE_RECON.json)",
+      "this seat's recompute of 2026-10-05 from S3 on 2026-10-19 (python -I, boto3 reads only): excluded rows 1,870 -> 1,883, accounts 126, excluded mv 23,462,451.06 -> 23,494,524.98"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-29 analysis item 2 (msg 8326): the $32k Monday-to-Thursday gap has a named step and dates, and the cause becomes its own row.",
+  "world_is": "The step is named and it has no weekday rule: it excludes accounts with no relationship mapping. The weekday pattern comes from the INPUT: the canonical holdings carry rows for these 126 accounts (mostly blank-ticker bd positions, 1,880 of the 1,883, mostly ETFs) on Monday-to-Thursday partitions only. The premise of D1-S53 is corrected: $32k is the change in the excluded mass between two fire versions, the level is about $23.5M a day. Not read: why those accounts have no relationship_id, why their rows exist only in Monday-to-Thursday partitions (the upstream writer of those bd rows), their class split (the producer classifier client lib/_shared/etf_classifications_dynamodb.py was absent from the worker worktree, rows D1-W106-S2), and whether excluding them is intended."
+}
+```
