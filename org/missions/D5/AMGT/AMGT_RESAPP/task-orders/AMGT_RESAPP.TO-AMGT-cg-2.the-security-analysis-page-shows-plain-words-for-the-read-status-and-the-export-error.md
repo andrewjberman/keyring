@@ -76,7 +76,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the portal half of the CTO's round-124 item 1 (msg 8560). THE FLOW is `portal/CONTRIBUTING-BOXES.md`: branch `cand/<box>/<slug>` cut from PROD (`facddeb6`, portal-v2.1.244; DEV is 140 commits ahead of PROD), the approval row (the issuer registers it in the shared tree; the CTO approves an Opal-internal page), the merge-forward by `.tools/portal-merge-forward.sh` (the portal release seat, `0.4.0_DT_ClientPlatform~H2`). Per the CTO: this page change is Opal-internal (Security Analysis), so its DEV merge waits only on the building box's CTO; no PROD promote is asked. `GenerationCaption.tsx` and `InputProvenance.tsx` are system-fact captions kept out of this cell and put to the CTO in the drain-end slug. LOCAL code cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>125</round>
 <slot>0.9.0_WK_AMGT_RESAPP~531</slot>
 <fabric>dell1</fabric>
