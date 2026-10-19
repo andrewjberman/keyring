@@ -1,6 +1,6 @@
 {
   "_what": "MDPF_SECCLASS data contract: the two enumerations the PRD closes as data (PRD CONTRACTS C-FIELD and C-WRITER). The canonical table is DynamoDB etf-classifications; its existing columns (ticker, asset_class, sub_asset_class, sector, name, management_style) are POSN_ASTTAX's and are not restated here.",
-  "contract_version": "0.8.0",
+  "contract_version": "0.9.0",
   "project": "MDPF_SECCLASS",
   "prd": "org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md",
   "fields": {
@@ -54,6 +54,24 @@
         "intent_coherence": "one axis: which identifier scheme keys the row; no class, ordering or vendor meaning is carried in it",
         "state_coherence": "setting identifier_namespace moves no asset_class, sub_asset_class or classified_by value; a CUSIP row's full identifier lives in the one ticker column, never split across two attributes",
         "token_census": "word-boundary census of identifier_namespace, 2026-09-30 ~03:2xZ, native/comp-find: infra/aws/lambda/v2_portal 0 hits, data 0 hits, portal/src 8 hits -- ALL in IRPT_BCKEND's own wire contract (portal/src/pages/InvestorReporting/contracts/wire/AnalysisRequest.ts, adapt.ts, fixtures/tests), whose identifier_namespace enum is wider (TICKER|CUSIP|ISIN|CASH|MODEL|UNMATCHED) and is a DIFFERENT schema (IRPT's own normalized-holdings wire, not etf-classifications) -- same token name, disjoint domain; flagged as row MDPF_SECCLASS-W5-S2, not a write-path collision"
+      }
+    },
+    "resolved_via": {
+      "serves": "FWD-7 (row MDPF_SECCLASS-D1-S55, CTO round-29 analysis CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_29_20261019.md section 3, contract 0.9.0)",
+      "type": "string",
+      "values": ["april_table"],
+      "domain": "rows of etf-classifications whose ticker came from a NAME, not from the holding's own ticker column",
+      "definitions": {
+        "april_table": "the holding carried no ticker; E_18's April name-to-ticker resolution table (4,424 names) mapped its name to a real ticker absent from etf-classifications, and the row was then classified through the classifier's normal path and refusal rule"
+      },
+      "absent": "a row without resolved_via took its ticker from the holding's own ticker column (or from a seed, constituents or model write keyed by ticker); absent is never defaulted to april_table, and the value is never inferred from the row's class or classified_by",
+      "rule24_record": {
+        "domain_declared": "the rows of etf-classifications, the population E_18's candidacy write (SC-e-117) adds to",
+        "mece_by_subtraction": "a row's ticker came either from the holding's own ticker column (absent) or from the April table's name resolution (april_table); a future resolver is a new value added by contract, never folded into april_table",
+        "same_grain": "one value per ticker (row), set once at the row's write",
+        "intent_coherence": "one axis: where the row's TICKER came from; it carries no class, confidence or writer meaning (classified_by keeps the writer)",
+        "state_coherence": "setting resolved_via moves no asset_class, sub_asset_class, classified_by or identifier_namespace value; a later seed correction keeps the ticker's provenance only if the seed row carries it, the seed path owns that row",
+        "token_census": "word-boundary census of resolved_via, 2026-10-19 ~15:2xZ, comp-find '\\bresolved_via\\b' over data, infra/aws/lambda, portal/src, lib, org/standards: 0 hits across 10,826 files scanned (1,594 binary and 2,014 ephemeral-floor files not searched) -- no collision"
       }
     },
     "classified_by": {
