@@ -42661,3 +42661,78 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "49 Financial refused (real loss, held by the CTO's ruling); Inflection and Cottonwood published with business date and custody as-of 2026-10-16."
 }
 ```
+
+## IRPT_BCKEND-D2-W459-S1 -- IB-cw-3 locus: the drop-guard refusal is raised in run_firm, not in carry_forward_removed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W459-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~459",
+  "surfaced_at": "2026-10-19T22:04:00Z",
+  "one_line": "The drop-guard refusal sits in run_firm (directory_runner.py 1282-1292), not in carry_forward_removed (985-1002); the held test is at line 998.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py@66ac649890 lines 985-1002 and 1282-1292, read at HEAD by 0.9.0_WK_IRPT_BCKEND~459",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~459/IBcw3_notes.md section 4 (the carry, the held test and the refusal)"
+    ]
+  },
+  "spec_asserts": "The order's worker face places the runner's drop guard refusal in carry_forward_removed, directory_runner.py about line 993.",
+  "world_is": "carry_forward_removed spans lines 985-1002 and only returns the held keys (998-999); the refusal that stops the landing, BUILD_DROPS_SOURCE_ENTRY, is raised in run_firm at lines 1282-1292 on that returned list."
+}
+```
+
+## IRPT_BCKEND-D2-W459-S2 -- IB-cw-3 release path: the bundle writer is not in the worktree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W459-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~459",
+  "surfaced_at": "2026-10-19T22:04:00Z",
+  "one_line": "The runner's release path ends at the bundle_uri copy (refresh.py 714); no writer of that bundle object was found under .tools or infra.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/directory/refresh.py@66ac649890 lines 714, 720, 739, 768 and 849, read at HEAD by 0.9.0_WK_IRPT_BCKEND~459",
+      "Grep over .tools and infra for bundle.tar.gz and IRPT_DIRECTORY_BUNDLE_URI returned only refresh.py, holdings_refresh/refresh_dispatch.py and tests"
+    ]
+  },
+  "spec_asserts": "The order's release_path step asks how a changed directory_runner.py reaches the build host, starting from the bundle named by bundle_uri in SsmBuildDispatcher.",
+  "world_is": "refresh.py line 714 copies the bundle at bundle_uri to the host, but the step that writes that bundle object (bundle.tar.gz or IRPT_DIRECTORY_BUNDLE_URI) is not present under .tools or infra in this worktree, so the upload path is not traced."
+}
+```
+
+## IRPT_BCKEND-D2-W459-S3 -- IB-cw-3 row schema: absent on disk in this worktree, tracked in the index
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W459-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~459",
+  "surfaced_at": "2026-10-19T22:04:00Z",
+  "one_line": "The row schema is tracked at HEAD but absent on disk in this worktree (sparse); the row shape was read from the base checkout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files at 66ac649890 lists org/surprise_channel/schemas/investigation_item.schema.json",
+      "org/surprise_channel is not a directory on disk in the worktree; the schema was read at the base checkout path org/surprise_channel/schemas/investigation_item.schema.json"
+    ]
+  },
+  "spec_asserts": "The order's bounds and the surprise-channel rule name org/surprise_channel/schemas/investigation_item.schema.json as the row schema, which a worker reads in its own tree.",
+  "world_is": "This worktree tracks org/surprise_channel in the index but has no such directory on disk (sparse checkout); the schema was read from the base checkout instead."
+}
+```
