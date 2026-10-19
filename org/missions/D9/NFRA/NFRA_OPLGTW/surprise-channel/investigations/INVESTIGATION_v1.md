@@ -29305,3 +29305,129 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The worker's finding is true and the catch-all is intended (NFRA_MCPORTAL MP-z-3); the property the tests name holds with a 404, so the repair is to the tests only."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~157",
+  "surfaced_at": "2026-10-19T02:30:00Z",
+  "id": "NFRA_OPLGTW-Z-W157-S1",
+  "one_line": "OG-ev-8's record states the 7-day audit-lake listing gave 73 keys in total; a listing of the same prefixes today gives 68643",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~154/AUDIT_SITES.json@581ee61977 body.frequency_absent_reason: 'gave 73 keys in total (8, 9, 9, 10, 16, 15, 6; 2026-10-18 partial at read time)'",
+      "my listing run 2026-10-19 22:06 UTC over audit/dt=2026-10-13..2026-10-19 (scratch lake/progress.txt, outside the repository): 8580, 8876, 9368, 15627, 14068, 10627, 1497 keys; total 68643",
+      "the 73 method is in its record's compiler_tools: .tools/aws s3api list-objects-v2 --bucket opal-mcp-audit --prefix audit/dt=<day>/ --output text --query 'Contents[].Key' over 2026-10-12..2026-10-18; that call was not re-run here, and its cause is not established"
+    ]
+  },
+  "spec_asserts": "OG-ev-8 frequency_absent_reason: a read-only listing of bucket opal-mcp-audit over the 7 UTC partitions gave 73 keys in total",
+  "world_is": "the same listing shape today gives 68643 keys over the 7 UTC partitions ending 2026-10-19 (1497 of them in the partial 10-19); the 73 is not reproduced and its cause is not established",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. This cell lists the lake itself and does not use the 73; the keys_listed counts in W/AUDIT_SITES_SIZED.json are this run's."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~157",
+  "surfaced_at": "2026-10-19T02:30:00Z",
+  "id": "NFRA_OPLGTW-Z-W157-S2",
+  "one_line": "two async tools run the shared _run helper in a worker thread, so 9 of the 12 formerly-unknown sites are off the loop on those two calls",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/tools.py@581ee61977:127 (def _run, sync) and :139-200 (the audit sites in it)",
+      "infra/aws/ec2/opal-gateway/app/tools.py@581ee61977:1599 and :1612 (async def client_get_transactions / client_get_fees: return await anyio.to_thread.run_sync(functools.partial(_run, ...)))",
+      "the FastMCP rule read from mcp==1.28.0 (mcp/server/fastmcp/utilities/func_metadata.py:93-96): a sync tool body runs on the loop"
+    ]
+  },
+  "spec_asserts": "OG-ev-8 and the OG-ev-11 brief: the 12 event-loop-unknown sites sit under SYNC @mcp.tool bodies, so the pinned mcp rule answers them yes",
+  "world_is": "_run is called from sync @mcp.tool bodies on the loop and, for two calls, from two async tools that run it in a worker thread; so the nine _run sites are on the loop for the sync callers and off it for those two calls. The column is binary: all 12 are set yes, with the exception named in loop_reason",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. Changes no yes/no value in the table; it names the two calls that run off the loop."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~157",
+  "surfaced_at": "2026-10-19T02:30:00Z",
+  "id": "NFRA_OPLGTW-Z-W157-S3",
+  "one_line": "the row schema the rules name, org/surprise_channel/schemas/investigation_item.schema.json, is absent from the worktree",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of org/surprise_channel/ in the worktree at HEAD 9430e21d5d: no such directory",
+      "a glob for **/investigation_item.schema.json under org/ at the same HEAD: no file"
+    ]
+  },
+  "spec_asserts": "the surprise-row rules name org/surprise_channel/schemas/investigation_item.schema.json as the row schema",
+  "world_is": "that path does not exist at this HEAD; the channel's existing rows were followed for shape, and the commit-time row gate is the mechanical check",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. The row gate ran on the rows at commit."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~157",
+  "surfaced_at": "2026-10-19T02:30:00Z",
+  "id": "NFRA_OPLGTW-Z-W157-S4",
+  "one_line": "the worker face says the row goes inside the fenced json array of the investigation file; the channel holds one fenced json block per row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md@9430e21d5d: 2567950 bytes, LF only, row ids each in their own fenced json block (1131 id lines)"
+    ]
+  },
+  "spec_asserts": "the OG-ev-11 worker face section 3: the row goes inside the fenced json array of the investigation file",
+  "world_is": "the file has no single array; each row is its own fenced json block, and this row follows that block form",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. The row follows the block form the channel already uses."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~157",
+  "surfaced_at": "2026-10-19T02:40:00Z",
+  "id": "NFRA_OPLGTW-Z-W157-S5",
+  "one_line": "proof-of-spec-check refuses AC1 on its count-bar limb: the criterion's zero bar on 'site' sits beside this run's 'frequency counted on 29 site(s)' line, though the two counts measure different things",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check on the instance, governing order bound: 'VIOLATION: count-bar[AC1]: the bar ... asserts ZERO of site and its own search DOES match the evidence -- but the evidence also carries a NONZERO count for that noun: 29 site(s)'; rc=1 INVALID",
+      "the AC1 check's own deciding run (ev11.AC1.sh, PASS, exit 0) prints both 'frequency counted on 29 site(s)' and 'event-loop column unknown on 0 site(s) (want 0)'; the output is quoted verbatim in the instance and not altered"
+    ]
+  },
+  "spec_asserts": "the OG-ev-11 criterion AC1 (verbatim from the order) passes by its output, and the proof-of-spec count-bar limb grades a PASS row whose bar and evidence name different counts of the same noun",
+  "world_is": "the count-bar limb matches the noun 'site' alone, so the zero bar on the unknown column is read against the nonzero frequency count on the same run; the instance is INVALID on this one violation (two schema gaps were fixed in the instance), so the order cannot be flipped to complete. Status is held open",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks the order's flip only; the record AUDIT_SITES_SIZED.json and the four rows stand. The validator verdict is reported, not worked around: the criterion text and the check's output are both verbatim."
+}
+```
