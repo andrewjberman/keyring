@@ -10717,6 +10717,128 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, graph_cypher (round 23 MX-s-5): members.yaml names the kuzu bucket at globgrph integration.py:156, but the code there is a thin in-VPC HTTP proxy call; the gateway reads no kuzu store or bucket.",
+    "spec_asserts": "members.yaml, tool graph_cypher: member b, owner NFRA_CLDGRPH, bucket kuzu, bucket_source app/integrations/globgrph/integration.py:156. Census linked rows for graph_cypher: none.",
+    "world_is": "app/integrations/globgrph/integration.py:156 is 'lambda _credential: query(statement)'; query() (lines 108-116) POSTs the statement to http://projection.opal-globgrph.local:8181/cypher via _request (lines 73-105). The module docstring (lines 9-14) says the gateway never reads S3 and holds nothing on the globgrph bucket. Trace source set: one integration source, integration globgrph, vendor opal, cite app/integrations/globgrph/integration.py:156. Recorded in source_sets_integrations.json (W75 deliverable) at commit of this row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/globgrph/integration.py lines 9-14, 108-116, 149-157 read before 2026-10-19T18:19:29Z (worktree wk-NFRA_MCPINDEX-75 at box/sitez base)",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 206-210 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, graph_status (round 23 MX-s-5): members.yaml names the kuzu bucket at globgrph integration.py:164, but the code there calls the in-VPC projection health endpoint; the gateway reads no kuzu store or bucket.",
+    "spec_asserts": "members.yaml, tool graph_status: member c, bucket kuzu, bucket_source app/integrations/globgrph/integration.py:164. Census linked rows for graph_status: none.",
+    "world_is": "app/integrations/globgrph/integration.py:164 is 'lambda _credential: health()'; health() (lines 119-121) GETs /health on the in-VPC projection service via _request. No store or bucket name appears on that path. Trace source set: one integration source, integration globgrph, vendor opal, cite app/integrations/globgrph/integration.py:164.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/globgrph/integration.py lines 119-121, 159-165 read before 2026-10-19T18:19:29Z (worktree wk-NFRA_MCPINDEX-75)",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 211-215 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, opal_data_refresh_status (round 23 MX-s-5): members.yaml names bucket portal-refresh at opal_portal integration.py:418, but that line is a GET on the portal front-door status route; the string portal-refresh occurs nowhere in the gateway's opal_portal integration.",
+    "spec_asserts": "members.yaml, tool opal_data_refresh_status: member b, owner unowned, bucket portal-refresh, bucket_source app/integrations/opal_portal/integration.py:418. Census linked rows: none.",
+    "world_is": "app/integrations/opal_portal/integration.py:418 is httpx.get(PORTAL_FRONT_DOOR + STATUS_PATH.format(...)) against https://www.opalinvest.dev (line 70). The served manifest read (line 428, MANIFEST_PATH line 75) is the same portal front door. grep of 'portal-refresh' in that file returns 0 lines. Trace source set: one integration source, integration opal_portal, vendor opal, cite app/integrations/opal_portal/integration.py:418.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py lines 70, 75, 405-440 read before 2026-10-19T18:19:29Z; grep -c portal-refresh = 0 (read before 2026-10-19T18:19:29Z)",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 367-371 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, opal_data_refresh_upload (round 23 MX-s-5): members.yaml names bucket opal-data-portal-v2 at opal_portal integration.py:109, a comment line; the tool reads its two PKLs from SharePoint through Microsoft Graph, and the bucket is only a presigned-PUT write target.",
+    "spec_asserts": "members.yaml, tool opal_data_refresh_upload: member c, bucket opal-data-portal-v2, bucket_source app/integrations/opal_portal/integration.py:109. Census linked rows: none.",
+    "world_is": "integration.py:109 is a comment in the SPEC hosts block (host tuple at line 112). The read path is the Graph SharePoint locate and download (_graph_find_pkl lines 239-258, _graph_download lines 261-268; the content GET at line 263). The bucket is written only through the presigned URLs returned by upload-urls (lines 352-366), so the code names no bucket it reads. Trace source set: graph source (graph.microsoft.com/v1.0/sites, vendor opal, cite integration.py:263) and integration source (opal_portal, vendor opal, cite integration.py:196, the post-trigger status read).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py lines 105-112, 196, 239-268, 337-366 read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 372-376 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, opal_describe (round 23 MX-s-5): members.yaml names only the gateway at opal_discover integration.py:194; the code also reads served objects from S3 bucket opal-data-portal-v2 (line 398, from the catalog's bucket key).",
+    "spec_asserts": "members.yaml, tool opal_describe: member b, owner NFRA_MCPINDEX, bucket gateway, bucket_source app/integrations/opal_discover/integration.py:194. Census linked rows: catalog:app/refs/DATA_CATALOG.yaml.",
+    "world_is": "integration.py:194 is query_v0._catalog(), which loads the gateway's own app/refs/DATA_CATALOG.yaml (vendor gateway). The same discover() path then reads the served object of each servable portal row: bucket from loaded['catalog'].get('bucket') (line 398), one GetObject (line 414) and one HeadObject (line 491). The catalog's top-level bucket is opal-data-portal-v2 (DATA_CATALOG.yaml line 53). Trace source set: store (app/refs/DATA_CATALOG.yaml, vendor gateway, cite :194) and s3 (opal-data-portal-v2, prefix empty, vendor opal, cite :398).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py lines 191-194, 398-401, 407-418, 486-500 read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 53 (bucket: opal-data-portal-v2) read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 377-381 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W75-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~75",
+    "surfaced_at": "2026-10-19T18:19:29Z",
+    "one_line": "routing observation, opal_discover (round 23 MX-s-5): members.yaml names only the gateway at opal_discover integration.py:194; the code also reads served objects from S3 bucket opal-data-portal-v2 (line 398, from the catalog's bucket key).",
+    "spec_asserts": "members.yaml, tool opal_discover: member b, owner NFRA_MCPINDEX, bucket gateway, bucket_source app/integrations/opal_discover/integration.py:194. Census linked rows: catalog:app/refs/DATA_CATALOG.yaml.",
+    "world_is": "Same code path as opal_describe (discover() with exact=False; opal_discover/integration.py lines 941-948). integration.py:194 loads app/refs/DATA_CATALOG.yaml (vendor gateway); line 398 names the bucket opal-data-portal-v2 read by GetObject (414) and HeadObject (491) for each servable portal row. Trace source set: store (app/refs/DATA_CATALOG.yaml, vendor gateway, cite :194) and s3 (opal-data-portal-v2, prefix empty, vendor opal, cite :398).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py lines 191-194, 398-401, 407-418, 486-500, 941-948 read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 53 read before 2026-10-19T18:19:29Z",
+        "C:/tmp/wk-mcpindex-75/workflows/atom_decomposition/tool_index/members.yaml lines 382-386 (the claim)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
