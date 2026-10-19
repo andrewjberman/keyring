@@ -219,8 +219,9 @@ Measured 2026-10-19, 17:08Z to 17:50Z, from Andrew's captures and the export sta
 
 - **It does not confirm the Quo credential works for this line.** The secret exists (Part IV finding 8), but its value
   was not read and the Quo inbound-SMS read was not exercised. Whether the key's workspace includes the digital line
-  named in the order was not checked. The code that consumes the key for the Google 2FA flow was not located: native
-  search covered `.tools/`, `infra/` and `integrations/` only.
+  named in the order was not checked. The key's existing consumer, the Google 2FA flow, is
+  `org/tier1_exec/4.0.0_SA_CRO/scripts/google_oauth_handler.py` (comp-find DEF hit). That is the Quo inbound-SMS read to
+  reuse; its logic was not reviewed here.
 - It does not claim the recurring export hour, weekend behaviour, or the historical-positions export's shape. None was
   observed yet.
 - It does not claim automated sign-in passes Fidelity's bot and device defences. Nothing automated has been tried.
@@ -244,7 +245,10 @@ Measured 2026-10-19, 17:08Z to 17:50Z, from Andrew's captures and the export sta
   SIBLING PROJECTS  official custodian feeds (Integration Xchange / Schwab SFTP); Fidelity silver converter (not yet a project)
   PRIOR ART         infra/aws/terraform/canonical-schwab-ec2/ ; infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1 ;
                     data/assets/docs/SCHWAB_BOX_ARCHETYPE.md ; data/assets/docs/SCHWAB_AUTO_PULL_DESIGN.md ;
-                    infra/aws/lambda/opal-assets/opal-assets-silver-schwab/
+                    infra/aws/lambda/opal-assets/opal-assets-silver-schwab/ ;
+                    org/tier1_exec/4.0.0_SA_CRO/scripts/google_oauth_handler.py (Quo SMS read) ;
+                    infra/aws/lambda/inf-otp-relay/ (OTP relay) ;
+                    org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFLEC.Q10.ds-fidelity-api-enrichment-assessment.md
   QUO SEARCH        secret quo/api-key (Secrets Manager, created 2026-09-10); resources.json:2771; inf-otp-relay Lambda
   MEASURED AT       2026-10-19 17:08Z-17:50Z (captures); 2026-10-19 ~18:00Z (repo + naming builder)
 ```
