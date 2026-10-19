@@ -3191,3 +3191,20 @@ Andrew demoed the Ticket Center analysis request flow in the CFO office and PROD
 **Decisions inside this decomposition (the issuer's, stated):** (a) the recut is DEV's bytes for the 48 files, not a commit-by-commit cherry-pick of DB-b-176..316: the same final content with no conflict surface, a payload list of file and newest source commit instead of 100-odd cherry-picks; (b) the first row `b085` was pinned at the second commit and was withdrawn when the reveal ruling added the third (row `c38f` replaces it); (c) the fold stays the issuer's step per the CTO's standing rule (msg 10617), although the Andrew-direct record's act list names the DT for it; (d) the tests are judged by the SET of failing test names against a DEV run on the same layout (15 on the recut, 17 on DEV, none new), because some tests read workspace paths and fail in a bare worktree; (e) no task order was cut before the recut: the id DB-b-336 first appeared in the issuer's ETA message and now names the DT promote order.
 
 **fanout:** 1 of 1 chains (the DT order), cap 4 (CTO msg 8765).
+
+
+## 198. ROUND 150, WORKSTREAM ALLDAYS (2026-10-19 ~22:0xZ, issuer 2.0.0_SA_COO~D2): the apply of the all-days Cottonwood rewrite and republish pair
+
+The CTO ended Andrew's pause and ruled GO for the pair under its own gate (msg 11048): the corrected reader is on the gold function (CodeSha256 `pa5JdBfO...`, 19:30:50Z; `~F2`'s list grant applied 20:14:45Z); I sign my half once the reader's first scheduled fire (Tuesday 12:15Z) reads clean, then send the CTO the packet for his half; the apply runs after 14:15Z, never alongside another IB2 act, after the Inflection pair; the publish schedule's re-enable is a separate later act. The packet (sha256 `1439a74f...`, revision 2 adds `external_flow` to the movable set: the corrected reader changes the flow column itself) and the unsigned COO half are committed; the apply checker `p201` FAILS at the base (no record) and its selftest is red on 90 single-fault mutants.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. the apply: scaling run, events, dry runs, rewrites, pre-write read, canary, ONE republish, after-read | DB-b-337 (to `0.7.0_AE_CloudOps~IB2`, STAGED) | FWD-10 (Cottonwood Performance tab) | WORLD, served output | the clean first fire; both halves SIGNED at `1439a74f`; the Inflection pair done | after the GO amendment |
+| 2. the publish schedule re-enable (one line, `safe-apply`, plan of exactly 1 change) | to be cut after item 1 reads clean | FWD-10 | WORLD | item 1 | after item 1 |
+| 3. the class_series writer (CTO ruling e50b, laptop XA-7574) | to be cut after item 1 | FWD-3 | WORLD | item 1; the one write prefix and the dated classification read from the gold as it stands after the rewrite | after item 1 |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the order is cut STAGED with an empty GO amendment so IB2 can read it and the checker now; the GO is a committed amendment plus a message, never an inference; (b) the events are cut by the applier from the scaling run (maximal runs of landed trading days, at most 25 days and a projection of at most 500 s each), because the corrected reader reads a 15-partition window per day and its per-day cost was not measured before the apply; (c) the expected rows per day come from the issuer's committed read-only derivation of all 66 days, not from the applier, so the record is graded against an independent number; (d) `abs_flow_cents` is graded as a fall on every day whose rows did not change (the five days whose rows change may rise); (e) the open design item (a rebuild-on-late-re-land trigger or a periodic full rewrite) is named in the packet and is NOT built or covered here.
+
+**fanout:** 1 of 1 chains for this cell, cap 4 (CTO msg 8765).
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; selftest red on 90 single-fault mutants):** `checks/r150/p201_cot_alldays_apply.py` (DBC201-1-AC1, DBC201-2-AC1, DBC201-3-AC1).

@@ -1,0 +1,7 @@
+# Drive log 2026-10-19 21Z -- 2.0.0_SA_COO~D2 (IRPT_DASHBD, DSGN_IRPTV1 second project)
+
+Substantive ticks of the hour, copied from the runtime tick file (counts, hashes and words only). Push state: LOCAL.
+
+- 2026-10-19T21:25Z | IRPT_DASHBD | tick | 20Z drive log committed; no new mail; waits unchanged (F2 reads Tue 12:15Z fire at ~12:3xZ; Andrew's pause release and PROD test) | outcome: DRIVE FORWARD (log) / WAITING
+- 2026-10-19T21:34Z | IRPT_DASHBD | notice | MSTR msg 11028 (relay of COO~O, Andrew-direct): opal-gateway resize to t4g.large, DOWN 2026-10-20 06:00Z-06:45Z (abort line 06:30Z); nothing of mine runs in that window (my next dated event is the Tue 12:15Z gold fire, F2's read at ~12:3xZ; no gateway-dependent run owed); acked, no reply needed | outcome: WAITING (owner F2)
+- 2026-10-19T21:59Z | IRPT_DASHBD | GO + issuance | CTO msg 11048: pause DONE, GO for the all-days pair under its gate (I sign after Tue 12:15Z fire reads clean; then the packet to the CTO for his half; apply after 14:15Z, never alongside another IB2 act, after the Inflection pair; publish re-enable separate); I corrected my own defect before any half was signed: the movable set gains external_flow (the corrected reader changes the flow column), packet sha256 now 1439a74f (was c0906587), CTO told; p201 updated (selftest red on 90 mutants); apply order TO-DB-b-337 cut STAGED to IB2 (empty GO amendment) with decomposition section 198, IB2 told to read and not act | outcome: DRIVE FORWARD (PARALLELIZE: the order cut)
