@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-14T11:45:56Z",
+ "written_at": "2026-10-19T16:18:48Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -311,7 +311,7 @@
    "source": "org/missions/D9/COMM/COMM_ASSIST/project.json",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T15:38:21Z",
    "kind": "act",
    "context": "Moved from site Z row sitez-20261012T210024Z-288f on the project's move to the laptop (placement @b4ad06ff09; handover packet CTO~Z msg 33656). FWD-3 is APPLIED and its poll healthy; no real @mention since the 10-11 18:49Z gateway release. Gates the round-15 close (CA-g-1).",
@@ -332,7 +332,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-16T19:02:41Z",
+    "by": "0.0.0_AB_MSTR",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO~MP/deliverables/ANDREW_DIRECT_20261016_185xZ_CLOSE_21C5_21D9_44EB_GATEWAY_READS_WELL.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "laptop-20261013T153823Z-e435",
@@ -342,7 +349,7 @@
    "source": "org/missions/D9/COMM/COMM_ASSIST/project.json",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-13T15:38:23Z",
    "kind": "act",
    "context": "Moved from site Z row sitez-20261011T030519Z-058e on the project's move to the laptop (placement @b4ad06ff09). FWD-4's internal branch is APPLIED and never exercised; no seat can send from an Opal mailbox other than Andrew's (0.0.3_BG_BBGTerminal declined under its seat hold, msg 33123).",
@@ -363,7 +370,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-16T03:00:38Z",
+    "by": "2.0.0_SA_COO~CA",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO~CA/ANDREW_DIRECT_20261016_024xZ_COMM_ASSIST_E1_TEST_MAIL_FROM_OPALBLOOMBERG.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "laptop-20261013T170357Z-2793",
@@ -895,7 +909,7 @@
    "source": "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r18/MUSE_SITTING_CARD.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-14T03:06:22Z",
    "kind": "act",
    "context": "The CTO's round-17 analysis rules one sitting: FWD-6's read, then muse's first real signed answer, which the live receiver must ACCEPT (it also shows muse's own payload carries signed_at, version, seq and tag). Everything on dell2 and in the assistant is live and checked; a forged answer is refused. It gates FWD-6, FWD-7 and FWD-12.",
@@ -923,7 +937,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-16T07:21:33Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_072xZ_A519_DONE_DEF4_POSTPONED_8F2B_DROPPED_MACBOOK_RDP_SCRATCHED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "laptop-20261014T051226Z-97c6",
@@ -1009,7 +1030,7 @@
    "source": "org/tier1_exec/2.0.0_SA_COO~CA/drive_log_20261014T06Z_andrew.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-14T09:38:27Z",
    "kind": "fork",
    "context": "The ingress mark has been live in record mode since 04:52Z and the key narrowed since 06:38Z, but no text has reached the handler (check_j5_obs: NO-EVIDENCE, 0 marked texts). The flip to enforce (CA-j-5) and the round's close wait on at least 3 marked texts; the first one also reads the narrowed key on a cold container (the CTO and CVO's watch). A plain text only asks the assistant a question; nothing is sent in his name without his #1.",
@@ -1030,7 +1051,14 @@
      "shared": []
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-14T14:53:49Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R18D_ENFORCE_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -1074,6 +1102,908 @@
     "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261014_104xZ_COMM_ASSIST_MARK_FRESHNESS_4H.md",
     "crossbox": null,
     "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261014T123848Z-608c",
+   "project": "COMM_ASSIST",
+   "subject": "FWD-13 (muse alerts Andrew): may the assistant keep two small scrubbed records for the dell2 folder, a channel @mention record and a recent considered-mail list? Metadata only, no message body",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/decompositions/COMM_ASSIST_DECOMP.round18.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T12:38:48Z",
+   "kind": "fork",
+   "context": "AMENDMENT 7: today a channel @mention is texted and leaves no row, and the mail object holds ONE pending draft (a newer considered mail hides the older), so muse cannot alert on either from the folder. FWD-13 (PRD v0.10) says the alert source is the dell2 folder. Both records widen what the assistant stores, so it is a design call before any code cell. Independent of muse's answer on the shape.",
+   "rec": "Yes, metadata only: for a mention, message id, team and channel names, sender, created time and a 120-character scrubbed snippet; for mail, the last 10 considered mails as id, sender, firm, subject (scrubbed), received time and tag, never the body. Both are written where the item is texted today, expire after 7 days, and carry nothing a reader could act with. Cut as one LOCAL code cell (CA-j-12) after muse's shape answer arrives.",
+   "scope": {
+    "measured_at": "2026-10-14T12:38:48Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T12:44:29Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/RULING_20261014_124xZ_COMM_ASSIST_608C_FWD13_TWO_SCRUBBED_RECORDS.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261014T130915Z-6d7e",
+   "project": "NFRA_CTLPLN",
+   "subject": "Be at dell1's console at 21:00Z today (17:00 ET) for the one approved FWD-11 restart, and sign in after it",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round13.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T13:09:15Z",
+   "kind": "act",
+   "context": "You approved this one restart (answer 4, ~11:4xZ). Dell1 has no auto-logon, so only your console sign-in brings its manager and seats back. The manager restarts only with you at the box and only after dell1's hardening read-back (AUOptions=3, Tailscale unattended), which is waiting on an admin paste and is the dell1 manager's to chase. Order: CT-ac-5.",
+   "rec": "Yes: be at the dell1 console at 21:00Z; if the read-back is not in, the manager says so and the window slips to the next hour you are there.",
+   "scope": {
+    "measured_at": "2026-10-14T13:09:15Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-14T20:52:14Z",
+    "by": "2.0.0_SA_COO~C",
+    "ruling": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-ac-5_RESTART_HELD_20261014.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T20:50:56Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "Andrew held the dell1 restart ~20:49Z ('held til later'); waits on his next word for a window"
+   }
+  },
+  {
+   "id": "laptop-20261014T181724Z-503f",
+   "project": "NONE",
+   "subject": "Move the Ticket Center's trade request and meeting request channels from dell2 to the laptop? (yes/no)",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/PLAN_20261014_DELIVERABLES_BOX_ORGANIZATION.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T18:17:24Z",
+   "kind": "fork",
+   "context": "Deliverables P2 is due Oct 24 and P1 Nov 15, both on dell2 alone. The laptop is freeing up (DEVPLN closed, CTLPLN closing, COMM_ASSIST secondary).",
+   "rec": "Yes: the laptop builds both channels via merge-forward, starting from NFRA_OPSWKF's resume packet; dell2 keeps the analysis request and P1.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-14T18:17:24Z"
+   },
+   "closed": {
+    "at": "2026-10-14T18:39:38Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_183xZ_FIVE_CALLS_ANSWERED_AND_BD_ASOF_CITATION.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T18:22:02Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "box reorganization against Andrew's Deliverables dates: a directive-level move, his word (PLAN_20261014_DELIVERABLES_BOX_ORGANIZATION.md)"
+   }
+  },
+  {
+   "id": "laptop-20261014T181725Z-7a4e",
+   "project": "NONE",
+   "subject": "Lend one dell1 seat to Investor Reporting (P1, due Nov 15)? (yes/no)",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/PLAN_20261014_DELIVERABLES_BOX_ORGANIZATION.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T18:17:25Z",
+   "kind": "fork",
+   "context": "The performance tab must work for all clients at all firms; its per-firm data overlaps dell1's firm-bucket work (ADVI_FIRMBKTS, MDPF_CANON) for P3.",
+   "rec": "Yes: one dell1 seat on P1's per-firm data from now to Nov 15, then it rejoins P3 at full force.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-14T18:17:25Z"
+   },
+   "closed": {
+    "at": "2026-10-14T18:39:39Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_183xZ_FIVE_CALLS_ANSWERED_AND_BD_ASOF_CITATION.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-14T18:22:03Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "box reorganization against Andrew's Deliverables dates: a directive-level move, his word (PLAN_20261014_DELIVERABLES_BOX_ORGANIZATION.md)"
+   }
+  },
+  {
+   "id": "laptop-20261014T205216Z-7841",
+   "project": "NFRA_CTLPLN",
+   "subject": "Name the hour for the one dell1 restart (FWD-11) and be at dell1's console then; no restart happens before your word",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-ac-5_RESTART_HELD_20261014.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-14T20:52:16Z",
+   "kind": "act",
+   "context": "You held the 21:00Z restart at ~20:49Z. CT-ac-5 (the last round-13 order) needs this one restart; it waits undated on your next word. dell1's manager announces an hour ahead and writes a fresh S0 first.",
+   "rec": "Name the next quiet hour you can be at the console; round 13 and the round-14 cut wait on it.",
+   "scope": {
+    "measured_at": "2026-10-14T20:52:16Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T16:57:11Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_164xZ_LAPTOP_ITEMS_RESTART_DONE_RDP_TONIGHT_CACHES_APPROVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261015T005114Z-3717",
+   "project": "NFRA_CTLPLN",
+   "subject": "Raise the account spend limit (claude.ai/settings/usage), or confirm waiting for the 1am ET reset: round 15's three workers stopped on it",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/ROUND15_WORKERS_STOPPED_ON_SPEND_LIMIT_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T00:51:14Z",
+   "kind": "act",
+   "context": "Workers ~97, ~98, ~99 hit the monthly spend limit at ~23:1xZ; 98 and 99 hold code but no proof instance, 97 an uncommitted test. No worker can be spawned until it clears. Round 15 and every later cell wait on it.",
+   "rec": "Raise the limit if the cost is acceptable; otherwise nothing is needed and the cells resume after the 05:00Z reset.",
+   "scope": {
+    "measured_at": "2026-10-15T00:51:14Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/nfra-ctlpln-identity"
+    ],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_kill_maint_planted.ps1 overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_measure_inline_holiday_sets.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_open_call_act_roots.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_safe_commit_derivation.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      "infra/aws/terraform/nfra-ctlpln-identity overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/terraform)",
+      ".tools/tests/test_round15_batch.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/tests/test_kill_maint_planted.ps1 is on the shared branch (.tools)",
+      ".tools/kill-maint.ps1 is on the shared branch (.tools)",
+      ".tools/seat-boundary.ps1 is on the shared branch (.tools)",
+      ".tools/measure_inline_holiday_sets.py is on the shared branch (.tools)",
+      ".tools/tests/test_measure_inline_holiday_sets.py is on the shared branch (.tools)",
+      ".tools/crossbox-deploy-check.py is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T03:54:04Z",
+    "by": "andrew",
+    "ruling": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/ANDREW_WORD_SPEND_LIMIT_LIFTED_20261015.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261015T052419Z-715c",
+   "project": "NONE",
+   "subject": "Approve deleting laptop caches and temp folders to free disk: .terraform provider caches under infra/aws (~8G, re-downloadable), tmp/yh-submit (2.1G), tmp/ui-walk (1.0G), and the large HAR files in Downloads (yours to pick)",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/logs/2026-10-15/self_drive_cluster_open_calls_tick68.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T05:24:19Z",
+   "kind": "act",
+   "context": "Laptop C: fell to 6.0G free at 05:15Z; each worker worktree costs 3.7G, and a full disk breaks git, the seats and the agentbus. Merged worktrees are already removed under your standing word; these are recursive deletes, so they are yours.",
+   "rec": "Yes to the .terraform caches and the two tmp folders (all regenerable or scratch); the Downloads HARs only if you do not need them.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-15T05:24:19Z"
+   },
+   "closed": {
+    "at": "2026-10-15T16:57:13Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_164xZ_LAPTOP_ITEMS_RESTART_DONE_RDP_TONIGHT_CACHES_APPROVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261015T075805Z-be0b",
+   "project": "DSGN_RBNDV2",
+   "subject": "Heat maps on the new look: (a) white-to-silver shading for size with the number's red/green for direction, (b) silver for gains and pale rose for losses, or (c) keep each heat map's colours and only re-skin the panel",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/missions/D13/DSGN/DSGN_RBNDV2/ledger/ROUND_ANALYSIS.round1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T07:58:05Z",
+   "kind": "fork",
+   "context": "Step 3 said 'instead of the blue scaling' but none of the eight heat maps is blue (green/red/yellow, pink/green, one unshaded); one white-to-silver shading shows size but not direction. FWD-4 waits on this (CVO ADJUDICATION_v1 W4-S1/S2).",
+   "rec": "(a): closest to 'white & silver scaling'; direction stays readable through the figure's red/green, which the page-by-page walk already checks for darkness.",
+   "scope": {
+    "measured_at": "2026-10-15T07:58:05Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "portal/src/ui/components/sidebar overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)",
+      "portal/src/ui/components/sidebar overlaps the write set of IRPT_BCKEND placed on dell2 (portal)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T14:39:48Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_141xZ_DSGN_RBNDV2_CALLS_AT_COO_RB_TERMINAL.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T12:56:53Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "a design call on the client-facing look; Andrew's word only (DSGN_RBNDV2 FWD-4)"
+   }
+  },
+  {
+   "id": "laptop-20261015T104959Z-3c44",
+   "project": "DSGN_RBNDV2",
+   "subject": "FWD-1: open http://localhost:5174/market on this laptop, sign in, and say YES or NO -- does the page read as Opal's own work?",
+   "asked_by": "2.0.0_SA_COO~RB",
+   "source": "org/missions/D13/DSGN/DSGN_RBNDV2/deliverables/2.0.0_SA_COO~RB/ROUND2_CLOSE_RUN_20261015.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T10:49:59Z",
+   "kind": "fork",
+   "context": "Rounds 1 and 2 of DSGN_RBNDV2 are built and merged on the local branch feature/dsgn-rbndv2-light (nothing pushed): lavender ground and sidebar, white panels, hairline sections, one shared modal frame on every listed modal, white and silver heat tables. The dev build serves it now. Your yes or no is the FWD-1 grade (DEC-5); it also gates whether round 3, the page-by-page walk that darkens faint reds and greens, starts. Still open on /market: 288 faint signal-colour elements (round 3) and the heat-map shape (the separate call already on this list).",
+   "rec": "Open /market and one modal (click the Fear and Greed gauge title). If the sidebar, panels and modal read right, say YES and round 3 starts; if not, name the one thing that reads wrong.",
+   "scope": {
+    "measured_at": "2026-10-15T10:49:59Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T14:38:13Z",
+    "by": "2.0.0_SA_COO~RB",
+    "ruling": "org/missions/D13/DSGN/DSGN_RBNDV2/deliverables/2.0.0_SA_COO~RB/ANDREW_DIRECT_20261015_MARKET_OVERVIEW_FEEDBACK.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T12:56:56Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "Andrew's own look at the page (DSGN_RBNDV2 FWD-1); no seat can answer it"
+   }
+  },
+  {
+   "id": "laptop-20261015T123054Z-c9a4",
+   "project": "NFRA_CTLPLN",
+   "subject": "FWD-14: open one real remote-desktop session from your MacBook to a box over the tailnet, and tell me when",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round19.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T12:30:54Z",
+   "kind": "act",
+   "context": "PRD FWD-14 needs a session record for 7 sessions (MacBook to laptop, site Z, dell1, dell2; Windows laptop to site Z, dell1, dell2). The ports answer from the laptop; no session has been recorded. Only your hands at the MacBook can do it. Gates the FWD-14 grade.",
+   "rec": "Do one box now (site Z) so the record shape is proven, the other six later; the cell that records them follows your word.",
+   "scope": {
+    "measured_at": "2026-10-15T12:30:54Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_round19_register.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round19_seat_record.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round19_unsigned_push.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round19_fwd27_laptop_side.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_wk_sparse_provision.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round18_batch.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/tests/test_round19_register.py is on the shared branch (.tools)",
+      ".tools/tests/test_round19_seat_record.py is on the shared branch (.tools)",
+      ".tools/tests/test_round19_unsigned_push.py is on the shared branch (.tools)",
+      ".tools/tests/test_round19_fwd27_laptop_side.py is on the shared branch (.tools)",
+      ".tools/commit-gate.sh is on the shared branch (.tools)",
+      ".tools/safe-commit.sh is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T07:21:34Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_072xZ_A519_DONE_DEF4_POSTPONED_8F2B_DROPPED_MACBOOK_RDP_SCRATCHED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261015T123058Z-318f",
+   "project": "NFRA_CTLPLN",
+   "subject": "FWD-17: listen to the 'what was checked and what it cannot rule out' record for one delivered package, read to you",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round19.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T12:30:58Z",
+   "kind": "act",
+   "context": "PRD FWD-17 DONE WHEN is one delivered package's record read aloud to you, including what was not checked. The click 8.3.1 record exists (TO-CT-v-3); the plain summary omitted a stated limit and was graded NOT MET. Only you can be the listener. Gates the FWD-17 grade.",
+   "rec": "Say 'read it' and I have the CRO or a seat read the corrected summary to you in a session; nothing is sent in your name.",
+   "scope": {
+    "measured_at": "2026-10-15T12:30:58Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_round19_register.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round19_seat_record.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round19_unsigned_push.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round19_fwd27_laptop_side.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_wk_sparse_provision.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round18_batch.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/tests/test_round19_register.py is on the shared branch (.tools)",
+      ".tools/tests/test_round19_seat_record.py is on the shared branch (.tools)",
+      ".tools/tests/test_round19_unsigned_push.py is on the shared branch (.tools)",
+      ".tools/tests/test_round19_fwd27_laptop_side.py is on the shared branch (.tools)",
+      ".tools/commit-gate.sh is on the shared branch (.tools)",
+      ".tools/safe-commit.sh is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T03:44:37Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_034xZ_ALL_19_CALLS_RECS_APPROVED_C02C_POSTPONED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261015T145235Z-002b",
+   "project": "DSGN_RBNDV2",
+   "subject": "Market Overview fix 'tooltips always to the left of the panel header title': do you mean the circled question-mark icon sits left of the title text, or the hover popup opens to the left of the icon?",
+   "asked_by": "2.0.0_SA_COO~RB",
+   "source": "org/missions/D13/DSGN/DSGN_RBNDV2/deliverables/2.0.0_SA_COO~RB/ANDREW_DIRECT_20261015_MARKET_OVERVIEW_FEEDBACK.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T14:52:35Z",
+   "kind": "fork",
+   "context": "Item 2 of Andrew's Market Overview list; the words fit two designs. Gates only this one item; the other ten items are cut now.",
+   "rec": "Move the question-mark icon to sit immediately left of the title text, so a panel and a modal title read the same way",
+   "scope": {
+    "measured_at": "2026-10-15T14:52:35Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-15T23:00:46Z",
+    "by": "2.0.0_SA_COO~RB",
+    "ruling": "org/missions/D13/DSGN/DSGN_RBNDV2/deliverables/2.0.0_SA_COO~RB/ANDREW_DIRECT_20261015_PANEL_TONE.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T14:56:20Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "DSGN_RBNDV2: Andrew answers at the 2.0.0_SA_COO~RB terminal (Andrew-direct ~14:1xZ, 78a5db1a3c)"
+   }
+  },
+  {
+   "id": "laptop-20261015T152850Z-21b4",
+   "project": "NONE",
+   "subject": "Approve the recursive delete of four old r18_batch_* test folders under the laptop's Temp (companion to 715c; the batch test now cleans its own)",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/ledger/ROUND_ANALYSIS.round20.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T15:28:50Z",
+   "kind": "act",
+   "context": "NFRA_CTLPLN round-19 hygiene found them; deleting a folder recursively is your word. Outside the repo, nothing reads them.",
+   "rec": "Approve: they are leftover test fixtures and the test no longer makes them.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-15T15:28:50Z"
+   },
+   "closed": {
+    "at": "2026-10-15T16:57:15Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_164xZ_LAPTOP_ITEMS_RESTART_DONE_RDP_TONIGHT_CACHES_APPROVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261015T211514Z-b87f",
+   "project": "NFRA_CTLPLN",
+   "subject": "FWD-14: from THIS laptop, one remote-desktop session to each of site Z, dell1 and dell2 over the tailnet, plus one attempt from off the tailnet (e.g. a phone hotspot) that should be refused -- same sitting as c9a4 if convenient",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/ledger/ROUND_ANALYSIS.round22.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T21:15:14Z",
+   "kind": "act",
+   "context": "No seat holds remote-desktop credentials, so the sign-in is a person's act. The laptop's outbound log shows attempts on 10-10 and 10-13 but no connection recorded at the targets.",
+   "rec": "Do it alongside tonight's MacBook session (c9a4); the issuer then reads each target's event 1149 and the refusal.",
+   "scope": {
+    "measured_at": "2026-10-15T21:15:14Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_round22_manager_ack.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_crossbox_call.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round13_batch.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/crossbox-call.py is on the shared branch (.tools)",
+      ".tools/tests/test_round22_manager_ack.py is on the shared branch (.tools)",
+      ".tools/tests/test_crossbox_call.py is on the shared branch (.tools)",
+      ".tools/tests/test_round13_batch.py is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-19T16:18:46Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_163xZ_SIX_HANGING_OPEN_CALLS_RESOLVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261015T230503Z-bea4",
+   "project": "DSGN_RBNDV2",
+   "subject": "Trending Topics: should the rank numbers (1, 2, 3) and the arrows beside them read the same canonical green and red as the signed figures (today a lighter green and pink from getSentimentColor, shared with the topic drilldown)?",
+   "asked_by": "2.0.0_SA_COO~RB",
+   "source": "org/missions/D13/DSGN/DSGN_RBNDV2/deliverables/2.0.0_SA_COO~RB/ANDREW_DIRECT_20261015_PANEL_TONE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T23:05:03Z",
+   "kind": "fork",
+   "context": "Same defect as the EQ/FI/CM badges; he named only the badges, so nothing is cut. RV-s-1 changes the drilldown modal only and leaves getSentimentColor alone. Gates the TrendCard rank badge and arrows (ExecutiveSummary.tsx), one small cell.",
+   "rec": "Yes: one small cell making the rank number and arrow read --delta-positive and --delta-negative; same reading he gave the badges.",
+   "scope": {
+    "measured_at": "2026-10-15T23:05:03Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "portal/src/ui/components/panels/PanelHeader.tsx overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)",
+      "portal/src/ui/components/panels/PanelHeader.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/__tests__/dsgn-rbndv2 overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)",
+      "portal/src/__tests__/dsgn-rbndv2 overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/components/market-performance/RSIModal.tsx overlaps the write set of AMGT_RESAPP placed on dell1 (portal/src)",
+      "portal/src/components/market-performance/RSIModal.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T03:39:37Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_034xZ_ALL_19_CALLS_RECS_APPROVED_C02C_POSTPONED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-15T23:13:46Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "DSGN_RBNDV2: Andrew answers at the 2.0.0_SA_COO~RB terminal (Andrew-direct ~14:1xZ, 78a5db1a3c)"
+   }
+  },
+  {
+   "id": "laptop-20261015T233750Z-3256",
+   "project": "ADVI_COTBKF",
+   "subject": "Read the EXACT key name of the Cottonwood CRM zip (name only; do not open or download it): AWS console as Andrew_Berman_Console, s3://opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_190xZ_D3CC_A_ONE_JOB_READS_RESTRICTED_CRM_ZIP.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-15T23:37:50Z",
+   "kind": "act",
+   "context": "dell1's one-job window (your (a) on d3cc) expected date=2026-06-23/CRM_CottonwoodCapitalAdvisors.zip and got 403, which reads as a missing key; agents cannot list the prefix (C-RESTRICTED). Your word at dell1 ~23:3xZ: 'send the ask for CRM zip to laptop mstr and cto'.",
+   "rec": "Paste the key name here; this seat relays it to 1.0.0_SA_CTO~DELL1 and COO~C1 runs the second window.",
+   "scope": {
+    "measured_at": "2026-10-15T23:37:50Z",
+    "paths": "hit",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [
+      "project ADVI_COTBKF is placed on dell1, this box is laptop"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T01:46:26Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_013xZ_F086_DELL1_7686_INTERNAL_CRM_MATCH_KEY_C02C_DESKTOP.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261016T045125Z-66e3",
+   "project": "NFRA_CTLPLN",
+   "subject": "Decide REQ-20261016T045108Z-toml (toml==0.10.2): approve it, or refuse it so lane 2.0.0_SA_COO~C drops its one waiting piece of work (FWD-19 test act)",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round27.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T04:51:25Z",
+   "kind": "fork",
+   "context": "Lane 2.0.0_SA_COO~C (NFRA_CTLPLN) is deliberately WAITING on toml==0.10.2 for one read-only piece of work, as CTO round-26 analysis section 3 item 2 asks; the lane keeps working elsewhere. Gates: only that one piece of work; the status verb reads REQUESTED. The decision closes the wait either way.",
+   "rec": "Approve: pure-Python wheel with no dependencies, a test act, nothing added to requirements.txt; or refuse and record that the lane lost the one piece. Either closes FWD-19's lane-wait clause.",
+   "scope": {
+    "measured_at": "2026-10-16T04:51:25Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_round22_manager_ack.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_crossbox_call.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round13_batch.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round25_journey_record.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/crossbox-call.py is on the shared branch (.tools)",
+      ".tools/tests/test_round22_manager_ack.py is on the shared branch (.tools)",
+      ".tools/tests/test_crossbox_call.py is on the shared branch (.tools)",
+      ".tools/tests/test_round13_batch.py is on the shared branch (.tools)",
+      ".tools/tests/test_round25_journey_record.py is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T05:07:14Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T0506Z_XA-20261016T050614Z-0021.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T050614Z-0021"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T050614Z-0021",
+    "at": "2026-10-16T05:06:14Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": null
+   }
+  },
+  {
+   "id": "laptop-20261016T114905Z-c164",
+   "project": "NFRA_CTLPLN",
+   "subject": "FWD-23 reader act: read one box's seats.json and name each operations seat's work without opening a log",
+   "asked_by": "2.0.0_SA_COO~C",
+   "source": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/FWD23_SEATS_READS_20261016.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T11:49:05Z",
+   "kind": "act",
+   "context": "All four boxes now hold a current seats.json (laptop cb39aa3058, dell1 b83562e324, dell2 7464c5847c, site Z 653d950a92). PRD FWD-23 DONE WHEN needs a person to read one list and name each seat's work. Gates the CVO's FWD-23 grade.",
+   "rec": "CVO 3.0.0_SA_CVO~L or Andrew reads the dell2 list (21 seats, a graded piece named) with python .tools/seat-list.py show and names each seat's work; recorded in the adjudication.",
+   "scope": {
+    "measured_at": "2026-10-16T11:49:05Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      ".tools/tests/test_round22_manager_ack.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_crossbox_call.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)",
+      ".tools/tests/test_round13_batch.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/tests)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/crossbox-call.py is on the shared branch (.tools)",
+      ".tools/tests/test_round22_manager_ack.py is on the shared branch (.tools)",
+      ".tools/tests/test_crossbox_call.py is on the shared branch (.tools)",
+      ".tools/tests/test_round13_batch.py is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T12:04:22Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T1204Z_XA-20261016T120416Z-452d.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T120416Z-452d"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T120416Z-452d",
+    "at": "2026-10-16T12:04:16Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": null
+   }
+  },
+  {
+   "id": "laptop-20261016T195534Z-446a",
+   "project": "COMM_ASSIST",
+   "subject": "Teams alerts: fix the assistant missing @mentions that are replies inside older channel threads (a repo change and deploy), or close COMM_ASSIST with Teams alerts unproven?",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/ledger/ROUND_ANALYSIS.round20.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T19:55:34Z",
+   "kind": "fork",
+   "context": "Muse's mail alerts passed on Andrew's word (2026-10-16). Alyssa Keith's real @mention was never seen: 419 channel polls 12:00-18:50Z found 0 mentions and no new top-level post in the 8 channels, so it was most likely a reply in an older thread, which the poller does not read. Gates FWD-3/FWD-13's Teams half.",
+   "rec": "(a) fix it: one cell to read replies on recently active threads, then one retest @mention; Teams alerts are half the outcome Andrew asked for and the cause is located.",
+   "scope": {
+    "measured_at": "2026-10-16T19:55:34Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T20:06:13Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_446A_COMM_ASSIST_TEAMS_THREAD_REPLY_MENTIONS_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261016T222633Z-2396",
+   "project": "COMM_ASSIST",
+   "subject": "Retest (CA-n-3): have a colleague @mention you once as a REPLY inside an older thread of a watched channel (the End of Day Updates thread is best), then say whether muse alerted you within 30 minutes",
+   "asked_by": "2.0.0_SA_COO~CA",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/decompositions/COMM_ASSIST_DECOMP.round21.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T22:26:33Z",
+   "kind": "act",
+   "context": "The thread-reply fix is live since 22:13Z 2026-10-16 (CA-n-2; live check N2-LIVE ok=True; 13 polls, max 12 calls, 0 failures). Alyssa's earlier @mention was missed because the poller never read replies under older posts. This retest is the outcome's real run (FWD-3, FWD-13).",
+   "rec": "",
+   "scope": {
+    "measured_at": "2026-10-16T22:26:33Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-19T16:18:48Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_163xZ_SIX_HANGING_OPEN_CALLS_RESOLVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
     "xadj": null
    }
   }
