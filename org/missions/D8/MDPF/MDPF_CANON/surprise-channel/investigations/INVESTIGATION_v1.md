@@ -2995,3 +2995,28 @@
   "notes": "Owner of the remedy: the CTO (a producer change to a SERVED object, rulings 7594/7600 named the drop). Recommendation sent with this row: empty GLOBAL_AXIS_DROP_DATES (a one-line change to the constant), under a new never-widen pair, D4 ref/new before the 2026-10-20 13:30Z fire. CN-s-1's Global grade is not graded here."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S37",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-19T14:52:06Z",
+  "one_line": "A typed list of dates dropped from Global's axis (GLOBAL_AXIS_DROP_DATES) is a premise that ages: CN-s-6 enumerated 2026-10-16 and the feeder falsified it within two days; a date should drop only when a leg lacks values on it, computed at build time (round-12 candidate, not a cell now).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling @176378e74d on row MDPF_CANON-D1-S36: 'a typed drop list is a premise that ages. A date should drop only when a leg lacks values on it, and that should be computed at build time. D1 files the row.'",
+  "world_is": "MEASURED by the issuer 2026-10-19. The enumerated set was {2026-10-16} from 2026-10-17 15:40Z (CN-s-6, live) to the CN-s-7 deploy (pending): for two scheduled fires (2026-10-18, 2026-10-19) it held Global at as_of 2026-10-15 while all three legs carried 2026-10-16 (row S36). Offline at HEAD, a build that drops any date only the Cottonwood leg holds EMITS over the 2026-10-17 legs instead of being refused by gate (v) (the mutant-3 arm of checks/r11_cn_s_7.py: the old-legs control arm turns red), so a computed drop must keep gate (v)'s protection for the branch where a leg loses a date: that is the design question. NOT read: how often a leg lags by a date in the feeder's history, or which axis rule the 2026-07 exempt list (20 enumerated dates) would collapse into.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/ledger/CTO_RULING_S36_EMPTY_GLOBAL_AXIS_DROP_20261019.md @176378e74d",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round11/real_run/FIRE_READ_20261019.md @4d30e30e8a",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round11/checks/r11_cn_s_7.py (mutant 3 of the issuer's pre-cut test)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Round 12 candidate for the CTO's analysis; no cell is cut for it this round. Owner of any remedy: the CTO (SERVED producer rule)."
+}
+```
