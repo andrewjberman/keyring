@@ -121,6 +121,135 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "Lane gate: a worker writes exactly the paths its order names; the cut built the worktree from the order's paths and the paths existing at the cut.",
     "world_is": "A granted path that is created by the order itself is absent from the cone built at the cut, so a new module directory cannot be staged until the cone includes it. The fix touches only this worktree's sparse definition and no file outside the grant.",
     "notes": "The cut's sparse-cone builder reads existing paths only. Whether other cells of the round hit the same cone gap is for the COO to check across the seven other worktrees."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S1",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-19T20:37:00Z",
+    "one_line": "The worktree sparse-checkout names infra/aws/ec2/canonical-fidelity, yet git refuses to stage the new lander files there, so safe-commit commits nothing and the FU-s-4 code stays uncommitted.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in C:/tmp/fidupl-w2 includes infra/aws/ec2/canonical-fidelity; git config --show-origin reports core.sparsecheckout=true and core.sparsecheckoutcone=true in .git/worktrees/fidupl-w2/config.worktree",
+        "git add --dry-run -- infra/aws/ec2/canonical-fidelity/land.py printed add rc=0 (a dry run; nothing staged)",
+        "bash .tools/safe-commit.sh with -F .scratch/msg_code.txt and the two files: git add printed 'matched paths that exist outside of your sparse-checkout definition, so will not be updated in the index'; commit --only printed 'did not match any file(s) known to git'; safe-commit rc=1; HEAD stayed 58aa7802b5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker reference and the TO: a worker's new files are committed by safe-commit under the paths the order names, in a worktree whose sparse-checkout carries those paths.",
+    "world_is": "git treats the new files under canonical-fidelity as outside the sparse definition although the definition names the directory, so the lander cannot be committed in this worktree. Cause not isolated on git 2.55.0.windows.5.",
+    "notes": "The worker stopped at this row. No sparse config was edited and nothing was pre-added: both are outside the grant and the no-pre-add rule. The code and tests exist uncommitted in the worktree and pass FU4-AC1 and FU4-AC2 on disk."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S2",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-19T20:37:00Z",
+    "one_line": "The run record's closed failure_class set has no class for a file-level failure, so a failed run can carry failure_class null beside a non-null failed_step and exit 1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/land.py in worktree wk-NFRA_FIDUPL-2 (uncommitted at filing): _examine, _land_one, _read_listing and land() set failed_step and a per-file reason with failure_class None for these cases",
+        "worker reference section 6 closed set: null, sign-in refused, code never arrived, export not generated yet, download refused, content date unreadable, content date is not a trading day",
+        "test_missing_file_exits_nonzero (11 passed on the worktree) asserts failed_step read for an absent file; the other cases are by construction in land.py, not separately measured"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 6: failure_class is null or one of the closed strings, and the run exits 0 only when failure_class is null and every file is landed or skipped_existing.",
+    "world_is": "The TO names no class for a missing file, a destination holding different bytes, a calendar coverage gap, a head or put refusal, or an absent listing.json. These record as failed_step with failure_class null and a per-file reason, and the run exits 1. A reader that gates on failure_class alone would read a failed day as clean.",
+    "notes": "Lander behavior as built: a per-file failure lands nothing for that file and the other files still land. The closed set is the decision to confirm (add classes, or keep null with failed_step as the signal)."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S3",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-19T20:37:00Z",
+    "one_line": "The TO says a re-served day lands once but does not say what a re-serve with different bytes does; the lander refuses to overwrite and records that file failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/land.py _land_one (worktree wk-NFRA_FIDUPL-2, uncommitted at filing): an existing object whose sha256 metadata differs gives action failed with reason 'destination already holds different bytes; not overwritten'",
+        "TO FU-s-4 item 2: skipped_existing when the same sha256 is already at the destination; no rule is stated for a different sha256"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FU-s-4 item 2 and reference section 5a: each file lands raw once at its builder address, and the same sha256 at the destination is skipped_existing.",
+    "world_is": "A corrected re-serve of the same content date and file name cannot land over the first copy, so the first bytes stay authoritative until a person decides. The lander never overwrites raw history.",
+    "notes": "For the CTO or COO to confirm: keep refuse-overwrite, or land a versioned key beside the first copy."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S4",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-19T20:37:00Z",
+    "one_line": "Reference section 9 gives land.py a config-file fallback for locating lib/opal_naming.py; the lander takes no config, so it finds lib only by walking up from its own file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/land.py _find_lib (worktree wk-NFRA_FIDUPL-2, uncommitted at filing) walks up from its own file for lib/opal_naming.py and raises ImportError when none is found",
+        "worker reference section 9, land.py bullet: find lib by walking up, else from the repo_root key of the config file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker reference section 9, land.py bullet: find lib/opal_naming.py walking up, else from the repo_root key of the config file.",
+    "world_is": "On the box the lander resolves lib only when a lib directory sits above its own code directory. FU-s-5 or FU-s-7 must ship the mirror at that place or pass the path, because the lander does not read config.json.",
+    "notes": "No box behavior runs in this order. The fallback is left for FU-s-5 or FU-s-7 to decide."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-19T20:37:00Z",
+    "one_line": "The run record carries keys reference section 6 does not list (content_date, failed_step, failure_class and reason per file; reason at top level), and a dry-run file action named planned.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/land.py _public() and land() (worktree wk-NFRA_FIDUPL-2, uncommitted at filing): file keys name action bytes sha256 dest content_date failed_step failure_class reason; top-level keys include reason",
+        "land.py exit_code(): requires failed_step null, failure_class null, a non-empty files list and every action in landed, skipped_existing or planned"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 6: the record shape and the three file actions landed, skipped_existing and failed; exit 0 only when failure_class is null and every file is landed or skipped_existing.",
+    "world_is": "The keys are additive. The action planned appears only in a dry-run return value and is never written. The exit rule is stricter than the TO's, because it also requires failed_step null. FU-x-1's r1_checks reads source, failure_class, the landed count and business_date_in_content, all of which are present.",
+    "notes": "The record is written by the lander only. FU-s-5 and FU-x-1 read it; the CTO confirms the shape with the _runs decision in NFRA_FIDUPL-D1-S1."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-19T20:37:00Z",
+    "one_line": "The completion step flips the TO status in NFRA_FIDUPL.TO-FU-s-4, but that file is not in this order's paths block, so the worker cannot make the flip.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_FIDUPL.TO-FU-s-4 paths block lists infra/aws/ec2/canonical-fidelity/land.py, infra/aws/ec2/canonical-fidelity/tests/test_land.py and this investigation file only",
+        "worker face PROOF step: flip the task order status to complete and commit instance, deliverables and flip together; the TO file carries status pending at 58aa7802b5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face PROOF step: flip the task order status to complete in the same commit as the instance and the deliverables.",
+    "world_is": "The grant admits no path to the TO file, so the flip falls to the issuer or the gate. The proof instance cannot be validated against a pinned code commit until the code commit lands (see NFRA_FIDUPL-D1-W2-S1).",
+    "notes": "Worker stopped before the proof. FU4-AC1 and FU4-AC2 passed on disk; no commit exists yet to pin."
   }
 ]
 ```
