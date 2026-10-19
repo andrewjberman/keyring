@@ -42553,3 +42553,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Several account-level entries share one client_id in both the served 2026-10-12 directory and the 2026-10-14 build."
 }
 ```
+
+## IRPT_BCKEND-D2-S241 -- IB-cw-2 graded: the wedge fix passes its checks, my folder comparison and two extra scenarios I ran myself (a 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S241",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T15:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W457-S1, W457-S2 and the uncommitted W457-S3 (worker ~457, order TO-IB-cw-2). S1: my check IBCW2 AC2 reads git, so it cannot pass before the worker's one commit; the worker recorded both stages; my wording defect, not the worker's. S2 (ARMED, my disarm): the worker flagged that a failed command carried on a COMPLETED manifest reaches the dispatcher through the previous manifest's delta and not through _last_dispatched, so a stop placed there would leave it raising every fire; the worker keyed the terminal test to the command id inside SsmBuildDispatcher.__call__, fed by _reported_failed_cids (REFRESH_FAILED records after the last accounted completion), which covers both paths, but no named test ran the COMPLETED-carried path. I ran it myself in a scratch copy of the full lambda folder (the merged refresh.py plus the worker's test fakes): a COMPLETED record carrying a failed command is reported by the first fire (REFRESH_FAILED with the id, zero sends) and re-dispatched exactly once by the next (cmd-2, REFRESH_DISPATCHED); and the 09:30 fire of a date observes and the 09:40 retry of the SAME date re-dispatches once, a third same-date fire sends nothing (cmd-2 in flight); both passed. The scenarios are saved at deliverables/2.0.0_SA_COO~P2/checks/r256/extra_scenarios_cw2.py for the release order to run. S3 (never committed by the worker, so not in the file): the worker's commit rewrote 78 CRLF lines of other seats' rows (W481-S3 to S5) to LF with the text unchanged; the same Edit-tool effect hit worker ~456, who restored the lines in a second commit. safe-merge landed the merge with the rows intact (4543635200); no row text changed. Verified by me before the merge: IBCW2 AC1 to AC3 re-run PASS in the worker worktree; the refresh.py diff read whole (the failure record carries the id, not text; at most one dispatch per fire; the in-flight and Success paths untouched, checked by the differential); the folder run in identical scratch copies of the full lambda folder, base and new, gave identical failing and error sets (62 failed, 38 errors each, the scratch copy lacking some siblings) with passed 126 to 132, the six new tests. NOT claimed: anything deployed; that the real Cottonwood history behaves as the fakes do (the release order reads the first live fires).",
+  "one_line": "IB-cw-2 graded: the wedge fix passes its checks, my folder comparison and two extra scenarios I ran myself (a COMPLETED-carried failed command, and the same-date retry slot); the ARMED note on the COMPLETED-carried path is disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r256/p256_cells.py . IBCW2-AC1|AC2|AC3 run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-457 at bb4a07c694: PASS x3",
+      "pytest of infra/aws/lambda/investor-reporting/directory/tests in two identical scratch copies (base refresh.py, new refresh.py + the new test file): failing and error sets identical (100 lines each), passed 126 and 132",
+      "pytest of two scenario tests in the new scratch copy: 2 passed (COMPLETED-carried failed command reported then re-dispatched once; same-date 09:30/09:40 fires)"
+    ]
+  },
+  "spec_asserts": "The COMPLETED-carried failed command is not covered by the six named tests (W457-S2) and AC2 can record a pre-commit PASS (W457-S1).",
+  "world_is": "The COMPLETED-carried path and the same-date retry slot both behave as the CTO's contract says on the merged code; the check reads git, so it passes only after the commit."
+}
+```
+
+## IRPT_BCKEND-D2-S242 -- IB-hx-1 graded: the third 49 Financial account is an overnight disappearance with holdings; the CTO ruled keep the refusal (msg 10788, S240 option a)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S242",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T17:40:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W458-S1, W458-S2 and W458-S3 (worker ~458, order TO-IB-hx-1). S1: the worker found the flag directory_marks_no_closures is False for 49 Financial (80 account ids under TERMINATED entries), so the cell text 'marks no closures' was inverted: my premise, recorded here; the refusal comes from the else branch at holdings_snapshot.py 3424-3425. S2 and S3: the replay harness needs GIT_DIR set outside a checkout and the sparse worktree set omitted the row schema; both are worker-environment notes with no effect on the finding. The finding (re-read by me at holdings_snapshot.py 3033-3063): the gone account has 0 rows on the candidate day and 18 position rows and 1 balance row on the prior day; the exemption (IB-pr-576) exempts only an account with no positions on both days, so line 3062 'exempt = lost - present' correctly leaves it lost; the two listed accounts have zero rows on both days, a different cause. CTO ruling msg 10788: option (a), keep the refusal; read daily whether the account returns at source (10-17 and 10-19 partitions); the gate passes by itself when it does; 49 Financial holdings stay as-of 2026-10-12 until then. Andrew-direct pause (CTO msg 10811): no new cell is cut.",
+  "one_line": "IB-hx-1 graded complete; the gate's refusal on the third lost account stands by the CTO's ruling, no exemption widening, no fix cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r258/p258_cells.py . IBHX1-AC1|AC2|AC3 run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-458 at 5f3e9e5af8: PASS x3",
+      "python .tools/proof-of-spec-check.py on the worker's instance, run in the main tree after the merge: VALID (rc=0)",
+      "holdings_snapshot.py lines 3033-3063 and 3407-3425 re-read by 2.0.0_SA_COO~P2 at the merged HEAD; CTO ruling msg 10788"
+    ]
+  },
+  "spec_asserts": "49 Financial's holdings gate marks no closures, so a lost account that the exemption does not cover is refused as account_lost.",
+  "world_is": "The flag is False; the third lost account held 18 position rows on 2026-10-15 and none on 2026-10-16, so the gate refuses it by design; the served 49 Financial holdings stay as-of 2026-10-12 until the account returns at source."
+}
+```
+
+## IRPT_BCKEND-D2-S243 -- IB-cw-1 stopped without findings: the Cottonwood drop is a re-key, 11 held keys not 6; the CTO said yes to a retained-key guard (msg 10788, S239); no cell is cut under the Andrew-direct pause
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S243",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T17:41:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W456-S1, W456-S2 and W456-S3 (worker ~456, order TO-IB-cw-1). S1 (BLOCKING premise 6 versus 11): the replay ran against today's source and the 2026-10-12 served directory and refuses 11 unique held keys; the 6 in the 10-14 command's stdout came from an earlier state of the source, which this read did not have; the difference is not explained further and does not change the cause, because all 11 held keys are accounts re-keyed from an account-level key to a relationship-level key (non-sentinel Relationship ID on 11 of 11, 0 of 28 in the retained control), every account still served. S2: the mechanism is directory_runner.py 803-806 (a row with a real Relationship ID goes to by_rel, so the account-level key is no longer emitted). S3: 11 duplicated account-level client keys in the 10-12 directory and 7 in the current build; the per-row emission at 834-841 is the probable cause, not verified, and is not in this scope. Order TO-IB-cw-1 is set superseded: no findings file or proof instance exists by design (its STOP clause). CTO ruling msg 10788: yes to the guard counting a previous key retained when every account_id of its entry is present in one current entry, any missing account failing closed, the pair listing every reader of the client key and what the re-key moves for each; the CTO half is the CTO's. The fix cell (check suites r259 for the reader census and r260 for the guard are built and controlled, uncommitted) is NOT cut: the Andrew-direct pause forbids a new cell until the pause record's DONE line.",
+  "one_line": "IB-cw-1 closed superseded: its notes answer the cause (a re-key, not a removal); the fix and its pair are held by the Andrew-direct pause (CTO msg 10811).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-IRPT_BCKEND-456 at 738deaf46b: deliverables IBcw1_notes.md sections 3 to 6 (replay refuses 11, 11 of 11 re-keyed, control 0 of 28), merged forward by safe-merge",
+      "CTO ruling msg 10788 and the Andrew-direct pause msg 10811 (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_17xxZ_PAUSE_NEW_WORK_MERGE_FORWARD_EVERYTHING_TO_PROD.md)",
+      "directory_runner.py 997-999 (carry_forward_removed compares client keys) re-read by 2.0.0_SA_COO~P2"
+    ]
+  },
+  "spec_asserts": "Six Cottonwood clients are dropped by a build stage and the guard refuses them (row D2-S239).",
+  "world_is": "Eleven previous account-level client keys are re-keyed to relationship keys in the 10-14 source; the guard compares client keys and reads each as a drop; Cottonwood's served directory stays as-of 2026-10-12 until the guard rule, the wedge fix (merged, not deployed) and a release land."
+}
+```

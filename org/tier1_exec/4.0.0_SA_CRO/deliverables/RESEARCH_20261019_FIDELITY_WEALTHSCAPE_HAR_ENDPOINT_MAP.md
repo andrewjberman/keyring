@@ -194,6 +194,60 @@ The Export Status list and download endpoints are therefore not yet measured.
 - **Positions:** one approach is the `Historical Prices and Positions Export` entitlement, one as-of date per run.
   Another is to roll today's `.ipn` back through `.trn`, the way Advent rebuilds positions.
 
+## 5b. Addendum 2 (~17:50Z): where scheduled exports land, and how to fetch them
+
+**Inputs:** HAR `wealthcentral.advisorchannel.com3.har` (Export Status pop-up), the custom export's `prices.txt`, and
+a screenshot of Import/Export Status. The screenshot's Domain column reads **ALONGSIDE, LLC**, so this book ($1.56B)
+is the Alongside domain.
+
+**The retrieval is two calls**, the counterpart of Schwab's FetchDetails + Download:
+
+1. **List:** POST `/ssc/importexport/wc/channel/status/v1/status.json`, body
+   `{"iEtype":"E","dateString":"YYYY-MM-DD","startPage":"1","pageLength":300}`, with the `x-xsrf-token` header. It
+   returns `statusElements[]`, one row per generated file. Each row carries:
+   - identity: `profileId`, `requestId`, `fileType`, `fileName`, `fileTypeDisp`;
+   - schedule and format: `scheduleFlag`, `scheduledDaysDisp`, `importExportFormatDisp`;
+   - outcome: `fileStatusDescription` (`COMPLETED`), `fileCreatedTimestamp` and `fileDeliveredTimestamp` (UTC).
+
+   The calendar reaches back **120 days**, one `dateString` per day.
+2. **Download:** GET `/ssc/importexport/wc/channel/export/v1/downloadExport.do?fileName=..&fileType=..&profileId=..&requestId=..`.
+   All four values come from the list row. The app opens it with `window.open(url, "_blank")` (`bundle-v26.9.1.S1.js`,
+   `handleCellSelection`), which is why a DevTools capture never records it. A sibling POST
+   `/export/v1/downloadExport.json` exists in the bundle, but its caller is commented out.
+
+**What is configured (read from status.json, 2026-10-19):**
+
+| Profile | Format | Schedule | Files (`fileType`: name) |
+|---|---|---|---|
+| v1.0.0 | Standard Format A, fixed-width (`FL`) | on demand | `EXPBL` `FI{MMDDYY}.ipn`, `EXPRC` `.mvl`, `EXACC` `.naa`, `EXSEC` `.sec`, `EXTRN` `.trn` |
+| v1.0.1 | **Custom, CSV (`CS`)**, every column selected | **all 7 days** | `EXACC` `account.txt` (141 cols), `EXPOS` `position.txt` (62), `EXBAL` `balance.txt` (43), `EXPRC` `prices.txt` (44), `EXSEC` `security.txt` (45), `EXTRN` `transact.txt` (66) |
+
+- **Run time on save:** v1.0.1 generated as soon as it was saved. The request went in at 17:32:04Z; the files
+  arrived between 17:32:07Z and 17:33:36Z, transactions last (91 s).
+- **Recurring run time:** the status row's `scheduledTimeDisp` is empty, so the hour of the daily run is **not stated
+  anywhere**. It is measured only by reading tomorrow's row.
+- **Custom vs standard:** the custom set adds **balances** (`balance.txt`), which closes the Schwab `fact_rps_s2` gap.
+  Its file names carry **no date** (`prices.txt` every day). So the business date must be read from the content: the
+  first CSV field is `20261016`, the T-1 date. This is Schwab's rule (partition from AsOfDATE, never the file name)
+  applied again.
+- **`prices.txt`:** 2,464 rows, no header row, quoted CSV, business date first. It also carries CUSIP, exchange,
+  symbol, description, asset class and security type.
+
+**Fit to the Auto-Schwab design, revised:** the box signs in each morning and posts to status.json for today. For each
+`COMPLETED` row of the scheduled profile it calls downloadExport.do and lands the raw bytes in Fidelity bronze under
+the content's business date. A run manifest is written as in `sdd-daily-pull.ps1`. Each morning that is 7 calls plus
+the login, not 20k per-account calls. The text-message code at login is still the one blocker to unattended operation
+(section 5a).
+
+**Backfill:**
+- **Status history:** the 120-day calendar holds only files that were actually generated. The schedule started on
+  2026-10-19, so it backfills nothing before that date.
+- **Transactions:** an on-demand export with a date range in step 1 Enter Criteria (the standard `.trn` covered
+  2026-05-26 to 2026-10-16). The status row's `exportFilterTransDateFrom/To` fields carry that range.
+- **Positions and balances before 2026-10-19:** not in the custom export, which is as-of the latest date. The options
+  are the `Historical Prices and Positions Export` entitlement (not yet walked), or rolling positions back through
+  transactions.
+
 ## 6. Open items
 
 - **Terms of Use:** read `TOU_RIA.html` for an automated-access clause before any scripted login. Owner: Andrew. The

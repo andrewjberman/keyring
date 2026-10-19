@@ -65,3 +65,46 @@ The 08:25 mirror copies the land, and the 13:30Z fire writes Cottonwood 10-19 wi
 and Andrew.
 
 ## Producer half: SIGNED by 4.0.0_SA_CRO~DDD. Awaiting the CTO half and apply gate.
+
+---
+
+## AMENDMENT 1 (~16:5xZ) -- the WAIT is replaced by a CARRY-FORWARD (Andrew-direct ADDENDUM 1)
+
+**The act:** `safe-deploy` of `cot_bronze_ingest.py` @e7d897445f to `s3://opal-data-cot/code/bronze/`.
+- **Prior object (rollback):** VersionId `76XG3l.p2w7ESDsOVU_9lhni3IAloUHg` (the wait, @67df6e6db1, sha eac2d977).
+- **opal-data-bd:** sha before is printed and restored the same turn if written (as before).
+- **Mirror cron:** unchanged. The 07:25/08:25/08:45 runs are now redundant but idempotent; no second apply today.
+
+**The rule:**
+- On the daily pull and the retry sweep (never `--backfill`), an account whose holdings rows are ALL null Market Value
+  lands with the previous landed HOLDINGS_DAILY file's rows.
+- An account null on both days lands as delivered.
+- The carry is recorded in the completeness sidecar (`carry`: from_date, from_version, accounts, market_value).
+- The sweep reads a carried day as UNKNOWN-OR-ABSENT and re-pulls it inside its 5-bday lookback until BD's own values
+  land. The carry also runs on the sweep, so the no-regress guard compares carry-for-carry.
+- Cottonwood bucket only.
+
+**Writers of what moves -- N = 1:** `cot_bronze_ingest` (bronze holdings, opal-data-cot). The land time returns to
+~07:31 ET; the values of carried accounts move from null to the prior day's.
+
+**Branches:**
+- **(a) Carriers null at 07:30.** About 112 accounts carry D-1 rows. Next morning's sweep re-pull lands BD's values;
+  if still null, it carries again (bounded by the 5-bday lookback).
+- **(b) Carriers already valued.** No carry, the sidecar has no `carry` field, and behaviour is as before.
+- **(c) Prior file unreadable, header changed, or any parse error.** Lands as pulled (fail-open). This is today's
+  pre-wait behaviour.
+- **(d) A closed account delivered all-null.** It carries one more value for up to 5 bdays, until the re-pull lands
+  BD's own null. Exposure: a real closure is overstated for up to 5 bdays.
+
+**Measured replay** (stored 2026-10-16 07:30 delivery, 160 all-null accounts, read-only):
+- 112 carried from 10-15; total 561,160,180.77.
+- BD's final 10-16 file: 561,115,503.42 (gap 44,677.35, 0.008%).
+- As pulled: 549,927,742.23.
+- The `Timestamps` sheet is byte-equal.
+
+**Tests:** 7 new (`tests/test_carrier_carry.py`) pass. 7 pre-existing failures fail identically at HEAD.
+
+**MDPF note:** MDPF writes a dated key once (silver converter skips an existing partition; A8 conditional put). A
+carried value that MDPF consumed stays in MDPF's history for that date until Andrew answers question 2.
+
+**Producer half (Amendment 1): SIGNED by 4.0.0_SA_CRO~DDD.**
