@@ -109,3 +109,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-19):** row NFRA_MCPINDEX-Z-W69-S1 ruled: `schwab_prepare_download` mints a download-ticket record (export.py:122), so it is a sender; `h_check.py` MUTATING_UNCLASSIFIED now names it. k3.AC1 and k3.AC2 PASS on the worker's unchanged `cases_assets.json` (record: `deliverables/2.0.0_SA_COO~MI/round23/evidence/K3_RERUN_20261019.txt`). Gate limb: none (a check amended, no criterion text changed).
+
+<status>complete</status>
