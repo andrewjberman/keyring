@@ -32351,3 +32351,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The CTO's msg 8275 ruling: whatever cause the log names becomes its own row. No model call was made, nothing was spent, no store object was written by the on-demand run. The issuer carries the key-supply question to the CTO."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W525-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~525",
+  "surfaced_at": "2026-10-19T15:25:00Z",
+  "one_line": "The chart line 'The chart: ABSENT' is a string literal in _thesis_driver_chart_markdown, so the AMGT-ce-1 status-word screen in _NOT_PLAIN_PATTERNS never sees it and the word still prints in the rich export's Model sheet (render_pack.py:2429).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@2fe324e11e:2184 reads: line = \"The chart: ABSENT\" + (' -- the thesis driver is \"{0}\"'.format(series) if series else \"\"), printed when drafting is SERVED and thesis_driver_chart is not SERVED (lines 2179-2183)",
+      "lib/research/print/tests/test_ba18_chart_line.py:19 asserts the literal 'The chart: ABSENT -- the thesis driver is \"EBITDA\"' for a non-served chart, so the literal is pinned by a test that this cell did not edit",
+      "render_pack.py:2176-2178 (docstring) states the line is the SAME line ThesisDriverChart.tsx renders when the driver chart is not SERVED: the word is the page's own copy, not a served reason"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-ce-1 ruling (round-122 analysis section 3): a served reason that carries the reader's own status word is not plain; the screen goes at the print layer, where every surface passes; the tuple _NOT_PLAIN_PATTERNS is the one region the cell owns.",
+  "world_is": "The chart line is a literal, not a served reason, so no _NOT_PLAIN_PATTERNS entry can reach it. The word ABSENT prints on the chart line of both surfaces whenever the thesis is drafted and the driver chart is not served. The worker kept the literal and changed no line outside the tuple.",
+  "notes": "Form only. The page copies the word (ThesisDriverChart.tsx), so the issuer decides whether the literal is a second instance of the same class the ruling names or the page's own vocabulary. No edit was made outside the tuple."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W525-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~525",
+  "surfaced_at": "2026-10-19T15:25:00Z",
+  "one_line": "The worktree branch wk-AMGT_RESAPP-525 is at 2fe324e11e, two commits past the issuance commit 613ec8aef1 that the order says the branch was cut from; the order file itself is unchanged since 613ec8aef1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --oneline -3 at the worktree: 2fe324e11e, c1119bfc59, 613ec8aef1; git merge-base --is-ancestor 613ec8aef1 HEAD returned rc=0",
+      "git log -1 -- org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ce-1.a-reason-carrying-a-reader-status-word-is-not-plain.md prints 613ec8aef1 as the last commit touching the order"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-ce-1 worker bounds: the worktree is cut from the issuance commit 613ec8aef1 and works only in that cut.",
+  "world_is": "The worktree HEAD is 2fe324e11e, a descendant of the issuance commit by two commits (c1119bfc59 a deploy-ledger entry, 2fe324e11e a CTO sign commit). Neither commit touches the order, render_pack.py or the tests folder. The worker kept its branch as found and committed on top of it.",
+  "notes": "Form only. The two commits are outside this cell's <paths>; the commit of this cell sits on 2fe324e11e, so its diff against 613ec8aef1 includes them."
+}
+```
