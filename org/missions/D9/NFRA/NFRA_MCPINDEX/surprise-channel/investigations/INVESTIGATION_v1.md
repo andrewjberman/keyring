@@ -9860,6 +9860,66 @@ carries none.
         "round21/post_release/anchor_host_check_after_batch5.txt: ANCHORS 127 of 127; round21/post_release/r13.AC3_monotone_after_batch5.txt: monotone PASS (37 equal, 2 behind and tolerated); discover_buckets_host_after_batch5.txt: 8 of 8"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W61-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~61",
+    "surfaced_at": "2026-10-19T15:24:24Z",
+    "one_line": "safe-commit's naming gate printed NAMING ERROR 'function-map folder missing' for infra/aws/lambda/ci/function-map/ in this sparse worktree, and the commit still returned rc=0; the naming gate's function-map leg read no folder for commit ae2110a3a3d.",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project; BOUNDS 2: the commit gate runs py_compile, the naming gate and ruff for py39. The face's <paths> grant names only workflows/gateway_battery/cheatsheet.py, its tests, the deliverables folder and this investigation file.",
+    "world_is": "The commit of workflows/gateway_battery/cheatsheet.py and workflows/gateway_battery/tests/test_cheatsheet.py printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-61\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' and then '[msg-verify] committed ae2110a3a3'. git sparse-checkout list in the worktree names workflows/gateway_battery, org/missions/D9/NFRA/NFRA_MCPINDEX, lib, org/ref and others, and does not name infra/aws/lambda/ci.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author ... -F .scratch/msg_commit1.txt -- workflows/gateway_battery/cheatsheet.py workflows/gateway_battery/tests/test_cheatsheet.py: rc=0, output in .scratch/commit1.out of wk-NFRA_MCPINDEX-61 (printed 2026-10-19T15:2xZ)",
+        "git -C C:/tmp/wk-mcpindex-61 sparse-checkout list (read 2026-10-19T15:24Z): workflows/gateway_battery, org/missions/D9/NFRA/NFRA_MCPINDEX, lib, org/ref, org/standards, .tools, infra/logic/registry, org/devices, org/modules/graph; infra/aws/lambda/ci not listed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W61-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~61",
+    "surfaced_at": "2026-10-19T15:24:24Z",
+    "one_line": "safe-commit's client-data check printed WARN that the hashed account-id list is ABSENT on this device, so commit ae2110a3a3d was not checked for client account ids.",
+    "spec_asserts": "The commit path (.tools/safe-commit.sh) runs the client-data check on the staged paths of every commit; the face names no exemption from it for this order. A missing reference list is absent, not empty.",
+    "world_is": "The hashed account-id list is not at the user's .opal folder on this device (test -f rc=1). The commit printed 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids'. The two committed files are Python source and a pytest file over synthetic tmp_path inputs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test -f <user home>/.opal/account_id_hashes.txt in the worktree shell at 2026-10-19T15:24Z: rc=1; ls of the .opal folder lists only ps-lock",
+        ".scratch/commit1.out of wk-NFRA_MCPINDEX-61: the WARN line for client-data-check, printed on commit ae2110a3a3d"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W61-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~61",
+    "surfaced_at": "2026-10-19T15:24:24Z",
+    "one_line": "The face's step 5.2 asks for <status>complete</status> appended to the task order itself, but the order file is not in the face's <paths> grant, so this worker does not flip it.",
+    "spec_asserts": "Face section 5, step 2: append <status>complete</status> to this order if all three criteria PASS. Face section 3 <paths>: workflows/gateway_battery/cheatsheet.py, workflows/gateway_battery/tests/test_cheatsheet.py, the deliverables folder for 0.9.0_WK_NFRA_MCPINDEX~61, and the investigation file. Worker rule: edit only the <paths> a non-terminal order names.",
+    "world_is": "The task order NFRA_MCPINDEX.TO-MX-g-5.fwd25-cheat-sheet-generator.md is not among the <paths> entries, so the status flip is outside this worker's write grant. All three criteria PASS, so the flip is the only remaining act of step 5.2. The flip is left for the issuer to make.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-g-5.fwd25-cheat-sheet-generator.md (face lines 83-88 <paths>; line 109 step 5.2) read in wk-NFRA_MCPINDEX-61 at 2026-10-19T15:24Z",
+        "g5.AC1, g5.AC2, g5.AC3 each RESULT: PASS in wk-NFRA_MCPINDEX-61 at 2026-10-19T15:2xZ (output in the proof instance)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
