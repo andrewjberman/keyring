@@ -688,6 +688,34 @@ most likely deliberate act is the one Z-S4 invites.**
    ]
   },
   "notes": "INERT: it records a landing and an answer, and nothing recurs from it. Consequence for Z-S21: with constituents protected by the landed route and models backfillable, the remaining daily cost of Smart App Control is a stale Positioning models date until a sanctioned route exists. That is not a permanent loss. Whether it goes on Andrew's list stays with Z-S21's disarm owner."
+ },
+ {
+  "id": "ETFS_POSITIONING-Z-S23",
+  "project": "ETFS_POSITIONING",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-19T13:25Z",
+  "one_line": "Z-S17's disarm condition is re-cut, and this row DISARMS Z-S17 now. The condition Z-S20 set (three LEG EXIT CODE lines in the 10-20 11:00Z log) does not discriminate the fix, because the success path writes those lines too. The disarm rests on the deliberate exercise: the landed bytes plus the forced-failure dry run with its negative control.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~Z",
+  "adjudicates": [
+   "ETFS_POSITIONING-Z-S17",
+   "ETFS_POSITIONING-Z-S20",
+   "ETFS_POSITIONING-Z-S21"
+  ],
+  "spec_asserts": "Z-S20 and Z-S22: Z-S17 disarms on the 2026-10-20 11:00Z run's log showing ETF, CONSTITUENTS and PRICE LEG EXIT CODE lines.",
+  "world_is": "Raised by 0.0.3_BG_BBGTerminal (msg 35963): those three lines also print on the success path, and cma's blpapi imports at 13:1xZ today, so tomorrow's run may never take the rc 50 branch. Z-S17 would then disarm on a log that cannot tell the fix from its absence. RE-CUT: (a) the mechanism was driven deliberately. The bytes at @805203d2b5 are the scheduler's working-tree bytes, and the forced-failure dry run ran the real file with 4 value lines substituted: 0 of 3 legs before the fix, 3 of 3 after. That is the disarm. This row carries it; Z-S17 itself is not edited (corrections are new rows). (b) The organic discriminator is 'PRECONDITION: FAILED' or 'DAPI state UNVERIFIED' in the SAME scheduled log as the three LEG EXIT CODE lines. It is recorded when it happens, never waited on. A log with the leg lines and no failure line is not evidence for this row. ALSO: (1) msg 35964: today's rc 50 cost the models leg nothing. The 20261016 PKLs were written Saturday 07:02-07:03 local, and the served data_pkl and model_pkl read data_as_of 2026-10-16, trading_days_behind_t1 0. (2) R-21: 0.0.3_BG_BBGTerminal self-reported one unintended agent-turn Bloomberg call. It ran dapi_check under cma expecting the import to fail; the import succeeded and the probe requested SPX Index/PX_LAST once. (3) cma's blpapi import is not blocked at 13:1xZ, so Z-S18's block is intermittent or no longer standing. Z-S21's owner reads that.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "0.0.3_BG_BBGTerminal msgs 35963 and 35964, read by this seat 2026-10-19 13:1xZ",
+    "git show 805203d2b5 (the landed .cmd) and org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_LAND_SCHEDULED_DAILY_PULL_RC50_LEGS_20261019_Z.md",
+    "org/tier0_utility/0.0.3_BG_BBGTerminal/deliverables/SCHEDULED_DAILY_PULL_LINE115_DRYRUN_20261019.md (UNTRACKED): the two dry-run arms and their diff controls"
+   ]
+  },
+  "notes": "R-21 disposition: one SPX PX_LAST reference request, no data landed, self-reported in the same message. Recorded and not escalated. The rule binds by reading, and the instrument the breach came from is a precondition probe that must never be run from an agent turn to test a hypothesis. NOT CLAIMED: why cma imports today when it did not at 07:01 local."
  }
 ]
 ```
