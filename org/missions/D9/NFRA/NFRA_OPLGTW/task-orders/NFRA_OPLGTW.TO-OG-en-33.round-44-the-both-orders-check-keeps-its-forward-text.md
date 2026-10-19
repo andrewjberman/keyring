@@ -69,7 +69,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-33.round-44-the-both-orders-
 - Two mechanical criteria. `AC1` base FAIL as expected (the unrepaired script has no stub support: arm A reports no `NO PASS LINE`). `AC2` base FAIL as expected (record absent); a synthetic record of 8 identical runs with `NOT_REPRODUCED` passes it and a record with one differing run but a `NOT_REPRODUCED` cause fails it.
 - Risk `LOCAL`: the one product-adjacent file is the issuer's own check script.
 
-<status>pending</status>
+<status>complete</status>
 <round>44</round>
 <workstream>ENRICH-R44-A</workstream>
 <slot>~159</slot>
