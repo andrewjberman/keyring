@@ -1,0 +1,39 @@
+{
+ "classified_by": "scheduled",
+ "new": {},
+ "remap": {
+  "NAME::LORD ABBETT CONVERTIBLE I": {
+   "before": {
+    "asset_class": {
+     "S": "cash"
+    },
+    "classified_by": {
+     "S": "scheduled"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-07T19:03:32.909068+00:00"
+    },
+    "name": {
+     "S": "Lord Abbett Convertible I"
+    },
+    "sub_asset_class": {
+     "S": "Cash"
+    },
+    "ticker": {
+     "S": "NAME::LORD ABBETT CONVERTIBLE I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-old-list-reclassify"
+    }
+   },
+   "set_class": "fixed_income",
+   "set_sub": ""
+  }
+ },
+ "table": "etf-classifications",
+ "taken_at": "2026-10-19T14:43:47.704961+00:00",
+ "updated_by": "mdpf-secclass-s11-rows"
+}
