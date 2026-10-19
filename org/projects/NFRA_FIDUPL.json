@@ -4,10 +4,10 @@
  "directive": "D8",
  "macro_code": "NFRA",
  "fabric": "dell1",
- "dep_stage": "DECOMP",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "The auto_fidelity uploader: the Wealthscape daily custom export (accounts, positions, balances, prices, securities, transactions) landed raw every morning in the Schwab window, signed in and OTP-read by itself via Quo, run from one Terraform root beside canonical-schwab-ec2",
  "generated_from": "org/missions/D8/NFRA/NFRA_FIDUPL/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-19T20:08:55Z"
+ "generated_at": "2026-10-19T20:20:03Z"
 }
