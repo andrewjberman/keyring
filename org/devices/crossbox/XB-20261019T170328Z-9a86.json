@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261019T170328Z-9a86",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "0.7.0_AE_CloudOps~MDPF1",
+ "subject": "MDPF_DEMQUE DQ-t-78 GO: register the 16:00 ET daily sweep task, then read the first sweep",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t78.sitez-sweep-task.md",
+ "opened_at": "2026-10-19T17:03:28Z",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack_bus_message_id": null,
+ "closed_from": {
+  "at": null,
+  "by": null
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}
