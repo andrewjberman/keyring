@@ -1,13 +1,12 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.23",
-  "prd_pin": "6500db27df4db2ae180b58d5aff26d34281f6d9e",
+  "prd_version": "v0.24",
+  "prd_pin": "7b55cfefe107a09cfbce446ba1600ed52789bf22",
   "half": "brief",
-  "half_hash": "c8a8c41d1a2333f3a82ecbc73e375440b4a86b1d3e2d449b6a335df1047fa216",
-  "endpoint_hash": "6791d7ebf2f5c00145c0416303ef1143a9b3c7a36971dadbfce26b58a44cefc6",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.23_BRIEF_HALF_20261019.md@115e85c6bd",
+  "half_hash": "4680bc391161b336fe2693ba91f79ec724e0fd0f1d2347baa31c4476ca80a37f",
+  "endpoint_hash": "f6d12e62285fb066df6e2b68261547026f97da4757fa5a737d42c37cce3210c8",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.23_BRIEF_HALF_20261019.md@5b5dae8c12",
   "signed_by": "4.0.0_SA_CRO~PRFRPT",
-  "signed_at": "2026-10-19T20:01:09Z",
-  "reason": "BRIEF COVERAGE rows 1 and 5 contradict the restated FWD-2/FWD-1; no rows for the midstream brief O1-O7"
+  "signed_at": "2026-10-19T20:10:18Z"
 }
