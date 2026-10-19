@@ -26150,3 +26150,83 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Owner: this seat. S136's condition is met; the clock move on S136 is the CVO's to write (R-15), and the word goes to the CVO with this row id. S137 (the Cottonwood flow inflation) stays ARMED until the code release and the all-days rewrite pair have applied. Counts and words only; no account, household or client value is recorded here."
 }
 ```
+
+## IRPT_DASHBD-D2-W319-S1 -- The feed's households_without_id is an integer count in the bronze envelope, not a list of household records
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W319-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~319",
+  "surfaced_at": "2026-10-19T13:30:12Z",
+  "one_line": "The order's step 3 reads households_without_id as a list whose length is kept; the feed writes it as an integer count, so the live read keeps the integer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-19 step 3 keeps 'the length of households_without_id' from each day's bronze envelope, which reads as a list.",
+  "world_is": "The feed writes households_without_id as the integer no_household_by_day[day], the count returned by load_universe (the second return value, incremented once per roster row with no household id). The live read took the integer when the field is an int, and the extract holds that integer per day. No list is written by the feed, so no length can be taken.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@5769ebb33f lines 195-206: load_universe returns (rows, no_household) with no_household an int counter",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@5769ebb33f lines 561 and 877: the envelope writes households_without_id = no_household_by_day[day] (an int)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~319/live_read.py (committed with this row): int(wo) if isinstance(wo, int) else len(wo)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The cell kept the integer as the count; the checker does not read this field. No value is recorded here. The premise in the order is the only thing that differs; the writer is not edited."
+}
+```
+
+## IRPT_DASHBD-D2-W319-S2 -- The trading-day arithmetic of the live read and of the checker ran on the hardcoded NYSE fallback, because pandas_market_calendars is absent on this box
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W319-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~319",
+  "surfaced_at": "2026-10-19T13:30:31Z",
+  "one_line": "lib/trading_calendar printed a WARN on every import on dell2 and answered from its hardcoded NYSE fallback (2010-2027) instead of the market-calendar package, for the live read and for the checker recount.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-19 takes trading days from lib/trading_calendar.py, and the checker recounts them with the same module, so the calendar is the authoritative source for the trading-day count.",
+  "world_is": "The import printed: WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028). The trading-day count of the one landed day was computed on that fallback. The package is not installed on this interpreter.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "stdout of python -I live_read.py run on dell2 in this session: the WARN line above, then status RAN",
+      "stdout of python -I p132_live.py --selftest . and then p132_live.py . DBI132-1-AC1: the same WARN line on each import, then DBI132-1-AC1 PASS",
+      "lib/trading_calendar.py@5769ebb33f holds the fallback path (the package-absent branch)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The fallback covers the window in use. The warning names a regeneration due before 2028 and a missing package on this interpreter; neither is acted on here. Counts and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W319-S3 -- The boundary and chain measures read nothing on the first landed day, because the silver carries one day and the measures need pairs of days
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W319-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~319",
+  "surfaced_at": "2026-10-19T13:30:52Z",
+  "one_line": "The first real-row run's boundary measure has 0 pairs and its chain check is WINDOW_TOO_SHORT, so neither measure carries a value on the landed silver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The run script's boundary measure (startValue of day t+1 against endValue of day t) and chain check read the landed silver and return a difference on real rows, as the round-129 docstring describes.",
+  "world_is": "The live silver holds one landed day. The run record reads boundary pairs 0, pairs_equal 0, max_rel_diff_bp null, and chain status WINDOW_TOO_SHORT with window_calendar_days 1 and 0 accounts checked. Neither measure is exercised on real rows yet; they become non-vacuous only when a second landed day exists.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~319/SCOPE_LIVE_READ_R132.json@5769ebb33f: run.boundary and run.chain fields",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py@5769ebb33f: measure_boundary requires a RETURNED row on day d and on day d+1; chain_check requires MIN_WINDOW_DAYS 238"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This is an outcome of one landed day, not a defect in the measures. The order's boundary criterion is recorded as read; no value is claimed. Counts and words only."
+}
+```
