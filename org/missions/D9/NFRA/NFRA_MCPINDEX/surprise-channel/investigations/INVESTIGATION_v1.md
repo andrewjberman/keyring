@@ -10915,6 +10915,68 @@ carries none.
     "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
     "world_is": "copy_site_file_to_s3 has no such path. K6-45 uses the extension refusal as its preview.",
     "notes": "Form finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:21:33Z",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-r-1 step 6 says 'The checks are .../round23/checks/h1.AC1.sh, .AC2.sh and .AC3.sh (they run h_check.py)'. The same order's section 4 proof_of_spec names r1.AC1.sh, r1.AC2.sh and r1.AC3.sh as the criteria of MX-r-1.",
+    "world_is": "h1.AC1-3 grade partition_windows.py (cell MX-h1: h_check.py h1_ac1, h1_ac2 and the pytest arm on test_partition_windows.py), not the routing table emitter. The r1 checks are the MX-r-1 criteria. I ran the proof's r1.AC1, r1.AC2 and r1.AC3 and did not run h1.",
+    "one_line": "Step 6 of TO-MX-r-1 names the h1 checks, which belong to another cell; the proof names the r1 checks. The worker ran the r1 checks.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 2 step 6 (line 71) names checks/h1.AC1.sh, h1.AC2.sh and h1.AC3.sh",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/checks/h_check.py@55588caa6e7 lines 88-89 (h1_ac1 grades partition windows) and line 721 (h1.AC3 pytest on test_partition_windows.py)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 4 proof_of_spec lines 93-96 name r1.AC1.sh, r1.AC2.sh and r1.AC3.sh"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:21:33Z",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-r-1 section 2 bound 1 says 'the measurer's live S3 path is written but never run by you; you test it with --fake'.",
+    "world_is": "The cell contract (section 1, ROUTING TABLE) defines the emitter flags, inputs and outputs with no measurer and no --fake option, and the section 3 grant names no measurer file. The emitter reads local files only and has no live S3 path; I wrote none and added no --fake option.",
+    "one_line": "Bound 2.1 refers to a measurer and a --fake test path that the MX-r-1 contract never specifies; no criterion needs one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 2 bound 1 (line 66) mentions the measurer and --fake",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 1 contract (lines 38-50) and section 3 paths (lines 76-82) name no measurer file and no --fake flag"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:33:10Z",
+    "spec_asserts": "MX-r-1 face, section 1 and section 2 bound 2: 'The commit gate runs py_compile, the naming gate and ruff for py39' (the naming gate is part of the commit gate a worker's commit must pass).",
+    "world_is": "The safe-commit naming gate printed 'NAMING ERROR function-map folder missing' for infra/aws/lambda/ci/function-map/ (the Lambda source map it reads). That folder is outside this worktree's sparse checkout (11 folders; infra/aws/lambda is absent), so the gate could not grade the naming input. The commit still landed (msg-verify committed 60058aca164). I did not widen the sparse checkout, since the cell needs no infra folder.",
+    "one_line": "The naming gate could not read its function-map input in the sparse worktree and printed ERROR; the commit landed anyway, so the naming half of the gate was not graded.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit 60058aca164: [naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-70\\infra/aws/lambda/ci/function-map/ followed by msg-verify committed 60058aca16",
+        "git sparse-checkout list at 55588caa6e7 lists 11 folders and no infra/aws/lambda path; ls infra/aws/lambda reports absent in the worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
