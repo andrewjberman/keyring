@@ -29590,3 +29590,103 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. The same condition is carried by NFRA_OPLGTW-Z-W160-S1 (filed by 0.9.0_WK_NFRA_OPLGTW~160). Not graded by this worker."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~162",
+  "surfaced_at": "2026-10-19T11:03:05Z",
+  "id": "NFRA_OPLGTW-Z-W162-S1",
+  "one_line": "The audit lake records carry the principal as a plaintext address in the user field; no hashed principal id field exists in the record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-mcp-audit/audit/dt=2026-10-18/ (10627 objects, boto3 get_object, every record read; record keys args, detail, outcome, tier, tool, ts, user)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~162/evidence/lake_window_1007_1018_counts.json (worktree wk-NFRA_OPLGTW-162, uncommitted at write; committed with this order) (106154 records, 2026-10-07..18; principal labels are sha256 prefixes computed locally)",
+      "a denial detail in the same window repeats a plaintext address (not copied here)"
+    ]
+  },
+  "spec_asserts": "The OG-gd-2 order states that principals appear in the audit lake as its hashed principal id, and that no private value is written in a record.",
+  "world_is": "Every lake record read for 2026-10-07 to 2026-10-18 (106154 records) holds the caller in a user field as a plaintext work address, and some denial details repeat one. The record has no hashed principal field.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not graded by this worker. The W evidence file names the principal classes only; no address is written in any W file."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~162",
+  "surfaced_at": "2026-10-19T11:03:05Z",
+  "id": "NFRA_OPLGTW-Z-W162-S2",
+  "one_line": "The census contract folder that maps FWD-22 groups G1 to G6 to typed tools is absent from the worktree; the group mapping used here is inferred from catalog source-group names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/ (directory absent in the worktree; FWD-22 SOURCE cites GATEWAY_DATA_CONTRACTS_20261014/G<n>_*.md under org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/) @5b26fdd4c6 (base of wk-NFRA_OPLGTW-162)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~162/evidence/tool_index_source_groups.txt (worktree wk-NFRA_OPLGTW-162, uncommitted at write; committed with this order) (tool to source-group map from DATA_CATALOG.yaml tool_index)"
+    ]
+  },
+  "spec_asserts": "FWD-22 names census groups G1 to G6, each with its typed tools, as the census contracts propose them.",
+  "world_is": "The worktree holds no census contract folder, so the tool-to-group mapping used in the OG-gd-2 read is inferred from source-group names in the catalog; the G2 and G4 membership is the least certain.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking for the read: each group arm is labelled inferred and names the mapping. Not graded by this worker."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~162",
+  "surfaced_at": "2026-10-19T11:03:05Z",
+  "id": "NFRA_OPLGTW-Z-W162-S3",
+  "one_line": "None of the seven active data-entitlement grants carries an identity-named column, so no grant in the store shows the identity-column positive arm FWD-10 describes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gateway-access-state-table, full read-only scan 2026-10-19: 2023 items, 7 active data_entitlement records (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~162/evidence/grant_identity_columns_1019.json (worktree wk-NFRA_OPLGTW-162, uncommitted at write; committed with this order))"
+    ]
+  },
+  "spec_asserts": "FWD-10 ACCEPT: Andrew and Alyssa, each under their own grant, see every account's number and every name and title field Schwab records; a principal whose grant does not carry the identity columns sees none.",
+  "world_is": "The four dataset column sets across the seven active grants name 44 columns (dim_transaction 15, dim_balance 9, dim_asset 9, dim_position 11), none identity-like. The scope's accounts key was not read.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking for the read: FWD-10 arm 3 is owed, and its contrast grant is not identifiable from the store. Not graded by this worker."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~162",
+  "surfaced_at": "2026-10-19T11:03:05Z",
+  "id": "NFRA_OPLGTW-Z-W162-S4",
+  "one_line": "One offline Black Diamond suite test raises FileNotFoundError in this worktree; the other 68 client and identity tests pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_blackdiamond.py::test_mx_t13_catalog_gated @5b26fdd4c6 (base of wk-NFRA_OPLGTW-162)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~162/evidence/suite_fwd10_15_16_17_18_client.txt (worktree wk-NFRA_OPLGTW-162, uncommitted at write; committed with this order) (1 failed, 68 passed, 9 files)"
+    ]
+  },
+  "spec_asserts": "The offline gateway suites run to completion in the worktree and give an inferred result for the live arms they cover.",
+  "world_is": "test_mx_t13_catalog_gated fails with FileNotFoundError on a path under the worktree; the cause is not read here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking: the failing test is not one this order's arms cite. Not graded by this worker."
+}
+```
