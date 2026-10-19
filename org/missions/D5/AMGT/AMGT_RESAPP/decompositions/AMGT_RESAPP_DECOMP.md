@@ -11423,3 +11423,16 @@ fanout: 2 of 2 chains, cap 8, reason: chain 1 is ce-1 then the issuer's ce-3 the
 **Not this round's:** the posture reader's landing; the AIFILL workstream (`~R2`); A4 (step 1 not before Tue 2026-10-20); the Lusha tier; row `S57`; the fund-currency carry.
 
 fanout: 2 of 2 chains, cap 8, reason: chain 1 is cf-1 then the issuer's cf-5 on-demand run; chain 2 is cf-2 then the issuer's cf-3 census then the CloudOps redeploy cf-4 under the pair; the two worker cells write disjoint files (`llm_batch/run.py` and a new test file; `render_pack.py` and print tests).
+
+### s.133a -- AMENDMENT (2026-10-19 ~19:5xZ, issuer, inside s.133): cell `AMGT-cf-6`, the filings launcher runs the model step on Python 3.12
+
+**Why.** The deliberate run of cf-5 (19:36Z, `tmp/llm_batch/filings_20261019T193618Z.log`) got past the key guard (cf-1 merged `8de2494a24`; 0 key-prefix greps in the log) and failed inside the installed SDK: `anthropic 0.45.0` on `Python 3.14.7` (row `AMGT_RESAPP-D1-S62`; the repo pins `anthropic==0.84.0`, `requirements.txt:14`). `pip install` on the box is guarded (user env `PIP_NO_INDEX=1`; the estate's route is `org/devices/intake` with a CTO-signed approval file). Python 3.12.10 on the same box already holds `anthropic 0.84.0` (the vetted closure `org/devices/intake/closure_cp312_win_amd64.json`), imports `lib.research.filings.batch` and `lib.research.llm_batch.run`, and its `Messages.stream` takes `output_config`. The CTO ruled (msg 8497 withdrawn, msg 8499): option B, no intake install, no guard override.
+
+| item | cell | what | worker | risk | edges |
+|---|---|---|---|---|---|
+| 5 | `AMGT-cf-6` | `run_filings.cmd` runs `py -3.12 -m lib.research.llm_batch.run filings` in place of `python -m ...` (one line; the log, the exit code and the cd guard unchanged); the launcher test asserts the interpreter argument; the other two launchers are NOT edited. CARRIED IN THE RE-OPENED ORDER `TO-AMGT-cf-1` (owned cells `AMGT-cf-1,AMGT-cf-6`): `.tools/to-pipeline-gate.py` refused a new order file in round 124 (ONE ISSUER PER ROUND is keyed to the round; a re-cut modifies the round's orders and adds no file), so the issuer re-opened its own order | worker-light ~527 (re-seated; Part A inherited as merged `8de2494a24`) | LOCAL | cf-1 (merged) |
+| (acts) | `AMGT-cf-5` | the issuer's ONE further deliberate `schtasks /run` after cf-6 merges, graded as before (rc=0, objects written, 0 key-prefix greps); if it fails the row is filed and there is no third run (CTO msg 8497 condition 3, kept by 8499) | the issuer | WORLD | cf-6 |
+
+**Rows owed by the same ruling (the issuer's, not cells):** `run_management.cmd` also runs on the 3.14 interpreter and `lib/research/management/ceo_search.py` imports `anthropic`, so the management task carries the same SDK mismatch (its launcher is NOT widened here); `run_scores.cmd` runs `lib.research.scores.run_scores`, which imports no `anthropic` (read: 0 matches under `lib/research/scores/`). The Harvest Cycle and the open-calls scan run `pythonw.exe` on 3.14 and import no `anthropic` (read: 0 matches under `lib/opal_data_harvest/` and in `.tools/open-calls-scan.py`).
+
+fanout: 1 of 1 chains (this amendment), cap 8, reason: one launcher line and its test; cf-1 and cf-2 are merged.
