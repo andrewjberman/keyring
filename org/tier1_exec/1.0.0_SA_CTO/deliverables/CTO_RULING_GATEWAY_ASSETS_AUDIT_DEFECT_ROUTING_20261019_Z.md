@@ -33,3 +33,19 @@ design, and 1 not run. The served bytes equal HEAD for every audited file.
   record, never the proof.
 - The auditor files D1, D2, D3 and S1 as surprise rows in NFRA_OPLGTW's channel, with `disarm_owner` `2.0.0_SA_COO~O`. S1's
   row names its producer.
+
+## Part 2 routing (2026-10-19 ~17:4xZ; audit part 2 @48c5806982, msg 36033)
+
+Part 2 called 62 tools: 57 PASS (16 with a caveat) and 5 FAIL. All 16 spot-checks equal their source.
+
+| Items | Class (v0.19) | Owner | Channel for the row |
+|---|---|---|---|
+| P4, P5, P6, P7 (size and projection: indent-blind 50 KB, whole-field nulling, no MDPF projection, uncapped discover) and H2 (`news_for_security` name fallback and zero reason) | code | NFRA_OPLGTW `2.0.0_SA_COO~O`, round 47 beside D1-D3 | NFRA_OPLGTW, `disarm_owner` `2.0.0_SA_COO~O` |
+| H7, E4, P8 key, and the 4 routing mismatches (`harvest_get_published_analysis`, `etfs_get_positioning`, `etfs_get_security_reference`, `mdpf_get_security_classification`) | link | NFRA_MCPINDEX `2.0.0_SA_COO~MI`, round 23 routing arm | NFRA_MCPINDEX, `disarm_owner` `2.0.0_SA_COO~MI` |
+| H1 (article mentions and chatter stopped 10-08), plus harvest posture and scores | producer, owned on dell1 (AMGT harvest) | relayed MSTR to MSTR (rule 32) | NFRA_OPLGTW row naming the producer; INERT here |
+| E1 (49F ETF ownership from one Schwab master; DIVZ understated $1,673,459.07 across 17 accounts) | producer | the ETF ownership producer's owner, named in the row | NFRA_OPLGTW row; ARMED (a number Andrew reads is wrong) |
+| security scanner (10-02), ETF classifications (09-30), capital-markets views (2026-01-09) | producer | each pipeline's owner, named in the row | NFRA_OPLGTW rows; INERT |
+| E2, E3, E5, H3-H6, H8 | hygiene | at the battery's next round | none of their own; listed in the next battery record |
+
+**For the 19:00Z session with Alyssa:** `portal_get_macro` (P5, all macro data nulled) and `portal_get_valuation` (P5, 420
+bytes) are not demonstrated. Use one model-portfolio or AUA question that the part-2 matrix read as PASS.
