@@ -29895,3 +29895,33 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "INERT: the route does not exist until Phase B and then answers only the verified owner. Options for the issuer and the CTO, not chosen here: (a) release as is and mask in a later cell; (b) cut the mask first (family_depth._why) and re-base this order on it. The ask carries the disclosure so the three halves sign knowing it."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T15:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S408",
+  "one_line": "Issuer rulings on OG-ap-50 Phase A rows Z-S406 (a fresh process needs deploy-to-ec2.sh, absent on the host) and Z-S407 (the family_depth response can carry the role ARN and account number in AWS error text): S406, stage the release's byte-equal copy in a scratch tree and disclose it; S407, release as is behind the owner gate and cut the mask for round 47, with the mask first if the CTO or CVO half refuses",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S406",
+    "NFRA_OPLGTW-Z-S407"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ap50.AC1 re-run by me on the applier's Phase A (msg 35992, ask sha256 50ed64086cb3, release 6d1b5dcb64 on live ref 6b1a9bd292): RESULT PASS; 2 files differ, 0 outside the take list; dell1's four harvest files byte-equal 4 of 4; route leg 15 -> 16 routes with 401, 403, 401, 404 and read() never called on a refusal; the real read() as the instance role 13 of 13 rows, 59 values, 0 claim-less.",
+      "Z-S406 (rows above): app/family_depth.py lines 157-187 read ENABLED_INTEGRATIONS from <tree root>/deploy-to-ec2.sh only when registry._ACTIVE_BY_TOOL is empty; /opt/opal-gateway/deploy-to-ec2.sh reads absent on the host; with the release's copy staged beside app/ in a scratch tree the same read ran. Nothing in production reads the file.",
+      "Z-S407 (rows above): the text carries identifiers (a role ARN, the account number, an instance id) and no credential, token or data value; 0 e-mail-shaped strings; the route answers the verified owner only (401 without identity, 403 for a non-owner, read() never called on either); app/family_depth.py is live and not in this release, so the text cannot be masked here without a second release."
+    ]
+  },
+  "spec_asserts": "OG-ap-50 step 7 / ap50.AC3: the ONE driven read runs read() once from the DEPLOYED tree in a fresh process; and the route returns, per family, schedule, last sweep and earliest served date with claims and no data value.",
+  "world_is": "S406: a fresh process from /opt/opal-gateway cannot complete read() without deploy-to-ec2.sh, which the host does not hold; the running service has a populated registry and does not read it (NOT CLAIMED for the service until an owner-session read or a read of server.py's startup order settles it). S407: the response embeds up to 200 characters of AWS error text in a value's source; 8 of 59 values carry the role ARN and account number. RULINGS (the issuer rules inside its own decomposition): S406, Phase B step 7 stages the release's deploy-to-ec2.sh (sha256 equal to the release blob and to the live base's) beside a SCRATCH copy of the deployed app/, never inside /opt/opal-gateway, says so in FWD20_DRIVEN_READ.json (scratch_staging_disclosure) and removes the scratch tree after; ap50.AC3 stands as written. S407, release as is: the reader is the owner, the text holds identifiers not secrets, no record of this order may carry the ARN or account number (counts and masked shapes only, as the applier did), and the mask (family_depth._why to the exception class name and a fixed phrase) is cut as a round-47 cell and listed in the next slug. If the CTO or CVO half refuses on S407 the mask is cut first and this order is re-based on it; that is their half to give, not mine to pre-empt.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S406 and S407 are both INERT until Phase B and neither blocks the release: S406 is a staging step the order now states, S407 is an owner-only identifier exposure with its mask carried to round 47. The signers' halves still decide S407 for this release."
+}
+```
