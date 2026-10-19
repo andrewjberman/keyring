@@ -1,13 +1,12 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.23",
-  "prd_pin": "6500db27df4db2ae180b58d5aff26d34281f6d9e",
+  "prd_version": "v0.24",
+  "prd_pin": "7b55cfefe107a09cfbce446ba1600ed52789bf22",
   "half": "ratified-text",
-  "half_hash": "6adc4982a98150c2ca23c0bedca4381484e60b0984f250aae026ea02968fad2d",
-  "endpoint_hash": "6791d7ebf2f5c00145c0416303ef1143a9b3c7a36971dadbfce26b58a44cefc6",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO~DELL2/deliverables/IRPT_ANLREQ_PRD_v0.23_RATIFIED_TEXT_REVIEW_20261019.md@89f1eec5f1",
+  "half_hash": "4394d1caf955daf4d9d1e643992a17c61d15a80e719c2ed644c66d44f8166914",
+  "endpoint_hash": "f6d12e62285fb066df6e2b68261547026f97da4757fa5a737d42c37cce3210c8",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO~DELL2/deliverables/IRPT_ANLREQ_PRD_v0.23_RATIFIED_TEXT_REVIEW_20261019.md@956b593a20",
   "signed_by": "3.0.0_SA_CVO~DELL2",
-  "signed_at": "2026-10-19T20:02:10Z",
-  "reason": "FWD-1 ACCEPT makes Andrew's own login the bar while DONE WHEN grades a synthetic staff user (a wait on Andrew, unqualified); one-sentence ACCEPT fix in the review"
+  "signed_at": "2026-10-19T20:11:14Z"
 }
