@@ -101,7 +101,7 @@ Report once, with:
 and writes `q1_seen.json` from his words before the spawn. Check dry-run at base 2851a9190d: AC1 FAIL (no run file). The
 negative arm is in the check: a request with no result reads `UNREAD:` and fails. Slot `~12` is spawned only at G-SEE2.
 
-<status>staged</status>
+<status>cancelled -- Andrew-direct 2026-10-19 ~16:3xZ, the human half is no longer owed (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_163xZ_SIX_HANGING_OPEN_CALLS_RESOLVED.md); the ACs read files the human half would have written and cannot run as written. CTO ruling 1.0.0_SA_CTO~Z msg 36018 (YES, cancel citing the record). FWD grading is the CVO's on the evidence the project holds; no replacement human act is cut.</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <slot>~12</slot>
