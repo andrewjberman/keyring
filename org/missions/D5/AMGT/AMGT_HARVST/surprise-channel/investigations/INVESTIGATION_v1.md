@@ -13344,6 +13344,69 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         },
         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W183-S13",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+      "surfaced_at": "2026-10-19T15:04:40Z",
+      "one_line": "HVST-cn-5 AC5 expects the naming-apply gate output to end with a `refusals: <n> of <m> graded lines; gate rc=<k>` line; the gate ends `NAMING-PLAN: WARN 38 graded` (rc 0, zero REFUSE verdicts) and prints no refusals line.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-cn-5 AC5 and the amendment-6 worker face: the naming-apply gate output is written unabridged and ends with the gate's line `refusals: <n> of <m> graded lines; gate rc=<k>` (expected n=0, k=0).",
+      "world_is": "python .tools/naming-apply-gate.py --plan-json <json> --root infra/aws/terraform/harvest --enforce, run on the full-root real-state plan JSON (Plan: 11 to add, 0 to change, 0 to destroy), exits rc=0 and its last line is `NAMING-PLAN: WARN 38 graded`. The gate source formats only `NAMING-PLAN: <PASS|WARN|REFUSE> <n> graded` (.tools/naming-apply-gate.py line 772); the string `refusals:` is absent from it. All eleven run-half names and the task log group grade CONFORMANT, including NAMING CONFORMANT aws_cloudwatch_log_group.dossier_refresh_task[0] /aws/ecs/amgt-dossier-refresh-task. The 14 WARN lines are existing out-of-pattern resources outside this cell (module.scoped_amgt_api and others). The output is written unabridged to cn5_naming_plan.out; the gate, the expectation and the Terraform were not edited.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~183/cn5_naming_plan.out@5bde0ccaf1 (the plan Plan line and the gate output, last line NAMING-PLAN: WARN 38 graded)",
+          ".tools/naming-apply-gate.py@5d6b1fb036 lines 755-774 (the denominator, summary and last-line formats)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "AC5 as written cannot be met by the gate as it exists; reading only, nothing edited."
+    },
+    {
+      "id": "AMGT_HARVST-D1-W183-S14",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+      "surfaced_at": "2026-10-19T15:04:40Z",
+      "one_line": "Against the real state the build half of HVST-cn-5 is already applied, so the AC3 labelled plans no longer read their expectations; the DEFAULT plan (no -var) now plans 5 to destroy the applied build-half resources.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~W1 (issuer of HVST-cn-5; the stage-1 apply lane is 0.7.0_AE_CloudOps~SC1)",
+      "spec_asserts": "TO HVST-cn-5 AC3 and the stage-1 premise: the DEFAULT plan (no -var) reads No changes; the BUILD plan plans the five build-half resources to add (Plan: 5 to add); the BOTH plan plans 16 to add.",
+      "world_is": "Read-only -target plans at 5bde0ccaf1 (cn5_plan.out): DEFAULT = Plan: 0 to add, 0 to change, 5 to destroy (aws_cloudwatch_log_group.dossier_refresh_build[0], aws_codebuild_project.dossier_refresh_build[0], aws_ecr_repository.dossier_refresh[0], aws_iam_role.dossier_refresh_build[0], aws_iam_role_policy.dossier_refresh_build[0]); BUILD = No changes; BOTH = Plan: 11 to add, 0 to change, 0 to destroy; RUN-ONLY-REFUSED = Plan: 9 to add, 5 to destroy, then the precondition error. The full-root real-state plan with both flags reads Plan: 11 to add, 0 to change, 0 to destroy. Because the flags default to false, an apply run without the -var flags would destroy the five applied build-half resources, the ECR repository among them. Nothing was applied and no state was written.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~183/cn5_plan.out@5bde0ccaf1 (DEFAULT, BUILD, BOTH and RUN-ONLY sections, Plan lines and the five destroy addresses)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~183/cn5_naming_plan.out@5bde0ccaf1 (full-root real-state Plan line 11 to add, 0 to destroy)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Premise of the AC3 expectation (no build-half resource in the real state) no longer holds. CloudOps holds the stage-1 apply and the flags; the issuer owns the cell. Not resolved in this pass."
+    },
+    {
+      "id": "AMGT_HARVST-D1-W183-S15",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+      "surfaced_at": "2026-10-19T15:04:40Z",
+      "one_line": "The commit-time naming gate printed NAMING RAISE (rule or registry defect, not PASS or REFUSE) on the template literal /aws/ecs/${local.task_family_name} at dossier-refresh.tf line 67, and the commit landed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "CLAUDE.md rule 30: every resource name is name() output and the commit-time naming gate REFUSES names (LGIC_ENFORCE); the amendment-6 cell's commit runs the gates the worker face names.",
+      "world_is": "safe-commit of 2b570ffa67 printed `[naming-gate] NAMING RAISE infra/aws/terraform/harvest/dossier-refresh.tf:67 /aws/ecs/{x} -> (rule or registry defect)` with `G3: the tokeniser cannot place a character of a resource name '{x}'` and `NAMING-GATE: WARN 1 graded`; the commit landed with rc 0. The plan-time gate grades the rendered name /aws/ecs/amgt-dossier-refresh-task CONFORMANT (cn5_naming_plan.out), so the raise comes from the commit gate reading the unrendered template. Form only; whether the commit gate should read templates is not judged here.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/terraform/harvest/dossier-refresh.tf@2b570ffa67 line 67 (the task_log_group local)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~183/cn5_naming_plan.out@5bde0ccaf1 (CONFORMANT line for aws_cloudwatch_log_group.dossier_refresh_task[0])"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
