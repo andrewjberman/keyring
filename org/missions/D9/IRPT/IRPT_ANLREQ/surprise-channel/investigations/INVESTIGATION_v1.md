@@ -26989,3 +26989,90 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W312-S1 -- the Ticket Center's Open report renders through RetainedSections, not NativeSections, so the cell's one-line hookup has no NativeSections call to attach to
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W312-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
+    "surfaced_at": "2026-10-19T22:35:31Z",
+    "one_line": "The Ticket Center's Open report renders through RetainedSections (OwnedRequestHistory.tsx), not NativeSections; the hookup the cell names (mode report and operator internal at the ticket's entry) has no NativeSections call to attach to.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-418 cell AR-y-418, context and change item 4: the Ticket Center's Open report reads the report through NativeSections({ report }); the one-line hookup mode='report' operator={internal} is added by the issuer at the merge at the ticket's entry.",
+    "world_is": "At portal base 4f9f2f633dc0, OpenedReportPanel (TicketCenter.tsx:200) renders RetainedSections (TicketCenter.tsx:211). RetainedSections (OwnedRequestHistory.tsx:151) imports SectionBlock from NativeSections.tsx (OwnedRequestHistory.tsx:12) and prints its own Report sections heading, its own vendor validation line and its own closed report-technical-details element. NativeSections is mounted only by RequestList.tsx:72, the Analysis tab's manual path. No file under src/pages/TicketCenter/ imports or renders NativeSections.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/TicketCenter/TicketCenter.tsx@4f9f2f633dc0 line 211: <div className='mt-1'><RetainedSections report={result.report} /></div> inside OpenedReportPanel (line 200)",
+        "portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx@4f9f2f633dc0 line 12 (import of SectionBlock from ./NativeSections), line 151 (RetainedSections), lines 165-173 (data-slot report-technical-details)",
+        "portal/src/pages/InvestorReporting/tabs/analysis/RequestList.tsx@4f9f2f633dc0 line 72: <NativeSections report={report} /> (the only mount of NativeSections under src/)",
+        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx@c34d3ea5 (LOCAL candidate): the report face is added; the default face is unchanged (AC2 25 pass, 0 fail, the base count)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not worked around: src/pages/TicketCenter/ and OwnedRequestHistory.tsx are outside this order's grant, and the cell forbids editing that folder. The issuer decides where the mode reaches the ticket (for example a mode prop on RetainedSections that forwards to the report face). Criteria AC1-AC3 do not depend on the hookup."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W312-S2 -- the NOT_SHOWN disclosure the cell names is defined nowhere in the portal; the report face moves a disclosure whose text carries the word NOT_SHOWN to the end on that unverified marker
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W312-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
+    "surfaced_at": "2026-10-19T22:35:31Z",
+    "one_line": "The cell asks that a NOT_SHOWN disclosure print last; no portal type, adapter or fixture names one, so the report face takes the word NOT_SHOWN in a disclosure's text as the marker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-418 cell change item 2 and test (5): in report mode the disclosures print once each in report order, and a NOT_SHOWN disclosure when present is the last one.",
+    "world_is": "adapt.ts maps wire disclosures[].text to a plain string list (lines 1077 and 1104). No portal file defines a NOT_SHOWN disclosure; the token appears only in SecurityAnalysis ModelTab, for a different line. reportDisclosureOrder() prints the texts without the token in report order, then the texts with it. The producer's exact disclosure wording was not read (no live call).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts@4f9f2f633dc0 lines 1077 and 1104: disclosures: wire.disclosures.map((disclosure) => disclosure.text)",
+        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx@c34d3ea5: NOT_SHOWN_TOKEN and reportDisclosureOrder",
+        "portal/src/pages/InvestorReporting/__tests__/fwd8/native-sections-report-mode.test.tsx@c34d3ea5 test (5): the NOT_SHOWN fixture disclosure sits second in wire order and must print last"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. The marker is the one assumption: if the producer words the line differently, the report face would not move it. The issuer may name the marker in the contract."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W312-S3 -- three report-face choices the cell does not state: a vendor section counts as a figure card; the element trace inside Technical details repeats cards only; the default face is kept as an early return
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W312-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
+    "surfaced_at": "2026-10-19T22:35:31Z",
+    "one_line": "The cell's VALUE-only card rule has no status to test on a vendor section; the report face's other choices (trace content, default path) are also not stated in the cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-418 cell change items 2 and 3: cards are ONLY the sections whose status is VALUE; the closed Technical details holds the reason lines and the full trace as trace mode prints it; the default is exactly today's rendering.",
+    "world_is": "In report mode a section with no status (a vendor section) is shown as a figure card, because it carries values and the VALUE rule has no status to test; an Opal NOT_AVAILABLE section is never a card. The element trace nested inside Technical details repeats the section cards only, so the disclosures print once, outside, in report mode. The default path is an early return before the unchanged trace body; SectionBlock gained an optional bare flag (default false) that the report face alone sets.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx@c34d3ea5: isFigureSection, ReportFace, the element-trace details and the bare flag of SectionBlock",
+        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx@4f9f2f633dc0 line 271: the base NativeSections signature (no mode, no operator)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Chosen to keep the default byte-for-byte and the disclosures printed once. No browser run (by order). The issuer may overrule the vendor-section choice at the merge."
+  }
+]
+```
