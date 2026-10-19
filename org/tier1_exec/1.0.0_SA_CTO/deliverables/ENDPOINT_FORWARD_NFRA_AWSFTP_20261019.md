@@ -110,6 +110,12 @@ office box, not a vendor in the middle.
          SOURCE     brief O9, Part II (no shadow pipeline, no standing comparison)
 ```
 
+## CONFIRMED by Andrew 2026-10-19 ~16:5xZ -- and the project is ON HOLD
+
+"Yes all recs approved for this" -- FWD-1..10 confirmed as written, the three qualified waits below accepted. Same word: "we cannot start
+this project until we actually have an FTP solution ... listed as 'hold' in status in the registry". Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_165xZ_NFRA_AWSFTP_RECS_APPROVED_D8_REGISTERED_ON_HOLD.md`.
+
 ## Reachability (L2 "NO FWD IS A WAIT")
 
 - **Reachable by working, on demand:** FWD-1, FWD-3, FWD-4, FWD-5, FWD-7, FWD-8, FWD-9 (7 of 10). Each is driven by Opal's own test login

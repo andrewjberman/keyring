@@ -1,0 +1,37 @@
+{
+  "project_code": "NFRA_AWSFTP",
+  "macro_code": "NFRA",
+  "directive": "D8",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "hold",
+  "dep_stage": "REGISTERED",
+  "created": "2026-10-19",
+  "registered_under_tree": "2026-10-19",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "ADVI_SCHWABAUTO",
+    "TCKT_EARLYWARN",
+    "NFRA_OPLGTW",
+    "MDPF_CANON"
+  ],
+  "name": "Custodian daily files by SFTP straight into AWS: Schwab and Fidelity deliver to one Opal endpoint in AWS landing in S3, kept as sent, recorded per account group per day, read into one cross-custodian holdings table",
+  "description": "Registered at L3 by 1.0.0_SA_CTO on Andrew-direct 2026-10-19 ~15:2xZ at the 4.0.0_SA_CRO terminal ('Yes write the brief. This should go into NFRA_AWSFTP. I would prefer to run it direct into AWS, so that is how it should be designed.'). Design fixed by that word: a managed SFTP endpoint in AWS writing to S3, never a desktop session, an office box or a vendor in the middle. Replaces the Schwab Box desktop-session pull master by master (no shadow run). No alerts (moratorium). Every new address and name comes from lib/opal_naming.py (rule 30); the registry rows the brief's Part IV finding 4 names are the CRO's.",
+  "phase": "2026-10-19 ~16:5xZ (1.0.0_SA_CTO): HOLD on Andrew's word. L2 endpoint FWD-1..10 confirmed with its three qualified waits; L3 registered under D8 (NFRA added to D8's macros on the same word). No PRD, decomposition, task order or COO seat until the hold lifts.",
+  "blocking": "ANDREW: HOLD -- 'we cannot start this project until we actually have an FTP solution, which may be some time ... listed as hold in status in the registry until we actually have this sorted out' (2026-10-19 ~16:5xZ). Lifts on his word only.",
+  "brief_ref": "docs/briefs/nfra-awsftp-custodian-sftp-direct-to-aws-brief-20261019.md@6dfe662bc1",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_AWSFTP_20261019.md",
+  "prds": [],
+  "decompositions": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": null,
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO"
+  },
+  "coo_lane": null,
+  "rulings": [
+    "ANDREW-DIRECT 2026-10-19 ~16:5xZ -- all recs approved (DONE WHEN FWD-1..10 confirmed, three qualified waits accepted; filed under D8 with NFRA added to D8's macros); status HOLD until an FTP solution exists. Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_165xZ_NFRA_AWSFTP_RECS_APPROVED_D8_REGISTERED_ON_HOLD.md"
+  ]
+}
