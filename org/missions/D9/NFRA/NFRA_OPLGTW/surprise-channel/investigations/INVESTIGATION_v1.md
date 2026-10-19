@@ -30214,3 +30214,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Producer: Lambda yang-generate-cma (infra/aws/lambda/v2_portal/yang_pipeline/cma/yang-generate-cma/), the Yang pipeline; last git writers 0.1.0_DS_MarketIntelligence, 0.5.0_AE_OpalETL and 0.7.0_AE_CloudOps. Owner: no owner field in infra/aws/lambda/ci/function-map/ and absent from comp-estate's measured chains; the lanes named are the producer source's last git writers, a pointer and not a recorded owner (claim: inferred)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T18:06:00Z",
+  "id": "NFRA_OPLGTW-Z-S420",
+  "one_line": "G1: the served opal-gateway is down for every user since ~17:30Z -- ALB target i-07dccb1615503ac99 unhealthy (Target.Timeout), POST /mcp no answer / 504; cause not established",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "describe-target-health opal-gateway-tg at 18:02:30Z: i-07dccb1615503ac99 unhealthy Target.Timeout; curl -X POST https://mcp.opalinvest.dev/mcp: no response in 20 s (18:02Z), 504 after 60.1 s (17:57Z).",
+      "CloudWatch (read by this seat's audit forks): UnHealthyHostCount 0->1 at 17:30Z; CPU ~0.4% 17:35Z-17:50Z after 8-11% earlier; ALB 5xx 1/40/23/17/13 per 5 min from 17:35Z; EC2 status checks ok.",
+      "Timing: release batch14 (6d1b5dcb64) ledger CLOSED 17:23:23Z (NRestarts 0 over its read-back); this seat's audit part 2 was calling the gateway from three forks 17:2xZ-17:5xZ, including unprojected replies of 743 KB (mdpf_get_aggregate_aua) and 585 KB (opal_discover) -- a load hypothesis, NOT verified (no journal or memory metric read).",
+      "Raised by broker 18:0xZ to 2.0.0_SA_COO~O and 1.0.0_SA_CTO~Z (DELIVERED) and 0.7.0_AE_CloudOps~Z (QUEUED, no live session)."
+    ]
+  },
+  "spec_asserts": "The served gateway answers its tools to signed-in Opal principals.",
+  "world_is": "No tool answers for anyone; MCP clients hang to their own timeout instead of failing fast. ARMED until the target reads healthy and one live call answers.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat touched nothing on the host and has stopped all audit calls. Disarm: the owner reads the journal, restores the service, and states the cause; if the cause is oversize replies, Z-S413 (P4-P7) is its fix."
+}
+```
