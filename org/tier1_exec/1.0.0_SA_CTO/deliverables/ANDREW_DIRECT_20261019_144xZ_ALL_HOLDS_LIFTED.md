@@ -19,3 +19,21 @@
   opens (ruling `RULING_COMMENTARY_GAP_TWO_CAUSES_20261017.md`). It follows that test, today.
 
 Rows d867 and 3c22 close on this record (`--ruled-by andrew`).
+
+---
+
+## ADDENDUM (~14:5xZ): his second word, through the laptop CTO
+
+`0.0.0_AB_MSTR~DELL2` msg 10732 relays Andrew at the laptop CTO terminal, VERBATIM: *"SOme of these are outdated, i already
+approved all requests and released all holds on teh DELL2 box."* Laptop record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_145xZ_DELL2_ALL_REQUESTS_APPROVED_ALL_HOLDS_RELEASED.md`
+(laptop b62e54d349; it rides box-sync and is not yet in this tree).
+
+This supersedes the "does not reach" section above for c02c.
+- **c02c is APPROVED: send the ask.** The draft
+  (`org/missions/D9/IRPT/IRPT_DASHBD/deliverables/1.0.0_SA_CTO~DELL2/DRAFT_ASK_INFLECTION_OPS_ORION_ACCOUNT_START_DATES_20261015.md`)
+  is written for Andrew to send from his own mail, to an Inflection operations contact no record names. No agent sends a
+  partner-firm request in his name. Today's count (IB2 @c438e1f1a6) is 39 of 863 reported accounts.
+- **449e is CLOSED as overtaken:** he re-ran the request at ~13:43Z.
+
+All 5 rows are now closed; the dell2 list reads open=0.
