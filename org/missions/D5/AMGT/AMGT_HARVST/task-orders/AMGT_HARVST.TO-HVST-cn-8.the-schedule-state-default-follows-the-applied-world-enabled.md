@@ -38,6 +38,9 @@ infra/aws/terraform/harvest/dossier-refresh.tf
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~184/
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round99/cn8_diff_check.py
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
+# READ ONLY, change nothing: the harvest root loads these at terraform init
+infra/aws/terraform/modules/
+infra/aws/lambda/ci/
 </paths>
 
 ## PROOF OF SPEC (each invocation LITERAL)
@@ -68,10 +71,13 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Known stale text left on purpose: the schedule resource's `description` attribute still says "(DISABLED by default)"; it is applied in AWS, and fixing it is a later in-place update under its own plan, not this cell.
 - Needs after the merge: COO addendum 4 to the `cn-7` pair (the tf bytes change; countersign by `1.0.0_SA_CTO~DELL1`) BEFORE any seat plans the root from the merged bytes for an apply; the first scheduled fire (Tue 2026-10-20 14:00Z) does not depend on this file.
 - Dry run at the base: all three criteria FAIL as expected.
+- **FIRST PASS (issuer, 2026-10-19 ~18:4xZ):** worker `~184` built the edit (`ab70f25bcf`: default ENABLED, description, header comments; AC1 PASS by output, `changed_lines=11 outside_allowed=0`) and filed `D1-W184-S1` (BLOCKING) and `S2`: AC2 and AC3 could not run because MY sparse provisioning left out `infra/aws/terraform/modules/` (the harvest root sources `../modules/yang-lambda`), so `terraform init` failed. The miss is mine (I provisioned from `<paths>` and did not census what `init` loads). Fix: the worktree now holds `infra/aws/terraform/modules/` and `infra/aws/lambda/ci/` (the function-map folder the naming gate wanted); the order's `<paths>` names both read-only; the worker is continued to re-run init, validate and both plans and to regenerate AC2 and AC3 and the proof. `S1` and `S2` are dispositioned here as an issuer miss, not a product defect. Gate limb: none graded this modification (no new order file).
+
+- **COMPLETE (issuer, 2026-10-19 ~19:0xZ):** worker `~184`, second pass; branch `wk-AMGT_HARVST-184` merged `207db2a041` (tf and checks `ab70f25bcf`, outputs `ea633b41d6`, proof `b4d8f39322` VALID rc 0). READ BY ME (not the worker's word): the tf diff is the header comment lines, the default and the description (`outside_allowed=0`); sha256 `3e068c0ee8ed1e8db6b5fe0989826f3ef9ca219a161bd3be82183bcfc41a1dc7`; I RAN the full-root no-var plan myself against the real state: `No changes.` exit 0; the worker's rollback plan `Plan: 0 to add, 1 to change, 0 to destroy.` with the schedule `state` ENABLED to DISABLED the only change; validate Success. Worker rows `D1-W184-S1` (BLOCKING) and `S2` are DISPOSITIONED here as an issuer miss (my sparse provisioning left out `infra/aws/terraform/modules/`), not a product defect; the correction was the amendment `1447f6c6f4`. The worker's readings of the gates on the tf: naming gate PASS 0 graded; risk reflex HOLD citing the CLOSED stage-1 deploy record (no bearing on a default and comment edit; nothing stranded). COO addendum 4 to the `cn-7` pair is OFFERED to the CTO (`deliverables/2.0.0_SA_COO_W1/round99/NEVER_WIDEN_HALF_COO_CN7_ADDENDUM_4_SCHEDULE_DEFAULT_ENABLED.md`). Not established: the stale `description` attribute of the schedule resource ("DISABLED by default") is left for a later in-place update under its own plan.
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>99</round>
 <workstream>SCHEDULE-DEFAULT</workstream>
 <slot>184</slot>

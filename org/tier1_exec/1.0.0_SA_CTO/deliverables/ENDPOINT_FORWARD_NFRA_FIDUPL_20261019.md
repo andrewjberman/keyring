@@ -28,8 +28,12 @@ brief names this project as the interim path ahead of the official custodian fee
 
   FWD-2  The Fidelity files arrive in the same morning window as the Schwab
          files, every day
-         DONE WHEN  EXERCISED -- the scheduled run is read on an ordinary
-                    business-day morning beside the Schwab run
+         DONE WHEN  EXERCISED -- the scheduled chain is started on demand by
+                    the same trigger the schedule uses and lands the day's files
+                    with their record; the live schedule is read and fires
+                    inside the Schwab window; one run is started on demand for a
+                    day Fidelity has not yet produced, and its record says so.
+                    The first scheduled morning is the organic case
          ACCEPT     Someone reading the morning ingestion sees Fidelity and Schwab
                     land within the same window and reads them as one routine; if
                     Fidelity has not produced its files by then, the record says so
@@ -48,8 +52,11 @@ brief names this project as the interim path ahead of the official custodian fee
          SOURCE     brief O4; Part III third test
 
   FWD-4  Every file is filed under the business date it actually contains
-         DONE WHEN  EXERCISED -- a Monday morning's files, which hold Friday's
-                    data, are read
+         DONE WHEN  EXERCISED -- a Monday export, which holds Friday's data,
+                    is pulled on demand and read (the 2026-10-19 files, holding
+                    2026-10-16, are served now); the same Friday files are
+                    pulled a second time on demand and land once. The first
+                    scheduled Monday is the organic case
          ACCEPT     Asking for a given business day returns the files whose content
                     is that day, and a weekend run that re-serves Friday's data does
                     not create a Saturday or Sunday that never traded
@@ -96,6 +103,11 @@ brief names this project as the interim path ahead of the official custodian fee
 
 - **The Wealthscape Terms of Use for automated access:** the brief marks this as Andrew's call (Part V), and it stands before any
   automated sign-in. This is an act only Andrew can do: his reading and word on Fidelity's terms.
+  **Measured 2026-10-19 18:31Z** (`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261019_NFRA_FIDUPL_WEALTHSCAPE_TERMS_OF_USE.md`
+  @e999b31f1f): the terms prohibit "agentic AI, robots, or other similar technologies" unless Fidelity approves. FWD-1's "nobody
+  signed in" and FWD-3's failed sign-in therefore rest on that act or on Fidelity's written approval. The in-terms paths the research
+  names are Fidelity's written approval, an Integration Xchange transmission, or a person's daily download; the rest of the chain
+  (schedule, landing, record, Terraform, scope) serves all three and is built regardless.
 - **Tenancy:** the export's domain is ALONGSIDE, LLC and spans several partner firms. Where it lands, and whether it is split, is an L4
   ruling under the cross-firm rule and the naming canon (brief Part IV, finding 6).
 - **Browser-driven or raw sign-in; a reused Schwab box or a new one; vault or Secrets Manager:** L4 design forks. They go to the CRO for
@@ -112,5 +124,12 @@ brief names this project as the interim path ahead of the official custodian fee
   - the project register beyond the D8 members line and NFRA_AWSFTP's row (read only to place the project).
 - **NOT YET LANDED:** this is the step-2 endpoint. The L4 PRD carries it under `ENDPOINT (step 2, /endpoint --forward)`.
 - **L2 is not complete until Andrew confirms the DONE WHEN lines** (the canonical loop: he confirms the CTO's DONE WHEN).
+
+## Amendments
+
+- **2026-10-19 ~18:4xZ (`1.0.0_SA_CTO~DELL1`):** FWD-2 and FWD-4 DONE WHEN amended in place, ids unchanged, on
+  `3.0.0_SA_CVO~DELL1`'s refusal @5c277d3352 (both read as waits). Each is now proven by an act a seat drives on demand, the organic
+  morning kept as the case it is not waiting on. The ACCEPT lines are unchanged. The Terms of Use finding is recorded under the open
+  questions.
 
 -- 1.0.0_SA_CTO~DELL1
