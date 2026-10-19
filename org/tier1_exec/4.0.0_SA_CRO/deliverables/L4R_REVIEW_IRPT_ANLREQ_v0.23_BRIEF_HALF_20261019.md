@@ -30,3 +30,12 @@ O6 -> FWD-8; O7 -> FWD-7 (unchanged). The placement and order in ADDENDUM v0.23 
 
 Note: ADDENDUM v0.23 says this half "is accepted because the CRO wrote the brief". The notifier delivered it anyway, and two
 rows now contradict the ENDPOINT, so this review grades it. The corrections are text only; nothing in the ENDPOINT changes.
+
+## Re-check at v0.24 @7b55cfefe1 (half hash 4680bc391161) -- SIGNED
+
+- Row 1 now derives the variant from the count; the report-type field is gone.
+- Row 5 states the any-firm, never-refused, unseeded bar. It is consistent with FWD-1's restated ACCEPT: the unseeded synthetic
+  staff user meets the bar, and Andrew's filing is the organic arm.
+- The midstream brief has its own table (O1 to O7, denominator 7). Each row carries content, path, guard and proof gap:
+  `_authz/served.py:1069-1111`, the READY trigger at `resident_worker.py:254`, "Technical details", and first paint.
+- No outcome, contract or surface moved beyond the text the two reviews asked for.
