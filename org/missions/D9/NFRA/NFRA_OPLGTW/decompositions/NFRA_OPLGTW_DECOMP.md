@@ -3068,3 +3068,14 @@ One chain `{OG-mg-2}`; no worker spawns (an applier act): `fanout: 0 workers of 
 | `OG-rs-1` | `systemctl restart opal-gateway` once, ledger `nfra-oplgtw-gateway-restart-20261019`, read-back of health, marker, tools/list, md5 walk and the 27-tool read | ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier | none |
 
 One chain `{OG-rs-1}`; `fanout: 0 workers of 1 chain, cap 8`. Gate limb that grades it: `to-pipeline-gate` on the newly added tree order.
+
+**R3-T.123 amendment A5 (2.0.0_SA_COO~O, round 46, ~19:3xZ, workstream ENRICH-R46-E, a fourth workstream with its own disjoint write surface): two cells, `OG-rz-1` and `OG-rz-2`, resize the gateway host to `t4g.large`.** Andrew-direct ~18:3xZ 2026-10-19 ("lets raise it to large"; record `ANDREW_DIRECT_20261019_183xZ_GATEWAY_EC2_RESIZE_TO_T4G_LARGE.md` @439343a969) relayed by `1.0.0_SA_CTO~Z` and `0.0.0_AB_MSTR~Z` msg 36070; the CTO's routing: cut it after Alyssa's 19:00Z session, off-hours, one deploy ledger, rollback to `t4g.small`.
+
+| cell | what | writes | risk | slot | class | after |
+|---|---|---|---|---|---|---|
+| `OG-rz-1` | the unit's `MemoryHigh` 1200M to 5600M and `MemoryMax` 1400M to 6400M, `test_og_un1`'s bounds to match, the contract's `target_instance_type` to `t4g.large` (three files) | 3 repo files | WORLD (gateway floor) | `~164` | worker-light | none |
+| `OG-rz-2` | `main.tf:172` `t4g.small` to `t4g.large` through `safe-apply` (in place, stop/start), THEN one release carrying `OG-rz-1`'s commit; ledger `nfra-oplgtw-gateway-resize-t4g-large`; own never-widen ask; STAGED, Phase A now, Phase B in an off-hours window on the issuer's GO | Terraform, release, ledger | WORLD | `~AE` (`~NFRA1`) | applier | `OG-rz-1` drained; Alyssa's session over |
+
+**Chains and fan-out.** One chain `OG-rz-1 -> OG-rz-2` (the release takes the worker's commit). `fanout: 1 worker of 1 chain, cap 8` (`~164`, worker-light, on the three-file cell under the 100-line floor).
+
+**Readings disclosed.** (1) The order of the acts is the safety property: the raised limits only AFTER the resize (`MemoryMax=6400M` on a 2 GiB host would invite the kernel OOM killer) and the rollback the other way round. (2) The values `5600M`/`6400M` are the issuer's: 8 GiB less about 1.6 GiB for the OS, the SSM agent and the guarded fresh-process reads, with the soft throttle 800M below the hard limit. (3) The public IPv4 of an instance without an Elastic IP changes on stop/start: Phase A reads whether it does and what in Opal's estate names it; a vendor-side allowlist is NOT CLAIMED. Gate limb that grades it: `to-pipeline-gate` on the two newly added tree orders in one commit.
