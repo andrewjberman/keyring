@@ -1,0 +1,75 @@
+{
+  "verified_at": "2026-10-19T17:45:36.924426+00:00",
+  "functions_verified": [
+    "finbert-batch-processor",
+    "news-trending-analysis",
+    "opal-news-layer3-curation",
+    "opal-trending-topics-portal-publisher"
+  ],
+  "curation_skipped": true,
+  "curation_rows_unchanged": 20,
+  "published_topics_checked": 20,
+  "payload_sha256": "484b3534795c68e7bcd24a1ddfaf7a65a53ec6bb4468c6c787cddf95089f656e",
+  "topic": "Korea Turns to Coal as LNG Crisis Deepens",
+  "topic_direction": "bearish",
+  "unique_articles": [
+    {
+      "source": "Seeking Alpha",
+      "url": "https://seekingalpha.com/article/4955100-expand-energy-stock-lng-demand-growth-takes-time?source=feed_all_articles",
+      "coverage": "headline",
+      "direction": "insufficient"
+    },
+    {
+      "source": "Oil Price",
+      "url": "https://oilprice.com/Latest-Energy-News/World-News/South-Korea-Turns-Back-to-Coal-as-LNG-Crisis-Deepens.html",
+      "coverage": "article_text",
+      "direction": "bearish"
+    },
+    {
+      "source": "Zerohedge",
+      "url": "https://www.zerohedge.com/commodities/asia-scrambles-coal-energy-crisis-sends-prices-two-year-high-ahead-winter",
+      "coverage": "article_text",
+      "direction": "bearish"
+    },
+    {
+      "source": "Nikkei Asia",
+      "url": "https://asia.nikkei.com/business/energy/coal-prices-up-40-this-year-on-lng-replacement-demand-supply-uncertainty",
+      "coverage": "headline",
+      "direction": "insufficient"
+    },
+    {
+      "source": "Oil Price",
+      "url": "https://oilprice.com/Latest-Energy-News/World-News/Super-El-Nio-Could-Ease-Asias-LNG-Supply-Concerns.html",
+      "coverage": "article_text",
+      "direction": "mixed"
+    }
+  ],
+  "python_regressions": 21,
+  "frontend_assertions": 9,
+  "live_model_cases": 8,
+  "portal_prod": "8cd45f623bdfae12ac6e4cfcfc8e0d74325ed4c3",
+  "portal_tag": "portal-v2.1.243",
+  "ci_run": 39294118121,
+  "limits": [
+    "Bounded backfill; historic feed not wholly rescored.",
+    "Nikkei and Seeking Alpha bodies inaccessible; headline-only remains uncertain.",
+    "Browser uses served production assets with captured S3 data and authentication fixture.",
+    "Curation probe before the guard repair regenerated today topics; all four calls ended before final migration."
+  ],
+  "browser": {
+    "origin": "https://opalinvest.dev",
+    "route": "/market",
+    "screenshot": ".runtime/news-sentiment-fix-20261019/served-final.png",
+    "sha256": "0285b055711c6c4bbaef6026470e1c45ed651a7d6d4821fd537e7279a942f08b",
+    "viewed": true,
+    "observed": "BEARISH; five articles; Nikkei Uncertain and Headline only"
+  },
+  "rollback": {
+    "baseline_packages_verified": 4,
+    "live_artifacts_verified": 4,
+    "journal_fields_checked": 10,
+    "data_rollback_exercised": true,
+    "code_rollback_activated": false
+  },
+  "raw_finbert_fields_unchanged": true
+}
