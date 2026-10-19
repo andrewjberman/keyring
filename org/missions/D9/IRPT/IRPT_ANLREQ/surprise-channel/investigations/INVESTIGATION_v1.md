@@ -27076,3 +27076,31 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W312-S4 -- the cell's "17 known failures at the base" in src/pages/InvestorReporting is not reproduced: the folder run in this sparse worktree has 69 non-new failures at base, and one test flips between runs
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W312-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
+    "surfaced_at": "2026-10-19T22:53:17Z",
+    "one_line": "bun test src/pages/InvestorReporting measures 69 failures at the base (excluding the four new FWD-8 tests) and 68 on the candidate, not the 17 the cell states; IVE17-AC2 fails only in the base run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-418 What to do (1): the rest of src/pages/InvestorReporting has 17 known failures at the base that are NOT yours.",
+    "world_is": "Folder run at the portal base 4f9f2f633dc0 with the base NativeSections swapped in: 1191 pass, 73 fail across 423 files (1289 tests). Folder run on the candidate c34d3ea5: 1196 pass, 68 fail, same files. The base-only set is the four new FWD-8 tests (no props at base) and IVE17-AC2 (a 35 s typecheck-style test that fails in the base run only). The candidate-only set is empty. The failing names are contract pins, the census, producer fixtures, route tables and a sparse-worktree gap; none imports NativeSections. The count is 25 tests short of the total on both runs (neither pass nor fail).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worker-local, not committed: C:/dev/wk-irpt-anlreq-312/.scratch/ir_folder_run.txt (candidate, 1196 pass, 68 fail) and .scratch/ir_folder_base.txt (base-swapped, 1191 pass, 73 fail); name lists .scratch/ir_fail_names_cand.txt and .scratch/ir_fail_names_base.txt",
+        "portal base 4f9f2f633dc0 (NativeSections.tsx swapped in from git show of that commit, then restored by sha256 match)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. Not chased: the failures sit outside this order's grant. The 17 may count failing files, not tests, or a different sparse set; the issuer may re-measure in a full checkout."
+  }
+]
+```
