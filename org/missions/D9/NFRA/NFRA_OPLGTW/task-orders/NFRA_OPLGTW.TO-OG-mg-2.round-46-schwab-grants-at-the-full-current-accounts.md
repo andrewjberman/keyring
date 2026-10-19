@@ -85,6 +85,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-mg-2.round-46-schwab-grants-at-
 - Pre-cut: `mg2.AC1` base FAIL as expected; `mg2.AC2` base FAIL as expected.
 - Open for the halves, not this seat: whether Andrew's word reaches Alyssa's grant. The CTO relays it for both (msg 36025 (a)); the ask records that quotation and the halves sign or refuse it.
 
+- A1 (issuer, 2026-10-19 ~18:3xZ): the applier's finding that `activate()` re-creates Andrew's `email_deny` record (row W3-S22; his record does not exist today, Alyssa's does) is ruled by the COO half: option (b), Alyssa's grant NOW, Andrew's HELD for a follow-on order with the deny handling. Phase B writes ONE record (Alyssa's) and writes `W/MG2_ANDREW_HELD.md`; `mg2.AC2` (amended the same turn) reads Andrew's grant revision as UNCHANGED when that file exists. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>46</round>
 <workstream>ENRICH-R46-C</workstream>
