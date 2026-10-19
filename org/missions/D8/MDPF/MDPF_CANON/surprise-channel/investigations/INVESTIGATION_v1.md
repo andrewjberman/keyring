@@ -3020,3 +3020,53 @@
   "notes": "Round 12 candidate for the CTO's analysis; no cell is cut for it this round. Owner of any remedy: the CTO (SERVED producer rule)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W34-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~34",
+  "surfaced_at": "2026-10-19T14:53:45Z",
+  "one_line": "The pre-commit risk reflex could not check the CN-s-7 diff: its danger map is STALE (91.0h old) and its build guard refused the linked worktree, so it scanned 0 of 2 files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (issuer of the slot ~34 order; routes the stale danger map and the linked-worktree build guard to the tooling owner)",
+  "spec_asserts": "TO-CN-s-7 section 5.1: commit the two code files through .tools/safe-commit.sh as one commit, the commit gate must pass.",
+  "world_is": "safe-commit.sh committed 3d3d5ed5b9 and the commit gate passed, but the printed risk-reflex line read NOT-DECIDABLE, ANSWER STATE PARTIAL_OR_BLIND, WITHIN BUDGET scanned 0 of 2 file(s). The reason printed: git-dir C:/dev/ajb_workspace/.git/worktrees/wk-canon-s7-34 differs from git-common-dir C:/dev/ajb_workspace/.git at C:\\dev\\wk-canon-s7-34.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 3d3d5ed5b9 (worktree C:/dev/wk-canon-s7-34, branch wk-MDPF_CANON-34): '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND' and '[risk-reflex] WITHIN BUDGET: scanned 0 of 2 file(s)'",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~34/ (the proof instance records the commit and its output)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the risk reflex is blind for linked worktrees on this box, so every worker commit here carries an unscanned risk check. The commit itself was not blocked."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W34-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~34",
+  "surfaced_at": "2026-10-19T14:53:45Z",
+  "one_line": "The commit gate printed client-data-check ABSENT (hashed account-id list not found), so commit 3d3d5ed5b9 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (issuer of the slot ~34 order; routes the account-id hash list to this box, which has it at C:\\Users\\Test\\.opal\\account_id_hashes.txt or OPAL_ACCOUNT_ID_HASHES)",
+  "spec_asserts": "TO-CN-s-7 section 5.1: commit through .tools/safe-commit.sh with the commit gate passing; the commit is the gate's denominator for the client-data check.",
+  "world_is": "safe-commit.sh printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).' The commit landed (3d3d5ed5b9, 2 files, 19 insertions, 24 deletions).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 3d3d5ed5b9: 'WARN: client-data-check: hashed account-id list ABSENT' followed by the commit line '[wk-MDPF_CANON-34 3d3d5ed5b9]'",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~34/ (the proof instance records the commit and its output)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: this box lacks the hashed account-id list, so commits here are not client-data checked. The diff touches two code files with synthetic test numbers and no client data; no figure was read from the six leg files."
+}
+```
