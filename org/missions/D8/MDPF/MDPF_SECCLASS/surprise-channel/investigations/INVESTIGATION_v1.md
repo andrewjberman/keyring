@@ -8888,6 +8888,75 @@ by dell1 or by this seat.
 }
 ```
 
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W106-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~106",
+  "surfaced_at": "2026-10-19T15:25:59Z",
+  "one_line": "check_r30_reads.py computes ROOT as five '..' above its own R30_CHECKS directory, which is <repo>/org, not the repo root, so S53_CAUSE.json and S48_RANGE_RECON.json are searched under org/org/missions/...; the S53 path the order names is never found and SC30-e118-AC1 cannot pass in any worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R30_CHECKS/check_r30_reads.py (ROOT = os.path.join(HERE, *(['..']*5)); CAUSE = os.path.join(ROOT, 'org', 'missions', ...)); evaluated at worktree wk-MDPF_SECCLASS-106 base bb1b988f11: ROOT = C:\\dev\\wk-secclass-106\\org; org/org absent",
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R30_CHECKS/check_r30_reads.py s53-cause -> R30-s53-cause ok=False problems=['no file at org\\\\missions\\\\D8\\\\MDPF\\\\MDPF_SECCLASS\\\\deliverables\\\\0.9.0_WK_MDPF_SECCLASS~106\\\\S53_CAUSE.json'] (rc=1, run by this seat 2026-10-19)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e118 ACCEPTANCE: R30_CHECKS/check_r30_reads.py s53-cause grades deliverables/0.9.0_WK_MDPF_SECCLASS~106/S53_CAUSE.json against deliverables/0.9.0_WK_MDPF_SECCLASS~103/S48_RANGE_RECON.json under the repo root.",
+  "world_is": "The script's repo root is one level short (<repo>/org), so both paths resolve under org/org/missions/. The worker may not edit the read-only check and may not write outside its grant, so AC1 stays FAIL for this round. The fix belongs to the script's owner (2.0.0_SA_COO~M1)."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W106-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~106",
+  "surfaced_at": "2026-10-19T15:25:59Z",
+  "one_line": "The class split of the excluded residue cannot be measured in this worktree: the producer classifier lib/etf_classifier.py loads its shared client from lib/_shared/etf_classifications_dynamodb.py, which is absent here, so C_06 classify_series cannot run and the class of the 1,883 excluded rows is unnamed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .scratch/s53_classsplit.py (worktree wk-MDPF_SECCLASS-106) -> BLOCKED: the shared ETFClassifier client (etf_classifications_dynamodb.py) is not in this file's own _shared/ directory nor on the repo path; searched data/black_diamond/scripts/gold/lib/_shared",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py _load_shared_classifier_cls (raises ImportError on the missing shared client)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e118 step 1: split the served residue by class (served class totals against the canonical holdings by class, mapped with the producer's classification) and find the class that carries the gap.",
+  "world_is": "The producer's classifier artifact is not in the worktree. The worker did not copy it into the repo or import it from the base checkout. The per-class split is therefore not measured. The class-agnostic measure (excluded mass per date, exact to the cent) is recorded in S53_CAUSE.json."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W106-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~106",
+  "surfaced_at": "2026-10-19T15:25:59Z",
+  "one_line": "The order's premise reads the 32k as a level gap; the level gap on Mon-Thu dates is about 23.5M (2026-10-05 canonical 2,034,178,999.86 vs served post 2,010,684,474.88). The 32k is the day-over-day residue: served post-minus-pre minus canonical after-minus-before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~103/S48_RANGE_RECON.json summary (residue is served delta minus canonical delta)",
+      "S3 reads by pinned version: served mix_daily_summary.json post l2Wqoi6iUJwQwwmTCu3lXWozfW4.Ak_. and canonical holdings after/before ids from S48; a gate simulation of C_06 process_date reproduces the served post totals to 4 decimals on 2026-10-05, 06, 07, 09, 10, 12 (diff 0.0000)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e118 THE CELL: the served firm TOTAL ran about $31.6k to $32.2k BELOW the canonical holdings' total on every Monday-to-Thursday date.",
+  "world_is": "On the Mon-Thu dates the served total sits about 23.5M below the canonical sum (zero on Fri and Sat). Only the day-over-day residue is 31.6k to 32.2k, and it equals minus the change in the excluded mass to the cent (2026-10-05 -32,073.9188 = -(23,494,524.98 - 23,462,451.06))."
+}
+```
+
 ## MDPF_SECCLASS-D1-S56 -- E_18's scheduled classifier has no live input, so the 14 admitted by SC-e-117 will all print "unresolved" and none will be written
 
 ```json
@@ -8935,5 +9004,30 @@ by dell1 or by this seat.
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "Validate the proof_of_spec instance BEFORE the flip with python .tools/proof-of-spec-check.py <instance> SC30-e117-AC1 (and AC2, AC3), each id as its own verdict.",
   "world_is": "The checker takes the ids as one expected set (<expected_criteria>). With one id it reports the instance two other rows as unexpected additions and exits 1, so no per-id run can exit 0 for a valid three-row instance. The worker validated with the full set and got rc=0; the three criteria are the grade."
+}
+```
+
+## MDPF_SECCLASS-D1-S57 -- C_06 drops the canonical holdings of 126 accounts that are missing from accounts_dimension: about $23.5M a day on Monday-to-Thursday dates, none on Friday to Sunday; the "$32k" of D1-S53 is the day-over-day change in that excluded mass
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S57",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-19T15:37:01Z",
+  "one_line": "Cell SC-e-118 (worker ~106, S53_CAUSE.json, drained @9ca78b1073, AC1 R30-s53-cause ok=True on main) names the step: data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py line 813 `pos = pos.dropna(subset=['relationship_id'])` drops every canonical holdings row whose account_id has no relationship_id in accounts_dimension. I recomputed 2026-10-05 from S3 (read-only; canonical holdings versions 6cZGJKLg... before and MPkQQMxb... after, accounts_dimension_latest.parquet at its current version, 11,175 accounts all with a relationship_id): 126 accounts absent from the dimension carry 1,870 rows and 23,462,451.06 before and 1,883 rows and 23,494,524.98 after, a change of +32,073.92, which equals the S48 residue of that date (-32,073.92) to the cent. Total canonical market value that day is 2,034,178,999.86 (after), so the excluded mass is about 1.2 percent. The worker found the same on 10-06 and 10-07 and zero excluded rows on 10-09 and 10-10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~106/S53_CAUSE.json (step file, line and quote verified by the checker against the repo; residues equal S48_RANGE_RECON.json)",
+      "this seat's recompute of 2026-10-05 from S3 on 2026-10-19 (python -I, boto3 reads only): excluded rows 1,870 -> 1,883, accounts 126, excluded mv 23,462,451.06 -> 23,494,524.98"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-29 analysis item 2 (msg 8326): the $32k Monday-to-Thursday gap has a named step and dates, and the cause becomes its own row.",
+  "world_is": "The step is named and it has no weekday rule: it excludes accounts with no relationship mapping. The weekday pattern comes from the INPUT: the canonical holdings carry rows for these 126 accounts (mostly blank-ticker bd positions, 1,880 of the 1,883, mostly ETFs) on Monday-to-Thursday partitions only. The premise of D1-S53 is corrected: $32k is the change in the excluded mass between two fire versions, the level is about $23.5M a day. Not read: why those accounts have no relationship_id, why their rows exist only in Monday-to-Thursday partitions (the upstream writer of those bd rows), their class split (the producer classifier client lib/_shared/etf_classifications_dynamodb.py was absent from the worker worktree, rows D1-W106-S2), and whether excluding them is intended."
 }
 ```
