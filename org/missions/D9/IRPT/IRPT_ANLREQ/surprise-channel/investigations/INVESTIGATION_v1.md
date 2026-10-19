@@ -26489,3 +26489,167 @@
   "notes": "Recorded for the CTO's read; not changed here. A second page with the old bound would meet the same slow resolve."
 }
 ```
+
+## IRPT_ANLREQ-D2-W62-S5 -- BLOCKING: a holds-only build of irpt-holdings at base 9e58503be1 ran the UPLOAD path and overwrote the live artifact object (the live Lambda is unchanged)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T07:46:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A BUILD_ONLY=1 holds-only build of irpt-holdings in a throwaway worktree at 9e58503be1 ran the upload branch: it wrote s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-holdings.zip (write VERIFIED) over the key the live package was built from. The live Lambda CodeSha256 is unchanged (SWRfUf).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-213 says nothing is uploaded, deployed or applied, and the BUILD_ONLY branch of infra/aws/lambda/ci/build-and-upload.sh (trunk HEAD ccacbb0f15, lines 687-696) builds the zip after every gate and exits before any aws call and before the source-map write.",
+  "world_is": "At base 9e58503be1 the build script has no BUILD_ONLY branch (a Grep for BUILD_ONLY in the throwaway worktree's build-and-upload.sh, 649 lines, returns no match), so the holds-only invocation ran the full path: staging, gates, 'aws s3 cp' of the zip to the key, head-object verify, source-map write. Log: .scratch/r20/tmp/ho_c1_lastdep.log ends 'write VERIFIED: size=294243, sha256 metadata match' and 'Complete -- 1 function(s) built and uploaded'. Measured after the write (read-only calls): head-object VersionId T1NEd9G.pJu3H8SlT4x0K4K7WGk8K3_O, LastModified 2026-10-13T07:42:43Z, ContentLength 294243, content-sha256 tS/APci3Mz/YRDP7pJboAVqKabShek9jYUqvQDIYwwE=. The version immediately before it (list-object-versions, prefix investor-reporting/irpt-holdings.zip) is dWoiYeH9MSXq9yOuQkApr2h_XxwrvVi8, LastModified 2026-10-12T13:51:17Z, Size 299273, which equals the live zip's byte count; its sha256 was not re-read (a download is outside the grant). get-function irpt-holdings CodeSha256 after the write: SWRfUfHdJarO2Rhbxw/KQK88DeDNorQujkaR1jUuZc0= (unchanged). The map artifact_sha256 change is in the throwaway worktree only; the product tree was not written. A later terraform plan or apply that reads the latest version of this key would deploy the new bytes. The worker made no further S3 write; restoring dWoiYe... over the key is not done by this seat (read-only grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk62-base/hold/infra/aws/lambda/ci/build-and-upload.sh at 9e58503be1: Grep BUILD_ONLY no match (throwaway worktree, read-only)",
+      ".scratch/r20/tmp/ho_c1_lastdep.log (worker scratch, log of the upload run)",
+      "aws s3api head-object and list-object-versions on opal-313476888478-lambda-artifacts investor-reporting/irpt-holdings.zip, and lambda get-function irpt-holdings CodeSha256, read by this seat at 2026-10-13T07:4xZ"
+    ]
+  },
+  "notes": "Form only; the restore decision is the issuer's. The act-4 ledger names 0.7.0_AE_CloudOps~FB1 as the rollback actor for IRPT artifact keys; the key was not restored by the worker. Cause of the BUILD_ONLY miss: see IRPT_ANLREQ-D2-W62-S6."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S6 -- BUILD_ONLY is not a universal switch: the build script at 9e58503be1 predates the branch, and the candidate-base method has no guard for it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T07:46:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The candidate-base method assumes a BUILD_ONLY-capable build script at every candidate base; the script at 9e58503be1 (the last_deployed_commit of irpt-holdings) has no BUILD_ONLY branch, so the same invocation that was safe at 6a0226dc02 and at e274a0e60c uploaded at 9e58503be1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "The order's method (BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting <fn> prints the CodeSha256 and uploads nothing) holds at each candidate base the order names.",
+  "world_is": "BUILD_ONLY lines printed and nothing uploaded at 4850c85632, 35a7cad5b9, e274a0e60c, 06557b66, 4650422c34, 69679b90e3, 5d8b0390ed, 6a0226dc02 and 1f14f0db5e (each log carries 'BUILD_ONLY:' and 'Complete (BUILD_ONLY)'). At 9e58503be1 the same invocation printed no BUILD_ONLY line and ran the upload (IRPT_ANLREQ-D2-W62-S5). The candidate list of the order (last_deployed_commit, its parent, e274a0e60c, 69679b90e3, 5d8b0390ed, then git log) has no step that checks the script carries the branch. The worker guards each later build by grepping the candidate's build script for BUILD_ONLY before the build.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk62-base/hold/infra/aws/lambda/ci/build-and-upload.sh (9e58503be1): no BUILD_ONLY match; trunk HEAD ccacbb0f15 carries the branch at lines 687-696",
+      ".scratch/r20/tmp/ds1.log, ds_c3_repin.log, yc_c5_r19base.log, ex_c3_repin.log: BUILD_ONLY lines and 'Complete (BUILD_ONLY)'"
+    ]
+  },
+  "notes": "Armed until the issuer states which candidate bases are BUILD_ONLY-capable or adds the guard to the order. Any worker that runs the order's candidate list as written can reach the upload path at a base older than the branch."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S7 -- the ycharts holds-only control does not reproduce live CodeSha256 with no patch at any of five candidates; it reproduces at 5d8b0390ed with the r19 R2 map patch
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T07:46:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "For irpt-ycharts-generate the live CodeSha256 bNPCG2Oe1oQM/ztjggmrdDbdl83CAmUEcPnBFxlj2Rk= is not reproduced by a BUILD_ONLY build of the unpatched map at any of the five candidates (last_deployed_commit 06557b66, its parent 4650422c34, e274a0e60c, 69679b90e3, 5d8b0390ed); it is reproduced at 5d8b0390ed with RELEASE_MAP_PATCH_R2.diff applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell's holds-only control is a BUILD_ONLY build that prints the live CodeSha256 with NO patch; a NOTE in the same cell says the control for this function is the trunk map at 5d8b0390ed plus the R2 patch.",
+  "world_is": "Unpatched BUILD_ONLY sha256 (base64): 06557b66 p/pwRXJd+daoVKIhRimGzlxhHHLs2E4lGsz+eZVNBns=; 4650422c34 and e274a0e60c p+17dqD9luDDeXGWiXcQvtZqh+bPmD0k9PBXFfLl/Ro=; 69679b90e3 u0YnPLPQ2E08RFAbiDHxCErVhW5NLCpz9qZ9JZ3bKHY=; 5d8b0390ed p/pwRXJd+daoVKIhRimGzlxhHHLs2E4lGsz+eZVNBns= (same as 06557b66). At 5d8b0390ed with the R2 patch (git hash-object df4d740e08c54566819a1b37942563df32f5a80e, git apply --check clean): bNPCG2Oe1oQM/ztjggmrdDbdl83CAmUEcPnBFxlj2Rk= equal to live. The worker used the NOTE's control and labels it so in the record; the no-patch control is not reproduced at the five candidates and was not searched further (a sixth candidate is out of bounds).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".scratch/r20/tmp/yc_c1_lastdep.log, yc_c2_parent.log, yc_c3_repin.log, yc_c4_flip.log, yc_c5_r19base.log, yc_c6.log (BUILD_ONLY lines)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~56/r19/RELEASE_MAP_PATCH_R2.diff at trunk HEAD ccacbb0f15 (hash-object df4d740e08c54566819a1b37942563df32f5a80e)"
+    ]
+  },
+  "notes": "Form only. The control's definition (patch or no patch) is the issuer's to state; the record names both."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S8 -- the source map's deployed_code_sha256 differs from live for four group B functions; each live CodeSha256 equals the map's artifact_sha256
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T07:46:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "At trunk HEAD ccacbb0f15, the map's deployed_code_sha256 for irpt-directory-search, irpt-export-render, irpt-holdings and irpt-49f-reporting-read-lambda is not the live CodeSha256; the live value equals each function's artifact_sha256 in the same map entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The map entry's deployed_code_sha256 is the CodeSha256 the function runs, read at the last deploy (the field the order's candidate list reads its last_deployed_commit beside).",
+  "world_is": "Map deployed_code_sha256 vs live CodeSha256 (read by this seat): directory-search IV7P2AL43cGo9VfyY2ku0zEFAhQWq9BPxge754UynM8= vs TefVhmGStCRorgQFrQFCS0lVUC+pXrWJYfdUCEExqe4=; export-render 7T29wPhzbU/FlJpeT3MNSJ5jFWcEmi7bvHiSKECkyns= vs dCzMEt04dtBAlvkj+2rZMGZaU30kY+7leZxN00dbxH8=; holdings SRANzIGzWj0cR9dl4YOuLVOECV9dt9omPQZ80uzoR5g= vs SWRfUfHdJarO2Rhbxw/KQK88DeDNorQujkaR1jUuZc0=; 49f cou/Td9ydDrn9rQPT4hfa1n04eb54VXqnWaq4+N4FTI= vs IhlTVtU9yYVskJ3PUOcoOKp1HnE2WAW5V8X31IwKkTc=. The ycharts entry agrees (bNPCG2). The directory value IV7P2AL equals the holds-only build at 4850c85632, the map's last_deployed_commit; the live directory-search and export-render packages equal their builds at e274a0e60c, not at their last_deployed_commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json at trunk HEAD ccacbb0f15, functions[<fn>].deployed_code_sha256 and artifact_sha256",
+      "lambda get-function Configuration.CodeSha256 for the five group B functions, read by this seat at 2026-10-13T03:2xZ to 07:xxZ"
+    ]
+  },
+  "notes": "Form only. Not used as evidence for any base; the bases were proved by build equality with the live CodeSha256."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S9 -- the release served.py (564e604838 bytes) fails function tests that pass with the live-pin served.py: directory-search and export-render
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T12:23:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Staged against each function's own test folder, the release served.py (sha256 30c0eb88ec38a7ddfc410e4ae1c06ee7a9e77661812ba666a45ffcf5552c2475) fails tests that pass with the live-pin served.py (74a62fb4, sha256 87d9ecc4...): directory-search 207 passed / 4 failed at the live pin, 173 passed / 10 failed and 28 errors at the release; export-render 307 passed / 6 failed at the live pin, 300 passed / 13 failed at the release.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-213 criterion AR213-y-AC1: for every function of the group the function's own tests pass against the release served.py; the release differs from live in served.py only.",
+  "world_is": "Measured in throwaway base worktrees (served.py swapped and restored): directory-search release: test_opal_context.py 6 failures (UNAVAILABLE or PARTIAL where COMPLETE was expected, KeyError 'data') and test_custody_owner.py 28 errors (KeyError 'data'); test_read_once.py 4 failures also occur at the live pin. export-render release: test_custody_writer_composed.py 7 failures (KeyError 'data', AssertionError on ok False) that do not occur at the live pin. Holdings (182 passed) and 49f reporting (21 passed) pass both ways. The status-rule tests pass 28 of 28 against the release for all five functions. Record: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~62/r20/STATUS_RULE_REBASE_GROUP_B.json (tests block). Nothing was shipped; the release packages are not uploaded. The test expectations were not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest runs in C:/dev/wk62-base/dirrel and C:/dev/wk62-base/exp, infra/aws/lambda/investor-reporting/<fn>/tests, control and release outputs under C:/dev/wk62-stage/<fn>/orig/control_run.txt and release_run.txt",
+      "infra/aws/lambda/investor-reporting/_authz/tests at trunk HEAD ccacbb0f15 (the two status-rule tests)"
+    ]
+  },
+  "notes": "Form only. Whether the release may be built with the tests moved is the issuer's call (the cell says the suites run what ships; a test edit was not made). Probably the e274a0e60c-era tests assume a served.py from before 564e604838; the record names the failing tests, not the cause."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W62-S10 -- the worker python has no fitz (PyMuPDF) or pypdf, so the ycharts and export suites cannot run here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W62-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~62",
+  "surfaced_at": "2026-10-13T12:23:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The worker's python (3.14.7) lacks the fitz (PyMuPDF) and pypdf modules: irpt-ycharts-generate's suite stops at 12 collection errors (ModuleNotFoundError fitz) with both served.py versions, and export-render's 6 live-pin failures (and 6 of its release failures) are ModuleNotFoundError pypdf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The function test folders can run in the worker environment so that AC1 reads pass or fail on served.py alone.",
+  "world_is": "pytest in ycharts/generate/tests: 12 errors, ImportError while importing test modules, ModuleNotFoundError fitz. export/tests: 'render.ValidationUnavailable: pypdf is not importable' and ModuleNotFoundError pypdf in 6 live-pin failures. These do not depend on served.py. The record keeps them as environment failures; they are counted in the release run totals.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk62-base/c4850c85 ycharts/generate/tests pytest collection output (fitz)",
+      "C:/dev/wk62-stage/irpt-export-render/orig/control_run.txt (pypdf)"
+    ]
+  },
+  "notes": "Form only. Installing packages is outside this worker's grant."
+}
+```
