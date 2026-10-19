@@ -63,7 +63,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the DEV landing half of the CTO's round-124 item 1 (msg 8560); approval msg 8562 (row `dell1-20261019T224555Z-fbb9`). Cut as `cb-3` was, WITHOUT the release, the PROMOTE and the fold-back: the CTO asked for the DEV merge only ("its DEV merge waits only on the building box's CTO"). The issuer cannot push DEV (the hook admits a DT or the integrator only). Seat `~H2` (live, IDLE); the order carries `<workstream>PROMOTE_SA</workstream>`. DEV is 140+ commits ahead of PROD; a later chosen-set promote and its fold-back are a different order and the CTO's call. The grade ON THE RUNNING PAGE is the issuer's (`AMGT-cg-6`, after the landing): the Peers tab of a name whose read failed prints `(read failed)`.
 
-<status>pending</status>
+<status>complete</status>
 <round>125</round>
 <workstream>PROMOTE_SA</workstream>
 <slot>0.4.0_DT_ClientPlatform~H2</slot>
