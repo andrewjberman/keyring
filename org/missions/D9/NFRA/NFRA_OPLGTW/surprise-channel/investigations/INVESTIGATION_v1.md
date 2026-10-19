@@ -30403,3 +30403,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The hazard (the client tools silently reading a master Andrew did not name) did not reach any release: it was caught by test_ogcl1_ac12 in the worker's tree and cured before the drain; the cured adapter is what batch15 carries."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T21:34:55Z",
+  "id": "NFRA_OPLGTW-Z-S427",
+  "one_line": "CVO note on OG-ms-2 (carried as a row naming its owner): the registry row OG-ms-1 added for master 08403355 in infra/logic/registry/scopes.json states firm 49financial; the registry's owner has not confirmed that attribution, and the gateway's own catalog notes the master has no registry row and no contract label before this release",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CVO half of OG-ms-2 (`3.0.0_SA_CVO~Z` @10dfd87598), relayed by `1.0.0_SA_CTO~Z` msg 36134: 'the 0840 registry row's firm 49financial is for the registry owner to confirm'; the CTO asked this seat to carry it as a row naming that owner.",
+      "OG-ms-1 (drained 9095ce68f3) copied the 08335338 MASTER row's shape for 08403355 with firm 49financial; app/client_adapter_schwab.py's header (read by the issuer) states the three masters 08242234, 08335338, 08403355 are ONE firm (49financial) and DATA_CATALOG.yaml lists 08403355 beside them; neither is the registry owner's confirmation.",
+      "owner named for the confirmation: `4.0.0_SA_CRO~Z`, as the compiler of infra/logic/registry/ per infra/logic/ORDER_OF_OPERATIONS.md (section B rows owned by the CRO); `1.0.0_SA_CTO~Z` may name another."
+    ]
+  },
+  "spec_asserts": "OG-ms-1: the registry row for 08403355 mirrors the 08335338 row with firm 49financial.",
+  "world_is": "The attribution rests on the adapter's own header and the catalog, not on the registry owner. It is inert: the registry row grants nothing, and OG-ms-2's grant names the master by its own key, independent of the firm. NOT CLAIMED: that the registry owner agrees (not asked until now). If the owner says another firm, the row's firm field and the batch15 staged copy app/refs/scopes.json change, which is a release, so it is cheaper to confirm before batch15's window than after.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Ask sent to 4.0.0_SA_CRO~Z to confirm or correct before the 2026-10-20 06:00Z window; the batch15 release takes scopes.json whole, so a correction before then rides it."
+}
+```
