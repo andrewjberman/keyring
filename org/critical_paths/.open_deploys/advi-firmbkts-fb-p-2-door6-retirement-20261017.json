@@ -12,40 +12,40 @@
       "kind": "verify",
       "target": "preconditions: status pending, COO half sha256 6d54f7a4.., accelerator ENABLED, backstop ENABLED cron(52 12), sentinel scan over live worktrees",
       "proof_required": "printed reads",
-      "proof": null,
-      "closed_at": null
+      "proof": "2026-10-17T14:16Z-14:20Z read: status pending (GO msg 7553 acked, issuer amendment 2); COO half sha256 6d54f7a4be2d6560bf474d2ae8f762793d42cdd7dc2bd28b4e01868c419d8bdc equals the order's; CTO half file present; mdpf-feeder-accelerator State ENABLED; mdpf-feeder-backstop-daily ENABLED cron(52 12 * * ? *) target mdpf-feeder-trigger; sentinel scan: 28 worktrees, 0 open sentinels name feeder/door6/orion-gold/inf-gold",
+      "closed_at": "20261017T141835Z"
     },
     {
       "id": "L1",
       "kind": "verify",
       "target": "B1 catch-up current date: prior VersionIds recorded, feeder-trigger invoke -> SSM Success, mdpf-gold-lambda floor re-run wrote or A7-refused, 10-13..10-16 still absent",
       "proof_required": "ssm: token + listing denominator",
-      "proof": null,
-      "closed_at": null
+      "proof": "ORGANIC, no dispatch by this order (COO amendment 3 @fe85fd1ba4): 12:52Z backstop dispatched 2026-10-17, ssm:d2809357-f7f0-41ca-a20d-751c36a9250d Success; 13:31Z floor wrote _aggregate_aua/2026-10-17.json reconciliation=PASS; all same-date versions listed in door6/CATCHUP_READS_20261017.txt; aggregate listing denominator 494, 2026-10-13..16 absent (control 10-12 and 10-17 present)",
+      "closed_at": "20261017T144955Z"
     },
     {
       "id": "L2",
       "kind": "activation",
       "target": "aws_scheduler_schedule cron(8 13) added in feeder-trigger.tf, plan add=1 change=0 destroy=0, safe-apply in window 2026-10-18T13:09Z..10-19T13:00Z, read back ENABLED",
       "proof_required": "get-schedule ENABLED + apply line",
-      "proof": null,
-      "closed_at": null
+      "proof": "safe-apply 2026-10-18T13:10:48Z-13:14:35Z (window opens 13:09:00Z): Apply complete 1 added 0 changed 0 destroyed rc=0; plan before: add=1 change=0 destroy=0 only aws_scheduler_schedule.mdpf_feeder_second_look; get-schedule mdpf-feeder-trigger-second-look-daily State ENABLED cron(8 13 * * ? *) UTC window OFF target mdpf-feeder-trigger role mdpf-feeder-scheduler-role dlq mdpf-daily-trigger-dlq no input; post-apply plan whole root: No changes; backstop ENABLED cron(52 12) and accelerator ENABLED unchanged; commit 831cb48e7c on branch fbp2-act2 (local); evidence door6/act_second_look/",
+      "closed_at": "20261018T131539Z"
     },
     {
       "id": "L3",
       "kind": "verify",
       "target": "first live fire 2026-10-19 13:08Z read in trigger log (dispatched or NOT-YET)",
       "proof_required": "log lines",
-      "proof": null,
-      "closed_at": null
+      "proof": "read by this seat 2026-10-19T14:05Z, /aws/lambda/mdpf-feeder-trigger, window 12:45Z-13:20Z (2 invocations): 13:08:25Z second-look fire OK: feeder chain dispatched, dispatched=true run_date=2026-10-19 run_stamp=20261019T130825Z ssm=c13ef26d-0760-4654-b186-ecb9404ed8ad runner i-02448edb624a7a7cf; 12:52:09Z backstop fire also dispatched ssm=5f2360d0-bad0-4eb4-8e62-295db1c7143e; NOT-YET 0",
+      "closed_at": "20261019T140900Z"
     },
     {
       "id": "L4",
       "kind": "activation",
       "target": "mdpf_feeder_accelerator state DISABLED, plan add=0 change=1 destroy=0, safe-apply, events describe-rule DISABLED, rule not deleted",
       "proof_required": "describe-rule DISABLED",
-      "proof": null,
-      "closed_at": null
+      "proof": "2026-10-19T14:07Z-14:08Z plan add=0 change=1 destroy=0 (only aws_cloudwatch_event_rule.mdpf_feeder_accelerator state ENABLED->DISABLED); safe-apply Apply complete 0 added 1 changed 0 destroyed rc=0; events describe-rule mdpf-feeder-accelerator State DISABLED; rule not deleted; backstop ENABLED cron(52 12), second-look ENABLED unchanged",
+      "closed_at": "20261019T140900Z"
     },
     {
       "id": "L5",
@@ -81,7 +81,12 @@
     }
   ],
   "log": [
-    "20261017T141805Z OPENED by 0.7.0_AE_CloudOps~FB1 with 9 leg(s)"
+    "20261017T141805Z OPENED by 0.7.0_AE_CloudOps~FB1 with 9 leg(s)",
+    "20261017T141835Z LEG L0 closed: 2026-10-17T14:16Z-14:20Z read: status pending (GO msg 7553 acked, issuer amendment 2); COO half sha256 6d54f7a4be2d6560b",
+    "20261017T144955Z LEG L1 closed: ORGANIC, no dispatch by this order (COO amendment 3 @fe85fd1ba4): 12:52Z backstop dispatched 2026-10-17, ssm:d2809357-f7",
+    "20261018T131539Z LEG L2 closed: safe-apply 2026-10-18T13:10:48Z-13:14:35Z (window opens 13:09:00Z): Apply complete 1 added 0 changed 0 destroyed rc=0; p",
+    "20261019T140900Z LEG L3 closed: read by this seat 2026-10-19T14:05Z, /aws/lambda/mdpf-feeder-trigger, window 12:45Z-13:20Z (2 invocations): 13:08:25Z se",
+    "20261019T140900Z LEG L4 closed: 2026-10-19T14:07Z-14:08Z plan add=0 change=1 destroy=0 (only aws_cloudwatch_event_rule.mdpf_feeder_accelerator state ENA"
   ],
   "last_red_at": null,
   "device": "dell1"

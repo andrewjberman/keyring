@@ -13238,6 +13238,73 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     }
     ,
     {
+        "id": "AMGT_HARVST-D1-W183-S10",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-19T13:57:00Z",
+        "one_line": "The commit path grades no CodeBuild buildspec: safe-commit printed 'commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED' for the amendment-5 fix, while the two non-string command items sat in HEAD 7eb7286960 with no commit-time grade.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "0.0.0_AB_MSTR",
+        "spec_asserts": "Order section 1E (amendment 5): the cn-5 checks never type-checked the buildspec, and AC4 closes that gap at proof time. CLAUDE.md rule 14 and the order's commit rule name the commit path (safe-commit.sh and commit-gate) as the commit-time grader of a changed file. The order names no commit-time check of a buildspec.",
+        "world_is": "The commit gate grades only .py, .sh, .tf and org/projects/*.json, and its own output says every other suffix falls through unexamined. The buildspec commit 2be65685ef therefore got no grade, so the defect class that CodeBuild refused in DOWNLOAD_SOURCE stays ungraded at commit time until a proof run (AC4) or a CodeBuild run catches it.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "safe-commit.sh output for commit 2be65685ef, run in the linked worktree C:/dev/wk-harvst-183e: '[commit-gate] WARN: commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED'",
+                "the same output's denominator line: 'This gate reads only .py / .sh / .tf / org/projects/*.json; every other suffix falls through unexamined.'",
+                "git diff 7eb7286960 2be65685ef -- infra/aws/harvest/dossier-refresh/buildspec.yml: the removed lines are the two unquoted items phases.build[2] and phases.post_build[7]"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S11",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-19T13:57:00Z",
+        "one_line": "The pre-commit risk reflex answers PARTIAL_OR_BLIND on a linked worktree ('build guard refused: linked worktree', 'scanned 0 of 1 file(s)'), and safe-commit still lands the commit.",
+        "class": "OBSERVATION",
+        "hazard_standing": "ARMED",
+        "disarm_owner": "0.0.0_AB_MSTR",
+        "spec_asserts": "CLAUDE.md rule 14b and the order's commit rule: a worker works and commits in its own linked worktree through .tools/safe-commit.sh, and the pre-commit risk reflex that runs on that path is the risk check of the diff.",
+        "world_is": "On commit 2be65685ef the reflex printed 'danger map: 89.9h old !! STALE', 'NOT-DECIDABLE ... build guard refused: linked worktree (git-dir C:/dev/ajb_workspace/.git/worktrees/wk-harvst-183e differs from git-common-dir C:/dev/ajb_workspace/.git)', 'ANSWER STATE: PARTIAL_OR_BLIND' and 'scanned 0 of 1 file(s)'. The reflex's own text says could-not-check is not checked-clean, and the commit landed with that result.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "safe-commit.sh output for commit 2be65685ef in worktree wk-AMGT_HARVST-183e: the [risk-reflex] lines, verbatim as quoted in world_is",
+                "the git-dir and git-common-dir named in the reflex line differ, which is the linked-worktree layout of this seat's worktree"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W183-S12",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+        "surfaced_at": "2026-10-19T13:57:00Z",
+        "one_line": "The proof instance's AC1 expect accepted any 10-to-19 literal count, and its compiler_tools still cited a 12-literal names run, while the order's amendment-4 AC1 expects exactly 13.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Order AC1 (criteria block, amendment 4): expect (?s)NAMES-CONTROL planted_mismatch_detected=yes.*NAMES-CHECK terraform_literals=13 builder_match=13 mismatches=0.",
+        "world_is": "The proof instance at 2be65685ef carried the AC1 expect 'terraform_literals=1 then one digit, builder_match=1 then one digit, mismatches=0', which a 12-literal run also satisfies, and a compiler_tools result of terraform_literals=12. This pass sets AC1 to the order's text and records the 13-literal run. The order is unchanged.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "proof instance at 2be65685ef, acceptance row AC1, the expect field (line 90): the one-digit pattern",
+                "order criteria block at 2be65685ef, line 76: AC1 expect with terraform_literals=13 builder_match=13 mismatches=0",
+                "proof instance at 2be65685ef, compiler_tools entry for the names check: result 'exit 0; NAMES-CONTROL planted_mismatch_detected=yes; NAMES-CHECK terraform_literals=12'"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
         "id": "AMGT_HARVST-D1-S65",
         "project": "AMGT_HARVST",
         "fabric": "dell1",
