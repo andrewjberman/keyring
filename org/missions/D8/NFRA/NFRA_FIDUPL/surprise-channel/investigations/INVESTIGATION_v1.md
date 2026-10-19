@@ -188,6 +188,28 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "FU-s-6 item 1: no public-IP requirement beyond what egress to the internet needs.",
     "world_is": "The default VPC is assumed present and is the placement for the box; the plan was refused before the VPC read could be shown, so the assumption is not measured here.",
     "notes": "A dedicated VPC or subnet is a CTO placement decision; this round uses the default VPC."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W4-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~4",
+    "surfaced_at": "2026-10-19T21:05:00Z",
+    "one_line": "The issuer amendment expects the regenerated name table to add the 08403355 master, but no scopes.json row carries 08403355, so the regenerated table adds alongside and nothing for 08403355.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -c 08403355 over infra/logic/registry/scopes.json at HEAD d88c69d12c returned 0, and over the same file at the CLOUD ref returned 0",
+        "python lib/opal_naming.py generate --out .scratch/gen --target infra/aws/terraform/modules/opal_name/generated_locals.tf wrote registry@6572bee9a8823233 and a diff against the committed table showed five added alongside lines and no removed line",
+        "infra/aws/terraform/canonical-schwab-ec2/monolith-daily-schedule.tf names 08403355 only as a locals map key and a Tax SMA label, not as a registry scope"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment 2026-10-19 item 1: regenerate generated_locals.tf and check the diff adds the alongside scope and the 08403355 master and removes nothing else.",
+    "world_is": "The registry has no 08403355 row, so no regeneration can add a 08403355 master; the regenerated table is correct for the registry as it stands and removes nothing.",
+    "notes": "FU-s-6 uses no 08403355 name, so the Fidelity root is unaffected. Whether a 08403355 scope row should exist is a registry question for its owner, not this order."
   }
 ]
 ```
