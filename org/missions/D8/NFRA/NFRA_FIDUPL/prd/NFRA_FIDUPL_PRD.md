@@ -5,10 +5,10 @@
  "project": "NFRA_FIDUPL",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/auto-fidelity-uploader-brief-20261019.md@ea34e538ae",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
  "status": "DRAFT"
 }
 ```
@@ -24,7 +24,7 @@
 - **~18:05Z,** `ANDREW_DIRECT_20261019_1805Z_AUTO_FIDELITY_TOP_PRIORITY_DELL1.md`: "this is now the highest priority project on this box".
 
 **Endpoint status:** written at L2 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_FIDUPL_20261019.md` @24f0400d63;
-FWD-2 and FWD-4 amended in place at v0.3). Andrew's
+FWD-2 and FWD-4 amended in place at v0.3; FWD-9 added at v0.4). Andrew's
 confirmation is an act on the box's open calls. This PRD goes to L4-R after he confirms; if he changes a line, ENDPOINT is re-pasted here.
 
 ## ENDPOINT (step 2, /endpoint --forward)
@@ -114,15 +114,26 @@ confirmation is an act on the box's open calls. This PRD goes to L4-R after he c
                     avoids anything the Schwab pull needs to itself
          SOURCE     brief Part II (the Schwab box is relied on and not changed);
                     Part V last item
+
+  FWD-9  Each firm's Fidelity files sit in that firm's own place, never
+         mixed with another firm's
+         DONE WHEN  EXERCISED -- one day's files are landed on demand and each
+                    firm's share is read in its own place, with any accounts
+                    no firm claims listed
+         ACCEPT     Someone opening Cottonwood's Fidelity files for a day finds only
+                    Cottonwood accounts in them, and can see which accounts, if any,
+                    could not be placed with a firm
+         SOURCE     Andrew-direct ~19:0xZ ("pulling them to the relevant bronze
+                    buckets per client"; "it is based off the G Number")
 ```
 
 ## CONTRACTS
 
 | row | owner | rule | proven by |
 |---|---|---|---|
-| C-TOU | Andrew | **No automated Wealthscape sign-in is tried before Andrew's word on the Terms of Use for automated access** (`TOU_RIA.html`, brief Part V). Read-only design and Terraform authoring may proceed. | his recorded word, cited by the first sign-in cell |
+| C-TOU | Andrew | **MET, Andrew-direct ~19:0xZ:** "We can absolutely do the automated sign in, we are authorized users of the application" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_190xZ_FIDUPL_SIGNIN_AUTHORIZED_RELAY_DELL1.md`; laptop primary 6e7a80f56f). The automated sign-in proceeds. | the record, cited by the first sign-in cell |
 | C-NAMES | `4.0.0_SA_CRO~FIDELITY` (registry rows); every cell (use) | **Every address and resource name is `lib/opal_naming.py` output** (rule 30). The Fidelity source key in `systems.json`, and its scope row(s), are added to `infra/logic/registry/` FIRST; `address("fidelity", ...)` refuses today (brief IV.5). A builder refusal is a missing row, never a hand-typed path. | `address()` and `name()` print every path and name in the Terraform and the puller |
-| C-TENANCY | `4.0.0_SA_CRO~FIDELITY` (the scope row and gate edit); every landing cell (use) | **The ALONGSIDE file set lands raw once under a FIRM-tenancy scope `alongside`** (bucket `opal-data-alongside`, built by `name()`/`address()`), never COMPOSITE (R7: the rows are identified accounts). **The same commit adds `alongside` to `_CROSS_FIRM_FOREIGN_{BUCKETS,KEY_PREFIXES}` in both directions.** No other firm's tree reads it; any split by firm is downstream. Verdict: `GOVERNANCE_VERDICT_NFRA_FIDUPL_TENANCY_20261019.md` @bc07810172. | `address("alongside", ...)` prints the landing path; `.tools/ds-precommit-check.py` cross-firm guard refuses an `alongside` path in another firm's tree |
+| C-TENANCY | `4.0.0_SA_CRO~FIDELITY` (scope rows and gate edits); every landing cell (use) | **Fidelity lands in `opal-data-assets` through the fidelity channel, never a new bucket** (Andrew-direct ~19:0xZ). Every path is `address('fidelity', <scope>, 'bronze', ...)`, and `opal-data-alongside` is not provisioned. **The split per firm runs on the G Number.** If each G number maps to one firm, that G number is a scope row under its firm and lands straight at `fidelity/<firm>/bronze`. If there is one G number, the full pull stages under the FIRM scope `alongside` (@bd84d81948) and is split afterwards on a named field, with unplaced accounts listed. The cross-firm gate covers every firm path in both directions. **Measured (`RESEARCH_20261019_NFRA_FIDUPL_G_NUMBERS.md` @14f422aa7d):** the login sees 31 G numbers, one firm each (13 map to Opal's three firms, 1 is the Alongside umbrella, 17 map to firms with no registry row); 0 of 5,007 accounts in the standard files carry one. **RULED: stage the full pull under `fidelity/alongside`** (his fallback). The first exercised sign-in captures two reads: whether the export wizard filters by G number (then one profile per Opal firm lands direct and the others are never pulled) and whether the custom `account.txt` carries a G number column (then split on it). **Andrew-direct ~19:05Z, VERBATIM: "We should land all of it so we have it ready."** (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261019_1905Z_FIDUPL_LAND_ALL_FIRMS.md` @ed9b24e509). The full pull lands, every G number included; this answers the laptop CTO's hold (msg 8483) and the CVO's question (@6b6d997e08). **RULED (home):** the accounts of the 17 non-registry G numbers stay raw under `fidelity/alongside`; a firm scope row is added only when Opal names a use for that firm. The three Opal firms are split to `fidelity/<firm>/bronze` (FWD-9). | `address()` prints every landing path; `.tools/ds-precommit-check.py` refuses a foreign firm path; FWD-9's read |
 | C-SIGNIN | the sign-in cell | **A fresh sign-in every run** (4-hour inactivity limit and about 10-hour hard limit): password, then the `OTPSMS` factor, then the code read from Quo by API for the order's digital line, then authorize. The code is single-use and never logged. The driver (browser or raw HTTP) is ruled at L4 on CRO research. | one on-demand sign-in completed with no person typing |
 | C-PULL | the pull cell | **Two calls, as Schwab's are:** the export status list (`status.json`, `iEtype=E`, the day's `dateString`), then `downloadExport.do` per file. All six v1.0.1 files: `account`, `position`, `balance`, `prices`, `security`, `transact`. | the run lists 6 and downloads 6 |
 | C-RAW | the pull cell | **Raw landing only**, bytes exactly as Fidelity served them, with a sha256 per file recorded in the run record (the archetype's raw rule). No conversion in this project. | a stored file's sha equals the record's |
@@ -151,8 +162,10 @@ confirmation is an act on the box's open calls. This PRD goes to L4-R after he c
    - **(c) Credentials in Secrets Manager:** one Wealthscape secret plus the existing `quo/api-key`, read by the box role with
      per-secret grants. There are no prefix wildcards (the `secret:schwab/*` hazard, `secrets.tf:11-13`) and secrets are never passed
      as environment variables (the Orion drift, `inf-jwt-fetch.sh:59-61`). Names come from the builder.
-   - **(d) C-TENANCY, ruled on `3.0.0_SA_CVO~DELL1`'s verdict @bc07810172:** a FIRM-tenancy scope `alongside`, bucket
-     `opal-data-alongside`, plus the cross-firm gate edit in the same commit. The COMPOSITE REC was refused under R7: the rows are
+   - **(d) C-TENANCY, ruled on `3.0.0_SA_CVO~DELL1`'s verdict @bc07810172 and then narrowed by Andrew's word at ~19:0xZ:** FIRM
+     tenancy, never COMPOSITE. The landing is in `opal-data-assets`, not the bucket `opal-data-alongside`, and the split runs per firm
+     on the G Number (C-TENANCY, FWD-9). The verdict's own text said a FIRM-tenancy scope `alongside`, bucket `opal-data-alongside`,
+     plus the cross-firm gate edit in the same commit. The COMPOSITE REC was refused under R7: the rows are
      identified accounts whose attribution is unmeasured, not absent. Relayed to `4.0.0_SA_CRO~FIDELITY` and `2.0.0_SA_COO~P1`
      (msgs 8444, 8445).
 5. **Quo, measured live by the CRO:** the read is `GET /v1/messages?phoneNumberId=<Operations line>&participants[]=<Fidelity sender>`
@@ -162,15 +175,12 @@ confirmation is an act on the box's open calls. This PRD goes to L4-R after he c
 ## OPEN AT ANDREW (acts only he can do)
 
 - **Confirm the DONE WHEN lines** (open call on dell1).
-- **His word on the Wealthscape Terms of Use for automated access (C-TOU),** before the first automated sign-in. The terms prohibit
-  robots and agentic AI unless Fidelity approves (`RESEARCH_20261019_NFRA_FIDUPL_WEALTHSCAPE_TERMS_OF_USE.md` @e999b31f1f). The
-  in-terms paths are Fidelity's written approval, an Integration Xchange transmission, or a person's daily download. Cell candidates 0,
-  2 and 3 serve all three and proceed; only candidate 1 (the automated sign-in) waits on this act.
+- **Confirm FWD-9**, added at v0.4 on his word, with the other eight (the same open call).
 
 ## CELL CANDIDATES (round 1 builds the FWD-1 thread; the issuer decomposes)
 
 0. **Prerequisite (CRO):** the Fidelity source and scope registry rows (C-NAMES).
-1. **Sign-in and OTP read** (C-SIGNIN), exercised once on demand after C-TOU. It ends with an authorized session and no person typing.
+1. **Sign-in and OTP read** (C-SIGNIN), exercised once on demand (C-TOU met). It ends with an authorized session and no person typing.
 2. **List, download and land raw, with the run record** (C-PULL, C-RAW, C-DATE, C-RECORD), driven on demand. The analyst then opens the six
    files: this is FWD-1's trace.
 3. **The Terraform root and the schedule** (C-TF, C-WINDOW, C-ISOLATION), after 1 and 2 run.
@@ -200,6 +210,15 @@ the on-demand chain run with the live schedule read (FWD-2).
 - **Repo:** this tree, the new root, the puller, and the registry rows.
 
 ## CHANGE LOG
+
+- **v0.4.3 (~19:0xZ):** Andrew-direct ~19:05Z "land all of it": the full pull lands; non-registry firms stay staged under `fidelity/alongside` (supersedes v0.4.2's hold).
+
+- **v0.4.2 (~19:0xZ):** C-TENANCY: the first pull is limited to the 14 Opal G numbers, or the full-pull landing is held for Andrew's answer on non-Opal firms (laptop CTO msg 8483).
+
+- **v0.4.1 (~19:0xZ):** C-TENANCY records the CRO's G-number measurement and rules staging under `fidelity/alongside` until the two reads land.
+
+- **v0.4 (~19:0xZ):** on Andrew's relayed word (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_190xZ_FIDUPL_SIGNIN_AUTHORIZED_RELAY_DELL1.md`): C-TOU MET, so the automated sign-in proceeds; C-TENANCY now lands in
+  `opal-data-assets` through the fidelity channel, split per firm on the G Number, with no new bucket; FWD-9 added at the next number.
 
 - **v0.3.1 (~18:5xZ):** the CVO's nit: FWD-4's dated parenthetical moved out of ENDPOINT into C-DATE; the DONE WHEN is unchanged in meaning.
 
