@@ -26653,3 +26653,80 @@
   "notes": "Form only. Installing packages is outside this worker's grant."
 }
 ```
+
+## IRPT_ANLREQ-D2-W302-S1 -- AR-g-164: the five re-pointed elements make the real map hold 14 OWN_SERIES elements; test_layout_overview.py pins 9 and fails, and that file is outside the grant
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W302-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~302",
+  "surfaced_at": "2026-10-19T16:13:01Z",
+  "one_line": "The cell re-points five overview elements to the OWN_SERIES shape, so the real overview map holds 14 OWN_SERIES elements; test_layout_overview.py pins 9 and fails (assert 14 == 9). That file is outside the cell's grant, so AC3 cannot pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "AR-g-164 AC3: the regress arm runs six existing producer and layout test files and they pass. The cell's grant (<paths>) names layout_overview.py, the overview map and test_price_pages_series.py; it does not name test_layout_overview.py.",
+  "world_is": "At commit e30ac4e52a (on c016f7e2bb plus the cell): ar_price_checks.py 164 build OK and guard OK; regress FAIL with 'test_layout_overview.py: rc=1 1 failed, 49 passed'. The failing test test_not_in_this_version_every_price_based_element_is_not_available asserts len(series) == 9 at test_layout_overview.py:754, where series = the real map's elements with computed == OWN_SERIES; the value is 14. The base passes it (nine). The other five regress files pass. compute_all selects elements by the computed key, so the count cannot stay at nine while the five elements carry the OWN_SERIES source the cell prescribes. Not edited: the file is outside the grant. The issuer must widen the grant or amend the pin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py@e30ac4e52a (lines 731-754, the pin of nine)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json@e30ac4e52a (the five source blocks now carry computed OWN_SERIES)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_price_checks.py (regress arm, TEST_FILES)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W302-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~302",
+  "surfaced_at": "2026-10-19T16:13:01Z",
+  "one_line": "With pricing off, the five re-pointed elements print the NOT_IN_THIS_VERSION page line instead of the generic 'Not available in this version.' line; their record status and reason are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-164 AC2: with pricing off every element reads exactly as at the base.",
+  "world_is": "The run record is identical to the base (status NOT_AVAILABLE, reason NOT_IN_THIS_VERSION; the guard arm passes). The printed line changes: at the base the five had no computed source, so with pricing off the layout printed OPAL_NOT_IN_VERSION_LINE ('Not available in this version.') from its outside_budget path. With the OWN_SERIES source they take the computed path and print NOT_IN_THIS_VERSION_LINE, the line the nine computed price elements already print. Measured at e30ac4e52a: a pricing-off produce renders 'Not available: not in this version of the report. Reason: NOT_IN_THIS_VERSION' for p7.e15 and p6.e21 (scratch script .scratch/html_check_164.py). The base line is read from layout_overview.py _element_html, not measured at the base.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@e30ac4e52a (_element_html, the computed path and the outside_budget path)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/price_pages_base_status.json (base record for the five at pricing off)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W302-S3 -- AR-g-165: with pricing off the four text elements print the NOT_IN_THIS_VERSION line instead of the generic line (the S2 pattern, four more elements)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W302-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~302",
+  "surfaced_at": "2026-10-19T17:29:03Z",
+  "one_line": "With pricing off, the four re-pointed text elements (p2.e07, p2.e16, p2.e03, p6.e20) print the NOT_IN_THIS_VERSION page line instead of 'Not available in this version.'; their record status and reason are unchanged. Same observation as IRPT_ANLREQ-D2-W302-S2, for the text elements.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-165 AC2: with pricing off every element reads exactly as at the base.",
+  "world_is": "The run record is identical to the base (status NOT_AVAILABLE, reason NOT_IN_THIS_VERSION; the 165 guard arm passes). The printed line changes for the four: at the base the source named a vendor call (portfolio_info or the level series' last point), so with pricing off the layout took the outside_budget path and printed 'Not available in this version.'; with the OWN_SERIES source they take the computed path and print NOT_IN_THIS_VERSION_LINE. The base line is read from layout_overview.py _element_html, not measured at the base. Measured at dbbe251592 only that the record carries NOT_IN_THIS_VERSION for the four (test_pricing_off_reads_not_in_this_version_for_the_four).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@dbbe251592 (_element_html: the computed path and the outside_budget path)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_text.py@dbbe251592 (pricing-off test for the four)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/price_pages_base_status.json (base record for the four at pricing off)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
