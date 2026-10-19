@@ -3808,6 +3808,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "DQ-t-77 item 4: daily_total_left = budgets.daily_total.value - spent_today, never below 0. No value for an absent total is stated.",
     "world_is": "The default pass applies no total when budgets.daily_total is absent (standing_drawer _usable). The sweep has no figure to subtract, so it reads daily_total_left 0 and stops NO_ALLOWANCE. No named test exercises this branch. A ruling that the sweep draws uncapped instead would reverse it."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W68-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~68",
+    "surfaced_at": "2026-10-19T20:34:15Z",
+    "one_line": "DQ-t-79 names no outcome for a sixth empty window that arrives with no room left for one health-probe cell; the build asks no probe and stops nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/standing_drawer.py@96e9daa459 _avail (lines 685-688): the cells a draw may still spend are the owed cap less the draws made, and the room less every cell spent",
+        "data/mdpf/scripts/demque/standing_drawer.py@96e9daa459 _empty_window (lines 865-880): the base stop at more than EMPTY_WINDOW_STOP_AT empties",
+        "data/mdpf/scripts/demque/standing_drawer.py (worktree, uncommitted) _health_trigger: returns with no stop when avail() < 1; no reset of ctx empty_count, so the next empty window triggers again"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-79 rule 1 and rule 2: the sixth empty window runs ONE health probe instead of stopping, and the probe's cell counts against the fire's room. No case is stated for a trigger at which the room holds no cell.",
+    "world_is": "A probe cell cannot be spent beyond the room, so with no room left at the trigger the build asks no probe, sets no stop and does not reset the empty count. The draw loop then spends nothing more on that request, and the fire ends DRAWN with no stop_reason and no health_probes entry for that trigger. The next empty window of the fire, in the same or a later request with room, triggers again (count still above 5), so the probe quota is spent per trigger. A ruling could read the no-room trigger as OUTAGE, as SPARSE-STOP, or as a reset."
   }
 ]
 ```
