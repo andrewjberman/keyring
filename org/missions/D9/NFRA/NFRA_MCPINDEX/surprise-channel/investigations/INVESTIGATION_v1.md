@@ -10083,6 +10083,48 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W59-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~59",
+    "surfaced_at": "2026-10-19T15:26:39Z",
+    "one_line": "The naming gate printed NAMING ERROR (function-map folder missing) on the TO-MX-g-2 commit and still returned rc=0; in this sparse worktree the Lambda source map is not checked out, so the naming check did not grade the staged files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at commit 3c59e5bc20d (worktree C:/tmp/wk-mcpindex-59): '[naming-gate] NAMING ERROR function-map folder missing: ...infra/aws/lambda/ci/function-map/ (nothing is graded from a copy)', then 'committed 3c59e5bc20d' and rc=0.",
+        "git cat-file -e 3c59e5bc20d:infra/aws/lambda/ci/function-map returns rc=0 (the folder is tracked at HEAD); ls -d infra/aws/lambda/ci/function-map in the worktree returns no such file; git sparse-checkout list names no infra/aws/lambda/ci entry."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MX-g-2 section 2 bound 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project; CLAUDE.md rule 30 says the commit-time naming gate refuses names. The order expects the gate to grade the staged names before the commit lands.",
+    "world_is": "The naming gate could not read its function-map source and reported that it graded nothing from a copy; safe-commit still returned rc=0 and landed commit 3c59e5bc20d (2 files, the two workflows/gateway_battery files). The fail-open path reads as a grade of the names when none was made.",
+    "notes": "Recorded, not acted on. The worker's sparse grant covers only the round22 and workflows/gateway_battery folders, so the function-map folder is out of reach for this worktree. The two committed files carry no Lambda name; the naming gate's silence on them is not a verdict. Disarm and owner: the issuer 2.0.0_SA_COO~MI decides whether the gate should refuse on an unreadable map or whether the worktree needs the folder."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W59-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~59",
+    "surfaced_at": "2026-10-19T15:31:19Z",
+    "one_line": "The order asks me to append the complete status to the task order and commit the flip, but the order file is not named in its own <paths> grant, so this worker did not flip it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_MCPINDEX.TO-MX-g-2.fwd23-coverage-gate.md <paths> block (lines 60-65): workflows/gateway_battery/index_coverage.py, workflows/gateway_battery/tests/test_index_coverage.py, org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~59/**, and INVESTIGATION_v1.md; the order file itself is not among them.",
+        "NFRA_MCPINDEX.TO-MX-g-2.fwd23-coverage-gate.md section 5 step 2 (line 86): 'Append <status>complete</status> to this order only if all three criteria PASS'; the order's status line is at line 96 and reads issued."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 5 steps 2 and 3 of the order: append the complete status to this order when the three criteria PASS, and commit that flip with the proof instance. Section 2 bound 1 and the <paths> block name the only files this worker may change.",
+    "world_is": "The three criteria PASS and the proof instance validates (rc 0), but the order file is outside the <paths> grant, so the flip is not made and the order's status line stays at issued. The flip is an edit the grant does not admit.",
+    "notes": "Not flipped and not committed; the order file was not edited. Disarm and owner: the issuer 2.0.0_SA_COO~MI decides whether to add the order path to the grant or to flip the order itself. The proof instance records the criteria result without the flip."
   }
 ]
 ```
