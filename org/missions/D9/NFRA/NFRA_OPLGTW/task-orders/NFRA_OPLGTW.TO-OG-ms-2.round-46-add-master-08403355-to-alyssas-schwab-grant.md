@@ -83,6 +83,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ms-2.round-46-add-master-084033
 - Pre-cut: `ms2.AC1` and `ms2.AC2` base FAIL as expected.
 
 <status>staged</status>
+<status>pending</status>
 <round>46</round>
 <workstream>ENRICH-R46-G</workstream>
 <slot>~AE</slot>
