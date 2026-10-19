@@ -5,7 +5,7 @@
   "fabric": "dell1",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-10-19",
   "registered_under_tree": "2026-10-19",
   "placement": "DELL1",
@@ -17,11 +17,13 @@
   ],
   "name": "The auto_fidelity uploader: the Wealthscape daily custom export (accounts, positions, balances, prices, securities, transactions) landed raw every morning in the Schwab window, signed in and OTP-read by itself via Quo, run from one Terraform root beside canonical-schwab-ec2",
   "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew-direct 2026-10-19 ~17:55Z at the 4.0.0_SA_CRO~FIDELITY terminal ('build out a terraform for auto_fidelity uploader, essentially taking the same structure we did for schwab and applying it to fidelity ... pull the relevant tables from it every morning at the same time that schwab does'). The interim path ahead of the official custodian feed (NFRA_AWSFTP, on HOLD). Landing stays raw; silver and gold for Fidelity are a later project. Every new address and name comes from lib/opal_naming.py (rule 30); the Fidelity source and scope registry rows are owed first. No alerts (moratorium): the morning run record is read, never sent.",
-  "phase": "2026-10-19 ~18:2xZ (1.0.0_SA_CTO~DELL1): L2 endpoint FWD-1..8 written; L3 registered under D8. L4 PRD waits on Andrew's confirmation of the DONE WHEN lines and his word on the Wealthscape Terms of Use for automated access.",
+  "phase": "2026-10-19 ~18:2xZ (1.0.0_SA_CTO~DELL1): HIGHEST PRIORITY on dell1 (Andrew-direct ~18:05Z). L4 PRD v0.1 DRAFT written; L4-R after Andrew confirms the endpoint; design forks (a)-(d) at CRO~FIDELITY; COO seat asked of MSTR. ~18:1xZ: L2 endpoint FWD-1..8 and L3 registered @24f0400d63.",
   "blocking": null,
   "brief_ref": "docs/briefs/auto-fidelity-uploader-brief-20261019.md@ea34e538ae",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_FIDUPL_20261019.md",
-  "prds": [],
+  "prds": [
+    "org/missions/D8/NFRA/NFRA_FIDUPL/prd/NFRA_FIDUPL_PRD.md"
+  ],
   "decompositions": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1",
@@ -30,5 +32,7 @@
     "cro": "4.0.0_SA_CRO~FIDELITY"
   },
   "coo_lane": null,
-  "rulings": []
+  "rulings": [
+    "PRIORITY -- Andrew-direct 2026-10-19 ~18:05Z: 'this is now the highest priority project on this box' (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261019_1805Z_AUTO_FIDELITY_TOP_PRIORITY_DELL1.md)."
+  ]
 }
