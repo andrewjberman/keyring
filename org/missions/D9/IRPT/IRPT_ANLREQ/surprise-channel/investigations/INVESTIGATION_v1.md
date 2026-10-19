@@ -26038,3 +26038,30 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W299-S1 -- safe-commit's client-data check was skipped for 298adde070: the account-id hash list is absent on this box
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W299-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~299",
+    "surfaced_at": "2026-10-19T16:13:59Z",
+    "one_line": "safe-commit's client-data check did not run for commit 298adde070: the hashed account-id list is absent on this box, so the commit was not checked for client account ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-408 worker face: commit with bash .tools/safe-commit.sh, which runs the commit gates on the staged paths.",
+    "world_is": "safe-commit printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). The commit (7 paths: the producer and its tests) went through; the diff, read by this worker, holds no account identifier. Not fixed: the list lives outside <paths>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for commit 298adde070 on wk-IRPT_ANLREQ-299 (the WARN line, printed in the commit call)",
+        "git show 298adde070 --stat (7 files: opal_producer.py, the new test file and five existing test files)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
