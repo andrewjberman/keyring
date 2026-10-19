@@ -1,0 +1,17 @@
+# Drive log -- 2.0.0_SA_COO~O -- NFRA_OPLGTW -- 2026-10-19 00:50Z to 03:00Z (host opal_bloomberg; box UTC reads)
+
+## Substantive ticks since the 22:30Z-23:25Z log (ticks 317 to 320)
+
+- **Seats re-seated at the CTO's ask (msg 35836):** `0.0.0_AB_MSTR~Z` (claude pid 29332), `3.0.0_SA_CVO~Z` (50220), `4.0.0_SA_CRO~Z` (14476), all registered. Cause of my earlier failed spawns: `wt.exe -w new new-tab` starts nothing from this shell and `spawn-agent.ps1` prefers it (every launch logged `pid=UNKNOWN`); with `wt.exe` off PATH the script's own `cmd start` fallback works. Two childless wrappers reaped (CVO~Z 24344, CRO~Z 38084), audited.
+- **Round 43 closed:** `round-close-check` MAY-CLOSE (reviewer `3.0.0_SA_CVO~Z` present, 12 of 12 complete, 0 BLOCKING, 3 ARMED carried); slug `L10_SLUG_ROUND43.md` @eccb028a00 sent (msg 35840); the CTO's round-43 analysis (msg 35841, `ledger/ROUND_ANALYSIS.round43.md` @d35c913755) read.
+- **Round 44 issued in ONE commit `a87e8d32b0`:** `OG-ev-10`, `OG-ev-11`, `OG-en-32`, `OG-en-33`, `OG-en-34` (my seventh cell, amendment A1), `OG-ap-46`, `OG-ap-47`; decomposition addendum `R3-T.121`; 14 check scripts in `deliverables/2.0.0_SA_COO~O/r44/checks/`, each dry-run at the base (and the green arms of the new records fed to their checkers). `fanout: 4 workers of 5 chains, cap 8`. The CVO's rule (msg 35845: the ask names process-wide state; every Phase B prints journal and lake counts) is in `OG-ap-46`'s criteria.
+- **Four workers (haiku, high) drained:** `OG-en-33` `e241000203` (`_bothorders.sh` keeps the forward text; 9 cold runs, 0 differed, NOT_REPRODUCED), `OG-en-34` `36b4466f11` (comment lines only, AST equal), `OG-en-32` `1dd9c2ddd7` (cause `test_premise`), `OG-ev-11` `d684c26956` (80 of 81 audit-write sites on the event loop: `mcp` 1.28.0 runs a sync tool body on the loop; 68643 lake keys listed over 7 days, every 6th read; rank 1: a bounded botocore timeout on the audit client). Each worker's checks re-run by me in its tree before the merge.
+- **Two issuer rulings:** `Z-S400` (the worker's BLOCKING `Z-W158-S1`: the five route tests asserted a 405 that NFRA_MCPORTAL's catch-all route `server.py:1198` (MP-z-3, `e42d2c35c3`) superseded; the application is unchanged; tests accept 404 or 405; amendment A2) and `Z-S401` (the worker's BLOCKING `Z-W157-S5`: the proof validator's count-bar limb refused my own criterion wording, "unknown on 0 site(s)" beside "29 site(s)"; amended `08da80ff93` and put on the worker's branch `61a96725e9`).
+- **Applier chase:** my GOs for `OG-ev-10` STEP 1 (msg 35852, 01:46Z) and `OG-ap-46` PHASE A (msg 35861, 02:22Z) read OFFER-EXHAUSTED: the applier `0.7.0_AE_CloudOps~NFRA1` re-armed its watcher at 02:29Z, after both arrived, and a late-started watcher does not replay the gap. Peek (the console is Active again): idle at input, "waiting on the COO". Nudged with `/unstick --keys` at ~03:00Z; the READ is awaited. The peek screen also showed an old `FREEZE TRIPWIRE` window and a `powershell.exe` "guard page for the stack cannot be created" dialog; they date from the commit-memory exhaustion and are for the operator.
+- Carried ARMED rows (mine): `Z-W94-S2`, `Z-S177`, `Z-W155-S1`. The MP ask (`admin_people_access.py`) is unanswered; `OG-ap-46` goes without that pair.
+
+## Next
+
+The applier's `OG-ev-10` STEP 1 and `OG-ap-46` Phase A (`ap46.AC1` on my run, then the three halves, then Phase B); `OG-ap-47` after `OG-ap-46` is CLOSED.
+
+Push state: LOCAL (box/sitez ahead of origin for my commits since 94b5992364; MSTR carries it).
