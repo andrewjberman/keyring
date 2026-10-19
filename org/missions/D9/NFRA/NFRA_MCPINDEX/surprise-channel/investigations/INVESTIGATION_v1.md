@@ -11559,6 +11559,27 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W76-S41",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~76",
+    "surfaced_at": "2026-10-19T18:54:46Z",
+    "one_line": "the work commit b5595abaa1 printed NAMING ERROR 'function-map folder missing' for C:/tmp/wk-mcpindex-76/infra/aws/lambda/ci/function-map/ and WARN 'client-data-check: hashed account-id list ABSENT', and the commit still returned rc=0; the same two conditions as the sibling rows NFRA_MCPINDEX-Z-W63-S1 and NFRA_MCPINDEX-Z-W63-S2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project; the face's <paths> grant does not name infra/aws/lambda/ci, and the worktree sparse list does not carry it.",
+    "world_is": "bash .tools/safe-commit.sh --author ... -F .scratch/msg_s6_work.txt -- org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~76/source_sets_m365.json org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md printed the naming-gate NAMING ERROR for the missing function-map folder and the client-data WARN (account-id list absent), then '[msg-verify] committed b5595abaa1' with rc=0. The commit-gate line read 'checked 0 of 2 file(s) -- NOTHING WAS CHECKED' (the two staged files are a JSON and a markdown file).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... -- (2 paths): rc=0; output in C:/tmp/wk-mcpindex-76/.scratch/commit_work.log lines 9, 12, 36-37, 42 (read 2026-10-19T18:40Z)",
+        "git -C C:/tmp/wk-mcpindex-76 log --oneline -1: b5595abaa1 NFRA_MCPINDEX MX-s-6 (0.9.0_WK_NFRA_MCPINDEX~76): source sets of the 43 m365 tools"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
