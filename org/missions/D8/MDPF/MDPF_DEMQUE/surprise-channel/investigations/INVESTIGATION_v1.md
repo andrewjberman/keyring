@@ -3808,6 +3808,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "DQ-t-77 item 4: daily_total_left = budgets.daily_total.value - spent_today, never below 0. No value for an absent total is stated.",
     "world_is": "The default pass applies no total when budgets.daily_total is absent (standing_drawer _usable). The sweep has no figure to subtract, so it reads daily_total_left 0 and stops NO_ALLOWANCE. No named test exercises this branch. A ruling that the sweep draws uncapped instead would reverse it."
+  },
+  {
+    "id": "MDPF_DEMQUE-Z-S10",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MDPF1",
+    "surfaced_at": "2026-10-19T20:08:00Z",
+    "one_line": "The first sweep (2026-10-19 16:00 ET) drew 606 of 2481016 cells and stopped EMPTY_OR_INCOMPLETE_RESPONSE on a 0-row window; DQ9-t78-AC2 reads FIRE-OK.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/receipt.2026-10-19.sweep.json: outcome STOPPED, stop_reason EMPTY_OR_INCOMPLETE_RESPONSE, cells_drawn 606 (57 + 3 + 546), daily_total_left 2481016, spent_today production 18984 drawer 0, 143 attempts; the last attempt is /cusip/31607A877 2019-03-29 rows 0 in MDPF_SECHIST-CARD-A-B1-OPTION-C",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R10_CHECKS/dq_t78_fire.py at 2026-10-19T20:02:49Z printed FIRE-OK rc=0",
+        "MDPF_SECHIST-CARD-A-B1-FUND-TYPE was REFUSED (/cusip/ UNVERIFIED, three probes empty); probe /cusip/662858FV6 returned 0 rows again (INCONCLUSIVE, cooled)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-78 AC2: the first sweep draws more than 0 cells, no more than daily_total_left, with no vendor-limit, refusal or PRODUCTION_SPEND_UNREAD stop. Andrew's ruling: whatever is left of the daily total is drawn.",
+    "world_is": "The criterion is met as written, and about 0.02% of the room was drawn. One empty window in a request ended the whole pass, so 2480410 cells of room stayed unspent. Whether an empty window should cool and continue rather than stop the pass is the issuer's call; nothing was changed or drawn by hand at site Z."
   }
 ]
 ```
