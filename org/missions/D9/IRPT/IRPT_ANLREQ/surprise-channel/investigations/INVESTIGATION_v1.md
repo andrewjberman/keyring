@@ -26087,3 +26087,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W302-S3 -- AR-g-165: with pricing off the four text elements print the NOT_IN_THIS_VERSION line instead of the generic line (the S2 pattern, four more elements)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W302-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~302",
+  "surfaced_at": "2026-10-19T17:29:03Z",
+  "one_line": "With pricing off, the four re-pointed text elements (p2.e07, p2.e16, p2.e03, p6.e20) print the NOT_IN_THIS_VERSION page line instead of 'Not available in this version.'; their record status and reason are unchanged. Same observation as IRPT_ANLREQ-D2-W302-S2, for the text elements.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-165 AC2: with pricing off every element reads exactly as at the base.",
+  "world_is": "The run record is identical to the base (status NOT_AVAILABLE, reason NOT_IN_THIS_VERSION; the 165 guard arm passes). The printed line changes for the four: at the base the source named a vendor call (portfolio_info or the level series' last point), so with pricing off the layout took the outside_budget path and printed 'Not available in this version.'; with the OWN_SERIES source they take the computed path and print NOT_IN_THIS_VERSION_LINE. The base line is read from layout_overview.py _element_html, not measured at the base. Measured at dbbe251592 only that the record carries NOT_IN_THIS_VERSION for the four (test_pricing_off_reads_not_in_this_version_for_the_four).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@dbbe251592 (_element_html: the computed path and the outside_budget path)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_text.py@dbbe251592 (pricing-off test for the four)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/price_pages_base_status.json (base record for the four at pricing off)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
