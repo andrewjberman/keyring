@@ -42316,3 +42316,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A third served account is gone from the candidate and not exempt, so the gate refuses; the served holdings are unchanged since 2026-10-12."
 }
 ```
+
+## IRPT_BCKEND-D2-W457-S1 -- AC2 is a differential over git HEAD and HEAD~1, so it cannot pass before the one commit: the order's pre-commit record of AC2 is a FAIL by construction
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W457-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~457",
+  "surfaced_at": "2026-10-19T14:23:51Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IBCW2-AC2 reads refresh.py from git (HEAD and HEAD~1), so before the one commit it FAILs 'byte-identical to the base' whatever the working tree holds; the order's instruction to record AC2 before the commit cannot be met as written.",
+  "spec_asserts": "TO IB-cw-2 WORKER FACE step 2: record AC1 and AC2 output in IBcw2_criteria_output.txt BEFORE the commit, and AC2 is a differential that PASSes on the changed refresh.py.",
+  "world_is": "The check at p256_cells.py ac2() runs git show HEAD:<refresh.py> and git show HEAD~1:<refresh.py> and fails when they are equal. Before the commit HEAD equals HEAD~1 for that file, so AC2 FAILs with 'refresh.py is byte-identical to the base' regardless of the edit. Measured pre-commit: AC1 PASS, AC2 FAIL, folder failing set unchanged. AC2 and AC3 can only be run after the commit lands; the pre-commit FAIL is kept verbatim in IBcw2_criteria_output.txt.",
+  "notes": "Not a worker defect and not worked around: no check was edited and no second commit was made (the order says ONE commit, never amend). The post-commit AC2 and AC3 runs are recorded separately.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r256/p256_cells.py ac2() at 1855ec7d0b reads HEAD and HEAD~1 via git show, then fails when the bytes are equal",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~457/IBcw2_criteria_output.txt: pre-commit run, IBCW2-AC2 FAIL 'refresh.py is byte-identical to the base'",
+      "folder pytest before and after the edit: 32 failed and 6 errors in both runs, identical sets (base 188 passed, after 194 passed)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W457-S2 -- the terminal rule is keyed to the command id, not to the REFRESH_DISPATCHED record that named it: a command carried on a COMPLETED record is not reached by hint (c)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W457-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~457",
+  "surfaced_at": "2026-10-19T14:23:51Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A failed command carried on a COMPLETED manifest (a fire that landed a build and handed the next one over) reaches the dispatcher through the previous manifest's delta, not through _last_dispatched, so the hint's stop in _last_dispatched would leave it raising every fire; the terminal test was placed in the dispatcher on the id instead.",
+  "spec_asserts": "TO IB-cw-2 contract 2 and hint (c): a reported failed command is terminal, and the walk that finds it stops at a REFRESH_FAILED record dated after the REFRESH_DISPATCHED record that named the command, returning (None, None).",
+  "world_is": "lambda_handler passes the previous manifest's own ssm_command_id to the dispatcher whenever no DISPATCHED record is pending (dispatch_previous = previous), and the landed path writes the id of the build it hands over into the COMPLETED manifest (refresh.py landed['ssm_command_id'], base line 921). So a failed command on a COMPLETED record re-raises on every fire even when _last_dispatched returns (None, None). The change keys the terminal test to the id in SsmBuildDispatcher.__call__, fed by _reported_failed_cids (REFRESH_FAILED records after the last completion); the DISPATCHED path is covered by the same test. Not covered by any of the six named tests (the COMPLETED-carried path is code-read only, not run); the fix is not deployed until the release order.",
+  "notes": "Live Lambda code is the base until the release order lands, so the hazard stays ARMED until then; disarm is the release, owned by the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/directory/refresh.py at 1855ec7d0b: landed ssm_command_id write near line 921; lambda_handler dispatch_previous = previous at line 1265 (before the edit)",
+      "infra/aws/lambda/investor-reporting/directory/refresh.py at the worker commit: SsmBuildDispatcher.__call__ reported_failed_cids terminal branch; lambda_handler _reported_failed_cids call before SsmBuildDispatcher(...)",
+      "tests/test_refresh_failed_command_redispatch.py: six tests pass; none drives the COMPLETED-carried path"
+    ]
+  }
+}
+```
