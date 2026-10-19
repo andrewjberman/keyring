@@ -32428,3 +32428,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not applied here: pip install into the shared interpreter is the CTO's call; recommendation sent in the drain message: install anthropic==0.84.0 (the repo's own pin) into Python 3.14, record the prior version 0.45.0 as the rollback, then one more deliberate run."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W527-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~527",
+  "surfaced_at": "2026-10-19T20:04:25Z",
+  "one_line": "The AMGT-cf-6 launcher change (py -3.12 on line 21 of run_filings.cmd) fails lib/research/llm_batch/tests/test_run.py::test_t12, which asserts the old line 'python -m lib.research.llm_batch.run filings' for every launcher key; the order does not name test_run.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:lib/research/llm_batch/tests/test_run.py at e78a163ce5, line 83: assert \"python -m lib.research.llm_batch.run %s\" % key in text, looped over tasks.TASKS",
+      "python -m pytest lib/research/llm_batch/tests on the worktree after the launcher and capture edits and before this line changed: 1 failed (test_t12), 72 passed; after the change: 73 passed, exit 0",
+      "base count of the directory at HEAD e78a163ce5, isolated from the worktree pytest.ini (export of lib and infra, pytest --rootdir=. -c /dev/null): 68 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-cf-6 Part B (a) to (c) names test_launcher_capture.py T5 as the one test holding the old command line and says change nothing else in that file; AC3 expects the directory at 73 passed with no failed.",
+  "world_is": "test_run.py test_t12 holds the same old command line for every key in tasks.TASKS, so the launcher change fails it. The worker changed that one assertion so the expected line is 'py -3.12 -m lib.research.llm_batch.run filings' for the filings key and 'python -m ...' for the others; no other assertion in test_run.py was touched.",
+  "notes": "Form only. The edit stays inside the order's surface lib/research/llm_batch/tests/ and sits in the AMGT-cf-6 commit. Whether the issuer names test_run.py in the order is the issuer's call."
+}
+```
