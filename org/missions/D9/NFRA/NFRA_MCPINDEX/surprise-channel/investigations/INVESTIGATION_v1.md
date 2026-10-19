@@ -10717,6 +10717,48 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:21:33Z",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-r-1 step 6 says 'The checks are .../round23/checks/h1.AC1.sh, .AC2.sh and .AC3.sh (they run h_check.py)'. The same order's section 4 proof_of_spec names r1.AC1.sh, r1.AC2.sh and r1.AC3.sh as the criteria of MX-r-1.",
+    "world_is": "h1.AC1-3 grade partition_windows.py (cell MX-h1: h_check.py h1_ac1, h1_ac2 and the pytest arm on test_partition_windows.py), not the routing table emitter. The r1 checks are the MX-r-1 criteria. I ran the proof's r1.AC1, r1.AC2 and r1.AC3 and did not run h1.",
+    "one_line": "Step 6 of TO-MX-r-1 names the h1 checks, which belong to another cell; the proof names the r1 checks. The worker ran the r1 checks.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 2 step 6 (line 71) names checks/h1.AC1.sh, h1.AC2.sh and h1.AC3.sh",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/checks/h_check.py@55588caa6e7 lines 88-89 (h1_ac1 grades partition windows) and line 721 (h1.AC3 pytest on test_partition_windows.py)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 4 proof_of_spec lines 93-96 name r1.AC1.sh, r1.AC2.sh and r1.AC3.sh"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:21:33Z",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-r-1 section 2 bound 1 says 'the measurer's live S3 path is written but never run by you; you test it with --fake'.",
+    "world_is": "The cell contract (section 1, ROUTING TABLE) defines the emitter flags, inputs and outputs with no measurer and no --fake option, and the section 3 grant names no measurer file. The emitter reads local files only and has no live S3 path; I wrote none and added no --fake option.",
+    "one_line": "Bound 2.1 refers to a measurer and a --fake test path that the MX-r-1 contract never specifies; no criterion needs one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 2 bound 1 (line 66) mentions the measurer and --fake",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-1.routing-table-emitter.md@55588caa6e7 section 1 contract (lines 38-50) and section 3 paths (lines 76-82) name no measurer file and no --fake flag"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
