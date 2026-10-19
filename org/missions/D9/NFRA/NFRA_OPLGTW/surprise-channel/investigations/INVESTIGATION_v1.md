@@ -29202,3 +29202,27 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Holds OG-en-32 AC1 red; the cause is recorded as real_routing_defect in W/ROUTE_404_CAUSE.json (change kind none, no product change made: app/ is not granted in this order). Not run against starlette 0.37.0 (egress NONE declared for this order); the 1.3.1 one-request run is the basis for refuting routing_library_version. The product fix needs its own cell; it is not this worker's to choose."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~158",
+  "surfaced_at": "2026-10-19T02:20:00Z",
+  "id": "NFRA_OPLGTW-Z-W158-S2",
+  "one_line": "The row schema the worker rules name, org/surprise_channel/schemas/investigation_item.schema.json, is absent in this worktree (org/surprise_channel/ does not exist); the row shape was taken from the rows already in INVESTIGATION_v1.md",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls org/surprise_channel and ls org/surprise_channel/schemas in worktree wk-NFRA_OPLGTW-158 at 45b9931c73: 'No such file or directory' for both",
+      "the row gate .tools/surprise-row-gate.py accepted NFRA_OPLGTW-Z-W158-S1 at commit 45b9931c73: '[surprise-row-gate] OK: 1 file(s), all new rows carry their step-7/step-10 fields'"
+    ]
+  },
+  "spec_asserts": "The worker rules name the row schema at org/surprise_channel/schemas/investigation_item.schema.json as the shape an investigation row must follow.",
+  "world_is": "That file is not in this tree, so the schema could not be read here. The row was written in the shape of the rows already in this file and graded by the row gate, which passed it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. Recorded so the schema location can be confirmed by the issuer; no product or gate change made here."
+}
+```
