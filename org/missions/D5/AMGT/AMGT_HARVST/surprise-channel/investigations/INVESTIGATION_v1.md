@@ -13236,5 +13236,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S65",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+        "surfaced_at": "2026-10-19T13:40:52Z",
+        "one_line": "HVST-cn-7 stage 2 STOP: the CodeBuild build FAILED in DOWNLOAD_SOURCE with YAML_FILE_ERROR because buildspec.yml has two unquoted list items containing a colon and a space; no image was built.",
+        "class": "BLOCKING",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO HVST-cn-7 section 2 stage 2: build-image.sh --go starts the CodeBuild build and polls to a TERMINAL status; the build's SMOKE step must have passed in the build log; the digest and size are read by two routes. Section 3: a build that fails is a STOP.",
+        "world_is": "Build amgt-dossier-refresh-build:a8b1605f-e707-4c69-81f8-945ac366a6eb, started 2026-10-19T13:37:36Z from the source zip cut at e2bd0ba104 (767 entries, equal to HEAD), reached FAILED at 13:37:46Z in phase DOWNLOAD_SOURCE: YAML_FILE_ERROR, 'Expected Commands[7] to be of string type: found subkeys instead at line 43, value of the key tag on line 42 might be empty'. PyYAML on infra/aws/harvest/dossier-refresh/buildspec.yml at the pin finds two non-string commands: phases.build[2] ('echo \"SMOKE: the Fargate ...') and phases.post_build[7] ('echo \"Push complete: ${REPO_URI}@${DIGEST} ...'), each a plain scalar with a colon-space that YAML reads as a mapping. No Docker step ran: ECR repository amgt-dossier-refresh-repo holds 0 images, no smoke step, no digest. The source zip (4032386 bytes, VersionId CEDJquKeV6S7d98aoOBHfjm_T828Qywb) was uploaded to s3://opal-313476888478-lambda-artifacts/harvest/build-source/dossier-refresh-source.zip and stays. Nothing retried, nothing deleted, the recipe not edited. The remedy is a recipe edit (quote or reword the two echo lines), a new cell of the issuer's under the order.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round99/cn7/cn7_s2.out (the build-image.sh transcript, the batch-get-builds phase read with the YAML_FILE_ERROR message, the CodeBuild log lines, the PyYAML read of the pinned buildspec naming the two commands, the ECR image count 0, the live ECS family sweep)",
+                "infra/aws/harvest/dossier-refresh/buildspec.yml at e2bd0ba104, phases.build[2] and phases.post_build[7]"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

@@ -25862,3 +25862,123 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S211 -- no deleter exists for retained original-holdings objects; each synthetic upload leaves one blob
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S211",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-19T13:03:56Z",
+  "one_line": "The application has no deleter for retained original-holdings objects: no code path, no delete grant and no lifecycle rule on the reporting bucket, so every synthetic run that reaches the upload leaves one standing blob (the second run left a 118-byte one).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "The e2e pair's rule (CTO half, Andrew's 2026-10-16 word): a synthetic run deletes the objects it created, each by its recorded key.",
+  "world_is": "MEASURED (worker 295, TO-AR-y-402, merged 7c9cb7f23b; issuer re-ran both criteria, 5 and 5, and read the W lines): W2 no delete_object, delete_objects or version delete in the investor-reporting code (614 of 614 .py files read), retention is logical only (reports/retention.py:1); W3 no s3:DeleteObject or s3:DeleteObjectVersion grant on the reporting bucket or the irpt/ prefix in the 615 .tf files read at HEAD (105 on disk, 510 by git grep), and no lifecycle configuration names the bucket (core/reporting_storage.tf:2, :26-31); W5 a synthetic blob is a standing leftover. W4 an identical re-post of the same token reaches the same ART- key (uploads.py:371, repository.py:390-395), but a new run mints a new principal and token, so it lands on a new key. NOT READ: the live bucket policy and any lifecycle rule applied outside Terraform; each cited line was not re-read by the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md (W2, W3, W4, W5)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e2/LEFTOVER.txt (the second run's AccessDenied)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S212 -- IRPT_ANLREQ-D2-W113-S2 disarmed: the release-21 pair is void against the live start state
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S212",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-19T13:28:21Z",
+  "one_line": "W113-S2 DISARMED: the release-21 pair's start digest no longer matches the live irpt-ycharts-generate, and the pair's R0b aborts on any other digest; no apply of it is open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W113-S2"
+  ],
+  "spec_asserts": "Row W113-S2: the release-21 pair step R0b expects CodeSha256 hpNfkhLt... and S3 latest version ennO07to..., otherwise ABORT; the live Lambda had been redeployed after the R0b read, so R0b would ABORT.",
+  "world_is": "MEASURED 2026-10-19 ~13:4xZ by this seat, read-only: get-function-configuration irpt-ycharts-generate reads CodeSha256 kxOEgpbspky10PYWQ28y0+7V2UXG28whJ2riMa4CkTE=, LastModified 2026-10-16T02:39:04Z, which equals neither the pair's R0b start digest (hpNfkhLt...) nor the digest the earlier row measured (xP47NQDn...). The pair's section 5 step R0b ABORTS on any other start digest, so an apply of release 21 on this pair cannot proceed. Ledger directory read by name: no change-management entry for a release-21 apply of this pair (the only 'r21' files are other projects' ledgers). NOT READ: the S3 latest VersionId of the key today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release21/NEVER_WIDEN_PAIR_ANLREQ_RELEASE21_READER_R193_TWO_LEG.md",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ANLREQ_RELEASE21_READER_R193_TWO_LEG_CTO_HALF.md (exists; a signed half does not make the pair appliable against a changed start state)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/task_orders/IRPT_ANLREQ.TO-RUN-COMMENTARY-E2E-3.fresh-synthetic-commentary-end-to-end-resolving-repost-ib2.md (R0 records the live digest kxOEgpb... as the start state of the current runs)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard is applying release 21 on a start state the pair no longer describes; the pair's own R0b aborts on the live digest, no apply of it is open, and any future release of the reader needs a fresh pair read against the then-live bytes."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S213 -- IRPT_ANLREQ-D2-W113-S3 disarmed: the release-21 pair is void against the live start state
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S213",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-19T13:28:21Z",
+  "one_line": "W113-S3 DISARMED: the release-21 pair's premises (uploads.py unchanged, matrix covers the reader only) do not hold on trunk, and the pair cannot be applied while its R0b aborts; a new pair would re-read the then-live bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W113-S3"
+  ],
+  "spec_asserts": "Row W113-S3: the pair's section 1 says intake/uploads.py stays 176682cb and the AR-y-226 matrix covers the reader with uploads unchanged; on trunk uploads.py is 80ace2d376 and portfolio.py d1232a1255, and the resident root pin blobs differ from those the pair says it holds.",
+  "world_is": "MEASURED 2026-10-19 ~13:4xZ by this seat, read-only: get-function-configuration irpt-ycharts-generate reads CodeSha256 kxOEgpbspky10PYWQ28y0+7V2UXG28whJ2riMa4CkTE=, LastModified 2026-10-16T02:39:04Z, which equals neither the pair's R0b start digest (hpNfkhLt...) nor the digest the earlier row measured (xP47NQDn...). The pair's section 5 step R0b ABORTS on any other start digest, so an apply of release 21 on this pair cannot proceed. Ledger directory read by name: no change-management entry for a release-21 apply of this pair (the only 'r21' files are other projects' ledgers). The row's own measurements (uploads.py 80ace2d376 on trunk 0d83fda956) stand and are the reason the pair is void rather than appliable. NOT READ: the running resident bytes (the root name ends -r19; the resident is now r34k per IB2's reads, so the old premise about its bytes is overtaken).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release21/NEVER_WIDEN_PAIR_ANLREQ_RELEASE21_READER_R193_TWO_LEG.md",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ANLREQ_RELEASE21_READER_R193_TWO_LEG_CTO_HALF.md (exists; a signed half does not make the pair appliable against a changed start state)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/task_orders/IRPT_ANLREQ.TO-RUN-COMMENTARY-E2E-3.fresh-synthetic-commentary-end-to-end-resolving-repost-ib2.md (R0 records the live digest kxOEgpb... as the start state of the current runs)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard is applying release 21 on a start state the pair no longer describes; the pair's own R0b aborts on the live digest, no apply of it is open, and any future release of the reader needs a fresh pair read against the then-live bytes."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W169-S1 -- AR-y-377 step 1: no existing portal read returns a firm's advisors with their email, so the advisor_email picker build is STOPPED
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W169-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~169",
+  "surfaced_at": "2026-10-16T21:21:00Z",
+  "one_line": "AR-y-377 step 1: no existing portal read at origin/DEV fcbf2bce returns a firm's advisors WITH their email. The build is stopped: no picker, no advisor_email member, no test file, no candidate branch. The issuer needs a backend cell that serves a firm's advisor directory with email before the portal cell can run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-377 step 1 (WORKER FACE): in portal origin/DEV find which existing directory read returns a firm's advisors WITH their email; if none exists, STOP the build, file a BLOCKING surprise row naming exactly what you searched, and report; do not invent a route and do not make the email free text.",
+  "world_is": "No such read exists at origin/DEV fcbf2bce. The Investor Reporting directory reads (directory-search, directory-browse, resolve-scope) return DirectoryEntry rows keyed to firm, client, relationship and account, with no advisor or email member. The Ticket Center firm chooser returns firms only. The advisor input is a typed name. The only email read on the Investor Reporting page is the signed-in user's own address. The on-behalf upload therefore has no advisor_email source in the portal. The searched paths, line numbers and negative-search counts are in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~169/r43/ADVISOR_DIRECTORY_READ.json at the commit that files this row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@fcbf2bce src/pages/InvestorReporting/contracts/wire/DirectoryEntry.ts lines 12-19: ids carries firm_id, client_id, relationship_id, account_ids; no advisor or email member",
+      "portal@fcbf2bce src/api/endpoints/investor-reporting.ts lines 1242-1289: searchDirectory, browseDirectory and resolveScope return DirectoryEntry, DirectoryBrowsePage and ResolvedScope only; grep email in this file returns 0 hits",
+      "portal@fcbf2bce src/pages/InvestorReporting/contracts (native Grep for email, advisors, partners): 0 hits; directory-browse.ts lines 29-71 admit only the closed DirectoryEntry key set",
+      "portal@fcbf2bce src/pages/TicketCenter/TicketCenter.tsx lines 104-121 loadAllowedFirms returns firms as {id, label} only; src/pages/TicketCenter/analysisRequest.ts line 372 calls uploadAnalysisInput(input.upload, input.answers.firm) with no advisor argument",
+      "portal@fcbf2bce src/api/endpoints/advisor-intelligence.ts reads platinum/advisors return advisor_id and advisor_name only (0 email hits); trade-submission.ts TradeUser is the trade-approval user record, not a firm directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
