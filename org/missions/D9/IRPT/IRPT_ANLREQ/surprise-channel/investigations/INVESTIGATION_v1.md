@@ -26989,3 +26989,33 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W311-S1 -- the sparse worktree does not carry data/firm_registry.json, so the ordered pytest run errors at fixture setup in 25 of 32 tests until IRPT_FIRM_REGISTRY points at the base checkout's byte-identical copy
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W311-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~311",
+    "surfaced_at": "2026-10-19T22:23:31Z",
+    "one_line": "The worktree C:/dev/wk-irpt-anlreq-311 is a sparse checkout (core.sparseCheckout=true; the sparse list carries .tools, docs, infra/aws/lambda, infra/logic, lib, but not data/), so data/firm_registry.json is skip-worktree and absent on disk. The ordered run of test_ready_signal.py, test_ready_signal_commentary_gate.py and test_commentary_requested_member.py then gives 7 passed, 25 errors (rc=1): every fixture-based test errors at setup with ids.IdRefused 'the firm registry was not found ... Looked at 9 path(s)'. Setting IRPT_FIRM_REGISTRY=/c/dev/ajb_workspace/data/firm_registry.json (read only, outside the worktree) gives 32 passed (rc=0).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-417 WORKER FACE: run the three baseline files from infra/aws/lambda/investor-reporting/ with the stated invocation; AC1 expects '5 passed' for the new file and AC2 expects '^[0-9]+ passed' for the three baseline files, with no fixture setup errors implied by the order.",
+    "world_is": "In this worktree the default run is '7 passed, 25 errors in 4.48s' (rc=1), and the registry is not on disk. The registry blob at HEAD (cdb9f785e043cd69e451c545dc384e598431b263, 5326 bytes) equals git hash-object of the base checkout's data/firm_registry.json, so the pointer reads the same bytes the commit carries. With the pointer the baseline is '32 passed, 21 subtests passed in 16.72s' (rc=0). The worker did not copy the file into the worktree, did not run git sparse-checkout, and did not change the sparse set.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/dev/wk-irpt-anlreq-311 config --get core.sparseCheckout -> true; git sparse-checkout list omits data; git ls-files -v -- data/firm_registry.json -> 'S' (skip-worktree); ls data -> no such file",
+        "run at C:/dev/wk-irpt-anlreq-311/infra/aws/lambda/investor-reporting: python -m pytest ycharts/generate/tests/test_ready_signal.py ycharts/generate/tests/test_ready_signal_commentary_gate.py ycharts/generate/tests/test_commentary_requested_member.py -q --color=no -p no:cacheprovider -> '7 passed, 25 errors in 4.48s'; E ids.IdRefused: the firm registry was not found ... Looked at 9 path(s).",
+        "same run with IRPT_FIRM_REGISTRY=/c/dev/ajb_workspace/data/firm_registry.json -> '32 passed, 21 subtests passed in 16.72s', rc=0",
+        "git hash-object /c/dev/ajb_workspace/data/firm_registry.json -> cdb9f785e043cd69e451c545dc384e598431b263 = git rev-parse HEAD:data/firm_registry.json (992923c429f)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Blocking for the literal invocation, not for the cell: the test harness needs the committed registry and the sparse set omits data/. The env pointer is a documented test-only workaround; the cell's change does not touch the registry. The issuer or the lane owner chooses whether data/ joins the sparse set. Recorded per the surprise rule; the worker did not widen its own sparse set."
+  }
+]
+```
