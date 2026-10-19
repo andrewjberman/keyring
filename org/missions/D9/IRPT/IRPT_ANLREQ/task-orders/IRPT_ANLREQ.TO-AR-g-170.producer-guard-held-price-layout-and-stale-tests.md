@@ -28,6 +28,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~308`.
 
 ### THE CELL (`AR-g-170`, inlined)
 
+**AMENDMENT 1 (issuer, 2026-10-19, on worker ~308's BLOCKING row IRPT_ANLREQ-D2-W308-S1; gate limb: none graded, an in-decomposition provisioning fix):** the first seating found the sparse worktree short of directories the tests import, so no code was written and the first proof record reads BLOCKED. The issuer widened the sparse set (`infra/aws/lambda/investor-reporting`, `infra/aws/lambda/v2_portal/_shared`, the YCDGEN maps folder) and re-ran the base from the worktree: AC1 FAIL (no tests ran), AC2 FAIL (8 failed, 24 passed), AC3 PASS (146 passed). Inherited state: commits 44afdd5d89 (the row) and bb0408b656 (the BLOCKED proof record) are on the branch; overwrite the proof instance with the real result and leave the row as it is. Do not run `git sparse-checkout` yourself.
+
 Directory for every file below: `infra/aws/lambda/investor-reporting/ycharts/research/` (`TESTS` = its `tests/` folder).
 
 **Part A: the guard (`opal_producer.py`).** The producer imports the layout as `lo`. Three reads assume the layout carries the AR-g-166 price pages: `lo.PRICE_TABLE` in `_price_table_element` (about line 112) and in `_opal_map` (about line 130), and the keyword `prices=prices` in the two `lo.compute_all(...)` calls (about lines 428 and 513). A layout built before AR-g-163..166 has no `PRICE_TABLE` and its `compute_all` takes no `prices` keyword, so the producer raises at report time. Make the producer work against such a layout WITHOUT changing a byte of behaviour against the current layout:
