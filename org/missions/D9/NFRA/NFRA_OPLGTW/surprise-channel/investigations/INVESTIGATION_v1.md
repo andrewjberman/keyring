@@ -29276,3 +29276,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. Recorded so the schema location can be confirmed by the issuer; no product or gate change made here."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T02:32:33Z",
+  "id": "NFRA_OPLGTW-Z-S400",
+  "one_line": "Round-44 ruling on the worker's BLOCKING row Z-W158-S1 (OG-en-32: the five route tests answer 404 where they expect 405 because the MP-z-3 catch-all route takes every method): the catch-all is intended; the cause class is test_premise; the tests are updated to accept a refusal of 404 or 405; the application is not changed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W158-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/server.py:1198 Route('/{path:path}', dashboard_deep_link, methods=[GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS]) is the last route, added by NFRA_MCPORTAL cell MP-z-3 (row Z-S41, commit e42d2c35c3, 2026-10-13); dashboard_deep_link (server.py:336-358) answers a plain 404 for any non-GET/HEAD request and for any path not in the bundle's routes.json, so a method a route does not allow reaches it and is refused with 404 instead of Starlette's 405",
+      "the worker's measurement (starlette 1.3.1 installed): a bare Route answers 405 for an unsupported method; with the catch-all, the hx and transcript routes answer 404; the five tests assert 405",
+      "after the test update the five cases pass together (en32.AC1: 5 of 5), the change touches only tests/test_transcript_route.py, tests/test_teams_route.py and tests/test_mail_route.py (en32.AC3: 0 files outside), and the only assertion changed per case is the refusal status, now in (404, 405); the cases' other assertions (handler not run, body not served, allowlist refuses the neighbours) are unchanged"
+    ]
+  },
+  "spec_asserts": "A method a route does not allow is refused and the handler does not run (the tests' property); the status the tests named was 405.",
+  "world_is": "Since 2026-10-13 the gateway answers 404, not 405, to an unsupported method on a path the catch-all matches. The refusal still refuses (fail closed), so the property holds; only the status differs, by the design of MP-z-3. The tests' premise of 405 was superseded by that cell, so the cause is test_premise, not a routing defect, and no application change is made or needed. A client that distinguishes 404 from 405 on these paths would see the change; no such client is known here.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The worker's finding is true and the catch-all is intended (NFRA_MCPORTAL MP-z-3); the property the tests name holds with a 404, so the repair is to the tests only."
+}
+```
