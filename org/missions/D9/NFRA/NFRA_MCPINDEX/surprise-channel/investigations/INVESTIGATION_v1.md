@@ -10717,6 +10717,235 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_get_allocation: the census links three smartx rows that no smartx function reads, and omits the schwab, orion and smartx-positions reads the code does make.",
+    "spec_asserts": "Census tools[client_get_allocation].indexes (round22 GATEWAY_SURFACE_CENSUS_20261019_v2.json) links 14 rows, including opal_data_assets_silver_smartx_fact_model_aum_daily, _fact_model_changerequests and _fact_model_performance.",
+    "world_is": "app/client_adapter_smartx.py:40-44 defines five table constants (roster, account map, allocation positions, allocation valuation, model holdings); get_allocation (:334-389) reads only roster, map, positions and fact_model_holdings, so the three linked smartx rows are not read. Read by get_allocation but not linked: schwab dim_position and dim_balance for 08242234, 08335338 and 08403355 (app/client_adapter_schwab.py:223-233 via _account_view, called from get_allocation at :294); orion fact_positions (app/client_adapter_orion.py:329-331 via _account_rows); smartx fact_allocation_positions (app/client_adapter_smartx.py:334-389).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_smartx.py:40-44 and :334-389 (2026-10-19)",
+        "Read app/client_adapter_schwab.py:223-233 and :294 (2026-10-19)",
+        "Census tools[client_get_allocation].indexes, 14 entries (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_get_fees: the census links a fee-schedule row that the adapter's own docstring says it never reads, and omits the two fee-branch reads of transaction tables.",
+    "spec_asserts": "Census tools[client_get_fees].indexes links blackdiamond_live_fees and opal_data_assets_silver_49f_dim_advisor_fee_role (2 rows).",
+    "world_is": "app/client_adapter_bd49f.py:704-705 (docstring): dim_advisor_fee_role is a fee schedule, never read here; get_fees reads only the live fees table (:712). Not linked: cottonwood fact_transactions, read by app/client_adapter_bdcottonwood.py:321-327 (TABLE_TXN in _window_rows with fee_only=True, called from get_fees at :385-414); orion fact_transactions, read by app/client_adapter_orion.py:193-200 (_tx_rows, called from get_fees at :358-372).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_bd49f.py:704-712 (2026-10-19)",
+        "Read app/client_adapter_bdcottonwood.py:321-327 and :385-414 (2026-10-19)",
+        "Read app/client_adapter_orion.py:193-200 and :358-372 (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_get_holdings: three read surfaces the code takes are missing from the census link list (cottonwood fact_allocations, smartx roster and account map).",
+    "spec_asserts": "Census tools[client_get_holdings].indexes links 13 rows.",
+    "world_is": "app/client_adapter_bdcottonwood.py:265-275 reads fact_allocations (p_a, TABLE_ALLOC) as well as fact_holdings. app/client_adapter_smartx.py:293-294 calls _firm_allocations (fact_model_allocation_roster) and _account_map (fact_allocation_account_map) before the positions read. Neither smartx table and not the cottonwood allocations table is linked to client_get_holdings. The other 13 linked rows are read by the trace.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_bdcottonwood.py:265-275 (2026-10-19)",
+        "Read app/client_adapter_smartx.py:127-151 and :286-294 (2026-10-19)",
+        "Census tools[client_get_holdings].indexes, 13 entries (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_get_transactions: the schwab account-index scan reads three dim_position tables that the census does not link.",
+    "spec_asserts": "Census tools[client_get_transactions].indexes links 7 rows: blackdiamond_live_transactions, commonwealth_cottonwood_transactions, cottonwood_fact_transactions, orion_inflection_fact_transactions and the three schwab dim_transaction rows.",
+    "world_is": "app/client_adapter_schwab.py:325 calls _index, which reads dim_position of every master in ctx.firm_segments (app/client_adapter_schwab.py:166-183, read at :183) before the entry master's dim_transaction (:329). The three schwab dim_position rows are read but not linked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_schwab.py:166-183 and :319-340 (2026-10-19)",
+        "Census tools[client_get_transactions].indexes, 7 entries (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "client_resolve_account: four linked rows are not read (one commonwealth row, three schwab fact_acc rows) and four resolve reads are not linked, one of them an eclipse branch that reads the Orion table.",
+    "spec_asserts": "Census tools[client_resolve_account].indexes links 7 rows, including opal_data_assets_silver_commonwealth_cottonwood_account_links and the three schwab fact_acc rows.",
+    "world_is": "app/client_adapter_commonwealth.py:120 and :165 read crosswalk only; no commonwealth function reads account_links. app/client_adapter_schwab.py:275-281 refuses no_resolve_source with zero reads. Read but not linked: orion fact_positions (app/client_adapter_orion.py:222-229); the eclipse module's resolve reads the Orion table (app/client_adapter_eclipse.py:146-151, ORION constant at :23); cottonwood fact_allocations (app/client_adapter_bdcottonwood.py:206-216); smartx fact_model_allocation_roster (app/client_adapter_smartx.py:244-252).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_adapter_commonwealth.py:120 and :165 (2026-10-19)",
+        "Read app/client_adapter_schwab.py:275-281 (2026-10-19)",
+        "Read app/client_adapter_eclipse.py:23 and :146-151 (2026-10-19)",
+        "Census tools[client_resolve_account].indexes, 7 entries (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "schwab_get_access: the members.yaml bucket_source names a deploy/ path that is absent from this checkout, and the tool reads the four contract datasets while its links name none.",
+    "spec_asserts": "members.yaml (schwab_get_access): bucket_source deploy/NFRA_OPLGTW_CONTRACT.json:301 in opal-data-assets; census links none.",
+    "world_is": "The named path is not in this checkout (no deploy/ directory). The gateway loads org/standards/NFRA_OPLGTW_CONTRACT.json (app/integrations/schwab/catalog.py:87-88); its line 301 is the source_bucket key with value opal-data-assets, read at catalog.py:224. The value agrees, the path does not. The trace: get_access calls _availability for every master and dataset (app/integrations/schwab/integration.py:431-445 and :282-292), which reads the snapshot and verifies the contract data_prefixes (catalog.py:901, :806-849) under the two completion prefixes and eight data prefixes. Links none under-states it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/integrations/schwab/catalog.py:87-88 and :224 (2026-10-19)",
+        "Read org/standards/NFRA_OPLGTW_CONTRACT.json:301 (2026-10-19)",
+        "Read app/integrations/schwab/integration.py:282-292 and :431-445 (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "schwab_list_files: linked to one dataset row, the code reads the snapshot that verifies all four contract datasets of the master.",
+    "spec_asserts": "Census tools[schwab_list_files].indexes links schwab_dim_asset only.",
+    "world_is": "app/integrations/schwab/integration.py:484 calls _availability for the requested master and dataset (:282-292), which reads the snapshot for the master and date; catalog.py:806-849 verifies the master's contract data_prefixes (:847-849). The four dataset rows (dim_asset, dim_balance, dim_position, dim_transaction) are read for any dataset argument; the link names one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/integrations/schwab/integration.py:282-292 and :484 (2026-10-19)",
+        "Read app/integrations/schwab/catalog.py:806-849 (2026-10-19)",
+        "Census tools[schwab_list_files].indexes (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "schwab_describe_dataset: linked to four silver dataset rows, the code reads no S3 object and describes the integration's own in-code schema.",
+    "spec_asserts": "Census tools[schwab_describe_dataset].indexes links schwab_dim_asset, schwab_dim_balance, schwab_dim_position and schwab_dim_transaction.",
+    "world_is": "app/integrations/schwab/integration.py:504-543: the body checks the grant and scope, then reads the integration's in-code schema qry.DATASET_SCHEMAS[d] (:516) and sem.describe_field (:530). No S3 or store read of those rows occurs. The schema is declared from the producer's pinned silver schema (the text at :543), not read from the rows at call time.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/integrations/schwab/integration.py:504-543 (2026-10-19)",
+        "Census tools[schwab_describe_dataset].indexes (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "schwab_prepare_download: the members.yaml bucket_source names a deploy/ path absent from this checkout, and the tool reads the same snapshot closure while its links name none.",
+    "spec_asserts": "members.yaml (schwab_prepare_download): bucket_source deploy/NFRA_OPLGTW_CONTRACT.json:301 in opal-data-assets; census links none.",
+    "world_is": "Same path finding as schwab_get_access (S6): the path is absent here; catalog.py:87-88 names the loaded file, whose line 301 is the source_bucket key with value opal-data-assets. The trace: prepare_download calls _availability for each master and download_filtered dataset (app/integrations/schwab/integration.py:802-815) and reads the same snapshot closure and data prefixes. Links none under-states it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/integrations/schwab/catalog.py:87-88 (2026-10-19)",
+        "Read org/standards/NFRA_OPLGTW_CONTRACT.json:301 (2026-10-19)",
+        "Read app/integrations/schwab/integration.py:802-815 (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "Contract master 08335338 is labelled BlackDiamond, and the four schwab tools read its schwab/ prefixes under vendor schwab: a Black Diamond label on a Schwab read path.",
+    "spec_asserts": "org/standards/NFRA_OPLGTW_CONTRACT.json:6-8 (masters) maps 08335338 to BlackDiamond and 08242234 to SmartX.",
+    "world_is": "The schwab tools read schwab/08335338/ (its completion prefix and four data prefixes; app/integrations/schwab/catalog.py:779-787 and the fetcher at app/integrations/schwab/integration.py:193-206). The catalog rows opal_data_assets_silver_schwab_08335338_* carry vendor schwab. The trace assigns vendor schwab, the owner by prefix and catalog. The label conflict is recorded here; the vendor owner of that master is not decided in this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read org/standards/NFRA_OPLGTW_CONTRACT.json:6-8 (2026-10-19)",
+        "Read app/integrations/schwab/catalog.py:779-787 and integration.py:193-206 (2026-10-19)",
+        "DATA_CATALOG silver rows opal_data_assets_silver_schwab_08335338_* vendor schwab (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W71-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~71",
+    "surfaced_at": "2026-10-19T18:59:17Z",
+    "one_line": "The bucket of every client_* source comes from catalog rows, so no client-layer .py names opal-data-assets: 33 client sources ground on the proxy line admin_gateway_breakdown.py:164, and 58 schwab sources on schwab integration.py:84.",
+    "spec_asserts": "Round23 cell section 1: a cite is the line that names the source or selects the branch, and the cited file must contain the bucket string.",
+    "world_is": "app/client_core.py:263-275 (Ctx.prefix) selects each key from DATA_CATALOG rows at call time; the file header (:17-20) says no bucket literal is typed there. The .py files under app/ that name opal-data-assets are two: app/admin_gateway_breakdown.py:164 and app/integrations/schwab/integration.py:84. The bd49f module names opal-data-bd only in comments (:11-12, :43). The cites therefore name a bucket by proxy, not the selecting line, for 33 client sources (blackdiamond cottonwood, commonwealth, orion, smartx and eclipse) and the bd49f resolve and fact_bd_allocation reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read app/client_core.py:17-20 and :263-275 (2026-10-19)",
+        "Grep app/*.py for opal-data-assets: 2 files, admin_gateway_breakdown.py:164 and integrations/schwab/integration.py:84 (2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
