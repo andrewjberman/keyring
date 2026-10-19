@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-16T22:39:33.918689+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261019T125454Z
 **Deploy:** IRPT_DASHBD TO-DB-f-2204: 49 Financial reporting-gold function irpt-49f-reporting-gold-lambda: ONE new bundle version (build-only hash SCt7IgN3..), plan 0 add 2 change 0 destroy (function code attributes and the role policy: ONE write resource arn:aws:s3:::opal-data-49financial/irpt/49financial/gold/account_transaction/* added last to WriteTheFiveGoldPrefixesOnly), ONE safe-apply, a transaction-only DRY RUN of one day (writes nothing), the CTO's 720 s time trigger, the first one-day WRITE and a bounded 25-day RANGE at the new prefix; bound to the signed packet sha256 b67bd4ad57f2 (COO half signed and countersigned, CTO half @6b6c16b492); rollback: artifact version 00dm6f4.vFnWIiIuxVafNVtxIh0zAEeh and the prior locals.tf through safe-apply; schedule untouched; nothing deleted; the ledger STAYS OPEN for leg L7 (the first scheduled fire, read by the issuer)
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -18,7 +18,7 @@
 | L4 | verify | transaction-only DRY RUN of one day: ok, stages transaction, one day with a positive count, none failed, writes nothing | status 200, 0 objects at the new prefix, within 6553 MB and 720 s | dry run (RE-STAGED code JgSV12Tz..) 2026-10-17T01:26:47Z: status 200, stages transaction, 2026-10-15 rows 5135, none failed, duration 849 ms, Max Memory 255 MB, 0 objects at the new prefix after; time trigger sum 299063 ms not over 720000, no rollback; plan 0/1/0 on the function only, apply 01:25Z, replan No changes | CLOSED 20261017T014249Z |
 | L5 | s3-prefix | the first one-day WRITE (same event without dry_run) at the new prefix account_transaction | one partition, 19 columns, schema hash equal, claims and flow classes valid, same count as the dry run | first one-day write 01:27:50Z: status 200, 5135 rows (equal to the dry run), partition date=2026-10-15 only, 19 columns, schema hash ac652e2f.. equal, claims and flow classes valid | CLOSED 20261017T014249Z |
 | L6 | s3-prefix | a bounded RANGE of the 25 most recent trading days at the new prefix | days written equal partitions after, the six other tables unchanged | range 2026-09-11 to 2026-10-15 at 01:28:13Z: status 200, 25 days written, 25 partitions after, none failed, 20108 ms, Max Memory 379 MB, the six other tables unchanged; CTO condition 4 returns-stage no-write dry run read: 200, stages returns/class/lots, 480146 ms, 4384 MB | CLOSED 20261017T014249Z |
-| L7 | verify | the first scheduled fire after the apply, read by the issuer (this ledger STAYS OPEN for it) | issuer read |  | OPEN |
+| L7 | verify | the first scheduled fire after the apply, read by the issuer (this ledger STAYS OPEN for it) | issuer read | first scheduled fire after the apply read by 2.0.0_SA_COO~F2 on 2026-10-19 (tools/read_49f_fire.py, 11:30Z-12:45Z window, 50 log events scanned): 1 invocation (REPORT 11:50:02Z), duration 494.8 s against the 720 s trigger, peak 5833 MB against 6553 MB (80 percent of 8192), 0 timeouts, 0 other error-class lines, 1 transaction-stage line, 0 TRANSACTION_SKIPPED, 0 FILLED_CATCHUP_LIST_FAILED lines; fresh LIST: account_transaction holds 26 date= partitions (25 from the range plus 2026-10-16 written 11:50:03Z by the fire), account_return_daily newest day 2026-10-16; PASS, no rollback | CLOSED 20261019T125454Z |
 
 ## Log
 
@@ -29,3 +29,5 @@
 - 20261017T014249Z LEG L4 closed: dry run (RE-STAGED code JgSV12Tz..) 2026-10-17T01:26:47Z: status 200, stages transaction, 2026-10-15 rows 5135, none fai
 - 20261017T014249Z LEG L5 closed: first one-day write 01:27:50Z: status 200, 5135 rows (equal to the dry run), partition date=2026-10-15 only, 19 columns,
 - 20261017T014249Z LEG L6 closed: range 2026-09-11 to 2026-10-15 at 01:28:13Z: status 200, 25 days written, 25 partitions after, none failed, 20108 ms, Ma
+- 20261019T125454Z LEG L7 closed: first scheduled fire after the apply read by 2.0.0_SA_COO~F2 on 2026-10-19 (tools/read_49f_fire.py, 11:30Z-12:45Z window
+- 20261019T125454Z CLOSED -- all 7 legs proven
