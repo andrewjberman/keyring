@@ -10125,6 +10125,42 @@ carries none.
     "spec_asserts": "Section 5 steps 2 and 3 of the order: append the complete status to this order when the three criteria PASS, and commit that flip with the proof instance. Section 2 bound 1 and the <paths> block name the only files this worker may change.",
     "world_is": "The three criteria PASS and the proof instance validates (rc 0), but the order file is outside the <paths> grant, so the flip is not made and the order's status line stays at issued. The flip is an edit the grant does not admit.",
     "notes": "Not flipped and not committed; the order file was not edited. Disarm and owner: the issuer 2.0.0_SA_COO~MI decides whether to add the order path to the grant or to flip the order itself. The proof instance records the criteria result without the flip."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S139",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-19T15:46:06Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W58-S1",
+      "NFRA_MCPINDEX-Z-W58-S2",
+      "NFRA_MCPINDEX-Z-W58-S3",
+      "NFRA_MCPINDEX-Z-W58-S4",
+      "NFRA_MCPINDEX-Z-W59-S1",
+      "NFRA_MCPINDEX-Z-W59-S2",
+      "NFRA_MCPINDEX-Z-W60-S1",
+      "NFRA_MCPINDEX-Z-W60-S2",
+      "NFRA_MCPINDEX-Z-W60-S3",
+      "NFRA_MCPINDEX-Z-W60-S4",
+      "NFRA_MCPINDEX-Z-W61-S1",
+      "NFRA_MCPINDEX-Z-W61-S2",
+      "NFRA_MCPINDEX-Z-W61-S3"
+    ],
+    "one_line": "ISSUER DISPOSITION of the 13 round-22 worker rows (W58-S1..S4, W59-S1..S2, W60-S1..S4, W61-S1..S3): sparse-worktree gate warnings that the full tree re-grades clean, and four status-flip rows the issuer discharges by flipping the four orders.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "S1 rows (naming gate: function-map folder absent from the sparse worktree, commit landed ungraded): the naming gate was re-run in the FULL tree over the 8 merged workflows/gateway_battery paths, python .tools/naming-gate.py --enforce --diff, and printed 8 path(s) seen, 0 not seen, NAMING-GATE: PASS 0 graded (no name in scope). W58-S2 / W60-S2 (risk reflex PARTIAL_OR_BLIND, danger map stale) and W58-S3 / W61-S2 (client-data hash list ABSENT on this device) are device facts printed on every commit on this box, not this round's defect; the four files are Python scripts and tests over synthetic inputs. W60-S4 (row schema file outside the sparse set) is a worktree fact; the rows follow the existing shape and the merge row gate passed. W58-S4, W59-S2, W60-S3, W61-S3 (the status flip is outside the worker's <paths>): the issuer flipped the four orders complete in this commit; the issuance face said the order's own file is lane ANY but did not list it in <paths>, so every worker withheld the flip, which is the safe reading. The next face names its own order file in <paths>. The issuer is disarm_owner of the three ARMED rows and disarms them here.",
+    "spec_asserts": "The 13 rows assert that gate legs did not grade the sparse commits and that the four orders could not be flipped by their workers.",
+    "world_is": "After the merge the naming gate in the full tree passes on all 8 paths, 12 of 12 criteria g1.AC1..g5.AC3 read RESULT: PASS on the merged tree, and the four orders are flipped complete.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/naming-gate.py --enforce --diff <git diff 490631f349 HEAD -- workflows/gateway_battery>: DENOMINATOR 8 path(s) in this diff; COVERAGE 0 not seen, 8 seen; NAMING-GATE: PASS 0 graded (run 2026-10-19 ~15:5xZ by the issuer)",
+        "deliverables/2.0.0_SA_COO~MI/round22/checks g1.AC1..g5.AC3 run on the merged tree at a6b6d88ffbd: 12 of 12 RESULT: PASS"
+      ]
+    }
   }
 ]
 ```

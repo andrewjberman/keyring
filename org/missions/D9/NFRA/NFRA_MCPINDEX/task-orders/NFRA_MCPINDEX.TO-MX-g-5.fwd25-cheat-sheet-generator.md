@@ -122,3 +122,4 @@ The issuer then merges, runs the real data through your script at the drain and 
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>
