@@ -23,11 +23,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T17:59:48Z. C-S203 carries what this sea
     "owner": "2.0.0_SA_COO~R1",
     "round": "v121",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v121"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

@@ -83,6 +83,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-50.round-46-thirteenth-batch
 - Pre-cut: `AC1` to `AC3` base FAIL as expected (the records are absent). Arms fed to the checks: `AC1` with a synthetic release commit whose diff is the two files passes; a release that also touches `app/audit.py`, a route answering 200 to no identity, a host read with zero measured values (no grant) and an ask missing a half each fail. `AC2`'s served-record grading: a good record reads `served verdict: OK`; a route answering 200 or a before-status of 401 each read NOT OK. `AC3`: a good driven-read record passes; a schedule mismatch, a depth mismatch, a claim count that does not sum and a wrong code sha each fail. (The ledger and landing legs of `AC2` can only be fed at Phase B.)
 
 <status>staged</status>
+<status>pending</status>
 <round>46</round>
 <workstream>ENRICH-R46-B</workstream>
 <slot>~AE</slot>
