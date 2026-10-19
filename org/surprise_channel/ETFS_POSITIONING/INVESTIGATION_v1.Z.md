@@ -608,6 +608,33 @@ most likely deliberate act is the one Z-S4 invites.**
    ]
   },
   "notes": "INERT, not ARMED: it is one mislabelled manifest from one recovery, and it does not recur unattended. It recurs only when a seat runs another hand recovery the same way. disarm_owner is 1.0.0_SA_CTO~Z, which surfaced it and whose ruling produced it. The tension is real: 'run it exactly as the scheduler does' and 'label it as what it was' cannot both be met with the script as written. Remedy shape (a run_class the caller can set for a manual run) is not ruled here. The manifest key bbg/2026-10-16 is consistent with the trading calendar: 2026-10-19 is a Monday, so T-1 is Friday 2026-10-16."
+ },
+ {
+  "id": "ETFS_POSITIONING-Z-S20",
+  "project": "ETFS_POSITIONING",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-19T12:11Z",
+  "one_line": "Disarm-owner ruling on Z-S17 (ARMED) and Z-S19 (INERT). Z-S17: every DAPI-precondition failure path reaches the landing legs, because the precondition is measured under cma and the legs run under PY_AWS, so a cma DOWN is not evidence the legs would fail. Z-S19: no script change; a hand recovery runs the leg script WITHOUT setting ETF_RUN_CLASS, so the script's own default labels it adhoc.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~Z",
+  "adjudicates": [
+   "ETFS_POSITIONING-Z-S17",
+   "ETFS_POSITIONING-Z-S19"
+  ],
+  "spec_asserts": "Z-S17 asked for the remedy shape: route :precond_down through the legs the way the line-147 branch does, or record why a DAPI-down morning must skip them. Z-S19 asked for a run_class a caller can set for a manual run.",
+  "world_is": "Z-S17 RULED: route :precond_down to the landing legs. (1) The skip rested on 'the ETF pull would fail for the same reason' (scheduled_daily_pull.cmd:153-154). That holds only when the fault is the Terminal. dapi_check runs under %PY% (cma) and the legs run under %PY_AWS%, and Z-S18 measured a cma-only fault on a morning the Terminal was up. (2) The costs are not symmetric: a leg run on a truly-down Terminal costs one non-zero leg exit line, while a skipped leg on a false DOWN loses the current-day-only constituents capture for good (READ_HERE s.4). (3) The same holds for the 'DAPI state UNVERIFIED' skip at :157-158, which takes the same route. Constraints for the edit: :etf_leg must be reached only after the `set PY_AWS` line (:139); jumping past it is the Z-S248 defect (empty interpreter, nothing lands, quietly). The wrapper's final rc stays 50 on this path, so the 07:15 backstop still fires. Z-S19 RULED: no script change. etf_constituents_pull.py:255 and etf_daily_pull.py:540 default run_class to adhoc ('only the scheduled chain sets it'). My 'exactly as :cons_leg' wording made the recovery set ETF_RUN_CLASS=scheduled. A hand recovery runs the leg with ETF_RUN_CLASS unset. The 2026-10-16 manifest stays as written (no S3 rewrite); the join to the truth is bbg_cons_MANUAL_RECOVERY_20261019.log.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd at box/sitez HEAD (file last changed e465eabe7b): :107 :precond_down runs %PY% dapi_check; :115 goto :prune; :139 set PY_AWS; :153-158 the UNVERIFIED skip and its stated reason; :246 and :297 set ETF_RUN_CLASS=scheduled; read by 1.0.0_SA_CTO~Z 2026-10-19 ~12:0xZ",
+    "comp-find run_class over integrations/bloomberg/pipeline/*.py: 6 hits across 7 files; etf_constituents_pull.py:255 and etf_daily_pull.py:540 log 'default adhoc; only the scheduled chain sets it'",
+    "Z-S18 (filed @5012389f79): the cma import blocked by Smart App Control while the PY_AWS copy loads; 0.0.0_AB_MSTR~Z msg 35951 measured the per-instance block"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Z-S17 stays ARMED until the edit lands. Its next fire is the 2026-10-20 11:00Z run. Write surface: 0.0.3_BG_BBGTerminal (the pipeline's owner). It was ordered before this row (CTO~Z 2026-10-19 ~11:4xZ) to land the fix before that run, with a dry-run in which the precondition is forced to fail and the log then shows ETF, CONSTITUENTS and PRICE LEG EXIT CODE lines. Z-S17 disarms on that run's log. Z-S19 needs no further act."
  }
 ]
 ```
