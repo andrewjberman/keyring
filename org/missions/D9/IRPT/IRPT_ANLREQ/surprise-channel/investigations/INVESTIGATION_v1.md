@@ -27134,3 +27134,30 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S217 -- A fresh-token run strands a second synthetic original-holdings object the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S217",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-19T23:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The fourth commentary run (a fresh upload token) wrote a NEW original-holdings object that the CloudOps principal cannot delete, so a second synthetic leftover stands beside the first; with a fresh token every run strands one more.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state_e2e4.json (irpt_anlreq_commentary_e2e4): the delete of this object answered AccessDenied for the CloudOps principal on 2026-10-19T23:11Z; the run's other 6 recorded keys read ABSENT (deleted 6 of 8)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: the principal the application deletes this prefix with is NONE FOUND (read at HEAD on 2026-10-19)",
+      "same_art_key was no: the fresh token (ADDENDUM 3) reached a different upload id and a different key than the first leftover (S214), as the AR-y-402 record W4 predicts"
+    ]
+  },
+  "spec_asserts": "The pair's rule is that a run deletes what it creates (section 4 of the E2E packet and the CTO's condition on the deletes).",
+  "world_is": "The object irpt/49financial/state/original_holdings/ART-0b6d4e6dbd0d5c28ca10a4b0bc38f486127a0d0fa54efc62f65a9eb6b8eebb05/8bfd3093b8ba004b234353359d93925f4e3dd197c9a05ccab826de5e63274215.csv remains (one version) after the run of 2026-10-19T23:10Z; its delete is AccessDenied for the CloudOps principal and no application path deletes it (W5 NONE FOUND). Together with the object of S214 the prefix holds two synthetic leftovers; no index row points at either. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
