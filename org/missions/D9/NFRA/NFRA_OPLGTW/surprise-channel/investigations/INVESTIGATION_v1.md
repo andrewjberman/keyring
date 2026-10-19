@@ -30344,3 +30344,33 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Three small defects in one row per the CTO routing."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T19:40:25Z",
+  "id": "NFRA_OPLGTW-Z-S425",
+  "one_line": "Issuer rulings on worker ~164's two rows (OG-rz-1): its BLOCKING commit refusal (a sparse worktree cut before the order existed fails the commit gate and the owned-paths lane rule) is cured by the issuer; its observation that the contract's target_memory_mib still reads 2048 for the 2 GiB host is carried to round 47 and not edited now",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W164-S1",
+    "NFRA_OPLGTW-Z-W164-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~164 report: safe-commit refused rc=1 on its three files; the gate imports comp_constants_cli from org/modules/graph (absent from its sparse cone). After the issuer widened the cone (org/modules/graph, org/devices, infra/aws/lambda/ci/function-map and others) the refusal changed to the owned-paths lane rule: infra/aws is lane CLOUD_OPS_OR_ETL and the worker's order was not in the tree its worktree was cut from (96cca43b19 predates the order at 2014e2e060).",
+      "cure: the worktree was fast-forwarded to the trunk tip carrying the order (3878e45da7), rz1.AC1's base became the worker branch's merge-base with box/sitez, and the commit landed (5807068e36), drained as 97ec4f8c60a; rz1.AC1 and rz1.AC2 PASS in the worker worktree on my run (3 files, 11 insertions, 11 deletions, test_og_un1 2 passed).",
+      "NFRA_OPLGTW_CONTRACT.json lines 353-355 (read by me): target_memory_mib 2048, admission_existing_peak_rss_multiplier 1.25, admission_os_reserve_bytes 134217728."
+    ]
+  },
+  "spec_asserts": "The worker's face said: work only in the worktree, run the checks from it, commit the three files; the issuer cut the worktree from the trunk tip before the order was committed.",
+  "world_is": "The worker's work was correct and complete; the refusals were the issuer's cut (a worktree base older than the order, and a sparse cone narrower than the commit gate reads). A worker whose order names paths in a lane it does not own can commit only from a tree that already carries its order. W164-S2: the contract still carries the 2 GiB admission figures; they govern the in-process admission of fresh-process reads, so raising them would let more reads run at once. That is a behaviour change, not a value fix, and it belongs with the memory guard for concurrent battery load (round-47 item 11). NOT CLAIMED: how the admission code reads target_memory_mib (not read).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W164-S1 is cured and its two cures are recorded for the next worker cut (cut the worktree at the trunk tip that holds the order; sparse cone includes org/modules/graph, org/devices and infra/aws/lambda/ci/function-map). W164-S2 stays 2048 on purpose and is carried to the memory guard cell."
+}
+```
