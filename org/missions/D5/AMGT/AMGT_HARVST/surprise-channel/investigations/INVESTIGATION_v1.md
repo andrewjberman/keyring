@@ -13449,6 +13449,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W184-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~184",
+      "surfaced_at": "2026-10-19T18:10:23Z",
+      "one_line": "HVST-cn-8 cannot run terraform init, validate or plan on the harvest root in this worktree: the three module blocks source ../modules/yang-lambda, which is tracked at HEAD but absent from disk (sparse checkout). AC2 and AC3 therefore record the program's own failures.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/terraform/harvest/api-gateway.tf@e678a264c9 line 69, chatter-axis-schedule.tf@e678a264c9 line 176 and scoped-amgt-api.tf@e678a264c9 line 460: source = \"../modules/yang-lambda\"",
+          "git ls-files -s infra/aws/terraform/modules/yang-lambda at e678a264c9 lists main.tf, outputs.tf, variables.tf; git config core.sparseCheckout = true; git sparse-checkout list omits infra/aws/terraform/modules; ls infra/aws/terraform/modules: No such file or directory",
+          "deliverables/0.9.0_WK_AMGT_HARVST~184/cn8_plan.out: DEFAULT-PLAN-EXIT=1 and DISABLE-ROLLBACK-PLAN-EXIT=1, each with three 'Error: Module not installed'; cn8_validate.out: VALIDATE-RC=1 with the same three errors"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The HVST-cn-8 PREFLIGHT and AC2/AC3 presuppose that the harvest root can run terraform init, validate and plan -lock=false (read-only against the real state) from the worktree's <paths>.",
+      "world_is": "The worktree is a sparse checkout whose lane admits only .claude/agents, .tools, infra/aws/terraform/harvest, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_HARVST, org/modules/graph, org/ref and org/standards. The harvest root's modules resolve from infra/aws/terraform/modules, which is outside that set. terraform init in the harvest root returned rc=1 at 'Unable to evaluate directory symlink: GetFileAttributesEx ..\\modules' for three module blocks. No sparse-checkout widening, copy or apply was done; the state was not read.",
+      "notes": "Filed by 0.9.0_WK_AMGT_HARVST~184. The dossier-refresh.tf edit (default ENABLED, comment-only header, description) is in place and AC1 passes with its planted-change control (DIFF-CHECK schedule_default=ENABLED changed_lines=11 outside_allowed=0). The plan's 'No changes' proof and the rollback plan are NOT established in this worktree; the criteria are BLOCKING until the module directory is present, which is a lane-grant decision for the issuer, not a worker override."
+    },
+    {
+      "id": "AMGT_HARVST-D1-W184-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~184",
+      "surfaced_at": "2026-10-19T18:13:28Z",
+      "one_line": "safe-commit of ab70f25bcf printed NAMING ERROR (function-map folder missing, outside the sparse lane) and a risk-reflex HOLD on dossier-refresh.tf that was graded from the main tree's danger map; the commit still exited 0 and landed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "safe-commit output of ab70f25bcf (commit log in the worker scratch): [naming-gate] NAMING ERROR function-map folder missing at C:\\dev\\wk-harvst-184\\infra/aws/lambda/ci/function-map/",
+          "git sparse-checkout list of the worktree at e678a264c9 omits infra/aws/lambda; the risk reflex printed REBUILD: sparse worktree: read the MAIN tree's map (C:\\dev\\ajb_workspace\\org\\modules\\graph\\nerves-risk-edges.json)",
+          "risk reflex output of ab70f25bcf: [HOLD] infra/aws/terraform/harvest/dossier-refresh.tf, 13 recorded claim(s), citing org/critical_paths/change_management/20261019T1330Z_harvst-cn7-s1-build-half_deploy_completion.md:15 (a path this worktree does not carry)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "CLAUDE.md section 4 and rule 14a: the commit-time naming gate refuses names today (LGIC_ENFORCE), and the pre-commit risk reflex grades the staged diff against a current danger map before a commit lands.",
+      "world_is": "In this sparse worktree the Lambda function-map folder is absent, so the naming gate printed NAMING ERROR and did not grade the names; the risk reflex answered from the main tree's danger map (0.9h old) and returned HOLD on the tf citing a change-management entry that is outside this worktree. The commit landed rc 0 on the commit-gate OK line. This worker did not read the cited entry (it is outside the worktree) and did not widen the lane to reach it.",
+      "notes": "Same root cause as AMGT_HARVST-D1-W184-S1 (the sparse lane). The client-data-check WARN on the same commit is the already-filed condition AMGT_HARVST-D1-W183-S16 on this device; it is not re-filed here."
     }
 ]
 ```
