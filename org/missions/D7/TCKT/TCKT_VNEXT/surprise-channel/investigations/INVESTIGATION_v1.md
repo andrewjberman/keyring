@@ -3210,3 +3210,29 @@ used as fixtures is a different read with a different denominator.
   "world_is": "The applier cannot do the order's S3 delete: an explicit deny, which a policy edit or another identity would be needed to get around. This seat did not try either. One synthetic 31-byte object stays under the firm's trade-form prefix until a seat that may delete does it (the key and version id are above); the ticket and the filer row are gone. Not claimed: that the deny is a mistake (it may be deliberate), or that any other prefix or bucket is affected."
 }
 ```
+
+## TCKT_VNEXT-D2-S63 -- TO-R20-PROD3 rerun (attempt 2) also stopped at the open read: the Open route answered 200 and the browser's own read of the object went through, but this seat's script took no url from the response body, so the SHA-256 comparison was never obtained in either attempt.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-19T21:30:00Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S63",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-R20-PROD3 rerun (attempt 2) also stopped at the open read: the Open route answered 200 and the browser's own read of the object went through, but this seat's script took no url from the response body, so the SHA-256 comparison was never obtained in either attempt.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "attempt 2, 21:24Z: ticket TCK-20261019-b931d737 filed (door 200, PUT 200, ticket 201); R20_TRADE_TRACE.json statuses show 'GET open route' 200 and a GET to s3 opal-data-cottonwood on the exact key (request census, path only); the script then printed 'STOP: the open route returned no url (status None)' at 21:24:48Z: it read no 'url' member from the 200 body (the body's shape was not logged, so the shape is not known to this seat)",
+      "ticket and filer row deleted by key 21:26:56Z, ConsistentRead ABSENT; residue objects: attempt 1 version U2wA9rMN_iqdUnci740XcsAfyvgsTK3h, attempt 2 key .../trade-form/b35a21075c634b588e83a529a8a724c5/tckt-r20-trade-synthetic.csv version 0pTf.3QXwPeHDLNgFTEKCnP32IE4IWuu (head-object 21:28Z, 31 bytes each)",
+      "attempt 1 (row TCKT_VNEXT-D2-S62): the same step stopped on a hung route.fetch; the open route's own presigned GET for the key was visible in that error log"
+    ]
+  },
+  "spec_asserts": "TO-R20-PROD3 step (c): the bytes are fetched through the Open control and the SHA-256 read back equals the SHA-256 uploaded. The order allowed one rerun (AMENDMENT 2); it is used.",
+  "world_is": "Two stops on the one step that is this seat's own instrument; the door, the PUT, the ticket, the delete of ticket and row all behave. The read-back equality is UNPROVEN, not failed. The result file was not written, so R20PROD3-AC1 would read RUN-BAD. A third attempt needs a new GO, and the first act of it should log the key set (not values) of the open route's body. Not claimed: that the bytes differ, or that the open route is wrong."
+}
+```

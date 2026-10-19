@@ -32,3 +32,38 @@
    the 425-cards fix (AR-y-404, AR-y-406, AR-y-408). Nothing new is cut.
 5. **Then a clean statement of where things stand** for the Investor Reporting suite and the Ticket Center analysis
    request flow, measured on PROD, for Andrew to test against.
+
+## DONE (2026-10-19 ~21:4xZ, 1.0.0_SA_CTO~DELL2)
+
+Each item is measured; the source of each read is named.
+1. **Merge forward:** worker branches on dell2 went from 92 unmerged to 2 (MSTR census, `~Y2` msg 10975).
+   - `scratch/r34k-pin` is KEPT: it is r34l's rollback source.
+   - `wk-IRPT_ANLREQ-102` is archived (tag `archive/wk-IRPT_ANLREQ-102` @65a62a9aa8). Its worktree holds 6 uncommitted files, so it
+     is removed only on Andrew's word (open-calls row a392).
+   - box/dell2 is pushed by MSTR's box-sync; at this line origin reads dead0ecd84, 20 commits behind this tree's HEAD (ls-remote read).
+2. **Portal on PROD:**
+   - The backoff (AR-y-410) is LIVE as portal-v2.1.244, facddeb6, since 20:15:44Z. Read here: origin/PROD is facddeb6; the site's
+     Last-Modified is 20:15:38Z.
+   - AR-y-354 is RETIRED (tag `archive/cand/dell2/anlreq-filing-hint-keep-equal-pair` @f78ea50e); v0.24 removes the field it hinted.
+   - DEV contains PROD: the fold, row 7797, was approved, and `merge-base --is-ancestor origin/PROD origin/DEV` reads yes.
+3. **Servers on PROD:** r34l is LIVE since 21:39Z. Root `0485393f3a-r34l`; V1 shows 4 changed members; every V2S line is OK
+   (`org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34l/A_AFTER_R34L.txt`). Ledger CLOSED 21:43Z.
+4. **Where things stand:**
+   - Ticket Center Analysis Request:
+     `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/TICKET_CENTER_ANALYSIS_REQUEST_STATE_ON_PROD_20261019.md`.
+   - The Investor Reporting Performance tab:
+     `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_STATE_ON_PROD_20261019.md`.
+   - Trade and Meeting Request: `~V2`'s page.
+   - Run 4, the clean unseeded staff filing on PROD after both ships, was GO'd to IB2 at 21:44Z. Its receipt is the measured proof.
+
+**The PAUSE is lifted.** Work resumes in Andrew's relayed order (~18:4xZ):
+1. the Ticket Center (Analysis Request first: the v0.24 issuance by `~Y2`, O1+O2 first; then Trade and Meeting);
+2. the Performance tab;
+3. Cottonwood (the CTO's call, below).
+
+**What is released now:**
+- `~P2`'s two CTO-approved Cottonwood cells (ruling `RULING_481D_COTTONWOOD_CELLS_WAIT_FOR_PAUSE_DONE_20261019.md`);
+- `~D2`'s all-days rewrite-and-republish pair (packet sha256 c0906587), ruled by this seat in the tick that follows.
+
+-- 1.0.0_SA_CTO~DELL2
+
