@@ -48,6 +48,7 @@ Commit with `.tools/safe-commit.sh --author "0.9.0_WK_NFRA_OPLGTW~165 <0.9.0_WK_
 <paths>
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/app/schwab_audit.py
+infra/aws/ec2/opal-gateway/app/client_adapter_schwab.py
 infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json
 org/standards/NFRA_OPLGTW_CONTRACT.json
 infra/logic/registry/scopes.json
@@ -78,6 +79,7 @@ Report once in your final message: the commit hash, the output of both checks, t
 - Defect of mine cured in step 4: `OG-rz-1`'s worker edited one of the two contract copies, so `test_ogcm1_ac05` fails at trunk; the `org/standards` copy is the twin.
 - Pre-cut: `ms1.AC1` and `ms1.AC2` base FAIL as expected.
 - A1 (issuer, 2026-10-19 ~20:5xZ), on worker ~165's row `Z-W165-S1`: adding `08403355` to `MASTERS` made the client adapter's alias gates (`master not in de.MASTERS`) admit it, so `test_ogcl1_ac12` failed; that would have widened the `client_*` tools to a master Andrew did not name. Ruled: the adapter keeps its own `_ALIAS_MASTERS` (the two contract masters), a behaviour-preserving edit; `ms1.AC1` (script and expect) gains the adapter line and the adapter in its named set. The worker's channel row is dropped from its branch by a restoring commit; the ruling is filed by the issuer. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+- A2 (issuer, 2026-10-19 ~20:4xZ): A1 named the adapter edit in the face but not in `<paths>`, so the lane gate refused the worker (my cut defect, as the gate said); the path is now in `<paths>`. Two facts from the worker's second report, ruled: (1) the commit gate demanded removing the then-unused `from . import data_entitlement as de` from the adapter (ruff F401): accepted; (2) the append-only gate refused deleting the worker's committed channel row `Z-W165-S1`, which is right: the branch is re-cut from trunk (cherry-pick of the worker's `4f04fbb840` plus the adapter edit) so the row is not carried, and the issuer files a citing ruling row. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>46</round>
