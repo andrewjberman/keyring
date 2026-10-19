@@ -3471,3 +3471,77 @@
   "notes": "Filed with the proof instance commit, which the surprises list of that instance cites. Not repaired here: the sparse cone is the issuer's worktree configuration, and no gate was edited."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T18:04:01Z",
+  "one_line": "MP-z-6 step 2 cannot read code_tools as written: the channel the order's pick rule selects, opal-data-etfs (18 tools, tied with opal-data-portal-v2), is a bucket, and the order's method reads an integration module's IntegrationSpec.tools and register(); no such module exists for it. code_tools is recorded null.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served _compute over SSM (command 200bedd3-7eab-46c1-8f5e-e199fe3ab0d0, instance i-07dccb1615503ac99, /opt/opal-gateway, import app.server first): CH|opal-data-etfs|tools=18 ; CH|opal-data-portal-v2|tools=18 ; CH|portal_index|tools=6 ; CH|schwab|tools=5 ; CH|ycharts|tools=6 ; CH|blackdiamond|tools=1.",
+      "infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py _compute lines 338-364: a tool joins its integration spec's channel first, else a bucket its catalog tool_index row declares as source_group, else Microsoft 365, else No source declared.",
+      "Tool lists (command 1998c941-d769-4131-97db-24fa4ec89278): TOOLS|opal-data-etfs = 18 etfs_* names; TOOLS|opal-data-portal-v2 = 18 names."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MP-z-6 step 2 reads code_tools from the integration module of the channel picked as the most-tools non-m365 channel, via IntegrationSpec.tools and the names its register() passes.",
+  "world_is": "Both largest non-m365 channels are buckets at 18 tools. Bucket channels take their tools from catalog tool_index source_group rows, not from an integration spec, so the as-written method has no module to read. The largest integration channel is portal_index at 6 tools.",
+  "notes": "Tie broken by page order (kind, then id): opal-data-etfs before opal-data-portal-v2; recorded in z6_run.json. The catalog side was not read in place of the module: the order is exactly as written. Whose fix: the order's pick rule and method disagree for a bucket channel."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S4",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T18:04:01Z",
+  "one_line": "MP-z-6 step 3 cannot read store_tools as written: ops/schwab_entitlement_admin.py has no read or show subcommand; its subcommands are activate, revoke and deny-backfill, all POLICY writers. store_tools is recorded null.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py (worktree, HEAD 9722e32fce3): _build_arg_parser add_parser calls at lines 442 (activate), 450 (revoke), 458 (deny-backfill); no other subcommand.",
+      "Same file: current_state(store, tid, oid) at line 262 is a Python function with no CLI entry. infra/aws/ec2/opal-gateway/ops/schwab_status.py header: read-only HEALTH, CLOSURE and ERROR summary, no per-principal grant.",
+      "The page's grant read for opalbloomberg@opalinvest.com (command 200bedd3): how 'data grant revision 1'. That is the gateway's own read, not the operator read the order names."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MP-z-6 step 3 reads the principal's active grant with the existing operator read, its read/show subcommand, run under the operator role.",
+  "world_is": "The ops directory holds no operator-role read or show command for a principal's grant. The only grant reader in the named script is an internal Python function.",
+  "notes": "Not substituted: calling current_state from a one-liner under the operator role would be a read the order does not name, and the operator role was not assumed. Whose fix: the order names a subcommand that is absent from the script."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S5",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T18:04:01Z",
+  "one_line": "MP-z-6 step 3 says the one real principal with a principal_profile, but the served page lists three principals with a data grant revision (andrew rev 1, opalbloomberg rev 1, alyssa rev 5); the principal was chosen by a stated rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served _compute (command 200bedd3): grant_store={'status': 'read', 'principals': 3}; opal-data-etfs holders: andrew@opalinvest.com (master admin; data grant revision 1), opalbloomberg@opalinvest.com (write-capable; data grant revision 1), alyssa@opalinvest.com (write-capable; data grant revision 5).",
+      "Holder data-grant tools (command 1998c941): opalbloomberg 5 schwab_* tools; alyssa 4 (no schwab_prepare_download); andrew 5 schwab_* plus blackdiamond_list_fees."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MP-z-6 step 3 takes the one real principal with a principal_profile, listed by the page with how 'data grant revision n'.",
+  "world_is": "Three principals carry a data grant revision. Rule applied: the first principal in page order whose how carries a data grant revision and who is not a master admin, which is opalbloomberg@opalinvest.com.",
+  "notes": "The choice changes the comparison: with alyssa, page_holder_tools would hold 4 tools. Recorded so the issuer can name the intended principal."
+}
+```
