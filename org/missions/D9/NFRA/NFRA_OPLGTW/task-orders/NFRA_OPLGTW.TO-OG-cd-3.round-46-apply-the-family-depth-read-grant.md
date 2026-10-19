@@ -80,6 +80,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cd-3.round-46-apply-the-family-
 - Pre-cut (amended at A1: `AC1` and `AC2` now also grade the delimiter bound; fixtures re-run): `cd3.AC1` and `cd3.AC2` base FAIL as expected (plan, ask, ledger and record absent). `AC1` arms fed to the check: the real `.tf` with a good plan and ask passes; a plan reading 2 to add, an ask with one half, `s3:*` in place of `s3:GetObject`, and an added `s3:PutObject` each fail. `AC2` needs the live policy and cannot be fed an arm before Phase B.
 
 <status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-B</workstream>
 <slot>~AE</slot>
