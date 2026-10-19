@@ -25,12 +25,31 @@ Counts only; no account numbers or client values. Account numbers were compared 
   key stays BD's frozen attribute.**
 - The custom `account.txt` (141 columns) has not been handed over, so whether IT carries a prior-account field is **unmeasured**.
 
-## Test 2 -- the seam (2026-06-01 to 07-15 in-kind receipts): NOT RUN
+## Test 2 -- the seam: READ FROM THE ON-HAND `.trn` (no new export needed), measured
 
-This needs an on-demand transactions export over that range, which is Andrew's export click. Nothing was requested from Wealthscape.
-Note that the standard `.trn` on hand spans 2026-05-26 to 2026-10-16 already: 47,024 rows in 2026-06 and 116,062 in 2026-07, across the
-whole book. A follow-up can read the seam from it directly for the 639 joined accounts without a new export. That read was not done in
-this turn.
+The standard `.trn` already spans 2026-05-26 to 2026-10-16. Comment rows (`;`) were attached to the data row before them on the same
+account.
+
+| Measure (the 643 BD Fidelity IWS accounts) | Value |
+|---|---|
+| accounts with any `.trn` row | 642 (69,320 rows) |
+| rows carrying a TRANSFER comment | 541 rows, on **186 accounts** |
+| ...codes | `dp*` ca 415, `wd*` ca 120, `sl*` eu 5, `wd*` ex 1 (the `*` flag marks them) |
+| ...by month | 2026-06: 66, 07: 262, 08: 90, 09: 73, 10: 50 |
+| ...inside 2026-06-01 to 07-15 | **275 rows on 145 accounts**, ISO weeks 25: 1, 26: 57, 27: 101, 28: 96, 29: 20 (about 06-22 to 07-17) |
+| accounts whose transfer comments **name their own Commonwealth number** (BD `NFS Account Number`) | **106 of 643** |
+
+The comment phrasings are "CONVERSION TRANS:REORG ACTIVITY OR ACCT ..." (526 rows), "TRANSFERRED FROM VS <id> ACATS" (196), "TRANSFERRED
+FROM VS <id>" (114), "TRANSFERRED TO VS <id>" (91), plus RGY and REDEM variants.
+
+**Reading (I):**
+- **The seam is datable from Fidelity's own file.** The transfers cluster in late June to mid July, matching BD's empty window of
+  06-22 to 07-09.
+- **For 106 accounts Fidelity's own transactions carry the Commonwealth number.** That is a Fidelity-side key for part of the book. The
+  other 537 still need BD's frozen attribute.
+- **The flagged transfer rows are cash journal entries (`ca`), not security receipts.** No `by` / `li` security rows with a transfer
+  comment were found, so opening security positions are **not** shown as in-kind receipts in this file. Whether they are carried some
+  other way, for example as the first positions after a conversion row, is unmeasured.
 
 ## Test 3 -- dedup: PARTIAL
 
