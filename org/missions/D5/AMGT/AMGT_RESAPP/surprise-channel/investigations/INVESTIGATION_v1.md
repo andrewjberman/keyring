@@ -32326,3 +32326,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The launcher is unchanged in this respect: the real python.exe is not a batch file and returns normally. The stub design is the only change; the issuer decides whether the order's stub wording is amended."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S61",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-19T15:35:00Z",
+  "one_line": "The G4 filings task cannot run unattended: the scheduled launcher's environment has no ANTHROPIC_API_KEY, so the batch prints BLOCKED and returns rc=1 before any model call; this is the cause of the 2026-10-19 11:30Z fire's rc=1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/llm_batch/filings_20261019T153017Z.log (the on-demand run of OpalResearch-FilingsAnalyzer at 15:30:16Z through the ce-2 launcher, merged c584af698a): line 2 'BLOCKED: ANTHROPIC_API_KEY is not in the environment. Export it in the SAME call: export ANTHROPIC_API_KEY=\"$(comp-secrets get anthropic-api-key --reveal ...)\"', line 8 'LLM-BATCH task=filings ran rc=1 last_run NOT recorded', line 10 'exit=1'",
+      "the same log lines 4 to 7: the plan-only read ran (8 names would be fetched, 0 unresolved), so only the model step is blocked"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-bn-6 (G4): the scheduled task OpalResearch-FilingsAnalyzer runs run_filings.cmd at 07:30 local on trading days and the batch analyses the new filings of the first-fire keys (CTO ruling G4, 2026-10-15).",
+  "world_is": "The task runs under the interactive logon with no ANTHROPIC_API_KEY in its environment; the batch's own guard refuses and exits 1 with 0 objects written and 0 spent. The same will happen at the Tue 2026-10-20 07:30 local fire (the negative arm). Where an unattended task is to obtain the key (a secret store read inside the launcher, a user-level environment variable, or another route) is a secret-handling decision not taken here.",
+  "notes": "Form only. The CTO's msg 8275 ruling: whatever cause the log names becomes its own row. No model call was made, nothing was spent, no store object was written by the on-demand run. The issuer carries the key-supply question to the CTO."
+}
+```
