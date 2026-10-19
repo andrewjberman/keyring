@@ -29486,3 +29486,53 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. Carried as a finding for the round-44 analysis: whether the lake leg should count its own failures (a counter or one stderr line in the except branch of _emit) is a decision for the CTO; it would be a code change and a release, not made here."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~161",
+  "surfaced_at": "2026-10-19T06:00:39Z",
+  "id": "NFRA_OPLGTW-Z-W161-S1",
+  "one_line": "The order TO-OG-pr-6 has no <status> tag above its RECORD FACE marker: the face's step to flip the one <status> tag to complete sits in the portion the worker is barred from reading, so this worker did not make the flip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-pr-6.round-45-make-the-audit-lake-leg-bounded-and-audible.md lines 1 to 63 read at worktree HEAD 866f1447f8: no <status> token; line 64 is the RECORD FACE marker",
+      "WORKER_FACE_OG-pr-6_slot161.md section 5 and the launch message: flip the one <status> tag to complete when all three AC criteria PASS, in the same commit as the deliverables"
+    ]
+  },
+  "spec_asserts": "The worker flips the order's one <status> tag to complete, in the worktree copy of the order file and in the same commit as the deliverables, when every mechanical criterion passes.",
+  "world_is": "All three criteria (AC1, AC2, AC3) PASS at the commit that carries the code. The tag is not located above the RECORD FACE marker, and the worker is not to read below it, so no legal location for the flip is available to this worker.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. The proof instance is written and validated rc=0; the status flip is left for the issuer to place."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~161",
+  "surfaced_at": "2026-10-19T06:00:39Z",
+  "id": "NFRA_OPLGTW-Z-W161-S2",
+  "one_line": "The spec's literal wording reads time.monotonic() twice per warned failure (once in the rate test, once in the assignment), but the face's rate test feeds exactly three values for three failures; the worker reads it once per failure into a local and uses that one value for both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WORKER_FACE_OG-pr-6_slot161.md section 1 item 1 (the literal condition and assignment both call time.monotonic()) and item 4 test_second_line_after_60s_carries_the_running_count (three controlled values t=1000, 1010, 1061)",
+      "infra/aws/ec2/opal-gateway/app/audit.py function _note_lake_failure, worktree of wk-NFRA_OPLGTW-161 (LOCAL, uncommitted at write): one read of time.monotonic() per failure, the same value gates the warn and is stored as _lake_last_warn"
+    ]
+  },
+  "spec_asserts": "The rate test is driven by exactly the three controlled monotonic values the face lists, t=1000, t=1010 and t=1061, and yields two warning lines.",
+  "world_is": "Two reads per warned failure would consume a fourth value that the face does not supply; the single read gives the same warn decisions (count=1 at t=1000, suppressed at t=1010, count=3 at t=1061) with the three values the face lists.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. Same warn decisions as the literal wording at every failure in the face's test; the difference is the number of clock reads."
+}
+```
