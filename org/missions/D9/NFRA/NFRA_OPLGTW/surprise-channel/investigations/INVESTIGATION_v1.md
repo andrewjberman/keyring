@@ -29841,3 +29841,57 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "INERT: one connect, a session-start event. It is useful evidence for OG-ev-13, the 24 h lake re-read due no earlier than 2026-10-20 07:45Z: a 429 refusal inside that window should appear in the audit lake with scope identity (OG-en-10). If it does not, the audit claim is falsified on a live case. Issuer to fold the check into OG-ev-13 or dispose of it with a reason."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-19T15:25:27Z",
+  "id": "NFRA_OPLGTW-Z-S406",
+  "one_line": "OG-ap-50 Phase A: app.family_depth.read() cannot run in a FRESH process from the deployed tree (/opt/opal-gateway): with no live integrations registry it reads ENABLED_INTEGRATIONS from deploy-to-ec2.sh, a file that is NOT on the host, and raises FileNotFoundError. The order's Phase B step 7 (the ONE driven read, AC3) as written would fail the same way.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Host run 2026-10-19T15:06Z, fresh process under oom_score_adj_1000_cgroup_memmax_1400mb from a scratch copy of /opt/opal-gateway/app: app.family_depth.read() raised FileNotFoundError on <scratch tree>/deploy-to-ec2.sh after 2.69 s, having made no AWS call (W/ap50_pa/host_leg.json holds the second run; the failing first run is quoted here).",
+      "Code: app/family_depth.py lines 157-162 (_enabled_ids_from_deploy opens DEPLOY_SCRIPT = <tree root>/deploy-to-ec2.sh) and 165-187 (default_channels reads it only when registry._ACTIVE_BY_TOOL is empty, which is the case in any process that has not registered the integrations, the module's own docstring says so).",
+      "Host: os.path.exists('/opt/opal-gateway/deploy-to-ec2.sh') read False (W/ap50_pa/host_leg.json, deploy_script_on_host_opt). The md5 walk of the host against the live ref is 143 of 143 equal with 145 host files; the deploy script is not part of the shipped tree.",
+      "With the release tree's deploy-to-ec2.sh (byte-equal to the live base's; sha256 equal to the release blob) staged beside app/ in the scratch copy, the same read ran: 13 families of denominator 13, 59 values (17 measured, 11 inferred, 31 absent each with a reason, 0 claim-less), 7.49 s, peak 110.5 MB, as the gateway instance role."
+    ]
+  },
+  "spec_asserts": "OG-ap-50 step 3(b) and step 7 / ap50.AC3: call app.family_depth.read() ONCE in a fresh process from the candidate scratch tree, and later from the DEPLOYED tree (/opt/opal-gateway), as the gateway instance role.",
+  "world_is": "A fresh process from a tree that lacks deploy-to-ec2.sh cannot complete read(). Phase A is measured with the file staged into the scratch copy (disclosed in PHASE_A_OG-ap-50.json host_read.scratch_staging_disclosure and in the ask). The RUNNING SERVICE is expected to be unaffected because server startup registers the integrations and registry._ACTIVE_BY_TOOL is populated, so the route would read 'measured' channels; NOT CLAIMED: that population, which only an owner-session read of the route (Andrew's, later) or a code read of server.py's startup order can settle. Phase B step 7 needs a ruling: stage the same blob (the release's deploy-to-ec2.sh) beside a scratch copy of the deployed app/ for the driven read and say so in the record (code_sha stays the marker), or amend AC3.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: nothing in production reads the file; the service has the registry. Phase A continues with the staging disclosed; Phase B step 7 needs the issuer's ruling before the driven read."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-19T15:32:43Z",
+  "id": "NFRA_OPLGTW-Z-S407",
+  "one_line": "OG-ap-50 Phase A: the family_depth response embeds up to 200 characters of AWS error text in a value's `source`, and for a denied GetObject that text names the gateway role's ARN with the AWS account number and the instance id; 8 of 59 values in the first host read carry it (12 twelve-digit runs, 12 arn:aws strings in 16881 bytes). The order's widening says 'no data value' and does not mention it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W/ap50_pa/host_leg.json host_read.response_scan (counts only, host 2026-10-19T15:31Z, fresh guarded process, the real read() as the gateway instance role): response_bytes 16881; twelve_digit_runs 12; arn_strings 12; email_shaped_strings 0; s3_uri_strings 29; backfill_status_keys_listed 17; arn in `source` by claim: inferred 6, absent 2; outside the `source` field 0.",
+      "Code: app/family_depth.py _why() returns '%s: %s' % (type(exc).__name__, str(exc)[:200]) and _read_status/_family_values put it into a leaf's `source`; botocore's AccessDenied message reads 'User: arn:aws:sts::<account>:assumed-role/<role>/<instance> is not authorized to perform ...'.",
+      "Cause of the denials, measured: the denied keys are status objects that DO NOT EXIST under blackdiamond (0 of 3 silver scopes hold meta/backfill-status.json), orion (1 of 2) and smartx (0 of 1); S3 answers AccessDenied for a missing key when the caller cannot list that prefix. simulate-principal-policy allows s3:GetObject on the key shape for all six roots tested (W/ap50_pa/status_object_census.json). Also: the sweep rule opal-assets-silver-bd49finsurance-sweep-daily does not exist (ResourceNotFoundException, one absent schedule value).",
+      "The route is owner-gated (the verified owner identity only), so the reader of the text is Andrew; the host record carries counts and masked shapes only."
+    ]
+  },
+  "spec_asserts": "OG-ap-50 step 4: the route 'returns, per vendor family the gateway serves, the sweep schedule, last sweep and earliest served date, each with its claim, and no data value'.",
+  "world_is": "No data value is returned, but the `source` of a value whose AWS call failed carries the AWS error text, and a denied GetObject names the role ARN, the account number and the instance id; the response also lists the s3 URI of each status object (source root and scope name). The signers should read this in the ask (section 2). The release is byte-equal to the cells that produced it and app/family_depth.py is not in the take list, so the text cannot be masked in this order; masking `_why` (class name and a fixed phrase) is a one-function change in a separate cell. NOT CLAIMED: whether the owner-session read through the load balancer shows the same text (it calls the same read()).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the route does not exist until Phase B and then answers only the verified owner. Options for the issuer and the CTO, not chosen here: (a) release as is and mask in a later cell; (b) cut the mask first (family_depth._why) and re-base this order on it. The ask carries the disclosure so the three halves sign knowing it."
+}
+```
