@@ -26038,3 +26038,79 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W303-S1 -- AR-g-166: the rendered price table names the vendor tier ycharts on a priced Opal page, and the R8 wording test forbids that word there, so AR166-g-AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W303-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~303",
+  "surfaced_at": "2026-10-19T16:12:27Z",
+  "one_line": "AR-g-166 is built (commit 3b589f17ea) and AC1 and AC2 pass. AC3 cannot pass as written: the table's Source column prints the tier name ycharts for CCC on the priced Opal page, and test_opal_producer_page_wording.py (in the AC3 regress set) asserts the vendor word is absent from every priced Opal page. Three of that file's tests fail on this page.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-166 cell text: Source is the tier that answered (estate, yfinance or ycharts), and the rendered report page contains the three tickers and the three tiers. R8, stated in opal_producer.py and in test_opal_producer_page_wording.py: a priced Opal page names no vendor. AC3 runs that test file.",
+  "world_is": "The two requirements cannot both hold on the same page. The layout renders the PRICE_TABLE value, so the page carries <td>ycharts</td> for CCC. test_opal_producer_page_wording.py::test_priced_page_names_no_vendor_and_no_time_budget, ::test_priced_package_page_names_no_vendor and ::test_unavailable_lines_use_the_opal_wording fail on that page. The test file is outside this order's grant, so it was not edited, and the tier was neither renamed nor dropped from the table. The CTO or the issuer must rule which requirement gives.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_page_wording.py@3b589f17ea lines 60-116: the R8 test asserts 'ycharts' not in page.lower() on the priced page, and not in the unavailable element",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@3b589f17ea compute_element PRICE_TABLE branch: the Source cell is the record's source tier value",
+      "pytest of test_opal_producer*.py and test_layout*.py on the worktree at 3b589f17ea: 4 failed, 118 passed; the failures are the 3 wording tests above and the element-list test (row IRPT_ANLREQ-D2-W303-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W303-S2 -- AR-g-166: the producer's element-list test pins the exact id list of the run, so the new opal.prices.holdings element fails it, and that test file is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W303-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~303",
+  "surfaced_at": "2026-10-19T16:12:27Z",
+  "one_line": "test_opal_producer.py::test_run_json_element_trace_every_entry_carries_method_inputs_coverage_status_reason asserts the run's element ids equal the map's ids plus the three classified ids. AR-g-166 appends one more element, so the assertion fails with 'Left contains one more item: opal.prices.holdings'. The file is in the AC3 regress set and outside this order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-166: the new element is always present in the opal map like the classified three, and the report's element count rises by one in both branches; the pair must say so. AR166-g-AC3 runs test_opal_producer.py.",
+  "world_is": "test_opal_producer.py lines 194-200 hard-code the expected id list. The element list changes by exactly one id in the commit, and the test's own message names it. Updating the expected list is the owner's act and needs test_opal_producer.py in the grant. It was not edited here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py@3b589f17ea lines 194-200: ids == expected + the three classified ids",
+      "pytest output on the worktree at 3b589f17ea: 'AssertionError ... Left contains one more item: opal.prices.holdings'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W303-S3 -- the worktree is sparse-checked out, so the channel schema the premise names is tracked at HEAD but not on disk
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W303-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~303",
+  "surfaced_at": "2026-10-19T16:12:27Z",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-303 has core.sparseCheckout true, and org/surprise_channel/ is not materialized on disk. The row schema org/surprise_channel/schemas/investigation_item.schema.json is tracked at HEAD and at box/dell2 but cannot be read from the worktree. The commit gate reads it from the index, so the row gate is not affected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-166 and the worker face: the row schema is named at org/surprise_channel/schemas/investigation_item.schema.json, and the worker confirms org/ and .tools/ exist in its worktree.",
+  "world_is": "org/ and .tools/ exist, so the TREE-OK premise holds. org/surprise_channel/ does not exist on disk. git ls-tree HEAD and git ls-tree box/dell2 both list the schema blob, and the gate's _schema() reads the staged index. The enum values were read from HEAD with git show: class OBSERVATION or BLOCKING, hazard_standing ARMED or INERT. No schema was copied into the tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD org/surprise_channel/schemas/ at wk-IRPT_ANLREQ-303 lists investigation_item.schema.json (blob 696468806e) and remediation_row.schema.json; positive control: .tools/surprise-row-gate.py is listed at HEAD",
+      ".tools/surprise-row-gate.py _schema() at @3b589f17ea (lines 2080-2092): reads the schema from the staged index and refuses when it is unreadable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
