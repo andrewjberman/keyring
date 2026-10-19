@@ -30374,3 +30374,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "W164-S1 is cured and its two cures are recorded for the next worker cut (cut the worktree at the trunk tip that holds the order; sparse cone includes org/modules/graph, org/devices and infra/aws/lambda/ci/function-map). W164-S2 stays 2048 on purpose and is carried to the memory guard cell."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T20:43:37Z",
+  "id": "NFRA_OPLGTW-Z-S426",
+  "one_line": "Issuer ruling on worker ~165's BLOCKING row Z-W165-S1 (OG-ms-1): registering master 08403355 in data_entitlement.MASTERS made client_adapter_schwab's two alias gates admit it, so test_ogcl1_ac12 failed and the client_* tools would have widened to a master Andrew did not name; ruled: the adapter keeps its own _ALIAS_MASTERS (the two contract masters), a behaviour-preserving edit; landed and graded",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W165-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~165 report: with 08403355 in MASTERS the seven-file test set read 2 failed, 72 passed; test_ogcl1_ac12 failed 'assert 3 == 2' at tests/test_og_cl1.py:506 because client_adapter_schwab.py:152 (mint_alias) and :186 (_index) test `master not in de.MASTERS`.",
+      "ruling executed: `_ALIAS_MASTERS = (\"08242234\", \"08335338\")` in the adapter, both gates on it, the unused data_entitlement import removed (ruff F401); re-cut branch wk-NFRA_OPLGTW-165b (cherry-pick 0be402e218 plus a844325b8e), drained as 9095ce68f39; ms1.AC1 and ms1.AC2 PASS on my runs in that worktree (73 passed, only test_ogz1_ac08 failing, the carried route-set pin).",
+      "the worker's own row text is preserved on the abandoned branch wk-NFRA_OPLGTW-165 at e78050c1d78; it was not carried because the append-only row gate refused deleting a committed row, and this row cites it instead."
+    ]
+  },
+  "spec_asserts": "OG-ms-1 as first cut: the client_* tools keep refusing 08403355 as master_not_registered while MASTERS gains it, and the adapter is not touched.",
+  "world_is": "Both could not hold: the adapter read de.MASTERS as its alias registry. The first cut's 'do not touch the adapter' was the issuer's error. The client_* tools still refuse 08403355 after the ruling; whether they should serve it is a separate decision for Andrew, not made here. NOT CLAIMED: that no other module reads MASTERS as a client-side registry (the worker's Grep over app/ found client_adapter_schwab.py:152,186 only; text-only hits in DATA_CATALOG.yaml and datasets.json).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard (the client tools silently reading a master Andrew did not name) did not reach any release: it was caught by test_ogcl1_ac12 in the worker's tree and cured before the drain; the cured adapter is what batch15 carries."
+}
+```

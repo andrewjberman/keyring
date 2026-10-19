@@ -82,6 +82,7 @@ Report once in your final message: the commit hash, the output of both checks, t
 - A2 (issuer, 2026-10-19 ~20:4xZ): A1 named the adapter edit in the face but not in `<paths>`, so the lane gate refused the worker (my cut defect, as the gate said); the path is now in `<paths>`. Two facts from the worker's second report, ruled: (1) the commit gate demanded removing the then-unused `from . import data_entitlement as de` from the adapter (ruff F401): accepted; (2) the append-only gate refused deleting the worker's committed channel row `Z-W165-S1`, which is right: the branch is re-cut from trunk (cherry-pick of the worker's `4f04fbb840` plus the adapter edit) so the row is not carried, and the issuer files a citing ruling row. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-F</workstream>
 <slot>~165</slot>
