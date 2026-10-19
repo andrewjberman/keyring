@@ -1,0 +1,13 @@
+{
+  "prd": "NFRA_FIDUPL_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "3324161d528d9573a7544ce9e30c71a80bd91bbb",
+  "half": "ratified-text",
+  "half_hash": "2f70753360a5d0dc9ba13c3da26e80b2b888f8953fc0b6a55cd11c607f35dd23",
+  "endpoint_hash": "9d65d18d9e7d746a2564a64af1aa4f2d43b97a66105a31d5611b36703dd20498",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_FIDUPL_v0.1_RATIFIED_TEXT_20261019.md@6c7c8bdf80",
+  "signed_by": "3.0.0_SA_CVO~DELL1",
+  "signed_at": "2026-10-19T18:20:03Z",
+  "reason": "ENDPOINT unconfirmed (open call e141 OPEN); FWD-2 and FWD-4 DONE WHEN are waits (rule 27 L2)"
+}
