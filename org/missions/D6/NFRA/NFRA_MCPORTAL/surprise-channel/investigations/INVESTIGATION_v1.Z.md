@@ -3545,3 +3545,51 @@
   "notes": "The choice changes the comparison: with alyssa, page_holder_tools would hold 4 tools. Recorded so the issuer can name the intended principal."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S6",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T19:07:17Z",
+  "one_line": "AMENDMENT 1 step 2 picks the integration with the most page tools, and two integrations tie at 6: portal_index and ycharts. The order's tie rule is absent; portal_index was taken as first in page order (kind, then id).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served _compute over SSM (command 6ced0404-2369-4c13-884a-0eb20f784509, import app.server first): INTEG|portal_index|6 ; INTEG|ycharts|6 ; INTEG|schwab|5 ; INTEG|globgrph|2 ; INTEG|opal_discover|2 ; INTEG|opal_portal|2 ; INTEG|blackdiamond|1 ; INTEG|advi_billing|NO-CHANNEL-ON-PAGE.",
+      "Integration directories at the served app: advi_billing, blackdiamond, globgrph, opal_discover, opal_portal, portal_index, schwab, ycharts (INTEGDIRS line of the same run)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 step 2: among integration directories (excluding m365), pick the one whose page channel lists the most tools; an integration with no channel on the page is taken to the next.",
+  "world_is": "portal_index and ycharts both list 6 tools on the page. advi_billing has no channel on the page and is skipped. The tie is not decided by the order text.",
+  "notes": "Chosen: portal_index, first in the page's own order. Its code_tools (the names its register() passes, read from the deployed artifact) equal its page tools, so the choice does not change AC1's equality for this channel. Recorded so the issuer can name the intended tie rule."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S7",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T19:07:17Z",
+  "one_line": "The sparse worktree C:/tmp/mp-gw-16 now carries infra/aws/ec2 and shows 11 smartx-exporter scripts as modified (CRLF in the working copy against LF in the index); the commits here name paths and do not stage them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat in C:/tmp/mp-gw-16 at HEAD a324cb607e0: 11 files changed, 3109 insertions(+), 3109 deletions(-); the warnings name infra/aws/ec2/smartx-exporter/smartx-workspace/scripts/*.py and config.py: 'CRLF will be replaced by LF the next time Git touches it'.",
+      "The files were materialised by the cone change of the issuer's provisioning fix (row NFRA_MCPORTAL-Z-W16-S1); this worker wrote none of them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worktree's write surface is the order's paths (deliverables and the surprise channel); a worker commits only those paths.",
+  "world_is": "Eleven files outside the write surface show as modified in the worktree from line-ending conversion. They are not part of any commit made here.",
+  "notes": "Not repaired and not staged. Every commit in this worker's chain was made with explicit paths through safe-commit.sh."
+}
+```
