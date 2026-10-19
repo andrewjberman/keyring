@@ -10574,6 +10574,90 @@ carries none.
     "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_coverage names one of those linked rows.",
     "world_is": "The coverage code reads the gold canonical_shape for the report date of each fund, which no linked row names. K1-03 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/, the table that answers the report date.",
     "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W62-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~62",
+    "surfaced_at": "2026-10-19T17:03:14Z",
+    "one_line": "The commit-time naming gate printed NAMING ERROR (function-map folder missing) on this sparse worktree and the commit still landed rc 0 with the staged names ungraded: infra/aws/lambda/ci/function-map/ is not in this worktree's sparse set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-h-1 bound 5 says a commit through the naming gate needs a staged .json under the project home if it must derive the project; the face names no sparse-set condition for the naming gate, so the code commit is expected to pass a graded naming check.",
+    "world_is": "safe-commit.sh of 9bf7759b0fe (workflows/gateway_battery/partition_windows.py and its tests) printed '[naming-gate] NAMING ERROR function-map folder missing: C:/tmp/wk-mcpindex-62/infra/aws/lambda/ci/function-map/' and then the commit line '[wk-NFRA_MCPINDEX-62 9bf7759b0f]' with rc 0; the naming check graded no name.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output of commit 9bf7759b0fe in C:/tmp/wk-mcpindex-62 (2026-10-19 ~17:0xZ): the [naming-gate] NAMING ERROR line, then msg-verify MATCH and rc=0",
+        "test -d infra/aws/lambda/ci in C:/tmp/wk-mcpindex-62 printed ci-absent; git sparse-checkout list (read 2026-10-19T17:03Z) names .tools, infra/aws/ec2/opal-gateway/app, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W62-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~62",
+    "surfaced_at": "2026-10-19T17:03:14Z",
+    "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on commit 9bf7759b0fe: its danger map is 93.0h old (STALE) and it scanned 0 of 2 files, so it could not clear the staged diff.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-h-1 declares comp-adversary DECLARED-NOT-APPLICABLE and asserts no lens beyond the criteria, so no reflex answer is expected in the commit path.",
+    "world_is": "safe-commit.sh of 9bf7759b0fe printed a risk-reflex block: 'danger map: 93.0h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'NOT-DECIDABLE: danger map STALE', 'WITHIN BUDGET: scanned 0 of 2 file(s)'; its REBUILD line names the MAIN tree's map and builds nothing in this worktree. The commit landed rc 0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output of commit 9bf7759b0fe in C:/tmp/wk-mcpindex-62: the [risk-reflex] block printed before the gates ran, with the INVOCATION line cmd=diff days=7 top=8 over the two staged paths",
+        "git show --stat 9bf7759b0fe: 2 files changed, 352 insertions(+), both staged paths in the scanned set"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W62-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~62",
+    "surfaced_at": "2026-10-19T17:03:14Z",
+    "one_line": "The row schema the face names (org/surprise_channel/schemas/investigation_item.schema.json) is not in this sparse worktree, so the row shape was copied from the rows already in this channel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-h-1 section 3 and the worker face name org/surprise_channel/schemas/investigation_item.schema.json as the row schema, to be read before a row is appended.",
+    "world_is": "In C:/tmp/wk-mcpindex-62 the path org/surprise_channel/schemas/investigation_item.schema.json does not exist; the sparse set holds no org/surprise_channel folder. The row fields used are those of the rows already in INVESTIGATION_v1.md; the row gate is the commit-time check.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test -e org/surprise_channel/schemas/investigation_item.schema.json in C:/tmp/wk-mcpindex-62 printed schema-absent (read 2026-10-19T17:03Z)",
+        "git sparse-checkout list in C:/tmp/wk-mcpindex-62 (read 2026-10-19T17:03Z): no org/surprise_channel entry"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W62-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~62",
+    "surfaced_at": "2026-10-19T17:03:14Z",
+    "one_line": "The face says the worktree was cut from box/sitez at the amendment commit ec6b4b428d; the branch HEAD at the start was 060b3afa809, a descendant of ec6b4b428d with 44 commits between them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "The worker face states the worktree is cut from box/sitez at the amendment commit ec6b4b428d.",
+    "world_is": "git merge-base --is-ancestor ec6b4b428d HEAD returned true at the start of this order, and git rev-list --count ec6b4b428d..HEAD returned 44 before the work commit. The amendment commit is carried in full; the cell's files are unaffected by the 44 commits.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git merge-base --is-ancestor ec6b4b428d HEAD in C:/tmp/wk-mcpindex-62: rc 0 (read 2026-10-19T17:0xZ)",
+        "git rev-list --count ec6b4b428d..HEAD in C:/tmp/wk-mcpindex-62: 44 before the work commit 9bf7759b0fe (45 after)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
