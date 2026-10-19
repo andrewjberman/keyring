@@ -42181,3 +42181,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The runner's flat directory contents are not read in this worktree. Inferred, not measured: the sidecar is present on the runner."
 }
 ```
+
+## IRPT_BCKEND-D2-S237 -- The first organic 49F fire on the new grant ran clean: 1 invocation, 0 errors, no denied calls in the log, dai
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S237",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T13:05:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Closes the item S220 and S224 left open (their disarm_owner is me): the first ORGANIC scheduled 49 Financial holdings-performance fire on the IB-pr-614 grant. Read by me on 2026-10-19 ~13:00Z with checks/monday_49f_read.py 2026-10-19 and by hand. The fire ran at 11:30Z: CloudWatch AWS/Lambda for irpt-holdings-performance-lambda in 11:00Z to 12:30Z reads Invocations 1, Errors 0 (the Friday 2026-10-16 negative control read 4 and 3); the function CodeSha256 is still LiDXhN74... (the Act 1 version); a log filter for AccessDenied, ERROR and Traceback over that window returns 0 events. The day written is the trading-day frontier, as-of 2026-10-16 (Friday is Monday's answer): the daily key and the manifest.json and manifest parquet under date=2026-10-16 all carry LastModified 2026-10-19T11:30:20Z. The manifest reads complete true, schema 1.2, split_adjust declared true and status SPLIT_ADJUSTED, with split_days 0 and ratio_absent empty (no split on the day, so this fire did not exercise a split adjustment itself), not_computable_count 0. So the split-adjust transactions read that the S217 AccessDenied was raised on now passes on the scheduled fire. Not claimed: that a day WITH a split is adjusted correctly by the organic path (the 47-day restatement of Act 2 covered that and was graded earlier); anything about Inflection or Cottonwood. My own defect found while reading: my first helper run passed a repo path as its date argument (the window line printed '.T11:00Z') and its manifest check looked under the fire date's partition, which does not exist (the run's partition is the as-of date); I re-ran with the date and fixed the helper to read the as-of partition.",
+  "one_line": "The first organic 49F fire on the new grant ran clean: 1 invocation, 0 errors, no denied calls in the log, daily and manifest written for as-of 2026-10-16, split_adjust declared and SPLIT_ADJUSTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/monday_49f_read.py 2026-10-19 -> FN OK, METRIC invocations 1.0 errors 0.0, NEWEST date=2026-10-16 LastModified 2026-10-19T11:30:20+00:00, MANIF asof=2026-10-16 manifest_keys=2, VERDICT PASS_CANDIDATE, run by 2.0.0_SA_COO~P2 on dell2 2026-10-19",
+      "s3://opal-data-49financial/irpt/49financial/gold/holdings_performance_manifest/date=2026-10-16/manifest.json read by 2.0.0_SA_COO~P2: complete true, split_adjust.declared true, status SPLIT_ADJUSTED, split_days 0"
+    ]
+  },
+  "spec_asserts": "The organic Monday 11:30Z fire has not run on the new grant and its result is owed (S220, S224).",
+  "world_is": "The fire ran at 11:30Z on the new grant and finished clean; the day it wrote is the Friday frontier."
+}
+```
+
+## IRPT_BCKEND-D2-S238 -- The Inflection gold chain has stopped at INF_C_01 on three runs in a row (NNA coverage-regression guard), no sentinel since 2026-10-16
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S238",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-19T13:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The Inflection gold chain (chain:full) has stopped at step INF_C_01 on three consecutive scheduled runs (2026-10-17, -18, -19) on its NNA PARTITION COVERAGE REGRESSION guard, so no pipeline-complete.json sentinel has been written since 2026-10-16T12:56:43Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/gold/logs/chain_full_20261019_113300.log: CHAIN chain:full FAILED at INF_C_01 (exit=1); the INF_C_01 error line reads I_C01 failed: NNA PARTITION COVERAGE REGRESSION -- 2 account(s), 2 (partition, account) row(s) of SERVED NNA ...; read by 0.7.0_AE_CloudOps~IB2 on dell2 2026-10-19",
+      "the same FAILED at INF_C_01 (exit=1) line in chain_full_20261018_113300.log (line 37189) and chain_full_20261017_113309.log; chain_full_20261015 and _20261016 carry no such line",
+      "s3://opal-data-inf/gold/meta/pipeline-complete.json LastModified 2026-10-16T12:56:43Z; gold/meta/pipeline-failed.json LastModified 2026-10-19T12:41:49Z with run_date 2026-10-19, failed_at 2026-10-19T12:41:48Z, exit_code 1 (keys only read)"
+    ]
+  },
+  "spec_asserts": "The scheduled Inflection gold chain completes each day and writes the pipeline-complete sentinel (it did on 2026-10-15 and 2026-10-16).",
+  "world_is": "On 2026-10-17, 2026-10-18 and 2026-10-19 the chain stopped at INF_C_01 (exit 1) on a data guard (a coverage regression of 2 accounts / 2 rows of served NNA), wrote pipeline-failed.json and NOT the sentinel; steps after INF_C_01 did not run. This seat did not examine the guard's cause and found no link to the Scope feed step, which ran earlier in the same chain and finished clean on 2026-10-18; the owner of the INF gold chain is not known to this seat.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```

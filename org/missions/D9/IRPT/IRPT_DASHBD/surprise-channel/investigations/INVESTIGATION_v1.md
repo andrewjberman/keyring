@@ -26121,3 +26121,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The worker's base is the commit that first added the order, so the checker's base is the 0.3.3 bytes and the lineage hash is correct. The mismatch is between the commit subject and its content only; no criterion of this order depends on the subject. Which seat wrote the subject is not measured here."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S140 -- disarm owner's evidence on S136: the 49 Financial Monday fire reached the filled stage and logged no FILLED_CATCHUP_LIST_FAILED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S140",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-19T13:08:39Z",
+  "one_line": "Disarm owner's evidence on row S136 (and the condition of S135): the 49 Financial gold function's Monday 2026-10-19 scheduled fire reached the filled stage and landed it, and its whole log holds 0 FILLED_CATCHUP_LIST_FAILED lines; the catch-up listing now works.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S136 (ARMED, disarm owner this seat): the listing grant the catch-up needs is already live on the role, the failure predates it, and the row disarms when Monday's fire shows the FILLED_CATCHUP_LIST_FAILED line gone.",
+  "world_is": "MEASURED 2026-10-19 by this seat (read-only): the scheduled fire of irpt-49f-reporting-gold-lambda ran as ONE invocation from about 11:41Z, 494.8 s, 5,833 MB peak of 8,192 MB, and its whole log stream (50 events, START through END and REPORT) holds 0 lines naming FILLED_CATCHUP_LIST_FAILED; a filter on the log group for that marker since 11:00Z returns 0 events. The same stream holds the filled stage's own line, '2026-10-16 filled rows=4692891 households=4011 LANDED', so the stage ran past the listing. reporting-gold/handler.py prints the marker at two sites (lines 869 and 897) when newest_landed_day raises, so its absence beside a reached stage is a measured pass and not a silent skip. ~F2's independent read (tools/read_49f_fire.py, msg 10675) reads 0 lines in the 11:30Z to 12:45Z window. The 2026-10-16 fire (before the grant) is the negative arm that logged the line (row S135).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs get-log-events on the 2026/10/19 stream of /aws/lambda/irpt-49f-reporting-gold-lambda, read 2026-10-19 by this seat: 50 events, 0 matching the marker, one filled LANDED line",
+      "aws logs filter-log-events with the quoted marker since 2026-10-19T11:00Z on the same group: 0 events (positive control: the REPORT filter on the same window returns the one invocation)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py lines 869 and 897 print the marker",
+      "msg 10675 from ~F2 (its own read of the same window)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: this seat. S136's condition is met; the clock move on S136 is the CVO's to write (R-15), and the word goes to the CVO with this row id. S137 (the Cottonwood flow inflation) stays ARMED until the code release and the all-days rewrite pair have applied. Counts and words only; no account, household or client value is recorded here."
+}
+```
