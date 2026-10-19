@@ -635,6 +635,32 @@ most likely deliberate act is the one Z-S4 invites.**
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Z-S17 stays ARMED until the edit lands. Its next fire is the 2026-10-20 11:00Z run. Write surface: 0.0.3_BG_BBGTerminal (the pipeline's owner). It was ordered before this row (CTO~Z 2026-10-19 ~11:4xZ) to land the fix before that run, with a dry-run in which the precondition is forced to fail and the log then shows ETF, CONSTITUENTS and PRICE LEG EXIT CODE lines. Z-S17 disarms on that run's log. Z-S19 needs no further act."
+ },
+ {
+  "id": "ETFS_POSITIONING-Z-S21",
+  "project": "ETFS_POSITIONING",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-19T12:30Z",
+  "one_line": "Disarm-owner disposition on Z-S18: the policy stands and nothing is loosened; the residual after Z-S20's fix is the cma models leg failing each morning, for as long as Smart App Control judges the cma blpapi file instance unreputable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+   "ETFS_POSITIONING-Z-S18"
+  ],
+  "spec_asserts": "Z-S18 asked whether the policy is lifted, the interpreter allow-listed, or the pull moved to an allowed interpreter, and named this seat the owner of that choice.",
+  "world_is": "Measured 2026-10-19 ~11:15-11:45Z by 0.0.0_AB_MSTR~Z, session not elevated (WDAC_BLPAPI_CMA_FINDING_20261019.md @56ff4365a5). Smart App Control is in ENFORCE (VerifiedAndReputablePolicyState=1). It blocks ffiutils.cp311-win_amd64.pyd (unsigned) when loaded by C:/Anaconda/envs/cma/python.exe. cma's and PY_AWS's copies have the same SHA-256; PY_AWS's loads, cma's and a copy of it under %TEMP% are blocked, so the verdict is per file instance. Last good cma pull 2026-10-18 07:03 local, first bad 2026-10-19 07:01 local. DISPOSITION: (a) the policy is NOT lifted: Smart App Control cannot be re-enabled without resetting Windows, and the choice is Andrew's; (b) the interpreter is NOT allow-listed and blpapi is NOT preloaded in place: 1.0.0_SA_CTO~Z ruled no preload at msg 35951/35952 as a workaround of a code-integrity control; (c) the pull is NOT moved: the cma env carries tia, which PY_AWS lacks (READ_HERE s.3, two interpreters by design). RESIDUAL: after Z-S20's route lands, the PY_AWS landing legs run on a cma DOWN and Z-S18 costs only the cma models leg, each morning, until a sanctioned route exists. NOT KNOWN: whether that leg can be backfilled for a lost morning (the CTO asked 0.0.3_BG_BBGTerminal); why the file instance was allowed on 10-18 and not on 10-19.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/tier0_exec/0.0.0_AB_MSTR/deliverables/WDAC_BLPAPI_CMA_FINDING_20261019.md @56ff4365a5: registry state, CodeIntegrity events 3077/3033, SHA-256 match, the three load tests, the daily-pull log dates",
+    "1.0.0_SA_CTO~Z msg 35952 (no in-place preload; the cma leg waits on a sanctioned route) and msg 35956 (the recommended disposition), both read by this seat",
+    "C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261018_070002.log (cma pull ran, DAPI UP) and bbg_tplus1_20261019_070002.log (WinError 4551), both read by this seat"
+   ]
+  },
+  "notes": "ARMED because the residual repeats unattended every morning while the policy stands. It disarms on one of: a signed or reputable build of the blocked pyd is landed in the cma env by that env's owner (0.0.3_BG_BBGTerminal), or Andrew's recorded word on Smart App Control. This seat has the infrastructure half: the candidate sanctioned route is a clean reinstall of the vendor blpapi wheel into the cma env, to be tried only on the env owner's word; it is a candidate, not a measured fix. Nothing was changed on the box."
  }
 ]
 ```
