@@ -798,6 +798,8 @@ def validate(reg_dir=None, systems_file=None):
     # whose placeholders are not exactly its params, or a reader that is not a project.
     leg_obj = reg.get("legacy_addresses")
     alias_buckets = {a["spelling"] for s in scopes for a in s.get("aliases", []) if "bucket" in a.get("planes", [])}
+    # A pre-canon PLATFORM bucket (bucket.legacy_platform) is a legal bucket for a legacy READ row and nowhere else.
+    legacy_platform = set(schema["bucket"].get("legacy_platform", []))
     seen_leg = set()
     for i, r in enumerate((leg_obj or {}).get("legacy_addresses", []) if isinstance(leg_obj, dict) else []):
         where = "legacy_addresses.json[%d]" % i
@@ -816,8 +818,8 @@ def validate(reg_dir=None, systems_file=None):
         if lkey in seen_leg:
             refuse(where, "key", "%r is a repeated key" % (lkey,))
         seen_leg.add(lkey)
-        if r["bucket"] not in known_buckets | alias_buckets:
-            refuse(where, "bucket", "%r is not a bucket scopes.json or bucket.standing_shared knows" % (r["bucket"],))
+        if r["bucket"] not in known_buckets | alias_buckets | legacy_platform:
+            refuse(where, "bucket", "%r is not a bucket scopes.json, bucket.standing_shared or bucket.legacy_platform knows" % (r["bucket"],))
         if r["shape"] not in ("object", "prefix"):
             refuse(where, "shape", "object or prefix")
         if isinstance(tmpl, str) and tmpl:
