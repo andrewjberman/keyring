@@ -42661,3 +42661,51 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "49 Financial refused (real loss, held by the CTO's ruling); Inflection and Cottonwood published with business date and custody as-of 2026-10-16."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W460-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~460",
+  "surfaced_at": "2026-10-19T22:05:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-cw-4 order says record AC1 and AC2 output before the commit, but AC2 reads committed HEAD against HEAD~1, so it cannot pass before the commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r260/p260_cells.py@5390480a9c1 (ac2: git show HEAD~1:RUNNER and git show HEAD:RUNNER; fails when the two are byte-identical)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-cw-4.a-rekeyed-previous-client-key-is-retained-not-dropped.md@5390480a9c1 (criteria section, AC2 and AC3 both name HEAD~1)",
+      "pre-commit run on worktree base 66ac649890f: AC2 prints 'FAIL: directory_runner.py is identical to the base' (recorded verbatim in deliverables/0.9.0_WK_IRPT_BCKEND~460/IBcw4_criteria_output.txt)"
+    ]
+  },
+  "spec_asserts": "Worker face step 2: run AC1 and AC2 and record their output BEFORE the single commit; run AC3 after it.",
+  "world_is": "AC2 grades the committed change (HEAD against HEAD~1), so before the commit it can only FAIL by construction. AC2's verdict exists only after the commit; the pre-commit FAIL is recorded verbatim and the post-commit AC2 run is reported separately."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W460-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~460",
+  "surfaced_at": "2026-10-19T22:05:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-cw-4 rule 1 unions the account ids of ALL a key's previous entries, while rule 3 says a previous entry with no account ids is NOT retained; the two disagree for a key with one account-less previous entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-cw-4.a-rekeyed-previous-client-key-is-retained-not-dropped.md@5390480a9c1 (worker face rules 1 and 3)",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py@66ac649890f (base, carry_forward_removed and entry_key)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_directory_runner_retained_key.py (worktree; test_a_previous_entry_with_no_account_ids_is_held, third arm)"
+    ]
+  },
+  "spec_asserts": "Rule 1: a key is retained iff A (the union of account ids over ALL its previous entries) is non-empty and a subset of ONE current entry. Rule 3: a previous entry with no account_ids is NOT retained.",
+  "world_is": "For a key with one account-bearing previous entry and one account-less previous entry, rule 1 alone would retain it and rule 3 forbids it. The worker implemented the fail-closed reading (any account-less previous entry of the key means not retained) and pinned it in a test. The CTO should confirm this reading."
+}
+```
