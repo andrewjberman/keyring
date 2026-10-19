@@ -26412,3 +26412,87 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W305-S1 -- The filing-hint commit f78ea50ef87d (AR-y-354) is not a clean cut from PROD's head: it conflicts with origin/PROD in four files and is left out of the recut
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W305-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~305",
+    "surfaced_at": "2026-10-19T19:04:06Z",
+    "one_line": "The filing-hint commit f78ea50ef87d (AR-y-354) has parent a6b83f69, an ancestor of origin/PROD 8cd45f623bdf but not its head; it does not apply to origin/PROD (four files, 14 conflict hunks) and is not present on PROD or DEV by content, so the recut leaves it out.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-411 cell, step 1 and step 2: the filing-hint commit is cut from PROD and never landed on DEV; if it cannot apply it is LEFT OUT with its reason in r58/LEFT_OUT.json.",
+    "world_is": "git merge-tree --write-tree origin/PROD f78ea50ef87d exits 1 with conflicts in src/pages/TicketCenter/AnalysisRequestParts.tsx, TicketCenter.tsx, __tests__/filing-hint.test.tsx and analysisRequest.ts; a trial on the recut at a9cc52661e conflicts the same four files (2, 7, 3 and 2 hunks). git cherry origin/PROD and git cherry origin/DEV both print + for f78ea50ef87d. origin/PROD derives keptHints from filingChoices kind 'no' (TicketCenter.tsx), the form before this commit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git merge-tree --write-tree origin/PROD f78ea50ef87d (portal worktree, origin/PROD 8cd45f623bdf): rc 1, four CONFLICT (content) lines",
+        "git rev-parse f78ea50ef87d^ = a6b83f692084b2f599d0b6142aa61c75bb735a42; git log --oneline origin/PROD..f78ea50ef87d lists only f78ea50ef87d",
+        "git show --stat f78ea50ef87d: 5 files, 274 insertions, 38 deletions",
+        "git cherry origin/PROD f78ea50ef87d and git cherry origin/DEV f78ea50ef87d: both print + f78ea50ef87d"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W305-S2 -- The filing-hint commit's own message says it must not ship before door release AR-g-68; the recut does not carry it and no door state was read
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W305-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~305",
+    "surfaced_at": "2026-10-19T19:04:06Z",
+    "one_line": "The commit message of f78ea50ef87d says the Keep equal pair must not ship before door release AR-g-68 is applied, since the server refuses it with CORRECTIONS_INVALID until then; the cell names no door-release precondition, and this worker did not read the door (no live call).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-411 cell, step 2: a filing-hint commit is applied when it applies cleanly and breaks no test; the cell names no precondition on the door.",
+    "world_is": "The message of f78ea50ef87d (author 0.9.0_WK_IRPT_ANLREQ~154, 2026-10-15) reads: Not shipped before the door release (AR-g-68) is applied: the server refuses the equal pair with CORRECTIONS_INVALID until then. git grep for CORRECTIONS_INVALID under src on origin/PROD 8cd45f623bdf returns no line. The commit is left out of the recut, so this row governs any later recut that carries it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log -1 --format=%B f78ea50ef87d (the commit message, read at the commit)",
+        "git grep -n CORRECTIONS_INVALID origin/PROD 8cd45f623bdf -- src: no match (rc 1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W305-S3 -- The Bash permission denied the order's throwaway-reset chain, and a --no-commit trial left no cherry-pick state, so commit a9cc5266 was made by git commit with the -x trailer
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W305-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~305",
+    "surfaced_at": "2026-10-19T19:04:06Z",
+    "one_line": "The Bash permission refused one compound command that held the branch switch, a git cherry-pick -x --no-commit and git reset --hard origin/PROD; the trial was undone with git reset --merge, and the recut commit a9cc52661e was made with git commit carrying the cherry-pick -x trailer, not with git cherry-pick -x.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-411 step 2: git cherry-pick -x <sha> applies c8fefec6909c, and the throwaway state after a trial is cleared with git reset --hard origin/PROD.",
+    "world_is": "The refused compound command was not run in part or in whole. A --no-commit cherry-pick of c8fefec6909c applied cleanly; git cherry-pick --abort then returned rc 128 (no cherry-pick in progress, since --no-commit writes no CHERRY_PICK_HEAD); git reset --merge returned rc 0 and status was clean. The commit a9cc52661e carries the original author and author date, the original message and the line (cherry picked from commit c8fefec6909c...); git range-diff pairs it with c8fefec6909c as the same change, differing only in the trailer and the index lines.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat a9cc52661e: 4 files, 195 insertions, 27 deletions (equal to git show --stat c8fefec6909c)",
+        "git range-diff f70745362d8b..c8fefec6909c 8cd45f623bdf..a9cc52661e: pair 1:, '!' (message trailer only)",
+        "portal worktree status after git reset --merge: clean; HEAD a9cc52661e"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
