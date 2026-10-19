@@ -10285,6 +10285,140 @@ carries none.
         "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml silver_datasets entity opal_data_portal_v2_served_security_scanner (prefix json/security_scanner/latest/) @060b3afa809"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "MX-k-3 AC2 cannot pass as written: h_check.py classes schwab_prepare_download as a reader (write_class UNCLASSIFIED, not in MUTATING_UNCLASSIFIED), so it needs a nonempty or empty answer case, but the tool mints a single-use download ticket record on every successful call; the face's sender rule (can write or send: preview only) forbids that case, and the tool has no read-only definition line to cite.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 step 1 and decomposition R23.4 ruling 6: a tool is a sender if it can write or send, and gets preview cases only; an UNCLASSIFIED tool is a reader only when its definition shows it only reads. h_check.py is_sender() names opal_data_refresh_upload as the one mutating UNCLASSIFIED tool, and k3.AC2 requires every reader to have a nonempty or empty case.",
+    "world_is": "schwab_prepare_download (integration.py:792-886) builds a ticket request and, inside schwab_audit.release, calls the wired ticket_issuer (make_ticket_issuer at integration.py:1112), whose mint() calls store.put_runtime(..., condition=IF_ABSENT) at export.py:122 and returns a download URL. The tool declares class SAFE (integration.py:107-108) and the census reads write_class UNCLASSIFIED. Its only non-writing path is the catalog_id format refusal (integration.py:803-805), which yields no answer. Measured on 0.9.0_WK_NFRA_MCPINDEX~69: k3.AC1 RESULT PASS; k3.AC2 RESULT FAIL, readers without an answer case [schwab_prepare_download], 1 of 11 tools. ARMED hazard: a nonempty case for this tool at the drain mints a ticket; disarm by keeping it preview-only or by a ruling on the class.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:792-886 @060b3afa80 (prepare_download body; ticket request 854-859; issuer call 867; release 878)",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/export.py:105-125 @060b3afa80 (mint(); store.put_runtime with IF_ABSENT at line 122)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/checks/h_check.py:418-422 @060b3afa80 (MUTATING_UNCLASSIFIED and is_sender)",
+        "k3.AC2 run 2026-10-19 on org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~69/cases_assets.json: 'RESULT: FAIL ... readers without: [schwab_prepare_download]'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "Census links schwab_dim_asset to schwab_describe_dataset, but the tool reads no bucket or prefix: it answers from the pinned schema (DATASET_SCHEMAS and datasets.json) after the grant check, so the linked row names a source this code path does not read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Routing rule (k3 cell section 1 step 1): the linked catalog rows are the census indexes; a link that names a source the code does not read is filed as one OBSERVATION row.",
+    "world_is": "describe_dataset (integration.py:504-548) calls _grant and _scope, reads self.rules.fields, qry.DATASET_SCHEMAS and sem.describe_field, and sets type_basis to the producer schema source (data/assets/scripts/silver/schwab_schemas.py). It calls neither _availability nor _entries, so no snapshot object is read. The catalog row schwab_dim_asset names read_tool schwab_query only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:504-548 @060b3afa80",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml schwab_dim_asset row (silver_datasets; read_tool schwab_query) @060b3afa80",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[schwab_describe_dataset].indexes = [schwab_dim_asset]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "Census gives schwab_get_access no linked catalog row (indexes empty), but the tool reads the availability of every granted master and dataset through the Schwab catalog, which reads the completion prefixes and the dataset snapshots.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Routing rule (k3 cell section 1 step 1): a source the code reads that no linked row names is filed as one OBSERVATION row.",
+    "world_is": "get_access (integration.py:423-455) loops every granted master and dataset through _availability (integration.py:282-292), which calls the catalog. The catalog header assigns the CATALOG role to the two completion prefixes and the DATA role to the six data prefixes (org/standards/NFRA_OPLGTW_CONTRACT.json data_prefixes at lines 302-311). The census link list for this tool is empty and no catalog row carries a prefix.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:423-455 @060b3afa80",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:282-292 @060b3afa80",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py (module header, CATALOG and DATA roles) @060b3afa80",
+        "org/standards/NFRA_OPLGTW_CONTRACT.json lines 302-315 (data_prefixes, completion_prefixes) @060b3afa80",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[schwab_get_access].indexes = []"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "Census links only schwab_dim_asset to schwab_list_files, but the tool reads whichever dataset its argument names; a call for dim_position, dim_balance or dim_transaction reads a prefix that no list_files link names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Routing rule (k3 cell section 1 step 1): the code decides the source; a link covering one of the sources the code reads is a routing finding for the round.",
+    "world_is": "list_files (integration.py:460-499) validates dataset against the four contract datasets, then calls _availability for that master and dataset (integration.py:484). The three other schwab_dim_* rows are linked only to schwab_query.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:460-499 @060b3afa80",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[schwab_list_files].indexes = [schwab_dim_asset]; tools[schwab_query].indexes = four schwab_dim_* rows"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "Census links opal_data_assets_silver_49f_dim_advisor_fee_role to client_get_fees, but the 49F Black Diamond fee branch reads only the live fees table (silver/fees); the adapter states that dim_advisor_fee_role is a fee schedule and not a fee-row source, and does not read it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Routing rule (k3 cell section 1 step 1): a linked row whose source the code does not read is filed as one OBSERVATION row naming the tool, the row and the line.",
+    "world_is": "get_fees (app/client_adapter_bd49f.py:702-769) reads only _live_prefix(ctx, segment, \"fees\") (line 712). The comment at line 704 says dim_advisor_fee_role is a fee schedule, not a fee-row source. The row names read_tool client_get_fees, so the link and the code disagree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py:702-769 @060b3afa80 (get_fees; line 704 comment; line 712 live prefix)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml opal_data_assets_silver_49f_dim_advisor_fee_role row (read_tool client_get_fees) @060b3afa80",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[client_get_fees].indexes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W69-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~69",
+    "surfaced_at": "2026-10-19T17:08:48Z",
+    "one_line": "The catalog rows the Schwab and Black Diamond tools link (schwab_dim_asset, schwab_dim_balance, schwab_dim_position, schwab_dim_transaction, blackdiamond_fees) carry a bucket and no prefix or key, so the expect_source for those tools cannot be read off the row and comes from the code's own constant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Cases rule (k3 cell section 1 step 1): expect_source is taken from the catalog row's bucket and prefix or key, or from the code's bucket_source line, never from the tool's name.",
+    "world_is": "The schwab_dim_* rows and blackdiamond_fees carry keys bucket, read_tool, tools, vendor and similar, with no prefix or key. The code addresses schwab/<master>/silver/<dataset>/ from the contract data_prefixes (org/standards/NFRA_OPLGTW_CONTRACT.json lines 302-311) and silver/fees from integration.py:69 (SOURCE = bucket plus /silver/fees). Those code sources were used for the expect_source values of K3-06 to K3-10.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml silver_datasets rows schwab_dim_asset, schwab_dim_balance, schwab_dim_position, schwab_dim_transaction, blackdiamond_fees @060b3afa80",
+        "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py:69 @060b3afa80",
+        "org/standards/NFRA_OPLGTW_CONTRACT.json lines 302-311 @060b3afa80"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
