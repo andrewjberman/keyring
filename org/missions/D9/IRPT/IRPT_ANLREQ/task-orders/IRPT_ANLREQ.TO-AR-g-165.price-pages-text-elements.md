@@ -27,6 +27,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~302`, continuing on `C:/dev/wk-irpt-anlreq-302` (b
 
 ### THE CELL (`AR-g-165`, inlined)
 
+**AMENDMENT 1 (issuer, 2026-10-19, on worker ~302's row IRPT_ANLREQ-D2-W302-S1; gate limb: none graded, an in-decomposition amendment of a grant):** `infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py` line 754 pins the number of `OWN_SERIES` elements of the real map: `assert len(res) == len(series) == 9`. Your cell adds 4, so it must read `18` on YOUR branch (the three round-57 cells that add `OWN_SERIES` elements each move it by their own delta, 163 by 8, 164 by 5, 165 by 4; the issuer reconciles the line to 26 at the merge). That file is now in your `<paths>`. Change ONLY that number (and, if the line wraps, nothing else); do not weaken the assertion, do not touch any other line of the file. Then re-run AC3.
+
 Files: `infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py` (the statistic engine `statistic_of`, which AR-g-164 extended) and `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json`.
 
 Four `text` elements read NOT_IN_THIS_VERSION with pricing on because their `source` names a vendor call (`portfolio_info`, or the last point of `portfolio_level_series`). Re-point each `source` to `OWN_SERIES` (the shape of `p7.e05`: `{"call": "portfolio_level_series", "columns": [], "computed": "OWN_SERIES", "field": "$.chart_data[0][0].raw_data", "sleeve": null, "statistic": "<name>"}`) and add two statistics to the engine. Both read only the last point of the level series `points` ([(ms, level)], ms in UTC milliseconds) and return a string:
@@ -71,6 +73,7 @@ infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_text
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~302/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-165.price-pages-text-elements.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py
 </paths>
 
 <decomp_ref>
