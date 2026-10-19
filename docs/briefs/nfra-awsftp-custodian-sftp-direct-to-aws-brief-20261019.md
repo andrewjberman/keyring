@@ -107,6 +107,12 @@ No long side-by-side run and no standing comparison job (Andrew's veto on shadow
 **Siblings, named:**
 - **ADVI_SCHWABAUTO / OPAL_ASSETS C3** is the Schwab Box pull this replaces. It keeps running until each master's
   cutover (O9).
+- **NFRA_FIDUPL** (dell1, D8; brief `docs/briefs/auto-fidelity-uploader-brief-20261019.md`) is the live half of the
+  Fidelity route off Black Diamond. It lands the Wealthscape daily custom export (accounts, positions, balances,
+  prices, securities, transactions) through a signed-in session. Per `1.0.0_SA_CTO` msg 109859 and record
+  `ANDREW_DIRECT_20261019_184xZ_CLUSTER_PRIORITIES_PER_BOX_COHERENCE.md` (b3785dd745), this brief is the held half,
+  and the two share ONE Fidelity landing home. The Fidelity silver parser and landing address are designed once,
+  across both.
 - **The SMArtX SFTP receiver** is the EC2 listener at `infra/aws/ec2/smartx-sftp/`. Out of scope. Folding it into this
   endpoint later is a consolidation choice for its own owner, not a rider here.
 - **Orion and Black Diamond feeds.** Today these are the only path for Fidelity accounts (Inflection via Orion, Fidelity
@@ -244,7 +250,8 @@ the sum of `net_mv_plus_cash`, and the position-file market values agree within 
   BRIEF PATH        docs/briefs/nfra-awsftp-custodian-sftp-direct-to-aws-brief-20261019.md
   PROJECT           NFRA_AWSFTP (named by Andrew; not yet registered -- L3, 1.0.0_SA_CTO)
   EXISTING PRD      NONE
-  SIBLING PROJECTS  ADVI_SCHWABAUTO / OPAL_ASSETS C3 (Schwab Box pull), SMArtX SFTP receiver, TCKT_EARLYWARN,
+  SIBLING PROJECTS  NFRA_FIDUPL (dell1; shared Fidelity landing home), ADVI_SCHWABAUTO / OPAL_ASSETS C3 (Schwab Box
+                    pull), SMArtX SFTP receiver, TCKT_EARLYWARN,
                     NFRA_OPLGTW, MDPF, IRPT, ADVI (consumers of Schwab silver)
   PRIOR ART         data/assets/docs/SCHWAB_AUTO_PULL_DESIGN.md; data/assets/docs/SCHWAB_BOX_ARCHETYPE.md;
                     infra/aws/terraform/canonical-schwab-ec2/; infra/aws/ec2/smartx-sftp/setup-sftp-receiver.sh;

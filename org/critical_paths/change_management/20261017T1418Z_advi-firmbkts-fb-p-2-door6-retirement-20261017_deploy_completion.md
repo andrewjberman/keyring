@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-17T14:18:05.582876+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / 2.0.0_SA_COO~B1 step-6 read of the pipeline-complete.json version history after the 2026-10-20 gold chain day (L8); object write path closed to this order per XA-20261019T143617Z-d9a9, dell1 CTO msg 8317 (held since 2026-10-19T18:47:38.589632+00:00)
 **Deploy:** ADVI_FIRMBKTS FB-p-2 Door 6 retirement (WORLD): current-date catch-up, 13:08Z second-look schedule, accelerator disable after first live fire, Inflection done-marker writer stopped in the deployed orion-gold-dispatch.sh. GO msg 7553; pair COO @8e1b650b9e / CTO @156165f766
 **Authored by:** 0.7.0_AE_CloudOps~FB1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -33,3 +33,4 @@
 - 20261019T142343Z LEG L5 closed: 2026-10-19T14:11Z door6_live_reader_census.py rerun: functions_listed=245 zip=241 image_not_scanned=4 scanned_ok=241 err
 - 20261019T142344Z LEG L6 closed: 2026-10-19T14:22:09Z code/gold/orion-gold-dispatch.sh VersionId JjTLNaZeRRAQn342RRa7qEHSR0AUf1FV sha256 e9aef66b.. -> hK
 - 20261019T142423Z LEG L7 closed: repo source data/inf/scripts/gold/orion-gold-dispatch.sh success-branch marker block changed, committed 9bfa23498977c8ad
+- 20261019T184738Z HELD-SOVEREIGN-GATED gate=external/2.0.0_SA_COO~B1 step-6 read of the pipeline-complete.json version history after 
