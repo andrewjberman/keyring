@@ -138,6 +138,62 @@ Fidelity login page, signed out. Save the result as one HAR.
 
 The capture should be short: about 5 minutes, one client or group for any per-account step.
 
+## 5a. Addendum 1 (~17:35Z): walk #2 results -- the files, the login, the export schedule
+
+**Inputs:** five files Andrew exported from Wealthscape (`FI101626.{trn,ipn,sec,mvl,naa}`), the HAR
+`wealthcentral.advisorchannel.com2.har`, and a screenshot of the Export Custom wizard. All stay in dell1 Downloads.
+They hold client PII and are never committed.
+
+**The files are Advent-format interface files, one set for the whole book, named `FI{MMDDYY}.*`.** The `101626` suffix
+is Friday 16-Oct-2026, the T-1 business date. The format is fixed-width ASCII with CRLF line ends.
+
+| File | Rows | Accounts | What it is | Columns, in order | Schwab counterpart |
+|---|---|---|---|---|---|
+| `.ipn` | 97,438 | 4,873 | positions as of the file date, written as `by` rows at closing price | account, code, date, security type, symbol, `@price`, source, quantity, then option and bond fields | `fact_rps` / `dim_position` |
+| `.trn` | 401,593 | 4,955 | transactions, trade dates 2026-05-26 to 2026-10-16 (the export's date range) | account, code, trade date, security type, symbol, amount, cash/client, quantity, broker `NFSC`, commission, settle date, comment; `;` rows are comment continuations | `fact_trn` |
+| `.sec` | 2,464 | -- | security master, keyed by security type + symbol | description, coupon/rate, issue and maturity dates, payment frequency, factor | `fact_sec` / `dim_asset` |
+| `.mvl` | 2,436 | -- | closing prices (security type + symbol, price) | -- | prices in `fact_sec` |
+| `.naa` | 5,007 | 5,007 | account master: names, address, tax and contact fields (PII) | -- | `fact_acc` |
+
+- **Transaction codes:** by 166,752; dv 129,384; sl 63,459; dp 14,606; wd 6,859; in 5,658; plus ai, rc, ss, cs and
+  a few upper-case codes.
+- **Security types:** cs, mf, mm, fc, ca, ep, mb, gb, cb, cd, cl and others. Bond prices are quoted per 100 of par.
+- **Reconciliation:** `.ipn` securities, valued at quantity x price (bonds per 100), sum to **$1,569.6M** against the
+  book tile's **$1,563.1M** (+0.4%). The `CA` rows (29,495 of them, `dp` code) are not cash at that value: they sum to
+  $4.98B. Their meaning is open.
+- **Not in this file set:** open lots and realized lots (Schwab `fact_uln/ult/rld`) and balances (Schwab
+  `fact_rps_s2`).
+
+**Login, measured.** The flow runs as follows:
+1. `www.wealthscape.com`, then POST `/auth/api/redirect-info`.
+2. POST `wealthcentral.../auth/login`, which sends the username.
+3. On `ecaap.advisorchannel.com`: POST `/user/factor/password/authentication`, then POST `/user/session/login`. That
+   call returns the authenticator list: `OTPSMS`, `OTPVOICE`, `OTPREP`.
+4. POST `/user/factor/otp/sms/authentication` sends the text, and a PUT to the same path submits `securityCode`.
+5. POST `wealthcentral.../ssc/platform-authorization/api/v2/authorize`, then the app loads.
+
+No remember-this-device step appeared, and a text-message code was required. Device profiling runs during login:
+`cfa.fidelity.com` scripts, `online-metrix.net` (ThreatMetrix), and a probe of local ports including 3389 (RDP), 5900
+(VNC) and 5939 (TeamViewer). A login from an RDP-managed EC2 box may therefore score as higher risk. Unattended daily
+automation is blocked by the text-message code until one of these is decided: a human enters the code each morning, the
+code goes to a number the box can read (a Terms of Use and policy call), or the official transmission is set up.
+
+**Export scheduling (from Andrew's screenshot, not yet captured as traffic).** The wizard lives at
+`/ssc/singlecontainer/wc/channel/app/tools/portfolio-exports/custom` and has five steps: Enter Criteria, Name File &
+Choose Columns, Choose Filter, Create File, Verify. Step 4 offers two modes:
+- **On Demand**: run manually from the Saved Exports view.
+- **Automatically**: on chosen weekdays (Mon-Sun); "go to Export Status to download the file".
+
+So a scheduled export is not pushed anywhere. It is **generated and parked in Export Status**, and still has to be
+downloaded in a signed-in session. The export windows opened as pop-ups, which the main tab's DevTools did not record.
+The Export Status list and download endpoints are therefore not yet measured.
+
+**Backfill, as hypotheses to verify in the wizard:**
+- **Transactions:** the `.trn` date range comes from step 1 Enter Criteria, so an on-demand export over a long range
+  can backfill them.
+- **Positions:** one approach is the `Historical Prices and Positions Export` entitlement, one as-of date per run.
+  Another is to roll today's `.ipn` back through `.trn`, the way Advent rebuilds positions.
+
 ## 6. Open items
 
 - **Terms of Use:** read `TOU_RIA.html` for an automated-access clause before any scripted login. Owner: Andrew. The
