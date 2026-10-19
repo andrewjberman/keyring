@@ -69,7 +69,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 1 of the CTO's round-122 analysis (`ledger/ROUND_ANALYSIS.round122.R1.md`, msg 8323, `@3583db8527`) and his msg 8275. The deliberate proof (`AMGT-ce-5`, `schtasks /run` of `OpalResearch-FilingsAnalyzer`) is the issuer's act after this merges into the shared tree (the scheduled task runs `C:\dev\ajb_workspace\lib\research\llm_batch\launchers\run_filings.cmd`, so the merged file is what it runs); the Tue 2026-10-20 07:30 local organic fire is the negative arm. LOCAL code cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>123</round>
 <slot>0.9.0_WK_AMGT_RESAPP~526</slot>
 <fabric>dell1</fabric>
