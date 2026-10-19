@@ -67,7 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-11.round-44-size-the-inline-
 - Read-only, no product path in `<paths>`: `<risk>LOCAL</risk>`.
 - Pre-cut: `AC1` base FAIL as expected (the record is absent); a synthetic green record built from `OG-ev-8`'s sites passes it, and an `unknown` row, 20000 objects read and a scaled count off by the rate each fail it.
 
-<status>pending</status>
+<status>complete</status>
 <round>44</round>
 <workstream>ENRICH-R44-A</workstream>
 <slot>~157</slot>
