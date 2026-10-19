@@ -71,8 +71,7 @@ confirmation is an act on the box's open calls. This PRD goes to L4-R after he c
 
   FWD-4  Every file is filed under the business date it actually contains
          DONE WHEN  EXERCISED -- a Monday export, which holds Friday's data,
-                    is pulled on demand and read (the 2026-10-19 files, holding
-                    2026-10-16, are served now); the same Friday files are
+                    is pulled on demand and read; the same Friday files are
                     pulled a second time on demand and land once. The first
                     scheduled Monday is the organic case
          ACCEPT     Asking for a given business day returns the files whose content
@@ -127,7 +126,7 @@ confirmation is an act on the box's open calls. This PRD goes to L4-R after he c
 | C-SIGNIN | the sign-in cell | **A fresh sign-in every run** (4-hour inactivity limit and about 10-hour hard limit): password, then the `OTPSMS` factor, then the code read from Quo by API for the order's digital line, then authorize. The code is single-use and never logged. The driver (browser or raw HTTP) is ruled at L4 on CRO research. | one on-demand sign-in completed with no person typing |
 | C-PULL | the pull cell | **Two calls, as Schwab's are:** the export status list (`status.json`, `iEtype=E`, the day's `dateString`), then `downloadExport.do` per file. All six v1.0.1 files: `account`, `position`, `balance`, `prices`, `security`, `transact`. | the run lists 6 and downloads 6 |
 | C-RAW | the pull cell | **Raw landing only**, bytes exactly as Fidelity served them, with a sha256 per file recorded in the run record (the archetype's raw rule). No conversion in this project. | a stored file's sha equals the record's |
-| C-DATE | the pull cell | **The business date comes from the file content** (the first field, for example `20261016` on Monday), never from the run date. Checked against `lib/trading_calendar.py`. A weekend re-serve of Friday is landed once under Friday or not at all, never as Saturday or Sunday. | FWD-4's on-demand pull of a Monday export |
+| C-DATE | the pull cell | **The business date comes from the file content** (the first field, for example `20261016` on Monday), never from the run date. Checked against `lib/trading_calendar.py`. A Monday export is served on demand for FWD-4 (2026-10-19's files hold 2026-10-16). A weekend re-serve of Friday is landed once under Friday or not at all, never as Saturday or Sunday. | FWD-4's on-demand pull of a Monday export |
 | C-RECORD | the pull cell | **One run record per morning**, beside the Schwab manifests' shape (`_ops/daily_pull/`): files listed, downloaded, skipped or failed, the business date, and the failed step. The failure classes are distinct: sign-in refused, code never arrived, export not generated yet, download refused. It is only read, never sent (moratorium). | one good morning and one deliberately failed sign-in read |
 | C-WINDOW | the schedule cell | **The schedule fires in the Schwab window** (05:45, 06:15 and 06:45 ET today, `monolith-daily-schedule.tf`), on Fidelity's own clock, never triggered by an upstream landing. Fidelity's generation hour is measured from the first recurring run (the 2026-10-20 status rows) before the cron is fixed. If Fidelity generates after the window, the record says "export not generated yet" and a later attempt in the window retries. | FWD-2's on-demand chain run and the live schedule read |
 | C-ISOLATION | the box cell | **The Fidelity run never touches the Schwab SDD lockfile or the Schwab console session.** Reuse of the Schwab box, or a new box, is ruled at L4 on CRO research. Either way the Schwab run on a shared morning is byte-equal to a Schwab-only morning. | FWD-8's both-run morning |
@@ -201,6 +200,8 @@ the on-demand chain run with the live schedule read (FWD-2).
 - **Repo:** this tree, the new root, the puller, and the registry rows.
 
 ## CHANGE LOG
+
+- **v0.3.1 (~18:5xZ):** the CVO's nit: FWD-4's dated parenthetical moved out of ENDPOINT into C-DATE; the DONE WHEN is unchanged in meaning.
 
 - **v0.3 (~18:4xZ):** FWD-2 and FWD-4 DONE WHEN amended in place (the CVO's refusal @5c277d3352: both were waits), each now driven on
   demand; fork (d) ruled on the CVO's verdict @bc07810172 (FIRM scope `alongside`); C-TENANCY re-owned to the CRO's scope row; the Terms
