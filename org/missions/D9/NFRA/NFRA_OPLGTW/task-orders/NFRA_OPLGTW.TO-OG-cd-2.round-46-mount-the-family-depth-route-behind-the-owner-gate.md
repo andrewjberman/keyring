@@ -68,6 +68,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cd-2.round-46-mount-the-family-
 - Base blob of `app/admin_api.py` at the issuance: `c1885ec0404f45714616addeec961923ff549ed0`. Pre-cut: `AC1` base FAIL as expected (no test file); `AC2` base FAIL as expected (0 added lines). Arms fed to the checks: the issuer's reference implementation (two lines plus a three-test file) passed both and was reverted; a bare `family_depth.families` (no gate), a third added line and a removed import each failed `AC2` as they should.
 
 <status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-B</workstream>
 <slot>~163</slot>
