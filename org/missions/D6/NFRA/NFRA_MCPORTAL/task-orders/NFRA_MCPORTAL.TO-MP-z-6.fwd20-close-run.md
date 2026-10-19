@@ -14,7 +14,7 @@
 comp-schedule: DECLARED-NOT-APPLICABLE -- a one-time close run.
 comp-iam: DECLARED-NOT-APPLICABLE -- reads only: the deployed code from the release record, the grant store through the existing operator read path, the gateway log through SSM.
 comp-adversary: DECLARED-NOT-APPLICABLE -- the two equality reads are made against sources other than the page.
-EGRESS CLASS, declared: AWS reads (S3 artifact get, DynamoDB GetItem/Query, SSM send-command for journalctl); no write.
+EGRESS CLASS, declared: AWS reads (S3 artifact get, DynamoDB GetItem/Query, SSM send-command for journalctl, sts assume-role on the operator role opal-gateway-access-admin for the store read, credentials never printed or written); no write.
 </preflight>
 
 ## 1. THE CELL -- `MP-z-6` (workstream GW round 1, decomposition sections GW.1 and GW.6, G-SEE3)
@@ -27,7 +27,7 @@ ISSUER LINE at the end of your spawn prompt names the window in which Andrew ope
 and then `https://mcp.opalinvest.dev/control-plane` by direct load, and quotes his words on what he read.
 
 1. **The window.** Take `t0` and `t1` (ISO Z) from the issuer line as given.
-2. **One channel against the deployed code.** Pick the channel with the most tools that is NOT `m365`. Read its tool
+2. **One channel against the deployed code.** Among the integrations that exist as directories under `infra/aws/ec2/opal-gateway/app/integrations/` (excluding `m365`), pick the one whose channel on the page lists the most tools (a bucket channel such as `opal-data-etfs` has no integration module and is NOT eligible; if an integration has no channel of its own on the page, take the next). Read its tool
    list off the page's data: the live response is not readable by you (owner-gated), so read it from the served module
    instead: over SSM, run the deployed `app.admin_gateway_breakdown._compute()` from the host's venv (the way
    `deliverables/2.0.0_SA_COO~MP/fwd20/checks/_z5_probe.py` does, INCLUDING its first line `import app.server`: the
@@ -38,9 +38,10 @@ and then `https://mcp.opalinvest.dev/control-plane` by direct load, and quotes h
    scratch directory, and list the tools that integration's module registers (its `IntegrationSpec.tools` and the names
    its `register()` passes) -> `code_tools`.
 3. **One person against the grant store.** Take the one real principal with a `principal_profile` (the page lists it
-   with `how` "data grant revision <n>"). Read its active grant from the store with the existing operator read
-   (`infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py`, its read/show subcommand, run under the operator role
-   as its header describes), and from that grant's `operations` list the data-grant tools it admits, using the
+   with `how` "data grant revision <n>"). Read its active grant from the store under the OPERATOR role `opal-gateway-access-admin`, by the method of
+   `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_run.py` (read it first; its output shape is `pd1_store_read.json`):
+   sts assume-role through `.tools/aws`, session credentials in process environment only and never printed or written, then the
+   store's Query/GetItem by `POLICY#<tid>#<oid>`. `schwab_entitlement_admin.py` has no read subcommand (row Z-W16-S4), so it is not used. From that grant's `operations` list the data-grant tools it admits, using the
 operation each tool needs in `app/data_entitlement.py` `SCHWAB_TOOLS` -> `store_tools`.
    Read the same principal's tools off the served `_compute()` output (all channels) -> `page_holder_tools`, restricted
    to the data-grant family (`schwab_*`, `blackdiamond_list_fees`).
@@ -63,7 +64,7 @@ org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~16/**
 org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/**
 </paths>
 
-Read, never write: `infra/aws/ec2/EC2_MANIFEST.json`, `infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py`,
+Read, never write: `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_run.py`, `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~25/pd1_store_read.json`, `infra/aws/ec2/EC2_MANIFEST.json`, `infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py`,
 `infra/aws/ec2/opal-gateway/app/integrations/`, `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/`.
 
 Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md`, with id
@@ -73,7 +74,7 @@ ARMED row is `2.0.0_SA_COO~MP`.
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-z-6"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/z6.AC1.sh; echo "exit=$?"</invocation><expect>breakdown 200s>=1; direct /control-plane 200s>=1; channel tools code==page: yes; principal tools store==page: yes -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-z-6"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/z6.AC1.sh; echo "exit=$?"</invocation><expect>breakdown 200s>=1; control-plane data routes (fabric boxes, overlap, gitstate, calls) each answered 200: 4 of 4; channel tools code==page: yes; principal tools store==page: yes -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MP-z-6" judgment="true"/>
 </proof_of_spec>
 
@@ -97,6 +98,8 @@ window go to the worker in the spawn prompt's issuer line. Check dry-run at base
 **AMENDMENT (issuer 2.0.0_SA_COO~MP, 2026-10-13 ~22:2xZ):** step 2 now names the `import app.server` line (row Z-S48, the same probe defect MP-z-5 A3 fixed). Before this, the order did not carry it. No criterion changes.
 
 **SPAWNED (issuer 2.0.0_SA_COO~MP, 2026-10-19 ~17:3xZ):** G-SEE3 is met by Andrew's live look at his own terminal on 2026-10-16 ~18:40-18:55Z (record org/tier1_exec/2.0.0_SA_COO~MP/deliverables/ANDREW_DIRECT_20261016_185xZ_CLOSE_21C5_21D9_44EB_GATEWAY_READS_WELL.md). The exact minute was not recorded, so the window handed to the worker is the superset t0=2026-10-16T18:30:00Z, t1=2026-10-16T19:05:00Z; AC1 grades 200s inside it. The access log is 3 days old: a FAIL for log retention is a finding, not a defect of the criterion. Check dry-run at base 2fce7de6ef: AC1 FAIL (no run file), as expected. Spawned worker 0.9.0_WK_NFRA_MCPORTAL~16, haiku/high (MODEL_POLICY MP-20261010).
+
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~MP, 2026-10-19 ~18:2xZ), after worker ~16's report (rows Z-W16-S3, S4, S5; AC1 1 of 4):** (a) step 2 now picks among INTEGRATION channels (the bucket channel the first rule chose has no module to read: S3); (b) step 3 reads the store under the operator role by the MP-pd-1 method (the named admin script has only writers: S4); (c) the control-plane clause counts the page's four data routes, not a direct `GET /control-plane`: the issuer read the gateway log for 2026-10-16 (SSM, read-only) and found NO direct `/control-plane` request that day, but in 18:40-18:49Z one `/gateway` 200 and 2 each of `fabric/boxes`, `fabric/overlap`, `fabric/gitstate` and 3 of `fabric/calls` answered 200, so the page was opened by in-app navigation and its calls are the evidence (the original text assumed a direct load; Andrew's words never said so). Principal choice (S5): the first non-owner principal with a data grant in page order, as the worker took. No criterion is relaxed to pass: the window, the equalities and the 200 counts are unchanged in strength. Gate limb that graded the modification: none (to-pipeline-gate grades a modified order only for `<placeholders>`, which stays NONE). Checks _z6_probe.py and z6.AC1.sh amended to match; base dry-run recorded in the amendment commit.
 
 <status>pending</status>
 <round>1</round>

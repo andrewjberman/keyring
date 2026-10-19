@@ -8966,3 +8966,56 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "This seat holds FB-p-2 staged; the order's step 1 is built on the false premise and is not to be cut as ordered. To the CTO: drop step 1 or replace it with a live reader read; the decision is his. The deployed-versus-repo drift of inf-gold-trigger is a separate finding for the Lambda's owner (the repo copy is not what runs). Disarm: none (INERT); the cell is not running."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-p-2, step 5 close: the BOUNDS 2 deviation and the closed write path)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S62",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-19T18:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-p-2 step 5 leg (iii) deployed code/gold/orion-gold-dispatch.sh with s3api put-object, not safe-deploy: safe-deploy.sh cannot deploy a .sh (python files only), so BOUNDS 2 could not be followed as written.",
+  "spec_asserts": "TO FB-p-2 section 1a step 5 (iii) and BOUNDS 2: deploy only through `bash .tools/safe-deploy.sh data/inf/scripts/gold/orion-gold-dispatch.sh`, then read the S3 object's sha256 equal to the file's.",
+  "world_is": "safe-deploy.sh on that path printed 'OK: safe-deploy -- no deploy-scope script files detected, nothing to do' (safe_deploy_core.file_to_s3_target and resolve_tree_layer return None for any path not ending .py, lines 680 and 718). The same edited bytes went up with `aws s3api put-object` at 2026-10-19T14:22:09Z, SSE AES256, content-type binary/octet-stream as the prior version: VersionId JjTLNaZeRRAQn342RRa7qEHSR0AUf1FV (sha256 e9aef66b, 113445 B, 2128 lines) -> hK5vY2H31oT3NHmoiArlZ00ra8gkuDaO (sha256 9495cd56228b0b5a4fe8d7d2ce4e22fc3a540fbedf9af02ccdbbee484e069013, 113054 B, 2121 lines), read back with get-object equal to the edited file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/door6/STEP5_WRITER_STOP_20261019.txt section (iii)",
+      "aws s3api get-object --version-id JjTLNaZeRRAQn342RRa7qEHSR0AUf1FV and the current object, re-read 2026-10-19T18:4xZ: sha256 e9aef66bc8a4a883196a2ba61567e56e645d4ffba82cfc74705cb6e270d59e43 (113445 B, 2128 lines) and 9495cd56228b0b5a4fe8d7d2ce4e22fc3a540fbedf9af02ccdbbee484e069013 (113054 B, 2121 lines)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/door6/STEP5_DIFF_e9aef66b_vs_9495cd56.diff (sha256 69f94cc2221ab6e91ed99618fb35118cdd8e5ff6ba2eae6c45a2759737a33b09): `diff` prior live, one hunk 1903,1912c1903,1905, 10 lines out and 3 in, all inside the success branch of the Chain-complete sentinel block; the failure branch and pipeline-failed.json are unchanged"
+    ]
+  },
+  "notes": "Graded by 2.0.0_SA_COO~B1 (COO msg 8301). Disarm: none (INERT). Fix owner for the gap: whoever owns safe-deploy.sh; the object's write path is closed to this order (see ADVI_FIRMBKTS-D1-S63)."
+}
+```
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S63",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-19T18:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~N2",
+  "one_line": "A later upload of s3://opal-data-inf/code/gold/orion-gold-dispatch.sh cut from a source older than commit 9bfa234989 restores the retired pipeline-complete.json marker write: the live object is 9495cd56 (113054 B) while repo 9bfa234989 is d2ff692a (118883 B), so the two are not the same bytes.",
+  "spec_asserts": "TO FB-p-2 step 5 and Andrew's Door 6 ruling (ANDREW_DIRECT_20261013_200xZ row 1): the marker has no successor and its write is stopped in the deployed copy; step 6 expects no new marker version after the next gold chain day.",
+  "world_is": "Deployed object is 9495cd56 (marker block stopped, VersionId hK5vY2H31oT3NHmoiArlZ00ra8gkuDaO). Another lane, IRPT_BCKEND ~IB2 (ledger irpt-scope-feed-region-script-ibn4-20261017; order IB-pn-4, issuer 2.0.0_SA_COO~N2), replaces this same object from a repo commit. An upload cut from CLOUD before 9bfa234989 integrates, or from the prior version e9aef66b, restores the marker write and step 6 would read a new marker version. Repo 9bfa234989 is not the deployed bytes (d2ff692a, 118883 B, against 9495cd56, 113054 B); per COO msg 8305 it also carries IRPT's undeployed DB-f-2103 block, so the repo file is not a drop-in for the live object either. Local read: 9bfa234989 is an ancestor of origin/CLOUD (local ref) and CLOUD tip bf1e828f5f (ls-remote 2026-10-19) carries 'marker write retired' once in that file. Cross-adjudication XA-20261019T143617Z-d9a9: IB2 on dell2 is the single uploader of this object (dell2 CTO msg 10719 via MSTR 8314; dell1 CTO concurs, msg 8317, relayed by COO msg 8318); this order makes no further upload now or after the ruling, so its step 7 rollback of this object is not its to run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 9bfa234989:data/inf/scripts/gold/orion-gold-dispatch.sh | sha256sum, first 8 hex d2ff692a, 118883 bytes (read 2026-10-19T18:4xZ)",
+      "git grep -c 'marker write retired' bf1e828f5f -- data/inf/scripts/gold/orion-gold-dispatch.sh = 1; git ls-remote origin CLOUD = bf1e828f5fa51496e3ac2080130231aba422aabc (read 2026-10-19T18:4xZ)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/door6/STEP5_DIFF_e9aef66b_vs_9495cd56.diff: the only moved hunk between the prior and the live object is the marker block",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~N2/IB-pn-4_CLOSE_RECORD_20261019.md names the IB2 ledger"
+    ]
+  },
+  "notes": "Disarm: owner 2.0.0_SA_COO~N2 (IB2's issuer) confirms any release of this object is cut from source that carries 9bfa234989 or later and that IB2's pair names the marker block. FB1 holds no further act on the object. Ledger advi-firmbkts-fb-p-2-door6-retirement-20261017 stays open until the COO reports the 2026-10-20 marker version-history read (step 6)."
+}
+```

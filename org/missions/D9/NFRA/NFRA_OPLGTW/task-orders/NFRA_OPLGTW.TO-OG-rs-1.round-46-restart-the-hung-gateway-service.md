@@ -66,7 +66,10 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rs-1.round-46-restart-the-hung-
 - Pre-cut: `rs1.AC1` base FAIL as expected (ledger absent, record absent).
 - Open, not this seat's: whether six parallel battery runners can push the host past `MemoryHigh` again. `2.0.0_SA_COO~MI` has been told to run at most two calls at a time after the restart is confirmed.
 
+- SUPERSEDED (issuer, 2026-10-19 ~18:4xZ): the need was met another way. `0.0.0_AB_MSTR~Z` restarted the service itself at 18:24:47Z under the SAME ledger name (the CTO's routing, msg 36060, after `~NFRA1` had read neither GO while mid-turn on `OG-mg-2`): `/health` 200 at 18:26:22Z, marker `6d1b5dcb64`, one process, ledger `nfra-oplgtw-gateway-restart-20261019` CLOSED 20261019T183627Z, record `org/critical_paths/change_management/20261019T1821Z_nfra-oplgtw-gateway-restart-20261019_deploy_completion.md`. I read the gateway answering end to end at 18:38Z (a `whoami` through the gateway returned). NOT done by anyone: `tools/list` 103 and the 27-tool read under the hard guard; they ride the next gateway read-back (`OG-ap-51` or the next release), and `2.0.0_SA_COO~MI`'s battery reads the tools at two calls at a time.
+
 <status>pending</status>
+<status>superseded</status>
 <round>46</round>
 <workstream>ENRICH-R46-D</workstream>
 <slot>~AE</slot>
