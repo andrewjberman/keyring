@@ -10161,6 +10161,26 @@ carries none.
         "deliverables/2.0.0_SA_COO~MI/round22/checks g1.AC1..g5.AC3 run on the merged tree at a6b6d88ffbd: 12 of 12 RESULT: PASS"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W64-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~64",
+    "surfaced_at": "2026-10-19T17:02:42Z",
+    "one_line": "safe-commit's naming gate printed NAMING ERROR 'function-map folder missing' for infra/aws/lambda/ci/function-map/ in this sparse worktree; commit 58d423c75a8 returned rc=0 and the naming gate's function-map leg read no folder.",
+    "spec_asserts": "Face section 2, BOUNDS 2: the commit gate runs py_compile, the naming gate and ruff for py39 on the commit. Face section 1 step 0: the worktree's sparse set is workflows/gateway_battery, its tests, workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app; the face names no infra/aws/lambda/ci folder.",
+    "world_is": "The worktree sparse list (git sparse-checkout list, read 2026-10-19T17:02Z) is .tools, infra/aws/ec2/opal-gateway/app, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery; infra/aws/lambda/ci is not in it. The commit printed the naming-gate ERROR beside 'commit-gate OK: pre-commit gate clean for 3 of 3 file(s)' and landed with rc=0, so the naming leg graded nothing for these three files. The risk-reflex PARTIAL_OR_BLIND and the client-data WARN printed in the same run are device facts, not filed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author ... -F .scratch/msg_work_h3.txt -- workflows/gateway_battery/index_coverage.py workflows/gateway_battery/tests/test_index_coverage.py workflows/gateway_battery/tests/test_index_coverage_explained.py: rc=0, output in .scratch/commit_work.log of wk-NFRA_MCPINDEX-64 (read 2026-10-19T17:02Z); line 16 is the NAMING ERROR",
+        "git -C C:/tmp/wk-mcpindex-64 sparse-checkout list (read 2026-10-19T17:02Z): infra/aws/lambda/ci not listed; the same finding is NFRA_MCPINDEX-Z-W61-S1, which the issuer dispositioned in the round-22 ISSUER DISPOSITION row"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
