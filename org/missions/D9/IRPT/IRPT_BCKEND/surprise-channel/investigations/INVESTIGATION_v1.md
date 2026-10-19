@@ -42289,3 +42289,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The sparse directories are a local worktree setting; nothing under data/inf/scripts was committed by this worker."
 }
 ```
+
+## IRPT_BCKEND-D2-S240 -- The first fire of the IB-pr-605 exemption bundles: 49 Financial's holdings gate REFUSED the 2026-10-16 candida
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S240",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T14:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The first fire of the IB-pr-605 exemption bundles: 49 Financial's holdings gate REFUSED the 2026-10-16 candidate on account_lost, one account beyond the 2 listed absent-at-source; the served holdings stay as-of 2026-10-12 and the gate has refused on four consecutive fires.",
+  "notes": "From IB2's after-read (msg 10712, deliverables/0.7.0_AE_CloudOps~IB2/IB236-1_after_read_20261019.json), counts only. (1) Cottonwood: STAMPED_T_MINUS_1 (business date and custody as-of 2026-10-16, 2026-10-16 source partitions cited), 0 listed exempted accounts, no absent_at_source marker, no closed name, no amount: an accepted outcome. (2) Inflection: published, business date and custody as-of 2026-10-16, but the cited positions and roster snapshots are dated the fire day 2026-10-19 (the previous fire cited 2026-10-16 snapshots under business date 2026-10-15): the producer's own convention; whether that satisfies the order's wording 'a T-1 source partition under it' is NOT yet ruled (I will compare it with IB-pr-549's accepted reading). (3) 49 Financial: the producer REFUSED the 2026-10-16 candidate (condition account_lost, count 1, beyond the 2 listed absent-at-source accounts); the served manifest and latest date stay 2026-10-12 (last written 2026-10-13T14:20:49Z); refusals recorded on 2026-10-14, 10-15, 10-16 and 10-19 fires (4 object versions); the T-1 source partitions all exist. The Friday re-measure had expected PUBLISHED with 2 listed. By holdings_snapshot.py lines 3401 to 3425 a served account missing from the candidate that is neither CLOSED nor exempt by absent_at_source_exempt (lines 3033 onward: no positions in BOTH tables on the candidate day AND the prior day, all four partitions at least 95 percent of the prior day's count) stays 'lost' and, because 49 Financial marks no closures, refuses. So the third account either still holds positions at the source (a build fault) or the completeness test fails for it, or it is a closure without its marker; which one is not yet read. Effect: 49 Financial's served holdings are 5 trading days old and the gate will refuse every fire until this is resolved; nothing wrong is served (the refusal is the designed fail-closed behaviour). NOT measured by me: which account, and why. IB2 wrote facts only, no apply record, closed no ledger leg (L2, L3 stay open).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB236-1_after_read_20261019.json read by 2.0.0_SA_COO~P2: 49financial gate REFUSED, condition account_lost count 1, listed_absent_at_source_accounts 2, served_latest_date 2026-10-12, refusals_by_fire_utc four entries",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py lines 3025-3054 and 3401-3425 read by 2.0.0_SA_COO~P2"
+    ]
+  },
+  "spec_asserts": "The 49 Financial re-measure of 2026-10-16 expected PUBLISHED with 2 listed accounts, so the first scheduled fire on the exemption bundle publishes (IB-pr-605 step 3 and AMENDMENT 1).",
+  "world_is": "A third served account is gone from the candidate and not exempt, so the gate refuses; the served holdings are unchanged since 2026-10-12."
+}
+```
+
+## IRPT_BCKEND-D2-W457-S1 -- AC2 is a differential over git HEAD and HEAD~1, so it cannot pass before the one commit: the order's pre-commit record of AC2 is a FAIL by construction
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W457-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~457",
+  "surfaced_at": "2026-10-19T14:23:51Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IBCW2-AC2 reads refresh.py from git (HEAD and HEAD~1), so before the one commit it FAILs 'byte-identical to the base' whatever the working tree holds; the order's instruction to record AC2 before the commit cannot be met as written.",
+  "spec_asserts": "TO IB-cw-2 WORKER FACE step 2: record AC1 and AC2 output in IBcw2_criteria_output.txt BEFORE the commit, and AC2 is a differential that PASSes on the changed refresh.py.",
+  "world_is": "The check at p256_cells.py ac2() runs git show HEAD:<refresh.py> and git show HEAD~1:<refresh.py> and fails when they are equal. Before the commit HEAD equals HEAD~1 for that file, so AC2 FAILs with 'refresh.py is byte-identical to the base' regardless of the edit. Measured pre-commit: AC1 PASS, AC2 FAIL, folder failing set unchanged. AC2 and AC3 can only be run after the commit lands; the pre-commit FAIL is kept verbatim in IBcw2_criteria_output.txt.",
+  "notes": "Not a worker defect and not worked around: no check was edited and no second commit was made (the order says ONE commit, never amend). The post-commit AC2 and AC3 runs are recorded separately.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r256/p256_cells.py ac2() at 1855ec7d0b reads HEAD and HEAD~1 via git show, then fails when the bytes are equal",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~457/IBcw2_criteria_output.txt: pre-commit run, IBCW2-AC2 FAIL 'refresh.py is byte-identical to the base'",
+      "folder pytest before and after the edit: 32 failed and 6 errors in both runs, identical sets (base 188 passed, after 194 passed)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W457-S2 -- the terminal rule is keyed to the command id, not to the REFRESH_DISPATCHED record that named it: a command carried on a COMPLETED record is not reached by hint (c)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W457-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~457",
+  "surfaced_at": "2026-10-19T14:23:51Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A failed command carried on a COMPLETED manifest (a fire that landed a build and handed the next one over) reaches the dispatcher through the previous manifest's delta, not through _last_dispatched, so the hint's stop in _last_dispatched would leave it raising every fire; the terminal test was placed in the dispatcher on the id instead.",
+  "spec_asserts": "TO IB-cw-2 contract 2 and hint (c): a reported failed command is terminal, and the walk that finds it stops at a REFRESH_FAILED record dated after the REFRESH_DISPATCHED record that named the command, returning (None, None).",
+  "world_is": "lambda_handler passes the previous manifest's own ssm_command_id to the dispatcher whenever no DISPATCHED record is pending (dispatch_previous = previous), and the landed path writes the id of the build it hands over into the COMPLETED manifest (refresh.py landed['ssm_command_id'], base line 921). So a failed command on a COMPLETED record re-raises on every fire even when _last_dispatched returns (None, None). The change keys the terminal test to the id in SsmBuildDispatcher.__call__, fed by _reported_failed_cids (REFRESH_FAILED records after the last completion); the DISPATCHED path is covered by the same test. Not covered by any of the six named tests (the COMPLETED-carried path is code-read only, not run); the fix is not deployed until the release order.",
+  "notes": "Live Lambda code is the base until the release order lands, so the hazard stays ARMED until then; disarm is the release, owned by the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/directory/refresh.py at 1855ec7d0b: landed ssm_command_id write near line 921; lambda_handler dispatch_previous = previous at line 1265 (before the edit)",
+      "infra/aws/lambda/investor-reporting/directory/refresh.py at the worker commit: SsmBuildDispatcher.__call__ reported_failed_cids terminal branch; lambda_handler _reported_failed_cids call before SsmBuildDispatcher(...)",
+      "tests/test_refresh_failed_command_redispatch.py: six tests pass; none drives the COMPLETED-carried path"
+    ]
+  }
+}
+```
