@@ -3262,3 +3262,80 @@ used as fixtures is a different read with a different denominator.
   "world_is": "The key names are measured: expires_in, filename, url. The ordering of the log lines is measured; the cause (event delivery waiting on a Playwright call, so a wait loop should call page.wait_for_timeout and not time.sleep) is INFERRED and untested. The read-back SHA-256 comparison through the Open route stays UNPROVEN; the stored bytes were separately read from the attempt 1 object with a read-only GET and equal the file. No fourth attempt is allowed by AMENDMENT 3 and 4. Not claimed: that the Open route returns the right bytes, or that it returns wrong ones."
 }
 ```
+
+## TCKT_VNEXT-D2-W53-S1 -- The package route's test harness cannot load in this worktree: test_package_route.py reads org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json at import, and that file is absent here, so the issuer's Lambda check R20LM7-AC1 cannot run and the ticket_center folder fails collection.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~53",
+  "surfaced_at": "2026-10-19T23:03:34Z",
+  "class": "BLOCKING",
+  "id": "TCKT_VNEXT-D2-W53-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The package route's test harness cannot load in this worktree: test_package_route.py reads org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json at import, and that file is absent here, so the issuer's Lambda check R20LM7-AC1 cannot run and the ticket_center folder fails collection.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-tckt-vnext-53 @d2f482c9678 (branch wk-TCKT_VNEXT-53): git config core.sparseCheckout = true, cone mode; git ls-files -v marks org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json with the S (skip-worktree) flag; ls org/missions/D9 -> No such file or directory; the file is tracked (git ls-files lists it, 1 entry)",
+      "timeout 120 python -m pytest C:/dev/wk-tckt-vnext-53/org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R20_CHECKS/test_r20_package_commentary_null.py -q -p no:cacheprovider --color=no -> rc 2, collection error: FileNotFoundError on C:\\dev\\wk-tckt-vnext-53\\org\\missions\\D9\\IRPT\\IRPT_ANLREQ\\deliverables\\2.0.0_SA_COO~G2\\I7_SAMPLE.json, raised at test_package_route.py line 41 (_i7_canonical at line 37)",
+      "timeout 120 python -m pytest infra/aws/lambda/ticket_center/tests -q -p no:cacheprovider --color=no -> rc 2, Interrupted: 8 errors during collection (test_no_row_refuses, test_package_409_codes, test_package_env_firms, test_package_i5p_i7, test_package_principal, test_package_request_id, test_package_route, test_status_active), all the same FileNotFoundError",
+      "sibling row TCKT_VNEXT-D2-W49-S1 (worker 49, worktree 430b378b8f) records the same eight collection errors for the same missing path"
+    ]
+  },
+  "spec_asserts": "TO-R20-LM7 ACCEPTANCE R20LM7-AC1: the issuer's Lambda check file runs from C:/dev/wk-tckt-vnext-53 and passes 5 of 5; the drain check runs the whole infra/aws/lambda/ticket_center/tests/ folder once. The worker's grant is exactly the <paths> the order names, and a path the worker needs that it lacks is a BLOCKING row on that criterion, never an override.",
+  "world_is": "The worktree carries the order's named paths (the Lambda source, the portal files, the D7 task order and the issuer check file) but not the D9 fixture the harness reads at import, because the sparse checkout omits it. The worker did not copy the fixture into the worktree and did not change the sparse-checkout settings: both are outside the grant. AC1 and the drain check are therefore NOT RUN to a verdict; the Lambda change is committed on the branch, unverified by the check. Not claimed: that the Lambda change is wrong."
+}
+```
+
+## TCKT_VNEXT-D2-W53-S2 -- The order names the surprise schema at org/surprise_channel/schemas/investigation_item.schema.json, but org/surprise_channel is outside this worktree's sparse checkout, so the schema was read from the HEAD blob with git show.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~53",
+  "surfaced_at": "2026-10-19T23:03:34Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-W53-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the surprise schema at org/surprise_channel/schemas/investigation_item.schema.json, but org/surprise_channel is outside this worktree's sparse checkout, so the schema was read from the HEAD blob with git show.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-tckt-vnext-53 @d2f482c9678: cat org/surprise_channel/schemas/investigation_item.schema.json -> No such file or directory; git config core.sparseCheckout = true (cone)",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json returned 10462 bytes, rc 0; the required fields and the class enum (OBSERVATION, BLOCKING) were read from that blob"
+    ]
+  },
+  "spec_asserts": "Surprise section of the task order: a row is appended to the investigation file, per org/surprise_channel/schemas/investigation_item.schema.json, and the schema is the reference for its fields.",
+  "world_is": "The schema path the order names is absent from this worktree, the same sparse-checkout cause as TCKT_VNEXT-D2-W53-S1. The worker read the schema from the committed blob and wrote the row to it. Not claimed: that the schema at the base checkout differs from the blob."
+}
+```
+
+## TCKT_VNEXT-D2-W53-S3 -- Appending one row to this investigation file with the worker's edit tool rewrote the line endings of every existing row: commit 56e4caf475a showed 1468 insertions and 1416 deletions for a 52-line append, and the file is mixed-ending (1865 CR over 3238 lines at the base).
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~53",
+  "surfaced_at": "2026-10-19T23:10:17Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-W53-S3",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "Appending one row to this investigation file with the worker's edit tool rewrote the line endings of every existing row: commit 56e4caf475a showed 1468 insertions and 1416 deletions for a 52-line append, and the file is mixed-ending (1865 CR over 3238 lines at the base).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 56e4caf475a: 1 file changed, 1468 insertions(+), 1416 deletions(-); git diff --ignore-cr-at-eol --stat HEAD~1 HEAD: 52 insertions(+) only; the base blob had 1865 CR characters over 3238 lines",
+      "corrected by a forward commit (this row's commit) that restores the base bytes of HEAD~1 and appends the 52 lines with LF endings; the history keeps the rewrite in 56e4caf475a, no commit was rewritten"
+    ]
+  },
+  "spec_asserts": "Investigation file header: the channel is append-only during the round; never edit an existing row.",
+  "world_is": "A byte-level append made through the worker's edit tool re-wrote the endings of the existing rows, so the committed diff of an append-only file was about 2,900 changed lines for 52 added. The content of the existing rows is unchanged (diff ignoring CR at end of line is 52 insertions). Not claimed: that any other channel file was affected."
+}
+```
