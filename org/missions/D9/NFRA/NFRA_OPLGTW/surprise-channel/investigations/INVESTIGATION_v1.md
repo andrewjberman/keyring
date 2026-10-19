@@ -29460,3 +29460,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The finding is true and the fault was the issuer's criterion wording; it is amended and the order completes on the amended text."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T05:00:36Z",
+  "id": "NFRA_OPLGTW-Z-S402",
+  "one_line": "audit._emit swallows every failed lake put_object, so the refusal writer's own failure counter and WARN line (ratelimit.record_identity_refusal) can never see a failing S3 put: OG-ev-10 STEP 1's '0 WARN lines' does not rule out a lake write that fails",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/audit.py lines 38 to 64 (read by me at trunk 76057b9301): _emit appends the local floor line, then calls _s3_client.put_object inside try ... except Exception: pass ('floor holds; the lake write is best-effort by design')",
+      "infra/aws/ec2/opal-gateway/app/ratelimit.py lines 218 to 248: record_identity_refusal wraps log_ratelimit in try/except, counts a failure in _audit_failures and prints 'ratelimit-audit WARN: refusal row not recorded'; an exception from the lake put never reaches it because _emit has already caught it",
+      "the applier's finding (ask section 2, msg 35881) and its STEP 1 record (0 journal 429 lines, 0 WARN lines, 0 gw_ratelimit rows over 5568 objects): the 0 WARN count is evidence only about errors raised before or around _emit"
+    ]
+  },
+  "spec_asserts": "The in-process counter and the stderr WARN line make a failed audit write for a refusal observable (OG-en-10 design; round-43 analysis item 1 reads them as the first evidence).",
+  "world_is": "For the lake leg the counter and the WARN line are unreachable by construction: _emit returns normally whether the put succeeded or failed. So a refusal row that never reaches the lake leaves no trace in the journal. The only observation of the put itself is a direct one (the OG-ev-10 STEP 2 writer test, which wraps the module's S3 client in a recording shim in a fresh process under the instance role). The same blindness applies to every audit record the gateway writes through _emit, not only gw_ratelimit.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. Carried as a finding for the round-44 analysis: whether the lake leg should count its own failures (a counter or one stderr line in the except branch of _emit) is a decision for the CTO; it would be a code change and a release, not made here."
+}
+```
