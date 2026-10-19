@@ -26230,3 +26230,109 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "This is an outcome of one landed day, not a defect in the measures. The order's boundary criterion is recorded as read; no value is claimed. Counts and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W321-S1 -- The round-119 record names no count of 40, and the active-roster response holds 96 null-start ids; 40 of them are in the latest feed partition
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W321-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~321",
+  "surfaced_at": "2026-10-19T14:46:48Z",
+  "one_line": "The round-119 record carries no count of 40 null start dates; over the whole active-roster response 96 distinct ids have a null or empty start date, and 40 of those are in the latest feed partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-i-21, Why paragraph: the round-119 account-record read counted 40 accounts with a null accountStartDate in Orion's active roster.",
+  "world_is": "ACCOUNT_RECORD_READ_R119.json names no such count (its basis words name none). Measured over the local active-roster response that the round-119 record hashes (3040 rows, 3040 distinct ids), 96 ids carry a null or empty accountStartDate. Of those, 40 are in the latest feed partition (863 accounts) and 56 are not. The 40 reproduces only over the feed-universe subset. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~307/ACCOUNT_RECORD_READ_R119.json@69dbbd4648",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~321/S60_MEMBERSHIP_R133.json@69dbbd4648",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-21.s60-membership-read-by-hashed-id.md@69dbbd4648 (Why paragraph)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-21. Form only. Not repaired: the order says do not fix; the cell's count is recorded as measured. Counts only; no id, no date."
+}
+```
+
+## IRPT_DASHBD-D2-W321-S2 -- The membership extract covers the feed universe only, so the 39-against-40 verdict leaves out 56 roster null-start ids outside the feed partition
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W321-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~321",
+  "surfaced_at": "2026-10-19T14:46:48Z",
+  "one_line": "Under the order's extract rule (roster accounts not in the feed are not in the extract), 56 of the 96 roster null-start ids are outside the comparison, so the verdict and the S60 membership speak for the feed universe only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-i-21, step 2: the extract holds every account of the latest partition, and an account of the roster that is not in the feed is not in the extract; step 3: roster_null_start counts the feed accounts whose roster record has a null start date.",
+  "world_is": "Under that rule the record's roster_null_start is 40 and its verdict is DIFFERENCE_SHOWN over 863 feed accounts. The 56 roster null-start ids outside the feed are compared with nothing. The whole-roster comparison that the 39-against-40 wording implies was not made by this cell and is not established. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~321/S60_MEMBERSHIP_R133.json@69dbbd4648",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-21.s60-membership-read-by-hashed-id.md@69dbbd4648 (step 2 and step 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-21. Form only: the extract's scope is a narrower domain than the sentence it answers. The issuer chooses whether a roster-wide read is a later cell. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W321-S3 -- The latest feed partition classes the S60 account NO_START_DATE_AT_SOURCE, not NO_GROUP as the S60 row's one_line says it must
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W321-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~321",
+  "surfaced_at": "2026-10-19T14:46:48Z",
+  "one_line": "The S60 account is in the latest feed partition as ABSENT NO_START_DATE_AT_SOURCE, and its roster start date is null; the S60 row's expected class NO_GROUP is not what the feed carries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "The S60 row (IRPT_DASHBD-D2-S60, one_line): the Scope account feed must carry the one Inflection account with no Orion Scope group as ABSENT NO_GROUP, never a zero or an Opal fill.",
+  "world_is": "The latest partition (one day, 863 accounts) carries the S60 account, matched by sha256 of its id string, as ABSENT with reason_class NO_START_DATE_AT_SOURCE; its roster record has a null start date. It sits in the 39-account NO_START_DATE_AT_SOURCE set and in neither difference. No NO_GROUP row for it is in this partition. Counts and class words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~321/S60_MEMBERSHIP_R133.json@69dbbd4648 (s60_feed_class, s60_in_roster_null_start, s60_in_difference)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md@69dbbd4648 (IRPT_DASHBD-D2-S60 one_line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-21. ARMED on the S60 row's own owner, who disarms it by reading the feed's class against the S60 row's disarm clause. The worker does not disarm it. Counts and class words only."
+}
+```
+
+## IRPT_DASHBD-D2-W321-S4 -- The one roster null-start account the feed does not class NO_START_DATE_AT_SOURCE carries status RETURNED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W321-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~321",
+  "surfaced_at": "2026-10-19T14:46:48Z",
+  "one_line": "The one account in difference A (null start date in the roster, not NO_START_DATE_AT_SOURCE in the feed) has feed status RETURNED, so the feed returns a daily series for an account whose roster start date is null.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-i-21, Why paragraph: the feed's 39 ABSENT NO_START_DATE_AT_SOURCE accounts and the roster's null-start accounts are the same population, one account apart, so the one account on one side is not on the other.",
+  "world_is": "The one account in difference A has feed class RETURNED (feed status RETURNED, not ABSENT). Difference B is empty. The cause of the null roster start is not read. Counts and the class word only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~321/S60_MEMBERSHIP_R133.json@69dbbd4648 (a_minus_b_feed_class, a_minus_b_sha256, b_minus_a_sha256)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-21.s60-membership-read-by-hashed-id.md@69dbbd4648 (Why paragraph)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-21. Form only: the feed's NO_START_DATE_AT_SOURCE class does not cover every null roster start date. Counts and class word only."
+}
+```

@@ -8887,3 +8887,28 @@ by dell1 or by this seat.
   "world_is": "The display works and shows more than the nine: five further real tickers absent from the canonical table are also hidden by the April table (name-to-ticker rows from 2026-04-07) and are therefore never candidates. S52's latent defect is wider than the nine and the set grows with the holdings. Whether the resolution table should still gate candidacy once a ticker is absent from etf-classifications is the design question already carried; these five names are its first new evidence. Not read: which of the five are held out on purpose (none is in the seed's nine)."
 }
 ```
+
+## MDPF_SECCLASS-D1-S56 -- E_18's scheduled classifier has no live input, so the 14 admitted by SC-e-117 will all print "unresolved" and none will be written
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S56",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-19T15:21:17Z",
+  "one_line": "Read-only plan of the 14 held-out pairs (BALCX, CIMAX, DODBX, FPE, FSNQX, HBLFX, JBAWX, KAMIX, PCEF, TRRJX, TRRNX, VTTVX, WTM, XPMIX) through the real etf_classification_scheduled.plan_rows with the arguments E_18 passes (vocab from the live table, existing_tickers = the 11,375 live keys, no bd_securities, GICS or Schwab lookup): planned 0, unresolved 14, seed_pending 0, none already in the table. E_18 no longer carries a BD_SECURITIES_TABLE constant (grep, 0 hits), and the module's own header says GICS and Schwab are not wired live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I read of infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py at HEAD bb1b988f11: ETFClassifier(), existing_tickers(clf) = 11375, TableVocabulary.from_live_table(clf), plan_rows(14 pairs) -> PLANNED 0, UNRESOLVED 14, SEED_PENDING 0, IN KNOWN none (no write, no AWS write)",
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py lines 243-248: plan_rows(canonical_candidates, vocab=vocab, existing_tickers=existing, updated_by='e18-scheduled') with no lookup argument"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-29 analysis msg 8326 section 4 item 1: the 14 enter candidacy through the classifier's normal path and the next fire's E_18 line reads each as written or refused-with-reason.",
+  "world_is": "With no live input wired in E_18, the classifier's normal path resolves none of the 14: they will print 'unresolved (no input classified it)', 0 rows are written, and etf-classifications does not change. The cell still removes the hold-out (0 held out) and gives each name a printed reason; it does not classify anything. Not read: which input would classify them (the module names bd-securities, GICS and Schwab; only bd-securities has a live provider, for the retiring fork table whose name E_18 no longer carries)."
+}
+```
