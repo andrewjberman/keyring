@@ -576,6 +576,70 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "Issuer amendment 2026-10-19 item 1: regenerate generated_locals.tf and check the diff adds the alongside scope and the 08403355 master and removes nothing else.",
     "world_is": "The registry has no 08403355 row, so no regeneration can add a 08403355 master; the regenerated table is correct for the registry as it stands and removes nothing.",
     "notes": "FU-s-6 uses no 08403355 name, so the Fidelity root is unaffected. Whether a 08403355 scope row should exist is a registry question for its owner, not this order."
+  },
+  {
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-19T21:30:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_FIDUPL-D1-S2",
+    "one_line": "bootstrap.sh fails on the Amazon Linux 2023 box at 'playwright install --with-deps chromium' (apt-get absent, exit 127), so no Chromium is installed and the order's bootstrap leg cannot close.",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command 34e5f9fa-8871-4de9-afdb-0084cba13858 on i-028e830f7226cc685: bootstrap_rc=1; log tail 'BEWARE: your OS is not officially supported by Playwright; installing dependencies for ubuntu24.04-x64 as a fallback. ... sh: line 1: apt-get: command not found ... Error: Installation process exited with code: 127'",
+        "the same log shows OK lines for python 3.12 (dnf), the venv, and the boto3 and playwright pip install; ls /root/.cache/ms-playwright on the box: No such file or directory"
+      ]
+    },
+    "spec_asserts": "FU-s-7 item 3: run bootstrap.sh on the box (FU-s-5 box/bootstrap.sh, written for amzn or ubuntu).",
+    "world_is": "On amzn the dnf branch works but the playwright step uses --with-deps, which shells out to apt-get; the browser and its system libraries are not installed, so a Wealthscape session cannot open (FU-x-1).",
+    "notes": "Fix belongs to FU-s-5's file (box/bootstrap.sh), outside this order's grant: on amzn install the chromium system libraries with dnf, then 'playwright install chromium' without --with-deps. The ledger leg L2 is left OPEN; nothing else on the box was changed."
+  },
+  {
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-19T21:30:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_FIDUPL-D1-S3",
+    "one_line": "The automation document runs 'python3 /opt/fidelity-uploader/box/run.py', which on the box is system Python 3.9 with no boto3 or playwright, while bootstrap.sh installs both only in /opt/fidelity-uploader/venv.",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/canonical-fidelity-ec2/automation.tf line 6: run_command = python3 /opt/fidelity-uploader/box/run.py",
+        "SSM read on i-028e830f7226cc685: 'python3 --version' Python 3.9.25; python3 -c 'import boto3' and 'import playwright' both ModuleNotFoundError; venv/bin/python imports land OK"
+      ]
+    },
+    "spec_asserts": "FU-s-6 and FU-s-5: the run automation starts the wrapper; the wrapper's dependencies are in the venv bootstrap.sh builds.",
+    "world_is": "A scheduled or manual automation run would fail at the first boto3 import. The applied root plans to No changes, so the fix is a Terraform edit (run_command to the venv python) plus a re-apply, or a run.py re-exec into the venv.",
+    "notes": "Not changed here: the apply is by plan only and automation.tf is outside this order's grant. The schedule rules are DISABLED, so no run is due before this is fixed."
+  },
+  {
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-19T21:30:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_FIDUPL-D1-S4",
+    "one_line": "land.py finds lib/opal_naming.py only by walking up from its own file, and the config key repo_root (which the reference says is the fallback) is read by nothing, so the repo/ mirror at /opt/fidelity-uploader/repo/ is invisible to it.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/land.py _find_lib walks up for lib/opal_naming.py and reads no config; grep of box/run.py shows repo_root only in ALLOWED_KEYS",
+        "opal_naming.py derives REPO as the parent of its own LIB_DIR (abspath), so a lib symlink alone would miss infra/logic/registry",
+        "box check: venv/bin/python -c 'import land' printed IMPORT-land-OK /opt/fidelity-uploader/lib and address() returned s3://opal-data-assets/fidelity/alongside/bronze/account/20261016/account.txt"
+      ]
+    },
+    "spec_asserts": "Worker reference section 9: a module finds lib/opal_naming.py by walking up, else from the repo_root key of the config file (the box carries a minimal mirror; FU-s-7 ships it).",
+    "world_is": "Bridged on the box with three symlinks in /opt/fidelity-uploader (lib, infra, org -> repo/...), so the walk-up finds the mirror and REPO resolves to /opt/fidelity-uploader. No code was changed.",
+    "notes": "The mirror is 11 registry files, NAMING_SCHEMA.json, opal_naming.py and trading_calendar.py (found by an open() audit hook over address() and is_trading_day()). It is a copy at registry@ the current HEAD and will go stale when the registry changes."
   }
 ]
 ```
