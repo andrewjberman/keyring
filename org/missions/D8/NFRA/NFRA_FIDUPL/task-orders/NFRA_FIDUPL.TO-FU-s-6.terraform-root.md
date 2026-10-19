@@ -39,6 +39,14 @@ Resources, each with its name from the HCL builder module (system `fidelity`, sc
 6. **Outputs:** the instance id, the document name, the secret id (pointer), the role ARN.
 No bucket, no SNS topic, no CloudWatch alarm, no Lambda. All files ASCII.
 
+**ISSUER AMENDMENT 2026-10-19 (answers your rows W4-S1 to W4-S7; the order is otherwise unchanged):**
+1. W4-S1, the stale HCL target: regenerate it and commit it with your root. Run `python lib/opal_naming.py generate --out <a scratch directory under .scratch/ in your worktree> --target infra/aws/terraform/modules/opal_name/generated_locals.tf`, then copy the generated file over `infra/aws/terraform/modules/opal_name/generated_locals.tf` (that one file is now in your `<paths>`). Never edit it by hand. Check the diff adds the `alongside` scope and the `08403355` master and removes nothing else.
+2. W4-S2, the secret name: the canon has no SECRET builder, only a grader. Use the name `fidelity/alongside/wealthscape-credentials` and record the output of `python -c "import sys; sys.path.insert(0,'lib'); import opal_naming as o; print(o.grade('fidelity/alongside/wealthscape-credentials','SECRET'))"`, which must read CONFORMANT. That is a graded name, not a typed guess; the missing builder is the issuer's row.
+3. W4-S3 and W4-S4, the guard: it has been corrected (you receive the new copy of the check script). It now flags `0.0.0.0/0` only inside an ingress block, so the egress rule is fine; and it accepts a Resource star only when one of the 3 lines above it carries `# STAR-OK: <action> has no resource-level support`, naming the action. Use that only for an action AWS cannot resource-scope (for example `ssm:DescribeInstanceInformation`); every other Resource stays scoped.
+4. W4-S6: leave the instance as created. It is stopped by the first run of the automation document; do not add a stop to the root.
+5. W4-S5 (`iam:PassRole` scoped to the automation role) and W4-S7 (default VPC by data source) are accepted.
+Re-run the three criteria after your changes and report each line verbatim.
+
 ### ACCEPTANCE
 
 <criterion id="FU6-AC1" cell_refs="FU-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu6v</invocation><expect>R1-FU6V-OK Success! The configuration is valid\.</expect></criterion>
@@ -74,6 +82,7 @@ Reads (outside the grant):
 
 <paths>
 infra/aws/terraform/canonical-fidelity-ec2/
+infra/aws/terraform/modules/opal_name/generated_locals.tf
 org/missions/D8/NFRA/NFRA_FIDUPL/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
