@@ -96,6 +96,17 @@ brief names this project as the interim path ahead of the official custodian fee
                     avoids anything the Schwab pull needs to itself
          SOURCE     brief Part II (the Schwab box is relied on and not changed);
                     Part V last item
+
+  FWD-9  Each firm's Fidelity files sit in that firm's own place, never
+         mixed with another firm's
+         DONE WHEN  EXERCISED -- one day's files are landed on demand and each
+                    firm's share is read in its own place, with any accounts
+                    no firm claims listed
+         ACCEPT     Someone opening Cottonwood's Fidelity files for a day finds only
+                    Cottonwood accounts in them, and can see which accounts, if any,
+                    could not be placed with a firm
+         SOURCE     Andrew-direct ~19:0xZ ("pulling them to the relevant bronze
+                    buckets per client"; "it is based off the G Number")
 ```
 
 ## Questions the brief leaves open, and who settles them (none is an outcome)
@@ -131,5 +142,8 @@ brief names this project as the interim path ahead of the official custodian fee
   morning kept as the case it is not waiting on. The ACCEPT lines are unchanged. The Terms of Use finding is recorded under the open
   questions.
 - **~18:5xZ:** FWD-4's dated parenthetical moved to the PRD's C-DATE (the CVO's nit, L4R v0.3 review); meaning unchanged.
+- **~19:0xZ:** on Andrew's relayed word (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_190xZ_FIDUPL_SIGNIN_AUTHORIZED_RELAY_DELL1.md`): FWD-9 added at the next number
+  (each firm's files in its own place, split on the G Number). The Terms of Use question is closed: he wrote "we are authorized users
+  of the application".
 
 -- 1.0.0_SA_CTO~DELL1
