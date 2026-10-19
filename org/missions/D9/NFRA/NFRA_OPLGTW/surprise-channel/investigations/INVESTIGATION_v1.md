@@ -29201,3 +29201,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking for OG-en-34. Not fixed here: the list is an environment input outside this order's paths. Filed for the CVO's read of the device state."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~160",
+  "surfaced_at": "2026-10-19T02:15:06Z",
+  "id": "NFRA_OPLGTW-Z-W160-S2",
+  "one_line": "proof-of-spec-check.py ran in structural FALLBACK mode on this device ('jsonschema not installed -- structural coverage PARTIAL'), and its pre-flip VALID rc=0 on the instance did not carry the schema finding that the commit-time to-pipeline-gate then raised on the same instance",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .tools/proof-of-spec-check.py on the OG-en-34 instance, status still pending, rc=0, 'VALID (rc=0)'; its first line reads 'structural=FALLBACK (jsonschema not installed -- structural coverage PARTIAL; install for full)'",
+      "the same instance after the one-field status flip, at the commit attempt on 0.9.0_WK_NFRA_OPLGTW~160: to-pipeline-gate REFUSED with 'instance VIOLATION: schema: artifacts_produced/0/introduces: [] should be non-empty' and 'flips to complete but its instance is NOT VALID (rc=1)'; the field was then set to a non-empty list and the standalone checker re-run rc=0"
+    ]
+  },
+  "spec_asserts": "The proof-of-spec checker validates an instance against the PROOF_OF_SPEC schema, so a VALID verdict on an instance means the schema holds for it.",
+  "world_is": "On this Site Z worktree the checker has no jsonschema library, so its schema coverage is partial and it said VALID on an instance the commit gate then refused on a schema field. The standalone VALID verdict was not, by itself, a reliable read of the schema on this device; the commit-time gate was the check that caught the field. Not measured: how many other instances passed the standalone checker here in fallback mode.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking for OG-en-34: the commit-time gate refused the bad field and the field is fixed. Not fixed here: the library install is an environment input outside this order's paths. Filed for the CVO's read of the device state."
+}
+```

@@ -67,7 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-34.round-44-correct-the-prob
 - The base blob is `85ce5027cc8bd84dc93aa00bc71130e2c09c0795` (`git rev-parse HEAD:infra/aws/ec2/opal-gateway/app/probe_listener.py` at the cut); `AC1` compares to it. Base: `AC1` FAIL as expected (no change, the stale sentence stands); `AC2` base PASS as expected (a control, 16 passed); a temporary edit of the sentence passed `AC1` (2 changed lines) and was restored byte-equal.
 - Risk `WORLD` is the gateway-path floor.
 
-<status>pending</status>
+<status>complete</status>
 <round>44</round>
 <workstream>ENRICH-R44-A</workstream>
 <slot>~160</slot>
