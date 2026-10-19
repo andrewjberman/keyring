@@ -26038,3 +26038,85 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W301-S1 -- TO-AR-g-163 AC3 (regress) is red: the map re-point breaks two asserts in test_layout_overview.py, outside the grant
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W301-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~301",
+    "surfaced_at": "2026-10-19T16:17:41Z",
+    "one_line": "The AR-g-163 map re-point (commit 4470af3ff2) makes two existing asserts in test_layout_overview.py stale: the real-map OPAL_HELD count reads 156 where the test asserts 158, and the real-map OWN_SERIES count with pricing off reads 17 where the test asserts 9. The file is outside the order's <paths> grant, so AC3 cannot pass without a write this worker is not granted.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G2",
+    "spec_asserts": "TO-AR-g-163 AC3: the six existing producer and layout test files pass on their own (ar_price_checks.py regress, TEST_FILES includes test_layout_overview.py); the order's <paths> grants only the map, the new test file, the worker folder, the order and the channel file.",
+    "world_is": "At HEAD 4470af3ff2, python -m pytest -q on infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py reads 2 failed, 48 passed. test_opal_held_the_real_overview_map_computes_every_held_element_from_fixture_rows asserts len(held) == 158 and reads 156 (p2.e11 and p2.e15 left OPAL_HELD). test_not_in_this_version_every_price_based_element_is_not_available asserts the real map has 9 OWN_SERIES elements and reads 17 (the eight re-pointed elements). The base map at c016f7e2bb reads 158 OPAL_HELD and 9 OWN_SERIES, so both failures come from this cell's own map change. The regress arm reads AR-PRICE-163-REGRESS-FAIL test_layout_overview.py: rc=1 2 failed, 48 passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py@c016f7e2bb:623 asserts len(held) == 158; @c016f7e2bb:754 asserts len(res) == len(series) == 9",
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json@c016f7e2bb (base: 254 elements, OPAL_HELD 158, OWN_SERIES 9) and @4470af3ff2 (head: 254 elements, OPAL_HELD 156, OWN_SERIES 17), counted by a json read in the worker's worktree",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_price_checks.py 163 regress run at 4470af3ff2 (rc=1, AR-PRICE-163-REGRESS-FAIL test_layout_overview.py: rc=1 2 failed, 48 passed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W301-S2 -- The worktree sparse checkout omits org/surprise_channel, so the row schema named in the worker face is not on disk
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W301-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~301",
+    "surfaced_at": "2026-10-19T16:17:41Z",
+    "one_line": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row schema, but this worktree's sparse checkout omits org/surprise_channel and the file is not on disk. The schema was read from HEAD with git show instead; the row gate ran on the channel file and passed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Worker face: the row shape is org/surprise_channel/schemas/investigation_item.schema.json, and the worktree is provisioned with org/ and .tools/ present.",
+    "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-301 names .tools, data, docs, infra, lib, ops and five org/ subpaths (org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps, org/modules/graph, org/ref, org/standards); org/surprise_channel is not among them and git ls-files -v marks its entries skip-worktree. git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json reads the schema (required: id, surfaced_by, surfaced_at, one_line, class, grounding, disposition). python .tools/surprise-row-gate.py --check on the channel file reads OK.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list and git ls-files -v org/surprise_channel in C:/dev/wk-irpt-anlreq-301 at c016f7e2bb (skip-worktree S on org/surprise_channel/*)",
+        "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json read at c016f7e2bb by 0.9.0_WK_IRPT_ANLREQ~301"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W301-S3 -- The pre-commit risk reflex answered PARTIAL_OR_BLIND on the AR-g-163 commit: its danger map is 92.1h stale in this worktree
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W301-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~301",
+    "surfaced_at": "2026-10-19T16:17:41Z",
+    "one_line": "The pre-commit comp-pulse risk reflex printed a danger map 92.1 hours old (STALE), scanned 0 of 2 files, and answered PARTIAL_OR_BLIND for the AR-g-163 commit; the commit gate still printed All checks passed. The reflex's own text says could not check is not checked clean.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Worker face: every commit goes through .tools/safe-commit.sh, which runs the commit gates; the task order names no risk reflex and no danger map.",
+    "world_is": "On commit 4470af3ff2 (overview_map.json and test_price_pages_repoint.py) the reflex printed danger map 92.1h old STALE, REBUILD pointing to the main tree's nerves-risk-edges.json, ANSWER STATE PARTIAL_OR_BLIND, WITHIN BUDGET scanned 0 of 2 file(s). The reflex cannot run in this sparse worktree, so the risk check on this commit is not measured.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output for the commit of 4470af3ff2 (comp-pulse diff, cmd=diff days=7 top=8, danger map 92.1h old !! STALE, ANSWER STATE PARTIAL_OR_BLIND)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
