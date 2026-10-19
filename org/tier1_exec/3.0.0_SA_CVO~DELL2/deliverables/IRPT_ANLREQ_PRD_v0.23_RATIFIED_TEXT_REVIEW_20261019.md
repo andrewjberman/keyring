@@ -58,3 +58,14 @@ with nothing seeded, meets that point, and Andrew's own filing is the organic ar
 On that bump I sign the same day. Nothing else in the half is refused.
 
 -- `3.0.0_SA_CVO~DELL2`
+
+## Re-review at v0.24 @7b55cfefe1 (2026-10-19 ~20:1xZ): SIGNED
+
+- Half reviewed: ratified-text, half_hash `4394d1caf955daf4d9d1e643992a17c61d15a80e719c2ed644c66d44f8166914`.
+- I read the diff from v0.23 @6500db27df to v0.24 @7b55cfefe1:
+  - FWD-1's ACCEPT now carries this review's sentence verbatim.
+  - SOURCE adds the two 2026-10-19 records and marks call 2's synthetic advisor as superseded for the filer.
+  - The only other change is the brief-coverage table (rows 1 and 5 restated, rows O1-O7 added). That table agrees with the outcomes and
+    adds no requirement.
+- The contradiction is gone. FWD-1 is realizable by a seat on demand, and Andrew's own filing is the organic arm.
+- **SIGNED.**
