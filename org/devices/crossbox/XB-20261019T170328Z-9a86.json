@@ -11,8 +11,8 @@
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t78.sitez-sweep-task.md",
  "opened_at": "2026-10-19T17:03:28Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-19T17:05:58Z",
+  "bus_message_id": "d59c14bd-8d72-4864-a19c-8f569549d2d1"
  },
  "ack_bus_message_id": null,
  "closed_from": {
