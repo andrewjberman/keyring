@@ -52,7 +52,10 @@ landed by 1.0.0_SA_CTO~DELL2; each other box's CTO lands its own.
   ~20:4xZ: "we need COO~C added to the live arms group, as well as any other active COO on the various boxes, so they can run
   canonical-drive properly". Lanes named at landing are measured from the project registers on CLOUD (28 active of 52) and the
   dell2 packet's seat list:
-  - laptop: `2.0.0_SA_COO~C` (NFRA_CTLPLN), `~DV` (NFRA_DEVPLN), `~CA` (COMM_ASSIST);
+  - laptop: `2.0.0_SA_COO~C` (NFRA_CTLPLN), `~DV` (NFRA_DEVPLN), ~~`~CA` (COMM_ASSIST)~~ STRUCK 2026-10-19 ~20:3xZ by 1.0.0_SA_CTO:
+    COMM_ASSIST parked at the round-22 analysis (`org/missions/D9/COMM/COMM_ASSIST/ledger/ROUND_ANALYSIS.round22.md` @462e9adf5b), both
+    natural reads in (`org/tier1_exec/2.0.0_SA_COO~CA/drive_log_20261019T20Z_andrew.md` @892e8c7d48); the lane deleted its cron `9f34b128`
+    (msg 109875). Re-arms under this row when the project un-parks;
   - dell1: `~B1` (ADVI_FIRMBKTS), `~K1` (ADVI_BDPRCE), `~R1` (AMGT_RESAPP), `~W1` (AMGT_HARVST), `~V1` (ETFS_RIVALS),
     `~D1` (MDPF_CANON), `~Q1` (MDPF_DEMQUE), `~M1` (MDPF_SECCLASS), `~G1` (MDPF_HEALGAP), `~S1` (MDPF_STRATID), `~H1` (MDPF_SECHIST);
   - dell2: `~Y2` (IRPT_ANLREQ), `~G2` (IRPT_YCDGEN), `~P2` (IRPT_BCKEND), `~D2` (IRPT_DASHBD), `~C2` (ADVI_COTBKF), `~T2`
