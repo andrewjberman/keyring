@@ -911,3 +911,34 @@ of EVERY kind, and every tool listed under it.
   (FWD-24), then one employee's sheet (FWD-25). The next rounds enrich segment by segment.
 
 ENDPOINT changed (FWD-23, FWD-24, FWD-25 added): the ratified-text half re-signs.
+
+### v0.19 addendum (2026-10-19 ~16:3xZ, 1.0.0_SA_CTO~Z) -- FWD-23 and FWD-24 add ROUTED CORRECTLY; opal-data-assets first (Andrew-direct)
+
+**Andrew, verbatim** (`4.0.0_SA_CRO~Z` terminal, ~16:2xZ; record
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261019_162xZ_GATEWAY_PAGE_SCHWAB_TOOLS_SHOW_BLACK_DIAMOND_INDEXES_DEEP_AUDIT_EVERY_TOOL_CALL.md`
+@634d368d98):
+
+> "There are numerous cases where there are tools for Schwab and in the Indexes section it's talking about Black Diamond
+> information. I do not understand why there would be Black Diamond indexes/tooling on a Schwab function. This is why I need a
+> deep audit for the functionality of every single tool-call, starting with everything for opal-data-assets. i need to know that
+> every tool call works and is routed to the right location."
+
+**ENDPOINT changes:**
+
+- **FWD-23** adds a ROUTING arm. Every index link a tool carries (`index`, `links`) names a catalog row whose source (bucket,
+  prefix, or store or integration) is the one the tool's own code reads. This is read from the code (`bucket_source` and the
+  row's key), never from the tool's name.
+  - A link to a row the tool does not read is a defect. The Black Diamond rows on Schwab tools are the first named case.
+  - Proof: a per-tool routing table (tool, the code's source line, the linked rows, and the verdict `ROUTED` or `MISROUTED`),
+    plus one planted wrong link, which must read `MISROUTED`.
+- **FWD-24** adds to `PASS` that the answer came from the routed source: the response's own source or as-of fields match the
+  row. A correct-looking answer from the wrong source is `FAIL` (class `misrouted`).
+
+**Order:** opal-data-assets and its vendor/firm segments first, then the integration channels (Schwab, Black Diamond, YCharts
+and the rest), then the others.
+
+**One auditor, one instrument:** `4.0.0_SA_CRO~Z` runs the read-only research audit (why the page shows Black Diamond on
+Schwab, and the routing table). Its findings are this round's routing evidence and arrive as surprise rows. The battery stays
+FWD-24's one script. No second tester and no parallel comparator.
+
+ENDPOINT changed (FWD-23 and FWD-24 refined): the ratified-text half re-signs.
