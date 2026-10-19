@@ -63,6 +63,29 @@ wants to be a listed SMA manager.
 3. Ask Schwab Advisor Services for server-to-server (SFTP) delivery of the daily files for 08242234 and 08335338 (and
    any partner master), retiring the desktop-session ride.
 
+## Addendum 1, ~15:1xZ -- Andrew-direct, VERBATIM
+
+> Check into current holdings in the three schwab masters that we are pulling from. Furthermore we know there is 700m
+> for the Fidelity master. The premise here is that there is a "Alongside RIA" this is essentially the master group
+> that inflection/cottonwood/49 financial/etc are all part of. I think all the accounts are grouped with Alongside on
+> the backend so we should be safely over the 100m limit there. What i need to know explicitly is what needs to happen
+> to get this FTP set up immediately.
+
+**Schwab holdings, business date 2026-10-16** (silver `s3://opal-data-assets/schwab/<master>/silver/dim_balance/`,
+sum of `net_mv_plus_cash`; position-file market values agree within 0.01%):
+
+| Master | Name on file | Accounts | Net MV + cash |
+|---|---|---|---|
+| 08242234 | 49 WEALTH MANAGEMENT LLC | 7,599 | $1,782.0M |
+| 08335338 | 49 FINANCIAL | 7,690 | $1,843.3M |
+| 08403355 | 49 FINANCIAL | 30 | $42.9M |
+| **De-duplicated** | | **7,711** | **$1,843.6M** |
+
+The masters overlap: 7,578 accounts appear in both 08242234 and 08335338, and all 30 of 08403355 appear in 08335338.
+Summing the three ($3,668M) double-counts. No master on file is named Alongside, Cottonwood or Inflection.
+
+The $700M Fidelity figure is Andrew's; Opal has no direct Fidelity feed to measure it.
+
 ## Limits
 
 Public sources only; Fidelity and Schwab publish no fee schedule or SFTP spec for these feeds. Nothing was asked of
