@@ -25982,3 +25982,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S214 -- A synthetic original-holdings object cannot be deleted by any existing path and stays as a standing leftover
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S214",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-19T14:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "One synthetic upload's original-holdings object (118 bytes) cannot be deleted by the CloudOps principal and no existing path in the application deletes it; two commentary end-to-end runs wrote and then re-used the same key, so it stays as a standing leftover.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state_e2e3.json (irpt_anlreq_commentary_e2e3, commit follows): the delete of this object answered AccessDenied for the CloudOps principal on 2026-10-19T14:31:39Z; the run's other 6 recorded keys read ABSENT; the same key was left by the run of 2026-10-17 (irpt_anlreq_commentary_e2e2/LEFTOVER.txt) and the third run reached it again (same_art_key yes), so it is one object",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: the principal the application deletes this prefix with is NONE FOUND (no code path, no grant), retention is logical only, the versioned bucket has no lifecycle rule; read at HEAD by 0.7.0_AE_CloudOps~IB2 on 2026-10-19",
+      "head_object and list_object_versions on the key read by 0.7.0_AE_CloudOps~IB2 on 2026-10-17: 1 version, size 118, no object lock, no legal hold, no Delete deny in the bucket policy"
+    ]
+  },
+  "spec_asserts": "The pair's rule is that a run deletes what it creates (section 4 of the E2E packet and the CTO's condition on the deletes).",
+  "world_is": "The object irpt/49financial/state/original_holdings/ART-1693c10111be255d3459991bad0f6abed20b9152daac161061fb58cf5167bd57/30d44443701df5f92dfee4def4d1a1f139818ee416601b2577c66e30fb3b96a1.csv (118 bytes, one version) remains after the runs of 2026-10-17 and 2026-10-19; its delete is AccessDenied for the CloudOps principal and the AR-y-402 record finds no deleter in code or policy. Its index rows were deleted, so nothing in the application points at it. No client data; synthetic five-row holdings file.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
