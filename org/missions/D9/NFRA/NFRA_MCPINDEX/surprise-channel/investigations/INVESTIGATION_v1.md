@@ -10161,6 +10161,67 @@ carries none.
         "deliverables/2.0.0_SA_COO~MI/round22/checks g1.AC1..g5.AC3 run on the merged tree at a6b6d88ffbd: 12 of 12 RESULT: PASS"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W68-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~68",
+    "surfaced_at": "2026-10-19T17:18:00Z",
+    "one_line": "ROUTING (MX-k-2): the census links news_market_mood to the catalog row opal_data_portal_v2_served_news_trending_and_sentiment, whose prefix names json/trending/latest.json as well as json/sentiment/, but the tool's code reads only the two sentiment singletons under json/sentiment/ and never the trending object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The census entry for news_market_mood links the news trending and sentiment row, so the linked source is the one the tool answers from (cell MX-k-2 step 1, ROUTING: expect_source is what the code reads, and a linked row the code does not read is one observation row).",
+    "world_is": "news_typed.py:497-498 reads FEAR_GREED_KEY and KEYWORD_SENTIMENTS_KEY (both under SENTIMENT_PREFIX json/sentiment/, news_typed.py:26-28); json/trending/latest.json is not read by news_market_mood. Case K2-17 carries expect_source opal-data-portal-v2/json/sentiment/ (what the code reads), not the linked trending key.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/news_typed.py:491-498 (def news_market_mood; the two reads at 497 and 498) @060b3afa809 (worktree HEAD)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json: tools[name=news_market_mood].indexes = opal_data_portal_v2_served_news_trending_and_sentiment, opal_data_portal_v2_served_sentiment_singletons",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:17517 (entity opal_data_portal_v2_served_news_trending_and_sentiment, prefix json/trending/latest.json; json/sentiment/) @060b3afa809"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W68-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~68",
+    "surfaced_at": "2026-10-19T17:18:00Z",
+    "one_line": "PREMISE (MX-k-2): opal_asker_query has no static argument that surely returns an answer or a refusal; its nonempty case K2-18 carries placeholder strings for a live Teams chat_id and message_id, and no refused case is written for it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Cell MX-k-2 step 1 asks each reader to get a case that expects an answer, with real, valid example values for its args, and a placeholder only for an id returned by an earlier case of this file.",
+    "world_is": "tools.py:1887 opal_asker_query(chat_id, message_id, key) answers through asker_scope.handle_asker_query, which refuses a message with no resolvable Entra sender (NO-SENDER), a message older than the recency window (STALE-MESSAGE), and an asker with no profile. Those ids are live Teams identifiers that no case of this file can produce, so K2-18 is runnable only in a signed-in session with ids filled in.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/tools.py:1887-1896 (opal_asker_query and its _run call) @060b3afa809",
+        "infra/aws/ec2/opal-gateway/app/asker_scope.py:305-330 (handle_asker_query: sender resolution, recency window, profile check) @060b3afa809"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W68-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~68",
+    "surfaced_at": "2026-10-19T17:18:00Z",
+    "one_line": "PREMISE (MX-k-2): no universe name or factor code for portal_get_security_scan is held in the catalog or the gateway code, so K2-31 is an empty case by construction (an absent universe folder) and no nonempty scan case is written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Cell MX-k-2 step 1 asks for real, valid example values, and to read the catalog example_questions where one exists; the scan's example question names a universe in words ('S&P 500') and no key.",
+    "world_is": "portal_macro.py:43-44 and :287-304 read json/security_scanner/latest/universes/<universe>/scanner_data.json with the universe folder name taken from the caller; the catalog row for the scanner (entity opal_data_portal_v2_served_security_scanner) names only the prefix json/security_scanner/latest/. The universe and factor values that exist are not in any file this cell reads.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/portal_macro.py:43-44 and :287-304 (PREFIX_UNIVERSES; _scan key construction; absent_reason on a missing universe) @060b3afa809",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml silver_datasets entity opal_data_portal_v2_served_security_scanner (prefix json/security_scanner/latest/) @060b3afa809"
+      ]
+    }
   }
 ]
 ```
