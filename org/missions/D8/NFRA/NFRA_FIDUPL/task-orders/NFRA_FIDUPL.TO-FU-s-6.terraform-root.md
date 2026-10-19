@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~4</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -47,6 +47,10 @@ No bucket, no SNS topic, no CloudWatch alarm, no Lambda. All files ASCII.
 5. W4-S5 (`iam:PassRole` scoped to the automation role) and W4-S7 (default VPC by data source) are accepted.
 Re-run the three criteria after your changes and report each line verbatim.
 
+### REPAIR (issuer, 2026-10-19; this order is REOPENED)
+
+The CloudOps seat applied your root (18 added, post-apply plan: No changes) and read the box (row NFRA_FIDUPL-D1-S3): `automation.tf` runs `python3 /opt/fidelity-uploader/box/run.py`, which on the box is system Python 3.9 with no boto3 or playwright; the bootstrap installs both only in `/opt/fidelity-uploader/venv`. Fix `automation.tf` only: the run command is `/opt/fidelity-uploader/venv/bin/python /opt/fidelity-uploader/box/run.py`. Do NOT apply (plan only); the CloudOps seat re-applies. Because the root is now applied, the plan check changed: FU6-AC3 now expects `Plan: 0 to add, 1 to change, 0 to destroy.` with the change on the automation document. Update your proof instance for four criteria, re-validate, and flip to complete only when all four PASS.
+
 ### ACCEPTANCE
 
 <criterion id="FU6-AC1" cell_refs="FU-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu6v</invocation><expect>R1-FU6V-OK Success! The configuration is valid\.</expect></criterion>
@@ -55,14 +59,18 @@ Re-run the three criteria after your changes and report each line verbatim.
 <criterion id="FU6-AC2" cell_refs="FU-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu6g</invocation><expect>R1-FU6G-OK no ingress</expect></criterion>
 `FU6-AC2` -- no ingress, no wildcard secret grant, no secret version, prevent_destroy present.
 
-<criterion id="FU6-AC3" cell_refs="FU-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu6p</invocation><expect>R1-FU6P-OK Plan: \d+ to add, 0 to change, 0 to destroy\.</expect></criterion>
-`FU6-AC3` -- the plan against the real backend only adds.
+<criterion id="FU6-AC3" cell_refs="FU-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu6p2</invocation><expect>R1-FU6P2-OK Plan: 0 to add, 1 to change, 0 to destroy\.</expect></criterion>
+`FU6-AC3` -- REPLACED at the repair: the root is APPLIED (18 resources), so the plan against the real backend must now change exactly one thing, the automation document, and add and destroy nothing.
 
-<expected_criteria>FU6-AC1,FU6-AC2,FU6-AC3</expected_criteria>
+<criterion id="FU6-AC4" cell_refs="FU-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu6c</invocation><expect>R1-FU6C-OK the automation runs the wrapper with /opt/fidelity-uploader/venv/bin/python</expect></criterion>
+`FU6-AC4` -- the automation document runs the wrapper with the venv python. (A fourth criterion, with its reason: the CloudOps seat's finding is a defect the other three could not see.)
+
+<expected_criteria>FU6-AC1,FU6-AC2,FU6-AC3,FU6-AC4</expected_criteria>
 
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU6-AC1` base: FAIL as expected.
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU6-AC2` base: FAIL as expected.
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU6-AC3` base: FAIL as expected.
+Dry-run at the base (HEAD of box/dell1 at the repair): `FU6-AC3` (replaced) base: FAIL as expected; `FU6-AC4` base: FAIL as expected.
 
 ## BOUNDS
 

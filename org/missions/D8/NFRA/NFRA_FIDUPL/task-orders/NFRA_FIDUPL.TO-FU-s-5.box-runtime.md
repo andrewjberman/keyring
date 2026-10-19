@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~3</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -35,6 +35,10 @@ Build `infra/aws/ec2/canonical-fidelity/box/bootstrap.sh`, `box/run.py` and `tes
 3. `run.py` has a `main()` that loads the config path from argv or `/opt/fidelity-uploader/config.json` and wires the real `signin.open_session`, `fetch.fetch_day` and `land.land` (imported lazily so the tests need no browser). It never reads a secret from the environment and never sets one.
 4. Tests with fakes: `test_calls_signin_fetch_land_in_order`, `test_stage_failure_exits_nonzero`, `test_failure_still_writes_record_via_lander`, `test_no_secret_in_environment` (assert the environment is unchanged after a run), `test_reads_config_pointers_only` (a config holding a literal password value is rejected).
 
+### REPAIR (issuer, 2026-10-19; this order is REOPENED)
+
+The CloudOps seat applied the root and ran your bootstrap on the real box (Amazon Linux 2023, instance i-028e830f7226cc685; surprise row NFRA_FIDUPL-D1-S2): `playwright install --with-deps chromium` shells out to `apt-get`, which does not exist on Amazon Linux, so exit 127 and no Chromium. Fix `box/bootstrap.sh` only: in the `amzn` branch install Chromium's system libraries with `dnf install -y` (at least `nss`, `atk`, `at-spi2-atk`, `cups-libs`, `libdrm`, `libxkbcommon`, `libXcomposite`, `libXdamage`, `libXfixes`, `libXrandr`, `mesa-libgbm`, `pango`, `alsa-lib`, `libX11`, `libxcb`; tolerate a package name that does not exist by installing each with `|| true` and printing a WARN, since the box is the real test), then run `python3 -m playwright install chromium` WITHOUT `--with-deps`; keep `--with-deps` only inside the `ubuntu|debian` branch. Keep the rest as built. Your existing tests must still pass. Add AC3 to your proof instance (refresh the instance and re-validate it) and flip the order to complete only when all three PASS. The real proof is on the box: the CloudOps seat re-runs the bootstrap and the issuer's check FU7-AC3 launches Chromium there.
+
 ### ACCEPTANCE
 
 <criterion id="FU5-AC1" cell_refs="FU-s-5"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu5</invocation><expect>R1-FU5-OK passed=\d+</expect></criterion>
@@ -43,7 +47,12 @@ Build `infra/aws/ec2/canonical-fidelity/box/bootstrap.sh`, `box/run.py` and `tes
 <criterion id="FU5-AC2" cell_refs="FU-s-5"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu5b</invocation><expect>R1-FU5B-OK bash -n clean</expect></criterion>
 `FU5-AC2` -- the bootstrap parses, installs a browser and exports no secret.
 
-<expected_criteria>FU5-AC1,FU5-AC2</expected_criteria>
+<criterion id="FU5-AC3" cell_refs="FU-s-5"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu5c</invocation><expect>R1-FU5C-OK amzn branch installs browser libraries with dnf</expect></criterion>
+`FU5-AC3` -- the Amazon Linux branch installs Chromium's system libraries with dnf and `--with-deps` is run only in the ubuntu or debian branch.
+
+<expected_criteria>FU5-AC1,FU5-AC2,FU5-AC3</expected_criteria>
+
+Dry-run at the base (HEAD of box/dell1 at the repair): `FU5-AC3` base: FAIL as expected.
 
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU5-AC1` base: FAIL as expected.
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU5-AC2` base: FAIL as expected.

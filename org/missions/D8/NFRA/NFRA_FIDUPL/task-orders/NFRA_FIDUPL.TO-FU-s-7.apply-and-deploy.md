@@ -37,6 +37,10 @@ This is an AWS apply, so it is addressed to the NFRA macro CloudOps lane (CLAUDE
 Never run a Wealthscape sign-in here: that is FU-x-1.
 5. **The instance is created RUNNING** (worker row W4-S6: the root does not manage its state). Do NOT stop it by hand: stopping an EC2 instance is an act that needs a human's confirmation. Leave it running, record in the ledger that it runs from the apply until FU-x-1's first automation run stops it, and tell the issuer in your report if the apply to FU-x-1 gap exceeds 24 hours.
 
+### REPAIR LEG (issuer, 2026-10-19, answering your rows S2, S3, S4 and your message 8545)
+
+FU-s-5 (bootstrap.sh) and FU-s-6 (automation.tf) are REOPENED and being repaired by their workers; the issuer will tell you when both are merged on box/dell1. Then: re-deliver `box/bootstrap.sh` to the box, re-run the bootstrap, re-apply the root (the plan will show one change, the automation document), re-run the delivery verification, close ledger leg L2 and the entry, and run the three criteria below. Your row S4 (the repo mirror found only through three symlinks) is accepted as the box's delivered layout for round 1; keep those symlinks in the delivery notes of the ledger entry. Your instance is left running per the order.
+
 ### ACCEPTANCE
 
 <criterion id="FU7-AC1" cell_refs="FU-s-7"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu7a</invocation><expect>R1-FU7A-OK No changes\.</expect></criterion>
@@ -45,7 +49,12 @@ Never run a Wealthscape sign-in here: that is FU-x-1.
 <criterion id="FU7-AC2" cell_refs="FU-s-7"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu7l</invocation><expect>R1-FU7L-OK completion entries=\d+, open sentinels=0</expect></criterion>
 `FU7-AC2` -- the change-management entry is closed and no sentinel remains.
 
-<expected_criteria>FU7-AC1,FU7-AC2</expected_criteria>
+<criterion id="FU7-AC3" cell_refs="FU-s-7"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu7b</invocation><expect>R1-FU7B-OK chromium=launched</expect></criterion>
+`FU7-AC3` -- ADDED at the repair: on the real box the venv python imports boto3 and playwright and launches headless Chromium.
+
+<expected_criteria>FU7-AC1,FU7-AC2,FU7-AC3</expected_criteria>
+
+Dry-run at the base (HEAD of box/dell1 at the repair): `FU7-AC3` base: FAIL as expected (the SSM command returned Failed: Chromium was not installed).
 
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU7-AC1` base: FAIL as expected.
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU7-AC2` base: FAIL as expected.
