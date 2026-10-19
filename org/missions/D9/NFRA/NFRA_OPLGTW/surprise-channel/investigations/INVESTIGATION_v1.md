@@ -29787,3 +29787,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking: the failing test is not one this order's arms cite. Not graded by this worker."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T11:49:07Z",
+  "id": "NFRA_OPLGTW-Z-S404",
+  "one_line": "Round-46 ruling on the worker's ARMED row Z-W162-S1 (the audit lake stores the principal as a plaintext sign-in address, not a hashed id): the expectation was MY order wording, copied from GD1, and was wrong; the record the worker wrote is clean; whether the lake should store a hashed id is a design question for the CTO, raised in the slug",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W162-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-gd-2 (gd2.AC1, AC2 and AC3 PASS on my run in the worker's worktree; drained at a1c57e92bd): GD2_GRADE_READ.json and its evidence hold 0 email addresses, 0 runs of 8 or more digits and 0 token-shaped strings (gd2.AC2 private-value scan), so the plaintext in the lake did not reach any record",
+      "the worker's row Z-W162-S1: every record of the 2026-10-18 audit day (10,627 objects) carries the keys args, detail, outcome, tier, tool, ts and user, and `user` is the caller's sign-in address; the worker's principal labels in its counts file are sha256 prefixes it computed locally",
+      "OG-gd-2's face (my text, copied from OG-gd-1's) said principals appear as 'the audit lake's hashed principal id'; the lake has no such field"
+    ]
+  },
+  "spec_asserts": "Principals in the audit lake are recorded as a hashed principal id (the OG-gd-1 and OG-gd-2 order wording).",
+  "world_is": "The audit lake's `user` field holds the caller's sign-in address as plaintext. The bucket is Opal's own internal audit store, written by the gateway for the owner's review. Whether it should hold a hashed id instead (the callers include non-Opal partner users) is a privacy-design call that touches a served record format and is the CTO's, not the issuer's; it is listed in the next L10 slug. The worker handled it correctly: it computed hashes locally and wrote no address.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard the row names (a plaintext address reaching a record of this order) did not occur: the worker's output is clean by a mechanical scan, and the wrong expectation was the issuer's wording. The separate design question is routed to the CTO, not held open on this row."
+}
+```
