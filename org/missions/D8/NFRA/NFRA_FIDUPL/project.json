@@ -27,11 +27,11 @@
   "decompositions": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1",
-    "coo": null,
+    "coo": "2.0.0_SA_COO~P1",
     "cvo": "3.0.0_SA_CVO~DELL1",
     "cro": "4.0.0_SA_CRO~FIDELITY"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~P1",
   "rulings": [
     "PRIORITY -- Andrew-direct 2026-10-19 ~18:05Z: 'this is now the highest priority project on this box' (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261019_1805Z_AUTO_FIDELITY_TOP_PRIORITY_DELL1.md)."
   ]
