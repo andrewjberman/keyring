@@ -10181,6 +10181,28 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W65-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~65",
+    "surfaced_at": "2026-10-19T17:01:10Z",
+    "one_line": "The pending tool-index record classes harvest_list as member b, owner AMGT_HARVST (the MX-c-11 cell), but the gateway source lists object keys and sizes, which the MX-h-4 contract names as member c; the disposition file classes it c, so the two records disagree until the issuer rules.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tool_index/pending_members.yaml lines 8-12 at worktree HEAD 77df1c53cc: the comment 'classed member b, owner AMGT_HARVST, as the MX-c-11 cell states' and the entry tool harvest_list member b owner AMGT_HARVST.",
+        "infra/aws/ec2/opal-gateway/app/harvest_read.py:113 at HEAD 77df1c53cc: resp = _client().list_objects_v2(**kw), building keys of object name, size and last_modified under a served prefix; the contract (decomposition R23.2) names c for a tool that lists names.",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~65/disposition_non_m365.json at commit 77df1c53cc: harvest_list member c, no owner, reason ends [app/harvest_read.py:113]; h4.AC1 and h4.AC2 both RESULT: PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-h-4 section 1: classify each of the 13 tools by its definition; c when the tool lists names, probes a status, passes a vendor call through or reads only the caller's own data; b when it reads a dataset a catalog row should describe.",
+    "world_is": "The pending record (MX-c-11) says b for harvest_list, the source is a names-and-sizes listing that the contract names c, and the disposition file therefore says c. Both records are present; the applier reads the disposition only for tools with no catalog index.",
+    "notes": "Recorded, not acted on. The disposition file follows the contract text, the one place the face was explicit. The issuer decides whether the pending entry or the disposition governs harvest_list at the drain."
   }
 ]
 ```
