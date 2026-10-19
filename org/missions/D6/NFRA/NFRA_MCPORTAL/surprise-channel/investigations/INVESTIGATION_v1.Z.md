@@ -3420,3 +3420,200 @@
   "notes": "Filed by the issuer, the disarm_owner of record. The old profile folder (deliverables/0.9.0_WK_NFRA_MCPORTAL~3/.scratch/profile-edge, git-ignored) holds the owner's session cookies; it is left in place and a redo uses a different profile folder."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T17:42:37Z",
+  "one_line": "MP-z-6 cannot run its reads: the order names read paths (infra/aws/ec2/EC2_MANIFEST.json, infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py, infra/aws/ec2/opal-gateway/app/integrations/) that the sparse worktree C:/tmp/mp-gw-16 does not materialise; the worker stopped at the first act and did not reconstruct them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/mp-gw-16 sparse-checkout list (rc=0) prints .tools, infra/logic/registry, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/modules/graph, org/ref, org/standards; no infra/aws entry.",
+      "ls C:/tmp/mp-gw-16/infra/aws/ fails with 'No such file or directory'; ls of infra/aws/ec2/opal-gateway/app/ fails likewise.",
+      "git ls-files infra/aws/ec2/opal-gateway at HEAD 9722e32fce3 lists 494 tracked paths; git ls-files --error-unmatch infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py passes: tracked at HEAD, absent on disk.",
+      "timeout 120 bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/fwd20/checks/z6.AC1.sh; echo exit=$? -> 'no run: org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~16/z6_run.json missing or unreadable' / 'RESULT: FAIL' / exit=1 (recorded verbatim in the instance)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MP-z-6 section 3 names infra/aws/ec2/EC2_MANIFEST.json, infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py and infra/aws/ec2/opal-gateway/app/integrations/ as read-only paths of this worker, and steps 2 and 3 read the deployed code and the grant store through them; the first-act bar requires the worktree to carry the paths the order names.",
+  "world_is": "The worktree is a cone sparse-checkout carrying .tools, infra/logic/registry, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/modules/graph, org/ref and org/standards only. infra/aws/ is not on disk, though those files are tracked at HEAD 9722e32fce3. The quote's source record under org/tier1_exec/ is also absent from the worktree.",
+  "notes": "NFRA_MCPORTAL-Z-W3-S5 recorded the same absence and read the app path from HEAD with git show. This worker did not: the first-act bar says STOP, and reading the named paths out of HEAD is the extraction the bar does not allow. Not repaired here; the cone is the issuer's worktree configuration. No gateway read, store read, vendor call, write or deploy was attempted. AC2 is judgment and is left for 3.0.0_SA_CVO~Z; the verbatim quote is in deliverables/0.9.0_WK_NFRA_MCPORTAL~16/z6_andrew_read.md."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T17:48:29Z",
+  "one_line": "The commit-time naming gate printed NAMING ERROR (function-map folder missing) on the proof-instance commit in the sparse worktree and the commit still landed at rc=0; the gate's error does not refuse.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of 0.9.0_WK_NFRA_MCPORTAL~16 proof instance and session.log (commit 4290f5ef4b4): log line '[naming-gate] NAMING ERROR function-map folder missing: C:/tmp/mp-gw-16/infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)'; the same call returned rc=0 and the commit landed (git log --oneline -3 shows 4290f5ef4b4).",
+      "The folder sits under infra/aws/, which the sparse cone of C:/tmp/mp-gw-16 does not carry (see NFRA_MCPORTAL-Z-W16-S1). The commit paths were JSON and a text log only; no Lambda source was staged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A commit through .tools/safe-commit.sh is refused when a commit-time gate cannot read the source map it grades against; the naming gate is a gate, not a notice.",
+  "world_is": "In this sparse worktree the naming gate reports NAMING ERROR for the missing function-map folder and the commit proceeds with rc=0. Any later commit from this worktree that stages a Lambda name would pass this gate ungraded. The commit itself touched no named resource.",
+  "notes": "Filed with the proof instance commit, which the surprises list of that instance cites. Not repaired here: the sparse cone is the issuer's worktree configuration, and no gate was edited."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T18:04:01Z",
+  "one_line": "MP-z-6 step 2 cannot read code_tools as written: the channel the order's pick rule selects, opal-data-etfs (18 tools, tied with opal-data-portal-v2), is a bucket, and the order's method reads an integration module's IntegrationSpec.tools and register(); no such module exists for it. code_tools is recorded null.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served _compute over SSM (command 200bedd3-7eab-46c1-8f5e-e199fe3ab0d0, instance i-07dccb1615503ac99, /opt/opal-gateway, import app.server first): CH|opal-data-etfs|tools=18 ; CH|opal-data-portal-v2|tools=18 ; CH|portal_index|tools=6 ; CH|schwab|tools=5 ; CH|ycharts|tools=6 ; CH|blackdiamond|tools=1.",
+      "infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py _compute lines 338-364: a tool joins its integration spec's channel first, else a bucket its catalog tool_index row declares as source_group, else Microsoft 365, else No source declared.",
+      "Tool lists (command 1998c941-d769-4131-97db-24fa4ec89278): TOOLS|opal-data-etfs = 18 etfs_* names; TOOLS|opal-data-portal-v2 = 18 names."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MP-z-6 step 2 reads code_tools from the integration module of the channel picked as the most-tools non-m365 channel, via IntegrationSpec.tools and the names its register() passes.",
+  "world_is": "Both largest non-m365 channels are buckets at 18 tools. Bucket channels take their tools from catalog tool_index source_group rows, not from an integration spec, so the as-written method has no module to read. The largest integration channel is portal_index at 6 tools.",
+  "notes": "Tie broken by page order (kind, then id): opal-data-etfs before opal-data-portal-v2; recorded in z6_run.json. The catalog side was not read in place of the module: the order is exactly as written. Whose fix: the order's pick rule and method disagree for a bucket channel."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S4",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T18:04:01Z",
+  "one_line": "MP-z-6 step 3 cannot read store_tools as written: ops/schwab_entitlement_admin.py has no read or show subcommand; its subcommands are activate, revoke and deny-backfill, all POLICY writers. store_tools is recorded null.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py (worktree, HEAD 9722e32fce3): _build_arg_parser add_parser calls at lines 442 (activate), 450 (revoke), 458 (deny-backfill); no other subcommand.",
+      "Same file: current_state(store, tid, oid) at line 262 is a Python function with no CLI entry. infra/aws/ec2/opal-gateway/ops/schwab_status.py header: read-only HEALTH, CLOSURE and ERROR summary, no per-principal grant.",
+      "The page's grant read for opalbloomberg@opalinvest.com (command 200bedd3): how 'data grant revision 1'. That is the gateway's own read, not the operator read the order names."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MP-z-6 step 3 reads the principal's active grant with the existing operator read, its read/show subcommand, run under the operator role.",
+  "world_is": "The ops directory holds no operator-role read or show command for a principal's grant. The only grant reader in the named script is an internal Python function.",
+  "notes": "Not substituted: calling current_state from a one-liner under the operator role would be a read the order does not name, and the operator role was not assumed. Whose fix: the order names a subcommand that is absent from the script."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S5",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T18:04:01Z",
+  "one_line": "MP-z-6 step 3 says the one real principal with a principal_profile, but the served page lists three principals with a data grant revision (andrew rev 1, opalbloomberg rev 1, alyssa rev 5); the principal was chosen by a stated rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served _compute (command 200bedd3): grant_store={'status': 'read', 'principals': 3}; opal-data-etfs holders: andrew@opalinvest.com (master admin; data grant revision 1), opalbloomberg@opalinvest.com (write-capable; data grant revision 1), alyssa@opalinvest.com (write-capable; data grant revision 5).",
+      "Holder data-grant tools (command 1998c941): opalbloomberg 5 schwab_* tools; alyssa 4 (no schwab_prepare_download); andrew 5 schwab_* plus blackdiamond_list_fees."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MP-z-6 step 3 takes the one real principal with a principal_profile, listed by the page with how 'data grant revision n'.",
+  "world_is": "Three principals carry a data grant revision. Rule applied: the first principal in page order whose how carries a data grant revision and who is not a master admin, which is opalbloomberg@opalinvest.com.",
+  "notes": "The choice changes the comparison: with alyssa, page_holder_tools would hold 4 tools. Recorded so the issuer can name the intended principal."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S6",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T19:07:17Z",
+  "one_line": "AMENDMENT 1 step 2 picks the integration with the most page tools, and two integrations tie at 6: portal_index and ycharts. The order's tie rule is absent; portal_index was taken as first in page order (kind, then id).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served _compute over SSM (command 6ced0404-2369-4c13-884a-0eb20f784509, import app.server first): INTEG|portal_index|6 ; INTEG|ycharts|6 ; INTEG|schwab|5 ; INTEG|globgrph|2 ; INTEG|opal_discover|2 ; INTEG|opal_portal|2 ; INTEG|blackdiamond|1 ; INTEG|advi_billing|NO-CHANNEL-ON-PAGE.",
+      "Integration directories at the served app: advi_billing, blackdiamond, globgrph, opal_discover, opal_portal, portal_index, schwab, ycharts (INTEGDIRS line of the same run)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 step 2: among integration directories (excluding m365), pick the one whose page channel lists the most tools; an integration with no channel on the page is taken to the next.",
+  "world_is": "portal_index and ycharts both list 6 tools on the page. advi_billing has no channel on the page and is skipped. The tie is not decided by the order text.",
+  "notes": "Chosen: portal_index, first in the page's own order. Its code_tools (the names its register() passes, read from the deployed artifact) equal its page tools, so the choice does not change AC1's equality for this channel. Recorded so the issuer can name the intended tie rule."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S7",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T19:07:17Z",
+  "one_line": "The sparse worktree C:/tmp/mp-gw-16 now carries infra/aws/ec2 and shows 11 smartx-exporter scripts as modified (CRLF in the working copy against LF in the index); the commits here name paths and do not stage them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat in C:/tmp/mp-gw-16 at HEAD a324cb607e0: 11 files changed, 3109 insertions(+), 3109 deletions(-); the warnings name infra/aws/ec2/smartx-exporter/smartx-workspace/scripts/*.py and config.py: 'CRLF will be replaced by LF the next time Git touches it'.",
+      "The files were materialised by the cone change of the issuer's provisioning fix (row NFRA_MCPORTAL-Z-W16-S1); this worker wrote none of them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worktree's write surface is the order's paths (deliverables and the surprise channel); a worker commits only those paths.",
+  "world_is": "Eleven files outside the write surface show as modified in the worktree from line-ending conversion. They are not part of any commit made here.",
+  "notes": "Not repaired and not staged. Every commit in this worker's chain was made with explicit paths through safe-commit.sh."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S8",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T19:09:46Z",
+  "one_line": "Task-order status flip: the coordinator's message says flip the order's status when every mechanical criterion passes, and AC1 now passes, but the order file is outside this worker's write grant (<paths> names only the deliverables and the surprise channel). The flip is left to the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "z6.AC1.sh run verbatim (timeout 120): window 2026-10-16T18:30:00Z .. 2026-10-16T19:05:00Z; ssm status=Success; breakdown 200s=24; control-plane data routes 200 (of 4)=4; channel tools code==page: yes; principal tools store==page: yes; RESULT: PASS; exit=0.",
+      "The order file NFRA_MCPORTAL.TO-MP-z-6.fwd20-close-run.md carries <status>pending</status>; its path is not in the <paths> block of the order (section 3)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order is flipped to complete by its worker only when every mechanical criterion passes, and the worker writes only its <paths>.",
+  "world_is": "Both conditions cannot be met by this worker at once. AC1 passes; the file that holds <status> is outside the write grant.",
+  "notes": "Not repaired: no edit to the order file was made. The instance records the flip as the issuer's. AC2 is judgment and is left for 3.0.0_SA_CVO~Z."
+}
+```
