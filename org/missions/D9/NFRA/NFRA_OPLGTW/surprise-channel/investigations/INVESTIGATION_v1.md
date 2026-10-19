@@ -29536,3 +29536,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. Same warn decisions as the literal wording at every failure in the face's test; the difference is the number of clock reads."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~161",
+  "surfaced_at": "2026-10-19T06:10:00Z",
+  "id": "NFRA_OPLGTW-Z-W161-S3",
+  "one_line": "The commit gate printed 'WARN: client-data-check: hashed account-id list ABSENT' on this device at the commit of 7925828f63 and stated the commit was NOT checked for client account ids; the commit went through on the WARN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of the commit 7925828f63 (LOCAL on wk-NFRA_OPLGTW-161): 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the staged paths are infra/aws/ec2/opal-gateway/app/audit.py, infra/aws/ec2/opal-gateway/tests/test_og_pr6.py and this channel file; the diff adds no account id (this worker's read of the diff, not the gate's)"
+    ]
+  },
+  "spec_asserts": "The commit gate checks every commit for client account ids before it lands.",
+  "world_is": "On this device the hashed account-id list is absent, so the gate's client-data check grades nothing, and the commit lands on the WARN alone.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. The same condition is carried by NFRA_OPLGTW-Z-W160-S1 (filed by 0.9.0_WK_NFRA_OPLGTW~160). Not graded by this worker."
+}
+```
