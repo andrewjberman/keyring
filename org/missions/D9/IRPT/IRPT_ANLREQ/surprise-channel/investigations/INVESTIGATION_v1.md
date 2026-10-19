@@ -25770,3 +25770,95 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W294 -- door versus mint (AR-y-400): the login premise and the on-behalf collision
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W294-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~294",
+  "surfaced_at": "2026-10-17T20:28:42Z",
+  "one_line": "The cell's login-code premise fails: the auth module is not under infra/aws/lambda/ but under infra/aws/opalinvest_dev/lambda/auth-handler/src/, which is absent from this sparse worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-400 says the login code that builds a session token is in the ticket/auth service, found by name in infra/aws/lambda/ (a named folder at a time).",
+  "world_is": "At HEAD c877863508 the login is infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts:69 (login, with the status test at :106-107 and the token call at :217) and the token claims are built at infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:168-184; both were read by git show HEAD because infra/aws/opalinvest_dev does not exist in this worktree (ls).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts:69, :106-107, :116, :208, :217 (git show HEAD:<path>, HEAD c877863508)",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:168-184 (git show HEAD:<path>, HEAD c877863508)",
+      "infra/aws/opalinvest_dev/lambda/ci/function-map/opalinvest-auth-handler.json names source_dir infra/aws/opalinvest_dev/lambda/auth-handler"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W294-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~294",
+  "surfaced_at": "2026-10-17T20:28:42Z",
+  "one_line": "The upload door's on-behalf rule refuses the synthetic staff row that AR-y-373 gave allowedFirmIds naming the run firm, because the run names no advisor: the mint's one-firm scope and the door's on-behalf rule collide.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-373 (fwd1_mint.py:27, :65, readback_ok at :79-83) makes the synthetic staff row carry allowedFirmIds naming 49financial so the FWD-1 ticket reader admits it; the paired run's upload names selected_tenant only (e2e_run.py:181) and no advisor_email.",
+  "world_is": "The door refuses such a row with NOT_AUTHORIZED: _create_owner raises ProspectOwnershipRefused when the tenant is in the actor's allowedFirmIds and no advisor_email is named (served.py:1089-1091, mapped to NOT_AUTHORIZED at served.py:1069). The receipt U line records the same code (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e/A_E2E.txt), and window 4 was refused at the same door (INVESTIGATION_v1.md:22817-22823). The only item_for-only admitting edit removes allowedFirmIds and widens reach to every firm (served.py:1189-1190, interactive_access.py:70-76); the advisor route needs a partner profile at the firm (served.py:1104-1114) that the mint does not write. NOT READ: a live staff row's allowedFirmIds value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1089-1091 and :1069 (HEAD c877863508, worktree read)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_mint.py:27, :65, :79-83",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~294/r53/DOOR_VERSUS_MINT.md (V4, V6)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W295-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~295",
+  "surfaced_at": "2026-10-17T21:03:49Z",
+  "one_line": "The stored original's object name is the sha256 of the uploaded bytes, not the uploaded file name, so the AR-y-402 key premise <file>.csv is not what the writer builds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The AR-y-402 cell names the stored original's key as irpt/<firm>/state/original_holdings/ART-<id>/<file>.csv.",
+  "world_is": "The reporting destination returns prefix + '/' + sha256 + '.' + extension (lib/opal_naming.py:2663-2665), so the object is ART-<id>/<sha256>.csv: the uploaded file name never enters the key. The extension is csv (infra/logic/registry/reporting_policies.json:31). The ART- segment is the logical binding (infra/aws/lambda/investor-reporting/reports/repository.py:390-395). Read at HEAD 41d4cd86d0. NOT READ: a live listing of the prefix.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:2663-2665 (HEAD 41d4cd86d0, worktree read)",
+      "infra/logic/registry/reporting_policies.json:31 (HEAD 41d4cd86d0, worktree read)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md (W4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W295-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~295",
+  "surfaced_at": "2026-10-17T21:03:49Z",
+  "one_line": "No existing path deletes the synthetic original: the writer holds no delete grant, the application has no delete call, and the declared 30-day retention window has no deleter, so the IB2 leftover stays until a rule is added.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The third run's step D (CTO msg 10668 item 2; ruling f4be348491 ADDENDUM 3) assumes the one leftover CSV is deleted through the application's existing delete path, or carried as a surprise row; the X10 policy declares unreferenced_days 30 for ORIGINAL_HOLDINGS (infra/logic/registry/reporting_policies.json:31).",
+  "world_is": "No existing delete path: the writer's statement RetainOriginalHoldingsUploadsOnly grants put and get only (infra/aws/terraform/investor-reporting/ycharts/generate.tf:150-157); no code deletes an S3 object (infra/aws/lambda/investor-reporting/reports/repository.py:526-563 has put and get only); retention is logical with no physical deletion (infra/aws/lambda/investor-reporting/reports/retention.py:1); the bucket has no lifecycle rule (infra/aws/terraform/investor-reporting/core/reporting_storage.tf:2). The retained bytes persist past the declared window and IB2's leftover is undeletable by the application. Read at HEAD 41d4cd86d0; full answers in the record W2, W3 and W5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf:150-157 (HEAD 41d4cd86d0, worktree read)",
+      "infra/aws/lambda/investor-reporting/reports/repository.py:526-563 and reports/retention.py:1 (HEAD 41d4cd86d0, worktree read)",
+      "infra/aws/terraform/investor-reporting/core/reporting_storage.tf:2 and :26-31 (HEAD 41d4cd86d0, worktree read)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md (W2, W3, W5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
