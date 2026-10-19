@@ -32480,3 +32480,129 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not applied: widening cf-6 to this launcher is the CTO's call (msg 8499 kept it out); a later cell would move run_management.cmd to py -3.12 the same way, with its own test."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W531-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~531",
+  "surfaced_at": "2026-10-19T22:23:37Z",
+  "one_line": "The page-vs-export harness exportCompare.harness.cjs aborts at load on the PROD vintage (facddeb6): its stub set is an older copy of tabs.harness.cjs, so the page's new imports are unresolved before any artifact is read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "node src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs --rich .../richBA.old.md at portal facddeb6 (unrepaired): rc=1, Error: Cannot find module '@/ui/components/PageEnd' (SecurityAnalysis.tsx:38 import). After the PageEnd line: Cannot find module '@/lib/dateUtils' (PageEnd.tsx:14); after that '@/ui/components/graphic/GraphicCard' (LeadPanel.tsx:107); after that 'useCollectedChatter is not a function' and the hooks useModelVersions, useModelCompare, useInputLedger missing from the hook stub.",
+      "node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs at the same portal tree: rc=0, CHECKS-OK 21 of 21 (the loader it copies from carries all of those entries)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cg-2 order runs exportCompare.harness.cjs --rich on the unchanged harness and reads its verdict lines for the old and new export; the order names the harness as the parity instrument and states its loader as tabs.harness.cjs's own.",
+  "world_is": "The harness does not load at portal facddeb6. Its loader is a stale copy: the missing entries were copied from tabs.harness.cjs (PageEnd, dateUtils, GraphicCard, react-query, api-client, and four idle hook stubs) so it reaches the page. Its comparison logic is unchanged apart from the cg-2 vintage rule. The repair sits in the harness folder, the order's own surface.",
+  "notes": "Form only. The stale loader is a harness defect, not a page defect; a later cell may replace the copied stub set with a shared loader."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W531-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~531",
+  "surfaced_at": "2026-10-19T22:23:37Z",
+  "one_line": "The cg-2 rule scopes the uppercase state word to 'a reader sentence', but the check-face badge prints the uppercase label REFUSED as a badge, not as a sentence; the order does not say which.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/components/CheckFaceBadge.tsx:42 at facddeb6: VERDICT_CONFIG REFUSE label 'REFUSED' (the badge also carries the words PASS and PROVISIONAL at :35 and :48); rendered at :65 beside the value of every REFUSE figure (ProvenanceLine.tsx:60, ModelTab.tsx:158).",
+      "the harnesses drafting.harness.cjs:261 and thesisLadder.harness.cjs:302 pin the badge text '>REFUSED</span>' (unchanged by this cell).",
+      "census row recorded with edited: false and the reason, in readerWordsPageCensus.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "cg-2 Census rule (1): any further VISIBLE site that prints an UPPERCASE state word in a reader sentence is EDITED the same way (its plain words in the receipt); the badge label is outside the order's named sites.",
+  "world_is": "CheckFaceBadge.tsx:42 prints the uppercase state word REFUSED as a visible badge label. It is a verdict label beside a value, not a sentence, and the AMGT-s-10 three-state labels are pinned by two harnesses. It was not edited; the decision whether a badge label falls under the sentence rule is left to the issuer.",
+  "notes": "Form only. No page text changed by this row."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W531-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~531",
+  "surfaced_at": "2026-10-19T22:23:37Z",
+  "one_line": "exportCompare's rich parser reads every ABSENT and REFUSED line of the export generically, not only the three kinds the order names, so the three-kind vintage rule leaves the other kinds of the new export unread.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "exportCompare.harness.cjs (rich parser, generic rule, unchanged): line 'const absent = line.match(/ABSENT\\s*--\\s*(.+)$/)' and the REFUSED rule '^\\S+:\\s*REFUSED\\s*--' read every such line in the export regardless of its kind.",
+      "richBA.old.md (the r123 export) carries 1 of the three kinds (line 747, y/y growth rows) and 12 other ABSENT lines (lines 710 to 721: Shares, Debt, Preferred, ...), read by the generic rule; the old and new verdict lines are identical after the change (measured, 4 runs)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "cg-2 rule (4): exportCompare accepts both vintages of the export's words for the three line kinds it reads (the y/y-growth note, the estimate-years note, the Model Cases lines); nothing else in it changes.",
+  "world_is": "The harness reads the Posture (K1), no-call (K2), Description (K5), Exec Management (K6) and MNEMONIC REFUSED (K8) lines of the export too, through its generic ABSENT and REFUSED rules. The cg-1 vocabulary (Not available) on those kinds is not read by the three-kind rule, so an export that carries them in the new words would list their page absences as missing. Not tested: no fixture in the tree carries those kinds in the new words.",
+  "notes": "Form only. The three-kind rule was implemented as ordered; widening it to the other kinds is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W530-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~530",
+  "surfaced_at": "2026-10-19T22:37:32Z",
+  "one_line": "The round-125 census counts two printing writers for the K8 REFUSED line, _refused_figures_markdown and build_rich_text, but at the base _refused_figures_markdown has no caller, so the export's REFUSED line comes only from build_rich_text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-125 census (round125_prep/READER_STATE_WORD_CENSUS.md, section 3, row K8) and the order's rule (a) and test T8 name two writers of the K8 line, the function at render_pack.py:2173 and build_rich_text at :2430, each printing `<MNEMONIC>: REFUSED -- <reason>`.",
+  "world_is": "At 4d3c666a3b the only occurrence of _refused_figures_markdown in lib/research/print/render_pack.py is its definition (line 2147) and a comment at line 1583; no production call site exists in lib/research. build_rich_text prints the Model Notes REFUSED line from row_refusals (line 2430) and never calls the function. The function was re-worded to Not available and is covered by a direct-call test, so the export's K8 line is covered by the build_rich_text assertion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@4d3c666a3b:2147 is `def _refused_figures_markdown(check_face, declared_years=None) -> list:`; a native Grep of the worktree's render_pack.py after the cg-1 edit shows no call site, only the definition at 2152 and a comment at 1583",
+      "a native Grep of lib/research for _refused_figures_markdown lists render_pack.py, test_cg1_reader_state_words.py and the two catalogue fixtures bu3_date_sites.json and bv2_quote_blocks.json; no other module calls it",
+      "lib/research/print/render_pack.py@4d3c666a3b:2430 is `lines.append(\"{0}: REFUSED -- {1}\".format(mnemonic, \"; \".join(row_refusals[mnemonic])))`, the Model Notes writer that build_rich_text does call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The census's two-writer count is the issuer's; whether to delete the uncalled function is not this cell's call, and the order bounds the edit to the writers it names."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W530-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~530",
+  "surfaced_at": "2026-10-19T22:37:32Z",
+  "one_line": "The order's step D asks each committed rich-text base fixture that pins a moved word to be re-scoped by changing only the pinned line; the two recorded bases that pin moved words were kept as recorded and mapped by hand in their controls.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step D of the order (section 5 and the E-step list): each committed rich-text base fixture under lib/research/print/tests/fixtures/ that pins a moved word is re-scoped by changing ONLY the pinned line to the new words, with the old and new text in the receipt.",
+  "world_is": "fixtures/bv2_rich_text_base_RIO_LN.txt (4 moved lines) and fixtures/ca3_base_export_{GOOGL_US,ICICIBC_IN,ICT_PM}.md (2 moved lines each) are read by test_bv2_rich_dates_and_quotes.py Q3 and test_ca3_export_thesis_pillars.py P5, whose headers record them from the UNEDITED renderer. The fixture bytes are unchanged; each control now maps the moved base lines to the new words by hand-written pairs (bv2 state_rescoped, ca3 CG1_BASE_TO_NOW_STATE), the AMGT-cf-2 precedent. fixtures/bz1_base_export_*.md is read by test_bz1_rich_money_codes.py and no assertion on it moved, so it is not pinned and is untouched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the run of lib/research/print/tests after the writer edit showed P5 failing for ICT_PM, GOOGL_US and ICICIBC_IN and Q3 failing; after the two mappings they pass, and the fixture files were not written by this cell",
+      "test_bv2_rich_dates_and_quotes.py Q3 header: the base was recorded from the UNEDITED renderer (base e58e97c92e); test_ca3_export_thesis_pillars.py header: the ca3 bases are recorded from the UNEDITED renderer",
+      "lib/research/print/tests/test_bz1_rich_money_codes.py line 53 reads bz1_base_export_<NAME>.md and its suite passes unchanged after the cg-1 edit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Whether a recorded base should be re-recorded at the new words, instead of mapped, is the issuer's call for cg-2 or a later round; this cell chose the mapping because the recorded bytes are the evidence the controls compare against."
+}
+```
