@@ -26989,3 +26989,77 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W309-S1 -- the worktree is a sparse checkout with no infra/aws/terraform/ and no data/, so the _authz battery does not collect and the 365-passed baseline cannot be printed in this tree
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W309-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~309",
+  "surfaced_at": "2026-10-19T22:50:00Z",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-309 is a sparse checkout that carries no infra/aws/terraform/ and no data/ tree, so `python -m pytest _authz` does not collect: three files raise 'published guarded directory-search operation missing' and pytest prints no pass line, so AR415-y-AC2 and the 365-passed baseline cannot be measured here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-415 ACCEPTANCE AR415-y-AC2: `cd infra/aws/lambda/investor-reporting/ && python -m pytest _authz -q --color=no -p no:cacheprovider` expect ^[0-9]+ passed; WORKER FACE 'What to do' (1): the baseline prints 365 passed at HEAD.",
+  "world_is": "`git sparse-checkout list` in the worktree names .tools, docs, infra/aws/lambda, infra/logic, lib and some org/ paths only; `git ls-files -t infra/aws/terraform` shows skip-worktree S flags and `ls infra/aws/terraform` reports no such directory. routetable.entry_points() returns Unresolved(irpt-directory-search: declared tf_file is not on disk: infra/aws/terraform/investor-reporting/directory/lambda.tf), so test_guarded_entries.py:110 asserts 'irpt-directory-search' in {} and the collection of test_guarded_entries.py, test_pointer_guard.py and test_wire_reason_codes.py fails. The sparse set also excludes data/ (data/firm_registry.json), so with --continue-on-collection-errors the folder reads 145 failed, 182 passed, 3 errors in this worktree, 86 failures naming KeyComponentRefused REGISTRY_UNREADABLE. Worktree was not rebuilt or extracted, per the worker rules.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list (worktree, read at 0.9.0_WK_IRPT_ANLREQ~309 start, HEAD 992923c429f): no infra/aws/terraform and no data/ entry",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py:110 @992923c429f: assert 'irpt-directory-search' in out",
+      "routetable.entry_points() in the worktree: 23 table entries, 2 skipped, Unresolved(... tf_file is not on disk: infra/aws/terraform/investor-reporting/directory/lambda.tf)",
+      "worktree pytest output .scratch/baseline_full.txt (3 errors during collection, Interrupted) and .scratch/after_folder_cont.txt (145 failed, 182 passed, 3 errors)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observation of the premise, not a code defect: the order's pass line is produced in a full checkout. The issuer decides whether AR415-y-AC2 is re-run in a full checkout or in the release worktree."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W309-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~309",
+  "surfaced_at": "2026-10-19T22:50:00Z",
+  "one_line": "The O1 change removes refusals that a pinned test file asserts: _authz/tests/test_served_on_behalf_create.py (IB-pr-366, outside this order's <paths>) expects NOT_AUTHORIZED for an advisor-absent, profile-absent, disabled, other-firm or malformed key, so the order's premise 'no test in the repo pins the on-behalf branch today' is false and AR415-y-AC2 cannot read 'no failure' once the change lands.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO-AR-y-415 WORKER FACE 'the tests' and AR415-y-AC2 (the whole _authz folder reads baseline plus 9 passed, no failure); the worker may edit only served.py and the new test file.",
+  "world_is": "Read from the assertions, not measured: in this sparse tree the whole file already fails at the base and at the change for registry reasons (ids.IdRefused, KeyComponentRefused REGISTRY_UNREADABLE, public code UNEXPECTED where NOT_AUTHORIZED is asserted). With the change in a full checkout these cases flip: test_served_refuses_advisor_email_absent (line 219, post(advisor=None) becomes the staff fallback and is admitted), test_served_refuses_advisor_profile_absent (lines 225 and 227, partner None and user None now fall back), test_served_refuses_advisor_profile_disabled (line 232), test_served_refuses_advisor_of_other_firm (lines 240 and 243), and test_served_refuses_advisor_email_malformed (line 264, the keys '', '   ', None, 7 and the list all take the fallback). test_served_refuses_advisor_profile_read_error and test_served_refuses_a_body_named_advisor keep their refusals. The pinned file is IB-pr-366 under CTO ruling msg 1402 option (c); amending it is not this worker's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_served_on_behalf_create.py:217-243 and :259-265 @992923c429f (assertions read by the worker, not run in a full checkout)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_create_owner_on_behalf.py T1, T2, T4, T5 difference control: the same refusals raised at 992923c429f (control_unchanged run, .scratch/control_unchanged.txt)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py _create_owner and _advisor_owner after the change (worktree, uncommitted at the time of this row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm proposal for the issuer: amend or re-rule the pinned file under its own order, or record the flip in the PRD addendum; this worker did not edit it."
+},
+{
+  "id": "IRPT_ANLREQ-D2-W309-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~309",
+  "surfaced_at": "2026-10-19T22:50:00Z",
+  "one_line": "The order's 'exactly two' unprovisioned cases name the user row as absent, not active, or of another firm, but the old combined check also tested the user row's email; the hunk keeps a user row whose email differs from the lookup key as a plain refusal, which the order does not name either way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-415 cell step 3: AdvisorUnprovisioned for exactly two cases (no partner profile; user row absent, not active, or of another firm); every other raise stays a plain ProspectOwnershipRefused.",
+  "world_is": "The user-row email mismatch (user.get('email') != email) is a third condition of the old combined check that the order does not list. The hunk makes it a plain ProspectOwnershipRefused('advisor user row names another principal'), so it is not a fallback. No test pins this case; T6 covers the partner side only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py _advisor_owner @992923c429f: the old user-row condition tested email, firmId and status in one raise",
+      "infra/aws/lambda/investor-reporting/_authz/served.py _advisor_owner after the change (worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading of the order's 'every other raise stays a plain refusal'. The issuer or ~P2 may move this case to the fallback if the review says so."
+}
+]
+```
