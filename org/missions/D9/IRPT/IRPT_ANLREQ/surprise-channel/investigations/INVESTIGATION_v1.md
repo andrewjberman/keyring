@@ -26841,3 +26841,34 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W306-S1 -- The r34l build at pin e30c79da3ff6 changed six members against r34k, not four: ycharts/research/layout_overview.py and ycharts/research/overview_map.json are the fifth and sixth movers, the driver refused and wrote no record, and its stage folder C:/dev/irpt-release-r35b remains holding that six-mover tarball
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W306-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~306",
+    "surfaced_at": "2026-10-19T20:24:02Z",
+    "one_line": "The r34l build driver refused on its own delta check: six members changed against r34k, not the four the order names. The extra movers are ycharts/research/layout_overview.py and ycharts/research/overview_map.json. No record was written, and the stage folder C:/dev/irpt-release-r35b (created by this run) still holds the six-mover tarball.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2",
+    "spec_asserts": "TO-AR-y-406 step 2 and the driver's EXPECT_CHANGED (r34l_build.py, copied unchanged from r55): the build changes exactly SHA256SUMS, reports/resident_bindings.json, ycharts/research/opal_producer.py and reports/resident_installed.py against the r34k tarball 64f5567dddbd7e96a955410e7e12c5fb3f319551fbe9ce1527cdefdfe8f18a0c, adds nothing and removes nothing.",
+    "world_is": "python -I r34l_build.py --pin e30c79da3ff6e3166f72b7f8757377ae751a1e2c --out C:/dev/irpt-release-r35b (rc 1) printed: R34L-BUILD-BAD the delta against r34k is not exactly changed [SHA256SUMS, reports/resident_bindings.json, ycharts/research/opal_producer.py, reports/resident_installed.py] added []: changed [SHA256SUMS, reports/resident_bindings.json, reports/resident_installed.py, ycharts/research/layout_overview.py, ycharts/research/opal_producer.py, ycharts/research/overview_map.json] added [] removed []. The record RESIDENT_R34L_BUILD.json was not written, so AR406-y-AC1 and AR406-y-AC2 cannot pass. Grounding of the fifth mover: layout_overview.py is line 24 of org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/files_from_r34.txt (the files-from list), so it is taken at the pin, and its sha256 differs from the r34k copy (6f9c02fa... at x32, b3245f1c... at x34). Grounding of the sixth mover: overview_map.json is the --opal-map member taken from org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json at the pin, and its sha256 differs from the r34k copy (21a8f6d6... at x32, 661adac1... at x34). The stage folder C:/dev/irpt-release-r35b was created by this run and holds build_a, build_b, x32, x34, the tarball and its SHA256SUMS; nothing was uploaded, installed or used. It was not deleted, since removing it is a recursive delete the issuer must word.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -I .../0.9.0_WK_IRPT_ANLREQ~306/r56/r34l_build.py --pin e30c79da3ff6e3166f72b7f8757377ae751a1e2c --out C:/dev/irpt-release-r35b: stdout line R34L-BUILD-BAD (rc 1), at worktree HEAD 69c1f97a7b",
+        "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/files_from_r34.txt@69c1f97a7b line 24: infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py",
+        "sha256sum C:/dev/irpt-release-r35b/x32/ycharts/research/layout_overview.py = 6f9c02faf9100a040636df7d85caeaffd9df0493a5fc3e6f9485ed42a91153c0; C:/dev/irpt-release-r35b/x34/ycharts/research/layout_overview.py = b3245f1c77d0f05846b1507c20c6d2397f5fc6493cd47c4fd13cb9acbfe2376f",
+        "sha256sum C:/dev/irpt-release-r35b/x32/ycharts/research/overview_map.json = 21a8f6d690bbd28cf7eedfc979c3edcfa8d8a156336d9de779e8438c4913310f; C:/dev/irpt-release-r35b/x34/ycharts/research/overview_map.json = 661adac1efa8ee72cd95952f72815dfea90bfe83c4af162ee74daf3d4542143b",
+        "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/build_resident_package.py@69c1f97a7b line 75 and line 221: overview_map.json is the tracked file at --pin packaged as ycharts/research/overview_map.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
