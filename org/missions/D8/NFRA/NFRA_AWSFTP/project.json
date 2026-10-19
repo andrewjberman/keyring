@@ -11,6 +11,7 @@
   "placement": "LAPTOP",
   "pods": [],
   "related": [
+    "NFRA_FIDUPL",
     "ADVI_SCHWABAUTO",
     "TCKT_EARLYWARN",
     "NFRA_OPLGTW",
@@ -32,6 +33,7 @@
   },
   "coo_lane": null,
   "rulings": [
+    "ONE FIDELITY HOME -- carried for the PRD when the hold lifts (1.0.0_SA_CTO~DELL1 msg 8457 via laptop 109861, 2026-10-19 ~18:44Z; laptop record ANDREW_DIRECT_20261019_184xZ_CLUSTER_PRIORITIES_PER_BOX_COHERENCE.md): Fidelity data for Alongside's firms lands through the FIRM scope row 'alongside' in infra/logic/registry/scopes.json (bd84d81948; bucket opal-data-alongside; cross-firm gate both directions, CVO~DELL1 @bc07810172) via address(), the same home NFRA_FIDUPL uses; the per-firm split is downstream of the raw landing. No second Fidelity home. The Wealthscape Terms-of-Use question is dell1 act c3a6.",
     "ANDREW-DIRECT 2026-10-19 ~16:5xZ -- all recs approved (DONE WHEN FWD-1..10 confirmed, three qualified waits accepted; filed under D8 with NFRA added to D8's macros); status HOLD until an FTP solution exists. Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_165xZ_NFRA_AWSFTP_RECS_APPROVED_D8_REGISTERED_ON_HOLD.md"
   ]
 }
