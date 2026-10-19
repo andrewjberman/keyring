@@ -73,7 +73,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Part A: item 1 of the CTO's round-123 analysis (`ledger/ROUND_ANALYSIS.round123.R1.md`, msg 8492, `@980ad8c80c`) and his msgs 8275 and 8353; merged `8de2494a24`, order flipped complete `9f1d0d34cc`. Part B: the CTO's msg 8499 (option B) after row `AMGT_RESAPP-D1-S62`; decomposition `s.133a`. A NEW order file for cf-6 was refused by `.tools/to-pipeline-gate.py` (ONE ISSUER PER ROUND is keyed to the round: a re-cut into the first issuance modifies its orders and adds no file), so the issuer RE-OPENED this order and extended it (status `complete` -> `pending`, `owned_cells` gains `AMGT-cf-6`, criteria 3). The grade of the whole is the issuer's `AMGT-cf-5`: one further deliberate `schtasks /run` reads rc=0, objects written and 0 key-prefix greps; no third run if it fails (msg 8497 condition 3 kept by 8499).
 
-<status>pending</status>
+<status>complete</status>
 <round>124</round>
 <slot>0.9.0_WK_AMGT_RESAPP~527</slot>
 <fabric>dell1</fabric>
