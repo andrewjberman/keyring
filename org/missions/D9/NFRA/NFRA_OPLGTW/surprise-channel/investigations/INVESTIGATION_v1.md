@@ -29816,3 +29816,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The hazard the row names (a plaintext address reaching a record of this order) did not occur: the worker's output is clean by a mechanical scan, and the wrong expectation was the issuer's wording. The separate design question is routed to the CTO, not held open on this row."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-19T12:16Z",
+  "id": "NFRA_OPLGTW-Z-S405",
+  "one_line": "A Claude Code session on site Z (1.0.0_SA_CTO~Z's) failed to connect its opalgateway MCP server with HTTP 429 and body {\"error\":\"rate_limited\",\"scope\":\"identity\"}: the per-identity limiter refused a client at connect, so that session has no gateway tools at all",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the harness notice in session 40d98df3 at ~2026-10-19T11:58Z: 'opalgateway (429): Error POSTing to endpoint: { error : rate_limited , scope : identity }'; the server is listed as configured but failed to connect",
+      "the body names scope identity, the per-identity limiter traced in OG-ev-9 (task-orders/NFRA_OPLGTW.TO-OG-ev-9.round-43-trace-the-per-identity-limiter.md), unlike the 2026-10-18 organic 429 that never passed the ALB (Z-S403)"
+    ]
+  },
+  "spec_asserts": "The per-identity limiter caps one caller's request rate; a client connecting once at session start is well inside it, and every 429 it answers is audited (OG-en-10).",
+  "world_is": "One session's connect was refused by the identity limiter. Site Z had 8 claude.exe sessions at the 11:29Z census, and each one that configures opalgateway connects under the identity its client is set to. NOT CLAIMED: which identity this session uses, how many sessions share it, whether the lake holds the refusal record, or whether a retry would pass.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: one connect, a session-start event. It is useful evidence for OG-ev-13, the 24 h lake re-read due no earlier than 2026-10-20 07:45Z: a 429 refusal inside that window should appear in the audit lake with scope identity (OG-en-10). If it does not, the audit claim is falsified on a live case. Issuer to fold the check into OG-ev-13 or dispose of it with a reason."
+}
+```
