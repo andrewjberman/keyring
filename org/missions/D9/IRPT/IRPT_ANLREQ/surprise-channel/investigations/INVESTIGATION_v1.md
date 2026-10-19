@@ -25862,3 +25862,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S211 -- no deleter exists for retained original-holdings objects; each synthetic upload leaves one blob
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S211",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-19T13:03:56Z",
+  "one_line": "The application has no deleter for retained original-holdings objects: no code path, no delete grant and no lifecycle rule on the reporting bucket, so every synthetic run that reaches the upload leaves one standing blob (the second run left a 118-byte one).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "The e2e pair's rule (CTO half, Andrew's 2026-10-16 word): a synthetic run deletes the objects it created, each by its recorded key.",
+  "world_is": "MEASURED (worker 295, TO-AR-y-402, merged 7c9cb7f23b; issuer re-ran both criteria, 5 and 5, and read the W lines): W2 no delete_object, delete_objects or version delete in the investor-reporting code (614 of 614 .py files read), retention is logical only (reports/retention.py:1); W3 no s3:DeleteObject or s3:DeleteObjectVersion grant on the reporting bucket or the irpt/ prefix in the 615 .tf files read at HEAD (105 on disk, 510 by git grep), and no lifecycle configuration names the bucket (core/reporting_storage.tf:2, :26-31); W5 a synthetic blob is a standing leftover. W4 an identical re-post of the same token reaches the same ART- key (uploads.py:371, repository.py:390-395), but a new run mints a new principal and token, so it lands on a new key. NOT READ: the live bucket policy and any lifecycle rule applied outside Terraform; each cited line was not re-read by the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md (W2, W3, W4, W5)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e2/LEFTOVER.txt (the second run's AccessDenied)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
