@@ -3725,6 +3725,89 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "mcp bloomberg_health at 2026-10-18T14:48:18Z: ok true"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W67-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~67",
+    "surfaced_at": "2026-10-19T16:44:30Z",
+    "one_line": "The sweep's actuals rows cannot carry the order's pass member: bbg_quote.record_actual has no pass parameter and bbg_quote.py is outside this order's grant. AC1 test 1 fails on that one assertion.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_quote.py@5a34d13381 lines 837-862 (record_actual: fixed key set, no pass argument)",
+        "data/mdpf/scripts/demque/standing_drawer.py@345ecb0564 _run_sweep, the actuals loop (record_actual called without a pass member)",
+        "data/mdpf/scripts/demque/test_demque_sweep.py@345ecb0564 line 122 (assertion that every actuals row carries pass sweep)",
+        "dq_t77_tests.py run at 345ecb0564: SWEEP-BAD not-passed=test_the_sweep_draws_on_a_trading_day_up_to_the_daily_total_left rc=1; the other four named tests pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-77 item 7: the sweep's actuals rows carry \"pass\": \"sweep\". AC1 names test_the_sweep_draws_on_a_trading_day_up_to_the_daily_total_left, which asserts it.",
+    "world_is": "record_actual takes no pass argument and writes a fixed key set. The sweep writes its rows through it unchanged, so the rows carry no pass member; the receipt does carry pass. Cell counts are unaffected: _drawn_by_job and _sweep_room count cells by job and date, not by pass. No second actuals writer was added, because the drawer's single-recorder rule forbids one. Issuer options: widen the grant to bbg_quote.py for an optional pass argument, or accept the receipt as the sole pass record and amend AC1."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W67-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~67",
+    "surfaced_at": "2026-10-19T16:44:30Z",
+    "one_line": "The sweep caps reference requests by the reference room (52 cells less today's reference cells), because DQ-t-77 names only the surface rooms and the untagged ceiling as waived.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t77.late-day-sweep.md item 5 (waived: surface rooms and untagged ceiling plus carry-over only)",
+        "data/mdpf/scripts/demque/bbg_allowance.json@5a34d13381 reference.ceiling.value = 52 (held floor)",
+        "data/mdpf/scripts/demque/standing_drawer.py@345ecb0564 _run_sweep: ref_left = _reference_room(...), cap = min(ref_left, left)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-77 item 5 waives the per-surface rooms and the untagged history ceiling; item 5 caps each drawable request at min(its remaining, daily_total_left).",
+    "world_is": "The reference room is named in neither item 5 nor item 6, so _run_sweep keeps it. A reference request draws up to min(reference room left, daily_total_left). With a 52-cell reference ceiling, a sweep reference draw is at most 52 cells less today's reference cells, not the daily total. This is the narrower reading. Waiving it too is a one-line change (cap = left)."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W67-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~67",
+    "surfaced_at": "2026-10-19T16:44:30Z",
+    "one_line": "unconverted_modes lists bbgtml-unmetered on every non-empty production ledger that has no bbgtml record, because rows_for_day appends that synthetic row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_ledger_upload.py@5a34d13381 lines 112-137 (rows_for_day appends mode bbgtml-unmetered, rows 0, cells None)",
+        "measured at 345ecb0564: python standing_drawer.py --room --sweep --day 2026-10-19 over a ledger holding one daily batch row of 3000 rows printed unconverted_modes [\"bbgtml-unmetered\"] and spent_today production 48000"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-77 items 4 and 8: unconverted_modes lists the modes of budget-ledger rows whose cells is None.",
+    "world_is": "The synthetic row is a row whose cells is None, so the sweep lists its mode as the spec reads. It adds no floor (rows 0). The listing is noise on every ordinary production day. A ruling could exclude rows of zero rows, or the synthetic row's mode, from the listing."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W67-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~67",
+    "surfaced_at": "2026-10-19T16:44:30Z",
+    "one_line": "The order states no value for an absent budgets.daily_total. The sweep fails closed there with NO_ALLOWANCE and daily_total_left 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_quote.py@5a34d13381 daily_total(): returns None for an absent or non-int value",
+        "data/mdpf/scripts/demque/standing_drawer.py@345ecb0564 _sweep_room: total None gives reason NO_ALLOWANCE"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-77 item 4: daily_total_left = budgets.daily_total.value - spent_today, never below 0. No value for an absent total is stated.",
+    "world_is": "The default pass applies no total when budgets.daily_total is absent (standing_drawer _usable). The sweep has no figure to subtract, so it reads daily_total_left 0 and stops NO_ALLOWANCE. No named test exercises this branch. A ruling that the sweep draws uncapped instead would reverse it."
   }
 ]
 ```
