@@ -86,7 +86,7 @@ run `proof-of-spec-check.py` on it as the worker rules say, and report once, wit
 The `index_pairs` shape is the issuer's contract (decomposition GWZ1.1), sent to `2.0.0_SA_COO~O` for NFRA_OPLGTW round 47; if that round lands a different shape, the issuer amends this order and the check, not the worker. Fixtures only: no seam probe against the real handler is possible until the field is live (owner-gated). The change reaches the host only with the next mcportal bundle release AND the handler's field; nothing in this order deploys. The status flip is the issuer's.
 z8.AC1 base: FAIL as expected (`bun test src` 73 pass, 0 fail; named tests present in sources 0 of 5; min 79), run in the provisioned slot-41 worktree at mcportal 59e802a, 2026-10-19 ~20:1xZ.
 
-<status>pending</status>
+<status>complete -- drained f1ecb7e89fc (worker 0.9.0_WK_NFRA_MCPORTAL~41); AC1 PASS: named tests 5 of 5, bun test src 79 pass 0 fail (issuer re-ran), mutant control 4 of 5 fail, tsc rc 0, build rc 0; mcportal 21ad404 (LOCAL on branch wk-NFRA_MCPORTAL-41-mcportal until MSTR~Z pushes DEV). Built on fixtures against the index_pairs contract (decomposition GWZ1.1, accepted by 2.0.0_SA_COO~O msg 36096); the served page filters only after that field is live and a bundle release ships.</status>
 <round>1</round>
 <workstream>GWZ</workstream>
 <slot>~41</slot>
