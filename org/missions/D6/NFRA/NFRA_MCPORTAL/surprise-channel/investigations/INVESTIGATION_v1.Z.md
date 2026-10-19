@@ -3642,3 +3642,28 @@
   "notes": "The first spawn stopped at its first act on S1, as the worker bar says it must; the issuer's own mistake cost one worker pass and about 25 minutes."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W41-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~41",
+  "surfaced_at": "2026-10-19T19:56:09Z",
+  "one_line": "The proof-of-spec checker resolves artifact commits only in the workspace repo; the mcportal commit cb17848 lives in the nested mcportal repo, so the checker reads its three artifact rows UNRESOLVED-HERE. The instance is VALID (rc=0); the schema has no slot for a nested-repo pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/mp-gwz-41 cat-file -t cb17848 -> 'fatal: Not a valid object name cb17848', rc=128 (absent from the workspace object store).",
+      "git -C C:/tmp/mp-gwz-41/mcportal cat-file -t cb17848 -> 'commit', rc=0 (positive control: present in the mcportal store); git cat-file -t 739e6857a50 in the workspace -> 'commit', rc=0.",
+      "python .tools/proof-of-spec-check.py on NFRA_MCPORTAL.TO-MP-z-7.schwab-master-bd-context-line.proof_of_spec.json AC1 -> 'artifact-resolution: 0 resolved at pin / 0 PENDING co-committed / 0 pending-on-worktree / 3 UNRESOLVED-HERE (commit not in local store; announced, not asserted)', then 'VALID (rc=0)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A proof instance's artifact commit_or_etag resolves at its pin in the repo the proof-of-spec checker reads (artifact-resolution limb).",
+  "world_is": "The mcportal worktree is its own git repository. Its commit cb17848 is absent from the workspace object store, so the checker announces UNRESOLVED-HERE for all three artifact rows of this instance and resolves none. Verified by hand against the mcportal store only.",
+  "notes": "Cited the mcportal commit as commit_or_etag because the schema has no field for a commit in a nested repo; the sibling pf-11 instance cites its mcportal commit the same way. Not repaired here: the checker and its resolution scope belong to the owner of proof-of-spec-check.py. The mcportal commit is LOCAL on wk-NFRA_MCPORTAL-41-mcportal, not pushed."
+}
+```
