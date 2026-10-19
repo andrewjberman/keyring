@@ -3593,3 +3593,27 @@
   "notes": "Not repaired and not staged. Every commit in this worker's chain was made with explicit paths through safe-commit.sh."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W16-S8",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~16",
+  "surfaced_at": "2026-10-19T19:09:46Z",
+  "one_line": "Task-order status flip: the coordinator's message says flip the order's status when every mechanical criterion passes, and AC1 now passes, but the order file is outside this worker's write grant (<paths> names only the deliverables and the surprise channel). The flip is left to the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "z6.AC1.sh run verbatim (timeout 120): window 2026-10-16T18:30:00Z .. 2026-10-16T19:05:00Z; ssm status=Success; breakdown 200s=24; control-plane data routes 200 (of 4)=4; channel tools code==page: yes; principal tools store==page: yes; RESULT: PASS; exit=0.",
+      "The order file NFRA_MCPORTAL.TO-MP-z-6.fwd20-close-run.md carries <status>pending</status>; its path is not in the <paths> block of the order (section 3)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order is flipped to complete by its worker only when every mechanical criterion passes, and the worker writes only its <paths>.",
+  "world_is": "Both conditions cannot be met by this worker at once. AC1 passes; the file that holds <status> is outside the write grant.",
+  "notes": "Not repaired: no edit to the order file was made. The instance records the flip as the issuer's. AC2 is judgment and is left for 3.0.0_SA_CVO~Z."
+}
+```
