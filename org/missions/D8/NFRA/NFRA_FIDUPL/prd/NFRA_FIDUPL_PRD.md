@@ -5,7 +5,7 @@
  "project": "NFRA_FIDUPL",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/auto-fidelity-uploader-brief-20261019.md@ea34e538ae",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -131,11 +131,24 @@ confirmation is an act on the box's open calls. This PRD goes to L4-R after he c
 1. **The box archetype holds (C-SIGNIN):** the session is stateful, so per `SCHWAB_BOX_ARCHETYPE.md:27` a box beats a Lambda (brief IV.3).
 2. **Raw only, and silver is a later project:** the landing must not foreclose reusing the Schwab silver (FWD-5). It does not build it.
 3. **No new alert (C-RECORD):** the run record is the whole failure surface.
-4. **OPEN, routed to CRO research at L4 (design forks), each ruled the tick its research lands:**
-   - (a) browser-driven or raw-HTTP sign-in under Akamai, ThreatMetrix and cfa fingerprinting;
-   - (b) reuse the Schwab box or a new one;
-   - (c) the vault or Secrets Manager for the credentials;
-   - (d) C-TENANCY.
+4. **Forks ruled at L4 on CRO research** (`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261019_NFRA_FIDUPL_L4_FORKS.md` @b99a64cd4e):
+   - **(a) Sign-in: a real browser, Playwright, mints the session, and the two JSON/GET calls run inside it.** This is the Orion
+     inf-exporter split (`orion_export.ts:428-453`). Every estate auto-login is a real browser and none replays raw HTTP. A persistent
+     profile or saved state is kept. Whether a persisted device cookie skips the SMS step is exercised once and recorded; it is never
+     assumed.
+   - **(b) A new dedicated Linux box, SSM-only, with no inbound ports, started on demand and stopped after the run.** Every auto-login
+     box takes this shape (`EC2_MANIFEST.json:94, :581`). The Schwab box is Windows only because SI2's DLLs and vault token need it,
+     and Fidelity has neither. Its open RDP is exactly what ThreatMetrix probes. **"The same structure we did for schwab" is read as
+     the CHAIN: EventBridge, then SSM, then the puller, then raw bronze and the run manifests, on the Schwab schedule and lock
+     discipline. It is not the Windows host.** This also settles C-ISOLATION: the run touches no part of the Schwab box.
+   - **(c) Credentials in Secrets Manager:** one Wealthscape secret plus the existing `quo/api-key`, read by the box role with
+     per-secret grants. There are no prefix wildcards (the `secret:schwab/*` hazard, `secrets.tf:11-13`) and secrets are never passed
+     as environment variables (the Orion drift, `inf-jwt-fetch.sh:59-61`). Names come from the builder.
+   - **(d) C-TENANCY:** a governance fork, pitched to `3.0.0_SA_CVO~DELL1` with the REC: land raw once under a new COMPOSITE scope
+     `alongside` (the `global` shape, no firm's tree), and split by firm downstream once attribution is profiled. Open until the verdict.
+5. **Quo, measured live by the CRO:** the read is `GET /v1/messages?phoneNumberId=<Operations line>&participants[]=<Fidelity sender>`
+   inside a recency window opened at the SMS-send step. The code was readable about 1.6 s after the send. The key now carries two
+   numbers, so the line is chosen by id, never by "the only number".
 
 ## OPEN AT ANDREW (acts only he can do)
 
@@ -175,6 +188,9 @@ Later rounds enrich: the backfill (C-BACKFILL), the both-run morning (FWD-8), th
 - **Repo:** this tree, the new root, the puller, and the registry rows.
 
 ## CHANGE LOG
+
+- **v0.2 (~18:3xZ):** forks (a) to (c) ruled on the CRO's cited research; (d) tenancy pitched to the CVO; the Quo read pinned by line id
+  and sender.
 
 - **v0.1 (~18:2xZ):** first draft, written while Andrew's endpoint confirmation and Terms of Use word are held, and while the CRO researches
   forks (a) to (d).
