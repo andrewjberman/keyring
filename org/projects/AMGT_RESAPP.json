@@ -4,10 +4,10 @@
  "directive": "D5",
  "macro_code": "AMGT",
  "fabric": "dell1",
- "dep_stage": "EXECUTING",
+ "dep_stage": "ROUND_CLOSE",
  "status": "active",
  "name": "Security Analysis: the research pack, automated -- an analyst opens a covered name and the model block, company description and segment breakdown are already there, every figure defensible from the page, and Adam forwards the printed output without reformatting it.",
  "generated_from": "org/missions/D5/AMGT/AMGT_RESAPP/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-15T21:29:33Z"
+ "generated_at": "2026-10-19T14:36:13Z"
 }
