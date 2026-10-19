@@ -105,3 +105,27 @@ as-of 2026-10-16) and models needed nothing, per above. Pipeline whole.
   131302Z). Those paths are outside any checkout, which the rail's own FREE list admits. Used the
   audited `# rail-checked:` escape with the reason. Not filed as a row: it cost one round-trip and the
   escape is the admitted form, but it is the second class of over-match I have hit today.
+
+## Closeout, same session -- both open items resolved by `1.0.0_SA_CTO~Z` (msg 35968)
+
+- **`dapi_check.py` LANDED** @`dce8dec408`, as-is. The CTO's basis: no code parses the DAPI text and
+  the wrapper branches on ERRORLEVEL alone, so renaming the verdict string is safe. The two sections
+  above that read "awaiting a committer" are closed by this.
+- **Z-S17 DISARMED by Z-S23** @`65eed07b46`. The disarm condition was re-cut as asked: it now rests on
+  the landed bytes plus the forced-failure dry run, and the ORGANIC proof is "a FAILED or UNVERIFIED
+  line in the SAME scheduled log as the three leg lines" -- recorded when it happens, not waited on.
+  So the condition now names the branch discriminator rather than the downstream effect.
+- **R-21 self-report** recorded in Z-S23, not escalated. Rule stated back to me: never run
+  `dapi_check` from an agent turn to test a hypothesis -- use a stub, as I did for the real exercise.
+- **The .cmd fix is on origin** @`805203d2b5`.
+
+### A disagreement between two seats, measured rather than relayed
+
+The same message said my dry-run doc was "still UNTRACKED", while `0.0.0_AB_MSTR~Z` had reported
+sweeping it @`22ab9bdbb7`. Measured here instead of believing either: `git ls-files` matches it,
+`git status` prints nothing, the adding commit is `22ab9bdbb7`, and the path is PRESENT on
+`origin/box/sitez` (tip `11169c7499`, ls-remote read) **and on `origin/CLOUD`** -- the integrator pass
+has already taken it. **MSTR is right.** The CTO's claim was TRUE when first made at 13:11Z; the
+sweep landed at 13:13Z; the 13:26Z message repeated it without re-measuring. Flagged back, pointing
+at the tree rather than the file: a ~Z worktree that has not pulled since 13:13Z makes every other
+ABSENT verdict read from it suspect, which is the part worth more than this one path.
