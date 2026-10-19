@@ -26381,3 +26381,34 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W297-S1 -- TO-AR-y-406 build refused: the r34l build at the pin moves a fifth member, lib/trading_calendar.py, against the four-member expectation
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W297-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~297",
+  "surfaced_at": "2026-10-19T16:00:57Z",
+  "one_line": "TO-AR-y-406 build refused: the r34l build at pin f7d0b5ad04 moves a fifth member, lib/trading_calendar.py (14 inserted lines of trunk), against the four-member expectation SHA256SUMS, reports/resident_bindings.json, ycharts/research/opal_producer.py, reports/resident_installed.py; the driver stopped before the record, the scripts and the smoke, and nothing was uploaded, installed or run.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO-AR-y-406 step 2 (WORKER FACE) and ACCEPTANCE AR406-y-AC1: the member difference of the r34l build at pin f7d0b5ad044f6f299938230a5f2b79869dfc7fef against the r34k tarball 64f5567dddbd7e96a955410e7e12c5fb3f319551fbe9ce1527cdefdfe8f18a0c is exactly the four members SHA256SUMS, reports/resident_bindings.json, ycharts/research/opal_producer.py and reports/resident_installed.py, with added and removed empty; a fifth mover is a BLOCKING surprise row naming it, and the expectation is not loosened.",
+  "world_is": "MEASURED 2026-10-19 by 0.9.0_WK_IRPT_ANLREQ~297 in the worktree at HEAD 5660dc8c5e: the driver org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~297/r55/r34l_build.py run with --pin f7d0b5ad044f6f299938230a5f2b79869dfc7fef printed R34L-BUILD-BAD with changed [SHA256SUMS, lib/trading_calendar.py, reports/resident_bindings.json, reports/resident_installed.py, ycharts/research/opal_producer.py], added [], removed []. The two builds at the pin were identical (317 of 317 files, measured on the stage folder). The fifth mover is lib/trading_calendar.py, read at the pin by its --member entry: blob c9859686bf at f7d0b5ad04 against blob 72178007dd at the 1ad8bd8c1b scratch pin (read-only git rev-parse); the diff is 14 inserted lines. The 1ad8bd8c1b commit message says the scratch pin put that file back to the r34e bytes because the DASHBD hunk f25618c0b4 rides only its own pair, and f25618c0b4 is the most recent trunk commit to that file at the pin. The refusal fired before the record, the host scripts and the import smoke, so no RESIDENT_R34L_BUILD.json exists. The stage folder C:/dev/irpt-release-r35a was created by this run (it did not exist before) and holds build_a, build_b, x32, x34, the scripts folder is absent, and an r34l-named tarball (sha256 5347ced3aeaf7b69fa2f281672e3e8479d0ab5eed02fd7eb4f810447d2b37bbe, 317 members) that carries the fifth mover; a re-run refuses while that folder exists. Removing it is a recursive deletion and waits on the issuer's or Andrew's word. NOT READ: the live host, the live root, any AWS object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~297/r55/r34l_build.py (the driver; its delta check prints the changed list above)",
+      "git rev-parse 1ad8bd8c1bb83ecc35d9489014a42c53812f4424:lib/trading_calendar.py = 72178007dd037995ac4a391a9ad81c4348b9721e; f7d0b5ad044f6f299938230a5f2b79869dfc7fef:lib/trading_calendar.py = c9859686bf12adbf8481d09c6e08a0336735bfe7 (read-only)",
+      "git diff --stat 1ad8bd8c1bb83ecc35d9489014a42c53812f4424 f7d0b5ad044f6f299938230a5f2b79869dfc7fef -- lib/trading_calendar.py: 1 file changed, 14 insertions(+)",
+      "git log -3 f7d0b5ad044f6f299938230a5f2b79869dfc7fef -- lib/trading_calendar.py: first line f25618c0b4 (IRPT_DASHBD DB-f-1801, one business_date for all three firms)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-406.resident-release-r34l-build-only-two-movers.md (step 2: a fifth mover is a BLOCKING row, not a loosened expectation)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
