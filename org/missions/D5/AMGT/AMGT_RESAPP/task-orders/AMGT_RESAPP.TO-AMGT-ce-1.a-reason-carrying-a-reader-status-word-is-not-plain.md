@@ -72,7 +72,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 2 of the CTO's round-122 analysis (`ledger/ROUND_ANALYSIS.round122.R1.md`, msg 8323, `@3583db8527`); row W524-S1 (the CVO's latent finding). The 101-name census (`AMGT-ce-3`) is the issuer's and should read DELTA 0 since no current name carries a status word. LOCAL code cell; served only through `AMGT-ce-4` (a pair only if a printed line moves).
 
-<status>pending</status>
+<status>complete</status>
 <round>123</round>
 <slot>0.9.0_WK_AMGT_RESAPP~525</slot>
 <fabric>dell1</fabric>
