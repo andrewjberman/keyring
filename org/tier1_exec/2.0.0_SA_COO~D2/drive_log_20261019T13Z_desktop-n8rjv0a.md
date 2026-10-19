@@ -1,0 +1,7 @@
+# Drive log 2026-10-19 13Z -- 2.0.0_SA_COO~D2 (IRPT_DASHBD, DSGN_IRPTV1 second project)
+
+Substantive ticks of the hour, copied from the runtime tick file (counts, hashes and words only). Push state: LOCAL.
+
+- 2026-10-19T13:16Z | IRPT_DASHBD | back online | box resumed Mon after ~40h offline; state read: origin box/dell2 carries my commits through the 17Z log (integrator pushed); 49F Monday fire read by me: gold function ran once 494.8 s / 5833 MB, filled stage reached and landed, 0 FILLED_CATCHUP_LIST_FAILED (stream complete, 50 events; marker filter since 11:00Z 0 events); F2's read agrees (msg 10675); filed row D2-S140 (disarm owner's evidence) and sent the word to the CVO to write the S136 clock; S137 stays ARMED; F2 sent GO 2702 to IB2 for Tue, Cottonwood pair Wed, then my all-days pair | outcome: DRIVE FORWARD
+- 2026-10-19T13:24Z | IRPT_DASHBD | next-calls --drive | FREE option taken: p201 dry-run at the base (no applier record yet): all three criteria FAIL as required; no call for Andrew; waits: CVO's S136 clock, F2 Tue 2702 and Wed Cottonwood pair, then my all-days pair and the publisher | outcome: DRIVE FORWARD / WAITING
+- 2026-10-19T13:54Z | IRPT_DASHBD | next-calls --drive | lease FULL, inbox empty; no FREE option: S136 clock waits on the CVO (word sent, row D2-S140), F2 Tue 2702 and Wed Cottonwood pair, then my all-days pair (p201 ready, base dry-run FAILs as required) and the publisher; nothing to queue for Andrew | outcome: WAITING (recorded with owners)

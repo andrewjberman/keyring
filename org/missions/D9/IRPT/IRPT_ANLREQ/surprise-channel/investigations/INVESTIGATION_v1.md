@@ -26119,3 +26119,183 @@
   "notes": "The 45 POLL lines in window 4 would show a receive refusal as retained_for_retry (resident_main.py:71) if one happened; that count was not read."
 }
 ```
+
+## IRPT_ANLREQ-D2-W304-S1 -- the order's catalogue vendor_id premise (UST, ST, INT, LT, ULT) is not the file: four of five candidate.vendor_id values are YCharts ids
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~304",
+  "surfaced_at": "2026-10-19T16:38:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W304-S1",
+  "one_line": "The order's Q6 premise names the catalogue vendor_id values UST, ST, INT, LT, ULT; templates.json holds UST for one model and YCharts P: ids for the other four.",
+  "spec_asserts": "TO-AR-g-169 Q6: the catalogue's vendor_id maps as UST, ST, INT, LT, ULT.",
+  "world_is": "templates.json candidate.vendor_id is UST for opal_ultra_short_term (namespace OPAL, line 108), P:1728415 for opal_short_term (line 137), P:1728315 for opal_intermediate_term (line 168), P:1728413 for opal_long_term (line 199) and P:1728420 for opal_ultra_long_term (line 230). Four of five are YCharts ids, not model codes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json:108,137,168,199,230, read in worktree C:/dev/wk-irpt-anlreq-304"
+    ]
+  },
+  "notes": "The trace record MODEL_COMPOSITION_TRACE.md Q6 carries the corrected premise and the registry model_key mapping. No action beyond the row."
+}
+```
+
+## IRPT_ANLREQ-D2-W304-S2 -- the order's irpt-resident process name is absent from Terraform; the resident runs as irpt-ycharts-runner-role on one host
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~304",
+  "surfaced_at": "2026-10-19T16:38:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W304-S2",
+  "one_line": "TO-AR-g-169 Q5 names an irpt-resident process; no Terraform file uses that name, and the resident is the runner host's process under irpt-ycharts-runner-role.",
+  "spec_asserts": "TO-AR-g-169 Q5: which IAM role would a reader inside the irpt-resident process run as.",
+  "world_is": "No file under infra/aws/terraform names irpt-resident (search: no match). resident.tf:1-3 names one supervised process on i-0167fd745ad906a66; that host's instance profile (instance.tf:67) is aws_iam_role.runner, irpt-ycharts-runner-role (iam.tf:68-69).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf:1-3",
+      "infra/aws/terraform/investor-reporting/ycharts/iam.tf:68-69",
+      "infra/aws/terraform/investor-reporting/ycharts/instance.tf:67"
+    ]
+  },
+  "notes": "The trace record answers Q5 against irpt-ycharts-runner-role. No action beyond the row."
+}
+```
+
+## IRPT_ANLREQ-D2-W304-S3 -- the silver model_composition address is literal in the feeder, not lib/opal_naming.py output, against the CLAUDE.md section 4 rule
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~304",
+  "surfaced_at": "2026-10-19T16:38:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W304-S3",
+  "one_line": "The silver model_composition address (opal-data-mdpf, mdpf/feeds/model_composition/inflection/) is typed as literals in the WS-C feeder and has no builder registry row.",
+  "spec_asserts": "CLAUDE.md section 4: every S3 address is lib/opal_naming.py output; TO-AR-g-169 Q1 asks for the builder's address for the composition, if the code uses the builder.",
+  "world_is": "build_mdpf_wsc_inflection_feeder.py writes the silver model_composition to opal-data-mdpf at mdpf/feeds/model_composition/inflection/<date>.parquet from literals MDPF_BUCKET (line 79) and MDPF_FEEDS_PREFIX (line 86). infra/logic/registry/feeds.json registers only the orion_model_composition feed (lines 8-14); no registry row gives the silver address.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/build_mdpf_wsc_inflection_feeder.py:28-31,79,86",
+      "infra/logic/registry/feeds.json:8-14"
+    ]
+  },
+  "notes": "The trace record Q1 states the literal address and marks it not builder output. No action beyond the row."
+}
+```
+
+## IRPT_ANLREQ-D2-W304-S4 -- the investigation_item schema path the worker face names is absent from the worktree
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~304",
+  "surfaced_at": "2026-10-19T16:38:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W304-S4",
+  "one_line": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row schema; that path does not exist in the worktree.",
+  "spec_asserts": "Worker face: row shape per org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "A Glob for investigation_item*.json under the worktree org/ returned no files, and a Glob for org/surprise_channel/**/*schema* returned no files. The row was written in the shape of the existing rows in this channel file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob investigation_item*.json under C:/dev/wk-irpt-anlreq-304/org: no files",
+      "Glob org/surprise_channel/**/*schema* under C:/dev/wk-irpt-anlreq-304: no files"
+    ]
+  },
+  "notes": "Gate check is the surprise-row-gate. No action beyond the row."
+}
+```
+
+## IRPT_ANLREQ-D2-W303-S1 -- AR-g-166: the rendered price table names the vendor tier ycharts on a priced Opal page, and the R8 wording test forbids that word there, so AR166-g-AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W303-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~303",
+  "surfaced_at": "2026-10-19T16:12:27Z",
+  "one_line": "AR-g-166 is built (commit 3b589f17ea) and AC1 and AC2 pass. AC3 cannot pass as written: the table's Source column prints the tier name ycharts for CCC on the priced Opal page, and test_opal_producer_page_wording.py (in the AC3 regress set) asserts the vendor word is absent from every priced Opal page. Three of that file's tests fail on this page.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-166 cell text: Source is the tier that answered (estate, yfinance or ycharts), and the rendered report page contains the three tickers and the three tiers. R8, stated in opal_producer.py and in test_opal_producer_page_wording.py: a priced Opal page names no vendor. AC3 runs that test file.",
+  "world_is": "The two requirements cannot both hold on the same page. The layout renders the PRICE_TABLE value, so the page carries <td>ycharts</td> for CCC. test_opal_producer_page_wording.py::test_priced_page_names_no_vendor_and_no_time_budget, ::test_priced_package_page_names_no_vendor and ::test_unavailable_lines_use_the_opal_wording fail on that page. The test file is outside this order's grant, so it was not edited, and the tier was neither renamed nor dropped from the table. The CTO or the issuer must rule which requirement gives.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_page_wording.py@3b589f17ea lines 60-116: the R8 test asserts 'ycharts' not in page.lower() on the priced page, and not in the unavailable element",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@3b589f17ea compute_element PRICE_TABLE branch: the Source cell is the record's source tier value",
+      "pytest of test_opal_producer*.py and test_layout*.py on the worktree at 3b589f17ea: 4 failed, 118 passed; the failures are the 3 wording tests above and the element-list test (row IRPT_ANLREQ-D2-W303-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W303-S2 -- AR-g-166: the producer's element-list test pins the exact id list of the run, so the new opal.prices.holdings element fails it, and that test file is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W303-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~303",
+  "surfaced_at": "2026-10-19T16:12:27Z",
+  "one_line": "test_opal_producer.py::test_run_json_element_trace_every_entry_carries_method_inputs_coverage_status_reason asserts the run's element ids equal the map's ids plus the three classified ids. AR-g-166 appends one more element, so the assertion fails with 'Left contains one more item: opal.prices.holdings'. The file is in the AC3 regress set and outside this order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-166: the new element is always present in the opal map like the classified three, and the report's element count rises by one in both branches; the pair must say so. AR166-g-AC3 runs test_opal_producer.py.",
+  "world_is": "test_opal_producer.py lines 194-200 hard-code the expected id list. The element list changes by exactly one id in the commit, and the test's own message names it. Updating the expected list is the owner's act and needs test_opal_producer.py in the grant. It was not edited here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py@3b589f17ea lines 194-200: ids == expected + the three classified ids",
+      "pytest output on the worktree at 3b589f17ea: 'AssertionError ... Left contains one more item: opal.prices.holdings'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W303-S3 -- the worktree is sparse-checked out, so the channel schema the premise names is tracked at HEAD but not on disk
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W303-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~303",
+  "surfaced_at": "2026-10-19T16:12:27Z",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-303 has core.sparseCheckout true, and org/surprise_channel/ is not materialized on disk. The row schema org/surprise_channel/schemas/investigation_item.schema.json is tracked at HEAD and at box/dell2 but cannot be read from the worktree. The commit gate reads it from the index, so the row gate is not affected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-166 and the worker face: the row schema is named at org/surprise_channel/schemas/investigation_item.schema.json, and the worker confirms org/ and .tools/ exist in its worktree.",
+  "world_is": "org/ and .tools/ exist, so the TREE-OK premise holds. org/surprise_channel/ does not exist on disk. git ls-tree HEAD and git ls-tree box/dell2 both list the schema blob, and the gate's _schema() reads the staged index. The enum values were read from HEAD with git show: class OBSERVATION or BLOCKING, hazard_standing ARMED or INERT. No schema was copied into the tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD org/surprise_channel/schemas/ at wk-IRPT_ANLREQ-303 lists investigation_item.schema.json (blob 696468806e) and remediation_row.schema.json; positive control: .tools/surprise-row-gate.py is listed at HEAD",
+      ".tools/surprise-row-gate.py _schema() at @3b589f17ea (lines 2080-2092): reads the schema from the staged index and refuses when it is unreadable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
