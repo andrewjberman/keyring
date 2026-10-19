@@ -2015,3 +2015,32 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "The COO may amend the attribution line in the issuance if it wants the Sonnet line on this round's commits. The worker did not amend or rewrite the commit to change it."
 }
 ```
+
+## COMM_ASSIST-S5 -- the gateway stopped answering chats at 17:40:18Z, 3.5 minutes BEFORE the CA-p-2 apply; every ingress run since times out at 120 s and none reaches the mail step
+
+```json
+{
+  "id": "COMM_ASSIST-S5",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~COMM1",
+  "surfaced_at": "2026-10-19T17:52:45Z",
+  "one_line": "teams-global-chat-assist-ingress-lambda: last completed ingress_poll 17:38:19Z; first 'gateway chats refused: status=504' 17:40:18Z; first 120000 ms timeout 17:41:18Z; the CA-p-2 apply landed 17:43:49Z (ingress) / 17:43:55Z (handler). From 17:41Z every REPORT is Status: timeout and no channel_poll, ingress_poll or mail_poll line is written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~CA",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ingress log group /aws/lambda/teams-global-chat-assist-ingress-lambda, filter-log-events counts only: 80 ingress_poll 16:19Z-17:38Z (last 17:38:19Z); ingress_step_failed step=chats detail 'gateway chats refused: status=504' first at 17:40:18Z; REPORT Status: timeout first at 17:41:18Z, 8 of 8 REPORTs after the apply are timeouts",
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~COMM1/r22/ (APPLY_START 17:43:14Z, APPLY_END 17:44:00Z, AFTER_*_config.json LastModified 17:43:55Z handler / 17:43:49Z ingress)",
+      "the session's own opalgateway whoami tool call was still running after 120 s at 17:49Z (the gateway answers nothing); EC2 i-07dccb1615503ac99 reads running, status checks ok/ok",
+      "handler log: 0 events since the apply (nothing reaches it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-p-2 step 6 and COO half condition 3: within 10 minutes of the apply the ingress logs show channel_poll lines (calls at most 20), ingress_poll and the mail step polled; no function log shows an error.",
+  "world_is": "That check cannot pass while the gateway is down: the failing step is the gateway chats call, which runs before the mail step, so the new mail_requests.py is not reached. The outage began before the apply, so the apply did not cause it. The applier did NOT roll back: a rollback would not restore the gateway and the AFTER failure is not in the changed code. AC2 live read ok=True, the targeted re-plan reads No changes, the DLQ reads 0/0/0.",
+  "notes": "Id is COMM_ASSIST-S5, the next unused plain number: the row gate refuses the order's COMM_ASSIST-C22D-S<k> (grammar) and C- ids outside adjudications/ (the CVO's coordinate). The gateway's owner is not this seat and the applier restarted nothing. Condition 8 (the first mail event after the apply) cannot be observed until the gateway answers. The applier keeps the ledger leg L4 open and re-reads the logs; counts only, no message content."
+}
+```
