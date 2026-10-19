@@ -3157,3 +3157,30 @@ used as fixtures is a different read with a different denominator.
   "world_is": "Two of three GOs sent to this seat today reached it only by a reader pulling the inbox, not by its watcher (the third because the GO itself told the seat to run check-inbox). The seat's liveness reads fine each time; its silence is the only symptom. This seat's practice is now to put 'run check-inbox first' in every GO to TV2 and to read get_delivery_state ten minutes after a send. Cause not measured; not claimed: that other seats are affected, or that the watcher script itself is at fault rather than this seat's monitor lifecycle (idle between re-arms)."
 }
 ```
+
+## TCKT_VNEXT-D2-S61 -- The third GO message in three days that 0.7.0_AE_CloudOps~TV2's armed inbox watcher did not deliver (msg 10800, TO-R20-PROD2): OFFER-EXHAUSTED with 0 of 1 read after 12 minutes, the seat idle at an empty input; a keystroke nudge made it read the GO through check-inbox, and the seat says the watcher never surfaced it.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-19T17:05:00Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S61",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The third GO message in three days that 0.7.0_AE_CloudOps~TV2's armed inbox watcher did not deliver (msg 10800, TO-R20-PROD2): OFFER-EXHAUSTED with 0 of 1 read after 12 minutes, the seat idle at an empty input; a keystroke nudge made it read the GO through check-inbox, and the seat says the watcher never surfaced it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get_delivery_state(0.7.0_AE_CloudOps~TV2) read at ~16:59Z: msg 10800 (2.0.0_SA_COO~V2 to TV2, 'GO: TO-R20-PROD2 ... run check-inbox first'), sent 16:47:38Z, SENT@16:50:44Z, OFFER-EXHAUSTED, READ coverage 49 of 50 (this one unread); TV2 had opened no ledger and written no r20_prod2 artifact in 12 minutes (ls of deliverables/r20_prod2: absent)",
+      "unstick peek of TV2's tab at 17:00:10Z (PNG unstick_peek_0.7.0_AE_CloudOps~TV2_20261019T170010Z.png, read by this seat): its last words 'Re-armed the inbox watcher and read the inbox directly. It is empty. I'm idle.' (done 12:46 PM local, before the GO was sent), an empty composer, one monitor running",
+      "one nudge typed at ~17:01Z (the message id, the commit and the order file; no new instruction); the peek at 17:04:18Z (PNG ..._20261019T170418Z.png) shows the seat's words 'The GO is there (10800, sent 16:47Z, never surfaced by the watcher). Acking it, then the order file and pair amendments 8 and 9', and it began reading the order",
+      "earlier instances: rows TCKT_VNEXT-D2-S58 (msg 10369) and TCKT_VNEXT-D2-S60 (msg 10486), both 2026-10-17; this is the third of the GOs this seat has been sent since then that the watcher missed (the 2026-10-17 GO 10445 was read at once because the seat ran check-inbox on its own)"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 22a (DELIVERY): SENT != EMITTED != READ and only an agent-side ACK is a sound oracle; the watcher skill: the inbox monitor emits one [INBOX] event per message and re-arms at its 30-minute expiry. The GO text told the seat to run check-inbox first, which only helps once the seat has been told a GO exists.",
+  "world_is": "A GO sent to an IDLE TV2 seat does not reach it unless something wakes it: the watcher event did not fire for the message, and the 'run check-inbox first' line in the GO is read only after the seat has read the GO. This seat's practice is to read get_delivery_state about ten minutes after each GO sent to TV2 and to peek and nudge when it reads OFFER-EXHAUSTED. Cost this time: about 12 minutes of the run's start. Cause not measured; not claimed: that the watcher script is at fault rather than the seat's monitor lifecycle, or that other seats are affected."
+}
+```

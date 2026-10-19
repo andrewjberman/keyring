@@ -1,11 +1,11 @@
-# TO-AR-g-166 -- the Opal-built report's price pages, part 4: the per-holding price table (ticker, last price date, source tier as the claim) (row 3c22; CTO msgs 10729, 10734, 10743)
+# TO-AR-g-166 -- the Opal-built report's price pages, part 4: the per-holding price table (ticker, last price date, the source tier as a neutral label; the exact tier is the run.json claim) (row 3c22; CTO msgs 10729, 10734, 10743)
 
 <to_id>IRPT_ANLREQ.TO-AR-g-166</to_id>
 <project>IRPT_ANLREQ</project>
 <issued_to>0.9.0_WK_IRPT_ANLREQ~303</issued_to>
 <issued_by>2.0.0_SA_COO~G2</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -27,6 +27,10 @@ You are `0.9.0_WK_IRPT_ANLREQ~303`.
 - Python 3.9 syntax, ruff clean, ASCII only. Do not touch anything outside the `<paths>` block. Run Python with plain `python` (the producer's tests need `pypdf`, which `python -I` cannot see).
 
 ### THE CELL (`AR-g-166`, inlined)
+
+**AMENDMENT 1 (issuer, 2026-10-19, on worker ~303's BLOCKING rows IRPT_ANLREQ-D2-W303-S1 and S2; gate limb: none graded, an in-decomposition amendment of a grant and of a wording):**
+- **S2 (the id list).** `ycharts/research/tests/test_opal_producer.py` pins the exact element id list (about line 200: `assert ids == expected + ["opal.classified.holdings", "opal.classified.asset_class", "opal.classified.sub_asset_class"]`). That file is now in your `<paths>`. Append `"opal.prices.holdings"` as the LAST member of that list and change nothing else in the file.
+- **S1 (R8 wording).** R8 (AR-g-89, `test_opal_producer_page_wording.py`) forbids a vendor name on an Opal page; that rule stands and its test is NOT touched. So the `Source` COLUMN OF THE PAGE prints a neutral label per tier, one-to-one with the tier: `estate` -> `Opal data store`, `yfinance` -> `Public market data`, `ycharts` -> `Licensed market data`; a holding not priced keeps `none`. The exact tier name stays the machine-readable claim in `run.json` (`prices.symbols[ticker].source`, which the element's trace input `prices` names); the table value itself carries only the neutral label. A tier name outside those three prints `Market data` (never raise). The label table is a constant next to `NOT_PRICED_SOURCE`. Your test asserts the neutral labels and that the page names none of `estate`, `yfinance`, `ycharts` as a Source (the word `ycharts` must not appear on the priced page; the sibling R8 tests must pass untouched).
 
 Files: `infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py` (read it first: `_opal_map` at about line 104 appends the three classified elements after the map's last page through `_classified_elements(page)`; `_price_stage` at about line 261 returns `(kept_by_name, prices, named)`; `prices["symbols"][TICKER]` is `{"symbol", "status", "source", "first_date", "last_date", "attempts"}`; `lo.compute_all(...)` is called at about lines 405 and 491, and `run_doc["prices"] = prices` is set only AFTER the second call, at about line 509) and `infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py` (`compute_element` at about line 790 dispatches on `src["computed"]`; the classified methods are the pattern: a computed method that reads the run, a `NAME = "NAME"` constant, and a renderer through `_table_html`, which draws a LIST OF DICTS as a table with a header row).
 
@@ -66,6 +70,7 @@ infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_tabl
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~303/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-166.price-pages-per-holding-price-table.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py
 </paths>
 
 <decomp_ref>

@@ -28,6 +28,10 @@ You are `0.9.0_WK_IRPT_ANLREQ~301`.
 
 ### THE CELL (`AR-g-163`, inlined)
 
+**AMENDMENT 1 (issuer, 2026-10-19, on worker ~302's row IRPT_ANLREQ-D2-W302-S1; gate limb: none graded, an in-decomposition amendment of a grant):** `infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py` line 754 pins the number of `OWN_SERIES` elements of the real map: `assert len(res) == len(series) == 9`. Your cell adds 8, so it must read `17` on YOUR branch (the three round-57 cells that add `OWN_SERIES` elements each move it by their own delta, 163 by 8, 164 by 5, 165 by 4; the issuer reconciles the line to 26 at the merge). That file is now in your `<paths>`. Change ONLY that number (and, if the line wraps, nothing else); do not weaken the assertion, do not touch any other line of the file. Then re-run AC3.
+
+**AMENDMENT 2 (issuer, 2026-10-19, on worker ~301's BLOCKING row IRPT_ANLREQ-D2-W301-S1):** the same file has a SECOND stale pin from your cell: moving Beta (5Y) and Alpha (5Y) off `OPAL_HELD` takes that count from 158 to 156, so lines 623 (`assert len(held) == 158 and ...`) and 625 (`assert len(got) == 158`) must read `156`. Change those two numbers and the line-754 number (9 to 17) and nothing else in the file; do not weaken any assertion. (`ycharts/research/tests/test_runner.py` line 943 also holds a `158`; it is not in your regress set, the issuer fixes it at the merge. Do not touch it.) Then re-run AC3.
+
 File: `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json` (a pretty-printed JSON file, one `"elements": [...]` list). Eight elements read NOT_IN_THIS_VERSION with pricing on because their `source` names a vendor call or a held-data group. The layout (`ycharts/research/layout_overview.py`) ALREADY computes the statistics they need from the buy-and-hold level series (`_STATS`: total_return incl. `ytd`; std_dev; beta and alpha over 1y/3y/5y/10y/15y). Change ONLY each element's `source` object (and, if you wish, its `note`); do not change its `id`, `page`, `kind`, `label` or `claim`, and do not touch `layout_overview.py`.
 
 The shape to copy is the existing element `p7.e05` (one statistic) and `p2.e13` (a column list):
@@ -80,6 +84,7 @@ infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_pages_repo
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~301/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-163.price-pages-repoint-existing-statistics.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py
 </paths>
 
 <decomp_ref>
