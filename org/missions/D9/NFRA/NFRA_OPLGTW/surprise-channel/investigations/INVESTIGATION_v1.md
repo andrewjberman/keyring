@@ -29590,3 +29590,52 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. The same condition is carried by NFRA_OPLGTW-Z-W160-S1 (filed by 0.9.0_WK_NFRA_OPLGTW~160). Not graded by this worker."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~163",
+  "surfaced_at": "2026-10-19T10:09:02Z",
+  "id": "NFRA_OPLGTW-Z-W163-S1",
+  "one_line": "The worker face names the branch wk-NFRA_OPLGTW-163-portal; the worktree at C:/tmp/wk-og-163 is on branch wk-NFRA_OPLGTW-163.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --abbrev-ref HEAD in C:/tmp/wk-og-163 at worktree HEAD 5b26fdd4c6 printed wk-NFRA_OPLGTW-163",
+      "git worktree list --porcelain: branch refs/heads/wk-NFRA_OPLGTW-163 for worktree C:/tmp/wk-og-163"
+    ]
+  },
+  "spec_asserts": "The worker's branch is wk-NFRA_OPLGTW-163-portal (worker face, identity block).",
+  "world_is": "The worktree the face names carries the branch wk-NFRA_OPLGTW-163, with no -portal suffix. The TREE-OK check passed on this worktree, so the work was done here and committed on wk-NFRA_OPLGTW-163.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. The commit lands on the branch the worktree carries; the name mismatch is recorded, not corrected."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~163",
+  "surfaced_at": "2026-10-19T10:09:02Z",
+  "id": "NFRA_OPLGTW-Z-W163-S2",
+  "one_line": "The cell says to monkeypatch DASHBOARD_OWNER_EMAILS on app.config.get_config(), but get_config() builds a new Config on each call, so the owner gate's module-level roster is not reached by that patch alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/config.py:444 @5b26fdd4c6 -- def get_config() -> Config: return Config() (no cache, no singleton; class Config at config.py:34 has no __new__)",
+      "infra/aws/ec2/opal-gateway/app/owner_gate.py:32 @5b26fdd4c6 -- module-level _cfg = get_config(), read by is_owner()",
+      "tests/test_og_cd2.py (new, this commit) sets the roster on the get_config() instance AND on owner_gate._cfg; the three tests pass 3 of 3 under pytest"
+    ]
+  },
+  "spec_asserts": "Monkeypatching DASHBOARD_OWNER_EMAILS on app.config.get_config() sets the owner roster the gate checks.",
+  "world_is": "Each get_config() call returns a distinct Config instance, so a patch on one instance does not reach owner_gate._cfg. The new test also patches owner_gate._cfg to the same object. The sibling tests/test_admin_gateway_breakdown.py sets the roster the same way at its lines 48-51; whether that sibling's owner path is affected was NOT measured by this worker.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not blocking. The cell's test shape is kept; the added owner_gate._cfg patch is the only deviation, and it is test-only. Not graded by this worker."
+}
+```
