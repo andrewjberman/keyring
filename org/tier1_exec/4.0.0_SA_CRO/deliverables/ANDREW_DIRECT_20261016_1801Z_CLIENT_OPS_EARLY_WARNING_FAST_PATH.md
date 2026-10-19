@@ -75,6 +75,25 @@ logins should see real numbers, and whether to start the Day 1 build. Andrew, VE
   It runs no live app-only mailbox read until the Graph grant exists (Day 0, Andrew).
   The daily rules read Schwab silver directly, never through the gateway.
 
+## Addendum 7, 2026-10-19 ~14:4xZ: a client-ops data store, twice-daily scans, and user access over the gateway
+
+Andrew, VERBATIM:
+
+> I think what needs to happen is that there is a database that holds all of this information with regular scans at 9a every day
+> and 4p every night, naive eastern time. This will be held in a bucket like opal-data-clientops. then we can connect users to this
+> bucket and they can ask for warnings on various surfaces that our scanners are providing. I want you to formalize this design, it is
+> the same pattern we are developing across the platform with NFRA_OPLGTW/MCPINDEX, e.g. how we have a "Security Analysis"
+> application dashboard for Asset Management that is fed by opal-data-harvest which is accessible via a tool index for users over
+> opalgateway mcp.
+
+- **Ask:** the CRO formalizes the design as a document; this addendum is not a build order. The design covers:
+  - a durable store of every scanner finding in a dedicated client-ops bucket (the name comes from the builders; "opal-data-clientops"
+    is Andrew's illustration);
+  - scheduled scans at 09:00 and 16:00 America/New_York ("naive eastern time");
+  - users reach the warnings through the opalgateway MCP tool index, on the same pattern as opal-data-harvest feeding the
+    Security Analysis dashboard and the harvest_* tools (NFRA_OPLGTW / NFRA_MCPINDEX).
+- **Unchanged by this addendum:** addenda 5 (findings only) and 6 (the approved thresholds and owners).
+
 ## Addendum 6, 2026-10-17 ~05:0xZ: all open-call RECs approved
 
 The CRO printed /open-calls; cards 4 and 5 were withdrawn under addendum 5. Andrew, VERBATIM:
