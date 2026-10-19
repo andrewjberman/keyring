@@ -10781,6 +10781,28 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W73-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~73",
+    "surfaced_at": "2026-10-19T19:11:44Z",
+    "one_line": "safe-commit printed NAMING ERROR function-map folder missing and the commit landed anyway (70f76b50ca): the naming gate graded nothing on this commit, and the commit gate checked 0 of 2 files because neither file suffix is one it reads.",
+    "spec_asserts": "CLAUDE.md section 14a: a commit goes through .tools/safe-commit.sh, which runs the commit gate and the naming gate; face BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home, which is the case here.",
+    "world_is": "commit log .scratch/commit1.log in C:/tmp/wk-mcpindex-73 line 12: '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-73\\infra/aws/lambda/ci/function-map/'; line 9: '[commit-gate] WARN: commit-gate checked 0 of 2 file(s) -- NOTHING WAS CHECKED'; the commit was written as 70f76b50ca (msg-verify MATCH). The worktree sparse list does not carry infra/aws/lambda. The same message is recorded as NFRA_MCPINDEX-Z-W61-S1 and NFRA_MCPINDEX-Z-W63-S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -n naming-gate .scratch/commit1.log in C:/tmp/wk-mcpindex-73 (read 2026-10-19T19:11:44Z): NAMING ERROR function-map folder missing",
+        "git sparse-checkout list in C:/tmp/wk-mcpindex-73 (read 2026-10-19T19:11:44Z): no infra/aws/lambda entry",
+        "git log --oneline -1 in C:/tmp/wk-mcpindex-73: 70f76b50caa NFRA_MCPINDEX r23 MX-s-3 (read 2026-10-19T19:11:44Z)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
