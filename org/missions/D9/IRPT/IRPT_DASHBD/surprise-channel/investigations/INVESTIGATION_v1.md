@@ -26336,3 +26336,62 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-21. Form only: the feed's NO_START_DATE_AT_SOURCE class does not cover every null roster start date. Counts and class word only."
 }
 ```
+
+## IRPT_DASHBD-D2-S141 -- disarm of W321-S3: the feed classes S60's account NO_START_DATE_AT_SOURCE by its own classifier order, not a defect
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S141",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-19T15:24:51Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W321-S3: the feed gives S60's account the class NO_START_DATE_AT_SOURCE and not NO_GROUP because its own classifier tests a null start date before a missing group; the class S60's text expected was the issuer's drafting guess, not a defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W321-S3: the S60 row expects the Scope feed to carry S60's account as ABSENT NO_GROUP.",
+  "world_is": "In data/inf/manual_api/pull_inflection_scope_account_returns.py the row classifier returns RETURNED for a row with a group and a series point, and otherwise tests the start date FIRST (a null start date gives NO_START_DATE_AT_SOURCE) and only then a missing group (NO_GROUP). S60's account has a null roster start date (round-119 read), so its ABSENT class is NO_START_DATE_AT_SOURCE by that order. Measured on the landed day by DB-i-21: the account is in the 39-account NO_START_DATE_AT_SOURCE set, ABSENT with a reason class and never a zero or a fill, which is what S60 asked for; DBI133-2-AC1 PASSES on the merged tree (4c4c14a8be). Only the class word differs from what S60's text guessed. Counts and class words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W321-S3",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py (the row classifier: the start-date test precedes the group test)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~321/S60_MEMBERSHIP_R133.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r133/p133_membership.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W321-S3: its condition (the feed carries S60's account under a class other than NO_GROUP) is the feed's own classifier order, read in the code and measured on the landed day; the account is ABSENT with a reason class and not zero-filled. S60 itself stays ARMED on its consumer half (see the next row)."
+}
+```
+
+## IRPT_DASHBD-D2-S142 -- S60 stays ARMED, re-pointed to the consumer: the page reader must show an absent account as absent
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S142",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-19T15:24:51Z",
+  "one_line": "S60 stays ARMED and its disarm condition is re-pointed to the consumer: the feed half is now seen (S60's account is ABSENT NO_START_DATE_AT_SOURCE, never zero-filled, none of the 68 ABSENT rows is filled), but no consumer exists yet, so the 4-of-5 coverage hazard is latent until the page reader proves a household shows its absent account as absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "S60 notes: disarm needs the feed to carry the account as ABSENT (with a reason class) and no household-level aggregate built from the feed's account rows.",
+  "world_is": "The feed half is met in substance: on the landed day 68 of 863 accounts are ABSENT with a reason class (NO_START_DATE_AT_SOURCE 39, GROUP_NO_SERIES 17, NO_GROUP 12), S60's account among the 39, none zero-filled (DB-i-19, DB-i-21). The hazard S60 names is a CONSUMER's: a figure computed over a household's account returns that silently covers fewer accounts than the household holds. No consumer of the feed's rows exists yet (the page reader is not built), so nothing is wrong today, and a disarm now would drop the only guard on the cell that will be. Counts and class words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-S60",
+      "IRPT_DASHBD-D2-S61",
+      "IRPT_DASHBD-D2-W321-S3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~321/S60_MEMBERSHIP_R133.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~319/SCOPE_LIVE_READ_R132.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Re-pointed disarm condition, owned by this seat: S60 disarms when the page reader's cell has a criterion that a household holding an ABSENT account shows that account as absent with its reason class and computes no household figure over fewer accounts than the household holds. Carried to the CTO as a requirement of that cell."
+}
+```
