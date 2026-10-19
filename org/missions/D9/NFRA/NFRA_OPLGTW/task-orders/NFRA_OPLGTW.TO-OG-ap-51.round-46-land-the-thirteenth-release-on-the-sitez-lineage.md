@@ -73,6 +73,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-51.round-45-land-the-thirtee
 
 <status>staged</status>
 <status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-B</workstream>
 <slot>~AE</slot>
