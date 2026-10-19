@@ -72,6 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-51.round-45-land-the-thirtee
 - Pre-cut: `ap51.AC1` to `AC3` base FAIL as expected (the record is absent); `AC4` cannot be run before `OG-ap-50` exists.
 
 <status>staged</status>
+<status>pending</status>
 <round>46</round>
 <workstream>ENRICH-R46-B</workstream>
 <slot>~AE</slot>
