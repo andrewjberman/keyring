@@ -10161,6 +10161,65 @@ carries none.
         "deliverables/2.0.0_SA_COO~MI/round22/checks g1.AC1..g5.AC3 run on the merged tree at a6b6d88ffbd: 12 of 12 RESULT: PASS"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W63-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~63",
+    "surfaced_at": "2026-10-19T17:08:38Z",
+    "one_line": "safe-commit's naming gate printed NAMING ERROR 'function-map folder missing' for infra/aws/lambda/ci/function-map/ on the work commit 0a2fb26fd8 (workflows/gateway_battery/apply_disposition.py and its test file), and the commit still returned rc=0; the same message as the sibling row NFRA_MCPINDEX-Z-W61-S1.",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project; BOUNDS 2: the commit gate runs py_compile, the naming gate and ruff for py39. The face's <paths> grant names workflows/gateway_battery/apply_disposition.py, its test file, the deliverables folder, the task order file and this investigation file.",
+    "world_is": "The commit of workflows/gateway_battery/apply_disposition.py and workflows/gateway_battery/tests/test_apply_disposition.py printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-63\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' and then '[msg-verify] committed 0a2fb26fd8'. The worktree's git sparse-checkout list names workflows/gateway_battery, workflows/atom_decomposition, infra/aws/ec2/opal-gateway/app and the other folders in the list, and does not name infra/aws/lambda/ci.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author ... -F .scratch/msg_work_mx_h2.txt -- workflows/gateway_battery/apply_disposition.py workflows/gateway_battery/tests/test_apply_disposition.py: rc=0, output in .scratch/commit1.log of wk-NFRA_MCPINDEX-63 (printed 2026-10-19T17:0xZ)",
+        "git -C C:/tmp/wk-mcpindex-63 sparse-checkout list: workflows/gateway_battery, workflows/atom_decomposition, infra/aws/ec2/opal-gateway/app, infra/logic/registry, lib, org/devices, org/modules/graph, org/ref, org/standards, org/missions/D9/NFRA/NFRA_MCPINDEX, .tools; infra/aws/lambda/ci not listed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W63-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~63",
+    "surfaced_at": "2026-10-19T17:08:38Z",
+    "one_line": "safe-commit's client-data check printed WARN: the hashed account-id list is ABSENT on this device, so the work commit 0a2fb26fd8 was not checked for client account ids, and the commit still returned rc=0.",
+    "spec_asserts": "CLAUDE.md section 5 and the commit gate: a commit is checked by the commit gate's client-data leg; the face's BOUNDS 2 names the commit gate's legs as py_compile, the naming gate and ruff, and does not name the client-data leg.",
+    "world_is": "The commit log of 0a2fb26fd8 printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).' The two committed files are Python source and a test over synthetic inputs with no account identifier in them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author ... -F .scratch/msg_work_mx_h2.txt -- ...: output line 22 of .scratch/commit1.log in wk-NFRA_MCPINDEX-63 (printed 2026-10-19T17:0xZ)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W63-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~63",
+    "surfaced_at": "2026-10-19T17:08:38Z",
+    "one_line": "the launch brief cuts this worktree at box/sitez commit ec6b4b428d, but the worktree HEAD is 060b3afa809, a box-sync commit 44 commits later; the task order file and its carried folders are present at HEAD.",
+    "spec_asserts": "The launch brief: 'Your worktree (ABSOLUTE path, branch wk-NFRA_MCPINDEX-63, cut from box/sitez at the amendment commit ec6b4b428d)'.",
+    "world_is": "git -C C:/tmp/wk-mcpindex-63 rev-parse --abbrev-ref HEAD prints wk-NFRA_MCPINDEX-63; git merge-base --is-ancestor ec6b4b428d HEAD holds; git rev-list --count ec6b4b428d..060b3afa809 is 44, the newest 060b3afa809 box-sync(0.0.0_AB_MSTR~Z). The work was committed on top of 060b3afa809 as 0a2fb26fd8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/tmp/wk-mcpindex-63 rev-parse --abbrev-ref HEAD: wk-NFRA_MCPINDEX-63 (read 2026-10-19T17:0xZ)",
+        "git -C C:/tmp/wk-mcpindex-63 rev-list --count ec6b4b428d..060b3afa809: 44 (read 2026-10-19T17:0xZ)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
