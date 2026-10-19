@@ -112,7 +112,7 @@ git toplevel). Commit the deploy evidence FIRST, then write the proof instance t
 `org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~COMM1/COMM_ASSIST.TO-CA-p-2.selfmail-deploy.proof_of_spec.json`,
 pinning each artifact row to the commit that carried it, validate it with
 `python .tools/proof-of-spec-check.py <instance> CAp2-AC1,CAp2-AC2,CAp2-AC3` AFTER your last commit, and flip `<status>` to
-`complete` only when all three PASS and the instance is VALID at the final head. Surprise rows are `COMM_ASSIST-C22D-S<k>`, fabric
+`complete` only when all three PASS and the instance is VALID at the final head. Surprise rows are `COMM_ASSIST-S<k>` (the next free number; AMENDED 2026-10-19 ~18:0xZ by the issuer: the row gate refuses the `C22D` form, the issuer's defect, found by the lane on its first row), fabric
 `laptop`, disarm_owner `2.0.0_SA_COO~CA`, `surfaced_at` = `date -u +%FT%TZ` at filing. Append lines only to the investigation file.
 
 <decomp_ref>

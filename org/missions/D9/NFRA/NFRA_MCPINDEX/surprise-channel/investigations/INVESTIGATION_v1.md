@@ -10720,3 +10720,32 @@ carries none.
   }
 ]
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "id": "NFRA_MCPINDEX-Z-S140",
+  "one_line": "Catalog routing: 4 tools read somewhere other than their catalog row says, plus H7, E4 and the P8 key",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "harvest_get_published_analysis (H7): catalogued opal-data-harvest; live it reads opal-amgt-scoped-api /api/scoped/amgt/security/.../overlay.",
+      "etfs_get_positioning (E4): tool_index row under opal-data-portal-v2 while its indexes are opal-data-etfs; live it reads portal-v2 platinum/etfs/positioning_data.json by default and opal-data-etfs gold/book only for another as_of; units unlabelled (aum about 10^6 smaller than etfs_get_fund_holdings, weights fractions vs points).",
+      "etfs_get_security_reference: also reads security_universe, which its catalog row does not list.",
+      "mdpf_get_security_classification: reads DynamoDB etf-classifications, with no catalog bucket row.",
+      "P8: portal_get_pipeline_freshness reads json/latest/manifest.json, not in the catalog (the pipeline_freshness channel holds 0 artifacts, so gateway_query_catalog refuses the key).",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART2_HARVEST_NEWS_ETFS_PORTAL_MDPF_20261019.md @48c5806982; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @944f324225 (Part 2 routing)"
+    ]
+  },
+  "spec_asserts": "Each tool's catalog row names the bucket and keys it reads.",
+  "world_is": "The /gateway page groups these tools under buckets they do not (only) read, the same class as part 1's P2.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Fix owner per the CTO routing: 2.0.0_SA_COO~MI, round 23 routing arm."
+}
+```
