@@ -32480,3 +32480,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not applied: widening cf-6 to this launcher is the CTO's call (msg 8499 kept it out); a later cell would move run_management.cmd to py -3.12 the same way, with its own test."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W530-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~530",
+  "surfaced_at": "2026-10-19T22:37:32Z",
+  "one_line": "The round-125 census counts two printing writers for the K8 REFUSED line, _refused_figures_markdown and build_rich_text, but at the base _refused_figures_markdown has no caller, so the export's REFUSED line comes only from build_rich_text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-125 census (round125_prep/READER_STATE_WORD_CENSUS.md, section 3, row K8) and the order's rule (a) and test T8 name two writers of the K8 line, the function at render_pack.py:2173 and build_rich_text at :2430, each printing `<MNEMONIC>: REFUSED -- <reason>`.",
+  "world_is": "At 4d3c666a3b the only occurrence of _refused_figures_markdown in lib/research/print/render_pack.py is its definition (line 2147) and a comment at line 1583; no production call site exists in lib/research. build_rich_text prints the Model Notes REFUSED line from row_refusals (line 2430) and never calls the function. The function was re-worded to Not available and is covered by a direct-call test, so the export's K8 line is covered by the build_rich_text assertion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/print/render_pack.py@4d3c666a3b:2147 is `def _refused_figures_markdown(check_face, declared_years=None) -> list:`; a native Grep of the worktree's render_pack.py after the cg-1 edit shows no call site, only the definition at 2152 and a comment at 1583",
+      "a native Grep of lib/research for _refused_figures_markdown lists render_pack.py, test_cg1_reader_state_words.py and the two catalogue fixtures bu3_date_sites.json and bv2_quote_blocks.json; no other module calls it",
+      "lib/research/print/render_pack.py@4d3c666a3b:2430 is `lines.append(\"{0}: REFUSED -- {1}\".format(mnemonic, \"; \".join(row_refusals[mnemonic])))`, the Model Notes writer that build_rich_text does call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The census's two-writer count is the issuer's; whether to delete the uncalled function is not this cell's call, and the order bounds the edit to the writers it names."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W530-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~530",
+  "surfaced_at": "2026-10-19T22:37:32Z",
+  "one_line": "The order's step D asks each committed rich-text base fixture that pins a moved word to be re-scoped by changing only the pinned line; the two recorded bases that pin moved words were kept as recorded and mapped by hand in their controls.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step D of the order (section 5 and the E-step list): each committed rich-text base fixture under lib/research/print/tests/fixtures/ that pins a moved word is re-scoped by changing ONLY the pinned line to the new words, with the old and new text in the receipt.",
+  "world_is": "fixtures/bv2_rich_text_base_RIO_LN.txt (4 moved lines) and fixtures/ca3_base_export_{GOOGL_US,ICICIBC_IN,ICT_PM}.md (2 moved lines each) are read by test_bv2_rich_dates_and_quotes.py Q3 and test_ca3_export_thesis_pillars.py P5, whose headers record them from the UNEDITED renderer. The fixture bytes are unchanged; each control now maps the moved base lines to the new words by hand-written pairs (bv2 state_rescoped, ca3 CG1_BASE_TO_NOW_STATE), the AMGT-cf-2 precedent. fixtures/bz1_base_export_*.md is read by test_bz1_rich_money_codes.py and no assertion on it moved, so it is not pinned and is untouched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the run of lib/research/print/tests after the writer edit showed P5 failing for ICT_PM, GOOGL_US and ICICIBC_IN and Q3 failing; after the two mappings they pass, and the fixture files were not written by this cell",
+      "test_bv2_rich_dates_and_quotes.py Q3 header: the base was recorded from the UNEDITED renderer (base e58e97c92e); test_ca3_export_thesis_pillars.py header: the ca3 bases are recorded from the UNEDITED renderer",
+      "lib/research/print/tests/test_bz1_rich_money_codes.py line 53 reads bz1_base_export_<NAME>.md and its suite passes unchanged after the cg-1 edit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Whether a recorded base should be re-recorded at the new words, instead of mapped, is the issuer's call for cg-2 or a later round; this cell chose the mapping because the recorded bytes are the evidence the controls compare against."
+}
+```
