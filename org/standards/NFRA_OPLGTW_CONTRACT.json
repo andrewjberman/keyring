@@ -5,7 +5,8 @@
   "activation": "DESIGN_ONLY_NOT_A_GRANT",
   "masters": {
     "08242234": "SmartX",
-    "08335338": "BlackDiamond"
+    "08335338": "BlackDiamond",
+    "08403355": "TaxSMA"
   },
   "datasets": [
     "dim_position",
@@ -307,11 +308,16 @@
     "schwab/08335338/silver/dim_position/",
     "schwab/08335338/silver/dim_balance/",
     "schwab/08335338/silver/dim_asset/",
-    "schwab/08335338/silver/dim_transaction/"
+    "schwab/08335338/silver/dim_transaction/",
+    "schwab/08403355/silver/dim_position/",
+    "schwab/08403355/silver/dim_balance/",
+    "schwab/08403355/silver/dim_asset/",
+    "schwab/08403355/silver/dim_transaction/"
   ],
   "completion_prefixes": [
     "schwab/08242234/meta/complete/",
-    "schwab/08335338/meta/complete/"
+    "schwab/08335338/meta/complete/",
+    "schwab/08403355/meta/complete/"
   ],
   "surface_ids": [
     "S1",
@@ -348,7 +354,7 @@
     "A20"
   ],
   "capacity": {
-    "target_instance_type": "t4g.small",
+    "target_instance_type": "t4g.large",
     "target_architecture": "arm64",
     "target_memory_mib": 2048,
     "admission_existing_peak_rss_multiplier": 1.25,
