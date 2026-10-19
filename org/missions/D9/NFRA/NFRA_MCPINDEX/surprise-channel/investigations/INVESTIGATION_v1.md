@@ -10316,6 +10316,117 @@ carries none.
     "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_coverage names one of those linked rows.",
     "world_is": "The coverage code reads the gold canonical_shape for the report date of each fund, which no linked row names. K1-03 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/, the table that answers the report date.",
     "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "send_email is documented as a confirm=false preview but sends at once when its recipient and external-domain counts are under the blast cap, so a confirm=false call to send_email is a live send, not a preview.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/blast_cap.py:107-139 evaluate() returns allow under the cap for a COUNTABLE tool whatever confirm is; blast_cap.py:_COUNTABLE maps send_email to recipients and external_domains (seed caps 25 standard, 5 external domains).",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:469-485 send_email posts to /me/sendMail and passes confirm only to _run; its docstring says ONLY call after the user has explicitly confirmed.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/destructive_ops.py:140-145 classes send_email IRREVERSIBLE_SEND."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "send_email has no non-sending path at confirm=false under the cap. K6-51 uses an argument refusal (no to) as its preview, so the battery never sends. The live hazard is that any caller using confirm=false with a small recipient list sends mail.",
+    "notes": "ARMED because the send is reachable today from any principal below the cap. The cheat sheet must not show confirm=false as a preview for send_email. Disarm is the issuer's."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "create_draft writes a draft to the mailbox at once (WRITE_REVERSIBLE, no confirm argument, no dry-run flag), so the definition offers no non-sending path for its preview case.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:455-465 create_draft posts to /me/messages and has no confirm or dry-run parameter.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/destructive_ops.py:134-139 classes create_draft WRITE_REVERSIBLE; blast_cap.py evaluate() allows WRITE_REVERSIBLE at once."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "create_draft has neither. K6-46 uses an argument refusal (no to, refused before the function runs) as its preview, so no draft is written by the battery.",
+    "notes": "Routing and form finding of round 23, not a defect in the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "save_email_attachment_to_site writes a file to a SharePoint site at once (WRITE_REVERSIBLE, no confirm argument, no dry-run flag); its only non-writing path is the empty folder_path refusal.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:372-399 save_email_attachment_to_site has no confirm or dry-run parameter; the write is graph.upload_large at :393.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:380-382 returns invalid folder_path before any Graph call, which is the probe K6-48 uses."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "save_email_attachment_to_site has no such path. K6-48 uses the empty folder_path refusal as its preview.",
+    "notes": "Form finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "upload_text_to_site writes a text file to a SharePoint site at once (WRITE_REVERSIBLE, no confirm argument, no dry-run flag); its only non-writing path is the unsafe filename refusal.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:820-840 upload_text_to_site has no confirm or dry-run parameter; the write is graph.upload_large in fn.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:826-827 raises ValueError unsafe filename before _run, which is the probe K6-52 uses."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "upload_text_to_site has no such path. K6-52 uses the unsafe filename refusal as its preview.",
+    "notes": "Form finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T18:26:46Z",
+    "one_line": "copy_site_file_to_s3 writes an object to S3 at once (WRITE_REVERSIBLE, no confirm argument, no dry-run flag); its only non-writing path is the extension refusal before any read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/tools.py:843-862 copy_site_file_to_s3 has no confirm or dry-run parameter.",
+        "CODE @fc233f703d: infra/aws/ec2/opal-gateway/app/integrations/advi_billing/site_to_s3.py:86-90 _pair refuses any extension outside the admitted pairs before any read, which is the probe K6-45 uses."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A sender has a confirm=false or dry-run non-sending path read in its definition, so each send tool has a preview case.",
+    "world_is": "copy_site_file_to_s3 has no such path. K6-45 uses the extension refusal as its preview.",
+    "notes": "Form finding of round 23. No change to the gateway."
   }
 ]
 ```
