@@ -10419,6 +10419,161 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_fund_holdings reads the gold book table (opal_data_etfs_gold_book) for its book totals, and no census link names that row for this tool; the census links gold_holding and silver_holdings only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_funds.py:426 calls _book_totals() on the holdings path; :386 reads rows[ENTITY_GOLD_BOOK]; :454-458 reads the book part and filters it by FUND_COLUMN[ENTITY_GOLD_BOOK].",
+        "CENSUS @060b3afa809: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_fund_holdings].indexes = [opal_data_etfs_gold_holding, opal_data_etfs_silver_holdings].",
+        "CATALOG @060b3afa809: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 14556, opal_data_etfs_gold_book, tools = [etfs_get_positioning]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_fund_holdings names one of those linked rows.",
+    "world_is": "The holdings code also reads the gold book for the same date, which no linked row names. K1-09 carries expect_source opal-data-etfs/gold/holding/, the linked table that answers the holding rows.",
+    "notes": "Routing finding of round 23 (contract: keep expect_source on what the code reads and file one OBSERVATION row). No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_fund_trades reads the gold peer_group_map on its peer_group path, and no census link names that row for this tool; the census links trade_schedule only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:449 calls _peer_funds() when peer_group is given; _peer_funds reads rows[ENTITY_PEERS] at :403.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_fund_trades].indexes = [opal_data_etfs_gold_trade_schedule]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_fund_trades names one of those linked rows.",
+    "world_is": "The peer_group path reads the gold peer_group_map, which no linked row names. K1-14 (peer_group PFOE) carries expect_source opal-data-etfs/rivalfunds/etfs/gold/trade_schedule/, the linked table that answers the trade rows.",
+    "notes": "Routing finding of round 23. The fund_ticker path (K1-15) reads trade_schedule only. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_compare_peers reads the gold peer_group_map on every call, and no census link names that row for this tool; the census links buying_trend and holding_contribution.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:576 calls _peer_funds() unconditionally; _peer_funds reads rows[ENTITY_PEERS] at :403.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_compare_peers].indexes = [opal_data_etfs_gold_buying_trend, opal_data_etfs_gold_holding_contribution]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_compare_peers names one of those linked rows.",
+    "world_is": "The compare path reads the gold peer_group_map on every call, which no linked row names. K1-01 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/buying_trend/, a linked table.",
+    "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_rival_page_status reads the gold canonical_shape on every call, and no census link names that row for this tool; the census links rivalfunds_page only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals_flow.py:735 calls _canonical_latest() unconditionally; _canonical_latest reads rows[ENTITY_CANON] at :675.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_rival_page_status].indexes = [opal_data_etfs_platinum_rivalfunds_page]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_rival_page_status names one of those linked rows.",
+    "world_is": "The page status code reads the gold canonical_shape for each fund's gold latest report, which no linked row names. K1-25 carries expect_source opal-data-etfs/rivalfunds/etfs/platinum/page/, the linked page prefix.",
+    "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_who_holds reads the gold canonical_shape on every call, and no census link names that row for this tool; the census links security_universe only. Its peer_group_map read occurs only with a peer_group argument.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals.py:506 reads rows[ENTITY_CANON]; :529-538 partitions and reads canonical_shape on every call; :508 and :542 read the peer_group_map only when peer_group is given.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_who_holds].indexes = [opal_data_etfs_gold_security_universe]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_who_holds names one of those linked rows.",
+    "world_is": "The holders code reads the gold canonical_shape for the matched rows, which no linked row names. K1-29 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/, the table that holds the holder rows.",
+    "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_security_reference reads the gold security_universe on every call to resolve the security, and no census link names that row for this tool; the census links security_market, corporate_actions and security_names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals.py:573 reads rows[ENTITY_UNIVERSE]; :583 calls _latest() on it unconditionally.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_security_reference].indexes = [opal_data_etfs_gold_corporate_actions, opal_data_etfs_gold_security_market, opal_data_etfs_gold_security_names]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_security_reference names one of those linked rows.",
+    "world_is": "The reference code reads the gold security_universe to resolve identifiers, which no linked row names. K1-27 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/security_market/, a linked table.",
+    "notes": "Routing finding of round 23. No change to the gateway."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W67-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~67",
+    "surfaced_at": "2026-10-19T17:18:03Z",
+    "one_line": "etfs_get_coverage reads the gold canonical_shape on every call for each fund's latest report date, and no census link names that row for this tool; the census links holdings_coverage and input_census. Its peer_group_map read occurs only when fund_ticker is omitted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @060b3afa809: infra/aws/ec2/opal-gateway/app/etfs_rivals.py:624 reads rows[ENTITY_CANON]; :635 partitions it and :644 reads its latest reports on every call; :627 and :641 read the peer_group_map only when fund_ticker is None.",
+        "CENSUS @060b3afa809: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[etfs_get_coverage].indexes = [opal_data_etfs_gold_holdings_coverage, opal_data_etfs_gold_input_census]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links each opal-data-etfs tool to the catalog rows of the tables it reads, so expect_source for etfs_get_coverage names one of those linked rows.",
+    "world_is": "The coverage code reads the gold canonical_shape for the report date of each fund, which no linked row names. K1-03 carries expect_source opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/, the table that answers the report date.",
+    "notes": "Routing finding of round 23. No change to the gateway."
   }
 ]
 ```
