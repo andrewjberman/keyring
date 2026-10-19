@@ -70,6 +70,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-pr-6.round-45-make-the-audit-la
 - Risk `WORLD` is the gateway-path floor.
 
 <status>pending</status>
+<status>complete</status>
 <round>45</round>
 <workstream>ENRICH-R45-A</workstream>
 <slot>~161</slot>
