@@ -1125,7 +1125,9 @@ def _firm_registry_rows(reg):
 def _separations(reg):
     """(pipeline dir, foreign buckets, foreign key prefixes) per firm pipeline tree: the other firms'
     provisioned legacy buckets, then their provisioned ruled buckets; and every spelling the tree's vendor
-    uses for those firms in the monolith."""
+    uses for those firms in the monolith, then every spelling ANY OTHER vendor uses for them there.
+    A foreign firm's slice under another vendor's prefix in the shared bucket (fidelity/alongside/, the
+    multi-firm Wealthscape export, NFRA_FIDUPL) is still that firm's data to every other tree."""
     rows = []
     for s in _scopes(reg):
         for pt in s.get("pipeline_trees", []):
@@ -1135,6 +1137,9 @@ def _separations(reg):
             ruled = [g["bucket"] for g in foreign if g.get("bucket_provisioned")]
             prefixes = ["%s/%s/" % (pt["vendor"], sp) for g in foreign
                         for sp in (g.get("monolith_scopes") or {}).get(pt["vendor"], [])]
+            prefixes += ["%s/%s/" % (v, sp) for g in foreign
+                         for v, sps in sorted((g.get("monolith_scopes") or {}).items()) if v != pt["vendor"]
+                         for sp in sps]
             rows.append((pt["dir"], tuple(legacy + ruled), tuple(prefixes)))
     return rows
 

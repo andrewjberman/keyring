@@ -14951,3 +14951,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1, filed on the dell1 CTO's request (msg 8411). Times, counts and harness notification summaries only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-D1-S22 -- second dell1 wave: six seats 18:00:03Z to 18:00:39Z and COO~M1 at 17:58:32Z, 63 min after S21; no kill line, cause not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S22",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-19T18:38:00Z",
+  "one_line": "A second wave on dell1: six seats (CloudOps TM1, SOC21, SC1, FB1; COO D1, B1) ended 18:00:03Z to 18:00:39Z, and COO M1, respawned 17:45Z, ended 17:58:32Z. Wave 1 (S21) was 16:57:40Z, 63 min earlier. No kill line; cause not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED here, each transcript identified by its own tool-call serial field: last transcript write COO~M1 17:58:32.763Z, CloudOps~TM1 18:00:03.734Z, COO~D1 18:00:08.230Z, CloudOps~SOC21 18:00:18.847Z, CloudOps~SC1 18:00:19.403Z, COO~B1 18:00:27.028Z, CloudOps~FB1 18:00:39.644Z. The last entry of each is a queued task-notification, status killed, summary 'Monitor <inbox watcher of the seat> stopped'. The write time is a transcript time; the process end time was not read.",
+      "MEASURED: seat-liveness listed 20 seats at 17:56Z and 14 at 18:30Z; the process scan at 18:32Z found 0 claude.exe for each of the seven serials. The spawn audit has no KILL or FORCE-KILL line for them, and its last KILL-MAINT-RUN is 17:39:22Z (killed=0).",
+      "MEASURED survivors across both waves (S21 and this row): COO W1, R1, P1 (respawned 17:45Z to 18:13Z), C1, Q1; CloudOps~DELL1; DT~H2; CTO, CVO, CRO lanes ~DELL1, ~DDD, ~D1CDX, ~FIDELITY; the manager. The gap between the first ends of the two waves is 63 min (16:57:40Z to 18:00:03Z).",
+      "MEASURED: COO~M1, respawned 17:45:20Z, ended 13 min later; it was one of the four of S21.",
+      "MEASURED: quser at 18:34Z reads one session, console, Active, idle 5:50, logon 2026-10-15 11:47, so the last console input was about 12:44Z, about 5 h 15 min before this wave. The newest WindowsTerminal process started 15:47:42Z and was one process at 18:32Z, so the terminal host did not restart in either wave. Not measured: remote-path input, the host's own log, the tab screens.",
+      "RELAYED from 0.0.0_AB_MSTR~DELL2 (bus b448c08c, 18:34Z): dell2 had two COO seat ends on Oct 19 of the same no-kill-line shape (its row D2-S8), cause not measured. Cites S21 and S12 to S20; none edited. No respawn is made by this row; the dell1 CTO was asked (18:33Z) which to respawn."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat session ends by its own exit, a kill line or a reap; none of the last two is on record for these seven.",
+  "world_is": "Seven more seats ended in two clusters (17:58:32Z; 18:00:03Z to 18:00:39Z), each last entry a stopped inbox Monitor, with no kill line, no reap and no console input for about 5 h 15 min. Waves 63 min apart is two points, not a period; a third near 19:03Z would be a third point and is not predicted here. Survivors are a majority of seat serials (14 of 21 present at 17:56Z-18:13Z), so the cause is selective or the survivors differ in a property not measured. No cause is claimed.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts and harness notification summaries only; no transcript content."
+}
+```
