@@ -91,12 +91,25 @@ def main():
     (folder / 'example-articles.json').write_text(json.dumps(journal, indent=2))
     if result.get('failures') or any('news_context' not in a for a in lookup.values()):
         raise ValueError('incomplete_enrichment: inspect example-invoke.json')
-    old = before['topic']
+    for item in lookup.values():
+        context = item['news_context']
+        if context['evidence']['coverage'] == 'headline' and context['market_impact']['direction'] != 'insufficient':
+            raise ValueError('headline_only_direction_rejected_before_publish')
+    # A scheduled or legitimate re-curation can replace ranks/headlines. Locate the
+    # current matching topic by its source URLs and journal that exact current row.
+    current_topics = query('opal-news-trending-daily', 'date', unpack(before['topic'])['date'])
+    wanted = set(before['urls'])
+    def overlap(row):
+        return len(wanted & {canonical_url(a.get('url')) for a in unpack(row).get('top_articles', [])})
+    old = max(current_topics, key=overlap)
+    if overlap(old) < 2:
+        raise ValueError('reported_topic_not_present_in_current_curation')
+    (SCRATCH / 'backup/example-current-topic-before-wire.json').write_text(json.dumps(old, indent=2))
     topic = unpack(old)
-    articles = [dict(a, **public_context(lookup[canonical_url(a['url'])])) for a in topic['top_articles']]
+    articles = [dict(a, **public_context(lookup.get(canonical_url(a['url']), {}))) for a in topic['top_articles']]
     unique = deduplicate_articles(articles)
     fields = {'top_articles': unique,
-              'article_count': max(len(unique), int(topic.get('article_count', len(articles))) - len(articles) + len(unique)),
+              'article_count': len(unique),
               'market_direction': topic['topic_rank'].split('-')[0],
               'direction_reason': topic.get('direction_reason') or topic.get('rationale') or
                'Rising energy costs and LNG supply disruption pressure broad markets; coal producers can benefit.'}
