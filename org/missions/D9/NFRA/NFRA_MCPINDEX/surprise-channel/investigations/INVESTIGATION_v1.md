@@ -10717,6 +10717,70 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W73-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~73",
+    "surfaced_at": "2026-10-19T19:04:09Z",
+    "one_line": "etfs_get_positioning reads the gold holding table (bucket opal-data-etfs, prefix gold/holding/) on its fund_ticker branch for an as_of other than the object's own date, but the census and members.yaml link this tool to the gold book (or to no gold table) and never to gold/holding/.",
+    "spec_asserts": "GATEWAY_SURFACE_CENSUS_20261019_v2.json lists the linked rows of etfs_get_positioning as opal_data_etfs_gold_book, opal_data_portal_v2_platinum_etfs_positioning_data and portal_etfs_positioning (face section 1, table row 1); members.yaml lists portal_etfs_positioning and etfs.01.positioning-data for it.",
+    "world_is": "app/integrations/portal_index/integration.py:292 hands a fund_ticker request with another as_of to _history_answer; lines 319 and 321 of the same file read rows[ef.ENTITY_GOLD_HOLDING] and name both gold entities in the answer's source list; app/etfs_funds.py:33 defines ENTITY_GOLD_HOLDING = opal_data_etfs_gold_holding, a row whose bucket is opal-data-etfs and prefix is gold/holding/. The gold holding row is not among the census linked rows of this tool. The trace source set (source_sets_portal.json) carries it as a separate s3 source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 292p app/integrations/portal_index/integration.py in C:/tmp/wk-mcpindex-73: 'return _history_answer(ef, tool, ticker, as_of)' (read 2026-10-19T19:04Z)",
+        "sed -n 33p app/etfs_funds.py in C:/tmp/wk-mcpindex-73: 'ENTITY_GOLD_HOLDING = \"opal_data_etfs_gold_holding\"' (read 2026-10-19T19:04Z)",
+        "census row list for etfs_get_positioning: 3 linked rows, none is opal_data_etfs_gold_holding (GATEWAY_SURFACE_CENSUS_20261019_v2.json, read 2026-10-19)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W73-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~73",
+    "surfaced_at": "2026-10-19T19:04:09Z",
+    "one_line": "news_market_mood reads only the two sentiment singletons under json/sentiment/, but the census links it to opal_data_portal_v2_served_news_trending_and_sentiment, whose prefix list names json/trending/latest.json; this tool never reads that object.",
+    "spec_asserts": "The census row list for news_market_mood (face section 1, table row 36) names opal_data_portal_v2_served_news_trending_and_sentiment and opal_data_portal_v2_served_sentiment_singletons.",
+    "world_is": "app/news_typed.py:26-28 names SENTIMENT_PREFIX json/sentiment/, FEAR_GREED_KEY and KEYWORD_SENTIMENTS_KEY; line 493 admits exactly those two keys and lines 497-498 read exactly those two. json/trending/latest.json is read by portal_get_trending (app/portal_json_served.py:499), not by news_market_mood.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 26,28p app/news_typed.py in C:/tmp/wk-mcpindex-73: SENTIMENT_PREFIX, FEAR_GREED_KEY, KEYWORD_SENTIMENTS_KEY (read 2026-10-19T19:04Z)",
+        "sed -n 493,498p app/news_typed.py in C:/tmp/wk-mcpindex-73: admission and the two ts.read_json calls, no trending key (read 2026-10-19T19:04Z)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W73-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~73",
+    "surfaced_at": "2026-10-19T19:04:09Z",
+    "one_line": "12 of the 32 source citations in source_sets_portal.json name a file that holds the bucket only in its entity-name form, so s3.AC2 grounds them through the underscore variant of a catalog entity name; a catalog-resolved bucket is declared in app/refs/DATA_CATALOG.yaml, which the cite grammar app/<file>.py cannot name.",
+    "spec_asserts": "Face section 1: the cited file must contain the bucket, store, integration or graph string, and the cite is app/<file>.py:<line>. h_check.py line 709 also accepts key.replace('-', '_') found in the cited text.",
+    "world_is": "Measured with .scratch/ground.py in C:/tmp/wk-mcpindex-73: 20 of 32 sources cite a file that contains the literal bucket; 12 do not: portal_json_served.py (7 cites), portal_served.py (2), etfs_funds.py (2), portal_mdpf.py (1). The literal bucket is in DATA_CATALOG.yaml:53 and in per-row bucket fields, not in a .py file; the .py cites carry the entity name (for example portal_json_served.py:52 E_CORRELATIONS = opal_data_portal_v2_served_correlation_data).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .scratch/ground.py in C:/tmp/wk-mcpindex-73: 'sources 32 cited file has literal bucket 20 underscore-variant only 12' (read 2026-10-19T19:04Z)",
+        "sed -n 52p app/portal_json_served.py in C:/tmp/wk-mcpindex-73: E_CORRELATIONS = opal_data_portal_v2_served_correlation_data (read 2026-10-19T19:04Z)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
