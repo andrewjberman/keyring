@@ -17,7 +17,7 @@
   ],
   "name": "The auto_fidelity uploader: the Wealthscape daily custom export (accounts, positions, balances, prices, securities, transactions) landed raw every morning in the Schwab window, signed in and OTP-read by itself via Quo, run from one Terraform root beside canonical-schwab-ec2",
   "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew-direct 2026-10-19 ~17:55Z at the 4.0.0_SA_CRO~FIDELITY terminal ('build out a terraform for auto_fidelity uploader, essentially taking the same structure we did for schwab and applying it to fidelity ... pull the relevant tables from it every morning at the same time that schwab does'). The interim path ahead of the official custodian feed (NFRA_AWSFTP, on HOLD). Landing stays raw; silver and gold for Fidelity are a later project. Every new address and name comes from lib/opal_naming.py (rule 30); the Fidelity source and scope registry rows are owed first. No alerts (moratorium): the morning run record is read, never sent.",
-  "phase": "2026-10-19 ~18:2xZ (1.0.0_SA_CTO~DELL1): HIGHEST PRIORITY on dell1 (Andrew-direct ~18:05Z). L4 PRD v0.1 DRAFT written; L4-R after Andrew confirms the endpoint; design forks (a)-(d) at CRO~FIDELITY; COO seat asked of MSTR. ~18:1xZ: L2 endpoint FWD-1..8 and L3 registered @24f0400d63.",
+  "phase": "2026-10-19 ~18:4xZ (1.0.0_SA_CTO~DELL1): PRD v0.3 @6d747e7737 (FWD-2/FWD-4 driven on demand; fork (d) FIRM scope alongside, C-NAMES landed bd84d81948; ToU finding e999b31f1f under C-TOU). L4-R ratified-text half owed by CVO~DELL1; e141 + c3a6 at Andrew. 2026-10-19 ~18:2xZ (1.0.0_SA_CTO~DELL1): HIGHEST PRIORITY on dell1 (Andrew-direct ~18:05Z). L4 PRD v0.1 DRAFT written; L4-R after Andrew confirms the endpoint; design forks (a)-(d) at CRO~FIDELITY; COO seat asked of MSTR. ~18:1xZ: L2 endpoint FWD-1..8 and L3 registered @24f0400d63.",
   "blocking": null,
   "brief_ref": "docs/briefs/auto-fidelity-uploader-brief-20261019.md@ea34e538ae",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_FIDUPL_20261019.md",
@@ -33,6 +33,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~P1",
   "rulings": [
-    "PRIORITY -- Andrew-direct 2026-10-19 ~18:05Z: 'this is now the highest priority project on this box' (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261019_1805Z_AUTO_FIDELITY_TOP_PRIORITY_DELL1.md)."
+    "PRIORITY -- Andrew-direct 2026-10-19 ~18:05Z: 'this is now the highest priority project on this box' (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261019_1805Z_AUTO_FIDELITY_TOP_PRIORITY_DELL1.md).",
+    "CLUSTER PRIORITIES -- Andrew-direct 2026-10-19 ~18:4xZ at the laptop CTO terminal (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_184xZ_CLUSTER_PRIORITIES_PER_BOX_COHERENCE.md): FIDUPL is dell1's highest priority; 'test it for a few days as well as figure out how to run a full backfill and what that backfill looks like and how far back it goes' (FWD-2/FWD-3 mornings, FWD-6 backfill). Cottonwood performance direct from Fidelity is the stated downstream payoff, not an outcome of this raw-landing project. One Fidelity landing home with NFRA_AWSFTP: the alongside scope row (bd84d81948)."
   ]
 }
