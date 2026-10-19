@@ -42289,3 +42289,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The sparse directories are a local worktree setting; nothing under data/inf/scripts was committed by this worker."
 }
 ```
+
+## IRPT_BCKEND-D2-W456-S1 -- The replay of Cottonwood's 2026-10-14 build refuses 11 previous clients (14 entries) against the 2026-10-12 served directory, not the 6 that the ruling and TO-IB-cw-1 name; the six cannot be reproduced read-only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W456-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~456",
+  "surfaced_at": "2026-10-19T14:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Read-only dry-run of cottonwood as-of 2026-10-14 at HEAD e7bf14ca0f refuses 11 unique previous client keys (14 directory entries) with BUILD_DROPS_SOURCE_ENTRY against the 2026-10-12 served directory; the ruling and the order name 6, so the premise count cannot be reproduced.",
+  "notes": "The stage read was completed on the replay's own refusal. The count differs from the 6 in the 2026-10-14 SSM stdout quoted in row IRPT_BCKEND-D2-S239. The order's STOP clause applies to the six: verdict UNDETERMINED, no findings file, no proof instance. Notes: 0.9.0_WK_IRPT_BCKEND~456 deliverables folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/gold/investor_reporting/directory_runner.py --firms cottonwood --as-of 2026-10-14 --dry-run, run at worktree HEAD e7bf14ca0f with no --upload and no --local-out: rc=1; CARRIED held_in_source 11, previous_as_of 2026-10-12, refused BUILD_DROPS_SOURCE_ENTRY 11 previous client(s), uploaded False",
+      "bisect, read-only and aggregates only: previous served directory 271 entries; 14 of them held in source = 11 unique client keys; all 14 are account-level entries; 2 entries gone from the build and absent from source are carried TERMINATED",
+      "ruling org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO~DELL2/RULING_D2_S239_COTTONWOOD_DIRECTORY_WEDGE_20261019.md part (a) and row IRPT_BCKEND-D2-S239 both name 6"
+    ]
+  },
+  "spec_asserts": "The 2026-10-14 Cottonwood build was refused with 6 previous clients still in the source snapshot and missing from the build (ruling part (a) and the TO-IB-cw-1 premise).",
+  "world_is": "Today the same dry-run refuses 11 unique previous client keys (14 entries) against the served directory the wedge row names (as_of 2026-10-12). The six cannot be reproduced read-only, so the count premise is contradicted and the six-client verdict is UNDETERMINED."
+}
+```
+
+## IRPT_BCKEND-D2-W456-S2 -- The 11 held clients are account-level entries of the 2026-10-12 directory whose account now carries a Relationship ID in the 2026-10-14 source; the build re-keys them under relationship entries and the drop guard reads the re-key as a drop
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W456-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~456",
+  "surfaced_at": "2026-10-19T14:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 11 held keys are not absent from the directory: each account is still present in a current relationship entry. The guard compares client-level keys, so an account re-keyed from account level to relationship level is refused as a drop.",
+  "notes": "Routing at data/assets/scripts/gold/investor_reporting/directory_runner.py:803-806 sends a row with a real Relationship ID to by_rel, so no account-only entry is emitted for it at :834-841. carry_forward_removed at :997-999 holds a previous key that is absent from the build and present in the source. The class of the 11 is a re-key, neither a removal of a client nor a verified build loss.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:803 @e7bf14ca0f sha256 ded1b3d1aaea212c6c47a76f3cb4bd33128e8bd8957d6e45198d467849815198 (if rid == FirmCOT.NO_REL_SENTINEL:)",
+      "bisect aggregates: 11 of 11 held keys have alloc rows with a non-sentinel Relationship ID; 11 of 11 accounts present in a current entry account_ids; 28 of 28 retained account-level keys have sentinel-only rows; 0 whitespace variants in AccountID or Relationship ID",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:997-999 @e7bf14ca0f (held = previous key absent from build and present in source)"
+    ]
+  },
+  "spec_asserts": "A build that drops an entry the source still holds is a build fault and is refused (IB-pr-384); a removal of a client is a source fact.",
+  "world_is": "The 11 accounts are served under relationship entries in the 2026-10-14 build; the account-level client key disappears; no account is absent from the directory."
+}
+```
+
+## IRPT_BCKEND-D2-W456-S3 -- The directory carries duplicate client-level keys: 11 in the 2026-10-12 served directory and 7 in today's build, all account-level entries
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W456-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~456",
+  "surfaced_at": "2026-10-19T14:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two or more account-level directory entries share one client-level key: 11 duplicated keys over 51 account-level entries in the 2026-10-12 served directory, and 7 over 35 in today's cottonwood build.",
+  "notes": "The probable mechanism is build_cot appending one account-level entry per ungrouped row at data/assets/scripts/gold/investor_reporting/directory_runner.py:834-841 with no dedupe by account. The mechanism is NOT verified here; this row records the form only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bisect aggregates: previous served directory 271 entries, 51 account-level, 11 duplicated client keys; today's build 258 entries, 35 account-level, 7 duplicated client keys",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:834-841 @e7bf14ca0f (for r in ungrouped: entries.append(_entry(...)))"
+    ]
+  },
+  "spec_asserts": "Each directory entry is keyed by ids.client_id, which the refresh compares (entry_key), so one client key names one entry.",
+  "world_is": "Several account-level entries share one client_id in both the served 2026-10-12 directory and the 2026-10-14 build."
+}
+```
