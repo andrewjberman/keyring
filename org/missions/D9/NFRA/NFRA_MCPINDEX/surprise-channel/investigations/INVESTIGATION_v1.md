@@ -11523,6 +11523,342 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_article: the census links no row and members.yaml carries bucket opal-data-harvest (app/harvest_read.py:26), but the code reads the article_security_mention gold part and one of five silver article prefixes chosen by its publisher argument (six sources).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_press.py:38 GOLD_MENTION, :43-47 SILVER dict, :478-512 harvest_get_article reads mention_key then _silver_join on SILVER[publisher]",
+        "CENSUS @46dba0930f: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round22/evidence/GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_article].indexes = []"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_get_article to no catalog row (indexes empty), and members.yaml bucket_source names app/harvest_read.py:26; the index expects no silver or gold row behind this tool.",
+    "world_is": "harvest_get_article reads amgt/harvest/gold/article_security_mention/ (harvest_press.py:38) and, by the publisher argument, one of seeking-alpha, bloomberg, wsj, ft or barrons silver article prefixes (harvest_press.py:43-47). The bucket claim agrees; the linked-row claim does not. The silver catalog rows name harvest_search_articles as their read_tool, not this tool."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_chatter: members.yaml carries no bucket or bucket_source for this tool, while the code reads three gold prefixes of opal-data-harvest (harvest_press.py:35-37); the three linked rows agree with the trace.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_press.py:35-37 GOLD_DAILY, GOLD_WINDOW, GOLD_EVENT; :283-349 harvest_get_chatter reads all three (ht.newest_part, ht.read_parquet, _parquets)",
+        "MEMBERS @46dba0930f: workflows/atom_decomposition/tool_index/members.yaml carries {tool: harvest_get_chatter, member: b, owner: AMGT_HARVST} with no bucket or bucket_source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "members.yaml records a bucket or bucket_source for each harvest tool that reads the harvest bucket (the census bucket column reads none for this tool).",
+    "world_is": "The tool reads s3 opal-data-harvest prefixes amgt/harvest/gold/chatter_daily/, chatter_window/ and chatter_event/ on every call. The index carries no bucket for it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_filing_analysis: the census links harvest_issuer_site_harvest_silver_filing_source, which no branch reads; the code reads filings/v1, drafting/v1 and sec/harvest/silver/filing_source, and members.yaml has no bucket claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_research.py:58-60 P_FILINGS, P_DRAFTING, P_FILING_SOURCE; :514-625 _filings and harvest_get_filing_analysis read them (drafting and filing_source whenever an analysis is selected, :569-597)",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_filing_analysis].indexes includes harvest_issuer_site_harvest_silver_filing_source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_get_filing_analysis to the issuer-site filing source row (issuer-site/harvest/silver/filing_source/).",
+    "world_is": "No constant or read in harvest_research.py names issuer-site/. The three prefixes read are filings/v1/, drafting/v1/ and sec/harvest/silver/filing_source/. The issuer-site row is linked on a tool that never reaches it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_fundamentals: the census links exec_officers, histdata_daily_px and price_history_tot_return, which this tool does not read (exec_officers is read by harvest_get_research); the code's seven prefixes are not all linked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_figures.py:37-43 prefix constants, :219-231 _kind_ref, :271-338 _fund_* readers; harvest_research.py:57 P_EXEC read by harvest_get_research",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_fundamentals].indexes (10 rows) includes harvest_bloomberg_harvest_bronze_exec_officers, _histdata_daily_px, _price_history_tot_return"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links ten catalog rows to harvest_get_fundamentals, including exec_officers, histdata_daily_px and price_history_tot_return.",
+    "world_is": "harvest_figures.py names derived/model_block/ and _fye/, bestdata, refdata, histdata, segments and price_history_px_last. histdata_daily_px and price_history_tot_return appear in no read of this module; exec_officers is read by harvest_get_research (harvest_research.py:57)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_peers_and_scores: the linked rows agree with the trace (peers, posture, scores), but members.yaml carries no bucket or bucket_source for this tool, while the code reads opal-data-harvest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_research.py:61-63 P_PEERS, P_SCORES, P_POSTURE; :662-714 _peers_scores reads each (_union_json, object_pick)",
+        "MEMBERS @46dba0930f: workflows/atom_decomposition/tool_index/members.yaml carries {tool: harvest_get_peers_and_scores, member: b, owner: AMGT_HARVST} with no bucket or bucket_source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "members.yaml records the bucket for each harvest tool that reads it (census bucket column none for this tool).",
+    "world_is": "The tool reads s3 opal-data-harvest peers/v1/, scores/v1/ and posture/v1/ on every call. The index carries no bucket for it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_published_analysis: the census indexes none, but the code's one source is an integration, the AMGT scoped-API Lambda named by the environment key AMGT_SCOPED_API_FUNCTION; the index carries no source for it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_published.py:41 FUNCTION_ENV, :89-91 _function_name (env read at call time), :121 admit_typed on amgt/security/<key>, :135 one RequestResponse invoke",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_published_analysis].indexes = []"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census gives harvest_get_published_analysis no linked row and no bucket claim, so the index names no source for the tool.",
+    "world_is": "The tool's only source is the Lambda invoke. The function name is not held in the gateway code; the trace records the environment key that carries it. No bucket or table is read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_get_research: the census links six rows the code reads, but the code also reads bloomberg exec_officers (harvest_research.py:57), which the census does not link to this tool; members.yaml has no bucket claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_research.py:52-57 P_DOSSIER, P_CONTINUATION, P_AI_FILL, P_REPORT, P_MANAGEMENT, P_EXEC; :334-474 _research reads all six unconditionally",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_get_research].indexes (6 rows) does not include harvest_bloomberg_harvest_bronze_exec_officers"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_get_research to six rows and no bloomberg exec_officers row.",
+    "world_is": "_research reads bloomberg/harvest/bronze/exec_officers/ (harvest_research.py:57) in every call. The index carries no bucket for the tool and no link to that row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_list: the census indexes none and members.yaml carries no bucket, but the code lists under any of the 24 served prefixes of opal-data-harvest (harvest_read.py:31-33), admitted at :64 and :78.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_read.py:26 BUCKET, :30-34 SERVED_PREFIXES, :64 _served, :105-126 harvest_list (list_objects_v2 with Bucket=BUCKET at :110)",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_list].indexes = []"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census gives harvest_list no linked row and no bucket claim.",
+    "world_is": "harvest_list lists any caller-named prefix that starts with one of the 24 served prefixes. The trace records all 24 as sources, so the index's none does not describe what the tool can list."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_query_columns: the census links only harvest_candidate_universe, but the code's allow-list has seven dataset branches (harvest_figures.py:95-107), each a distinct prefix of the bucket; six reachable datasets are unlinked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_figures.py:94-110 _DATASETS and ALLOW; :572-625 harvest_query_columns takes dataset as the branch selector and reads spec[prefix]",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_query_columns].indexes = [harvest_candidate_universe]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_query_columns to one catalog row, harvest_candidate_universe.",
+    "world_is": "The allow-list has seven datasets: chatter_daily, chatter_window, article_security_mention, article_sentiment, candidate_universe, model_block (derived/model_block/) and bestdata. Six of them are reachable by this tool and unlinked to it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_read: the census links 39 catalog rows, but the code reads any key under the 24 served prefixes, which hold all 78 harvest_datasets rows; the 39 rows not linked to this tool sit under the same prefixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_read.py:26, :30-34 SERVED_PREFIXES, :64 _served, :78 admit, :130 get_object(Bucket=BUCKET, Key=key)",
+        "CATALOG @46dba0930f: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml harvest_datasets (78 rows), every prefix under one of the 24 served prefixes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_read to 39 rows, the catalog rows whose read_tool is harvest_read; the index treats the remaining harvest rows as unreachable by this tool.",
+    "world_is": "harvest_read accepts any key under a served prefix, so every harvest_datasets row is reachable by it. The 39 unlinked rows are reachable and not indexed to this tool."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_resolve_security: the census links harvest_identity_v1 (identity/v1/), which the code never reads; the code reads the amgt research_dossier prefix (harvest_identity.py:43, :300-309), which the census does not link to this tool.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_identity.py:40-43 CROSSWALK_PREFIX, UNIVERSE_PREFIX, IDENTITY_PREFIX, DOSSIER_PREFIX; :375 admit_typed on all four; :300-309 covered_keys reads DOSSIER_PREFIX",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_resolve_security].indexes includes harvest_identity_v1 and excludes the amgt research_dossier rows"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_resolve_security to harvest_identity_v1 (identity/v1/).",
+    "world_is": "No constant or read in harvest_identity.py names identity/v1/ (the only identity prefix is bloomberg/harvest/bronze/identity/, :42). The resolve path reads the amgt research_dossier prefix when several listings share one CIK, and the census does not link it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_search_articles: the seven linked rows agree with the trace, but members.yaml carries no bucket or bucket_source for this tool, while the code reads opal-data-harvest gold and silver prefixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_press.py:38-39 GOLD_MENTION, GOLD_SENTIMENT; :43-47 SILVER; :357-478 harvest_search_articles reads them",
+        "MEMBERS @46dba0930f: workflows/atom_decomposition/tool_index/members.yaml carries {tool: harvest_search_articles, member: b, owner: AMGT_HARVST} with no bucket or bucket_source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "members.yaml records the bucket for each harvest tool that reads it (census bucket column none for this tool).",
+    "world_is": "The tool reads opal-data-harvest mention and sentiment gold prefixes and up to five silver article prefixes, chosen by the publisher of each mention row. The index carries no bucket for it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "harvest_security_coverage: the census links only harvest_packs, but the code lists all 31 keyed dataset prefixes of opal-data-harvest (harvest_identity.py:58-88) on every call; 30 datasets are reachable by this tool and unlinked, and members.yaml has no bucket claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/harvest_identity.py:58-88 KEYED (31 entries); :546-547 composed and admitted; :559-601 each entry listed and reported",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[harvest_security_coverage].indexes = [harvest_packs]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links harvest_security_coverage to one catalog row, harvest_packs.",
+    "world_is": "The coverage tool reads all 31 keyed dataset prefixes (gold, bronze, state and derived, across amgt, bloomberg, seeking-alpha, derived, filings, management, packs, peers, posture, scores, drafting, publication-links and raw). Only packs is linked."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "mdpf_get_security_classification: the census indexes none, but the code reads one DynamoDB table, etf-classifications (mdpf_classification.py:34, get_item at :160), which no index carries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/mdpf_classification.py:34 TABLE, :160 get_item(TableName=TABLE, Key ticker), :197 admit_scope on TABLE",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[mdpf_get_security_classification].indexes = [] (channel dynamodb lists the tool)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census places mdpf_get_security_classification in the dynamodb channel with no linked row.",
+    "world_is": "The tool's one source is the etf-classifications table, read by a single get_item per call. The index names no store for it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "news_for_security: the census indexes none, but the code reads the harvest article_security_mention index and, on a text fallback, the NEWS_ARTICLES_TABLE store; the members.yaml bucket claim (app/harvest_read.py:26) agrees with the S3 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/news_typed.py:29 MENTION_PREFIX, :579 admit_scope(HARVEST), :587 newest_part on MENTION_PREFIX, :617-619 _table('articles') on the fallback path",
+        "CENSUS @46dba0930f: GATEWAY_SURFACE_CENSUS_20261019_v2.json tools[news_for_security].indexes = []; members.yaml bucket_source app/harvest_read.py:26"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census gives news_for_security no linked row; members.yaml names the harvest bucket for it.",
+    "world_is": "The tool reads the harvest article_security_mention index (catalog row harvest_article_security_mention, which the census does not link to this tool) and, when a ticker or security key is given, the NEWS_ARTICLES_TABLE store as a text fallback. The store is not indexed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W74-S16",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~74",
+    "surfaced_at": "2026-10-19T19:03:27Z",
+    "one_line": "news_trending_topics: the census links a second row, opal_data_news_v2_gold_trending_reports (bucket opal-data-news-v2, trending_reports/), which no gateway code reads; the code reads only the NEWS_TRENDING_TABLE store.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @46dba0930f: infra/aws/ec2/opal-gateway/app/news_typed.py:376-430 news_trending_topics; :394 _table('trending') is its only read target; infra/aws/ec2/opal-gateway/app/ holds no reference to opal-data-news-v2 outside refs/DATA_CATALOG.yaml",
+        "CATALOG @46dba0930f: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:16388-16400 opal_data_news_v2_gold_trending_reports, bucket opal-data-news-v2, prefix trending_reports/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census links news_trending_topics to two rows: dynamodb_dynamodb_opal_news_trending_daily and opal_data_news_v2_gold_trending_reports.",
+    "world_is": "The tool reads the trending store only. The second linked row is an S3 prefix in a bucket the gateway code does not name, so the link is not backed by a read this tool makes."
   }
 ]
 ```
