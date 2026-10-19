@@ -119,6 +119,69 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No action taken. The FU-x-1 live run of --run-live is the proof of the three-field form and of the status.json and downloadExport.do shapes."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-19T21:00:37Z",
+    "one_line": "The handoff contract has no failure class for a refused status list, so fetch_day raises FetchError and writes no listing.json for that run, leaving the lander's run record without the failure it is meant to carry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FU-s-3 WHAT TO BUILD 2: fetch_day returns the listing and does not raise for the contract's failure classes; the handoff failure is null or one of four strings (worker reference section 5).",
+    "world_is": "The four strings in section 5 cover a missing day, a missing file and a refused download, and no string covers a refused status list (non-200 from status.json). fetch.py raises FetchError with the status code and writes no listing.json, so box/run.py has no handoff record for that stage. The worker chose the raise over an invented class; the contract owner decides the class or the record.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worker reference section 5 lists exactly four failure strings: sign-in refused, code never arrived, export not generated yet, download refused",
+        "fetch.py fetch_day raises FetchError when status != 200 or the body is not a dict (commit dafda501f1); tests/test_fetch.py test_status_refused_raises_fetch_error covers it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken. The COO or the CTO decides whether a refused status list gets a class (for example download refused) or stays a raised error that run.py records."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-19T21:00:37Z",
+    "one_line": "The status-row and download field names that fetch.py reads (fileName, fileType, profileId, requestId, fileStatusDescription, fileCreatedTimestamp) and the downloadExport.do parameter names come from reference section 4, not from any capture, so FU-x-1 must prove them against the live list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FU-s-3 WHAT TO BUILD 1: fetch_day posts the status list and keeps COMPLETED rows of the six names, then GETs downloadExport.do with the four row values as parameters (worker reference section 4).",
+    "world_is": "The HAR capture holds no status.json and no downloadExport.do entry (see NFRA_FIDUPL-D1-W1-S4), so every field name fetch.py reads from a status row and every query parameter name it sends to downloadExport.do is UNMEASURED. The names are used exactly as reference section 4 states them.",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "worker reference section 4 states the status row keys and the downloadExport.do query parameters (fileName, fileType, profileId, requestId)",
+        "the Downloads HAR key-name output (.scratch/har/keys.txt, not committed) has zero status.json or downloadExport.do entries"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken. The FU-x-1 live --run-live proof of the status list and the account.txt download covers these names."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-19T21:00:37Z",
+    "one_line": "Two copies of the session adapter now exist: fetch.PlaywrightSession (the shared one, FU-s-3) and signin_recon.ContextSession (FU-s-2's stand-in), and nothing in round 1 retires the stand-in.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FU-s-2 note and worker reference section 9: fetch.py owns the real PlaywrightSession and signin_recon.ContextSession is a stand-in to be replaced by it.",
+    "world_is": "signin_recon.py (outside the FU-s-3 grant, so not edited here) still defines ContextSession with the same surface. --run-live in signin_recon uses that copy. Replacing it with fetch.PlaywrightSession is a one-import change for a later order whose grant includes signin_recon.py.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "signin_recon.py class ContextSession (commit ccd25ab7db) defines xsrf_token, post_json, post_form and get_bytes; fetch.py class PlaywrightSession (commit dafda501f1) defines xsrf_token, post_json and get_bytes, which is all fetch_day calls",
+        "the FU-s-3 paths block lists signin_recon.py as read-only for this order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken. Retiring the copy is for the COO to route; it is not a blocker for FU-x-1 because both copies implement the same calls."
   }
 ]
 ```
