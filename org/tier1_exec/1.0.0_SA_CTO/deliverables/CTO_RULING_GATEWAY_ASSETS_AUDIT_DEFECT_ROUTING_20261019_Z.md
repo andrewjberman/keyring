@@ -49,3 +49,16 @@ Part 2 called 62 tools: 57 PASS (16 with a caveat) and 5 FAIL. All 16 spot-check
 
 **For the 19:00Z session with Alyssa:** `portal_get_macro` (P5, all macro data nulled) and `portal_get_valuation` (P5, 420
 bytes) are not demonstrated. Use one model-portfolio or AUA question that the part-2 matrix read as PASS.
+
+## Part 3 routing (2026-10-19 ~19:1xZ; audit part 3 @df8a98cbed, msgs 36079 and 36080)
+
+Part 3 called 54 tools (42 Microsoft 365 and 12 integrations): 38 PASS (6 with a caveat), 2 FAIL, 2 correct refusals and 12
+NOT RUN. Parts 1-3 together cover 127 served tools.
+
+| Items | Class (v0.19) | Owner | Row |
+|---|---|---|---|
+| Oversize replies from `search_files`, `search_site_files` and `ycharts_fund_series` | code | NFRA_OPLGTW, with Z-S413 (P4-P7) | fold into the Z-S413 row, no new row. This is now an availability fix: an uncapped reply is a load risk to the host |
+| Y2: `ycharts_time_series` and `ycharts_risk_return_scatter` get a 403 and answer an empty series with no reason | code | NFRA_OPLGTW (YCharts integration). First read whether the 403 is an entitlement or an endpoint change; either way, the empty series must carry its reason | one NFRA_OPLGTW row |
+| Y1 (`ycharts_snapshot_metrics` loses the symbol key), R1 (`opal_data_refresh_status` with an unknown id never reaches a terminal state), T1 (`poll_addressed_teams_messages` ignores `top`) | code | NFRA_OPLGTW | one NFRA_OPLGTW row for the three |
+| The 8 send tools have no always-preview path | -- | not a defect. Andrew answered c5c2 YES (@65a05f6658): the FWD-24 battery exercises each sending tool with ONE real message to the tester's own mailbox or chat, read back. The battery covers it | no row |
+| A1: Cottonwood's mail tenant is not a registered partner tenant, so a Cottonwood sender gets `asker_tenant_denied` from `opal_asker_query` | -- | Andrew: whether Cottonwood's tenant is registered for asker answers | open call on site Z's list |

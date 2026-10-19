@@ -25418,6 +25418,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
     "world_is": "The reusable fake is in tests/test_email_deny.py; tests/test_og_en14.py imports _FakeTable and _seed_deny from it, the pattern tests/test_og_en8.py uses. The two named files were read for their request fixtures only. Their one edit is the _email_denied stub signature, which the order's rule for pinned signatures covers. No criterion is affected.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Premise narrowed by reading, not a blocker: the fake store lives in a file the order does not list in its paths, so the new test imports it rather than copying it."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-S421",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-19T18:08:57Z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The gateway host stops answering at its memory limit under a concurrent read load: every MCP call timed out from about 17:40Z on 2026-10-19 and /health returned nothing, with the service still reported active and uvicorn at RSS 1.41 GB against MemoryHigh 1.2 GB and MemoryMax 1.4 GB. Alyssa's test with Andrew is at 19:00Z.",
+    "spec_asserts": "The gateway answers MCP calls and /health while the service is active; the CTO's rule (msg 36046) allows the battery at no more than 2 concurrent calls after a restart.",
+    "world_is": "Between 17:38Z and 17:46Z this seat ran six battery runners in parallel (portal, etfs, Schwab, stores, two Microsoft 365 groups) through the connector, five of them reading large answers. From about 17:40Z every call timed out, including whoami. SSM reads of the host: 17:45Z health=000, memory used 1491 of 1846 MB with 170 MB available, uvicorn pid 1351185 RSS 1,412,476 KB, service active, NRestarts 0, journal quiet since 17:38:46Z (one line in the last three minutes); 17:47Z health=000, RSS 1.41 GB, MemoryCurrent 1,412,337,664; 17:52Z, 17:59Z, 18:02Z, 18:06Z health=000. The runners were stopped at 17:46Z and the host did not recover. The same host showed 87 percent memory on 2026-10-17 (row Z-S375).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM read-only commands on i-07dccb1615503ac99 at 17:45Z, 17:47Z, 17:52Z, 17:59Z, 18:02Z, 18:06Z: curl http://127.0.0.1:8080/health -> 000; free -m; ps -eo rss; systemctl show opal-gateway -p NRestarts,MemoryCurrent",
+        "journalctl -u opal-gateway: last request line 17:38:46Z (POST /mcp 200); one journal line in the following three minutes",
+        "unit limits from the host read of 2026-10-19 07:39Z (CODE13_SERVED.json unit_limits): memory_max_bytes 1468006400, memory_high_bytes 1258291200",
+        "this seat's message 36038-36040 at 17:4xZ; COO~O order OG-rs-1 (msg 36051)"
+      ]
+    },
+    "notes": "Probable cause is concurrent large reads against a 1.8 GB host (not a code defect proven); the round-47 memory guard for concurrent battery load is on COO~O's list (msg 36051). This seat runs no battery call until COO~O confirms /health 200, and then at most two at a time, all stopped by 18:50Z."
   }
 ]
 ```
