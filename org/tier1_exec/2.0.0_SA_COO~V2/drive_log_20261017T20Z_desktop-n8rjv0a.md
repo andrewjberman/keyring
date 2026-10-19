@@ -1,0 +1,11 @@
+# Drive log -- 2.0.0_SA_COO~V2 (dell2), TCKT_VNEXT, 2026-10-17 ~19:00Z to ~21:00Z
+
+Ticks since the 18Z log (`drive_log_20261017T18Z_desktop-n8rjv0a.md`), copied from `org/mcp/drive_ticks/2.0.0_SA_COO~V2.md`. Commits named are LOCAL on box/dell2; portal refs are ls-remote reads.
+This block: dated-hold ticks (the PROD journey is date-gated) and one measurement: origin/PROD moved to 856fb37b785c on a second unrelated dell1 AMGT_SA promote; the start-gate dependencies re-read on origin/PROD (light-ink class, trade_request filter, showsMeetingOutcome present; the four Trade Request upload strings read 0, Andrew's hold intact).
+
+Open: TO-R20-PROD2 (TV2) STAGED, GO Monday 2026-10-19 before 11:00Z or from 15:00Z (fire band 11:30Z to 14:15Z), blobs measured that day; then my check re-run, my read of the shots and contrast, L8 part 5, the CVO's grade of R20PROD2-AC2J, then the L10 slug. round-close-check round 20 reads MAY-CLOSE.
+
+## 2026-10-17T19:00Z tick: TCKT_VNEXT | FULL | round 20 MAY-CLOSE | stage: await TO-R20-PROD2 GO (Mon 10-19) | thread y | inbox empty; PROD 932cea99e8ca unchanged since 18:28Z (ls-remote read); 18Z hourly drive log committed 57f3b4aee4 (LOCAL, verified by git log) | outcome: dated hold, no free option (next-calls --drive)
+## 2026-10-17T19:30Z tick: TCKT_VNEXT | FULL | round 20 MAY-CLOSE | stage: await TO-R20-PROD2 GO (Mon 10-19) | thread y | inbox empty; PROD 932cea99e8ca and DEV 0f6dc96b0f unchanged since 19:00Z (ls-remote read) | outcome: dated hold, no free option (next-calls --drive)
+## 2026-10-17T20:00Z tick: TCKT_VNEXT | FULL | round 20 MAY-CLOSE | stage: await TO-R20-PROD2 GO (Mon 10-19) | thread y | inbox empty; PROD moved to 856fb37b785c (unrelated dell1 AMGT_SA promote, ls-remote read); start-gate deps re-read on origin/PROD: light-ink class 1, trade_request filter and showsMeetingOutcome present in TicketCenter.tsx, Trade Request upload strings 0 | outcome: dated hold, no free option (next-calls --drive)
+## 2026-10-17T20:30Z tick: TCKT_VNEXT | FULL | round 20 MAY-CLOSE | stage: await TO-R20-PROD2 GO (Mon 10-19) | thread y | inbox empty; PROD 856fb37b785c unchanged since 19:58Z; DEV moved to 61664837e8ac (not this project) (ls-remote read) | outcome: dated hold, no free option (next-calls --drive)
