@@ -13407,6 +13407,48 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W183-S16",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+      "surfaced_at": "2026-10-19T16:20:19Z",
+      "one_line": "safe-commit of the cn-5 amendment-7 tf edit printed WARN client-data-check: the hashed account-id list is ABSENT on this device, so commit 0bf0e821b4 was not checked for client account ids.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "0.0.0_AB_MSTR (CLAUDE.md rule 32: MSTR runs infrastructure, and the client-data check is commit infrastructure)",
+      "spec_asserts": "CLAUDE.md rule 14a and the commit mechanics: safe-commit runs the commit gates, the client-data check among them, so a commit is checked for client account ids before it lands.",
+      "world_is": "On dell1 the hashed account-id list is absent at C:\\Users\\Test\\.opal\\account_id_hashes.txt and OPAL_ACCOUNT_ID_HASHES is not set. The WARN line reads 'this commit was NOT checked for client account ids'; 0bf0e821b4 landed with rc 0. Absent is not empty: the check did not run on this commit or on any commit made on this device until the list is placed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/terraform/harvest/dossier-refresh.tf@0bf0e821b4 (the commit the check did not cover; 12 insertions, 11 deletions)",
+          "safe-commit output of 0bf0e821b4: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W183-S17",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~183",
+      "surfaced_at": "2026-10-19T16:20:19Z",
+      "one_line": "The pre-commit risk reflex inside safe-commit answered PARTIAL_OR_BLIND for the cn-5 tf diff (danger map 92.3h STALE, build guard refused a linked worktree), so the diff was not risk-checked.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "0.0.0_AB_MSTR (CLAUDE.md rule 32: MSTR runs infrastructure; the danger map and the build guard are infrastructure)",
+      "spec_asserts": "CLAUDE.md rule 21 and the pre-commit risk reflex: the reflex grades the staged diff against a current danger map, and a clear answer is the basis for landing the commit.",
+      "world_is": "safe-commit of 0bf0e821b4 printed '[risk-reflex] danger map: 92.3h old !! STALE', 'NOT-DECIDABLE: danger map STALE and the build guard refused: linked worktree (git-dir C:/dev/ajb_workspace/.git/worktrees/wk-harvst-183g differs from git-common-dir C:/dev/ajb_workspace/.git)', 'ANSWER STATE: PARTIAL_OR_BLIND' and 'scanned 0 of 1 file(s)'. The commit landed on the commit-gate OK line. The guard's stated test (git-dir differs from git-common-dir) holds for every linked worktree, so the refusal is structural to worker worktrees, not specific to this diff.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/terraform/harvest/dossier-refresh.tf@0bf0e821b4 (the staged diff the reflex could not grade)",
+          "safe-commit output of 0bf0e821b4: [risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND (linked worktree build guard)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
