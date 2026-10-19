@@ -911,3 +911,56 @@ of EVERY kind, and every tool listed under it.
   (FWD-24), then one employee's sheet (FWD-25). The next rounds enrich segment by segment.
 
 ENDPOINT changed (FWD-23, FWD-24, FWD-25 added): the ratified-text half re-signs.
+
+### v0.19 addendum (2026-10-19 ~16:3xZ, 1.0.0_SA_CTO~Z) -- FWD-23 and FWD-24 add ROUTED CORRECTLY; opal-data-assets first (Andrew-direct)
+
+**Andrew, verbatim** (`4.0.0_SA_CRO~Z` terminal, ~16:2xZ; record
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261019_162xZ_GATEWAY_PAGE_SCHWAB_TOOLS_SHOW_BLACK_DIAMOND_INDEXES_DEEP_AUDIT_EVERY_TOOL_CALL.md`
+@634d368d98):
+
+> "There are numerous cases where there are tools for Schwab and in the Indexes section it's talking about Black Diamond
+> information. I do not understand why there would be Black Diamond indexes/tooling on a Schwab function. This is why I need a
+> deep audit for the functionality of every single tool-call, starting with everything for opal-data-assets. i need to know that
+> every tool call works and is routed to the right location."
+
+**ENDPOINT changes** (cures V1-V3 of `3.0.0_SA_CVO~Z`'s refusal
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.19_RATIFIED_TEXT_20261019_Z.md` @879f78e642 applied):
+
+- **FWD-23 adds a ROUTING arm, graded per (tool, linked row) pair.**
+  - **Source SET:** for every census tool, the set of sources its code can read (bucket and prefix, store, or integration
+    endpoint). Each dispatch branch is cited `<path>:<line>`. A multi-vendor `client_*` tool has one member per vendor branch.
+    - The instrument is a TRACE of the tool's read path in the deployed gateway code.
+    - `bucket_source` and `index` are index CLAIMS checked against that trace, never the oracle.
+  - **Link check:** each (tool, linked row) pair is `ROUTED` when the row's source is in the tool's source set, and `MISROUTED`
+    otherwise.
+  - **Intent check:** the tool's source set must agree with its DECLARED scope: its `serves` pairs, its integration spec and its
+    registered description. Its name is never the scope.
+    - A disagreement is `MISROUTED`.
+    - It catches a Schwab tool whose code reads Black Diamond, which the link check alone cannot.
+  - **Defect class**, on every MISROUTED pair or tool:
+    - `link`: the index row is wrong; NFRA_MCPINDEX fixes it;
+    - `code`: the tool reads outside its declared scope; a defect cell in NFRA_OPLGTW;
+    - `display`: /gateway lists the tool under a segment or index it does not serve; the C-GROUP grouping, NFRA_MCPORTAL with
+      this PRD.
+  - **Andrew's case is classified first, by measurement:** Black Diamond indexes shown on Schwab tools.
+  - **Proof:** the routing table is EMITTED by ONE committed, re-runnable script (the emitter or a sibling of the battery, not a
+    second tester). It is re-run after every fix. One planted wrong link must read `MISROUTED (link)`, and one planted
+    out-of-scope read must read `MISROUTED (code)`.
+- **FWD-24 adds to `PASS` that the answer came from a routed source:**
+  - Where the response names its source or as-of, the field must match a row in the tool's routed set. The record says
+    `route: response-cited`.
+  - Where the response carries no source field, routing is proven by the tool's FWD-23 routing-table row, which cites the code.
+    The record says `route: code-cited`.
+  - A response field naming a source outside the routed set is `FAIL`, class `misrouted`.
+
+**Order:** opal-data-assets and its vendor/firm segments first, then the integration channels (Schwab, Black Diamond, YCharts
+and the rest), then the others.
+
+**One auditor, one instrument:**
+- `4.0.0_SA_CRO~Z` runs the read-only research audit (why the page shows Black Diamond on Schwab). It is evidence, and the seed
+  of the defect rows, which arrive as surprise rows.
+- The routing table's proof is the committed script above.
+- The battery stays FWD-24's one script.
+- There is no second tester and no parallel comparator.
+
+ENDPOINT changed (FWD-23 and FWD-24 refined): the ratified-text half re-signs.

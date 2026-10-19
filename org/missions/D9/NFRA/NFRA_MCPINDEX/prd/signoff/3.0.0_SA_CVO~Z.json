@@ -1,13 +1,13 @@
 {
   "prd": "NFRA_MCPINDEX_PRD.md",
   "prd_version": "v0.17",
-  "prd_pin": "4b8dcf3b8646fccbedbfd0d0805b28cfb887f3e8",
+  "prd_pin": "f59634ebe3635b648760d61d516c04a6aa5215f4",
   "half": "ratified-text",
   "half_hash": "664ba1c9b0f599b543d86a9a3d7c2330d4aa11e799778f2293bc07937f9e2b5c",
   "endpoint_hash": "f63231644f3bca2e6b554b8eef51ac157ded4b51fec6492c2576d0cc919572d5",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.18_CURES_RATIFIED_TEXT_20261019_Z.md@2be4cf26457",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPINDEX_v0.19_RATIFIED_TEXT_20261019_Z.md@879f78e6426",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-19T14:46:55Z",
-  "reason": "v0.18 cures R1-R3 MET at 4b8dcf3b86"
+  "signed_at": "2026-10-19T16:32:38Z",
+  "reason": "v0.19: V1 no intent oracle + singular source; V2 no rule for source-less responses; V3 routing table not re-runnable, bucket_source misnamed as code"
 }
