@@ -95,7 +95,7 @@ JUDGMENT criterion. Check dry-run at base: AC1 FAILS (no window file).
 - Andrew has opened the page and named one box's projects;
 - the issuer has written `x5_seen.json` with his words and the time.
 
-<status>staged</status>
+<status>cancelled -- Andrew-direct 2026-10-16 ~18:5xZ closed its call 21c5 ("we can close the name one box projects i see those displaying cleanly", org/tier1_exec/2.0.0_SA_COO~MP/deliverables/ANDREW_DIRECT_20261016_185xZ_CLOSE_21C5_21D9_44EB_GATEWAY_READS_WELL.md); the AC reads x5_seen.json, which needs a named box and its projects that his words do not carry, and the issuer will not invent them. Same route as MP-q-1/v-2/c-2 (CTO~Z msg 36018, YES). FWD-14 is graded by the CVO on the evidence in org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/EVIDENCE_FOR_CVO_FWD_1_2_15_16_17_20261019.md section FWD-14; no replacement human act is cut.</status>
 <round>5</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
