@@ -10759,6 +10759,26 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W70-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~70",
+    "surfaced_at": "2026-10-19T18:33:10Z",
+    "spec_asserts": "MX-r-1 face, section 1 and section 2 bound 2: 'The commit gate runs py_compile, the naming gate and ruff for py39' (the naming gate is part of the commit gate a worker's commit must pass).",
+    "world_is": "The safe-commit naming gate printed 'NAMING ERROR function-map folder missing' for infra/aws/lambda/ci/function-map/ (the Lambda source map it reads). That folder is outside this worktree's sparse checkout (11 folders; infra/aws/lambda is absent), so the gate could not grade the naming input. The commit still landed (msg-verify committed 60058aca164). I did not widen the sparse checkout, since the cell needs no infra folder.",
+    "one_line": "The naming gate could not read its function-map input in the sparse worktree and printed ERROR; the commit landed anyway, so the naming half of the gate was not graded.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit 60058aca164: [naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-70\\infra/aws/lambda/ci/function-map/ followed by msg-verify committed 60058aca16",
+        "git sparse-checkout list at 55588caa6e7 lists 11 folders and no infra/aws/lambda path; ls infra/aws/lambda reports absent in the worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
