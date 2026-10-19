@@ -82,7 +82,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gd-2.round-46-fwd10-19-22-grade
 - The protocol edit (item 6, `AC3`) rides this cell on the CTO's word (A2, msg 35928). A1's item 4 (G-C written by the CTO) is withdrawn by A2. `AC3` base FAIL as expected (the G-C path is named twice); a narrow edit passes; an edit that leaves the template's G-C `Input:` line, one that omits the ruling number, and one that changes the Evidence rules section each fail.
 - Pre-cut: `gd2.AC1` and `gd2.AC2` base FAIL as expected (the record is absent); a planted 11-outcome record passed both; 10 of 11 outcomes, a grade word, an unresolved evidence path, an email and a 12-digit run each failed as they should. The fixture was removed.
 
-<status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-B</workstream>
 <slot>~162</slot>
