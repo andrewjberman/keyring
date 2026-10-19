@@ -25890,3 +25890,67 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S212 -- IRPT_ANLREQ-D2-W113-S2 disarmed: the release-21 pair is void against the live start state
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S212",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-19T13:28:21Z",
+  "one_line": "W113-S2 DISARMED: the release-21 pair's start digest no longer matches the live irpt-ycharts-generate, and the pair's R0b aborts on any other digest; no apply of it is open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W113-S2"
+  ],
+  "spec_asserts": "Row W113-S2: the release-21 pair step R0b expects CodeSha256 hpNfkhLt... and S3 latest version ennO07to..., otherwise ABORT; the live Lambda had been redeployed after the R0b read, so R0b would ABORT.",
+  "world_is": "MEASURED 2026-10-19 ~13:4xZ by this seat, read-only: get-function-configuration irpt-ycharts-generate reads CodeSha256 kxOEgpbspky10PYWQ28y0+7V2UXG28whJ2riMa4CkTE=, LastModified 2026-10-16T02:39:04Z, which equals neither the pair's R0b start digest (hpNfkhLt...) nor the digest the earlier row measured (xP47NQDn...). The pair's section 5 step R0b ABORTS on any other start digest, so an apply of release 21 on this pair cannot proceed. Ledger directory read by name: no change-management entry for a release-21 apply of this pair (the only 'r21' files are other projects' ledgers). NOT READ: the S3 latest VersionId of the key today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release21/NEVER_WIDEN_PAIR_ANLREQ_RELEASE21_READER_R193_TWO_LEG.md",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ANLREQ_RELEASE21_READER_R193_TWO_LEG_CTO_HALF.md (exists; a signed half does not make the pair appliable against a changed start state)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/task_orders/IRPT_ANLREQ.TO-RUN-COMMENTARY-E2E-3.fresh-synthetic-commentary-end-to-end-resolving-repost-ib2.md (R0 records the live digest kxOEgpb... as the start state of the current runs)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard is applying release 21 on a start state the pair no longer describes; the pair's own R0b aborts on the live digest, no apply of it is open, and any future release of the reader needs a fresh pair read against the then-live bytes."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S213 -- IRPT_ANLREQ-D2-W113-S3 disarmed: the release-21 pair is void against the live start state
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S213",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-19T13:28:21Z",
+  "one_line": "W113-S3 DISARMED: the release-21 pair's premises (uploads.py unchanged, matrix covers the reader only) do not hold on trunk, and the pair cannot be applied while its R0b aborts; a new pair would re-read the then-live bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W113-S3"
+  ],
+  "spec_asserts": "Row W113-S3: the pair's section 1 says intake/uploads.py stays 176682cb and the AR-y-226 matrix covers the reader with uploads unchanged; on trunk uploads.py is 80ace2d376 and portfolio.py d1232a1255, and the resident root pin blobs differ from those the pair says it holds.",
+  "world_is": "MEASURED 2026-10-19 ~13:4xZ by this seat, read-only: get-function-configuration irpt-ycharts-generate reads CodeSha256 kxOEgpbspky10PYWQ28y0+7V2UXG28whJ2riMa4CkTE=, LastModified 2026-10-16T02:39:04Z, which equals neither the pair's R0b start digest (hpNfkhLt...) nor the digest the earlier row measured (xP47NQDn...). The pair's section 5 step R0b ABORTS on any other start digest, so an apply of release 21 on this pair cannot proceed. Ledger directory read by name: no change-management entry for a release-21 apply of this pair (the only 'r21' files are other projects' ledgers). The row's own measurements (uploads.py 80ace2d376 on trunk 0d83fda956) stand and are the reason the pair is void rather than appliable. NOT READ: the running resident bytes (the root name ends -r19; the resident is now r34k per IB2's reads, so the old premise about its bytes is overtaken).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release21/NEVER_WIDEN_PAIR_ANLREQ_RELEASE21_READER_R193_TWO_LEG.md",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ANLREQ_RELEASE21_READER_R193_TWO_LEG_CTO_HALF.md (exists; a signed half does not make the pair appliable against a changed start state)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/task_orders/IRPT_ANLREQ.TO-RUN-COMMENTARY-E2E-3.fresh-synthetic-commentary-end-to-end-resolving-repost-ib2.md (R0 records the live digest kxOEgpb... as the start state of the current runs)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard is applying release 21 on a start state the pair no longer describes; the pair's own R0b aborts on the live digest, no apply of it is open, and any future release of the reader needs a fresh pair read against the then-live bytes."
+}
+]
+```
