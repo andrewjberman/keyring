@@ -26841,3 +26841,64 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W306-S1 -- The r34l build at pin e30c79da3ff6 changed six members against r34k, not four: ycharts/research/layout_overview.py and ycharts/research/overview_map.json are the fifth and sixth movers, the driver refused and wrote no record, and its stage folder C:/dev/irpt-release-r35b remains holding that six-mover tarball
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W306-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~306",
+    "surfaced_at": "2026-10-19T20:24:02Z",
+    "one_line": "The r34l build driver refused on its own delta check: six members changed against r34k, not the four the order names. The extra movers are ycharts/research/layout_overview.py and ycharts/research/overview_map.json. No record was written, and the stage folder C:/dev/irpt-release-r35b (created by this run) still holds the six-mover tarball.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2",
+    "spec_asserts": "TO-AR-y-406 step 2 and the driver's EXPECT_CHANGED (r34l_build.py, copied unchanged from r55): the build changes exactly SHA256SUMS, reports/resident_bindings.json, ycharts/research/opal_producer.py and reports/resident_installed.py against the r34k tarball 64f5567dddbd7e96a955410e7e12c5fb3f319551fbe9ce1527cdefdfe8f18a0c, adds nothing and removes nothing.",
+    "world_is": "python -I r34l_build.py --pin e30c79da3ff6e3166f72b7f8757377ae751a1e2c --out C:/dev/irpt-release-r35b (rc 1) printed: R34L-BUILD-BAD the delta against r34k is not exactly changed [SHA256SUMS, reports/resident_bindings.json, ycharts/research/opal_producer.py, reports/resident_installed.py] added []: changed [SHA256SUMS, reports/resident_bindings.json, reports/resident_installed.py, ycharts/research/layout_overview.py, ycharts/research/opal_producer.py, ycharts/research/overview_map.json] added [] removed []. The record RESIDENT_R34L_BUILD.json was not written, so AR406-y-AC1 and AR406-y-AC2 cannot pass. Grounding of the fifth mover: layout_overview.py is line 24 of org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/files_from_r34.txt (the files-from list), so it is taken at the pin, and its sha256 differs from the r34k copy (6f9c02fa... at x32, b3245f1c... at x34). Grounding of the sixth mover: overview_map.json is the --opal-map member taken from org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json at the pin, and its sha256 differs from the r34k copy (21a8f6d6... at x32, 661adac1... at x34). The stage folder C:/dev/irpt-release-r35b was created by this run and holds build_a, build_b, x32, x34, the tarball and its SHA256SUMS; nothing was uploaded, installed or used. It was not deleted, since removing it is a recursive delete the issuer must word.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -I .../0.9.0_WK_IRPT_ANLREQ~306/r56/r34l_build.py --pin e30c79da3ff6e3166f72b7f8757377ae751a1e2c --out C:/dev/irpt-release-r35b: stdout line R34L-BUILD-BAD (rc 1), at worktree HEAD 69c1f97a7b",
+        "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/files_from_r34.txt@69c1f97a7b line 24: infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py",
+        "sha256sum C:/dev/irpt-release-r35b/x32/ycharts/research/layout_overview.py = 6f9c02faf9100a040636df7d85caeaffd9df0493a5fc3e6f9485ed42a91153c0; C:/dev/irpt-release-r35b/x34/ycharts/research/layout_overview.py = b3245f1c77d0f05846b1507c20c6d2397f5fc6493cd47c4fd13cb9acbfe2376f",
+        "sha256sum C:/dev/irpt-release-r35b/x32/ycharts/research/overview_map.json = 21a8f6d690bbd28cf7eedfc979c3edcfa8d8a156336d9de779e8438c4913310f; C:/dev/irpt-release-r35b/x34/ycharts/research/overview_map.json = 661adac1efa8ee72cd95952f72815dfea90bfe83c4af162ee74daf3d4542143b",
+        "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/build_resident_package.py@69c1f97a7b line 75 and line 221: overview_map.json is the tracked file at --pin packaged as ycharts/research/overview_map.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-S216 -- the producer reads a price-page layout that a release may not carry, and 8 tests are red on trunk
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-S216",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~G2",
+    "surfaced_at": "2026-10-19T21:06:30Z",
+    "one_line": "Trunk's opal_producer.py (AR-g-166, merged 3b589f17ea) reads layout_overview.PRICE_TABLE at two places and passes prices= to lo.compute_all at two calls; a release that takes the producer without the AR-g-163..166 layout raises at report time (CTO msg 11012, ~Y2 msg 11010 and amendment 003fae44dd of TO-AR-g-406). The same merge, after AR-y-408, leaves 8 tests red on trunk.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G2",
+    "spec_asserts": "CTO msg 11012: the producer runs without the held price-page layout (guard the read) or lands with it; the price pair ships opal_producer.py, layout_overview.py and the map together. AR-g-166 AC3 spec: the producer and layout test files pass.",
+    "world_is": "opal_producer.py at HEAD reads lo.PRICE_TABLE in _price_table_element (about line 112) and _opal_map (about line 130) and calls lo.compute_all(..., prices=prices) at about lines 428 and 513, unguarded. At the base pytest on test_opal_producer_not_in_this_version.py reads 5 failed, 4 passed (the report document drops the NOT_IN_THIS_VERSION price table and counts it, AR-y-408); test_price_pages_table.py, test_price_pages_series.py and test_price_pages_text.py each read 1 failed (KeyError on the pricing-off element, now absent from the document); the four files together read 8 failed, 24 passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py@HEAD lines 108-133 (_price_table_element, _opal_map) and lines 428-429 and 513-514 (compute_all with prices=prices)",
+        "python -m pytest --color=no -q on the four test files at the base printed '8 failed, 24 passed in 1.92s'; the six existing producer and layout files print '146 passed in 13.88s'",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-406.resident-release-r34l-build-only-two-movers.md amendment 003fae44dd (r34l rebuilt at a producer-only pin)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: TO-AR-g-170 (a producer flag _LAYOUT_HAS_PRICE_PAGES plus a held-layout guard test, and the 8 stale tests repaired to the AR-y-408 rule). The disarm word goes to the CVO with the merged hash."
+  }
+]
+```
