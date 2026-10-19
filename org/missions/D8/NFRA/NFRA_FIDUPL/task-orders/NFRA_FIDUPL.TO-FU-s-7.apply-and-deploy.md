@@ -2,7 +2,7 @@
 
 <to_id>NFRA_FIDUPL.TO-FU-s-7</to_id>
 <project>NFRA_FIDUPL</project>
-<issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
 <status>staged</status>
@@ -28,7 +28,7 @@
 
 ### WHAT TO BUILD
 
-This is an AWS apply, so it is addressed to the CloudOps seat on this box (CLAUDE.md rule 34; rule 20: query the dependency graph before the change; NEVER-2: open the ledger at the start and close it at completion). Hold until the issuer says the four upstream orders are merged.
+This is an AWS apply, so it is addressed to the NFRA macro CloudOps lane (CLAUDE.md rule 34, CTO msg 8529; rule 20: query the dependency graph before the change; NEVER-2: open the ledger at the start and close it at completion). Hold until the issuer says the four upstream orders are merged.
 
 1. Open a change-management entry with `.tools/deploy_ledger.py open --slug nfra-fidupl-apply-20261019 ...` (legs: the apply; the code delivery; the verify) before any AWS act. `org/critical_paths/change_management/` and `org/critical_paths/.open_deploys/` are in your `<paths>`.
 2. Apply `infra/aws/terraform/canonical-fidelity-ec2/` ONLY through `.tools/safe-apply.sh`. The schedule rules are DISABLED in the root, so the apply starts no run. Apply what the FU-s-6 plan showed; if the plan differs from the merged plan in any destroy or change, STOP and file a surprise row.
