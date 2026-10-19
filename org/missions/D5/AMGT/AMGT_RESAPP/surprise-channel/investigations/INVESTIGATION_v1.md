@@ -32606,3 +32606,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Whether a recorded base should be re-recorded at the new words, instead of mapped, is the issuer's call for cg-2 or a later round; this cell chose the mapping because the recorded bytes are the evidence the controls compare against."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S64",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.4.0_DT_ClientPlatform~H2",
+  "surfaced_at": "2026-10-19T22:57:49Z",
+  "one_line": "The push gate reads the CHECKED-OUT branch of the repo it is aimed at, not the pushed refspec, so a DT's push of a candidate branch from the main portal tree (checked out on DEV) is denied as a DEV push; the same push run alone from a linked worktree on the candidate branch is admitted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/hooks/never-rules-gate.sh:352 sets BRANCH=$(git -C \"$REPO\" rev-parse --abbrev-ref HEAD); the NFRA_DEVPLN S03 limb at :701-702 denies a push when BRANCH = DEV, the caller is a DT serial and origin is Opal-Capital/portal. It never inspects the pushed refspec.",
+      "cg-5 step 2 as written, `git -C C:/dev/ajb_workspace/portal push origin cand/dell1/amgt-sa-reader-words`, was DENIED (BLOCKED NFRA_DEVPLN S03, C-MERGE-FORWARD fate ii) with the main portal tree on DEV (git branch --show-current read DEV); the `cd portal && git push ...` form was denied the same way.",
+      "A compound call (worktree add && push) was denied because the gate resolved the repo from its first -C; `git -C portal worktree add <path> cand/dell1/amgt-sa-reader-words` run alone succeeded, and `git -C <that worktree> push origin cand/dell1/amgt-sa-reader-words` run alone was ADMITTED: ls-remote origin refs/heads/cand/dell1/amgt-sa-reader-words read c8cd2da0ebbb3cb8b27c4b34d161118a2913083c. No override was used; the worktree was removed after."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-cg-5 step 2: git -C C:/dev/ajb_workspace/portal push origin cand/dell1/amgt-sa-reader-words pushes the feature branch (the contributing flow's step 3), for a DT seat.",
+  "world_is": "From the main portal tree on DEV the DT push of a non-DEV candidate branch is denied by the DEV-push limb; it is admitted only from a checkout whose HEAD is the candidate branch. AMGT-cb-3's session log records the same two denied forms. Any order that tells a DT to push a candidate branch from the main portal tree will hit this.",
+  "notes": "Form only. Not applied: whether the gate should read the pushed refspec instead of HEAD is the CTO's call (the hook is MSTR's lane); an order's step 2 can instead say 'push from a linked worktree on the branch'."
+}
+```
