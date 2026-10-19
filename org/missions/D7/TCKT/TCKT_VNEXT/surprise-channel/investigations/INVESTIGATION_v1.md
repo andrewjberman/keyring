@@ -3288,3 +3288,28 @@ used as fixtures is a different read with a different denominator.
   "world_is": "The schema path the order names is absent from this worktree, the same sparse-checkout cause as TCKT_VNEXT-D2-W53-S1. The worker read the schema from the committed blob and wrote the row to it. Not claimed: that the schema at the base checkout differs from the blob."
 }
 ```
+
+## TCKT_VNEXT-D2-W53-S3 -- Appending one row to this investigation file with the worker's edit tool rewrote the line endings of every existing row: commit 56e4caf475a showed 1468 insertions and 1416 deletions for a 52-line append, and the file is mixed-ending (1865 CR over 3238 lines at the base).
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~53",
+  "surfaced_at": "2026-10-19T23:10:17Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-W53-S3",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "Appending one row to this investigation file with the worker's edit tool rewrote the line endings of every existing row: commit 56e4caf475a showed 1468 insertions and 1416 deletions for a 52-line append, and the file is mixed-ending (1865 CR over 3238 lines at the base).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 56e4caf475a: 1 file changed, 1468 insertions(+), 1416 deletions(-); git diff --ignore-cr-at-eol --stat HEAD~1 HEAD: 52 insertions(+) only; the base blob had 1865 CR characters over 3238 lines",
+      "corrected by a forward commit (this row's commit) that restores the base bytes of HEAD~1 and appends the 52 lines with LF endings; the history keeps the rewrite in 56e4caf475a, no commit was rewritten"
+    ]
+  },
+  "spec_asserts": "Investigation file header: the channel is append-only during the round; never edit an existing row.",
+  "world_is": "A byte-level append made through the worker's edit tool re-wrote the endings of the existing rows, so the committed diff of an append-only file was about 2,900 changed lines for 52 added. The content of the existing rows is unchanged (diff ignoring CR at end of line is 52 insertions). Not claimed: that any other channel file was affected."
+}
+```
