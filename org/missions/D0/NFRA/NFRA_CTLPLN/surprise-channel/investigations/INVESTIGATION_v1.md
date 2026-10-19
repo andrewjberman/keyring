@@ -14921,3 +14921,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Decision owner: 2.0.0_SA_COO~C. The seat changed nothing for this row and made no second run. Counts only."
 }
 ```
+
+## NFRA_CTLPLN-D1-S21 -- four dell1 COO seats ended 12 s apart (W1, S1, R1, M1; 16:57:40Z to 16:57:52Z), no kill line, console idle about 4 h 15 min; cause not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S21",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-19T17:55:00Z",
+  "one_line": "Four dell1 COO seats (W1, S1, R1, M1) ended 12 s apart, 16:57:40Z to 16:57:52Z: no kill line, no reap, console idle about 4 h 15 min, and each seat's last transcript entry is its stopped inbox-watcher Monitor. Cause not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED here, each transcript under ~/.claude/projects/C--Dev-ajb-workspace identified by its own tool-call serial field: last transcript write W1 16:57:40.162Z, S1 16:57:40.689Z, R1 16:57:43.543Z, M1 16:57:52.828Z. Last API response W1 16:42:56Z, S1 16:30:16Z, R1 16:31:16Z, M1 16:48:39Z, so 14m44s, 27m24s, 26m27s and 9m13s from the last response to the last write. The write time is a transcript time; the process end time was not read.",
+      "MEASURED: the last entry of each is a queued task-notification with status killed and summary 'Monitor ... stopped', for the seat's own inbox watcher (W1 re-armed, S1 re-armed, R1 inbox stream, M1 re-arm). Whether the stopped Monitor is cause or consequence of the end is not distinguished.",
+      "MEASURED denominator: of the project's transcripts, 4 had a last write between 16:56:00Z and 16:59:00Z, these four; 23 had been written within the 60 minutes before 17:50Z (live sessions). Seat-liveness at 16:38Z listed all four, at 17:39Z none; the process scan at 17:40Z found 0 claude.exe and 0 spawn markers for each serial; org/mcp/agent-spawn-audit.log has no KILL or FORCE-KILL line for them, and its only KILL-MAINT-RUN lines are 16:39:01Z and 17:39:22Z (killed=0 each), none between.",
+      "MEASURED: quser at about 17:51Z lists one session, console, Active, idle 5:10, logon 2026-10-15 11:47. The last input at the dell1 console was therefore about 12:41Z, about 4 h 15 min before the ends. Not measured: whether input over a remote path resets that idle time, and where Andrew was.",
+      "UNRESOLVED, not absent: a Get-WinEvent read of the System and Application logs for 16:50Z to 17:05Z, filtered to terminal-services, Winlogon, error-reporting and power providers, returned no events; no positive control was run.",
+      "Not measured: the Windows Terminal host's own log; the tab screens (tabs spawned with -Tab are titled by project, so /unstick cannot reach them, and no peek was taken); the other two of the six exits the dell1 CTO counts for today (msg 8411), which this row does not cover. Respawned on that message: W1 17:45:16Z, R1 17:45:18Z, M1 17:45:20Z (spawn audit); S1 stays down by the CTO's word. Cites S12 to S20; none edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat session ends by its own exit, a kill line or a reap; none of the last two is on record for these four.",
+  "world_is": "Four seats ended within 12 s of each other with no kill line, no reap and no console input for about 4 h 15 min; each last transcript entry is a stopped inbox-watcher Monitor. S20 relays a laptop case of three seats ending 5 s apart (02:43:20Z to 02:43:25Z), the same shape; the simultaneity is measured here, a shared cause is not. A person closing tabs at the console is not supported for these four by the idle time; a harness or terminal-host cause is neither supported nor excluded.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1, filed on the dell1 CTO's request (msg 8411). Times, counts and harness notification summaries only; no transcript content."
+}
+```

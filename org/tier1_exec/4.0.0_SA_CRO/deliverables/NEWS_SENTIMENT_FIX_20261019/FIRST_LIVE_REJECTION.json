@@ -1,0 +1,46 @@
+{
+  "unique_urls": 5,
+  "pending": 5,
+  "selected": 5,
+  "assessed": 5,
+  "updated_rows": 6,
+  "failures": [],
+  "results": [
+    {
+      "url": "https://seekingalpha.com/article/4955100-expand-energy-stock-lng-demand-growth-takes-time",
+      "updated_rows": 1,
+      "direction": "insufficient",
+      "coverage": "headline",
+      "cached": false
+    },
+    {
+      "url": "https://oilprice.com/Latest-Energy-News/World-News/South-Korea-Turns-Back-to-Coal-as-LNG-Crisis-Deepens.html",
+      "updated_rows": 1,
+      "direction": "bearish",
+      "coverage": "article_text",
+      "cached": false
+    },
+    {
+      "url": "https://asia.nikkei.com/business/energy/coal-prices-up-40-this-year-on-lng-replacement-demand-supply-uncertainty",
+      "updated_rows": 2,
+      "direction": "bullish",
+      "coverage": "headline",
+      "cached": false
+    },
+    {
+      "url": "https://www.zerohedge.com/commodities/asia-scrambles-coal-energy-crisis-sends-prices-two-year-high-ahead-winter",
+      "updated_rows": 1,
+      "direction": "bearish",
+      "coverage": "article_text",
+      "cached": false
+    },
+    {
+      "url": "https://oilprice.com/Latest-Energy-News/World-News/Super-El-Nio-Could-Ease-Asias-LNG-Supply-Concerns.html",
+      "updated_rows": 1,
+      "direction": "mixed",
+      "coverage": "article_text",
+      "cached": false
+    }
+  ],
+  "dry_run": false
+}

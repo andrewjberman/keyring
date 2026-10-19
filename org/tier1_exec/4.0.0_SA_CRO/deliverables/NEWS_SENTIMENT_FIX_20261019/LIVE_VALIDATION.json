@@ -7,7 +7,7 @@
     "characters": 0,
     "truncated": false,
     "direction": "insufficient",
-    "reason": "The headline does not provide enough information to determine the broad market impact.",
+    "reason": "Only the headline is available. Broad-market impact is unverified until article text or a summary is available.",
     "input_sha256": "d13ef6aa04b8362bea3dcd8f54f00b8efb59f02eb2dda19c49fee0d48f195bc7",
     "finbert_windows": 1
   },
@@ -42,8 +42,8 @@
     "extraction": "publisher_access_restricted",
     "characters": 0,
     "truncated": false,
-    "direction": "bearish",
-    "reason": "Rising coal prices indicate increased energy costs and supply uncertainty, which can negatively impact the broad market.",
+    "direction": "insufficient",
+    "reason": "Only the headline is available. Broad-market impact is unverified until article text or a summary is available.",
     "input_sha256": "116f79ed96edaac30fe1dbc1faa01e3a627720b5d42f4f174e171a5b27e8ebab",
     "finbert_windows": 1
   },
@@ -55,7 +55,7 @@
     "characters": 1977,
     "truncated": false,
     "direction": "mixed",
-    "reason": "Easing gas demand in Asia could benefit Europe, but ongoing supply disruptions may lead to higher prices.",
+    "reason": "Easing demand in Asia could benefit Europe, but ongoing supply disruptions and high prices create uncertainty.",
     "input_sha256": "82ff1fba738d46da48659dbe1e3c3f85c05121b48313d7b39b613524099e4ac0",
     "finbert_windows": 3
   }

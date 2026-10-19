@@ -1,0 +1,34 @@
+{
+  "finbert-batch-processor": {
+    "code_sha256": "bS9apmUaYJS+XrMl9oH7YHPIqkxf1QtO9XNoNFqYv5s=",
+    "source_commit": "b4e7c36602",
+    "revision": "abfd59d1-0ee8-42dc-b5a3-049514b949de",
+    "last_modified": "2026-10-19T17:36:40.000+0000",
+    "state": "Active",
+    "last_update_status": "Successful"
+  },
+  "news-trending-analysis": {
+    "code_sha256": "bnMiX3uT5TEglVTiP3z1qXDTzezQ0f26AOhdUYnXy/s=",
+    "source_commit": "6d16b9b93f",
+    "revision": "09a854e0-0538-4711-b032-5fdbebed14b3",
+    "last_modified": "2026-10-19T17:29:04.000+0000",
+    "state": "Active",
+    "last_update_status": "Successful"
+  },
+  "opal-news-layer3-curation": {
+    "code_sha256": "OSjRnpFUrkRpN+VN/qwZqB62Pyd9wXCvgFMm8rFE6DY=",
+    "source_commit": "5edd941fce",
+    "revision": "4ca19795-e720-4ce9-bf87-96603b7427cc",
+    "last_modified": "2026-10-19T17:40:04.000+0000",
+    "state": "Active",
+    "last_update_status": "Successful"
+  },
+  "opal-trending-topics-portal-publisher": {
+    "code_sha256": "IR/MduwQlCIdW48IDmRAP285AwB6fs5/XKnDbNj6ENA=",
+    "source_commit": "6d16b9b93f",
+    "revision": "8666fa52-d8a5-459c-8943-1cebabab7419",
+    "last_modified": "2026-10-19T17:29:17.000+0000",
+    "state": "Active",
+    "last_update_status": "Successful"
+  }
+}
