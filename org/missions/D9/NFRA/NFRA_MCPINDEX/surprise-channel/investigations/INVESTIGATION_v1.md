@@ -10717,6 +10717,50 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W65-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~65",
+    "surfaced_at": "2026-10-19T18:11:28Z",
+    "one_line": "The census links news_trending_topics to the S3 gold row opal_data_news_v2_gold_trending_reports (bucket opal-data-news-v2, prefix trending_reports/), but the tool's code reads only the DynamoDB table named by NEWS_TRENDING_TABLE, so the linked row names a source the code does not read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/news_typed.py:394 at worktree HEAD 18949a78ed: table = _table(\"trending\"), and :407 _query_pages(table, ...) queries that one DynamoDB table; no S3 read of opal-data-news-v2 appears in news_typed.py for this tool.",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:16388 at HEAD 18949a78ed: entity opal_data_news_v2_gold_trending_reports, bucket opal-data-news-v2, prefix trending_reports/, tools: news_trending_topics.",
+        "GATEWAY_SURFACE_CENSUS_20261019_v2.json: news_trending_topics indexes = [dynamodb_dynamodb_opal_news_trending_daily, opal_data_news_v2_gold_trending_reports]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "KNOWN k-4 routing rule (round 23, PRD v0.19 FWD-24 misrouted): for a reader, EVERY linked catalog row is its indexes; the CODE decides which source a case reads, and a linked row naming a source the code does not read is one OBSERVATION row naming the tool, the row and the line of the code.",
+    "world_is": "news_trending_topics reads the opal-news-trending-daily DynamoDB table only. Its second linked row, the gold trending_reports JSON in opal-data-news-v2, is not read by this tool at any line of the gateway code.",
+    "notes": "Recorded, not acted on. The k4 case K4-08 carries expect_source dynamodb:opal-news-trending-daily, the source the code reads. The issuer decides whether the gold row link is wrong or the tool should read the gold table."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W65-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~65",
+    "surfaced_at": "2026-10-19T18:11:28Z",
+    "one_line": "mdpf_get_security_classification reads the etf-classifications DynamoDB table, but the census links it to no catalog row (indexes empty), so the source the code reads has no linked row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/mdpf_classification.py:34 at worktree HEAD 18949a78ed: TABLE = \"etf-classifications\"; :197 ts.admit_scope(sc, TOOL, TABLE) and the one get_item read by ticker key.",
+        "GATEWAY_SURFACE_CENSUS_20261019_v2.json: mdpf_get_security_classification indexes = [] (0 linked rows).",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:2391 at HEAD 18949a78ed: the tool appears in a tool list with bucket dynamodb, but no entity row links it, so the census count of 0 holds."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "KNOWN k-4 routing rule (round 23, PRD v0.19 FWD-24 misrouted): expect_source is the source the tool's OWN CODE reads; if the code reads a source that no linked row names, keep expect_source on what the code reads and add one OBSERVATION row naming the tool, the row and the line of the code.",
+    "world_is": "mdpf_get_security_classification reads the etf-classifications table by ticker, and no catalog entity row names that table or links the tool.",
+    "notes": "Recorded, not acted on. The k4 case K4-03 carries expect_source dynamodb:etf-classifications, the source the code reads. The issuer decides whether a catalog row for etf-classifications should exist and be linked."
   }
 ]
 ```
