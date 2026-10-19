@@ -26119,3 +26119,107 @@
   "notes": "The 45 POLL lines in window 4 would show a receive refusal as retained_for_retry (resident_main.py:71) if one happened; that count was not read."
 }
 ```
+
+## IRPT_ANLREQ-D2-W304-S1 -- the order's catalogue vendor_id premise (UST, ST, INT, LT, ULT) is not the file: four of five candidate.vendor_id values are YCharts ids
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~304",
+  "surfaced_at": "2026-10-19T16:38:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W304-S1",
+  "one_line": "The order's Q6 premise names the catalogue vendor_id values UST, ST, INT, LT, ULT; templates.json holds UST for one model and YCharts P: ids for the other four.",
+  "spec_asserts": "TO-AR-g-169 Q6: the catalogue's vendor_id maps as UST, ST, INT, LT, ULT.",
+  "world_is": "templates.json candidate.vendor_id is UST for opal_ultra_short_term (namespace OPAL, line 108), P:1728415 for opal_short_term (line 137), P:1728315 for opal_intermediate_term (line 168), P:1728413 for opal_long_term (line 199) and P:1728420 for opal_ultra_long_term (line 230). Four of five are YCharts ids, not model codes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json:108,137,168,199,230, read in worktree C:/dev/wk-irpt-anlreq-304"
+    ]
+  },
+  "notes": "The trace record MODEL_COMPOSITION_TRACE.md Q6 carries the corrected premise and the registry model_key mapping. No action beyond the row."
+}
+```
+
+## IRPT_ANLREQ-D2-W304-S2 -- the order's irpt-resident process name is absent from Terraform; the resident runs as irpt-ycharts-runner-role on one host
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~304",
+  "surfaced_at": "2026-10-19T16:38:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W304-S2",
+  "one_line": "TO-AR-g-169 Q5 names an irpt-resident process; no Terraform file uses that name, and the resident is the runner host's process under irpt-ycharts-runner-role.",
+  "spec_asserts": "TO-AR-g-169 Q5: which IAM role would a reader inside the irpt-resident process run as.",
+  "world_is": "No file under infra/aws/terraform names irpt-resident (search: no match). resident.tf:1-3 names one supervised process on i-0167fd745ad906a66; that host's instance profile (instance.tf:67) is aws_iam_role.runner, irpt-ycharts-runner-role (iam.tf:68-69).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf:1-3",
+      "infra/aws/terraform/investor-reporting/ycharts/iam.tf:68-69",
+      "infra/aws/terraform/investor-reporting/ycharts/instance.tf:67"
+    ]
+  },
+  "notes": "The trace record answers Q5 against irpt-ycharts-runner-role. No action beyond the row."
+}
+```
+
+## IRPT_ANLREQ-D2-W304-S3 -- the silver model_composition address is literal in the feeder, not lib/opal_naming.py output, against the CLAUDE.md section 4 rule
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~304",
+  "surfaced_at": "2026-10-19T16:38:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W304-S3",
+  "one_line": "The silver model_composition address (opal-data-mdpf, mdpf/feeds/model_composition/inflection/) is typed as literals in the WS-C feeder and has no builder registry row.",
+  "spec_asserts": "CLAUDE.md section 4: every S3 address is lib/opal_naming.py output; TO-AR-g-169 Q1 asks for the builder's address for the composition, if the code uses the builder.",
+  "world_is": "build_mdpf_wsc_inflection_feeder.py writes the silver model_composition to opal-data-mdpf at mdpf/feeds/model_composition/inflection/<date>.parquet from literals MDPF_BUCKET (line 79) and MDPF_FEEDS_PREFIX (line 86). infra/logic/registry/feeds.json registers only the orion_model_composition feed (lines 8-14); no registry row gives the silver address.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/build_mdpf_wsc_inflection_feeder.py:28-31,79,86",
+      "infra/logic/registry/feeds.json:8-14"
+    ]
+  },
+  "notes": "The trace record Q1 states the literal address and marks it not builder output. No action beyond the row."
+}
+```
+
+## IRPT_ANLREQ-D2-W304-S4 -- the investigation_item schema path the worker face names is absent from the worktree
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~304",
+  "surfaced_at": "2026-10-19T16:38:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-W304-S4",
+  "one_line": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row schema; that path does not exist in the worktree.",
+  "spec_asserts": "Worker face: row shape per org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "A Glob for investigation_item*.json under the worktree org/ returned no files, and a Glob for org/surprise_channel/**/*schema* returned no files. The row was written in the shape of the existing rows in this channel file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob investigation_item*.json under C:/dev/wk-irpt-anlreq-304/org: no files",
+      "Glob org/surprise_channel/**/*schema* under C:/dev/wk-irpt-anlreq-304: no files"
+    ]
+  },
+  "notes": "Gate check is the surprise-row-gate. No action beyond the row."
+}
+```
