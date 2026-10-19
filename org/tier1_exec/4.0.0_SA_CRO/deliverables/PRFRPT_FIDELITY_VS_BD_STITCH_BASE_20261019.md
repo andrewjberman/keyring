@@ -78,6 +78,22 @@ IRPT_CUSTDY names for 2027-01-01).
 | Lifetime | BD is scheduled to be replaced by 2027-01-01 (IRPT_CUSTDY), so stitching to it is work that gets thrown away | the custodian of record; survives BD's retirement |
 | Ready today | yes (with the reader fix) | no: nothing landed, SMS login unsolved, history before 10-19 needs on-demand exports |
 
+## 5a. Test results from dell1 (4.0.0_SA_CRO~FIDELITY, `RESEARCH_20261019_PRFRPT_TESTS_FROM_DELL1.md` @abc6fcdbd7; relayed, not re-measured here)
+
+- **Test 1 passed:** 639 of 643 BD Fidelity IWS accounts are in the Alongside `.naa`. The standard `.naa` never carries the
+  Commonwealth number, so **the key stays BD's attribute, frozen once**. Whether the custom `account.txt` carries it is unmeasured.
+- **Test 2, the seam is datable from Fidelity:** transfer comments on 145 accounts cluster in ISO weeks 26-28 (about 06-22 to 07-17).
+  For **106 accounts** the comments name the Commonwealth number, which gives Fidelity its own key for part of the book. **But the
+  flagged rows are cash journals ("CONVERSION TRANS:REORG ACTIVITY"), not security receipts.** So the opening positions are not
+  given as in-kind rows. They have to come from the entitled `Historical Prices and Positions Export` as of about 06-23, or by
+  rolling the current `.ipn` back through `.trn`. The second is the cheaper read and is still to be tested.
+- **Test 3, partial:** the standard `.trn` has no transaction id, and 259 exact-duplicate rows (0.07%) cannot be told apart from
+  genuine repeats. The custom `transact.txt` (66 columns) is still unseen. The first two scheduled daily files (from 10-20) will show
+  whether days repeat. **Until those answer, a Fidelity reader must not union overlapping files**, which is the Black Diamond bug again.
+
+The recommendation in section 1 stands. The new fact is that the seam's opening positions need one extra read, a
+historical-positions export or a roll-back.
+
 ## 6. Tests that decide it (each one cheap; owners named)
 
 1. **The Fidelity number joins:** the 643 BD `Fidelity IWS` account numbers against `FI101626.naa` / `account.txt` on
