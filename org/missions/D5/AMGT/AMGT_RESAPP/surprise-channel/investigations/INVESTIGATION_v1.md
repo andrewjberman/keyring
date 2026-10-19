@@ -32301,3 +32301,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The issuer decides whether the sparse worktree should carry org/surprise_channel/schemas for workers."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W526-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~526",
+  "surfaced_at": "2026-10-19T15:15:06Z",
+  "one_line": "The AMGT-ce-2 test stub python.cmd on a temporary PATH ends the launcher: a batch file called without CALL transfers control and never returns, so run_filings.cmd exits before its exit= line is written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base 2fe324e11e run_filings.cmd: the command line python -m lib.research.llm_batch.run filings is not preceded by call; with a stub python.cmd (@echo off, echo stub-out, echo stub-err 1>&2, exit /b 7) on PATH the scratch run rc=7 wrote launcher start, stub-out and stub-err lines and NO exit=7 line",
+      "the same scratch tree with the stub as a module shadowed on cwd (tmp_path/lib/research/llm_batch/run.py) writes all of launcher start, stub-out, stub-err and exit=7; the scratch tree was removed before commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-ce-2 Tests: the stub is tmp_path/stub/python.cmd on a temporary PATH, and T1 to T4 read the exit line the launcher writes after python returns.",
+  "world_is": "A .cmd invoked without CALL from a batch transfers control; the launcher is terminated at the stub call with rc 7 and no exit line. The test uses a stub module that cwd shadows (run.py under the temporary tree), so the real batch is never imported; the real python is still the interpreter that runs the stub.",
+  "notes": "Form only. The launcher is unchanged in this respect: the real python.exe is not a batch file and returns normally. The stub design is the only change; the issuer decides whether the order's stub wording is amended."
+}
+```
