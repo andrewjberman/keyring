@@ -42234,3 +42234,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S239 -- Cottonwood's directory refresh has been wedged since 2026-10-14: a build refused by the runner's drop guard le
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S239",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T14:05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Cottonwood's directory refresh has been wedged since 2026-10-14: a build refused by the runner's drop guard left a failed command that every later fire re-reads and raises on, so cottonwood is never re-dispatched and its served directory (as-of 2026-10-12) is over the 2-trading-day ceiling.",
+  "notes": "Found 2026-10-19 ~13:40Z reading the first scheduled directory fire for the HMAC QA. (1) The runner's own guard (IB-pr-384, working as designed) REFUSED cottonwood's 2026-10-14 build: BUILD_DROPS_SOURCE_ENTRY, 6 previous clients still in the source snapshot but missing from the build, nothing landed (SSM command status Failed, rc 1, 8 s). (2) refresh.py lines 845 to 853: when the last recorded command ended in any status other than in-flight or Success, the fire raises DispatchError BUILD_ENDED_UNSUCCESSFUL and does NOT re-dispatch; the failure manifest it writes carries no command id, so the next fire's walk skips it and re-reads the same 2026-10-14 command: cottonwood manifests of 2026-10-15, 10-16 and 10-19 all read FAILED REFRESH_FAILED BUILD_ENDED_UNSUCCESSFUL, and today's SSM command list holds directory builds for inflection and 49financial only. The wedge ends only when that manifest leaves the 10-trading-day window (about 2026-10-28) or a newer manifest names a different command. (3) The served cottonwood directory pointer reads as-of 2026-10-12 written 2026-10-13T13:40Z; expiry.py MAX_AGE_TRADING_DAYS is 2, so a read of it answers DIRECTORY_OVER_AGE state STALE (5 trading days old on 2026-10-19). Inflection and 49financial were refreshed at 13:40Z today. (4) Effect on the HMAC producer QA: cottonwood has no list key; only the refresh's firm build writes it. Two separate questions need a ruling: whether the 6 clients are a genuine source removal (to be carried TERMINATED) or a build fault, and the wedge itself (a failed build should not block every later fire). NOT measured by me: why the build drops the 6 clients, and which served pages show STALE today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm get-command-invocation of the 2026-10-14 cottonwood build command (Status Failed, ResponseCode 1, stderr 'failed to run commands: exit status 1', stdout line 'REFUSED: BUILD_DROPS_SOURCE_ENTRY: 6 previous client(s) are still in the source snapshot but missing from this build; nothing is landed'), read by 2.0.0_SA_COO~P2 2026-10-19",
+      "s3://opal-data-cot/investor-reporting/directory/_refresh/{2026-10-14,15,16,19}/manifest.json read by 2.0.0_SA_COO~P2: RUNNING then FAILED x3 with BUILD_ENDED_UNSUCCESSFUL and no ssm_command_id",
+      "s3://opal-data-cot/investor-reporting/directory/latest.json as_of_business_date 2026-10-12, LastModified 2026-10-13T13:40:48Z; infra/aws/lambda/investor-reporting/directory/refresh.py:845-853 and expiry.py:47 (MAX_AGE_TRADING_DAYS = 2)"
+    ]
+  },
+  "spec_asserts": "A failed build is recorded and the next fire re-dispatches (refresh.py docstrings: 'the next fire re-dispatches'); the served directory is refreshed every trading day.",
+  "world_is": "For cottonwood the failed command is re-read on every fire and re-raised; no cottonwood build has been dispatched since 2026-10-14 and the served directory is five trading days old."
+}
+```
+
+## IRPT_BCKEND-D2-W490-S1 -- The worktree's sparse set lacks data/inf/scripts/gold and data/inf/scripts/bronze, which the order names as present: the test import of rate_limiter fails until they are added locally
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W490-S1",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~490",
+  "surfaced_at": "2026-10-19T13:47:54Z",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "one_line": "The worktree's sparse set lacks data/inf/scripts/gold and data/inf/scripts/bronze, which the order names as present: the test import of rate_limiter fails until they are added locally (git sparse-checkout add, not committed).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-IB-pn-5 WORKER FACE: the worktree is cut sparse with data/inf/scripts/gold/, data/inf/scripts/silver/ and data/inf/scripts/bronze/ present; a test import that fails for a missing directory is fixed by git sparse-checkout add, locally, never committed.",
+  "world_is": "At base d5794f4cce the sparse list was .tools, data/inf/manual_api, infra/logic/registry, lib and the org folders. data/inf/scripts/gold and data/inf/scripts/bronze were absent from the worktree; the baseline pytest of data/inf/manual_api ran 47 failed and 2 passed, all ModuleNotFoundError rate_limiter (rate_limiter.py lives under data/inf/scripts/bronze). data/inf/scripts/silver is also absent from the sparse set; no test of this order imports from it. All three directories exist at HEAD. After git sparse-checkout add of gold and bronze, the baseline ran 49 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-IRPT_BCKEND-490 before the add (no scripts/gold, no scripts/bronze) and after it",
+      "python -m pytest -q -p no:cacheprovider data/inf/manual_api before the add: 47 failed, 2 passed, ModuleNotFoundError rate_limiter; after the add: 49 passed",
+      "git ls-tree -d --name-only d5794f4cce data/inf/scripts/ lists bronze, gold and silver"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The sparse directories are a local worktree setting; nothing under data/inf/scripts was committed by this worker."
+}
+```
