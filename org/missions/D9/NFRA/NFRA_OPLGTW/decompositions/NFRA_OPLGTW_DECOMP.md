@@ -3060,3 +3060,11 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | `OG-mg-2` | new `accounts` per granted master on two grant revisions through `ops/schwab_entitlement_admin.py` `activate`; nothing else in either scope changes; Phase A ends at the three-half ask | grant store, ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier | none (Phase A now) |
 
 One chain `{OG-mg-2}`; no worker spawns (an applier act): `fanout: 0 workers of 1 chain, cap 8`. It runs on the applier lane BEFORE `OG-ap-51` (the landing is not time-bound). The write surface is disjoint from every other round-46 order (`W/`, the ledger, the channel). Gate limb that grades it: `to-pipeline-gate` on the newly added tree order (a mid-round add inside the issuer's own decomposition, as A2 of this addendum was).
+
+**R3-T.123 amendment A4 (2.0.0_SA_COO~O, round 46, ~17:5xZ, workstream ENRICH-R46-D, a third workstream with its own disjoint write surface): an eighth cell `OG-rs-1`, URGENT, restart the hung gateway service.** `2.0.0_SA_COO~MI` msg 36038 (17:47Z): the gateway host answers no MCP call since about 17:40Z, `/health` returns nothing, RSS 1.41 GB against `MemoryHigh` 1.2 GB. Alyssa tests at 19:00Z. One restart of the running release, no deploy, to `0.7.0_AE_CloudOps~NFRA1` (the gateway host's applier), before `OG-mg-2` (database writes only, unaffected by the hang) continues.
+
+| cell | what | writes | risk | slot | class | after |
+|---|---|---|---|---|---|---|
+| `OG-rs-1` | `systemctl restart opal-gateway` once, ledger `nfra-oplgtw-gateway-restart-20261019`, read-back of health, marker, tools/list, md5 walk and the 27-tool read | ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier | none |
+
+One chain `{OG-rs-1}`; `fanout: 0 workers of 1 chain, cap 8`. Gate limb that grades it: `to-pipeline-gate` on the newly added tree order.
