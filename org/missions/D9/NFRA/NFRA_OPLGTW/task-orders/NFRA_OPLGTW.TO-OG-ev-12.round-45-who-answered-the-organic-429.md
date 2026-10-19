@@ -71,6 +71,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-12.round-45-who-answered-the
 - Pre-cut: `AC1` base FAIL as expected (the record is absent). Synthetic arms fed to the check: journal not covering the time reads `UNDETERMINED` (PASS); covered with 0 lines reads `OTHER_LAYER` (PASS); 2 lines and 0 rows reads `THIS_SERVICE_WROTE_NOTHING` (PASS); 2 lines and 1 row reads `THROTTLED` (PASS); a verdict that contradicts the rule FAILS; a refusal window that differs from the code at the pinned sha FAILS.
 
 <status>staged</status>
+<status>complete</status>
 <round>45</round>
 <workstream>ENRICH-R45-A</workstream>
 <slot>~AE</slot>
