@@ -71,7 +71,7 @@ Report once: the commit hash and the base; the test run at the base and after; A
 
 **ISSUER NOTES:** Item 2 of the CTO's round-123 analysis (`ledger/ROUND_ANALYSIS.round123.R1.md`, msg 8492, `@980ad8c80c`), section 2. The CTO's list is the Peers absent-column fields and the chart literal; the `(d)` lines (Posture, y/y growth, estimate years, Description, Exec Management, no-peer-set, Model Cases) carry the same word but are outside the ruling's list and are put to the CTO as a question in the drain-end slug, not decided here. The issuer's `AMGT-cf-3` census (8 live rich exports plus the PDFs, before and after) lists the moved lines, expected: only the Peers absent-column lines and the chart line; a moved line outside that list is a row and stops the redeploy `AMGT-cf-4` (a never-widen pair, CTO and COO). The page still shows `ABSENT` (portal untouched; client-facing page changes wait on Andrew).
 
-<status>pending</status>
+<status>complete</status>
 <round>124</round>
 <slot>0.9.0_WK_AMGT_RESAPP~528</slot>
 <fabric>dell1</fabric>
