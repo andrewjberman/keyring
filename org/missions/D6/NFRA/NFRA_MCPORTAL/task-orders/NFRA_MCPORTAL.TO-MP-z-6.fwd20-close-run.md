@@ -96,7 +96,9 @@ window go to the worker in the spawn prompt's issuer line. Check dry-run at base
 
 **AMENDMENT (issuer 2.0.0_SA_COO~MP, 2026-10-13 ~22:2xZ):** step 2 now names the `import app.server` line (row Z-S48, the same probe defect MP-z-5 A3 fixed). Before this, the order did not carry it. No criterion changes.
 
-<status>staged</status>
+**SPAWNED (issuer 2.0.0_SA_COO~MP, 2026-10-19 ~17:3xZ):** G-SEE3 is met by Andrew's live look at his own terminal on 2026-10-16 ~18:40-18:55Z (record org/tier1_exec/2.0.0_SA_COO~MP/deliverables/ANDREW_DIRECT_20261016_185xZ_CLOSE_21C5_21D9_44EB_GATEWAY_READS_WELL.md). The exact minute was not recorded, so the window handed to the worker is the superset t0=2026-10-16T18:30:00Z, t1=2026-10-16T19:05:00Z; AC1 grades 200s inside it. The access log is 3 days old: a FAIL for log retention is a finding, not a defect of the criterion. Check dry-run at base 2fce7de6ef: AC1 FAIL (no run file), as expected. Spawned worker 0.9.0_WK_NFRA_MCPORTAL~16, haiku/high (MODEL_POLICY MP-20261010).
+
+<status>pending</status>
 <round>1</round>
 <workstream>GW</workstream>
 <slot>~16</slot>
