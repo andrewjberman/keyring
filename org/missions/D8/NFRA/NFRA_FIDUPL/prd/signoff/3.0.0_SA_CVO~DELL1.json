@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_FIDUPL_PRD.md",
   "prd_version": "v0.4",
-  "prd_pin": "b2ec4c7e66fec5a1bacb933ba14ad69d2d1ec84e",
+  "prd_pin": "37a986573917461285cd3b540e171a6542185106",
   "half": "ratified-text",
-  "half_hash": "85a4dc01e6f922ee9e0e8ea957c543c6fa430f4506fcc24ce98ea18e560c250f",
+  "half_hash": "5038a2fae92d6e1780f96c0350b3e575cb70f0be88a34c448febbf9b22551c38",
   "endpoint_hash": "6ee4135c5dc411f21171e357cca0d956a9482a105c703d42d97b079497a3d250",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_FIDUPL_v0.4_RATIFIED_TEXT_20261019.md@f08b72623c",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_FIDUPL_v0.4.3_RATIFIED_TEXT_20261019.md@074b6ec430",
   "signed_by": "3.0.0_SA_CVO~DELL1",
-  "signed_at": "2026-10-19T18:58:24Z",
-  "reason": "ENDPOINT unconfirmed (e141 OPEN; its text names 8 of 9 lines); FWD-9 and C-TENANCY pass"
+  "signed_at": "2026-10-19T19:53:43Z"
 }
