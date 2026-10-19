@@ -1,0 +1,42 @@
+{
+  "finbert-batch-processor": {
+    "sha256": "ce9fb71a7fa5f2015fe39ff4b671e2692aa44b748cacac7e5f70ed40f424fbe9",
+    "code_sha256": "zp+3Gn+l8gFf45/0tnHiaSqkS3SMrKx+X3DtQPQk++k=",
+    "revision": "239e5923-815a-400d-a3e2-091933c22562",
+    "last_modified": "2026-01-03T01:13:38.000+0000",
+    "bytes": 2797
+  },
+  "news-trending-analysis": {
+    "sha256": "2663613820885d138dd5f80cb1771127dda65897d3854a54d732fad181320def",
+    "code_sha256": "JmNhOCCIXRON1fgMsXcRJ92mWJfThUpU1zL60YEyDe8=",
+    "revision": "1d6b0ee9-67ce-4ebc-a5da-aba6a56d5634",
+    "last_modified": "2026-09-16T04:00:49.000+0000",
+    "bytes": 50695
+  },
+  "opal-news-layer3-curation": {
+    "sha256": "08c3d78f719664f01c6fb26cde304f04e4b078a3cc7058ce8399bd69ec20c171",
+    "code_sha256": "CMPXj3GWZPAcb7Js3jBPBOSweKPMcFjOg5m9aewgwXE=",
+    "revision": "90746922-9c7c-407f-a86a-153e7b6752b2",
+    "last_modified": "2026-09-16T04:00:49.000+0000",
+    "bytes": 45659
+  },
+  "opal-trending-topics-portal-publisher": {
+    "sha256": "224af02d128ed80fa4ab5ca5e72c61c957e46fb2a35094bc430e22b9860d92cd",
+    "code_sha256": "IkrwLRKO2A+kq1yl5yxhyVfkb7KjUJS8Qw4iuYYNks0=",
+    "revision": "c35f6fa5-5b3b-4637-abfc-c243276a978b",
+    "last_modified": "2026-04-08T17:09:56.000+0000",
+    "bytes": 3568
+  },
+  "portal-before.json": {
+    "bucket": "opal-data-portal-v2",
+    "key": "json/trending/latest.json",
+    "version": "hYQxpcqAPTTfqctAltt3BO2HZ5WWOkG.",
+    "sha256": "7144462035b9b1eba3733154b2a1f7c006366c40cf7bfa62ecf4dbd4cb85d17b"
+  },
+  "layer2-before.json": {
+    "bucket": "opal-data-news-v2",
+    "key": "trending_reports/latest.json",
+    "version": "Y6NZBBKETV3Lyg7ZfI_JUixkmJVXRTRt",
+    "sha256": "3c4d6760052dddf8d0f0dbb315e861af0cd16ba17e4ce201fa62888ef40b8325"
+  }
+}

@@ -29925,3 +29925,110 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "S406 and S407 are both INERT until Phase B and neither blocks the release: S406 is a staging step the order now states, S407 is an owner-only identifier exposure with its mask carried to round 47. The signers' halves still decide S407 for this release."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:22:00Z",
+  "class": "OBSERVATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-S409",
+  "hazard_standing": "INERT",
+  "one_line": "D1: the client_* tools never answer for orion, eclipse or commonwealth -- client_core._names() fence_kind holds only schwab and blackdiamond, so Ctx.firm_segments() returns [] and the three adapters refuse firm_not_served before any read",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live, served gateway as Andrew@ (master_admin), 2026-10-19 ~16:4xZ: client_resolve_account(firm=inflection) -> absent_reason firm_not_served; a cottonwood last-4 taken from the Commonwealth crosswalk returned only the Black Diamond candidate.",
+      "Reproduced on HEAD (byte-equal to releases 6b1a9bd292 and 6d1b5dcb64 for client_core.py and the seven adapters): Ctx(DATA_CATALOG).firm_segments(orion|eclipse, inflection) = [], (commonwealth, cottonwood) = []; orion, eclipse and commonwealth resolve_account each raise firm_not_served.",
+      "The table never carried them: FENCE_KIND at 5c8c1554e5 and _names() since OG-cl-7 0921b7605b hold {schwab, blackdiamond} only. S3 holds current data: orion fact_positions to 2026-10-19, eclipse fact_models to 2026-10-17.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_OPAL_DATA_ASSETS_20261019.md @216dfc8144; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @473f5177a8"
+    ]
+  },
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT / the catalog tool_index `serves`: the client_* tools serve commonwealth/cottonwood, orion/inflection and eclipse/inflection.",
+  "world_is": "Every client_* call for those three vendors refuses firm_not_served (resolve) or cannot be reached (no account_ref is ever issued), on the served release, since the hookup. The refusal is visible, not a silent wrong answer.",
+  "notes": "Fix owner per the CTO routing: 2.0.0_SA_COO~O, round 47, D1 first. Proof: one live call per vendor."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:22:00Z",
+  "class": "OBSERVATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-S410",
+  "hazard_standing": "ARMED",
+  "one_line": "D2: Cottonwood Black Diamond client_get_transactions and client_get_fees always answer empty -- client_adapter_bdcottonwood._date() parses ISO only and the source's Trade Date is MM/DD/YYYY, so every row is dropped",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live, 2026-10-19 ~16:5xZ: client_get_transactions(cottonwood, a z09 test account, 2026-07-01..2026-10-16) -> 0 transactions, partition_dates null over partition_rows 9263 (fact_transactions/date=2026-10-19/).",
+      "Direct S3 read of the same object: 2 rows for that account, Trade Date '10/12/2026' (string); the column type is string in every date column.",
+      "Source at HEAD (= served): _date() returns date.fromisoformat(str(value)[:10]), None on ValueError; _window_rows drops a row whose date is None. client_get_fees uses the same path (FEE_TYPE Management Fee).",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_OPAL_DATA_ASSETS_20261019.md @216dfc8144"
+    ]
+  },
+  "spec_asserts": "client_get_transactions / client_get_fees return the account's rows in the window.",
+  "world_is": "Both tools answer an empty list with absent_reason null for every Cottonwood Black Diamond account: a silent wrong answer that reads as 'no transactions / no fees'. ARMED: any reader quoting it reports a false zero. Separately, the source holds one rolling file (trade dates 10/05..10/16), so a 13-month window cannot be served even after the parse is fixed.",
+  "notes": "Disarm: COO~O (parse MM/DD/YYYY, or the silver producer writes ISO). Until then the tool's answer for Cottonwood transactions and fees should not be quoted."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:22:00Z",
+  "class": "OBSERVATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-S411",
+  "hazard_standing": "INERT",
+  "one_line": "D3: client_resolve_account answers a multi-vendor merge under the FIRST answering adapter's envelope (source_keys, denominator, absent_reason) and drops every other adapter's refusal code",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live, 2026-10-19 ~16:4xZ: a 49financial last-4 that only SmartX holds answered candidate_count 1 (a smartx candidate) with absent_reason no_candidate_for_last4, source_keys ['blackdiamond/49f/silver/dim_account_xref/2026-09-28'] and denominator.candidates 0.",
+      "Source at HEAD (= served) client_core.client_resolve_account: `answered` is the first adapter's out; merged = dict(answered); refused codes collect in a local list that is used only when no adapter answers.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_OPAL_DATA_ASSETS_20261019.md @216dfc8144"
+    ]
+  },
+  "spec_asserts": "The envelope names the sources read and the denominator of the answer it carries.",
+  "world_is": "The envelope describes one vendor's read while the candidates come from several; refusals (D1's commonwealth firm_not_served) never reach the caller.",
+  "notes": "Fix owner 2.0.0_SA_COO~O per the CTO routing."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:22:00Z",
+  "class": "OBSERVATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPLGTW-Z-S412",
+  "hazard_standing": "INERT",
+  "one_line": "S1: the 49F Black Diamond producer's dim_account_xref and dim_advisor_fee_role stop at 2026-09-28 (14 trading days) and fact_bd_allocation is one partition, 2026-08-18 (42 trading days), so 49F resolve and the allocation market-value profile serve stale inputs",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 list 2026-10-19 ~16:5xZ, opal-data-assets: blackdiamond/49f/silver/dim_account_xref/ 53 partitions, newest 2026-09-28; dim_advisor_fee_role/ 53, newest 2026-09-28; fact_bd_allocation/ 1 partition, 2026-08-18.",
+      "Live: client_resolve_account(49financial) freshness_td 14; client_get_allocation(49financial) profile_freshness_td 42. Frontier T-1 = 2026-10-16 (lib/trading_calendar).",
+      "The live 49F tables in opal-data-bd are current (unrealized/allocations 10-16, transactions 10-19, fees 10-15).",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_OPAL_DATA_ASSETS_20261019.md @216dfc8144"
+    ]
+  },
+  "spec_asserts": "Served inputs are at the trading-day frontier unless declared otherwise.",
+  "world_is": "The resolve crosswalk and the allocation profile lag the frontier by 14 and 42 trading days; an account opened after 09-28 cannot be resolved for 49F through Black Diamond.",
+  "notes": "Names the 49F Black Diamond producer (the opal-data-assets blackdiamond/49f silver writer) as the party to re-run or retire these three tables; disarm_owner stays the issuer per the CTO routing."
+}
+```

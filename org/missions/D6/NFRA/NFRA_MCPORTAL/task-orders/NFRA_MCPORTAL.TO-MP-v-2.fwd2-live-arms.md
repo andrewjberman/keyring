@@ -107,7 +107,7 @@ SPAWN ONLY when ALL hold:
 - **G-2ND:** Andrew (or a person he names) is at the box, ready to sign in as Opal Bloomberg in the window the worker
   opens. This is ONE card to Andrew.
 
-<status>staged</status>
+<status>cancelled -- Andrew-direct 2026-10-19 ~16:3xZ, the human half is no longer owed (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_163xZ_SIX_HANGING_OPEN_CALLS_RESOLVED.md); the ACs read files the human half would have written and cannot run as written. CTO ruling 1.0.0_SA_CTO~Z msg 36018 (YES, cancel citing the record). FWD grading is the CVO's on the evidence the project holds; no replacement human act is cut.</status>
 <round>5</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
