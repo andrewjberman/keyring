@@ -661,6 +661,33 @@ most likely deliberate act is the one Z-S4 invites.**
    ]
   },
   "notes": "ARMED because the residual repeats unattended every morning while the policy stands. It disarms on one of: a signed or reputable build of the blocked pyd is landed in the cma env by that env's owner (0.0.3_BG_BBGTerminal), or Andrew's recorded word on Smart App Control. This seat has the infrastructure half: the candidate sanctioned route is a clean reinstall of the vendor blpapi wheel into the cma env, to be tried only on the env owner's word; it is a candidate, not a measured fix. Nothing was changed on the box."
+ },
+ {
+  "id": "ETFS_POSITIONING-Z-S22",
+  "project": "ETFS_POSITIONING",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-19T13:20Z",
+  "one_line": "Z-S20's route is LANDED on box/sitez @805203d2b5, with a forced-failure dry run (0 of 3 legs before the fix, 3 of 3 after, rc 50 on both). Z-S21's NOT KNOWN is answered: the cma models leg IS backfillable, so the residual costs a stale models day, not a lost one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~Z",
+  "adjudicates": [
+   "ETFS_POSITIONING-Z-S17",
+   "ETFS_POSITIONING-Z-S21"
+  ],
+  "spec_asserts": "Z-S20: Z-S17 disarms on the 2026-10-20 11:00Z run's log once the edit lands with a forced-failure dry run. Z-S21: NOT KNOWN whether the cma models leg can be backfilled for a lost morning.",
+  "world_is": "LANDED: scheduled_daily_pull.cmd @805203d2b5 (author 0.0.3_BG_BBGTerminal, committed by this seat because the author's prompt bars git work). goto :prune became goto :etf_leg at :precond_down and at the DAPI-UNVERIFIED branch. PY_AWS is defined at the top of the file. The overwrite read Andrew's 10-14 word requires is in the commit's record: the models chain is unchanged and RC stays 50; on a down Bloomberg the ETF leg returns 62 and the constituents leg returns 71, both before any put_object. BACKFILL: both notebooks pull get_historical over long windows with date_end = today + BDay(-1), a commented date_end override is already present, and the PKL is named from date_end. A missed models day re-runs by setting date_end, once cma imports again. Z-S17 stays ARMED until the 2026-10-20 11:00Z run's log, as Z-S20 set.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "git show 805203d2b5: scheduled_daily_pull.cmd and org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_LAND_SCHEDULED_DAILY_PULL_RC50_LEGS_20261019_Z.md",
+    "org/tier0_utility/0.0.3_BG_BBGTerminal/deliverables/SCHEDULED_DAILY_PULL_LINE115_DRYRUN_20261019.md (UNTRACKED at this row): dry-run arms and the notebook date_end table",
+    "etf_daily_pull.py:684 return 62 ahead of put_object :858; etf_constituents_pull.py:275 return 71 ahead of put_object :316; read by this seat 2026-10-19 ~13:1xZ"
+   ]
+  },
+  "notes": "INERT: it records a landing and an answer, and nothing recurs from it. Consequence for Z-S21: with constituents protected by the landed route and models backfillable, the remaining daily cost of Smart App Control is a stale Positioning models date until a sanctioned route exists. That is not a permanent loss. Whether it goes on Andrew's list stays with Z-S21's disarm owner."
  }
 ]
 ```
