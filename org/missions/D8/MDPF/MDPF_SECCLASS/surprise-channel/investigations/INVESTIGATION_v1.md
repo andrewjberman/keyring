@@ -8888,6 +8888,75 @@ by dell1 or by this seat.
 }
 ```
 
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W106-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~106",
+  "surfaced_at": "2026-10-19T15:25:59Z",
+  "one_line": "check_r30_reads.py computes ROOT as five '..' above its own R30_CHECKS directory, which is <repo>/org, not the repo root, so S53_CAUSE.json and S48_RANGE_RECON.json are searched under org/org/missions/...; the S53 path the order names is never found and SC30-e118-AC1 cannot pass in any worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R30_CHECKS/check_r30_reads.py (ROOT = os.path.join(HERE, *(['..']*5)); CAUSE = os.path.join(ROOT, 'org', 'missions', ...)); evaluated at worktree wk-MDPF_SECCLASS-106 base bb1b988f11: ROOT = C:\\dev\\wk-secclass-106\\org; org/org absent",
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R30_CHECKS/check_r30_reads.py s53-cause -> R30-s53-cause ok=False problems=['no file at org\\\\missions\\\\D8\\\\MDPF\\\\MDPF_SECCLASS\\\\deliverables\\\\0.9.0_WK_MDPF_SECCLASS~106\\\\S53_CAUSE.json'] (rc=1, run by this seat 2026-10-19)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e118 ACCEPTANCE: R30_CHECKS/check_r30_reads.py s53-cause grades deliverables/0.9.0_WK_MDPF_SECCLASS~106/S53_CAUSE.json against deliverables/0.9.0_WK_MDPF_SECCLASS~103/S48_RANGE_RECON.json under the repo root.",
+  "world_is": "The script's repo root is one level short (<repo>/org), so both paths resolve under org/org/missions/. The worker may not edit the read-only check and may not write outside its grant, so AC1 stays FAIL for this round. The fix belongs to the script's owner (2.0.0_SA_COO~M1)."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W106-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~106",
+  "surfaced_at": "2026-10-19T15:25:59Z",
+  "one_line": "The class split of the excluded residue cannot be measured in this worktree: the producer classifier lib/etf_classifier.py loads its shared client from lib/_shared/etf_classifications_dynamodb.py, which is absent here, so C_06 classify_series cannot run and the class of the 1,883 excluded rows is unnamed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .scratch/s53_classsplit.py (worktree wk-MDPF_SECCLASS-106) -> BLOCKED: the shared ETFClassifier client (etf_classifications_dynamodb.py) is not in this file's own _shared/ directory nor on the repo path; searched data/black_diamond/scripts/gold/lib/_shared",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py _load_shared_classifier_cls (raises ImportError on the missing shared client)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e118 step 1: split the served residue by class (served class totals against the canonical holdings by class, mapped with the producer's classification) and find the class that carries the gap.",
+  "world_is": "The producer's classifier artifact is not in the worktree. The worker did not copy it into the repo or import it from the base checkout. The per-class split is therefore not measured. The class-agnostic measure (excluded mass per date, exact to the cent) is recorded in S53_CAUSE.json."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W106-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~106",
+  "surfaced_at": "2026-10-19T15:25:59Z",
+  "one_line": "The order's premise reads the 32k as a level gap; the level gap on Mon-Thu dates is about 23.5M (2026-10-05 canonical 2,034,178,999.86 vs served post 2,010,684,474.88). The 32k is the day-over-day residue: served post-minus-pre minus canonical after-minus-before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~103/S48_RANGE_RECON.json summary (residue is served delta minus canonical delta)",
+      "S3 reads by pinned version: served mix_daily_summary.json post l2Wqoi6iUJwQwwmTCu3lXWozfW4.Ak_. and canonical holdings after/before ids from S48; a gate simulation of C_06 process_date reproduces the served post totals to 4 decimals on 2026-10-05, 06, 07, 09, 10, 12 (diff 0.0000)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e118 THE CELL: the served firm TOTAL ran about $31.6k to $32.2k BELOW the canonical holdings' total on every Monday-to-Thursday date.",
+  "world_is": "On the Mon-Thu dates the served total sits about 23.5M below the canonical sum (zero on Fri and Sat). Only the day-over-day residue is 31.6k to 32.2k, and it equals minus the change in the excluded mass to the cent (2026-10-05 -32,073.9188 = -(23,494,524.98 - 23,462,451.06))."
+}
+```
+
 ## MDPF_SECCLASS-D1-S56 -- E_18's scheduled classifier has no live input, so the 14 admitted by SC-e-117 will all print "unresolved" and none will be written
 
 ```json
