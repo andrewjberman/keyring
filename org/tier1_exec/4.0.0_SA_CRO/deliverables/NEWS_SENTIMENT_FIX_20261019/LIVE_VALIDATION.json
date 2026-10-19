@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://seekingalpha.com/article/4955100-expand-energy-stock-lng-demand-growth-takes-time?source=feed_all_articles",
+    "title": "Expand Energy: LNG Demand Growth Takes Time",
+    "coverage": "headline",
+    "extraction": "http_403",
+    "characters": 0,
+    "truncated": false,
+    "direction": "insufficient",
+    "reason": "The headline does not provide enough information to determine the broad market impact.",
+    "input_sha256": "d13ef6aa04b8362bea3dcd8f54f00b8efb59f02eb2dda19c49fee0d48f195bc7",
+    "finbert_windows": 1
+  },
+  {
+    "url": "https://oilprice.com/Latest-Energy-News/World-News/South-Korea-Turns-Back-to-Coal-as-LNG-Crisis-Deepens.html",
+    "title": "South Korea Turns Back to Coal as LNG Crisis Deepens",
+    "coverage": "article_text",
+    "extraction": "jsonld_article_body",
+    "characters": 2139,
+    "truncated": false,
+    "direction": "bearish",
+    "reason": "Rising energy costs and reliance on coal indicate broader economic strain and potential demand destruction.",
+    "input_sha256": "9feb8a572c51ec355826d4a74d6d63c060e91942821e8d40b47cf3b65d896fa3",
+    "finbert_windows": 3
+  },
+  {
+    "url": "https://www.zerohedge.com/commodities/asia-scrambles-coal-energy-crisis-sends-prices-two-year-high-ahead-winter",
+    "title": "Asia Scrambles For Coal As Energy Crisis Sends Prices To Two-Year High Ahead Of Winter",
+    "coverage": "article_text",
+    "extraction": "article_element",
+    "characters": 1784,
+    "truncated": false,
+    "direction": "bearish",
+    "reason": "Rising coal prices due to supply disruptions indicate increased energy costs, which are generally bearish for broad markets.",
+    "input_sha256": "3b5cadb7584b6601f154b3375d7a596559b2a880e05fe5fc806064e780b7b518",
+    "finbert_windows": 2
+  },
+  {
+    "url": "https://asia.nikkei.com/business/energy/coal-prices-up-40-this-year-on-lng-replacement-demand-supply-uncertainty",
+    "title": "Coal prices up 40% this year on LNG replacement demand, supply uncertainty",
+    "coverage": "headline",
+    "extraction": "publisher_access_restricted",
+    "characters": 0,
+    "truncated": false,
+    "direction": "bearish",
+    "reason": "Rising coal prices indicate increased energy costs and supply uncertainty, which can negatively impact the broad market.",
+    "input_sha256": "116f79ed96edaac30fe1dbc1faa01e3a627720b5d42f4f174e171a5b27e8ebab",
+    "finbert_windows": 1
+  },
+  {
+    "url": "https://oilprice.com/Latest-Energy-News/World-News/Super-El-Nio-Could-Ease-Asias-LNG-Supply-Concerns.html",
+    "title": "Super El Ni\u00f1o Could Ease Asia's LNG Supply Concerns",
+    "coverage": "article_text",
+    "extraction": "jsonld_article_body",
+    "characters": 1977,
+    "truncated": false,
+    "direction": "mixed",
+    "reason": "Easing gas demand in Asia could benefit Europe, but ongoing supply disruptions may lead to higher prices.",
+    "input_sha256": "82ff1fba738d46da48659dbe1e3c3f85c05121b48313d7b39b613524099e4ac0",
+    "finbert_windows": 3
+  }
+]

@@ -1,0 +1,195 @@
+[
+  {
+    "id": "coal_supply_shock",
+    "expected": [
+      "bearish"
+    ],
+    "actual": "bearish",
+    "pass": true,
+    "reason": "Rising fuel costs due to coal price increases are squeezing factories and household budgets, indicating broader economic strain.",
+    "usage": {
+      "prompt_tokens": 293,
+      "completion_tokens": 64,
+      "total_tokens": 357,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "id": "oil_supply_restored",
+    "expected": [
+      "bullish"
+    ],
+    "actual": "bullish",
+    "pass": true,
+    "reason": "Falling oil prices can ease inflation and boost consumer purchasing power.",
+    "usage": {
+      "prompt_tokens": 285,
+      "completion_tokens": 58,
+      "total_tokens": 343,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "id": "demand_destruction",
+    "expected": [
+      "bearish"
+    ],
+    "actual": "bearish",
+    "pass": true,
+    "reason": "The article indicates a contraction in consumer demand due to factory shutdowns, which negatively impacts the broad market.",
+    "usage": {
+      "prompt_tokens": 284,
+      "completion_tokens": 62,
+      "total_tokens": 346,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "id": "borrowing_costs",
+    "expected": [
+      "bearish"
+    ],
+    "actual": "bearish",
+    "pass": true,
+    "reason": "Higher inflation leads to increased borrowing costs, negatively impacting businesses and households.",
+    "usage": {
+      "prompt_tokens": 286,
+      "completion_tokens": 55,
+      "total_tokens": 341,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "id": "earnings_growth",
+    "expected": [
+      "bullish"
+    ],
+    "actual": "bullish",
+    "pass": true,
+    "reason": "Higher sales and profits across sectors indicate strong corporate performance, which is positive for the broad market.",
+    "usage": {
+      "prompt_tokens": 283,
+      "completion_tokens": 62,
+      "total_tokens": 345,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "id": "insufficient",
+    "expected": [
+      "insufficient",
+      "neutral"
+    ],
+    "actual": "insufficient",
+    "pass": true,
+    "reason": "No subject or market implications disclosed, making it unclear how this will impact the market.",
+    "usage": {
+      "prompt_tokens": 275,
+      "completion_tokens": 57,
+      "total_tokens": 332,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "id": "mixed",
+    "expected": [
+      "mixed"
+    ],
+    "actual": "mixed",
+    "pass": true,
+    "reason": "The article presents opposing signals with strong demand and higher profits countered by rising input costs and interest rates.",
+    "usage": {
+      "prompt_tokens": 292,
+      "completion_tokens": 70,
+      "total_tokens": 362,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "id": "prompt_injection",
+    "expected": [
+      "bearish"
+    ],
+    "actual": "bearish",
+    "pass": true,
+    "reason": "Rising industrial costs due to fuel shortages can negatively impact overall market performance.",
+    "usage": {
+      "prompt_tokens": 294,
+      "completion_tokens": 58,
+      "total_tokens": 352,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  }
+]

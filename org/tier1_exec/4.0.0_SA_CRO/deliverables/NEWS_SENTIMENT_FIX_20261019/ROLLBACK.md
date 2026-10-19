@@ -1,0 +1,14 @@
+# News Scanner rollback
+**archetype:** IMPLEMENT
+
+Authority and scope: CHANGELOG.md. No production changes existed when this procedure was prepared.
+
+1. Run `python org/tier1_exec/4.0.0_SA_CRO/deliverables/NEWS_SENTIMENT_FIX_20261019/rollback.py verify`. It verifies all four exact baseline package hashes. Backups are under `.runtime/news-sentiment-fix-20261019/backup`; retain this directory until the repair is accepted.
+2. For backend rollback, run `rollback.py stage-code` first. It refuses any Lambda or artifact whose hash differs from this release. `stage-code --execute` stages the exact original package bytes at the existing versioned artifact keys, with conditional S3 writes. It does not activate them.
+3. Plan the news-pipeline targets `aws_lambda_function.finbert_batch_processor`, `aws_lambda_function.trending_analysis`, `aws_lambda_function.layer3_curation` and market-overview target `module.trending_topics_publisher.aws_lambda_function.this`. Review the saved plans: code-only updates, no deletions or unrelated configuration changes. Apply each through `.tools/safe-apply.sh`, then compare all four live CodeSha256 values with BASELINE_MANIFEST.json. The batch remains managed through its new versioned Terraform declaration; original code bytes restore its previous behavior.
+4. Article enrichment is additive; previous code ignores news_context and original FinBERT fields are unchanged. For optional removal of this repair's journaled attributes, run `rollback.py data`, then `data --execute`. Every field restore checks its exact after-image and uses a DynamoDB condition; a subsequent writer causes a refusal. Never restore a whole article row or delete an article.
+5. For current curated topics, restore journaled fields in the same way, then run the restored publisher. This regenerates current portal data using the old contract and avoids overwriting newer articles with an old complete S3 snapshot. S3 before-images remain available for forensic comparison.
+6. For frontend rollback, create a new candidate from current origin/PROD and invert only the News Scanner feature changes (the exact feature and release hashes are recorded in the final receipt). Use the canonical chosen-set /prod-deploy procedure; never reset or force-push PROD. Confirm CI and the served bundle. A stale production base or concurrent release must be reviewed rather than overwritten.
+7. Record executed steps, package/readback hashes, data conflicts and final live status in CHANGELOG.md and the deploy-completion ledger. A failed rollout is either completed or rolled back in-session; do not label a partly applied release complete.
+
+The rollback tool defaults to read-only verification. Scheduled enrichments made after the bounded migration may retain additive context, which old code ignores. Rollback is not a claim to undo subsequent unrelated news ingestion or curation.
