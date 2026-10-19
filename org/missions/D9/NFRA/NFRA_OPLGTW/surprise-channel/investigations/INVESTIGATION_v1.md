@@ -29486,3 +29486,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Not blocking. Carried as a finding for the round-44 analysis: whether the lake leg should count its own failures (a counter or one stderr line in the except branch of _emit) is a decision for the CTO; it would be a code change and a release, not made here."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-19T06:06:17Z",
+  "id": "NFRA_OPLGTW-Z-S403",
+  "one_line": "Round-45 ruling on my ARMED row Z-W155-S1 (is the per-identity refusal's audit row failing to land?): disarmed on the measured evidence: an organic 429 burst on 2026-10-17 wrote its row in the service, a fresh-process writer test wrote one under the instance role, and the 2026-10-18 ~19:2xZ 429 never passed the ALB, so no row was owed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W155-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ev-12 (ev12.AC1 PASS on my run; proof VALID under python3 -I; record W/ORGANIC_429.json, applier commit 26d01280b6): the account's ALB access logs (14837 lines for 2026-10-18) hold NO 429 on 2026-10-18 or so far on 2026-10-19; the only 429s in 2026-10-17 to 19 are 26 lines at 17:21:43Z-17:21:44Z on 2026-10-17, all POST /mcp answered by this service, against exactly ONE gw_ratelimit lake row (the first refusal wrote, the per-key 10 s fold took the rest)",
+      "OG-ev-10 STEP 2 (ev10.AC1 PASS on my run): a one-object writer test in a fresh guarded process under the service's instance role: the put returned, the object is in the lake, an independent reader read it back; verdict WRITES (CTO ruling 35895)",
+      "OG-ev-12's own verdict by the rule fixed before the run is UNDETERMINED (the access log returned at 19:23:53Z, after the 19:20Z start of the 429's time range, so the journal cannot cover it); the ALB evidence goes beyond the rule and is recorded as such"
+    ]
+  },
+  "spec_asserts": "Every per-identity 429 the service answers writes one gw_ratelimit audit row (the first of each 10 s per principal) that reaches the lake (Z-W155-S1, round-42 analysis item 9).",
+  "world_is": "The service's refusal row does reach the lake: the 2026-10-17 17:21Z burst left its one row from inside the service, and a fresh process under the instance role wrote one on 2026-10-19. The 2026-10-18 ~19:2xZ refusal that the CTO's connection saw left no row because no 429 passed this service's ALB at that time: the answer came from a layer before it (the connector or the client side), not from the limiter. Not established: WHICH layer answered it (no log in this account keeps bodies). The audit sink's silent failure for every other record class is a separate finding (Z-S402) and stays open; the round-45 cells OG-pr-6 and OG-ap-48 make it audible.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard (a refusal row failing to land) is not supported by any measurement and is contradicted by two: the organic 2026-10-17 burst's row and the writer test; the missing 2026-10-18 row is explained by the ALB logs. The remaining question, which layer sent that 429, is not this service's."
+}
+```
