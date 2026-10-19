@@ -26989,3 +26989,32 @@
   }
 ]
 ```
+
+
+## IRPT_ANLREQ-D2-W310-S1 -- the naming gate printed a NAMING ERROR for a missing function-map folder during two commits; the commits still landed, because the sparse worktree does not carry that folder
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W310-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~310",
+    "surfaced_at": "2026-10-19T23:05:17Z",
+    "one_line": "safe-commit of 554d32a79f7 and 07a5276542d printed \"[naming-gate] NAMING ERROR function-map folder missing\" and then committed; the sparse worktree does not carry infra/aws/lambda/ci/function-map.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-416 worker face: commit with .tools/safe-commit.sh; the order paths block is the only write grant and the commit should pass its gates.",
+    "world_is": "Both commits of the deliverables folder and of the instance fix printed the naming-gate ERROR line, then the commit-gate and msg-verify lines, and landed (rc 0). The naming gate reads the Lambda source map from that folder and grades nothing from a copy. The same condition is recorded for worker 308 at IRPT_ANLREQ-D2-W308-S3.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of 554d32a79f7 on wk-IRPT_ANLREQ-310: \"[naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-irpt-anlreq-310\\infra/aws/lambda/ci/function-map/\"",
+        "safe-commit output of 07a5276542d on wk-IRPT_ANLREQ-310: the same NAMING ERROR line; both commits landed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. The worker did not add the folder to the sparse set and did not copy the map from the main tree."
+  }
+]
+```
