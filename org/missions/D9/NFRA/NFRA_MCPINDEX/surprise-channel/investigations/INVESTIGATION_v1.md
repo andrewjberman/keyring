@@ -9860,6 +9860,90 @@ carries none.
         "round21/post_release/anchor_host_check_after_batch5.txt: ANCHORS 127 of 127; round21/post_release/r13.AC3_monotone_after_batch5.txt: monotone PASS (37 equal, 2 behind and tolerated); discover_buckets_host_after_batch5.txt: 8 of 8"
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W60-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~60",
+    "surfaced_at": "2026-10-19T15:23:53Z",
+    "one_line": "The commit-time naming gate printed NAMING ERROR (function-map folder missing) on the sparse worktree and the commit still landed rc 0 with the staged names ungraded: infra/aws/lambda/ci/function-map/ is not in this worktree's sparse set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-g-4 commits two .py files through .tools/safe-commit.sh with rc 0 as the clean outcome, and gives no sparse-set condition for the naming gate.",
+    "world_is": "safe-commit.sh of e3bd819412 (workflows/gateway_battery/tool_battery.py and its tests) printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-60\\infra/aws/lambda/ci/function-map/' and then the commit line '[wk-NFRA_MCPINDEX-60 e3bd819412]' with rc 0; the naming check graded no name. The sparse checkout is .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/gateway_battery.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at C:/tmp/wk-mcpindex-60/.scratch/commit1.out (untracked, worktree): line containing [naming-gate] NAMING ERROR function-map folder missing, then [wk-NFRA_MCPINDEX-60 e3bd819412] and msg-verify MATCH",
+        "git sparse-checkout list in C:/tmp/wk-mcpindex-60 (read 2026-10-19T15:23Z): the nine entries named in world_is; infra/aws/lambda/ci is not among them"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W60-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~60",
+    "surfaced_at": "2026-10-19T15:23:53Z",
+    "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on this commit: its danger map is 91.4h old (STALE) and it scanned 0 of 2 files, so it could not clear the staged diff.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-g-4 declares comp-adversary DECLARED-NOT-APPLICABLE and asserts no lens beyond the criteria, so no reflex answer is expected in the commit path.",
+    "world_is": "safe-commit.sh of e3bd819412 printed a risk-reflex block: 'danger map: 91.4h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'NOT-DECIDABLE: danger map STALE', 'WITHIN BUDGET: scanned 0 of 2 file(s)'; its REBUILD line names the MAIN tree's map and builds nothing here. The commit landed rc 0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at C:/tmp/wk-mcpindex-60/.scratch/commit1.out (untracked, worktree): the [risk-reflex] block printed before the gates run",
+        "commit e3bd819412 on branch wk-NFRA_MCPINDEX-60 (LOCAL, not pushed): the diff the reflex scanned was 0 of 2 files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W60-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~60",
+    "surfaced_at": "2026-10-19T15:23:53Z",
+    "one_line": "The order's step 5.2 asks for the status flip on the task order file itself, which is not in the order's <paths> grant, so the flip is not made by this worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-g-4 section 5 step 2: append <status>complete</status> to this order when all three criteria PASS; section 3 <paths> is the complete write surface and lists the two script files, the deliverables folder and this investigation file.",
+    "world_is": "The task order file NFRA_MCPINDEX.TO-MX-g-4.fwd24-tool-battery.md is not in <paths>. Section 2 bound 1 limits writes to <paths>. The worker leaves the <status> tag at issued and reports the flip for the issuer to make.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task order file in worktree C:/tmp/wk-mcpindex-60 at HEAD 490631f349 (issuance commit): section 3 <paths> lists four entries and no task-orders path",
+        "task order file section 5 step 2 names the status append on this order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W60-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~60",
+    "surfaced_at": "2026-10-19T15:23:53Z",
+    "one_line": "The row schema the order names (org/surprise_channel/schemas/investigation_item.schema.json) is not in this sparse worktree, so the row shape was copied from the rows already in this channel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-g-4 section 3 and the worker face name org/surprise_channel/schemas/investigation_item.schema.json as the row schema, to be read before appending a row.",
+    "world_is": "In C:/tmp/wk-mcpindex-60 the path org/surprise_channel/ does not exist: the sparse set is .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/gateway_battery. The row fields used are those of the rows already in INVESTIGATION_v1.md; the row gate is the commit-time check.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cat of org/surprise_channel/schemas/investigation_item.schema.json in C:/tmp/wk-mcpindex-60 returned 'No such file or directory' (read 2026-10-19T15:23Z)",
+        "git sparse-checkout list in C:/tmp/wk-mcpindex-60 (2026-10-19T15:23Z): the nine entries named in world_is"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
