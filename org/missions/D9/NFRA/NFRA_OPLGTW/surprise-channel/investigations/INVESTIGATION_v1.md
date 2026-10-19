@@ -30032,3 +30032,185 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Names the 49F Black Diamond producer (the opal-data-assets blackdiamond/49f silver writer) as the party to re-run or retire these three tables; disarm_owner stays the issuer per the CTO routing."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S413",
+  "one_line": "P4-P7 size handling: the 50 KB projection is measured on compact JSON but served indented, the trimmer nulls whole fields, the MDPF envelope has no projection, and opal_discover has no cap -- 4 of part 2's 5 FAILs",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "P4: harvest_typed._size() measures json.dumps without indent while the reply is pretty-printed; live: model_portfolio_timeseries 64.9K chars vs projected 51,100, model_positioning 75.9K vs 48,954, market_returns 55.7K, mdpf_get_model_composition 59.1K.",
+      "P5: harvest_typed.project() empties the largest list first and only then nulls a non-list field, whole; live: portal_get_macro answered macro: null, truncated: true over a 93 KB source; portal_get_valuation (S&P 500) answered 420 bytes, ranges [] and time_series null.",
+      "P6: mdpf_get_aggregate_aua answered 743,469 characters with no projection.",
+      "P7: opal_discover('client account holdings') matched 137 datasets (45 servable), 585,084 characters.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART2_HARVEST_NEWS_ETFS_PORTAL_MDPF_20261019.md @48c5806982; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @944f324225 (Part 2 routing)"
+    ]
+  },
+  "spec_asserts": "Every typed answer fits the 50 KB projection it declares, and a projection drops rows, not whole fields.",
+  "world_is": "Replies over the client's tool-result limit are unreadable, and two portal tools lose their payload to the trim.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Fix owner per the CTO routing: 2.0.0_SA_COO~O, round 47, beside D1-D3 (Z-S409..Z-S411)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S414",
+  "one_line": "H2: news_for_security answers 0 mentions for an active name with no reason -- it reads only the stale article_security_mention index (10-08) and its fallback matches the ticker TEXT, not the name",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live 2026-10-19 ~17:3xZ: news_for_security(NVDA, 7 days) -> 0 mentions, fallback_rows 0, fallback_absent_reason null; news_search_articles found 35 'Nvidia' articles in 10-14..10-16 in its own store.",
+      "The answer's precision field reads 'a TEXT match of the ticker'; the primary index is H1's stale partition.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART2_HARVEST_NEWS_ETFS_PORTAL_MDPF_20261019.md @48c5806982; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @944f324225 (Part 2 routing)"
+    ]
+  },
+  "spec_asserts": "news_for_security answers the security's recent news, or says why it found none.",
+  "world_is": "A zero that reads as 'no news' for a heavily covered name.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Fix owner 2.0.0_SA_COO~O: a name-based fallback and a stated zero reason."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S415",
+  "one_line": "H1 producer: the AMGT harvest article-mention and chatter producers stopped -- article_security_mention and chatter_daily newest 10-08, chatter_window 10-04, article_sentiment 10-03; harvest posture (09-16) and scores are 21-22 trading days old",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 listings 2026-10-19 ~17:3xZ of the harvest bucket's newest partitions, as above; live harvest_get_chatter trading_days_behind_t1 6; harvest_get_peers_and_scores posture 2026-09-16.",
+      "Producer: the dell1 AMGT harvest (per the CTO routing, relayed MSTR to MSTR under rule 32).",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART2_HARVEST_NEWS_ETFS_PORTAL_MDPF_20261019.md @48c5806982; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @944f324225 (Part 2 routing)"
+    ]
+  },
+  "spec_asserts": "Per-security news and chatter are at the trading-day frontier T-1 (2026-10-16).",
+  "world_is": "Every per-security news and chatter answer is 6-9 trading days old; the gateway reports the lag honestly.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT here: the producer is dell1's AMGT harvest; the relay is the MSTRs'. Owner: no owner field in infra/aws/lambda/ci/function-map/ and absent from comp-estate's measured chains; the lanes named are the producer source's last git writers, a pointer and not a recorded owner (claim: inferred)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S416",
+  "one_line": "E1 producer: 49F ETF ownership is built from Schwab master 08242234 only, so accounts held only under 08335338 drop out -- DIVZ on 10-16 is understated by $1,673,459.07 across 17 accounts, and the ownership rollup inherits it",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live: etfs_get_partner_ownership(49financial) and etfs_get_ownership_rollup read daily/49financial/2026-10-16.json (4 rows equal to S3).",
+      "S3 fact_rps 10-16, DIVZ: master 08242234 $189,581,457.42 across 5,899 accounts; master 08335338 holds those same 5,899 accounts with identical values plus 17 more holding $1,673,459.07.",
+      "Producer bd-49f-etf-ownership-daily (infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/): RPS_PREFIX = 'schwab/08242234/silver/fact_rps' (backfill_49f_daily_from_monolith_rps.py:62); the 0824/0833 overlap is handled by reading one master, which drops the 0833-only accounts. IDVZ, PFDE and PFOE not measured.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART2_HARVEST_NEWS_ETFS_PORTAL_MDPF_20261019.md @48c5806982; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @944f324225 (Part 2 routing)"
+    ]
+  },
+  "spec_asserts": "49F's ETF ownership counts every 49F account holding the fund.",
+  "world_is": "The figure Andrew reads for 49F ownership of Opal's ETFs is low by the 0833-only accounts (DIVZ: $1.67M, 17 accounts). ARMED: a number in use is wrong.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Producer: bd-49f-etf-ownership-daily; last git writers 0.5.0_AE_OpalETL, 0.7.0_AE_CloudOps~A and 0.9.0_WK_ETFS_GUARDRAIL~2 (the ETFS_GUARDRAIL project). Owner: no owner field in infra/aws/lambda/ci/function-map/ and absent from comp-estate's measured chains; the lanes named are the producer source's last git writers, a pointer and not a recorded owner (claim: inferred). Disarm: read both masters and dedupe by account, never sum the overlap."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S417",
+  "one_line": "Producer: the security scanner's served output is as of 2026-10-02, 10 trading days behind T-1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live portal_get_security_scan as_of 2026-10-02; S3 portal-v2 json/security_scanner/latest/ last modified 10-02.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART2_HARVEST_NEWS_ETFS_PORTAL_MDPF_20261019.md @48c5806982; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @944f324225 (Part 2 routing)"
+    ]
+  },
+  "spec_asserts": "The served scan is at the trading-day frontier.",
+  "world_is": "portal_get_security_scan answers a scan 10 trading days old.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Producer: Lambda opal-security-scanner-processor (infra/aws/lambda/opal_security_scanner_processor/); last git writers 0.5.0_AE_OpalETL and 0.3.0_DT_TradingOperations. Owner: no owner field in infra/aws/lambda/ci/function-map/ and absent from comp-estate's measured chains; the lanes named are the producer source's last git writers, a pointer and not a recorded owner (claim: inferred)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S418",
+  "one_line": "Producer: the ETF classifications behind mdpf_get_security_classification are as of 2026-09-30 (12 trading days), classified_by seed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live mdpf_get_security_classification(DIVZ): DynamoDB etf-classifications, as_of 2026-09-30, classified_by seed.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART2_HARVEST_NEWS_ETFS_PORTAL_MDPF_20261019.md @48c5806982; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @944f324225 (Part 2 routing)"
+    ]
+  },
+  "spec_asserts": "Security classifications are current.",
+  "world_is": "A classification 12 trading days old, from the seed rather than a refresh.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Producer: the classification seed scripts (data/black_diamond/scripts/classification/); last git writers 0.9.0_WK_MDPF_SECCLASS~33/~9 (the MDPF_SECCLASS project) and 0.9.0_WK_POSN_ASTTAX~27. Owner: no owner field in infra/aws/lambda/ci/function-map/ and absent from comp-estate's measured chains; the lanes named are the producer source's last git writers, a pointer and not a recorded owner (claim: inferred)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-19T17:58:00Z",
+  "id": "NFRA_OPLGTW-Z-S419",
+  "one_line": "Producer: the capital-markets views served by gateway_query_catalog (portal-v2 json/capital-markets/views.json) are dated 2026-01-09",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live gateway_query_catalog: json/capital-markets/views.json, 5,992 bytes, data dated 2026-01-09.",
+      "Audit: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_TOOL_AUDIT_PART2_HARVEST_NEWS_ETFS_PORTAL_MDPF_20261019.md @48c5806982; routing: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_GATEWAY_ASSETS_AUDIT_DEFECT_ROUTING_20261019_Z.md @944f324225 (Part 2 routing)"
+    ]
+  },
+  "spec_asserts": "Served capital-markets views are current, or labelled as an annual edition.",
+  "world_is": "The views are nine months old with no label saying whether that is the intended cadence.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Producer: Lambda yang-generate-cma (infra/aws/lambda/v2_portal/yang_pipeline/cma/yang-generate-cma/), the Yang pipeline; last git writers 0.1.0_DS_MarketIntelligence, 0.5.0_AE_OpalETL and 0.7.0_AE_CloudOps. Owner: no owner field in infra/aws/lambda/ci/function-map/ and absent from comp-estate's measured chains; the lanes named are the producer source's last git writers, a pointer and not a recorded owner (claim: inferred)."
+}
+```
