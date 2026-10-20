@@ -31435,3 +31435,80 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "S1 is ruled and fixed in the process; S2 is accepted for the cell and the follow-up is named with its owner (the issuer, before the ask)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W179-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~179",
+  "surfaced_at": "2026-10-20T21:48:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "one_line": "The completion marker's bucket opal-data-49financial has a resource policy that explicitly denies s3:* to every principal outside the -49f- role pattern and the registry exemptions; the gateway catalog reader is outside both, so its granted read of the 0840 state object is refused at the door after the move.",
+  "spec_asserts": "Task order OG-sk-3 section 1 step 3: when a bucket policy denies principals it does not list and does not name the gateway catalog role, file a BLOCKING row; do NOT edit that bucket policy (it is outside the order).",
+  "world_is": "infra/aws/terraform/shared-infra/s3-49financial.tf:114-146 declares aws_s3_bucket_policy.opal_data_49financial: Deny Principal * on Action s3:* over the bucket and its objects, with Condition ArnNotLike aws:PrincipalArn = module opal_name fence_patterns['49financial'] (the *-49f-* role pattern) plus fence_exemption_arns for the bucket. gateway-schwab-catalog-read-role matches neither, and infra/logic/registry/exemptions.json opal-data-49financial holds no gateway row. needs_change is true for the BLOCKING owner to route; the policy is not edited here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-49financial.tf:114-146 @d7d029bd188 (the bucket policy: Deny Principal * s3:* with ArnNotLike on the fence patterns and exemption ARNs)",
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf:129-130 @d7d029bd188 (fence_patterns 49financial = the *-49f-* role pattern; read via git show, the path is skip-worktree in this checkout)",
+      "infra/logic/registry/exemptions.json:11-240 @d7d029bd188 (opal-data-49financial exemption principals: none named gateway-schwab-catalog-read-role)",
+      "infra/logic/registry/exemptions.json:369-377 @d7d029bd188 (opal-data-49financial grants: irpt-holdings-role only)"
+    ]
+  },
+  "notes": "Filed by OG-sk-3 (round 47). The gateway's reader IAM text (infra/aws/terraform/opal-gateway/schwab_reader_iam.tf) is edited and names the state object; the resource policy is the second door. Measured from the text of the policy, not from a live AWS read: no AWS call was made."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W179-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~179",
+  "surfaced_at": "2026-10-20T21:48:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The site-Z worktree does not carry infra/aws/terraform/modules/opal_name on disk: the six tracked files are skip-worktree in this checkout, so the module that derives the bucket fence patterns can be read only through git show.",
+  "spec_asserts": "Task order OG-sk-3 section 3 and section 1 step 3: the worker reads the bucket-side fact against the files it cites in the worktree, which the order grants by its paths.",
+  "world_is": "git ls-files -v reports S (skip-worktree) for infra/aws/terraform/modules/opal_name/* while the same paths are indexed at HEAD; core.sparseCheckout is true in this checkout. The module's files are absent from the disk, so a read-by-path there returns no file; the evidence used for needs_change was read from HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -v infra/aws/terraform/modules/opal_name @d7d029bd188 (S flag on six files; the directory is absent from the disk of worktree wk-NFRA_OPLGTW-179)",
+      "git config core.sparseCheckout @d7d029bd188 (true in this checkout)",
+      "git show d7d029bd188:infra/aws/terraform/modules/opal_name/generated_locals.tf:129-130 (the fence_patterns the bucket policy reads)"
+    ]
+  },
+  "notes": "Observation only: the order names no module path, so this row does not block OG-sk-3. Whoever reads the module by path from this checkout reads nothing."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W179-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~179",
+  "surfaced_at": "2026-10-20T21:56:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "one_line": "The commit-time naming gate graded seven REFUSE verdicts on the new Schwab locals in schwab_reader_iam.tf; the gate read its enforce file as absent in this sparse checkout and printed WARN, so the commit landed here, but the enforce file is committed at HEAD and the same seven names would refuse under it.",
+  "spec_asserts": "Task order OG-sk-3 section 1 step 1: the locals carry EXACTLY the names given (schwab_state_bucket = opal-data-49financial, the schwab/49financial/silver and state prefixes); CLAUDE.md section 4 (LGIC): every new name is name() or lookup() output, and a builder refusal is a registry row to add.",
+  "world_is": "safe-commit of 6b853afa689 printed naming-gate WARN 7 graded: schwab_reader_iam.tf:93, :97-100 and :105-106 each REFUSE as a NEW hand-kept carrier of 49financial outside a permitted context, with the advice to read it through lookup('49financial'); the window read WARN because org/mcp/naming-gate.enforce is skip-worktree in this checkout, so the 7 verdicts did not block here. The LGIC_ENFORCE flip is committed at HEAD (2.0.0_SA_COO~G, 2026-09-17). Not changed here: the names are the order's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of the OG-sk-3 commit 6b853afa689: [naming-gate] NAMING REFUSE lines for infra/aws/terraform/opal-gateway/schwab_reader_iam.tf:93,97,98,99,100,105,106 and '(WARN window: 7 REFUSE verdict(s) did not block ...)'",
+      "git show d7d029bd188:org/mcp/naming-gate.enforce (the LGIC_ENFORCE flip, present at HEAD); git ls-files -v marks it S (skip-worktree) in this checkout, so it is absent on disk here"
+    ]
+  },
+  "notes": "Filed for the issuer to rule: whether the new locals move to lookup('49financial') before the enforce window, or the gate's context rule takes a permitted-context entry for the 0840 move. Measured in the same checkout: 91,827 index entries are skip-worktree (git ls-files -v), so enforce-file and module reads here are not evidence of HEAD's state; read HEAD through git show. The LIVE-READ-FAILED note in the gate output is the gate's own live AWS pull; it is not part of this row."
+}
+```
