@@ -968,6 +968,50 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Interpretation only: no retry, no blocked criterion. FR3-AC1 passes on the built reading. The issuer may rule on the planner bound."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S1",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-20T15:13:23Z",
+    "one_line": "The round-2 modules attribute.py, gswitch.py and split.py are not on the branch at c5ff6eaad5, so box/daily.py and the daily hookup in box/run.py reference their documented names only, and the daily wiring can run only with fakes until they land.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls infra/aws/ec2/canonical-fidelity/ in worktree wk-NFRA_FIDUPL-5 at HEAD c5ff6eaad5 lists fetch.py land.py quo_otp.py signin.py signin_recon.py and box/ tests/; attribute.py gswitch.py split.py are absent",
+        "box/run.py _real_daily_deps imports split inside its wrapper, and the attribute wrapper refuses by design; an absent split module fails only the split stage (ImportError is caught as a stage failure) and the land still runs"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 11: attribute.py sweep_attribution, gswitch.py GSwitcher and split.py split_day are the documented round-2 interfaces the daily stages call.",
+    "world_is": "No module of the three exists on this branch, so the real attribute and split stages cannot run from this worktree; the stage-level failure is loud in the run record and the exit code.",
+    "notes": "Nothing is stubbed. The tests inject fakes through the deps dict, so the five daily tests prove the orchestration, not the modules."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S2",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-20T15:13:23Z",
+    "one_line": "No documented path gives the daily attribute stage its inputs: the signin Session carries only context and close(), gswitch needs a request object with get_text and post_form, and sweep_attribution needs an account_lister whose constructor reference section 11 does not name; the attribute wrapper therefore refuses loudly and every daily run reports partial.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P1 (names the request adapter and the account lister constructor, or rules where they live; until then each daily run lands and reports attribution and split as not finished)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/signin.py class Session (worktree HEAD c5ff6eaad5): assigns self.context and defines close(); no request, get_text or post_form attribute",
+        "decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 11 (gswitch): GSwitcher(request) with request as get_text(url) and post_form(url, fields); attribute: account_lister() is injected and its real constructor is not named",
+        "box/run.py _real_daily_deps attribute_day raises RuntimeError by design and names this row; the run record and exit code show the failure"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 11: sweep_attribution reads the form, switches every option, calls the injected account lister, and restores the starting G; the daily stage runs it with the session's request object.",
+    "world_is": "The session does not expose the request object the switch needs, and the account lister has no named constructor, so the production attribute stage cannot be built from the documented surfaces. The land stage is unaffected and runs first.",
+    "notes": "A repaired adapter or a named lister constructor is a new cell; this worker did not invent either. ARMED because each scheduled daily run would end partial with no attribution until the owner rules."
   }
 ]
 ```
