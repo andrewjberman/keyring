@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~153</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Complete, 2026-10-20. Worker 0.9.0_WK_NFRA_CTLPLN~153 built it (branch wk-NFRA_CTLPLN-153, head 625541626f; the first run was blocked by the issuer's sparse checkout omitting data/assets/scripts/lib, row W153-S1, fixed by the issuer). CTcl1-AC1: `29 passed` (base 26); the issuer re-ran in the worker tree (29 passed) and ran the seam probe on the REAL stored dim (date=2026-09-28, 282,857 rows, 5,338 open, read-only): the unfixed file closes 5338 of 5338 open accounts against a today frame with flat_fee int64; the fixed file closes 0 of 5338, total rows 282,857 unchanged; control with one real flat_fee change closes 1. The two converter copies are byte-equal; sha256 bc3019570d49...00d503 equals the BUILD_MANIFEST value. Nothing deployed: the apply leg is CT-cm-1.</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
