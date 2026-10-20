@@ -13405,3 +13405,52 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~86",
+  "surfaced_at": "2026-10-20T16:39:59Z",
+  "id": "NFRA_MCPINDEX-Z-W86-S1",
+  "one_line": "The naming gate cannot run in the worktree: it reads infra/aws/lambda/ci/function-map/, which the sparse cone does not hold; the MX-y-3 commit is held",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/naming-gate.py --diff .scratch/y3_work.diff --enforce --staged-paths .scratch/y3_staged.txt exited rc=1 with: NAMING ERROR function-map folder missing: C:/tmp/wk-mcpindex-86/infra/aws/lambda/ci/function-map/ (run at HEAD 62604a82b8c)",
+      ".tools/naming-gate.py FUNCTION_MAP_DIR at line 1109 and function_map_problem() at line 1294 refuse when that folder is absent",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-86 at HEAD 62604a82b8c: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition; infra/aws/lambda/ci is not in it",
+      "face section 1 step 0 permits one sparse change (the four named folders); face section 2 item 3 requires the naming gate to exit 0 before commit"
+    ]
+  },
+  "spec_asserts": "Before any commit, python .tools/naming-gate.py --diff <diff> --enforce --staged-paths <file> must exit 0 in the worktree (face section 2 item 3).",
+  "world_is": "The gate exits 1 with NAMING ERROR in the worktree because its function-map input is outside the sparse cone. AC1, AC2 and AC3 PASS by output (23/23, 11/11, 87 passed). Nothing is committed; no folder was added and none copied. The local checks pass: py_compile, ruff py39, ASCII (0 non-ASCII added lines).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~86",
+  "surfaced_at": "2026-10-20T16:39:59Z",
+  "id": "NFRA_MCPINDEX-Z-W86-S2",
+  "one_line": "The surprise-channel schema org/surprise_channel/schemas/investigation_item.schema.json is absent from the worktree (org/surprise_channel is outside the sparse cone), so this row was shaped after the sibling rows of this file and not schema-checked",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of C:/tmp/wk-mcpindex-86/org/surprise_channel/schemas/investigation_item.schema.json returned: File does not exist (HEAD 62604a82b8c)",
+      "git sparse-checkout list at HEAD 62604a82b8c does not name org/surprise_channel"
+    ]
+  },
+  "spec_asserts": "A row is appended per org/surprise_channel/schemas/investigation_item.schema.json (face section 3 and the worker rules, surprise paragraph).",
+  "world_is": "The schema file is not in the worktree. The row carries the same keys as the rows already in this investigation file (project, fabric, surfaced_by, surfaced_at, id, one_line, class, hazard_standing, grounding, spec_asserts, world_is, disposition).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
