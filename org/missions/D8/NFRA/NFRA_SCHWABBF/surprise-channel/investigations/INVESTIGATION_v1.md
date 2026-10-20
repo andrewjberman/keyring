@@ -244,6 +244,151 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO-BF-k1 AC2 and the worker face: import data/assets/scripts/silver/schwab_conversion.py by path and assert that scope_from_key, feed_from_key and date_from_key read a new-form key built by monolith_bronze_key (the seam probe against the REAL neighbor). The order presents the converter's file set as loadable from its source directory.",
     "world_is": "The six key functions and the other 242 test cases pass at HEAD 5f1ad506a4 plus the BF-k-1 edits. Only the seam case fails, because the converter's sibling stream_parquet is not beside the source file; the sibling is tracked in data/assets/scripts/lib/ and packaged beside the Lambda copy. Nothing was patched: the refusal clause forbids a fallback that weakens the probe, and the converter is read-only for this cell.",
     "notes": "Options for the issuer, not taken by the worker: put data/assets/scripts/lib on the probe's sys.path (a test-harness edit inside the BF-k-1 write grant, no assertion weakened), or name the Lambda package directory as the seam neighbor. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T15:40:29Z",
+    "one_line": "The task order says BUILD_MANIFEST.json names the generator that rebuilds the twin, but the manifest names none: it declares the vendored source paths and says FLAT at zip root, so the twin was refreshed by a flat copy of the source file and the manifest needed no edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/opal-assets/opal-assets-silver-schwab/BUILD_MANIFEST.json at worktree HEAD 87d44e203b: keys function, vendored_modules, vendoring, layer_dependencies, memory_mb, timeout_s, sizing_basis, contract; no generator key and no hash",
+        "comp-find 'vendored_modules' returned 2 hits (the manifest and the task order); comp-find 'BUILD_MANIFEST' hits .tools/check-lambda-layer-deps (reads sidecars, generates none) and .tools/safe_deploy_core.py (comment only)",
+        "infra/aws/lambda/ci/function-map/opal-assets-silver-schwab.json at HEAD lists the 12 files the zip is built from, from source_dir; the builder is infra/aws/lambda/ci/build-and-upload.sh at HEAD (not materialised in this sparse worktree)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-c2 Build step 2: read the manifest and the generator it names, and keep the twin and the manifest exactly as that generator would produce them.",
+    "world_is": "No generator is named or found. The twin is byte-equal to the source after a flat copy (sha256 e2a23e1068 on both). The manifest lists the same source paths before and after, since no module was added, removed or renamed, so it is unchanged."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T15:40:29Z",
+    "one_line": "conversion_manifest._key_scope reads the master by the path-segment rule the converter had, so under the firm form it names the firm (49financial) for every firm-form key that reaches the closure lanes; the converter now reads the file name, but this sibling does not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~SB (issuer; the fix belongs in data/assets/scripts/silver/conversion_manifest.py and its twin, both outside BF-c-2's grant)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/conversion_manifest.py:398-400 at worktree HEAD 87d44e203b: _key_scope returns parts[1] when parts[0] is schwab, else parts[0], the pre-change rule of scope_from_key",
+        "infra/aws/lambda/opal-assets/opal-assets-silver-schwab/conversion_manifest.py:398-400 (twin, byte-identical rule)",
+        "census of the vendored set by grep for parts[ and split(\"/\") over the twin directory: this is the only other position-based master read in the converter family besides set_identity_guard.py (row W5-S3); crs_reader.py, cs_reader.py, silver_registry.py and backfill_status.py hold no key-to-master read"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-c2 worker face: census the other vendored modules for parts[, split(\"/\") and scope_from_key; read-only unless it is the same bug, and if it is, change it only if its file is in the paths block, else file a row.",
+    "world_is": "The same bug is present in conversion_manifest.py, whose file is not in this order's paths, so it is recorded here and not changed. It arms when a firm-form bronze key is written under schwab/49financial/ or schwab/cottonwood/ (the C-MOVE copy) and a closure is built over that lane."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T15:40:29Z",
+    "one_line": "set_identity_guard.parse_bronze_key requires parts[1] to equal the lane's master, so under the firm form every bronze key is dropped from the bronze census and the set-identity verdict for that lane reads its silver without bronze; it is outside this order's grant and unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~SB (issuer; the fix belongs in data/assets/scripts/silver/set_identity_guard.py and its twin, both outside BF-c-2's grant)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/set_identity_guard.py:63-70 at worktree HEAD 87d44e203b: parse_bronze_key(key, scope) returns None unless parts[1] == scope; parse_silver_key (lines 73-79) has the same test but silver keys stay per-master, so it is not armed by the firm form",
+        "infra/aws/lambda/opal-assets/opal-assets-silver-schwab/set_identity_guard.py:63-70 (twin, same rule)",
+        "data/assets/scripts/silver/set_identity_guard.py:81-108 guard_verdict(bronze_keys, silver_keys, scope) counts bronze only through parse_bronze_key, so a firm-form lane reads with an empty bronze side"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-c2 worker face: census the other vendored modules for parts[, split(\"/\") and scope_from_key and say what was found.",
+    "world_is": "The census found the same position-based master test here. It is not in the paths block, so it is recorded and left as it is. It arms with the C-MOVE copy, as W5-S2 does."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T15:40:29Z",
+    "one_line": "The order's 'any other first or second segment RAISES' was read as: a staging first segment must be an 8-digit master and a schwab key's second segment an 8-digit master or a firm folder; the old code returned any staging first segment unchanged, so a non-master staging key now raises at scope_from_key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/schwab_conversion.py scope_from_key at worktree (this change): raises ValueError for a first segment that is neither schwab nor [0-9]{8}, and for a second segment that is neither [0-9]{8} nor in FIRMS",
+        "callers of scope_from_key found by census: schwab_conversion.py convert_object (bronze event key) and schwab_runtime.py:57 (r.key, bronze). Test suites test_schwab_runtime, test_schwab_conversion, test_schwab_projections and test_schwab_schemas pass after the change"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-c2 Build step 1: staging {master}/bronze/... maps to parts[0] (unchanged); any other first or second segment RAISES as it would have failed before.",
+    "world_is": "The staging branch keeps returning parts[0] for an 8-digit master, unchanged. A non-master staging first segment now raises instead of returning a string that failed later. Whether the order meant the staging check to be a validation or a pass-through is the issuer's to confirm; no caller in the census passes such a key."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T15:40:29Z",
+    "one_line": "The schwab OPAL_BUILD_COMMIT pin in infra/aws/terraform/opal-assets/silver.tf names the commit whose package directory equals the deployed build; this change makes the package directory differ at schwab_conversion.py, so the pin is wrong for any build from this tree until the release act moves it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-assets/silver.tf:75-100 at worktree HEAD 87d44e203b: the schwab pin is a literal that the comment says must name the commit the zip is built from, and the comment says a rebuild that does not move it leaves a precise but wrong pin",
+        "this order builds and deploys nothing (WORLD floor); the twin now differs from the pinned commit at schwab_conversion.py only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-c2 Bounds: the Terraform deploy of the new package is the issuer's release act; nothing is deployed here.",
+    "world_is": "The pin is not touched by this order (silver.tf is outside the grant). The release act that deploys the new package moves OPAL_BUILD_COMMIT to the commit that carries it, per the comment's own rule."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T15:40:29Z",
+    "one_line": "The worktree's portal submodule pointer is already modified before any edit by this order (a48fa073c2 in HEAD, 97c66c9364 in the worktree); it is not staged or committed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff portal at wt-bf-5 (branch wk-NFRA_SCHWABBF-5): Subproject commit a48fa073c2... to 97c66c9364...; this order's commits name only the paths block"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-c2 Bounds: the grant is the paths block plus the deliverables folder and this order's file; nothing else is edited.",
+    "world_is": "The submodule pointer differs in this sparse worktree; it is outside the grant and is left alone."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S7",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T15:40:29Z",
+    "one_line": "The code commit 0af3a73506 passed safe-commit rc 0 while two of its checks read nothing in this sparse worktree: the risk reflex answered PARTIAL_OR_BLIND on a stale danger map read from the main tree, and the naming gate printed NAMING ERROR for the missing function-map folder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for commit 0af3a73506 on branch wk-NFRA_SCHWABBF-5: '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND' with the danger map 115.8h old and 'scanned 0 of 3 file(s)'",
+        "safe-commit output for commit 0af3a73506: '[naming-gate] NAMING ERROR function-map folder missing: ...wt-bf-5/infra/aws/lambda/ci/function-map/', then the commit reports 'committed 0af3a73506' with rc=0",
+        "infra/aws/lambda/ci/function-map/ is not materialised in the sparse worktree (ls returns no such folder); the file exists at HEAD as infra/aws/lambda/ci/function-map/opal-assets-silver-schwab.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker rules: a commit passes .tools/safe-commit.sh; the commit-gate reports the checks it ran per file.",
+    "world_is": "The commit-gate checks for the three .py files were clean (3 of 3). The risk reflex and naming gate did not grade this diff in this worktree, and the commit was not blocked by either. Their verdicts for this commit are therefore not evidence of a clean diff."
   }
 ]
 ```
