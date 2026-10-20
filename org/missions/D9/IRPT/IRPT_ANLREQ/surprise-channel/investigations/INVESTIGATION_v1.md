@@ -28782,3 +28782,53 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W330-S1 -- AR-g-171 is silent on a duplicate date, an unknown model code, and a model code absent from the positioning object
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T17:13:00Z",
+  "one_line": "AR-g-171 names no behaviour for two timeseries rows of one code on one date, for a model_code outside the five, or for a model code absent from the positioning object. Built as: a duplicate date refuses; every code present is returned; read_allocation reads the five model codes only and skips an absent one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-171 (cell step 1): read_series 'Per model code, take its rows sorted by date ... Only the codes present are returned.' The refusal list names a missing or mistyped timeseries, a non-date row date, a non-finite model_return, a missing model_code, and no usable series. read_allocation: 'the seven keys of portfolios.<code>.allocation renamed'; the refusal list names an allocation key outside the seven and a non-number weight.",
+  "world_is": "The refusal list and the codes rule do not say what happens to a duplicate (model_code, date), to a model_code outside CODES, or to a CODES member missing from portfolios. Built as follows, in model_source.py at ddd92b3b0a: a duplicate pair raises ModelSourceRefused (tests/test_model_source.py, 'two rows for one code on one date'); read_series returns every code present; read_allocation iterates CODES, skips an absent member, refuses a member whose allocation is malformed or lacks one of the seven keys, and refuses a positioning object with no model allocation. The checker build arm passes; its fixtures carry no duplicate and exactly the five codes, so it does not grade these choices.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-171.model-source-reader-and-model-code-map.md@a5b0ef4b5cd (cell step 1: refusal list and codes rule)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/model_source.py@ddd92b3b0a (duplicate refusal in read_series; CODES loop in read_allocation)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_model_source.py@ddd92b3b0a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S2 -- the commit gate of ddd92b3b0a printed a stale danger map and a client-data WARN, so the reflex did not clear the diff
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T17:13:00Z",
+  "one_line": "The safe-commit of AR-g-171 (ddd92b3b0a) printed the pre-commit risk reflex as PARTIAL_OR_BLIND (danger map 117.2 h old, STALE, 0 of 3 files scanned) and a client-data-check WARN (the hashed account-id list is absent on this box). The commit went through on the commit-gate's own pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md rule 14: every .py edit passes .tools/commit-gate.sh; the commit gate's pass is the pre-commit check. The risk reflex prints a verdict for the diff it was given, and states NOT-DECIDABLE when its map is stale.",
+  "world_is": "At ddd92b3b0a the risk reflex printed ANSWER STATE PARTIAL_OR_BLIND, NOT-DECIDABLE, 'danger map STALE', WITHIN BUDGET scanned 0 of 3 file(s). The client-data-check printed WARN: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, so the commit was not checked for client account ids. The commit-gate reported 'pre-commit gate clean for 2 of 3 file(s)' (the two .py files); the naming, surprise-row and to-pipeline gates passed on the staged set. The three files hold no client data: a stdlib module, a JSON map of five catalogue keys, an offline test.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit stdout for ddd92b3b0a in C:/dev/wk-irpt-anlreq-330 (risk-reflex lines: ANSWER STATE PARTIAL_OR_BLIND; client-data-check WARN: ABSENT)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
