@@ -244,6 +244,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO-BF-k1 AC2 and the worker face: import data/assets/scripts/silver/schwab_conversion.py by path and assert that scope_from_key, feed_from_key and date_from_key read a new-form key built by monolith_bronze_key (the seam probe against the REAL neighbor). The order presents the converter's file set as loadable from its source directory.",
     "world_is": "The six key functions and the other 242 test cases pass at HEAD 5f1ad506a4 plus the BF-k-1 edits. Only the seam case fails, because the converter's sibling stream_parquet is not beside the source file; the sibling is tracked in data/assets/scripts/lib/ and packaged beside the Lambda copy. Nothing was patched: the refusal clause forbids a fallback that weakens the probe, and the converter is read-only for this cell.",
     "notes": "Options for the issuer, not taken by the worker: put data/assets/scripts/lib on the probe's sys.path (a test-harness edit inside the BF-k-1 write grant, no assertion weakened), or name the Lambda package directory as the seam neighbor. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W3-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T15:37:01Z",
+    "one_line": "With the post-run guard reading the firm prefix only, a legacy-only own file that the resumability index correctly skips is absent from the guard's listing, so the run counts it as a shortfall and exits 6 on every fire whose lookback window plans that file, until the migration copies it to the firm form.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1 at worktree wk-NFRA_SCHWABBF-3 (uncommitted at filing): the pre-loop index lists the legacy master folder ($LEGACYROOT) through Get-ResumeNames, so the download loop skips a legacy-only own file",
+        "same file: the post-run guard lists only the firm prefix ($PREFIX) through Get-LandedIndex, and Get-LandingGuardVerdict counts every planned name absent from that index as shortfall; Die 6 fires on guard.ok false with zero download failures",
+        "data/canonical/schwab/tests/test_sdd_daily_pull_key_form.py test_landing_guard_resumability_counts_legacy_only_own_file asserts the skip arm only; no test asserts the guard arm for a legacy-only file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-w2 build step 2 and measured effects: the resumability index must still count the OLD master-form prefix so a not-yet-copied file is skipped, not re-pulled; and the post-run guard reads the NEW prefix only.",
+    "world_is": "Both clauses hold in the built script, and together they make a not-yet-copied legacy-only own file a guard shortfall: the run exits 6 (LANDING GUARD FAILED) with zero download failures. The round-1 row NFRA_SCHWABBF-W2-S3 says the skip is correct, which holds for the download loop, not for the guard. Not exercised against S3 (WORLD floor); the consequence follows from the code read at the cited lines.",
+    "notes": "Recorded for the issuer, not resolved by the worker: whether the guard should also accept a legacy-form copy during the copy-to-delete window, or the migration copies every legacy object before the puller is deployed, is the issuer's decision. The guard was NOT relaxed to pass this case; the spec's new-prefix-only rule is built as written."
   }
 ]
 ```
