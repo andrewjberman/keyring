@@ -1,12 +1,12 @@
 {
   "prd": "NFRA_SCHWABBF_PRD.md",
-  "prd_version": "v0.6",
-  "prd_pin": "0fd3b119fd974de15b4bbefb18ba6c4ece9ea82b",
+  "prd_version": "v0.9",
+  "prd_pin": "3941c46886c96c77da436f8cc660490beab86c37",
   "half": "ratified-text",
-  "half_hash": "3ba8ae5706ae1085e10ca944c18eddff25af3f2804bc1bfdf2b076759ba01309",
-  "endpoint_hash": "0424d44417d9779dcc588037feb99974d1f58c1deff54c62015e8d813f5721f7",
+  "half_hash": "e30544382080fd2636d693735c5e851eee2a33bd7e233046c2d1b2676836596c",
+  "endpoint_hash": "715481ab5b520311caeaf60633d7ccb578d731bb4218f9feea4a13b94e87595a",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.6_RATIFIED_TEXT_20261020.md@ec2d44cf30",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.9_RATIFIED_TEXT_20261020.md@b5a34e355c",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-20T16:28:48Z"
+  "signed_at": "2026-10-20T16:59:48Z"
 }
