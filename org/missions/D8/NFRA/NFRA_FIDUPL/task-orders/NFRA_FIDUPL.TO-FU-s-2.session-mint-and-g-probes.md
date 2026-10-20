@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -78,6 +78,14 @@ The issuer ran your `--trace-login` once on the box (SSM command 26f743ae-6205-4
 2. **Browser fingerprint tells.** The trace shows `window_chrome=false` and a user agent claiming `Chrome/124` while the installed Chromium is much newer (the earlier SSM check read 156): a headless-bot tell. Fix in the context setup: add an init script that defines `window.chrome` with a `runtime` object, sets `navigator.languages` to `['en-US','en']`, and gives a non-empty `navigator.plugins`; and build the user-agent string from the installed browser's real version (`browser.version`) in the Windows Chrome form, so it matches the client hints Chromium sends. Keep `navigator.webdriver` hidden.
 Add three tests to the EXISTING `tests/test_login_trace.py`: `test_error_detection_requires_visible_text`, `test_fingerprint_sets_window_chrome_and_languages`, `test_user_agent_matches_installed_chromium_version`. FU2-AC4 now needs all thirteen. This rides with REPAIR 3 in one delivery. No AWS call, no live call.
 
+### REPAIR 5 (issuer, 2026-10-20 ~15:15Z) -- the repaired login now reaches the site, and the site answers 400
+
+The issuer ran the repaired `--trace-login` on the box (SSM command df28ace9-1a38-4778-8b82-a31641f2a82c; output committed at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/2.0.0_SA_COO~P1/FU-x-1_attempt4_trace_login.txt`, read it by absolute path under `C:/Dev/ajb_workspace/`). Your REPAIR 4 worked: the fingerprint now reads `window_chrome=true`, `Chrome/156.0.8078.4`, and the error detection is no longer a false positive. The new, real picture: after the Next click the site's own `POST /auth/api/redirect-info` returns **400 Bad Request**, the page shows `Error System unavailable at this time`, and the username step fails. In the human capture that same call succeeds. So the browser sends a request the site rejects, and the trace cannot say what is wrong with it. Extend the trace once more, values-free, so the next run says what the 400 request lacks:
+1. **For every XHR or fetch that returns a 4xx or 5xx status:** its method, host label, path, status, the request HEADER NAMES (names only, never values), the request body's top-level JSON or form KEY NAMES with, per key, only whether the value is empty and its length class (0, 1-8, 9-32, 33+), and the response body text cut to 200 characters if it is JSON or plain text (an API error message is not a secret; redact anything that looks like a token or a value you sent).
+2. **Third-party failures:** every `requestfailed` event and every script or XHR to a host other than the site's own: host label (first two labels, for example `online-metrix`), resource type and the failure text or status. The human login loads device-profiling scripts from other hosts; a blocked one would leave a hidden field or header empty.
+3. **Page-side facts:** `document.cookie` cookie NAMES only (never values) present at the Next click, and the names of `window` properties the profiling scripts usually set that are present or absent (just the booleans for `_abck` in the cookie names and for any global whose name contains `tmx` or `ThreatMetrix`).
+Add three tests to the EXISTING `tests/test_login_trace.py`: `test_trace_records_failed_request_shape_without_values`, `test_trace_records_response_error_text`, `test_trace_records_third_party_failures`. FU2-AC4 now needs sixteen. Same rules: values never appear; no AWS, no live call; refresh the proof instance for four criteria and flip to complete only when all four PASS.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -90,7 +98,7 @@ Add three tests to the EXISTING `tests/test_login_trace.py`: `test_error_detecti
 `FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the thirteen login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+`FU2-AC4` -- the sixteen login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 
