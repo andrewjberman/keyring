@@ -87,6 +87,7 @@ Commit, then write the proof instance at `W/NFRA_OPLGTW.TO-OG-sk-2.round-47-the-
 - READINGS DISCLOSED: the layout is RELAYED; the census found no gateway reader of `last_run`, `conversions`, `pulls`, `daily_pull` or `_ops`, and no gateway bronze destination is named, so nothing is dual-read for them; the bronze closure partition check (`catalog.py` near line 456) reads `bronze_keys` from the marker's own closure and is NOT changed here (surprise row `Z-W177-S3` carries it).
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-M</workstream>
 <slot>~178</slot>
