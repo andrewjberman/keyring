@@ -666,7 +666,12 @@ stays the read-only map, and `/people` keeps its list and links into `/opalgatew
 - **FWD-25 -- Restore in one act.**
   - Proof: the restore after FWD-24, then the next call is admitted.
 - **FWD-26 -- Add a channel the person lacks, in one act, labelled WIDENING before it lands.**
-  - The writer refuses a widening that has no recorded sign-off.
+  - The writer refuses a widening that has no recorded sign-off. **That sign-off is defined here** (CVO cure W1, @6ec8d689d5):
+    - **The verified owner's confirm IS the recorded sign-off.** That is a master-admin principal confirming a
+      WIDENING-labelled add on the page. The writer stores it with the act: who, when, before and after. This keeps
+      Andrew's "with ease".
+    - **A widening that an agent requests** (any seat, any script) still needs the three never-widen halves.
+    - Requiring halves on the owner's own clicks too would be Andrew's call. It is not implemented here.
   - The data family needs a grant layer. The `client_*` tools for a non-master person ride the per-firm client grant shape:
     NFRA_OPLGTW round 48, Andrew's yes for Alyssa and Menachem @50bd4a33b4.
   - `portal_channels` gets its control on the grant (brief F7).
@@ -674,6 +679,9 @@ stays the read-only map, and `/people` keeps its list and links into `/opalgatew
   - The page refuses to stop the last master admin, so the owner cannot lock himself out (brief F5 risk).
 - **FWD-28 -- One audit list.**
   - Every add, subtract and stop is shown with who, when, before and after, for every person, in one place.
+  - Proof (CVO cure W2): every driven act of FWD-24 to FWD-27 appears in the list with its actor, time and before/after.
+  - Negative arm: a change written outside the page's writer, for example directly to the store in a test tree, is flagged
+    `unattributed` and never shown as an owner act.
 - **FWD-29 -- What the page shows ON is what the gateway admits.**
   - Proof: after every FWD-24 to FWD-27 act, one call through the served gateway agrees with the page's switch.
   - A switch that is on while a different gate refuses is a FAIL (brief F5 and O7).
