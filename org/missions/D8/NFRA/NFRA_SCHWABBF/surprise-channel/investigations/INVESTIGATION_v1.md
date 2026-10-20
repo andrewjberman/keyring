@@ -244,6 +244,49 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO-BF-k1 AC2 and the worker face: import data/assets/scripts/silver/schwab_conversion.py by path and assert that scope_from_key, feed_from_key and date_from_key read a new-form key built by monolith_bronze_key (the seam probe against the REAL neighbor). The order presents the converter's file set as loadable from its source directory.",
     "world_is": "The six key functions and the other 242 test cases pass at HEAD 5f1ad506a4 plus the BF-k-1 edits. Only the seam case fails, because the converter's sibling stream_parquet is not beside the source file; the sibling is tracked in data/assets/scripts/lib/ and packaged beside the Lambda copy. Nothing was patched: the refusal clause forbids a fallback that weakens the probe, and the converter is read-only for this cell.",
     "notes": "Options for the issuer, not taken by the worker: put data/assets/scripts/lib on the probe's sys.path (a test-harness edit inside the BF-k-1 write grant, no assertion weakened), or name the Lambda package directory as the seam neighbor. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T15:36:55Z",
+    "one_line": "The TO-BF-t2 worker face reads a sibling master's file in the shared firm partition as NOT-HELD for this master, but the round-1 rule for a day with silver present and this master's bronze absent is THREAD-FAIL; the worker kept the round-1 rule and named the sibling case NOT-HELD only when silver is also absent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/keyform/thread_trace.py at worktree branch wk-NFRA_SCHWABBF-4 (base 87d44e203b): trace() sets cause=other-master-only only on the NOT-HELD branch, which requires silver absent; silver present with no bronze for this master falls to THREAD-FAIL reason=bronze-not-held-form-*",
+        "data/canonical/schwab/tests/test_thread_trace.py::test_sibling_file_does_not_count_as_this_masters_bronze_when_silver_is_present asserts rc 1 and no THREAD-OK for that case; test_shared_partition_holding_only_a_sibling_is_not_held_for_this_master asserts rc 2 cause=other-master-only with silver absent",
+        "data/canonical/schwab/tests/test_thread_trace.py::test_silver_present_without_bronze_is_a_failure_not_an_absence (round-1 test, kept unchanged in intent) asserts rc 1 for silver present and no bronze"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-t2 build step 2: 'A day where ANOTHER master's file is in the firm partition but not this master's is NOT-HELD for this master (name the cause cause=other-master-only when silver is also absent).' Step 2 also keeps the typed absence unchanged.",
+    "world_is": "The sentence names NOT-HELD for the sibling-only day in general and places the cause name only on the silver-absent branch; the round-1 rule (silver present without this master's bronze is a failure, not an absence) is kept in code, so a sibling-only day with silver present reads THREAD-FAIL, not NOT-HELD. The issuer should confirm which reading governs the silver-present branch.",
+    "notes": "Not an alert and not a monitor. The silver-absent case, the one the real 2026-10-17 probe exercises, is NOT-HELD cause=no-bronze-no-silver on the real store; the sibling-only case is covered on the fake store only."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T15:36:55Z",
+    "one_line": "The TO-BF-t2 order fixes 'both forms -> FAIL naming the second form' without naming a --form; the worker applied it to --form builder (the CLI default) and kept the round-1 rule that --form any accepts either layout and reports the second form on its hop.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/keyform/thread_trace.py at worktree branch wk-NFRA_SCHWABBF-4 (base 87d44e203b): the problems list keeps 'if second_n > 0 and form != \"any\"', and main() defaults --form to builder",
+        "data/canonical/schwab/tests/test_thread_trace.py::test_both_forms_under_builder_form_fails_naming_the_second_form asserts rc 1 and second-form-found-legacy; test_both_forms_under_any_form_is_ok_and_reports_the_second_form asserts rc 0 with HOP second-form FOUND n=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-t2 build step 1: 'Under --form builder a found second form still makes the verdict FAIL.' Test list: 'both forms -> FAIL naming the second form' (no --form named).",
+    "world_is": "Only the builder form is pinned to FAIL on a second form; under --form any a both-forms day passes and names the second form on its hop. FWD-4 forbids a day stored two ways, so the issuer should say whether --form any must also FAIL on both forms.",
+    "notes": "Not an alert and not a monitor. The real 2026-10-16 probe under --form any reports HOP second-form NONE, so this choice does not change any criterion's output."
   }
 ]
 ```
