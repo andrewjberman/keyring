@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_MCPORTAL_PRD.md",
-  "prd_version": "v0.8",
-  "prd_pin": "d0dd3f0964eafd62b9403116b08819c014898a28",
+  "prd_version": "v0.9",
+  "prd_pin": "ac11a41e4bf1b4beaeeef00b18e242cbe32afda8",
   "half": "ratified-text",
   "half_hash": "ce592cd443f6832b7b195f16df84373499db4eec06ac810c65f48f87e7fcca16",
   "endpoint_hash": "b0e542453b7463fb5f8b282fce23e3eea223f8094a6d3050b37f9b4ca967509a",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPORTAL_v0.8_RATIFIED_TEXT_20261014_Z.md@a75bdd3eea",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_MCPORTAL_v0.10_CURES_RATIFIED_TEXT_20261020_Z.md@a9e0c88901c",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-14T02:53:23Z"
+  "signed_at": "2026-10-20T17:41:57Z",
+  "reason": "v0.10 cures: W2 MET; W1' owner-confirm worded as master-admin (includes systems allowlist), must be the owner gate's single principal"
 }
