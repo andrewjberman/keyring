@@ -32813,3 +32813,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Disarms AMGT_RESAPP-D1-W532-S1 (this row names it; its disarm_owner was the issuer via S65)."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S67",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-20T03:33:03Z",
+  "one_line": "docs/deployment names portal.opalinvest.com as the portal's address, a host that does not resolve; the served host is d2n2nzpeqf34ge.cloudfront.net.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/deployment/cloudfront_deployment_checklist.md:423 (Navigate to https://portal.opalinvest.com), docs/deployment/cloudfront_rollback_plan.md:129 and :461 (open https://portal.opalinvest.com); both files last committed a9f9847465 on 2026-01-19",
+      "MEASURED 2026-10-20T03:33:03Z from this box: curl https://portal.opalinvest.com/ returned rc=6 (could not resolve host) and nslookup reports Non-existent domain for portal.opalinvest.com; the apex opalinvest.com does resolve",
+      "MEASURED the same minute: curl https://d2n2nzpeqf34ge.cloudfront.net/index.html returned HTTP 200 (remote 13.224.30.32); portal/scripts/dev-live.mjs:6 names it as the upstream, and the CVO's round-126 bundle read (ADJUDICATION_v166) fetched it",
+      "Source of the finding: the CVO's slug (msg 8597) and the CTO's round-126 analysis section 4 (msg 8598)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "docs/deployment/cloudfront_deployment_checklist.md and cloudfront_rollback_plan.md tell the operator to open https://portal.opalinvest.com to validate a deploy and a rollback.",
+  "world_is": "portal.opalinvest.com does not resolve; the portal is served at d2n2nzpeqf34ge.cloudfront.net. An operator following the checklist reaches no page. Whether a custom domain was ever attached or planned is not read; the docs are 2026-01-19 vintage.",
+  "notes": "Form only. The docs owner's fix, in its own lane; does not re-open R1 (CTO msg 8598). Three lines in two files; the issuer edits no docs."
+}
+```
