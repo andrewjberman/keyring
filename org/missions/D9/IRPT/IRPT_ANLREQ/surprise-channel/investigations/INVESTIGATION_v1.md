@@ -29069,3 +29069,210 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W341-S1 -- AR467-y-AC2's literal output carries ANSI colour codes (FORCE_COLOR=3), so its expect ^[0-9]+ passed does not match the tail line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:20:00Z",
+  "one_line": "The literal invocation python -m pytest infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py -q 2>&1 | tail -1 prints 14 passed wrapped in ANSI colour codes on this box, so the expect ^[0-9]+ passed does not match its line; the same invocation under FORCE_COLOR=0 prints a plain 14 passed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR467-y-AC2 (the order's ACCEPTANCE block): the invocation python -m pytest infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py -q 2>&1 | tail -1 expects ^[0-9]+ passed.",
+  "world_is": "This worker environment sets FORCE_COLOR=3, and pytest 9.0.2 colours its summary when that is set, so the tail line begins with ESC[32m and no line starts with a digit. Measured 2026-10-20: the literal invocation printed the ESC-wrapped line '14 passed in 1.43s' (rc not a criterion); FORCE_COLOR=0 with the same invocation printed the plain line. The 14 tests pass both ways; only the regex's anchor and the colour setting disagree. Not fixable inside <paths>: pytest.ini at the repo root is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env FORCE_COLOR=3 in the worker Bash environment, measured 2026-10-20",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py@8feed742676 (14 tests)",
+      ".tools/proof-of-spec-check.py:122-142 matches expect against output_evidence with re.M, so the coloured line cannot match"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S2 -- the packager holds no ticket, so the form as filed, the filer's user type and the filing time have no source inside the cell's ports
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:22:00Z",
+  "one_line": "The cell has the packager write the audit from 'the ticket' and 'the form as filed taken from the ticket answers', but the packager reads only the ticket id and no port reads a ticket; the audit's ticket side is therefore an optional port (audit_source) that the live caller does not set, so a live attach records AUDIT_REFUSED:AUDIT_PORTS_UNWIRED and writes nothing until the ticket source is ruled.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 change (3) and PRD C-AUDIT-RECORD: the packager writes the audit at attach time from the ticket, the accepted record, the package pointers and the commentary pointer, and the form as filed is taken from the ticket answers; the filer carries principal id and user type.",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:158-160 reads only ticket_id from the acceptance record. The ports dict (opal_packager.py:43-51) has no ticket reader, and the module header (opal_packager.py:40) states that no port reads a ticket (AR-g-32). The acceptance record shape (_contracts/AnalysisRequest.schema.json) carries no answers, filer user type or filing time. The worker therefore defined the ticket input as {ticket_id, ticket_type, answers, filed_at, filer_user_type, written_at} from audit_source; that shape is the writer's contract, not a read of the ticket service. The live caller (ycharts/generate/resident_worker.py, outside <paths>) does not set audit_source or audit_put.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:158-160@8feed742676",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:40@8feed742676 (no port reads a ticket)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:_write_audit@8feed742676 (AUDIT_PORTS_UNWIRED)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S4 (form-as-filed NOT established from source)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S3 -- the audit put cannot use the existing stores port without breaking an existing packager test, so it is an optional audit_put port
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:24:00Z",
+  "one_line": "AR-y-467 asks for the writer to go through the module's existing injected ports; the only object-store port is stores(record)['objects'], and writing the audit there would add a put that the existing commentary-path test asserts never happens, in a file outside this grant. The audit put is therefore a new optional port, audit_put.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 change (3): call the writer ONCE after a successful attach 'through the module's existing injected ports'; no other behaviour of the packager changes.",
+  "world_is": "opal_packager.py stores(record) returns the objects client that the commentary path uses for the PDF (opal_producer.py:452, :495, :554). infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py test d asserts world.objects.puts == [] and it is outside <paths>. The audit put on that port would fail test d. Two optional ports (audit_source, audit_put) keep every existing caller's behaviour unchanged: they are absent there, so the outcome is AUDIT_REFUSED:AUDIT_PORTS_UNWIRED and nothing is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py test d (objects.puts == [])@6e36e3dcc29",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:452@6e36e3dcc29",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:_write_audit@8feed742676"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S4 -- the schema admits exactly two null pointers, which rejects the custody request whose original_ref is null by design
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:26:00Z",
+  "one_line": "The cell says the schema admits exactly pdf_ref and commentary_ref as null, and also that each package pointer is a string or null. The packager sends original_ref null for every custody request (I5'), so the exactly-two rule refuses every custody audit as AUDIT_RECORD_INVALID. The worker followed the explicit 'exactly those two' rule and did not widen the schema.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 (e) (CTO msg 11472): the schema admits exactly the two pointers pdf_ref and commentary_ref as null and rejects a null report_ref; the same cell's package list reads 'each a string pointer or null'.",
+  "world_is": "opal_packager.py:210-212 (_job_and_original) sets original_ref None for a custody request (_custody_lane, opal_packager.py:130-137), by design (I5'). AnalysisAudit.v1 declares package.original_ref as a non-null string (infra/aws/lambda/investor-reporting/_contracts/AnalysisAudit.v1.schema.json, package.properties.original_ref), so a custody record fails validation and is never written. The custody path has no audit test in test_analysis_audit.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:210-212@8feed742676",
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisAudit.v1.schema.json package.original_ref@8feed742676",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~341/check_audit_schema.py (good sample carries original_ref)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S5 -- a request that reaches READY and never gets a commentary_ref gets no audit record, and the commentary path never attaches the null pair case (e) describes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:28:00Z",
+  "one_line": "The writer is wired only in handle_commentary_ready (AC3). handle_ready attaches the READY package with pdf_ref and commentary_ref both null (AR-y-423) and writes no audit, and handle_commentary_ready never attaches a null pair (it refuses COMMENTARY_REF_ABSENT). So the case (e) describes, a commentary failure at attach, has no packager path that writes it, and a request with no commentary_ready message has no audit at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 (e): a commentary failure at attach (pdf_ref and commentary_ref both null) STILL writes the record. AR-y-467 AC3: exactly one writer call after the attach in the commentary-ready path.",
+  "world_is": "opal_packager.py:166-170 refuses a missing or malformed commentary_ref. handle_ready (opal_packager.py, the READY attach) calls _attach with None, None and is not wired to the writer, which the cell leaves unchanged. The unit test covers the null pair at the writer level (test_analysis_audit.py, commentary-failure test), not through a packager path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:166-170@8feed742676",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:handle_ready@8feed742676 (no _write_audit call)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py::test_commentary_failure_at_attach_still_writes_and_the_schema_admits_exactly_the_two_null_pointers@8feed742676"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S6 -- the resident builder lists _contracts/ as a directory, so the new schema ships without the builder edit the cell asks for
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:30:00Z",
+  "one_line": "AR-y-467 asks for AnalysisAudit.v1.schema.json to be added wherever the resident package builder lists the _contracts it ships. The builder lists the directory _contracts/ and ships every tracked file under it at the pin, so the new schema ships once committed, and build_resident_package.py was left unchanged (the file is in <paths> but needs no edit).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 change (3), last clause: add AnalysisAudit.v1.schema.json wherever the resident package builder lists the _contracts it ships; additions only.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37 lists DIRS including _contracts, and the loop at the DIRS block adds every tracked file under BASE + directory at PIN (git ls-tree -r --name-only PIN), excluding tests and fixtures. The builder names no _contracts file individually, so there is no list to add to.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37@6e36e3dcc29",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:DIRS loop@6e36e3dcc29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S7 -- no registry row exists for the new ANALYSIS_AUDIT family, and the writer's address does not need one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:32:00Z",
+  "one_line": "PRD v0.27 C-AUDIT-RECORD names a new platinum family ANALYSIS_AUDIT (table analysis_audit, 2555 days, unreferenced_days null). The registry row lives in infra/logic/registry/reporting_policies.json, which is outside this grant, so it is not added. address() builds the key without consulting the registry, so the writer works, but the family is undocumented in the registry until the row lands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.27 C-AUDIT-RECORD: a NEW platinum family ANALYSIS_AUDIT, table analysis_audit, accepted_ceiling_days 2555, unreferenced_days null, in the reporting policy revision irpt-anlreq-x10-v1.",
+  "world_is": "lib/opal_naming.py address() (around line 2522-2531) runs key() and _home_bucket() and never reads the families of reporting_policies.json; the family registry check runs only in the X10 writer path (lib/opal_naming.py:2660-2661). The worker's address is irpt / cottonwood / platinum / analysis_audit / request=<id>/analysis-audit.json, bucket from the scope row, and the table check is not run for this address.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:2522-2531@6e36e3dcc29 (address)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S1 (address takes no family argument)",
+      "infra/logic/registry/reporting_policies.json (ANALYSIS_AUDIT row absent; outside <paths>)@6e36e3dcc29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S8 -- the cell names the check scripts' folder as ~330, which this tree does not carry; the acceptance invocations name ~341
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:34:00Z",
+  "one_line": "The worker-face check paragraph places check_audit_schema.py and check_audit_wired.py in deliverables/0.9.0_WK_IRPT_ANLREQ~330/, a folder this tree does not have; the three acceptance invocations and the <paths> grant name ~341. The checks were written to ~341.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 cell, 'The checks': in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~330/ check_audit_schema.py and check_audit_wired.py. ACCEPTANCE AC1 and AC3 name deliverables/0.9.0_WK_IRPT_ANLREQ~341/ for the same two files.",
+  "world_is": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/ holds ~1..~331 (no ~330) at the base commit. The grant names deliverables/0.9.0_WK_IRPT_ANLREQ~341/, and the acceptance invocations resolve there, so the files live there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/ listing@6e36e3dcc29 (no ~330 folder)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-467.audit-record-schema-writer-and-packager-wiring.md ACCEPTANCE AC1 and AC3 invocations"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
