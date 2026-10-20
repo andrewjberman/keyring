@@ -26,11 +26,10 @@ EGRESS CLASS, declared: NONE beyond Opal's own AWS.
 ### PHASE A (only on the issuer's GO)
 1. Read, per principal (`alyssa`, `menachem`; roles, never e-mail or tid in a record): the profile (present?), the `person_access` record (present?), the tool-denial policy, tier and entitlements, and what the admit scope decides for each of the five tools on the TRUNK code (use the gateway's own `decide`/admit functions with the principal's stored records; do not re-implement them).
 2. Write `W/GC1_GATES.json`: `{"principals": {"alyssa": P, "menachem": P}, "write_path": W}`, `P = {"role", "profile_present", "client_tools": {<each of the five>: "admitted" | "denied:<gate>"}, "gates_read": [...], "needs_write": bool, "reason": "..."}`, `W = {"mechanism", "needs_owner_session", "writer"}`.
-3. If either principal has a tool `denied:`, write the ask `W/NEVER_WIDEN_ASK_OG-gc-1.md`: three headed halves (CTO, COO, CVO); the EXACT `tools_allow` set, a subset of the five; the sentence `nothing else is widened` (no channel, no other tool, no other principal); the rollback (`revoke`, a tombstone, never a delete); the line `process-wide state this change touches: none (grant records; no process, logger, signal, environment or global config), read`. If nothing is denied for either, write NO ask and say so in `reason`.
+3. For each denied principal also record `person_access_can_admit` (true only if a `person_access` record could change the denial; false when the gate is `entitlements`, i.e. `decide()` denies before `person_access` is read) and cite the lines read. If a denied principal has `person_access_can_admit` true, write the ask `W/NEVER_WIDEN_ASK_OG-gc-1.md`: three headed halves (CTO, COO, CVO); the EXACT `tools_allow` set, a subset of the five; the sentence `nothing else is widened` (no channel, no other tool, no other principal); the rollback (`revoke`, a tombstone, never a delete); the line `process-wide state this change touches: none (grant records; no process, logger, signal, environment or global config), read`. If nothing is denied for either, or no `person_access` record can admit what is denied, write NO ask and say so in `reason`.
 4. Commit, run AC1 (`.../r47/checks/gc1.AC1.sh`), REPORT, STOP. Activate nothing in Phase A in ANY form.
 
-### PHASE B (only on the issuer's GO, which names all three halves signed, or says no write is needed)
-Open ledger `nfra-oplgtw-gc1-client-tools` (entry AND sentinel, committed first). If a write is needed, apply it through the writer Phase A named, then in EACH principal's own session call `client_resolve_account` once; if no session of theirs exists to read as, report it and STOP before closing: do not mark a call that was not theirs. Write `W/GC1_RESULT.json` (shape in `gc1.AC2.sh`'s header), close the ledger, write the proof instance, commit, run AC2, report once, send me the ledger CLOSED time.
+### PHASE B -- REMOVED (issuer ruling on row Z-S432, 2026-10-20): Phase A showed that no `person_access` record can admit the five tools (the denial is `decide()`'s `entitlement_denied`; `person_access` only narrows after it). There is nothing for this order to apply. The order closes on its Phase A facts. The instrument is a code change to the entitlement model, asked of the CTO as an enrichment item.
 
 ## 2. BOUNDS
 
@@ -52,14 +51,13 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-gc-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r47/checks/gc1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)alyssa: five client tools classified yes.*menachem: five client tools classified yes.*write path named: mechanism and writer stated.*: ok.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-gc-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r47/checks/gc1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)alyssa: a served client_resolve_account call in the principal's own session answered, not denied, [1-9]\d* candidate\(s\): ok.*menachem: a served client_resolve_account call in the principal's own session answered, not denied, [1-9]\d* candidate\(s\): ok.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
-- `AC1` (Phase A) is graded by me before any GO to Phase B; `AC2` (Phase B) after the ledger closes, against the LIVE partitions.
+- `AC1` (Phase A, amended: a denied principal whose gate is `entitlements` needs no ask, and none may be present) is graded by me; the order is complete on AC1. There is no Phase B and no `AC2`.
 
 ## 5. WHEN YOU ARE DONE
 
-Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gc-1.round-47-client-tools-for-alyssa-and-menachem.proof_of_spec.json` after Phase B and validate it with `python3 -I .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>` (`python3`, not `python`: ruling msg 35901). The `<status>` flip is mine.
+Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gc-1.round-47-client-tools-for-alyssa-and-menachem.proof_of_spec.json` after Phase A and validate it with `python3 -I .tools/proof-of-spec-check.py <instance> AC1 --governing-order <this order>` (`python3`, not `python`: ruling msg 35901). The `<status>` flip is mine.
 
 <!-- ===================== RECORD FACE ===================== -->
 
@@ -67,6 +65,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gc-1.round-47-client-tools-for-
 - Round 47, workstream ENRICH-R47-H, amendment A7 of R3-T.124. Source: Andrew-direct @50bd4a33b4 (call `fea3` approved) and the CTO's round-46 analysis. Staged: Phase A may run now on trunk code; Phase B waits for `OG-rl-17` (D1-D3 live) CLOSED.
 - The shape is two-sided on purpose: the gate that denies the `client_*` tools is not established, so a write is conditional on Phase A's facts. If `person_access` is NFRA_MCPORTAL's alone, the order stops at an Andrew open call; I do not route around that owner.
 - Pre-cut: `AC1` and `AC2` base FAIL as expected (no `GC1_GATES.json`, no `GC1_RESULT.json`). The `AC2` pass arm needs a served call from each principal's own session; the order refuses a read that was not theirs.
+- AMENDED 2026-10-20 ~12:5xZ (2.0.0_SA_COO~O, row Z-S434): Phase A found that the gate is `entitlements` (`decide()`), which no `person_access` record moves. Phase B and `AC2` removed; `AC1` and Phase A step 3 amended; the order closes on its facts. Gate limb: none graded (an existing tree order that declares no placeholders). The client_* build is the CTO's to rule.
 
 <status>staged</status>
 <status>pending</status>

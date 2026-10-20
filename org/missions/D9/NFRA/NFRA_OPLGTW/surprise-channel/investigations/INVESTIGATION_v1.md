@@ -30976,3 +30976,34 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Unblocks when a record carries the verified pair (his first sign-in produces a pending profile or an audit principal key, or the issuer names the source). Not a gate I may work around."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T12:49:22Z",
+  "id": "NFRA_OPLGTW-Z-S434",
+  "one_line": "Issuer rulings on the three Phase A rows of the grant orders: Z-S431 (Andrew's download operation is unchanged, not refused), Z-S432 (the client_* tools need a code change in the entitlement model, not a person_access record: OG-gc-1 closes on its facts, the build goes to the CTO), Z-S433 (Menachem has no verified identity record: OG-gm-1 is superseded for round 47 and re-cuts when gate G-E is met)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S431",
+    "NFRA_OPLGTW-Z-S432",
+    "NFRA_OPLGTW-Z-S433"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Z-S431: Andrew's held scope carries operation download_filtered (Alyssa's template does not). The order says only accounts changes; refusing prepare_download would narrow an operation Andrew did not ask to narrow. RULED (a): prepare_download is expected UNCHANGED, admitted iff his stored operations include download_filtered. The order text, its AC1/AC2 expect strings and grantcheck.py were amended in commit 1ed22ed869; the refusal check stays on OG-gm-1 (template: Alyssa's). The ask states that his download operation is unchanged by this grant.",
+      "Z-S432: W/GC1_FACTS.json and the quoted lines of app/data_entitlement.py (decide() 729-743; tool_denial() 838-846) show that an active profile is confined to access.tools on the client tools and person_access only narrows after decide() admits. RULED: no record this order may write moves the denial. OG-gc-1 closes on its facts (Phase B and AC2 removed; AC1 grades the facts and the absence of an ineffective ask). The instrument is a code change to the entitlement model (a grant operation or tools list that admits the five client tools for a granted principal), which is access-widening build work: asked of the CTO as an enrichment item, not cut by the issuer.",
+      "Z-S433: strong scan of POLICY# (29 items) holds no profile for Menachem and no seat-readable record carries his tid and oid; gate G-E (his verified identity) is the open gate. The order forbids typing or guessing the pair. RULED: OG-gm-1 is superseded for round 47 (the precedent of OG-bd-1) and re-cuts when a record carries the verified pair; it is carried in the L10 slug, not an inbox."
+    ]
+  },
+  "spec_asserts": "A worker or applier row is a finding the issuer rules inside its own decomposition (obligation 7); a build that widens access is the CTO's.",
+  "world_is": "gv-1 Phase A continues on the amended expectation. gc-1 is terminal on its facts. gm-1 is terminal for the round with its reason. The client_* build and Menachem's identity are the two carried items.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The three rows are ruled in the evidence above with their reasons; none changes a signed scope, and no grant was activated."
+}
+```
