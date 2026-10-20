@@ -31346,3 +31346,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Worktree materialisation condition, not a product defect. Not repaired here: widening the sparse checkout or checking the file out is outside this worker's write grant and the order's bounds. The issuer must either materialise infra/aws/terraform/opal-gateway in this worktree or name the neighbour as carried for OG-sk-2 before AC2 can grade PASS."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W178-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~178",
+  "surfaced_at": "2026-10-20T21:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The firm_form block the task order specifies holds hand-typed 49financial S3 names, which the commit-time naming gate refuses in its WARN window.",
+  "spec_asserts": "Task order OG-sk-2 section 1 step 1 gives the firm_form key as literal values (state_bucket opal-data-49financial, silver and completion prefixes under schwab/49financial/). Rule 30 (CLAUDE.md): every S3 address and resource name is lib/opal_naming.py output, and a hand-typed carrier is a refusal.",
+  "world_is": "The commit of the firm_form key (2f86838dc4, both contract copies) ran the naming gate: 8 REFUSE verdicts, one each on deploy/NFRA_OPLGTW_CONTRACT.json lines 379 (state_bucket), 380 (four silver_prefixes), 381 (completion_prefix) and 382 (backfill_status_prefix), each 'a NEW hand-kept carrier of 49financial outside every permitted context'. The gate reports WARN, not ENFORCE, so the commit landed. The gate's own live read failed (LIVE-READ-FAILED, comp-find aws census rc=2), so its reason is partly unverified here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json:379 (state_bucket literal opal-data-49financial)",
+      "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json:380 (silver_prefixes literal schwab/49financial/silver/)",
+      "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json:381 (completion_prefix literal schwab/49financial/state/complete/)",
+      "commit 2f86838dc48 on wk-NFRA_OPLGTW-178: safe-commit naming-gate output, WARN window, 8 REFUSE verdict(s) did not block"
+    ]
+  },
+  "notes": "Recorded, not repaired: the literal values are the issuer's specification and the contract is the spec's own carrier. The question for the issuer or the CTO is whether these names must come from lib/opal_naming.py before LGIC_ENFORCE is switched on, since the next commit touching the contract would then be refused."
+}
+```
