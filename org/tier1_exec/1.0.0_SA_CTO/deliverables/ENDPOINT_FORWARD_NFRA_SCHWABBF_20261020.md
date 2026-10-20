@@ -75,6 +75,12 @@ builder form. Each outcome below holds under either answer to (b).
          SOURCE     brief O6, Part III fourth test
 ```
 
+## CONFIRMED by Andrew 2026-10-20 ~13:0xZ
+
+"1.) Yes as written. 2.) Yes, rec is accurate. 3.) We don't care about these at this time."
+FWD-1..7 are confirmed as written, and FWD-7's qualified wait is accepted. (b) The stored-partition move is YES. (a) The other 210 masters
+are OUT OF SCOPE. Record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_130xZ_NFRA_SCHWABBF_DONE_WHEN_CONFIRMED_PATH_MOVE_YES_210_MASTERS_OUT.md`.
+
 ## Reachability
 
 - **Reachable by working: FWD-1 to FWD-6 (6 of 7).** FWD-4 and FWD-5 need Andrew's word on (b) before they are cut, because they move
