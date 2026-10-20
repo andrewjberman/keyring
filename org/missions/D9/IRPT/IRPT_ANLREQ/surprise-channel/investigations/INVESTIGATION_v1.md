@@ -27022,6 +27022,8 @@
 
 ## IRPT_ANLREQ-D2-W312-S2 -- the NOT_SHOWN disclosure the cell names is defined nowhere in the portal; the report face moves a disclosure whose text carries the word NOT_SHOWN to the end on that unverified marker
 
+## IRPT_ANLREQ-D2-W310-S1 -- the naming gate printed a NAMING ERROR for a missing function-map folder during two commits; the commits still landed, because the sparse worktree does not carry that folder
+
 ```json
 [
   {
@@ -27078,6 +27080,31 @@
 ```
 
 ## IRPT_ANLREQ-D2-W312-S4 -- the cell's "17 known failures at the base" in src/pages/InvestorReporting is not reproduced: the folder run in this sparse worktree has 69 non-new failures at base, and one test flips between runs
+    "id": "IRPT_ANLREQ-D2-W310-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~310",
+    "surfaced_at": "2026-10-19T23:05:17Z",
+    "one_line": "safe-commit of 554d32a79f7 and 07a5276542d printed \"[naming-gate] NAMING ERROR function-map folder missing\" and then committed; the sparse worktree does not carry infra/aws/lambda/ci/function-map.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-416 worker face: commit with .tools/safe-commit.sh; the order paths block is the only write grant and the commit should pass its gates.",
+    "world_is": "Both commits of the deliverables folder and of the instance fix printed the naming-gate ERROR line, then the commit-gate and msg-verify lines, and landed (rc 0). The naming gate reads the Lambda source map from that folder and grades nothing from a copy. The same condition is recorded for worker 308 at IRPT_ANLREQ-D2-W308-S3.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of 554d32a79f7 on wk-IRPT_ANLREQ-310: \"[naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-irpt-anlreq-310\\infra/aws/lambda/ci/function-map/\"",
+        "safe-commit output of 07a5276542d on wk-IRPT_ANLREQ-310: the same NAMING ERROR line; both commits landed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. The worker did not add the folder to the sparse set and did not copy the map from the main tree."
+  }
+]
+```
+
+
+## IRPT_ANLREQ-D2-W310-S2 -- the restored Keep path (AR-y-354 words) is the decision tree No press (AR-y-363): the kept line changes from NO_CHOICE_LINE to keptLine for that press
 
 ```json
 [
@@ -27262,5 +27289,28 @@
   "disposition": "UNDER_INVESTIGATION",
   "notes": "This row narrows IRPT_ANLREQ-D2-W309-S1 (the registry gap is closed; the terraform gap remains) and measures IRPT_ANLREQ-D2-W309-S2 (9 cases) rather than reading it. Neither prior row is edited."
 }
+]
+```
+    "id": "IRPT_ANLREQ-D2-W310-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~310",
+    "surfaced_at": "2026-10-20T00:01:45Z",
+    "one_line": "AR-y-425 restores Keep (AR-y-354) on a form where Keep already exists as the decision tree No press (AR-y-363, PRD v0.19), whose words NO_CHOICE_LINE were ruled exactly; the restored keptLine words replace them for that press.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-425 face: re-apply f78ea50e behaviour, keep its words unchanged (keptLine), keep both AR-y-416 and AR-y-419 behaviours; the TO says Keep is a separate press of the Use and Keep form.",
+    "world_is": "On the form at AR-y-419 the equal-pair press is \"No\" (AR-y-363, decision tree Yes / Replace / No) and its kept line is NO_CHOICE_LINE \"Opal Staff will manage the replacement.\". f78ea50e predates the tree and its Keep button is gone. The equal pair, one accumulator, last-click-stands, cap 20, no swap and the no-click rule already held on No, so Keep was applied as the No press: keptHint (= noChoice), isKeptHint, keptLine replaces NO_CHOICE_LINE. filing-decision-tree.test.tsx case e and filing-hint.test.tsx case d re-pinned to the keptLine words. No separate Keep button was added (it would duplicate No).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal show 8095ca42 message: \"keptLine is replaced by NO_CHOICE_LINE\" (AR-y-363, PRD v0.19), Yes / Replace / No",
+        "git -C portal show f78ea50ef87d: Use and Keep buttons, keptLine words \"is kept as you typed it. It is not priced here and goes to the backend with your request.\"",
+        "portal commit 7a7e01775da1 (AR-y-419 candidate): TicketCenter.tsx chooseHint routes every press; AnalysisRequestParts.tsx UploadFindings No press shows the kept line"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Words ruling for the CTO: the TO names keptLine for Keep, which supersedes the AR-y-363 words on the No press. Behaviour is otherwise unchanged. Reversing the words is a one-line change in analysisRequest.ts plus the two re-pinned tests."
+  }
 ]
 ```
