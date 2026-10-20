@@ -59,6 +59,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sz-2.round-47-the-wide-row-coun
 - Pre-cut: `AC1` base FAIL as expected (3 passed, 1 failed); `AC2` base FAIL as expected (0 lines changed, N 120). Arm fed to the checks: a scratch copy with 120 replaced by 80 read `AC1` PASS (4 of 4) and `AC2` PASS (4 lines changed), then was restored.
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-D</workstream>
 <slot>~173</slot>
