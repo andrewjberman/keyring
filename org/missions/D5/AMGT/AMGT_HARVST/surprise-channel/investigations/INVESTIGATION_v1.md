@@ -13583,5 +13583,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         "disposition": "UNDER_INVESTIGATION",
         "notes": "The row gate .tools/surprise-row-gate.py was run on the filed rows; its verdict is in the commit report."
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W187-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~187",
+        "surfaced_at": "2026-10-20T17:26:18Z",
+        "one_line": "proof-of-spec-check count-bar raises VIOLATION on a PASS row whose verbatim census line reads 'no_today_model_block=1 skipped_allowed=0': the checker takes '1 skipped_allowed' from the key=value pair as a nonzero count.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Ruling M(ii) (proof-of-spec-check count-bar-frame): a PASS is not decided by a substring of a contradicting summary; the bar's zero-asserted nouns are graded against nonzero counts in the evidence. A PASS row whose evidence is the verbatim expected census line matches the amended AC1 pattern.",
+        "world_is": "Checker run on the amended instance (artifacts pinned at b5db6b593f) with AC1,AC2: rc=1, VIOLATION count-bar[AC1] names 'skipped_allowed' and evidence '1 skipped_allowed', a substring of the verbatim census line BRANCH-NOTODAY REFRESH-CENSUS ... no_today_model_block=1 skipped_allowed=0 ... The violation's zero-noun list also names no_today_model_block, which the bar asserts as 1. AC1 matches the amended pattern in full; the verdict is INVALID from the count-bar alone.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~187/AMGT_HARVST.TO-HVST-co-3.the-two-unfired-branches-of-the-refresh-driver-are-driven-on-demand-in-dry-mode-against-live-data.proof_of_spec.json (worktree, the amended instance)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~187/co3_branches.out @b5db6b593f (BRANCH-NOTODAY line)",
+                ".tools/proof-of-spec-check.py count-bar-frame @b5db6b593f"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Not worked around: the expect and the verbatim evidence are unchanged. The instance stays INVALID (rc=1) and the order stays open until the checker grades this form. Form only; significance is for the CVO."
+    }
 ]
 ```
