@@ -4798,3 +4798,15 @@ After IB-cw-4 and IB-cw-5 are graded: ONE never-widen pair for the release (the 
 | `IB-cw-5` | BUILD: the refresh Lambda's drop guard counts a re-keyed previous key as retained | FWD-7 | WORLD | none (shares the rule with IB-cw-4, not its files) | PM17-a |
 
 fanout: 1 of 1 chains cut this round, cap 8, reason: one cell on one file (`refresh.py` and its tests); IB-cw-4 is round 16's and touches the runner only.
+
+## 255. ROUND 18, WORKSTREAM ~PM (the Cottonwood retained-key release: cell 6, the APPLY by IB2; 2026-10-19 ~23:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, under the signed pair: packet `deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_COTTONWOOD_RETAINED_KEY_PAIR_PACKET_AND_COO_HALF.md` blob 51c382f112, CTO half `deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_COTTONWOOD_RETAINED_KEY_CTO_HALF.md` SIGNED @1087ec58ec, msg 11103)
+
+Cells 2, 4 and 5 (round 14 and rounds 16 and 17) are graded complete and merged on `box/dell2`: the directory wedge fix, the runner's retained-key rule and the refresh Lambda's retained-key rule. Cell 3 (the reader census) is complete and feeds the pair. This round cuts the ONE release: `IB-cw-6`, to `0.7.0_AE_CloudOps~IB2`, moves the runner bundle object (carrying `directory_runner.py` at blob `f2d2329d39a1`) and the `irpt-directory-refresh` Lambda zip (carrying `refresh.py` at blob `304eb35580ee`, built digest `3YK/4/pGsXjLNoYWmG2mqrps8y+t2QUiLiPt6osNT5g=` measured twice by me at HEAD 67b9d912c5), the runner first, then the zip and a Terraform plan of 0 add 1 change 0 destroy. Live before-state read by me 2026-10-19 23:5xZ: the bundle at version `7ywFHFyMHW5JcS7hjeGIIAWsNyyOOVMB`, the function's CodeSha256 `I7T8wRYmv11nytYpD7i+4XCwwvy6JUaB3fdsgtHyXmA=` (the HMAC release of 2026-10-17). The CTO's timing (msg 11103) and the gateway notice (MSTR msg 11032) fix the window: start between 00:30Z and 04:30Z on 2026-10-20, never alongside another IB2 act, never 06:00Z to 06:45Z, never in the 11:30Z to 14:15Z band. Nothing is invoked and no fire is started by hand: the QA is the first scheduled Cottonwood fire (13:30Z), read by the issuer, with the CTO's added check (a filled report under ONE re-keyed account's new key; counts only; none found means a surprise row for ~D2).
+
+- `IB-cw-6` (APPLY by IB2): gates, the ledger pinning both blobs, the bundle through `safe-deploy` with every member equal to HEAD, the zip digest equal to the pin, the Terraform plan 0/1/0 through `safe-apply`, the CodeSha256 read back equal to the pin, Branch B in reverse. Check `IBCW6` (`r262`): the record's gates, legs and counters; control passes the clean record and each of 34 record negatives and 2 half-file negatives fails its own arm, 0 unexpected; dry-run at the base: AC1 to AC3 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-cw-6` | APPLY by IB2: the runner bundle and the refresh Lambda zip, one release | FWD-7 | WORLD | IB-cw-2, IB-cw-4, IB-cw-5 (complete, merged); the signed pair | PM18-a |
+
+fanout: 1 of 1 chains cut this round, cap 8, reason: one release with ordered acts on two artifacts and one Terraform root.
