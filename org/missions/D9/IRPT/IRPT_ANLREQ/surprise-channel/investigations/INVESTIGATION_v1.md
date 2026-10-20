@@ -27939,3 +27939,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W318-S6 -- the bound check's cut anchor was named in the worker's own record commit, so the anchor moved onto that commit and the changed-since diff came back empty
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W318-S6",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~318",
+    "surfaced_at": "2026-10-20T04:50:38Z",
+    "one_line": "The check's first anchor, the phrase 'to worker slot 318', was also written in the body of the worker's own record commit 0725fb9f544, so git log --grep returned that commit as the cut, the diff to HEAD was empty, and the check printed CONFIRM-BOUND-BAD (files=0) with rc 1. The anchor is now the cut's workstream tag, which no worker commit names; the check then prints CONFIRM-BOUND-OK files=2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order step (4): the check lists the files changed since the cut commit; the cut is the commit that git log --grep finds for the anchor phrase.",
+    "world_is": "A message-grep anchor is only stable while no later commit repeats its phrase. The worker's record commit 0725fb9f544 repeated the phrase in its body; the anchor then resolved to 0725fb9f544 and the product diff was lost. Measured at HEAD 0725fb9f544: the phrase grep returned 0725fb9f544, the diff to it was empty, and the check printed CONFIRM-BOUND-BAD (files=0). After the anchor changed to the cut's workstream tag, which only the cut commit f83176c2a61 carries, the same check at HEAD prints CONFIRM-BOUND-OK files=2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --format=%H --fixed-strings --grep='to worker slot 318' -1 at HEAD 0725fb9f544 returned 0725fb9f5444a9c863ead5c9aae1c980e7024b66, the worker's own record commit",
+        "python -I .../0.9.0_WK_IRPT_ANLREQ~318/check_confirm_bound.py at HEAD 0725fb9f544 with the phrase anchor printed CONFIRM-BOUND-BAD  (files=0), rc=1",
+        "git log --format=%H --fixed-strings --grep='cut(IRPT_ANLREQ round 43 workstream ZZ99' -1 returns f83176c2a61; the same check then prints CONFIRM-BOUND-OK files=2 rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
