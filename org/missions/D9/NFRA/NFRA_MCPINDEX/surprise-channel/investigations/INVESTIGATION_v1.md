@@ -13405,3 +13405,51 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~84",
+  "surfaced_at": "2026-10-20T16:36:47Z",
+  "id": "NFRA_MCPINDEX-Z-W84-S1",
+  "one_line": "The naming gate printed NAMING ERROR (function-map folder missing from this sparse worktree) on the commit of MX-y-1; the commit landed with rc 0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 70635dad511 (LOCAL on wk-NFRA_MCPINDEX-84): the commit-gate output in C:/tmp/wk-mcpindex-84/.scratch/commit1.log line 14 reads [naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-84\\infra/aws/lambda/ci/function-map/ and the commit then printed its commit line with rc 0",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-84 (after the step 0 add): .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery -- infra/aws/lambda is not in the cone"
+    ]
+  },
+  "spec_asserts": "A commit through safe-commit.sh in this worktree is graded by the naming gate, which prints an OK grade for the staged files or refuses the commit.",
+  "world_is": "The naming gate printed NAMING ERROR for the missing function-map folder, which the cone does not carry, and printed no OK line for the naming grade of the two staged files. The commit landed with rc 0 at 70635dad511. The gate's own text says nothing is graded from a copy.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~84",
+  "surfaced_at": "2026-10-20T16:36:47Z",
+  "id": "NFRA_MCPINDEX-Z-W84-S2",
+  "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on the MX-y-1 commit: its danger map is STALE and it scanned 0 of 2 files",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/wk-mcpindex-84/.scratch/commit1.log lines 1-8: [risk-reflex] danger map 116.6h old STALE; ANSWER STATE PARTIAL_OR_BLIND; NOT-DECIDABLE; WITHIN BUDGET scanned 0 of 2 file(s); REBUILD names the MAIN tree's map since a sparse worktree has no build here",
+      "commit 70635dad511 (LOCAL on wk-NFRA_MCPINDEX-84) landed rc 0 with the reflex line printed"
+    ]
+  },
+  "spec_asserts": "The pre-commit risk reflex grades the staged diff against its danger map and answers with a verdict on that diff.",
+  "world_is": "The reflex had a stale danger map and graded 0 of the 2 staged files; it answered PARTIAL_OR_BLIND and stated that it could not clear the diff. The commit landed without a reflex verdict on the diff.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
