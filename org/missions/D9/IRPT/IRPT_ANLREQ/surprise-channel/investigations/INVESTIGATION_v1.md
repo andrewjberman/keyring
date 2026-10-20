@@ -27314,3 +27314,169 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W313-S1 -- The sparse worktree omits infra/aws/ec2, so 40 fixtures of the AC2 regression set error before any test body runs
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W313-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~313",
+  "surfaced_at": "2026-10-20T00:00:06Z",
+  "one_line": "The sparse worktree of 0.9.0_WK_IRPT_ANLREQ~313 does not hold infra/aws/ec2/investor-reporting-ycharts, so 40 fixture setups of the AC2 regression set error before any test body runs (test_resident_installed 13, test_resident_packager_binding 18, test_package_poll 9); the resident_installed.py build path and the resident_worker.py assembly path changed by AR-y-423 are not exercised in this worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO-AR-y-423 AR423-y-AC2 (the regression set of ten files, expect a passing count) runs against the cell's changes; a file the worker needs and lacks is filed as a surprise row and the part is stopped, never copied in.",
+  "world_is": "The AC2 invocation at base cf17a3ccf3f, before and after the change, prints 190 passed, 8 skipped, 40 errors and exits rc 1. Every error is FileNotFoundError on C:\\dev\\wk-irpt-anlreq-313\\infra\\aws\\ec2\\investor-reporting-ycharts\\run-ycharts-session.sh. infra/aws/ec2 is absent from the sparse checkout although the git tree at HEAD holds it. The worker did not copy the folder in; the 40 tests have no result in this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 invocation output at worktree HEAD cf17a3ccf3f, before the change: 190 passed, 8 skipped, 40 errors in 54.50s, rc 1; after the change: 190 passed, 8 skipped, 40 errors in 51.72s (scratch file .scratch/ac2_after.txt, rc 1)",
+      "error counts per file: reports/tests/test_resident_installed.py 13, reports/tests/test_resident_packager_binding.py 18, ycharts/generate/tests/test_package_poll.py 9; each traces to FileNotFoundError on infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh",
+      "git ls-tree -r --name-only HEAD infra/aws/ec2/investor-reporting-ycharts lists run-ycharts-session.sh at cf17a3ccf3f; ls infra/aws/ec2 in the worktree: no such directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocking for the AC2 invocation, not for the new tests: AC1 (11 tests) and the packager tests run green. The issuer or the lane owner decides whether infra/aws/ec2 joins the sparse set; the worker did not widen its own sparse set."
+}
+```
+
+## IRPT_ANLREQ-D2-W313-S2 -- The ticket service at this worker's base still refuses a null pdf_ref and commentary_ref, which the R20-LM7 premise says it accepts
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W313-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~313",
+  "surfaced_at": "2026-10-20T00:00:06Z",
+  "one_line": "The order's depends_on (TCKT_VNEXT.TO-R20-LM7: the ticket service accepts pdf_ref and commentary_ref both null, read at HEAD) does not hold at this worktree's base: the null-pair admission landed after cf17a3ccf3f, on box/dell2 at 99267e3a254.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-423 depends_on: TCKT_VNEXT.TO-R20-LM7 (the ticket service accepts pdf_ref and commentary_ref both null); read at HEAD.",
+  "world_is": "At base cf17a3ccf3f, infra/aws/lambda/ticket_center/lambda_function.py package_ticket (lines 1812-1818) still requires a non-empty string for pdf_ref and commentary_ref; only original_ref may be null. The null-pair admission is in 17073aff04e (the R20-LM7 build) and reaches the branch in 99267e3a254 (the drain), a child of cf17a3ccf3f. The worker read the service only, changed nothing in it, and no test of this order calls it (fakes only), so the cell is unaffected at test time. The release-order contract stands: this packager must not reach PROD before the service accepts the null pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 99267e3a254 cf17a3ccf3f: not an ancestor (rc 1); git show --stat 99267e3a254 lists infra/aws/lambda/ticket_center/lambda_function.py with 11 insertions, and its first parent is cf17a3ccf3f",
+      "infra/aws/lambda/ticket_center/lambda_function.py at HEAD cf17a3ccf3f, lines 1812-1818: the loop over PACKAGE_REF_FIELDS requires a non-empty string except for original_ref"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the flip of the O5 pair reads the premise against the branch that carries R20-LM7. No action taken on the service."
+}
+```
+
+## IRPT_ANLREQ-D2-W313-S3 -- The packager is built after the ResidentAssembly constructor, so it is not available at the assembly construction the cell names
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W313-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~313",
+  "surfaced_at": "2026-10-20T00:00:06Z",
+  "one_line": "The cell says the assembly is constructed with ready_package=getattr(packager, ...) at about line 581 of resident_installed.py, but make_packager ran after that constructor; the worker moved the packager construction ahead of the assembly (no AWS call; closures and a sys.path append only) so the assembly can take it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-423 change 3: at the assembly construction (about line 581) pass ready_package=getattr(packager, 'ready_package', None) where the packager exists; the resident runtime's closed key set does not change.",
+  "world_is": "In build_resident_runtime, the packager (make_packager with live_ticket_ports) was constructed after the ResidentAssembly call and only under bindings commentary_ready_queue_url, so no packager object existed at the assembly construction. The block now runs first and sets packager = None when the binding is absent; the assembly takes getattr(packager, 'ready_package', None); the runtime dict keys (assembly, sqs, queue_url, and under the binding package_queue_url and packager) are unchanged. The move is side-effect-free apart from the research sys.path append, which now runs before the assembly.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/resident_installed.py at base cf17a3ccf3f, build_resident_runtime: the ResidentAssembly(...) call (about line 577) precedes runtime['packager'] = make_packager(...) (about line 593)",
+      "the build_resident_runtime test that would exercise the reordered block is in the blocked file set (see IRPT_ANLREQ-D2-W313-S1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The reordering is the worker's reading of 'where the packager exists'. The CTO or issuer may prefer a post-construction attribute instead; no action taken beyond the change in the worktree."
+}
+```
+
+## IRPT_ANLREQ-D2-W314-S1 -- the old served.py sha256 is still named in six other function-map files after the irpt-ycharts-generate pin edit (reported, not edited)
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "The old served.py sha256 30c0eb88ec38 is still named in six other function-map files after the irpt-ycharts-generate pin edit; the order says report, not edit, so they are reported here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-426 step 2: change the pin and the sha256 of the served.py staged_from entry in infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json and nothing else; print git grep for the old sha256 before and after; any OTHER place naming the old sha256 is reported in a row and not edited.",
+    "world_is": "git grep -n 30c0eb88ec38 -- infra/aws/lambda/ci matches seven lines at 3765e44f3bf: irpt-directory-search.json:40, irpt-export-render.json:126, irpt-holdings.json:106, irpt-narrative.json:79, irpt-performance-adapter.json:411, irpt-status.json:119 and irpt-ycharts-generate.json:177. At bd1894d789f (the step-2 commit) the six other files still carry 30c0eb88ec38, and HEAD:infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json:177 carries 600a934c4b34. The packaged names of the six other entries were not read; the matches are the sha256 field of entries.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git grep -n 30c0eb88ec38 3765e44f3bf -- infra/aws/lambda/ci (seven lines)",
+        "git grep -n 30c0eb88ec38 bd1894d789f -- infra/aws/lambda/ci (six lines)",
+        "git grep -n 600a934c4b34 HEAD -- infra/aws/lambda/ci (one line, irpt-ycharts-generate.json:177)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reported only; this worker edited none of the six. Their own releases move their own pins. The drift is the one the cell preflight names for the other functions that stage served.py."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W314-S2 -- AR426-y-AC3 names HEAD, so its verdict moves with every later commit
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "AR426-y-AC3 is written as map HEAD, so its verdict is a function of the commit HEAD names: it reads R37-MAP-OK at the step-2 commit and R37-MAP-BAD one commit later.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-426 AC3: python -I .../r37/check_r37.py map HEAD, expect ^R37-MAP-OK numstat=2/2 pin=720e125d31469ed60b6e698812c7be731bd6d8e8 sha256=600a934c4b34$.",
+    "world_is": "The map mode diffs <commit>~1 against <commit>. Run at bd1894d789f (the step-2 commit) map HEAD prints R37-MAP-OK numstat=2/2 pin=720e125d31469ed60b6e698812c7be731bd6d8e8 sha256=600a934c4b34, rc=0 (saved in MAP.txt). Run at 7f701cf5e6c, the outputs commit, the same invocation prints 'R37-MAP-BAD numstat lists 4 files, want exactly 1', rc=1. The explicit form map bd1894d789f5196bbc48dc00b081d10c9cc03610 prints the OK line at the current HEAD (saved in MAP_STEP2_EXPLICIT.txt).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r37/MAP.txt at 7f701cf5e6c (map HEAD run at bd1894d789f, rc=0)",
+        "worker run at HEAD 7f701cf5e6c: python -I check_r37.py map HEAD, rc=1, R37-MAP-BAD numstat lists 4 files, want exactly 1",
+        "r37/MAP_STEP2_EXPLICIT.txt (map with the explicit step-2 sha, rc=0)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The proof instance records AC3 at the step-2 commit and the explicit-sha run beside it. Whether the criterion should name the step-2 sha rather than HEAD is for the issuer to decide; the worker does not edit the criterion."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W314-S3 -- the W310-S2 row sits outside any fenced json array
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "The IRPT_ANLREQ-D2-W310-S2 object in INVESTIGATION_v1.md is not inside any fenced json array: it follows the W309-S4 array's closing fence with no opening bracket, brace or json fence before it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Investigation rows are each one object inside a fenced json array (the array's opening and closing bracket lines), and a new row is appended as a new block (surprise-channel append convention, docs/doctrine/THE_SURPRISE_CHANNEL.md).",
+    "world_is": "At 3765e44f3bf the W309-S4 array closes at line 27292 and its fence sits at line 27293. Lines 27294 to 27314 are the W310-S2 object's fields with no opening bracket, brace or fence before them; line 27315 is a closing bracket and line 27316 a bare fence. A parse of every json-tagged fenced block in the file gives 943 blocks and 0 failures, and none of them contains the W310-S2 object.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INVESTIGATION_v1.md @3765e44f3bf lines 27292-27316 (read at the worker worktree)",
+        "worker parse of every json-tagged fenced block in INVESTIGATION_v1.md at 3765e44f3bf: 943 blocks, 0 failing; the W310-S2 id lies outside every block"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reported only. The row was not edited (the rule is never to edit an existing row). Appended rows of this worker sit in their own fenced blocks after it."
+}
+]
+```

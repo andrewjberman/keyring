@@ -3208,3 +3208,16 @@ The CTO ended Andrew's pause and ruled GO for the pair under its own gate (msg 1
 **fanout:** 1 of 1 chains for this cell, cap 4 (CTO msg 8765).
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; selftest red on 90 single-fault mutants):** `checks/r150/p201_cot_alldays_apply.py` (DBC201-1-AC1, DBC201-2-AC1, DBC201-3-AC1).
+
+
+## 199. ROUND 150, WORKSTREAM ALLDAYS (2026-10-20 ~01:1xZ, issuer 2.0.0_SA_COO~D2): the all-days pair is HELD on Andrew's word
+
+Andrew-direct, relayed by the CTO (msg 11151, MSTR msg 11150; record `ANDREW_DIRECT_20261020_010xZ_CLOSE_OUT_TCKT_ANALYSIS_REQUEST_NO_PERFORMANCE_UNTIL_FIDELITY.md`): performance reporting waits until Fidelity is stood up. Ruled for this project: no new performance cell is cut; the all-days pair (packet sha256 `1439a74f...`, order `DB-b-337`) is NOT started, Tuesday's 12:15Z clean fire included; the Inflection pair stays as scheduled; read-only reads that keep served data honest are allowed.
+
+| item | cell | state |
+|---|---|---|
+| 1. the apply | DB-b-337 | HELD, staged and READY; no GO amendment on a clean fire; my COO half stays unsigned |
+| 2. the publish re-enable | not cut | not cut (a performance cell) |
+| 3. the class_series writer | not cut | not cut (a performance cell) |
+
+**Decision inside this decomposition (the issuer's, stated):** the order text gains a HELD line above its empty GO amendment so IB2 reads the hold from the order itself. Nothing else in the order or packet changes.
