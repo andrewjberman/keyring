@@ -771,6 +771,247 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No retry, per the order: step 0 failed, so steps 1 and 3 were not run and no text was requested. The fix needs a trace that records the page state after the Next click (URL and the outline without the fill), which is a worker repair in a later order, or the issuer's decision. The box stays RUNNING, AutoShutdown=disabled."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The offset field that pages accountList.json past the first 2,000 rows is named start, which the order marks as an assumption: no measured request carries an offset field, so the name is unverified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/attribute.py@19ed775f82 page_account_list: pages after the first send fields['start'] = str(page * length); the first page is sent without it, as measured",
+        "RESEARCH_20261019_FIDELITY_WEALTHSCAPE_HAR_ENDPOINT_MAP.md line 58 (accountList.json form: length, accountNumber, sourceCode, custodianCode) and RESEARCH_20261019_NFRA_FIDUPL_ACCOUNT_TXT_AND_FIRM_SPLIT.md section 2b step 3: no offset field is measured",
+        "NFRA_FIDUPL.TO-FR-s-1 WHAT TO BUILD item 2: the field name past 2,000 rows is an ASSUMPTION, unmeasured"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker reference section 11 and the order: accountList.json is paged with length=2000 until a page shorter than 2000 comes back, using an offset field named start.",
+    "world_is": "No captured request in the cited research carries an offset field, so the name start is unmeasured. The fake tests fix the name, and the live cell must confirm it against a request past 2,000 rows before the lister is wired.",
+    "notes": "Built against fakes only; nothing runs live. The paging loop stops at the first short page and caps at 50 pages, so a server that ignores the offset cannot loop forever."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The row container of an accountList.json response, the key that holds each page's account records, is not named in any cited measurement, so page_account_list takes the extractor as an injected callable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/signin_recon.py@19ed775f82 reads only accountListResponse.numberOfAccounts from the accountList.json response; no list key is read",
+        "grep of the cited research (ENDPOINT_MAP, G_NUMBERS, ACCOUNT_TXT_AND_FIRM_SPLIT) for accountListResponse and the account-list key: only numberOfAccounts is named",
+        "attribute.py@19ed775f82 page_account_list: rows_of is required and raises AccountListError when not supplied; no key is guessed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker reference section 11: the real account_lister pages accountList.json until a page shorter than 2000 comes back, so each page's record count is read from the response.",
+    "world_is": "The response key that holds the account records is unmeasured in the cited research, so a page's count cannot be read by a named key. The fake tests supply their own extractor. The live cell must name the key from a captured response before the real lister is wired.",
+    "notes": "No key is guessed in code. Built against fakes only."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "Reference section 11 keys summary.per_label_counts by firm label, while the order bounds say no firm label appears in any output, so the two cannot both hold for a printed summary.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 11 (sweep_attribution return shape): summary.per_label_counts is {label: n}",
+        "NFRA_FIDUPL.TO-FR-s-1 BOUNDS: No G number, account number or firm label in any output. Counts and booleans only",
+        "attribute.py@19ed775f82 implements the section 11 shape verbatim; sweep_attribution prints nothing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker reference section 11: summary holds counts only, and per_label_counts maps label to count. The order BOUNDS: no firm label in any output.",
+    "world_is": "The two statements conflict for the summary dict: its per_label_counts keys are firm labels. The function prints nothing, so the conflict bites only where a caller prints or logs summary; the caller that writes the full dict to the work directory is unaffected.",
+    "notes": "Implemented the section 11 shape as written and did not rename the keys. The issuer decides whether the summary keys change before the day orchestration (box/daily.py) prints anything."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The proof step flips the status of NFRA_FIDUPL.TO-FR-s-1 to complete, but that task-order file is not in this order's paths block, so the worker cannot make the flip.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_FIDUPL.TO-FR-s-1 paths block lists infra/aws/ec2/canonical-fidelity/gswitch.py, attribute.py, tests/test_gswitch.py, tests/test_attribute.py and this investigation file only",
+        "worker face PROOF step: flip the task order status to complete and commit instance, deliverables and flip together; the TO file carries status pending at c5ff6eaad5",
+        "same gap as NFRA_FIDUPL-D1-W2-S6 (round 1, FU-s-4): the grant admits no path to the task-order file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face PROOF step: flip the task order status to complete in the same commit as the instance and the deliverables.",
+    "world_is": "The grant admits no path to the TO file, so the flip falls to the issuer or the gate. The proof instance can be validated and pinned to the code commit 19ed775f82, but the status stays pending until the issuer flips it.",
+    "notes": "Worker leaves the TO file untouched. The criteria FR1-AC1 and FR1-AC2 both PASS-by-output at 19ed775f82."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The order asks the record to list conflicts, unplaced accounts and unmapped labels, while its bounds and reference section 11 forbid any account number or label in an output; the split record carries ordinal ids and counts only, and the id-to-value map stays in memory.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py split_day (worktree wk-NFRA_FIDUPL-3, uncommitted at filing): ids conflict-NNN, unplaced-NNN, label-NNN; resolution filled only when the caller passes a dict",
+        "TO FR-s-2 item 4 and test name test_record_has_counts_and_lists versus BOUNDS 'no G number, account number or firm label in any output'",
+        "tests/test_split.py test_record_has_counts_and_lists asserts no account value, label value or G value appears in the record body (passed on disk)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-2 bounds and reference section 11: no G number, account number or firm label in any output; counts and booleans only.",
+    "world_is": "A reader of the record can see how many accounts were conflicts, unplaced or under an unmapped label, but cannot name them from the record alone; the mapping from id to value exists only in the caller's memory.",
+    "notes": "For the COO to confirm: whether the lists should carry values in an encrypted bronze record (as the raw file does) or stay ids-only as built."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The order does not say what an account is when one of its G numbers carries an unmapped label and another G number of a single firm; split.py lists it unplaced and lands nothing for it, and it judges conflicts and unplaced over every attributed account, not only the accounts in the day's file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py _placement and _classify (worktree wk-NFRA_FIDUPL-3, uncommitted at filing): an account in acct_unmapped is unplaced before the single-firm test",
+        "TO FR-s-2 item 2 states the single-firm and two-firm rules and the unmapped-label rule, not the mixed case",
+        "tests/test_split.py test_unmapped_label_listed_not_landed passes with an unmapped-label account in the export and the unmapped label listed (passed on disk)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-2 item 2: an account under G numbers of one firm lands once for that firm; an account under no G, or under a label that matches no firm, goes to unplaced.",
+    "world_is": "A mixed account (one mapped G, one unmapped G) lands nowhere, which fails closed; the record counts it as unplaced. An account under a mapped G that is not in the day's file is still counted under unplaced or conflicts.",
+    "notes": "For the COO to confirm the mixed-case rule; the fail-closed reading is the one built."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The order does not say what a firm's object does when a same-day split already sits at the destination with different bytes; split.py refuses to overwrite and records that firm-file failed, the same rule the lander applies to raw files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py split_day (worktree wk-NFRA_FIDUPL-3, uncommitted at filing): an existing object whose sha256 metadata differs gives action failed with reason 'destination already holds different bytes; not overwritten'",
+        "NFRA_FIDUPL-D1-W2-S3 (the lander's same rule, filed 2026-10-20 by 0.9.0_WK_NFRA_FIDUPL~2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-2 item 3: each firm's lines are written once per firm and file; a re-run lands the same bytes or nothing.",
+    "world_is": "A re-split of the same day under a changed attribution cannot replace the first firm object; the first bytes stay until a person decides, and the exit code is non-zero.",
+    "notes": "Same decision as NFRA_FIDUPL-D1-W2-S3, to be ruled once for both the lander and the split."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The order's exit rule names three conditions; split.py also exits non-zero on a missing or unreadable file, a failed or refused write, an unkeyed line, or a listing failure, and it performs no trading-calendar check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py exit_code (worktree wk-NFRA_FIDUPL-3, uncommitted at filing): any record failure, any unkeyed row, or any firm-file action outside landed, skipped_existing or planned, or a row count mismatch, returns 1",
+        "TO FR-s-2 item 4: exit 0 only when conflicts and firms_without_scope are empty and every written object's row count matches; the TO does not name the other conditions"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-2 item 4: exit code 0 only when conflicts and firms_without_scope are empty and every written object's row count matches.",
+    "world_is": "The exit code is stricter than the order's rule; every extra condition makes a run exit non-zero, never zero. The calendar is checked by the lander on the staged day, not again here.",
+    "notes": "Stricter-only; the extra conditions can be dropped by a ruling if the box run must not stop on them."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W4-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~4",
+    "surfaced_at": "2026-10-20T15:14:39Z",
+    "spec_asserts": "TO-FR-s-3 WHAT TO BUILD items 1 and 2: plan_windows(today, floor_date, chunk_days) yields non-overlapping windows covering today back to floor_date; backfill_g stops a kind at an EMPTY window whose end is older than floor_date (account open date) and at the 20-year cap.",
+    "world_is": "Both cannot hold on one walk: a walk bounded at floor_date never yields a window whose end is older than floor_date, so the account open date stop is unreachable. Built as: plan_windows keeps the named wording (bounded at its floor argument); backfill_g calls it with the cap date as that floor and tests floor_date only at each EMPTY window, so the account open date stop and the cap stop are both reachable.",
+    "one_line": "The order's planner bound and its account-open-date stop cannot both be met by one walk; backfill_g walks to the cap and tests floor_date at each EMPTY window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FR-s-3.backfill-planner.md at c5ff6eaad5: WHAT TO BUILD item 1 bounds plan_windows at floor_date and item 2 stops a kind at an EMPTY window older than floor_date",
+        "org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md at c5ff6eaad5 section 11: backfill_g walks back from today and stops at the 20-year cap; no planner bound is stated there",
+        "infra/aws/ec2/canonical-fidelity/backfill.py in worktree C:/tmp/fidupl-w4 branch wk-NFRA_FIDUPL-4: _walk_kind calls plan_windows(today, cap_date, chunk_days) and tests date_to < floor_date only on EMPTY",
+        "timeout 120 python -m pytest -p no:cacheprovider infra/aws/ec2/canonical-fidelity/tests/test_backfill.py in worktree C:/tmp/fidupl-w4: 9 passed, including test_stops_at_account_open_date and test_stops_at_cap_years"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Interpretation only: no retry, no blocked criterion. FR3-AC1 passes on the built reading. The issuer may rule on the planner bound."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S1",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-20T15:13:23Z",
+    "one_line": "The round-2 modules attribute.py, gswitch.py and split.py are not on the branch at c5ff6eaad5, so box/daily.py and the daily hookup in box/run.py reference their documented names only, and the daily wiring can run only with fakes until they land.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls infra/aws/ec2/canonical-fidelity/ in worktree wk-NFRA_FIDUPL-5 at HEAD c5ff6eaad5 lists fetch.py land.py quo_otp.py signin.py signin_recon.py and box/ tests/; attribute.py gswitch.py split.py are absent",
+        "box/run.py _real_daily_deps imports split inside its wrapper, and the attribute wrapper refuses by design; an absent split module fails only the split stage (ImportError is caught as a stage failure) and the land still runs"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 11: attribute.py sweep_attribution, gswitch.py GSwitcher and split.py split_day are the documented round-2 interfaces the daily stages call.",
+    "world_is": "No module of the three exists on this branch, so the real attribute and split stages cannot run from this worktree; the stage-level failure is loud in the run record and the exit code.",
+    "notes": "Nothing is stubbed. The tests inject fakes through the deps dict, so the five daily tests prove the orchestration, not the modules."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S2",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-20T15:13:23Z",
+    "one_line": "No documented path gives the daily attribute stage its inputs: the signin Session carries only context and close(), gswitch needs a request object with get_text and post_form, and sweep_attribution needs an account_lister whose constructor reference section 11 does not name; the attribute wrapper therefore refuses loudly and every daily run reports partial.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P1 (names the request adapter and the account lister constructor, or rules where they live; until then each daily run lands and reports attribution and split as not finished)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/signin.py class Session (worktree HEAD c5ff6eaad5): assigns self.context and defines close(); no request, get_text or post_form attribute",
+        "decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 11 (gswitch): GSwitcher(request) with request as get_text(url) and post_form(url, fields); attribute: account_lister() is injected and its real constructor is not named",
+        "box/run.py _real_daily_deps attribute_day raises RuntimeError by design and names this row; the run record and exit code show the failure"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 11: sweep_attribution reads the form, switches every option, calls the injected account lister, and restores the starting G; the daily stage runs it with the session's request object.",
+    "world_is": "The session does not expose the request object the switch needs, and the account lister has no named constructor, so the production attribute stage cannot be built from the documented surfaces. The land stage is unaffected and runs first.",
+    "notes": "A repaired adapter or a named lister constructor is a new cell; this worker did not invent either. ARMED because each scheduled daily run would end partial with no attribution until the owner rules."
   }
 ]
 ```
