@@ -67,6 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-mp-1.round-47-mount-the-owner-g
 - Pre-cut: `AC1` base FAIL as expected (GET 404 POST 404; count 16); `AC2` base FAIL as expected (new test file absent; the five neighbours read 31 passed); `AC3` base FAIL as expected. Arm: the two mount lines applied in the shared tree read `AC1` PASS and `AC3`'s first two lines PASS, then were reverted by edit. Pin: `admin_api.py` blob `2fb26985d9` (equal to the live ref `13917ef993`).
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-K</workstream>
 <slot>~176</slot>
