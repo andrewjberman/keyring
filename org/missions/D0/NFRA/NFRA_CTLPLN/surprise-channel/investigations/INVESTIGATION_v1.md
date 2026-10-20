@@ -15127,3 +15127,56 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 2.0.0_SA_COO~C for the flip. Command output and file metadata only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-W154-S1 -- the worker-checker path the order names is absent from this worktree; the tree's proof checker was run instead
+
+```json
+{
+  "id": "NFRA_CTLPLN-W154-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~154",
+  "surfaced_at": "2026-10-20T20:25Z",
+  "one_line": "The order says to validate the proof instance with the checker '.claude/agents/worker.md' names; that file is not in the worktree (the worktree has no .claude/agents/ folder), so the validation ran with .tools/proof-of-spec-check.py, the checker the worker contract names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test -e /c/Users/AndrewBerman/Desktop/wk-NFRA_CTLPLN-154/.claude/agents/worker.md = ABSENT, and ls of /c/Users/AndrewBerman/Desktop/wk-NFRA_CTLPLN-154/.claude/agents/ finds no such folder, at worktree HEAD e7d8af9d1ce (2026-10-20 ~20:24Z).",
+      "/c/Users/AndrewBerman/Desktop/ajb_workspace/.claude/agents/worker.md exists in the base checkout; it was read-only context and was NOT copied into the worktree.",
+      "/c/Users/AndrewBerman/Desktop/wk-NFRA_CTLPLN-154/.tools/proof-of-spec-check.py is present; it is the checker the worker contract names for the instance."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's proof step: validate the instance with the checker .claude/agents/worker.md names; the worktree is the write grant and the path is an order-named input.",
+  "world_is": "The named file is absent from the worktree (sparse checkout); the instance was validated with .tools/proof-of-spec-check.py, rc recorded in the proof and the final report.",
+  "notes": "OWNER: 2.0.0_SA_COO~C (the issuer, for the sparse set of this worktree and the checker name in the order). Command output and file metadata only; no transcript content."
+}
+```
+
+## NFRA_CTLPLN-W154-S2 -- the order names no VersionId refusal, but apply refuses when the prior object has no VersionId, before any write
+
+```json
+{
+  "id": "NFRA_CTLPLN-W154-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~154",
+  "surfaced_at": "2026-10-20T20:25Z",
+  "one_line": "The order says apply records the prior VersionId from head_object and then puts; the built tool refuses (nonzero, nothing written) when head_object returns no VersionId, because a put over an unversioned object has no prior version to restore.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/bd49f_dim_compact.py apply(): the branch 'if not prior: REFUSED ... bucket unversioned' sits between the merged==0 return and the single put_object, at worktree HEAD e7d8af9d1ce.",
+      "The order's CLI sentence (TO section 3) names only the recorded prior VersionId; it does not name the no-VersionId case. The tool was not run against S3 (WORLD cell); the branch is exercised by no test, as the six named tests do not cover it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's apply mode: record the prior object's VersionId from head_object, then ONE put_object to the same key, then read back and re-run the proofs.",
+  "world_is": "The tool adds a narrowing refusal for an unversioned prior object. It writes nothing in that case and exits nonzero; the issuer or the CloudOps seat decides whether the bucket's versioning is a precondition of the one write.",
+  "notes": "OWNER: 2.0.0_SA_COO~C (the apply contract). Command output and file metadata only; no transcript content."
+}
+```
