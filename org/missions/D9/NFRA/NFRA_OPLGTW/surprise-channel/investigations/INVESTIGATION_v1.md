@@ -31166,3 +31166,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Ruled above with its evidence: the stubs are fixed on trunk and graded green on the merged tree."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S438",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MI",
+  "surfaced_at": "2026-10-20T17:04:32Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "harvest_query_columns dates its answer after its source: the answer reads as_of 2026-10-09T10:34:23Z while the newest date= partition under the prefix it read is 2026-10-08, because _stamp_of returns the part-file write stamp (a clock time) before it looks at the date= partition.",
+  "spec_asserts": "A served answer's as_of is the date of the data it carries (DATA_CATALOG.yaml:21878 names the date= partition as the basis); an answer is never dated after its source.",
+  "world_is": "NFRA_MCPINDEX round 25 MX-y-5 (worker 0.9.0_WK_NFRA_MCPINDEX~88, proof VALID) read app/harvest_figures.py:168-171: _stamp_of puts the part-name write stamp ahead of the partition date. The round-23 battery result for case H15 reads as_of 2026-10-09T10:34:23Z; the list-only source compare of 2026-10-20 reads source dates ending 2026-10-08 under the same prefix.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/harvest_figures.py:168",
+      "infra/aws/ec2/opal-gateway/app/harvest_figures.py:171",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~88/harvest_date_attribution.json",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round25/evidence/SOURCE_COMPARE_20261020c.json"
+    ]
+  },
+  "notes": "Proposed fix (the worker's): in _stamp_of test the date=YYYY-MM-DD partition before the part stamp. CTO round-24 analysis item 2: a code fault goes to 2.0.0_SA_COO~O as a defect row."
+}
+```
