@@ -3227,3 +3227,9 @@ Chain `OG-mp-1 -> OG-rl-18 -> OG-gv-1`; `fanout: 1 worker of 1 chain, cap 8` (`~
 | cell | what | writes | risk | slot | class | after |
 |---|---|---|---|---|---|---|
 | `OG-sk-2` | contract `firm_form` (two copies), catalog dual read, fetch rule, tests | catalog.py, integration.py, two contract copies, `tests/test_og_sk2.py` | WORLD (gateway-path floor) | `~178` | build, worker | `OG-sk-1` (drained) |
+
+**R3-T.124 amendment A16 (2.0.0_SA_COO~O, round 47, ~22:2xZ, workstream ENRICH-R47-N): the IAM text cell `OG-sk-3`.** The reader IAM of the dual read: the data and catalog roles are fenced by `NotResource` denies over the locals of `infra/aws/terraform/opal-gateway/schwab_reader_iam.tf`, so the four firm silver files-by-name (existing bucket) and the one state completion object-by-name (the NEW bucket `opal-data-49financial`, the gateway's FIRST grant there) must be named; `~NFRA1` applies it under `safe-apply` in the release window under its own never-widen pair (the widening). TEXT ONLY: no apply, no plan, no init in the gateway root; plus a read-only record of the bucket-side policy (`W/SK3_BUCKET_POLICY.json`: whether a bucket policy would deny the catalog role anyway). Write set: that one `.tf` and `W/` (disjoint from `OG-sk-2` and `OG-sk-4`). Checks `sk3.AC1` (the locals evaluated by `terraform console` in a scratch module), `sk3.AC2` (statements, `terraform fmt -check`, diff bounds), `sk3.AC3` (the bucket-side record read against the files it cites): base FAIL as expected; AC1 and AC2 armed with a scratch reference edit (PASS, PASS) then restored byte-for-byte. Chain `OG-sk-1 -> {OG-sk-2, OG-sk-3, OG-sk-4} -> R3c release (~NFRA1)`.
+
+| cell | what | writes | risk | slot | class | after |
+|---|---|---|---|---|---|---|
+| `OG-sk-3` | reader IAM text (locals and the catalog role's state-bucket statements) and the bucket-side fact | `schwab_reader_iam.tf`, `W/` | WORLD (`infra/` floor) | `~179` | build, worker | `OG-sk-1` (drained) |
