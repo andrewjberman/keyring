@@ -13651,3 +13651,183 @@ carries none.
   "notes": "OBSERVATION, INERT: this worker's commit touched workflows/gateway_battery only. Whether the sparse cone should carry the function-map folder is the issuer's call; nothing in MX-y-6 reads the naming result."
 }
 ```
+
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~90",
+  "surfaced_at": "2026-10-20T18:48:14Z",
+  "id": "NFRA_MCPINDEX-Z-W90-S1",
+  "one_line": "The census gives 0 rows and no dated partition for opal-data-inf silver/api_dims/, but that rows figure is read from one schema object (billing snapshot 2020-03-22) while the prefix holds 9192 parquet objects, so the census does not establish that the table is empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/4.0.0_SA_CRO~Y/census.json#opal-data-inf/silver/api_dims/ (rows 0, partitions 0, objects 10913, parquet 9192, schema_key silver/api_dims/billing/snapshot_date=2020-03-22/data.parquet)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~90/uncatalogued_rows.json (the api_dims item, disposition reason, caveat inside its reason text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order takes the census as the authority on table contents, and its reason case covers an empty table, so a zero row census figure is read as empty.",
+  "world_is": "The census row figure for opal-data-inf silver/api_dims/ comes from one schema object, 0 rows, while the prefix holds 9192 parquet objects; the table was not counted across its objects.",
+  "notes": "OBSERVATION, INERT: the api_dims item is written as a reason on the census figure with the caveat stated in its text. No criterion grades the row count beyond the census; the CVO or issuer decides whether a count of all objects is needed."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~91",
+  "surfaced_at": "2026-10-20T18:46:22Z",
+  "id": "NFRA_MCPINDEX-Z-W91-S1",
+  "one_line": "The mirror.tf comment for the inf-daily mirror slot says the RP-W3 move put it at 15:05Z and that it must postdate the eclipse producer's ~14:48Z landing, but the declared expression is cron(5 13 * * ? *), 13:05Z, before that landing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-assets/mirror.tf:98 (description: ... AND the eclipse producer's ~14:48Z landing.)",
+      "infra/aws/terraform/opal-assets/mirror.tf:101-105 (RP-W3 comment: 14:15Z -> 15:05Z; this slot MUST postdate eclipse's landing)",
+      "infra/aws/terraform/opal-assets/mirror.tf:106 (schedule_expression = \"cron(5 13 * * ? *)\"); mirror.tf:206 and :229 also name 13:05Z as the first fire",
+      "infra/aws/lambda/ci/trigger-map.json:2739 (opal-assets-ingest-mirror-inf-daily expression cron(15 14); file header _updated 2026-08-01T19:23Z, so a stale registry, not a live read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "mirror.tf:98-105 states that the inf-daily mirror slot was moved to 15:05Z and must postdate the eclipse producer landing near 14:48Z.",
+  "world_is": "mirror.tf:106 declares cron(5 13 * * ? *), 13:05Z, which precedes the landing; the comment and the expression disagree within the same file. The stale trigger-map entry carries a third value, cron(15 14).",
+  "notes": "OBSERVATION, INERT. The gap between the first poll and the landing is the first term of the copy lag named in the copier file (eclipse_copier.json lag.cause). The owner (2.0.0_SA_COO~MI or OPAL_ASSETS) reconciles the comment with the expression; this worker changes neither."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~91",
+  "surfaced_at": "2026-10-20T18:46:22Z",
+  "id": "NFRA_MCPINDEX-Z-W91-S2",
+  "one_line": "The schedules name the same-day gap between the producer landing and the copy, but not a whole missing trading day; the 17:05Z second poll should carry 2026-10-19 by that evening, so the full-day miss needs the live outcome of that run, which this worker did not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/4.0.0_SA_CRO~Y/ADVISOR_TABLES_PER_VENDOR_BRIEF_20261020.md:129-130 (STALE by 1 trading day; the copy stops at 2026-10-17 and is missing 2026-10-19)",
+      "infra/aws/terraform/opal-assets/mirror.tf:230 (second poll cron(5 17 * * ? *), for a raw file that landed after 13:05Z)",
+      "infra/aws/lambda/opal-assets/opal-assets-silver-eclipse/mirror_conversion.py:777 (the sweep lists bronze under the monolith only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The brief frames the copy as one trading day behind and asks the copier cause to be named from the schedule against the producer cadence.",
+  "world_is": "The schedule explains a same-day gap of about 2 hours 17 minutes between the ~14:48Z landing and the 17:05Z poll, not a missing whole day. A missing 2026-10-19 partition needs the live result of the 17:05Z poll for that day, which requires an AWS read this worker was not permitted to make. The cause in eclipse_copier.json is therefore the schedule's share only.",
+  "notes": "OBSERVATION, INERT. The CVO or the issuer reads the live listing of eclipse/inflection/bronze/ and silver/ for 2026-10-19 to close the remainder of the lag."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~91",
+  "surfaced_at": "2026-10-20T18:46:22Z",
+  "id": "NFRA_MCPINDEX-Z-W91-S3",
+  "one_line": "The task order says the issuer pre-adds data to the sparse cone, but the cone held infra/aws, lib, workflows and org paths only; this worker added data/inf/scripts and data/assets/scripts to read the producer and converter scripts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree wk-NFRA_MCPINDEX-91 before the add: .tools, infra/aws, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows (no data path)",
+      "data/inf/scripts/silver/convert_eclipse_portfolios_to_silver.py:4 (producer writes s3://opal-data-inf/silver/eclipse/{date}/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 0 of the worker face says the issuer pre-adds infra/aws, workflows, lib and data to the sparse cone.",
+  "world_is": "The cone lacked data; the add of data/inf/scripts and data/assets/scripts was the only sparse change made, as the face permits. org/projects is absent from the cone, and the checker resolves project codes through git cat-file, so it was not added.",
+  "notes": "OBSERVATION, INERT. The issuer decides whether the cone pre-add list in future faces should carry data."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~92",
+  "surfaced_at": "2026-10-20T18:50:30Z",
+  "id": "NFRA_MCPINDEX-Z-W92-S1",
+  "one_line": "The source-set cites for six ycharts tools (source_sets_integrations.json, cites integration.py:130-191) and for schwab_describe_dataset (source_sets_assets.json, cite integration.py:516) do not name the tool definitions; the cited lines sit in helper or unrelated code, and the definitions are at ycharts integration.py:173, 182, 196, 208, 220, 235 and schwab integration.py:1221.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~75/source_sets_integrations.json@4668dc43e44 (ycharts cites at lines 121, 135, 149, 163, 177, 191 of the file)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~71/source_sets_assets.json@4668dc43e44:470 (schwab_describe_dataset cite integration.py:516)",
+      "infra/aws/ec2/opal-gateway/app/integrations/ycharts/integration.py@4668dc43e44: def lines 173, 182, 196, 208, 220, 235; lines 130 and 516 of the schwab file are not the tool definitions (schwab integration.py:1221 is async def schwab_describe_dataset)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each integration tool's source-set cite names the line of that tool's source read in the gateway app.",
+  "world_is": "The ycharts and schwab source-set cites are stale: they name lines that are not the tool definitions, so a reader following them lands in helper or unrelated code.",
+  "notes": "OBSERVATION, INERT: no criterion of MX-z-3 reads a source-set cite; the probe plan cites the current definitions. Whether the source sets are regenerated is the issuer's call."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~93",
+  "surfaced_at": "2026-10-20T18:48:25Z",
+  "id": "NFRA_MCPINDEX-Z-W93-S1",
+  "one_line": "The channel artifact cma.02.views (json/capital-markets/views.json, serve-with-caveat, opal-internal) is described only in the channels section of DATA_CATALOG.yaml, so none of the three row sections holds a row for an object the discover tools serve; the new row json_capital_markets_views is the first row for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@4668dc43e44 lines 258-262 (channels capital_markets, artifact key json/capital-markets/views.json, entity cma.02.views, verdict serve-with-caveat)",
+      "grep of capital-markets/views in DATA_CATALOG.yaml@4668dc43e44: lines 224, 258, 270 only; none in silver_datasets (4622-19791) or portal_datasets (19792-19938)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every object family a discover tool reads is described by a row of silver_datasets, portal_datasets or harvest_datasets, the member (a) set of the coverage gate; a servable family outside those sections is a missing row.",
+  "world_is": "The servable object json/capital-markets/views.json is described only by a channels artifact entry, which the three row sections do not hold; the row json_capital_markets_views written by MX-z-4 is the first row for it.",
+  "notes": "OBSERVATION, INERT: the row-for-opal_describe and c-for-opal_discover choice in coverage_two.json rests on this reading of row. The issuer links the row as member (a) at the drain. Nothing in MX-z-4 reads the channel verdict."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~93",
+  "surfaced_at": "2026-10-20T18:48:25Z",
+  "id": "NFRA_MCPINDEX-Z-W93-S2",
+  "one_line": "The coverage check refuses any reason token that starts with an entity prefix and is absent from the catalog file, so a c reason cannot name a new row that follows the silver naming convention; I named the row json_capital_markets_views, outside that convention, to keep the naming the face asks for.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round26/checks/z4_check.py@4668dc43e44 ENTITY_PREFIXES (line 29) and named_entities_missing (lines 126-132): a reason token starting portal_, opal_data_, harvest_, dynamodb_ or silver_ must be a catalog entity of the three sections",
+      "z4.AC2 run on the worker coverage_two.json: reason check passed with json_capital_markets_views named in the opal_discover reason (no prefix, so not graded as an entity token)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The c item for opal_discover names the new row's entity, and the new row takes the catalog's silver naming convention opal_data_portal_v2_served_<table>.",
+  "world_is": "The reason rule grades every opal_data_ token against the catalog file, which lacks the new row until it lands, so a conventional name cannot be named by a c reason in the same round; the row carries the non-prefixed name json_capital_markets_views.",
+  "notes": "OBSERVATION, INERT: the issuer chooses the entity name at the drain. The naming choice is the only departure from the silver convention in MX-z-4 output."
+}
+```

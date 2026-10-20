@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "ROUND_CLOSE",
+  "dep_stage": "EXECUTING",
   "created": "2026-10-20",
   "registered_under_tree": "2026-10-20",
   "placement": "LAPTOP",
@@ -20,7 +20,7 @@
   ],
   "name": "Schwab masters: full backfill to Schwab's served floor and canonical (builder-form) bronze paths, plus the onboarding path for newly entitled Cottonwood masters",
   "description": "Registered at L3 by 1.0.0_SA_CTO on Andrew-direct 2026-10-19 ~21:0xZ ('we need to start pulling all of these and also getting as much backfill as we can from them ... full backfill from the 0840 account ... organized in the opal-data-assets bucket in canonical LGIC_NAMING path form', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_210xZ_SCHWAB_COTTONWOOD_MASTERS_PULL_AND_BACKFILL.md @c031634941) and his 2026-10-20 01:02Z word via ms that the laptop CTO owns it end to end. Three entitled masters (08242234, 08335338, 08403355); the four Cottonwood masters wait on Schwab entitlement (absent from the 213-master list, download 204). Uses the Schwab Box's SDD login and session lock, never inside the daily pull fires. No alerts (moratorium). No shadow paths: one key form.",
-  "phase": "2026-10-20 ~16:1xZ (2.0.0_SA_COO~SB): round 2 CLOSED at the drain: 8 of 8 orders complete and merged on box/laptop (firm-form key function, move tool, readers, puller, trace, converter set, IAM and event-rule text), nothing deployed, applied or moved; the L10 slug to the CTO carries one decision (1,245 unprefixed 0824 objects) and the release plan R0-R8 on the firm form.",
+  "phase": "2026-10-20 ~18:4xZ (2.0.0_SA_COO~SB): round 5 issued on PRD v1.0 (CTO msgs 109966, 109970): meta and _ops as the builder state tier in the FIRM bucket for 08403355 (converter family, puller, move tool, IAM text); 4 task orders, 4 worker slots. The cutover is one act across every tier and waits for this round, the gateway edit (2.0.0_SA_COO~O) and Andrew.",
   "blocking": null,
   "brief_ref": "docs/briefs/nfra-schwabbf-schwab-masters-backfill-canonical-paths-brief-20261020.md@f0e33a4317",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_SCHWABBF_20261020.md",
@@ -29,7 +29,10 @@
   ],
   "decompositions": [
     "org/missions/D8/NFRA/NFRA_SCHWABBF/decompositions/NFRA_SCHWABBF_DECOMP.md",
-    "org/missions/D8/NFRA/NFRA_SCHWABBF/decompositions/NFRA_SCHWABBF_DECOMP_R2.md"
+    "org/missions/D8/NFRA/NFRA_SCHWABBF/decompositions/NFRA_SCHWABBF_DECOMP_R2.md",
+    "org/missions/D8/NFRA/NFRA_SCHWABBF/decompositions/NFRA_SCHWABBF_DECOMP_R3.md",
+    "org/missions/D8/NFRA/NFRA_SCHWABBF/decompositions/NFRA_SCHWABBF_DECOMP_R4.md",
+    "org/missions/D8/NFRA/NFRA_SCHWABBF/decompositions/NFRA_SCHWABBF_DECOMP_R5.md"
   ],
   "leads": {
     "cto": "1.0.0_SA_CTO",

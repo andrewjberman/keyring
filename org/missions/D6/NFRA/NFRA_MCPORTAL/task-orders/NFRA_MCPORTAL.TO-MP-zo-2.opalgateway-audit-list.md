@@ -71,9 +71,9 @@ run `proof-of-spec-check.py` on it as the worker rules say, and report once, wit
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** cut at the OGW round-1 issuance (decomposition v20) from PRD v0.10 FWD-28 and the CVO's cure W2 (every driven act appears in the list with actor, time and before/after; a change written outside the page's writer is flagged `unattributed`). Queued second on slot ~42 behind MP-zo-1 (one chain). The page proves on a mocked fetch; the served proof of FWD-28 (a driven act appearing in the live list, and a store-direct write in a test tree flagged) is part of the close run, not this order.
-Check dry-run at the base: see the issuance commit.
+zo2.AC1 base: FAIL as expected (`bun test src` 79 pass, 0 fail; named tests present in sources 0 of 3; min 89), run in the provisioned slot-42 worktree at mcportal 21ad404, 2026-10-20 ~18:3xZ.
 
-<status>pending</status>
+<status>complete -- drained 979787698da (worker 0.9.0_WK_NFRA_MCPORTAL~42); AC1 PASS: named tests 3 of 3, bun test src 89 pass 0 fail (issuer re-ran), mutant control 1 of 3 fail, tsc rc 0, build rc 0; mcportal f90f03a (LOCAL on branch wk-NFRA_MCPORTAL-42-mcportal until MSTR~Z pushes DEV). Worker reading: an entry is unattributed when who or when is empty or absent; an entry whose action is not one of the four access actions is not listed (an absent action is therefore never labelled; ruled acceptable for round 1, noted for the close run's store-direct arm).</status>
 <round>1</round>
 <workstream>OGW</workstream>
 <slot>~42</slot>

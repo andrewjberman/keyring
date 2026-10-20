@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_SCHWABBF~11</issued_to>
 <issued_by>2.0.0_SA_COO~SA</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -62,6 +62,18 @@ You write a NEW Terraform root, as TEXT, plus a test. You run no `terraform init
    - REGISTRY (name contains `registry`): the master map and the registry rows agree both ways (a master in one and not the other fails).
    - FMT: if `terraform` is on PATH, `terraform fmt -check -recursive` on the folder exits 0; otherwise print `SKIP: terraform not on PATH` and pass (put this arm in a test whose name contains `box_instance`).
 
+### AMENDMENT 2026-10-20 ~17:0xZ (issuer 2.0.0_SA_COO~SA; the order is REOPENED, same worker, same face above)
+
+The issuer ran a read-only `terraform plan` of the merged root at pin `8bb7fdf9b7c`. Two defects your text tests did not see. Fix both as TEXT (still no `terraform`, no `aws`). Your worktree is `C:/Users/AndrewBerman/Desktop/wt-al-11` (re-provisioned from `box/laptop` HEAD; your earlier commits are in its base).
+
+**Defect 1: the shared name table is stale.** `infra/aws/terraform/modules/opal_name/generated_locals.tf` is GENERATED from the registry by `lib/opal_naming.py` (its header says so). It predates the master scope rows, so the module refuses `scope = "08719286"` (the four daily rule names in `schedule.tf`): "scope must be the LONG form of a FIRM, GLOBAL or MASTER row". Fix: regenerate it with the generator, never by hand. From the repo root: `python lib/opal_naming.py generate --out <a scratch dir outside every repo folder> --target infra/aws/terraform/modules/opal_name/generated_locals.tf`, then copy the one file the generator wrote (`<scratch>/infra/aws/terraform/modules/opal_name/generated_locals.tf`) over the repo file. The issuer's measurement of that exact run: 83 key/value entries before, 123 after, 40 added, 0 removed, in the sections `fence_patterns`, `scope_bucket`, `scope_class`, `scope_long`, `scope_short` only. Print the same three numbers from your run. If your run removes any entry, STOP with a surprise row and do not commit that file (it is shared by every Terraform root that uses the name module; the change must be purely additive).
+
+**Defect 2: the adopted secret would lose its description.** The plan showed the import of `schwab/alongside/sdd-credentials` would set its live `description` to null (`1 to change`). Fix in `secrets.tf`: in the `lifecycle` of `aws_secretsmanager_secret.alongside_sdd_credentials` ONLY, `ignore_changes = [description, tags, tags_all, force_overwrite_replica_secret, recovery_window_in_days]`, with a two-line comment (the live secret carries a description set at creation; adoption must change nothing). The created secret `alongside_ec2_credentials` keeps its old list.
+
+**Tests (same file):** update the test whose name contains `secrets` so the adopted secret expects the list with `description` first and the created secret keeps the old list; ADD a test whose name contains `name_table`: read `generated_locals.tf` as text; its `scope_long` section has a key for each of the four masters of `local.alongside_masters` (read from `masters.tf`), each is a row of `infra/logic/registry/scopes.json` with `class` `MASTER`, its `scope_class` section maps each of the four to `MASTER`, and `cottonwood` and `alongside` are present in `scope_long`. Write the `name_table` test first and see it fail on the stale table, then regenerate.
+
+**New criterion (a fourth, with its reason: the amendment adds a shared generated file the original three did not cover):** `AL1-a1-AC4`, below. Re-run AC1-AC4, update your proof instance for the four ids (`proof-of-spec-check.py` over AL1-a1-AC1..AC4), commit everything in one safe-commit and flip the status to `complete` only when all four PASS. After this order you return to `AL-s-1`'s files only if a criterion there turns red (run `test_alongside_schedule_tf.py` once; it must stay at 6 passed).
+
 ### ACCEPTANCE
 
 <criterion id="AL1-a1-AC1" cell_refs="AL-a-1"><invocation>python -m pytest data/canonical/schwab/tests/test_alongside_box_tf.py -q -p no:cacheprovider --color=no -k "builder_names or iam_grants"</invocation><expect>^[0-9]+ passed[ ,]</expect></criterion>
@@ -73,7 +85,10 @@ You write a NEW Terraform root, as TEXT, plus a test. You run no `terraform init
 <criterion id="AL1-a1-AC3" cell_refs="AL-a-1"><invocation>python -m pytest data/canonical/schwab/tests/test_alongside_box_tf.py -q -p no:cacheprovider --color=no -k "one_writer or registry"</invocation><expect>^[0-9]+ passed[ ,]</expect></criterion>
 `AL1-a1-AC3` -- the four Cottonwood masters only, matching the registry both ways.
 
-<expected_criteria>AL1-a1-AC1,AL1-a1-AC2,AL1-a1-AC3</expected_criteria>
+<criterion id="AL1-a1-AC4" cell_refs="AL-a-1"><invocation>python -m pytest data/canonical/schwab/tests/test_alongside_box_tf.py -q -p no:cacheprovider --color=no -k "name_table"</invocation><expect>^[0-9]+ passed[ ,]</expect></criterion>
+`AL1-a1-AC4` -- the regenerated shared name table resolves the four Cottonwood masters as MASTER scopes (amendment; the original three criteria are unchanged).
+
+<expected_criteria>AL1-a1-AC1,AL1-a1-AC2,AL1-a1-AC3,AL1-a1-AC4</expected_criteria>
 
 Dry-run at the base 2026-10-20 (the test file does not exist): all three, "file or directory not found" (rc 4) -- FAIL as expected. Write the test FIRST and run each criterion to see it fail on the missing root files, then build.
 
@@ -89,6 +104,7 @@ infra/aws/terraform/alongside-schwab-ec2/masters.tf
 infra/aws/terraform/alongside-schwab-ec2/iam.tf
 infra/aws/terraform/alongside-schwab-ec2/secrets.tf
 infra/aws/terraform/alongside-schwab-ec2/box.tf
+infra/aws/terraform/modules/opal_name/generated_locals.tf
 data/canonical/schwab/tests/test_alongside_box_tf.py
 org/missions/D8/NFRA/NFRA_SCHWABBF/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -101,7 +117,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AL1-a1-AC1, AL1-a1-AC2, AL1-a1-AC3. Instance at `org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.9.0_WK_NFRA_SCHWABBF~11/NFRA_SCHWABBF.TO-AL-a1.alongside-box-terraform-root.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> AL1-a1-AC1,AL1-a1-AC2,AL1-a1-AC3` BEFORE the flip.
+Criterion ids: AL1-a1-AC1, AL1-a1-AC2, AL1-a1-AC3, AL1-a1-AC4. Instance at `org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.9.0_WK_NFRA_SCHWABBF~11/NFRA_SCHWABBF.TO-AL-a1.alongside-box-terraform-root.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> AL1-a1-AC1,AL1-a1-AC2,AL1-a1-AC3,AL1-a1-AC4` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT (your final message):** each file with its line count, the resource addresses you created, the pytest summary lines, the commit hash, any surprise row id.
