@@ -1106,5 +1106,75 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "world_is": "In this sparse worktree the naming gate cannot find its function-map folder and the risk reflex's danger map is stale; both print without failing the commit, so those two checks were not graded for 09839fddaaaf. The same condition is recorded at NFRA_SCHWABBF-W5-S7 and NFRA_SCHWABBF-W5-S8.",
     "notes": "Form only. Recorded per commit, as the W5 rows are. No action taken; the sparse worktree is not rebuilt."
   }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W4-S9",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:08:43Z",
+    "one_line": "The BF-g-5 state-tier grants are not sufficient for a firm-bucket write: each firm bucket policy denies every s3:* to principals outside its fence pattern and exemption list, and neither the box role nor the converter role is in either.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO (NFRA_SCHWABBF issuer) with 1.0.0_SA_CTO sign-off on the exemption rows for opal-data-49financial and opal-data-cottonwood (never-widen, NEVER #1)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/shared-infra/s3-49financial.tf@43bcfd4bc6a lines 114-137: aws_s3_bucket_policy statement DenyForeignFirmPrincipals, Effect Deny, Principal *, Action s3:*, Condition ArnNotLike aws:PrincipalArn = module.opal_name.fence_patterns[49financial] plus fence_exemption_arns",
+        "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf@43bcfd4bc6a lines 142-170: the same DenyForeignFirmPrincipals Deny on opal-data-cottonwood with fence_patterns[cottonwood]",
+        "infra/aws/terraform/modules/opal_name/generated_locals.tf@43bcfd4bc6a lines 129-132: fence_patterns 49financial = role/*-49f-* and cottonwood = role/*-cot-*; the box role (quartz-si2-spike-role, named at infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf@43bcfd4bc6a line 11) and the converter role (opal-assets-silver-schwab-role, from aws_iam_role.silver) match neither pattern",
+        "infra/logic/registry/exemptions.json@43bcfd4bc6a: the exemption principals listed for opal-data-49financial and opal-data-cottonwood contain neither quartz-si2-spike-role nor opal-assets-silver-schwab-role"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-g-5 worker face: 'Neither the box role nor the converter role can write there today: the first state write of a firm-form master would be refused.' The build adds the IAM statements, and the face asks the report to name anything else that would refuse these writes (a deny statement, a required KMS key).",
+    "world_is": "The IAM statements land and their arms pass, but they are not sufficient: the bucket policy of each firm bucket denies every s3:* (GetObject and ListBucket included) to any principal that matches neither the firm fence pattern nor an exemptions.json row, and neither role matches or is exempted for either bucket. Encryption is not the blocker: both buckets default to AES256 (SSE-S3), which the puller's --sse AES256 satisfies. The exemption rows are a registry edit (infra/logic/registry/exemptions.json, outside this order's paths, under never-widen sign-off) and were not made here.",
+    "notes": "Not an alert and not a monitor. Left alone, the box's daily_pull and pulls writes and the converter's complete, conversions and backfill_status writes and read-backs are refused by the bucket policy with AccessDenied. The converter's idempotency and read-back reads are denied the same way, and the monolith-iam.tf header records that an idempotency check which cannot read its destination swallows the error. Disposition for the issuer: name the exemption rows, or hold the state-tier cell until they land."
+  }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W4-S10",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:08:43Z",
+    "one_line": "The firm-bucket Terraform the face names is absent from this sparse worktree on disk; it was read at HEAD through git show, read only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in worktree wk-NFRA_SCHWABBF-4 names no infra/aws/terraform/shared-infra entry, so the directory has no files on disk here",
+        "git show 43bcfd4bc6a:infra/aws/terraform/shared-infra/s3-49financial.tf line 57: sse_algorithm = AES256 on the opal-data-49financial bucket",
+        "git show 43bcfd4bc6a:infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf line 127: sse_algorithm = AES256 on each lgic_firm bucket (opal-data-cottonwood)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-g-5 worker face: 'Read the firm buckets' own Terraform (bucket policy, encryption: the puller sends --sse AES256) and name in your report anything that would refuse these writes.'",
+    "world_is": "The two firm-bucket files are tracked at HEAD under infra/aws/terraform/shared-infra/ but the worktree's sparse-checkout list omits that directory, so they cannot be read from disk in this worktree. They were read with git show HEAD:<path>. Both files set SSE AES256, so the puller's --sse AES256 matches.",
+    "notes": "Not an alert. Any later cell that needs these files on disk needs the issuer to widen the sparse list; this order did not edit it."
+  }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W4-S11",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:08:43Z",
+    "one_line": "The face names local.monolith_bucket for the monolith, but the canonical-schwab-ec2 root defines no such local; the firm-bucket grants use literal bucket names, as both roots already do.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-assets/monolith.tf@43bcfd4bc6a line 59: monolith_bucket = opal-data-assets is defined only in the opal-assets root",
+        "Grep of the worktree paths infra/aws/terraform/opal-assets and infra/aws/terraform/canonical-schwab-ec2 for module opal_name and opal-data-49financial or opal-data-cottonwood references: no module call; literal locals only (opal-assets advi_49f_floor.tf line 53, advi_stitch_landing.tf line 22)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-g-5 worker face, build step 1: 'Use the same local names for the monolith bucket (local.monolith_bucket) ... read how other roots reference opal-data-49financial and opal-data-cottonwood ... follow that, never retype a bucket where a reference exists.'",
+    "world_is": "local.monolith_bucket exists only in the opal-assets root, and canonical-schwab-ec2/monolith-iam.tf uses the literal opal-data-assets. No root reaches the firm buckets through a module or a data source. The new grants therefore use literal firm-bucket names, and data/canonical/schwab/tests/test_firm_prefix_grants.py pins each bucket against its infra/logic/registry/scopes.json row.",
+    "notes": "Not an alert. The box grant is in canonical-schwab-ec2 and the converter grant is in opal-assets, so one shared local would need a cross-root edit, which this order does not make."
+  }
 ]
 ```
