@@ -12876,3 +12876,52 @@ carries none.
   "notes": "Fix owner per the CTO routing: 2.0.0_SA_COO~MI, round 23 routing arm."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_MCPINDEX-Z-W77-S1",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~77",
+  "surfaced_at": "2026-10-20T13:21:55Z",
+  "one_line": "The face's premise that the worktree already carries workflows/gateway_battery failed: the sparse cone lacked it, and I added it with the one permitted sparse change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/wk-mcpindex-77 at HEAD 277ad324045 (branch wk-NFRA_MCPINDEX-77): git sparse-checkout list before the change printed 8 entries (.tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards); workflows/gateway_battery absent; ls workflows/gateway_battery: No such file or directory (read 2026-10-20).",
+      "git ls-tree -r --name-only HEAD workflows/gateway_battery at 277ad324045 holds 16 files (7 scripts, 9 tests); after git sparse-checkout add workflows/gateway_battery the worktree lists the same 16 files."
+    ]
+  },
+  "spec_asserts": "Task order NFRA_MCPINDEX.TO-MX-w-1.source-compare, section 1 step 0: the worktree already carries the sparse folder workflows/gateway_battery; git sparse-checkout add is the only sparse change permitted if another folder is missing.",
+  "world_is": "The folder was in HEAD but outside the worktree's sparse cone. I ran git sparse-checkout add workflows/gateway_battery and changed nothing else in the sparse set; the sparse change is worktree configuration and is not committed.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced by 0.9.0_WK_NFRA_MCPINDEX~77 on MX-w-1. The issuer may want the worktree cut for the L7 spawn to carry the folders its orders name."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPINDEX-Z-W77-S2",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~77",
+  "surfaced_at": "2026-10-20T13:21:55Z",
+  "one_line": "The listing helper the contract names, partition_windows.list_row, returns no key names, so the Contents-key date tokens need a mirrored paging loop in source_compare.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "workflows/gateway_battery/partition_windows.py@277ad324045 lines 112-134 (list_row): it returns (partitions, saw_entries) where partitions holds only CommonPrefixes matching <prefix><key>=YYYY-MM-DD/; Contents[].Key values are never returned.",
+      "Fixtures org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round24/fixtures/w1_fake.json: bkt-g2|p2/ holds the key p2/20261016.json and bkt-h|ph/ holds ph/2026-10-16.json; neither is a CommonPrefix, so list_row cannot read their tokens (read 2026-10-20)."
+    ]
+  },
+  "spec_asserts": "W1 contract: for an s3 source the instrument lists keys under bucket+prefix by importing the listing helper of partition_windows.py, and source_dates are the YYYY-MM-DD, date=YYYY-MM-DD and YYYYMMDD tokens found in the listed keys.",
+  "world_is": "The helper returns the date partitions and an entries flag, not the keys. source_compare.py imports the client, build_client, load_json_object and Refused from partition_windows and mirrors its paging loop (same kwargs, Delimiter /, ContinuationToken while IsTruncated); partition_windows.py is not edited.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced by 0.9.0_WK_NFRA_MCPINDEX~77 on MX-w-1. The contract's wording and the helper's return shape disagree; a later cell may want list_row to return keys."
+}
+```
