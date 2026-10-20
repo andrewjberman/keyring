@@ -121,7 +121,7 @@ Black Diamond's 2026-10-19 allocations export for Cottonwood (`opal-data-cot/for
 
 | Custodian | Opal landing today | Measured |
 |---|---|---|
-| Fidelity | **None yet.** `s3://opal-data-assets/fidelity/` is empty. NFRA_FIDUPL is EXECUTING: its Terraform root is planned, not applied (18 to add, commit 814c01e738), and both live sign-in attempts so far stopped before the text-message step (its rows W1-S9, 13:05Z, and W1-S11, 13:48Z). | prefix listing 2026-10-20 ~13:4xZ |
+| Fidelity | **None yet.** `s3://opal-data-assets/fidelity/` is empty. NFRA_FIDUPL is EXECUTING: its Terraform root is APPLIED (FU-s-7 complete @80dd906801; EC2 i-028e830f7226cc685 read `running` 2026-10-20 ~13:58Z; amended in place on CTO msg 8647), and both live sign-in attempts so far stopped before the text-message step (its rows W1-S9, 13:05Z, and W1-S11, 13:48Z). | prefix listing 2026-10-20 ~13:4xZ |
 | Schwab | **None for Cottonwood.** Opal lands three masters: 08335338 and 08242234 (49 Financial) and 08403355 (Opal's Tax SMA). None of Black Diamond's 20 Cottonwood Schwab accounts appears in any of them (0 of 20). | 2026-10-19 `dim_balance` of each master: 7,695, 7,604 and 30 accounts |
 | Strata | **None.** No `strata/` prefix, no registry source, no Opal pull. Black Diamond receives a direct Strata feed (8 accounts, F1); how is not known. | prefix listing |
 | Commonwealth (history) | **Landed.** Bronze plus 12 silver tables under `opal-data-assets/commonwealth/cottonwood/silver/` (transactions, performance, positions, daily_returns, account_day_value, crosswalk, account_links, document_index and others), as-of 2026-06-23. | listing 2026-10-20 |
