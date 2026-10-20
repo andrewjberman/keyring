@@ -30,7 +30,7 @@
 
 1. Open a change-management entry (`.tools/deploy_ledger.py open --slug nfra-fidupl-automation-iam-<date> ...`, one leg: policy widened).
 2. In `automation.tf`, add ONE statement to the automation role's policy: `Action = ["ssm:ListCommands", "ssm:ListCommandInvocations"]` on `Resource = ["*"]`, with the `# STAR-OK: <reason>` comment the guard `fu6g` requires (these two list actions have no resource-level support). Do not widen any other statement, add no wildcard action, change no other resource.
-3. Plan: it must read exactly `Plan: 0 to add, 1 to change, 0 to destroy.` and the one change must be the role policy. Apply with `safe-apply` only. Close the ledger.
+3. Plan (AMENDED 2026-10-20 ~21:40Z on CTO ruling, msg after 8806: the WHOLE root, no `-target`): it must read exactly `Plan: 1 to add, 2 to change, 0 to destroy.` and name, line by line, (a) ADD the per-G list secret `fidelity/alongside/perg-list` (metadata only, `ignore_changes` on its value, no secret version), (b) CHANGE the box role policy (the one per-secret read grant, no wildcard), (c) CHANGE the automation role policy (the two `ssm` list actions of step 2). Anything else in the plan is a surprise row and a stop. FR-s-5's resources belong in the applied world (FR-s-5 is complete on fakes). Apply the root once with `safe-apply`, no `-target`, and ONLY after the issuer's message says APPLY (the attempt window must have reported first, so no IAM change lands mid-run). Close the ledger. The secret's VALUE is not written by this order (the executor writes it later from the off-git list).
 4. Run the criteria below and put the lines verbatim in your report. **Do not start the automation and do not sign in**: the criteria check the grant, not a run.
 
 ### ACCEPTANCE
@@ -43,12 +43,12 @@
 
 <expected_criteria>FU13-AC1,FU13-AC2</expected_criteria>
 
-Dry-run at the base: `FU13-AC1` base: FAIL as expected (the role lacks both actions); `FU13-AC2` base: PASS as expected.
+Dry-run at the base: `FU13-AC1` base: FAIL as expected (the role lacks both actions); `FU13-AC2` base: PASS as expected. (The whole-root plan expectation is graded by the seat's report of the plan line, not by a third criterion.)
 
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below and your deliverables folder.
-- **WORLD.** This order changes an IAM policy. Ledger first, closed last; the apply is by `safe-apply` only; nothing is stopped, started or deleted; no secret value anywhere; no alert.
+- **WORLD.** This order changes two IAM policies and adds one secret (metadata only). Ledger first, closed last; the apply is by `safe-apply` only; nothing is stopped, started or deleted; no secret value anywhere; no alert.
 - **Refusal clause.** A premise that fails (the plan shows more than one change, an automation execution is in progress) is a surprise row (`NFRA_FIDUPL-D1-<your slot>-S<k>`, next unused) and you stop.
 
 <paths>
