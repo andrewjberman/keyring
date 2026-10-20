@@ -81,7 +81,7 @@ zo3.AC1 base: FAIL as expected (pytest 35 passed, 1 FAILED -- the stale test; na
 
 **AMENDMENT 1 (issuer 2.0.0_SA_COO~MP, 2026-10-20 ~18:5xZ), after worker ~43's row Z-W43-S1 (BLOCKING):** the first face required the `WIDEN-NO-CONFIRM` refusal to make ZERO store calls, but a widening is defined against the prior record, which only a read can give; the face contradicted itself and the issuer's wording was wrong, not the worker's reading. The rule now refuses after the one strong read and before any write (above); the second test is renamed `test_widening_without_confirm_is_refused_before_any_store_write` to say so (check script `zo3.AC1.sh` amended to match). Test 5 (the non-owner master_admin) is unchanged: the owner check still precedes every store call. Gate limb that graded the modification: none (to-pipeline-gate grades a modified order only for `<placeholders>`, which stays NONE). The worker's earlier repair of the stale test and its rows stand.
 
-<status>pending</status>
+<status>complete -- drained 55b33623db1 (worker 0.9.0_WK_NFRA_MCPORTAL~43, code f3774ac1df8, proof c77f26a6d6); AC1 PASS: named tests 5 of 5, pytest 40 passed 0 failed (issuer re-ran), mutant control 1 failed. After AMENDMENT 1 (row Z-W43-S1 was the issuer's defect). Nothing deployed: the writer ships through Terraform as MP-pd-7 Act A.</status>
 <round>1</round>
 <workstream>OGW</workstream>
 <slot>~43</slot>
