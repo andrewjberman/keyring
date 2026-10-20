@@ -75,7 +75,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's msg 8584 (promote cg-2 and ch-1 in the chosen-set PROD promote, Opal-internal, approved by the CTO; then the issuer reads them on PROD). Cut as `cb-3` was, minus its merge-forward (both branches are already on DEV); the fold-back preparation (step 7) was added by AMENDMENT 1 at the CTO's msg 8587 (`cand/dell1/prod-into-dev-fold-r126`, the usual no-new-code merge; the landing needs the CTO's named waiver and is a later step 8). Seat `~H2` (live); the order carries `<workstream>PROMOTE_SA_PROD</workstream>`. The grade ON THE RUNNING PAGE is the issuer's: PROD under a real login, reading the Peers suffix on a served name and the plain wording on the Posture tab; row `AMGT_RESAPP-D1-W532-S1` (the PROD-only Peers gap) disarms on that read.
 
-<status>pending</status>
+<status>complete</status>
 <round>126</round>
 <workstream>PROMOTE_SA_PROD</workstream>
 <slot>0.4.0_DT_ClientPlatform~H2</slot>
