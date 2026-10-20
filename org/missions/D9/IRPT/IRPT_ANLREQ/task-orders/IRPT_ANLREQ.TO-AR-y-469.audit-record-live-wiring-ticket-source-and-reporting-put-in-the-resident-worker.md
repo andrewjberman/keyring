@@ -31,6 +31,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~343`.
 
 *The checks.* In `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~343/`: `check_audit_live_wired.py` (stdlib only, ruff clean, offline) reads `resident_worker.py` by AST and prints `AUDIT-LIVE-WIRED-OK source=yes put=yes` when the packager call supplies both ports from `make_audit_source` and an S3 put function, else `AUDIT-LIVE-WIRED-BAD <why>` (rc 1); `--selftest` removes each port in memory in turn and prints `CONTROL-FIRES` only when BOTH removals read BAD; `check_audit_source_clean.py` runs the source against a fake item that carries an e-mail address and a display name and prints `AUDIT-SOURCE-CLEAN-OK no_email=yes no_name=yes` only when no output value contains the address or the name.
 
+*AMENDMENT 1 (issuer, 2026-10-20 ~19:5xZ, ruling on your BLOCKING rows IRPT_ANLREQ-D2-W343-S1 and S2).* S1 TAKEN (my error: the order named the wrong file): the packager's ports are built in `infra/aws/lambda/investor-reporting/reports/resident_installed.py` `make_packager` (near lines 469-475), not in `resident_worker.py`, which only receives the packager as an injected callable. Supply `audit_source` (from `make_audit_source` over the same ticket table and DynamoDB client the `make_packager` already uses for its other ports) and `audit_put` (to the reporting bucket through the S3 client `make_packager` already builds for the reporting repository, bucket from the variable it already reads) THERE. `resident_worker.py` and `ycharts/generate/ticket_confirmation.py` are NOT edited; if you left a change in `resident_worker.py` revert it in a new commit. S2 TAKEN: the ticket writer stores no user type, and the audit must not fail for want of one. In `AnalysisAudit.v1.schema.json` `filer.user_type` becomes a string OR null (the key stays required); `reports/analysis_audit.py` takes it from `audit_source` when present and sets it to null otherwise; `ticket_audit_source.py` returns the ticket's own user type only if the item carries one (read the ticket writer to see) and `None` otherwise, never a guess. In `reports/tests/test_analysis_audit.py` change only what the old requirement asserted (a record with `user_type` null validates; a record with the `user_type` key MISSING is rejected); every other test stays green (24 before). S3 and S4 accepted. The write set of this order is therefore: `ticket_audit_source.py` and `tests/test_audit_live_wiring.py` (yours), `reports/resident_installed.py`, `_contracts/AnalysisAudit.v1.schema.json`, `reports/analysis_audit.py`, `reports/tests/test_analysis_audit.py`, plus your deliverables, this order and the investigation file. The tests of your own file must now include the packager-call test and the one-put test the grant blocked before: build the packager through `make_packager` with recording fakes for DynamoDB and S3 and assert both ports are supplied and that one attach ends with exactly one put to `opal-data-irpt` under `irpt/<firm>/platinum/analysis_audit/`. The `--selftest` of `check_audit_live_wired.py` (each port removed in turn reads BAD) now has a baseline that reads OK, so it can fire. Take this amended order onto your branch first (committed alone), then do the above in new commits, re-run all three criteria, and flip `<status>` to `complete` with the instance only on VALID.
+
 ---
 
 ## ACCEPTANCE
@@ -55,8 +57,11 @@ Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-469.audit-record-live-wiring-ticket-
 
 <paths>
 infra/aws/lambda/investor-reporting/ycharts/generate/ticket_audit_source.py
-infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
 infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_audit_live_wiring.py
+infra/aws/lambda/investor-reporting/reports/resident_installed.py
+infra/aws/lambda/investor-reporting/_contracts/AnalysisAudit.v1.schema.json
+infra/aws/lambda/investor-reporting/reports/analysis_audit.py
+infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~343/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-469.audit-record-live-wiring-ticket-source-and-reporting-put-in-the-resident-worker.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
