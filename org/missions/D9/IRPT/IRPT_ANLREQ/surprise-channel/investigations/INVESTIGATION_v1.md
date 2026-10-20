@@ -30012,3 +30012,53 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S235 -- reports/tests/test_analysis_audit.py (AR-y-467) leaves sys.path edits that break collection of test_generate_installed.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S235",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-20T19:49:48Z",
+  "one_line": "Collecting reports/tests/test_analysis_audit.py before test_generate_installed.py binds the module entry to ops/entry.py, so the generate-installed test files fail at collection (AssertionError at line 32).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A reports/tests file leaves the lookup of sibling modules as it found it (test_generate_installed.py pins its own entry and says a sibling file binds its own).",
+  "world_is": "Measured on trunk at 09dd4ea9951 from infra/aws/lambda/investor-reporting: python -m pytest reports/tests/test_analysis_audit.py reports/tests/test_generate_installed.py gives 1 error in collection (ops/entry.py bound); test_generate_installed.py alone passes (14). The whole reports/tests directory errors at collection for test_generate_installed.py and test_generate_installed_custody.py until test_analysis_audit.py is ignored. Not this cell's file (AR-y-467, lane Y2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py lines 12-16 (sys.path inserts)",
+      "pytest output of the two-file run at 09dd4ea9951"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S236 -- test_opal_thread_ready_end_to_end expects NOT_IN_THIS_VERSION sections that AR-y-408 no longer writes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S236",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-20T19:49:48Z",
+  "one_line": "ycharts/generate/tests/test_opal_thread_integration.py line 208 asserts NOT_IN_THIS_VERSION among the NOT_AVAILABLE section reasons, but the producer drops those entries from the document since AR-y-408.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The Opal thread integration test describes the document the producer writes.",
+  "world_is": "On trunk the test fails at line 208 with reasons limited to INPUT_MISSING; test_opal_producer_not_in_this_version.py (AR-y-408) states the document lists no NOT_IN_THIS_VERSION entry. Failing before this issuer's round-60 work (31-line baseline holds it). Not round 60's cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_opal_thread_integration.py:208",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_not_in_this_version.py:1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

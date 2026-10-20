@@ -34,6 +34,36 @@ You are `0.9.0_WK_IRPT_ANLREQ~330`.
 
 **AMENDMENT 3 (issuer, 2026-10-20, after the issuer's post-merge suite run on trunk; gate limb: GATE (viii) graded the modify and passed; an in-decomposition grant):** Part E, two defects of your own tests' reach, both found by running `reports/tests` whole. `infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py` is now in your `<paths>`. (1) In `reports/tests/test_resident_installed.py::test_installer_supplies_opal_stores` the asserted key set of the Opal stores (line ~244) now also holds `\"model_bytes\"`: add that one name to the expected set and change nothing else in the file. (2) `reports/tests/test_compare_ports.py` edits `sys.path` at module level (your copy of its sibling's list, `ops/` and `intake/` ahead of `ycharts/generate/`), which makes pytest bind `entry` to the wrong file when `test_generate_installed.py` is collected after it (`AssertionError ... ops/entry.py` or `export/entry.py` at its line 32; reproduce with `python -m pytest reports/tests/test_compare_ports.py reports/tests/test_generate_installed.py` from `infra/aws/lambda/investor-reporting`). Fix: take `_PATH_BEFORE = list(sys.path)` just before the `HERE = ...` line, and put `sys.path[:] = _PATH_BEFORE` on the line right after `from test_resident_installed import opal_record`, with a two-line comment saying why. The checker's `175 build` arm runs both. Inherited state: your commits through 62b33c5588 are MERGED on trunk (09dd4ea9951); this is one more small commit; re-run the three criteria, write a new proof instance, status complete on three PASS. Do not touch `test_analysis_audit.py` or any other failing test.
 
+**AMENDMENT 4 (issuer, 2026-10-20, replaces Part E item (2) only; item (1), the `model_bytes` name in the stores key set, stands and is done; gate limb: GATE (viii) graded the modify, as for AMENDMENT 3):** your `sys.path[:] = _PATH_BEFORE` restore fixed the collection but removed `reports/` and `_scope/` from the path after `test_resident_installed` had run its own header at your import, so 7 of its tests fail later in the regress list (`ModuleNotFoundError: canonical_profile_reads`, `composition`; your row W330-S11, correct). The issuer proved a different fix on the trunk tree: no path edit and no import at module level at all; the edits and the imports move into a module-scoped autouse fixture, so they run when this file's tests run and never at collection. In `infra/aws/lambda/investor-reporting/reports/tests/test_compare_ports.py`: remove the `_PATH_BEFORE` line, the three-line comment and the `sys.path[:] = _PATH_BEFORE` line you added, remove the original module-level path loops and the four module-level imports (`import resident_installed as ri`, `import resident_worker as rw`, `import model_source as msrc`, `from test_resident_installed import opal_record`) with their `# noqa: E402`, and put EXACTLY this block in their place, from the line `HERE = Path(__file__).resolve().parent` up to (not including) the line that defines `PRINCIPAL`. Keep every test function, helper and constant below it unchanged (they already use `ri`, `rw`, `msrc` and `opal_record` only inside functions):
+
+```python
+HERE = Path(__file__).resolve().parent
+PKG = HERE.parents[1]  # infra/aws/lambda/investor-reporting
+ROOT = PKG.parents[3]  # the workspace / worktree root
+ri = rw = msrc = opal_record = None  # bound by _bind below, at run time
+
+
+@pytest.fixture(autouse=True, scope="module")
+def _bind():
+    """The path edits and imports run when this module's tests run, never at collection: at module level they reorder the
+    lookup of `entry` for the sibling test files pytest collects after this one (test_generate_installed.py pins ycharts/generate)."""
+    for rel in ("reports", "ycharts/generate", "ycharts/research", "ycharts/session", "ycharts/extract", "_scope", "_ids", "_keys",
+                "_authz", "intake", "ops"):
+        p = PKG / rel
+        if str(p) not in sys.path:
+            sys.path.insert(0, str(p))
+    for p in (HERE, ROOT / "lib"):
+        if str(p) not in sys.path:
+            sys.path.insert(0, str(p))
+    import resident_installed
+    import resident_worker
+    import model_source
+    from test_resident_installed import opal_record as opal_record_fn
+    globals().update(ri=resident_installed, rw=resident_worker, msrc=model_source, opal_record=opal_record_fn)
+```
+
+Then run `reports/tests/test_compare_ports.py` alone (4 passed), the order's three criteria, and `python -m pytest --color=no -q -p no:cacheprovider reports/tests/test_compare_ports.py reports/tests/test_generate_installed.py reports/tests/test_resident_installed.py` (all pass). Inherited state: your commits through 77e329a4069 stand; the proof instance is rewritten again at the end; flip `<status>` to complete on three PASS. Do not edit the checker.
+
 Directory `RES` = `infra/aws/lambda/investor-reporting/ycharts/research/`; `TESTS` = its `tests/` folder; `GEN` = `infra/aws/lambda/investor-reporting/ycharts/generate/`; `REP` = `infra/aws/lambda/investor-reporting/reports/`. Edit `RES/opal_producer.py`, `GEN/resident_worker.py` and `REP/resident_installed.py`; create `TESTS/test_compare_producer.py` and `REP/tests/test_compare_ports.py`; nothing else. Your earlier orders put `model_source.py`, `comparables.py` and the layout's COMPARE methods on this branch.
 
 **Why.** This cell connects the pieces so a real Comparison or Multi-Comp request produces the comparison section (PRD FWD-10, C-MODEL-SOURCE). The decomposition's K4 contract: `stores["comparables"]` = the ordered list of catalogue entries (`{"key", "label", "ticker"}`; a model entry has `"ticker": None`, an ETF entry has its ticker); `stores["model_bytes"]` = `callable(key) -> bytes` for the two model objects.
