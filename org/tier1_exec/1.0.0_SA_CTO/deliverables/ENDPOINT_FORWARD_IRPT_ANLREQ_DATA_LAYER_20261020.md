@@ -1,4 +1,4 @@
-# /endpoint --forward -- IRPT_ANLREQ report data layer (yfinance first, Bloomberg without limit): FWD-13 to FWD-15
+# /endpoint --forward -- IRPT_ANLREQ report data layer (one Bloomberg job per request, no limit): FWD-13 to FWD-15
 
 **Seat:** 1.0.0_SA_CTO~DELL2. **Date:** 2026-10-20 ~22:4xZ. **State:** DRAFT, put to Andrew at the dell2 terminal. These outcomes
 land as IRPT_ANLREQ PRD v0.29 on his confirmation of the DONE WHEN lines.
@@ -16,19 +16,20 @@ land as IRPT_ANLREQ PRD v0.29 on his confirmation of the DONE WHEN lines.
                      asset class, credit quality, maturity, bond sector, market cap, style, fundamentals, top
                      holdings, and the return and risk series, each computed for the client's actual holdings
           ACCEPT     a person opening the report finds the charts and breakdowns the YCharts packet carries, filled;
-                     no holding reads "not covered" when yfinance or Bloomberg knows it; how the pages look matters
+                     no holding reads "not covered" when Bloomberg knows it; how the pages look matters
                      less than that the charts and concentrations are there
           SOURCE     Andrew 2026-10-20 ("the premise is simply to recreate the y chart format, hwoever we have to
                      do it"; "as long as it has a bunch of charts and concentrations"); brief D1
 
-  FWD-14  Each holding's details come from yfinance first and Bloomberg second, and the report says which
-          DONE WHEN  EXERCISED -- for FWD-13's request, every value records its source per holding (yfinance or
-                     Bloomberg); Bloomberg is asked only for what yfinance cannot supply, through its request
-                     queue; prices still come only from the existing price chain
-          ACCEPT     anyone checking a number can see where it came from; Bloomberg fills only what yfinance could
-                     not; a holding neither source knows is named in words on the page
-          SOURCE     Andrew 2026-10-20 ("if we cannot get that from yfinance, then we need to get it from bloomberg";
-                     "there are no limits on bloomberg when it comes to this, it has to get done"); brief D2
+  FWD-14  Each filed request sends ONE job to the Bloomberg device, which compiles every holding's details there
+          DONE WHEN  EXERCISED -- for FWD-13's request, one job carrying the client's holdings goes to the Bloomberg
+                     device at filing, comes back with each holding's characteristics and look-through, and the report
+                     marks each value's source as Bloomberg; prices still come only from the existing price chain
+          ACCEPT     anyone checking a number can see it came from Bloomberg for that request; a holding Bloomberg
+                     does not know is named in words on the page
+          SOURCE     Andrew 2026-10-20 ("we dont even need to use yfinance, we just send the job immediately to the
+                     bloomberg device and it is compiled there"; "there are no limits on bloomberg ... it has to get
+                     done"); brief D2 (@0bdd487715)
 
   FWD-15  The fund style box and the full fund look-through are filled
           DONE WHEN  EXERCISED -- FWD-13's report shows the 3x3 style box for each fund held and the top-25
