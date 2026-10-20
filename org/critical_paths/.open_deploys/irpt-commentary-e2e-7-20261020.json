@@ -1,0 +1,56 @@
+{
+  "slug": "irpt-commentary-e2e-7-20261020",
+  "title": "IRPT_ANLREQ TO-RUN-COMMENTARY-E2E-7: staff filing through the PROD portal page (ADDENDUM 9): form, filing, four package pointers, Open report, route, sections",
+  "author": "0.7.0_AE_CloudOps~IB2",
+  "status": "OPEN",
+  "opened_at": "2026-10-20T15:10:17.107695+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261020T1510Z_irpt-commentary-e2e-7-20261020_deploy_completion.md",
+  "legs": [
+    {
+      "id": "A",
+      "kind": "verify",
+      "target": "mint the synthetic staff user (no advisor) and the private login",
+      "proof_required": "mint ok, A2 none-by-design, L token private-file ok",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "B",
+      "kind": "verify",
+      "target": "browser leg B1 form read, B2 one filing, B3 Open report",
+      "proof_required": "B1 B2 B3 lines recorded",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "P",
+      "kind": "verify",
+      "target": "poll P1 to P5 and the P7 package reads",
+      "proof_required": "hops green or the first red named",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "R",
+      "kind": "verify",
+      "target": "route read and sections read (R, R2)",
+      "proof_required": "route and sections lines",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "D",
+      "kind": "verify",
+      "target": "delete only the recorded keys, each read back ABSENT, and the private token file",
+      "proof_required": "deleted n of m, token_file=absent",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261020T151017Z OPENED by 0.7.0_AE_CloudOps~IB2 with 5 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}
