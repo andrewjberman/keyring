@@ -15100,3 +15100,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER for the sparse-checkout scope of this worktree: 2.0.0_SA_COO~C (the issuer). Command output and file metadata only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-W153-S2 -- the order asks for its own status flip to complete, but the order file is outside the worker's paths
+
+```json
+{
+  "id": "NFRA_CTLPLN-W153-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~153",
+  "surfaced_at": "2026-10-20T19:17Z",
+  "one_line": "The worker face says flip this order to complete when the criterion passes, but the order file org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-cl-1.bd49f-dim-convert-scd2-dtype-fix.md is not among the order's <paths>, so the worker did not flip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order file <paths> block at worktree HEAD d2a0487598 lists five paths: the silver converter, the silver test file, the vendored converter, BUILD_MANIFEST.json and INVESTIGATION_v1.md. The order file itself is not listed.",
+      "The coordinator's message asked for the flip to complete on a pass; the criterion passed at 61850841c0d (29 passed, rc=0, two runs) and the proof instance validated rc=0.",
+      "The sibling order CT-ci-1 (proof at 0.9.0_WK_NFRA_CTLPLN~152) declared the same flip as an exclusion: the issuer flips the status on a valid instance."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's worker face: flip this order complete only when the criterion passes. The paths block is the write grant; a path the order lacks is a BLOCKING row, never an override.",
+  "world_is": "The grant does not include the order file, so the flip is left to the issuer 2.0.0_SA_COO~C. The criterion passed and the instance is VALID (rc=0).",
+  "notes": "OWNER: 2.0.0_SA_COO~C for the flip. Command output and file metadata only; no transcript content."
+}
+```
