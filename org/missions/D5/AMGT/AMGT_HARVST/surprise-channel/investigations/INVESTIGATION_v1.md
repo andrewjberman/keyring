@@ -13539,5 +13539,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         "disposition": "UNDER_INVESTIGATION",
         "notes": "Ruled by the issuer: a guard stop is the designed behaviour and does not fail stage 6. The cause of the two unnamed stops is an enrichment item for the round analysis, not a cn-7 criterion."
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W188-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~188",
+        "surfaced_at": "2026-10-20T17:01:45Z",
+        "one_line": "Batch 16 (OG-rl-17) does not NAME tests/test_cj2_slash_key_one_form.py in its test list and no rl-17 check names it; the test reaches batch 16 only inside the Phase A full-suite comparison, and no release branch is at origin yet. Verdict PARTIAL, not IN.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "CTO cross-adjudication org/critical_paths/cross_adjudication/20261019T1238Z_XA-20261018T094750Z-cbaa.md: tests/test_cj2_slash_key_one_form.py is in EVERY opal-gateway release's test list, whichever box releases; a release that does not run it is not a release of that rule. Site Z batch-16 release order NFRA_OPLGTW.TO-OG-rl-17 (window 2026-10-21 06:00Z to 06:45Z) must therefore name it.",
+        "world_is": "Read 2026-10-20 by 0.9.0_WK_AMGT_HARVST~188 (co4_batch16.sh, output co4_batch16.out): rl-17 names test_cj2_slash_key_one_form 0 times; the two check folders r47/checks and r38/checks (89 files searched) name it 0 times; the test file exists at base 13917ef993 (blob 2bcec39195223f106a76e64405a748ddebbe53e9); rl-17 line 34 (Phase A step 3) states a full-suite comparison against the live ref without naming each tests/ file; git ls-remote origin refs/heads/rel-nfra-oplgtw-batch16 returns no line. Not read: the release tree C:/tmp/og-rel-batch16 on site Z's host (not on this box) and the test list of the release that Phase A would cut there.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~188/co4_batch16.out @7997ac0b53",
+                "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rl-17.round-47-sixteenth-batched-release-the-client-fences-the-size-caps-and-the-in-flight-guard.md @7997ac0b53 (line 30 take list, line 34 full-suite clause)",
+                "git ls-remote origin refs/heads/rel-nfra-oplgtw-batch16 (empty line count 0), read 2026-10-20 ~17:0xZ"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Filed under face section 1c (verdict not IN). The CTO decides any MSTR-to-MSTR routing before the window."
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W185-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~185",
+        "surfaced_at": "2026-10-20T17:03:30Z",
+        "one_line": "The three guard-stopped names of the 2026-10-20 dossier fire (BZLFY_US_Equity, PBR_US_Equity, TSM_US_Equity) each drop one valued model_rows row, the same row, typecast|BEST_DPS|FY1; they share one cause, field_absent_in_new_block: the 2026-10-20 Model block carries no BEST_DPS figure and its unresolved reason is HELD_OFF by --no-sa-fallback.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO HVST-co-1 section 1 e and CTO round-99 item 1: the valued row each guard-stopped name drops is named with its cause decided from the two Model blocks, and ONE surprise row is filed per distinct cause (or one row saying the three share a cause). Prior finding for PBR (HVST-cn-2): typecast|BEST_DPS|FY1, field_absent_in_new_block, the 2026-10-18 block listing it unresolved.",
+        "world_is": "Read 2026-10-20 ~17:03Z by 0.9.0_WK_AMGT_HARVST~185 (co1_names.py, read-only, rc=0, GUARD-STOPS gets=800 bytes=144527718, base 7997ac0b53): each name's served dossier is the 2026-10-18 one (the stopped names keep it); the stored valued rows are 56 (BZLFY), 56 (PBR), 54 (TSM) and the built valued rows 55, 55, 53; the one missed row per name is typecast|BEST_DPS|FY1 (stored value 0.391, 9.546 and 131.309 respectively; built absent). The stored blocks are 20261018T130256Z, 20261017T130744Z, 20261018T130948Z; the built blocks are 20261020T130322Z, 20261020T130921Z, 20261020T131131Z. In each built block BEST_DPS has no figure, and the block's unresolved reason reads HELD_OFF: SA fallback held off by --no-sa-fallback. rows_new is 0 for all three. Controls: UNH_US_Equity rows_missed=0; a planted deletion from BZLFY's stored rows is found once (identity typecast|ARD_GOODWLL|2021).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~185/co1_names.py run at base 7997ac0b53 (foreground, rc=0); output co1_names.out in the same folder",
+                "lib/research/corpus/dossier.py:1278 _figure_for_row_key lookup order (fiscal line item, header, FY1 forecast, then the block's unresolved reason) @7997ac0b53",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py:270 _pick_dossier, copied unchanged into co1_names.py @7997ac0b53",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~180/cn2_pbr.out line 13: the same typecast|BEST_DPS|FY1 cause for PBR on the 2026-10-18 block"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Form only. The counts reproduce the guard's own counts (56/55, 56/55, 54/53, one miss each). The cause for BZLFY and TSM was read from their own two blocks, not assumed from PBR's. hazard_standing INERT: a guard stop keeps the prior dossier by design (AMGT_HARVST-D1-S68 notes); whether a standing HELD_OFF on BEST_DPS FY1 keeps the three names stale on every later fire is for the L9 read, not graded here."
+    }
 ]
 ```
