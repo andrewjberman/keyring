@@ -13651,3 +13651,53 @@ carries none.
   "notes": "OBSERVATION, INERT: this worker's commit touched workflows/gateway_battery only. Whether the sparse cone should carry the function-map folder is the issuer's call; nothing in MX-y-6 reads the naming result."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~93",
+  "surfaced_at": "2026-10-20T18:48:25Z",
+  "id": "NFRA_MCPINDEX-Z-W93-S1",
+  "one_line": "The channel artifact cma.02.views (json/capital-markets/views.json, serve-with-caveat, opal-internal) is described only in the channels section of DATA_CATALOG.yaml, so none of the three row sections holds a row for an object the discover tools serve; the new row json_capital_markets_views is the first row for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@4668dc43e44 lines 258-262 (channels capital_markets, artifact key json/capital-markets/views.json, entity cma.02.views, verdict serve-with-caveat)",
+      "grep of capital-markets/views in DATA_CATALOG.yaml@4668dc43e44: lines 224, 258, 270 only; none in silver_datasets (4622-19791) or portal_datasets (19792-19938)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every object family a discover tool reads is described by a row of silver_datasets, portal_datasets or harvest_datasets, the member (a) set of the coverage gate; a servable family outside those sections is a missing row.",
+  "world_is": "The servable object json/capital-markets/views.json is described only by a channels artifact entry, which the three row sections do not hold; the row json_capital_markets_views written by MX-z-4 is the first row for it.",
+  "notes": "OBSERVATION, INERT: the row-for-opal_describe and c-for-opal_discover choice in coverage_two.json rests on this reading of row. The issuer links the row as member (a) at the drain. Nothing in MX-z-4 reads the channel verdict."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~93",
+  "surfaced_at": "2026-10-20T18:48:25Z",
+  "id": "NFRA_MCPINDEX-Z-W93-S2",
+  "one_line": "The coverage check refuses any reason token that starts with an entity prefix and is absent from the catalog file, so a c reason cannot name a new row that follows the silver naming convention; I named the row json_capital_markets_views, outside that convention, to keep the naming the face asks for.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round26/checks/z4_check.py@4668dc43e44 ENTITY_PREFIXES (line 29) and named_entities_missing (lines 126-132): a reason token starting portal_, opal_data_, harvest_, dynamodb_ or silver_ must be a catalog entity of the three sections",
+      "z4.AC2 run on the worker coverage_two.json: reason check passed with json_capital_markets_views named in the opal_discover reason (no prefix, so not graded as an entity token)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The c item for opal_discover names the new row's entity, and the new row takes the catalog's silver naming convention opal_data_portal_v2_served_<table>.",
+  "world_is": "The reason rule grades every opal_data_ token against the catalog file, which lacks the new row until it lands, so a conventional name cannot be named by a c reason in the same round; the row carries the non-prefixed name json_capital_markets_views.",
+  "notes": "OBSERVATION, INERT: the issuer chooses the entity name at the drain. The naming choice is the only departure from the silver convention in MX-z-4 output."
+}
+```
