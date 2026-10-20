@@ -29,3 +29,14 @@ Not in this rectangle: R0 (the served-floor re-read belongs to the backfill roun
 - `comp-schedule`: RUN by reading. The pull fires 09:45, 10:15, 10:45, 21:45, 22:15, 22:45Z; the window 12:00-20:00Z sits between the 10:45 and 21:45 fires; CTO: no fire between R4c and R5.
 - `comp-iam`: RUN. The copy identity is CloudOps's own (never the box); the fence rows admit the box role and the converter role for the state prefixes only; the converter role has no delete; versioning is ON on the monolith (read at R1 for the two firm buckets).
 - `comp-adversary`: findings inlined into the orders: (1) the `opal-assets` and `shared-infra` plans may carry other projects' pending changes: apply only the named resources by `-target`, and stop if the plan shows anything else; (2) a push before R4 verifies would deploy `_monolith_bronze.py` early (the deploy gate holds it only while no OPEN entry names it): the entry names it at R5, not before; (3) the bronze copy fires the converter 6,074 times by design (event-order branch, plan section 2).
+
+## AMENDMENT 1 (2026-10-20 ~22:3xZ, issuer 2.0.0_SA_COO~SB; CTO rulings msgs 110044 and 110046, addendum 2 @e79769e167): the gateway's read row and the early fence apply
+
+Site Z found that the 49financial bucket policy denies the gateway's `gateway-schwab-catalog-read-role`, and its dual read treats AccessDenied as a hard error. The CTO ruled: a fourth scoped READ row, and the shared-infra apply moves out of the window to tonight (before 2026-10-21 06:00Z), to the idle lane `0.7.0_AE_CloudOps~NFRA2`. Two cells are added under their own workstream name `release-fence` (the gate keys one issuance to a round and workstream):
+
+| cell | item | release act | placement | risk | executor | depends on |
+|---|---|---|---|---|---|---|
+| `BF-h-6` | the fourth scoped row in `exemptions.json`: gateway catalog read role, GetObject and ListBucket on `schwab/49financial/state/complete/` only | R3a (text) | laptop | WORLD (`infra/` floor; nothing applied) | worker (slot ~2) | `BF-h-5` (merged) |
+| `BF-r-2` | apply the five fence rows (shared-infra, the two firm-bucket policies, `-target`) and prove each principal's read; message the issuer the moment the gateway read passes | R3a | laptop | WORLD | `0.7.0_AE_CloudOps~NFRA2` | `BF-h-6` |
+
+Effects on the cells above: `BF-r-1`'s leg L1 becomes a verify leg; `BF-r-3` step A becomes verify-only. Chains: `BF-h-6` -> `BF-r-2` (a second pair of cells, disjoint write sets: `exemptions.json` and `test_fence_state_rows.py`, then CloudOps deliverables).

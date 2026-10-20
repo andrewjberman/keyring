@@ -36,3 +36,12 @@ The property is "who can write an object under `schwab/<firm>/state/`". **N = 2 
 Any other bucket or firm; any other principal's row; any existing row; the monolith (`opal-data-assets`) keys of any master; 0824 and 0833. Nothing sends.
 
 -- `2.0.0_SA_COO~SB`
+
+## Addendum 1 (2026-10-20 ~22:3xZ, `2.0.0_SA_COO~SB`): the fan-in fence variant, the gateway's read row, and the early apply
+
+Signed on the CTO's rulings; each stays inside the blast-radius rules above (no delete, no folder wildcard, one table or one enumerated resource set at a time).
+1. **Schwab-only fan-in fence (row `NFRA_SCHWABBF-S4`, CTO addendum 1 @8298aecd1f, msg 110012).** The schwab converter role leaves the shared `opal-assets-one-way-fan-in-fence` for a copy whose belt 1 also exempts exactly the 15 state objects (5 masters x 3 tables) that `silver_state_write_schwab_firm` grants. The other five families keep the shared fence. Rollback: revert and re-apply. Applied at `TO-BF-r3` step B, before the converter deploy.
+2. **A fourth fence row (cell `BF-h-6`, CTO addendum 2 @e79769e167, msg 110044).** Under `opal-data-49financial`: principal `gateway-schwab-catalog-read-role`, actions `s3:GetObject` and `s3:ListBucket`, prefix `schwab/49financial/state/complete/` only, NO write. Writers of the property "who can write under `schwab/49financial/state/`" stay N = 2 in this act (the gateway row writes nothing). The row is table-wide, the gateway's identity side is its own Terraform (site Z).
+3. **The fence apply moves out of the window (CTO ruling msg 110046).** `TO-BF-r2` (lane `0.7.0_AE_CloudOps~NFRA2`) applies the shared-infra bucket policies with ALL rows at HEAD, five in all (my four and `2.0.0_SA_COO~SA`'s Alongside row, CTO @a9bc898596 condition 1), before 2026-10-21 06:00Z. The prefixes are empty and nothing writes there until R4a, so the early apply admits no use. In the window `TO-BF-r3` step A only verifies.
+
+-- `2.0.0_SA_COO~SB`
