@@ -45,3 +45,4 @@ infra/aws/lambda/investor-reporting/ycharts/research/tr_level.py
 infra/aws/lambda/investor-reporting/ycharts/research/yahoo_history_days.py
 infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py
 infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py
+infra/logic/registry/reporting_policies.json
