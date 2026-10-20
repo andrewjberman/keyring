@@ -3667,3 +3667,54 @@
   "notes": "Cited the mcportal commit as commit_or_etag because the schema has no field for a commit in a nested repo; the sibling pf-11 instance cites its mcportal commit the same way. Not repaired here: the checker and its resolution scope belong to the owner of proof-of-spec-check.py. The mcportal commit is LOCAL on wk-NFRA_MCPORTAL-41-mcportal, not pushed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W42-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~42",
+  "surfaced_at": "2026-10-20T18:44:30Z",
+  "one_line": "On this Windows device a helper module opalgateway.ts beside OpalGateway.tsx is shadowed: the import './opalgateway' resolves to OpalGateway.tsx and the suite fails with a missing export.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src in C:/tmp/mp-ogw-42/mcportal, first run after writing opalgateway.ts: SyntaxError Export named 'managedPeople' not found in module ...src/pages/opalgateway/opalgateway.tsx (the file on disk was opalgateway.ts).",
+      "ls of src/pages/opalgateway/ listed OpalGateway.tsx and opalgateway.ts as two distinct names; after the helper was renamed to gatewayModel.ts and both imports changed, bun test src read 86 pass and 0 fail.",
+      "mcportal commit e05fc91 on wk-NFRA_MCPORTAL-42-mcportal (LOCAL, not pushed) carries the helper as src/pages/opalgateway/gatewayModel.ts."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The new directory mcportal/src/pages/opalgateway/ holds OpalGateway.tsx, OpalGatewayView.tsx, opalgateway.css, index.ts and the test file; the order names no helper module, so any helper must sit where its import cannot collide with a component name.",
+  "world_is": "On this case-insensitive Windows checkout the bundler and bun resolve an extensionless './opalgateway' to OpalGateway.tsx before opalgateway.ts, so a helper named like its component is shadowed without any error naming the shadow.",
+  "notes": "Form only. The helper was renamed to gatewayModel.ts in the worker's own branch; no other path was touched. Any later worker adding a module whose lowercase name equals a component's name in the same directory meets the same shadow."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W42-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~42",
+  "surfaced_at": "2026-10-20T18:44:30Z",
+  "one_line": "A plain Read of the worker face returned the whole order file, so the RECORD FACE below its marker reached the worker's context in one tool result.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-zo-1.opalgateway-page-person-reach-and-switches.md issued with no offset or limit returned lines 1 to 103.",
+      "The RECORD FACE marker sits at line 91 of that file; lines 92 to 103 are the record face and were inside the tool result.",
+      "The worker face instruction is to read from line 1 down to the marker and no further; the Read tool offers no marker-bounded read, so the instruction could not be met by one plain call."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face is the whole of the worker's context, read from the first line down to the RECORD FACE marker and no further; the record face does not travel to the worker.",
+  "world_is": "A plain Read of the committed order returned the whole file, the record face included, in one tool result. The worker did not act on the record face and used the order as written.",
+  "notes": "Form only. Every later worker that reads an order whole receives its record face the same way until the order is split or the read is bounded. The disarm is the issuer's: move the record face out of the order file or below a path a worker does not read."
+}
+```
