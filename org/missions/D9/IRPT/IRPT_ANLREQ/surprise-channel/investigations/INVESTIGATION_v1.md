@@ -30603,3 +30603,72 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W349-S1 -- the naming module refuses the product scope irpt, so the audit-write policy is named as a shared resource
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W349-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~349",
+  "surfaced_at": "2026-10-20T22:45:00Z",
+  "one_line": "TO-AR-y-478 asks for the product scope irpt if the opal_name module accepts it; it does not, so the policy name carries no scope segment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-478 (the change, item 2): the new aws_iam_policy takes its name from infra/aws/terraform/modules/opal_name with function audit-write and kind policy, and the scope the module accepts for the product (irpt) if it accepts one; else say so in a surprise row and use the narrowest accepted.",
+  "world_is": "modules/opal_name/variables.tf:11-15 takes a scope that is the LONG form of a FIRM, GLOBAL or MASTER row, and generated_locals.tf:99 sets name_scope_classes to FIRM, GLOBAL, MASTER. irpt is a PRODUCT row of infra/logic/registry/scopes.json, so the module refuses it. The worker passed no scope (a shared resource, the module's null), giving the name irpt-audit-write-policy (checked: lib/opal_naming.py name('irpt', None, 'audit-write', 'policy') and the naming gate at commit b7b499b111d, resident_audit_policy.tf:22). A FIRM scope was not used: the policy covers three firms and a single firm name would mislabel it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/opal_name/variables.tf:11-15 @b7b499b111d",
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf:99 @b7b499b111d",
+      "infra/logic/registry/scopes.json (row irpt, class PRODUCT) @b7b499b111d",
+      "infra/aws/terraform/investor-reporting/ycharts/resident_audit_policy.tf:22 @b7b499b111d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W349-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~349",
+  "surfaced_at": "2026-10-20T22:45:00Z",
+  "one_line": "The commit gate's client-data check did not run on the Terraform commit: the hashed account-id list is absent on this box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md rule 14 and the worker face: every commit goes through safe-commit, which runs the pre-commit gate, and the gate is the check that a commit carries no client account id.",
+  "world_is": "The safe-commit output of commit b7b499b111d printed WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there). The worker did not set the variable and did not create the list. The two committed files carry no account identifier.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of commit b7b499b111d (the WARN line, printed before the commit landed)",
+      "infra/aws/terraform/investor-reporting/ycharts/resident_audit_policy.tf @b7b499b111d (no account identifier literal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W349-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~349",
+  "surfaced_at": "2026-10-20T22:45:00Z",
+  "one_line": "The pre-commit risk reflex could not scan the Terraform commit: its danger map is stale and the build guard refuses a linked worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: a Terraform commit is a WORLD-class edit and goes through safe-commit; the pre-commit risk reflex answers clear for the paths it scans, or names what it could not decide.",
+  "world_is": "safe-commit printed [risk-reflex] danger map 122.8h old STALE; NOT-DECIDABLE, the build guard refused: linked worktree (git-dir C:/dev/ajb_workspace/.git/worktrees/wk-irpt-anlreq-349 differs from git-common-dir C:/dev/ajb_workspace/.git); ANSWER STATE PARTIAL_OR_BLIND; WITHIN BUDGET scanned 0 of 2 file(s). The commit landed at b7b499b111d on the commit-gate and naming-gate results, both OK. The reflex's 0 of 2 is not a clean scan of the two files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of commit b7b499b111d (the risk-reflex block, printed before the commit landed)",
+      "the same safe-commit block, its git-dir and git-common-dir lines (the linked worktree C:/dev/wk-irpt-anlreq-349)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```

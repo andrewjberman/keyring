@@ -1,4 +1,4 @@
-# BRIEF (midstream) -- IRPT_ANLREQ: the report's data layer -- recreate the YCharts packet from real data, yfinance first, Bloomberg without limit
+# BRIEF (midstream) -- IRPT_ANLREQ: the report's data layer -- recreate the YCharts packet from real data, one Bloomberg job per request
 
 Author: `4.0.0_SA_CRO~TCKT` (dell2), 2026-10-20. Mode: `--midstream`.
 Consumer: `1.0.0_SA_CTO~DELL2`, `/endpoint --forward`, as a PRD addendum to IRPT_ANLREQ (v0.28). It sits beside
@@ -67,12 +67,20 @@ gap map (cited below as GM and its section numbers).
   constituents (173 securities). Any other holding reads "not covered". That is why run 7d showed 13 values out of 257
   elements.
 
-### D2 -- A characteristic is looked up once per security, yfinance first, then Bloomberg, and the report names its source
-- Per security, for each field:
-  1. yfinance (the GM s.2 key: `info` keys, `funds_data` methods);
-  2. otherwise Bloomberg reference data (GM s.2 mnemonic) through the existing Bloomberg request queue;
-  3. otherwise the report says in words what is missing for that holding (FWD-12).
-- Each value carries its source as a claim field (yfinance / bloomberg), as prices already do (C-PRICES).
+### D2 -- Each request sends ONE job to the Bloomberg device; the characteristics are compiled there and the report names the source
+- **Andrew, 2026-10-20 ~22:4xZ (verbatim):** "It can do it, if we do it this way then we dont even need to use
+  yfinance, we just send the job immediately to the bloomberg device and it is compiled there."
+  - This supersedes the earlier "yfinance first" order, for characteristics.
+- At filing, the request's holdings list goes as one job to the Bloomberg device (the terminal machine running the
+  Excel BQL route, D3).
+- There it compiles every per-security characteristic and every fund look-through the packet needs (GM s.2 groups 1-10,
+  Bloomberg column).
+- The result returns to the generator.
+- No yfinance step for characteristics.
+- A security Bloomberg cannot describe is named in words on the page (FWD-12).
+- Each value carries `source: bloomberg` as a claim field.
+- Prices are unchanged: C-PRICES stays (yfinance, then YCharts; Bloomberg out of the price chain) until Andrew says
+  otherwise.
 
 ### D3 -- The style box and the full look-through use the proven Excel BQL route (no purchase)
 - The 3x3 stock style box for funds (9 elements) has no yfinance source (M).
@@ -144,8 +152,8 @@ Fill counts (GM s.3, of 244 not-available elements):
 - **The terminal is signed in when a request files.** The sign-in is two-phase, with a 2-attempt budget
   (READ_HERE s.2).
 - **Every new S3 address is builder output** (C-NAMES). The characteristics cache needs a registry row (GM s.5).
-- **The Excel BQL route serves an ad-hoc fund list at filing**, not only the ETFS_RIVALS daily universe, within its
-  budget ledger. This is an owner question for the collector (ETFS_RIVALS) and the terminal seat.
+- **The Excel BQL route takes an ad-hoc list at filing.** Andrew confirms it can ("It can do it"). The job's request
+  path to the device, and its budget-ledger entry, are owner work for the collector (ETFS_RIVALS) and the terminal seat.
 
 ## PART VI -- STATUS (NOT OUTCOME-BEARING), measured 2026-10-20 ~22:xxZ
 
