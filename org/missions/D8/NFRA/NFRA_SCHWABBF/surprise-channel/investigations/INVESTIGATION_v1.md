@@ -244,6 +244,114 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO-BF-k1 AC2 and the worker face: import data/assets/scripts/silver/schwab_conversion.py by path and assert that scope_from_key, feed_from_key and date_from_key read a new-form key built by monolith_bronze_key (the seam probe against the REAL neighbor). The order presents the converter's file set as loadable from its source directory.",
     "world_is": "The six key functions and the other 242 test cases pass at HEAD 5f1ad506a4 plus the BF-k-1 edits. Only the seam case fails, because the converter's sibling stream_parquet is not beside the source file; the sibling is tracked in data/assets/scripts/lib/ and packaged beside the Lambda copy. Nothing was patched: the refusal clause forbids a fallback that weakens the probe, and the converter is read-only for this cell.",
     "notes": "Options for the issuer, not taken by the worker: put data/assets/scripts/lib on the probe's sys.path (a test-harness edit inside the BF-k-1 write grant, no assertion weakened), or name the Lambda package directory as the seam neighbor. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W3-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T15:37:01Z",
+    "one_line": "With the post-run guard reading the firm prefix only, a legacy-only own file that the resumability index correctly skips is absent from the guard's listing, so the run counts it as a shortfall and exits 6 on every fire whose lookback window plans that file, until the migration copies it to the firm form.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1 at worktree wk-NFRA_SCHWABBF-3 (uncommitted at filing): the pre-loop index lists the legacy master folder ($LEGACYROOT) through Get-ResumeNames, so the download loop skips a legacy-only own file",
+        "same file: the post-run guard lists only the firm prefix ($PREFIX) through Get-LandedIndex, and Get-LandingGuardVerdict counts every planned name absent from that index as shortfall; Die 6 fires on guard.ok false with zero download failures",
+        "data/canonical/schwab/tests/test_sdd_daily_pull_key_form.py test_landing_guard_resumability_counts_legacy_only_own_file asserts the skip arm only; no test asserts the guard arm for a legacy-only file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-w2 build step 2 and measured effects: the resumability index must still count the OLD master-form prefix so a not-yet-copied file is skipped, not re-pulled; and the post-run guard reads the NEW prefix only.",
+    "world_is": "Both clauses hold in the built script, and together they make a not-yet-copied legacy-only own file a guard shortfall: the run exits 6 (LANDING GUARD FAILED) with zero download failures. The round-1 row NFRA_SCHWABBF-W2-S3 says the skip is correct, which holds for the download loop, not for the guard. Not exercised against S3 (WORLD floor); the consequence follows from the code read at the cited lines.",
+    "notes": "Recorded for the issuer, not resolved by the worker: whether the guard should also accept a legacy-form copy during the copy-to-delete window, or the migration copies every legacy object before the puller is deployed, is the issuer's decision. The guard was NOT relaxed to pass this case; the spec's new-prefix-only rule is built as written."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T15:36:55Z",
+    "one_line": "The TO-BF-t2 worker face reads a sibling master's file in the shared firm partition as NOT-HELD for this master, but the round-1 rule for a day with silver present and this master's bronze absent is THREAD-FAIL; the worker kept the round-1 rule and named the sibling case NOT-HELD only when silver is also absent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/keyform/thread_trace.py at worktree branch wk-NFRA_SCHWABBF-4 (base 87d44e203b): trace() sets cause=other-master-only only on the NOT-HELD branch, which requires silver absent; silver present with no bronze for this master falls to THREAD-FAIL reason=bronze-not-held-form-*",
+        "data/canonical/schwab/tests/test_thread_trace.py::test_sibling_file_does_not_count_as_this_masters_bronze_when_silver_is_present asserts rc 1 and no THREAD-OK for that case; test_shared_partition_holding_only_a_sibling_is_not_held_for_this_master asserts rc 2 cause=other-master-only with silver absent",
+        "data/canonical/schwab/tests/test_thread_trace.py::test_silver_present_without_bronze_is_a_failure_not_an_absence (round-1 test, kept unchanged in intent) asserts rc 1 for silver present and no bronze"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-t2 build step 2: 'A day where ANOTHER master's file is in the firm partition but not this master's is NOT-HELD for this master (name the cause cause=other-master-only when silver is also absent).' Step 2 also keeps the typed absence unchanged.",
+    "world_is": "The sentence names NOT-HELD for the sibling-only day in general and places the cause name only on the silver-absent branch; the round-1 rule (silver present without this master's bronze is a failure, not an absence) is kept in code, so a sibling-only day with silver present reads THREAD-FAIL, not NOT-HELD. The issuer should confirm which reading governs the silver-present branch.",
+    "notes": "Not an alert and not a monitor. The silver-absent case, the one the real 2026-10-17 probe exercises, is NOT-HELD cause=no-bronze-no-silver on the real store; the sibling-only case is covered on the fake store only."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T15:36:55Z",
+    "one_line": "The TO-BF-t2 order fixes 'both forms -> FAIL naming the second form' without naming a --form; the worker applied it to --form builder (the CLI default) and kept the round-1 rule that --form any accepts either layout and reports the second form on its hop.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/keyform/thread_trace.py at worktree branch wk-NFRA_SCHWABBF-4 (base 87d44e203b): the problems list keeps 'if second_n > 0 and form != \"any\"', and main() defaults --form to builder",
+        "data/canonical/schwab/tests/test_thread_trace.py::test_both_forms_under_builder_form_fails_naming_the_second_form asserts rc 1 and second-form-found-legacy; test_both_forms_under_any_form_is_ok_and_reports_the_second_form asserts rc 0 with HOP second-form FOUND n=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-t2 build step 1: 'Under --form builder a found second form still makes the verdict FAIL.' Test list: 'both forms -> FAIL naming the second form' (no --form named).",
+    "world_is": "Only the builder form is pinned to FAIL on a second form; under --form any a both-forms day passes and names the second form on its hop. FWD-4 forbids a day stored two ways, so the issuer should say whether --form any must also FAIL on both forms.",
+    "notes": "Not an alert and not a monitor. The real 2026-10-16 probe under --form any reports HOP second-form NONE, so this choice does not change any criterion's output."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W6-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~6",
+    "surfaced_at": "2026-10-20T15:39:04Z",
+    "one_line": "The schwab converter's silver WRITE grant names only the three master scopes, while the converter's scope function returns the first folder segment of a new-form key (49financial, cottonwood); whether its silver output follows that segment is not traced in TO-BF-i2, so a firm-folder event may be denied on the silver write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-assets/silver.tf:191-200 at 87d44e203b (silver_source_scopes.schwab = 08242234, 08335338, 08403355) and :370-422 (silver_write_per_source: PutObject/GetObject/ListBucket on schwab/{scope}/silver|meta/* for those scopes only)",
+        "data/assets/scripts/silver/schwab_conversion.py:133-143 at 87d44e203b (scope_from_key returns parts[1] for a schwab/ key, i.e. 49financial or cottonwood for the new key form)",
+        "silver.tf (this worktree, BF-i-2 edit): silver_read_schwab_firm_prefix adds READ ONLY on schwab/49financial/bronze/* and schwab/cottonwood/bronze/*; silver_source_scopes is not widened"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-i2 step 3: the converter's firm-prefix grant is a minimal READ; the cell names no silver-tier write for the firm folders.",
+    "world_is": "The converter's silver write grant covers schwab/{08242234,08335338,08403355}/silver|meta/* only. Output keying on the firm segment is unverified here: the cell read the grant, not the converter's output-key construction. If keyed on the segment, the first firm-key event would AccessDenied on silver PutObject (loud, to the DLQ), not corrupt data.",
+    "notes": "Not widened in this cell (the TO says minimal read). Options for the issuer: confirm BF-c-2's output key (master from the file name) before the cutover, or grant silver/meta write on the firm scopes as its own never-widen edit. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W6-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~6",
+    "surfaced_at": "2026-10-20T15:39:04Z",
+    "one_line": "The box role's run-manifest (_ops) and pull-manifest (meta/pulls) PutObject grants enumerate the three old masters only, so a manifest written under a firm-folder master would be denied; TO-BF-i2 scopes the new grant to bronze, so these two are not covered.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf at 87d44e203b, statements MonolithSchwabOpsWrite (schwab/{08242234,08335338,08403355}/_ops/*) and MonolithSchwabMetaPullsWrite (schwab/{08242234,08335338,08403355}/meta/pulls/*); the file's own comment (lines 88-89) says the puller WARNs, not silently, if the manifest write AccessDenies",
+        "infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf (this worktree): MonolithSchwabWrite gains the three 49financial per-master bronze entries; no _ops or meta/pulls entry is added"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-i2 step 1: ADD per-master bronze write entries for the 49financial firm folder; the cell names no other statement.",
+    "world_is": "The puller's manifest home for a firm-folder master is not traced in this cell. If it writes schwab/49financial/_ops/ or schwab/49financial/meta/pulls/, those PutObjects AccessDeny; the puller's WARN makes the denial visible.",
+    "notes": "Not an alert and not a monitor. The issuer decides whether the firm folder needs _ops and meta/pulls grants (enumerated per master, as the cell did for bronze)."
   }
 ]
 ```
