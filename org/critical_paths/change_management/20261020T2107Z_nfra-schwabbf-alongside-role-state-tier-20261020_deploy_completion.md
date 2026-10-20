@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-20T21:07:17.705690+00:00
-**Status:** OPEN
+**Status:** HELD-PRE-APPLY -- gate: external / COO msg 110030: TO-AL-r3 to be re-pinned (AL-r4 needs the vnc secret created by r3's apply); nothing applied at pin f6a3be06abf (held since 2026-10-20T21:14:05.575907+00:00)
 **Deploy:** NFRA_SCHWABBF Alongside box: in-place update of the role inline policy aws_iam_role_policy.alongside_inline (two master-scope statements out, StateTierWrite in), three S3 code uploads (four files), refresh of the box's code copies. No resource added or destroyed.
 **Authored by:** 0.7.0_AE_CloudOps~NFRA1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -19,3 +19,4 @@
 ## Log
 
 - 20261020T210717Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 3 leg(s)
+- 20261020T211405Z HELD-PRE-APPLY gate=external/COO msg 110030: TO-AL-r3 to be re-pinned (AL-r4 needs the vnc secret created by 

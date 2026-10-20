@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -59,6 +59,10 @@ FU-s-2 REPAIR 10 is merged (the display is started before the Playwright driver)
 ### REOPENED (issuer, 2026-10-20 ~19:15Z) -- ninth delivery, signin.py changed at 132dc9c3061
 
 FU-s-2 REPAIR 11 is merged (polling survives a navigation race; a failed step records a redacted message). Deliver the shipped set from head 132dc9c3061 or later (only `signin.py` differs from your eighth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-9-<date>`), check `fu10m` (and `fu10x`), same rules: a file copy only, no browser run beyond the check's scratch launch, no bootstrap, no sign-in, nothing under either profile directory. Tell the issuer in one line.
+
+### REOPENED (issuer, 2026-10-20 ~21:20Z) -- tenth delivery, URGENT: signin.py changed at d8e08fbb331
+
+FU-s-2 REPAIR 12 is merged (authorize accepts any 2xx; logout on close). Deliver the shipped set from head d8e08fbb331 or later (only `signin.py` differs from your ninth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-10-<date>`), check `fu10m`, same rules: a file copy only, nothing under either profile directory, no sign-in, no browser. The live attempt window is 21:35Z to 21:55Z: tell the issuer in one line the moment `fu10m` reads OK (fu10x need not be re-run for a signin.py-only change).
 
 ### ACCEPTANCE
 
