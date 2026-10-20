@@ -28108,3 +28108,56 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S224 -- Run 6 strands six synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S224",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T08:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 6, a request that reached the commentary, left SIX synthetic state objects (original holdings, request composition, normalized portfolio, extraction evidence, analysis commentary and the report PDF) that the CloudOps principal cannot delete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state_e2e6.json (irpt_anlreq_commentary_e2e6): six deletes answered AccessDenied for the CloudOps principal on 2026-10-20T08:04Z; 13 of the 19 distinct recorded keys read ABSENT",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates (section 4 of the E2E packet and the CTO's condition on the deletes).",
+  "world_is": "These objects remain, each one version: irpt/49financial/state/analysis_commentaries/ART-79633aa8d7f0469502681195a8dc13ecd4e71872bc877bea713a7b330810b159/e889189c5218f84be1e747361279d092f1d4b495b908f3ea99db9b066cb6b3c3.json; irpt/49financial/state/extraction_evidence/ART-54e6c4b2fc9d5ff6eac60d0ffe70621bdca832583c0668a71a7f3a8d889e4648/71b0691b745897d021d9cd046a0fa5d17681424c0a16c22ffd1cbb315ee234a4.json; irpt/49financial/state/normalized_portfolios/ART-0737b18dd1135ada822310fdd4d416ddeff9ee050504488217997f4206bb5292/5bc8cb372133b48ad8843814c53b7bad0ca687e6ce1eef13407614af0f94cac6.json; irpt/49financial/state/original_holdings/ART-d5c14dd9930b984917a5d5baf593e8c1f819775784bf64a1f9744c7353a015db/79842b4fcadc1d4ef44a9e79ab77343a211e4eafa9163a7b90d45f6cf604b7f5.csv; irpt/49financial/state/request_compositions/ART-3089b4641b70f8c76dc6a7a052d94d2e93840db76219181545c926ca7889086e/7c02029714cb17b4c139d82215e79e60ce5800f8041175c778b57538e7e2dcea.json; irpt/49financial/state/ycharts_opal_reports/ART-1801cc76693462c398b757a06b348eaef415b3024f25ef21c48198742d7d45f0/b3ecd0c5e4285162d625ec39757154d3f7508c56c5b50b6d38e3478a2c164165.pdf. No index row points at them. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S225 -- The packager's READY attach is not visible on the ticket and the second attach hits a ClientError (run 6)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S225",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T08:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "In run 6 the READY attach hook ran at 08:02:53Z but the ticket carried no package member 9 seconds later, and the attach at commentary arrival was retained for retry with ClientError, so the ticket never held the PARTIAL or COMPLETE package.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "A_E2E6.txt (irpt_anlreq_commentary_e2e6): P1 READY 08:03:02Z, P2 and P3 green 08:04:06Z, P4 retained_for_retry class=ClientError code=- at 08:04:18Z; P7 at READY and by hand 15 s later read no package member on the ticket item (names only)",
+      "the resident journal read-only: IRPT_RESIDENT_PACKAGE_READY at 08:02:53Z; one IRPT_RESIDENT_PACKAGE retained_for_retry class=ClientError code=- at 08:04:18Z; the AWS error is not named in the journal",
+      "the commentary-ready main queue read 1 message after the run (dead letter 1, unchanged)"
+    ]
+  },
+  "spec_asserts": "ADDENDUM 8 of the commentary run packet: with the Opal producer path the ticket reads PARTIAL at READY (report and original held) and COMPLETE once the commentary arrives (four pointers).",
+  "world_is": "The routing fix held (no RecipeRefused, READY in 30 s), the commentary and its draft were produced, but the ticket package was never seen: no package member at READY, then a ClientError retained the second attach. The journal carries the class only; the AWS error and the table or object it came from are not measured. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
