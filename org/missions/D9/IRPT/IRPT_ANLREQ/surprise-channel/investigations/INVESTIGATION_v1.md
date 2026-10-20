@@ -28583,3 +28583,42 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S226 -- nine round-43 worker rows dismissed on measured state
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S226",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-20T13:55:00Z",
+  "one_line": "Nine worker rows of round 43 (W321-S1..S3, W322-S1, W323-S2..S3, W324-S1..S3) are dismissed on measured state: resolved by the alias probe or AMENDMENT 1, or facts of the page and naming slips with nothing owed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W321-S1",
+    "IRPT_ANLREQ-D2-W321-S2",
+    "IRPT_ANLREQ-D2-W321-S3",
+    "IRPT_ANLREQ-D2-W322-S1",
+    "IRPT_ANLREQ-D2-W323-S2",
+    "IRPT_ANLREQ-D2-W323-S3",
+    "IRPT_ANLREQ-D2-W324-S1",
+    "IRPT_ANLREQ-D2-W324-S2",
+    "IRPT_ANLREQ-D2-W324-S3"
+  ],
+  "spec_asserts": "Rows W321-S1..S3 doubt the packager token and edge reads, W322-S1 says the r34n generator refuses a two-member release, W323-S2..S3 and W324-S1..S3 record page facts, a naming slip and worker-branch limits; each reads UNDER_INVESTIGATION.",
+  "world_is": "W321-S1: IB2's alias probe (irpt_anlreq_packager_cfprobe/A_PACKAGER_CFPROBE.txt, 10:24Z, CTO msg 11309) was ADMITTED through the alias with the expected iss and aud, answer 404 from the ticket service. W321-S2 is a label in IB2's reader; W321-S3 no open order reads the edge association version since the packager rides the alias. W322-S1: AMENDMENT 1 fixed the generator, the issuer re-measured the build, r34n live 10:58Z (A_AFTER_R34N.txt, msg 11329). W323-S2 and S3 are page facts read into PAGE_NOTES; W324-S1 the TO file sits on box/dell2 and the issuer flips it; W324-S2 a naming slip, the method is on LiveClient; W324-S3 the swap was restored by sha256. NOT dismissed here: W321-S4 (edge checks RS256 only), W322-S2 (stage-folder deletion waits on Andrew), W323-S1 (ARMED until the guard fix is live on PROD).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (the nine rows named in adjudicates)",
+      "org/tier1_exec/2.0.0_SA_COO~Y2/drive_log_20261020T10Z_desktop-n8rjv0a.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Each of the nine is either answered by a measured record (the alias probe, the r34n live read) or states a fact or limit with no act owed; the three rows with an owed act are left open and named in world_is."
+}
+]
+```
