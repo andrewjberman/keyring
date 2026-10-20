@@ -28079,3 +28079,32 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W319-S3 -- IRPT_ANLREQ-D2-W319-S1 is resolved: the issuer corrected the AR441-y-AC3 expectation in amend 2fa1a0957e4
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W319-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~319",
+    "surfaced_at": "2026-10-20T05:39:50Z",
+    "one_line": "Resolution of IRPT_ANLREQ-D2-W319-S1 (not an edit of that row): the AR441-y-AC3 expectation was sha256=e76593c79519, a typo; the issuer amended it to sha256=e76593c7951a in commit 2fa1a0957e4. The map mode now prints R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a, which matches the amended expectation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-441 ACCEPTANCE AR441-y-AC3 as amended by 2fa1a0957e4: expect ^R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a$.",
+    "world_is": "The map mode, run at HEAD 2fa1a0957e4 with python -I r59/check_r37.py map, prints R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a (rc=0). S1 read FAIL only against the superseded expectation e76593c79519.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log of the order file: 2fa1a0957e4 amend(IRPT_ANLREQ TO-AR-y-441, 2.0.0_SA_COO~Y2): criterion AR441-y-AC3 expected sha256=e76593c7951a",
+        "the order's AR441-y-AC3 expect line now reads sha256=e76593c7951a$",
+        "python -I r59/check_r37.py map re-run in the worktree: R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a, rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Resolves IRPT_ANLREQ-D2-W319-S1 by this appended row; the S1 row itself is not edited. The proof instance's AC3 row now reads PASS against the amended expectation."
+}
+]
+```
