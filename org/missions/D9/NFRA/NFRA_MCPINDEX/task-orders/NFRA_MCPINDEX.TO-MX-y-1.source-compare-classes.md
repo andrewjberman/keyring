@@ -104,3 +104,4 @@ Base dry-runs 2026-10-20 (script and test file as merged at the cut; the new tes
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>

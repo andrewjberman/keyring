@@ -13539,5 +13539,161 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         "disposition": "UNDER_INVESTIGATION",
         "notes": "Ruled by the issuer: a guard stop is the designed behaviour and does not fail stage 6. The cause of the two unnamed stops is an enrichment item for the round analysis, not a cn-7 criterion."
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W188-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~188",
+        "surfaced_at": "2026-10-20T17:01:45Z",
+        "one_line": "Batch 16 (OG-rl-17) does not NAME tests/test_cj2_slash_key_one_form.py in its test list and no rl-17 check names it; the test reaches batch 16 only inside the Phase A full-suite comparison, and no release branch is at origin yet. Verdict PARTIAL, not IN.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "CTO cross-adjudication org/critical_paths/cross_adjudication/20261019T1238Z_XA-20261018T094750Z-cbaa.md: tests/test_cj2_slash_key_one_form.py is in EVERY opal-gateway release's test list, whichever box releases; a release that does not run it is not a release of that rule. Site Z batch-16 release order NFRA_OPLGTW.TO-OG-rl-17 (window 2026-10-21 06:00Z to 06:45Z) must therefore name it.",
+        "world_is": "Read 2026-10-20 by 0.9.0_WK_AMGT_HARVST~188 (co4_batch16.sh, output co4_batch16.out): rl-17 names test_cj2_slash_key_one_form 0 times; the two check folders r47/checks and r38/checks (89 files searched) name it 0 times; the test file exists at base 13917ef993 (blob 2bcec39195223f106a76e64405a748ddebbe53e9); rl-17 line 34 (Phase A step 3) states a full-suite comparison against the live ref without naming each tests/ file; git ls-remote origin refs/heads/rel-nfra-oplgtw-batch16 returns no line. Not read: the release tree C:/tmp/og-rel-batch16 on site Z's host (not on this box) and the test list of the release that Phase A would cut there.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~188/co4_batch16.out @7997ac0b53",
+                "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rl-17.round-47-sixteenth-batched-release-the-client-fences-the-size-caps-and-the-in-flight-guard.md @7997ac0b53 (line 30 take list, line 34 full-suite clause)",
+                "git ls-remote origin refs/heads/rel-nfra-oplgtw-batch16 (empty line count 0), read 2026-10-20 ~17:0xZ"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Filed under face section 1c (verdict not IN). The CTO decides any MSTR-to-MSTR routing before the window."
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W185-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~185",
+        "surfaced_at": "2026-10-20T17:03:30Z",
+        "one_line": "The three guard-stopped names of the 2026-10-20 dossier fire (BZLFY_US_Equity, PBR_US_Equity, TSM_US_Equity) each drop one valued model_rows row, the same row, typecast|BEST_DPS|FY1; they share one cause, field_absent_in_new_block: the 2026-10-20 Model block carries no BEST_DPS figure and its unresolved reason is HELD_OFF by --no-sa-fallback.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO HVST-co-1 section 1 e and CTO round-99 item 1: the valued row each guard-stopped name drops is named with its cause decided from the two Model blocks, and ONE surprise row is filed per distinct cause (or one row saying the three share a cause). Prior finding for PBR (HVST-cn-2): typecast|BEST_DPS|FY1, field_absent_in_new_block, the 2026-10-18 block listing it unresolved.",
+        "world_is": "Read 2026-10-20 ~17:03Z by 0.9.0_WK_AMGT_HARVST~185 (co1_names.py, read-only, rc=0, GUARD-STOPS gets=800 bytes=144527718, base 7997ac0b53): each name's served dossier is the 2026-10-18 one (the stopped names keep it); the stored valued rows are 56 (BZLFY), 56 (PBR), 54 (TSM) and the built valued rows 55, 55, 53; the one missed row per name is typecast|BEST_DPS|FY1 (stored value 0.391, 9.546 and 131.309 respectively; built absent). The stored blocks are 20261018T130256Z, 20261017T130744Z, 20261018T130948Z; the built blocks are 20261020T130322Z, 20261020T130921Z, 20261020T131131Z. In each built block BEST_DPS has no figure, and the block's unresolved reason reads HELD_OFF: SA fallback held off by --no-sa-fallback. rows_new is 0 for all three. Controls: UNH_US_Equity rows_missed=0; a planted deletion from BZLFY's stored rows is found once (identity typecast|ARD_GOODWLL|2021).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~185/co1_names.py run at base 7997ac0b53 (foreground, rc=0); output co1_names.out in the same folder",
+                "lib/research/corpus/dossier.py:1278 _figure_for_row_key lookup order (fiscal line item, header, FY1 forecast, then the block's unresolved reason) @7997ac0b53",
+                "infra/aws/ec2/opal-gateway/app/harvest_research.py:270 _pick_dossier, copied unchanged into co1_names.py @7997ac0b53",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~180/cn2_pbr.out line 13: the same typecast|BEST_DPS|FY1 cause for PBR on the 2026-10-18 block"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Form only. The counts reproduce the guard's own counts (56/55, 56/55, 54/53, one miss each). The cause for BZLFY and TSM was read from their own two blocks, not assumed from PBR's. hazard_standing INERT: a guard stop keeps the prior dossier by design (AMGT_HARVST-D1-S68 notes); whether a standing HELD_OFF on BEST_DPS FY1 keeps the three names stale on every later fire is for the L9 read, not graded here."
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W186-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~186",
+        "surfaced_at": "2026-10-20T17:06:08Z",
+        "one_line": "The rebuild entry lib.research.harvest.publication_gold measures UNDER the 250 MB unzipped Lambda limit (138.86 MB), so its import closure does not by itself require a Fargate container task.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-2 section 0 and AC1: the rebuild entry's import closure is measured against the 250 MB unzipped Lambda limit; a container task is the path if the closure is OVER.",
+        "world_is": "co2_gold.out (this commit) reads GOLD-CLOSURE entry=lib.research.harvest.publication_gold lib_modules=9 third_party_pkgs=3 third_party_mb=138.46 lib_code_mb=0.40 total_mb=138.86 limit_unzipped_mb=250 verdict=UNDER biggest=pyarrow:86.40,numpy:51.94,cloudpickle:0.12 removable_by_lazy=none. Both controls pass (CONTROL-POSITIVE pyarrow_in_closure=yes, CONTROL-NEGATIVE third_party_tops=0). The earlier closure of lib.research.corpus.dossier_refresh measured 287.13 MB OVER (cn4_closure.out, round 181) because that entry also loads lib.trading_calendar (pandas, pandas_market_calendars) and lib.research.corpus.extract (pymupdf, lxml, openpyxl, pillow); the publication_gold closure loads none of them.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "7997ac0b53:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.out",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~186/co2_gold.out (this commit)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W186-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~186",
+        "surfaced_at": "2026-10-20T17:06:08Z",
+        "one_line": "The gold roster is not the covered-universe listing the order names as its start point: the round-75 roster has 242 names, covered_universe returns 95 keys, and 147 keys of the newest chatter_daily object are not covered.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-2 step 1.4: find where the --securities-json roster of a gold build comes from, starting from covered_universe.covered_security_keys().",
+        "world_is": "covered_universe.covered_security_keys() returns the 95 security folders under amgt/harvest/gold/research_dossier/ (C-PAGE-UNIVERSE-ONE-NAME). It is not an input of publication_gold; a gold build takes its roster from --securities-json. The round-75 roster securities.universe.r75.json (242 entries, deliverables 0.9.0_WK_AMGT_HARVST~129) is written by lib/research/harvest/universe_securities.py build() at HEAD (gold_rebuild11.signing.py docstring). co2_gold.out NOTE roster: the newest chatter_daily object part-20261009T103423Z.parquet (partition date=2026-10-08, 4 objects in the partition) holds 242 distinct security_keys, all inside the r75 roster (roster_file_vs_daily_not_in_file=0); 147 of them are absent from covered_universe (daily_not_covered=147, covered_not_daily=0, equal=no).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "7997ac0b53:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~129/securities.universe.r75.json",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~186/co2_gold.out (this commit)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W187-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~187",
+        "surfaced_at": "2026-10-20T17:06:42Z",
+        "one_line": "The no-today branch of the refresh driver was not reached for UNH_US_Equity at now=2026-11-02T14:00:00Z: the driver returned UNCHANGED (build equals the served dossier), not NO_TODAY_MODEL_BLOCK.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-co-3 AC1 and build step 1.b.2: main(['--only','UNH_US_Equity','--require-trading-day'], now=2026-11-02T14:00:00Z) prints REFRESH-CENSUS with no_today_model_block=1 written=0 errors=0 mode=dry-run for UNH_US_Equity, its stored dossier untouched.",
+        "world_is": "Read 2026-10-20 ~17:05Z by 0.9.0_WK_AMGT_HARVST~187 (dry run; co3_branches.py; co3_branches.out): REFRESH-CENSUS names=1 written=0 would_write=0 unchanged=1 no_new_model_block=0 no_today_model_block=0 skipped_allowed=0 skipped_guard=0 errors=0 mode=dry-run; the per-name line reads 'REFRESH UNH_US_Equity status=UNCHANGED moved=none inputs_differ=none guard=NA reason=build equals the served dossier in fields and inputs'. The stored prefix listing (18 objects) is equal before and after the call. In dossier_refresh.py refresh_one, the UNCHANGED return (no moved field and equal inputs) comes before the today-block check, so NO_TODAY_MODEL_BLOCK is reached only when the build differs from the stored dossier.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~187/co3_branches.out (worktree, pre-commit; BRANCH-NOTODAY line)",
+                "lib/research/corpus/dossier_refresh.py @7997ac0b53 refresh_one lines 387-399 (UNCHANGED return before today_block_missing)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Dry run only: writes_total=0, no --write. The NO_TODAY_MODEL_BLOCK branch is not exercised by this cell on this name; no fix is asserted here."
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W187-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~187",
+        "surfaced_at": "2026-10-20T17:06:42Z",
+        "one_line": "The investigation item schema the worker bar names, org/surprise_channel/schemas/investigation_item.schema.json, is absent from this worktree, so the rows were shaped from the rows already in this channel file.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Worker bar: each surprise row is shaped per org/surprise_channel/schemas/investigation_item.schema.json at the worktree root.",
+        "world_is": "Read 2026-10-20 ~17:05Z by 0.9.0_WK_AMGT_HARVST~187: the Read tool on C:/dev/wk-harvst-187/org/surprise_channel/schemas/investigation_item.schema.json returns File does not exist; ls of org/surprise_channel/schemas/ returns No such file or directory; a Glob for investigation_item*.json under C:/dev/wk-harvst-187/org returns no files.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "Read and Glob of the schema path under C:/dev/wk-harvst-187/org (no file)",
+                "ls org/surprise_channel/schemas/ in C:/dev/wk-harvst-187 at 7997ac0b53: No such file or directory"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "The row gate .tools/surprise-row-gate.py was run on the filed rows; its verdict is in the commit report."
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W187-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~187",
+        "surfaced_at": "2026-10-20T17:26:18Z",
+        "one_line": "proof-of-spec-check count-bar raises VIOLATION on a PASS row whose verbatim census line reads 'no_today_model_block=1 skipped_allowed=0': the checker takes '1 skipped_allowed' from the key=value pair as a nonzero count.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Ruling M(ii) (proof-of-spec-check count-bar-frame): a PASS is not decided by a substring of a contradicting summary; the bar's zero-asserted nouns are graded against nonzero counts in the evidence. A PASS row whose evidence is the verbatim expected census line matches the amended AC1 pattern.",
+        "world_is": "Checker run on the amended instance (artifacts pinned at b5db6b593f) with AC1,AC2: rc=1, VIOLATION count-bar[AC1] names 'skipped_allowed' and evidence '1 skipped_allowed', a substring of the verbatim census line BRANCH-NOTODAY REFRESH-CENSUS ... no_today_model_block=1 skipped_allowed=0 ... The violation's zero-noun list also names no_today_model_block, which the bar asserts as 1. AC1 matches the amended pattern in full; the verdict is INVALID from the count-bar alone.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~187/AMGT_HARVST.TO-HVST-co-3.the-two-unfired-branches-of-the-refresh-driver-are-driven-on-demand-in-dry-mode-against-live-data.proof_of_spec.json (worktree, the amended instance)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~187/co3_branches.out @b5db6b593f (BRANCH-NOTODAY line)",
+                ".tools/proof-of-spec-check.py count-bar-frame @b5db6b593f"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Not worked around: the expect and the verbatim evidence are unchanged. The instance stays INVALID (rc=1) and the order stays open until the checker grades this form. Form only; significance is for the CVO."
+    }
 ]
 ```

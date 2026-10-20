@@ -103,3 +103,13 @@ The live trace needs the repaired sign-in code on the box after each worker repa
 | **FU-s-10** | Keep the box's code equal to the repo: re-deliver every shipped file of `infra/aws/ec2/canonical-fidelity/` (and `box/`) to `/opt/fidelity-uploader/` by SSM, md5-checked, the box left running | `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF | WORLD |
 
 Edge: `FU-s-2 -> FU-s-10 -> FU-x-1`. Executor: `0.7.0_AE_CloudOps~NFRA1`.
+
+## 10. ADDENDUM 2026-10-20 ~16:45Z (issuer, CTO ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_NFRA_FIDUPL_HEADFUL_CHROME_20261020.md` @c618ca8c8c, Andrew-direct via CRO msg 8711)
+
+Track B of the sign-in ruling: a repeatable AGENT-DRIVEN headful fallback, beside the scheduled puller. No spec change.
+
+| cell | what it builds (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FU-s-11** | Measure whether the Claude-in-Chrome plugin and a Claude session run on the box with real Google Chrome on a display the agent can drive (same profile directory as the puller), then, when the issuer says GO, one agent-driven headful sign-in to the text-message code, recorded values-free | `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF | WORLD |
+
+Edge: `FU-s-10 -> FU-s-11`. Executor: `0.7.0_AE_CloudOps~NFRA1`.

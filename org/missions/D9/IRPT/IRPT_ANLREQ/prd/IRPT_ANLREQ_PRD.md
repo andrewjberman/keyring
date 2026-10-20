@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.25",
+ "prd_version": "v0.28",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -163,12 +163,12 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 | C-PACKAGER: one principal attaches the package | this project | The package is four STANDALONE items: the original holdings upload, the form selections as filed, the Opal report, and the AI commentary as a standalone branded Opal PDF marked DRAFT. The packager is triggered by the report's READY, never by the commentary flag: the first three attach when the report completes, the commentary when it is drafted, and a commentary failure withholds nothing else (v0.23). The combined package PDF (the report with a commentary page inside) is never posted as an attachment. That hop's principal is the ONE `package_principal` named in the type definition. It is firm-bound by its PROFILE row (internal-caller narrowing, IB-pr-387), and never ALL. |
 | C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the packager by its row. FWD-1's filer, an Opal staff principal, CHOOSES ANY firm from the served partner tenants and is never refused for want of an advisor, a directory row or an `allowedFirmIds` membership: the staff principal is the request's owner (`access.prospect_owner()`), and every hop binds to that choice (v0.23, superseding the `allowedFirmIds` clause of v0.7). A partner-firm user's firm is the signed-in user's and is never a choice. ALL never admits and never substitutes for the choice. |
 | C-ABSORB: what MOVES into this project (the brief's "compress into ONE project") | this project | **Moves in, owned and issued here.** (a) IRPT_BCKEND `~Y2`'s Analysis lane: the upload door and resolution `infra/aws/lambda/investor-reporting/intake/{uploads,upload_resolution,upload_suggestions,resolution_kimi}.py`, the security swap (today `KIMI_WEB_SEARCH_UNVERIFIED`, `resolution_kimi.py:159-165`; candidates from `etf-classifications`, ex-IRPT_YCDGEN FWD-16), and generation submit. (b) IRPT_YCDGEN whole: the Opal engine and brand `ycharts/generate/{resident_worker,durable_job,comparison_catalogue,publication_worker}.py`, `ycharts/research/{opal_producer,layout_overview}.py`, report types and vendor retirement. (c) NFRA_TRNSPT FWD-10 and FWD-11: the commentary drafter `data/transcripts/scripts/commentary/*` and its Lambda `commentary.tf`. (d) The READY event H1 (from `~P2`'s queue). (e) TCKT_VNEXT's Analysis Request scope: the `analysis_request` type definition, `POST /tickets/{id}/package`, `portal/src/pages/TicketCenter/` Analysis Request parts. **Keeps the remainder:** IRPT_BCKEND (`~P2`: auth, routes, directory, holdings, `irpt-export-render` as the shared renderer); NFRA_TRNSPT (FWD-1..9: transcripts, company read, mail); TCKT_VNEXT (non-analysis types). **Lanes:** `~Y2` is the ONE driver, issuing the FWD-1 thread and the round analysis. `~G2` (engine and brand), `~T2` (commentary) and `~V2` (ticket) continue as this project's workstreams with disjoint write surfaces, each issuing only into its own workstream scope (rule 27). No hop of FWD-1 parks on another project's cell. Each source PRD gains a one-line addendum pointing here at its next round boundary; in-flight orders and signed pairs complete where they are. |
-| C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2; restated v0.14 to the CTO replacement ruling @5deb868819) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; the form's typo hint is C-FILING-HINT, verified against the registry and yfinance, never YCharts. (2) PRICED: Yahoo, then YCharts per symbol (C-PRICES); if either has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. Every holding the door filed UNRESOLVED (a kept `TICKER_NOT_FOUND`, a `TICKER_DATA_NOT_ENTITLED`) enters this pass; the filer is never asked for a replacement (v0.18). (3) CLASSIFY only if neither has prices: SECCLASS's classifier on kimi-k2.6 with a web-search tool and the tool-call loop, output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) REPLACE: from the class-matched pool (registry rows plus model proposals that pass the class match and have Yahoo history), the longest Yahoo history wins, ties by ticker. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`, and the report names the replacement. No designated-proxy table exists (provider QA @30ceaa97fa, finding 9). |
+| C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2; restated v0.14 to the CTO replacement ruling @5deb868819) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; the form's typo hint is C-FILING-HINT, verified against the registry and yfinance, never YCharts. (2) PRICED: Yahoo, then YCharts per symbol (C-PRICES); if either has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. Every holding the door filed UNRESOLVED (a kept `TICKER_NOT_FOUND`, a `TICKER_DATA_NOT_ENTITLED`) enters this pass; the filer is never asked for a replacement (v0.18). (3) CLASSIFY only if neither has prices: SECCLASS's classifier on the estate's current Kimi model (kimi-k3, `etf_classification_model.py:42`; v0.26), WITHOUT web search until a verified web-search receipt exists (the resident refuses KIMI_WEB_SEARCH_UNVERIFIED), output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) REPLACE: from the class-matched pool (registry rows plus model proposals that pass the class match and have Yahoo history), the longest Yahoo history wins, ties by ticker. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`, and the report names the replacement. No designated-proxy table exists (provider QA @30ceaa97fa, finding 9). |
 | C-PRICES: where prices come from (restated v0.13; Andrew-direct 10-14 ~17:5xZ, CTO price ruling ADDENDUM 2 @ac60268494) | this project | Per security, in order: (0) the estate's own stores where they hold the symbol (the DEMQUE price store, the Opal ETFs' Bloomberg history), read, not called; (1) Yahoo (yfinance), cut at T-1, `source: yfinance`; (2) YCharts through the stored session, one symbol per call, prices only, `source: ycharts`; (3) the backend replacement C-SWAP step 2 (class-matched pool, longest Yahoo history, ties by ticker), named in the report; (4) else the report runs WITHOUT the security and says so in words, never blocking. Bloomberg is OUT of this chain. Every price carries its source as a claim field. **There is no price-date input (v0.16, Andrew-direct 10-15 ~20:4xZ):** every price, share-quantity valuations included, is the most recent close, the T-1 frontier of `lib/trading_calendar.py`, stated in the report as the as-of. The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts report, figure or PDF. |
 | C-FILING-HINT: the unmatched-ticker decision tree at filing (v0.12; restated v0.15, v0.18; restated v0.19 to Andrew-direct 10-15 ~21:5xZ, the decision tree; v0.22 yfinance first) | this project | **The door's check asks yfinance first (v0.22, Andrew-direct 10-16 ~15:2xZ): a holding yfinance keeps at T-1 is KNOWN with no YCharts call; YCharts is asked only for a symbol yfinance does not keep.** Every holding the upload door cannot match is CHECKED by the door, then: (A) **the ticker does not exist** (`TICKER_NOT_FOUND`): it is treated as a possible typo, and the form shows 'Did you mean <symbol> (<name>)?' (the door's own provider-verified `suggestion`) with three answers. **Yes** accepts the suggestion (the same upload re-posted with that correction). **Replace** opens an input where the filer types the replacement ticker(s), which are re-posted as corrections and CHECKED AGAIN by the same tree; a replacement that also fails gets the same prompt. **No** files the holding UNRESOLVED, and the form says 'Opal Staff will manage the replacement.' With no suggestion, the prompt offers Replace and No only. (B) **the ticker exists but Opal cannot price it** (`TICKER_DATA_NOT_ENTITLED` and every other unpriceable-as-given class): there is no typo prompt; it files UNRESOLVED with the words 'Opal Staff will manage the replacement.' Every UNRESOLVED holding goes to C-SWAP in the backend, and the report names its replacement. The form NEVER asks the filer to name a proxy: `NAME_PROXY` is retired from every filer-facing finding, and no text tells the filer to replace without an input to do it. Replace is the filer CORRECTING their own ticker, not picking a proxy (swaps are not the filer's, Andrew 10-15 ~14:xxZ). It works for the staff filer after a firm is chosen, and makes no vendor call at the form. |
 | C-HOP-FAILURE: how a failed hop reaches the ticket (v0.20; design fork from `2.0.0_SA_COO~T2` msg 8900, research by this seat) | this project | The ticket READS the failure; no service writes a note to the ticket, and no new ticket route or principal exists for it. (1) The analysis-request ticket page calls the existing status route `getJobStatus(report_ref.request_id, firm)` and shows the state, the failed step and its words. (2) `irpt-status` returns a CLOSED failure code (`^[A-Z0-9_]+$`, an enumerated set) beside the state. Each code maps to words in one table in `status.py` that name the step and what happens next; an unmapped code reads as its step's generic words, never as blank. (3) The generator hops already write the job row in `irpt-jobs` (ATTENTION or FAILED, with `detail.code`). The silent hops write ONE set-once sibling attribute `hop_failure` = {hop, code, at} on that row, beside the receipt, never overwriting READY. The silent hops are the ready-signal send, the commentary draft and the packager. The packager writes it through the resident's existing jobs-table client. The commentary writes it through a `fail` op on the existing draft-store invoke. (4) Writers of `hop_failure`: exactly those three hops, one value per request. (5) A recovered hop (v0.21): the page shows a failure ONLY while the request is unfinished (no package attached). A request whose package is attached shows its completion, and the set-once value stays on the row as history. |
 | C-MODEL-SOURCE: the Opal model data the report engine reads (v0.25; CTO ruling R1 @665110f9c2, key corrected @b9de1e559d, on the CRO research @c05a6b6841) | this project | FWD-10 returns, risk and the chart read the firm-neutral model return series `opal-data-portal-v2` `json/benchmarks/model_portfolio_timeseries.json` (rows date, model_code UST/ST/INT/LT/ULT, model_return, benchmark_return, rfr; inception 2024-04-30) through ONE read grant on the resident policy under a never-widen pair. FWD-10 asset allocation reads the models' CURRENT weights from the registered firm-neutral positioning surface, dated on the page at the T-1 frontier. FWD-11 reads a dated JSON extract `{as_of: {model_code: {ticker: weight}}}` written by the yang job, at a builder address after a new registry row (rule 30); the resident never unpickles. The model-code map (UST to ULT to the catalogue's five Opal models) is one committed artifact. REJECTED: the MDPF composition tables and the gateway composition tool, which are keyed by firm (CLAUDE.md section 5). |
-| C-AUDIT-RECORD: one audit JSON per analysis request (v0.25; CTO ruling R3 @665110f9c2; Andrew 2026-10-20 "a structured JSON for that audit reporting") | this project | A NEW `analysis-report` family beside `ycharts_runs` (run.json unchanged; LGIC R19), in each firm's bucket at a builder-made address, with a published JSON Schema that a consumer rejects a malformed record against. It carries four linkages: the ticket, the form as filed, the filer, and the package and commentary pointers. Retention: 2,555 days from filing, with no unreferenced expiry (the driver's ruling; Andrew stated none; his word changes it). |
+| C-AUDIT-RECORD: one audit JSON per analysis request (v0.25; CTO ruling R3 @665110f9c2; Andrew 2026-10-20 "a structured JSON for that audit reporting") | this project | A NEW platinum family ANALYSIS_AUDIT, table `analysis_audit` (v0.27; `analysis_reports` is already the analysis table), beside `ycharts_runs` (run.json unchanged; LGIC R19), at the builder-made address in the IRPT product bucket under the firm's key prefix, `opal-data-irpt/irpt/<firm>/platinum/analysis_audit/` (v0.28: every IRPT retained family lives there via `reporting_destination`, and the client firm buckets are fenced against the resident role), WRITTEN BY THE PACKAGER at attach time (the one hop that holds all four linkages; the form as filed is taken from the ticket answers), schema AnalysisAudit.v1 beside AnalysisReport.v2, with a published JSON Schema that a consumer rejects a malformed record against. It carries four linkages: the ticket, the form as filed, the filer, and the package and commentary pointers. Retention: 2,555 days from filing, with no unreferenced expiry (the driver's ruling; Andrew stated none; his word changes it). |
 | C-NAMES: rule 30 | consumed; LGIC | Every new S3 address and resource name is `lib/opal_naming.py` `address()` / `name()` output, printed in the order that writes it. |
 
 ## 2. THREAD -- FWD-1, round 1
@@ -704,5 +704,67 @@ accepted because the CRO wrote the brief (proportionate sign-off).
 **Sign-off:**
 - ENDPOINT and CONTRACTS changed, so `3.0.0_SA_CVO~DELL2` signs the ratified-text half.
 - The brief half is accepted because the CRO wrote the brief (proportionate sign-off).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## v0.26 (2026-10-20 ~17:1xZ, 1.0.0_SA_CTO~DELL2) -- C-SWAP step 3: the classifier model as it is in the tree (text only)
+
+**On:** `2.0.0_SA_COO~Y2` msg 17:12Z and the AR-y-461 read
+(`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~326/SWAP_LEG_READ.md`, drained @0dc0f983b7).
+
+**What the read found:**
+- The tree classifies with kimi-k3 (`etf_classification_model.py:42`), not kimi-k2.6.
+- No web search is wired, and the resident's swap advisory refuses KIMI_WEB_SEARCH_UNVERIFIED (`resolution_kimi.py:165`).
+
+**Ruling (`~Y2`'s REC):**
+- Step 3 classifies with kimi-k3, without web search, bound to the live (class, sub-class) vocabulary; below 0.80 is FLAGGED.
+- Web search is added only once a verified web-search receipt exists.
+
+**Why no wider change:**
+- The model only widens the pool and classifies; it never picks (step 4 picks by the longest Yahoo history).
+- It is the same vendor under C-KIMI, so no new vendor leg.
+
+**Sign-off:** a wording change inside a CONTRACTS row, with no ENDPOINT change. Under proportionate sign-off it re-opens no half.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## v0.27 (2026-10-20 ~17:3xZ, 1.0.0_SA_CTO~DELL2) -- C-AUDIT-RECORD fitted to the builder (text only)
+
+**On:** `2.0.0_SA_COO~Y2` msg 17:32Z and the AR-y-462 read
+(`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md`, drained @71d23f59a8).
+
+**Three terms did not fit the builder:**
+- "analysis-report" is not a registry family key, and `analysis_reports` is already the analysis table (`opal_naming.py:2605`).
+- "No unreferenced expiry" is allowed only at the platinum tier (`opal_naming.py:2632`).
+- The commentary pointer is set after READY, so a record written at READY would lack it.
+
+**Ruling (`~Y2`'s REC):**
+- A new platinum family ANALYSIS_AUDIT, table `analysis_audit`.
+- A 2,555-day ceiling, with unreferenced expiry null.
+- Written by the packager at attach time, the last hop holding all four linkages; the form as filed comes from the ticket answers.
+- Schema AnalysisAudit.v1.
+
+**Unchanged:** the outcome, the linkages and the retention.
+
+**Sign-off:** a CONTRACTS edit, so `3.0.0_SA_CVO~DELL2` reads it (the v0.26 note).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## v0.28 (2026-10-20 ~18:2xZ, 1.0.0_SA_CTO~DELL2) -- C-AUDIT-RECORD's address: the IRPT product bucket under the firm prefix (text only)
+
+**On:** `2.0.0_SA_COO~Y2` msg 18:21Z (worker 342's finding, probed by the issuer; orders 466 to 468 amended @a71b17d96d).
+
+**Why "each firm's bucket" was wrong:**
+- Every IRPT retained family is addressed by `reporting_destination` into `opal-data-irpt/irpt/<firm>/<tier>/<table>/...`.
+- The client firm buckets are fenced against the resident role (`resident.tf` 229-241).
+- So the audit record lives at `opal-data-irpt/irpt/<firm>/platinum/analysis_audit/`, with the firm in the key. This is the
+  LGIC home that Andrew's "using lgic naming standards of course" points to.
+
+**Rejected:** the alternative, a per-firm principal, would be a never-widen-class widening for no gain.
+
+**For Andrew:** his words were "I believe we just have an analysis-report folder in each firm's bucket". The record is per firm,
+by key prefix in the product bucket. This seat states the difference in its close-out report so he can correct it.
+
+**Sign-off:** a CONTRACTS edit, so `3.0.0_SA_CVO~DELL2` reads it; the brief half re-reads.
 
 -- 1.0.0_SA_CTO~DELL2

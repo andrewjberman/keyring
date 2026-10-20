@@ -38,3 +38,38 @@
   that field requires the filer to type or choose anything. Pre-filled and unchanged meets it; a typed email does not.
 
 -- `3.0.0_SA_CVO~DELL2`
+
+## Re-review at v0.26 @62631269b7 (2026-10-20 ~17:2xZ): SIGNED
+
+- Half reviewed: ratified-text, half_hash `ac5cbec71969b8d3b8071b21a800f8378f6af90d555e4a71ec7cfe438246a240`.
+- The only change is C-SWAP step 3:
+  - the classifier model is `kimi-k3`, not kimi-k2.6;
+  - there is no web search until a verified web-search receipt exists;
+  - a pick below 0.80 is still FLAGGED, the output is still bound to the live vocabulary, and the model still classifies and never picks.
+- Read at the cited lines:
+  - `infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:42` is `MODEL = "kimi-k3"`;
+  - `infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:160-165` returns `KIMI_WEB_SEARCH_UNVERIFIED` unless the search
+    capability is verified with a QA receipt.
+- The contract narrows to what the code does, with the same vendor (C-KIMI) and no ENDPOINT change.
+- Proportionate sign-off is written for single-round or sub-week projects, and IRPT_ANLREQ is neither. This seat therefore re-binds to the
+  current bytes rather than resting on "current by ENDPOINT hash". **SIGNED.**
+
+## Re-review at v0.27 @cd00de4ecb (2026-10-20 ~17:4xZ): SIGNED
+
+- Half reviewed: ratified-text, half_hash `d17f285911f0398375484a7c0b94108d710497559632c6194ff215675e66d1b5`.
+- The only change is the C-AUDIT-RECORD row:
+  - platinum family ANALYSIS_AUDIT, table `analysis_audit`;
+  - a 2,555-day ceiling, unreferenced expiry null;
+  - written by the packager at attach time, with the form as filed taken from the ticket answers;
+  - schema AnalysisAudit.v1.
+- The outcome, the four linkages and the retention are unchanged.
+- Read in `lib/opal_naming.py`:
+  - a family key must match `[A-Z]+(?:_[A-Z]+)*` (~2605), so "analysis-report" cannot be one;
+  - the ceiling must be `0 < d <= 2555`;
+  - `unreferenced_days` None raises unless the tier is platinum (~2630-2632).
+  - The ruling fits the builder as stated. **SIGNED.**
+- **Grading note, not a condition.** "At attach time" meets two cases already in the contracts.
+  - **A commentary failure** attaches with `pdf_ref` and `commentary_ref` null (C-PACKAGER v0.23; TCKT_VNEXT R20-lm-7). AnalysisAudit.v1
+    must admit those two pointers as null.
+  - **A replace attach** (`prior_attached_at`) must supersede the record, not write a second one silently.
+  - The audit-record cell is graded on both cases.

@@ -28556,6 +28556,7 @@
 }
 ]
 ```
+
 ## IRPT_ANLREQ-D2-W324-S3 -- the difference control swaps the guard file in place for one run, because the test's import is a relative path
 
 ```json
@@ -28777,6 +28778,369 @@
       "portal/src/pages/TicketCenter/TicketCenter.tsx staff submit button disabled={creating || heldReason !== null} @d5d2fdea",
       "portal/src/pages/TicketCenter/analysisRequest.ts ADVISOR_HELD and submitHeldReason advisor check @d5d2fdea",
       "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/shots_blank_advisor (AC2 run, rc 1, B2 REFUSED line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W326-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~326",
+  "surfaced_at": "2026-10-20T17:01:35Z",
+  "one_line": "AR-y-461 and PRD C-SWAP name the swap classifier as kimi-k2.6; the classifier in this tree pins kimi-k3 (etf_classification_model.py:42, resolution_kimi.py:20). Read only; no row or code changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-SWAP row (org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md:166) and the AR-y-461 cell context: SECCLASS's classifier on kimi-k2.6 with a web-search tool and the tool-call loop.",
+  "world_is": "The classifier module infra/aws/lambda/v2_portal/_shared/etf_classification_model.py pins MODEL = kimi-k3 (line 42), and intake/resolution_kimi.py pins kimi-k3 (line 20). The recorded Kimi ruling is kimi-k3 (infra/aws/terraform/estate-report/instance.tf:16-19); kimi-k2.6 appears at instance.tf:22 with its KIMI_HTTP_400 cause recorded as open. Measured by reading at worktree HEAD; no call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:42 MODEL = kimi-k3 read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:20 MODEL = kimi-k3 read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/terraform/estate-report/instance.tf:16-22 kimi_model ruling and kimi-k2.6 note read in worktree wk-IRPT_ANLREQ-326"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W326-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~326",
+  "surfaced_at": "2026-10-20T17:01:35Z",
+  "one_line": "The contract's step (3) classifier is not on the investor-reporting resident path: the resident classifies by table read, the model classifier has no web-search tool, and the resident's swap-kind advisory refuses KIMI_WEB_SEARCH_UNVERIFIED by construction. Step (3) cannot be wired as worded without a ruling.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-461 (S2 of the read): compare what the named classifier needs at run time with what the investor-reporting resident has. PRD C-SWAP step (3): CLASSIFY only if neither Yahoo nor YCharts has prices, using SECCLASS's classifier on kimi-k2.6 with a web-search tool and the tool-call loop.",
+  "world_is": "No investor-reporting module imports etf_classification_model (ycharts/generate/kimi_port.py:4 names it in a docstring only). The resident's stores classifier is the ETFClassifier table read (reports/resident_installed.py:374-376; ycharts/research/layout_overview.py:776-777). classify_one sends no tools (etf_classification_model.py:178-179) and has one retry loop (lines 186-208). The swap-kind advisory needs a verified search_capability (intake/resolution_kimi.py:159-165); ycharts/session/resident_session.py:137 builds KimiAdvisory without it. So step (3) needs a ruling on the model and a verified web-search configuration.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:374-376 _open_classifier read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:178-179 payload with no tools read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:159-165 search_capability gate read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py:137 KimiAdvisory built without search_capability read in worktree wk-IRPT_ANLREQ-326"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W326-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~326",
+  "surfaced_at": "2026-10-20T17:01:35Z",
+  "one_line": "The swap path has no 0.80 flag, no price-first check for the holding, and no sub-class bound on a model classification: swap_pass writes low_confidence as a literal False and swap_holdings goes straight from the UNRESOLVED row to classify.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-SWAP row (IRPT_ANLREQ_PRD.md:166) step (2): PRICE the holding first, Yahoo then YCharts; step (3): below 0.80 confidence FLAGGED; PRD lines 691-692: a pick below 0.80 is flagged.",
+  "world_is": "swap_pass.py:196-202 has no price call before _symbol_class and choose_replacement. swap_pass.py:167 writes the literal low_confidence False into every record. The 0.80 threshold exists only at etf_classification_model.py:52 with its flag at line 214, and the swap path never calls classify_one. classify_one leaves sub_asset_class unbound (lines 141-143); the live-table bound is apply_bound in v2_portal/yang_pipeline/classify-residual-model.py:133-148.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py:167 literal low_confidence False read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py:196-202 holding loop with no price call read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:52 and :214 threshold and flag read in worktree wk-IRPT_ANLREQ-326"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S231 -- Run 7b R: the commentary-pdf route answers UNEXPECTED because irpt-status-role is denied s3:GetObjectVersion on the retained report PDF
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S231",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T17:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7b passed B1, B2, P1 to P5, P7 (COMPLETE, four pointers), B3 and R2, then stopped at R: GET analysis/requests/{REQ}/commentary-pdf answered closed codes UNAVAILABLE,UNEXPECTED because the irpt-status Lambda's role was denied s3:GetObjectVersion on the retained Opal report PDF.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch log group /aws/lambda/irpt-status, request 92dbbb09-9958-478a-8b3a-800fdd51feb5, 2026-10-20T17:02:0xZ: INTERNAL-CALLER-CLASS admitted, then irpt_internal exception_text 'An error occurred (AccessDenied) when calling the GetObject operation: User: ...assumed-role/irpt-status-role/irpt-status is not authorized to perform: s3:GetObjectVersion on resource: arn:aws:s3:::opal-data-irpt/irpt/49financial/state/ycharts_opal_reports/ART-ed570a0dcc2f3f1f30420dc349789710e0425dd950c12b929a3964737b3870f9/c396092e57eaaecd4b...', then irpt_error operation analysis-request-commentary-pdf public_reason_code UNEXPECTED",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7b/state_e2e7b.json (route code UNAVAILABLE,UNEXPECTED; green P1 to P5; p7_final COMPLETE)"
+    ]
+  },
+  "spec_asserts": "ADDENDUM 9 / run 6 step R: the route read returns 200 with download_route.url for the owner of a request whose commentary PDF is retained (PASS is a PDF of the retained size).",
+  "world_is": "MEASURED: the denial is s3:GetObjectVersion by irpt-status-role on the object under state/ycharts_opal_reports for this run's retained PDF (a synthetic request; no client data). NOT MEASURED here: whether irpt-status-role holds s3:GetObject on that prefix, the role's actual policy statements, and whether the route reads a version id on every call or only for this object. This seat changed no IAM (the order's bound). The run's PDF object stays (see the stranded-objects row), so the route can be re-read against it after a grant if the issuer rules so. The ticket package pointers and the report face (B3) were unaffected: the failure is the route's read of the PDF only.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S232 -- Run 7b strands seven synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S232",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T17:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7b, a request that reached the commentary and the report PDF, left SEVEN synthetic state objects that the CloudOps principal cannot delete (AccessDenied); all 13 index rows and the synthetic user read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7b/state_e2e7b.json (leftover_blob_keys, leftover_delete_code AccessDenied, deleted 14 of 22 counted keys; upload_identified: 1 of 45 UPLOAD rows matched the synthetic address and the run's holdings hash, recorded at creation)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates; the order's 'if this run's own upload leaves objects your principal cannot delete, record keys by creation ... then delete what you can and file the row'.",
+  "world_is": "These objects remain, each one version: irpt/49financial/state/analysis_commentaries/ART-eb5382510e6c769ccf624da966acc7f77c13f76b4a43acff06e7df28c9f1277c/32a22849147db3045bf473bb74b5487effd9690d8ad06e82f160056c2849f8ea.json; irpt/49financial/state/extraction_evidence/ART-883b96ab4acf7bf0e8b6ba69103e0a3f3ab585548db9853d39b2cfe077032d90/e0a7f4daadd2a6e1ef6ea6d355099c217edc63e0d9ce72da52f19bc0f475dc5a.json; irpt/49financial/state/normalized_portfolios/ART-db4d5fcc293c59ed619e45c2da3269fe2a5d8e96718065b324d9641ad3c744f4/853d7ec51b764aea9ef99ce438aa31fcf98441f69f2a4f2c0355f7735838cd0b.json; irpt/49financial/state/original_holdings/ART-fe93d2291df0822809a1cf29ea26de9a0373c4b5407b0220b6505b2ae8928add/723cdf9cd7006bcb27121ef1f3b78d27ba062605c44f973d53474a7e4a414ca1.csv; irpt/49financial/state/request_compositions/ART-1da94342d9a288e559b9cbfb5b0a9674d58b898b22dc7763e6016c97a5776244/0b953c252efcba0b960098f9f4d993a37e4206f64d2fc9a100e35a3f750881cf.json; irpt/49financial/state/ycharts_opal_reports/ART-3065a72ec9e61d0e1ccd783558dff2808ef17ce330883c156f10b0d2da2563d9/4803cae2fcd0ef96e22b7dfb34264219d7f1e751bbc3454772437159f849ea8b.pdf; irpt/49financial/state/ycharts_opal_reports/ART-ed570a0dcc2f3f1f30420dc349789710e0425dd950c12b929a3964737b3870f9/c396092e57eaaecd4bcf0fba68a5ae3b93eb9239383fb19dbff3c7ea7e642b38.pdf. No index row points at them. No client data. Run 7's two objects (row S229) are separate and untouched.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-W331-S1
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W331-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~331",
+  "surfaced_at": "2026-10-20T17:07:26Z",
+  "one_line": "safe-commit printed WARN client-data-check: the hashed account-id list is absent on this box, so commit 50f7c709af2 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO face step 3 and CLAUDE.md rule 14a: commit with .tools/safe-commit.sh, whose commit checks run on the commit; the face names no client-data exception.",
+  "world_is": "The commit of resident.tf (50f7c709af2, 16 insertions) printed 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids'. Absent is not empty. By inspection the added lines carry a bucket name and two object keys and no account id, but the check did not run. Every later commit from this box is unchecked for client account ids until the list is placed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 50f7c709af2 (WARN client-data-check line, worktree C:/dev/wk-irpt-anlreq-331)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-172.terraform-read-grant-model-series-and-positioning.md worker face step 3 (commit with safe-commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2"
+}
+```
+
+## IRPT_ANLREQ-D2-W331-S2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W331-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~331",
+  "surfaced_at": "2026-10-20T17:07:26Z",
+  "one_line": "The face's step order (edit, run the criteria, then commit) cannot grade an edit: ar_grant_check.py reads the committed diff against the merge-base, so the code was committed before any criterion ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO face steps 1-3: 1. Make the edit. 2. Run the three criteria. 3. Commit (code), then the proof and the status flip as separate commits.",
+  "world_is": "ar_grant_check.py build and guard read 'git diff -U0 <merge-base> HEAD -- resident.tf' and the committed name list, so an uncommitted edit is invisible to them. Measured: the edit was made (numstat 16 0 against HEAD a5b0ef4b5cd), the code was committed as 50f7c709af2, and only then did the three criteria run, each printing its OK RESULT line at rc 0. The merge-base with box/dell2 read a5b0ef4b5cd, the parent of the code commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_grant_check.py lines 29-36 (base = git merge-base HEAD box/dell2; added_text = git diff base HEAD)",
+      "commit 50f7c709af2 (resident.tf, 16 insertions, 0 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W331-S3
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W331-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~331",
+  "surfaced_at": "2026-10-20T17:07:26Z",
+  "one_line": "The commit-time risk reflex answered PARTIAL_OR_BLIND (danger map 117.1 h old, STALE) and could not clear resident.tf in this sparse worktree; the commit gate still passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO face step 3 (commit with .tools/safe-commit.sh); RECORD FACE preflight names comp-blast and comp-iam as the risk reads for this cell, recorded by the issuer by reading.",
+  "world_is": "The pre-commit risk reflex (comp-pulse diff on resident.tf) printed ANSWER STATE PARTIAL_OR_BLIND, 'danger map STALE', 'REBUILD: read the MAIN tree's map (C:/dev/ajb_workspace/org/modules/graph/nerves-risk-edges.json); no build here', and 'scanned 0 of 1 file(s)'. The reflex is not checked-clean. This worker did not re-read the main tree's map: the cell's risk reads are the issuer's preflight, and the commit went through the gate chain (naming, to-pipeline, surprise-row gates OK).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 50f7c709af2 ([risk-reflex] lines: ANSWER STATE PARTIAL_OR_BLIND, danger map STALE)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-172.terraform-read-grant-model-series-and-positioning.md RECORD FACE preflight comp-blast and comp-iam"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W327-S1 -- the builder address() takes no family and checks no registry row, so an analysis-report table is not refused at the address call
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W327-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~327",
+  "surfaced_at": "2026-10-20T17:14:09Z",
+  "one_line": "C-AUDIT-RECORD asks for a builder-made address for a new family; address() has no family argument and consults no reporting_policies row, so an unregistered table is not refused by the builder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.25 C-AUDIT-RECORD (org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md:171): a NEW analysis-report family beside ycharts_runs at a builder-made address; CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add under infra/logic/registry/.",
+  "world_is": "address(source, scope, tier, table, partition, object) at lib/opal_naming.py:2522-2530 takes no family; key() at lib/opal_naming.py:2506-2519 checks only segment form (_segment at :2488-2491), the systems key, the LONG scope and the tier. No line compares table with any registry file. The ycharts_runs row (infra/logic/registry/reporting_policies.json:71) is read by no address() caller. The only family-membership refusal is in the X10 writer, lib/opal_naming.py:2660-2661.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:2522-2530 address() signature and body @0.9.0_WK_IRPT_ANLREQ~327 worktree",
+      "lib/opal_naming.py:2506-2519 key() checks",
+      "infra/logic/registry/reporting_policies.json:71 YCHARTS_RUN row (documentary only)",
+      "lib/opal_naming.py:2660-2661 family refusal in _reporting_destination only",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W327-S2 -- a state-tier family cannot carry the no-unreferenced-expiry the audit row asks for; the validator admits a null lifetime only at platinum
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W327-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~327",
+  "surfaced_at": "2026-10-20T17:14:09Z",
+  "one_line": "C-AUDIT-RECORD says the family sits beside ycharts_runs (state tier, 30-day unreferenced lifetime) and has no unreferenced expiry; the registry validator permits a null unreferenced lifetime only at platinum.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.25 C-AUDIT-RECORD (IRPT_ANLREQ_PRD.md:171): the new family is beside ycharts_runs, and its retention is 2,555 days from filing with no unreferenced expiry.",
+  "world_is": "ycharts_runs is tier state with unreferenced_days 30 (infra/logic/registry/reporting_policies.json:71). The validator refuses unreferenced_days null unless the tier is platinum (lib/opal_naming.py:2632-2634), and the retention window for a non-accepted-only family is now + unreferenced_days (infra/aws/lambda/investor-reporting/reports/retention.py:233). So 'beside ycharts_runs' at state tier and 'no unreferenced expiry' do not both hold; the admitted form of no unreferenced expiry is platinum, as ANALYSIS (reporting_policies.json:25) and CUSTODY_REPORT (:90) use it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json:71 ycharts_runs state, unreferenced_days 30",
+      "lib/opal_naming.py:2632-2634 null lifetime only at platinum",
+      "infra/aws/lambda/investor-reporting/reports/retention.py:233 expiry from unreferenced_days",
+      "infra/logic/registry/reporting_policies.json:25 ANALYSIS platinum null lifetime",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W327-S3 -- the family name analysis-report is not admitted by the registry, and the table analysis_reports is already owned by the ANALYSIS family
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W327-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~327",
+  "surfaced_at": "2026-10-20T17:14:09Z",
+  "one_line": "C-AUDIT-RECORD names the family analysis-report; the registry admits an UPPER_SNAKE family key and a snake_case table, and analysis_reports is already the table of the ANALYSIS family in the private policy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.25 C-AUDIT-RECORD (IRPT_ANLREQ_PRD.md:171) names the new family analysis-report.",
+  "world_is": "A reporting family key must match [A-Z]+(?:_[A-Z]+)* (lib/opal_naming.py:2605) and a table must be snake_case (lib/opal_naming.py:2610; org/standards/NAMING_SCHEMA.json:51), so analysis-report is refused as written. The snake form analysis_reports is the table of ANALYSIS in the ACTIVE policy irpt-private-reporting (infra/logic/registry/reporting_policies.json:25). The distinct-table check is per policy only (lib/opal_naming.py:2603), so a second policy could reuse analysis_reports without a refusal. A new family needs a table name that is not analysis_reports.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:2605 family key regex",
+      "lib/opal_naming.py:2610 table regex",
+      "org/standards/NAMING_SCHEMA.json:51 table_case snake_case",
+      "infra/logic/registry/reporting_policies.json:25 ANALYSIS table analysis_reports",
+      "lib/opal_naming.py:2603 distinct tables checked per policy",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W328-S1
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "The cell's registry premise fails: YCHARTS_OPAL_REPORT is registered under irpt-ycdgen-research-v1, not irpt-x10-v1, so the cell's local built from local.irpt_reporting_policy would fail the Terraform plan; the worker corrected the local to the registry row that holds the family.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell AR-y-463 and CTO msg 11459: the family is YCHARTS_OPAL_REPORT of the reporting policy revision irpt-x10-v1 (infra/logic/registry/reporting_policies.json), and the new local is built from the YCHARTS_OPAL_REPORT row of local.irpt_reporting_policy.",
+  "world_is": "reporting_policies.json holds YCHARTS_OPAL_REPORT only in the row with policy_revision irpt-ycdgen-research-v1 (the ycdgen-research policy row, its families block), and the irpt-x10-v1 row has no YCHARTS_OPAL_REPORT key. lib/tests/test_irpt_destination.py lines 186-191 assert 'no OPAL_REPORT_PDF family is registered on irpt-x10-v1' and resolve the family through reporting_policy('irpt-ycdgen-research-v1'). The first commit 8516437273 built the local from irpt_reporting_policy and would have failed the plan with a missing families key. Commit 161d929920 builds it from a second registry-derived one() local, irpt_ycdgen_research_policy, with the same selector form. The statement, its actions and its firms are unchanged. Nothing was planned, applied or run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json@161d929920 (irpt-x10-v1 families lines 18-32; irpt-ycdgen-research-v1 row line 72 holds YCHARTS_OPAL_REPORT)",
+      "lib/tests/test_irpt_destination.py@161d929920:186-191 (no OPAL_REPORT_PDF family on irpt-x10-v1)",
+      "infra/aws/terraform/investor-reporting/ops/iam.tf@161d929920 (locals irpt_ycdgen_research_policy and opal_report_family; statement ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly line 85)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_ANLREQ-D2-W139-S8 (the producer's FAMILY_REVISION is irpt-ycdgen-research-v1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W328-S2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "Criterion AR463-y-AC3 cannot pass as written: the cell's only edit to the existing statement replaces one existing line (the family list), so git counts one deletion, while the criterion and cell step 2 require zero deletions.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell AR-y-463 step 2 ('git diff --numstat for the file must read <n> 0') and the change ('additions only'), and criterion AR463-y-AC3 ('OPAL-REPORT-BOUND-OK numstat=<n>/0 files=1' only when deletions are 0).",
+  "world_is": "Adding local.opal_report_family to the statement's family list requires modifying the existing concat line in the statement ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly (iam.tf line 85). Measured: git diff --numstat e02d849d4990..HEAD -- infra/aws/terraform/investor-reporting/ops/iam.tf reads 7 insertions and 1 deletion, and check_opal_report_bound.py prints OPAL-REPORT-BOUND-BAD numstat=7/1 files=1 (rc 1). The 0-deletion bound was not relaxed. Adding a new statement instead would change a second statement, which the cell forbids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ops/iam.tf@161d929920 line 85 (the concat line carrying local.opal_report_family)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~328/check_opal_report_bound.py output OPAL-REPORT-BOUND-BAD numstat=7/1 files=1 (run at HEAD 161d929920, cut e02d849d4990)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W328-S3
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "The commit-time risk reflex answered PARTIAL_OR_BLIND (danger map STALE, linked worktree build guard refused) for the Terraform commit and could not clear it; the other commit gates passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's preflight declares comp-blast and comp-iam not applicable and the worker face commits with .tools/safe-commit.sh; the commit is expected to pass the gate chain.",
+  "world_is": "safe-commit printed [risk-reflex] comp-pulse diff for iam.tf: danger map 117.5 h old, STALE; NOT-DECIDABLE because the build guard refused a linked worktree (git-dir differs from git-common-dir); ANSWER STATE PARTIAL_OR_BLIND; scanned 0 of 1 file(s). The commit gate, naming gate, to-pipeline gate and surprise-row gate then reported OK, and the commit was made (8516437273 and 161d929920). The reflex is not checked-clean for this diff. Same class as IRPT_ANLREQ-D2-W331-S3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 8516437273 and 161d929920 ([risk-reflex] lines, ANSWER STATE PARTIAL_OR_BLIND)",
+      "IRPT_ANLREQ-D2-W331-S3 in INVESTIGATION_v1.md (the same reflex result for a worktree commit)"
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
