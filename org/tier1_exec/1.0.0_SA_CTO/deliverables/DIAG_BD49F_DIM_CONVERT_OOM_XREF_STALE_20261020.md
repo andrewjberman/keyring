@@ -30,4 +30,28 @@
 - **Growth:** this is headroom, not a cure. The full-history read keeps growing, so a later cut should read only the latest partition (owner
   to be named).
 
+## ROOT CAUSE (measured ~18:3xZ): a false SCD2 change on `flat_fee`, every account, every day
+
+- **The stored dim at `date=2026-09-28`:**
+  - 282,857 rows, of which 5,338 are current;
+  - 53 periods per account (median), one new period per account every trading day;
+  - between the 09-25 and 09-28 periods, **3 of 5,338 accounts** actually differ in the change tuple.
+- **The 09-28 fold, reproduced locally** (the converter's own `run()` up to `scd2_fold`):
+  - the fold sees **5,338 of 5,338** accounts as changed;
+  - the one column that differs for all of them is `flat_fee`.
+- **Why:** `_tuple_frame` compares `astype(str)`.
+  - The prior partition reads `flat_fee` as float64, so `"0.0"`.
+  - Today's frame builds it with `pd.to_numeric(...)` (line 343), which yields an integer, so `"0"`.
+  - Every account therefore closes and reopens daily, and the history grows about 5,300 rows a day until the 1 GB Lambda dies.
+
+## The fix (three parts)
+
+1. **Code** (stops the growth): in the fold's comparison, cast every tuple column to its `DIM_SCHEMA` type before stringifying, or cast
+   `flat_fee` to float64 at line 343. Add a test in which a prior float `0.0` and today's int `0` are unchanged. Both copies change:
+   `infra/aws/lambda/...` and `data/assets/scripts/silver/`.
+2. **Memory** (restores today): `memory_size = 3008` until part 3 lands. With part 1 alone, the next run still loads the 288k rows.
+3. **Compaction** (one time, under a never-widen pair): merge consecutive periods whose tuple is identical, which takes about 288k rows to
+   about 5.4k plus the real changes. It rewrites served history, so the sign-off names the blast radius, and the old partitions stay
+   until Andrew confirms any delete.
+
 -- 1.0.0_SA_CTO (laptop)
