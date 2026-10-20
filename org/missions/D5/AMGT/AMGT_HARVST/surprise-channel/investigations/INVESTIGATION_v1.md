@@ -13516,5 +13516,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S68",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "2.0.0_SA_COO~W1",
+        "surfaced_at": "2026-10-20T16:25:00Z",
+        "one_line": "The first scheduled dossier fire stopped three names at the valued-rows guard, but the order names only PBR_US_Equity; BZLFY_US_Equity and TSM_US_Equity each built one valued row fewer than stored, cause not read.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-cn-7 stage 6: skipped_guard accounted for (a guard stop is reported, not a failure); PBR_US_Equity expected as SKIPPED_GUARD while its BEST_DPS FY1 figure is absent.",
+        "world_is": "Read 2026-10-20 ~16:2xZ by 2.0.0_SA_COO~W1 from the fire's log stream dossier-refresh/dossier-refresh/bc80a834255049eb89c1731792eef625 (filter-log-events): REFRESH-CENSUS names=95 written=92 skipped_guard=3 errors=0 mode=write; the three SKIPPED_GUARD lines read BZLFY_US_Equity 'valued rows built 55 lower than stored 56', PBR_US_Equity 'valued rows built 55 lower than stored 56', TSM_US_Equity 'valued rows built 53 lower than stored 54'; S3 holds 92 objects with as_of=2026-10-20 under gold/research_dossier/. The three stored dossiers keep their prior as_of. Not read: which valued row is missing for BZLFY and TSM, or whether PBR's cause is the BEST_DPS FY1 gap the order names.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "aws logs filter-log-events on the fire stream, patterns REFRESH-CENSUS and SKIPPED_GUARD, 2026-10-20 ~16:2xZ",
+                "aws s3 ls --recursive of gold/research_dossier/ counting as_of=2026-10-20 = 92",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round99/cn7/cn7_s6.out @f36c8d99c7"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Ruled by the issuer: a guard stop is the designed behaviour and does not fail stage 6. The cause of the two unnamed stops is an enrichment item for the round analysis, not a cn-7 criterion."
+    }
 ]
 ```
