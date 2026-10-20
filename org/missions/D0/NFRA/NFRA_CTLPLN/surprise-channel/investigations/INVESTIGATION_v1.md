@@ -15209,3 +15209,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts, file metadata and harness notification summaries only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-D1-S27 -- companion to S26: the laptop, dell2 and site Z each report no seat ended near 21:34Z; the 21:34Z ends were dell1-only; cause not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S27",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-20T22:50:00Z",
+  "one_line": "Companion to NFRA_CTLPLN-D1-S26: the other three boxes report no seat ended near 21:34Z. The laptop, dell2 and site Z each answered NO by their own process reads (21:42Z to 22:44Z), so the 21:34:45Z to 21:34:49Z ends of COO~W1, CloudOps~SC1 and CloudOps~DELL1 were dell1-only. dell2's last ends are the 13:08Z cluster (relayed earlier); the laptop and site Z report none in the window.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RELAYED, each by the box's own manager from its own process read, not measured by me: laptop (bus 5552896e, 21:42:59Z, restated 4b9b2888 22:40Z): the same 10 claude.exe seats at 21:3xZ and 22:3xZ, latest spawn NFRA2 at 18:44Z, no kill line in its spawn audit. dell2 (bus 9a7d7a44, 22:30Z): the same 10 pids at 21:23Z, 21:42Z and 22:30Z, no seat ended near 21:34Z, last ends the 13:08Z cluster. site Z (bus 31d607de, 22:41Z): 11 claude.exe seats alive, none restarted at 21:34Z (no process carries that start time), no SPAWN, KILL or REJECT line between 21:00Z and 22:41Z; it kept no hourly census, and its broker tools are detached, so its view is the OS view, not broker liveness.",
+      "MEASURED by me, dell1 (row S26): three seats ended 21:34:45.3Z (W1, SC1, 1 ms apart) and 21:34:49Z (CloudOps~DELL1), each with its own inbox Monitor stopped as its last entry. So of four boxes, one shows ends in that window, and they are the dell1 seats. The dell2 ends at 13:08:24Z to 13:08:50Z (bus baa24539) and the dell1 ends of S21 to S26 never fell on one instant across boxes, per the rows. No shared cause is identified and none is claimed.",
+      "Not measured: whether any cross-box event (a tailnet, broker or host service) is common to the seat ends; each box's data is its own process read at different hours. Cites S21 to S26; none edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A harness event that kills sessions sharing a notification path would show on every box that runs seats.",
+  "world_is": "The 21:34Z ends are on dell1 only by three boxes' own reads. That reads as a dell1-local event, or one that spares the other boxes' seats; the cause is not identified and none is claimed.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts, times and relayed answers only; no transcript content."
+}
+```
