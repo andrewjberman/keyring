@@ -69,6 +69,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gc-1.round-47-client-tools-for-
 
 <status>staged</status>
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-H</workstream>
 <slot>~AE</slot>
