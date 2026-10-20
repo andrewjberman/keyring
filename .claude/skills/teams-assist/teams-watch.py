@@ -300,7 +300,10 @@ def self_name(token: str | None) -> str | None:
     if _ME_NAME_FETCHED:
         return _ME_NAME
     _ME_NAME_FETCHED = True
-    res = _gateway_call(token, "whoami", {}) if token else None
+    try:
+        res = _gateway_call(token, "whoami", {}) if token else None
+    except Exception:  # best-effort per the docstring: a transient TCP reset (URLError) must not kill the monitor
+        res = None
     if isinstance(res, dict):
         nm = res.get("displayName") or res.get("display_name") or res.get("name")
         _ME_NAME = str(nm).strip() if nm else None
