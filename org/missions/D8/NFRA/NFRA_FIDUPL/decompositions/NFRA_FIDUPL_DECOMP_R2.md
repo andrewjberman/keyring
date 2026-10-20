@@ -41,3 +41,7 @@ Maximal paths: five single-cell chains. `fanout: 5 of 5 chains, cap 8`.
 ## 5. Battery
 
 `comp-iam`: RUN at FR-s-5's drain (the parameter read grant); BLIND to the root's computed names, as in round 1. `comp-schedule`: RUN at FR-s-5's drain over the three rules' state variable. `comp-adversary`: DECLARED-NOT-APPLICABLE: build round on fakes; runs when the live round touches the surface.
+
+## 6. Amendment 2026-10-20 ~15:20Z (CTO msg 8673)
+
+FR-s-5's per-G list home is a Secrets Manager secret `fidelity/alongside/perg-list` (metadata only, one per-secret read grant), NOT an SSM SecureString: the canon grades no SSM parameter name. The cell's other contents are unchanged. The issuer states this in the order and the check; the cell id and write set did not move.
