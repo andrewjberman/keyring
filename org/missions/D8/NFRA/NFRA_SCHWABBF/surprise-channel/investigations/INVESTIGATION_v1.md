@@ -352,6 +352,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-i2 step 1: ADD per-master bronze write entries for the 49financial firm folder; the cell names no other statement.",
     "world_is": "The puller's manifest home for a firm-folder master is not traced in this cell. If it writes schwab/49financial/_ops/ or schwab/49financial/meta/pulls/, those PutObjects AccessDeny; the puller's WARN makes the denial visible.",
     "notes": "Not an alert and not a monitor. The issuer decides whether the firm folder needs _ops and meta/pulls grants (enumerated per master, as the cell did for bronze)."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W11-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~11",
+    "surfaced_at": "2026-10-20T16:20:11Z",
+    "one_line": "The worktree's sparse-checkout cone (11 entries, cut before the order's new folder existed) omits infra/aws/terraform/alongside-schwab-ec2/, so git refuses to index the granted new root and safe-commit refuses the commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in C:/Users/AndrewBerman/Desktop/wt-al-11 at base ae487c676890b37699a259e2f85c83871844c49c: .tools, data/canonical/schwab/tests, infra/aws/terraform/canonical-schwab-ec2, infra/aws/terraform/modules, infra/logic, lib, org/devices, org/missions/D8/NFRA/NFRA_SCHWABBF, org/modules/graph, org/ref, org/standards (no alongside-schwab-ec2 entry)",
+        "git add -n infra/aws/terraform/alongside-schwab-ec2/main.tf: 'The following paths and/or pathspecs matched paths that exist outside of your sparse-checkout definition, so will not be updated in the index'; positive control git add -n infra/aws/terraform/canonical-schwab-ec2/main.tf prints nothing",
+        "bash .tools/safe-commit.sh of the five new .tf paths and the test refused rc=1 with 'pathspec ... did not match any file(s) known to git'; git log -1 at the worktree still reads ae487c67689"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-a1 <paths> names infra/aws/terraform/alongside-schwab-ec2/{main,masters,iam,secrets,box}.tf as the write grant, and the worker commits its granted files with safe-commit.sh.",
+    "world_is": "The grant names the folder and the lane admits it, but the worktree's sparse cone does not, so the index refuses the path. The root is built and its test passes (13 passed). The worker adds only the granted folder to its own worktree's cone (git sparse-checkout add of that one path) so the commit can stage it; no other path is added and no tree is rebuilt.",
+    "notes": "Plumbing, not a grant change: the write grant is unchanged. A lane that creates a new folder under a sparse parent needs that folder in the cone before the commit. Not an alert and not a monitor."
   }
 ]
 ```
