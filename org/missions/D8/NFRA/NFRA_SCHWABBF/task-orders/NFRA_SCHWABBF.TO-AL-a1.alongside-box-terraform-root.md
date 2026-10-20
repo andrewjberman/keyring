@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_SCHWABBF~11</issued_to>
 <issued_by>2.0.0_SA_COO~SA</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
