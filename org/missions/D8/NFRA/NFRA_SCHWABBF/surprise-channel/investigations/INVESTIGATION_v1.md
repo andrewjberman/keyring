@@ -1062,6 +1062,27 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "BF-s-4 worker face, build item 1: ONE pure function in the Schwab-only code, put where the import direction allows with no cycle, 'a leaf such as schwab_projections.py, imported by the others'.",
     "world_is": "A rule in schwab_projections.py would make conversion_manifest.py, which the closure validator imports without pyarrow, depend on schwab_projections and so on pyarrow. The rule now lives in conversion_manifest.py (it already owns FIRMS and the key-claim rule and imports only silver_registry). schwab_projections.dim_key, the converter's three fact-key sites, the set-identity guard and the runtime census all call through it. Old-form keys are byte-identical to the pre-round code (test OLD).",
     "notes": "Not an alert. Disposition for the CVO or the issuer: accept conversion_manifest.py as the one rule's home, or name another leaf that carries no pyarrow import. No behavior depends on the choice; the tests pass against the chosen home."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T19:01:29Z",
+    "one_line": "TO-AL-r1 step 9a as written (forward slashes in every on-box path) makes msiexec exit 1619 on the MSI argument; the same install with a backslash MSI path exits 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command 4438e725-bf05-49fd-8745-47744fb1a048 on i-0825aa0ed88342d67: 'msiexec exit=1619' with -ArgumentList '/i','C:/schwab-sdd/AWSCLIV2.msi' (saved: deliverables/0.7.0_AE_CloudOps~NFRA1/r1/step9a_invocation.json)",
+        "SSM command 03b044e0-fda5-4727-a361-567990dbc727: msi present=True bytes=50155520, 'msiexec exit=0', 'aws-cli/2.38.2 Python/3.14.6 Windows/2022Server' with the MSI argument as C:\\schwab-sdd\\AWSCLIV2.msi (saved: r1/step9a_retry_invocation.json)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r1 step 9: use forward slashes in every on-box path, which Windows accepts; step 9a: msiexec /i C:/schwab-sdd/AWSCLIV2.msi /qn /norestart with exit 0 or 3010.",
+    "world_is": "Windows accepts forward slashes in PowerShell file paths, but msiexec parses its own arguments and returns 1619 (package could not be opened) for a forward-slash package path. The act used the same download and the same msiexec call with the backslash path (JSON-escaped by the non-shell writer); no other install route was used.",
+    "notes": "Form only: the order text for any later box build should carry the backslash MSI path."
   }
 ]
 ```
