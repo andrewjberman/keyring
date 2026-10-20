@@ -31320,3 +31320,37 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "The move's effect is relayed (laptop CTO), not measured by this seat. The disarm is the dual-read release landing before the move; the issuer owns the timing."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T21:17:00Z",
+  "id": "NFRA_OPLGTW-Z-S439",
+  "one_line": "Issuer rulings on worker ~177's five rows (OG-sk-1 census): S1 to S4 accepted; S5 (ARMED) carried until the dual-read release is live",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W177-S1",
+    "NFRA_OPLGTW-Z-W177-S2",
+    "NFRA_OPLGTW-Z-W177-S3",
+    "NFRA_OPLGTW-Z-W177-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S1: the worker counted the lines of DATA_CATALOG.yaml naming the 0840 master at 150, the order text said 144 (the issuer's figure came from an earlier count of a different pattern). RULED: accepted; the order's number was a hint, the census uses the file.",
+      "S2: _master_accounts is at integration.py:364 and reads the requested business date, not a newest snapshot (the issuer's design note said newest). RULED: accepted; the census is right and the OG-sk-2 order does not touch it.",
+      "S3: the relayed layout names no bronze destination, and the gateway reads bronze only in the closure partition check (catalog.py near line 456) from the marker's own bronze_keys. RULED: accepted; OG-sk-2 does not change it and the cutover's bronze form is COO~SB's (carried in the slug draft).",
+      "S4: folder-prefix fences and the single-bucket contract cannot express a file-name dual read. RULED: accepted; that is exactly the shape of OG-sk-2 (firm_form key, file-name parse, _key_in_data) and OG-sk-3 (IAM cannot fence by file name, so the IAM grant is per master by object-name pattern).",
+      "Census graded: sk1.AC1 (0 of 54 hit files missing from the census, 120 entries) and sk1.AC2 (120 of 120 cited lines true, 109 of 109 schwab lines in the reader IAM file, 5 fence points) re-run by the issuer on the merged tree 9bcbf580a33: PASS, PASS; the proof validates."
+    ]
+  },
+  "spec_asserts": "A worker's row is a finding the issuer rules inside its own decomposition (obligation 7); an ARMED row's disarm owner is the issuer.",
+  "world_is": "S5 (ARMED, the worker's: if the move lands before a dual-read release, old-form reads find nothing) stays ARMED here and is disarmed when the R3c release is live and read back, before the cutover window opens.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S1 to S4 are ruled above with their evidence; S5 is carried armed by name, not dispositioned."
+}
+```

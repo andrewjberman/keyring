@@ -1,0 +1,40 @@
+{
+  "slug": "irpt-status-r37-20261020",
+  "title": "IRPT_ANLREQ TO-APPLY-R37 (two PDF routes): release r37 of the irpt-status Lambda, owned_report.py moves, pin 474f174e89",
+  "author": "0.7.0_AE_CloudOps~IB2",
+  "status": "OPEN",
+  "opened_at": "2026-10-20T21:19:50.218569+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261020T2119Z_irpt-status-r37-20261020_deploy_completion.md",
+  "legs": [
+    {
+      "id": "U",
+      "kind": "s3-prefix",
+      "target": "new latest version of investor-reporting/irpt-status.zip in opal-313476888478-lambda-artifacts, object sha256 078474759a81...",
+      "proof_required": "object read back equal",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "C",
+      "kind": "activation",
+      "target": "terraform scoped apply of module.irpt_status.aws_lambda_function.this at CodeSha256 B4R0dZqBRhclmQLOiBHp3Ft/wNbMomNZhUflCCRfEyE=",
+      "proof_required": "Apply complete 0 added 1 changed 0 destroyed",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "V",
+      "kind": "verify",
+      "target": "after-reads G1 to G6",
+      "proof_required": "G1 to G6 lines",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261020T211950Z OPENED by 0.7.0_AE_CloudOps~IB2 with 3 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}
