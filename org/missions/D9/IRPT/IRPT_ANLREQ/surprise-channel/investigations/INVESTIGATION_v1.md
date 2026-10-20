@@ -28622,3 +28622,34 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S227 -- W323-S1 disarmed: the guard fix is live on PROD
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S227",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-20T14:40:00Z",
+  "one_line": "W323-S1 DISARMED: the guard fix is live on PROD (portal-v2.1.248, 4546cee0528c, 14:26:16Z), so run 7's B2 no longer meets a form that refuses its own body; the live filing is still run 7's to prove.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W323-S1"
+  ],
+  "spec_asserts": "Row W323-S1: on the PROD tip f48e09dd the page files the ticket and never sends the analysis, because readSubmissionRequest refuses commentary_requested; the one-shot live run must not press B2 on PROD until the analysis submit sends.",
+  "world_is": "MEASURED 2026-10-20 ~14:3xZ by this seat: gh run view 39438860151 reads conclusion=success, headSha 4546cee0528c, workflow Deploy to Production; git ls-remote origin refs/heads/PROD reads 4546cee0528c; git diff --stat e9ca1106dd origin/PROD prints nothing and e9ca1106dd is an ancestor of origin/PROD. The fix (AR-y-455: the guard admits commentary_requested, boolean only; five tests with the real body builder and guard; the mutant fires) is therefore the served code. The browser script was re-proved offline against the fixed tree (AR-y-454, PAGE_NOTES.md). NOT measured here: a real filing on the PROD page; run 7 B2 is that read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.4.0_DT_ClientPlatform~DELL2/deliverables/irpt_anlreq_guard/A_PROMOTE_GUARD.txt (K3 CI success deployed sha 4546cee0528c run 39438860151)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/PAGE_NOTES.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard was pressing run 7's B2 before the analysis submit could send; the fix that makes it send is deployed and read on PROD by CI conclusion, remote tip and an empty diff against the branch. Whether the live page files an analysis is run 7's outcome, graded there."
+}
+]
+```
