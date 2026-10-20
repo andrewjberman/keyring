@@ -35,6 +35,12 @@
 
 **Part 2, the agent-driven sign-in, ONLY after the issuer's message says GO.** Only one Fidelity sign-in attempt may run at a time, and the scheduled puller's attempt goes first. When the message names GO: the agent session drives the headful Chrome from the login page through "Text me the code", reads the code from Quo (line `...3066`, the same reader as the puller, `quo_otp.py`), submits it, and stops at the home page. Never print the credential, the code, a cookie value, an account number or a G number. Record `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/0.7.0_AE_CloudOps~NFRA1/FU-s-11_agent_signin_record.md` with the lines `outcome=SIGNED_IN|REFUSED|ERROR`, `driver=claude-in-chrome`, `headful=true`, the step reached, and the response status of each of the password and code calls (statuses only). ONE attempt; no retry on a refusal.
 
+### RULINGS (CTO msg 8724, 2026-10-20 ~16:52Z) -- they change Part 1 and Part 2
+
+1. **A long-lived claude.ai login may live on the box.** Andrew's `/login` on the box and his extension sign-in over VNC are HIS acts, listed for him, and they block nothing: the scheduled puller's attempt goes first. **Part 1b, NOW:** install a VNC server on the box (dnf, no spend), bound to localhost only, reached only through an SSM port forward (the box has no inbound port); no password or token printed; record the install and the exact port-forward command Andrew would run, in the feasibility file under a new line `vnc=installed|failed` with its reason. A new ledger leg, `vnc-installed`.
+2. **The agent's Chrome gets its OWN profile directory**, `/opt/fidelity-uploader/profile-agent`, not the puller's `/opt/fidelity-uploader/profile` (this supersedes "the SAME profile" above). The puller's Chrome will run with extensions disabled (the issuer cuts that one-flag change to `signin.py`), so a machine-wide plugin policy does not change its fingerprint. **Do NOT install any standing ExtensionInstallForcelist policy yet:** it waits for the issuer's message, which comes after that flag is delivered.
+3. If Part 2 halts at the login page, as the vendor documents, **record that as Track B's measured result** (`outcome=REFUSED` with the step reached, in the sign-in record); that is a complete answer, not a failure of the order.
+
 ### ACCEPTANCE
 
 <criterion id="FU11-AC1" cell_refs="FU-s-11"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu11f</invocation><expect>R1-FU11-OK feasibility record carries 4 facts</expect></criterion>
