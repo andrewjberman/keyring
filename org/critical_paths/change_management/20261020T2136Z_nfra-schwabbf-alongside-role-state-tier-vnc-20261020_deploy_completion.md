@@ -12,10 +12,11 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | activation | terraform apply of the saved plan in infra/aws/terraform/alongside-schwab-ec2 via safe-apply (1 add, 1 change, 0 destroy) | apply summary line + 0-diff plan exit 0 + get-role-policy and describe-secret after |  | OPEN |
+| L1 | activation | terraform apply of the saved plan in infra/aws/terraform/alongside-schwab-ec2 via safe-apply (1 add, 1 change, 0 destroy) | apply summary line + 0-diff plan exit 0 + get-role-policy and describe-secret after | Apply complete! Resources: 1 added, 1 changed, 0 destroyed. post-apply plan -detailed-exitcode 0; live policy read back: no OpsWrite/MetaPullsWrite, StateTierWrite 8 resources PutObject, AlongsideBoxSecretsWrite 2 ARNs; vnc-credentials exists with no version (r3/after.txt) | CLOSED 20261020T214356Z |
 | L2 | s3-prefix | opal-data-assets code/alongside-schwab-si2 four files | local sha256 printed, head-object sizes |  | OPEN |
 | L3 | ec2-baked-asset | sdd-daily-pull.ps1 sdd-entitlements.ps1 bootstrap.ps1 refreshed on i-0825aa0ed88342d67 | on-box Get-FileHash equals local sha256 for each |  | OPEN |
 
 ## Log
 
 - 20261020T213634Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 3 leg(s)
+- 20261020T214356Z LEG L1 closed: Apply complete! Resources: 1 added, 1 changed, 0 destroyed. post-apply plan -detailed-exitcode 0; live policy read back:
