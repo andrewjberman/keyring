@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-20T00:16:22.719358+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261020T004323Z
 **Deploy:** AMGT_RESAPP AMGT-cg-4: ONE code leg redeploying opal-amgt-scoped-api from release pin 3597a6e76c (parent 08b8ea9f8c; ONE member lib/research/print/render_pack.py blob 57160d25953f -> 1b3122332439, file sha256 deb004aef9ba; under the signed never-widen pair COO 804664ea9d + CTO 2c6c6851ac); live must read keJ3wDa8.. first (rev cdab5595.., LastModified 2026-10-19T20:54:16Z); AMGT_AIFILL_ROOT stays absent; code-only saved plan on the harvest root, exactly 1 change 0 add 0 destroy; rollback = cf-4 artifact VersionId FxCZ_iBdI5R7St5_rGfIKsnlFt04AoHg by the same saved-plan route; no close before the issuer word
 **Authored by:** 0.7.0_AE_CloudOps~SC1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -19,7 +19,7 @@
 | H5 | activation | safe-apply of the saved plan after get_delivery_state all READ; CodeSha256 after differs from keJ3wDa8.. | apply output + config | PASS. cg4_apply.out 00:23Z to 00:25Z: get_delivery_state 1 of 1 READ (8567, this order's GO); config re-read equal 00:23:16Z; safe-apply of the saved plan 00:23:17Z to 00:25:15Z rc 0 (HALT_ACK=1): Apply complete! Resources: 0 added, 1 changed, 0 destroyed. CodeSha256 after b0JbtgSG.. differs from keJ3wDa8.. (rev f9561b0d-dc7d-45fa-abf5-3c509526d0e2, modified 2026-10-20T00:25:09.000+0000) | CLOSED 20261020T002939Z |
 | H6 | verify | post-act AC1 pack form, AC2 rich kind check, AC3 config, AC4 pin diff; environment unchanged | AC outputs | PASS. cg4_post_act.out 00:25Z to 00:27Z: AC3 config as above, mem 1769 timeout 29, ENV keys HARVEST_ARTICLES_TABLE and HARVEST_METRICS_TABLE, AMGT_AIFILL_ROOT absent; AC1 PACK CAPTURE 8 of 8 (0 not 200) and PACK FORM YES (8 of 8 names); AC2 RICH CAPTURE 8 of 8 (0 not 200) and RICH KIND CHECK YES (8 of 8 names; 22 lines moved in total); AC4 pin diff 1 member render_pack.py 57160d25953f -> 1b3122332439; plan after the apply (ENABLED var): No changes | CLOSED 20261020T002939Z |
 | H7 | git | record-terraform-deploy.sh harvest; source-map entry equal to live CodeSha256 | record output + entry | PASS. record-terraform-deploy.sh harvest --plan cg4.tfplan RECORD_RC=0 (cg4_record.out): commit cdebcb03bd, reconcile artifact_sha256 -> b0JbtgSG..; follow-up commit sets deployed_code_sha256 and deploy_ledger; function-map entry deployed_code_sha256 = artifact_sha256 = live CodeSha256 b0JbtgSGtHD4GAkyOx5nMxPlfz6oAeTDm6Oa68AdqEw= | CLOSED 20261020T002939Z |
-| H8 | verify | issuer reads and KEEP word; proof_of_spec instance VALID on committed bytes; report to the issuer once | issuer word + checker last line |  | OPEN |
+| H8 | verify | issuer reads and KEEP word; proof_of_spec instance VALID on committed bytes; report to the issuer once | issuer word + checker last line | PASS. Issuer 2.0.0_SA_COO~R1 KEEP at 00:41Z (msg 8569, acked READ): config b0JbtgSG.. rev f9561b0d, env unchanged; leak scan 101 of 101; money vs page 16 of 16; cross-surface 8 of 8; worst route 9.2 s of 20 s; live rich export moved exactly the pair's 317 lines on 101 names (K1 134, K2 50, K3 101, K4 2, K5 1, K6 2, K8 27), 0 other lines with the daily vintage day masked; PDF text equal on all 101 names with dates masked; seat rich kind check YES 8 of 8 (22 lines); proof_of_spec instance VALID rc=0 on committed bytes (fc8c7b9de3). Rollback target FxCZ_iBdI5R7St5_rGfIKsnlFt04AoHg recorded, unused | CLOSED 20261020T004323Z |
 
 ## Log
 
@@ -31,3 +31,5 @@
 - 20261020T002939Z LEG H5 closed: PASS. cg4_apply.out 00:23Z to 00:25Z: get_delivery_state 1 of 1 READ (8567, this order's GO); config re-read equal 00:23
 - 20261020T002939Z LEG H6 closed: PASS. cg4_post_act.out 00:25Z to 00:27Z: AC3 config as above, mem 1769 timeout 29, ENV keys HARVEST_ARTICLES_TABLE and H
 - 20261020T002939Z LEG H7 closed: PASS. record-terraform-deploy.sh harvest --plan cg4.tfplan RECORD_RC=0 (cg4_record.out): commit cdebcb03bd, reconcile ar
+- 20261020T004323Z LEG H8 closed: PASS. Issuer 2.0.0_SA_COO~R1 KEEP at 00:41Z (msg 8569, acked READ): config b0JbtgSG.. rev f9561b0d, env unchanged; leak 
+- 20261020T004323Z CLOSED -- all 8 legs proven
