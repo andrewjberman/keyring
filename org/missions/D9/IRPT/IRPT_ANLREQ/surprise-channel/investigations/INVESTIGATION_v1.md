@@ -29069,3 +29069,112 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W342-S1 -- the audit grant names registry family ANALYSIS_AUDIT, which is absent from this branch until AR-y-466 merges, so the grant check reads BAD and the Terraform cannot evaluate here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:09:32Z",
+  "one_line": "AR-y-468 reads the audit prefixes from registry family ANALYSIS_AUDIT of irpt-anlreq-x10-v1. That family is not on wk-IRPT_ANLREQ-342 (base 6e36e3dcc29): its row is AR-y-466's commit 1c277930e66 on wk-IRPT_ANLREQ-340, not merged here. So AC1 prints AUDIT-WRITE-GRANT-BAD at this HEAD, and resident.tf indexes a missing key until the row lands.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-468 cell (decomp IRPT_ANLREQ_DECOMP_R40A_Y.md:189): the prefixes are built from the registry for family ANALYSIS_AUDIT (tier platinum, table analysis_audit). Decomp line 316 fanout: the three cells are disjoint and 'none waits on another'.",
+  "world_is": "infra/logic/registry/reporting_policies.json@6e36e3dcc29 and @6f38e71fc3e: policy irpt-anlreq-x10-v1 carries only ANALYSIS_COMMENTARY, so families['ANALYSIS_AUDIT'] is absent. wk-IRPT_ANLREQ-340 at 1c277930e66 (LOCAL, not on this branch) adds the family (platinum, analysis_audit, json, ceiling 2555, unreferenced null). A DIAGNOSTIC run with that row held in memory only (not a verdict) gives reasons=0 firms=3 prefixes=3. The committed resident.tf@6f38e71fc3e (commit 6f38e71fc3e) evaluates families['ANALYSIS_AUDIT'] in locals, so a plan on this branch fails until the row is on it. Hazard: the Terraform commit must not reach CLOUD or a plan ahead of the AR-y-466 row. Disarm: AR-y-466's row merged to the trunk and this branch before the commit is merged or planned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json@6e36e3dcc29 irpt-anlreq-x10-v1 families: ANALYSIS_COMMENTARY only",
+      "wk-IRPT_ANLREQ-340 commit 1c277930e66 registry(IRPT_ANLREQ AR-y-466): add platinum family ANALYSIS_AUDIT (git grep on HEAD 505dc4c0ddf finds 1 match)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~342/check_audit_write_grant.py at 6f38e71fc3e: output AUDIT-WRITE-GRANT-BAD family ANALYSIS_AUDIT absent ... (rc 1)",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@6f38e71fc3e locals resident_audit_write_prefixes (families[\"ANALYSIS_AUDIT\"] lookup)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R40A_Y.md:316 fanout line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S2 -- the audit statement's bucket is the firm scope bucket by the home rule, but the runner role is fenced out of firm buckets and the X10 writer uses the product reporting bucket, so the grant may be inert
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:09:32Z",
+  "one_line": "The cell names the bucket as the builder home rule gives it for a FIRM platinum tier, which is the scope bucket opal-data-<firm>. The same resident.tf says the runner role carries no firm slot and is denied on firm buckets, and the X10 writer puts reporting families in the product reporting bucket. So WriteTheAnalysisAudit may be inert or name the wrong bucket, and a packager put could be refused.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 cell: find which bucket the platinum tier of a FIRM scope resolves to with the builder home rule (tiers.json, lib/opal_naming.py home lookup) and state it in a comment. AR-y-466 cell: address() gives the audit address for every enabled client firm.",
+  "world_is": "(a) tiers.json FIRM.platinum home = scope, and address() takes the scope row bucket (lib/opal_naming.py _home_bucket). The diagnostic grant output at 6f38e71fc3e gives arn:aws:s3:::opal-data-49financial, opal-data-cottonwood and opal-data-inflection, each /irpt/<firm>/platinum/analysis_audit/ (scopes.json buckets). (b) infra/aws/terraform/investor-reporting/ycharts/resident.tf@6f38e71fc3e lines 231-237 say each client firm bucket's fence (shared-infra s3-lgic-firm-buckets.tf, Sid DenyForeignFirmPrincipals) denies s3:* to principals without the firm slot, that the runner role has none, and that a direct grant on the firm bucket was inert (row IRPT_YCDGEN-S1); the research writes now assume a per-firm principal. The new statement is a direct PutObject on opal-data-<firm> for the runner role, the same shape. (c) lib/opal_naming.py _reporting_destination (lines 2655-2672 at 6e36e3dcc29) puts X10 family objects in the PRODUCT scope bucket (policy product_scope irpt, core/reporting_storage.tf:60 aws_s3_bucket.reporting), which is the bucket that resident_write_prefixes and resident_commentary_read_prefixes use. So address() and reporting_destination() name different buckets for an X10 family. Nothing applied. NOT READ: shared-infra/s3-lgic-firm-buckets.tf itself; the fence claim rests on the resident.tf comment. The choice between the two writers belongs to AR-y-467.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/tiers.json@6e36e3dcc29 FIRM.platinum home scope",
+      "lib/opal_naming.py@6e36e3dcc29 _home_bucket and address() (scope row bucket)",
+      "lib/opal_naming.py@6e36e3dcc29 lines 2655-2672 _reporting_destination (bucket = product_scope bucket)",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@6f38e71fc3e lines 231-237 and 310 (fence, inert grant, SSE-S3 comment)",
+      "infra/aws/terraform/investor-reporting/core/reporting_storage.tf@6f38e71fc3e line 60 reporting_bucket output",
+      "check_audit_write_grant.py output at 6f38e71fc3e (firm bucket and key rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S3 -- the cell places the checks in deliverables ~331, but its invocations, its paths and its commit rule name ~342
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:09:32Z",
+  "one_line": "The cell's check paragraph says deliverables/0.9.0_WK_IRPT_ANLREQ~331/, but the ACCEPTANCE invocations and the paths block grant only ~342/. The checks were written in ~342/, because ~331 is worker AR-g-172's folder and outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 cell, 'The checks': 'In org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/: check_audit_write_grant.py ...'",
+  "world_is": "The order's <paths> block names only deliverables/0.9.0_WK_IRPT_ANLREQ~342/. AC1, AC2 and AC3 invoke files under ~342/. The folder ~331 holds AR-g-172's proof instance (IRPT_ANLREQ.TO-AR-g-172.terraform-read-grant-model-series-and-positioning.proof_of_spec.json, committed on the base).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_ANLREQ.TO-AR-y-468 task order, <paths> block and ACCEPTANCE invocations at 6f38e71fc3e",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/ listing at 6f38e71fc3e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S4 -- the bound check cannot anchor on the order id, because the commit that added the order does not carry the literal TO-AR-y-468 in its message
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:09:32Z",
+  "one_line": "The AR-y-445 bound check anchors on git log --grep of the order id with --diff-filter=A. For AR-y-468 that returns no commit, since the issuing commit 1471a6f87b6 names the cells AR-y-466, AR-y-467 and AR-y-468 but not the literal TO-AR-y-468. The check anchors on the order file path instead, and that gives AUDIT-WRITE-BOUND-OK numstat=19/0 files=1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 cell: check_audit_write_bound.py prints AUDIT-WRITE-BOUND-OK numstat=<n>/0 files=1 when the Terraform commit added lines only to this one file. The AR-y-445 pattern (check_commentary_bound.py) anchors on the commit whose message carries the TO id.",
+  "world_is": "git log --grep=TO-AR-y-468 --diff-filter=A on the task-orders folder returns nothing at 6f38e71fc3e. git log --diff-filter=A -1 on the order file path returns 1471a6f87b6. The numstat from 1471a6f87b6 to 6f38e71fc3e under infra/ is 19 insertions, 0 deletions, 1 file (resident.tf).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --grep=TO-AR-y-468 --diff-filter=A -- task-orders at 6f38e71fc3e (no output)",
+      "git log --diff-filter=A -1 -- IRPT_ANLREQ.TO-AR-y-468 path at 6f38e71fc3e = 1471a6f87b6",
+      "check_audit_write_bound.py output AUDIT-WRITE-BOUND-OK numstat=19/0 files=1 at 6f38e71fc3e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
