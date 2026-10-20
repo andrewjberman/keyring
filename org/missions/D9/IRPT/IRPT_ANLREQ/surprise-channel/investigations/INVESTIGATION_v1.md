@@ -28984,3 +28984,80 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W328-S1
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "The cell's registry premise fails: YCHARTS_OPAL_REPORT is registered under irpt-ycdgen-research-v1, not irpt-x10-v1, so the cell's local built from local.irpt_reporting_policy would fail the Terraform plan; the worker corrected the local to the registry row that holds the family.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell AR-y-463 and CTO msg 11459: the family is YCHARTS_OPAL_REPORT of the reporting policy revision irpt-x10-v1 (infra/logic/registry/reporting_policies.json), and the new local is built from the YCHARTS_OPAL_REPORT row of local.irpt_reporting_policy.",
+  "world_is": "reporting_policies.json holds YCHARTS_OPAL_REPORT only in the row with policy_revision irpt-ycdgen-research-v1 (the ycdgen-research policy row, its families block), and the irpt-x10-v1 row has no YCHARTS_OPAL_REPORT key. lib/tests/test_irpt_destination.py lines 186-191 assert 'no OPAL_REPORT_PDF family is registered on irpt-x10-v1' and resolve the family through reporting_policy('irpt-ycdgen-research-v1'). The first commit 8516437273 built the local from irpt_reporting_policy and would have failed the plan with a missing families key. Commit 161d929920 builds it from a second registry-derived one() local, irpt_ycdgen_research_policy, with the same selector form. The statement, its actions and its firms are unchanged. Nothing was planned, applied or run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json@161d929920 (irpt-x10-v1 families lines 18-32; irpt-ycdgen-research-v1 row line 72 holds YCHARTS_OPAL_REPORT)",
+      "lib/tests/test_irpt_destination.py@161d929920:186-191 (no OPAL_REPORT_PDF family on irpt-x10-v1)",
+      "infra/aws/terraform/investor-reporting/ops/iam.tf@161d929920 (locals irpt_ycdgen_research_policy and opal_report_family; statement ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly line 85)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_ANLREQ-D2-W139-S8 (the producer's FAMILY_REVISION is irpt-ycdgen-research-v1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W328-S2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "Criterion AR463-y-AC3 cannot pass as written: the cell's only edit to the existing statement replaces one existing line (the family list), so git counts one deletion, while the criterion and cell step 2 require zero deletions.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell AR-y-463 step 2 ('git diff --numstat for the file must read <n> 0') and the change ('additions only'), and criterion AR463-y-AC3 ('OPAL-REPORT-BOUND-OK numstat=<n>/0 files=1' only when deletions are 0).",
+  "world_is": "Adding local.opal_report_family to the statement's family list requires modifying the existing concat line in the statement ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly (iam.tf line 85). Measured: git diff --numstat e02d849d4990..HEAD -- infra/aws/terraform/investor-reporting/ops/iam.tf reads 7 insertions and 1 deletion, and check_opal_report_bound.py prints OPAL-REPORT-BOUND-BAD numstat=7/1 files=1 (rc 1). The 0-deletion bound was not relaxed. Adding a new statement instead would change a second statement, which the cell forbids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ops/iam.tf@161d929920 line 85 (the concat line carrying local.opal_report_family)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~328/check_opal_report_bound.py output OPAL-REPORT-BOUND-BAD numstat=7/1 files=1 (run at HEAD 161d929920, cut e02d849d4990)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W328-S3
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "The commit-time risk reflex answered PARTIAL_OR_BLIND (danger map STALE, linked worktree build guard refused) for the Terraform commit and could not clear it; the other commit gates passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's preflight declares comp-blast and comp-iam not applicable and the worker face commits with .tools/safe-commit.sh; the commit is expected to pass the gate chain.",
+  "world_is": "safe-commit printed [risk-reflex] comp-pulse diff for iam.tf: danger map 117.5 h old, STALE; NOT-DECIDABLE because the build guard refused a linked worktree (git-dir differs from git-common-dir); ANSWER STATE PARTIAL_OR_BLIND; scanned 0 of 1 file(s). The commit gate, naming gate, to-pipeline gate and surprise-row gate then reported OK, and the commit was made (8516437273 and 161d929920). The reflex is not checked-clean for this diff. Same class as IRPT_ANLREQ-D2-W331-S3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 8516437273 and 161d929920 ([risk-reflex] lines, ANSWER STATE PARTIAL_OR_BLIND)",
+      "IRPT_ANLREQ-D2-W331-S3 in INVESTIGATION_v1.md (the same reflex result for a worktree commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
