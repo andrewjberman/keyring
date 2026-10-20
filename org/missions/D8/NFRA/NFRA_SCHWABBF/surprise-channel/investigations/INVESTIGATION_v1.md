@@ -1018,6 +1018,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO-BF-m4 worker face, build step 2: 'Silver plan: list schwab/08403355/silver/ (live, read-only, paginated) or take --listing-file.' Build step 3 and the idempotence clause: 'A destination that already exists is already (idempotent re-plan).'",
     "world_is": "A source-only listing cannot observe a destination, so a live silver plan reports already=0 whether or not the copy has run. The tool lists the firm-form silver prefix as well, read-only. The bronze live path (list_live) has the same gap for its firm-form destinations and is unchanged, because the bronze output is byte-identical by the order. The copy step is not affected: _copy_one head-checks each destination and skips a size match.",
     "notes": "Not an alert. Disposition for the issuer: keep the destination listing for the silver tier, or refuse it and accept already=0 on a live plan. The bronze gap is the same question and is not decided here."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S8",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T17:54:13Z",
+    "one_line": "Criterion BF4-t4-AC3 expects ^THREAD-FAIL master=08403355 day=2026-10-16, but the verdict line the tool prints is THREAD-FAIL reason=... master=..., so the anchored expectation cannot match the verdict as written; AC3 is recorded FAIL and the expectation is not weakened.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_SCHWABBF/task-orders/NFRA_SCHWABBF.TO-BF-t4.trace-silver-both-forms.md WORKER FACE, ACCEPTANCE, BF4-t4-AC3: expect '^THREAD-FAIL master=08403355 day=2026-10-16'",
+        "data/canonical/schwab/keyform/thread_trace.py at 0f92b86fe32 (base 998fe826317): the verdict is emitted as 'THREAD-FAIL reason=%s master=%s day=%s'; the real run at --form builder prints 'THREAD-FAIL reason=bronze-not-held-form-builder;second-form-found-legacy;silver-absent;silver-second-form-found-legacy master=08403355 day=2026-10-16' with rc 1, and re.search of the AC3 expect with re.M over that output is False (captured at .scratch/ac3_out.txt)",
+        "data/canonical/schwab/tests/test_thread_trace.py at 0f92b86fe32: the round-3 arm asserts 'THREAD-FAIL reason=bronze-not-held-form-builder' (reason first), and the face requires every round-3 arm to stay green and every other line to be unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF4-t4-AC3 expect: '^THREAD-FAIL master=08403355 day=2026-10-16'. Refusal clause: a criterion that cannot be met as written is stopped on, recorded in the report and as a surprise row, and the test is not weakened to pass.",
+    "world_is": "The strict firm-form trace of the real day 2026-10-16 FAILS with rc 1 as the face predicts, but its verdict line begins 'THREAD-FAIL reason='. Reordering the verdict would break the round-3 arms the face keeps green; loosening the expect would weaken the criterion. Neither was done. The rest of AC3 (rc 1, THREAD-FAIL on the real day) is met.",
+    "notes": "Not an alert and not a monitor. The issuer rules the expectation: re-cut the expect to the reason-first verdict form, or change the verdict order together with the round-3 arms. AC3 stays FAIL and the TO stays pending until that ruling."
   }
 ]
 ```
