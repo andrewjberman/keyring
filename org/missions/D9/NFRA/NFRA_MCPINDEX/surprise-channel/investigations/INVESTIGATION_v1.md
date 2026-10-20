@@ -13102,3 +13102,97 @@ carries none.
   "notes": "Surfaced by 0.9.0_WK_NFRA_MCPINDEX~77 on MX-w-1. The contract's wording and the helper's return shape disagree; a later cell may want list_row to return keys."
 }
 ```
+
+```json
+[
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~80",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "id": "NFRA_MCPINDEX-Z-W80-S1",
+    "one_line": "The worktree did not carry the two sparse folders the MX-w-4 face says it already carries: infra/aws/ec2/opal-gateway/app and workflows/atom_decomposition were absent until git sparse-checkout add ran.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-w-4 face step 0: the worktree already carries the sparse folders workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app; git sparse-checkout add is the only sparse change the worker may make.",
+    "world_is": "At HEAD 277ad324045 both folders exist as trees. The worktree sparse list held .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref and org/standards only. After git sparse-checkout add infra/aws/ec2/opal-gateway/app workflows/atom_decomposition (rc=0) both folders are present and the list holds them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/tmp/wk-mcpindex-80 sparse-checkout list, before and after the add (read 2026-10-20T13:4xZ)",
+        "git -C C:/tmp/wk-mcpindex-80 ls-tree -d HEAD infra/aws/ec2/ and workflows/ (both folders present as trees)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The worker ran only the sparse change the face sanctions; no other tree change was made."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~80",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "id": "NFRA_MCPINDEX-Z-W80-S2",
+    "one_line": "The YCharts 403 body head is captured by the client and dropped by the tool answer, so the round 23 record cannot tell an entitlement refusal from a request-shape refusal for K5-04 and K5-06.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-w-4 step 1: decide whether a YCharts refusal is a code, data or battery cause from the evidence in the record.",
+    "world_is": "integrations/ycharts/client.py:109 stores error_body_head for every non-200 response. integrations/ycharts/integration.py:98-102 carries only http_status and absent_reason upstream_http_403 into the answer. results_all K5-04 and K5-06 keep only the text http_status 403 with points or series empty, so the vendor body that would name the refusal is not in the record.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/ycharts/client.py:109 (read 2026-10-20T13:4xZ)",
+        "infra/aws/ec2/opal-gateway/app/integrations/ycharts/integration.py:98-102 (read 2026-10-20T13:4xZ)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/results_all_20261019.json#K5-04 and #K5-06"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The cause for both YCharts tools is recorded as data (the session is live: K5-01, K5-02, K5-05, K5-07 return 200). Carrying error_body_head into the answer would let a later round confirm it."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~80",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "id": "NFRA_MCPINDEX-Z-W80-S3",
+    "one_line": "No project code produces the Microsoft 365 mail data behind inspect_email_attachment, so the data-cause owner for K6-09 is the carrier project NFRA_MCPINDEX and not a producer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-w-4 contract: a battery or data cause names the producing project code as owner.",
+    "world_is": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~76/source_sets_m365.json names the vendor microsoft for both list_email_attachments and inspect_email_attachment (Graph /me/messages). The worktree names no M365 producer project. The 242-byte gap between listed size 15441 and inspected bytes 15199 is between two reads of the same Graph resource, and tools.py:438-463 reports the measured content length, so the attribution is data with owner NFRA_MCPINDEX as carrier.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "source_sets_m365.json tool inspect_email_attachment (vendors microsoft; cite app/tools.py:432)",
+        "infra/aws/ec2/opal-gateway/app/tools.py:438-463 and graph.py:97 (raw bytes returned for non-JSON content)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer should name the producer of record for Microsoft-served data before the next attribution round."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~80",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "id": "NFRA_MCPINDEX-Z-W80-S4",
+    "one_line": "Row NFRA_MCPINDEX-Z-W22-S6 is reached by an ordinary request: portal_get_security_scan on an absent universe returns a raw AccessDenied for s3:ListBucket on opal-data-portal-v2 (K2-31, round 23), with no object removed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "NFRA_MCPINDEX-Z-W22-S6: the internal reader role has GetObject and no ListBucket, so an absent object reads AccessDenied; INERT because every key the catalog names exists, and it matters only when a portal object is removed.",
+    "world_is": "K2-31 asks for the absent universe k2-no-such-universe and receives AccessDenied for s3:ListBucket. portal_macro.py:54 and :149 map only NoSuchKey, 404 and NotFound to absent, so an absent universe is reached without any object removal. The grant decision is the same one Z-W22-S6 recorded.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/results_all_20261019.json#K2-31",
+        "infra/aws/ec2/opal-gateway/app/portal_macro.py:149 (read 2026-10-20T13:4xZ)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The MX-w-4 attribution for K2-31 is code (grant), owner 2.0.0_SA_COO~O. The hazard standing is the issuer's to re-grade."
+  }
+]
+```
