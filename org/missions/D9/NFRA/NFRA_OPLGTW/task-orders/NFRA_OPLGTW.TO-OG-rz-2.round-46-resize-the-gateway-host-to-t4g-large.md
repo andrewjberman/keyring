@@ -92,6 +92,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rz-2.round-46-resize-the-gatewa
 - A1 (issuer, 2026-10-19 ~20:2xZ): the release is batched with `OG-ms-1` (master `08403355`), CTO ruling (B) msg 36104; step 5 waits for its hash; the ask carries the master registration and the live reader-role read. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-E</workstream>
 <slot>~AE</slot>
