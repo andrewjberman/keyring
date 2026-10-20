@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-10-20",
   "registered_under_tree": "2026-10-20",
   "placement": "LAPTOP",
@@ -20,11 +20,13 @@
   ],
   "name": "Schwab masters: full backfill to Schwab's served floor and canonical (builder-form) bronze paths, plus the onboarding path for newly entitled Cottonwood masters",
   "description": "Registered at L3 by 1.0.0_SA_CTO on Andrew-direct 2026-10-19 ~21:0xZ ('we need to start pulling all of these and also getting as much backfill as we can from them ... full backfill from the 0840 account ... organized in the opal-data-assets bucket in canonical LGIC_NAMING path form', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_210xZ_SCHWAB_COTTONWOOD_MASTERS_PULL_AND_BACKFILL.md @c031634941) and his 2026-10-20 01:02Z word via ms that the laptop CTO owns it end to end. Three entitled masters (08242234, 08335338, 08403355); the four Cottonwood masters wait on Schwab entitlement (absent from the 213-master list, download 204). Uses the Schwab Box's SDD login and session lock, never inside the daily pull fires. No alerts (moratorium). No shadow paths: one key form.",
-  "phase": "2026-10-20 ~13:0xZ (1.0.0_SA_CTO): L2 CONFIRMED by Andrew (FWD-1..7 as written, FWD-7 wait accepted); stored-partition move YES; the other 210 masters OUT OF SCOPE. L4 PRD next.",
+  "phase": "2026-10-20 ~13:1xZ (1.0.0_SA_CTO): L4 PRD v0.1 DRAFT written on the confirmed endpoint; L4-R sign-off owed (CVO ratified-text half; brief half accepted, the CRO wrote the brief); a laptop COO lane to seat for L5/L6.",
   "blocking": null,
   "brief_ref": "docs/briefs/nfra-schwabbf-schwab-masters-backfill-canonical-paths-brief-20261020.md@f0e33a4317",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_SCHWABBF_20261020.md",
-  "prds": [],
+  "prds": [
+    "org/missions/D8/NFRA/NFRA_SCHWABBF/prd/NFRA_SCHWABBF_PRD.md"
+  ],
   "decompositions": [],
   "leads": {
     "cto": "1.0.0_SA_CTO",
