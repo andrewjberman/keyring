@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~5</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -36,10 +36,17 @@ Build `adapters.py`, `tests/test_adapters.py` and the one edit of `box/run.py` n
 4. Edit `_real_daily_deps` in **`box/run.py`** (it lives there, at about line 270, not in `daily.py`: the issuer's first draft of this order named the wrong file, your row W5-S3 caught it, and `box/run.py` is now in your paths block) so `attribute` builds `ContextRequest(handle.context)`, a `GSwitcher` on it, and `make_account_lister`, then calls `attribute.sweep_attribution(...)`; delete the refusal path (W5-S2). Keep every other behaviour.
 5. Tests (fakes; no network): in the new `tests/test_adapters.py` `test_get_text_follows_redirect_and_returns_text`, `test_post_form_sends_urlencoded_body_without_logging_values`, `test_account_lister_pages_until_short_page`, `test_extract_accounts_finds_list_by_key_not_by_container_name`, `test_extract_failure_names_only_keys`, `test_daily_real_deps_use_adapters` (the last in this file, calling `_real_daily_deps` with a fake context). Your five daily tests must still pass.
 
+### REPAIR (issuer, 2026-10-20 ~16:00Z; this order is REOPENED) -- the accountList.json shape is now MEASURED
+
+The CRO read the response structure out of Andrew's human capture: `C:/Dev/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261020_NFRA_FIDUPL_ACCOUNTLIST_SHAPE.md` (absolute path, main tree, read-only; read it whole). It corrects two guesses in your `adapters.py`:
+1. **The rows are `accountListResponse.accounts` and the account number is the key `number`** (not `accountNumber`). Fix `extract_accounts` to try that exact path and key FIRST, falling back to the structural search only if the path is absent (keep `AdapterShapeError` naming only key names and types). Keep ONLY the account-number strings; `ssn`, `taxReportingId`, `primaryOwner` and every other field are personal and are dropped immediately, never held, logged or returned.
+2. **Paging.** The total is `accountListResponse.pageResponse.available` (5197 in Andrew's book, with 2000 rows on the first page). `pageResponse` also carries `start` and `sessionCacheId` (both null on the single page captured); their live behaviour is UNMEASURED. Rewrite `make_account_lister`: send the first page WITHOUT `start`; read `available` and `sessionCacheId` from the first response; while the rows collected are fewer than `available`, request the next page with `start=<rows collected so far>` and, when `sessionCacheId` is non-null, `sessionCacheId=<that value>` (the request-side field names are the same two words, an assumption to file as ONE row); stop when collected reaches `available` or a page returns no rows; never loop more than 50 pages; if the loop ends short of `available`, raise `AdapterShapeError` carrying only the two counts (collected, available), never staying silent about a short list.
+Add four tests to the EXISTING `tests/test_adapters.py`: `test_extract_accounts_uses_measured_container_and_number_key`, `test_lister_stops_at_available_total`, `test_lister_sends_session_cache_id_on_later_pages`, `test_lister_fails_loud_when_short_of_available`. FR6-AC1 now needs ten; FR6-AC2 must still pass. Fakes only; no AWS, no live call, no account number in any output. Refresh the proof instance and flip only when both criteria PASS.
+
 ### ACCEPTANCE
 
 <criterion id="FR6-AC1" cell_refs="FR-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fr6</invocation><expect>R1-FR6-OK passed=\d+</expect></criterion>
-`FR6-AC1` -- the six named adapter tests exist and pass.
+`FR6-AC1` -- the ten named adapter tests (six built, four of the REPAIR) exist and pass.
 
 <criterion id="FR6-AC2" cell_refs="FR-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fr4</invocation><expect>R1-FR4-OK passed=\d+</expect></criterion>
 `FR6-AC2` -- the five daily-orchestration tests still pass after the wiring edit.
