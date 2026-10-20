@@ -945,6 +945,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "TO FR-s-2 item 4: exit code 0 only when conflicts and firms_without_scope are empty and every written object's row count matches.",
     "world_is": "The exit code is stricter than the order's rule; every extra condition makes a run exit non-zero, never zero. The calendar is checked by the lander on the staged day, not again here.",
     "notes": "Stricter-only; the extra conditions can be dropped by a ruling if the box run must not stop on them."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W4-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~4",
+    "surfaced_at": "2026-10-20T15:14:39Z",
+    "spec_asserts": "TO-FR-s-3 WHAT TO BUILD items 1 and 2: plan_windows(today, floor_date, chunk_days) yields non-overlapping windows covering today back to floor_date; backfill_g stops a kind at an EMPTY window whose end is older than floor_date (account open date) and at the 20-year cap.",
+    "world_is": "Both cannot hold on one walk: a walk bounded at floor_date never yields a window whose end is older than floor_date, so the account open date stop is unreachable. Built as: plan_windows keeps the named wording (bounded at its floor argument); backfill_g calls it with the cap date as that floor and tests floor_date only at each EMPTY window, so the account open date stop and the cap stop are both reachable.",
+    "one_line": "The order's planner bound and its account-open-date stop cannot both be met by one walk; backfill_g walks to the cap and tests floor_date at each EMPTY window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FR-s-3.backfill-planner.md at c5ff6eaad5: WHAT TO BUILD item 1 bounds plan_windows at floor_date and item 2 stops a kind at an EMPTY window older than floor_date",
+        "org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md at c5ff6eaad5 section 11: backfill_g walks back from today and stops at the 20-year cap; no planner bound is stated there",
+        "infra/aws/ec2/canonical-fidelity/backfill.py in worktree C:/tmp/fidupl-w4 branch wk-NFRA_FIDUPL-4: _walk_kind calls plan_windows(today, cap_date, chunk_days) and tests date_to < floor_date only on EMPTY",
+        "timeout 120 python -m pytest -p no:cacheprovider infra/aws/ec2/canonical-fidelity/tests/test_backfill.py in worktree C:/tmp/fidupl-w4: 9 passed, including test_stops_at_account_open_date and test_stops_at_cap_years"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Interpretation only: no retry, no blocked criterion. FR3-AC1 passes on the built reading. The issuer may rule on the planner bound."
   }
 ]
 ```
