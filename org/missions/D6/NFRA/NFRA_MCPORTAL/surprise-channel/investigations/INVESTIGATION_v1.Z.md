@@ -3667,3 +3667,105 @@
   "notes": "Cited the mcportal commit as commit_or_etag because the schema has no field for a commit in a nested repo; the sibling pf-11 instance cites its mcportal commit the same way. Not repaired here: the checker and its resolution scope belong to the owner of proof-of-spec-check.py. The mcportal commit is LOCAL on wk-NFRA_MCPORTAL-41-mcportal, not pushed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W42-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~42",
+  "surfaced_at": "2026-10-20T18:44:30Z",
+  "one_line": "On this Windows device a helper module opalgateway.ts beside OpalGateway.tsx is shadowed: the import './opalgateway' resolves to OpalGateway.tsx and the suite fails with a missing export.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src in C:/tmp/mp-ogw-42/mcportal, first run after writing opalgateway.ts: SyntaxError Export named 'managedPeople' not found in module ...src/pages/opalgateway/opalgateway.tsx (the file on disk was opalgateway.ts).",
+      "ls of src/pages/opalgateway/ listed OpalGateway.tsx and opalgateway.ts as two distinct names; after the helper was renamed to gatewayModel.ts and both imports changed, bun test src read 86 pass and 0 fail.",
+      "mcportal commit e05fc91 on wk-NFRA_MCPORTAL-42-mcportal (LOCAL, not pushed) carries the helper as src/pages/opalgateway/gatewayModel.ts."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The new directory mcportal/src/pages/opalgateway/ holds OpalGateway.tsx, OpalGatewayView.tsx, opalgateway.css, index.ts and the test file; the order names no helper module, so any helper must sit where its import cannot collide with a component name.",
+  "world_is": "On this case-insensitive Windows checkout the bundler and bun resolve an extensionless './opalgateway' to OpalGateway.tsx before opalgateway.ts, so a helper named like its component is shadowed without any error naming the shadow.",
+  "notes": "Form only. The helper was renamed to gatewayModel.ts in the worker's own branch; no other path was touched. Any later worker adding a module whose lowercase name equals a component's name in the same directory meets the same shadow."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W42-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~42",
+  "surfaced_at": "2026-10-20T18:44:30Z",
+  "one_line": "A plain Read of the worker face returned the whole order file, so the RECORD FACE below its marker reached the worker's context in one tool result.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-zo-1.opalgateway-page-person-reach-and-switches.md issued with no offset or limit returned lines 1 to 103.",
+      "The RECORD FACE marker sits at line 91 of that file; lines 92 to 103 are the record face and were inside the tool result.",
+      "The worker face instruction is to read from line 1 down to the marker and no further; the Read tool offers no marker-bounded read, so the instruction could not be met by one plain call."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face is the whole of the worker's context, read from the first line down to the RECORD FACE marker and no further; the record face does not travel to the worker.",
+  "world_is": "A plain Read of the committed order returned the whole file, the record face included, in one tool result. The worker did not act on the record face and used the order as written.",
+  "notes": "Form only. Every later worker that reads an order whole receives its record face the same way until the order is split or the read is bounded. The disarm is the issuer's: move the record face out of the order file or below a path a worker does not read."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W42-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~42",
+  "surfaced_at": "2026-10-20T19:02:30Z",
+  "one_line": "The exported change reader does not fit the audit list: getRecentChanges types GET /api/admin/changes entries without an action field and with grant Scope before and after, so the audit list reads the same route through its own checked reader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal/src/api/admin.ts lines 59-68: ChangeRecord declares tid, oid, who, when, verdict, reason, before: Scope and after: Scope; no action field.",
+      "mcportal/src/api/admin.ts lines 109-112: getRecentChanges() calls fetch('/api/admin/changes') and types the response as ChangeRecord[].",
+      "mcportal/src/api/admin.ts lines 614-624: getPersonChanges(tid, oid) filters the same route to action set_person_access for one person; the audit list needs every access action for every person."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The audit list needs every access change of every person and reads the writer's changes through an exported helper of src/api/admin.ts, the same route with the same fetch helper; if no exported helper fits, the worker refuses with a BLOCKING row naming what it needs (zo-2 face section 1).",
+  "world_is": "The exported getRecentChanges reads the route but its declared type carries no action and types before and after as grant scopes; getPersonChanges filters to one person and one action. The audit list reads the same route through auditRead.ts, checks each entry field by field, and makes no cast and no edit of admin.ts.",
+  "notes": "Form only. Judged here that no exported helper fits the audit's shape, so no BLOCKING row was filed and the criterion was not refused. The issuer may rule on whether the type should carry action, which would be an edit of admin.ts outside this order's surfaces."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W43-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~43",
+  "surfaced_at": "2026-10-20T18:38:45Z",
+  "one_line": "The face asks for a WIDENING defined against the prior record AND a WIDEN-NO-CONFIRM refusal with zero store calls, but the prior record is readable only through store.get, so the two requirements cannot both hold; the widening rule and its four new named tests are not built.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py@ba8cfc3ef39 line 398: prior = _plain_record(st.get(key)) is the only prior-record read. It runs after the shape check (lines 383-385) and the RECORD-KIND check (lines 386-388) and before any write (read by hand at this commit).",
+      "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/tests/test_person_access.py@ba8cfc3ef39 lines 41-43: FakeStore.get appends ('get', key) to store.calls, so any read makes store.calls non-empty; the face's widening test asserts store.calls == [] (face section 1, FWD-26).",
+      "Grep -i 'widen|widening_confirm|widening_signoff' over the grant-writer folder at ba8cfc3ef39: no widening_confirm and no widening_signoff anywhere. The 'widen' hits are the grant-level action (lambda_function.py:458-467, tests/test_grant_writer.py:96), not the person_access rule."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A WIDENING (a change that adds an entry to tools_allow or channels_allow relative to the prior record; a first write counts against an empty prior) is REFUSED WIDEN-NO-CONFIRM when widening_confirm is not exactly True, before any store call (zero store calls). The face's test 2 asserts store.calls == [] for a channels_allow addition with no confirm against an empty store (face section 1, PRD v0.10 FWD-26 writer side).",
+  "world_is": "The writer learns the prior record only by a store read (lambda_function.py:398), and FakeStore counts every get as a store call (tests/test_person_access.py:41-43). An exact prior-relative widening decision therefore needs one store call before the refusal, and the zero-call assertion forbids it. Nothing in the writer carries widening_confirm or widening_signoff at base. The face does not say which requirement yields. Built here: only the stale-test repair (commit ba8cfc3ef39). Not built: the widening rule and the four new tests (face tests 2-5).",
+  "notes": "Two resolutions the issuer could choose; neither taken here. (a) Read the prior first and drop the zero-call clause for the WIDEN-NO-CONFIRM refusal. (b) Refuse without a read whenever a change names tools_allow or channels_allow with a non-empty list; this over-refuses a re-assertion of an allow entry the prior already holds, a fail-closed deviation from the definition. The face says stop on the criterion and not repair it, so neither was implemented. Stale-test repair: old body had no monkeypatch argument and asserted the REFUSED RECORD-KIND-NOT-LIVE with zero store calls against the live tuple (which now holds person_access); new body narrows acs.POLICY_RECORD_TYPES with monkeypatch for that test, asserts person_access absent, and keeps the same refusal and zero-call assertions. Whole grant-writer suite at ba8cfc3ef39: 36 passed, 0 failed (rc=0)."
+}
+```
