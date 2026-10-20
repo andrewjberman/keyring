@@ -352,6 +352,72 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-i2 step 1: ADD per-master bronze write entries for the 49financial firm folder; the cell names no other statement.",
     "world_is": "The puller's manifest home for a firm-folder master is not traced in this cell. If it writes schwab/49financial/_ops/ or schwab/49financial/meta/pulls/, those PutObjects AccessDeny; the puller's WARN makes the denial visible.",
     "notes": "Not an alert and not a monitor. The issuer decides whether the firm folder needs _ops and meta/pulls grants (enumerated per master, as the cell did for bronze)."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W2-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~2",
+    "surfaced_at": "2026-10-20T15:46:52Z",
+    "one_line": "TO-BF-m2 dry run: AC1 and AC3 PASS at base, though the order says all three must FAIL before any change. The round-1 move tool already imports the firm-form key contract (TO-BF-k2), so it prints firm-form destinations and the round-1 assertions still hold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/keyform/move_bronze_key_form.py@264023be84 loads the key contract by path from data/canonical/schwab/silver/_canonical_silver_lib.py, which is the firm-form library at 60781d2d86 (TO-BF-k2)",
+        "python -m pytest data/canonical/schwab/tests/test_move_bronze_key_form.py -q -p no:cacheprovider --color=no at 264023be84: '13 passed in 1.25s' (rc=0); the order predicts FAIL at base",
+        "python data/canonical/schwab/keyform/move_bronze_key_form.py plan --master 08403355 --type acc at 264023be84: 'MOVE-PLAN in_scope=516 foreign=0 copy=516 already=0 events=516' (rc=0); AC3's regex '^MOVE-PLAN in_scope=[0-9]+ foreign=0 copy=[0-9]+ already=[0-9]+ events=[0-9]+' matches it at base"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-m2 worker face, dry-run paragraph: 'Run all three first and record what they print; they must FAIL before you change anything', and 'after TO-BF-z2 and TO-BF-k2 the library is firm-form, so the old tool's import and its master-form destination assertions fail'.",
+    "world_is": "AC1 and AC3 PASS at base; AC2 FAILS as expected (no MOVE-SAMPLE line). The base tool emits firm-form destinations because it imports the k2 library, and its round-1 test assertions (dst starts with schwab/, contains /date=, ends with the vendor name, events=12) hold on firm-form keys. AC3's regex does not name a destination, so it cannot tell the grammars apart. Nothing was patched before this row: the build is the rewrite the face specifies, and the criteria are judged on the rewritten tool and test.",
+    "notes": "Not an alert and not a monitor. The rewrite replaces the round-1 assertions with firm-form ones (address() equality, guards, the MOVE-SAMPLE line), so AC1 discriminates after the change. AC3's regex is not changed by this cell; the issuer may decide whether the AC3 regex should name the destination."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W2-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~2",
+    "surfaced_at": "2026-10-20T16:04:31Z",
+    "one_line": "TO-BF-r2 premise: the shared silver contract exports NO public all-dates lister. The two readers that need every date (build_canonical_daily.py and build_fact_tax_1099div.py) import the PRIVATE _bronze_dates_or_refuse from _canonical_silver_lib.py, because the order's named list_bronze_dates exists only in the bd-tree mirror.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/silver/_canonical_silver_lib.py@60781d2d86 defines _bronze_dates_or_refuse (line 203) and latest_bronze_date (line 221); no public list_bronze_dates in that file (grep '^def ' shows none)",
+        "data/black_diamond/scripts/bronze/_monolith_bronze.py@60781d2d86 is the file that exports list_bronze_dates",
+        "data/canonical/schwab/build_canonical_daily.py at 2dc375853a1 is the reader that needs every date (_monolith_partitions); it now imports _bronze_dates_or_refuse by name, with a comment"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-r2 worker face, 'What exists': the shared function is TO-BF-k2's, and list_bronze_dates / latest_bronze_date return compact YYYYMMDD strings for ONE master. 'If a name you need is private, say so in your report; do not edit that file.' Bounds: 'If a reader needs a function the shared contract lacks, stop and file a surprise row.'",
+    "world_is": "The silver contract has latest_bronze_date (public, latest date only) and _bronze_dates_or_refuse (private, all dates). Both readers use the private all-dates function by name; _canonical_silver_lib.py was not edited. The private import is reported in the TO-BF-r2 worker report. Nothing was patched in the shared file.",
+    "notes": "Not an alert and not a monitor. The issuer may decide whether the silver contract should export a public all-dates lister (a TO-BF-k2 amendment); this cell did not change that file."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W2-S7",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~2",
+    "surfaced_at": "2026-10-20T16:04:31Z",
+    "one_line": "The RPS date axis (build_canonical_daily.py) no longer lists the ~719 2023-2024 partitions whose only object carries a broken name (CRS{d8}.{FEED}, no master prefix), because the firm-form listing filters by master name. The order said the same days stay unchanged; this set of days changes for those partitions.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/build_canonical_daily.py@HEAD 2dc375853a1 (before this cell): _monolith_partitions enumerated 8-digit DIRECTORY names under schwab/08335338/bronze/rps/ (MONOLITH_FEED_PREFIX at line 63), so a broken-name partition still appeared on the axis",
+        "data/canonical/schwab/tests/test_canonical_daily_date_axis.py (this cell): test_broken_name_partition_is_not_on_the_firm_axis asserts the broken-name day is absent; the mutant that drops the master filter fails it (3 failed, 14 passed on the mutant)",
+        "data/canonical/schwab/silver/_canonical_silver_lib.py@60781d2d86 _scan_bronze_partitions: a key whose file name does not start with '{master}.' is skipped"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-r2 worker face, Build 1: 'For the same set of days the output and the latest selection are unchanged.' Also the TO-BF-k2 contract: the listers keep only keys whose file name starts with {master}.",
+    "world_is": "The daily axis now excludes partitions whose only object is broken-name (for the 0833 RPS feed, 2023-2024). Those days were already unreadable through monolith_bronze_key. A full or --force rebuild that reaches them through this function will no longer see them. No object was moved, renamed or deleted; bronze stays immutable (Rule 17a).",
+    "notes": "Not an alert and not a monitor. The remedy for the broken names is the re-land/alias ruling named in the old note; this cell did not decide it. The issuer may want the count of broken-name partitions printed at the next release act."
   }
 ]
 ```

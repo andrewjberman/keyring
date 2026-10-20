@@ -28733,3 +28733,52 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W325-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~325",
+  "surfaced_at": "2026-10-20T15:58:39Z",
+  "one_line": "AR-y-459 (d) says the fixtures give the stub session a non-empty user name; the stub session is built in the script (buildSession, name 'Dev User'), not in fixtures_offline.json, and it already names the filer. No fixture was changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-459 (d): the fixtures give the stub session a non-empty user name so the Advisor is pre-filled (read how ui-smoke and the script build the stub session and what name the page reads: auth.user?.name).",
+  "world_is": "The stub session is built by buildSession() in run7_browser_leg.mjs (user.name 'Dev User') and served by the /auth/refresh route. fixtures_offline.json carries no session key. AuthContext stores the refresh response's user as auth.user and TicketCenter pre-fills the Advisor from auth.user?.name: measured advisor_prefilled=yes on the AC1 B1 line. The fixtures file is unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/run7_browser_leg.mjs buildSession (name Dev User) at the worker worktree HEAD",
+      "portal/src/contexts/AuthContext.tsx refreshToken stores data.user as auth.user @d5d2fdea",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx startingAnalysisForm(auth.user?.name) and the effect at 257-259 @d5d2fdea",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/OFFLINE_STDOUT.txt B1 line advisor_prefilled=yes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W325-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~325",
+  "surfaced_at": "2026-10-20T15:58:39Z",
+  "one_line": "AR-y-459 (e) says --blank-advisor clears the Advisor before the one submit; the page disables File Analysis Request while the Advisor is held, so no submit press is possible. The control reads the page's held words and presses nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-459 (e): a new option --blank-advisor clears the Advisor field before the one submit; with it the script prints the page's held words on the B2 line as B2 filed REFUSED <the words> and CALLS lists NO tickets create.",
+  "world_is": "The staff submit is disabled while a held reason is set (TicketCenter.tsx: disabled={creating || heldReason !== null} @d5d2fdea) and a blank Advisor sets heldReason to ADVISOR_HELD. Measured in AC2: after fill('') the button is disabled, the held line reads 'Advisor is required. Add the advisor presenting this report to submit it.', the B2 line prints those words, and the CALLS list has no ticket create. The script makes no press in this path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx staff submit button disabled={creating || heldReason !== null} @d5d2fdea",
+      "portal/src/pages/TicketCenter/analysisRequest.ts ADVISOR_HELD and submitHeldReason advisor check @d5d2fdea",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/shots_blank_advisor (AC2 run, rc 1, B2 REFUSED line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
