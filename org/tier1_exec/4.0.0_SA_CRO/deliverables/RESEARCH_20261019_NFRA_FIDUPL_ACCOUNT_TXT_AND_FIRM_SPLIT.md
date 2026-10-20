@@ -67,6 +67,51 @@ These are read from three screenshots Andrew took. No traffic has been captured 
   export can then be split on it, with no extra exports. **Not yet measured:** the switch endpoint and its parameters, and whether
   `accountList.json` actually narrows after a switch.
 
+## 2b. Addendum (2026-10-20 ~14:35Z): the G-number switch, MEASURED from Andrew's HAR 4
+
+**Source:** `wealthcentral.advisorchannel.com4.har` on dell1 (off git), recorded 2026-10-20 14:26:36Z to 14:28:00Z. It has 115 entries
+and contains 13 switches: Inflection's 5, Cottonwood's 7 and 49 Financial's 1. G numbers are shown hashed or masked.
+
+**The mechanism is a legacy server-rendered JSP form, not an API:**
+
+1. **Open the form:** GET `https://wealthcentral.advisorchannel.com/ac/wc/channel/jsp/support/ria_changegnum.jsp` returns 302 to GET
+   `https://www2.advisorchannel.com/wc/channel/jsp/support/ria_changegnum.jsp` (200, about 6.6 KB HTML). It sends the session cookies
+   only: no `x-xsrf-token` and no hidden CSRF field.
+2. **The form**, `name="pgChangeGN"`, posts to `action="ria_changegnum.jsp"`:
+   - `select name="gnumClientNm"`: 31 options, each `value="G" + 8 digits`;
+   - `input name="isDefault" value="Y"`: the "Set As Default" checkbox;
+   - `input value="Apply"`: the submit button;
+   - `input type="hidden" name="process" value="change"`;
+   - `input type="button" value="Cancel" onclick="cancelWC()"`.
+
+   The page renders `Current: <G> - <label>` and `Default: <G> - <label>` in table cells.
+3. **Switch:** POST `https://www2.advisorchannel.com/wc/channel/jsp/support/ria_changegnum.jsp`, content type
+   `application/x-www-form-urlencoded`, body `gnumClientNm=<G>&process=change`. **Leave `isDefault` out to change only the current
+   G.** It responds 200 with the same page (about 7.1 KB) and sets the cookies `ATC`, `ATCTO`, `bm_sv`, `zpc`, so the session token
+   is re-issued on each switch.
+
+**Verified per switch (13 of 13):**
+- The response's `Current:` equals the requested G.
+- `Default:` stays the ALONGSIDE G every time. No request carried `isDefault`.
+- The switches ran 4 to 9 s apart, by a person.
+
+**Not measured in this HAR (owed by the live cell):**
+- **Whether `accountList.json` narrows after a switch.** The capture holds no account-list call after any switch.
+- Whether the `wealthcentral` SSC APIs follow the re-issued `ATC`.
+- Whether the scheduled export, which runs under the default, is unaffected. It should be, since the default never changed.
+
+**State left behind:** the capture ends with the session's CURRENT G set to 49 FINANCIAL's G (its last POST, 14:27:53Z). The default is
+unchanged, so the next sign-in starts on ALONGSIDE. The uploader should switch back to the ALONGSIDE G at the end of every per-G sweep,
+so the session ends where it started.
+
+**Uploader recipe (inferred from the above; the live cell proves it):** inside the signed-in Playwright session, for each G in the run-time
+list (SSM SecureString, CTO msg 8638):
+1. POST `ria_changegnum.jsp` with `gnumClientNm=<G>&process=change`.
+2. Assert that the response's `Current:` cell equals `<G>`.
+3. Call `accountList.json` (POST, form `length=2000&accountNumber=&sourceCode=BROK&custodianCode=FID`, header `x-xsrf-token`).
+   Page through it and record the account-to-G map.
+4. After the last G, switch back to ALONGSIDE and assert it.
+
 ## 3. What would attribute the rest (unmeasured; for the CTO, with Andrew's hands where noted)
 
 - **Per-G account lists from Wealthscape.** The login has a `defaultGNumber`, which implies a current-G-number context. If the UI lets
