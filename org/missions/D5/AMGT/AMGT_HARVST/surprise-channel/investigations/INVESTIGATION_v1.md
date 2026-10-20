@@ -13628,5 +13628,67 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W189-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~189",
+        "surfaced_at": "2026-10-20T19:01:01Z",
+        "one_line": "The worker Bash shell sets FORCE_COLOR=3, so pytest prints ANSI-coloured output and the AC1 summary line does not begin its line; the offline suite reads 16 passed when run with FORCE_COLOR unset.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-5 AC1: python -m pytest lib/research/harvest/test_gold_refresh.py -q, expect (?m)^(1[2-9]|[2-9]\\d) passed(?!.*failed) -- an anchored line match on the pytest summary.",
+        "world_is": "FORCE_COLOR=3 is set in the worker shell environment. Under it pytest wraps the summary line in ANSI escape codes, so the line begins with an escape, not a digit, and the anchored expect cannot match. The same suite run under env -u FORCE_COLOR prints '16 passed in 0.88s' on its own line, rc=0 (deliverable co5_pytest.out). No expectation was edited; the plain run is the recorded output and the environment is the finding.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~189/co5_pytest.out (plain run, this commit)",
+                "worker Bash shell environment probe: FORCE_COLOR=3 (this run)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W189-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~189",
+        "surfaced_at": "2026-10-20T19:01:01Z",
+        "one_line": "The worker worktree is a sparse checkout that leaves org/surprise_channel/ off disk; the row schema the face names is tracked at HEAD but could be read only through git show.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "The worker face names the row schema org/surprise_channel/schemas/investigation_item.schema.json as the form every appended row conforms to, a readable file in the worktree the row is written from.",
+        "world_is": "In worktree C:/dev/wk-harvst-189 (HEAD bed53abcc2) the directory org/surprise_channel/ does not exist on disk ('No such file or directory'). The file is tracked: git ls-files lists org/surprise_channel/schemas/investigation_item.schema.json and git show HEAD:<that path> returns the schema. The worktree has sparse-checkout patterns set (the first three shown: .claude/agents, .tools, infra/logic). The schema was read through git show; the row was written to the investigation file, which is on disk.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json (bed53abcc2, this run)",
+                "ls org/surprise_channel/ in C:/dev/wk-harvst-189: No such file or directory (this run)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W189-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~189",
+        "surfaced_at": "2026-10-20T19:01:01Z",
+        "one_line": "The real DRY RUN of the gold driver took 4561.6 s wall, over the one-hour mark; the mention build alone took 2715.1 s over 2762 GETs and 461 MB, and the event build re-read the same bytes.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-5 step d: the real dry run runs in the background under a 120-minute ceiling, and a row is filed if its wall time is over an hour.",
+        "world_is": "co5_dryrun.out, GOLD-CENSUS: wall_seconds=4561.6, inside the ceiling, not killed; 3 GOLD-BUILD lines, written=0 would_write=3 errors=0, s3_puts=0, served_from_memory=7. Per table: article_security_mention 2715.1 s (gets 2762, bytes 461381835); chatter_daily 1503.4 s (gets 8645, bytes 752430494); chatter_event 341.4 s (gets 2762, bytes 461381835). The event build's silver-article read repeats the mention build's GET count and byte total exactly, which reads as the same silver article set read twice.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~189/co5_dryrun.out (this commit)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
