@@ -771,6 +771,94 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No retry, per the order: step 0 failed, so steps 1 and 3 were not run and no text was requested. The fix needs a trace that records the page state after the Next click (URL and the outline without the fill), which is a worker repair in a later order, or the issuer's decision. The box stays RUNNING, AutoShutdown=disabled."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The offset field that pages accountList.json past the first 2,000 rows is named start, which the order marks as an assumption: no measured request carries an offset field, so the name is unverified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/attribute.py@19ed775f82 page_account_list: pages after the first send fields['start'] = str(page * length); the first page is sent without it, as measured",
+        "RESEARCH_20261019_FIDELITY_WEALTHSCAPE_HAR_ENDPOINT_MAP.md line 58 (accountList.json form: length, accountNumber, sourceCode, custodianCode) and RESEARCH_20261019_NFRA_FIDUPL_ACCOUNT_TXT_AND_FIRM_SPLIT.md section 2b step 3: no offset field is measured",
+        "NFRA_FIDUPL.TO-FR-s-1 WHAT TO BUILD item 2: the field name past 2,000 rows is an ASSUMPTION, unmeasured"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker reference section 11 and the order: accountList.json is paged with length=2000 until a page shorter than 2000 comes back, using an offset field named start.",
+    "world_is": "No captured request in the cited research carries an offset field, so the name start is unmeasured. The fake tests fix the name, and the live cell must confirm it against a request past 2,000 rows before the lister is wired.",
+    "notes": "Built against fakes only; nothing runs live. The paging loop stops at the first short page and caps at 50 pages, so a server that ignores the offset cannot loop forever."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The row container of an accountList.json response, the key that holds each page's account records, is not named in any cited measurement, so page_account_list takes the extractor as an injected callable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/signin_recon.py@19ed775f82 reads only accountListResponse.numberOfAccounts from the accountList.json response; no list key is read",
+        "grep of the cited research (ENDPOINT_MAP, G_NUMBERS, ACCOUNT_TXT_AND_FIRM_SPLIT) for accountListResponse and the account-list key: only numberOfAccounts is named",
+        "attribute.py@19ed775f82 page_account_list: rows_of is required and raises AccountListError when not supplied; no key is guessed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker reference section 11: the real account_lister pages accountList.json until a page shorter than 2000 comes back, so each page's record count is read from the response.",
+    "world_is": "The response key that holds the account records is unmeasured in the cited research, so a page's count cannot be read by a named key. The fake tests supply their own extractor. The live cell must name the key from a captured response before the real lister is wired.",
+    "notes": "No key is guessed in code. Built against fakes only."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "Reference section 11 keys summary.per_label_counts by firm label, while the order bounds say no firm label appears in any output, so the two cannot both hold for a printed summary.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 11 (sweep_attribution return shape): summary.per_label_counts is {label: n}",
+        "NFRA_FIDUPL.TO-FR-s-1 BOUNDS: No G number, account number or firm label in any output. Counts and booleans only",
+        "attribute.py@19ed775f82 implements the section 11 shape verbatim; sweep_attribution prints nothing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker reference section 11: summary holds counts only, and per_label_counts maps label to count. The order BOUNDS: no firm label in any output.",
+    "world_is": "The two statements conflict for the summary dict: its per_label_counts keys are firm labels. The function prints nothing, so the conflict bites only where a caller prints or logs summary; the caller that writes the full dict to the work directory is unaffected.",
+    "notes": "Implemented the section 11 shape as written and did not rename the keys. The issuer decides whether the summary keys change before the day orchestration (box/daily.py) prints anything."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The proof step flips the status of NFRA_FIDUPL.TO-FR-s-1 to complete, but that task-order file is not in this order's paths block, so the worker cannot make the flip.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_FIDUPL.TO-FR-s-1 paths block lists infra/aws/ec2/canonical-fidelity/gswitch.py, attribute.py, tests/test_gswitch.py, tests/test_attribute.py and this investigation file only",
+        "worker face PROOF step: flip the task order status to complete and commit instance, deliverables and flip together; the TO file carries status pending at c5ff6eaad5",
+        "same gap as NFRA_FIDUPL-D1-W2-S6 (round 1, FU-s-4): the grant admits no path to the task-order file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face PROOF step: flip the task order status to complete in the same commit as the instance and the deliverables.",
+    "world_is": "The grant admits no path to the TO file, so the flip falls to the issuer or the gate. The proof instance can be validated and pinned to the code commit 19ed775f82, but the status stays pending until the issuer flips it.",
+    "notes": "Worker leaves the TO file untouched. The criteria FR1-AC1 and FR1-AC2 both PASS-by-output at 19ed775f82."
   }
 ]
 ```
