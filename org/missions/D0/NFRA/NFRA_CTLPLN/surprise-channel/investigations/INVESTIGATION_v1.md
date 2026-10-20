@@ -15071,3 +15071,112 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts, file metadata and harness notification summaries only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-W153-S1 -- the worktree is a sparse checkout: data/assets/scripts/lib/ is absent on disk, so the converter test module cannot import
+
+```json
+{
+  "id": "NFRA_CTLPLN-W153-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~153",
+  "surfaced_at": "2026-10-20T18:59Z",
+  "one_line": "The worktree at 41584d28e0e is a sparse checkout: data/assets/scripts/lib/ is in HEAD and carries the skip-worktree flag, but is absent on disk, so bd49f_dim_conversion.py cannot import stream_parquet and the whole test module fails at collection (rc=2) before any test runs.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD data/assets/scripts/ (worktree, 2026-10-20 ~18:58Z) lists lib as a tree; git ls-files -v data/assets/scripts/lib carries flag S (skip-worktree) on backfill_status.py, stream_parquet.py, tests/conftest.py, tests/test_backfill_status.py, tests/test_stream_parquet.py; git config --get core.sparseCheckout = true.",
+      "ls data/assets/scripts/ (worktree) = silver only; test -e data/assets/scripts/lib/stream_parquet.py = ABSENT. Every order-named path tested with test -e = PRESENT.",
+      "timeout 120 python -m pytest data/assets/scripts/silver/tests/test_bd49f_dim_conversion.py -q (worktree, after the edits): ERROR at collection, 'E   ModuleNotFoundError: No module named stream_parquet', 'Interrupted: 1 error during collection', rc=2. The import is bd49f_dim_conversion.py line 61; the test inserts data/assets/scripts/lib on sys.path at line 20.",
+      "The base checkout ajb_workspace holds data/assets/scripts/lib/stream_parquet.py (tracked). It was NOT copied into the worktree; the worktree was not rebuilt or extracted.",
+      "org/surprise_channel/schemas/investigation_item.schema.json is also absent from the worktree; the row shape was read from the base checkout, read-only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTcl1-AC1: python -m pytest data/assets/scripts/silver/tests/test_bd49f_dim_conversion.py -q reads 29 passed in the worktree. The order names no lib path in its paths, and its premise is that the worktree carries the code the test imports.",
+  "world_is": "Every order-named path is present on disk. The three edits and the vendored byte copy are made in the worktree (converter sha256 bc3019570d49ac1ee10d7cd7668dfdc23a09e938d14dece7abd7c662cf00d503). The criterion's run stops at import, rc=2, so the 29-pass count is not reached and the new tests are not exercised in this worktree.",
+  "notes": "OWNER for the sparse-checkout scope of this worktree: 2.0.0_SA_COO~C (the issuer). Command output and file metadata only; no transcript content."
+}
+```
+
+## NFRA_CTLPLN-W153-S2 -- the order asks for its own status flip to complete, but the order file is outside the worker's paths
+
+```json
+{
+  "id": "NFRA_CTLPLN-W153-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~153",
+  "surfaced_at": "2026-10-20T19:17Z",
+  "one_line": "The worker face says flip this order to complete when the criterion passes, but the order file org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-cl-1.bd49f-dim-convert-scd2-dtype-fix.md is not among the order's <paths>, so the worker did not flip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order file <paths> block at worktree HEAD d2a0487598 lists five paths: the silver converter, the silver test file, the vendored converter, BUILD_MANIFEST.json and INVESTIGATION_v1.md. The order file itself is not listed.",
+      "The coordinator's message asked for the flip to complete on a pass; the criterion passed at 61850841c0d (29 passed, rc=0, two runs) and the proof instance validated rc=0.",
+      "The sibling order CT-ci-1 (proof at 0.9.0_WK_NFRA_CTLPLN~152) declared the same flip as an exclusion: the issuer flips the status on a valid instance."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's worker face: flip this order complete only when the criterion passes. The paths block is the write grant; a path the order lacks is a BLOCKING row, never an override.",
+  "world_is": "The grant does not include the order file, so the flip is left to the issuer 2.0.0_SA_COO~C. The criterion passed and the instance is VALID (rc=0).",
+  "notes": "OWNER: 2.0.0_SA_COO~C for the flip. Command output and file metadata only; no transcript content."
+}
+```
+
+## NFRA_CTLPLN-W154-S1 -- the worker-checker path the order names is absent from this worktree; the tree's proof checker was run instead
+
+```json
+{
+  "id": "NFRA_CTLPLN-W154-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~154",
+  "surfaced_at": "2026-10-20T20:25Z",
+  "one_line": "The order says to validate the proof instance with the checker '.claude/agents/worker.md' names; that file is not in the worktree (the worktree has no .claude/agents/ folder), so the validation ran with .tools/proof-of-spec-check.py, the checker the worker contract names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test -e /c/Users/AndrewBerman/Desktop/wk-NFRA_CTLPLN-154/.claude/agents/worker.md = ABSENT, and ls of /c/Users/AndrewBerman/Desktop/wk-NFRA_CTLPLN-154/.claude/agents/ finds no such folder, at worktree HEAD e7d8af9d1ce (2026-10-20 ~20:24Z).",
+      "/c/Users/AndrewBerman/Desktop/ajb_workspace/.claude/agents/worker.md exists in the base checkout; it was read-only context and was NOT copied into the worktree.",
+      "/c/Users/AndrewBerman/Desktop/wk-NFRA_CTLPLN-154/.tools/proof-of-spec-check.py is present; it is the checker the worker contract names for the instance."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's proof step: validate the instance with the checker .claude/agents/worker.md names; the worktree is the write grant and the path is an order-named input.",
+  "world_is": "The named file is absent from the worktree (sparse checkout); the instance was validated with .tools/proof-of-spec-check.py, rc recorded in the proof and the final report.",
+  "notes": "OWNER: 2.0.0_SA_COO~C (the issuer, for the sparse set of this worktree and the checker name in the order). Command output and file metadata only; no transcript content."
+}
+```
+
+## NFRA_CTLPLN-W154-S2 -- the order names no VersionId refusal, but apply refuses when the prior object has no VersionId, before any write
+
+```json
+{
+  "id": "NFRA_CTLPLN-W154-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~154",
+  "surfaced_at": "2026-10-20T20:25Z",
+  "one_line": "The order says apply records the prior VersionId from head_object and then puts; the built tool refuses (nonzero, nothing written) when head_object returns no VersionId, because a put over an unversioned object has no prior version to restore.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/bd49f_dim_compact.py apply(): the branch 'if not prior: REFUSED ... bucket unversioned' sits between the merged==0 return and the single put_object, at worktree HEAD e7d8af9d1ce.",
+      "The order's CLI sentence (TO section 3) names only the recorded prior VersionId; it does not name the no-VersionId case. The tool was not run against S3 (WORLD cell); the branch is exercised by no test, as the six named tests do not cover it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's apply mode: record the prior object's VersionId from head_object, then ONE put_object to the same key, then read back and re-run the proofs.",
+  "world_is": "The tool adds a narrowing refusal for an unversioned prior object. It writes nothing in that case and exits nonzero; the issuer or the CloudOps seat decides whether the bucket's versioning is a precondition of the one write.",
+  "notes": "OWNER: 2.0.0_SA_COO~C (the apply contract). Command output and file metadata only; no transcript content."
+}
+```

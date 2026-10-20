@@ -21,7 +21,10 @@ infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
 infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
 infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py
 infra/aws/lambda/investor-reporting/ycharts/generate/ticket_confirmation.py
+infra/aws/lambda/investor-reporting/ycharts/research/comparables.py
 infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py
+infra/aws/lambda/investor-reporting/ycharts/research/model_code_map.json
+infra/aws/lambda/investor-reporting/ycharts/research/model_source.py
 infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py
 infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py
 infra/aws/lambda/investor-reporting/ycharts/research/portfolio_series.py
