@@ -36,6 +36,10 @@ Edit `infra/aws/terraform/canonical-fidelity-ec2/` (APPLIED in round 1: read eve
 4. An output `perg_parameter_name`. The one added resource is the parameter; the plan also shows the changed role policy.
 Mechanical bars: the root validates (reuse FU6-AC1's check), the guard stays green, and the plan reads exactly `Plan: 1 to add, 1 to change, 0 to destroy.` with the one add being the SSM parameter (check `fr5p`).
 
+### CTO RULING 2026-10-20 ~15:18Z (msg 8673; it amends msg 8637 and answers your row W6-S1): NO SSM parameter
+
+The per-G list lives in a **Secrets Manager secret named `fidelity/alongside/perg-list`** (the canon grades that name CONFORMANT; it sits beside `fidelity/alongside/wealthscape-credentials`). Build it exactly like the Wealthscape secret in `secret.tf`: an `aws_secretsmanager_secret` (METADATA ONLY: never an `aws_secretsmanager_secret_version`, so no value is ever in state), `lifecycle { prevent_destroy = true }`, in `perg.tf`. Record the `grade(...,'SECRET')` line. The box role gets ONE per-secret read grant, `secretsmanager:GetSecretValue` on that secret's ARN, no wildcard, added beside its existing grant for the Wealthscape secret. Output `perg_secret_id` (a pointer). Delete any `aws_ssm_parameter`, SSM grant or `perg_parameter_name` output you made. The plan bar is unchanged in numbers (`Plan: 1 to add, 1 to change, 0 to destroy.`) but the one add is now the Secrets Manager secret (check `fr5p` was updated to read that). Ignore the 'SSM SecureString' and 'ssm:GetParameter' wording above.
+
 ### ACCEPTANCE
 
 <criterion id="FR5-AC1" cell_refs="FR-s-5"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu6v</invocation><expect>R1-FU6V-OK Success! The configuration is valid\.</expect></criterion>
