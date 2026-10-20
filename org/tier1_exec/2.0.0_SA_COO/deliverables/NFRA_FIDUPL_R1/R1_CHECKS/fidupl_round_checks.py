@@ -52,7 +52,9 @@ TEST_FILES = {
         "test_text_me_the_code_button_sends_the_sms", "test_call_me_button_is_never_clicked",
         "test_display_waits_for_the_x_socket", "test_launch_args_disable_extensions",
         "test_display_is_set_before_the_playwright_driver_starts",
-        "test_after_next_survives_a_navigation_race", "test_failed_step_note_carries_a_redacted_message_cut"]),
+        "test_after_next_survives_a_navigation_race", "test_failed_step_note_carries_a_redacted_message_cut",
+        "test_authorize_accepts_any_2xx_and_records_seen_responses_on_timeout",
+        "test_logout_calls_both_deletes_and_records_statuses", "test_session_close_logs_out_first_and_never_raises"]),
     "fr1a": ("%s/tests/test_gswitch.py" % CF, [
         "test_parses_current_default_and_options", "test_switch_posts_form_without_isdefault",
         "test_switch_asserts_current_equals_requested", "test_switch_failure_raises_and_names_no_value"]),
