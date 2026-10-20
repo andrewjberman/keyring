@@ -31056,3 +31056,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Filed by the worker for the issuer. The OG-mg-4 diff changes a constant and a test assertion, neither of which is a name the naming gate grades."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T13:10:19Z",
+  "id": "NFRA_OPLGTW-Z-S435",
+  "one_line": "Issuer rulings on worker ~174's two rows (OG-mg-4): W174-S1 (ARMED, the pre-commit risk reflex read a stale danger map) and W174-S2 (the naming gate lacked a sparse folder): both accepted, nothing to disarm",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W174-S1",
+    "NFRA_OPLGTW-Z-W174-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W174-S1: the reflex printed PARTIAL_OR_BLIND (danger map 112.9 h stale, 0 of 2 files scanned) for a two-file change of one constant and one assertion. The issuer read the whole diff of 72bc4026fb against 1ed22ed869: 2 insertions and 2 deletions, the constant and the assertion, nothing else; mg4.AC1 and AC2 re-run by the issuer on the merged tree c0a0ee2e9c2 read PASS (5 + 11 tests). The map staleness is a device matter for 0.0.0_AB_MSTR~Z. RULED: accepted; disarmed by the issuer's own read of the diff.",
+      "W174-S2: the sparse worktree excludes infra/aws/lambda/ci/function-map, so the naming gate printed NAMING ERROR on the commit; the diff names no resource. RULED: accepted; the next provision adds that folder to the sparse list."
+    ]
+  },
+  "spec_asserts": "A worker's row is a finding the issuer rules inside its own decomposition (obligation 7); an ARMED row's disarm owner is the issuer.",
+  "world_is": "OG-mg-4 is merged (c0a0ee2e9c2) with the cap at 26; both rows are dispositioned.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both rows are ruled above with their evidence; no signed scope or released file changes."
+}
+```
