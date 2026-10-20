@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~331</issued_to>
 <issued_by>2.0.0_SA_COO~G2</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -28,6 +28,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~331`.
 - **The checker** is `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_grant_check.py` (read it; you cannot edit it). It builds its own deterministic fixtures and computes every expected number itself, independent of your code: if your number and the checker's differ, re-read the cell text before you doubt the checker, and if you still believe the checker is wrong file a BLOCKING row quoting both numbers, and stop on that criterion.
 
 ### THE CELL (`AR-g-172`, inlined)
+
+**AMENDMENT 1 (issuer, 2026-10-20, after CloudOps seat IB2 stopped the apply at step 3; gate limb: none graded, an in-decomposition correction of the issuer's own checker):** your first delivery (pin `50f7c709af2`, merged at `e408831dd8f`) is correct in content but FAILS `terraform fmt -check resident.tf` (rc 3): three lines of the statement are over-padded. Terraform is not installed on the boxes and the first checker graded only the diff text, so neither of us saw it. `terraform fmt` aligns the `=` signs of each run of consecutive SINGLE-LINE attributes to the longest key of that run, and a line that opens a multi-line value (`Resource = [`) is not part of the run. So in the statement the three lines are `Sid    = ...`, `Effect = ...`, `Action = ...` (one space after `Effect` and `Action`, four after `Sid`) and `Resource = [` keeps its single space. The checker (`ar_grant_check.py`) now grades this alignment on the file at HEAD, and its three arms are unchanged in name. THE JOB NOW: your worktree starts at trunk, where the statement is already present; change ONLY the whitespace of those three lines in `infra/aws/terraform/investor-reporting/ycharts/resident.tf` (nothing else in the file, and not the `Resource` entries), run the three criteria, commit, write a new proof instance, and flip the order's `<status>` to complete again only on three PASS. In your report, name the commit hash of the whitespace fix: it becomes the new pin of the never-widen packet.
 
 Directory `TF` = `infra/aws/terraform/investor-reporting/ycharts/`. Edit ONE file: `TF/resident.tf`. Terraform is not installed on this box: nothing is planned, applied or run; the commit is the PIN for the later CloudOps apply.
 
