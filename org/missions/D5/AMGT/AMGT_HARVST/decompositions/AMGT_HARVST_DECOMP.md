@@ -4821,3 +4821,11 @@ The CTO accepted the narrow release (his msg 7978 supersedes his msg 7975 cut li
 - **Workstreams:** `co-2` `GOLD-SCHEDULE`, `co-5` `GOLD-DRIVER`, `co-6` `GOLD-PACKAGE`, `co-8` will be `GOLD-IMAGE`, `co-7` will be `GOLD-APPLY`.
 - **Fan-out (this cut):** `N of M chains, N=1 worker (co-6 at ~190) of M=2 chains (B1: co-6; B2: co-5 running, then co-8 and co-7 held), cap 8`.
 - **Check at the cut, dry-run at the base:** `co-6` AC1, AC2, AC3: each `base: FAIL as expected` (no output files); every `<expect>` compiles.
+
+### 145. ROUND 100 -- ADDENDUM to section 144: `HVST-co-5` and `HVST-co-6` MERGED; `HVST-co-8` CUT (the image recipe; issuer, 2026-10-20 ~19:19Z)
+
+- **Merged and closed:** `HVST-co-5` (the gold rebuild driver, `6fb95de5b86`; real dry run 4561.6 s, peak 4036.5 MB, closure 207.34 MB) and `HVST-co-6` (`gold-refresh.tf`, `e588c28f765`; DEFAULT plan No changes, BUILD 5, BOTH 16, the run half alone REFUSED by its guard). Each took one amendment of mine (a colour setting; my wrong expectation of a run-only plan). Closed `6e93a6fe0e`.
+- **`HVST-co-8` (CUT, worker `~191`, workstream `GOLD-IMAGE`):** the image recipe in `infra/aws/harvest/gold-refresh/`: Dockerfile and pinned requirements (13 distributions from `co5_closure.out`), a buildspec whose `commands:` items are all strings (smoke step, immutable tag, digest read-back), a dry-run-by-default `build-image.sh` with a file set derived from the COPY lines, and three checks: a static recipe check, a minimal-root probe of the driver (negative control: a removed data file), and the buildspec type check. Builds, pushes and deploys nothing. Class WORLD.
+- **`HVST-co-7` (DEFINED, NOT CUT; unchanged):** the seat order (apply, image build, canary, ONE deliberate run writing the trading-day-current `chatter_daily` partition, the schedule, the first fire). Waits on `co-8` merged, both pair halves and the ruled cross-adjudication of call `dell1-20261020T184002Z-3d0c`.
+- **Fan-out (this cut):** `N of M chains, N=1 worker (co-8 at ~191) of M=1 chain (B2: co-8, then co-7 held), cap 8`.
+- **Check at the cut, dry-run at the base:** `co-8` AC1, AC2, AC3: each `base: FAIL as expected`; every `<expect>` compiles; the three bars were pre-tested with the checker's own `count_bar_check` on synthetic evidence (0 violations each), because a count-bar false positive cost round 100 two amendments.
