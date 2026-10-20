@@ -52,6 +52,6 @@ Merging FR-s-4 showed the real attribute stage cannot run: the signed-in session
 
 | cell | what it builds (one adapter) | write set | PRD rows | risk |
 |---|---|---|---|---|
-| **FR-s-6** | The adapters: a request object over the signed-in context, the account lister that pages `accountList.json`, a structural extractor for its unmeasured response shape, and the wiring edit of `box/daily.py` | `infra/aws/ec2/canonical-fidelity/adapters.py`, `.../tests/test_adapters.py`, `.../box/daily.py` | C-TENANCY, FWD-9 | WORLD |
+| **FR-s-6** | The adapters: a request object over the signed-in context, the account lister that pages `accountList.json`, a structural extractor for its unmeasured response shape, and the wiring edit of `box/run.py` | `infra/aws/ec2/canonical-fidelity/adapters.py`, `.../tests/test_adapters.py`, `.../box/run.py` (the wiring function `_real_daily_deps` lives there) | C-TENANCY, FWD-9 | WORLD |
 
 Edges: `FR-s-1 -> FR-s-6` and `FR-s-4 -> FR-s-6` (both merged). Executor: the worker slot ~5.

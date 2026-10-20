@@ -40,5 +40,9 @@
   "coo_lane": "2.0.0_SA_COO~SB",
   "rulings": [
     "ANDREW-DIRECT 2026-10-20 ~13:0xZ -- '1.) Yes as written. 2.) Yes, rec is accurate. 3.) We don't care about these at this time.' DONE WHEN confirmed; path move yes (one cutover, same-day rollback, readers in the same release, no side-by-side copy; never-widen pair owed); the 210 other entitled masters out of scope. Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_130xZ_NFRA_SCHWABBF_DONE_WHEN_CONFIRMED_PATH_MOVE_YES_210_MASTERS_OUT.md"
-  ]
+  ],
+  "workstreams": {
+    "cutover": "2.0.0_SA_COO~SB",
+    "alongside (FWD-8, C-ALONGSIDE)": "2.0.0_SA_COO~SA"
+  }
 }
