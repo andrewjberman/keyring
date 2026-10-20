@@ -1062,6 +1062,27 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "BF-s-4 worker face, build item 1: ONE pure function in the Schwab-only code, put where the import direction allows with no cycle, 'a leaf such as schwab_projections.py, imported by the others'.",
     "world_is": "A rule in schwab_projections.py would make conversion_manifest.py, which the closure validator imports without pyarrow, depend on schwab_projections and so on pyarrow. The rule now lives in conversion_manifest.py (it already owns FIRMS and the key-claim rule and imports only silver_registry). schwab_projections.dim_key, the converter's three fact-key sites, the set-identity guard and the runtime census all call through it. Old-form keys are byte-identical to the pre-round code (test OLD).",
     "notes": "Not an alert. Disposition for the CVO or the issuer: accept conversion_manifest.py as the one rule's home, or name another leaf that carries no pyarrow import. No behavior depends on the choice; the tests pass against the chosen home."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T19:18:13Z",
+    "one_line": "Off-task, pre-existing: test_packaged_calendar_is_byte_copy (advi-49f dategate tests) fails at the worktree HEAD 41584d28e0e, because the packaged advi-49f-gold-dispatch/trading_calendar.py is not a byte copy of lib/trading_calendar.py. No file this order grants is involved; not fixed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/opal-assets/tests/test_advi_49f_gold_dispatch_dategate.py@41584d28e0e:107-109 asserts (_DIR / 'trading_calendar.py').read_bytes() == lib/trading_calendar.py read_bytes(); _DIR (line 25) = infra/aws/lambda/opal-assets/advi-49f-gold-dispatch",
+        "run at 41584d28e0e (python -m pytest on the two advi-49f test files): 1 failed, 10 passed; the AssertionError shows the packaged bytes name expected_last_trading_day(now) and the lib bytes name first_trading_day_on_or_after after a shared 1,639-character prefix"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The dategate test asserts the packaged calendar is a byte copy of lib/trading_calendar.py (test_packaged_calendar_is_byte_copy, lines 107-109).",
+    "world_is": "At 41584d28e0e the two bodies diverge after the shared docstring prefix: the packaged copy names expected_last_trading_day, lib/trading_calendar.py names first_trading_day_on_or_after. The copy-or-test drift is pre-existing and no commit of this order touches either file.",
+    "notes": "Seen while running the regression sweep of the converter family (BF-p-5). Owner for disposition: the seat that last changed lib/trading_calendar.py or the advi-49f packaging, to be named on disposition."
   }
 ]
 ```
