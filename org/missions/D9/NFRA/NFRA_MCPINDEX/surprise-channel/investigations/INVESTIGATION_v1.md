@@ -13453,3 +13453,54 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~85",
+  "surfaced_at": "2026-10-20T16:36:47Z",
+  "id": "NFRA_MCPINDEX-Z-W85-S1",
+  "one_line": "The battery's plant subcommand writes a planted broken tool by setting status to error only; for a sender whose recorded send carries an agreeing readback, the planted result still grades PASS (plant of send_email then grade: PASS, rc 0), so the planted-FAIL control does not hold for a sender after MX-y-2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tool_battery.py cmd_plant (worktree C:/tmp/wk-mcpindex-85, base 62604a82b8c plus the uncommitted MX-y-2 edit): sets status error, rows None, error_text planted, source_check None; leaves sent and readback in place.",
+      "plant --tool send_email over round25/fixtures/y2_results.json: PLANT tool=send_email cases=1 rc 0; grade of the planted file: GRADE tools=5 PASS=3 EMPTY-CORRECT=0 REFUSED-CORRECT=0 PREVIEW-ONLY=2 FAIL=0, send_email PASS, grade rc 0.",
+      "round22/checks/g_check.py:253-258 (G1) plants harvest_read, a tool whose result is sent false in results_min.json; its control is unaffected by MX-y-2."
+    ]
+  },
+  "spec_asserts": "tool_battery.py plant: every case of --tool is set to error, so grade reads the planted broken tool as FAIL (script docstring; the round-22 G1 control).",
+  "world_is": "Since the MX-y-2 grade change a sent result with readback agrees true grades PASS whatever its status, and plant does not clear sent or readback, so a planted sender reads PASS. Before the change every sent result read FAIL, so the plant held for senders.",
+  "notes": "OBSERVATION, INERT: among the round-22, round-23 and round-25 checks, the plant subcommand is called only by round22/checks/g_check.py (G1, harvest_read), so no served artifact or current control reads a planted sender. It ARMS when a planted FAIL control is run on a tool whose recorded send carries an agreeing readback. Not repaired in this cell: the contract is silent on plant, and the face bounds widening the output. Candidate remedy, not attempted: plant sets sent to false and drops readback, so the planted result reads FAIL tool_error. Denominator: 1 sending tool planted (send_email), 1 case.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~85",
+  "surfaced_at": "2026-10-20T16:48:18Z",
+  "id": "NFRA_MCPINDEX-Z-W85-S2",
+  "one_line": "The commit gate's naming gate printed NAMING ERROR for the function-map folder infra/aws/lambda/ci/function-map/, which this sparse worktree does not carry; both MX-y-2 commits landed with the naming gate's verdict unread.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 4ea645f8afb (C:/tmp/wk-mcpindex-85/.scratch/commit_i.log line 16) and for a84b4af364d (.scratch/commit_ii.log line 12): '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-85\\infra/aws/lambda/ci/function-map/'; both commits returned rc 0 and both landed.",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-85 at the cut: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery; infra/aws/lambda/ci/ is not in the set."
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4 rule 30: the commit-time naming gate REFUSES names today (LGIC_ENFORCE); a builder or gate that cannot read its registry folder is a finding, not a pass.",
+  "world_is": "In this sparse worktree the naming gate could not read the function-map folder it needs, printed NAMING ERROR on both commits, and did not refuse either. Neither commit names a Lambda resource or a registry name, so nothing this cell wrote was graded by that gate.",
+  "notes": "OBSERVATION, INERT: the cell's paths carry no resource name. The same class was filed on the sibling worktree as NFRA_MCPINDEX-Z-W83-S1. It ARMS when a commit from a sparse worktree that lacks the function-map folder names a resource. Denominator: 2 commits, 2 NAMING ERROR lines, 0 refusals.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
