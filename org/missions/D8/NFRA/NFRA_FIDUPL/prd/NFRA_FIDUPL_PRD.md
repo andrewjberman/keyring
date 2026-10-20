@@ -5,7 +5,7 @@
  "project": "NFRA_FIDUPL",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/auto-fidelity-uploader-brief-20261019.md@ea34e538ae",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -210,6 +210,12 @@ the on-demand chain run with the live schedule read (FWD-2).
 - **Repo:** this tree, the new root, the puller, and the registry rows.
 
 ## CHANGE LOG
+
+- **v0.4.6 (2026-10-20 ~20:5xZ):** Andrew-direct (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_205xZ_FIDUPL_ALL_SWITCHER_G_NUMBERS_AND_SIGNIN_RECOVERY.md`):
+  - coverage is every G number the G Number Switcher lists, read at each run;
+  - the agent recovers the full browser sign-in when the trust token is no longer accepted, once per run and recorded, never
+    looped.
+  - CONTRACTS (C-TENANCY, C-SIGNIN); the ENDPOINT is unchanged.
 
 - **v0.4.5 (2026-10-20 ~15:0xZ):** Andrew-direct @b329e1c5f3. Every G number is split to its own firm, with a FIRM scope row for
   each firm not yet registered, and lands once per firm. The backfill goes as far back as possible for every G number, and each stop
