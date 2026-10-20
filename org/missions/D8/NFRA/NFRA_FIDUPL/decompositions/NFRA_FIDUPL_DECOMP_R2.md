@@ -45,3 +45,13 @@ Maximal paths: five single-cell chains. `fanout: 5 of 5 chains, cap 8`.
 ## 6. Amendment 2026-10-20 ~15:20Z (CTO msg 8673)
 
 FR-s-5's per-G list home is a Secrets Manager secret `fidelity/alongside/perg-list` (metadata only, one per-secret read grant), NOT an SSM SecureString: the canon grades no SSM parameter name. The cell's other contents are unchanged. The issuer states this in the order and the check; the cell id and write set did not move.
+
+## 7. Addendum 2026-10-20 ~15:50Z (issuer, from worker row W5-S2)
+
+Merging FR-s-4 showed the real attribute stage cannot run: the signed-in session offers a context only, `gswitch` needs a request object, and nothing supplies the account lister. One cell closes it.
+
+| cell | what it builds (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FR-s-6** | The adapters: a request object over the signed-in context, the account lister that pages `accountList.json`, a structural extractor for its unmeasured response shape, and the wiring edit of `box/daily.py` | `infra/aws/ec2/canonical-fidelity/adapters.py`, `.../tests/test_adapters.py`, `.../box/daily.py` | C-TENANCY, FWD-9 | WORLD |
+
+Edges: `FR-s-1 -> FR-s-6` and `FR-s-4 -> FR-s-6` (both merged). Executor: the worker slot ~5.
