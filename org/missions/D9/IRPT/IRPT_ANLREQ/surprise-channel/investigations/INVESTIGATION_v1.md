@@ -30115,3 +30115,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W348-S1 -- the AR-y-474 AC3 infra-wide diff counts two sibling test files moved after the pin (the package inputs are clean)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W348-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~348",
+  "surfaced_at": "2026-10-20T20:46:21Z",
+  "one_line": "AR-y-474 AC3 (git diff --name-only 06cb0e999d7 HEAD -- infra piped to wc -l, expect 0) prints 2: reports/tests/test_compare_ports.py and reports/tests/test_resident_installed.py, moved by the sibling AR-g-175 commits 40584ba5e45 and f754658df61 (drain 51e86c27cd0) after the pin. Neither is a package input: the step-1 diff over the ops and ci dirs prints nothing, so the build at HEAD carries the pin's package inputs.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-474 AC3 (order line 43): git diff --name-only 06cb0e999d7707a5d918e724305b74c0dbcecd2d HEAD -- infra | wc -l expects ^0$. Step 1 (order line 30): the diff over infra/aws/lambda/investor-reporting/ops and infra/aws/lambda/ci must print nothing. Grant: nothing under infra/ changes by this order.",
+  "world_is": "At 474f174e89407c62cec422870cb63cb47eff2e43 (HEAD of wk-IRPT_ANLREQ-348): the step-1 diff over ops and ci prints nothing; owned_report.py at HEAD sha256 0efb3b154f0146a93084f0b602e3e61a290e51870b3d904b1ddbfb84ae5c7218 equals the pin blob; the AC3 invocation prints 2 (rc 0). The two paths are infra/aws/lambda/investor-reporting/reports/tests/test_compare_ports.py and infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py (2 files changed, 21 insertions, 15 deletions). The worker made no infra change: its commits ca09378aa47 and 76875e46495 touch org/ only. The two files moved in the range by AR-g-175 commits 40584ba5e45 (AMENDMENT 3 Part E) and f754658df61 (AMENDMENT 4 Part E item 2) and the drain merge 51e86c27cd0. AC3 cannot print 0 without reverting a sibling's work, which this order does not do.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --name-only 06cb0e999d7707a5d918e724305b74c0dbcecd2d 474f174e89407c62cec422870cb63cb47eff2e43 -- infra (prints 2 paths, worktree wk-IRPT_ANLREQ-348)@474f174e894",
+      "git log --oneline 06cb0e999d7707a5d918e724305b74c0dbcecd2d..474f174e894 -- infra/aws/lambda/investor-reporting/reports/tests/test_compare_ports.py infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py (prints 40584ba5e45, f754658df61)@474f174e894",
+      "git diff --name-only 06cb0e999d7707a5d918e724305b74c0dbcecd2d HEAD -- infra/aws/lambda/investor-reporting/ops infra/aws/lambda/ci (prints nothing)@474f174e894",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-474.irpt-status-release-build-and-live-diff-for-the-two-pdf-route-fixes.md@474f174e894 (AC3 line 43)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
