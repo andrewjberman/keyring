@@ -3743,3 +3743,29 @@
   "notes": "Form only. Judged here that no exported helper fits the audit's shape, so no BLOCKING row was filed and the criterion was not refused. The issuer may rule on whether the type should carry action, which would be an edit of admin.ts outside this order's surfaces."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W43-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~43",
+  "surfaced_at": "2026-10-20T18:38:45Z",
+  "one_line": "The face asks for a WIDENING defined against the prior record AND a WIDEN-NO-CONFIRM refusal with zero store calls, but the prior record is readable only through store.get, so the two requirements cannot both hold; the widening rule and its four new named tests are not built.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py@ba8cfc3ef39 line 398: prior = _plain_record(st.get(key)) is the only prior-record read. It runs after the shape check (lines 383-385) and the RECORD-KIND check (lines 386-388) and before any write (read by hand at this commit).",
+      "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/tests/test_person_access.py@ba8cfc3ef39 lines 41-43: FakeStore.get appends ('get', key) to store.calls, so any read makes store.calls non-empty; the face's widening test asserts store.calls == [] (face section 1, FWD-26).",
+      "Grep -i 'widen|widening_confirm|widening_signoff' over the grant-writer folder at ba8cfc3ef39: no widening_confirm and no widening_signoff anywhere. The 'widen' hits are the grant-level action (lambda_function.py:458-467, tests/test_grant_writer.py:96), not the person_access rule."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A WIDENING (a change that adds an entry to tools_allow or channels_allow relative to the prior record; a first write counts against an empty prior) is REFUSED WIDEN-NO-CONFIRM when widening_confirm is not exactly True, before any store call (zero store calls). The face's test 2 asserts store.calls == [] for a channels_allow addition with no confirm against an empty store (face section 1, PRD v0.10 FWD-26 writer side).",
+  "world_is": "The writer learns the prior record only by a store read (lambda_function.py:398), and FakeStore counts every get as a store call (tests/test_person_access.py:41-43). An exact prior-relative widening decision therefore needs one store call before the refusal, and the zero-call assertion forbids it. Nothing in the writer carries widening_confirm or widening_signoff at base. The face does not say which requirement yields. Built here: only the stale-test repair (commit ba8cfc3ef39). Not built: the widening rule and the four new tests (face tests 2-5).",
+  "notes": "Two resolutions the issuer could choose; neither taken here. (a) Read the prior first and drop the zero-call clause for the WIDEN-NO-CONFIRM refusal. (b) Refuse without a read whenever a change names tools_allow or channels_allow with a non-empty list; this over-refuses a re-assertion of an allow entry the prior already holds, a fail-closed deviation from the definition. The face says stop on the criterion and not repair it, so neither was implemented. Stale-test repair: old body had no monkeypatch argument and asserted the REFUSED RECORD-KIND-NOT-LIVE with zero store calls against the live tuple (which now holds person_access); new body narrows acs.POLICY_RECORD_TYPES with monkeypatch for that test, asserts person_access absent, and keeps the same refusal and zero-call assertions. Whole grant-writer suite at ba8cfc3ef39: 36 passed, 0 failed (rc=0)."
+}
+```
