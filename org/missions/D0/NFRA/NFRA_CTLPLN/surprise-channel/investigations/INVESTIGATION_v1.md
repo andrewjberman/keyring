@@ -15071,3 +15071,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts, file metadata and harness notification summaries only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-W153-S1 -- the worktree is a sparse checkout: data/assets/scripts/lib/ is absent on disk, so the converter test module cannot import
+
+```json
+{
+  "id": "NFRA_CTLPLN-W153-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~153",
+  "surfaced_at": "2026-10-20T18:59Z",
+  "one_line": "The worktree at 41584d28e0e is a sparse checkout: data/assets/scripts/lib/ is in HEAD and carries the skip-worktree flag, but is absent on disk, so bd49f_dim_conversion.py cannot import stream_parquet and the whole test module fails at collection (rc=2) before any test runs.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD data/assets/scripts/ (worktree, 2026-10-20 ~18:58Z) lists lib as a tree; git ls-files -v data/assets/scripts/lib carries flag S (skip-worktree) on backfill_status.py, stream_parquet.py, tests/conftest.py, tests/test_backfill_status.py, tests/test_stream_parquet.py; git config --get core.sparseCheckout = true.",
+      "ls data/assets/scripts/ (worktree) = silver only; test -e data/assets/scripts/lib/stream_parquet.py = ABSENT. Every order-named path tested with test -e = PRESENT.",
+      "timeout 120 python -m pytest data/assets/scripts/silver/tests/test_bd49f_dim_conversion.py -q (worktree, after the edits): ERROR at collection, 'E   ModuleNotFoundError: No module named stream_parquet', 'Interrupted: 1 error during collection', rc=2. The import is bd49f_dim_conversion.py line 61; the test inserts data/assets/scripts/lib on sys.path at line 20.",
+      "The base checkout ajb_workspace holds data/assets/scripts/lib/stream_parquet.py (tracked). It was NOT copied into the worktree; the worktree was not rebuilt or extracted.",
+      "org/surprise_channel/schemas/investigation_item.schema.json is also absent from the worktree; the row shape was read from the base checkout, read-only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTcl1-AC1: python -m pytest data/assets/scripts/silver/tests/test_bd49f_dim_conversion.py -q reads 29 passed in the worktree. The order names no lib path in its paths, and its premise is that the worktree carries the code the test imports.",
+  "world_is": "Every order-named path is present on disk. The three edits and the vendored byte copy are made in the worktree (converter sha256 bc3019570d49ac1ee10d7cd7668dfdc23a09e938d14dece7abd7c662cf00d503). The criterion's run stops at import, rc=2, so the 29-pass count is not reached and the new tests are not exercised in this worktree.",
+  "notes": "OWNER for the sparse-checkout scope of this worktree: 2.0.0_SA_COO~C (the issuer). Command output and file metadata only; no transcript content."
+}
+```
