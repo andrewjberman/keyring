@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~3</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -37,10 +37,14 @@ Build `split.py` and `tests/test_split.py` to worker reference section 11 (the `
 5. CLI `python split.py --handoff-dir DIR --attribution FILE --config FILE [--dry-run]`; it prints only counts.
 6. Tests (a recording fake S3, synthetic attribution and six synthetic files with made-up account numbers): `test_rows_split_by_account_to_firm_addresses`, `test_account_under_two_g_of_one_firm_lands_once`, `test_account_under_two_firms_listed_not_landed`, `test_unplaced_accounts_listed`, `test_unregistered_firm_scope_listed_not_landed`, `test_raw_line_bytes_preserved` (include CRLF lines and a non-ASCII byte), `test_dry_run_writes_nothing`, `test_record_has_counts_and_lists`, `test_unmapped_label_listed_not_landed`.
 
+### REPAIR (issuer, 2026-10-20 ~15:45Z; this order is REOPENED) -- your row W3-S5
+
+Your split record carries ordinal ids and counts where the order asked for the account lists. The issuer rules: **the S3 run record `split-<run_id>.json` MUST hold the actual account-number strings in `unplaced` and `conflicts`** (the FWD-9 bar is that someone can see WHICH accounts could not be placed). It lives under `fidelity/alongside/bronze/_runs/`, the same staging prefix that already holds every account in the pull; that is not an output. What stays forbidden is any print, log line, exception message or CLI output carrying an account value or a G number: the CLI and the logs still print counts only. Change the record to carry the lists, keep the printed output counts-only, and add the test `test_record_lists_unplaced_and_conflict_accounts` to your `tests/test_split.py` (a recording fake S3 holding the record, with made-up account strings; assert the record contains them AND the captured stdout, stderr and logs do not). Your rows W3-S6, S7 and S8 are accepted as built (an account under one mapped and one unmapped G is unplaced; different bytes at a destination are refused; the stricter exit code). FR2-AC1 now needs ten. Refresh the proof instance and flip when it PASSES.
+
 ### ACCEPTANCE
 
 <criterion id="FR2-AC1" cell_refs="FR-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fr2</invocation><expect>R1-FR2-OK passed=\d+</expect></criterion>
-`FR2-AC1` -- the nine named split tests exist and pass.
+`FR2-AC1` -- the ten named split tests (the nine and `test_record_lists_unplaced_and_conflict_accounts`) exist and pass.
 
 <expected_criteria>FR2-AC1</expected_criteria>
 
