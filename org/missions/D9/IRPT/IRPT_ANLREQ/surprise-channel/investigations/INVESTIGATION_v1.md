@@ -30372,3 +30372,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W347-S1 -- the audit test file cannot drop its imported modules: the packager imports keys lazily, so removing them fails 6 of 25 tests
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W347-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~347",
+  "surfaced_at": "2026-10-20T21:01:04Z",
+  "one_line": "AR-y-473 asks the audit test file to save and restore sys.path and to remove the modules it imported. Removing the repo-local modules from sys.modules fails 6 of 25 audit tests with ModuleNotFoundError 'keys', because opal_packager imports keys lazily at call time. The change restores sys.path only and keeps the modules cached; the 25 pass and the entry collision is gone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-473 cell: the audit test file saves and restores sys.path and removes the modules it imported, so that importing or collecting the file changes neither.",
+  "world_is": "With the repo-local modules (keys, opal_packager, analysis_audit, opal_producer) deleted from sys.modules at the end of the import, python -m pytest reports/tests/test_analysis_audit.py alone gives 6 failed, 19 passed: ycharts/research/opal_packager.py:106 raises ModuleNotFoundError 'keys' at call time. The packager's own import-time sys.path insert for _KEYS is undone by the restore too, so the lazy import needs the cached module. With only sys.path restored, the three orderings read 45 passed, 45 passed, 25 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:106 @ 9a013a245e3 (lazy import keys inside a function)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py (the change) @ worktree 0.9.0_WK_IRPT_ANLREQ~347, the module-removal variant measured 6 failed, 19 passed",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~347/MUTANT_REPORT.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W347-S2 -- the audit test file binds no `entry`: the collision comes from the sys.path entry it leaves behind
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W347-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~347",
+  "surfaced_at": "2026-10-20T21:01:04Z",
+  "one_line": "AR-y-473 says collecting the audit test file binds the name entry to ops/entry.py. Measured: importing the audit file alone leaves sys.modules without an entry module. The collision comes from the ycharts/generate sys.path entry the audit file inserts, which makes test_generate_installed.py's own loop skip ycharts/generate and insert ops first, so ops/entry.py wins.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-473 cell: collecting the audit test file first binds the module name entry (or edits sys.path at import) to ops/entry.py.",
+  "world_is": "Probe of the trunk file at 9a013a245e3 (importing reports/tests/test_analysis_audit.py as a module): 6 paths added to sys.path, 247 modules added, and sys.modules has no 'entry' afterwards. Pre-change combined run: test_generate_installed.py:32 asserts that sys.modules['entry'] (ops/entry.py) is ycharts/generate/entry.py. The entry binding is made by test_generate_installed.py's own import, after the audit file has left ycharts/generate on sys.path. The restore of sys.path alone fixes it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py:19-31 @ 9a013a245e3 (the loop that skips a path already on sys.path, then sys.modules['entry'])",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~347/MUTANT_REPORT.txt (the pre-change assertion line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
