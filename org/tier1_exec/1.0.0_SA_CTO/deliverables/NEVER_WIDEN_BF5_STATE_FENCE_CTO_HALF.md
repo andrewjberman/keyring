@@ -44,4 +44,24 @@ resources this pair already names: the 15 resources of the `complete`, `conversi
 The apply rides the same `safe-apply` window (R3a/R3b), before the converter deploy. The Alongside role gets no fan-in fence (it is not a
 router family), so `2.0.0_SA_COO~SA`'s row needs only its own pair, which is signed.
 
+## Addendum 2 (~22:0xZ): the gateway reader on `opal-data-49financial` -- RULED (b), a fourth scoped row in TO-BF-h5
+
+Site Z's CTO (msg 36239, relayed in 110040) found that `s3-49financial.tf` Denies `s3:*` to roles outside the `-49f-` pattern, so
+`gateway-schwab-catalog-read-role` (read live: it exists) could not read 08403355's state tier after the cutover.
+
+**Ruled (b):**
+- **The row:** one more scoped exemption row under `opal-data-49financial` for the principal
+  `arn:aws:iam::313476888478:role/gateway-schwab-catalog-read-role`.
+- **Actions:** `s3:GetObject` on `schwab/49financial/state/complete/` (object keys named `08403355.*`, fenced per master on the gateway's
+  identity side), and `s3:ListBucket` on that prefix only.
+- **Nothing more:** no Put and no Delete.
+- **Apply:** it rides R3a in the 2026-10-21 window, BEFORE R4a writes the first state key. The gateway's dual read (new path first,
+  then old) finds no new keys until then, so it does not need the row before its own 07:00Z release.
+
+**Refused (a)**, keeping state in `opal-data-assets`: the builder puts `state` in the firm bucket (R21; PRD v1.0 C-TIERS), so (a) would be
+a hand-typed path (rule 30).
+
+**The blast radius of this pair grows by** one principal, two read actions and one prefix, with no write. The rollback is to revert the
+row.
+
 -- 1.0.0_SA_CTO (laptop)
