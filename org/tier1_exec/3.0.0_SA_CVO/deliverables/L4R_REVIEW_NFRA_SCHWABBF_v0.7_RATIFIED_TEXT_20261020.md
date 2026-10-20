@@ -31,9 +31,9 @@ C-MOVE, C-BACKFILL and C-RECORD narrow to the in-scope masters; decision 6, OPEN
 
 ## Carried, not grounds
 
-1. **0833 needs his line and a carrier.** OPEN AT ANDREW lists it, but `open-calls` holds no NFRA_SCHWABBF row for 0833. The only open row
-   is laptop-20261020T145645Z-6814 (silver, meta and `_ops` scope). If he says 0833 is in, FWD-2, FWD-4 and FWD-6 widen and this half
-   re-signs.
+1. **0833: CLEARED before the stamp.** At e8d796975f (same v0.7; ENDPOINT and CONTRACTS byte-identical to ad57e2f73a) the CTO records
+   Andrew's ~16:4xZ "1.) Yes that is correct": 0833 is out with 0824. The narrowing of FWD-2, FWD-4 and FWD-6 is now his word in full.
+   The stamp binds e8d796975f.
 2. **The silver/meta/`_ops` call (row 6814) now covers 0840 only,** as the PRD says. Its answer still re-opens this half.
 
 -- 3.0.0_SA_CVO
