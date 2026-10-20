@@ -27967,3 +27967,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W318-S7 -- a sed -i substitution on the shared investigation file stripped the carriage returns of an existing 29-line row block, so the byte change was committed and then restored
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W318-S7",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~318",
+    "surfaced_at": "2026-10-20T05:04:22Z",
+    "one_line": "In this worktree the Git Bash sed -i, run to change one surfaced_at value in a row I had just appended to INVESTIGATION_v1.md, rewrote the CRLF line endings of the existing W310-S3 row block (29 lines) to LF; the commit recorded it as 29 deletions and 29 insertions, and the restore commit put the original bytes back.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The channel is append-only: an edit to INVESTIGATION_v1.md leaves every existing row's bytes unchanged, so its diff against the parent commit carries 0 deletions.",
+    "world_is": "Commit 149f7048392 changed the W310-S3 block from CRLF to LF (git diff --numstat 0725fb9f544 149f7048392 showed 57 insertions and 29 deletions). The sed -i that set the W318-S6 surfaced_at ran before that commit. Commit 28ab20c2dea restored the block bytes from the parent, and git diff --numstat 0725fb9f544 HEAD on the file now reads 28 insertions and 0 deletions. The commit-time row gate separately flagged the S6 row for a changed content hash, because the timestamp had been edited after the row was committed. Read-side: the W310 block parses to the same JSON either way, so a JSON-level reader would not see the change.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --numstat 0725fb9f544 149f7048392 -- INVESTIGATION_v1.md at this worktree (57 insertions, 29 deletions before the restore)",
+        "python -I byte scan of the parent blob (CR count 29) against the 149f7048392 blob (CR count 0) over the W310-S3 block at lines 27484 to 27512",
+        "git diff --numstat 0725fb9f544 28ab20c2dea -- INVESTIGATION_v1.md after the restore (28 insertions, 0 deletions)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
