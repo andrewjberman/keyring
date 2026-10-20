@@ -71,7 +71,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-mg-3.round-47-the-memory-guard-
 - READINGS DISCLOSED TO THE CTO: (1) the bound is a COUNT of concurrent calls (4), not bytes: it is the simplest guard the service can enforce itself, and the host has 7.8 GiB with `MemoryHigh` 5600M; the value 4 and the 20 s wait are the issuer's, not measured against a hang. (2) The bound is global, not per principal: a burst by one caller can queue another's call (up to 20 s, then `gateway_busy`, which a poller treats as a missed cycle). (3) The 20 s wait is under the load balancer's 60 s timeout, so a queued call answers rather than timing out. (4) `target_memory_mib` is read by the on-host benchmark harness only (`tests/acceptance/onhost_bench.py`), not by a live admission; changing it changes no running behaviour. (5) The unit file (`MemoryHigh` 5600M / `MemoryMax` 6400M) is unchanged: `OG-rz-1` set it.
 - Pre-cut: `AC1` and `AC2` base FAIL as expected (module absent); both were fed a reference implementation in a scratch copy of `app/` and read PASS on every line (the `inflight_guard.py` reference and the `tools.py` hunk described above), then discarded. `AC3` base FAIL as expected (`target_memory_mib` 2048; no test file). The neighbours pass at the base except the one carried red `test_ogz1_ac08` (and the denial-envelope test is run alone).
 
-<status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-A</workstream>
 <slot>~169</slot>

@@ -73,6 +73,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sz-1.round-47-the-50-kb-project
 - Pre-cut: `AC1` base FAIL as expected (69,616 bytes for a list answer; `macro` `None`; the empty string field), `AC2` base FAIL as expected (567,025 and 447,769 bytes; the two controls hold), `AC3` base FAIL as expected (no test file). The 16 neighbour files pass at the base (137 tests).
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-A</workstream>
 <slot>~168</slot>
