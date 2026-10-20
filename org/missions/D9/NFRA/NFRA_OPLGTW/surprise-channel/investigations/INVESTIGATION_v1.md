@@ -30457,3 +30457,77 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S427's question is answered by the registry's compiler and the row is inert; the subset fact does not change OG-ms-2's signed scope, it only sharpens what the halves read, and it is recorded here for them."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W171-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~171",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The order's closing step, flipping its <status> tag to complete, writes the task-order file, which is not one of the three <paths> this worker is granted, so the flip is not made by this worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ix-1.round-47-the-breakdown-handler-supplies-the-vendor-and-firm-of-each-index.md at 6f2ddfd58e0, the WORKER FACE <paths> block (lines 41-45) names app/admin_gateway_breakdown.py, tests/test_og_ix1.py and this investigation file; the task-order file is not among them.",
+      "COMMIT: aa3103bcc15 (LOCAL on wk-NFRA_OPLGTW-171) carries the handler and the test file; AC1 RESULT: PASS and AC2 RESULT: PASS on that commit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 5 of the order: when both criteria PASS, flip the one <status> tag of the task order to complete, then report once.",
+  "world_is": "The flip is a write outside this worker's granted paths, so the order's <status> is not flipped at the worker's close; the issuer owns the flip or the grant. The proof instance records both criteria either way.",
+  "notes": "BLOCKING on the status flip only. Both criteria are met on the commit; no path outside the grant was touched."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W171-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~171",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The pair rule takes the second prefix component verbatim, so 12 of the 43 index pairs in the segmented channels carry an all-digit firm key (3 distinct values), and the owner page will show those master numbers under firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COUNT: _compute on the committed handler aa3103bcc15 against the real catalog (infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml): 43 index pairs, 43 resolved, 12 whose firm is all digits, 3 distinct such values; the values are not recorded in this row.",
+      "CATALOG: the prefix rows of the form schwab/<digits>/silver/<dataset>/ in DATA_CATALOG.yaml (prefix lines about 8135-9582 at 6f2ddfd58e0) carry a master number in the second position."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The OG-ix-1 pair rule: the pair is the first two non-empty path components of the index's catalog row prefix, and no value is rejected or named locally.",
+  "world_is": "For the schwab rows the second component is a master number, not a firm key; the registry rows Z-S427 and Z-S428 carry the master-to-firm attribution separately. The page's firm column will therefore show a master number for those indexes until the catalog or the registry says otherwise.",
+  "notes": "OBSERVATION: the rule is as ratified and both criteria pass. Recorded for the CRO and the CVO before MP-z-7 and MP-z-8 cut the page filter on these keys. The page is owner-only; this worker printed no value."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W171-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~171",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The fresh worktree wk-NFRA_OPLGTW-171 reports the portal gitlink modified before any edit (' M portal', one insertion and one deletion); this worker left it unstaged and out of its commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --short -- portal in C:/tmp/wk-og-171 at 2026-10-20T09:54Z prints ' M portal'; git diff --stat -- portal prints 'portal | 2 +-' (1 file changed, 1 insertion, 1 deletion)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's worktree is cut from trunk 6f2ddfd58e0 and its granted paths are the only write surface; a fresh cut carries no pending change.",
+  "world_is": "The worktree's portal gitlink differs from its index entry at the cut, before any worker edit.",
+  "notes": "INERT for this order: no granted path is the portal gitlink, and the commit names only the two granted code files."
+}
+```
