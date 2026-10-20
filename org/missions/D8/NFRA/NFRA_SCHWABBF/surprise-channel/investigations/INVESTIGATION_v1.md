@@ -824,6 +824,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-n3 worker face, Build step 1: the new file contains all seven masters in its scope maps; do not change any other generated target. The cell names Cottonwood 08719286, 08134043, 08165601, 08480305 and 49financial 08242234, 08335338, 08403355 as the rows the regeneration adds.",
     "world_is": "All seven masters are present, as asserted. The regeneration also carries the four FIRM rows above, which scopes.json holds at HEAD and which the generator renders as the registry says. Nothing was excluded, because the generator's output is the carrier's definition.",
     "notes": "Not an alert and not a monitor. The extra FIRM rows are in the carrier and in the 80 vectors; the Terraform roots that read them are unchanged by this cell. Surfaced for the CTO's round-3 analysis."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W11-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~11",
+    "surfaced_at": "2026-10-20T17:10:16Z",
+    "one_line": "The amendment's key/value baseline for the regenerated name table reads 83 before and 123 after; a count of the same five sections (fence_patterns, scope_bucket, scope_class, scope_long, scope_short) gives 79 and 119, with the same 40 added and 0 removed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show d2df0d6f0c3:infra/aws/terraform/modules/opal_name/generated_locals.tf (5575 bytes): five sections count 16+16+26+16+5 = 79 map-key lines at four-space indent",
+        "python lib/opal_naming.py generate --out <system scratchpad>/amend_gen/out --target infra/aws/terraform/modules/opal_name/generated_locals.tf wrote 7705 bytes at registry@94c3a84b838d2f23; the same five sections count 25+25+35+25+9 = 119; tuple-level diff (section, key, value) gives 40 added, 0 removed",
+        "the regenerated repo file (infra/aws/terraform/modules/opal_name/generated_locals.tf) differs from HEAD only by the registry-hash header line and the added entries when whitespace is ignored (git diff -w)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-a1 amendment, Defect 1: the issuer's measurement of the generator run is 83 key/value entries before, 123 after, 40 added, 0 removed, in the five named sections.",
+    "world_is": "The added (40) and removed (0) counts agree. The before and after baselines are each 4 higher in the issuer's count than in the worker's count over the same five sections, a constant offset the regeneration does not change; the worker could not identify which four entries the issuer's method counts. The regenerated table is purely additive, so the offset does not change the fix.",
+    "notes": "Not an alert and not a monitor. The issuer confirms the counting method for the four-entry offset; the worker printed both numbers and did not adjust its own count to match."
   }
 ]
 ```
