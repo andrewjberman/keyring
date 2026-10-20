@@ -29731,3 +29731,256 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W330-S1 -- AR-g-171 is silent on a duplicate date, an unknown model code, and a model code absent from the positioning object
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T17:13:00Z",
+  "one_line": "AR-g-171 names no behaviour for two timeseries rows of one code on one date, for a model_code outside the five, or for a model code absent from the positioning object. Built as: a duplicate date refuses; every code present is returned; read_allocation reads the five model codes only and skips an absent one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-171 (cell step 1): read_series 'Per model code, take its rows sorted by date ... Only the codes present are returned.' The refusal list names a missing or mistyped timeseries, a non-date row date, a non-finite model_return, a missing model_code, and no usable series. read_allocation: 'the seven keys of portfolios.<code>.allocation renamed'; the refusal list names an allocation key outside the seven and a non-number weight.",
+  "world_is": "The refusal list and the codes rule do not say what happens to a duplicate (model_code, date), to a model_code outside CODES, or to a CODES member missing from portfolios. Built as follows, in model_source.py at ddd92b3b0a: a duplicate pair raises ModelSourceRefused (tests/test_model_source.py, 'two rows for one code on one date'); read_series returns every code present; read_allocation iterates CODES, skips an absent member, refuses a member whose allocation is malformed or lacks one of the seven keys, and refuses a positioning object with no model allocation. The checker build arm passes; its fixtures carry no duplicate and exactly the five codes, so it does not grade these choices.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-171.model-source-reader-and-model-code-map.md@a5b0ef4b5cd (cell step 1: refusal list and codes rule)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/model_source.py@ddd92b3b0a (duplicate refusal in read_series; CODES loop in read_allocation)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_model_source.py@ddd92b3b0a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S2 -- the commit gate of ddd92b3b0a printed a stale danger map and a client-data WARN, so the reflex did not clear the diff
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T17:13:00Z",
+  "one_line": "The safe-commit of AR-g-171 (ddd92b3b0a) printed the pre-commit risk reflex as PARTIAL_OR_BLIND (danger map 117.2 h old, STALE, 0 of 3 files scanned) and a client-data-check WARN (the hashed account-id list is absent on this box). The commit went through on the commit-gate's own pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md rule 14: every .py edit passes .tools/commit-gate.sh; the commit gate's pass is the pre-commit check. The risk reflex prints a verdict for the diff it was given, and states NOT-DECIDABLE when its map is stale.",
+  "world_is": "At ddd92b3b0a the risk reflex printed ANSWER STATE PARTIAL_OR_BLIND, NOT-DECIDABLE, 'danger map STALE', WITHIN BUDGET scanned 0 of 3 file(s). The client-data-check printed WARN: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, so the commit was not checked for client account ids. The commit-gate reported 'pre-commit gate clean for 2 of 3 file(s)' (the two .py files); the naming, surprise-row and to-pipeline gates passed on the staged set. The three files hold no client data: a stdlib module, a JSON map of five catalogue keys, an offline test.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit stdout for ddd92b3b0a in C:/dev/wk-irpt-anlreq-330 (risk-reflex lines: ANSWER STATE PARTIAL_OR_BLIND; client-data-check WARN: ABSENT)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S3 -- AR-g-173 names statistic_of for the risk figures, but the layout engine has no 2-year std dev or max drawdown
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T17:35:19Z",
+  "one_line": "AR-g-173 names the layout's statistic helpers for the risk figures, but the engine offers std_dev and max_drawdown only for 1y, 3y, 5y, 10y and 15y, so the 2-year risk of the FWD-10 window is built on the engine's own helpers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-173 (cell, Risk): std_dev is the sample standard deviation x sqrt(12) x 100 over the last years whole years; max_drawdown is over those same years; 'reuse those helpers where they fit'. years = min(5, floor(window years)), which is 2 for the FWD-10 window (2.5 years).",
+  "world_is": "layout_overview._STATS (line 233) lists std_dev and max_drawdown with periods 1y,3y,5y,10y,15y (max_drawdown also 'all'); _STAT_ID (line 242) matches only those forms, so statistic_of('std_dev_2y') and statistic_of('max_drawdown_2y') raise _NA. comparables.py computes both with lo._month_returns, lo._sample_var and lo._window_start (the engine's own helpers, the same arithmetic as statistic_of), and sharpe, sortino, alpha and beta with lo._risk_stat, which takes any years. layout_overview.py is not in this grant and is unchanged. The checker's calibrate arm compares the 3y values only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@4ec6bad212 (_STATS lines 233-241; _STAT_ID line 242)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/comparables.py@4ec6bad212 (_std_dev, _max_drawdown, _risk)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-173.compare-record-and-allocation-arithmetic.md@a5b0ef4b5cd (cell, Risk)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S4 -- AR-g-173 keeps each path to its own last observation, not to the common window end
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T17:35:19Z",
+  "one_line": "AR-g-173 defines the window end as the earliest last observation but says a path runs from the window start on, with no end cut; a row whose last observation is later than the window end therefore has returns and risk that run past the window end.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-173 (cell, Window): 'end = the EARLIEST last observation among them'. (cell, Path): 'path = its points from start on'. No clause cuts a path at the window end.",
+  "world_is": "comparables.py _rebased keeps every point from the window start to the row's own last point, so a portfolio or comparable whose series ends after the window end reads its returns and risk to that later date while the window record names the earlier end. Every series in the checker's fixtures and in the tests ends on 2026-10-14, so no criterion grades the case. Built as the literal reading (points from start on, no end cut); the CTO or the issuer decides whether the path stops at the window end.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/comparables.py@4ec6bad212 (_rebased, build_compare window)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-173.compare-record-and-allocation-arithmetic.md@a5b0ef4b5cd (cell, Window and Path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S5 -- R8 says no vendor name anywhere on the page, but a pricing-on page prints "Data: YCharts" in its footer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:06:22Z",
+  "one_line": "AR-g-174 says no vendor name anywhere on the page (R8); the layout footer of a pricing-on page prints 'Data: YCharts' on every section, so such a page names the vendor whatever its comparison elements say. The five compare elements add no vendor name; the footer is pre-existing and outside this cell's grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-174 (The change, HTML): 'No vendor name anywhere on the page (R8).' AR-g-175 (checker arms_build_175): the rendered page of a pricing=True producer run must not contain 'YCharts' or 'ycharts' outside 'Licensed market data'.",
+  "world_is": "layout_overview.py build() writes _e(SOURCE_CREDIT if pricing else OPAL_SOURCE_CREDIT) into every section footer (lines 1447 and 1486); SOURCE_CREDIT is 'Data: YCharts' (line 69) and OPAL_SOURCE_CREDIT is 'Data: Opal Capital' (line 70). Measured in this cell: the HTML of the pricing=True test page carries the footer span 'Data: YCharts'. The per-element fragments of the five compare elements carry no vendor name (test_no_vendor_name_in_any_compare_element_fragment passes). Not run: the cell 175 arm, whose producer code is not on this branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@57349135ee (SOURCE_CREDIT line 69, OPAL_SOURCE_CREDIT line 70, footer writes at lines 1447 and 1486)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_compare_elements.py@57349135ee (test_the_built_page_names_every_row_and_prints_every_gap_line_and_the_note: the failure output showed the footer span Data: YCharts)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-174.layout-comparison-section-elements.md (cell, The change, HTML: 'No vendor name anywhere on the page (R8)')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S6 -- AR-g-175 names no outcome for a model whose allocation object cannot be read
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:37:00Z",
+  "one_line": "AR-g-175 says a model's weights and as_of come from model_source.read_allocation and that a refused model object is a gap for the run, but names no outcome when read_allocation itself refuses; the producer had to pick one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 A (Allocation inputs): 'a model's weights and as_of from model_source.read_allocation(...)'. The same cell says a ModelSourceRefused makes the comparable a gap 'with the reason the Opal model series could not be read' and that the run never fails for it, but only for the series branch.",
+  "world_is": "opal_producer._compare_stage reads the model object once; when read_allocation refuses, the model's series is still used (if read_series succeeded) and its allocation row is a gap with the reason 'the Opal model allocation could not be read'. The order gives no reason text for this branch; the run completes in every case. Checker and tests do not grade the case.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/model_source.py@ce8eee49396 (read_allocation raises ModelSourceRefused on a bad object)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-175.producer-comparison-stage-and-resident-ports.md@ce8eee49396 (cell A, Allocation inputs)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S7 -- AR-g-175 names no outcome for a run whose portfolio has no buy-and-hold path to rebase
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:37:30Z",
+  "one_line": "AR-g-175 says the stage runs when comparables are given, pricing is on and the flag is true, but comparables.build_compare needs the portfolio's buy-and-hold path, which the price stage may not keep; the order names no outcome for that run, so the producer skips the stage.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 A: 'The stage runs only when stores.get(\"comparables\") is a non-empty list AND pricing is on AND the flag is true', and 'builds the portfolio argument from the price stage's buy-and-hold path (the kept portfolio_level_series pairs)'. No clause covers a run whose kept path is absent.",
+  "world_is": "opal_producer._compare_stage returns None, and no compare element is appended, when the kept portfolio_level_series has fewer than two pairs or when layout_overview's _amount_weights refuses (no holding carries an amount). The run completes as a run without comparables. build_compare would otherwise raise ValueError and fail the run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/comparables.py@ce8eee49396 (build_compare raises ValueError when the portfolio series has fewer than two points)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py@ce8eee49396 (_price_stage keeps portfolio_level_series only when the buy-and-hold status is OK)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S8 -- AR-g-175 defines two comparable kinds and not a third, which a map entry can still carry
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:38:00Z",
+  "one_line": "AR-g-175 defines a model entry (a catalogue key with a model code) and an ETF entry (a ticker set) and no other; an entry with neither has no defined treatment, and the producer had to choose one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 A: 'one comparables item per entry, in order, named by the entry's label', with the two entry kinds 'a model entry (...)' and 'an ETF entry (ticker set)'. No third kind and no treatment for an entry with neither.",
+  "world_is": "opal_producer._compare_stage keeps such an entry as an item of kind 'other' with no series and no allocation weights, so the comparable is stated as a gap line in the returns, risk and allocation tables (the layout's default reason for a gap) and the order's one-item-per-entry rule holds. It is not dropped and it fails no run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/comparables.py@ce8eee49396 (_gap_row and build_allocation default reasons)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-175.producer-comparison-stage-and-resident-ports.md@ce8eee49396 (cell A, the two entry kinds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S9 -- the sparse worktree lacks the paths the installed-package and validator suites read, so those suites error before any assertion
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:45:00Z",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-330 carries no infra/aws/ec2 and no docs/contracts tree, so the package fixture of test_resident_installed.py and test_opal_pricing_binding.py and the v2 validator tests fail with FileNotFoundError on paths HEAD holds; the cell's own tests and the checker's regress list do not read them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 C and the worker face: run the tests, and the existing test files pass. The worker face names the test files of the cell and the checker's regress list names the research test files; it names no reports-side suite.",
+  "world_is": "Measured at the worktree: reports/tests/test_compare_ports.py 4 passed; test_resident_installed.py, test_opal_pricing_binding.py and test_opal_variant_binding.py report 4 failed and 31 errors, every one a FileNotFoundError on a path under infra/aws/ec2/investor-reporting-ycharts/ or docs/contracts/investor-reporting/v1/ (for example docs/contracts/investor-reporting/v1/AnalysisReport.schema.json). The same paths exist at HEAD (git ls-tree HEAD infra/aws/ec2/investor-reporting-ycharts/ lists run-ycharts-session.sh). None of the cell's edits touches them. Not rebuilt, per the worktree rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py@ce8eee49396 (the package fixture copies the ec2 directory)",
+      "git ls-tree ce8eee49396 infra/aws/ec2/investor-reporting-ycharts/ (run-ycharts-session.sh present at HEAD; absent from the worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S10 -- AMENDMENT 2 grants the r31 test file, but the checker's cell-175 write-set table omits it, so the regress arm refuses it as stray
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T19:13:56Z",
+  "one_line": "AMENDMENT 2 puts reports/tests/test_resident_r31_source.py in the order's paths, but the checker's write-set table OWN[175] does not list it, so the regress arm's scope check refuses the Part D commit as outside the cell's write set; AR175-g-AC3 FAILs on that scope limb alone, its pytest limb passing.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 AMENDMENT 2 (order text): test_resident_r31_source.py is in the order's <paths>; criterion AR175-g-AC3 (checker regress 175) is to print AR-CMP-175-REGRESS-OK after the worker's commits.",
+  "world_is": "After commit 640ee394e4 (one literal changed, sha 661adac1...2143b, test passes), AC1 build and AC2 guard print AR-CMP-175-OK (rc=0). AC3 regress prints 'AR-CMP-175-REGRESS-FAIL outside the cell's write set: infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py' (rc=1). The checker's OWN[175] (ar_compare_checks.py lines 638-639) lists opal_producer.py, resident_worker.py, reports/resident_installed.py, test_compare_producer.py and reports/tests/test_compare_ports.py, and not test_resident_r31_source.py; scope() (lines 678-693) flags any diff path outside OWN and the deliverables prefixes. The pytest limb of regress returned no failure. The checker is read-only to this worker, so the table was not edited and the check was not weakened. The order's status stays pending; no close commit was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_compare_checks.py@640ee394e4 (OWN 175 at lines 638-639; scope() at lines 678-693)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py@640ee394e4 (the Part D literal, the one-line diff)",
+      "python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_compare_checks.py 175 regress (rc=1, the output line quoted above)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
