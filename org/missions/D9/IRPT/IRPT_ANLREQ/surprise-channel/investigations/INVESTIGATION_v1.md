@@ -27623,3 +27623,56 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-S219 -- Run 5B strands three synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S219",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T03:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 5B stranded three more synthetic state objects (original holdings, request composition, normalized portfolio) that the CloudOps principal cannot delete; with a request that reaches submit the prefix gains two more kinds than the upload alone leaves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state_e2e5b.json (irpt_anlreq_commentary_e2e5b): three deletes answered AccessDenied for the CloudOps principal on 2026-10-20T03:04Z; 13 of the 16 distinct recorded keys read ABSENT",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates (section 4 of the E2E packet and the CTO's condition on the deletes).",
+  "world_is": "These objects remain, each one version: irpt/49financial/state/normalized_portfolios/ART-b650c1dbe862432fd38cd2e64f43bcca65ee95dec1f86ca2f01e7e3a61f6f5ab/7a259191a8b6b9440458079020462289f26eec988f2415ee8a5795d49c49f295.json; irpt/49financial/state/original_holdings/ART-02ccd815264adc6289f64056ab5f8c494b18f9526a865043a14248b19b0fb1af/420860c72d806edfcbea48500acbe955274002af924f3ea783aa1dba31ec1e66.csv; irpt/49financial/state/request_compositions/ART-bd5a3b97f14555701ff6a3c14a4afacd51098bf003592b2bdf58033713863ce3/9d087ccd3c079554428f271eac1ecbf19c2521a059fe36bce2382b751c1445f4.json. No index row points at them. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S220 -- A kept-as-typed row reaches the door as NORMALIZED but the resident refuses the submission (CLOSED_COMPOSITION_REQUIRED)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S220",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T03:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "A request that carries the kept-as-typed unknown row ZQXWVK is accepted by the door but the resident refuses its submission with CLOSED_COMPOSITION_REQUIRED, so it never reaches READY and ends in the generation dead letter.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "A_E2E5B.txt (irpt_anlreq_commentary_e2e5b): U ok keep=sent (NORMALIZED after one Keep re-post), T ok, S ok REQ-84ca4dffd74c00a2e8999d01, then P1 red at the 30 minute budget",
+      "the resident journal read-only (host_r1b.sh): IRPT_RESIDENT_POLL retained_for_retry class=SubmissionRefused code=CLOSED_COMPOSITION_REQUIRED at 2026-10-20T02:34:11Z and 02:49:12Z",
+      "irpt-jobs row read at 03:02Z: state RECEIVED, outbox_state SENT; irpt-generation 1 in flight, irpt-generation-dlq 8 (unchanged)"
+    ]
+  },
+  "spec_asserts": "ADDENDUM 6 and 7 of the commentary run packet: after the single equal-pair Keep the request reaches C-SWAP as UNRESOLVED/KEPT_AS_TYPED and the run goes on to a READY job, a commentary and a PDF.",
+  "world_is": "The door accepted the kept row, but the resident's submission step refused the request as SubmissionRefused/CLOSED_COMPOSITION_REQUIRED (inferred cause: the unresolved row leaves the composition not closed; the row itself was not read). The job stayed RECEIVED for the 30 minute budget and the message was redelivered after 900 s. The earlier dead letter holds the same shape of 49financial requests. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
