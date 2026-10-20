@@ -34,7 +34,18 @@ verbatim:
 (Prior art: `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/BBG_EXCEL_ACCESS_VERIFIED.md`; in
 production as `data/etfs/scripts/rivalfunds/collector_bloomberg.py`. No purchase is needed.)
 
+His next message (~22:4xZ), verbatim, after this seat named the open question (can the Excel BQL route take a
+client's fund list at filing):
+
+> It can do it, if we do it this way then we dont even need to use yfinance, we just send the job immediately to the
+> bloomberg device and it is compiled there.
+
 Read by this seat (his words above govern):
+- SUPERSEDES the "yfinance first" order for per-security characteristics. Each analysis request sends ONE job straight
+  to the Bloomberg device, and the characteristics and look-through are compiled there (the Excel BQL route). No
+  yfinance step for characteristics.
+- Read narrowly: prices are not named, so C-PRICES (yfinance, then YCharts; Bloomberg out of the price chain) stands
+  until he widens it.
 Two more follow-on messages, same session, verbatim:
 
 > the premise is simply to recreate the y chart format, hwoever we have to do it
