@@ -12844,6 +12844,29 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W79-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~79",
+    "surfaced_at": "2026-10-20T13:20:56Z",
+    "one_line": "MX-w-3 cannot be built: the worktree does not carry infra/aws/ec2/opal-gateway/app (the catalog and every cite root), and the face's one permitted sparse add (workflows/gateway_battery) does not bring it in.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree C:/tmp/wk-mcpindex-79 @277ad324045 (branch wk-NFRA_MCPINDEX-79): test -d org and test -d .tools pass (TREE-OK); ls infra/aws/ec2/opal-gateway/ -> No such file or directory",
+        "git -C C:/tmp/wk-mcpindex-79 sparse-checkout list (after git sparse-checkout add workflows/gateway_battery, rc=0): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/gateway_battery; neither infra/aws/ec2/opal-gateway/app nor workflows/atom_decomposition is listed",
+        "git ls-tree HEAD infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml -> 100644 blob 2cbe275d03c9a5af85afefabc604e26b71e9be12, so the path is in HEAD and outside the sparse cone",
+        "bash .../round24/checks/w3.AC1.sh <link_fixes.json> (exit=1, output .scratch/ac1_out.txt): routing_table_w3.InputError: catalog unreadable: infra\\aws\\ec2\\opal-gateway\\app\\refs\\DATA_CATALOG.yaml (No such file or directory); w3.AC2.sh the same, exit=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Face section 1 Steps 0 and Surfaces and section 3: the worktree already carries the sparse folders workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app; the only sparse change I may make is git sparse-checkout add workflows/gateway_battery; the checks read the catalog at infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml.",
+    "world_is": "The worktree carries neither folder: both are outside the sparse cone and the catalog path does not exist on disk, so the checks cannot load the catalog and no link_fixes.json can be graded or grounded. The cell is blocked, not built. I did not widen the sparse cone or reconstruct the tree.",
+    "notes": "Blocking for MX-w-3 criteria AC1 and AC2. Disarm owner 2.0.0_SA_COO~MI decides whether to re-cut this worker's worktree with the opal-gateway app folder in its sparse set, or to re-issue. The routing and source-set inputs (round23 ROUTING_TABLE, round22 census, source_sets_* under ~71..~76) are present; only the catalog and code cites are missing."
   }
 ]
 ```
