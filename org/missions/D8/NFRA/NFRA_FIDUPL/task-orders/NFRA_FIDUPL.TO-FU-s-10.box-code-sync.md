@@ -48,12 +48,19 @@ Round 2 added modules on the box path (`gswitch.py`, `attribute.py`, `split.py`,
 
 FR-s-6 is merged: `adapters.py` is new and `box/run.py` changed (the daily attribute stage is wired). Deliver the full current set from head f3a4761ed5 or later (13 files now), a NEW ledger (slug `nfra-fidupl-box-code-sync-5-<date>`), check `fu10m`, same rules (no bootstrap, no sign-in, no start or stop). Thank you for the fourth delivery. Nothing else of round 2 is pending in the repo; if a file changes after this I will say so.
 
+### SCOPE WIDENED AGAIN (issuer, 2026-10-20 ~16:35Z; CTO ruling 8704) -- the box needs Xvfb, then the sixth delivery
+
+The sign-in now launches a HEADED Chromium under a virtual display. Before (or with) the sixth delivery, install the package on the box: `sudo dnf install -y xorg-x11-server-Xvfb` through an SSM RunShellScript, idempotent, no reboot, the box left running (your ledger leg `xvfb-installed`, one more leg beside the code leg). The delivery head will be named by a message once the sign-in repair (REPAIR 7) merges; deliver all shipped files from that head. Criterion FU10-AC2 is checked after both. No bootstrap run, no sign-in, no start or stop.
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
 `FU10-AC1` -- the seven shipped files on the box match the repo by md5.
 
-<expected_criteria>FU10-AC1</expected_criteria>
+<criterion id="FU10-AC2" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu10x</invocation><expect>R1-FU10X-OK Xvfb present and a headed Chromium launches under it</expect></criterion>
+`FU10-AC2` -- a second criterion, with its reason: the code md5s cannot see that the box can run a headed browser, which is the whole point of the sixth delivery.
+
+<expected_criteria>FU10-AC1,FU10-AC2</expected_criteria>
 
 Dry-run at the base (the box holds the pre-REPAIR-2 signin.py): `FU10-AC1` base: FAIL as expected.
 
