@@ -909,6 +909,27 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "Order BF-k-3 worker face, per-master contract item 'keep every round-2 name working, add the new ones'; TO-BF-m3 imports this contract.",
     "world_is": "Both key files at 2103514e72 define FIRM_FORM_MASTERS and no MASTER_FIRM. The worktree is clean for the grant files at HEAD. An alias fix needs an order whose <paths> names the two key files and the test while it is non-terminal.",
     "notes": "Not an alert. Disposition for the issuer: grant the two key files in TO-BF-m3 (or re-open BF-k-3) to add MASTER_FIRM = FIRM_FORM_MASTERS inside the byte-equal block, or confirm that no caller needs the name."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:57:23Z",
+    "one_line": "The BF-s-4 face names a leaf such as schwab_projections.py for the firm silver key rule; the rule was placed in conversion_manifest.py instead, because schwab_projections imports pyarrow through schwab_schemas and conversion_manifest is the light module the closure validator imports without pyarrow.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/schwab_schemas.py@0429204ae71:54 'import pyarrow as pa'; data/assets/scripts/silver/schwab_projections.py@0429204ae71:27 'import pyarrow as pa' and :29 'import schwab_schemas as sch'",
+        "data/assets/scripts/silver/conversion_manifest.py@0429204ae71:36 'Light on purpose (no pyarrow)'; :713-714 build_closure imports schwab_conversion and set_identity_guard lazily because 'neither is needed by the v1 marker or by the validator'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-s-4 worker face, build item 1: ONE pure function in the Schwab-only code, put where the import direction allows with no cycle, 'a leaf such as schwab_projections.py, imported by the others'.",
+    "world_is": "A rule in schwab_projections.py would make conversion_manifest.py, which the closure validator imports without pyarrow, depend on schwab_projections and so on pyarrow. The rule now lives in conversion_manifest.py (it already owns FIRMS and the key-claim rule and imports only silver_registry). schwab_projections.dim_key, the converter's three fact-key sites, the set-identity guard and the runtime census all call through it. Old-form keys are byte-identical to the pre-round code (test OLD).",
+    "notes": "Not an alert. Disposition for the CVO or the issuer: accept conversion_manifest.py as the one rule's home, or name another leaf that carries no pyarrow import. No behavior depends on the choice; the tests pass against the chosen home."
   }
 ]
 ```
