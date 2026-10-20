@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -31,6 +31,10 @@
 1. Open a change-management entry (`.tools/deploy_ledger.py open --slug nfra-fidupl-box-code-sync-<date> ...`, one leg: code equal to the repo).
 2. The FU-s-2 login-trace repair 2 is merged on box/dell1 at f5abe66e28 (signin.py gained a values-free network, form-state, console and fingerprint trace; tests 67 passing). Take the repo files at THAT head or later. Re-deliver exactly these seven to `/opt/fidelity-uploader/`, keeping the same relative layout you used before: `quo_otp.py`, `signin.py`, `signin_recon.py`, `fetch.py`, `land.py`, `box/run.py`, `box/bootstrap.sh`. Do not touch `config.json`, `profile/`, `work/`, `venv/` or the bridge symlinks. Do NOT run `bootstrap.sh`; do not run any sign-in; do not stop or start the instance (it is running; if it is stopped, tell the issuer, do not start it).
 3. Run the criterion below, record the line verbatim, close the ledger leg and the entry.
+
+### REOPENED (issuer, 2026-10-20 ~15:00Z) -- second delivery
+
+The first delivery (your commit 63f72e9788) is done and verified. FU-s-2 repairs 3 and 4 are now merged at 15b8f23cc0 (`signin.py`: visible-text error detection, fingerprint hygiene, a version-matched user agent; `signin_recon.py`: the measured legacy-JSP G-switch probe). The box differs from the repo for `signin.py` and `signin_recon.py` again. Do steps 1 to 3 again from the head 15b8f23cc0 or later (same seven files, same rules: no bootstrap, no sign-in, no start or stop), with a NEW ledger entry (slug `nfra-fidupl-box-code-sync-2-<date>`), and run `fu10m`. Report the head you delivered from.
 
 ### ACCEPTANCE
 

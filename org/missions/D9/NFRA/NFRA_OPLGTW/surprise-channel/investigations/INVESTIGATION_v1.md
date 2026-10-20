@@ -31085,3 +31085,56 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Both rows are ruled above with their evidence; no signed scope or released file changes."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T14:23:35Z",
+  "id": "NFRA_OPLGTW-Z-S436",
+  "one_line": "Relayed from 2.0.0_SA_COO~MI (msg 36219, round 24 battery, case K2-31): portal_get_security_scan returns a raw AccessDenied for an absent-universe request because the gateway reader role lacks s3:ListBucket on that prefix and the reader maps only NoSuchKey, 404 and NotFound to absent",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "The relay cites org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~80/fail_attribution.json (merged ba0cb900e7a on the sender's lineage, LOCAL). This seat has NOT read that file or reproduced the call; the claim is the sender's.",
+      "Code read by this seat: infra/aws/ec2/opal-gateway/app/portal_macro.py _read() (lines 138-159): an exception from ts._load_capped whose boto error code is not in _ABSENT_CODES propagates; an S3 GET of a missing key by a role WITHOUT s3:ListBucket answers AccessDenied, not NoSuchKey, which is the mechanism the relay names. The sender cites line 149 for the same mapping."
+    ]
+  },
+  "spec_asserts": "An absent served item reads as absent (None, 0) so the typed tool answers absent_reason, not a raw IAM error.",
+  "world_is": "Unverified by this seat. If the relay holds, an absent-universe request for the security scan surfaces AccessDenied. Two fix shapes: (a) the IAM read grant gains s3:ListBucket on that served prefix (an access change, never-widen, CTO), or (b) _read treats AccessDenied on a get of a KEY IN THE SERVED PREFIX as absent (a code change that hides a real denial, so it needs a prefix check). HYPOTHESIS TO TEST, NOT A FINDING: OG-ls-1 (complete, ledger nfra-oplgtw-grants-ls1 CLOSED 11:02:38Z) narrowed the */silver/* ListBucket statement today; whether the portal prefix lost ListBucket in that change is not established.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Carried to the round-48 enrichment list (L10 slug draft section 4). Not cut in round 47: round 47's releases are staged and a read-grant change is an access change for the CTO."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~175",
+  "surfaced_at": "2026-10-20T14:08:52Z",
+  "id": "NFRA_OPLGTW-Z-W175-S1",
+  "one_line": "OG-ed-1 AC2 cannot pass as written: tests/test_scoped_consent_r253.py stubs data_entitlement.email_denial as a one-argument lambda, and the cell's required token_broker one-liner calls it with route_class=, so /callback answers 500 and two r253 neighbours fail.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/test_scoped_consent_r253.py:117 at commit b843804461 reads monkeypatch.setattr(tb.data_entitlement, \"email_denial\", lambda email: None); the cell's edit at app/token_broker.py:393 at b843804461 calls data_entitlement.email_denial(principal.email, route_class=data_entitlement.CONSENT)",
+      "run at b843804461 under python -m pytest tests/test_scoped_consent_r253.py: test_r253_unscoped_consent_unchanged and test_r253_both_legs_same_scopes FAILED with (500, 'Internal Server Error') at the /callback leg (test file line 139); 5 other tests in that file pass",
+      "the same file run from git archive of HEAD 5499b78e886 (copy under .scratch/headcheck, outside the commit) passes 7 of 8 with only test_ogz1_ac08 red; so the two failures are caused by the one-line token_broker change, not pre-existing",
+      "ed1.AC2.sh at b843804461 prints: neighbours (4): 30 passed, failed names [test_r253_both_legs_same_scopes,test_r253_unscoped_consent_unchanged] (allowed: test_ogz1_ac08 only); RESULT: FAIL",
+      "the cell forbids editing tests outside tests/test_og_ed1.py (section 2 bounds, and 'do not edit ... any other test'), so the stub cannot be corrected inside this order"
+    ]
+  },
+  "spec_asserts": "OG-ed-1 AC2: the new tests and the four neighbours pass, the one carried red test_ogz1_ac08 aside; the neighbours include tests/test_scoped_consent_r253.py. The cell's step 3 changes token_broker.py redeem_consent to pass route_class=data_entitlement.CONSENT on one line.",
+  "world_is": "The product change is correct on every criterion except AC2: AC1 PASS (behaviour), AC3 PASS (bound), tests/test_og_ed1.py 4 passed. The r253 neighbour's one-argument stub of email_denial is incompatible with the required call; the production email_denial accepts route_class, so the break is in the test double, not in the gateway. Resolving it needs an edit of tests/test_scoped_consent_r253.py (a test outside this order's paths) or a ruling that the stub changes with the call; the worker did not edit it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the issuer. Left ARMED: the red neighbour persists in the suite until the issuer disarms it by ruling or by a test-only edit. No product file or other test was changed beyond the commit b843804461 cell set."
+}
+```
