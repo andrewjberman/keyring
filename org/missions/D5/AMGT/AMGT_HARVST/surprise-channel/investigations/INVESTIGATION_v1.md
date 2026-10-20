@@ -13957,5 +13957,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S69",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "2.0.0_SA_COO~W1",
+        "surfaced_at": "2026-10-20T23:34:30Z",
+        "one_line": "The ECR scan on push of the gold-refresh image reports HIGH 12, MEDIUM 20, LOW 5, UNDEFINED 1; all 12 HIGH are Amazon Linux 2023 base-image OS packages (pcre2, openssl, rpm, curl), none is in the 13 pinned Python distributions; not triaged for exposure.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-co-7 stage 2: the ECR image scan on push may report findings; print the counts, they are not a stop. CTO ruling (msg 8865): a finding, not a stop, for the deliberate run; the addendum that enables the schedule must cite its triage.",
+        "world_is": "Read 2026-10-20T23:34:30Z by 2.0.0_SA_COO~W1: aws ecr describe-image-scan-findings, repository amgt-gold-refresh-repo, imageDigest sha256:4da76365a1beb45df5a642ab3b2d0b3fdcdf1564ce78a60025306574c45fdd74: status COMPLETE, findingSeverityCounts HIGH 12 / MEDIUM 20 / LOW 5 / UNDEFINED 1, 38 findings listed, no nextToken. The 12 HIGH are six CVE ids over pcre2 and pcre2-syntax 10.40-1.amzn2023.0.3, openssl-snapsafe-libs and openssl-fips-provider-latest 3.5.8-1.amzn2023.0.1, rpm and rpm-libs 4.16.1.3-29.amzn2023.0.7, curl-minimal and libcurl-minimal 8.21.0-5.amzn2023.0.1. NOT MEASURED: whether the task runs any listener or opens any port (the task definition and security group were not read by me for this row), whether the MEDIUM/LOW/UNDEFINED packages are also base-image only, whether a newer base-image tag fixes them.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "aws ecr describe-image-scan-findings --repository-name amgt-gold-refresh-repo --image-id imageDigest=sha256:4da76365a1beb45df5a642ab3b2d0b3fdcdf1564ce78a60025306574c45fdd74 (read by 2.0.0_SA_COO~W1 2026-10-20T23:34:30Z)",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round100/NEVER_WIDEN_HALF_COO_CO7_ADDENDUM_1_IMAGE_DIGEST.md (the counts as the seat reported them)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
