@@ -356,7 +356,7 @@
   "capacity": {
     "target_instance_type": "t4g.large",
     "target_architecture": "arm64",
-    "target_memory_mib": 2048,
+    "target_memory_mib": 8192,
     "admission_existing_peak_rss_multiplier": 1.25,
     "admission_os_reserve_bytes": 134217728,
     "existing_workflow_p95_regression_max_fraction": 0.2,

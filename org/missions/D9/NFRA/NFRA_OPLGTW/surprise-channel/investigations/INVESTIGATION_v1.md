@@ -30805,3 +30805,54 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   }
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~169",
+  "surfaced_at": "2026-10-20T10:06:26Z",
+  "id": "NFRA_OPLGTW-Z-W169-S1",
+  "one_line": "The 50 KB projection the order names, harvest_typed.project(answer, 51200), measures compact JSON, but the answer is served as json indent=2 and runs larger; so the literal call does not bound the served answer to 51200 bytes (OG-tp-1 AC1 measures the indented rendering)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/harvest_typed.py project() at 1511679e899, lines 50-54 and 65-94: _size() is json.dumps without indent; the binary search fits the compact size to the limit, then projected_to_bytes is fixed to the compact count.",
+      "Measured in the worktree at 1511679e899 with the literal call on 100 items of 3000-byte padding and a pad sweep of 0 to 3400 bytes in steps of 37: the served indented size reached 54716 bytes (pad 370, 97 items, compact 50820), over the 51200 limit the order names.",
+      "Fix in the OG-tp-1 commit on wk-NFRA_OPLGTW-169: app/tools.py _bounded_search re-projects with the limit cut by the served excess, the envelope keys counted; a sweep of 524 cases gave worst served 51196 and zero over the limit."
+    ]
+  },
+  "spec_asserts": "OG-tp-1 step 1: the search answer is projected with harvest_typed.project(answer, 51200), and AC1 requires each answer to fit 51200 bytes as served (json indent=2).",
+  "world_is": "project() measures compact JSON, so the answer it fits to 51200 can serve above 51200 indented. The harm is live in the shared function: every caller of harvest_typed.project() inherits the compact measure, and OG-sz-1 is changing project()'s internals in parallel. NOT CLAIMED: how the other typed tools serve their answers; they were not measured here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Search tools fixed in the worker's own hunk. The disarm for the shared function belongs to the issuer, because OG-sz-1 owns project()'s internals: measure the served rendering there, or confirm the callers never serve indented."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~169",
+  "surfaced_at": "2026-10-20T10:06:26Z",
+  "id": "NFRA_OPLGTW-Z-W169-S2",
+  "one_line": "The Teams poll cursor set to the last kept message's timestamp can drop a message that shares that timestamp and was cut: the next poll serves only timestamps strictly after the cursor, so the order's claim that nothing is skipped holds only when message timestamps are distinct",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/tools.py poll_addressed_impl at infra/aws/ec2/opal-gateway/app/tools.py@1511679e899 (the OG-tp-1 hunk): when len(out) > top the answer keeps the oldest top messages and sets cursor to out[-1].timestamp_utc; the filter upstream reads ts <= since_iso as already seen.",
+      "tests/test_og_tp1.py test_ogtp1_poll_three_pages_no_loss passes on distinct timestamps only (10:01 to 10:06); the tie case is not in the probe and was not run."
+    ]
+  },
+  "spec_asserts": "OG-tp-1 step 2: the cursor is the last kept message's timestamp, so the next poll returns the rest: nothing is skipped and nothing repeats.",
+  "world_is": "A message that ties the cut timestamp and falls after the cut is never served by the next poll. Not measured: how often Graph gives two chat messages the same createdDateTime at second or sub-second precision. The pre-cut code never cut, so the boundary is created by this order's top bound. A cursor carrying an id tie-break would change the REST /teams/poll contract that teams-watch.sh reads; not made here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left as specified. The issuer decides whether the tie case needs a tie-break before the page bound ships to the monitor."
+}
+```
