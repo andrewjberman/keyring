@@ -13651,3 +13651,29 @@ carries none.
   "notes": "OBSERVATION, INERT: this worker's commit touched workflows/gateway_battery only. Whether the sparse cone should carry the function-map folder is the issuer's call; nothing in MX-y-6 reads the naming result."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~92",
+  "surfaced_at": "2026-10-20T18:50:30Z",
+  "id": "NFRA_MCPINDEX-Z-W92-S1",
+  "one_line": "The source-set cites for six ycharts tools (source_sets_integrations.json, cites integration.py:130-191) and for schwab_describe_dataset (source_sets_assets.json, cite integration.py:516) do not name the tool definitions; the cited lines sit in helper or unrelated code, and the definitions are at ycharts integration.py:173, 182, 196, 208, 220, 235 and schwab integration.py:1221.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~75/source_sets_integrations.json@4668dc43e44 (ycharts cites at lines 121, 135, 149, 163, 177, 191 of the file)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~71/source_sets_assets.json@4668dc43e44:470 (schwab_describe_dataset cite integration.py:516)",
+      "infra/aws/ec2/opal-gateway/app/integrations/ycharts/integration.py@4668dc43e44: def lines 173, 182, 196, 208, 220, 235; lines 130 and 516 of the schwab file are not the tool definitions (schwab integration.py:1221 is async def schwab_describe_dataset)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each integration tool's source-set cite names the line of that tool's source read in the gateway app.",
+  "world_is": "The ycharts and schwab source-set cites are stale: they name lines that are not the tool definitions, so a reader following them lands in helper or unrelated code.",
+  "notes": "OBSERVATION, INERT: no criterion of MX-z-3 reads a source-set cite; the probe plan cites the current definitions. Whether the source sets are regenerated is the issuer's call."
+}
+```
