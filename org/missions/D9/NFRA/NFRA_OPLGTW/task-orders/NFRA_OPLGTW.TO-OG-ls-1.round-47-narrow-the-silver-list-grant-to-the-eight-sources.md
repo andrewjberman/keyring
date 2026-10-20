@@ -73,6 +73,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ls-1.round-47-narrow-the-silver
 - Pre-cut: `AC1` base FAIL as expected (plan, ask and simulation absent), `AC2` base FAIL as expected, READ AGAINST THE LIVE ROLE: shape `broad`; bloomberg, gateway and yahoo silver lists read `allowed` (the defect); PutRule and PutObject controls absent for want of a record. `AC1` arms fed with synthetic inputs: the narrowed `.tf` with a `0/1/0` plan, three halves and the six simulation cases PASSES; the ORIGINAL `.tf` with the same inputs FAILS (broad globs left, no per-source build).
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-B</workstream>
 <slot>~AE</slot>
