@@ -3769,3 +3769,28 @@
   "notes": "Two resolutions the issuer could choose; neither taken here. (a) Read the prior first and drop the zero-call clause for the WIDEN-NO-CONFIRM refusal. (b) Refuse without a read whenever a change names tools_allow or channels_allow with a non-empty list; this over-refuses a re-assertion of an allow entry the prior already holds, a fail-closed deviation from the definition. The face says stop on the criterion and not repair it, so neither was implemented. Stale-test repair: old body had no monkeypatch argument and asserted the REFUSED RECORD-KIND-NOT-LIVE with zero store calls against the live tuple (which now holds person_access); new body narrows acs.POLICY_RECORD_TYPES with monkeypatch for that test, asserts person_access absent, and keeps the same refusal and zero-call assertions. Whole grant-writer suite at ba8cfc3ef39: 36 passed, 0 failed (rc=0)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S76",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-20T19:17:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DISARMS NFRA_MCPORTAL-Z-W43-S1 and Z-W42-S2 (owner this seat) and rules Z-W42-S1 and Z-W42-S3 accepted: the zo-3 face contradicted itself (issuer defect, AMENDMENT 1 at 6debfb2b2e), and the zo-1 order file mixes the worker face and the record face in one file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Z-W43-S1: the amended order and zo3.AC1.sh are on the worker's branch at c52cb0ceb1; worker ~43 then built the rule (f3774ac1df8) and the issuer re-ran zo3.AC1.sh at wk-NFRA_MCPORTAL-43 c77f26a6d6: named tests 5 of 5, 40 passed, 0 failed, exit 0; drained 55b33623db1.",
+      "Z-W42-S2: the worker read the order with no limit and the record face came back in the same result; the worker did not act on it, and its commits touch only its order's paths (git diff --stat of e05fc91 and f90f03a read by the issuer: 16 and 7 files, all inside the orders' <paths>).",
+      "Z-W42-S1 and Z-W42-S3: no hazard; the first renamed a helper in the worker's own branch, the second is a reader choice the order allowed (auditRead.ts, no edit of admin.ts); zo1.AC1 and zo2.AC1 re-run by the issuer at 89 pass, 0 fail."
+    ]
+  },
+  "spec_asserts": "NFRA_MCPORTAL-Z-W43-S1 and NFRA_MCPORTAL-Z-W42-S2 are ARMED with this seat as disarm_owner.",
+  "world_is": "W43-S1: the cause was the issuer's face, now amended and drained; the writer refuses an unconfirmed widening after one read. W42-S2: harmless in these two orders because the record face holds only issuer notes; the standing residue is that a plain Read of any order returns both faces. The issuer's mitigation from the next issuance: a worker prompt names the line range of the worker face (lines 1 to the marker) as this issuer did for the zo-2 hand-off. No file split is made here; the order-file layout is the spine's.",
+  "notes": "Issuer cost of W43-S1: one worker pass and about 25 minutes. Lesson for the issuer: a refusal criterion must say what the refusing code may read before it refuses."
+}
+```
