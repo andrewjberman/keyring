@@ -93,3 +93,13 @@ The CTO rules one order now, not a round-2 item. The decomposition is otherwise 
 | **FU-s-9** | Autoshutdown off for the Fidelity box: one edit of the Terraform root adds the tag `AutoShutdown=disabled` to the instance and removes the `stopInstance` step from `automation.tf` (with the `onFailure` references to it), applied by the CloudOps seat under `safe-apply` AFTER FU-x-1's automation run has ended | `infra/aws/terraform/canonical-fidelity-ec2/`; `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF, FWD-7 | WORLD |
 
 Edge: `FU-x-1 -> FU-s-9` (the apply waits until no automation execution is in progress). Executor: `0.7.0_AE_CloudOps~NFRA1`.
+
+## 9. ADDENDUM 2026-10-20 (issuer, no spec change)
+
+The live trace needs the repaired sign-in code on the box after each worker repair; code delivery is the CloudOps seat's act (FU-s-7 leg 3). The issuer reopens this order for each later repair rather than cutting a new one.
+
+| cell | what it builds (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FU-s-10** | Keep the box's code equal to the repo: re-deliver every shipped file of `infra/aws/ec2/canonical-fidelity/` (and `box/`) to `/opt/fidelity-uploader/` by SSM, md5-checked, the box left running | `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF | WORLD |
+
+Edge: `FU-s-2 -> FU-s-10 -> FU-x-1`. Executor: `0.7.0_AE_CloudOps~NFRA1`.
