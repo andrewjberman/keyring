@@ -29328,3 +29328,189 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+## IRPT_ANLREQ-D2-W328-S1
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "The cell's registry premise fails: YCHARTS_OPAL_REPORT is registered under irpt-ycdgen-research-v1, not irpt-x10-v1, so the cell's local built from local.irpt_reporting_policy would fail the Terraform plan; the worker corrected the local to the registry row that holds the family.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell AR-y-463 and CTO msg 11459: the family is YCHARTS_OPAL_REPORT of the reporting policy revision irpt-x10-v1 (infra/logic/registry/reporting_policies.json), and the new local is built from the YCHARTS_OPAL_REPORT row of local.irpt_reporting_policy.",
+  "world_is": "reporting_policies.json holds YCHARTS_OPAL_REPORT only in the row with policy_revision irpt-ycdgen-research-v1 (the ycdgen-research policy row, its families block), and the irpt-x10-v1 row has no YCHARTS_OPAL_REPORT key. lib/tests/test_irpt_destination.py lines 186-191 assert 'no OPAL_REPORT_PDF family is registered on irpt-x10-v1' and resolve the family through reporting_policy('irpt-ycdgen-research-v1'). The first commit 8516437273 built the local from irpt_reporting_policy and would have failed the plan with a missing families key. Commit 161d929920 builds it from a second registry-derived one() local, irpt_ycdgen_research_policy, with the same selector form. The statement, its actions and its firms are unchanged. Nothing was planned, applied or run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json@161d929920 (irpt-x10-v1 families lines 18-32; irpt-ycdgen-research-v1 row line 72 holds YCHARTS_OPAL_REPORT)",
+      "lib/tests/test_irpt_destination.py@161d929920:186-191 (no OPAL_REPORT_PDF family on irpt-x10-v1)",
+      "infra/aws/terraform/investor-reporting/ops/iam.tf@161d929920 (locals irpt_ycdgen_research_policy and opal_report_family; statement ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly line 85)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_ANLREQ-D2-W139-S8 (the producer's FAMILY_REVISION is irpt-ycdgen-research-v1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W328-S2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "Criterion AR463-y-AC3 cannot pass as written: the cell's only edit to the existing statement replaces one existing line (the family list), so git counts one deletion, while the criterion and cell step 2 require zero deletions.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell AR-y-463 step 2 ('git diff --numstat for the file must read <n> 0') and the change ('additions only'), and criterion AR463-y-AC3 ('OPAL-REPORT-BOUND-OK numstat=<n>/0 files=1' only when deletions are 0).",
+  "world_is": "Adding local.opal_report_family to the statement's family list requires modifying the existing concat line in the statement ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly (iam.tf line 85). Measured: git diff --numstat e02d849d4990..HEAD -- infra/aws/terraform/investor-reporting/ops/iam.tf reads 7 insertions and 1 deletion, and check_opal_report_bound.py prints OPAL-REPORT-BOUND-BAD numstat=7/1 files=1 (rc 1). The 0-deletion bound was not relaxed. Adding a new statement instead would change a second statement, which the cell forbids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ops/iam.tf@161d929920 line 85 (the concat line carrying local.opal_report_family)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~328/check_opal_report_bound.py output OPAL-REPORT-BOUND-BAD numstat=7/1 files=1 (run at HEAD 161d929920, cut e02d849d4990)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W328-S3
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W328-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~328",
+  "surfaced_at": "2026-10-20T17:37:14Z",
+  "one_line": "The commit-time risk reflex answered PARTIAL_OR_BLIND (danger map STALE, linked worktree build guard refused) for the Terraform commit and could not clear it; the other commit gates passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's preflight declares comp-blast and comp-iam not applicable and the worker face commits with .tools/safe-commit.sh; the commit is expected to pass the gate chain.",
+  "world_is": "safe-commit printed [risk-reflex] comp-pulse diff for iam.tf: danger map 117.5 h old, STALE; NOT-DECIDABLE because the build guard refused a linked worktree (git-dir differs from git-common-dir); ANSWER STATE PARTIAL_OR_BLIND; scanned 0 of 1 file(s). The commit gate, naming gate, to-pipeline gate and surprise-row gate then reported OK, and the commit was made (8516437273 and 161d929920). The reflex is not checked-clean for this diff. Same class as IRPT_ANLREQ-D2-W331-S3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 8516437273 and 161d929920 ([risk-reflex] lines, ANSWER STATE PARTIAL_OR_BLIND)",
+      "IRPT_ANLREQ-D2-W331-S3 in INVESTIGATION_v1.md (the same reflex result for a worktree commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W340-S1 -- AR-y-466 AC2: the validator accepts a platinum family with a non-null unreferenced lifetime, so the control cannot fire
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W340-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~340",
+  "surfaced_at": "2026-10-20T18:05:00Z",
+  "one_line": "AR-y-466 AC2: the cell says the registry validation rejects a platinum row with a non-null unreferenced lifetime; it does not. The --selftest variant with platinum and unreferenced_days 30 reads OK, so CONTROL-FIRES cannot print.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-466 cell, 'The read': the registry validation 'that rejects a platinum row with a non-null unreferenced lifetime, near lines 2600-2640'; the control: '--selftest ... an in-memory copy where the new row carries unreferenced_days: 30 ... prints CONTROL-FIRES only when BOTH read BAD'. The CTO ruling (PRD v0.27 C-AUDIT-RECORD, msg 11466) sets the platinum family's unreferenced_days to null.",
+  "world_is": "lib/opal_naming.py _validate_reporting_policies, lines 2629-2636: a None lifetime is refused only for a non-platinum tier; a platinum row with an int lifetime passes when 0 < draft <= min(30, ceiling). Measured on the worktree at 1c277930e66: python -I check_audit_family.py --selftest printed 'CONTROL-VARIANT-A platinum with unreferenced_days 30 -> OK (validator accepts)' and 'CONTROL-DOES-NOT-FIRE ... variant A read BAD=False', rc=1. Variant B (tier state, null) reads BAD as the cell expects. The validator has no platinum-null rule, so a later platinum row may carry a lifetime and pass. The added row is null, so AC1 is unaffected. lib/ is outside this order's grant and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@6e36e3dcc29:2629-2636 (the lifetime branch: only a non-platinum None is refused; a platinum int 30 passes the bound check)",
+      "infra/logic/registry/reporting_policies.json@1c277930e66 (the ANALYSIS_AUDIT row: platinum, unreferenced_days null)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~340/check_audit_family.py@505dc4c0dd (--selftest: variant A OK, CONTROL-DOES-NOT-FIRE, rc 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W340-S2 -- AR-y-466: the new family row is placed before ANALYSIS_COMMENTARY, not after it, because a placement after it breaks the numstat 0-deletion requirement
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W340-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~340",
+  "surfaced_at": "2026-10-20T18:05:00Z",
+  "one_line": "AR-y-466 cell asks for ANALYSIS_AUDIT after ANALYSIS_COMMENTARY and for additions only; both cannot hold in the file, so the row was placed before ANALYSIS_COMMENTARY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-466 cell, 'The change': add ANALYSIS_AUDIT 'after ANALYSIS_COMMENTARY (add the comma the previous line needs; additions only, git diff --numstat reads <n> 0, one file)'.",
+  "world_is": "ANALYSIS_COMMENTARY is the last member of the family object and carries no trailing comma. A row after it needs that line changed to add a comma: numstat 2/1. Placed before it, the edit is one inserted line: numstat 1/0 (commit 1c277930e66). JSON key order is not read by _validate_reporting_policies or address(). The worker took the additions-only form, which the AR-y-466 bound check requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json@6e36e3dcc29:108 (ANALYSIS_COMMENTARY, last family, no trailing comma)",
+      "infra/logic/registry/reporting_policies.json@1c277930e66 (numstat 1 0; the ANALYSIS_AUDIT row sits before ANALYSIS_COMMENTARY)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W340-S3 -- AR-y-466: the cell names deliverables folder ~329 for the two checks, but the grant and the acceptance invocations name ~340
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W340-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~340",
+  "surfaced_at": "2026-10-20T18:05:00Z",
+  "one_line": "AR-y-466 cell says write check_audit_family.py in deliverables ~329; the <paths> grant and the three acceptance invocations name ~340. The checks were written to ~340.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-466 cell, 'The check': 'Write check_audit_family.py in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~329/'. The order's <paths>, AC1-AC3 invocations and worker face name ~340.",
+  "world_is": "The order's own write grant and invocations are ~340 (the amendment 6e36e3dcc29 renumbered the audit cells to workers 340-342). The cell text's ~329 is a stale folder name. The check_audit_family.py and check_audit_family_bound.py files were committed at 505dc4c0dd under ~340, the only folder the lane gate admits.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-466.audit-family-registry-row-and-builder-addresses.md@6e36e3dcc29 (cell text ~329; <paths> and ACCEPTANCE invocations ~340)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~340/check_audit_family.py@505dc4c0dd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W340-S4 -- AR-y-466: "compares the registry at HEAD with HEAD~1" reads nothing once the deliverables commit sits on top of the edit; the bound check reads the edit commit instead
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W340-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~340",
+  "surfaced_at": "2026-10-20T18:05:00Z",
+  "one_line": "AR-y-466 cell says the bound check compares the registry at HEAD with HEAD~1. After the deliverables commit, HEAD is no longer the edit and a literal HEAD~1 read compares nothing, so the check reads the newest commit that touched the registry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-466 cell, 'The check': check_audit_family_bound.py 'compares the registry at HEAD with HEAD~1 (commit the edit FIRST and alone ...) and prints AUDIT-FAMILY-BOUND-OK numstat=<n>/0 files=1 only when deletions are 0 and exactly this one file changed in that commit'.",
+  "world_is": "The edit is commit 1c277930e66; the deliverables commit 505dc4c0dd follows it, so HEAD~1 of HEAD is the edit only before that commit. The check resolves git log -1 -- infra/logic/registry/reporting_policies.json (the edit) and reads its numstat and its subject (must cite AR-y-466). Measured at 505dc4c0dd: AUDIT-FAMILY-BOUND-OK numstat=1/0 files=1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~340/check_audit_family_bound.py@505dc4c0dd (EDIT-COMMIT 1c277930e66; NUMSTAT 1 0 ; AUDIT-FAMILY-BOUND-OK numstat=1/0 files=1)",
+      "git log of infra/logic/registry/reporting_policies.json at 505dc4c0dd (newest touching commit 1c277930e66)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
