@@ -27802,3 +27802,29 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-S223 -- Run 5D strands five synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S223",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T05:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 5D, a request that reached READY, left FIVE synthetic state objects (original holdings, request composition, normalized portfolio, extraction evidence and the report PDF) that the CloudOps principal cannot delete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state_e2e5d.json (irpt_anlreq_commentary_e2e5d): five deletes answered AccessDenied for the CloudOps principal on 2026-10-20T05:02Z; 14 of the 19 distinct recorded keys read ABSENT",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates (section 4 of the E2E packet and the CTO's condition on the deletes).",
+  "world_is": "These objects remain, each one version: irpt/49financial/state/extraction_evidence/ART-4e20c23cfb533a0f8799135f69579a129cf91507a5d2bf03402005d0b892fd0b/359f56686707c2eac50abeae447e9848c5839a23e4be0087430493ac97646e0a.json; irpt/49financial/state/normalized_portfolios/ART-07a29193ec79783063fcd045e8ba4bfab2f9d3215f70cb4c04c4b9d3fdc3da79/aeaa516236b06f6afe4938dc686e43388b0bb424ced35f51ae15c47257d18557.json; irpt/49financial/state/original_holdings/ART-b2b30edac6c466b8173b60aed5c240d495f98553330e80af17b26a5c4159d3e6/82e05e06c0417633a856307ee43b213157473e28154df4ff1d6f008bd899e346.csv; irpt/49financial/state/request_compositions/ART-edebf93295250e2140c47f4e0ba2b7b289805e30799494597cee5bf056a61eb1/2bca516d8bc4b811379ee0074d7a1f773d098615d52d5e7d59f06979006f9e6b.json; irpt/49financial/state/ycharts_opal_reports/ART-014ff00ce9aaa90b28dd97481320dc7b4f08d1531058ef5e88bb7f551c4262a3/c1d8a29944645b05552e76ff76283b0113f8e30f27d2fcab0c7c1d49fb21e9b3.pdf. No index row points at them (the index rows were deleted). A request that reaches READY leaves five kinds of state object, two more than a request refused earlier. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
