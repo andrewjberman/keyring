@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~154</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Complete, 2026-10-20, merged @40cecd5f66. Worker 0.9.0_WK_NFRA_CTLPLN~154 (head b85ce2e714): CTcn1-AC1 `6 passed`, CTcn1-AC2 `29 passed` (base 29); proof instance VALID rc=0; two OBSERVATION rows (W154-S1 the checker named in worker.md is absent from the sparse tree; W154-S2 apply also refuses when the prior object has no VersionId, which is the safe side). The issuer read the tool whole and ran `--mode plan --date 2026-10-19` on the REAL stored partition (read-only, writes nothing): `COMPACT-PLAN date=2026-10-19 rows_before=288194 rows_after=6669 merged=281525 accounts=5339 current_equal=True runs_equal=True`. Nothing written to S3 by the cell. The one run is CT-co-1 (TO-APPLY-36), STAGED until the GO.</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
