@@ -30,6 +30,8 @@ You are `0.9.0_WK_IRPT_ANLREQ~330`.
 
 ### THE CELL (`AR-g-175`, inlined)
 
+**AMENDMENT 2 (issuer, 2026-10-20, after the issuer's broader-suite run on trunk; gate limb: none graded, an in-decomposition grant and one added part):** Part D. `infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py` is now in your `<paths>`. Its test `test_the_bindings_carry_the_opal_map_member_pinned_by_content` pins the packaged Overview map's sha256 as the literal `21a8f6d690bbd28cf7eedfc979c3edcfa8d8a156336d9de779e8438c4913310f`; the round-57 price pages re-pointed that map, so the pin is stale and the test FAILS on trunk (its second assertion, against `_sha(MAP_SOURCE)`, is the live check and stays). Change that ONE literal to the map's current sha256, `661adac1efa8ee72cd95952f72815dfea90bfe83c4af162ee74daf3d4542143b` (compute it yourself from `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json` and confirm), and change nothing else in the file. The checker's `175 build` arm now runs that test. Inherited state: your commits 1c700aee586, 1b00c8dafbd, 05f9a402c68, 538f1492298 and ed599b9bfd1 stand; re-run the three criteria, write a new proof instance, flip `<status>` to complete again on three PASS. Also: do not fix anything else you see failing in the reports or generate suites; the issuer has the baseline and the other failures are not this cell's.
+
 Directory `RES` = `infra/aws/lambda/investor-reporting/ycharts/research/`; `TESTS` = its `tests/` folder; `GEN` = `infra/aws/lambda/investor-reporting/ycharts/generate/`; `REP` = `infra/aws/lambda/investor-reporting/reports/`. Edit `RES/opal_producer.py`, `GEN/resident_worker.py` and `REP/resident_installed.py`; create `TESTS/test_compare_producer.py` and `REP/tests/test_compare_ports.py`; nothing else. Your earlier orders put `model_source.py`, `comparables.py` and the layout's COMPARE methods on this branch.
 
 **Why.** This cell connects the pieces so a real Comparison or Multi-Comp request produces the comparison section (PRD FWD-10, C-MODEL-SOURCE). The decomposition's K4 contract: `stores["comparables"]` = the ordered list of catalogue entries (`{"key", "label", "ticker"}`; a model entry has `"ticker": None`, an ETF entry has its ticker); `stores["model_bytes"]` = `callable(key) -> bytes` for the two model objects.
@@ -78,6 +80,7 @@ infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
 infra/aws/lambda/investor-reporting/reports/resident_installed.py
 infra/aws/lambda/investor-reporting/ycharts/research/tests/test_compare_producer.py
 infra/aws/lambda/investor-reporting/reports/tests/test_compare_ports.py
+infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~330/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-175.producer-comparison-stage-and-resident-ports.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md

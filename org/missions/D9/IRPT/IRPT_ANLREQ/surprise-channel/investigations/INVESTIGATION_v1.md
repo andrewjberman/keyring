@@ -29256,3 +29256,478 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W341-S1 -- AR467-y-AC2's literal output carries ANSI colour codes (FORCE_COLOR=3), so its expect ^[0-9]+ passed does not match the tail line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:20:00Z",
+  "one_line": "The literal invocation python -m pytest infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py -q 2>&1 | tail -1 prints 14 passed wrapped in ANSI colour codes on this box, so the expect ^[0-9]+ passed does not match its line; the same invocation under FORCE_COLOR=0 prints a plain 14 passed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR467-y-AC2 (the order's ACCEPTANCE block): the invocation python -m pytest infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py -q 2>&1 | tail -1 expects ^[0-9]+ passed.",
+  "world_is": "This worker environment sets FORCE_COLOR=3, and pytest 9.0.2 colours its summary when that is set, so the tail line begins with ESC[32m and no line starts with a digit. Measured 2026-10-20: the literal invocation printed the ESC-wrapped line '14 passed in 1.43s' (rc not a criterion); FORCE_COLOR=0 with the same invocation printed the plain line. The 14 tests pass both ways; only the regex's anchor and the colour setting disagree. Not fixable inside <paths>: pytest.ini at the repo root is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env FORCE_COLOR=3 in the worker Bash environment, measured 2026-10-20",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py@8feed742676 (14 tests)",
+      ".tools/proof-of-spec-check.py:122-142 matches expect against output_evidence with re.M, so the coloured line cannot match"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S2 -- the packager holds no ticket, so the form as filed, the filer's user type and the filing time have no source inside the cell's ports
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:22:00Z",
+  "one_line": "The cell has the packager write the audit from 'the ticket' and 'the form as filed taken from the ticket answers', but the packager reads only the ticket id and no port reads a ticket; the audit's ticket side is therefore an optional port (audit_source) that the live caller does not set, so a live attach records AUDIT_REFUSED:AUDIT_PORTS_UNWIRED and writes nothing until the ticket source is ruled.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 change (3) and PRD C-AUDIT-RECORD: the packager writes the audit at attach time from the ticket, the accepted record, the package pointers and the commentary pointer, and the form as filed is taken from the ticket answers; the filer carries principal id and user type.",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:158-160 reads only ticket_id from the acceptance record. The ports dict (opal_packager.py:43-51) has no ticket reader, and the module header (opal_packager.py:40) states that no port reads a ticket (AR-g-32). The acceptance record shape (_contracts/AnalysisRequest.schema.json) carries no answers, filer user type or filing time. The worker therefore defined the ticket input as {ticket_id, ticket_type, answers, filed_at, filer_user_type, written_at} from audit_source; that shape is the writer's contract, not a read of the ticket service. The live caller (ycharts/generate/resident_worker.py, outside <paths>) does not set audit_source or audit_put.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:158-160@8feed742676",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:40@8feed742676 (no port reads a ticket)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:_write_audit@8feed742676 (AUDIT_PORTS_UNWIRED)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S4 (form-as-filed NOT established from source)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S3 -- the audit put cannot use the existing stores port without breaking an existing packager test, so it is an optional audit_put port
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:24:00Z",
+  "one_line": "AR-y-467 asks for the writer to go through the module's existing injected ports; the only object-store port is stores(record)['objects'], and writing the audit there would add a put that the existing commentary-path test asserts never happens, in a file outside this grant. The audit put is therefore a new optional port, audit_put.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 change (3): call the writer ONCE after a successful attach 'through the module's existing injected ports'; no other behaviour of the packager changes.",
+  "world_is": "opal_packager.py stores(record) returns the objects client that the commentary path uses for the PDF (opal_producer.py:452, :495, :554). infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py test d asserts world.objects.puts == [] and it is outside <paths>. The audit put on that port would fail test d. Two optional ports (audit_source, audit_put) keep every existing caller's behaviour unchanged: they are absent there, so the outcome is AUDIT_REFUSED:AUDIT_PORTS_UNWIRED and nothing is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py test d (objects.puts == [])@6e36e3dcc29",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:452@6e36e3dcc29",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:_write_audit@8feed742676"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S4 -- the schema admits exactly two null pointers, which rejects the custody request whose original_ref is null by design
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:26:00Z",
+  "one_line": "The cell says the schema admits exactly pdf_ref and commentary_ref as null, and also that each package pointer is a string or null. The packager sends original_ref null for every custody request (I5'), so the exactly-two rule refuses every custody audit as AUDIT_RECORD_INVALID. The worker followed the explicit 'exactly those two' rule and did not widen the schema.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 (e) (CTO msg 11472): the schema admits exactly the two pointers pdf_ref and commentary_ref as null and rejects a null report_ref; the same cell's package list reads 'each a string pointer or null'.",
+  "world_is": "opal_packager.py:210-212 (_job_and_original) sets original_ref None for a custody request (_custody_lane, opal_packager.py:130-137), by design (I5'). AnalysisAudit.v1 declares package.original_ref as a non-null string (infra/aws/lambda/investor-reporting/_contracts/AnalysisAudit.v1.schema.json, package.properties.original_ref), so a custody record fails validation and is never written. The custody path has no audit test in test_analysis_audit.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:210-212@8feed742676",
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisAudit.v1.schema.json package.original_ref@8feed742676",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~341/check_audit_schema.py (good sample carries original_ref)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S5 -- a request that reaches READY and never gets a commentary_ref gets no audit record, and the commentary path never attaches the null pair case (e) describes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:28:00Z",
+  "one_line": "The writer is wired only in handle_commentary_ready (AC3). handle_ready attaches the READY package with pdf_ref and commentary_ref both null (AR-y-423) and writes no audit, and handle_commentary_ready never attaches a null pair (it refuses COMMENTARY_REF_ABSENT). So the case (e) describes, a commentary failure at attach, has no packager path that writes it, and a request with no commentary_ready message has no audit at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 (e): a commentary failure at attach (pdf_ref and commentary_ref both null) STILL writes the record. AR-y-467 AC3: exactly one writer call after the attach in the commentary-ready path.",
+  "world_is": "opal_packager.py:166-170 refuses a missing or malformed commentary_ref. handle_ready (opal_packager.py, the READY attach) calls _attach with None, None and is not wired to the writer, which the cell leaves unchanged. The unit test covers the null pair at the writer level (test_analysis_audit.py, commentary-failure test), not through a packager path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:166-170@8feed742676",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:handle_ready@8feed742676 (no _write_audit call)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py::test_commentary_failure_at_attach_still_writes_and_the_schema_admits_exactly_the_two_null_pointers@8feed742676"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S6 -- the resident builder lists _contracts/ as a directory, so the new schema ships without the builder edit the cell asks for
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:30:00Z",
+  "one_line": "AR-y-467 asks for AnalysisAudit.v1.schema.json to be added wherever the resident package builder lists the _contracts it ships. The builder lists the directory _contracts/ and ships every tracked file under it at the pin, so the new schema ships once committed, and build_resident_package.py was left unchanged (the file is in <paths> but needs no edit).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 change (3), last clause: add AnalysisAudit.v1.schema.json wherever the resident package builder lists the _contracts it ships; additions only.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37 lists DIRS including _contracts, and the loop at the DIRS block adds every tracked file under BASE + directory at PIN (git ls-tree -r --name-only PIN), excluding tests and fixtures. The builder names no _contracts file individually, so there is no list to add to.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37@6e36e3dcc29",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:DIRS loop@6e36e3dcc29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S7 -- no registry row exists for the new ANALYSIS_AUDIT family, and the writer's address does not need one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:32:00Z",
+  "one_line": "PRD v0.27 C-AUDIT-RECORD names a new platinum family ANALYSIS_AUDIT (table analysis_audit, 2555 days, unreferenced_days null). The registry row lives in infra/logic/registry/reporting_policies.json, which is outside this grant, so it is not added. address() builds the key without consulting the registry, so the writer works, but the family is undocumented in the registry until the row lands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.27 C-AUDIT-RECORD: a NEW platinum family ANALYSIS_AUDIT, table analysis_audit, accepted_ceiling_days 2555, unreferenced_days null, in the reporting policy revision irpt-anlreq-x10-v1.",
+  "world_is": "lib/opal_naming.py address() (around line 2522-2531) runs key() and _home_bucket() and never reads the families of reporting_policies.json; the family registry check runs only in the X10 writer path (lib/opal_naming.py:2660-2661). The worker's address is irpt / cottonwood / platinum / analysis_audit / request=<id>/analysis-audit.json, bucket from the scope row, and the table check is not run for this address.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:2522-2531@6e36e3dcc29 (address)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S1 (address takes no family argument)",
+      "infra/logic/registry/reporting_policies.json (ANALYSIS_AUDIT row absent; outside <paths>)@6e36e3dcc29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S8 -- the cell names the check scripts' folder as ~330, which this tree does not carry; the acceptance invocations name ~341
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T18:34:00Z",
+  "one_line": "The worker-face check paragraph places check_audit_schema.py and check_audit_wired.py in deliverables/0.9.0_WK_IRPT_ANLREQ~330/, a folder this tree does not have; the three acceptance invocations and the <paths> grant name ~341. The checks were written to ~341.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-467 cell, 'The checks': in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~330/ check_audit_schema.py and check_audit_wired.py. ACCEPTANCE AC1 and AC3 name deliverables/0.9.0_WK_IRPT_ANLREQ~341/ for the same two files.",
+  "world_is": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/ holds ~1..~331 (no ~330) at the base commit. The grant names deliverables/0.9.0_WK_IRPT_ANLREQ~341/, and the acceptance invocations resolve there, so the files live there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/ listing@6e36e3dcc29 (no ~330 folder)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-467.audit-record-schema-writer-and-packager-wiring.md ACCEPTANCE AC1 and AC3 invocations"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S9 -- the ANALYSIS_AUDIT family is not in irpt-anlreq-x10-v1 on this branch or on trunk, so the amended writer is refused live until AR-y-466's row lands
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T19:05:00Z",
+  "one_line": "AMENDMENT 1 has the audit addressed by reporting_destination under policy irpt-anlreq-x10-v1 and family ANALYSIS_AUDIT. That family is not in the registry row on this branch or on trunk box/dell2@608c4a61abe (only ANALYSIS_COMMENTARY is), so reporting_destination refuses and the live audit is recorded AUDIT_REFUSED:AUDIT_ADDRESS_REFUSED. The writer's tests supply the family on a copy of the row; the real-row test pins the refusal.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ AR-y-467 AMENDMENT 1: audit_address calls reporting_destination(firm, 'ANALYSIS_AUDIT', ..., policy_revision='irpt-anlreq-x10-v1'), and the family is the product of AR-y-466 (the registry row).",
+  "world_is": "infra/logic/registry/reporting_policies.json on box/dell2@608c4a61abe: policy irpt-anlreq-x10-v1 is ACTIVE with families ['ANALYSIS_COMMENTARY'] only. lib/opal_naming.py _reporting_destination refuses a family outside the policy (around lines 2657-2670) and reporting_policy() raises for an unknown revision. The worker's test fixture adds ANALYSIS_AUDIT (platinum, analysis_audit, json, 2555, unreferenced null) to a copy of the row, and test_real_registry_without_the_family_refuses_the_address reads the real row and expects AddressRefused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json irpt-anlreq-x10-v1 families@608c4a61abe (ANALYSIS_COMMENTARY only)",
+      "lib/opal_naming.py:2657-2680@608c4a61abe (_reporting_destination, reporting_destination)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py::test_real_registry_without_the_family_refuses_the_address@42e154ba95"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S10 -- the packager has no port that writes the reporting bucket, so the audit put is the injected audit_put that AMENDMENT 1 allows as its fallback
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T19:07:00Z",
+  "one_line": "AMENDMENT 1 says the record is written through the packager's existing writer port for the reporting bucket, and to use an injected put_object if there is none. The packager's only object port is stores(record)['objects'], the firm research principal's client for the firm's own bucket, which is the fenced path. There is no reporting-bucket writer port, so the audit uses the injected audit_put (already optional, S3) and the live caller must supply it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ AR-y-467 AMENDMENT 1: 'The record is written through the packager's existing writer port for the reporting bucket; if the packager has no such port, say so in a surprise row and use an injected put_object(bucket, key, body_bytes).'",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py: the ports dict (lines 43-51) has no reporting-bucket writer; stores(record)['objects'] is the firm research principal client (opal_producer.py:21, put_object(Bucket, Key, Body, ContentType)). The commit adds audit_put as the optional injected port, absent in every existing caller (AUDIT_PORTS_UNWIRED). The live caller (ycharts/generate/resident_worker.py, outside <paths>) does not set it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:43-51@42e154ba95 (ports)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:21@6e36e3dcc29 (objects port: the firm research principal)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:_write_audit@42e154ba95 (audit_put optional)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S233 -- Run 7c R: the commentary-pdf route refuses COMMENTARY_PDF_BINDING (INVALID_INPUT) after the status grant cleared the IAM denial
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S233",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T19:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7c, after the status grant, passed B1, B2, P1 to P5, P7 (COMPLETE, four pointers), B3 and R2, then stopped at R again with a different closed code: the commentary-pdf route answered UNAVAILABLE,INVALID_INPUT because the status Lambda refused the request read with COMMENTARY_PDF_BINDING. The earlier AccessDenied of run 7b (row S231) is gone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch log group /aws/lambda/irpt-status, request e60be4bd-3cd5-4995-8396-d178d5fc915e, 2026-10-20T18:59:2xZ: INTERNAL-CALLER-CLASS admitted, then irpt_internal exception_type RequestReadRefused, exception_text COMMENTARY_PDF_BINDING, extra classifier_code UNEXPECTED, operation analysis-request-commentary-pdf; then irpt_error public_reason_code INVALID_INPUT",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7c/state_e2e7c.json (route code UNAVAILABLE,INVALID_INPUT; green P1 to P5; p7_final COMPLETE; r2 status 200, 100 sections, 13 values)"
+    ]
+  },
+  "spec_asserts": "Run 7c order, step R: the route read GET analysis/requests/{REQ}/commentary-pdf answers a PDF once the status role holds the read; R3 saves the Opal report PDF for Andrew (FWD-9).",
+  "world_is": "MEASURED: the refusal is a RequestReadRefused named COMMENTARY_PDF_BINDING raised inside the status Lambda after the caller was admitted and with no AccessDenied in the window; the route maps it to the public code INVALID_INPUT. NOT MEASURED: what the binding check compares (the code path was not read by this seat), whether it is the request's commentary_ref against the PDF artifact the resident wrote, or a version-id binding; whether run 7b would have met it past its IAM denial. The request's index rows are deleted (the run's own D), so the route cannot be re-read against this request; the retained PDF objects stay (see the stranded-objects row). This seat changed no IAM and made no retry. No R3 PDF was saved (R3 NOT-RUN R). The disposition is the issuer's.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S234 -- Run 7c strands seven synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S234",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T19:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7c strands seven synthetic state objects the CloudOps principal cannot delete (AccessDenied); all 13 index rows and the synthetic user read ABSENT. Exact keys and VersionIds are in residue_7c.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7c/residue_7c.json (bucket, key, version_id, size for each of seven objects, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7c/state_e2e7c.json (leftover_delete_code AccessDenied; upload_identified: 1 of 45 UPLOAD rows matched the synthetic address and the run's holdings hash, recorded at creation)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates; the order's 'record keys by creation ... list each exact key and its VersionId in residue_7c.json ... and file the row'.",
+  "world_is": "These objects remain, one version each, bucket opal-data-irpt: irpt/49financial/state/analysis_commentaries/ART-7aa62c23fd1e605fb0de8e50e2ae781a1d0da1df0b59272c62c0419c7262e261/6fe6afedf192e39188c20b5385da8903c9ef438604d82cf95b60cd0ca2eb3369.json; irpt/49financial/state/extraction_evidence/ART-cc634950bfe38fa83ecb76c38c8faff65d9377db89acbbb25f61b997ca451b36/f9a20aa568b9895e84d2c19538b2c7b17cdf7eda15fbd46a6f170a887ffb13e0.json; irpt/49financial/state/normalized_portfolios/ART-e6eaf8bcdd3ae407a09b823da585e13426af3de9470486896584fbbc25a529fc/44eddcf71b5c9863477492256d0f62acc451bbb8db202df6ad78ee57309ba938.json; irpt/49financial/state/original_holdings/ART-bc912f14c2a7c74d380dcb7a458ad679b876651242d863887ea5a4d9acc85432/7d3835311fd453aa66aa8c4b7fb7ad8ce7363c6e52f8f67942abc3d01af8e889.csv; irpt/49financial/state/request_compositions/ART-f79ff23d122f64e9f0c969d020c264d5e8a96e2f541d8b9caf6cb6deca038f56/f1720e33d390558e1d5615bb84e485e71b6f469c8656cd2ad904093faef97942.json; irpt/49financial/state/ycharts_opal_reports/ART-711ec913761fa3cbbdf9cb68ded030c02bf448001eb9c21e523fe642b04728c3/b896bdf86f9482ca8fe2c16a1a1d32554fe3fef9e86a25100303588966127784.pdf; irpt/49financial/state/ycharts_opal_reports/ART-b1bc14d8f920594b1c260aec82edba5de49f65aad04edc1f4ac1f9a1ffde15d9/1ec196b90e4fff5502a7bcc3cd13bd0da6304f2872adf8b615ac58d08ddb4012.pdf. No index row points at them. No client data. The leftover objects of runs 7 (row S229) and 7b (row S232) are separate and untouched.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S1 -- the audit grant names registry family ANALYSIS_AUDIT, which is absent from this branch until AR-y-466 merges, so the grant check reads BAD and the Terraform cannot evaluate here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:09:32Z",
+  "one_line": "AR-y-468 reads the audit prefixes from registry family ANALYSIS_AUDIT of irpt-anlreq-x10-v1. That family is not on wk-IRPT_ANLREQ-342 (base 6e36e3dcc29): its row is AR-y-466's commit 1c277930e66 on wk-IRPT_ANLREQ-340, not merged here. So AC1 prints AUDIT-WRITE-GRANT-BAD at this HEAD, and resident.tf indexes a missing key until the row lands.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-468 cell (decomp IRPT_ANLREQ_DECOMP_R40A_Y.md:189): the prefixes are built from the registry for family ANALYSIS_AUDIT (tier platinum, table analysis_audit). Decomp line 316 fanout: the three cells are disjoint and 'none waits on another'.",
+  "world_is": "infra/logic/registry/reporting_policies.json@6e36e3dcc29 and @6f38e71fc3e: policy irpt-anlreq-x10-v1 carries only ANALYSIS_COMMENTARY, so families['ANALYSIS_AUDIT'] is absent. wk-IRPT_ANLREQ-340 at 1c277930e66 (LOCAL, not on this branch) adds the family (platinum, analysis_audit, json, ceiling 2555, unreferenced null). A DIAGNOSTIC run with that row held in memory only (not a verdict) gives reasons=0 firms=3 prefixes=3. The committed resident.tf@6f38e71fc3e (commit 6f38e71fc3e) evaluates families['ANALYSIS_AUDIT'] in locals, so a plan on this branch fails until the row is on it. Hazard: the Terraform commit must not reach CLOUD or a plan ahead of the AR-y-466 row. Disarm: AR-y-466's row merged to the trunk and this branch before the commit is merged or planned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json@6e36e3dcc29 irpt-anlreq-x10-v1 families: ANALYSIS_COMMENTARY only",
+      "wk-IRPT_ANLREQ-340 commit 1c277930e66 registry(IRPT_ANLREQ AR-y-466): add platinum family ANALYSIS_AUDIT (git grep on HEAD 505dc4c0ddf finds 1 match)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~342/check_audit_write_grant.py at 6f38e71fc3e: output AUDIT-WRITE-GRANT-BAD family ANALYSIS_AUDIT absent ... (rc 1)",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@6f38e71fc3e locals resident_audit_write_prefixes (families[\"ANALYSIS_AUDIT\"] lookup)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R40A_Y.md:316 fanout line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S2 -- the audit statement's bucket is the firm scope bucket by the home rule, but the runner role is fenced out of firm buckets and the X10 writer uses the product reporting bucket, so the grant may be inert
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:09:32Z",
+  "one_line": "The cell names the bucket as the builder home rule gives it for a FIRM platinum tier, which is the scope bucket opal-data-<firm>. The same resident.tf says the runner role carries no firm slot and is denied on firm buckets, and the X10 writer puts reporting families in the product reporting bucket. So WriteTheAnalysisAudit may be inert or name the wrong bucket, and a packager put could be refused.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 cell: find which bucket the platinum tier of a FIRM scope resolves to with the builder home rule (tiers.json, lib/opal_naming.py home lookup) and state it in a comment. AR-y-466 cell: address() gives the audit address for every enabled client firm.",
+  "world_is": "(a) tiers.json FIRM.platinum home = scope, and address() takes the scope row bucket (lib/opal_naming.py _home_bucket). The diagnostic grant output at 6f38e71fc3e gives arn:aws:s3:::opal-data-49financial, opal-data-cottonwood and opal-data-inflection, each /irpt/<firm>/platinum/analysis_audit/ (scopes.json buckets). (b) infra/aws/terraform/investor-reporting/ycharts/resident.tf@6f38e71fc3e lines 231-237 say each client firm bucket's fence (shared-infra s3-lgic-firm-buckets.tf, Sid DenyForeignFirmPrincipals) denies s3:* to principals without the firm slot, that the runner role has none, and that a direct grant on the firm bucket was inert (row IRPT_YCDGEN-S1); the research writes now assume a per-firm principal. The new statement is a direct PutObject on opal-data-<firm> for the runner role, the same shape. (c) lib/opal_naming.py _reporting_destination (lines 2655-2672 at 6e36e3dcc29) puts X10 family objects in the PRODUCT scope bucket (policy product_scope irpt, core/reporting_storage.tf:60 aws_s3_bucket.reporting), which is the bucket that resident_write_prefixes and resident_commentary_read_prefixes use. So address() and reporting_destination() name different buckets for an X10 family. Nothing applied. NOT READ: shared-infra/s3-lgic-firm-buckets.tf itself; the fence claim rests on the resident.tf comment. The choice between the two writers belongs to AR-y-467.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/tiers.json@6e36e3dcc29 FIRM.platinum home scope",
+      "lib/opal_naming.py@6e36e3dcc29 _home_bucket and address() (scope row bucket)",
+      "lib/opal_naming.py@6e36e3dcc29 lines 2655-2672 _reporting_destination (bucket = product_scope bucket)",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@6f38e71fc3e lines 231-237 and 310 (fence, inert grant, SSE-S3 comment)",
+      "infra/aws/terraform/investor-reporting/core/reporting_storage.tf@6f38e71fc3e line 60 reporting_bucket output",
+      "check_audit_write_grant.py output at 6f38e71fc3e (firm bucket and key rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S3 -- the cell places the checks in deliverables ~331, but its invocations, its paths and its commit rule name ~342
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:09:32Z",
+  "one_line": "The cell's check paragraph says deliverables/0.9.0_WK_IRPT_ANLREQ~331/, but the ACCEPTANCE invocations and the paths block grant only ~342/. The checks were written in ~342/, because ~331 is worker AR-g-172's folder and outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 cell, 'The checks': 'In org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/: check_audit_write_grant.py ...'",
+  "world_is": "The order's <paths> block names only deliverables/0.9.0_WK_IRPT_ANLREQ~342/. AC1, AC2 and AC3 invoke files under ~342/. The folder ~331 holds AR-g-172's proof instance (IRPT_ANLREQ.TO-AR-g-172.terraform-read-grant-model-series-and-positioning.proof_of_spec.json, committed on the base).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_ANLREQ.TO-AR-y-468 task order, <paths> block and ACCEPTANCE invocations at 6f38e71fc3e",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/ listing at 6f38e71fc3e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S4 -- the bound check cannot anchor on the order id, because the commit that added the order does not carry the literal TO-AR-y-468 in its message
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:09:32Z",
+  "one_line": "The AR-y-445 bound check anchors on git log --grep of the order id with --diff-filter=A. For AR-y-468 that returns no commit, since the issuing commit 1471a6f87b6 names the cells AR-y-466, AR-y-467 and AR-y-468 but not the literal TO-AR-y-468. The check anchors on the order file path instead, and that gives AUDIT-WRITE-BOUND-OK numstat=19/0 files=1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 cell: check_audit_write_bound.py prints AUDIT-WRITE-BOUND-OK numstat=<n>/0 files=1 when the Terraform commit added lines only to this one file. The AR-y-445 pattern (check_commentary_bound.py) anchors on the commit whose message carries the TO id.",
+  "world_is": "git log --grep=TO-AR-y-468 --diff-filter=A on the task-orders folder returns nothing at 6f38e71fc3e. git log --diff-filter=A -1 on the order file path returns 1471a6f87b6. The numstat from 1471a6f87b6 to 6f38e71fc3e under infra/ is 19 insertions, 0 deletions, 1 file (resident.tf).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --grep=TO-AR-y-468 --diff-filter=A -- task-orders at 6f38e71fc3e (no output)",
+      "git log --diff-filter=A -1 -- IRPT_ANLREQ.TO-AR-y-468 path at 6f38e71fc3e = 1471a6f87b6",
+      "check_audit_write_bound.py output AUDIT-WRITE-BOUND-OK numstat=19/0 files=1 at 6f38e71fc3e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S5 -- the audit prefixes in the product bucket are outside the KMS encryption-context list that the Opal report prefixes of this role sit in
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:46:38Z",
+  "one_line": "On the SAME product bucket (resident_bucket), the role's Opal report PDF family (YCHARTS_OPAL_REPORT, ycdgen_opal_report_prefixes) has a Put/Get statement AND an entry in the kms:GenerateDataKey/Decrypt encryption-context list. The new audit prefixes have the Put statement but NO encryption-context entry. Whether that matters depends on whether the reporting bucket default-encrypts with the core KMS key, which this worker did not read. No KMS statement was added, per the amendment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 AMENDMENT 1 (trunk a71b17d96d): report in a row what the existing statements for ycharts_opal_reports of this role carry for the SAME bucket; add no KMS statement; the KMS need is for the issuer to decide.",
+  "world_is": "infra/aws/terraform/investor-reporting/ycharts/resident.tf@3f0b44d5b11 (same content on the trunk): statement RetainTheOpalReportPdf (lines 163-167) grants s3:PutObject, s3:GetObject, s3:GetObjectVersion on local.ycdgen_opal_report_prefixes, which is built (lines 275-278) from local.resident_bucket with family YCHARTS_OPAL_REPORT of policy irpt-ycdgen-research-v1 for each enabled ycdgen firm. Statement ReportEncryptionViaS3ForResidentFamiliesOnly (lines 229-237) grants kms:Decrypt and kms:GenerateDataKey on the core kms_key_arn, with kms:ViaService s3 and kms:EncryptionContext:aws:s3:arn StringLike over concat(resident_write_prefixes, resident_read_prefixes, ycdgen_opal_report_prefixes). local.resident_write_prefixes and resident_read_prefixes are on the reporting bucket too. resident_audit_write_prefixes (new, on local.resident_bucket) is NOT in that concat. The reporting bucket's default encryption was NOT read (remote state, no AWS call), so whether the audit put needs kms:GenerateDataKey is undetermined here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@3f0b44d5b11 lines 163-167 RetainTheOpalReportPdf",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@3f0b44d5b11 lines 229-237 ReportEncryptionViaS3ForResidentFamiliesOnly",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@3f0b44d5b11 lines 275-278 ycdgen_opal_report_prefixes",
+      "infra/aws/terraform/investor-reporting/core/reporting_storage.tf@6f38e71fc3e line 60 reporting_bucket (remote state value not read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S6 -- the cumulative bound against the cut cannot read files=1 on this branch: the trunk merge brought other lanes' infra edits, and the one resident.tf line count includes trunk-side deletions
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:46:38Z",
+  "one_line": "AR-y-468 AC3 prints AUDIT-WRITE-BOUND-BAD, not the OK line. Measured against the cut 1471a6f87b6, infra/ holds six changed paths, not one. The extra five came in with the trunk merge 5143b9b2565 (AR-y-466 and other lanes' infra work), and resident.tf carries 3 trunk-side deletions. The amendment's cumulative bound, read literally, cannot pass on this branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 cell AC3: check_audit_write_bound.py prints AUDIT-WRITE-BOUND-OK numstat=<n>/0 files=1 when the Terraform commit added lines only to this one file. AMENDMENT 1: the cumulative bound against the cut stays additions only.",
+  "world_is": "check_audit_write_bound.py output at 3f0b44d5b11: AUDIT-WRITE-BOUND-BAD infra/aws/ec2/opal-gateway/app/admin_api.py(+2,-0) infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml(+176,-52) infra/aws/ec2/opal-gateway/tests/test_og_mp1.py(+146,-0) infra/aws/terraform/investor-reporting/ops/iam.tf(+7,-1) infra/aws/terraform/investor-reporting/ycharts/resident.tf(+21,-3) infra/logic/registry/reporting_policies.json(+1,-0). This serial's own infra commits are 6f38e71fc3e (+19/-0) and 3f0b44d5b11 (+5/-6, a revision of its own lines). The registry row is AR-y-466's (1c277930e66). The resident.tf deletions are a trunk-side reformat of the ReadTheModelReturnSeriesAndPositioning statement, merged in automatically. The check was NOT re-anchored or narrowed, because the amendment fixes the bound against the cut. Decision needed from the issuer: the anchor (the cut, or the trunk point 5143b9b2565) and whether lanes merged from the trunk are inside the bound.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_audit_write_bound.py output at 3f0b44d5b11 (AUDIT-WRITE-BOUND-BAD, six paths listed)",
+      "git diff --numstat 1471a6f87b6 HEAD -- infra/ at 3f0b44d5b11",
+      "git diff 1471a6f87b6 HEAD -- infra/aws/terraform/investor-reporting/ycharts/resident.tf (3 deletions are the ReadTheModelReturnSeriesAndPositioning reformat)",
+      "git log --author=0.9.0_WK_IRPT_ANLREQ~342 1471a6f87b6..HEAD -- infra/ (6f38e71fc3e and 3f0b44d5b11, plus merge bff0facc3d7)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
