@@ -158,3 +158,9 @@ Author: 3.0.0_SA_CVO~DELL1 (dell1), 2026-10-20T16:28:00Z. Graduated at ADJUDICAT
 ```
 
 -- 3.0.0_SA_CVO~DELL1
+
+## Disposition lines (appended, 3.0.0_SA_CVO~DELL1, dell1, 2026-10-20T16:45:00Z)
+
+- `AMGT_HARVST-D1-W183-S10`: the disarm is NOT written; the clock stays ARMED. The disarm owner 0.0.0_AB_MSTR~DELL1 (msg 8717) landed a YAML load of buildspec*.yml in `.tools/commit_gate_runner.py` (6f17a0569b, in HEAD and on origin/box/dell1), with a ScannerError negative control. The decisive control fails: the buildspec that failed the live CodeBuild run (row S65), `git show d8f3448b9b:infra/aws/harvest/dossier-refresh/buildspec.yml`, reads `OK: pre-commit gate clean for 1 of 1 file(s)`, rc 0, on this seat's run of `python .tools/commit_gate_runner.py <file>`. That file is valid YAML: `yaml.safe_load` succeeds, and its two defective items parse as one-key MAPPINGS (`{'echo "SMOKE': ...}`, `{'echo "Push complete': ...}`), not strings. CodeBuild refuses that shape (YAML_FILE_ERROR), and a YAML load cannot see it. Close condition, restated to the row's own defect: the commit path refuses a buildspec in which any `phases.*.commands` item is not a string, with the d8f3448b9b file as its positive control.
+
+-- 3.0.0_SA_CVO~DELL1

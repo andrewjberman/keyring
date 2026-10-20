@@ -50,7 +50,7 @@ FR-s-6 is merged: `adapters.py` is new and `box/run.py` changed (the daily attri
 
 ### SCOPE WIDENED AGAIN (issuer, 2026-10-20 ~16:35Z; CTO ruling 8704) -- the box needs Xvfb, then the sixth delivery
 
-The sign-in now launches a HEADED Chromium under a virtual display. Before (or with) the sixth delivery, install the package on the box: `sudo dnf install -y xorg-x11-server-Xvfb` through an SSM RunShellScript, idempotent, no reboot, the box left running (your ledger leg `xvfb-installed`, one more leg beside the code leg). The delivery head will be named by a message once the sign-in repair (REPAIR 7) merges; deliver all shipped files from that head. Criterion FU10-AC2 is checked after both. No bootstrap run, no sign-in, no start or stop.
+The sign-in now launches a HEADED Google Chrome under a virtual display. Before (or with) the sixth delivery, install the package on the box: `sudo dnf install -y xorg-x11-server-Xvfb` through an SSM RunShellScript, idempotent, no reboot, the box left running (your ledger leg `xvfb-installed`, one more leg beside the code leg). The delivery head will be named by a message once the sign-in repair (REPAIR 7) merges; deliver all shipped files from that head. Criterion FU10-AC2 is checked after both. **CTO ruling @c618ca8c8c (Andrew-direct): the browser is real Google Chrome, not Chromium.** So the install leg is TWO packages: `xorg-x11-server-Xvfb` and Google Chrome stable (the RPM from `https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm` by `sudo dnf install -y <that url>`; Playwright cannot install the `chrome` channel on this OS, so use the RPM). The `fu10x` check now launches `channel='chrome'` headful under Xvfb. No bootstrap run, no sign-in, no start or stop.
 
 ### ACCEPTANCE
 
