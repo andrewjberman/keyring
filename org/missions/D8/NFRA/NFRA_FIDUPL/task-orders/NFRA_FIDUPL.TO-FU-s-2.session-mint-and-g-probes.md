@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -60,6 +60,17 @@ FU-x-1 attempt 2 ran your `--trace-login` on the real box (SSM command e0b78633-
 5. **Fingerprint facts:** the user-agent string, the value of `navigator.webdriver`, whether `window.chrome` exists, and the viewport size.
 Add five tests to the EXISTING file `tests/test_login_trace.py` (keep its five): `test_trace_records_network_calls_without_bodies`, `test_trace_records_form_state_without_values`, `test_trace_records_error_text_after_next`, `test_trace_records_console_error_count`, `test_trace_records_fingerprint_facts`. Do not change the Next-click mechanism yet except that after the click you MUST wait for the page change or the error as in item 3; if you can see from the CRO's listing (reference section 10) that a different control submits the form, use it and say so in a surprise row. Same rules: criterion FU2-AC4 now needs all ten tests; refresh your proof instance for four criteria, flip to complete only when all four PASS; you make no AWS call and no live call.
 
+### REPAIR 3 (issuer, 2026-10-20 ~14:40Z; this order is REOPENED a third time) -- the G switch is MEASURED, so the probe stops guessing a dialog
+
+Andrew recorded the G-number switch (HAR 4) and the CRO measured it: `C:/Dev/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261019_NFRA_FIDUPL_ACCOUNT_TXT_AND_FIRM_SPLIT.md` section 2b (absolute path in the main tree, read-only for you; read it whole). It is a legacy server-rendered JSP form on a DIFFERENT host, not an API and not a dialog: GET `https://wealthcentral.advisorchannel.com/ac/wc/channel/jsp/support/ria_changegnum.jsp` redirects (302) to `https://www2.advisorchannel.com/wc/channel/jsp/support/ria_changegnum.jsp`, a form `pgChangeGN` with `select name="gnumClientNm"` (31 options), a checkbox `isDefault` (Set As Default), a hidden `process=change`, and the page prints `Current: <G> - <label>` and `Default: <G> - <label>`. A switch is POST to `https://www2.advisorchannel.com/wc/channel/jsp/support/ria_changegnum.jsp`, content type `application/x-www-form-urlencoded`, body `gnumClientNm=<G>&process=change`, with `isDefault` OMITTED; it answers 200 with the same page and re-issues the session cookies. No `x-xsrf-token` is needed there.
+Rewrite `probe_g_switch` (and its Playwright adapter in `signin_recon.py`) to use that recipe through the signed-in context's request object, and drop the dialog guesses:
+1. GET the form page; parse the `Current:` and the option values; remember the starting G (the `Current:` value). Count the options (that is `options`).
+2. Read `accountList.json` (POST `/ssc/accountsearch/wc/channel/accountList.json`, form `length=2000&accountNumber=&sourceCode=BROK&custodianCode=FID`, header `x-xsrf-token`) and record only the total count.
+3. Pick the FIRST option whose value differs from the starting G (the code reads the option list at run time; no G number is written in any file or output), POST the switch WITHOUT `isDefault`, and assert the response's `Current:` equals the requested value.
+4. Read `accountList.json` again, record the count, and set `list_narrows` as before.
+5. In a `finally`, POST the switch back to the starting G and assert `Current:` equals it; set `restored_starting_g` accordingly. Never send `isDefault`. Counts and booleans only: no G number, no account number, no label text with a firm name, in any return value, log or print.
+Tests (in the EXISTING `tests/test_gprobe.py`, with fakes; keep your five and add): `test_probe_posts_form_without_isdefault`, `test_probe_asserts_current_cell_equals_requested`, `test_probe_uses_www2_jsp_endpoint`. FU2-AC3 needs all eight. Re-run all four criteria, refresh your proof instance, flip to complete only when all four PASS. No AWS call and no live call.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -69,7 +80,7 @@ Add five tests to the EXISTING file `tests/test_login_trace.py` (keep its five):
 `FU2-AC2` -- the four account.txt read tests exist and pass.
 
 <criterion id="FU2-AC3" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2c</invocation><expect>R1-FU2C-OK passed=\d+</expect></criterion>
-`FU2-AC3` -- the five G-switch probe tests exist and pass.
+`FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
 `FU2-AC4` -- the ten login-trace tests (the five of the first repair and the five of REPAIR 2) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
