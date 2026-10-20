@@ -973,6 +973,29 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Worker rules: a commit passes .tools/safe-commit.sh; the commit-gate reports the checks it ran per file.",
     "world_is": "The commit-gate checks for the two files of c959c9abdf were clean (2 of 2). The risk reflex and naming gate did not grade this diff in this worktree, and the commit was not blocked by either. Their verdicts for this commit are therefore not evidence of a clean diff. The sibling row NFRA_SCHWABBF-W5-S7 is not edited."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T18:03:14Z",
+    "one_line": "TO-AL-r1 step 9 cannot be met: the new Alongside box (stock Windows Server 2022) has no AWS CLI v2 at C:/Program Files/Amazon/AWSCLIV2/aws.exe, so bootstrap.ps1 cannot be downloaded and would throw at its own line 21 if it were there; the box is built and idle, bootstrap and reboot not run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command 39c62a93-26e4-4d16-b25c-d1acfea82a75 on i-0825aa0ed88342d67: status Success rc 0 but stdout carries no OK: line and stderr reads \"The term 'C:/Program Files/Amazon/AWSCLIV2/aws.exe' is not recognized\" (saved: deliverables/0.7.0_AE_CloudOps~NFRA1/r1/bootstrap_invocation.json)",
+        "Read-only SSM probe 1a7822f0-176a-4263-aba7-865280d76347: os=Windows Server 2022 Datacenter; exists C:/schwab-sdd=True; exists C:/schwab-sdd/bootstrap.ps1=False; exists AWSCLIV2 dir=False; Get-Command aws=none; Amazon dirs=cfn-bootstrap,EC2Launch,SSM,XenTools; modules=AWSPowerShell (saved: r1/probe_readonly.txt)",
+        "infra/aws/ec2/alongside-schwab-si2/bootstrap.ps1 lines 19-21: comment says the CLI is installed for the box user, then 'if (-not (Test-Path -LiteralPath $AWS)) { throw \"aws.exe not found at $AWS\" }'; nothing in the file installs it",
+        "aws secretsmanager describe-secret schwab/alongside/ec2-credentials after the run: VersionIdsToStages null (no AWSCURRENT version), so the generated password was never written"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r1 step 9: the box has C:/Program Files/Amazon/AWSCLIV2/aws.exe, the S3 copy of bootstrap.ps1 succeeds and every bootstrap step line reads OK:.",
+    "world_is": "The Terraform root creates the instance from a stock Windows Server 2022 image that carries AWS Tools for PowerShell (module AWSPowerShell) but not the AWS CLI v2; the 49F box had it installed by hand. Steps 0-8 passed (apply 1 import / 17 add / 0 change / 0 destroy, 0-diff plan, four uploads matched). Steps 9-11 are not run: no bootstrap, no reboot, no quser, no port-forward test. Candidate fixes for the issuer: the root's user_data installs AWS CLI v2 (a .tf edit, forbidden to this order), or an install step is added to this order (MSI from the AWS download URL or an S3-staged MSI). Not improvised here.",
+    "notes": "The box is running, holds no Schwab session, ports closed, four rules DISABLED. It bills while running (t3.large). Ledger nfra-schwabbf-alongside-box-build-20261020 legs L1 and L2 closed, L3 and L4 open and put on hold."
   }
 ]
 ```
