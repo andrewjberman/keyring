@@ -13431,3 +13431,28 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~85",
+  "surfaced_at": "2026-10-20T16:48:18Z",
+  "id": "NFRA_MCPINDEX-Z-W85-S2",
+  "one_line": "The commit gate's naming gate printed NAMING ERROR for the function-map folder infra/aws/lambda/ci/function-map/, which this sparse worktree does not carry; both MX-y-2 commits landed with the naming gate's verdict unread.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 4ea645f8afb (C:/tmp/wk-mcpindex-85/.scratch/commit_i.log line 16) and for a84b4af364d (.scratch/commit_ii.log line 12): '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-85\\infra/aws/lambda/ci/function-map/'; both commits returned rc 0 and both landed.",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-85 at the cut: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery; infra/aws/lambda/ci/ is not in the set."
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4 rule 30: the commit-time naming gate REFUSES names today (LGIC_ENFORCE); a builder or gate that cannot read its registry folder is a finding, not a pass.",
+  "world_is": "In this sparse worktree the naming gate could not read the function-map folder it needs, printed NAMING ERROR on both commits, and did not refuse either. Neither commit names a Lambda resource or a registry name, so nothing this cell wrote was graded by that gate.",
+  "notes": "OBSERVATION, INERT: the cell's paths carry no resource name. The same class was filed on the sibling worktree as NFRA_MCPINDEX-Z-W83-S1. It ARMS when a commit from a sparse worktree that lacks the function-map folder names a resource. Denominator: 2 commits, 2 NAMING ERROR lines, 0 refusals.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
