@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~7</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -40,6 +40,13 @@
    - The record is a text of `key=value` lines: `outcome=SIGNED_IN|REFUSED|ERROR`, `driver=cdp-remote`, `headful=true`, `step_reached=<name>`, `password_ok=true|false`, `code_ok=true|false`, `authorize_ok=true|false`. No value, URL, cookie or message. `run` returns the record text and writes nothing else; a `main()` prints the record, taking `--instance-id` (or the terraform output `instance_id` of `infra/aws/terraform/canonical-fidelity-ec2` read through a subprocess) and `--port`.
    - This module imports NO secrets client and reads NO secret: it must not import `boto3.client("secretsmanager")` use, `read_wealthscape_credentials`, `QuoOtpReader` or `quo_otp`.
 3. **Tests**, fakes only. `tests/test_agent_fill.py`: `test_username_step_fills_and_never_prints_the_value`, `test_password_step_reports_factor_names_only`, `test_code_step_reads_quo_and_reports_authorize_status_only`, `test_attach_uses_localhost_cdp_only`, `test_failure_prints_the_class_name_only`. `tests/test_agent_drive.py`: `test_forward_command_targets_the_cdp_port`, `test_helper_is_invoked_over_ssm_with_a_fixed_command`, `test_drive_order_and_record_are_values_free`, `test_refused_password_ends_the_run_with_a_refused_record`, `test_drive_module_reads_no_secret` (a static read of `agent_drive.py` for the forbidden names). Use a made-up credential string and code in the fakes and assert they appear in no stdout, no stderr, no log, no record.
+
+### REPAIR 1 (issuer, 2026-10-20 ~22:30Z) -- the first live drive ended at the password helper with no detail, and the forward outlives the driver
+
+The first two live runs (22:05Z and 22:17Z, SSM commands on the box): the `username` helper answered `{"ok": true, "path": "/auth/login", "step": "username"}`, then the `password` helper answered `{"error": "LoginStepError", "ok": false, "step": "password"}` with exit 1, nine seconds later, and printed nothing that names the cause (the class name only, as this order required). A read-only look over CDP afterwards: the page is still at `/auth/login`, no `ATT`, no `JSESSIONID`. Two changes:
+1. **`box/agent_fill.py`: a failure line carries a redacted detail and the step trace.** On an exception in any step the single JSON line becomes `{"step":..., "ok":false, "error":"<ClassName>", "detail":"<message>", "trace":[...]}`: `detail` is the exception text passed through the driver's `_render` (which redacts every remembered secret), newlines collapsed, cut to 160 characters; `trace` is the driver's `trace_text()` split into lines, with every line starting `  el tag`, every `third-party` line and every line mentioning `cookies_` dropped, each line cut to 160 characters, at most 40 lines. The line must still contain no credential, code, cookie value, header or URL query. The `ok:true` lines are unchanged.
+2. **`agent_drive.py`: close kills the whole forward process tree.** On Windows, `proc.terminate()` stops `aws.exe` but leaves its child `session-manager-plugin.exe` holding the local port, so the next run attaches through a dead tunnel. In `_close`, after `terminate()` and the wait, also kill the tree: on Windows run `taskkill /PID <pid> /T /F` (a subprocess seam, `os.name == "nt"`); elsewhere `proc.kill()`. Also record in the drive's record a line `helper_error=<ClassName>` when a helper line carried an error (class only; the detail and trace stay out of the record, they are printed to STDERR by `main()` as one block prefixed `HELPER-DETAIL:` so the issuer can read them).
+Add two tests: `test_failure_json_carries_a_redacted_detail_and_trace` in `tests/test_agent_fill.py` (a made-up secret inside the exception message and a trace line is redacted; the line has no `el tag` line; at most 40 trace lines) and `test_close_kills_the_forward_process_tree` in `tests/test_agent_drive.py` (the taskkill seam is called with the pid and `/T /F` when `os.name` is `nt`). FU12-AC1 now needs six, FU12-AC2 needs seven (six plus the one forward-timeout test the first build added). Fakes only.
 
 ### ACCEPTANCE
 
