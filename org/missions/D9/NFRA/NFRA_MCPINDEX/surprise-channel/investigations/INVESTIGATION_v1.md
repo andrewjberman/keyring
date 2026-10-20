@@ -13021,6 +13021,49 @@ carries none.
     "spec_asserts": "The catalog row's read_tool and tools fields state that news_trending_topics reads the trending_reports prefix of the opal-data-news-v2 bucket.",
     "world_is": "No code path reads that bucket or prefix. The link is removed in link_fixes.json. The catalog's read_tool claim is not supported by the code under app/.",
     "notes": "Catalog correction is the issuer's; no edit made in this worker's tree."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W82-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~82",
+    "surfaced_at": "2026-10-20T13:22:58Z",
+    "one_line": "the worktree did not carry infra/aws/ec2/opal-gateway/app (the catalog refs/DATA_CATALOG.yaml that criterion AC2 reads), although the face says it does; added that folder by git sparse-checkout add, the one sparse change the face allows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 step 0: the worktree already carries the sparse folders workflows/gateway_battery, workflows/gateway_battery/tests, workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app. Face section 1 names infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml as an input of AC2.",
+    "world_is": "At box/sitez cut 277ad324045 the worktree sparse list held .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards and workflows/gateway_battery. infra/aws/ec2/opal-gateway/app and workflows/atom_decomposition were absent (ls rc non-zero). After git sparse-checkout add infra/aws/ec2/opal-gateway/app the catalog file is present. workflows/atom_decomposition stays absent; no criterion reads it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/tmp/wk-mcpindex-82 sparse-checkout list, read 2026-10-20 before the add: no infra/aws/ec2/opal-gateway/app line",
+        "ls C:/tmp/wk-mcpindex-82/infra/aws/ec2/opal-gateway/app: No such file or directory (read 2026-10-20)",
+        "git sparse-checkout add infra/aws/ec2/opal-gateway/app: rc=0; infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml present afterwards"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W82-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~82",
+    "surfaced_at": "2026-10-20T13:33:28Z",
+    "one_line": "the work commit 5e0bcdd9cf printed NAMING ERROR 'function-map folder missing' for C:/tmp/wk-mcpindex-82/infra/aws/lambda/ci/function-map/ and WARN 'client-data-check: hashed account-id list ABSENT', and the commit still returned rc=0; the same two conditions as the sibling row NFRA_MCPINDEX-Z-W76-S41.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project. The face's <paths> grant does not name infra/aws/lambda/ci, and the worktree sparse list does not carry it.",
+    "world_is": "bash .tools/safe-commit.sh --author ... -F .scratch/msg_w6_work.txt -- workflows/gateway_battery/routing_table.py workflows/gateway_battery/tests/test_routing_serves.py org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md printed the naming-gate NAMING ERROR for the missing function-map folder and the client-data WARN (account-id list absent), then '[msg-verify] committed 5e0bcdd9cf' with rc=0. The commit-gate line read 'checked 2 of 3 file(s)' for the py gate; the markdown file was not a py file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... -- (3 paths): rc=0; output in C:/tmp/wk-mcpindex-82/.scratch/commit_work.log lines 9-14, 39, 44 (read 2026-10-20T13:33Z)",
+        "git -C C:/tmp/wk-mcpindex-82 log --oneline -1: 5e0bcdd9cf NFRA_MCPINDEX MX-w-6 (0.9.0_WK_NFRA_MCPINDEX~82): --serves-out writes the TRACED set"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
