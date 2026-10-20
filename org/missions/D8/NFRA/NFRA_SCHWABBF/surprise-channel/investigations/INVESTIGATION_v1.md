@@ -651,6 +651,49 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-a1 <paths> names infra/aws/terraform/alongside-schwab-ec2/{main,masters,iam,secrets,box}.tf as the write grant, and the worker commits its granted files with safe-commit.sh.",
     "world_is": "The grant names the folder and the lane admits it, but the worktree's sparse cone does not, so the index refuses the path. The root is built and its test passes (13 passed). The worker adds only the granted folder to its own worktree's cone (git sparse-checkout add of that one path) so the commit can stage it; no other path is added and no tree is rebuilt.",
     "notes": "Plumbing, not a grant change: the write grant is unchanged. A lane that creates a new folder under a sparse parent needs that folder in the cone before the commit. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W12-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~12",
+    "surfaced_at": "2026-10-20T16:22:30Z",
+    "one_line": "The granted folder infra/aws/ec2/alongside-schwab-si2/ is outside this worktree's sparse-checkout definition, so git refuses to stage the four deliverables there and the cell cannot commit them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/Users/AndrewBerman/Desktop/wt-al-12 sparse-checkout list (worktree branch wk-NFRA_SCHWABBF-12, cut from box/laptop at ae487c67689) lists .tools, data/canonical/schwab/tests, infra/aws/ec2/canonical-schwab-si2, infra/aws/terraform/canonical-schwab-ec2, infra/logic/registry, lib, org/devices, org/missions/D8/NFRA/NFRA_SCHWABBF, org/modules/graph, org/ref, org/standards; infra/aws/ec2/alongside-schwab-si2 is not among them",
+        "git -C C:/Users/AndrewBerman/Desktop/wt-al-12 add --dry-run infra/aws/ec2/alongside-schwab-si2/keep-console.ps1 returned rc=1: 'matched paths that exist outside of your sparse-checkout definition, so will not be updated in the index'",
+        "org/missions/D8/NFRA/NFRA_SCHWABBF/task-orders/NFRA_SCHWABBF.TO-AL-p1.alongside-box-puller-copy.md line 30 writes into the same folder, so the same block applies to the sibling cell AL-p-1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-e1 (worker face, first act and Bounds): the worktree must carry the granted paths; a granted path the worktree lacks is a BLOCKING row on that criterion, never an override. The write grant names infra/aws/ec2/alongside-schwab-si2/{keep-console.ps1,bootstrap.ps1,sdd-entitlements.ps1,RUNBOOK_ALONGSIDE_SITTING.md}.",
+    "world_is": "The worktree's sparse set omits the new folder, so safe-commit cannot stage the scripts. The four files exist on disk and the pytest criteria pass against them on disk; nothing in the folder is committed. The worker did not change the sparse-checkout definition, because widening the worktree is the lane owner's call.",
+    "notes": "Remedy for the lane owner, not applied by this worker: add the folder to this worktree's sparse definition (git sparse-checkout add infra/aws/ec2/alongside-schwab-si2) or re-cut the worktree with it, then commit with safe-commit. Untracked files on disk: infra/aws/ec2/alongside-schwab-si2/keep-console.ps1, bootstrap.ps1, sdd-entitlements.ps1, RUNBOOK_ALONGSIDE_SITTING.md. The test file data/canonical/schwab/tests/test_alongside_box_scripts.py is in a materialized path and is also untracked."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W12-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~12",
+    "surfaced_at": "2026-10-20T16:22:30Z",
+    "one_line": "The order names sdd-harness.ps1 as the read-first reference for the UserMasters request and response, but no file of that name exists in this repo at any ref, so the entitlement request and response shapes are unverified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/Users/AndrewBerman/Desktop/wt-al-12 ls-files then a pattern match for sdd-harness returned no tracked path at HEAD ae487c67689; git log --all --oneline -- '*sdd-harness*' returned zero commits (no add or delete in any ref)",
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1 lines 413-420 (Invoke-Sdd, the only SI2 POST shape in the repo) and line 441 (FetchDetails/SpecificFileDetails.aspx) are the in-repo references; no UserMasters response type appears in the repo"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-e1 worker face, item 3: sdd-entitlements.ps1 does what sdd-harness.ps1 does for UserMasters.aspx, and the order says to read sdd-harness.ps1 whole (5.8 KB) first.",
+    "world_is": "The entitlement script names DownloadUserMastersRequest and DownloadUserMastersResponse in the Schwab.SI.SI2Desktop.Contract.Download namespace; the request name comes from the order, the response name is a guess, and the master list is found by reflection. If the shape does not match, the script exits 9 and prints the response property names; it never reports a list it did not read.",
+    "notes": "Not an alert and not a monitor. The issuer supplies the harness or confirms the names. The first live run of sdd-entitlements.ps1 (runbook step h) is the proof of shape."
   }
 ]
 ```
