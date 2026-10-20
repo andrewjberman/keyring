@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -55,6 +55,10 @@ The sign-in now launches a HEADED Google Chrome under a virtual display. Before 
 ### REOPENED (issuer, 2026-10-20 ~18:35Z) -- eighth delivery, signin.py changed at 5cb31dfa650
 
 FU-s-2 REPAIR 10 is merged (the display is started before the Playwright driver). Deliver the shipped set from head 5cb31dfa650 or later (only `signin.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-8-<date>`), check `fu10m`, same rules: a file copy only, no browser, no bootstrap, no sign-in, nothing under either profile directory. The checker was renamed (commit 43ab0c6541): the invocations in this order now name `fidupl_round_checks.py`. Re-run `fu10x` as well (a browser launch under Xvfb on a scratch profile, as the check does) since it is the order's AC2. Tell the issuer in one line; the issuer then runs a launch-only probe.
+
+### REOPENED (issuer, 2026-10-20 ~19:15Z) -- ninth delivery, signin.py changed at 132dc9c3061
+
+FU-s-2 REPAIR 11 is merged (polling survives a navigation race; a failed step records a redacted message). Deliver the shipped set from head 132dc9c3061 or later (only `signin.py` differs from your eighth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-9-<date>`), check `fu10m` (and `fu10x`), same rules: a file copy only, no browser run beyond the check's scratch launch, no bootstrap, no sign-in, nothing under either profile directory. Tell the issuer in one line.
 
 ### ACCEPTANCE
 
