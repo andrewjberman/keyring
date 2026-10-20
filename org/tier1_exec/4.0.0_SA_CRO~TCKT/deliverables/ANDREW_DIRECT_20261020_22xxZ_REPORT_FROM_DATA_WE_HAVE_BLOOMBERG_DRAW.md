@@ -27,8 +27,19 @@ A fourth follow-on message, same session, verbatim:
 > I do not give a shit what this packet looks like as long as it has a bunch of charts and concentrations and etc. on it
 
 Read by this seat (his words above govern):
-- THE BAR IS CONTENT, NOT LAYOUT: the packet must carry many charts and concentration breakdowns built from real data.
-  Matching the YCharts page layout is not required. The sample is a guide to what data is useful, not a template.
+Two more follow-on messages, same session, verbatim:
+
+> the premise is simply to recreate the y chart format, hwoever we have to do it
+
+> and furthermore, there are no limits on bloomberg when it comes to this, it has to get done
+
+- THE GOAL (reading revised on the two messages above): recreate the YCharts packet format, by whatever means. Every
+  chart and concentration breakdown the YCharts packet carries is reproduced from real data; a pixel-exact look is
+  secondary ("I do not give a shit what this packet looks like as long as it has a bunch of charts and concentrations").
+  The sample is the content specification.
+- BLOOMBERG: "no limits ... it has to get done". Where yfinance cannot supply a field, Bloomberg does, with no budget
+  restraint stated. The queue discipline and the per-seat sign-in mechanics (integrations/bloomberg/READ_HERE.md) are
+  how it is done, not limits on whether.
 - SOURCE ORDER for per-security information: yfinance first; Bloomberg where yfinance cannot supply it. This matches
   the PRD v0.22 rule "yfinance first ... everywhere in this process".
 - NO DATA RESTRAINT: Bloomberg may be used for per-security characteristics (beta, duration, "etc"), and for the
