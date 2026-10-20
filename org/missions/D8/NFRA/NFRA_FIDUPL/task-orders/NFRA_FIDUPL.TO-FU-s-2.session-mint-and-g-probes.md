@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -99,7 +99,7 @@ The CRO mapped Andrew's fresh working sign-in: `C:/Dev/ajb_workspace/org/tier1_e
 1. **Headed Chromium under Xvfb, persistent profile.** The box's headless browser on a datacenter address is scored untrusted by the device check, so the password POST is refused. `_launch` now launches the persistent context with `headless=False` AND `channel="chrome"` (real Google Chrome stable, CTO ruling @c618ca8c8c, Andrew-direct: not Chromium; the box gets the `google-chrome-stable` RPM from the CloudOps seat). `_installed_version` probes the same channel so the user agent matches the installed Chrome. `test_launch_is_headed_under_a_started_xvfb` also asserts `channel == "chrome"`; no test is added or renamed. In `box/bootstrap.sh` the `amzn` branch also installs `https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm` by dnf (WARN, not stop, if it cannot). If the environment has no `DISPLAY`, it first starts `Xvfb <display> -screen 0 1440x900x24` as a child process (display `config.get("display", ":99")`), waits briefly for it, sets `DISPLAY` for the browser, and stops that child in `_teardown`. If `DISPLAY` is already set, it starts nothing. If `Xvfb` is not on the PATH, it RAISES an error naming the missing binary, and NEVER falls back to headless silently. `_installed_version` stays headless (a version probe only). The profile directory is the existing persistent one, unchanged.
 2. **Nothing blocks the device beacons.** The page loads about 40 `cfa.fidelity` fingerprint requests and the `online-metrix` script before the password POST; they earn the `ATT` cookie. No request or script may be routed, aborted or blocked on the page or the context; add a test that `route` is never called.
 3. **Factor step is two buttons.** The verify page shows one phone number and the buttons "Text me the code" and "Call me with the code" (no radio, no "Generate"). `select_factor` must tolerate a page with no factor radio; `request_sms` clicks the button whose visible text starts with "Text me the code" (case-insensitive) under `expect_response` of the SMS path `/user/factor/otp/sms/authentication`, returns the send instant as now, and NEVER clicks "Call me". The older radio-and-send path stays as the fallback only when no such button is found. The code page (Security code field, Submit, PUT of the code) keeps its current handling.
-Update the existing assertion in `tests/test_signin.py` that the launch is headless (`kw["headless"] is True`, near line 216) to headed, and add Xvfb to `box/bootstrap.sh`: the package `xorg-x11-server-Xvfb` joins the dnf list for `amzn` (a name the image does not carry is a WARN as the other names are); keep `r1_checks.py fu5b` passing.
+Update the existing assertion in `tests/test_signin.py` that the launch is headless (`kw["headless"] is True`, near line 216) to headed, and add Xvfb to `box/bootstrap.sh`: the package `xorg-x11-server-Xvfb` joins the dnf list for `amzn` (a name the image does not carry is a WARN as the other names are); keep `fidupl_round_checks.py fu5b` passing.
 Add six tests to the EXISTING `tests/test_login_trace.py`: `test_launch_is_headed_under_a_started_xvfb`, `test_launch_reuses_an_existing_display`, `test_launch_fails_loud_when_xvfb_is_missing`, `test_no_request_is_routed_or_blocked`, `test_text_me_the_code_button_sends_the_sms`, `test_call_me_button_is_never_clicked`. FU2-AC4 now needs twenty-five; FU2-AC1..3 and `fu5b` must still pass. Fakes only (fake Xvfb process, fake playwright): no AWS, no live call, no sign-in, no value in any note.
 
 ### REPAIR 8 (issuer, 2026-10-20 ~16:50Z) -- the remainder of REPAIR 7: real Google Chrome
@@ -113,19 +113,23 @@ The issuer ran `--trace-login` once on the box with the REPAIR 8 code (SSM comma
 2. **Puller's Chrome runs with extensions disabled** (CTO ruling 8724): add `--disable-extensions` to `LAUNCH_ARGS`.
 Add two tests to the EXISTING `tests/test_login_trace.py`: `test_display_waits_for_the_x_socket` (a fake child whose socket file appears after a few polls: the call returns only then; and a variant where it never appears: `DisplayError`, child terminated), `test_launch_args_disable_extensions`. FU2-AC4 now needs twenty-seven; fu2a, fu2b, fu2c and fu5b must still pass. Fakes only: no AWS, no live call, no sign-in.
 
+### REPAIR 10 (issuer, 2026-10-20 ~18:30Z) -- the launch still closes: the display is set after the Playwright driver has started
+
+The issuer ran the one live attempt with REPAIR 9 on the box (SSM command 9a0ccbe4-aa54-49d9-8986-78585514434c): `TargetClosedError` again, no page, no Fidelity traffic. Running `signin._launch` on the box and printing the error (a diagnostic, no sign-in) again gave Playwright's banner "launched a headed browser without having a XServer running". REPAIR 9's socket wait was therefore not the cause (the issuer's earlier reading was wrong). The cause is the ORDER inside `_launch`: `cm.__enter__()` starts the Playwright driver process FIRST, and `_ensure_display(config)` sets `os.environ["DISPLAY"]` only AFTER, so the driver, and the Chrome it spawns, never inherit `DISPLAY`. One change in `signin.py`, no other file: in `_launch`, call `_ensure_display(config)` BEFORE `cm.__enter__()` (before the Playwright driver starts), so the environment the driver inherits already carries `DISPLAY`. If anything fails after the display was started, the existing teardown must still stop the child Xvfb (the display is started outside the current try block, so restructure so that a failure in `cm.__enter__()` also calls `_stop_display()`). Add ONE test to the EXISTING `tests/test_login_trace.py`: `test_display_is_set_before_the_playwright_driver_starts` (a fake playwright factory whose `__enter__` records whether `os.environ` holds a `DISPLAY` at that moment; assert it does; and a variant where `__enter__` raises: the child Xvfb is terminated and `DISPLAY` is unset again). FU2-AC4 now needs twenty-eight; fu2a, fu2b, fu2c and fu5b must still pass. The checker file was renamed to `fidupl_round_checks.py` (commit 43ab0c6541); every invocation in this order now names it, so run the criteria with `C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py`. Fakes only: no AWS, no live call, no sign-in.
+
 ### ACCEPTANCE
 
-<criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
+<criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
 `FU2-AC1` -- the seven sign-in tests exist and pass.
 
-<criterion id="FU2-AC2" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2b</invocation><expect>R1-FU2B-OK passed=\d+</expect></criterion>
+<criterion id="FU2-AC2" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2b</invocation><expect>R1-FU2B-OK passed=\d+</expect></criterion>
 `FU2-AC2` -- the four account.txt read tests exist and pass.
 
-<criterion id="FU2-AC3" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2c</invocation><expect>R1-FU2C-OK passed=\d+</expect></criterion>
+<criterion id="FU2-AC3" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2c</invocation><expect>R1-FU2C-OK passed=\d+</expect></criterion>
 `FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
-<criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the twenty-seven login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+<criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
+`FU2-AC4` -- the twenty-eight login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9, one from REPAIR 10) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 

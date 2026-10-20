@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.27",
+ "prd_version": "v0.28",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -168,7 +168,7 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 | C-FILING-HINT: the unmatched-ticker decision tree at filing (v0.12; restated v0.15, v0.18; restated v0.19 to Andrew-direct 10-15 ~21:5xZ, the decision tree; v0.22 yfinance first) | this project | **The door's check asks yfinance first (v0.22, Andrew-direct 10-16 ~15:2xZ): a holding yfinance keeps at T-1 is KNOWN with no YCharts call; YCharts is asked only for a symbol yfinance does not keep.** Every holding the upload door cannot match is CHECKED by the door, then: (A) **the ticker does not exist** (`TICKER_NOT_FOUND`): it is treated as a possible typo, and the form shows 'Did you mean <symbol> (<name>)?' (the door's own provider-verified `suggestion`) with three answers. **Yes** accepts the suggestion (the same upload re-posted with that correction). **Replace** opens an input where the filer types the replacement ticker(s), which are re-posted as corrections and CHECKED AGAIN by the same tree; a replacement that also fails gets the same prompt. **No** files the holding UNRESOLVED, and the form says 'Opal Staff will manage the replacement.' With no suggestion, the prompt offers Replace and No only. (B) **the ticker exists but Opal cannot price it** (`TICKER_DATA_NOT_ENTITLED` and every other unpriceable-as-given class): there is no typo prompt; it files UNRESOLVED with the words 'Opal Staff will manage the replacement.' Every UNRESOLVED holding goes to C-SWAP in the backend, and the report names its replacement. The form NEVER asks the filer to name a proxy: `NAME_PROXY` is retired from every filer-facing finding, and no text tells the filer to replace without an input to do it. Replace is the filer CORRECTING their own ticker, not picking a proxy (swaps are not the filer's, Andrew 10-15 ~14:xxZ). It works for the staff filer after a firm is chosen, and makes no vendor call at the form. |
 | C-HOP-FAILURE: how a failed hop reaches the ticket (v0.20; design fork from `2.0.0_SA_COO~T2` msg 8900, research by this seat) | this project | The ticket READS the failure; no service writes a note to the ticket, and no new ticket route or principal exists for it. (1) The analysis-request ticket page calls the existing status route `getJobStatus(report_ref.request_id, firm)` and shows the state, the failed step and its words. (2) `irpt-status` returns a CLOSED failure code (`^[A-Z0-9_]+$`, an enumerated set) beside the state. Each code maps to words in one table in `status.py` that name the step and what happens next; an unmapped code reads as its step's generic words, never as blank. (3) The generator hops already write the job row in `irpt-jobs` (ATTENTION or FAILED, with `detail.code`). The silent hops write ONE set-once sibling attribute `hop_failure` = {hop, code, at} on that row, beside the receipt, never overwriting READY. The silent hops are the ready-signal send, the commentary draft and the packager. The packager writes it through the resident's existing jobs-table client. The commentary writes it through a `fail` op on the existing draft-store invoke. (4) Writers of `hop_failure`: exactly those three hops, one value per request. (5) A recovered hop (v0.21): the page shows a failure ONLY while the request is unfinished (no package attached). A request whose package is attached shows its completion, and the set-once value stays on the row as history. |
 | C-MODEL-SOURCE: the Opal model data the report engine reads (v0.25; CTO ruling R1 @665110f9c2, key corrected @b9de1e559d, on the CRO research @c05a6b6841) | this project | FWD-10 returns, risk and the chart read the firm-neutral model return series `opal-data-portal-v2` `json/benchmarks/model_portfolio_timeseries.json` (rows date, model_code UST/ST/INT/LT/ULT, model_return, benchmark_return, rfr; inception 2024-04-30) through ONE read grant on the resident policy under a never-widen pair. FWD-10 asset allocation reads the models' CURRENT weights from the registered firm-neutral positioning surface, dated on the page at the T-1 frontier. FWD-11 reads a dated JSON extract `{as_of: {model_code: {ticker: weight}}}` written by the yang job, at a builder address after a new registry row (rule 30); the resident never unpickles. The model-code map (UST to ULT to the catalogue's five Opal models) is one committed artifact. REJECTED: the MDPF composition tables and the gateway composition tool, which are keyed by firm (CLAUDE.md section 5). |
-| C-AUDIT-RECORD: one audit JSON per analysis request (v0.25; CTO ruling R3 @665110f9c2; Andrew 2026-10-20 "a structured JSON for that audit reporting") | this project | A NEW platinum family ANALYSIS_AUDIT, table `analysis_audit` (v0.27; `analysis_reports` is already the analysis table), beside `ycharts_runs` (run.json unchanged; LGIC R19), in each firm's bucket at a builder-made address, WRITTEN BY THE PACKAGER at attach time (the one hop that holds all four linkages; the form as filed is taken from the ticket answers), schema AnalysisAudit.v1 beside AnalysisReport.v2, with a published JSON Schema that a consumer rejects a malformed record against. It carries four linkages: the ticket, the form as filed, the filer, and the package and commentary pointers. Retention: 2,555 days from filing, with no unreferenced expiry (the driver's ruling; Andrew stated none; his word changes it). |
+| C-AUDIT-RECORD: one audit JSON per analysis request (v0.25; CTO ruling R3 @665110f9c2; Andrew 2026-10-20 "a structured JSON for that audit reporting") | this project | A NEW platinum family ANALYSIS_AUDIT, table `analysis_audit` (v0.27; `analysis_reports` is already the analysis table), beside `ycharts_runs` (run.json unchanged; LGIC R19), at the builder-made address in the IRPT product bucket under the firm's key prefix, `opal-data-irpt/irpt/<firm>/platinum/analysis_audit/` (v0.28: every IRPT retained family lives there via `reporting_destination`, and the client firm buckets are fenced against the resident role), WRITTEN BY THE PACKAGER at attach time (the one hop that holds all four linkages; the form as filed is taken from the ticket answers), schema AnalysisAudit.v1 beside AnalysisReport.v2, with a published JSON Schema that a consumer rejects a malformed record against. It carries four linkages: the ticket, the form as filed, the filer, and the package and commentary pointers. Retention: 2,555 days from filing, with no unreferenced expiry (the driver's ruling; Andrew stated none; his word changes it). |
 | C-NAMES: rule 30 | consumed; LGIC | Every new S3 address and resource name is `lib/opal_naming.py` `address()` / `name()` output, printed in the order that writes it. |
 
 ## 2. THREAD -- FWD-1, round 1
@@ -747,5 +747,24 @@ accepted because the CRO wrote the brief (proportionate sign-off).
 **Unchanged:** the outcome, the linkages and the retention.
 
 **Sign-off:** a CONTRACTS edit, so `3.0.0_SA_CVO~DELL2` reads it (the v0.26 note).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## v0.28 (2026-10-20 ~18:2xZ, 1.0.0_SA_CTO~DELL2) -- C-AUDIT-RECORD's address: the IRPT product bucket under the firm prefix (text only)
+
+**On:** `2.0.0_SA_COO~Y2` msg 18:21Z (worker 342's finding, probed by the issuer; orders 466 to 468 amended @a71b17d96d).
+
+**Why "each firm's bucket" was wrong:**
+- Every IRPT retained family is addressed by `reporting_destination` into `opal-data-irpt/irpt/<firm>/<tier>/<table>/...`.
+- The client firm buckets are fenced against the resident role (`resident.tf` 229-241).
+- So the audit record lives at `opal-data-irpt/irpt/<firm>/platinum/analysis_audit/`, with the firm in the key. This is the
+  LGIC home that Andrew's "using lgic naming standards of course" points to.
+
+**Rejected:** the alternative, a per-firm principal, would be a never-widen-class widening for no gain.
+
+**For Andrew:** his words were "I believe we just have an analysis-report folder in each firm's bucket". The record is per firm,
+by key prefix in the product bucket. This seat states the difference in its close-out report so he can correct it.
+
+**Sign-off:** a CONTRACTS edit, so `3.0.0_SA_CVO~DELL2` reads it; the brief half re-reads.
 
 -- 1.0.0_SA_CTO~DELL2
