@@ -27480,3 +27480,146 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W310-S3 -- the firm-list hold of CTO item 4 applies only while no firm is chosen, because the AR-y-416 test (7) pins that a chosen firm is never held for the list's readiness
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W310-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~310",
+    "surfaced_at": "2026-10-20T01:42:55Z",
+    "one_line": "CTO item 4 (Loading the firm list... / the Try again words for an internal filer while firms is null) and the AR-y-416 test (7) (a chosen firm is never held for the list's readiness) meet in submitHeldReason; the worker applied the firm-list words only while no firm is chosen, and left test (7) unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-429 item 4 (CTO msg 11159): for an internal filer while firms is null the held line says Loading the firm list... (or the failed words); the existing pin analysis-form-derived.test.tsx test (7) asserts that a list still loading, or a failed read, holds nothing once a firm is chosen. The order says to keep each pinned intent and weaken no assertion.",
+    "world_is": "The page never reaches the conflicting state: filingFirm returns '' while firms is null, so the form's firm is always empty then. The two statements meet only in the pure function. The worker scoped the firm-list words to firm '' in submitHeldReason (portal commit 96d4e00a, src/pages/TicketCenter/analysisRequest.ts), so a chosen firm is never held for readiness, and test (7) at 8942a0d70ed3 (src/pages/TicketCenter/__tests__/analysis-form-derived.test.tsx lines 235-237) stands unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/TicketCenter/__tests__/analysis-form-derived.test.tsx@8942a0d70ed3 lines 235-237 (test (7) assertions on firms null with firm fir_alpha)",
+        "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx@8942a0d70ed3 filingFirm: firms null returns '' (line 103)",
+        "portal/src/pages/TicketCenter/analysisRequest.ts@96d4e00a submitHeldReason internal branch: the firm-list words sit under firm === ''"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reported only. No existing row was edited. Whether the pin or the hold is the intent is for the CTO or the CVO to rule; the commit's test suite is green on the scoped reading (272 pass, 0 fail)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W315-S1 -- the order's literal rename keeps the generator's must-differ guard on opal_producer.py, which the r34m build does not change; the guard list was edited to the three movers
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W315-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~315",
+    "surfaced_at": "2026-10-20T01:48:21Z",
+    "one_line": "The order's one-pass r34l to r34m rename keeps make_scripts' must-differ guard naming ycharts/research/opal_producer.py, which is byte-identical between r34l and the r34m build, so the generator would refuse; the guard list was edited to the three movers and the two sums and bindings members.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order cell AR-y-430 step 1: make the four r34m copies by one rename pass (r34l -> r34m, r34k -> r34l) and apply exactly the listed constants; EXPECT_CHANGED is the five members (SHA256SUMS, resident_bindings.json, resident_installed.py, resident_worker.py, opal_packager.py). The inherited generator guard requires opal_producer.py to differ between the base and the release.",
+    "world_is": "The build pin 7f1eab530cde is pin C 2a3aaa2815 with exactly three files differing (git diff --name-status: M resident_installed.py, M resident_worker.py, M opal_packager.py). opal_producer.py is the pin-C blob in both r34l and r34m, so the inherited line 'for must in (SUMS, BINDINGS, opal_producer.py, resident_installed.py)' would refuse the generator. The must list was changed to SUMS, BINDINGS, resident_worker.py, opal_packager.py, resident_installed.py in make_scripts_r34m.py only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~306/r56/make_scripts_r34l.py @ c1dc97ad58a (inherited must-differ guard line)",
+        "git diff --name-status 2a3aaa2815874f8efaed622065676332ec41808d 7f1eab530cde4661e9a559bf45439ebdbf73dab2 @ c1dc97ad58a: three M lines, the three O5 movers only",
+        "r34m_build.py run @ c1dc97ad58a: R34M-BUILD-OK 317 members, builds identical 317 of 317, changed 5 added 0 removed 0 (the generator ran on the edited must list)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Edited in the worker's r57 copy only; the criterion text was not edited. The issuer should confirm the five-member guard as the r34m reading of the inherited must-differ rule. The predecessor's copy is untouched."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W315-S2 -- the r34m copies carry constant and prose edits beyond the order's enumerated rename (reported, not ruled)
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W315-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~315",
+    "surfaced_at": "2026-10-20T01:48:21Z",
+    "one_line": "The r34m copies carry constant and prose edits beyond the order's enumerated rename: the generator's base tarball sha, the ledger date stamp, the generated host headers (the changed-member provenance, the round and issuer, the authorship line), the builder's R55 constant name and docstring, and an added tool_copies record key.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order cell AR-y-430: 'Apply exactly' the listed constants; 'Any literal that still names r34k after the pass, or any other edit, is a BLOCKING row naming it'; the record carries the sha256 of each of the four copies.",
+    "world_is": "Edits beyond the enumerated list, all in the r57 copies: (a) make_scripts_r34m.py R32_TAR set to the r34l tarball sha e1466cb8a0465572e4e0f9a42d79e193313c8afea5fbc2f3370a9ec015a33b6c (the order names this sha for the builder only); (b) LEDGER_OLD set from irpt-resident-r34l-20261017 (the shifted r34k stamp, a date no r34l run carries) to irpt-resident-r34l-20261019, the r34l ledger; (c) the HOST_HEADER changed-member sentence rewritten from AR-y-404 and AR-g-161 to AR-y-417 and AR-y-423, and its authorship line from ~297 to ~315; (d) the three generated header comments 'rounds 53 and 54 (issuer 2.0.0_SA_COO~G2)' rewritten to 'round 43 workstream ZZ89 (issuer 2.0.0_SA_COO~Y2)'; (e) the builder's R55 constant and variable renamed to R57, the docstring clauses rewritten; (f) make_scripts_r34m.py and check_r34m_record.py docstring and EXPECT updated to the five members; (g) the record gains a tool_copies block carrying the four copy sha256 values, which the order asks the record to carry. The residual literal check finds no r34k or 34K literal in the four copies.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~315/r57/make_scripts_r34m.py (R32_TAR, LEDGER_R31 line, HOST_HEADER, the three header comments) at this worker's HEAD after commit",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~315/r57/r34m_build.py (R57 constant, docstring, tool_copies) at this worker's HEAD after commit",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~315/r57/RESIDENT_R34M_BUILD.json delta_vs_r34l and tool_copies"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Every edit is textual or a constant that the order's rename would have left stale; none changes a member byte of the release (the members and the delta are as the order states). Reported for the issuer's ruling; the worker did not widen the order."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W315-S3 -- the xref rule's basename fallback matches the stdlib urllib.parse to intake/parse.py (false BAD on the correct build); dotted names now match by path only
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W315-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~315",
+    "surfaced_at": "2026-10-20T01:48:21Z",
+    "one_line": "The order's xref rule 'match the module's dotted path or its basename' resolves the stdlib import urllib.parse to the intake/parse.py member by basename, so the first widened run printed a false R34M-XREF-BAD missing=1 quote on the correct build; the checker now applies the basename match to undotted names only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order cell AR-y-430, check_r34m_xref.py: for every import whose module resolves to another member of the tarball (by dotted path, or by basename), each attribute the mover reads from it must be defined at module level in that sibling.",
+    "world_is": "opal_packager.py line 317 reads 'from urllib.parse import quote' (stdlib). The first run of the basename rule on irpt-resident-0485393f3a-r34m.tar.gz printed R34M-XREF-BAD missing=1 quote, naming intake/parse.py, a false positive. With the basename fallback limited to undotted names, the same tarball prints R34M-XREF-OK missing=0 names=79, and the difference control (one sibling definition removed) still prints R34M-XREF-BAD missing=1 KeyComponentRefused.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py @ c1dc97ad58a line 317 (from urllib.parse import quote)",
+        "R34M-XREF-BAD missing=1 quote and R34M-XREF-OK missing=0 names=79 runs on C:/dev/irpt-release-r35e/irpt-resident-0485393f3a-r34m.tar.gz (sha256 d9be3cea9fded27e4a34b094cb83816f5ae8fb5863eb176fc90d954125b44c64)",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~315/r57/check_r34m_xref.py resolve() at this worker's HEAD after commit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The basename rule is kept for undotted module names only. A dotted third-party or stdlib name is never resolved to a member by its last component."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S218 -- Run 5's file holds two unknown tickers, not one, and a third synthetic original-holdings object is stranded
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S218",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T02:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The fifth commentary run stopped at the door and stranded a THIRD synthetic original-holdings object the CloudOps principal cannot delete; the order's own holdings bytes hold two unknown tickers (APPL and ZQXWVK), not the one its Keep rule assumes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state_e2e5.json (irpt_anlreq_commentary_e2e5): the delete of this object answered AccessDenied for the CloudOps principal on 2026-10-20T02:05Z; the run's other 6 recorded keys read ABSENT (deleted 6 of 8; 7 distinct keys)",
+      "the door's NEEDS_CORRECTION answer to the sixth-post sequence carried five findings: TICKER_KEPT_BY_HISTORY on SPY, AGG, TIMXX (rows 2 to 4) and TICKER_NOT_FOUND on APPL (row 5) and ZQXWVK (row 6); ADDENDUM 6 (b) sends the Keep only for exactly one TICKER_NOT_FOUND on ZQXWVK",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: the principal the application deletes this prefix with is NONE FOUND"
+    ]
+  },
+  "spec_asserts": "ADDENDUM 6 of the commentary run packet: the holdings bytes carry exactly one unknown ticker (ZQXWVK), so the Keep rule's exactly-one-finding branch can fire; and the pair's rule that a run deletes what it creates.",
+  "world_is": "The door returned five findings for the order's five-row file: APPL (row 5) reads TICKER_NOT_FOUND as well as ZQXWVK, so no Keep was sent and the run stopped at U. The object irpt/49financial/state/original_holdings/ART-5c5ed7e1631a265d1e606caafb12e2047ec1b78378e27205872daf47f7e44069/d83e1c2cc18418d69523a659d6191f6a75d9ff3fb0f229234d8c111afe073bab.csv remains (one version); its delete is AccessDenied and no application path deletes it; the prefix now holds three synthetic leftovers (S214, S217 and this). No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
