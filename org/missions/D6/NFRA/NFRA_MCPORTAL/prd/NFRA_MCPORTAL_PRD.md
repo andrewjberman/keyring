@@ -667,10 +667,11 @@ stays the read-only map, and `/people` keeps its list and links into `/opalgatew
   - Proof: the restore after FWD-24, then the next call is admitted.
 - **FWD-26 -- Add a channel the person lacks, in one act, labelled WIDENING before it lands.**
   - The writer refuses a widening that has no recorded sign-off. **That sign-off is defined here** (CVO cure W1, @6ec8d689d5):
-    - **The verified owner's confirm IS the recorded sign-off.** That is a master-admin principal confirming a
-      WIDENING-labelled add on the page. The writer stores it with the act: who, when, before and after. This keeps
-      Andrew's "with ease".
-    - **A widening that an agent requests** (any seat, any script) still needs the three never-widen halves.
+    - **The verified owner's confirm IS the recorded sign-off.** That is the confirm, on a WIDENING-labelled add, of the
+      principal that passes `owner_gate.require_owner` (`app/owner_gate.py:34`, Andrew's identity only). The writer stores
+      it with the act: who, when, before and after. This keeps Andrew's "with ease".
+    - **Every other principal needs the three never-widen halves.** That includes `master_admin`, which also holds system
+      identities (`app/tier.py:29`), and any widening an agent, seat or script requests (CVO cure W1', @a9e0c88901).
     - Requiring halves on the owner's own clicks too would be Andrew's call. It is not implemented here.
   - The data family needs a grant layer. The `client_*` tools for a non-master person ride the per-firm client grant shape:
     NFRA_OPLGTW round 48, Andrew's yes for Alyssa and Menachem @50bd4a33b4.
