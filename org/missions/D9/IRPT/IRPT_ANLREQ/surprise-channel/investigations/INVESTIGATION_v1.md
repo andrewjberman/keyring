@@ -28556,6 +28556,7 @@
 }
 ]
 ```
+
 ## IRPT_ANLREQ-D2-W324-S3 -- the difference control swaps the guard file in place for one run, because the test's import is a relative path
 
 ```json
@@ -28777,6 +28778,79 @@
       "portal/src/pages/TicketCenter/TicketCenter.tsx staff submit button disabled={creating || heldReason !== null} @d5d2fdea",
       "portal/src/pages/TicketCenter/analysisRequest.ts ADVISOR_HELD and submitHeldReason advisor check @d5d2fdea",
       "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/shots_blank_advisor (AC2 run, rc 1, B2 REFUSED line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W326-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~326",
+  "surfaced_at": "2026-10-20T17:01:35Z",
+  "one_line": "AR-y-461 and PRD C-SWAP name the swap classifier as kimi-k2.6; the classifier in this tree pins kimi-k3 (etf_classification_model.py:42, resolution_kimi.py:20). Read only; no row or code changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-SWAP row (org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md:166) and the AR-y-461 cell context: SECCLASS's classifier on kimi-k2.6 with a web-search tool and the tool-call loop.",
+  "world_is": "The classifier module infra/aws/lambda/v2_portal/_shared/etf_classification_model.py pins MODEL = kimi-k3 (line 42), and intake/resolution_kimi.py pins kimi-k3 (line 20). The recorded Kimi ruling is kimi-k3 (infra/aws/terraform/estate-report/instance.tf:16-19); kimi-k2.6 appears at instance.tf:22 with its KIMI_HTTP_400 cause recorded as open. Measured by reading at worktree HEAD; no call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:42 MODEL = kimi-k3 read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:20 MODEL = kimi-k3 read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/terraform/estate-report/instance.tf:16-22 kimi_model ruling and kimi-k2.6 note read in worktree wk-IRPT_ANLREQ-326"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W326-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~326",
+  "surfaced_at": "2026-10-20T17:01:35Z",
+  "one_line": "The contract's step (3) classifier is not on the investor-reporting resident path: the resident classifies by table read, the model classifier has no web-search tool, and the resident's swap-kind advisory refuses KIMI_WEB_SEARCH_UNVERIFIED by construction. Step (3) cannot be wired as worded without a ruling.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-461 (S2 of the read): compare what the named classifier needs at run time with what the investor-reporting resident has. PRD C-SWAP step (3): CLASSIFY only if neither Yahoo nor YCharts has prices, using SECCLASS's classifier on kimi-k2.6 with a web-search tool and the tool-call loop.",
+  "world_is": "No investor-reporting module imports etf_classification_model (ycharts/generate/kimi_port.py:4 names it in a docstring only). The resident's stores classifier is the ETFClassifier table read (reports/resident_installed.py:374-376; ycharts/research/layout_overview.py:776-777). classify_one sends no tools (etf_classification_model.py:178-179) and has one retry loop (lines 186-208). The swap-kind advisory needs a verified search_capability (intake/resolution_kimi.py:159-165); ycharts/session/resident_session.py:137 builds KimiAdvisory without it. So step (3) needs a ruling on the model and a verified web-search configuration.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:374-376 _open_classifier read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:178-179 payload with no tools read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:159-165 search_capability gate read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py:137 KimiAdvisory built without search_capability read in worktree wk-IRPT_ANLREQ-326"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W326-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~326",
+  "surfaced_at": "2026-10-20T17:01:35Z",
+  "one_line": "The swap path has no 0.80 flag, no price-first check for the holding, and no sub-class bound on a model classification: swap_pass writes low_confidence as a literal False and swap_holdings goes straight from the UNRESOLVED row to classify.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-SWAP row (IRPT_ANLREQ_PRD.md:166) step (2): PRICE the holding first, Yahoo then YCharts; step (3): below 0.80 confidence FLAGGED; PRD lines 691-692: a pick below 0.80 is flagged.",
+  "world_is": "swap_pass.py:196-202 has no price call before _symbol_class and choose_replacement. swap_pass.py:167 writes the literal low_confidence False into every record. The 0.80 threshold exists only at etf_classification_model.py:52 with its flag at line 214, and the swap path never calls classify_one. classify_one leaves sub_asset_class unbound (lines 141-143); the live-table bound is apply_bound in v2_portal/yang_pipeline/classify-residual-model.py:133-148.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py:167 literal low_confidence False read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py:196-202 holding loop with no price call read in worktree wk-IRPT_ANLREQ-326",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:52 and :214 threshold and flag read in worktree wk-IRPT_ANLREQ-326"
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
