@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -52,12 +52,16 @@ FR-s-6 is merged: `adapters.py` is new and `box/run.py` changed (the daily attri
 
 The sign-in now launches a HEADED Google Chrome under a virtual display. Before (or with) the sixth delivery, install the package on the box: `sudo dnf install -y xorg-x11-server-Xvfb` through an SSM RunShellScript, idempotent, no reboot, the box left running (your ledger leg `xvfb-installed`, one more leg beside the code leg). The delivery head will be named by a message once the sign-in repair (REPAIR 7) merges; deliver all shipped files from that head. Criterion FU10-AC2 is checked after both. **CTO ruling @c618ca8c8c (Andrew-direct): the browser is real Google Chrome, not Chromium.** So the install leg is TWO packages: `xorg-x11-server-Xvfb` and Google Chrome stable (the RPM from `https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm` by `sudo dnf install -y <that url>`; Playwright cannot install the `chrome` channel on this OS, so use the RPM). The `fu10x` check now launches `channel='chrome'` headful under Xvfb. No bootstrap run, no sign-in, no start or stop.
 
+### REOPENED (issuer, 2026-10-20 ~18:35Z) -- eighth delivery, signin.py changed at 5cb31dfa650
+
+FU-s-2 REPAIR 10 is merged (the display is started before the Playwright driver). Deliver the shipped set from head 5cb31dfa650 or later (only `signin.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-8-<date>`), check `fu10m`, same rules: a file copy only, no browser, no bootstrap, no sign-in, nothing under either profile directory. The checker was renamed (commit 43ab0c6541): the invocations in this order now name `fidupl_round_checks.py`. Re-run `fu10x` as well (a browser launch under Xvfb on a scratch profile, as the check does) since it is the order's AC2. Tell the issuer in one line; the issuer then runs a launch-only probe.
+
 ### ACCEPTANCE
 
-<criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
+<criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
 `FU10-AC1` -- the seven shipped files on the box match the repo by md5.
 
-<criterion id="FU10-AC2" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu10x</invocation><expect>R1-FU10X-OK Xvfb present and a headed Google Chrome launches under it</expect></criterion>
+<criterion id="FU10-AC2" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10x</invocation><expect>R1-FU10X-OK Xvfb present and a headed Google Chrome launches under it</expect></criterion>
 `FU10-AC2` -- a second criterion, with its reason: the code md5s cannot see that the box can run a headed browser, which is the whole point of the sixth delivery.
 
 <expected_criteria>FU10-AC1,FU10-AC2</expected_criteria>
