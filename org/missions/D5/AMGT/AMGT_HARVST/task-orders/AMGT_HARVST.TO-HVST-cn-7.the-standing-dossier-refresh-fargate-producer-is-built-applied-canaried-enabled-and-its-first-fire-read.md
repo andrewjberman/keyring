@@ -87,9 +87,11 @@ This order touches none of them (the bucket and prefix are AMGT's own).
 - **The first-fire read is organic (the negative arm):** the next scheduled fire. The deliberate arm is stage 4's canary (a dry run of the same task definition). A deliberate real-write fire would write nothing today (the dossiers are level); after the 13:00Z model blocks of the next day it would, but that is the scheduled fire's read.
 - Dry run at the base (issuer, dell1, 2026-10-18 ~22:5xZ): all three criteria FAIL as expected (the file does not exist).
 
+- **COMPLETE (issuer, 2026-10-20 ~16:3xZ):** seat `0.7.0_AE_CloudOps~SC1`, stage 6 evidence `f36c8d99c7` (`cn7_s6.out`, `cn7_served.out`; proof instance VALID rc 0). READ BY ME, not the seat's word: the first scheduled fire is ECS task `bc80a834255049eb89c1731792eef625`, started 14:00:57Z, stopped 15:57:02Z, wall 6965 s, exit 0 (not the oracle). I read the log stream's final line myself (`filter-log-events`): `REFRESH-CENSUS names=95 written=92 would_write=0 unchanged=0 skipped_guard=3 errors=0 mode=write`, and `aws s3 ls --recursive` of `gold/research_dossier/` counts exactly 92 objects with `as_of=2026-10-20`. AC1 to AC3 each match once in `cn7_served.out` (all three PASS lines). The three guard stops are BZLFY_US_Equity, PBR_US_Equity (named in the order) and TSM_US_Equity, each one valued row fewer than stored; the order grades a guard stop as reported, not failed. The two unnamed stops are filed as row `AMGT_HARVST-D1-S68` (OBSERVATION, INERT) for the round analysis. I did not re-run the samples (SC1's `samples_ok=92 of 92`, and `BP/_LN_Equity`, are the seat's read, not mine).
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>99</round>
 <workstream>REFRESH-STANDING</workstream>
 <slot>dell1</slot>
