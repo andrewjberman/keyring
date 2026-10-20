@@ -13405,3 +13405,27 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~87",
+  "surfaced_at": "2026-10-20T16:38:00Z",
+  "id": "NFRA_MCPINDEX-Z-W87-S1",
+  "one_line": "The commit gate printed a NAMING ERROR for the function-map folder and a risk-reflex PARTIAL_OR_BLIND read, and safe-commit still returned rc 0 and landed e70e101542f; this worktree's sparse cone does not carry infra/aws/lambda/ci/function-map/",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for e70e101542f in C:/tmp/wk-mcpindex-87: '[naming-gate] NAMING ERROR function-map folder missing: C:/tmp/wk-mcpindex-87/infra/aws/lambda/ci/function-map/' then '[wk-NFRA_MCPINDEX-87 e70e101542] feat(NFRA_MCPINDEX round 25 GATEWAY ...'; the commit reported rc=0",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-87 at HEAD 62604a82b8c: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery; ls of infra/aws/lambda/ci/function-map returns no such directory"
+    ]
+  },
+  "spec_asserts": "The face says the commit gate runs py_compile, the naming gate and ruff for py39, and a commit through safe-commit.sh is graded by those gates before it lands.",
+  "world_is": "The naming gate printed NAMING ERROR (function-map folder absent from this sparse worktree) and did not refuse; the risk-reflex printed ANSWER STATE PARTIAL_OR_BLIND (danger map 116.6h STALE, 0 of 2 files scanned). The commit landed at rc 0. The naming gate's verdict on the two staged files is therefore not established by that log; this row records the form only.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
