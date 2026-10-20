@@ -15012,3 +15012,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts and harness notification summaries only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-D1-S24 -- fourth dell1 exit cluster: COO~W1 at 12:38:52Z, then COO~R1 and CloudOps~SC1 3 ms apart at 13:17:46Z; no kill line; binary, shim and broker unchanged; cause not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S24",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-20T13:35:00Z",
+  "one_line": "Three more dell1 seat ends since S23: COO~W1 at 12:38:52.800Z (13 min 57 s after its 12:24:55Z respawn), then COO~R1 at 13:17:46.870Z and CloudOps~SC1 at 13:17:46.873Z, 3 ms apart. No kill line. The installed claude binary and the broker did not change. Cause not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED here, each transcript identified by its own tool-call serial field: last transcript write W1 12:38:52.800Z, R1 13:17:46.870Z, SC1 13:17:46.873Z. The last entry of each is a queued task-notification, status killed, summary 'Monitor <inbox watcher of the seat> stopped'. Last API responses: W1 12:30:35Z, R1 13:10:17Z, SC1 13:05:43Z. The write time is a transcript time; the process end time was not read.",
+      "MEASURED survival: W1 13 min 57 s after its respawn at 12:24:55Z (spawn audit pid 56632); R1 19 h 32 min after its 17:45:18Z respawn on 10-19; SC1 16 h 49 min after its 20:28:12Z respawn on 10-19 (by COO~R1). The 3 ms gap between R1 and SC1 is the closest pair of ends in S21 to S24 (S23 had SC1 and FB1 27 ms apart).",
+      "MEASURED at 13:28Z to 13:30Z: 0 claude.exe for W1, R1 and SC1; no KILL or FORCE-KILL line in the spawn audit; the only KILL-MAINT-RUN since 19:39Z yesterday that stopped anything is 12:38:55Z (targets=1: one ORPHANED agent-poller python, pid 14296, descendants=0, for W1's serial), which came after W1's last write. No reaper run overlaps 13:17:46Z. kill-maint.ps1 protects every claude.exe and codex.exe tree and session shell in every mode (lines 81 to 86, 653, 722 to 732) and its ORPHANED class targets only a watcher or poller whose serial has no live MCP server (lines 199, 560): a reading of the code, not a replay.",
+      "MEASURED, the dell1 CTO's request (msg 8630) to check the binary and shim and the broker before the respawn: installed claude.exe C:/Users/Test/.bun/install/global/node_modules/@anthropic-ai/claude-code-win32-x64/claude.exe is 244 MB, mtime 10-08 16:35:05Z; the shim C:/Users/Test/.bun/bin/claude.exe is 8 KB, mtime 10-05 22:10:30Z, with claude.bunx 10-08 16:17:28Z; claude --version reads 2.1.293; ~/.claude/.last-update-result.json is the 10-08 16:33:51Z success 2.1.292 to 2.1.293. So no binary or shim change since 10-08. The broker (org/mcp/broker.py, pid 17592) started 10-15 15:48:31Z and is unchanged; no MCP server process started between 12:00Z and 13:30Z today (the newest, pid 1208, started 10-19 21:11:02Z). Running seats' claude.exe still start from the same shim path.",
+      "MEASURED: quota snapshot at 13:31:40Z reads five-hour 8% and seven-day 19%; quser at 13:28Z reads one session, console, Active, idle 1 day 00:46 (last console input about 12:41Z yesterday); the one WindowsTerminal process is unchanged since 15:47:42Z on 10-15's boot. RELAYED from 0.0.0_AB_MSTR~DELL2 (bus 98208082, 13:26Z): 9 dell2 seats ended in the last hour with no kill line, session count 34 to 16; their times are asked (bus e5182d9a), not yet read.",
+      "Not measured: the tab screens (project-titled tabs), the terminal host's log, and whether R1 and SC1 shared a parent event. W1, SC1 respawned 13:30:5xZ on the CTO's ruling (R1 not: its AMGT_RESAPP track is closed, round 126 @93364cad29). The CTO also asked that my reaper be held until 14:30Z; it is. Cites S21 to S23; none edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat session ends by its own exit, a kill line or a reap; none of the last two is on record for these three.",
+  "world_is": "Three more seats ended, R1 and SC1 3 ms apart, with no kill line, no console input for about a day, quota at 8% and 19%, and no change to the claude binary, its shim or the broker. A 3 ms pair is more consistent with one shared event than two exits, as the dell1 CTO reads it; the event is not identified. dell2's nine ended seats may or may not coincide with 13:17:46Z; their times are not yet read. No cause is claimed.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts, file metadata and harness notification summaries only; no transcript content."
+}
+```
