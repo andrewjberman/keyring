@@ -27018,3 +27018,33 @@
   }
 ]
 ```
+
+
+## IRPT_ANLREQ-D2-W310-S2 -- the restored Keep path (AR-y-354 words) is the decision tree No press (AR-y-363): the kept line changes from NO_CHOICE_LINE to keptLine for that press
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W310-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~310",
+    "surfaced_at": "2026-10-20T00:01:45Z",
+    "one_line": "AR-y-425 restores Keep (AR-y-354) on a form where Keep already exists as the decision tree No press (AR-y-363, PRD v0.19), whose words NO_CHOICE_LINE were ruled exactly; the restored keptLine words replace them for that press.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-425 face: re-apply f78ea50e behaviour, keep its words unchanged (keptLine), keep both AR-y-416 and AR-y-419 behaviours; the TO says Keep is a separate press of the Use and Keep form.",
+    "world_is": "On the form at AR-y-419 the equal-pair press is \"No\" (AR-y-363, decision tree Yes / Replace / No) and its kept line is NO_CHOICE_LINE \"Opal Staff will manage the replacement.\". f78ea50e predates the tree and its Keep button is gone. The equal pair, one accumulator, last-click-stands, cap 20, no swap and the no-click rule already held on No, so Keep was applied as the No press: keptHint (= noChoice), isKeptHint, keptLine replaces NO_CHOICE_LINE. filing-decision-tree.test.tsx case e and filing-hint.test.tsx case d re-pinned to the keptLine words. No separate Keep button was added (it would duplicate No).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal show 8095ca42 message: \"keptLine is replaced by NO_CHOICE_LINE\" (AR-y-363, PRD v0.19), Yes / Replace / No",
+        "git -C portal show f78ea50ef87d: Use and Keep buttons, keptLine words \"is kept as you typed it. It is not priced here and goes to the backend with your request.\"",
+        "portal commit 7a7e01775da1 (AR-y-419 candidate): TicketCenter.tsx chooseHint routes every press; AnalysisRequestParts.tsx UploadFindings No press shows the kept line"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Words ruling for the CTO: the TO names keptLine for Keep, which supersedes the AR-y-363 words on the No press. Behaviour is otherwise unchanged. Reversing the words is a one-line change in analysisRequest.ts plus the two re-pinned tests."
+  }
+]
+```
