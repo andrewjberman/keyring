@@ -13539,5 +13539,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         "disposition": "UNDER_INVESTIGATION",
         "notes": "Ruled by the issuer: a guard stop is the designed behaviour and does not fail stage 6. The cause of the two unnamed stops is an enrichment item for the round analysis, not a cn-7 criterion."
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W188-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~188",
+        "surfaced_at": "2026-10-20T17:01:45Z",
+        "one_line": "Batch 16 (OG-rl-17) does not NAME tests/test_cj2_slash_key_one_form.py in its test list and no rl-17 check names it; the test reaches batch 16 only inside the Phase A full-suite comparison, and no release branch is at origin yet. Verdict PARTIAL, not IN.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "CTO cross-adjudication org/critical_paths/cross_adjudication/20261019T1238Z_XA-20261018T094750Z-cbaa.md: tests/test_cj2_slash_key_one_form.py is in EVERY opal-gateway release's test list, whichever box releases; a release that does not run it is not a release of that rule. Site Z batch-16 release order NFRA_OPLGTW.TO-OG-rl-17 (window 2026-10-21 06:00Z to 06:45Z) must therefore name it.",
+        "world_is": "Read 2026-10-20 by 0.9.0_WK_AMGT_HARVST~188 (co4_batch16.sh, output co4_batch16.out): rl-17 names test_cj2_slash_key_one_form 0 times; the two check folders r47/checks and r38/checks (89 files searched) name it 0 times; the test file exists at base 13917ef993 (blob 2bcec39195223f106a76e64405a748ddebbe53e9); rl-17 line 34 (Phase A step 3) states a full-suite comparison against the live ref without naming each tests/ file; git ls-remote origin refs/heads/rel-nfra-oplgtw-batch16 returns no line. Not read: the release tree C:/tmp/og-rel-batch16 on site Z's host (not on this box) and the test list of the release that Phase A would cut there.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~188/co4_batch16.out @7997ac0b53",
+                "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rl-17.round-47-sixteenth-batched-release-the-client-fences-the-size-caps-and-the-in-flight-guard.md @7997ac0b53 (line 30 take list, line 34 full-suite clause)",
+                "git ls-remote origin refs/heads/rel-nfra-oplgtw-batch16 (empty line count 0), read 2026-10-20 ~17:0xZ"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Filed under face section 1c (verdict not IN). The CTO decides any MSTR-to-MSTR routing before the window."
+    }
 ]
 ```
