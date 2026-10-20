@@ -29276,3 +29276,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W341-S9 -- the ANALYSIS_AUDIT family is not in irpt-anlreq-x10-v1 on this branch or on trunk, so the amended writer is refused live until AR-y-466's row lands
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T19:05:00Z",
+  "one_line": "AMENDMENT 1 has the audit addressed by reporting_destination under policy irpt-anlreq-x10-v1 and family ANALYSIS_AUDIT. That family is not in the registry row on this branch or on trunk box/dell2@608c4a61abe (only ANALYSIS_COMMENTARY is), so reporting_destination refuses and the live audit is recorded AUDIT_REFUSED:AUDIT_ADDRESS_REFUSED. The writer's tests supply the family on a copy of the row; the real-row test pins the refusal.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ AR-y-467 AMENDMENT 1: audit_address calls reporting_destination(firm, 'ANALYSIS_AUDIT', ..., policy_revision='irpt-anlreq-x10-v1'), and the family is the product of AR-y-466 (the registry row).",
+  "world_is": "infra/logic/registry/reporting_policies.json on box/dell2@608c4a61abe: policy irpt-anlreq-x10-v1 is ACTIVE with families ['ANALYSIS_COMMENTARY'] only. lib/opal_naming.py _reporting_destination refuses a family outside the policy (around lines 2657-2670) and reporting_policy() raises for an unknown revision. The worker's test fixture adds ANALYSIS_AUDIT (platinum, analysis_audit, json, 2555, unreferenced null) to a copy of the row, and test_real_registry_without_the_family_refuses_the_address reads the real row and expects AddressRefused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json irpt-anlreq-x10-v1 families@608c4a61abe (ANALYSIS_COMMENTARY only)",
+      "lib/opal_naming.py:2657-2680@608c4a61abe (_reporting_destination, reporting_destination)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py::test_real_registry_without_the_family_refuses_the_address@42e154ba95"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W341-S10 -- the packager has no port that writes the reporting bucket, so the audit put is the injected audit_put that AMENDMENT 1 allows as its fallback
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W341-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~341",
+  "surfaced_at": "2026-10-20T19:07:00Z",
+  "one_line": "AMENDMENT 1 says the record is written through the packager's existing writer port for the reporting bucket, and to use an injected put_object if there is none. The packager's only object port is stores(record)['objects'], the firm research principal's client for the firm's own bucket, which is the fenced path. There is no reporting-bucket writer port, so the audit uses the injected audit_put (already optional, S3) and the live caller must supply it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ AR-y-467 AMENDMENT 1: 'The record is written through the packager's existing writer port for the reporting bucket; if the packager has no such port, say so in a surprise row and use an injected put_object(bucket, key, body_bytes).'",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py: the ports dict (lines 43-51) has no reporting-bucket writer; stores(record)['objects'] is the firm research principal client (opal_producer.py:21, put_object(Bucket, Key, Body, ContentType)). The commit adds audit_put as the optional injected port, absent in every existing caller (AUDIT_PORTS_UNWIRED). The live caller (ycharts/generate/resident_worker.py, outside <paths>) does not set it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:43-51@42e154ba95 (ports)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:21@6e36e3dcc29 (objects port: the firm research principal)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:_write_audit@42e154ba95 (audit_put optional)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
