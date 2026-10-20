@@ -1,0 +1,48 @@
+{
+  "slug": "irpt-resident-audit-write-20261020",
+  "title": "IRPT_ANLREQ TO-APPLY-AUDITGRANT: Put-only statement WriteTheAnalysisAudit and three KMS context-list entries on aws_iam_role_policy.runner_resident for the resident host role, resident.tf blob efa98ea249",
+  "author": "0.7.0_AE_CloudOps~IB2",
+  "status": "OPEN",
+  "opened_at": "2026-10-20T22:18:06.637969+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261020T2218Z_irpt-resident-audit-write-20261020_deploy_completion.md",
+  "legs": [
+    {
+      "id": "R0",
+      "kind": "verify",
+      "target": "before-reads: live policy Sid list, KMS context list length, sha256, baseline simulations on a sample audit key",
+      "proof_required": "R0 baseline implicitDeny put on the audit key",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "C",
+      "kind": "verify",
+      "target": "scoped plan at the trunk commit reads 0 to add 1 to change 0 to destroy with exactly one added statement and three KMS entries",
+      "proof_required": "plan output and diff read",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "A",
+      "kind": "activation",
+      "target": "safe-apply of the saved plan",
+      "proof_required": "Apply complete 0 added 1 changed 0 destroyed",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "V",
+      "kind": "verify",
+      "target": "after-reads G1 to G3: byte-equal other statements, simulations, replan No changes",
+      "proof_required": "G1 G2 G3 lines",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261020T221806Z OPENED by 0.7.0_AE_CloudOps~IB2 with 4 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}
