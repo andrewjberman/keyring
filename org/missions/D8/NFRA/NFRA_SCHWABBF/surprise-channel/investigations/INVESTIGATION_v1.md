@@ -736,6 +736,27 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "PRD v0.7 C-KEYFORM item 2 as quoted in order BF-k-3: 'any OTHER master -> TODAY's partition'; firm_of raises for any master not in the firm-form set.",
     "world_is": "Both key files return the pre-round old-form key for any eight-digit master outside FIRM_FORM_MASTERS, registered or not. Only a malformed (non-eight-digit) master raises. Today's callers resolve the master through master_for(), which holds only 08335338 and 08242234, so no live path reaches an unregistered master.",
     "notes": "The literal spec was implemented as written; this row records the silence in the spec (no registry refusal for an unregistered eight-digit master). Disposition for the CTO or the issuer to choose: refuse non-registered masters, or accept them by name."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:12:27Z",
+    "one_line": "The round-2 name MASTER_FIRM was renamed to FIRM_FORM_MASTERS with no alias, although the order asks every round-2 name to keep working. The alias was written and then refused at commit by the owned-paths lane gate, because TO-BF-k3 was already complete, so the committed key functions lack MASTER_FIRM.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/bronze/_monolith_bronze.py@6c4675f585a:71 defined MASTER_FIRM as the seven-master map; at 57310f7877 and 2103514e72 neither key file defines MASTER_FIRM, and a Grep of the worktree data/ tree for MASTER_FIRM returns no code match (docs only)",
+        "safe-commit of the alias in worktree wt-bf-1 (log .scratch/commit_c.log): owned-paths lane violation for both key files, 'no NON-TERMINAL task order at HEAD issued_to this serial names this path', after TO-BF-k3 flipped to complete at 2103514e72"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order BF-k-3 worker face, per-master contract item 'keep every round-2 name working, add the new ones'; TO-BF-m3 imports this contract.",
+    "world_is": "Both key files at 2103514e72 define FIRM_FORM_MASTERS and no MASTER_FIRM. The worktree is clean for the grant files at HEAD. An alias fix needs an order whose <paths> names the two key files and the test while it is non-terminal.",
+    "notes": "Not an alert. Disposition for the issuer: grant the two key files in TO-BF-m3 (or re-open BF-k-3) to add MASTER_FIRM = FIRM_FORM_MASTERS inside the byte-equal block, or confirm that no caller needs the name."
   }
 ]
 ```
