@@ -1262,6 +1262,48 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "BF-g-5 and BF-h-5 (merged) and the CTO's signed fence pair (@4b0036c6cb): the converter role is admitted to write the firm buckets' state prefixes, and with the identity grant and the fence rows the write succeeds.",
     "world_is": "The identity-side explicit Deny of the shared fan-in fence refuses the converter's PutObject on those buckets whatever the grants and bucket policies say. Read from the Terraform text; the live attachment census (aws iam list-entities-for-policy) is the release act R1's check. The 49F box role has no such Deny (iam.tf: only the bd, cot and inf planes).",
     "notes": "Not an alert. Fix shape: a schwab-only policy copy whose belt 1 NotResource adds the 15 enumerated state resources, attached in place of the shared one for the schwab role only; the other five families keep the shared fence. The same fix serves the Cottonwood masters' converter state (2.0.0_SA_COO~SA's workstream)."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W17-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~17",
+    "surfaced_at": "2026-10-20T20:28:46Z",
+    "one_line": "The order asks to change an existing BOOTSTRAP test that pins a throw when aws.exe is missing, but no such test exists at base; the only aws.exe pin is a path token that the edit keeps.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/tests/test_alongside_box_scripts.py@5af57b99d0b:79-98 (test_bootstrap_writes_only_its_own_secret, test_bootstrap_password_never_printed, test_bootstrap_carried_49f_properties_and_markers): none asserts a throw; grep for throw, missing and aws.exe in the file at that commit finds no such test",
+        "infra/aws/ec2/alongside-schwab-si2/bootstrap.ps1@5af57b99d0b:21 carries the throw, so the code path exists while no test pins it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, Build step 3: the old BOOTSTRAP test that pins 'throws when aws.exe is missing' must be changed to pin the new behavior.",
+    "world_is": "No such test exists at 5af57b99d0b. Nothing in an existing test was changed. The three ensure_awscli tests were added as new tests; the pre-existing test that pins the aws.exe path token stays green because the path literal is kept.",
+    "notes": "Form only. Owner for disposition: the issuer, to state whether the order's wording of the old test is to be read as a count of new tests or as an error."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W17-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~17",
+    "surfaced_at": "2026-10-20T20:28:46Z",
+    "one_line": "The order's exact first-fetch command for a rebuilt box writes to C:\\schwab-sdd before bootstrap creates that directory, so the one-line command may fail on a box that has never run bootstrap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "infra/aws/ec2/alongside-schwab-si2/bootstrap.ps1@5af57b99d0b:37-43 (step 1 creates C:\\schwab-sdd and C:\\SchwabData) runs after the first fetch that the runbook command performs",
+        "Inferred from the order of operations; not measured, because the WORLD floor forbids running the command on a box"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, Build step 2: the exact one-line first-fetch command goes into RUNBOOK 'Rebuilding the box' and is the way a fresh box fetches bootstrap.ps1.",
+    "world_is": "The fetch target directory C:\\schwab-sdd is created only by bootstrap step 1, after the fetch. The runbook keeps the command verbatim and adds one sentence that the directory must exist first; no mkdir command was added. Whether Read-S3Object creates a missing directory is unmeasured.",
+    "notes": "Form only. Owner for disposition: the issuer, to decide whether the runbook carries a mkdir line or the command is run from a directory that exists."
   }
 ]
 ```
