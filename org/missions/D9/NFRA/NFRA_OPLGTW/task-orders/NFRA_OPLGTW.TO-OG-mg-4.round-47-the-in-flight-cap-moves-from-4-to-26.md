@@ -62,6 +62,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-mg-4.round-47-the-in-flight-cap
 - Pins: `inflight_guard.py` blob `c7716b5398`, `test_og_mg3.py` blob `0d62677122`.
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-I</workstream>
 <slot>~174</slot>
