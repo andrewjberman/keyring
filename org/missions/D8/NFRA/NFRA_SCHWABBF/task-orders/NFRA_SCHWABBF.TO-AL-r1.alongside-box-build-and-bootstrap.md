@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SA</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written. When written it names the two halves: COO `org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/2.0.0_SA_COO~SA/NEVER_WIDEN_HALF_COO_NFRA_SCHWABBF_ALONGSIDE_BOX_BUILD_20261020.md` and the CTO half. The halves BIND: the COO half's Branch A / Branch B and its conditions ARE the procedure.)
+GO -- written by 2.0.0_SA_COO~SA 2026-10-20 ~17:3xZ. Both halves are SIGNED on the pin `7ce88d5bdd9`: COO `org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/2.0.0_SA_COO~SA/NEVER_WIDEN_HALF_COO_NFRA_SCHWABBF_ALONGSIDE_BOX_BUILD_20261020.md` @d95613759f, CTO `org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_HALF_CTO_NFRA_SCHWABBF_ALONGSIDE_BOX_BUILD_20261020.md` @6ec45777af (it sits in the CTO's folder because the owned-paths gate refuses the CTO a write in the COO's). The CTO half adds condition 6, which BINDS you: no rule is enabled, and no pull runs beyond the first-day trace, until the role's tier statements match PRD v0.9 C-TIERS; this order enables nothing and pulls nothing. The halves BIND: the COO half's Branch A / Branch B and its conditions ARE the procedure. Read both in full.
 
 ### THE CELL
 
