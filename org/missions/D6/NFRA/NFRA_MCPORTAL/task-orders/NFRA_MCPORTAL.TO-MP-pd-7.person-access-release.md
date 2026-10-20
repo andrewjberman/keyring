@@ -114,7 +114,7 @@ Checks dry-run at the base (2026-10-20 ~19:4xZ): `pd7a.AC1.sh` FAIL (entry files
 
 **AMENDMENT A3 (the issuer's, 2026-10-20 ~20:3xZ), after the lane's report:** the two `<expect>` strings were prose, so proof-of-spec-check marked the lane's instance INVALID; they are now regexes (the lane's suggestion, `(?s)` prefixed) matching the checks' real output. The issuer's defect, not the lane's. The lane regenerates the instance. Gate limb that graded the modification: none expected (to-pipeline-gate grades a modified order only for `<placeholders>`, NONE). The act itself: closed 2026-10-20T20:23:42Z by the lane (plan 0/1/0, apply 237.4 s, CodeSha256 894RI63... -> RUGwtI9t8UKV8VpyCeArffZFwHeuUm4QhOIJU+nAJjg=); the issuer re-ran `pd7a.AC1.sh` and `pd7a.AC2.sh` itself at ~20:3xZ and both read PASS.
 
-<status>pending -- GO issued 2026-10-20; the lane closed the act 20:23:42Z (issuer re-ran AC1 and AC2: PASS); the order flips to complete when the lane's instance reads VALID</status>
+<status>complete -- Act A closed 2026-10-20T20:23:42Z by 0.7.0_AE_CloudOps~NFRA1 (plan 0/1/0, apply 237.4 s, CodeSha256 894RI63/G4h019yxAGP7E+wQzrpZIfJoMaLhzpTTyck= -> RUGwtI9t8UKV8VpyCeArffZFwHeuUm4QhOIJU+nAJjg=, no rollback; close report commit 6e01b3ad8f); AC1 and AC2 PASS (issuer re-ran both on the live function and ledger); proof instance VALID (issuer re-ran proof-of-spec-check rc 0). Deployed zip (sha256 prefix f3de1123) held to 2026-10-27 per the CTO half. Nothing reaches set_person_access until the gateway mount (OG-mp-1, batch17).</status>
 <round>2</round>
 <workstream>PC</workstream>
 <fabric>site-z</fabric>

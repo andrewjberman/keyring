@@ -1,3 +1,4 @@
+infra/aws/lambda/investor-reporting/_contracts/AnalysisAudit.v1.schema.json
 infra/aws/lambda/investor-reporting/_scope/interactive_access.py
 infra/aws/lambda/investor-reporting/intake/portfolio.py
 infra/aws/lambda/investor-reporting/intake/security_resolution.py
@@ -8,6 +9,7 @@ infra/aws/lambda/investor-reporting/ops/entry.py
 infra/aws/lambda/investor-reporting/ops/owned_report.py
 infra/aws/lambda/investor-reporting/ops/pdf_link.py
 infra/aws/lambda/investor-reporting/ops/status.py
+infra/aws/lambda/investor-reporting/reports/analysis_audit.py
 infra/aws/lambda/investor-reporting/reports/build_resident_package.py
 infra/aws/lambda/investor-reporting/reports/generate_installed.py
 infra/aws/lambda/investor-reporting/reports/resident_installed.py
@@ -20,6 +22,7 @@ infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py
 infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
 infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
 infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py
+infra/aws/lambda/investor-reporting/ycharts/generate/ticket_audit_source.py
 infra/aws/lambda/investor-reporting/ycharts/generate/ticket_confirmation.py
 infra/aws/lambda/investor-reporting/ycharts/research/comparables.py
 infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py
