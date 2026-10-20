@@ -15,6 +15,8 @@
 
 **STAGED. NO ACT before the issuer's GO amendment below this line is committed and its GO message reaches you.** The GO comes only after (1) the corrected reader's first scheduled fire (Tuesday 2026-10-20 12:15Z) has been read clean by `~F2` and by the issuer, (2) the COO half reads SIGNED at the packet's sha256, (3) the CTO half reads SIGNED at it, and (4) the Inflection pair (`TO-DB-f-2702`) has finished. If the 12:15Z fire does not read clean, nothing moves and the issuer reports to the CTO.
 
+**HELD (2026-10-20 ~01:1xZ, Andrew-direct via CTO msg 11151, MSTR msg 11150): "Do NOT take on performance reporting yet: it waits until Fidelity is stood up." This pair is NOT started, Tuesday's 12:15Z clean fire included. The order stays READY and staged; no GO amendment is cut on a clean fire. Only Andrew's word lifts the hold.**
+
 <go_amendment>NONE YET.</go_amendment>
 
 **Directive:** D9 | **Fabric:** dell2 | **Ordered by:** the CTO's GO (msg 11048, pause DONE @09748b7ca7) and the pair: COO half `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/NEVER_WIDEN_COTTONWOOD_ALLDAYS_REWRITE_AND_REPUBLISH_COO_HALF.md`, CTO half `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_COTTONWOOD_ALLDAYS_REWRITE_AND_REPUBLISH_CTO_HALF.md`, both bound to the packet `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/NEVER_WIDEN_PACKET_COTTONWOOD_ALLDAYS_REWRITE_AND_REPUBLISH.md` (sha256 `1439a74f417e3de33fa5a7e4f909c8fd4a8dc44a6cc5b800e7815d47605e338e`) | **Decomp cell:** `DB-b-337` (decomposition section 198).
