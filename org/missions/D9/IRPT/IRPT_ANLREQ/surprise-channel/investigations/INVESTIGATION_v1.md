@@ -27725,3 +27725,27 @@
   "world_is": "The only path to an accepted composition is the pytest fixture chain. No public, non-pytest builder for the accepted composition was found in the repository, so a plain script depends on a pytest internal."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W317-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~317",
+  "surfaced_at": "2026-10-20T03:44:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The r34l bindings already carry provenance.member_overrides ({}); the AR-y-438 override fills that existing key and adds no provenance key, so the bindings check was written to allow the changed member_overrides value instead of a new key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/build_resident_package.py@f3378684710 lines 294-302 (override loop) and line 355 (provenance member_overrides: overrides)",
+      "C:/dev/irpt-release-r35d/irpt-resident-0485393f3a-r34l.tar.gz member ./reports/resident_bindings.json provenance.member_overrides == {} (read at build time)",
+      "C:/dev/irpt-release-r35f/irpt-resident-0485393f3a-r34m.tar.gz member ./reports/resident_bindings.json provenance.member_overrides == {docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json: 7f1eab530cde4661e9a559bf45439ebdbf73dab2}; provenance key sets identical between r34l and r34m"
+    ]
+  },
+  "spec_asserts": "AR-y-438 step 1(d) and the cell text: an override may add a provenance key (for example overrides), and the bindings check allows the one provenance key the override adds.",
+  "world_is": "No provenance key is added. member_overrides already exists in r34l with value {} and the override sets its value. The r58 check allows exactly the changed provenance keys package_pin and member_overrides and requires member_overrides to equal the one override; the build passed with changed 6 added 0 removed 0."
+}
+```
