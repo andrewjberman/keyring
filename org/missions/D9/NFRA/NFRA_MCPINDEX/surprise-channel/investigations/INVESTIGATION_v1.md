@@ -12867,6 +12867,27 @@ carries none.
     "spec_asserts": "Face section 1 Steps 0 and Surfaces and section 3: the worktree already carries the sparse folders workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app; the only sparse change I may make is git sparse-checkout add workflows/gateway_battery; the checks read the catalog at infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml.",
     "world_is": "The worktree carries neither folder: both are outside the sparse cone and the catalog path does not exist on disk, so the checks cannot load the catalog and no link_fixes.json can be graded or grounded. The cell is blocked, not built. I did not widen the sparse cone or reconstruct the tree.",
     "notes": "Blocking for MX-w-3 criteria AC1 and AC2. Disarm owner 2.0.0_SA_COO~MI decides whether to re-cut this worker's worktree with the opal-gateway app folder in its sparse set, or to re-issue. The routing and source-set inputs (round23 ROUTING_TABLE, round22 census, source_sets_* under ~71..~76) are present; only the catalog and code cites are missing."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W79-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~79",
+    "surfaced_at": "2026-10-20T13:40:00Z",
+    "one_line": "The proof-of-spec commit 552f6fecf4 printed NAMING ERROR 'function-map folder missing' for C:/tmp/wk-mcpindex-79/infra/aws/lambda/ci/function-map/, and the commit still returned rc=0; the same condition as NFRA_MCPINDEX-Z-W76-S41.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author ... -F .scratch/msg_s2_proof.txt -- (2 paths, instance and session_log): rc=0; output in C:/tmp/wk-mcpindex-79/.scratch/commit_proof.log, line '[naming-gate] NAMING ERROR function-map folder missing' (read 2026-10-20T13:40Z)",
+        "git -C C:/tmp/wk-mcpindex-79 log --oneline -1: 552f6fecf43 NFRA_MCPINDEX MX-w-3 (0.9.0_WK_NFRA_MCPINDEX~79): proof instance, BLOCKED (AC1 FAIL, AC2 FAIL)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Commit gate: a commit that the naming gate refuses returns a refusal and is not landed (rc nonzero).",
+    "world_is": "The naming gate printed NAMING ERROR for a missing function-map folder and the commit landed at rc=0; the same as W76-S41. The folder is outside my sparse cone, so the gate could not read it.",
+    "notes": "Not a refusal from my side; the sibling row NFRA_MCPINDEX-Z-W76-S41 records the same class. Disarm owner not set: INERT."
   }
 ]
 ```
