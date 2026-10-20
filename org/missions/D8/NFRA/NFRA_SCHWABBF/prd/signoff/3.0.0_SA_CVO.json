@@ -6,8 +6,8 @@
   "half_hash": "62d3dd06557459b518c3c343f6b3bd77ed2fd0fb2f37615cb3316e5896051df6",
   "endpoint_hash": "0424d44417d9779dcc588037feb99974d1f58c1deff54c62015e8d813f5721f7",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.3_RATIFIED_TEXT_20261020.md@da104ef52e",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.4_RATIFIED_TEXT_20261020.md@6efc50424f",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-20T14:40:06Z",
-  "reason": "CONTRACTS contradict: C-KEYFORM moves bronze to schwab/<firm>/ while C-NAMES and C-RECORD keep schwab/<master>/; C-SCOPE still excludes the Cottonwood masters FWD-8 pulls"
+  "signed_at": "2026-10-20T14:44:47Z",
+  "reason": "C-SCOPE excludes the Cottonwood masters FWD-8 pulls; C-NAMES, C-ALONGSIDE IAM and C-RECORD still address schwab/<master>/ against C-KEYFORM's schwab/<firm>/"
 }

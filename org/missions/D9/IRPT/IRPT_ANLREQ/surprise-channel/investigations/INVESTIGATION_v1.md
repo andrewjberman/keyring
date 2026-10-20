@@ -28653,3 +28653,30 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S228 -- a withdrawn AMGT_RESAPP order still reads OPEN to the drive-mode arm (two status tags)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S228",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "4.0.0_SA_CRO~TCKT",
+  "surfaced_at": "2026-10-20T14:55:00Z",
+  "one_line": "drive-mode arm IRPT_ANLREQ~TCKT --surface portal/src/pages/TicketCenter is REFUSED by AMGT_RESAPP.TO-AMGT-bj-9, an order withdrawn 2026-10-13 whose file carries two status tags; the arm takes the first status word (pending), so a withdrawn order whose paths are portal/src/ blocks every portal FAST lease.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "drive-mode.py (header and line 27): arm refuses only a surface overlapping a live FAST lease or another project's OPEN task order paths; withdrawn is TERMINAL.",
+  "world_is": "MEASURED 2026-10-20 ~14:5xZ: org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-bj-9.the-security-analysis-feature-branch-cut-from-the-last-prod-release.md line 84 reads <status>pending</status> and line 85 reads <status>withdrawn -- 2026-10-13T19:5xZ by the issuer (2.0.0_SA_COO~R1) ...; its <paths> holds portal/src/; drive-mode.py lines 156-166 take the FIRST status word, so the order reads OPEN and the arm printed REFUSED naming it. The fix is either the issuer removing the stale pending line or the arm reading the last status word; neither is this seat's lane.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-bj-9.the-security-analysis-feature-branch-cut-from-the-last-prod-release.md lines 84-85",
+      ".tools/drive-mode.py lines 27, 156-166"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
