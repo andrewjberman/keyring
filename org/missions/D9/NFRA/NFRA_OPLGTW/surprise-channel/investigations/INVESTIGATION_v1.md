@@ -30686,3 +30686,51 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   }
 ]
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W172-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~172",
+  "surfaced_at": "2026-10-20T09:53:47Z",
+  "one_line": "The name lookup the order directs (harvest_resolve_security) is not network-free and write-free: each call reads S3 harvest objects and writes one SERVE audit row tagged harvest_resolve_security, so every news_for_security call now does both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "OG-nf-1 worker face section 1, step 1: _security_name 'never raises, never calls the network' and 'It makes no write'; the lookup is the existing harvest_resolve_security identity lookup.",
+  "world_is": "harvest_resolve_security lists and reads the crosswalk, universe and identity objects through harvest_read (S3 list and get), and harvest_typed.audit_ok writes one SERVE audit row per call through harvest_read._audit. The change calls that lookup once per news_for_security fallback, as the order directs, so each news call now adds those S3 reads and an audit row. No criterion exercises the live path: the probes and tests fake _security_name, and the resolver's exception path is tested with a stub.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_identity.py:374-404 @6f2ddfd58e0 -- harvest_resolve_security reads the newest crosswalk and universe objects and the identity listing (ht.read_json, ht.list_keys)",
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_typed.py:45-47 @6f2ddfd58e0 -- audit_ok writes one SERVE row through harvest_read._audit for the tool name it is given",
+      "CODE: infra/aws/ec2/opal-gateway/app/news_typed.py @ worker branch wk-NFRA_OPLGTW-172 -- _security_name calls harvest_identity.harvest_resolve_security(ticker) once per news_for_security fallback"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W172-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~172",
+  "surfaced_at": "2026-10-20T09:53:47Z",
+  "one_line": "The surprise-channel schema path named by the worker's rules is absent from this worktree: the worktree is a sparse checkout that leaves org/surprise_channel/ off disk, though the file is tracked at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker rules name the row schema at org/surprise_channel/schemas/investigation_item.schema.json, read from the worktree, and the worktree carries the paths the order names.",
+  "world_is": "The order's own paths are all present. org/surprise_channel/ does not exist on disk in the worktree (ls reports no such directory), while git ls-files lists the schema at HEAD. I read the schema with git show HEAD:<path> (read only, no checkout change) and built this row against it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GIT: org/surprise_channel/schemas/investigation_item.schema.json is tracked at HEAD 6f2ddfd58e0 (git ls-files, read via git show HEAD:<path>)",
+      "GIT: git sparse-checkout list in C:/tmp/wk-og-172 names a cone (.tools, data/mdpf/config, docs/catalog, infra/aws/ec2/opal-gateway, infra/aws/lambda/ci/function-map, ...); org/surprise_channel/ is outside the printed cone and absent on disk, measured 2026-10-20"
+    ]
+  }
+}
+```
