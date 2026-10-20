@@ -13677,3 +13677,81 @@ carries none.
   "notes": "OBSERVATION, INERT: the api_dims item is written as a reason on the census figure with the caveat stated in its text. No criterion grades the row count beyond the census; the CVO or issuer decides whether a count of all objects is needed."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~91",
+  "surfaced_at": "2026-10-20T18:46:22Z",
+  "id": "NFRA_MCPINDEX-Z-W91-S1",
+  "one_line": "The mirror.tf comment for the inf-daily mirror slot says the RP-W3 move put it at 15:05Z and that it must postdate the eclipse producer's ~14:48Z landing, but the declared expression is cron(5 13 * * ? *), 13:05Z, before that landing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-assets/mirror.tf:98 (description: ... AND the eclipse producer's ~14:48Z landing.)",
+      "infra/aws/terraform/opal-assets/mirror.tf:101-105 (RP-W3 comment: 14:15Z -> 15:05Z; this slot MUST postdate eclipse's landing)",
+      "infra/aws/terraform/opal-assets/mirror.tf:106 (schedule_expression = \"cron(5 13 * * ? *)\"); mirror.tf:206 and :229 also name 13:05Z as the first fire",
+      "infra/aws/lambda/ci/trigger-map.json:2739 (opal-assets-ingest-mirror-inf-daily expression cron(15 14); file header _updated 2026-08-01T19:23Z, so a stale registry, not a live read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "mirror.tf:98-105 states that the inf-daily mirror slot was moved to 15:05Z and must postdate the eclipse producer landing near 14:48Z.",
+  "world_is": "mirror.tf:106 declares cron(5 13 * * ? *), 13:05Z, which precedes the landing; the comment and the expression disagree within the same file. The stale trigger-map entry carries a third value, cron(15 14).",
+  "notes": "OBSERVATION, INERT. The gap between the first poll and the landing is the first term of the copy lag named in the copier file (eclipse_copier.json lag.cause). The owner (2.0.0_SA_COO~MI or OPAL_ASSETS) reconciles the comment with the expression; this worker changes neither."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~91",
+  "surfaced_at": "2026-10-20T18:46:22Z",
+  "id": "NFRA_MCPINDEX-Z-W91-S2",
+  "one_line": "The schedules name the same-day gap between the producer landing and the copy, but not a whole missing trading day; the 17:05Z second poll should carry 2026-10-19 by that evening, so the full-day miss needs the live outcome of that run, which this worker did not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/4.0.0_SA_CRO~Y/ADVISOR_TABLES_PER_VENDOR_BRIEF_20261020.md:129-130 (STALE by 1 trading day; the copy stops at 2026-10-17 and is missing 2026-10-19)",
+      "infra/aws/terraform/opal-assets/mirror.tf:230 (second poll cron(5 17 * * ? *), for a raw file that landed after 13:05Z)",
+      "infra/aws/lambda/opal-assets/opal-assets-silver-eclipse/mirror_conversion.py:777 (the sweep lists bronze under the monolith only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The brief frames the copy as one trading day behind and asks the copier cause to be named from the schedule against the producer cadence.",
+  "world_is": "The schedule explains a same-day gap of about 2 hours 17 minutes between the ~14:48Z landing and the 17:05Z poll, not a missing whole day. A missing 2026-10-19 partition needs the live result of the 17:05Z poll for that day, which requires an AWS read this worker was not permitted to make. The cause in eclipse_copier.json is therefore the schedule's share only.",
+  "notes": "OBSERVATION, INERT. The CVO or the issuer reads the live listing of eclipse/inflection/bronze/ and silver/ for 2026-10-19 to close the remainder of the lag."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~91",
+  "surfaced_at": "2026-10-20T18:46:22Z",
+  "id": "NFRA_MCPINDEX-Z-W91-S3",
+  "one_line": "The task order says the issuer pre-adds data to the sparse cone, but the cone held infra/aws, lib, workflows and org paths only; this worker added data/inf/scripts and data/assets/scripts to read the producer and converter scripts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree wk-NFRA_MCPINDEX-91 before the add: .tools, infra/aws, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows (no data path)",
+      "data/inf/scripts/silver/convert_eclipse_portfolios_to_silver.py:4 (producer writes s3://opal-data-inf/silver/eclipse/{date}/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 0 of the worker face says the issuer pre-adds infra/aws, workflows, lib and data to the sparse cone.",
+  "world_is": "The cone lacked data; the add of data/inf/scripts and data/assets/scripts was the only sparse change made, as the face permits. org/projects is absent from the cone, and the checker resolves project codes through git cat-file, so it was not added.",
+  "notes": "OBSERVATION, INERT. The issuer decides whether the cone pre-add list in future faces should carry data."
+}
+```
