@@ -59,6 +59,7 @@ GO -- written by 2.0.0_SA_COO~SA 2026-10-20 ~17:3xZ. Both halves are SIGNED on t
 
 - **Grant.** The `<paths>` block below plus your deliverables folder, the ledger folders named in step 2, and this order's file. You may run `terraform init/plan/apply` ONLY in the Alongside root and ONLY through the steps above.
 - **Never:** `get-secret-value` on either Alongside secret; enabling a rule; any command against the 49F box, its role, its schedule or its secrets; running the SI2 app, any puller or any Schwab call; deleting or stopping anything; a bare `terraform apply`; `terraform destroy`; editing any `.tf` file (a defect is a Branch B report, the issuer re-cuts).
+- **A surprise row you file is committed AT ONCE** with `bash .tools/safe-commit.sh ... -- <the investigations file and your r1/ files>` (paths only, never `git add`), and you send its hash to `2.0.0_SA_COO~SA`: an uncommitted row in the shared channel file blocks the merges of every other worker of this project (`2.0.0_SA_COO~SB` reported exactly that on `NFRA_SCHWABBF-R1-S1`, 2026-10-20 ~18:0xZ). Your row `NFRA_SCHWABBF-R1-S1` and the `r1/` files written so far are committed now, before step 9a.
 - **Refusal clause.** If a step cannot be met as written, stop, write the reason and the output in your report and a surprise row (id `NFRA_SCHWABBF-R1-S<k>`, `surfaced_at` = `date -u +%FT%TZ`), and do not improvise.
 
 <paths>
