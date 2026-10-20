@@ -771,6 +771,92 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No retry, per the order: step 0 failed, so steps 1 and 3 were not run and no text was requested. The fix needs a trace that records the page state after the Next click (URL and the outline without the fill), which is a worker repair in a later order, or the issuer's decision. The box stays RUNNING, AutoShutdown=disabled."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The order asks the record to list conflicts, unplaced accounts and unmapped labels, while its bounds and reference section 11 forbid any account number or label in an output; the split record carries ordinal ids and counts only, and the id-to-value map stays in memory.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py split_day (worktree wk-NFRA_FIDUPL-3, uncommitted at filing): ids conflict-NNN, unplaced-NNN, label-NNN; resolution filled only when the caller passes a dict",
+        "TO FR-s-2 item 4 and test name test_record_has_counts_and_lists versus BOUNDS 'no G number, account number or firm label in any output'",
+        "tests/test_split.py test_record_has_counts_and_lists asserts no account value, label value or G value appears in the record body (passed on disk)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-2 bounds and reference section 11: no G number, account number or firm label in any output; counts and booleans only.",
+    "world_is": "A reader of the record can see how many accounts were conflicts, unplaced or under an unmapped label, but cannot name them from the record alone; the mapping from id to value exists only in the caller's memory.",
+    "notes": "For the COO to confirm: whether the lists should carry values in an encrypted bronze record (as the raw file does) or stay ids-only as built."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The order does not say what an account is when one of its G numbers carries an unmapped label and another G number of a single firm; split.py lists it unplaced and lands nothing for it, and it judges conflicts and unplaced over every attributed account, not only the accounts in the day's file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py _placement and _classify (worktree wk-NFRA_FIDUPL-3, uncommitted at filing): an account in acct_unmapped is unplaced before the single-firm test",
+        "TO FR-s-2 item 2 states the single-firm and two-firm rules and the unmapped-label rule, not the mixed case",
+        "tests/test_split.py test_unmapped_label_listed_not_landed passes with an unmapped-label account in the export and the unmapped label listed (passed on disk)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-2 item 2: an account under G numbers of one firm lands once for that firm; an account under no G, or under a label that matches no firm, goes to unplaced.",
+    "world_is": "A mixed account (one mapped G, one unmapped G) lands nowhere, which fails closed; the record counts it as unplaced. An account under a mapped G that is not in the day's file is still counted under unplaced or conflicts.",
+    "notes": "For the COO to confirm the mixed-case rule; the fail-closed reading is the one built."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The order does not say what a firm's object does when a same-day split already sits at the destination with different bytes; split.py refuses to overwrite and records that firm-file failed, the same rule the lander applies to raw files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py split_day (worktree wk-NFRA_FIDUPL-3, uncommitted at filing): an existing object whose sha256 metadata differs gives action failed with reason 'destination already holds different bytes; not overwritten'",
+        "NFRA_FIDUPL-D1-W2-S3 (the lander's same rule, filed 2026-10-20 by 0.9.0_WK_NFRA_FIDUPL~2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-2 item 3: each firm's lines are written once per firm and file; a re-run lands the same bytes or nothing.",
+    "world_is": "A re-split of the same day under a changed attribution cannot replace the first firm object; the first bytes stay until a person decides, and the exit code is non-zero.",
+    "notes": "Same decision as NFRA_FIDUPL-D1-W2-S3, to be ruled once for both the lander and the split."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-20T15:20:00Z",
+    "one_line": "The order's exit rule names three conditions; split.py also exits non-zero on a missing or unreadable file, a failed or refused write, an unkeyed line, or a listing failure, and it performs no trading-calendar check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py exit_code (worktree wk-NFRA_FIDUPL-3, uncommitted at filing): any record failure, any unkeyed row, or any firm-file action outside landed, skipped_existing or planned, or a row count mismatch, returns 1",
+        "TO FR-s-2 item 4: exit 0 only when conflicts and firms_without_scope are empty and every written object's row count matches; the TO does not name the other conditions"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-2 item 4: exit code 0 only when conflicts and firms_without_scope are empty and every written object's row count matches.",
+    "world_is": "The exit code is stricter than the order's rule; every extra condition makes a run exit non-zero, never zero. The calendar is checked by the lander on the staged day, not again here.",
+    "notes": "Stricter-only; the extra conditions can be dropped by a ruling if the box run must not stop on them."
   }
 ]
 ```
