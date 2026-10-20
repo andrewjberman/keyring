@@ -11,8 +11,8 @@
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/CALL_SITEZ_READ_DRAWER_FIRE_20261020.md",
  "opened_at": "2026-10-20T18:47:11Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-20T18:50:29Z",
+  "bus_message_id": "a3fe2a13-737d-4a29-b913-5fcf1e4bf156"
  },
  "ack_bus_message_id": null,
  "closed_from": {
