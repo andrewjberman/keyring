@@ -29731,3 +29731,109 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W343-S1 -- the live packager ports are built in reports/resident_installed.py, not in resident_worker.py: the cell's wiring site is outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W343-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~343",
+  "surfaced_at": "2026-10-20T19:28:46Z",
+  "one_line": "AR-y-469 cell (the change, item 2) and check AC2 require the packager call in resident_worker.py to pass audit_source and audit_put. resident_worker.py contains no packager call that builds ports: it takes ready_package and packager as injected callables and calls packager(body). The ports dict is built in reports/resident_installed.py make_packager, which is outside this order's <paths>. AC2 cannot pass from resident_worker.py alone without a dead wiring that the live packager never calls.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-469 cell: 'In resident_worker.py, where the packager is called ... supply audit_source from (1) ... and audit_put ... to the REPORTING bucket'; <paths> names infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py; check AC2 reads resident_worker.py by AST for the packager call supplying both ports.",
+  "world_is": "resident_worker.py@HEAD has no ports dict and no handle_commentary_ready/handle_ready call: ResidentGenerationWorker.__init__ (l.278) and ResidentAssembly.__init__ (l.649, l.664) take ready_package as an injected callable; poll_package_once calls packager(body) (l.1087). The ports dict (acceptance, read_job, read_artifact, retained_package, stores, attach) is built in infra/aws/lambda/investor-reporting/reports/resident_installed.py make_packager l.469-475; the packager is called there at l.502 and l.510; build_resident_runtime (l.518-617) builds it at l.605-607. The factory already holds clients['s3'] (l.541) and the ticket table is IRPT_TICKETS_TABLE (generate_installed.py l.55, l.363-366). The ticket_audit_source module (committed 9599863f2f6) is ready for that site; the wiring is not made by this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py@9599863f2f6 l.278, l.649, l.664, l.1075-1098 (no ports dict; packager injected)",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@9599863f2f6 l.449-514 make_packager (ports dict l.469-475, handle_commentary_ready l.502, handle_ready l.510)",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@9599863f2f6 l.518-617 build_resident_runtime (make_packager call l.605-607)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py@9599863f2f6 l.52-54 (optional audit ports) and l.208-230 (_write_audit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W343-S2 -- the ticket writer stores no user type, so the audit's required filer.user_type has no source: a live attach would be refused by the validator
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W343-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~343",
+  "surfaced_at": "2026-10-20T19:28:46Z",
+  "one_line": "The cell asks audit_source to return filer_user_type from the requester's user type. The ticket item carries no user type: requester is {email, name, firm} and the userType exists only in the authorizer context. AnalysisAudit.v1 requires filer.user_type, so build_audit_record omits filer and validate refuses the record: a live attach would record AUDIT_REFUSED:AUDIT_RECORD_INVALID and write nothing. The source does not invent a value; it omits the field.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-469 cell (1): audit_source returns the ticket side in worker 341's shape from the item's real attributes (answers as filed, creation time as filed_at, the requester's user type as filer_user_type); the cell's adversary lens: a ticket attribute name assumed instead of read from the ticket service's writer.",
+  "world_is": "infra/aws/lambda/ticket_center/lambda_function.py@9599863f2f6: _new_item l.622-671 writes ticket_id, ticket_type, requester, created_by, created_at, answers, source; no user-type attribute. requester is set at l.1352 ({email, name, firm}) and l.1429-1430. userType is read from the authorizer context at l.342 and l.352 and not stored. reports/analysis_audit.py build_audit_record l.98-104 omits filer when user_type is absent; the schema's required list includes filer (filer.required principal_id, user_type). Measured offline: test_10 in test_audit_live_wiring.py shows the record without filer is refused with 'required'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@9599863f2f6 l.622-671 (_new_item fields), l.1352 and l.1429-1430 (requester), l.342 and l.352 (userType in actor context)",
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisAudit.v1.schema.json@9599863f2f6 required [schema_version, request_id, firm_id, filed_at, ticket, form_as_filed, filer, package, written_at]",
+      "infra/aws/lambda/investor-reporting/reports/analysis_audit.py@9599863f2f6 l.98-104",
+      "test_audit_live_wiring.py@9599863f2f6 test_10 (refused for filer only; validates with a test-supplied filer)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W343-S3 -- the source takes (tenant, ticket_id) and a clock, and refuses a firm mismatch: all three differ from the cell's wording
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W343-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~343",
+  "surfaced_at": "2026-10-20T19:28:46Z",
+  "one_line": "The cell names audit_source(ticket_id) and a pure source. The packager calls source(tenant, ticket_id) and reads written_at from the source's return; the packager reads no clock. make_audit_source therefore takes tenant as the second argument, an injected clock (default wall time) for written_at, and returns None when answers.firm differs from the tenant. The firm guard and the clock are not in the cell's text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-469 cell (1): audit_source(ticket_id) pure, no logging, None on any miss or exception.",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py@9599863f2f6 l.217 calls source(tenant, result['ticket_id']); l.222 reads written_at from the source's return. analysis_audit.py l.75 states the packager reads no clock. ticket_audit_source.py@9599863f2f6 make_audit_source(dynamodb, table_name, clock=None) returns audit_source(tenant, ticket_id); the firm guard is at answers.firm != tenant -> None.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py@9599863f2f6 l.217, l.222",
+      "infra/aws/lambda/investor-reporting/reports/analysis_audit.py@9599863f2f6 l.75",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/ticket_audit_source.py@9599863f2f6 (make_audit_source)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W343-S4 -- the ticket writer stores created_at with milliseconds; the audit schema's filed_at is whole-second Z: the source truncates, which the cell does not state
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W343-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~343",
+  "surfaced_at": "2026-10-20T19:28:46Z",
+  "one_line": "ticket_center writes created_at as ISO UTC with three fractional digits (_now). AnalysisAudit.v1 filed_at and written_at match the whole-second pattern. A raw copy would fail the validator, so ticket_audit_source truncates to whole seconds and refuses any other timestamp form (the source returns None).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-469 cell (1): the creation time as filed_at, from the item's real attributes.",
+  "world_is": "infra/aws/lambda/ticket_center/lambda_function.py@9599863f2f6 l.319-320 (_now: strftime with milliseconds and a Z). AnalysisAudit.v1 filed_at pattern: whole seconds with Z. ticket_audit_source.py@9599863f2f6 _whole_second() keeps the seconds and refuses other forms.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py@9599863f2f6 l.319-320",
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisAudit.v1.schema.json@9599863f2f6 properties.filed_at pattern",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/ticket_audit_source.py@9599863f2f6 _whole_second"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
