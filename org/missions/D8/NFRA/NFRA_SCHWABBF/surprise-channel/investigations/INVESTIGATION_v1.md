@@ -244,6 +244,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO-BF-k1 AC2 and the worker face: import data/assets/scripts/silver/schwab_conversion.py by path and assert that scope_from_key, feed_from_key and date_from_key read a new-form key built by monolith_bronze_key (the seam probe against the REAL neighbor). The order presents the converter's file set as loadable from its source directory.",
     "world_is": "The six key functions and the other 242 test cases pass at HEAD 5f1ad506a4 plus the BF-k-1 edits. Only the seam case fails, because the converter's sibling stream_parquet is not beside the source file; the sibling is tracked in data/assets/scripts/lib/ and packaged beside the Lambda copy. Nothing was patched: the refusal clause forbids a fallback that weakens the probe, and the converter is read-only for this cell.",
     "notes": "Options for the issuer, not taken by the worker: put data/assets/scripts/lib on the probe's sys.path (a test-harness edit inside the BF-k-1 write grant, no assertion weakened), or name the Lambda package directory as the seam neighbor. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W2-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~2",
+    "surfaced_at": "2026-10-20T15:46:52Z",
+    "one_line": "TO-BF-m2 dry run: AC1 and AC3 PASS at base, though the order says all three must FAIL before any change. The round-1 move tool already imports the firm-form key contract (TO-BF-k2), so it prints firm-form destinations and the round-1 assertions still hold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/keyform/move_bronze_key_form.py@264023be84 loads the key contract by path from data/canonical/schwab/silver/_canonical_silver_lib.py, which is the firm-form library at 60781d2d86 (TO-BF-k2)",
+        "python -m pytest data/canonical/schwab/tests/test_move_bronze_key_form.py -q -p no:cacheprovider --color=no at 264023be84: '13 passed in 1.25s' (rc=0); the order predicts FAIL at base",
+        "python data/canonical/schwab/keyform/move_bronze_key_form.py plan --master 08403355 --type acc at 264023be84: 'MOVE-PLAN in_scope=516 foreign=0 copy=516 already=0 events=516' (rc=0); AC3's regex '^MOVE-PLAN in_scope=[0-9]+ foreign=0 copy=[0-9]+ already=[0-9]+ events=[0-9]+' matches it at base"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-m2 worker face, dry-run paragraph: 'Run all three first and record what they print; they must FAIL before you change anything', and 'after TO-BF-z2 and TO-BF-k2 the library is firm-form, so the old tool's import and its master-form destination assertions fail'.",
+    "world_is": "AC1 and AC3 PASS at base; AC2 FAILS as expected (no MOVE-SAMPLE line). The base tool emits firm-form destinations because it imports the k2 library, and its round-1 test assertions (dst starts with schwab/, contains /date=, ends with the vendor name, events=12) hold on firm-form keys. AC3's regex does not name a destination, so it cannot tell the grammars apart. Nothing was patched before this row: the build is the rewrite the face specifies, and the criteria are judged on the rewritten tool and test.",
+    "notes": "Not an alert and not a monitor. The rewrite replaces the round-1 assertions with firm-form ones (address() equality, guards, the MOVE-SAMPLE line), so AC1 discriminates after the change. AC3's regex is not changed by this cell; the issuer may decide whether the AC3 regex should name the destination."
   }
 ]
 ```
