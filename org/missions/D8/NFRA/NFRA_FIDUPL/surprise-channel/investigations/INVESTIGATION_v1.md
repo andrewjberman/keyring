@@ -706,6 +706,28 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No retry, per the issuer's one-attempt bound. The next live attempt needs a trace (Playwright tracing or a page dump with no values) and a decision by the issuer. The sign-in leg is not proven; FU-x-1 criteria FX1-AC2 and FX1-AC3 have no output."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-20T13:20:54Z",
+    "one_line": "The FU-s-2 repair replaces the guessed selectors of row W1-S3 with the CRO-measured login selectors tried first, plus structural fallbacks; the page-3 factor option, shadow-root openness and the 20 second per-step budget are still unproven until the trace-login run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FU-s-2 REPAIR 1: find the login fields by structure with a 20 second timeout per step, and use the CRO-measured selectors first (worker reference section 10; research RESEARCH_20261020_NFRA_FIDUPL_LOGIN_DOM_FROM_HAR2.md).",
+    "world_is": "signin.py PlaywrightDriver now tries #userInput and input[type='submit'][value='Next'] (page 1), #passwordInput input and #submitButton (page 2), #continueButton or #submitButton (page 3, Generate code), [formcontrolname='securityCode'] input (page 4), then the structural fallbacks. The W1-S3 selectors (input[name='username'] and the rest) are retired from the driver. Not measured: the page-3 factor radio option markup (data-driven), whether the bwc shadow roots are open, and whether a human sign-in's 18 seconds fits the 20 second per-step budget. The next live proof is signin_recon.py --trace-login, which stops after the text request.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CRO research RESEARCH_20261020_NFRA_FIDUPL_LOGIN_DOM_FROM_HAR2.md (main tree, read-only): pages 1-4 selectors and the not-measured list",
+        "signin.py commit 6cbf750807: the P1_, P2_, P3_, P4_ constants and _wait_any candidate order; tests/test_login_trace.py 5 passed",
+        "r1_checks.py fu2t at commit 6cbf750807 (worktree C:/tmp/fidupl-w1): R1-FU2T-OK passed=5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken. The trace-login run is FU-x-1's live proof and costs at most one text message per attempt."
   }
 ]
 ```
