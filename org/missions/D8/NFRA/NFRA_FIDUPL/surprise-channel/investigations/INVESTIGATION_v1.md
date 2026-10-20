@@ -1078,6 +1078,28 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "REPAIR of FR-s-6: page by pageResponse.available, sending start and sessionCacheId on later pages; the request-side names are an assumption to file as one row.",
     "world_is": "If the live API names the request fields differently, a later page returns the first page again or no rows. The lister counts and returns DISTINCT account numbers, so repeats cannot fill the total: it either reaches available with distinct numbers or fails loud with the two counts (short of available). It never returns a silent short or duplicated list.",
     "notes": "Settled by the first live multi-page pull, which is the issuer's check on the box. No account value is printed by the pull's counts."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T16:50:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "one_line": "The fu10x check launches Google Chrome (channel chrome), which is not installed on the box, so FU10-AC2 reads FAIL after the Xvfb install even though a headed bundled Chromium launches under Xvfb.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r1_checks.py box_headed (line ~496): p.chromium.launch(channel='chrome', headless=False, ...) and the OK text 'a headed Google Chrome launches under it'; the order's FU10-AC2 expect text says 'a headed Chromium launches under it'",
+        "SSM on i-028e830f7226cc685 after dnf install of xorg-x11-server-Xvfb (rpm 21.1.13-5.amzn2023.0.11): channel=chrome -> 'Chromium distribution chrome is not found at /opt/google/chrome/chrome'; the bundled chromium headless=False under Xvfb :97 -> LAUNCH-OK; command -v google-chrome google-chrome-stable chrome -> none",
+        "r1_checks.py fu10x run at 16:4xZ: R1-FU10X-FAIL ssm status=Failed"
+      ]
+    },
+    "spec_asserts": "Order FU-s-10 SCOPE WIDENED AGAIN: install xorg-x11-server-Xvfb; FU10-AC2 expects R1-FU10X-OK Xvfb present and a headed Chromium launches under it.",
+    "world_is": "Xvfb is installed and a headed bundled Chromium launches under it. The check as written needs Google Chrome, an install this order does not ask for and its grant does not cover (playwright install chrome or a Google RPM changes the box beyond the Xvfb leg).",
+    "notes": "Not installed: Google Chrome. The issuer decides whether to widen the order (install chrome, FU-s-11 fallback) or change the check to the bundled Chromium. The Xvfb ledger is closed; the code delivery still waits for the named head."
   }
 ]
 ```
