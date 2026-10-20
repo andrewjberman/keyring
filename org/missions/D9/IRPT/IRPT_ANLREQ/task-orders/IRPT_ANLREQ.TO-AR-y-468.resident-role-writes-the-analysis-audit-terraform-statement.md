@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-468.resident-role-writes-the-analysis-audit-terraform-statement</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~331</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~342</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-20</issued_date>
 <status>pending</status>
@@ -19,8 +19,8 @@
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~331`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-331` (branch `wk-IRPT_ANLREQ-331`), provisioned by the issuer from the current branch. First confirm `org/` and `.tools/` exist. Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~331 <0.9.0_WK_IRPT_ANLREQ~331@opal.agent>" -F <msgfile> -- <paths>`; write every message file with the Write tool; do not pre-`git add`. A commit may take longer than 120 s: give it up to 400 s and check `git log` before retrying. The worktree may show a modified `.parquet` fixture and ` M portal`: never commit either. A row id has the form `IRPT_ANLREQ-D2-W331-S<k>`; APPEND only to `org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md` (0 deletions), class OBSERVATION or BLOCKING, with `spec_asserts` and `world_is` fields. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (ruff clean; no single-letter names `l`, `O`, `I`; no non-ASCII).
+You are `0.9.0_WK_IRPT_ANLREQ~342`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-342` (branch `wk-IRPT_ANLREQ-342`), provisioned by the issuer from the current branch. First confirm `org/` and `.tools/` exist. Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~342 <0.9.0_WK_IRPT_ANLREQ~342@opal.agent>" -F <msgfile> -- <paths>`; write every message file with the Write tool; do not pre-`git add`. A commit may take longer than 120 s: give it up to 400 s and check `git log` before retrying. The worktree may show a modified `.parquet` fixture and ` M portal`: never commit either. A row id has the form `IRPT_ANLREQ-D2-W342-S<k>`; APPEND only to `org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md` (0 deletions), class OBSERVATION or BLOCKING, with `spec_asserts` and `world_is` fields. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (ruff clean; no single-letter names `l`, `O`, `I`; no non-ASCII).
 - **No AWS call, no network, no push, no deploy.** Terraform is not installed on this box: do not try to run it. The proof instance copies the shape of `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/IRPT_ANLREQ.TO-AR-y-459.run7b-browser-leg-script-re-proved-offline-against-the-advisor-required-form.proof_of_spec.json` (read it first), with `to_id` exactly the order's id, a `controls.mutant` that FIRES and a `controls.determinism` really run; run `python .tools/proof-of-spec-check.py <instance> "AR468-y-AC1,AR468-y-AC2,AR468-y-AC3"` with THIS worktree's own `.tools/` and flip `<status>` to `complete` (with the instance, one commit) only on VALID.
 
 ### THE CELL (`AR-y-468`, inlined)
@@ -35,13 +35,13 @@ You are `0.9.0_WK_IRPT_ANLREQ~331`.
 
 ## ACCEPTANCE
 
-<criterion id="AR468-y-AC1" cell_refs="AR-y-468"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/check_audit_write_grant.py</invocation><expect>^AUDIT-WRITE-GRANT-OK firms=[0-9]+ prefixes=[0-9]+ builder_equal=yes put_only=yes$</expect></criterion>
-<criterion id="AR468-y-AC2" cell_refs="AR-y-468"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/check_audit_write_grant.py --selftest</invocation><expect>^CONTROL-FIRES$</expect></criterion>
-<criterion id="AR468-y-AC3" cell_refs="AR-y-468"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/check_audit_write_bound.py</invocation><expect>^AUDIT-WRITE-BOUND-OK numstat=[0-9]+/0 files=1$</expect></criterion>
+<criterion id="AR468-y-AC1" cell_refs="AR-y-468"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~342/check_audit_write_grant.py</invocation><expect>^AUDIT-WRITE-GRANT-OK firms=[0-9]+ prefixes=[0-9]+ builder_equal=yes put_only=yes$</expect></criterion>
+<criterion id="AR468-y-AC2" cell_refs="AR-y-468"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~342/check_audit_write_grant.py --selftest</invocation><expect>^CONTROL-FIRES$</expect></criterion>
+<criterion id="AR468-y-AC3" cell_refs="AR-y-468"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~342/check_audit_write_bound.py</invocation><expect>^AUDIT-WRITE-BOUND-OK numstat=[0-9]+/0 files=1$</expect></criterion>
 
 <proof_of_spec>
 The instance is at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/IRPT_ANLREQ.TO-AR-y-468.resident-role-writes-the-analysis-audit-terraform-statement.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~342/IRPT_ANLREQ.TO-AR-y-468.resident-role-writes-the-analysis-audit-terraform-statement.proof_of_spec.json`.
 Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-468.resident-role-writes-the-analysis-audit-terraform-statement`. Validate it AFTER its commit with
 `python .tools/proof-of-spec-check.py <instance> "AR468-y-AC1,AR468-y-AC2,AR468-y-AC3"`; flip `<status>` to `complete` only when it prints VALID.
 </proof_of_spec>
@@ -55,7 +55,7 @@ Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-468.resident-role-writes-the-analysi
 
 <paths>
 infra/aws/terraform/investor-reporting/ycharts/resident.tf
-org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~331/
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~342/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-468.resident-role-writes-the-analysis-audit-terraform-statement.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>

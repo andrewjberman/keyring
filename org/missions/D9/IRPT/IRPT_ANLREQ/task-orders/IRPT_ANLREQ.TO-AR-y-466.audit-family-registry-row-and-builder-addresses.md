@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-466.audit-family-registry-row-and-builder-addresses</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~329</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~340</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-20</issued_date>
 <status>pending</status>
@@ -13,14 +13,14 @@
 <round>43</round>
 <workstream>ZZ125</workstream>
 
-**Directive:** D9 | **Fabric:** dell2 | **Risk:** WORLD by the path floor | **Decomp cell:** `AR-y-466` (`decompositions/IRPT_ANLREQ_DECOMP_R40A_Y.md`) | **outcome_ref:** C-AUDIT-RECORD (PRD v0.27) | **depends_on:** CTO msg 11466; the read of AR-y-462
+**Directive:** D9 | **Fabric:** dell2 | **Risk:** WORLD | **Decomp cell:** `AR-y-466` (`decompositions/IRPT_ANLREQ_DECOMP_R40A_Y.md`) | **outcome_ref:** C-AUDIT-RECORD (PRD v0.27) | **depends_on:** CTO msg 11466; the read of AR-y-462
 
 ---
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~329`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-329` (branch `wk-IRPT_ANLREQ-329`), provisioned by the issuer from the current branch. First confirm `org/` and `.tools/` exist. Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~329 <0.9.0_WK_IRPT_ANLREQ~329@opal.agent>" -F <msgfile> -- <paths>`; write every message file with the Write tool; do not pre-`git add`. A commit may take longer than 120 s: give it up to 400 s and check `git log` before retrying. The worktree may show a modified `.parquet` fixture and ` M portal`: never commit either. A row id has the form `IRPT_ANLREQ-D2-W329-S<k>`; APPEND only to `org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md` (0 deletions), class OBSERVATION or BLOCKING, with `spec_asserts` and `world_is` fields. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (ruff clean; no single-letter names `l`, `O`, `I`; no non-ASCII).
+You are `0.9.0_WK_IRPT_ANLREQ~340`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-340` (branch `wk-IRPT_ANLREQ-340`), provisioned by the issuer from the current branch. First confirm `org/` and `.tools/` exist. Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~340 <0.9.0_WK_IRPT_ANLREQ~340@opal.agent>" -F <msgfile> -- <paths>`; write every message file with the Write tool; do not pre-`git add`. A commit may take longer than 120 s: give it up to 400 s and check `git log` before retrying. The worktree may show a modified `.parquet` fixture and ` M portal`: never commit either. A row id has the form `IRPT_ANLREQ-D2-W340-S<k>`; APPEND only to `org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md` (0 deletions), class OBSERVATION or BLOCKING, with `spec_asserts` and `world_is` fields. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (ruff clean; no single-letter names `l`, `O`, `I`; no non-ASCII).
 - **No AWS call, no network, no push, no deploy.** Terraform is not installed on this box: do not try to run it. The proof instance copies the shape of `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/IRPT_ANLREQ.TO-AR-y-459.run7b-browser-leg-script-re-proved-offline-against-the-advisor-required-form.proof_of_spec.json` (read it first), with `to_id` exactly the order's id, a `controls.mutant` that FIRES and a `controls.determinism` really run; run `python .tools/proof-of-spec-check.py <instance> "AR466-y-AC1,AR466-y-AC2,AR466-y-AC3"` with THIS worktree's own `.tools/` and flip `<status>` to `complete` (with the instance, one commit) only on VALID.
 
 ### THE CELL (`AR-y-466`, inlined)
@@ -35,13 +35,13 @@ You are `0.9.0_WK_IRPT_ANLREQ~329`.
 
 ## ACCEPTANCE
 
-<criterion id="AR466-y-AC1" cell_refs="AR-y-466"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~329/check_audit_family.py</invocation><expect>^AUDIT-FAMILY-OK firms=[0-9]+ addresses=[0-9]+ validator=pass$</expect></criterion>
-<criterion id="AR466-y-AC2" cell_refs="AR-y-466"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~329/check_audit_family.py --selftest</invocation><expect>^CONTROL-FIRES$</expect></criterion>
-<criterion id="AR466-y-AC3" cell_refs="AR-y-466"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~329/check_audit_family_bound.py</invocation><expect>^AUDIT-FAMILY-BOUND-OK numstat=[0-9]+/0 files=1$</expect></criterion>
+<criterion id="AR466-y-AC1" cell_refs="AR-y-466"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~340/check_audit_family.py</invocation><expect>^AUDIT-FAMILY-OK firms=[0-9]+ addresses=[0-9]+ validator=pass$</expect></criterion>
+<criterion id="AR466-y-AC2" cell_refs="AR-y-466"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~340/check_audit_family.py --selftest</invocation><expect>^CONTROL-FIRES$</expect></criterion>
+<criterion id="AR466-y-AC3" cell_refs="AR-y-466"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~340/check_audit_family_bound.py</invocation><expect>^AUDIT-FAMILY-BOUND-OK numstat=[0-9]+/0 files=1$</expect></criterion>
 
 <proof_of_spec>
 The instance is at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~329/IRPT_ANLREQ.TO-AR-y-466.audit-family-registry-row-and-builder-addresses.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~340/IRPT_ANLREQ.TO-AR-y-466.audit-family-registry-row-and-builder-addresses.proof_of_spec.json`.
 Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-466.audit-family-registry-row-and-builder-addresses`. Validate it AFTER its commit with
 `python .tools/proof-of-spec-check.py <instance> "AR466-y-AC1,AR466-y-AC2,AR466-y-AC3"`; flip `<status>` to `complete` only when it prints VALID.
 </proof_of_spec>
@@ -55,7 +55,7 @@ Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-466.audit-family-registry-row-and-bu
 
 <paths>
 infra/logic/registry/reporting_policies.json
-org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~329/
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~340/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-466.audit-family-registry-row-and-builder-addresses.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
