@@ -13539,5 +13539,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         "disposition": "UNDER_INVESTIGATION",
         "notes": "Ruled by the issuer: a guard stop is the designed behaviour and does not fail stage 6. The cause of the two unnamed stops is an enrichment item for the round analysis, not a cn-7 criterion."
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W187-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~187",
+        "surfaced_at": "2026-10-20T17:06:42Z",
+        "one_line": "The no-today branch of the refresh driver was not reached for UNH_US_Equity at now=2026-11-02T14:00:00Z: the driver returned UNCHANGED (build equals the served dossier), not NO_TODAY_MODEL_BLOCK.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "TO-HVST-co-3 AC1 and build step 1.b.2: main(['--only','UNH_US_Equity','--require-trading-day'], now=2026-11-02T14:00:00Z) prints REFRESH-CENSUS with no_today_model_block=1 written=0 errors=0 mode=dry-run for UNH_US_Equity, its stored dossier untouched.",
+        "world_is": "Read 2026-10-20 ~17:05Z by 0.9.0_WK_AMGT_HARVST~187 (dry run; co3_branches.py; co3_branches.out): REFRESH-CENSUS names=1 written=0 would_write=0 unchanged=1 no_new_model_block=0 no_today_model_block=0 skipped_allowed=0 skipped_guard=0 errors=0 mode=dry-run; the per-name line reads 'REFRESH UNH_US_Equity status=UNCHANGED moved=none inputs_differ=none guard=NA reason=build equals the served dossier in fields and inputs'. The stored prefix listing (18 objects) is equal before and after the call. In dossier_refresh.py refresh_one, the UNCHANGED return (no moved field and equal inputs) comes before the today-block check, so NO_TODAY_MODEL_BLOCK is reached only when the build differs from the stored dossier.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~187/co3_branches.out (worktree, pre-commit; BRANCH-NOTODAY line)",
+                "lib/research/corpus/dossier_refresh.py @7997ac0b53 refresh_one lines 387-399 (UNCHANGED return before today_block_missing)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "Dry run only: writes_total=0, no --write. The NO_TODAY_MODEL_BLOCK branch is not exercised by this cell on this name; no fix is asserted here."
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W187-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~187",
+        "surfaced_at": "2026-10-20T17:06:42Z",
+        "one_line": "The investigation item schema the worker bar names, org/surprise_channel/schemas/investigation_item.schema.json, is absent from this worktree, so the rows were shaped from the rows already in this channel file.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Worker bar: each surprise row is shaped per org/surprise_channel/schemas/investigation_item.schema.json at the worktree root.",
+        "world_is": "Read 2026-10-20 ~17:05Z by 0.9.0_WK_AMGT_HARVST~187: the Read tool on C:/dev/wk-harvst-187/org/surprise_channel/schemas/investigation_item.schema.json returns File does not exist; ls of org/surprise_channel/schemas/ returns No such file or directory; a Glob for investigation_item*.json under C:/dev/wk-harvst-187/org returns no files.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "Read and Glob of the schema path under C:/dev/wk-harvst-187/org (no file)",
+                "ls org/surprise_channel/schemas/ in C:/dev/wk-harvst-187 at 7997ac0b53: No such file or directory"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "The row gate .tools/surprise-row-gate.py was run on the filed rows; its verdict is in the commit report."
+    }
 ]
 ```
