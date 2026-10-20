@@ -1144,6 +1144,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "TO-FU-s-13 item 3: the plan must read exactly Plan: 0 to add, 1 to change, 0 to destroy and the one change must be the role policy; the refusal clause says more than one change is a surprise row and I stop.",
     "world_is": "A plain safe-apply of the root would also create the perg secret and rewrite the box role policy, which this order does not authorize and whose owner (FR-s-5, plan only) has not been given an apply order. Nothing was applied. The edit to automation.tf is committed.",
     "notes": "Held for the issuer: either (a) apply with -target=aws_iam_role_policy.automation (reads exactly the order's plan line and leaves FR-s-5's changes pending), or (b) widen the order to apply FR-s-5 as well after its box role policy diff is read. I recommend (a). No ledger was opened, because an open entry would flip fu7l."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S2",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-20T22:33:19Z",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P1",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "one_line": "REPAIR 1 item 2 orders terminate, wait, then taskkill /PID <pid> /T /F; measured on this box, taskkill /T after the parent has exited finds no child and the child survives, so the order's sequence leaves the forward's child alive.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "local probe, worktree .scratch/tree_probe.py (no AWS, not committed): SPEC-ORDER line 'taskkill-after rc=128 ERROR: The process \"56516\" not found.' and 'child_pid=44292 child_alive=True'",
+        "local probe, same script: ALT-ORDER line 'taskkill-before rc=0 SUCCESS: The process with PID 36432 (child process of PID 43356) has been terminated.' and 'child_alive=False'",
+        "local probe, worktree .scratch/close_probe.py: Drive._close() of infra/aws/ec2/canonical-fidelity/agent_drive.py on a real parent and child: 'taskkill_calls=2', 'child_alive=False' (the code commit that carries this row holds the change)"
+      ]
+    },
+    "spec_asserts": "REPAIR 1 item 2 (agent_drive.py _close): after terminate() and the wait, kill the forward's whole process tree with taskkill /PID <pid> /T /F on Windows, so the next run does not attach through a dead tunnel left by session-manager-plugin.exe.",
+    "world_is": "On Windows the order's sequence does not reach the child: after the parent exits, taskkill /T has no parent-child chain to follow and returns rc 128. The controller now kills the tree while the parent is alive (before terminate) and keeps the order's kill after the wait. Measured on a local parent and child pair only; the live aws.exe and session-manager-plugin.exe pair is not measured here.",
+    "notes": "Hazard stands until the first live run confirms that the forward port is free after close. Disarm is the issuer's: confirm on the next live drive that no session-manager-plugin.exe holds 127.0.0.1:9222 after the record is printed. The deviation from the written order's sequence is in the commit that carries this row."
   }
 ]
 ```
