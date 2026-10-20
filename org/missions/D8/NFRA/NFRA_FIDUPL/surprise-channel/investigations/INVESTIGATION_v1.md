@@ -1122,6 +1122,28 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "agent_drive.py imports no secrets client and no quo_otp (TO FU-s-12 section 2, the static test test_drive_module_reads_no_secret); it builds signin.PlaywrightDriver(page) and reads signin.OTP_SMS.",
     "world_is": "signin.py imports quo_otp at its top level, so importing signin loads quo_otp on dell1. Loading the module reads no key: the key provider runs only when a reader is constructed and asked for a code, and agent_drive.py never constructs one. The text of agent_drive.py names no quo_otp symbol, so the static check holds, but the transitive import is not caught by it. Whether the loaded-module reading counts as the import the TO forbids is the issuer's ruling.",
     "notes": "No value is read on dell1 by this path. Decision needed from the issuer: accept the transitive load (as built), or move the Quo import out of signin.py (signin.py is outside this order's grant and is not to be changed by this worker)."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T21:40:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "The FU-s-13 premise 'plan reads 0 to add, 1 to change' fails on the whole root: unapplied FR-s-5 work (a new secret and a box role policy change) is pending beside it, so the full plan reads 1 to add, 2 to change.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan of canonical-fidelity-ec2 at HEAD before my edit: Plan: 1 to add, 1 to change, 0 to destroy = aws_secretsmanager_secret.perg created (name fidelity/alongside/perg-list) + aws_iam_role_policy.box updated in place + new output perg_secret_id; after my edit the full plan reads 1 to add, 2 to change",
+        "git log of the root: fa72c37046b and 1d5e861e75b by 0.9.0_WK_NFRA_FIDUPL~6 (FR-s-5); order NFRA_FIDUPL.TO-FR-s-5 is PLAN ONLY, status complete, and says 'The CloudOps seat applies later by its own order'; no order of this seat covers that apply",
+        "terraform plan -target=aws_iam_role_policy.automation: Plan: 0 to add, 1 to change, 0 to destroy, the only diff being + ssm:ListCommands and + ssm:ListCommandInvocations"
+      ]
+    },
+    "spec_asserts": "TO-FU-s-13 item 3: the plan must read exactly Plan: 0 to add, 1 to change, 0 to destroy and the one change must be the role policy; the refusal clause says more than one change is a surprise row and I stop.",
+    "world_is": "A plain safe-apply of the root would also create the perg secret and rewrite the box role policy, which this order does not authorize and whose owner (FR-s-5, plan only) has not been given an apply order. Nothing was applied. The edit to automation.tf is committed.",
+    "notes": "Held for the issuer: either (a) apply with -target=aws_iam_role_policy.automation (reads exactly the order's plan line and leaves FR-s-5's changes pending), or (b) widen the order to apply FR-s-5 as well after its box role policy diff is read. I recommend (a). No ledger was opened, because an open entry would flip fu7l."
   }
 ]
 ```
