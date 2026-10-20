@@ -12876,3 +12876,127 @@ carries none.
   "notes": "Fix owner per the CTO routing: 2.0.0_SA_COO~MI, round 23 routing arm."
 }
 ```
+
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S1",
+  "one_line": "MX-w-5 premise: 32 of the 36 tool_member_b refusals read S3 sources that an existing catalog row already describes (same bucket and prefix, or a placeholder key template); only the 4 others are not described by a row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "refusals[] class tool_member_b (36 items): org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/COVERAGE_after_apply_20261019.json@277ad324045",
+      "rows matched on bucket and prefix (or key_template): infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@277ad324045 -- e.g. blackdiamond_live_unrealized (silver/unrealized/), opal_data_portal_v2_served_trending_latest (json/trending/latest.json), opal_data_mdpf_feeds_model_composition (key_template mdpf/feeds/model_composition/<firm>/, line 16387)",
+      "measured in worktree C:/tmp/wk-mcpindex-81 by .scratch/analyze2.py (scratch, not committed): the script left undescribed only the 23 harvest prefixes read by harvest_list and harvest_read and the 3 daily/<partner>/ sources of etfs_get_partner_ownership"
+    ]
+  },
+  "spec_asserts": "The round-23 coverage refusals (tool_member_b, 36 tools) each read data that no catalog row describes yet, so each needs a new catalog row or a (c) reason.",
+  "world_is": "32 of the 36 tools have every s3 source matched by an existing row (etfs_get_partner_ownership and mdpf_get_model_composition by a placeholder template). mdpf_get_security_classification and harvest_get_published_analysis read a store or an integration, and harvest_list and harvest_read browse caller-chosen prefixes. The refusal premise does not match the rows' own bucket and prefix.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S2",
+  "one_line": "harvest_list and harvest_read read 23 undescribed harvest prefixes, but an item holds one row: harvest_list takes harvest_amgt for amgt/ and the other 22 prefixes have no row in this coverage file",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/harvest_read.py:30-33 (SERVED_PREFIXES, 24 entries): infra/aws/ec2/opal-gateway/app/harvest_read.py@277ad324045",
+      "source set of harvest_list and harvest_read: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~74/source_sets_harvest.json@277ad324045",
+      "harvest_packs (prefix packs/) is the only served prefix a row describes: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@277ad324045"
+    ]
+  },
+  "spec_asserts": "Each tool's undescribed source gets one row for that object family; two tools reading one undescribed object share that row (the first in list order takes row, the other takes c).",
+  "world_is": "harvest_list and harvest_read each read the 24 served prefixes; 23 are described by no row. The shape allows one row per item, so the cell gives harvest_list one row (amgt/) and harvest_read c naming it. The 22 other families stay undescribed in this file.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S3",
+  "one_line": "MX-w-5 says a source is described when a row has the same bucket and prefix, but two catalog rows describe their sources only through a placeholder template; I read those 5 sources as described",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal_data_etfs_gold_daily_partner_ownership: prefix daily/, key_template daily/{partner}/{YYYY-MM-DD}.json (silver_datasets, infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@277ad324045 line 14826 onward); read by etfs_get_partner_ownership",
+      "opal_data_mdpf_feeds_model_composition: prefix and key_template mdpf/feeds/model_composition/<firm>/ (DATA_CATALOG.yaml@277ad324045 lines 16310-16387); read by mdpf_get_model_composition",
+      "the sources: app/etfs_ownership.py:287 (daily/49financial/, daily/cottonwood/, daily/inflection/) and app/portal_served.py:248 (mdpf/feeds/model_composition/49financial/, .../inflection/)"
+    ]
+  },
+  "spec_asserts": "A source is DESCRIBED when a catalog row has the same bucket and the same prefix (or, for a portal object, names the same key).",
+  "world_is": "No row prefix equals a concrete source prefix such as daily/49financial/ or mdpf/feeds/model_composition/49financial/. The two tools take c and name their rows as the link, a judgment the issuer should confirm at the drain.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S4",
+  "one_line": "w5_check.py AC2 plants the mutant 'two items with one entity' only when a second row item exists and plants no row mutant when none exists; the honest coverage has one row item, so AC2 cannot run its full mutant set as written",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round24/checks/w5_check.py@277ad324045 (mutants_ac2: the 'two items with one entity' mutant is added under `if others:`, and all row mutants under `if r is not None`)",
+      "run in worktree C:/tmp/wk-mcpindex-81 at the coverage file written by 0.9.0_WK_NFRA_MCPINDEX~81: info rows=1 c=35; 8 ok, 0 failed; RESULT: PASS; the mutant line for 'two items with one entity' is absent"
+    ]
+  },
+  "spec_asserts": "AC2 expect: the planted mutants (an entity already in the catalog, a bucket no source names, a vendor outside the vocabulary, two items with one entity, a three-word reason, a cite to a missing file, a cite past the end of the file) are each refused -- RESULT: PASS -- exit=0.",
+  "world_is": "AC2 exits 0 with six of the seven named mutants planted. The worker did not add a second row item to reach the seventh, since no source supports a second row. AC2 is refused as written, with this measurement.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S5",
+  "one_line": "The MX-w-5 worktree was cut without the two sparse folders the face names (infra/aws/ec2/opal-gateway/app and workflows/atom_decomposition); added with git sparse-checkout add",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-81 before the add (HEAD 277ad324045): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards",
+      "the add was the one sparse change the face permits: git sparse-checkout add infra/aws/ec2/opal-gateway/app, then add workflows/atom_decomposition"
+    ]
+  },
+  "spec_asserts": "The worktree carries the sparse folders workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app.",
+  "world_is": "Neither folder was in the sparse set; DATA_CATALOG.yaml was absent until the add. After the add both folders are present.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
