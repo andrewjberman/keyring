@@ -80,6 +80,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ed-1.round-47-the-master-admin-
 - AMENDED 2026-10-20 ~14:2xZ (2.0.0_SA_COO~O, ruling on worker row NFRA_OPLGTW-Z-W175-S1): the worker found that two existing tests stub `email_denial` with a one-argument lambda (my dry-run of the neighbours at the base ran four files and missed `test_login_admit_r24.py`, which also stubs it). Item 5 and two `<paths>` entries added; `ed1.AC2` gains `tests/test_login_admit_r24.py` as a fifth neighbour (7 passed at the base). Gate limb: none graded (an existing tree order that declares no placeholders).
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-J</workstream>
 <slot>~175</slot>
