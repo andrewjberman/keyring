@@ -4,10 +4,10 @@
  "directive": "D8",
  "macro_code": "NFRA",
  "fabric": "laptop",
- "dep_stage": "ROUND_CLOSE",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Schwab masters: full backfill to Schwab's served floor and canonical (builder-form) bronze paths, plus the onboarding path for newly entitled Cottonwood masters",
  "generated_from": "org/missions/D8/NFRA/NFRA_SCHWABBF/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-20T20:04:55Z"
+ "generated_at": "2026-10-20T20:19:30Z"
 }
