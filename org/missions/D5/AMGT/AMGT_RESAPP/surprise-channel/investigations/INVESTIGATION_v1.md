@@ -32762,3 +32762,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Supersedes S3 (the issuer sets its disposition). Corrects the 'c8cd2da0 is not an ancestor of DEV' statement in S1 and S2. Form only."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S65",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-20T01:33:34Z",
+  "one_line": "Disposition of the two ARMED worker rows of ch-1 (W532-S1, W532-S2): S1 is the PROD-only gap that cg-2's chosen-set promote closes; S2 is the CheckFaceBadge verdict label the CTO ruled stays.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMGT_RESAPP-D1-W532-S1: PeersTab.tsx prints the raw peer read status at PROD facddeb6 (line 408) and DEV already carries the plain words (cg-2, c8cd2da0eb, merged forward 5c9b1d0de9): the gap exists on PROD only and closes when the cg-2 branch reaches PROD in the chosen-set promote (decomposition s.135 cell ch-4)",
+      "AMGT_RESAPP-D1-W532-S2: CheckFaceBadge.tsx:41 label REFUSED: the CTO's round-125 analysis msg 8573 section 2 rules it a verdict label, not a reader sentence: it stays"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-125 analysis msg 8573: the round-126 cell is the posture cite misses; the Peers suffix rides the PROD promote; CheckFaceBadge stays.",
+  "world_is": "W532-S1's hazard stands only on PROD until ch-4; W532-S2's hazard is not a defect by the CTO's ruling.",
+  "notes": "Form only. The issuer disarms W532-S1 when ch-4's PROD read shows the Peers suffix in plain words; W532-S2 is closed by msg 8573."
+}
+```

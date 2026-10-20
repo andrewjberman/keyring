@@ -77,7 +77,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** item 1 of the CTO's round-125 analysis (`ledger/ROUND_ANALYSIS.round125.R1.md`, msg 8573, `@5ff77594ab`), narrowed by the CTO's ruling of 2026-10-20 ~00:5xZ after the issuer's read that `generationCaptionText` is attribute-only (no visible consumer at DEV): the caption is dropped from the cell and recorded in the census; `postureCites.ts` prints a lowercased raw status visibly and is edited. Cut from PROD (`facddeb6`), independent of `cg-2` (the helper is a NEW file so the two branches do not conflict at one chosen-set promote). THE FLOW is `portal/CONTRIBUTING-BOXES.md`: approval row (the issuer registers it; the CTO approves an Opal-internal page), merge-forward by `.tools/portal-merge-forward.sh` (the portal release seat `0.4.0_DT_ClientPlatform~H2`), then the live read of the page (the issuer's `AMGT-ch-2`) and the chosen-set PROD promote of `cg-2` and this branch together. LOCAL code cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>126</round>
 <slot>0.9.0_WK_AMGT_RESAPP~532</slot>
 <fabric>dell1</fabric>
