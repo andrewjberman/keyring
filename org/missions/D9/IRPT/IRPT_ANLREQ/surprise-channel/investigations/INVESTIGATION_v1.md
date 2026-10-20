@@ -27596,3 +27596,30 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S218 -- Run 5's file holds two unknown tickers, not one, and a third synthetic original-holdings object is stranded
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S218",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T02:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The fifth commentary run stopped at the door and stranded a THIRD synthetic original-holdings object the CloudOps principal cannot delete; the order's own holdings bytes hold two unknown tickers (APPL and ZQXWVK), not the one its Keep rule assumes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state_e2e5.json (irpt_anlreq_commentary_e2e5): the delete of this object answered AccessDenied for the CloudOps principal on 2026-10-20T02:05Z; the run's other 6 recorded keys read ABSENT (deleted 6 of 8; 7 distinct keys)",
+      "the door's NEEDS_CORRECTION answer to the sixth-post sequence carried five findings: TICKER_KEPT_BY_HISTORY on SPY, AGG, TIMXX (rows 2 to 4) and TICKER_NOT_FOUND on APPL (row 5) and ZQXWVK (row 6); ADDENDUM 6 (b) sends the Keep only for exactly one TICKER_NOT_FOUND on ZQXWVK",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: the principal the application deletes this prefix with is NONE FOUND"
+    ]
+  },
+  "spec_asserts": "ADDENDUM 6 of the commentary run packet: the holdings bytes carry exactly one unknown ticker (ZQXWVK), so the Keep rule's exactly-one-finding branch can fire; and the pair's rule that a run deletes what it creates.",
+  "world_is": "The door returned five findings for the order's five-row file: APPL (row 5) reads TICKER_NOT_FOUND as well as ZQXWVK, so no Keep was sent and the run stopped at U. The object irpt/49financial/state/original_holdings/ART-5c5ed7e1631a265d1e606caafb12e2047ec1b78378e27205872daf47f7e44069/d83e1c2cc18418d69523a659d6191f6a75d9ff3fb0f229234d8c111afe073bab.csv remains (one version); its delete is AccessDenied and no application path deletes it; the prefix now holds three synthetic leftovers (S214, S217 and this). No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
