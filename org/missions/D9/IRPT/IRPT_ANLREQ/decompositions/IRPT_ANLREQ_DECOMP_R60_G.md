@@ -66,3 +66,15 @@ These two orders are one second issuance of round 60 and carry their own `<works
 Chains: AR-g-176 and AR-g-177 are independent of each other and of the earlier cells (all merged). Checker for 176: `checks/ar_release_checks.py` (record, tree, scripts), calibrated on the rehearsal with mutants. Then the issuer's steps: the never-widen pair for r34o (COO and CTO halves), the CloudOps apply, and the one real run (`deliverables/2.0.0_SA_COO~G2/FWD10_ONE_REAL_RUN_PLAN_20261020.md`).
 
 fanout: 2 of 2 chains, cap 8, reason: the release build and the stale-test fix are independent single-cell chains.
+
+## Addendum 2 2026-10-20 (issuer): cell AR-g-178, the r34o rebuild with the audit registry file
+
+Read from the shipped AR-g-176 tree: `analysis_audit.audit_address` raised AddressRefused, because the packaged `infra/logic/registry/reporting_policies.json` (r34n's) lacks the ANALYSIS_AUDIT family, so the audit wiring of 2.0.0_SA_COO~Y2 would have been dormant (a failed audit put is non-fatal, the attach stands). With the pinned file the address resolves to `s3://opal-data-irpt/irpt/<firm>/platinum/analysis_audit/`. The CTO agreed (msg 11544) and re-signs on the new packet blob. Measured by a rehearsal at pin `480ceeae884ad29b0dc40c29003c8f519e71f9e6` (tarball sha256 df070b09230f...): 12 members change, 6 are added, 323 members, smoke 86 of 86.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-178` | the r34o v2 tarball, sums and four host scripts at the new pin into stage `C:/dev/irpt-release-r34o-g3` (BUILD ONLY), a record and a proof; the AR-g-176 stage `r34o-g2` is superseded and left in place | the worker folder `r62/` | LOCAL |
+
+AR-g-178 carries `<workstream>~GREL2</workstream>` (a third issuance of round 60; the gate keys one issuance to round x workstream).
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell.
