@@ -640,6 +640,27 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "Worker reference section 9: a module finds lib/opal_naming.py by walking up, else from the repo_root key of the config file (the box carries a minimal mirror; FU-s-7 ships it).",
     "world_is": "Bridged on the box with three symlinks in /opt/fidelity-uploader (lib, infra, org -> repo/...), so the walk-up finds the mirror and REPO resolves to /opt/fidelity-uploader. No code was changed.",
     "notes": "The mirror is 11 registry files, NAMING_SCHEMA.json, opal_naming.py and trading_calendar.py (found by an open() audit hook over address() and is_trading_day()). It is a copy at registry@ the current HEAD and will go stale when the registry changes."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T04:15:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "one_line": "The Fidelity box, created running and left running per the order, was stopped at 2026-10-20T00:51:18Z by the existing ec2-auto-shutdown-enforcer, so it does not stay up until FU-x-1.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ec2 describe-instances i-028e830f7226cc685 at 2026-10-20T04:07Z: State stopped, StateReason Client.UserInitiatedShutdown, StateTransitionReason User initiated (2026-10-20 00:51:18 GMT)",
+        "aws cloudtrail lookup-events on the instance id: StopInstances at 2026-10-19T20:51:18-04:00 by username ec2-auto-shutdown-enforcer; the only other writes are RunInstances and ModifyInstanceAttribute by cloudops-dell1-agent-user at 17:17-17:18 -04:00"
+      ]
+    },
+    "spec_asserts": "FU-s-7 item 5 and row W4-S6: the instance runs from the apply until FU-x-1's first automation run stops it; tell the issuer if the apply-to-FU-x-1 gap exceeds 24 hours.",
+    "world_is": "A standing estate enforcer stops EC2 instances overnight (this one 3.6 hours after creation). The stopped state is the box's normal between-runs state; the delivered code and the venv are on its EBS root and survive a stop. Whether the enforcer exempts a tagged instance is not measured here.",
+    "notes": "Not restarted: starting it is the automation document's job at the first run (the schedule rules are DISABLED). Nobody stopped it by hand."
   }
 ]
 ```
