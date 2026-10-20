@@ -12844,6 +12844,48 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W83-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~83",
+    "surfaced_at": "2026-10-20T13:38:42Z",
+    "one_line": "The naming gate printed NAMING ERROR (function-map folder missing for infra/aws/lambda/ci/function-map/) on commit 848ed42093 in this sparse worktree, and the commit landed without that gate grading it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "The commit gate (safe-commit, which runs the naming gate) grades the staged paths; the face's <paths> grant names no infra/aws/lambda/ci folder and the worktree sparse list does not carry one.",
+    "world_is": "safe-commit output of 848ed42093 (C:/tmp/wk-mcpindex-83/.scratch/commit_work.log line 14): '[naming-gate] NAMING ERROR function-map folder missing ...', then '[msg-verify] committed 848ed42093' and rc=0. The naming gate graded nothing for this commit; the commit-gate line read 'OK: pre-commit gate clean for 2 of 2 file(s)'. The same condition is filed as NFRA_MCPINDEX-Z-W76-S41.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output: C:/tmp/wk-mcpindex-83/.scratch/commit_work.log line 14 (read 2026-10-20T13:38Z); commit 848ed420932 on wk-NFRA_MCPINDEX-83 (LOCAL)",
+        "precedent row: org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md row NFRA_MCPINDEX-Z-W76-S41 (the same NAMING ERROR at commit b5595abaa1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W83-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~83",
+    "surfaced_at": "2026-10-20T13:38:42Z",
+    "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on commit 848ed42093: its danger map is 113.5h old (STALE) and it scanned 0 of 2 staged files, so it cleared nothing in this diff.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "The face's preflight declares comp-adversary DECLARED-NOT-APPLICABLE and states no risk-reflex result; the face does not say the reflex runs in a sparse worktree or what answer state a commit must carry.",
+    "world_is": "safe-commit output of 848ed42093 (C:/tmp/wk-mcpindex-83/.scratch/commit_work.log lines 1-8): '[risk-reflex] danger map: 113.5h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'NOT-DECIDABLE: danger map STALE', 'WITHIN BUDGET: scanned 0 of 2 file(s)'. Its REBUILD line points at the main tree's org/modules/graph/nerves-risk-edges.json. The commit proceeded; the same answer state is recorded in the earlier rows of this channel for commits 00c51aac7c and e3bd819412.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output: C:/tmp/wk-mcpindex-83/.scratch/commit_work.log lines 1-8 (read 2026-10-20T13:38Z); commit 848ed420932 on wk-NFRA_MCPINDEX-83 (LOCAL)",
+        "precedent rows: org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md entries whose world_is cites commits 00c51aac7c and e3bd819412 (PARTIAL_OR_BLIND, scanned 0 of 2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
