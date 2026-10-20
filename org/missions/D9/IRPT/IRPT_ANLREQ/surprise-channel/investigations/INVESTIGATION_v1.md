@@ -28244,3 +28244,60 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W322-S1 -- the r34m build driver's host-script generator refuses a two-member release: it requires three package members to change, and its member loops are built from those members
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W322-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~322",
+  "surfaced_at": "2026-10-20T09:55:14Z",
+  "one_line": "The r34m build driver's host-script generator refuses a two-member release: its must-differ list requires three package members to change, and its member-table loops are built from the package members that change. With only SHA256SUMS and the bindings moving, the r34n build stops at step 5 and writes no record.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-y-450 step 1 limits the r58 copies to edits (a) to (e) and says any other edit is a BLOCKING row. Step 5 requires the host-script generator to run for the two-member release r34n, whose EXPECT_CHANGED is exactly SHA256SUMS and reports/resident_bindings.json.",
+  "world_is": "The build at pin 7f1eab530cde4661e9a559bf45439ebdbf73dab2 printed R34N-BUILD-BAD script generator rc 1: REFUSE: ycharts/generate/resident_worker.py does not differ (rc=1; output in the worktree at .scratch/r34n_build_run1.out). The delta gate and the bindings gate passed before it: the tarball changed exactly SHA256SUMS and reports/resident_bindings.json against r34m version 2, and the import smoke read SMOKE live=82 imported=82 fail=0. The generator's must tuple (make_scripts_r34m.py lines 93-95) demands three package members. The later failure of the install, pre-read and rollback member loops on an empty member list is read from the code and is NOT measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build run output .scratch/r34n_build_run1.out in C:/dev/wk-irpt-anlreq-322, rc=1, last line R34N-BUILD-BAD script generator rc 1: REFUSE: ycharts/generate/resident_worker.py does not differ",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~317/r58/make_scripts_r34m.py@5e048ba4836 lines 93-95 (the must tuple and its refuse) and line 111 (def entries)",
+      "stage tarball C:/dev/irpt-release-r35g/irpt-resident-0485393f3a-r34n.tar.gz sha256 89cad47247e6785e6b61e60112b04dfaa3cd2d5de88aef6023959692da76d899, 317 members; member sha256 compare against C:/dev/irpt-release-r35f/irpt-resident-0485393f3a-r34m.tar.gz: changed [SHA256SUMS, reports/resident_bindings.json], added [], removed []"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not edited: the generator change is outside the order's named edits (a) to (e). Finishing the build needs an issuer decision on the generator for a release with no package members. The stage tarball is valid: AC3 PASS-by-output against r34m version 2."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W322-S2 -- the refused run leaves the stage folder C:/dev/irpt-release-r35g in place, so the driver refuses any re-run at that path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W322-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~322",
+  "surfaced_at": "2026-10-20T09:55:14Z",
+  "one_line": "The refused run leaves the stage folder C:/dev/irpt-release-r35g in place (the tarball, the SHA256SUMS copy, build_a, build_b, x32, x34 and an empty scripts folder), and r34m_build.py refuses any run at that path with 'the stage folder already exists' until the issuer disposes of it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-y-450 step 2: the stage folder C:/dev/irpt-release-r35g must not exist before the build, and the worker never uses or deletes r35a to r35f.",
+  "world_is": "After the run, C:/dev/irpt-release-r35g holds irpt-resident-0485393f3a-r34n.tar.gz (1132727 bytes, 317 members, sha256 89cad47247e6785e6b61e60112b04dfaa3cd2d5de88aef6023959692da76d899), irpt-resident-0485393f3a-r34n.package.SHA256SUMS, build_a, build_b, x32, x34 and scripts (0 entries). The worker deleted nothing; r35a to r35f were not touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la C:/dev/irpt-release-r35g after the run (sizes and names as above), and ls of scripts/ giving 0 entries",
+      "r34m_build.py stage check: if os.path.exists(out): bad('the stage folder %s already exists') in the r60 copy at 5e048ba4836 lineage"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer's next step. The worker did not remove the folder: removing a stage folder is a recursive deletion and waits for the issuer."
+}
+]
+```
