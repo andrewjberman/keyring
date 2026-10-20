@@ -22,7 +22,7 @@
 
 ### THE CELL
 
-**FR-s-6** -- The adapters that let the daily attribution stage run: a request object over the signed-in Playwright context, the account lister that pages `accountList.json`, a structural extractor for its unmeasured response shape, and the one edit of `box/daily.py` that wires them. Contract rows: C-TENANCY, FWD-9. Answers your row NFRA_FIDUPL-D1-W5-S2 (armed on the issuer).
+**FR-s-6** -- The adapters that let the daily attribution stage run: a request object over the signed-in Playwright context, the account lister that pages `accountList.json`, a structural extractor for its unmeasured response shape, and the one edit of `box/run.py` `_real_daily_deps` that wires them. Contract rows: C-TENANCY, FWD-9. Answers your row NFRA_FIDUPL-D1-W5-S2 (armed on the issuer).
 
 **Read first:** `org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md` (sections 1, 9 and 11) and the cell text above.
 
@@ -33,7 +33,7 @@ Build `adapters.py`, `tests/test_adapters.py` and the one edit of `box/daily.py`
 1. `adapters.py`: `ContextRequest(context)` wrapping `context.request` (Playwright's APIRequestContext): `get_text(url) -> (status, text)` (follows redirects, as the form's 302 to www2 needs), `post_form(url, fields) -> (status, text)` (an urlencoded body from a dict, never logging the values), and `post_form_json(url, fields, headers) -> (status, parsed_json_or_None)`. `xsrf_token(context)` reads the `XSRF-TOKEN` cookie value as `PlaywrightSession.xsrf_token` does in `fetch.py` (reuse that code, do not edit `fetch.py`).
 2. `extract_accounts(obj, account_key="accountNumber")`: the shape of the `accountList.json` response is UNMEASURED, so find the rows by structure: walk the parsed JSON for the first list whose items are dicts containing `account_key`, and return that key's values as strings. If none is found, raise `AdapterShapeError` whose message carries ONLY the top-level key names and the types (never a value) so the next run's trace names the shape. The container's name is never hard-coded.
 3. `make_account_lister(request, xsrf, length=2000, extract=extract_accounts)`: returns a callable that pages `accountList.json` (POST `/ssc/accountsearch/wc/channel/accountList.json`, form `length=2000&accountNumber=&sourceCode=BROK&custodianCode=FID`, header `x-xsrf-token`; the offset field past 2,000 rows is named `start`, UNMEASURED, the same assumption FR-s-1 made) until a page shorter than `length` comes back, and returns the list of account-number strings. Never prints or logs an account value.
-4. Edit `box/daily.py` `_real_daily_deps` (your own file from FR-s-4) so `attribute` builds `ContextRequest(handle.context)`, a `GSwitcher` on it, and `make_account_lister`, then calls `attribute.sweep_attribution(...)`; delete the refusal path (W5-S2). Keep every other behaviour.
+4. Edit `_real_daily_deps` in **`box/run.py`** (it lives there, at about line 270, not in `daily.py`: the issuer's first draft of this order named the wrong file, your row W5-S3 caught it, and `box/run.py` is now in your paths block) so `attribute` builds `ContextRequest(handle.context)`, a `GSwitcher` on it, and `make_account_lister`, then calls `attribute.sweep_attribution(...)`; delete the refusal path (W5-S2). Keep every other behaviour.
 5. Tests (fakes; no network): in the new `tests/test_adapters.py` `test_get_text_follows_redirect_and_returns_text`, `test_post_form_sends_urlencoded_body_without_logging_values`, `test_account_lister_pages_until_short_page`, `test_extract_accounts_finds_list_by_key_not_by_container_name`, `test_extract_failure_names_only_keys`, `test_daily_real_deps_use_adapters` (the last in this file, calling `_real_daily_deps` with a fake context). Your five daily tests must still pass.
 
 ### ACCEPTANCE
@@ -59,6 +59,7 @@ Dry-run at the base (HEAD of box/dell1 at the cut): `FR6-AC1` base: FAIL as expe
 infra/aws/ec2/canonical-fidelity/adapters.py
 infra/aws/ec2/canonical-fidelity/tests/test_adapters.py
 infra/aws/ec2/canonical-fidelity/box/daily.py
+infra/aws/ec2/canonical-fidelity/box/run.py
 org/missions/D8/NFRA/NFRA_FIDUPL/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
