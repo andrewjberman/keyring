@@ -57,7 +57,8 @@ TEST_FILES = {
         "test_logout_calls_both_deletes_and_records_statuses", "test_session_close_logs_out_first_and_never_raises",
         "test_text_entry_uses_key_events_not_fill", "test_mouse_path_precedes_each_click",
         "test_pointer_wander_issues_mouse_moves", "test_human_input_never_logs_a_value",
-        "test_abck_marker_is_noted_before_the_password_post", "test_password_post_is_not_sent_when_abck_reads_minus_one"]),
+        "test_abck_marker_is_noted_before_the_password_post", "test_password_post_is_not_sent_when_abck_reads_minus_one",
+        "test_authorize_accepts_the_home_page_as_success", "test_select_factor_waits_for_the_verify_page"]),
     "fr1a": ("%s/tests/test_gswitch.py" % CF, [
         "test_parses_current_default_and_options", "test_switch_posts_form_without_isdefault",
         "test_switch_asserts_current_equals_requested", "test_switch_failure_raises_and_names_no_value"]),

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -141,6 +141,13 @@ Read over CDP in the box's plain Chrome after the 23:06Z run: the Akamai `_abck`
 5. **Nothing else changes**: the traced step names, selectors, timeouts, the secrets handling and the trace lines stay as they are. Every new call goes through `self._sleep` for pauses so the existing fake clocks work. No value, key, coordinate or timing is logged or noted.
 Add six tests to the EXISTING `tests/test_login_trace.py`: `test_text_entry_uses_key_events_not_fill` (a fake page: `fill` is never called, `keyboard.type` receives each character, with a delay in the 60 to 170 range), `test_mouse_path_precedes_each_click` (a mouse move with steps of 8 or more is recorded before each down and up), `test_pointer_wander_issues_mouse_moves` (3 to 5 moves), `test_human_input_never_logs_a_value` (the secret appears in no note, log or trace), `test_abck_marker_is_noted_before_the_password_post` (a fake context whose `_abck` value has second field `0` after two polls: the note reads `abck_marker=0` and the submit click happens; the cookie value appears nowhere), `test_password_post_is_not_sent_when_abck_reads_minus_one` (the field stays `-1` for the whole poll: no submit click, a `LoginStepError`). FU2-AC4 now needs thirty-nine; fu2a, fu2b, fu2c and fu5b must still pass, and the existing tests that assert `fill` or `click` are updated to the new calls without changing their names. The checker is `fidupl_round_checks.py`. Fakes only: no AWS, no live call, no sign-in.
 
+### REPAIR 14 (issuer, 2026-10-20 ~23:45Z; CTO 8867, URGENT) -- the box signed in; two defects of ours remain, in the last two steps
+
+The 23:33Z run (`C:/Dev/ajb_workspace/org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/2.0.0_SA_COO~P1/FU-s-11_trackB_run4_signed_in.txt`) was SIGNED IN: password accepted (`_abck` field 1 read `0`), the text and the code done, the browser at `.../singlecontainer/wc/channel/app/professional-platform-summary` titled `Home Experience | Wealthscape`, `ATT` and `JSESSIONID` present. Our two defects:
+1. **`_authorize` took no authorize response.** The box helper's `_authorize` waited 20 s and noted `authorize_seen=[]` (the page was already on the home page, and the authorize call is not one the wait can see in this browser). Make it succeed as soon as EITHER a 2xx authorize response was recorded OR the page's URL path contains `professional-platform-summary` or starts with `/singlecontainer/` or the page title contains `Home Experience`; poll through `self._sleep` to the same deadline; on a timeout it still raises the same `TimeoutError` and the `authorize_seen` note stays. Note `authorize via=response|home_page`.
+2. **`_select_factor` raced the page transition** (first run: it raised right after the password step; 90 s later the same call passed in 0.8 s). Before it does anything, `_select_factor` waits (poll to the step timeout, through `self._sleep`, tolerating a navigation exception as `_after_next` does) until the verify page is present: a visible button whose text starts with `Text me the code` (case-insensitive) or one of the older factor choices. It still clicks nothing there. A timeout raises as today.
+Add two tests to the EXISTING `tests/test_login_trace.py`: `test_authorize_accepts_the_home_page_as_success` (no authorize response ever, but the fake page's URL path and title read as the home page: the step passes with `authorize via=home_page`; and the variant with a 2xx response: `via=response`), `test_select_factor_waits_for_the_verify_page` (the fake page shows the button only after three polls, the first two queries raise a plain Exception subclass named Error: the step passes). FU2-AC4 now needs forty-one; fu2a, fu2b, fu2c and fu5b must still pass. The checker is `fidupl_round_checks.py`. Fakes only. Be FAST: the live run is waiting.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -153,7 +160,7 @@ Add six tests to the EXISTING `tests/test_login_trace.py`: `test_text_entry_uses
 `FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the thirty-nine login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9, one from REPAIR 10, two from REPAIR 11, three from REPAIR 12, six from REPAIR 13) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+`FU2-AC4` -- the forty-one login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9, one from REPAIR 10, two from REPAIR 11, three from REPAIR 12, six from REPAIR 13, two from REPAIR 14) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 
