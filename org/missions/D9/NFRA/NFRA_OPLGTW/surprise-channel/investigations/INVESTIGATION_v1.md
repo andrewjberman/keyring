@@ -31085,3 +31085,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Both rows are ruled above with their evidence; no signed scope or released file changes."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T14:23:35Z",
+  "id": "NFRA_OPLGTW-Z-S436",
+  "one_line": "Relayed from 2.0.0_SA_COO~MI (msg 36219, round 24 battery, case K2-31): portal_get_security_scan returns a raw AccessDenied for an absent-universe request because the gateway reader role lacks s3:ListBucket on that prefix and the reader maps only NoSuchKey, 404 and NotFound to absent",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "The relay cites org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~80/fail_attribution.json (merged ba0cb900e7a on the sender's lineage, LOCAL). This seat has NOT read that file or reproduced the call; the claim is the sender's.",
+      "Code read by this seat: infra/aws/ec2/opal-gateway/app/portal_macro.py _read() (lines 138-159): an exception from ts._load_capped whose boto error code is not in _ABSENT_CODES propagates; an S3 GET of a missing key by a role WITHOUT s3:ListBucket answers AccessDenied, not NoSuchKey, which is the mechanism the relay names. The sender cites line 149 for the same mapping."
+    ]
+  },
+  "spec_asserts": "An absent served item reads as absent (None, 0) so the typed tool answers absent_reason, not a raw IAM error.",
+  "world_is": "Unverified by this seat. If the relay holds, an absent-universe request for the security scan surfaces AccessDenied. Two fix shapes: (a) the IAM read grant gains s3:ListBucket on that served prefix (an access change, never-widen, CTO), or (b) _read treats AccessDenied on a get of a KEY IN THE SERVED PREFIX as absent (a code change that hides a real denial, so it needs a prefix check). HYPOTHESIS TO TEST, NOT A FINDING: OG-ls-1 (complete, ledger nfra-oplgtw-grants-ls1 CLOSED 11:02:38Z) narrowed the */silver/* ListBucket statement today; whether the portal prefix lost ListBucket in that change is not established.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Carried to the round-48 enrichment list (L10 slug draft section 4). Not cut in round 47: round 47's releases are staged and a read-grant change is an access change for the CTO."
+}
+```
