@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261020T211229Z-0fb9",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "0.7.0_AE_CloudOps~MDPF1",
+ "subject": "MDPF_DEMQUE TO-DQ-t34: write the proof instance and flip complete (AC1 and AC2 both read OK)",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/CALL_SITEZ_CLOSE_T34_PROOF_20261020.md",
+ "opened_at": "2026-10-20T21:12:29Z",
+ "sent": {
+  "at": "2026-10-20T21:14:15Z",
+  "bus_message_id": "e8543bcd-6b06-4d2a-9c4e-fc576322bf33"
+ },
+ "ack_bus_message_id": null,
+ "closed_from": {
+  "at": null,
+  "by": null
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}
