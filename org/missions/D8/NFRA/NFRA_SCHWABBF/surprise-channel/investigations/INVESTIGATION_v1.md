@@ -846,6 +846,69 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-a1 amendment, Defect 1: the issuer's measurement of the generator run is 83 key/value entries before, 123 after, 40 added, 0 removed, in the five named sections.",
     "world_is": "The added (40) and removed (0) counts agree. The before and after baselines are each 4 higher in the issuer's count than in the worker's count over the same five sections, a constant offset the regeneration does not change; the worker could not identify which four entries the issuer's method counts. The regenerated table is purely additive, so the offset does not change the fix.",
     "notes": "Not an alert and not a monitor. The issuer confirms the counting method for the four-entry offset; the worker printed both numbers and did not adjust its own count to match."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:03:41Z",
+    "one_line": "The bronze move script and its test still encode the all-firm key grammar: after the per-master rule (PRD v0.7 C-KEYFORM), 10 of 19 move-script tests fail, because the move plans 0824 and 0833 into the firm form that the key functions no longer produce.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/canonical/schwab/tests/test_move_bronze_key_form.py -q in worktree wt-bf-1 (branch wk-NFRA_SCHWABBF-1, base HEAD 6c4675f585a plus the BF-k-3 key-function edits): 10 failed, 9 passed",
+        "data/canonical/schwab/keyform/move_bronze_key_form.py@6c4675f585a:35 SCOPE_MASTERS = (\"08242234\", \"08335338\", \"08403355\"); under the per-master key functions its plan raises PlanRefused 'two planned sources map to one destination' for 08242234 (move_bronze_key_form.py:115)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order BF-k-3 names the two key-function files and the bronze key test as its write grant and names no other consumer; its worker face states that 0824 and 0833 keep the pre-round key bytes.",
+    "world_is": "data/canonical/schwab/keyform/move_bronze_key_form.py still plans every legacy key of 08242234 and 08335338 into the firm form. With the per-master functions the planned destination equals the source, so the plan refuses and writes nothing. The move script has no per-master rule and its test expects 0824 under 49financial.",
+    "notes": "Not an alert and not a monitor. The move script and its test sit outside BF-k-3's grant; the rework needs an order from the issuer of the keyform move. Measured by this worker on LOCAL only: no S3, no move run."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:03:41Z",
+    "one_line": "The per-master rule's 'any OTHER master' branch accepts every eight-digit master, so an unregistered eight-digit master resolves silently to the old form, where the round-2 all-firm functions refused it through the MASTER_FIRM lookup.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live probe in worktree wt-bf-1 after BF-k-3: monolith_bronze_key('acc','20231017','08999999') returns 'schwab/08999999/bronze/acc/20231017/08999999.CRS20231017.ACC.zip'; monolith_bronze_key('acc','20231017','4698') raises KeyError",
+        "data/black_diamond/scripts/bronze/_monolith_bronze.py@6c4675f585a:71-79 MASTER_FIRM was the only master lookup; the BF-k-3 _master_form() accepts any eight-digit string that is not in FIRM_FORM_MASTERS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.7 C-KEYFORM item 2 as quoted in order BF-k-3: 'any OTHER master -> TODAY's partition'; firm_of raises for any master not in the firm-form set.",
+    "world_is": "Both key files return the pre-round old-form key for any eight-digit master outside FIRM_FORM_MASTERS, registered or not. Only a malformed (non-eight-digit) master raises. Today's callers resolve the master through master_for(), which holds only 08335338 and 08242234, so no live path reaches an unregistered master.",
+    "notes": "The literal spec was implemented as written; this row records the silence in the spec (no registry refusal for an unregistered eight-digit master). Disposition for the CTO or the issuer to choose: refuse non-registered masters, or accept them by name."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:12:27Z",
+    "one_line": "The round-2 name MASTER_FIRM was renamed to FIRM_FORM_MASTERS with no alias, although the order asks every round-2 name to keep working. The alias was written and then refused at commit by the owned-paths lane gate, because TO-BF-k3 was already complete, so the committed key functions lack MASTER_FIRM.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/bronze/_monolith_bronze.py@6c4675f585a:71 defined MASTER_FIRM as the seven-master map; at 57310f7877 and 2103514e72 neither key file defines MASTER_FIRM, and a Grep of the worktree data/ tree for MASTER_FIRM returns no code match (docs only)",
+        "safe-commit of the alias in worktree wt-bf-1 (log .scratch/commit_c.log): owned-paths lane violation for both key files, 'no NON-TERMINAL task order at HEAD issued_to this serial names this path', after TO-BF-k3 flipped to complete at 2103514e72"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order BF-k-3 worker face, per-master contract item 'keep every round-2 name working, add the new ones'; TO-BF-m3 imports this contract.",
+    "world_is": "Both key files at 2103514e72 define FIRM_FORM_MASTERS and no MASTER_FIRM. The worktree is clean for the grant files at HEAD. An alias fix needs an order whose <paths> names the two key files and the test while it is non-terminal.",
+    "notes": "Not an alert. Disposition for the issuer: grant the two key files in TO-BF-m3 (or re-open BF-k-3) to add MASTER_FIRM = FIRM_FORM_MASTERS inside the byte-equal block, or confirm that no caller needs the name."
   }
 ]
 ```
