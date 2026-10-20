@@ -64,6 +64,14 @@ TEST_FILES = {
         "test_unregistered_firm_scope_listed_not_landed", "test_raw_line_bytes_preserved",
         "test_dry_run_writes_nothing", "test_record_has_counts_and_lists",
         "test_unmapped_label_listed_not_landed", "test_record_lists_unplaced_and_conflict_accounts"]),
+    "fu12h": ("%s/tests/test_agent_fill.py" % CF, [
+        "test_username_step_fills_and_never_prints_the_value", "test_password_step_reports_factor_names_only",
+        "test_code_step_reads_quo_and_reports_authorize_status_only", "test_attach_uses_localhost_cdp_only",
+        "test_failure_prints_the_class_name_only"]),
+    "fu12d": ("%s/tests/test_agent_drive.py" % CF, [
+        "test_forward_command_targets_the_cdp_port", "test_helper_is_invoked_over_ssm_with_a_fixed_command",
+        "test_drive_order_and_record_are_values_free", "test_refused_password_ends_the_run_with_a_refused_record",
+        "test_drive_module_reads_no_secret"]),
     "fr6": ("%s/tests/test_adapters.py" % CF, [
         "test_get_text_follows_redirect_and_returns_text", "test_post_form_sends_urlencoded_body_without_logging_values",
         "test_account_lister_pages_until_short_page", "test_extract_accounts_finds_list_by_key_not_by_container_name",
@@ -738,7 +746,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu12h": lambda: tests("fu12h"), "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 

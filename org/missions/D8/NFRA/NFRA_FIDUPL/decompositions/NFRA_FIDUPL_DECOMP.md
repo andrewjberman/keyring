@@ -113,3 +113,13 @@ Track B of the sign-in ruling: a repeatable AGENT-DRIVEN headful fallback, besid
 | **FU-s-11** | (RE-CUT 2026-10-20 ~18:35Z on the CTO ruling 8750 of Andrew's steer: no Claude account or plugin on the box) The box's real Google Chrome runs headful on its own profile with a localhost-only CDP port, so a dell1 agent can drive it through an SSM port forward; then one agent-driven headful sign-in to the text-message code, recorded values-free | `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF | WORLD |
 
 Edge: `FU-s-10 -> FU-s-11`. Executor: `0.7.0_AE_CloudOps~NFRA1`.
+
+## 11. ADDENDUM 2026-10-20 ~18:45Z (issuer, CTO ruling 8754 on the Track B drive; no spec change)
+
+Track B's drive splits at the secrets: the secret-bearing steps (the username and password entry, the code entry) run in a BOX-side helper invoked over SSM, attached to the agent Chrome through the box's localhost CDP; the dell1 agent drives everything else and sees only masked fields. Neither the Wealthscape credential nor the Quo code reaches dell1.
+
+| cell | what it builds (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FU-s-12** | `box/agent_fill.py` (the box-side helper: `username`, `password`, `code` commands over CDP at 127.0.0.1) and `agent_drive.py` (the dell1 controller: SSM port forward, CDP attach, the open/factor/send steps, the helper calls over SSM, a values-free record), with tests, on fakes | `infra/aws/ec2/canonical-fidelity/box/agent_fill.py`, `.../agent_drive.py`, `.../tests/test_agent_fill.py`, `.../tests/test_agent_drive.py` | C-TENANCY | WORLD (floor; fakes only in effect) |
+
+Edge: `FU-s-2 -> FU-s-12 -> FU-s-11`. Executor: a worker of the COO.
