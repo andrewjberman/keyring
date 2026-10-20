@@ -300,6 +300,20 @@ def resolve_risk_map(tree: str, own_map: str, rebuild=rebuild_risk_map):
         return own, "sparse worktree: no danger map here or in the main tree", True
     if not own.exists:
         return own, None, False
+    # AMGT_HARVST-D1-W183-S11/S17: a LINKED worktree's own map is STALE (a checkout carries the
+    # map as last committed) and its build is refused by the guard, so the reflex answered
+    # PARTIAL_OR_BLIND on every worker commit. Read the MAIN tree's map when that one is fresh:
+    # no build here, and the main map's age is printed as the vintage. A stale main map falls
+    # through to the rebuild/refusal below, so a stale map still ends as a named NOT-DECIDABLE.
+    main = main_tree_of(tree)
+    if main and os.path.normcase(os.path.normpath(main)) != os.path.normcase(os.path.normpath(tree)):
+        main_map = os.path.join(main, MAP_REL)
+        if os.path.isfile(main_map):
+            main_src = RiskSource(main_map)
+            if main_src.exists and not main_src.stale:
+                return (main_src,
+                        "linked worktree: own map STALE; read the MAIN tree's map (%s); no build here"
+                        % main_map, False)
     ok, why = rebuild(own_map)
     fresh = RiskSource(own_map)
     if ok and not fresh.stale:
