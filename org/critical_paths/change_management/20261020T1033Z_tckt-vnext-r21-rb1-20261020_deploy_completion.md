@@ -13,7 +13,7 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | S1 | verify | check-inbox, census, PROD head and CI, site 200, DT and CTO and IB2 and Y2 asked, filer row and ticket ABSENT, prefix count, protected tickets present | all true and printed |  | OPEN |
-| O1 | verify | offline proof writing NOTHING: stub of the Open body shape and four earlier shapes, one read-only GET of a residue object at its version equals the known sha256, listener registered BEFORE the Open press | all three printed |  | OPEN |
+| O1 | verify | offline proof writing NOTHING: stub of the Open body shape and four earlier shapes, one read-only GET of a residue object at its version equals the known sha256, listener registered BEFORE the Open press | all three printed | OFFLINE-PROOF OK (10:36Z, nothing written; deliverables/r21_trade_prod/offline_proof_output.txt): (1) parser against stubbed bodies: {expires_in, filename, url} READ; four earlier shapes (data.url, attachment.url, items[].download_url) READ; no url REFUSED; non-S3 url REFUSED; other bucket's url REFUSED. (2) read-only GET of the residue object (key .../8b46f05593e643f0bb229023841d2a4a/tckt-r20-trade-synthetic.csv, version U2wA9rMN_iqdUnci740XcsAfyvgsTK3h) under own read rights: 31 bytes, sha256 f3e8bf44f4d910ebc27f49354d326787056293ff66a405b2c35c8bad3d31fa42 equals the known file. (3) listener before the press: r21_trade_prod.py line 369 page.expect_response(...) precedes line 371 click_locator.click() inside open_and_capture(); a stubbed page answering at once was driven through that same function and the early response was captured (200, key names [expires_in, filename, url]). | CLOSED 20261020T103727Z |
 | F1 | activation | filer files ONE Trade Request with ONE csv on PROD; shots prod_trade_form_filled and prod_trade_filed | three HTTP statuses, ticket id and object key printed, no engine call |  | OPEN |
 | R1 | verify | Open pressed with the listener registered; body key names printed; url downloaded with a plain GET | sha256 read equals sha256 uploaded |  | OPEN |
 | D1 | verify | after the last exp: ticket item saved whole, then ticket and filer row deleted by printed key; object NOT deleted | ticket and row ABSENT by a 404 only; four residue objects named with key and version |  | OPEN |
@@ -22,3 +22,4 @@
 ## Log
 
 - 20261020T103330Z OPENED by 0.7.0_AE_CloudOps~TV2 with 6 leg(s)
+- 20261020T103727Z LEG O1 closed: OFFLINE-PROOF OK (10:36Z, nothing written; deliverables/r21_trade_prod/offline_proof_output.txt): (1) parser against stu
