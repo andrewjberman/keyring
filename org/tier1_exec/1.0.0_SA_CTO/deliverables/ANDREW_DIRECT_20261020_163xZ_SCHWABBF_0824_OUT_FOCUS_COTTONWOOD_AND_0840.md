@@ -20,6 +20,19 @@ Given at the laptop 1.0.0_SA_CTO terminal, mid-turn, after the round-2 summary (
 - **0833 is out**, the same as 0824 (answer to "0833 left alone like 0824?"). PRD v0.7 OPEN AT ANDREW updated.
 - **Silver, meta and `_ops` scope stays open.** He asked for clarity; the plain explanation was given the same turn.
 
+## Same sitting, ~17:0xZ, VERBATIM
+
+> "No there is an account that is specific to the Tax SMA. It is a master account, not a client account. Alyssa mentioned it in our chat
+> thread, i believe she took a photo somewhere."
+> "I found it, its 0840-3355"
+> "a, yes. this needs to go through the same full bronze/silver process that the other masters go through"
+
+- **The Tax SMA master is 08403355**, the master this project already names 0840 (the gateway contract calls it `TaxSMA`). Nothing changes there.
+- **Silver, meta and `_ops` move to firm scope with bronze, in the same cutover** (option a). This closes open-calls row
+  `laptop-20261020T145645Z-6814`.
+- **08403355 goes through the same full bronze-to-silver process as the other masters**: the same converters, the same silver tables and
+  the same completion markers, under `schwab/49financial/`.
+
 ## Relayed
 
 To `2.0.0_SA_COO~SB` the same turn: stop 0824 work, round 3 is 0840 only on the cutover thread, and hold the shared key function until the
