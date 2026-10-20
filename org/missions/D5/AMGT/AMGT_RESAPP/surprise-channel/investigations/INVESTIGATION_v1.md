@@ -32632,3 +32632,133 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. Not applied: whether the gate should read the pushed refspec instead of HEAD is the CTO's call (the hook is MSTR's lane); an order's step 2 can instead say 'push from a linked worktree on the branch'."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W532-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~532",
+  "surfaced_at": "2026-10-20T01:15:58Z",
+  "one_line": "The Peers tab prints the raw peer read status in a reader sentence at PROD facddeb6; the order says edit every such site, but the file header calls the words load-bearing and a cg-2 candidate owns the line, so it is left unedited",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx:408 at PROD facddeb6 reads: {data.peer_read ?` (read ${data.peer_read.status})` : ''} -- a READ_FAILED or ABSENT status prints as a visible word.",
+      "PeersTab.tsx header line 20 at facddeb6: the (read READ_FAILED) / (read ABSENT) distinction is load-bearing and stays verbatim.",
+      "cand/dell1/amgt-sa-reader-words (c8cd2da0) changes the same line to peerReadWords(data.peer_read.status) and also edits refusalPresentation.ts, PrintExportAction.tsx and reasonWords.ts; c8cd2da0 is not an ancestor of DEV.",
+      "Worker decision on cand/dell1/amgt-sa-status-words (commit 1a6cfd48): census row PeersTab.tsx:408 carries edited false and surprise AMGT_RESAPP-D1-W532-S1."
+    ]
+  },
+  "spec_asserts": "Order step C(1) and rule (4): a VISIBLE site that prints a raw status in a reader sentence, outside the two named postureCites.ts sites, is edited the same way (blockStateWords or a plain phrase).",
+  "world_is": "The peers read-status line is a documented verbatim distinction and a cg-2 candidate owns it (peerReadWords on c8cd2da0, not on DEV); an edit here would conflict at the promote of either branch, and the order gives no plain phrase that fits a peer read status.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer rules whether the peers line lands with cg-2 or with this cell."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W532-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~532",
+  "surfaced_at": "2026-10-20T01:15:58Z",
+  "one_line": "The verdict word REFUSED prints raw in visible reader text (a figure value marker, two export and print error lines, a check-face badge); the order's phrasing covers block states only, so these sites are left unedited",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/refusalPresentation.ts:42 at PROD facddeb6: the value slot returns `[REFUSED: ${reason ?? 'see check face'}]` in place of a figure's number.",
+      "components/PrintExportAction.tsx:135 and :165 at PROD facddeb6: `[REFUSED: {richError}]` and `[REFUSED: {error ?? 'print render failed'}]` as visible text.",
+      "components/CheckFaceBadge.tsx:42 at PROD facddeb6: badge label 'REFUSED' (PASS and PROVISIONAL at :35 and :48 are the same family).",
+      "The order's rule 2 maps REFUSED to 'was refused', which fits a block sentence but not a value marker or a badge label; cg-2 candidate c8cd2da0 edits refusalPresentation.ts and PrintExportAction.tsx."
+    ]
+  },
+  "spec_asserts": "Order step C(1): a VISIBLE site that prints a raw status word in reader text is edited the same way; the order's word list names REFUSED.",
+  "world_is": "REFUSED at these sites is a verdict word on a figure value, an export line and a badge, not a block state; the order's mapping has no phrase for these sites, and two of the three files are in the cg-2 candidate.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. A ruling on the verdict vocabulary is the CTO's call; this cell does not decide it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W532-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~532",
+  "surfaced_at": "2026-10-20T01:15:58Z",
+  "one_line": "The face says round 125's cg-2 candidate is now on DEV; it is not. cand/dell1/amgt-sa-reader-words (c8cd2da0) is not an ancestor of DEV, and DEV's PeersTab still prints the raw status",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal merge-base --is-ancestor c8cd2da0 DEV (local DEV a48fa073): not an ancestor, measured 2026-10-20T01:15Z.",
+      "git show DEV:src/pages/SecurityAnalysis/tabs/PeersTab.tsx line 406 (local DEV a48fa073): ` (read ${data.peer_read.status})` still raw.",
+      "git show c8cd2da0:src/pages/SecurityAnalysis/tabs/PeersTab.tsx line 410: peerReadWords(data.peer_read.status) on the candidate only."
+    ]
+  },
+  "spec_asserts": "Order step C(1): round 125's cg-2 (candidate cand/dell1/amgt-sa-reader-words, now on DEV) owns the reader-word changes, including the peer read status.",
+  "world_is": "cg-2 lives on the candidate branch only. The base PROD facddeb6 lacks peerReadWords, which matches the order, but the 'now on DEV' premise is false, so the cg-2 owner's promote path is unconfirmed.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer confirms the cg-2 promote state before any reader-word cell is cut against DEV."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W532-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~532",
+  "surfaced_at": "2026-10-20T01:15:58Z",
+  "one_line": "The row schema org/surprise_channel/schemas/investigation_item.schema.json is tracked at HEAD but absent from this worktree's disk; the rows were checked against the copy read from HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls org/surprise_channel in C:/dev/wk-resapp-532 (measured 2026-10-20T01:15Z): No such file or directory; git status --short org/surprise_channel printed nothing.",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json returns the draft-07 schema; required: id, surfaced_by, surfaced_at, one_line, class, grounding, disposition."
+    ]
+  },
+  "spec_asserts": "Worker face, surprise rule: rows are filed per org/surprise_channel/schemas/investigation_item.schema.json, readable at that path in the worker's worktree.",
+  "world_is": "In this worktree the schema directory is absent from disk while the file is tracked at HEAD. The worker validated its rows by hand against the HEAD copy and the commit-time gate remains the check.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The gate .tools/surprise-row-gate.py runs at the channel commit."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W532-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~532",
+  "surfaced_at": "2026-10-20T01:20:01Z",
+  "one_line": "Correction to S3, and to the 'not on DEV' statement in S1 and S2: after a fetch, cg-2 (c8cd2da0) IS in origin/DEV; the earlier reading used a stale local DEV ref",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal fetch origin DEV (rc 0), then git merge-base --is-ancestor c8cd2da0 origin/DEV: IN origin/DEV, with origin/DEV at f6f1fe5b. The local DEV ref a48fa073 is stale and was the ref behind S1, S2 and S3.",
+      "git show origin/DEV:src/pages/SecurityAnalysis/tabs/PeersTab.tsx line 410: {data.peer_read ? ` (read ${peerReadWords(data.peer_read.status)})` : ''}.",
+      "origin/DEV components/PrintExportAction.tsx carries no REFUSED string; origin/DEV refusalPresentation.ts header states the bracket token is no longer printed.",
+      "origin/DEV components/CheckFaceBadge.tsx:42 still labels 'REFUSED' (the residual verdict label S2 names).",
+      "git diff facddeb6 origin/DEV -- src/pages/SecurityAnalysis/postureCites.ts: 0 lines, so the branch cand/dell1/amgt-sa-status-words merges onto DEV without a conflict in postureCites.ts."
+    ]
+  },
+  "spec_asserts": "Worker surprise row S3: the face's premise that cg-2 is now on DEV is false (measured against the local DEV ref a48fa073).",
+  "world_is": "cg-2 IS on origin/DEV. S3's premise reading was measured against a stale local ref and is wrong. S1 and S2 repeat the same 'not on DEV' reading. S1 is ARMED only on PROD, where the raw peer read status stays until the next DEV-to-PROD promote carries cg-2; the residual verdict label is CheckFaceBadge.tsx:42.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Supersedes S3 (the issuer sets its disposition). Corrects the 'c8cd2da0 is not an ancestor of DEV' statement in S1 and S2. Form only."
+}
+```
