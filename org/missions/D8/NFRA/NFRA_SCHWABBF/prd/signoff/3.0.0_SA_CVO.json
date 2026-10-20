@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_SCHWABBF_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "ebad019c125a3107d3b7c58308a57e4e4ba557e0",
+  "prd_version": "v0.4",
+  "prd_pin": "ab4d21cec6e61d35034a49c9ef930ce63700fa98",
   "half": "ratified-text",
-  "half_hash": "93998f28b0b19a15e7b15aa30a8707b54b71870d2767a30ae6f84d7548914632",
-  "endpoint_hash": "2b8d9daa6028486c21dac0474a696f60e9f4b28cff4e5101fbe564c62e0c0b22",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.1_RATIFIED_TEXT_20261020.md@389e038b1b",
+  "half_hash": "62d3dd06557459b518c3c343f6b3bd77ed2fd0fb2f37615cb3316e5896051df6",
+  "endpoint_hash": "0424d44417d9779dcc588037feb99974d1f58c1deff54c62015e8d813f5721f7",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.3_RATIFIED_TEXT_20261020.md@da104ef52e",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-20T13:15:27Z"
+  "signed_at": "2026-10-20T14:40:06Z",
+  "reason": "CONTRACTS contradict: C-KEYFORM moves bronze to schwab/<firm>/ while C-NAMES and C-RECORD keep schwab/<master>/; C-SCOPE still excludes the Cottonwood masters FWD-8 pulls"
 }
