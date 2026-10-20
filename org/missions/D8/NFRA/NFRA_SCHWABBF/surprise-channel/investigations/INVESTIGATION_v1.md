@@ -1196,6 +1196,49 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "The dategate test asserts the packaged calendar is a byte copy of lib/trading_calendar.py (test_packaged_calendar_is_byte_copy, lines 107-109).",
     "world_is": "At 41584d28e0e the two bodies diverge after the shared docstring prefix: the packaged copy names expected_last_trading_day, lib/trading_calendar.py names first_trading_day_on_or_after. The copy-or-test drift is pre-existing and no commit of this order touches either file.",
     "notes": "Seen while running the regression sweep of the converter family (BF-p-5). Owner for disposition: the seat that last changed lib/trading_calendar.py or the advi-49f packaging, to be named on disposition."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S12",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:44:20Z",
+    "one_line": "BF-h-5 cannot run in this worktree: its sparse checkout omits infra/aws/ and data/, so the named read paths (modules/opal_name, silver.tf, monolith-iam.tf) and the test directory are absent on disk though committed at HEAD.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wt-bf-4 HEAD 2b0918008fa; git config core.sparseCheckout = true; git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/missions/D8/NFRA/NFRA_SCHWABBF, org/modules/graph, org/ref, org/standards (no infra/aws, no data)",
+        "git ls-files -t infra/aws/terraform/modules/opal_name/main.tf and data/canonical/schwab/build_canonical_daily.py tag S (skip-worktree); git ls-tree HEAD shows infra/aws/terraform/modules/opal_name/main.tf committed; ls infra/ lists only README.md, launch_agents_powershell.ps1, logic",
+        "AC1 python -m pytest data/canonical/schwab/tests/test_fence_state_rows.py: 'ERROR: file or directory not found', rc=4; AC3 terraform -chdir=infra/aws/terraform/modules/opal_name test: 'chdir infra/aws/terraform/modules/opal_name: The system cannot find the path specified', rc=1; org/surprise_channel/schemas/investigation_item.schema.json not on disk (read by git show HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, Refusal clause and 'Dry-run at the base': the worktree carries the paths the order names (infra/logic/registry/exemptions.json, data/canonical/schwab/tests/, infra/aws/terraform/modules/opal_name/, infra/aws/terraform/opal-assets/silver.tf, infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf); a worktree that does not carry them is a BLOCKING row and a stop.",
+    "world_is": "The worktree is a sparse checkout whose cone omits infra/aws and data. The read-only identity and renderer files and the test directory are committed at HEAD but skip-worktree on disk, so AC1 and AC3 cannot run and clause (c) cannot be evaluated. Stopped without editing exemptions.json and without creating the test file.",
+    "notes": "Not reconstructed: the sparse set was not widened and nothing was checked out (no checkout, sparse-checkout add, or rebuild). Owner for disposition: the seat that cut wt-bf-4 (the lane gate) to widen the sparse set or re-cut the worktree. Coordinator amendment received mid-task (signoff_ref text, BOUNDS) is noted; it was not actioned because no row was written."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S13",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:44:20Z",
+    "one_line": "The order's numstat expectation (only added lines, about 36) cannot hold when rows are appended to non-empty JSON arrays: the preceding closing brace of each list gains a comma and shows as a deletion.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "infra/logic/registry/exemptions.json at HEAD 2b0918008fa: opal-data-49financial list ends with '      }' at line 223 and '    ],' at line 224; opal-data-cottonwood list ends with '      }' at line 326 and '    ],' at line 327",
+        "Inferred from JSON syntax (a comma must follow each non-final element); not measured, because no edit was made in this worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, 'Keep the file's own formatting': git diff --numstat for exemptions.json must show only added lines (about 36).",
+    "world_is": "Three appended rows of 8 lines each add about 24 lines, plus the two comma edits (2 added and 2 deleted), so numstat shows at least 2 deleted lines. The numstat criterion is not met as worded; the test's clause (d) is unaffected.",
+    "notes": "Form only. Owner for disposition: the issuer, to state whether a deleted comma line is acceptable."
   }
 ]
 ```
