@@ -309,6 +309,49 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO-BF-t2 build step 1: 'Under --form builder a found second form still makes the verdict FAIL.' Test list: 'both forms -> FAIL naming the second form' (no --form named).",
     "world_is": "Only the builder form is pinned to FAIL on a second form; under --form any a both-forms day passes and names the second form on its hop. FWD-4 forbids a day stored two ways, so the issuer should say whether --form any must also FAIL on both forms.",
     "notes": "Not an alert and not a monitor. The real 2026-10-16 probe under --form any reports HOP second-form NONE, so this choice does not change any criterion's output."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W6-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~6",
+    "surfaced_at": "2026-10-20T15:39:04Z",
+    "one_line": "The schwab converter's silver WRITE grant names only the three master scopes, while the converter's scope function returns the first folder segment of a new-form key (49financial, cottonwood); whether its silver output follows that segment is not traced in TO-BF-i2, so a firm-folder event may be denied on the silver write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-assets/silver.tf:191-200 at 87d44e203b (silver_source_scopes.schwab = 08242234, 08335338, 08403355) and :370-422 (silver_write_per_source: PutObject/GetObject/ListBucket on schwab/{scope}/silver|meta/* for those scopes only)",
+        "data/assets/scripts/silver/schwab_conversion.py:133-143 at 87d44e203b (scope_from_key returns parts[1] for a schwab/ key, i.e. 49financial or cottonwood for the new key form)",
+        "silver.tf (this worktree, BF-i-2 edit): silver_read_schwab_firm_prefix adds READ ONLY on schwab/49financial/bronze/* and schwab/cottonwood/bronze/*; silver_source_scopes is not widened"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-i2 step 3: the converter's firm-prefix grant is a minimal READ; the cell names no silver-tier write for the firm folders.",
+    "world_is": "The converter's silver write grant covers schwab/{08242234,08335338,08403355}/silver|meta/* only. Output keying on the firm segment is unverified here: the cell read the grant, not the converter's output-key construction. If keyed on the segment, the first firm-key event would AccessDenied on silver PutObject (loud, to the DLQ), not corrupt data.",
+    "notes": "Not widened in this cell (the TO says minimal read). Options for the issuer: confirm BF-c-2's output key (master from the file name) before the cutover, or grant silver/meta write on the firm scopes as its own never-widen edit. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W6-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~6",
+    "surfaced_at": "2026-10-20T15:39:04Z",
+    "one_line": "The box role's run-manifest (_ops) and pull-manifest (meta/pulls) PutObject grants enumerate the three old masters only, so a manifest written under a firm-folder master would be denied; TO-BF-i2 scopes the new grant to bronze, so these two are not covered.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf at 87d44e203b, statements MonolithSchwabOpsWrite (schwab/{08242234,08335338,08403355}/_ops/*) and MonolithSchwabMetaPullsWrite (schwab/{08242234,08335338,08403355}/meta/pulls/*); the file's own comment (lines 88-89) says the puller WARNs, not silently, if the manifest write AccessDenies",
+        "infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf (this worktree): MonolithSchwabWrite gains the three 49financial per-master bronze entries; no _ops or meta/pulls entry is added"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-i2 step 1: ADD per-master bronze write entries for the 49financial firm folder; the cell names no other statement.",
+    "world_is": "The puller's manifest home for a firm-folder master is not traced in this cell. If it writes schwab/49financial/_ops/ or schwab/49financial/meta/pulls/, those PutObjects AccessDeny; the puller's WARN makes the denial visible.",
+    "notes": "Not an alert and not a monitor. The issuer decides whether the firm folder needs _ops and meta/pulls grants (enumerated per master, as the cell did for bronze)."
   }
 ]
 ```
