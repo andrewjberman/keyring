@@ -32787,3 +32787,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only. The issuer disarms W532-S1 when ch-4's PROD read shows the Peers suffix in plain words; W532-S2 is closed by msg 8573."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S66",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-20T02:51:00Z",
+  "one_line": "Disarm of AMGT_RESAPP-D1-W532-S1: the Peers tab on the PROD head prints its read status in plain words (read served), so the PROD-only gap is closed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROD head e890aaa94f (portal-v2.1.246; ls-remote read; CI run 39359584436 success) holds both cg-2 c8cd2da0eb and ch-1 ebd7b44720 (merge-base --is-ancestor read for each)",
+      "The walker read the Peers tab of ICICIBC IN under the real login on the PROD head's source served locally (the walker refuses any non-localhost base): the sentence ends '(read served)', the plain word, not the raw state word (walk 20261020T024405Z step 010; AC1 of ch-4 read 19 of 19 paths byte-equal between the branches and PROD)",
+      "The Posture tab of BA US on the same build prints plain cite words (a Citation not resolved line in words, fit-score lines in words)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-125 analysis msg 8573: the Peers suffix rides the PROD promote; the issuer disarms W532-S1 when the PROD read shows it in plain words.",
+  "world_is": "W532-S1's hazard no longer stands on PROD: the raw peer read status is gone from the Peers tab at e890aaa94f. The read is of the PROD head's SOURCE run locally, not of the deployed bundle in a browser at the production host; the byte tie (AC1) and the CI success tie the two.",
+  "notes": "Form only. Disarms AMGT_RESAPP-D1-W532-S1 (this row names it; its disarm_owner was the issuer via S65)."
+}
+```
