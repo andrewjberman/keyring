@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_SCHWABBF_PRD.md",
-  "prd_version": "v0.4",
-  "prd_pin": "ab4d21cec6e61d35034a49c9ef930ce63700fa98",
+  "prd_version": "v0.5",
+  "prd_pin": "99555e004855e728181c731c69834deb125eda08",
   "half": "ratified-text",
-  "half_hash": "62d3dd06557459b518c3c343f6b3bd77ed2fd0fb2f37615cb3316e5896051df6",
+  "half_hash": "439d6b591efd23584ce6781cca0570fb54fe47232a9ac4bfc44f89a94cae411e",
   "endpoint_hash": "0424d44417d9779dcc588037feb99974d1f58c1deff54c62015e8d813f5721f7",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.4_RATIFIED_TEXT_20261020.md@6efc50424f",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.5_RATIFIED_TEXT_20261020.md@a9bc5675c4",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-20T14:44:47Z",
-  "reason": "C-SCOPE excludes the Cottonwood masters FWD-8 pulls; C-NAMES, C-ALONGSIDE IAM and C-RECORD still address schwab/<master>/ against C-KEYFORM's schwab/<firm>/"
+  "signed_at": "2026-10-20T14:54:45Z"
 }

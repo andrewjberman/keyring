@@ -130,6 +130,8 @@ CONFIRMED by Andrew 2026-10-20 ~13:0xZ. The source, verbatim from step 2, is
 
 ## OPEN AT ANDREW (acts only he can do)
 
+- **Silver, meta and `_ops` scope:** do they move to firm scope with bronze in the same cutover, or does bronze move alone? (The CVO's v0.4 item 4,
+  open-calls row on the laptop list.) REC: all tiers in one cutover. If yes, the ratified-text half re-signs and silver joins the cutover.
 - **The one-time sign-in on the Alongside box:** Andrew RDPs into the Alongside Schwab Box once it exists and signs into the SI2 app with
   Alongside's Schwab login (Andrew-direct ~13:5xZ: "I will need to RDP into the EC2 box most likely to get that done"). The box's
   RDP access is set up for that sitting and closed after it, as the 49F box's is.
