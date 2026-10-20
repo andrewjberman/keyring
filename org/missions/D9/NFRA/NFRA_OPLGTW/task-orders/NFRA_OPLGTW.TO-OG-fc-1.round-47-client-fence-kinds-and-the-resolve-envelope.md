@@ -68,6 +68,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-fc-1.round-47-client-fence-kind
 - Base blob of `app/client_core.py` at the issuance is the trunk tip at the cut. Pre-cut: `AC1` base FAIL as expected (served pairs 0 of 3), `AC2` base FAIL as expected (merge lines NO; the two controls hold), `AC3` base FAIL as expected (no test file). The 17 neighbour files pass at the base (81 tests).
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-A</workstream>
 <slot>~166</slot>

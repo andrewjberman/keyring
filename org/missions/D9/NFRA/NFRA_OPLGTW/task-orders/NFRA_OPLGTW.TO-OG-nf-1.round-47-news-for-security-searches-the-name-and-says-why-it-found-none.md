@@ -67,7 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-nf-1.round-47-news-for-security
 - READINGS DISCLOSED TO THE CTO: (1) the name comes from the gateway's own identity lookup, so a name it cannot resolve leaves the old ticker-only fallback, with the reason stated. (2) The fallback now makes up to twice the article reads (one per term), within the existing per-day caps. (3) `match_term`, `fallback_terms`, `fallback_name_absent_reason` and `mention_index_lag_days` are the issuer's field names.
 - Pre-cut: `AC1` base FAIL as expected (only the index-mention control holds), `AC2` base FAIL as expected (no test file). The three neighbour files pass at the base (14 tests with `test_og_gt8`, which carries one red at the live ref and is left out).
 
-<status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-A</workstream>
 <slot>~172</slot>

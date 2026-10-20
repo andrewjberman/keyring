@@ -28244,3 +28244,170 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W321-S1 -- the IB2 premise that the packager token is valid reads claim names and exp only; the origin gate returns before any token check, so the 403 says nothing about iss or aud
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W321-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~321",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The TO-AR-y-449 depends_on premise 'the token is valid' rests on IB2 A_PACKAGER_403 R1, which prints claim names, exp and sub, userType and tier values; the authorizer returns the origin refusal before it reaches the token check, so no read here shows the packager token's iss or aud values and E4 is UNDECIDED.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-449 depends_on: IB2 read A_PACKAGER_403.txt shows the direct call is refused by the authorizer with ORIGIN_VERIFICATION_FAILED, and the token is valid (sub svc-irpt-packager, userType service, exp 2027-01-09). The authorizer admits a service-tier bearer once the origin header is present, when the token verifies against the portal key with issuer opal-portal-auth and audience opal-portal-api.",
+  "world_is": "A_PACKAGER_403.txt R1 prints claims=aud,exp,iat,iss,name,sub,tier,userType and exp, sub, userType and tier values; it does not print aud or iss values and records no signature check. The authorizer order is origin gate (index.mjs:348-351), then token extraction (353-358), then the render branch (368-370), then verifyWithSlots with issuer and audience (380-384). A refusal at the origin gate therefore says nothing about iss, aud or the signature. No source in this tree holds the packager token minting code (the token is read by secret name), so the live iss and aud values are unreadable from source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_packager_403/A_PACKAGER_403.txt R1 line (claims list, and exp, sub, userType, tier values; no aud or iss value) @5e048ba483",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:348-351 origin gate returns isAuthorized false before token extraction; index.mjs:380-384 verifyWithSlots with issuer opal-portal-auth and audience opal-portal-api @5e048ba483",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:19-20,186-187 sets iss opal-portal-auth and aud opal-portal-api for human tokens; comp-find svc-irpt-packager finds the packager reading the token by secret name and no minter in this tree @5e048ba483"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W321-S2 -- the string ORIGIN_VERIFICATION_FAILED is not in the authorizer source; it is IB2's label for the authorizer log line 'Origin verification FAILED'
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W321-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~321",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The authorizer returns a bare isAuthorized false with no reason field; the label ORIGIN_VERIFICATION_FAILED appears only in IB2's reader and its output, not in the authorizer source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-449 cell context: the authorizer answers 403 with the reason ORIGIN_VERIFICATION_FAILED because the request did not come through CloudFront.",
+  "world_is": "The authorizer's simple response is isAuthorized false with a context object and no reason (index.mjs:233-238, 348-351). The only text on that path is the console.warn 'Origin verification FAILED - request did not come through CloudFront' (index.mjs:349). The label ORIGIN_VERIFICATION_FAILED appears in the repository only in IB2's reader packager_403.py:60 and its A_PACKAGER_403.txt output. The 403 status is API Gateway's rendering of the false decision; the source names no status code.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:233-238 generateSimpleResponse returns isAuthorized and context only @5e048ba483",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:348-350 console.warn text and return generateSimpleResponse(false) @5e048ba483",
+      "comp-find ORIGIN_VERIFICATION_FAILED: 7 hits, 1 in first-party source (org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_packager_403/packager_403.py:60) @5e048ba483"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W321-S3 -- the tickets behaviour attaches the edge function only when var.enable_lambda_edge is true, and that variable defaults false
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W321-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~321",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The edge function's Terraform association falls back to a hard-coded auth-validator-edge:13 ARN when the edge is not enabled, so the live association version cannot be read from source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-449 cell context: the behaviour for /api/scoped/tickets/* attaches a viewer-request Lambda@Edge function auth-validator-edge.",
+  "world_is": "The behaviour carries the viewer-request lambda_function_association (cloudfront-distribution.tf:549-553) with local.auth_validator_edge_arn. That local is the Terraform-managed qualified_arn only when enable_lambda_edge is true; otherwise it is the literal fallback ...:auth-validator-edge:13 (cloudfront-distribution.tf:65). The variable defaults false (lambda-edge.tf:11, :72). Which version is live is not readable from the source tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/portal-auth/lambda-edge.tf:11 the edge is gated by var.enable_lambda_edge, default false; lambda-edge.tf:72 edge_count @5e048ba483",
+      "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:65 auth_validator_edge_arn fallback literal auth-validator-edge:13; :549-553 viewer-request association on the tickets behaviour @5e048ba483"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W321-S4 -- the edge function verifies the Bearer JWT on RS256 alone, with no issuer or audience check, where the API authorizer checks both on the same key slots
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W321-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~321",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The edge function checks the algorithm only on the human path, while the API authorizer checks issuer and audience on the same key slots, so a portal-key token with another audience passes the edge and is refused only at the authorizer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-449 question 1: the edge function must state what it requires of a bearer JWT on an /api/scoped path, including what it accepts.",
+  "world_is": "On the human path the edge calls verifyWithSlots(jwt, token, slots, { algorithms: ['RS256'] }) (auth-validator-edge/index.mjs:383) with no issuer and no audience option. The authorizer calls the same helper with issuer opal-portal-auth and audience opal-portal-api (portal-authorizer/index.mjs:380-384). A token that verifies against the portal key with another issuer or audience therefore passes the edge and is refused only at the authorizer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:383 verifyWithSlots with algorithms RS256 only @5e048ba483",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:380-384 verifyWithSlots with issuer and audience @5e048ba483"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W322-S1 -- the r34m build driver's host-script generator refuses a two-member release: it requires three package members to change, and its member loops are built from those members
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W322-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~322",
+  "surfaced_at": "2026-10-20T09:55:14Z",
+  "one_line": "The r34m build driver's host-script generator refuses a two-member release: its must-differ list requires three package members to change, and its member-table loops are built from the package members that change. With only SHA256SUMS and the bindings moving, the r34n build stops at step 5 and writes no record.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-y-450 step 1 limits the r58 copies to edits (a) to (e) and says any other edit is a BLOCKING row. Step 5 requires the host-script generator to run for the two-member release r34n, whose EXPECT_CHANGED is exactly SHA256SUMS and reports/resident_bindings.json.",
+  "world_is": "The build at pin 7f1eab530cde4661e9a559bf45439ebdbf73dab2 printed R34N-BUILD-BAD script generator rc 1: REFUSE: ycharts/generate/resident_worker.py does not differ (rc=1; output in the worktree at .scratch/r34n_build_run1.out). The delta gate and the bindings gate passed before it: the tarball changed exactly SHA256SUMS and reports/resident_bindings.json against r34m version 2, and the import smoke read SMOKE live=82 imported=82 fail=0. The generator's must tuple (make_scripts_r34m.py lines 93-95) demands three package members. The later failure of the install, pre-read and rollback member loops on an empty member list is read from the code and is NOT measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build run output .scratch/r34n_build_run1.out in C:/dev/wk-irpt-anlreq-322, rc=1, last line R34N-BUILD-BAD script generator rc 1: REFUSE: ycharts/generate/resident_worker.py does not differ",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~317/r58/make_scripts_r34m.py@5e048ba4836 lines 93-95 (the must tuple and its refuse) and line 111 (def entries)",
+      "stage tarball C:/dev/irpt-release-r35g/irpt-resident-0485393f3a-r34n.tar.gz sha256 89cad47247e6785e6b61e60112b04dfaa3cd2d5de88aef6023959692da76d899, 317 members; member sha256 compare against C:/dev/irpt-release-r35f/irpt-resident-0485393f3a-r34m.tar.gz: changed [SHA256SUMS, reports/resident_bindings.json], added [], removed []"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not edited: the generator change is outside the order's named edits (a) to (e). Finishing the build needs an issuer decision on the generator for a release with no package members. The stage tarball is valid: AC3 PASS-by-output against r34m version 2."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W322-S2 -- the refused run leaves the stage folder C:/dev/irpt-release-r35g in place, so the driver refuses any re-run at that path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W322-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~322",
+  "surfaced_at": "2026-10-20T09:55:14Z",
+  "one_line": "The refused run leaves the stage folder C:/dev/irpt-release-r35g in place (the tarball, the SHA256SUMS copy, build_a, build_b, x32, x34 and an empty scripts folder), and r34m_build.py refuses any run at that path with 'the stage folder already exists' until the issuer disposes of it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-y-450 step 2: the stage folder C:/dev/irpt-release-r35g must not exist before the build, and the worker never uses or deletes r35a to r35f.",
+  "world_is": "After the run, C:/dev/irpt-release-r35g holds irpt-resident-0485393f3a-r34n.tar.gz (1132727 bytes, 317 members, sha256 89cad47247e6785e6b61e60112b04dfaa3cd2d5de88aef6023959692da76d899), irpt-resident-0485393f3a-r34n.package.SHA256SUMS, build_a, build_b, x32, x34 and scripts (0 entries). The worker deleted nothing; r35a to r35f were not touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la C:/dev/irpt-release-r35g after the run (sizes and names as above), and ls of scripts/ giving 0 entries",
+      "r34m_build.py stage check: if os.path.exists(out): bad('the stage folder %s already exists') in the r60 copy at 5e048ba4836 lineage"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer's next step. The worker did not remove the folder: removing a stage folder is a recursive deletion and waits for the issuer."
+}
+]
+```
