@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-19T16:18:48Z",
+ "written_at": "2026-10-20T13:02:15Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -2002,6 +2002,120 @@
     "at": "2026-10-19T16:18:48Z",
     "by": "1.0.0_SA_CTO",
     "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_163xZ_SIX_HANGING_OPEN_CALLS_RESOLVED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261020T130037Z-b333",
+   "project": "NFRA_SCHWABBF",
+   "subject": "Confirm the 7 DONE WHEN lines for the Schwab backfill (FWD-1..7), incl. FWD-7's wait on Cottonwood/Schwab entitlement: yes / edit?",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_SCHWABBF_20261020.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-20T13:00:37Z",
+   "kind": "fork",
+   "context": "Andrew-direct 2026-10-19 ~21:0xZ ordered the pull, full backfill and canonical paths; the L2 endpoint is written and L3 registered. Gates the L4 PRD.",
+   "rec": "Yes, as written: FWD-7 waits on an act no seat can do (Schwab entitling the 4 Cottonwood masters).",
+   "scope": {
+    "measured_at": "2026-10-20T13:00:37Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-20T13:02:12Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_130xZ_NFRA_SCHWABBF_DONE_WHEN_CONFIRMED_PATH_MOVE_YES_210_MASTERS_OUT.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261020T130039Z-3c35",
+   "project": "NFRA_SCHWABBF",
+   "subject": "Move the ~1,782 stored Schwab bronze days from <type>/<YYYYMMDD>/ to the builder's <type>/date=YYYY-MM-DD form, with the backfill: yes / no?",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_SCHWABBF_20261020.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-20T13:00:39Z",
+   "kind": "fork",
+   "context": "His order: land in canonical LGIC path form; without the move a master holds two layouts. Gates FWD-4 and FWD-5.",
+   "rec": "Yes: one cutover with a same-day rollback, every reader of the old form changed in the same release, no side-by-side copy.",
+   "scope": {
+    "measured_at": "2026-10-20T13:00:39Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-20T13:02:14Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_130xZ_NFRA_SCHWABBF_DONE_WHEN_CONFIRMED_PATH_MOVE_YES_210_MASTERS_OUT.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "laptop-20261020T130041Z-3cd2",
+   "project": "NFRA_SCHWABBF",
+   "subject": "The login is entitled to 213 Schwab masters; we pull 3. For the other 210: identify first, or pull all?",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261019_210xZ_SCHWAB_COTTONWOOD_MASTERS_PULL_AND_BACKFILL.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-20T13:00:41Z",
+   "kind": "fork",
+   "context": "Schwab's entitlement list carries numbers only, no firm names (measured 2026-10-19 21:17Z, record c031634941).",
+   "rec": "Identify first: one header read per master to name its firm (read-only, nothing stored), then Andrew picks.",
+   "scope": {
+    "measured_at": "2026-10-20T13:00:41Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-20T13:02:15Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_130xZ_NFRA_SCHWABBF_DONE_WHEN_CONFIRMED_PATH_MOVE_YES_210_MASTERS_OUT.md",
     "crossbox": null,
     "ruled_by": "andrew",
     "xadj": null
