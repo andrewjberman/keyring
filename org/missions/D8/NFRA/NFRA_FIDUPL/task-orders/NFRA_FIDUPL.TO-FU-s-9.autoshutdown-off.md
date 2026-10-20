@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -24,6 +24,8 @@
 
 **FU-s-9** -- Autoshutdown off for the Fidelity box: one edit of the Terraform root adds the tag `AutoShutdown=disabled` to the instance and removes the `stopInstance` step from `automation.tf` (with the `onFailure` references to it), applied by the CloudOps seat under `safe-apply` AFTER FU-x-1's automation run has ended. Contract rows: C-TF, FWD-7. Ruled by the CTO (msg 8621, ruling @630242a029) on Andrew's word ("Turn off autoshutdown for this box").
 
+**ADDED 2026-10-20 ~13:15Z (live finding, worker row NFRA_FIDUPL-D1-W1-S8, execution b065d07e-53e7-47b6-9c07-476c21f1d6df):** FU-x-1's one automation run failed at 13:02Z because the automation role lacks `ec2:DescribeInstanceStatus`, which the `aws:changeInstanceState` start step needs; the run never reached the wrapper. The same root edit and the same apply fix it (edit (c) below). Row S8 names you as its disarm owner.
+
 **Read first:** `org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md` (the facts every cell shares) and the cell text above. The account's `ec2-auto-shutdown-enforcer` stopped the box at 2026-10-20T00:51Z (your row NFRA_FIDUPL-D1-S5); its only exemption is the tag `AutoShutdown=disabled` (`infra/aws/lambda/ec2-auto-shutdown-enforcer/lambda_function.py:18` and `:114`, per the CRO).
 
 ### WHAT TO DO
@@ -31,8 +33,8 @@
 HOLD until the issuer messages you that FU-x-1's automation run has ended; no execution of the automation document may be in progress when you apply (read `aws ssm describe-automation-executions` for the document and confirm none is `InProgress`).
 
 1. Open a change-management entry first (`.tools/deploy_ledger.py open --slug nfra-fidupl-autoshutdown-off-20261020 ...`, legs: root edit applied; tag live; document version without a stop step).
-2. Edit `infra/aws/terraform/canonical-fidelity-ec2/` ONLY: (a) add the tag `AutoShutdown = "disabled"` to the instance's tags (keep every tag already there); (b) delete the `stopInstance` step of the automation document (about `automation.tf` lines 129-135) AND every `onFailure = "step:stopInstance"` that points at it (about lines 89, 99 and 117), so the document stays valid and the run ends after the wrapper step. Do not change anything else. Do not remove the automation role's permissions.
-3. `terraform plan` must show exactly two changes, the instance tags and the automation document, and nothing added or destroyed; stop and file a surprise row if it shows more.
+2. Edit `infra/aws/terraform/canonical-fidelity-ec2/` ONLY: (a) add the tag `AutoShutdown = "disabled"` to the instance's tags (keep every tag already there); (b) delete the `stopInstance` step of the automation document (about `automation.tf` lines 129-135) AND every `onFailure = "step:stopInstance"` that points at it (about lines 89, 99 and 117), so the document stays valid and the run ends after the wrapper step. (c) in `automation.tf`, add `ec2:DescribeInstanceStatus` to the automation role policy: put it in the existing `ReadBoxStateStar` statement beside `ec2:DescribeInstances` (neither supports a resource-level scope) and extend its `# STAR-OK:` comment to name it, so the IAM guard check stays green; (d) add an output `automation_role_arn` (the automation role's ARN) to `outputs.tf`. Do not change anything else and do not remove any permission.
+3. `terraform plan` must show exactly three changes (the instance tags, the automation document, the automation role policy) plus the new output, and nothing added or destroyed; stop and file a surprise row if it shows more.
 4. Apply ONLY through `.tools/safe-apply.sh`. Never stop, start or terminate the instance. The ledger is closed last.
 5. Run the three criteria below and record each line verbatim.
 
@@ -47,9 +49,12 @@ HOLD until the issuer messages you that FU-x-1's automation run has ended; no ex
 <criterion id="FU9-AC3" cell_refs="FU-s-9"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu7a</invocation><expect>R1-FU7A-OK No changes\.</expect></criterion>
 `FU9-AC3` -- after the apply, `terraform plan` reads No changes.
 
-<expected_criteria>FU9-AC1,FU9-AC2,FU9-AC3</expected_criteria>
+<criterion id="FU9-AC4" cell_refs="FU-s-9"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu8p</invocation><expect>R1-FU8P-OK the automation role is allowed ec2:DescribeInstanceStatus</expect></criterion>
+`FU9-AC4` -- the live automation role is allowed `ec2:DescribeInstanceStatus` (IAM simulation). A fourth criterion, with its reason: the live trace failed on exactly this missing permission and the other three cannot see it.
 
-Dry-run at the base (HEAD of box/dell1 at the cut): `FU9-AC1` base: FAIL as expected (tag AutoShutdown=None); `FU9-AC2` base: FAIL as expected (live document version 2 has a stop step); `FU9-AC3` base: PASS as expected (the root currently plans No changes; it is the after-apply bar).
+<expected_criteria>FU9-AC1,FU9-AC2,FU9-AC3,FU9-AC4</expected_criteria>
+
+Dry-run at the base (HEAD of box/dell1 at the cut; `FU9-AC4` base: FAIL as expected, no automation_role_arn output yet): `FU9-AC1` base: FAIL as expected (tag AutoShutdown=None); `FU9-AC2` base: FAIL as expected (live document version 2 has a stop step); `FU9-AC3` base: PASS as expected (the root currently plans No changes; it is the after-apply bar).
 
 ## BOUNDS
 
@@ -71,10 +76,10 @@ org/missions/D8/NFRA/NFRA_FIDUPL/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: FU9-AC1,FU9-AC2,FU9-AC3. Instance at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/0.7.0_AE_CloudOps~NFRA1/NFRA_FIDUPL.TO-FU-s-9.autoshutdown-off.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> FU9-AC1,FU9-AC2,FU9-AC3` BEFORE the flip. Commit code first, then pin.
+Criterion ids: FU9-AC1,FU9-AC2,FU9-AC3,FU9-AC4. Instance at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/0.7.0_AE_CloudOps~NFRA1/NFRA_FIDUPL.TO-FU-s-9.autoshutdown-off.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> FU9-AC1,FU9-AC2,FU9-AC3,FU9-AC4` BEFORE the flip. Commit code first, then pin.
 </proof_of_spec>
 
-**REPORT:** what changed and where, the plan's two changes, each check line verbatim, the ledger id, every surprise row id, commits.
+**REPORT:** what changed and where, the plan's three changes, each check line verbatim, the ledger id, every surprise row id, commits.
 
 ---
 

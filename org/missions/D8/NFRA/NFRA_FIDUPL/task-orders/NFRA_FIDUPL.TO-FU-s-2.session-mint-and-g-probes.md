@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -41,6 +41,15 @@ B. `signin_recon.py`:
    - `main()` with `--run-live`: mints a session through `signin.open_session`, runs the two helpers and prints the two blocks named in reference section 9. The `account.txt` bytes come from one `status.json` list and one `downloadExport.do` for the file named `account.txt` inside the session.
 C. Tests, with fakes (no network, no browser): in `tests/test_signin.py` `test_steps_in_order_password_factor_code_authorize`, `test_selects_otpsms_factor`, `test_code_requested_after_send_instant`, `test_sign_in_refused_classified`, `test_code_never_arrived_classified`, `test_no_secret_in_logs_or_env`, `test_persistent_profile_dir_used`; in `tests/test_signin_recon.py` `test_finds_g_number_column_by_index_and_counts`, `test_prints_no_values`, `test_reports_column_count`, `test_no_g_column_reports_none`; in `tests/test_gprobe.py` `test_probe_switches_current_g_once_and_back`, `test_probe_never_sets_default`, `test_probe_restores_starting_g_even_on_error`, `test_probe_compares_before_after_counts`, `test_probe_prints_no_account_numbers_or_g_values`.
 
+### REPAIR (issuer, 2026-10-20; this order is REOPENED) -- the live sign-in timed out
+
+FU-x-1's one live recon run (worker row NFRA_FIDUPL-D1-W1-S9, SSM command 91fa5057-3f37-4551-937e-0fab48001569 on the box) signed in with your PlaywrightDriver and ended `TimeoutError` BEFORE any text message was sent. The failing step is unknown, because no trace was kept, and the selectors are the ones listed in your row W1-S3 (guessed, not measured). Repair `signin.py` (and `signin_recon.py` for the new mode); your existing tests must still pass:
+1. **Locate fields by structure, not by guessed names.** In `PlaywrightDriver`: the username field is the first visible text or email input; the password field is the first visible `input[type=password]`; the buttons are found by role and visible text (Next, Continue, Sign in, Log in, Submit, Verify, Send, Text); the SMS factor is chosen by its visible text or by the `OTPSMS` token wherever the page carries it; the code field is the first visible one-time-code or numeric input. Each step has its own explicit timeout (20 seconds) so a stall names the step. Keep the persistent profile, the user agent and the hidden `navigator.webdriver`.
+2. **A step trace.** Every driver step records: the step name, the URL path (no query string), the page title, the elapsed seconds, the outcome, and on a failure or timeout an OUTLINE of the visible interactive elements (tag, type, id, name, role, aria-label, visible text cut to 40 characters). NEVER a value, a cookie, a header, or the attribute values of a password or code field. The trace is written to the run's work directory as `login_trace.txt` and is printed (the same text) when `signin_recon.py --run-live` fails.
+3. **`signin_recon.py --trace-login`**: runs the driver through the username, the password, the factor choice and the request for the text message, writes and prints the trace, and STOPS there: it neither reads nor submits the code, so each trace costs at most one text message.
+4. Tests, with fakes, in the new file `tests/test_login_trace.py`: `test_trace_records_step_outline_without_values`, `test_trace_stops_at_first_failing_step`, `test_trace_never_records_secret_or_code`, `test_locators_found_by_type_not_by_assumed_name`, `test_trace_mode_stops_after_sms_request`.
+5. Read `org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md` section 10 if it exists (the issuer adds the CRO's login-page listing there when it arrives). Add AC4 to your proof instance (four criteria), re-validate, and flip to complete only when all four PASS. You touch no AWS and make no live call; FU-x-1 runs it live.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -52,7 +61,12 @@ C. Tests, with fakes (no network, no browser): in `tests/test_signin.py` `test_s
 <criterion id="FU2-AC3" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2c</invocation><expect>R1-FU2C-OK passed=\d+</expect></criterion>
 `FU2-AC3` -- the five G-switch probe tests exist and pass.
 
-<expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3</expected_criteria>
+<criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
+`FU2-AC4` -- the five login-trace tests exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+
+<expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
+
+Dry-run at the base (HEAD of box/dell1 at the repair): `FU2-AC4` base: FAIL as expected.
 
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU2-AC1` base: FAIL as expected.
 Dry-run at the base (HEAD of box/dell1 at the cut): `FU2-AC2` base: FAIL as expected.
@@ -76,6 +90,7 @@ infra/aws/ec2/canonical-fidelity/signin_recon.py
 infra/aws/ec2/canonical-fidelity/tests/test_signin.py
 infra/aws/ec2/canonical-fidelity/tests/test_signin_recon.py
 infra/aws/ec2/canonical-fidelity/tests/test_gprobe.py
+infra/aws/ec2/canonical-fidelity/tests/test_login_trace.py
 org/missions/D8/NFRA/NFRA_FIDUPL/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -87,7 +102,7 @@ The block is your WRITE grant (your deliverables folder is granted by the tree c
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: FU2-AC1,FU2-AC2,FU2-AC3. Instance at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/0.9.0_WK_NFRA_FIDUPL~1/NFRA_FIDUPL.TO-FU-s-2.session-mint-and-g-probes.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> FU2-AC1,FU2-AC2,FU2-AC3` BEFORE the flip. Commit code first, then pin.
+Criterion ids: FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4. Instance at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/0.9.0_WK_NFRA_FIDUPL~1/NFRA_FIDUPL.TO-FU-s-2.session-mint-and-g-probes.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4` BEFORE the flip. Commit code first, then pin.
 </proof_of_spec>
 
 **REPORT:** what was built and where, any address or name with its builder call, the test names, each check line verbatim, every surprise row id, commits.

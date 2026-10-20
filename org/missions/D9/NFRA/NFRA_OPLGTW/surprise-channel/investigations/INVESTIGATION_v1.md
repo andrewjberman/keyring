@@ -31007,3 +31007,52 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The three rows are ruled in the evidence above with their reasons; none changes a signed scope, and no grant was activated."
 }
 ```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~174",
+  "surfaced_at": "2026-10-20T12:55:49Z",
+  "id": "NFRA_OPLGTW-Z-W174-S1",
+  "one_line": "The pre-commit risk reflex could not check the OG-mg-4 diff: danger map 112.9h STALE, ANSWER STATE PARTIAL_OR_BLIND, scanned 0 of 2 files; the commit went through with the reflex NOT-DECIDABLE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output on commit 72bc4026fb: [risk-reflex] danger map: 112.9h old STALE; ANSWER STATE: PARTIAL_OR_BLIND; NOT-DECIDABLE; WITHIN BUDGET: scanned 0 of 2 file(s)",
+      "the same output names REBUILD: read the MAIN tree map org/modules/graph/nerves-risk-edges.json; no build in the worktree",
+      "the same commit then printed [commit-gate] OK: pre-commit gate clean for 2 of 2 file(s) and committed 72bc4026fb"
+    ]
+  },
+  "spec_asserts": "Cell section 2 and CLAUDE.md rule 14a: commit through .tools/safe-commit.sh, which runs the pre-commit checks; the risk reflex is one of the checks safe-commit runs before a commit lands.",
+  "world_is": "In this worktree the risk reflex reported it could not decide the diff (stale danger map, zero files scanned) and said so, while the commit gate printed clean and the commit landed. A reader of the commit log cannot tell from the commit that the reflex did not run.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the issuer. No change was made to the reflex, the danger map or the gate; the rebuild is outside the cell's write surface."
+}
+```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~174",
+  "surfaced_at": "2026-10-20T12:55:49Z",
+  "id": "NFRA_OPLGTW-Z-W174-S2",
+  "one_line": "The worktree is a sparse cone that excludes infra/aws/lambda/ci/function-map: the naming gate printed NAMING ERROR (folder missing) on commit 72bc4026fb; the commit proceeded and the naming check did not read that folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output on commit 72bc4026fb: [naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-og-174\\infra/aws/lambda/ci/function-map/",
+      "git sparse-checkout list in the worktree names .tools, data/mdpf/config, infra/aws/ec2/opal-gateway, infra/aws/terraform/opal-assets and infra/logic/registry, not infra/aws/lambda/ci/function-map",
+      "ls -d infra/aws/lambda/ci/function-map reads absent in the worktree, while git ls-files lists 243 tracked paths under it at HEAD"
+    ]
+  },
+  "spec_asserts": "Cell section 3: the write surface is the two product files, the channel and the deliverables folder; the worktree was to carry the paths the order names, and the TREE-OK check passed.",
+  "world_is": "The two product files and the channel are present and graded. The naming gate's function-map source is outside this sparse cone, so the gate could not read it and printed an error line on a commit that changes no name.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the issuer. The OG-mg-4 diff changes a constant and a test assertion, neither of which is a name the naming gate grades."
+}
+```
