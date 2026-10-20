@@ -30856,3 +30856,45 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Left as specified. The issuer decides whether the tie case needs a tie-break before the page bound ships to the monitor."
 }
 ```
+
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T10:58:35Z",
+  "id": "NFRA_OPLGTW-Z-S430",
+  "one_line": "Issuer rulings on the fifteen rows of round 47's build workers (~166 to ~172): the order-file status flip is the issuer's; the in-flight guard, projection and master-wide-scope premises are ruled; one ARMED row (the Teams poll cursor tie) is carried to round 48 with its reason",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W166-S1", "NFRA_OPLGTW-Z-W166-S2", "NFRA_OPLGTW-Z-W166-S3",
+    "NFRA_OPLGTW-Z-W167-S1",
+    "NFRA_OPLGTW-Z-W168-S1", "NFRA_OPLGTW-Z-W168-S2", "NFRA_OPLGTW-Z-W168-S3",
+    "NFRA_OPLGTW-Z-W169-S1",
+    "NFRA_OPLGTW-Z-W170-S1",
+    "NFRA_OPLGTW-Z-W171-S1", "NFRA_OPLGTW-Z-W171-S2", "NFRA_OPLGTW-Z-W171-S3",
+    "NFRA_OPLGTW-Z-W172-S1", "NFRA_OPLGTW-Z-W172-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The status flip (W166-S1, W167-S1, W168-S1, W171-S1): the orders' section 5 said to flip, the workers' <paths> did not name the order file, so four workers did not flip and one (W171-S1) filed it BLOCKING. The flip is the issuer's; the issuer flipped fc-1, sx-1, sz-1 and ix-1 after re-running each order's checks (commit 762a9e246f); rt-1, nf-1, mg-3 and tp-1 were flipped by their workers inside an admitted commit. The defect is the issuer's wording (section 5 asked the worker to flip an order file it was not granted).",
+      "W166-S2: the fc-1 order asked for a single-vendor denominator both 'unchanged' (D3 b) and 'a dict with by_vendor' (D3 d). The worker took the uniform reading: every resolve answer carries {candidates, by_vendor}. RULED: accepted; the check fc1.AC2 requires denominator.candidates only, which holds.",
+      "W168-S2, W172-S2: the sparse worktree lacks org/surprise_channel on disk; the schema was read with git show. RULED: no action; the sparse cone is the issuer's and the next provision adds org/surprise_channel.",
+      "W166-S3, W168-S3: the commit-time client-data check printed WARN because the hashed account-id list is absent on this device, so those commits were not checked for client account ids. RULED: the issuer read the added lines of the merged files for account-shaped strings (fixtures are built at run time); the missing list is a device matter for 0.0.0_AB_MSTR~Z.",
+      "W169-S1 (ARMED): the prescribed harvest_typed.project measured compact JSON while the answer is served indented. RULED: OG-sz-1 (merged 0dad6e544b) moved the measure to the served form; the tp-1 worker's own re-projection against the served size stays and is harmless. Disarmed by the merge; OG-sz-1's AC1 proves the measure.",
+      "W170-S1: the master-wide helper _master_accounts builds its own dim_position policy check because the order's signature carried no check, so a master-wide grant that lacks dim_position is refused fail-closed. RULED: accepted; the grant orders for the sentinel must include dim_position (they do, as every Schwab grant to date); recorded in OG-rl-18's ask.",
+      "W171-S2: the pair rule takes the second prefix component verbatim, so 12 of 43 index pairs carry an all-digit firm key (3 distinct values). RULED: accepted as stated in the order (never rename, never reject); the page shows what the catalog's prefix says.",
+      "W172-S1 (ARMED): the name lookup the order directs, harvest_resolve_security, reads S3 harvest objects and writes one SERVE audit row per call, so each news_for_security fallback now does both. RULED: accepted; both are Opal's own AWS and the audit is the gateway's own; the order's phrase 'network-free, write-free' meant no external network and no data write. The cost is a few extra S3 reads per call; it is listed for the round-48 read of the lake counts.",
+      "W171-S3 and the portal gitlink modified in every fresh worktree: not part of any commit; the main tree's own state."
+    ]
+  },
+  "spec_asserts": "A worker's row is a finding the issuer rules inside its own decomposition (obligation 7); an ARMED row's disarm owner is the issuer.",
+  "world_is": "Fourteen of the fifteen rows are ruled here. W169-S2 (ARMED, not in the list above) is carried: poll_addressed_impl cuts a page at `top` and moves the cursor to the last served timestamp; a message tied at the cut timestamp is skipped by the next poll's `ts <= since_iso` filter. Graph's createdDateTime has millisecond precision and the poll's default top is 50, so the loss needs two chats whose latest message share one millisecond across a page edge; the previous behaviour (no cap) never lost one. NOT FIXED in round 47 (a fix is a worker cell: keep the whole tie group, page may exceed top); carried to round 48.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The listed rows are ruled above with their reasons; none changes a signed scope or a released file. W169-S2 is carried open, named here so a reader does not take it as dispositioned."
+}
+```
