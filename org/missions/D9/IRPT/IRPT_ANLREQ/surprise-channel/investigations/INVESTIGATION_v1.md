@@ -29009,3 +29009,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W330-S10 -- AMENDMENT 2 grants the r31 test file, but the checker's cell-175 write-set table omits it, so the regress arm refuses it as stray
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T19:13:56Z",
+  "one_line": "AMENDMENT 2 puts reports/tests/test_resident_r31_source.py in the order's paths, but the checker's write-set table OWN[175] does not list it, so the regress arm's scope check refuses the Part D commit as outside the cell's write set; AR175-g-AC3 FAILs on that scope limb alone, its pytest limb passing.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 AMENDMENT 2 (order text): test_resident_r31_source.py is in the order's <paths>; criterion AR175-g-AC3 (checker regress 175) is to print AR-CMP-175-REGRESS-OK after the worker's commits.",
+  "world_is": "After commit 640ee394e4 (one literal changed, sha 661adac1...2143b, test passes), AC1 build and AC2 guard print AR-CMP-175-OK (rc=0). AC3 regress prints 'AR-CMP-175-REGRESS-FAIL outside the cell's write set: infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py' (rc=1). The checker's OWN[175] (ar_compare_checks.py lines 638-639) lists opal_producer.py, resident_worker.py, reports/resident_installed.py, test_compare_producer.py and reports/tests/test_compare_ports.py, and not test_resident_r31_source.py; scope() (lines 678-693) flags any diff path outside OWN and the deliverables prefixes. The pytest limb of regress returned no failure. The checker is read-only to this worker, so the table was not edited and the check was not weakened. The order's status stays pending; no close commit was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_compare_checks.py@640ee394e4 (OWN 175 at lines 638-639; scope() at lines 678-693)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_r31_source.py@640ee394e4 (the Part D literal, the one-line diff)",
+      "python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_compare_checks.py 175 regress (rc=1, the output line quoted above)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
