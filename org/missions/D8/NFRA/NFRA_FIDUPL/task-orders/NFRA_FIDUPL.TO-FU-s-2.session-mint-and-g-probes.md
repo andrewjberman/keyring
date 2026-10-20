@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -71,6 +71,13 @@ Rewrite `probe_g_switch` (and its Playwright adapter in `signin_recon.py`) to us
 5. In a `finally`, POST the switch back to the starting G and assert `Current:` equals it; set `restored_starting_g` accordingly. Never send `isDefault`. Counts and booleans only: no G number, no account number, no label text with a firm name, in any return value, log or print.
 Tests (in the EXISTING `tests/test_gprobe.py`, with fakes; keep your five and add): `test_probe_posts_form_without_isdefault`, `test_probe_asserts_current_cell_equals_requested`, `test_probe_uses_www2_jsp_endpoint`. FU2-AC3 needs all eight. Re-run all four criteria, refresh your proof instance, flip to complete only when all four PASS. No AWS call and no live call.
 
+### REPAIR 4 (issuer, 2026-10-20 ~14:50Z) -- the repair-2 trace ran live and named two defects in `signin.py`
+
+The issuer ran your `--trace-login` once on the box (SSM command 26f743ae-6205-43ca-951d-78140ea38701; the full output is committed at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/2.0.0_SA_COO~P1/FU-x-1_attempt3_trace_login.txt`, read it from the main tree by absolute path). It shows:
+1. **The error detection is a false positive.** After the Next click the line read `after_next first=error error=""` at 0.1 s: an element whose class merely CONTAINS `error` (an empty, hidden container that is always in the DOM) won the race, so the step failed with `LoginPageError` before the page had answered. At that moment the site's own request `POST /auth/api/redirect-info` was still `pending`. Fix: an error counts only when the element is VISIBLE and its text is NON-EMPTY after trimming; otherwise keep waiting for the password component until the 20 s budget ends. (The trace also showed one console error, `status of 400`, and a `/getUserCookie.json` and an Akamai sensor POST still `pending`; the trace must keep recording them.)
+2. **Browser fingerprint tells.** The trace shows `window_chrome=false` and a user agent claiming `Chrome/124` while the installed Chromium is much newer (the earlier SSM check read 156): a headless-bot tell. Fix in the context setup: add an init script that defines `window.chrome` with a `runtime` object, sets `navigator.languages` to `['en-US','en']`, and gives a non-empty `navigator.plugins`; and build the user-agent string from the installed browser's real version (`browser.version`) in the Windows Chrome form, so it matches the client hints Chromium sends. Keep `navigator.webdriver` hidden.
+Add three tests to the EXISTING `tests/test_login_trace.py`: `test_error_detection_requires_visible_text`, `test_fingerprint_sets_window_chrome_and_languages`, `test_user_agent_matches_installed_chromium_version`. FU2-AC4 now needs all thirteen. This rides with REPAIR 3 in one delivery. No AWS call, no live call.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -83,7 +90,7 @@ Tests (in the EXISTING `tests/test_gprobe.py`, with fakes; keep your five and ad
 `FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the ten login-trace tests (the five of the first repair and the five of REPAIR 2) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+`FU2-AC4` -- the thirteen login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 
