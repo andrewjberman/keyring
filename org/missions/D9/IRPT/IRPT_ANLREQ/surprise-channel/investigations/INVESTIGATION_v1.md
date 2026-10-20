@@ -28909,3 +28909,103 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W330-S6 -- AR-g-175 names no outcome for a model whose allocation object cannot be read
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:37:00Z",
+  "one_line": "AR-g-175 says a model's weights and as_of come from model_source.read_allocation and that a refused model object is a gap for the run, but names no outcome when read_allocation itself refuses; the producer had to pick one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 A (Allocation inputs): 'a model's weights and as_of from model_source.read_allocation(...)'. The same cell says a ModelSourceRefused makes the comparable a gap 'with the reason the Opal model series could not be read' and that the run never fails for it, but only for the series branch.",
+  "world_is": "opal_producer._compare_stage reads the model object once; when read_allocation refuses, the model's series is still used (if read_series succeeded) and its allocation row is a gap with the reason 'the Opal model allocation could not be read'. The order gives no reason text for this branch; the run completes in every case. Checker and tests do not grade the case.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/model_source.py@ce8eee49396 (read_allocation raises ModelSourceRefused on a bad object)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-175.producer-comparison-stage-and-resident-ports.md@ce8eee49396 (cell A, Allocation inputs)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S7 -- AR-g-175 names no outcome for a run whose portfolio has no buy-and-hold path to rebase
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:37:30Z",
+  "one_line": "AR-g-175 says the stage runs when comparables are given, pricing is on and the flag is true, but comparables.build_compare needs the portfolio's buy-and-hold path, which the price stage may not keep; the order names no outcome for that run, so the producer skips the stage.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 A: 'The stage runs only when stores.get(\"comparables\") is a non-empty list AND pricing is on AND the flag is true', and 'builds the portfolio argument from the price stage's buy-and-hold path (the kept portfolio_level_series pairs)'. No clause covers a run whose kept path is absent.",
+  "world_is": "opal_producer._compare_stage returns None, and no compare element is appended, when the kept portfolio_level_series has fewer than two pairs or when layout_overview's _amount_weights refuses (no holding carries an amount). The run completes as a run without comparables. build_compare would otherwise raise ValueError and fail the run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/comparables.py@ce8eee49396 (build_compare raises ValueError when the portfolio series has fewer than two points)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py@ce8eee49396 (_price_stage keeps portfolio_level_series only when the buy-and-hold status is OK)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S8 -- AR-g-175 defines two comparable kinds and not a third, which a map entry can still carry
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:38:00Z",
+  "one_line": "AR-g-175 defines a model entry (a catalogue key with a model code) and an ETF entry (a ticker set) and no other; an entry with neither has no defined treatment, and the producer had to choose one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 A: 'one comparables item per entry, in order, named by the entry's label', with the two entry kinds 'a model entry (...)' and 'an ETF entry (ticker set)'. No third kind and no treatment for an entry with neither.",
+  "world_is": "opal_producer._compare_stage keeps such an entry as an item of kind 'other' with no series and no allocation weights, so the comparable is stated as a gap line in the returns, risk and allocation tables (the layout's default reason for a gap) and the order's one-item-per-entry rule holds. It is not dropped and it fails no run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/comparables.py@ce8eee49396 (_gap_row and build_allocation default reasons)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-175.producer-comparison-stage-and-resident-ports.md@ce8eee49396 (cell A, the two entry kinds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S9 -- the sparse worktree lacks the paths the installed-package and validator suites read, so those suites error before any assertion
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:45:00Z",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-330 carries no infra/aws/ec2 and no docs/contracts tree, so the package fixture of test_resident_installed.py and test_opal_pricing_binding.py and the v2 validator tests fail with FileNotFoundError on paths HEAD holds; the cell's own tests and the checker's regress list do not read them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 C and the worker face: run the tests, and the existing test files pass. The worker face names the test files of the cell and the checker's regress list names the research test files; it names no reports-side suite.",
+  "world_is": "Measured at the worktree: reports/tests/test_compare_ports.py 4 passed; test_resident_installed.py, test_opal_pricing_binding.py and test_opal_variant_binding.py report 4 failed and 31 errors, every one a FileNotFoundError on a path under infra/aws/ec2/investor-reporting-ycharts/ or docs/contracts/investor-reporting/v1/ (for example docs/contracts/investor-reporting/v1/AnalysisReport.schema.json). The same paths exist at HEAD (git ls-tree HEAD infra/aws/ec2/investor-reporting-ycharts/ lists run-ycharts-session.sh). None of the cell's edits touches them. Not rebuilt, per the worktree rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py@ce8eee49396 (the package fixture copies the ec2 directory)",
+      "git ls-tree ce8eee49396 infra/aws/ec2/investor-reporting-ycharts/ (run-ycharts-session.sh present at HEAD; absent from the worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
