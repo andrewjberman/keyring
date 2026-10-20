@@ -30634,3 +30634,27 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "INERT for this order: no granted path is the portal gitlink, and the commit names only the two granted code files."
 }
 ```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~167",
+  "surfaced_at": "2026-10-20T09:52:46Z",
+  "id": "NFRA_OPLGTW-Z-W167-S1",
+  "one_line": "The TO's proof step says to flip its <status> tag to complete on all-PASS, but the status tag sits in the RECORD FACE the worker face excludes and the TO file is outside the <paths> write grant, so this worker did not flip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-sx-1.round-47-small-fixes-d2-mask-ycharts-data-refresh-status.md @6f2ddfd58e, worker face section 5 (lines 67-69): 'Flip the ONE <status> tag to complete only if all three PASS'",
+      "the same file @6f2ddfd58e, worker face section 3 (<paths>, lines 46-53): grants the four product files, tests/test_og_sx1.py and the investigation channel; the TO file is not named",
+      "the launch directive for this worker excludes the RECORD FACE (line 71 onward) from the worker's context"
+    ]
+  },
+  "spec_asserts": "Section 5 of the TO asks the worker to flip the one <status> tag to complete after all three proof criteria PASS, and section 3 grants the worker write access to the paths it lists.",
+  "world_is": "All three proof criteria PASS at the code commit e6b4f5fc47 (sx1.AC1, sx1.AC2, sx1.AC3). The <status> tag is not reachable from the worker face, and the TO file is outside the write grant, so the flip is not made by this worker. The proof instance is validated in its own commit and the verdict is reported to the issuer.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
