@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_SCHWABBF_PRD.md",
-  "prd_version": "v0.7",
-  "prd_pin": "e8d796975fc39485dfa01b60fe868e58734ffc2b",
+  "prd_version": "v0.8",
+  "prd_pin": "998fe826317b0bfeec32c9e5fc6b537028925bd3",
   "half": "ratified-text",
-  "half_hash": "1ec6f36e94255fbacde16debd02e40864a85b301775e99bdf465cfc7fb832dff",
+  "half_hash": "3554d115bce5fc5e4ec101027856fb2e573759f97f06e892a918ea6d9218a8a5",
   "endpoint_hash": "715481ab5b520311caeaf60633d7ccb578d731bb4218f9feea4a13b94e87595a",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.7_RATIFIED_TEXT_20261020.md@ff35ca8041",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.8_RATIFIED_TEXT_20261020.md@b0504c0996",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-20T16:40:30Z"
+  "signed_at": "2026-10-20T16:52:41Z",
+  "reason": "C-TIERS: four Cottonwood masters write one schwab/cottonwood/silver/<table>/date=D/data.parquet through the same converters, so they overwrite each other silently"
 }
