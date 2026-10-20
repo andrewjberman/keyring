@@ -86,6 +86,13 @@ The issuer ran the repaired `--trace-login` on the box (SSM command df28ace9-1a3
 3. **Page-side facts:** `document.cookie` cookie NAMES only (never values) present at the Next click, and the names of `window` properties the profiling scripts usually set that are present or absent (just the booleans for `_abck` in the cookie names and for any global whose name contains `tmx` or `ThreatMetrix`).
 Add three tests to the EXISTING `tests/test_login_trace.py`: `test_trace_records_failed_request_shape_without_values`, `test_trace_records_response_error_text`, `test_trace_records_third_party_failures`. FU2-AC4 now needs sixteen. Same rules: values never appear; no AWS, no live call; refresh the proof instance for four criteria and flip to complete only when all four PASS.
 
+### REPAIR 6 (issuer, 2026-10-20 ~16:15Z; this order is REOPENED) -- the username step passes, the password POST answers 403
+
+The issuer ran the trace again after Andrew rewrote the stored credential (SSM command b154ad6a-1966-4310-9c9f-641e7e793a78; output at `C:/Dev/ajb_workspace/org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/2.0.0_SA_COO~P1/FU-x-1_attempt6_trace_login.txt`, read it whole). The username step now passes (`redirect-info` 200) and the page runs its own ecaap pre-flow (two `DELETE /user/session/login`, one `GET /user/identity/remember/username`). The next call, `POST /user/factor/password/authentication`, answers 403 `Not Authorized`. The CRO's reading is that the stored password is probably wrong, and the other candidate is that the session cookie `ATT`, which the pre-flow mints in the human capture, is missing at the password POST. The trace cannot yet say which. Two changes in `signin.py`, values-free:
+1. **Trace:** just before the password submit click, note the cookie NAMES present (as `_cookie_note` does at the Next click, names and presence booleans only, never a value) and a boolean `att=true|false|unknown` for the cookie named `ATT`. The note goes into the `submit_password` step of the trace.
+2. **Pre-flow, only when `ATT` is absent:** before the password click, if no cookie named `ATT` exists, replay the page's own pre-flow once through the browser context's request object (`self.page.context.request`): `DELETE https://ecaap.advisorchannel.com/user/session/login` twice and `GET https://ecaap.advisorchannel.com/user/identity/remember/username`, then re-read the cookie names and note `preflow=ran att_after=true|false` (statuses only). Best effort: any exception is caught and noted as `preflow=failed <exception class name>`, never raised, never retried. When `ATT` is present, do nothing and note `preflow=skipped`.
+Add three tests to the EXISTING `tests/test_login_trace.py`: `test_trace_notes_cookie_names_before_password_post`, `test_preflow_runs_only_when_att_absent`, `test_preflow_skipped_when_att_present`. FU2-AC4 now needs nineteen. Fakes only; no AWS, no live call, no sign-in; no cookie value, password or username in any note.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -98,7 +105,7 @@ Add three tests to the EXISTING `tests/test_login_trace.py`: `test_trace_records
 `FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the sixteen login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+`FU2-AC4` -- the nineteen login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 
