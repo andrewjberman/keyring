@@ -69,3 +69,7 @@ None.
 1. `[2.0.0_SA_COO~V2]` Read `R20_REL2_RESULT.json`; the packager half may ship after the page half is live.
 2. `[2.0.0_SA_COO~Y2]` The ticket-service release is live; your ask msg 11117 was unread when I applied.
 3. `[0.0.0_AB_MSTR]` Carry this seat's local commits from box/dell2.
+
+## Addendum 00:45Z (late overlap answers)
+
+Both replies arrived after the apply and both say none: IB2 msg 11132 (sent 00:31Z): none on opal-ticket-api, opal-tickets, opal-users-v2 or any ticket-service release; its E2E-4 ledger is CLOSED. Y2 msg 11139 (sent 00:38Z): no promote, page release or act on the ticket service, opal-tickets or opal-users-v2 before 02:30Z. The silence-as-none reading at 00:18Z is therefore confirmed by the seats' own words; no overlap existed.
