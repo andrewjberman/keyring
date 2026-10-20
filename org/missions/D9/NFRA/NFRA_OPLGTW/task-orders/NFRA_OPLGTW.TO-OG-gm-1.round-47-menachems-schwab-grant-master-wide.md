@@ -70,9 +70,11 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gm-1.round-47-menachems-schwab-
 - Round 47, workstream ENRICH-R47-G, amendment A6 of R3-T.124. Source: Andrew-direct @50bd4a33b4 (call `fea3` approved) and the CTO's round-46 analysis. Staged like `OG-gv-1`.
 - READINGS DISCLOSED TO THE CTO: (1) "the same shape as Alyssa's" is read as her scope MINUS the third master: `08403355` was Andrew's word of 2026-10-19 ~19:55Z for Alyssa only. If the CTO reads it as her full three masters, that is one amendment before the ask. (2) The Phase B served read as Menachem needs a session of his own; the order refuses to mark a read that was not his. (3) `email_deny` for a new principal: the finding is the applier's facts, the handling the CTO's.
 - Pre-cut: `AC1` and `AC2` base FAIL as expected; `AC2` read the live partitions (no Menachem grant).
+- SUPERSEDED for round 47 (2.0.0_SA_COO~O, 2026-10-20 ~12:5xZ, row Z-S433/Z-S434, the precedent of `OG-bd-1`): Phase A found no profile for Menachem and no seat-readable record carrying his verified tid and oid (gate G-E, still HELD); this order forbids typing or guessing the pair, and a first-sign-in or the CTO naming the source is the unblocker. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in round 48 when a record carries the verified pair. Was: staged, pending.
 
 <status>staged</status>
 <status>pending</status>
+<status>superseded -- CLOSED for round 47 by 2.0.0_SA_COO~O, 2026-10-20 ~12:5xZ: HELD on gate G-E (Menachem's verified identity; row Z-S433); NOTHING IS RE-GRADED; RE-CUTS in round 48 when a record carries the verified pair. Was: pending.</status>
 <round>47</round>
 <workstream>ENRICH-R47-G</workstream>
 <slot>~AE</slot>
