@@ -13405,3 +13405,26 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~88",
+  "surfaced_at": "2026-10-20T16:43:19Z",
+  "id": "NFRA_MCPINDEX-Z-W88-S1",
+  "one_line": "The commit-time naming gate printed NAMING ERROR for the function-map folder infra/aws/lambda/ci/function-map/, which the sparse worktree does not carry, and the commit still landed with rc=0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh of the harvest data file at HEAD 62604a82b8c in C:/tmp/wk-mcpindex-88 printed '[naming-gate] NAMING ERROR function-map folder missing: C:/tmp/wk-mcpindex-88/infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' and then 'rc=0' with commit e6dc31419e4",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-88 at HEAD 62604a82b8c: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery (no infra/aws/lambda/ci)"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4 states that the commit-time naming gate REFUSES names today (LGIC_ENFORCE), so a NAMING ERROR from that gate is a refusal of the commit.",
+  "world_is": "The gate printed NAMING ERROR for a staged JSON data file under the project home and the commit landed with rc=0. Whether the gate grades any name when its function-map folder is absent is not measured by this worker; the commit was not refused.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
