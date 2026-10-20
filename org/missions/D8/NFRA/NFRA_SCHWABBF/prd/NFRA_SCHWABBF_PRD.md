@@ -137,7 +137,7 @@ CONFIRMED by Andrew 2026-10-20 ~13:0xZ. The source, verbatim from step 2, is
 - **Silver, meta and `_ops` scope:** do they move to firm scope with bronze in the same cutover, or does bronze move alone? (The CVO's v0.4 item 4,
   open-calls row on the laptop list.) Since v0.7 this covers 0840 only. REC: all tiers in one cutover. If yes, the ratified-text half
   re-signs and silver joins the cutover.
-- **0833:** his ~16:3xZ word names 0824 out and names Cottonwood and 0840 as the work. 0833 is held out with 0824 until he says otherwise.
+- **0833: CLOSED ~16:4xZ.** Andrew, verbatim: "1.) Yes that is correct." 0833 is out with 0824.
 - **The one-time sign-in on the Alongside box:** Andrew RDPs into the Alongside Schwab Box once it exists and signs into the SI2 app with
   Alongside's Schwab login (Andrew-direct ~13:5xZ: "I will need to RDP into the EC2 box most likely to get that done"). The box's
   RDP access is set up for that sitting and closed after it, as the 49F box's is.
