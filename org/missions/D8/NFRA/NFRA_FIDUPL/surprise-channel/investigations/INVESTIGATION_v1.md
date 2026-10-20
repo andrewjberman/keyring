@@ -1100,6 +1100,28 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "Order FU-s-10 SCOPE WIDENED AGAIN: install xorg-x11-server-Xvfb; FU10-AC2 expects R1-FU10X-OK Xvfb present and a headed Chromium launches under it.",
     "world_is": "Xvfb is installed and a headed bundled Chromium launches under it. The check as written needs Google Chrome, an install this order does not ask for and its grant does not cover (playwright install chrome or a Google RPM changes the box beyond the Xvfb leg).",
     "notes": "Not installed: Google Chrome. The issuer decides whether to widen the order (install chrome, FU-s-11 fallback) or change the check to the bundled Chromium. The Xvfb ledger is closed; the code delivery still waits for the named head."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S1",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-20T18:42:36Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "one_line": "agent_drive.py must not import quo_otp (TO FU-s-12 section 2), but it must build signin.PlaywrightDriver, and signin.py imports quo_otp at module top, so the controller loads the Quo module transitively.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/signin.py:32 at 8c6b6e77175: 'from quo_otp import QuoApiError' (module top level, not inside a function)",
+        "infra/aws/ec2/canonical-fidelity/quo_otp.py at 8c6b6e77175: default_api_key() calls boto3 secretsmanager only when invoked; QuoOtpReader is built only by agent_fill.py on the box, never by agent_drive.py",
+        "infra/aws/ec2/canonical-fidelity/agent_drive.py at the worker commit: 'import signin' is the only sibling import; the static check test_drive_module_reads_no_secret names quo_otp, QuoOtpReader, default_api_key and secretsmanager and passes, and it reads agent_drive.py text only"
+      ]
+    },
+    "spec_asserts": "agent_drive.py imports no secrets client and no quo_otp (TO FU-s-12 section 2, the static test test_drive_module_reads_no_secret); it builds signin.PlaywrightDriver(page) and reads signin.OTP_SMS.",
+    "world_is": "signin.py imports quo_otp at its top level, so importing signin loads quo_otp on dell1. Loading the module reads no key: the key provider runs only when a reader is constructed and asked for a code, and agent_drive.py never constructs one. The text of agent_drive.py names no quo_otp symbol, so the static check holds, but the transitive import is not caught by it. Whether the loaded-module reading counts as the import the TO forbids is the issuer's ruling.",
+    "notes": "No value is read on dell1 by this path. Decision needed from the issuer: accept the transitive load (as built), or move the Quo import out of signin.py (signin.py is outside this order's grant and is not to be changed by this worker)."
   }
 ]
 ```

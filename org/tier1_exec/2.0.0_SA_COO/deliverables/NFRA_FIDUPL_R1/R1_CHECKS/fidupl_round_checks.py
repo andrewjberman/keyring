@@ -51,7 +51,8 @@ TEST_FILES = {
         "test_launch_fails_loud_when_xvfb_is_missing", "test_no_request_is_routed_or_blocked",
         "test_text_me_the_code_button_sends_the_sms", "test_call_me_button_is_never_clicked",
         "test_display_waits_for_the_x_socket", "test_launch_args_disable_extensions",
-        "test_display_is_set_before_the_playwright_driver_starts"]),
+        "test_display_is_set_before_the_playwright_driver_starts",
+        "test_after_next_survives_a_navigation_race", "test_failed_step_note_carries_a_redacted_message_cut"]),
     "fr1a": ("%s/tests/test_gswitch.py" % CF, [
         "test_parses_current_default_and_options", "test_switch_posts_form_without_isdefault",
         "test_switch_asserts_current_equals_requested", "test_switch_failure_raises_and_names_no_value"]),
@@ -64,6 +65,14 @@ TEST_FILES = {
         "test_unregistered_firm_scope_listed_not_landed", "test_raw_line_bytes_preserved",
         "test_dry_run_writes_nothing", "test_record_has_counts_and_lists",
         "test_unmapped_label_listed_not_landed", "test_record_lists_unplaced_and_conflict_accounts"]),
+    "fu12h": ("%s/tests/test_agent_fill.py" % CF, [
+        "test_username_step_fills_and_never_prints_the_value", "test_password_step_reports_factor_names_only",
+        "test_code_step_reads_quo_and_reports_authorize_status_only", "test_attach_uses_localhost_cdp_only",
+        "test_failure_prints_the_class_name_only"]),
+    "fu12d": ("%s/tests/test_agent_drive.py" % CF, [
+        "test_forward_command_targets_the_cdp_port", "test_helper_is_invoked_over_ssm_with_a_fixed_command",
+        "test_drive_order_and_record_are_values_free", "test_refused_password_ends_the_run_with_a_refused_record",
+        "test_drive_module_reads_no_secret"]),
     "fr6": ("%s/tests/test_adapters.py" % CF, [
         "test_get_text_follows_redirect_and_returns_text", "test_post_form_sends_urlencoded_body_without_logging_values",
         "test_account_lister_pages_until_short_page", "test_extract_accounts_finds_list_by_key_not_by_container_name",
@@ -540,11 +549,45 @@ def chrome_fallback_signin():
     if not os.path.isfile(rec):
         return out("%s-FAIL absent %s" % (tag, rec))
     text = open(rec, encoding="utf-8").read()
-    if "outcome=SIGNED_IN" not in text or "driver=claude-in-chrome" not in text or "headful=true" not in text:
-        return out("%s-FAIL record does not show an agent-driven headful sign-in (outcome=SIGNED_IN, driver=claude-in-chrome, headful=true)" % tag)
+    if "outcome=SIGNED_IN" not in text or "driver=cdp-remote" not in text or "headful=true" not in text:
+        return out("%s-FAIL record does not show an agent-driven headful sign-in (outcome=SIGNED_IN, driver=cdp-remote, headful=true)" % tag)
     if re.search(r"G\d{8}", text):
         return out("%s-FAIL the record carries a G number" % tag)
     return out("%s-OK agent-driven headful sign-in recorded values-free" % tag)
+
+
+def box_cdp():
+    tag = "R1-FU11C"
+    try:
+        import time
+
+        import boto3
+        rc, o = run(["terraform", "-chdir=%s" % TF_ROOT, "output", "-raw", "instance_id"], 60)
+        iid = o.strip()
+        if rc != 0 or not re.match(r"^i-[0-9a-f]+$", iid):
+            return out("%s-FAIL no instance_id output (rc=%s)" % (tag, rc))
+        cmd = ("echo listeners=$(ss -ltnH | awk '{print $4}' | grep ':9222$' | tr '\\n' ' '); "
+               "curl -s -m 5 http://127.0.0.1:9222/json/version | python3 -c \"import sys,json; d=json.load(sys.stdin); print('browser=' + d.get('Browser','?').split('/')[0])\"")
+        ssm = boto3.client("ssm", region_name="us-east-1")
+        cid = ssm.send_command(InstanceIds=[iid], DocumentName="AWS-RunShellScript", Parameters={"commands": [cmd]})["Command"]["CommandId"]
+        inv = {"Status": "Pending"}
+        for _ in range(30):
+            time.sleep(3)
+            try:
+                inv = ssm.get_command_invocation(CommandId=cid, InstanceId=iid)
+            except Exception:  # noqa: BLE001 -- not registered yet
+                continue
+            if inv["Status"] in ("Success", "Failed", "TimedOut", "Cancelled"):
+                break
+        so = inv.get("StandardOutputContent", "")
+        listeners = [x for x in so.split("listeners=")[-1].split("\n")[0].split() if x]
+        if inv["Status"] != "Success" or "browser=Chrome" not in so and "browser=HeadlessChrome" not in so:
+            return out("%s-FAIL ssm status=%s; the CDP endpoint did not answer on 127.0.0.1:9222" % (tag, inv["Status"]))
+        if not listeners or any(not x.startswith("127.0.0.1:") for x in listeners):
+            return out("%s-FAIL the CDP port is not bound to 127.0.0.1 only: %s" % (tag, ",".join(listeners)))
+        return out("%s-OK the box Chrome answers CDP on 127.0.0.1:9222 only" % tag)
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
 
 
 def _tf_out(name):
@@ -704,7 +747,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu12h": lambda: tests("fu12h"), "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 

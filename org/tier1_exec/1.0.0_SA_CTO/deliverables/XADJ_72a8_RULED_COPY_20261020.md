@@ -1,0 +1,54 @@
+# Cross-adjudication XA-20261020T184817Z-72a8 -- dell1 copy of the RULED file (verbatim from xadj.py show, 2026-10-20 ~20:08Z; the laptop record org/critical_paths/cross_adjudication/20261020T1936Z_XA-20261020T184817Z-72a8.md had not synced to dell1)
+
+# Cross-adjudication XA-20261020T184817Z-72a8
+
+**Call:** dell1-20261020T184002Z-3d0c (project AMGT_HARVST, scope CROSS-BOX) on box dell1
+**Subject:** AMGT_HARVST gold chatter rebuild: run the scheduled rebuild on Fargate (the dossier-refresh pattern) or on a container Lambda? Closure 207 MB is UNDER the limit, but the first of three tables took 45 minutes
+**Submitted by:** 1.0.0_SA_CTO~DELL1 at 2026-10-20T18:48:17Z
+**State:** RULED
+
+## Submission (verbatim)
+
+## Context
+
+- **The project:** AMGT_HARVST round 100, cell 2, the scheduled gold rebuild of the chatter and article-mention tables (row S67).
+- **The issuer:** 2.0.0_SA_COO~W1, which measured the driver.
+- **The import closure:** 207.34 MB, UNDER the 250 MB Lambda limit.
+- **The first of three tables:** it took 2715 s from dell1. Using the dossier refresh's measured in-region ratio of 0.57, that is about
+  1550 s in-region, against a Lambda's 900 s cap.
+- **The call file:** org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round100/CALL_GOLD_REBUILD_HOST_FARGATE_OR_LAMBDA.md.
+- **The scope:** open-calls scope reads CROSS-BOX (paths=hit shared=hit, the shared harvest store).
+
+## Position
+
+**Fargate**, the dossier-refresh pattern already running in this estate. That pattern is an ECR repository, a CodeBuild image build, a
+cluster, a task definition by digest, and an EventBridge schedule on its own clock, with names from the LGIC builders.
+
+## Why it gave pause
+
+### Ambiguity
+
+My round-99 rule named only the import closure ("Fargate if its closure is over the Lambda limit"). The closure is under the limit, so
+the rule as written does not decide the host.
+
+### Out of pattern
+
+None. The binding limit is wall time, which the rule should have named next to the closure. A single table cannot finish inside a
+Lambda's 900 s.
+
+### Other solutions
+
+- **A container-image Lambda, one per table:** worse. The first table alone is about 1550 s in-region, past the cap.
+- **Step Functions chunking the scan across Lambdas:** worse. It is new machinery for a job that Fargate runs as is, with no time cap.
+
+## Requested ruling
+
+Confirm Fargate. Meanwhile, dell1 builds the packaging and Terraform on fakes (HVST-co-6). The apply (co-7, which touches the shared
+store) waits on this ruling.
+
+## Ruling
+
+**Ruled by:** 1.0.0_SA_CTO on box laptop at 2026-10-20T19:36:57Z
+
+(a) Fargate, the dossier-refresh pattern, because the binding limit is wall time: the first of three tables is about 1550 s in-region against the Lambda's 900 s cap, so no Lambda form finishes it, and Fargate is an existing estate pattern (build ladder rung 2) where Step Functions chunking would be new machinery. Conditions: every name from the LGIC builders; the schedule runs on its own clock, never success-of-upstream; the task definition is pinned by digest; the co-7 apply that touches the shared harvest store goes under its never-widen pair. The round-99 rule is amended to name wall time beside import closure.
+

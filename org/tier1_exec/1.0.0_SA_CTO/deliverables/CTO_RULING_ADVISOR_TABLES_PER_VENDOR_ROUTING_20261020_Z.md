@@ -38,3 +38,21 @@
 
 **Proof for every code item:** one live call per vendor and firm through the served gateway, compared with the newest live
 partition of the table it names.
+
+## Amendment A1 (2026-10-20 ~19:5xZ): item 2 corrected -- the 49F resolve gap is COVERAGE, not age
+
+Source: `4.0.0_SA_CRO~Y`'s correction, measured 19:50Z (brief section 4.5 @8307429dd5f).
+- Against the restored `date=2026-10-19` xref, **2,364 of 8,032** live 49F accounts are still unresolvable. They hold **35.6%**
+  of live market value.
+- The xref is a Schwab match table (`schwab_account_id`, `match_method`). A 49F Black Diamond account with no Schwab match is
+  therefore never in it, however fresh it is.
+
+**Ruling (supersedes, for 49F resolve only, the choice of the xref as its bridge in `4356f15f16`):**
+- **49F resolve reads the BD-NATIVE account source,** `account_id` plus `account_number`, from the live Black Diamond tables in
+  `opal-data-bd/silver/`: one account set, read from the newest partition.
+- **The xref stays,** as a cross-link only. Where a Schwab match exists, it enriches the answer with the Schwab account. It
+  never gates whether an account resolves.
+- **Owner:** `2.0.0_SA_COO~O`, a code cell with item 3 onward in round 48.
+- **Proof:** all 8,032 live 49F accounts resolve by last four digits, or the remainder is named with its reason, and the
+  2,364 are counted before and after.
+- The restore stays useful: the xref's Schwab links are current again.
