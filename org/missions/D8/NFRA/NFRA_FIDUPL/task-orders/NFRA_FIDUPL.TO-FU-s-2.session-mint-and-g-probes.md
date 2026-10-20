@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -124,6 +124,13 @@ The launch-only probe on the box passed (a headed `about:blank`, `DISPLAY=:99` h
 2. **A failed step carries a redacted message.** In `_step`, when a step fails, add to the trace a line `detail="<message>"` where the message is the exception text cut to 160 characters, passed through the existing `self._render(...)` (which redacts every remembered secret) and with newlines collapsed; the failing outcome line stays `FAIL:<ClassName>`. A test pins that a remembered secret inside an exception message is redacted in the detail line.
 Add two tests to the EXISTING `tests/test_login_trace.py`: `test_after_next_survives_a_navigation_race` (a fake page whose first two selector queries raise a plain Exception subclass named Error, then the password element appears: the step passes, the note carries `navigation_races=2`; and a variant where the queries raise until the deadline: the step ends in TimeoutError, not a bare Error), `test_failed_step_note_carries_a_redacted_message_cut`. FU2-AC4 now needs thirty; fu2a, fu2b, fu2c and fu5b must still pass. Fakes only: no AWS, no live call, no sign-in.
 
+### REPAIR 12 (issuer, 2026-10-20 ~21:20Z; URGENT: the live attempt window is 21:35Z to 21:55Z) -- the box DID sign in at 20:59Z and the authorize wait failed; and every run must log out
+
+Evidence: a direct scripted run at 20:59:04Z ended `open_session: LoginStepError`, but the Quo line shows the text arrived at 20:59:20Z, and the profile then holds a fresh `ATT` (created 20:59:32Z), two `JSESSIONID` (20:59:26Z, 20:59:29Z) and the post-login `SSCPLATFORMSUMMARY` and `SSCVIRTUALASSISTANT` (20:59:31Z). The platform considered that browser signed in. The step that failed is therefore the last one, `authorize` (inferred, not measured: that run's trace was overwritten). `_authorize` returns True only for a recorded status of exactly 200. Two changes in `signin.py`:
+1. **`_authorize` accepts any 2xx** (200 to 299) as success, and on a timeout adds the values-free note `authorize_seen=[<path>:<status>,...]` for up to the last 12 responses on a `wealthcentral` or `ecaap` host whose path contains `authorize` or starts with `/container/` (path only, never a query, never a header). It raises the same `TimeoutError` as today at the deadline.
+2. **Logout.** Add `PlaywrightDriver.logout()`: through `self.page.context.request`, `DELETE https://wealthcentral.advisorchannel.com/ssc/platform-authorization/api/v2/unauthorize` and then `DELETE https://ecaap.advisorchannel.com/user/session/login`; note `logout statuses=<code>,<code>` (statuses only); it never raises (an exception is noted as `logout=failed <ClassName>`) and never retries. `Session` keeps a reference to its driver; `Session.close()` calls `driver.logout()` BEFORE it closes the context, then writes the trace file again if it can (`write_login_trace` with the config work dir, as `open_session` does). `open_session`'s failure path also calls `driver.logout()` before the teardown, when the driver exists and the password step was accepted (a `submit_password` that returned True); a failure before that point calls nothing.
+Add three tests to the EXISTING `tests/test_login_trace.py`: `test_authorize_accepts_any_2xx_and_records_seen_responses_on_timeout`, `test_logout_calls_both_deletes_and_records_statuses`, `test_session_close_logs_out_first_and_never_raises`. FU2-AC4 now needs thirty-three; fu2a, fu2b, fu2c and fu5b must still pass. The checker is `fidupl_round_checks.py`. Fakes only: no AWS, no live call, no sign-in. Be FAST: the issuer merges and the box is updated within minutes.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -136,7 +143,7 @@ Add two tests to the EXISTING `tests/test_login_trace.py`: `test_after_next_surv
 `FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the thirty login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9, one from REPAIR 10, two from REPAIR 11) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+`FU2-AC4` -- the thirty-three login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9, one from REPAIR 10, two from REPAIR 11, three from REPAIR 12) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 

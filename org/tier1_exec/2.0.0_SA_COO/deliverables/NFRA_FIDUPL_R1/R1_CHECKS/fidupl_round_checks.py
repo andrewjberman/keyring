@@ -52,7 +52,9 @@ TEST_FILES = {
         "test_text_me_the_code_button_sends_the_sms", "test_call_me_button_is_never_clicked",
         "test_display_waits_for_the_x_socket", "test_launch_args_disable_extensions",
         "test_display_is_set_before_the_playwright_driver_starts",
-        "test_after_next_survives_a_navigation_race", "test_failed_step_note_carries_a_redacted_message_cut"]),
+        "test_after_next_survives_a_navigation_race", "test_failed_step_note_carries_a_redacted_message_cut",
+        "test_authorize_accepts_any_2xx_and_records_seen_responses_on_timeout",
+        "test_logout_calls_both_deletes_and_records_statuses", "test_session_close_logs_out_first_and_never_raises"]),
     "fr1a": ("%s/tests/test_gswitch.py" % CF, [
         "test_parses_current_default_and_options", "test_switch_posts_form_without_isdefault",
         "test_switch_asserts_current_equals_requested", "test_switch_failure_raises_and_names_no_value"]),
@@ -595,6 +597,25 @@ def _tf_out(name):
     return rc, o.strip()
 
 
+def automation_iam():
+    tag = "R1-FU13I"
+    try:
+        import boto3
+        rc, arn = _tf_out("automation_role_arn")
+        if rc != 0 or not arn.startswith("arn:aws:iam::"):
+            return out("%s-FAIL no automation_role_arn output (rc=%s)" % (tag, rc))
+        iam = boto3.client("iam", region_name="us-east-1")
+        acts = ["ssm:SendCommand", "ssm:GetCommandInvocation", "ssm:ListCommands", "ssm:ListCommandInvocations"]
+        res = iam.simulate_principal_policy(PolicySourceArn=arn, ActionNames=acts, ResourceArns=["*"])["EvaluationResults"]
+        got = dict((r["EvalActionName"], r["EvalDecision"]) for r in res)
+        bad = [a for a in ("ssm:ListCommands", "ssm:ListCommandInvocations") if got.get(a) != "allowed"]
+        if bad:
+            return out("%s-FAIL not allowed for the automation role: %s" % (tag, ",".join(bad)))
+        return out("%s-OK the automation role may ListCommands and ListCommandInvocations" % tag)
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
+
 def autoshutdown_tag():
     tag = "R1-FU8T"
     try:
@@ -747,7 +768,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu12h": lambda: tests("fu12h"), "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 
