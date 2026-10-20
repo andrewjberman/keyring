@@ -13539,5 +13539,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         "disposition": "UNDER_INVESTIGATION",
         "notes": "Ruled by the issuer: a guard stop is the designed behaviour and does not fail stage 6. The cause of the two unnamed stops is an enrichment item for the round analysis, not a cn-7 criterion."
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W186-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~186",
+        "surfaced_at": "2026-10-20T17:06:08Z",
+        "one_line": "The rebuild entry lib.research.harvest.publication_gold measures UNDER the 250 MB unzipped Lambda limit (138.86 MB), so its import closure does not by itself require a Fargate container task.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-2 section 0 and AC1: the rebuild entry's import closure is measured against the 250 MB unzipped Lambda limit; a container task is the path if the closure is OVER.",
+        "world_is": "co2_gold.out (this commit) reads GOLD-CLOSURE entry=lib.research.harvest.publication_gold lib_modules=9 third_party_pkgs=3 third_party_mb=138.46 lib_code_mb=0.40 total_mb=138.86 limit_unzipped_mb=250 verdict=UNDER biggest=pyarrow:86.40,numpy:51.94,cloudpickle:0.12 removable_by_lazy=none. Both controls pass (CONTROL-POSITIVE pyarrow_in_closure=yes, CONTROL-NEGATIVE third_party_tops=0). The earlier closure of lib.research.corpus.dossier_refresh measured 287.13 MB OVER (cn4_closure.out, round 181) because that entry also loads lib.trading_calendar (pandas, pandas_market_calendars) and lib.research.corpus.extract (pymupdf, lxml, openpyxl, pillow); the publication_gold closure loads none of them.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "7997ac0b53:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~181/cn4_closure.out",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~186/co2_gold.out (this commit)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W186-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~186",
+        "surfaced_at": "2026-10-20T17:06:08Z",
+        "one_line": "The gold roster is not the covered-universe listing the order names as its start point: the round-75 roster has 242 names, covered_universe returns 95 keys, and 147 keys of the newest chatter_daily object are not covered.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-2 step 1.4: find where the --securities-json roster of a gold build comes from, starting from covered_universe.covered_security_keys().",
+        "world_is": "covered_universe.covered_security_keys() returns the 95 security folders under amgt/harvest/gold/research_dossier/ (C-PAGE-UNIVERSE-ONE-NAME). It is not an input of publication_gold; a gold build takes its roster from --securities-json. The round-75 roster securities.universe.r75.json (242 entries, deliverables 0.9.0_WK_AMGT_HARVST~129) is written by lib/research/harvest/universe_securities.py build() at HEAD (gold_rebuild11.signing.py docstring). co2_gold.out NOTE roster: the newest chatter_daily object part-20261009T103423Z.parquet (partition date=2026-10-08, 4 objects in the partition) holds 242 distinct security_keys, all inside the r75 roster (roster_file_vs_daily_not_in_file=0); 147 of them are absent from covered_universe (daily_not_covered=147, covered_not_daily=0, equal=no).",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "7997ac0b53:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~129/securities.universe.r75.json",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~186/co2_gold.out (this commit)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
