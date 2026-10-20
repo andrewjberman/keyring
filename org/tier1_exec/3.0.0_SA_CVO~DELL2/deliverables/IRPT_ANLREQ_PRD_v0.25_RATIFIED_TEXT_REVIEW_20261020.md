@@ -53,3 +53,23 @@
 - The contract narrows to what the code does, with the same vendor (C-KIMI) and no ENDPOINT change.
 - Proportionate sign-off is written for single-round or sub-week projects, and IRPT_ANLREQ is neither. This seat therefore re-binds to the
   current bytes rather than resting on "current by ENDPOINT hash". **SIGNED.**
+
+## Re-review at v0.27 @cd00de4ecb (2026-10-20 ~17:4xZ): SIGNED
+
+- Half reviewed: ratified-text, half_hash `d17f285911f0398375484a7c0b94108d710497559632c6194ff215675e66d1b5`.
+- The only change is the C-AUDIT-RECORD row:
+  - platinum family ANALYSIS_AUDIT, table `analysis_audit`;
+  - a 2,555-day ceiling, unreferenced expiry null;
+  - written by the packager at attach time, with the form as filed taken from the ticket answers;
+  - schema AnalysisAudit.v1.
+- The outcome, the four linkages and the retention are unchanged.
+- Read in `lib/opal_naming.py`:
+  - a family key must match `[A-Z]+(?:_[A-Z]+)*` (~2605), so "analysis-report" cannot be one;
+  - the ceiling must be `0 < d <= 2555`;
+  - `unreferenced_days` None raises unless the tier is platinum (~2630-2632).
+  - The ruling fits the builder as stated. **SIGNED.**
+- **Grading note, not a condition.** "At attach time" meets two cases already in the contracts.
+  - **A commentary failure** attaches with `pdf_ref` and `commentary_ref` null (C-PACKAGER v0.23; TCKT_VNEXT R20-lm-7). AnalysisAudit.v1
+    must admit those two pointers as null.
+  - **A replace attach** (`prior_attached_at`) must supersede the record, not write a second one silently.
+  - The audit-record cell is graded on both cases.
