@@ -29035,3 +29035,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W330-S11 -- the AMENDMENT 3 sys.path restore in test_compare_ports.py breaks test_resident_installed.py's runtime imports under the regress arm
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T19:59:26Z",
+  "one_line": "The AMENDMENT 3 fix (sys.path[:] = _PATH_BEFORE in test_compare_ports.py) makes test_generate_installed.py collect, but it also removes the reports/ and _scope/ entries that test_resident_installed.py's header added while test_compare_ports.py imported it, so 7 of its tests fail with ModuleNotFoundError when the regress arm runs the list; AR175-g-AC3 FAILs on its pytest limb.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-175 AMENDMENT 3 Part E (order line 35): test_compare_ports.py takes _PATH_BEFORE before HERE and restores sys.path[:] = _PATH_BEFORE after the test_resident_installed import; the two files must collect and pass together; criterion AR175-g-AC3 (checker regress 175) must print AR-CMP-175-REGRESS-OK after the worker's commits.",
+  "world_is": "At 40584ba5e453 (Part E as written): the two-file command passes (18 passed, rc=0) and test_installer_supplies_opal_stores passes alone (1 passed); checker build and guard print AR-CMP-175-OK (rc=0 each). Regress prints 'AR-CMP-175-REGRESS-FAIL pytest rc=1: 7 failed, 244 passed' (rc=1). The 7 failures are all in reports/tests/test_resident_installed.py (test_factory_returns_exactly_the_resident_shape_without_any_aws_call, test_installer_supplies_opal_stores, test_installer_supplies_opal_stores_the_map_binding_is_required_for_a_listed_principal, test_unlisted_principal_builds_no_opal_stores and its no_default_client variant, test_installer_wires_ycdgen_research_revision, test_installer_registers_the_commentary_family_under_its_revision), each ModuleNotFoundError: 'canonical_profile_reads' (resident_installed.py line 569; the module lives in _scope/) or 'composition' (test_resident_installed.py line 290; the module lives in reports/). Measured: the same 16-file list with test_compare_ports.py removed gives 247 passed (rc=0); the pair test_compare_ports.py then test_resident_installed.py gives 7 failed, 17 passed. Before this commit (the AMENDMENT 2 state at 527a203120) the regress arm printed AR-CMP-175-REGRESS-OK. Not edited here: the order's fix stands as written in the commit; the choice of a different fix is the issuer's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_compare_ports.py@40584ba5e453 (lines 13 to 31: _PATH_BEFORE, the module-level path loop, the import of test_resident_installed at line 29, the restore after it)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py@40584ba5e453 (header lines 13 to 24: the path loop that inserts reports and _scope; the runtime import sites)",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@40584ba5e453 (line 569: from canonical_profile_reads import ..., inside the build function)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_compare_checks.py@ef7ec06b1e6 (regress at lines 708 to 716 runs the list; the test_compare_ports and test_resident_installed pair is run at lines 629 to 631)",
+      "python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_compare_checks.py 175 regress (rc=1, the output line quoted above, run from the worktree root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
