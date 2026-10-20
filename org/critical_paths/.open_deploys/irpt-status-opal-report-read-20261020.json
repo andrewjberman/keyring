@@ -1,0 +1,48 @@
+{
+  "slug": "irpt-status-opal-report-read-20261020",
+  "title": "IRPT_ANLREQ TO-APPLY-STATUSGRANT: irpt-status-role reads the YCHARTS_OPAL_REPORT PDF family: one statement's resource list extended by three entries on aws_iam_role_policy.irpt_status, drained commit 9b614db42a1",
+  "author": "0.7.0_AE_CloudOps~IB2",
+  "status": "OPEN",
+  "opened_at": "2026-10-20T18:25:49.876997+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261020T1825Z_irpt-status-opal-report-read-20261020_deploy_completion.md",
+  "legs": [
+    {
+      "id": "R0",
+      "kind": "verify",
+      "target": "before-reads: live policy Sid list, retained-families resources, sha256, simulation get and getversion on the 7b PDF key",
+      "proof_required": "R0 baseline implicitDeny get and getversion",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "C",
+      "kind": "verify",
+      "target": "scoped plan at the drained commit reads 0 to add 1 to change 0 to destroy with exactly three added resource entries",
+      "proof_required": "plan output and diff read",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "A",
+      "kind": "activation",
+      "target": "safe-apply of the saved plan",
+      "proof_required": "Apply complete 0 added 1 changed 0 destroyed",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "V",
+      "kind": "verify",
+      "target": "after-reads G1 to G3: byte-equal other statements, simulation, replan No changes",
+      "proof_required": "G1 G2 G3 lines",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261020T182549Z OPENED by 0.7.0_AE_CloudOps~IB2 with 4 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}
