@@ -30672,3 +30672,57 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S239 -- Run 7e stops at P4 on the r34o resident: packager retained_for_retry class=RetentionRefused
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S239",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T23:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Run 7e on the r34o resident stopped at P4: the packager wrote outcome=ATTACHED_WITHOUT_COMMENTARY at 23:36:18Z, then retained_for_retry class=RetentionRefused code=- at 23:37:00Z; run 7d on r34n read outcome=ATTACHED at the same hop. The refusal's cause is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7e/ssm_retention_out.txt (SSM command 222e9031-dc40-4b67-876c-8e492ba355da: the two IRPT_RESIDENT_PACKAGE journal lines of the window 23:35:47Z onward)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7e/state_e2e7e.json (stopped_at P4, stop_code RETAINED_FOR_RETRY, p7_ready: report_ref and original_ref held, commentary_ref and pdf_ref not held at READY 23:36:26Z, dlq_before 2 after 2, main 0 before and 1 in flight after)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7d/A_E2E7D.txt line P4 (outcome=ATTACHED at 21:59:09Z on the r34n resident)"
+    ]
+  },
+  "spec_asserts": "The 7e order: the Overview filing on the r34o resident goes green through P1 to P5 as run 7d did on r34n, then R reads the Overview route and R3 saves the PDF for Andrew.",
+  "world_is": "The r34o resident (root 0485393f3a-r34o, active) took the request through P1 job READY, P2 commentary_ref and P3 draft, then logged IRPT_RESIDENT_PACKAGE_READY outcome=ATTACHED_WITHOUT_COMMENTARY and, 42 seconds later, retained_for_retry class=RetentionRefused code=-. At READY the ticket package held report_ref and original_ref and not commentary_ref or pdf_ref. The journal lines carry class and code only; which retention was refused, and why, is NOT measured by this seat. A retained report PDF object does exist under state/ycharts_opal_reports (see S240). One message sits in flight (not visible, visibility timeout 1800 s) in the commentary-ready main queue; the request, job and ticket rows were deleted by D. The R and R3 hops were never reached, so no Overview PDF was saved for Andrew from this run. No retry, no IAM change (the order).",
+  "notes": "The audit ports are unwired on the host (IRPT_TICKETS_TABLE unset, reported in the r34o record); whether that bears on the refusal is not measured."
+}
+```
+
+## IRPT_ANLREQ-D2-S240 -- Run 7e strands six synthetic state objects (a retained report PDF among them) the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S240",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T23:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7e leaves SIX synthetic state objects, one a retained report PDF, that the CloudOps principal cannot delete (AccessDenied); 12 index rows and the synthetic user read ABSENT. Exact keys and VersionIds are in residue_7e.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7e/residue_7e.json (bucket, key, version_id, size for each of six objects, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7e/state_e2e7e.json (leftover_delete_code AccessDenied; upload_identified 1 of 47 UPLOAD rows matched the synthetic address and the run's holdings hash, recorded at creation)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates; the order's 'for this run's own residue that your principal cannot delete, list each exact key and its VersionId in residue_7e.json and file the row'.",
+  "world_is": "These objects remain, one version each, bucket opal-data-irpt: irpt/49financial/state/analysis_commentaries/ART-90b75962a84a0d7f7add7c9ff482b6a576e9906e07f5623ac8e66130f3862dd8/f12e0e7aff1cbd41624bf898f0671e702b89c4a180e25c2ba7d69ce0c4214fe3.json (VersionId x4hPj8Xjag81sBGN75KkTRRVyUkuHSOB); irpt/49financial/state/extraction_evidence/ART-17007a5c775c264e7fe9be271d8175e102dbada095e4d1ba5ee837c3427dfd78/003a41b78e744942d68eb7237e8889dfc6bf2c96488182f59d08c65268001105.json (VersionId 6cQru7X6StS0tZJVAY1fXasu.ADLVRRu); irpt/49financial/state/normalized_portfolios/ART-b9c860f71264ea6aaaaeb6211eea27d92a7587a0566924d9a878587f2f62c64f/3bb769c9ab0fa0eb44e7d91c204b26ad250048968636fdf2468ac8abddca9bd0.json (VersionId nnCKe6m1et6OVrhCeNs8L5q.tjQWREuk); irpt/49financial/state/original_holdings/ART-601018e760f99c075e7bbca7b4d78507ccfa2ef5e2c6c96235c37fbbc2114597/15ea08f730dccaac6a91a73229196207551806c6de7e73cb05479559d8d31132.csv (VersionId 8davpZHmNv3cVpjpNEf.9PtFOCTJ6.FM); irpt/49financial/state/request_compositions/ART-8532a6673016fdc93e20598aad0a339e01591a3e23f3d168a4b73b43e49f4aff/01e03f488e4f1820251f70933550e49598293146d6a503495ba406cd514421c5.json (VersionId nv5Jd8DAN9J2_zAQSCjCtqr8gbOngYP2); irpt/49financial/state/ycharts_opal_reports/ART-f4a4de3a964a84913700c9a0988e4d64df5969bbadc54410135d30008b94f3c0/78b6e69b69e81edf59a841993572f8cb9370b01f612626d30b6d22c433c2d911.pdf (VersionId ola1FHdSSInkejeEwIgnZYvOb5fWL2Ub). No index row points at them. The synthetic holdings carry no client data. The leftover objects of runs 7 (S229), 7b (S232), 7c (S234) and 7d (S237) also remain.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
