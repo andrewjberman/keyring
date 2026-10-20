@@ -30487,3 +30487,174 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S402 waited on one thing, a window of production traffic read against the lake; OG-ev-13 read it and the verdict is HOLDS. The row's mechanism (a bounded, audible put) is unchanged and stays in force."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~166",
+  "surfaced_at": "2026-10-20T09:49:30Z",
+  "id": "NFRA_OPLGTW-Z-W166-S1",
+  "one_line": "Section 5 of the OG-fc-1 order asks the worker to flip the order's <status> tag to complete when all three criteria PASS; the order file is outside the <paths> write grant, so this worker did not flip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TASK ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-fc-1.round-47-client-fence-kinds-and-the-resolve-envelope.md:61 @eb4ff9f43dd -- section 5: 'Flip the ONE <status> tag to complete only if all three PASS'.",
+      "TASK ORDER: the same file, lines 41-45 @eb4ff9f43dd -- the <paths> grant lists infra/aws/ec2/opal-gateway/app/client_core.py, infra/aws/ec2/opal-gateway/tests/test_og_fc1.py and the investigation channel; the order file itself is not in it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 5 of NFRA_OPLGTW.TO-OG-fc-1 expects the worker to flip the order's status tag to complete on an all-PASS run, and the general worker rule pairs that flip with the instance and deliverables in one commit.",
+  "world_is": "The status flip writes the task-order file, which no <paths> entry or W/ folder grants. The three criteria PASS and the proof instance is written and validated, but the flip is held for the issuer. Nothing else was changed outside the grant.",
+  "notes": "REC to the issuer (2.0.0_SA_COO~O): flip the status from the one-line order record after reading this worker's report, or widen the grant for this one file. No gate is implicated: the lane gate refused nothing; the flip was simply not attempted."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~166",
+  "surfaced_at": "2026-10-20T09:49:30Z",
+  "id": "NFRA_OPLGTW-Z-W166-S2",
+  "one_line": "Order D3(b) gives every merged resolve envelope a denominator of the form {candidates, by_vendor}, but D3(d) says the single-vendor shape is unchanged; the worker applied (b) to one-holder calls too, so a single-vendor resolve no longer carries the adapter's own denominator keys at top level.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_core.py:584-587 @eb4ff9f43dd -- the merge loop has no single-holder branch; merged _denominator is {candidates: len(candidates), by_vendor: {v: out.get(_denominator)}} for every holder count.",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_eclipse.py:191 @6f2ddfd58e -- the eclipse resolve denominator is {partition_rows, candidates}; infra/aws/ec2/opal-gateway/app/client_adapter_commonwealth.py:198 @6f2ddfd58e -- {rows, candidates}; the two shapes differ, so a wrapped one-holder denominator differs from the adapter's own.",
+      "tests/test_og_fc1.py test_ogfc1_d3_single_vendor_shape @eb4ff9f43dd asserts denominator candidates only. NOT MEASURED: whether any consumer reads the top-level denominator keys of a resolve envelope."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D3(b): the merged denominator is a dict whose candidates equals the merged candidate_count and whose by_vendor maps each answering vendor to that adapter's own _denominator. D3(d): the refusals key is ABSENT when nobody refused (the single-vendor shape is unchanged).",
+  "world_is": "The order does not say whether a one-holder call keeps the adapter's own denominator. The worker chose the uniform reading (one merge path for every holder count), so a one-vendor resolve now carries {candidates, by_vendor} and the adapter's keys sit under by_vendor. The AC2 control and the neighbour tests (17 files plus test_og_cl5 and test_og_ad1) pass under that reading.",
+  "notes": "REC to the issuer: rule which reading holds for one-holder calls. If the adapter's own denominator must stay at top level for one holder, the change is a single branch in client_resolve_account; no adapter file is involved."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~166",
+  "surfaced_at": "2026-10-20T09:49:30Z",
+  "id": "NFRA_OPLGTW-Z-W166-S3",
+  "one_line": "The commit-time client-data check did not screen the OG-fc-1 commit on this device: the hashed account-id list is absent at its default path, so safe-commit printed WARN and checked nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit eb4ff9f43dd: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'.",
+      "git show eb4ff9f43dd, added lines: a digit-run scan returns only the fixture last-4 '1234', the firm alias '4698' and 2026 date literals; no account-shaped value is added."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's bounds forbid a client account value in any test, record or report, and the commit-time client-data check is the mechanical screen for that.",
+  "world_is": "On this device the screen's input list is absent, so the screen could not run. The worker's own scan of the two committed files found no account-shaped value. The absence of the list is a device fact, not a verdict on the commit.",
+  "notes": "OBSERVATION: the absence is recorded, not diagnosed. Whether the list should be provisioned on this device is the device owner's call."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W171-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~171",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The order's closing step, flipping its <status> tag to complete, writes the task-order file, which is not one of the three <paths> this worker is granted, so the flip is not made by this worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ix-1.round-47-the-breakdown-handler-supplies-the-vendor-and-firm-of-each-index.md at 6f2ddfd58e0, the WORKER FACE <paths> block (lines 41-45) names app/admin_gateway_breakdown.py, tests/test_og_ix1.py and this investigation file; the task-order file is not among them.",
+      "COMMIT: aa3103bcc15 (LOCAL on wk-NFRA_OPLGTW-171) carries the handler and the test file; AC1 RESULT: PASS and AC2 RESULT: PASS on that commit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 5 of the order: when both criteria PASS, flip the one <status> tag of the task order to complete, then report once.",
+  "world_is": "The flip is a write outside this worker's granted paths, so the order's <status> is not flipped at the worker's close; the issuer owns the flip or the grant. The proof instance records both criteria either way.",
+  "notes": "BLOCKING on the status flip only. Both criteria are met on the commit; no path outside the grant was touched."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W171-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~171",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The pair rule takes the second prefix component verbatim, so 12 of the 43 index pairs in the segmented channels carry an all-digit firm key (3 distinct values), and the owner page will show those master numbers under firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COUNT: _compute on the committed handler aa3103bcc15 against the real catalog (infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml): 43 index pairs, 43 resolved, 12 whose firm is all digits, 3 distinct such values; the values are not recorded in this row.",
+      "CATALOG: the prefix rows of the form schwab/<digits>/silver/<dataset>/ in DATA_CATALOG.yaml (prefix lines about 8135-9582 at 6f2ddfd58e0) carry a master number in the second position."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The OG-ix-1 pair rule: the pair is the first two non-empty path components of the index's catalog row prefix, and no value is rejected or named locally.",
+  "world_is": "For the schwab rows the second component is a master number, not a firm key; the registry rows Z-S427 and Z-S428 carry the master-to-firm attribution separately. The page's firm column will therefore show a master number for those indexes until the catalog or the registry says otherwise.",
+  "notes": "OBSERVATION: the rule is as ratified and both criteria pass. Recorded for the CRO and the CVO before MP-z-7 and MP-z-8 cut the page filter on these keys. The page is owner-only; this worker printed no value."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W171-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~171",
+  "surfaced_at": "2026-10-20T09:54:02Z",
+  "one_line": "The fresh worktree wk-NFRA_OPLGTW-171 reports the portal gitlink modified before any edit (' M portal', one insertion and one deletion); this worker left it unstaged and out of its commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --short -- portal in C:/tmp/wk-og-171 at 2026-10-20T09:54Z prints ' M portal'; git diff --stat -- portal prints 'portal | 2 +-' (1 file changed, 1 insertion, 1 deletion)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's worktree is cut from trunk 6f2ddfd58e0 and its granted paths are the only write surface; a fresh cut carries no pending change.",
+  "world_is": "The worktree's portal gitlink differs from its index entry at the cut, before any worker edit.",
+  "notes": "INERT for this order: no granted path is the portal gitlink, and the commit names only the two granted code files."
+}
+```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~167",
+  "surfaced_at": "2026-10-20T09:52:46Z",
+  "id": "NFRA_OPLGTW-Z-W167-S1",
+  "one_line": "The TO's proof step says to flip its <status> tag to complete on all-PASS, but the status tag sits in the RECORD FACE the worker face excludes and the TO file is outside the <paths> write grant, so this worker did not flip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-sx-1.round-47-small-fixes-d2-mask-ycharts-data-refresh-status.md @6f2ddfd58e, worker face section 5 (lines 67-69): 'Flip the ONE <status> tag to complete only if all three PASS'",
+      "the same file @6f2ddfd58e, worker face section 3 (<paths>, lines 46-53): grants the four product files, tests/test_og_sx1.py and the investigation channel; the TO file is not named",
+      "the launch directive for this worker excludes the RECORD FACE (line 71 onward) from the worker's context"
+    ]
+  },
+  "spec_asserts": "Section 5 of the TO asks the worker to flip the one <status> tag to complete after all three proof criteria PASS, and section 3 grants the worker write access to the paths it lists.",
+  "world_is": "All three proof criteria PASS at the code commit e6b4f5fc47 (sx1.AC1, sx1.AC2, sx1.AC3). The <status> tag is not reachable from the worker face, and the TO file is outside the write grant, so the flip is not made by this worker. The proof instance is validated in its own commit and the verdict is reported to the issuer.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
