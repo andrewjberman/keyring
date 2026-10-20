@@ -1,0 +1,24 @@
+{
+  "slug": "bd49f-dim-convert-memory-3008",
+  "title": "bd49f dim-convert Lambda memory 1024->3008 plus one scheduler-shaped invoke (NFRA_CTLPLN TO-APPLY-34)",
+  "author": "0.7.0_AE_CloudOps~NFRA2",
+  "status": "OPEN",
+  "opened_at": "2026-10-20T18:51:31.249418+00:00",
+  "window_hours": 4.0,
+  "entry_path": "org/critical_paths/change_management/20261020T1851Z_bd49f-dim-convert-memory-3008_deploy_completion.md",
+  "legs": [
+    {
+      "id": "opal-assets-bd49f-dim-convert",
+      "kind": "tf-lambda",
+      "target": "module.bd49f_convert.aws_lambda_function.this",
+      "proof_required": "TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261020T185131Z OPENED by 0.7.0_AE_CloudOps~NFRA2 with 1 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "laptop"
+}

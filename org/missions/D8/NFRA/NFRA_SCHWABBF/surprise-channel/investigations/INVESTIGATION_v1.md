@@ -1062,6 +1062,248 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "BF-s-4 worker face, build item 1: ONE pure function in the Schwab-only code, put where the import direction allows with no cycle, 'a leaf such as schwab_projections.py, imported by the others'.",
     "world_is": "A rule in schwab_projections.py would make conversion_manifest.py, which the closure validator imports without pyarrow, depend on schwab_projections and so on pyarrow. The rule now lives in conversion_manifest.py (it already owns FIRMS and the key-claim rule and imports only silver_registry). schwab_projections.dim_key, the converter's three fact-key sites, the set-identity guard and the runtime census all call through it. Old-form keys are byte-identical to the pre-round code (test OLD).",
     "notes": "Not an alert. Disposition for the CVO or the issuer: accept conversion_manifest.py as the one rule's home, or name another leaf that carries no pyarrow import. No behavior depends on the choice; the tests pass against the chosen home."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T19:01:29Z",
+    "one_line": "TO-AL-r1 step 9a as written (forward slashes in every on-box path) makes msiexec exit 1619 on the MSI argument; the same install with a backslash MSI path exits 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command 4438e725-bf05-49fd-8745-47744fb1a048 on i-0825aa0ed88342d67: 'msiexec exit=1619' with -ArgumentList '/i','C:/schwab-sdd/AWSCLIV2.msi' (saved: deliverables/0.7.0_AE_CloudOps~NFRA1/r1/step9a_invocation.json)",
+        "SSM command 03b044e0-fda5-4727-a361-567990dbc727: msi present=True bytes=50155520, 'msiexec exit=0', 'aws-cli/2.38.2 Python/3.14.6 Windows/2022Server' with the MSI argument as C:\\schwab-sdd\\AWSCLIV2.msi (saved: r1/step9a_retry_invocation.json)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r1 step 9: use forward slashes in every on-box path, which Windows accepts; step 9a: msiexec /i C:/schwab-sdd/AWSCLIV2.msi /qn /norestart with exit 0 or 3010.",
+    "world_is": "Windows accepts forward slashes in PowerShell file paths, but msiexec parses its own arguments and returns 1619 (package could not be opened) for a forward-slash package path. The act used the same download and the same msiexec call with the backslash path (JSON-escaped by the non-shell writer); no other install route was used.",
+    "notes": "Form only: the order text for any later box build should carry the backslash MSI path."
+  }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W3-S7",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T19:14:04Z",
+    "one_line": "The code commit 09839fddaa passed safe-commit rc 0 while two pre-commit checks read nothing in this sparse worktree, the same blind state as NFRA_SCHWABBF-W5-S7 and NFRA_SCHWABBF-W5-S8: the risk reflex answered PARTIAL_OR_BLIND on a danger map 119.2h old, and the naming gate printed NAMING ERROR for the missing function-map folder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output on 09839fddaaaf (wk-NFRA_SCHWABBF-3): [risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND, danger map 119.2h old, scanned 0 of 3 file(s); [naming-gate] NAMING ERROR function-map folder missing (infra/aws/lambda/ci/function-map/); commit rc 0",
+        "09839fddaaaf: 3 files changed, 529 insertions(+), 12 deletions(-): data/canonical/schwab/keyform/move_bronze_key_form.py, data/canonical/schwab/tests/test_move_bronze_key_form.py, data/canonical/schwab/tests/fixtures/move_listing_state.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The pre-commit gates (commit-gate, naming gate, risk reflex) read the staged paths of each commit in this worktree.",
+    "world_is": "In this sparse worktree the naming gate cannot find its function-map folder and the risk reflex's danger map is stale; both print without failing the commit, so those two checks were not graded for 09839fddaaaf. The same condition is recorded at NFRA_SCHWABBF-W5-S7 and NFRA_SCHWABBF-W5-S8.",
+    "notes": "Form only. Recorded per commit, as the W5 rows are. No action taken; the sparse worktree is not rebuilt."
+  }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W4-S9",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:08:43Z",
+    "one_line": "The BF-g-5 state-tier grants are not sufficient for a firm-bucket write: each firm bucket policy denies every s3:* to principals outside its fence pattern and exemption list, and neither the box role nor the converter role is in either.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO (NFRA_SCHWABBF issuer) with 1.0.0_SA_CTO sign-off on the exemption rows for opal-data-49financial and opal-data-cottonwood (never-widen, NEVER #1)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/shared-infra/s3-49financial.tf@43bcfd4bc6a lines 114-137: aws_s3_bucket_policy statement DenyForeignFirmPrincipals, Effect Deny, Principal *, Action s3:*, Condition ArnNotLike aws:PrincipalArn = module.opal_name.fence_patterns[49financial] plus fence_exemption_arns",
+        "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf@43bcfd4bc6a lines 142-170: the same DenyForeignFirmPrincipals Deny on opal-data-cottonwood with fence_patterns[cottonwood]",
+        "infra/aws/terraform/modules/opal_name/generated_locals.tf@43bcfd4bc6a lines 129-132: fence_patterns 49financial = role/*-49f-* and cottonwood = role/*-cot-*; the box role (quartz-si2-spike-role, named at infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf@43bcfd4bc6a line 11) and the converter role (opal-assets-silver-schwab-role, from aws_iam_role.silver) match neither pattern",
+        "infra/logic/registry/exemptions.json@43bcfd4bc6a: the exemption principals listed for opal-data-49financial and opal-data-cottonwood contain neither quartz-si2-spike-role nor opal-assets-silver-schwab-role"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-g-5 worker face: 'Neither the box role nor the converter role can write there today: the first state write of a firm-form master would be refused.' The build adds the IAM statements, and the face asks the report to name anything else that would refuse these writes (a deny statement, a required KMS key).",
+    "world_is": "The IAM statements land and their arms pass, but they are not sufficient: the bucket policy of each firm bucket denies every s3:* (GetObject and ListBucket included) to any principal that matches neither the firm fence pattern nor an exemptions.json row, and neither role matches or is exempted for either bucket. Encryption is not the blocker: both buckets default to AES256 (SSE-S3), which the puller's --sse AES256 satisfies. The exemption rows are a registry edit (infra/logic/registry/exemptions.json, outside this order's paths, under never-widen sign-off) and were not made here.",
+    "notes": "Not an alert and not a monitor. Left alone, the box's daily_pull and pulls writes and the converter's complete, conversions and backfill_status writes and read-backs are refused by the bucket policy with AccessDenied. The converter's idempotency and read-back reads are denied the same way, and the monolith-iam.tf header records that an idempotency check which cannot read its destination swallows the error. Disposition for the issuer: name the exemption rows, or hold the state-tier cell until they land."
+  }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W4-S10",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:08:43Z",
+    "one_line": "The firm-bucket Terraform the face names is absent from this sparse worktree on disk; it was read at HEAD through git show, read only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in worktree wk-NFRA_SCHWABBF-4 names no infra/aws/terraform/shared-infra entry, so the directory has no files on disk here",
+        "git show 43bcfd4bc6a:infra/aws/terraform/shared-infra/s3-49financial.tf line 57: sse_algorithm = AES256 on the opal-data-49financial bucket",
+        "git show 43bcfd4bc6a:infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf line 127: sse_algorithm = AES256 on each lgic_firm bucket (opal-data-cottonwood)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-g-5 worker face: 'Read the firm buckets' own Terraform (bucket policy, encryption: the puller sends --sse AES256) and name in your report anything that would refuse these writes.'",
+    "world_is": "The two firm-bucket files are tracked at HEAD under infra/aws/terraform/shared-infra/ but the worktree's sparse-checkout list omits that directory, so they cannot be read from disk in this worktree. They were read with git show HEAD:<path>. Both files set SSE AES256, so the puller's --sse AES256 matches.",
+    "notes": "Not an alert. Any later cell that needs these files on disk needs the issuer to widen the sparse list; this order did not edit it."
+  }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W4-S11",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:08:43Z",
+    "one_line": "The face names local.monolith_bucket for the monolith, but the canonical-schwab-ec2 root defines no such local; the firm-bucket grants use literal bucket names, as both roots already do.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-assets/monolith.tf@43bcfd4bc6a line 59: monolith_bucket = opal-data-assets is defined only in the opal-assets root",
+        "Grep of the worktree paths infra/aws/terraform/opal-assets and infra/aws/terraform/canonical-schwab-ec2 for module opal_name and opal-data-49financial or opal-data-cottonwood references: no module call; literal locals only (opal-assets advi_49f_floor.tf line 53, advi_stitch_landing.tf line 22)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-g-5 worker face, build step 1: 'Use the same local names for the monolith bucket (local.monolith_bucket) ... read how other roots reference opal-data-49financial and opal-data-cottonwood ... follow that, never retype a bucket where a reference exists.'",
+    "world_is": "local.monolith_bucket exists only in the opal-assets root, and canonical-schwab-ec2/monolith-iam.tf uses the literal opal-data-assets. No root reaches the firm buckets through a module or a data source. The new grants therefore use literal firm-bucket names, and data/canonical/schwab/tests/test_firm_prefix_grants.py pins each bucket against its infra/logic/registry/scopes.json row.",
+    "notes": "Not an alert. The box grant is in canonical-schwab-ec2 and the converter grant is in opal-assets, so one shared local would need a cross-root edit, which this order does not make."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T19:18:13Z",
+    "one_line": "Off-task, pre-existing: test_packaged_calendar_is_byte_copy (advi-49f dategate tests) fails at the worktree HEAD 41584d28e0e, because the packaged advi-49f-gold-dispatch/trading_calendar.py is not a byte copy of lib/trading_calendar.py. No file this order grants is involved; not fixed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/opal-assets/tests/test_advi_49f_gold_dispatch_dategate.py@41584d28e0e:107-109 asserts (_DIR / 'trading_calendar.py').read_bytes() == lib/trading_calendar.py read_bytes(); _DIR (line 25) = infra/aws/lambda/opal-assets/advi-49f-gold-dispatch",
+        "run at 41584d28e0e (python -m pytest on the two advi-49f test files): 1 failed, 10 passed; the AssertionError shows the packaged bytes name expected_last_trading_day(now) and the lib bytes name first_trading_day_on_or_after after a shared 1,639-character prefix"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The dategate test asserts the packaged calendar is a byte copy of lib/trading_calendar.py (test_packaged_calendar_is_byte_copy, lines 107-109).",
+    "world_is": "At 41584d28e0e the two bodies diverge after the shared docstring prefix: the packaged copy names expected_last_trading_day, lib/trading_calendar.py names first_trading_day_on_or_after. The copy-or-test drift is pre-existing and no commit of this order touches either file.",
+    "notes": "Seen while running the regression sweep of the converter family (BF-p-5). Owner for disposition: the seat that last changed lib/trading_calendar.py or the advi-49f packaging, to be named on disposition."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S12",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:44:20Z",
+    "one_line": "BF-h-5 cannot run in this worktree: its sparse checkout omits infra/aws/ and data/, so the named read paths (modules/opal_name, silver.tf, monolith-iam.tf) and the test directory are absent on disk though committed at HEAD.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wt-bf-4 HEAD 2b0918008fa; git config core.sparseCheckout = true; git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/missions/D8/NFRA/NFRA_SCHWABBF, org/modules/graph, org/ref, org/standards (no infra/aws, no data)",
+        "git ls-files -t infra/aws/terraform/modules/opal_name/main.tf and data/canonical/schwab/build_canonical_daily.py tag S (skip-worktree); git ls-tree HEAD shows infra/aws/terraform/modules/opal_name/main.tf committed; ls infra/ lists only README.md, launch_agents_powershell.ps1, logic",
+        "AC1 python -m pytest data/canonical/schwab/tests/test_fence_state_rows.py: 'ERROR: file or directory not found', rc=4; AC3 terraform -chdir=infra/aws/terraform/modules/opal_name test: 'chdir infra/aws/terraform/modules/opal_name: The system cannot find the path specified', rc=1; org/surprise_channel/schemas/investigation_item.schema.json not on disk (read by git show HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, Refusal clause and 'Dry-run at the base': the worktree carries the paths the order names (infra/logic/registry/exemptions.json, data/canonical/schwab/tests/, infra/aws/terraform/modules/opal_name/, infra/aws/terraform/opal-assets/silver.tf, infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf); a worktree that does not carry them is a BLOCKING row and a stop.",
+    "world_is": "The worktree is a sparse checkout whose cone omits infra/aws and data. The read-only identity and renderer files and the test directory are committed at HEAD but skip-worktree on disk, so AC1 and AC3 cannot run and clause (c) cannot be evaluated. Stopped without editing exemptions.json and without creating the test file.",
+    "notes": "Not reconstructed: the sparse set was not widened and nothing was checked out (no checkout, sparse-checkout add, or rebuild). Owner for disposition: the seat that cut wt-bf-4 (the lane gate) to widen the sparse set or re-cut the worktree. Coordinator amendment received mid-task (signoff_ref text, BOUNDS) is noted; it was not actioned because no row was written."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S13",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T19:44:20Z",
+    "one_line": "The order's numstat expectation (only added lines, about 36) cannot hold when rows are appended to non-empty JSON arrays: the preceding closing brace of each list gains a comma and shows as a deletion.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "infra/logic/registry/exemptions.json at HEAD 2b0918008fa: opal-data-49financial list ends with '      }' at line 223 and '    ],' at line 224; opal-data-cottonwood list ends with '      }' at line 326 and '    ],' at line 327",
+        "Inferred from JSON syntax (a comma must follow each non-final element); not measured, because no edit was made in this worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, 'Keep the file's own formatting': git diff --numstat for exemptions.json must show only added lines (about 36).",
+    "world_is": "Three appended rows of 8 lines each add about 24 lines, plus the two comma edits (2 added and 2 deleted), so numstat shows at least 2 deleted lines. The numstat criterion is not met as worded; the test's clause (d) is unaffected.",
+    "notes": "Form only. Owner for disposition: the issuer, to state whether a deleted comma line is acceptable."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~SB",
+    "surfaced_at": "2026-10-20T20:23:54Z",
+    "one_line": "The Schwab converter role carries the shared one_way_fan_in_fence, whose belt 1 denies every S3 mutation outside opal-data-assets, so the converter can never write the state tier in the firm buckets even with the identity grant (BF-g-5) and the fence rows (BF-h-5).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~SB (issuer) with 1.0.0_SA_CTO sign-off: a schwab-only variant of the fence whose belt 1 also excludes the 15 enumerated firm state resources (never-widen, NEVER #1); cell BF-j-6",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-assets/silver.tf:533-538 aws_iam_role_policy_attachment.silver_fence, for_each = local.silver_families (includes schwab), policy_arn = aws_iam_policy.one_way_fan_in_fence.arn",
+        "infra/aws/terraform/opal-assets/router_iam.tf:139-179 statement DenyAnyS3MutationOutsideMonolith, Effect Deny, Action s3:PutObject and eight other mutations, NotResource opal-data-assets and its keys; an explicit Deny wins over the Allow of silver_state_write_schwab_firm (silver.tf:714) and over the bucket-side exemption rows (exemptions.json, BF-h-5)",
+        "the converter's state writes (completion marker, conversion manifest, backfill status) for the five firm-form masters go to s3://opal-data-49financial and s3://opal-data-cottonwood (PRD v1.0 C-TIERS), both outside the monolith"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-g-5 and BF-h-5 (merged) and the CTO's signed fence pair (@4b0036c6cb): the converter role is admitted to write the firm buckets' state prefixes, and with the identity grant and the fence rows the write succeeds.",
+    "world_is": "The identity-side explicit Deny of the shared fan-in fence refuses the converter's PutObject on those buckets whatever the grants and bucket policies say. Read from the Terraform text; the live attachment census (aws iam list-entities-for-policy) is the release act R1's check. The 49F box role has no such Deny (iam.tf: only the bd, cot and inf planes).",
+    "notes": "Not an alert. Fix shape: a schwab-only policy copy whose belt 1 NotResource adds the 15 enumerated state resources, attached in place of the shared one for the schwab role only; the other five families keep the shared fence. The same fix serves the Cottonwood masters' converter state (2.0.0_SA_COO~SA's workstream)."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W17-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~17",
+    "surfaced_at": "2026-10-20T20:28:46Z",
+    "one_line": "The order asks to change an existing BOOTSTRAP test that pins a throw when aws.exe is missing, but no such test exists at base; the only aws.exe pin is a path token that the edit keeps.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/tests/test_alongside_box_scripts.py@5af57b99d0b:79-98 (test_bootstrap_writes_only_its_own_secret, test_bootstrap_password_never_printed, test_bootstrap_carried_49f_properties_and_markers): none asserts a throw; grep for throw, missing and aws.exe in the file at that commit finds no such test",
+        "infra/aws/ec2/alongside-schwab-si2/bootstrap.ps1@5af57b99d0b:21 carries the throw, so the code path exists while no test pins it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, Build step 3: the old BOOTSTRAP test that pins 'throws when aws.exe is missing' must be changed to pin the new behavior.",
+    "world_is": "No such test exists at 5af57b99d0b. Nothing in an existing test was changed. The three ensure_awscli tests were added as new tests; the pre-existing test that pins the aws.exe path token stays green because the path literal is kept.",
+    "notes": "Form only. Owner for disposition: the issuer, to state whether the order's wording of the old test is to be read as a count of new tests or as an error."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W17-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~17",
+    "surfaced_at": "2026-10-20T20:28:46Z",
+    "one_line": "The order's exact first-fetch command for a rebuilt box writes to C:\\schwab-sdd before bootstrap creates that directory, so the one-line command may fail on a box that has never run bootstrap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "infra/aws/ec2/alongside-schwab-si2/bootstrap.ps1@5af57b99d0b:37-43 (step 1 creates C:\\schwab-sdd and C:\\SchwabData) runs after the first fetch that the runbook command performs",
+        "Inferred from the order of operations; not measured, because the WORLD floor forbids running the command on a box"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, Build step 2: the exact one-line first-fetch command goes into RUNBOOK 'Rebuilding the box' and is the way a fresh box fetches bootstrap.ps1.",
+    "world_is": "The fetch target directory C:\\schwab-sdd is created only by bootstrap step 1, after the fetch. The runbook keeps the command verbatim and adds one sentence that the directory must exist first; no mkdir command was added. Whether Read-S3Object creates a missing directory is unmeasured.",
+    "notes": "Form only. Owner for disposition: the issuer, to decide whether the runbook carries a mkdir line or the command is run from a directory that exists."
   }
 ]
 ```

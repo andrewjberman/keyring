@@ -40,6 +40,16 @@ Not in this rectangle: the gateway side (`2.0.0_SA_COO~O` owns it; named to them
 - BF-g-5: `infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf`, `infra/aws/terraform/opal-assets/silver.tf`, `data/canonical/schwab/tests/test_firm_prefix_grants.py`.
 - **Overlaps with round 4:** `conversion_manifest.py`, `move_bronze_key_form.py` and its test, `silver.tf` and `test_firm_prefix_grants.py` were edited in round 4; round 4 merged before this issuance (cdce7d6d13, f6078a5d99, 16d4ae3ea0), so each round-5 cell starts from the merged code and no two workers edit one file.
 
+## AMENDMENT 1 (2026-10-20 ~19:2xZ, issuer 2.0.0_SA_COO~SB; surprise row `NFRA_SCHWABBF-W4-S9`): the fence cell `BF-h-5`
+
+Worker `~4` read the firm buckets' own policies at the cell: each carries `DenyForeignFirmPrincipals` (Deny `s3:*` to every principal outside the firm's fence patterns and the registry's exemption rows), and neither the box role (`quartz-si2-spike-role`) nor the converter role (`opal-assets-silver-schwab-role`) is in either. So the identity-side grants of `BF-g-5` alone leave every state write refused. The issuer rules inside its own decomposition: ONE cell is added. The precedent is the scoped exemption row (`opal-clientops-ews-role`, `schwab/49financial/state/ews_store/current/`).
+
+| cell | item | PRD rows | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `BF-h-5` | registry text: scoped exemption rows in `infra/logic/registry/exemptions.json` so the box role and the converter role pass the firm buckets' fence for the state prefixes only (text; nothing applied) | C-TIERS v1.0, C-ALONGSIDE (IAM shape) | FWD-1, FWD-6, FWD-8 | NOT-EVALUATED | laptop | WORLD (`infra/` floor; nothing applied) | worker | `BF-g-5` (merged) |
+
+Write set: `infra/logic/registry/exemptions.json`, `data/canonical/schwab/tests/test_fence_state_rows.py` (new). Chain: one (slot `~4`, re-seated). The apply is the CloudOps lane's act under `safe-apply` after the never-widen pair (COO half: `ledger/NEVER_WIDEN_BF5_STATE_FENCE_COO_HALF.md`; the CTO half is owed).
+
 ## Rule 24 record (the cell set is a schema)
 
 - **MECE over a declared domain.** Domain: the writers, movers and permissions of the `meta/` and `_ops/` trees of the in-scope masters (census 2026-10-20: writers = the converter family (completion marker, conversion manifest, backfill status), the puller (pull record, run record, last_run); mover = the move tool; permission = the box role and the converter role; readers outside this repo = the gateway (`family_depth.py`, `completion_prefixes`), `2.0.0_SA_COO~O`'s) = four cells plus the gateway. Remainder: none.
