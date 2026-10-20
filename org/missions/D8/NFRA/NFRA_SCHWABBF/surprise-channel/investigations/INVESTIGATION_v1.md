@@ -694,6 +694,48 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-e1 worker face, item 3: sdd-entitlements.ps1 does what sdd-harness.ps1 does for UserMasters.aspx, and the order says to read sdd-harness.ps1 whole (5.8 KB) first.",
     "world_is": "The entitlement script names DownloadUserMastersRequest and DownloadUserMastersResponse in the Schwab.SI.SI2Desktop.Contract.Download namespace; the request name comes from the order, the response name is a guess, and the master list is found by reflection. If the shape does not match, the script exits 9 and prints the response property names; it never reports a list it did not read.",
     "notes": "Not an alert and not a monitor. The issuer supplies the harness or confirms the names. The first live run of sdd-entitlements.ps1 (runbook step h) is the proof of shape."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T16:57:54Z",
+    "one_line": "The pre-existing registry-error arm of thread_trace's test suite traced master 99999999, which is outside the five masters, so the new C-SCOPE refusal answers it before the registry is read; the arm was rewritten, not kept as an ERROR arm.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/tests/test_thread_trace.py at worktree HEAD 998fe826317 (pre-edit): test_master_with_no_registered_firm_is_an_error traces master 99999999 and asserts rc 3 with an ERROR line",
+        "data/canonical/schwab/keyform/thread_trace.py main() after this order's edit: the IN_SCOPE refusal (TRACE-REFUSED, rc 3) sits before firm_of(), so the pre-edit arm would read TRACE-REFUSED and fail its ERROR assertion"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-t3 BOUNDS and build item 3: rework the test file by keeping the firm-form arms and replacing only the arms that trace 0833 or 0824; the order names no other arm and does not say what happens to the registry-error path.",
+    "world_is": "The one arm that exercised the registry-error path used 99999999, which is outside the five, so the refusal answers it first. The arm now asserts the refusal, and a new arm patches IN_SCOPE to an unregistered master to keep the registry-error ERROR path covered. No criterion of this order depends on the old arm.",
+    "notes": "Not an alert and not a monitor. Recorded so the round-3 analysis can see the test rewrite; the issuer may confirm it or name another shape."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S7",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T17:03:47Z",
+    "one_line": "The order says any master outside the five prints TRACE-REFUSED, but the registry's cottonwood masters list names z09, which is not eight digits, so the real tool prints ERROR: --master must be 8 digits (rc 3) for it, because the format check runs before the scope check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/scopes.json: the FIRM row key cottonwood lists masters z09, 08719286, 08134043, 08165601, 08480305 (read at worktree HEAD 998fe826317)",
+        "data/canonical/schwab/keyform/thread_trace.py main() at commit f76106a0c5: the _MASTER eight-digit check returns ERROR before the IN_SCOPE refusal; real run python data/canonical/schwab/keyform/thread_trace.py --master z09 --day 2026-10-16 --form any printed ERROR: --master must be 8 digits and rc=3"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-t3 build item 1: a trace of any master outside the five prints TRACE-REFUSED master=M out of scope and exits 3 before any S3 call.",
+    "world_is": "For z09 the tool exits 3 before any S3 call, as the order requires, but the printed line is the format ERROR, not TRACE-REFUSED. The order's acceptance does not probe z09, so no criterion grades the line. Code was not changed in this order.",
+    "notes": "Not an alert and not a monitor. The issuer decides whether the refusal should precede the format check (a one-line move) or whether z09 is out of the order's master family."
   }
 ]
 ```
