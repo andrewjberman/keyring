@@ -849,6 +849,24 @@ def process_files(files: list[str]) -> int:
                       "value -- escape it as \\\").", sys.stderr)
                 return 1
             checked += 1
+
+        elif os.path.basename(f).lower().startswith("buildspec") and f.lower().endswith((".yml", ".yaml")):
+            declared += 1
+            # AMGT_HARVST-D1-W183-S10: a CodeBuild buildspec used to fall through this loop unread
+            # ("checked 0 of 1 -- NOTHING WAS CHECKED"), and an unquoted colon-space list item in one
+            # failed the live build. A YAML load is the minimum the commit path can do at the write.
+            # NARROW except: a bug in this checker must not be reported as a fault in the file.
+            import yaml as _yaml
+            try:
+                with open(f, encoding="utf-8") as _fh:
+                    _yaml.safe_load(_fh)
+            except (_yaml.YAMLError, UnicodeDecodeError, OSError) as e:
+                _echo(f"BLOCKED: {f} is not valid YAML -- {type(e).__name__}: {e}", sys.stderr)
+                _echo("         A malformed buildspec fails the CodeBuild run, not the commit. "
+                      "Common cause: an unquoted ': ' inside a list item -- quote the item.",
+                      sys.stderr)
+                return 1
+            checked += 1
         else:
             continue
 
@@ -897,7 +915,7 @@ def process_files(files: list[str]) -> int:
         _echo(f"WARN: commit-gate checked 0 of {len(files)} file(s) -- NOTHING WAS CHECKED.",
               sys.stdout)
         _echo("      This line is NOT evidence of a clean gate. This gate reads only "
-              ".py / .sh / .tf / org/projects/*.json; every other suffix falls through "
+              ".py / .sh / .tf / org/projects/*.json / buildspec*.yml; every other suffix falls through "
               "unexamined.", sys.stdout)
         _echo("      Do NOT cite it as validation for a frontend artifact -- use the "
               "language-appropriate instrument (tsc -b, eslint, a read render).", sys.stdout)
