@@ -27022,6 +27022,35 @@
 
 ## IRPT_ANLREQ-D2-W312-S2 -- the NOT_SHOWN disclosure the cell names is defined nowhere in the portal; the report face moves a disclosure whose text carries the word NOT_SHOWN to the end on that unverified marker
 
+## IRPT_ANLREQ-D2-W310-S1 -- the naming gate printed a NAMING ERROR for a missing function-map folder during two commits; the commits still landed, because the sparse worktree does not carry that folder
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W312-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
+    "surfaced_at": "2026-10-19T22:35:31Z",
+    "one_line": "The cell asks that a NOT_SHOWN disclosure print last; no portal type, adapter or fixture names one, so the report face takes the word NOT_SHOWN in a disclosure's text as the marker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-418 cell change item 2 and test (5): in report mode the disclosures print once each in report order, and a NOT_SHOWN disclosure when present is the last one.",
+    "world_is": "adapt.ts maps wire disclosures[].text to a plain string list (lines 1077 and 1104). No portal file defines a NOT_SHOWN disclosure; the token appears only in SecurityAnalysis ModelTab, for a different line. reportDisclosureOrder() prints the texts without the token in report order, then the texts with it. The producer's exact disclosure wording was not read (no live call).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts@4f9f2f633dc0 lines 1077 and 1104: disclosures: wire.disclosures.map((disclosure) => disclosure.text)",
+        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx@c34d3ea5: NOT_SHOWN_TOKEN and reportDisclosureOrder",
+        "portal/src/pages/InvestorReporting/__tests__/fwd8/native-sections-report-mode.test.tsx@c34d3ea5 test (5): the NOT_SHOWN fixture disclosure sits second in wire order and must print last"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. The marker is the one assumption: if the producer words the line differently, the report face would not move it. The issuer may name the marker in the contract."
+  }
+]
+```
+
 ## IRPT_ANLREQ-D2-W312-S3 -- three report-face choices the cell does not state: a vendor section counts as a figure card; the element trace inside Technical details repeats cards only; the default face is kept as an early return
 
 ```json
@@ -27074,6 +27103,34 @@
 ]
 ```
 
+
+## IRPT_ANLREQ-D2-W310-S2 -- the restored Keep path (AR-y-354 words) is the decision tree No press (AR-y-363): the kept line changes from NO_CHOICE_LINE to keptLine for that press
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W312-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
+    "surfaced_at": "2026-10-19T22:53:17Z",
+    "one_line": "bun test src/pages/InvestorReporting measures 69 failures at the base (excluding the four new FWD-8 tests) and 68 on the candidate, not the 17 the cell states; IVE17-AC2 fails only in the base run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-418 What to do (1): the rest of src/pages/InvestorReporting has 17 known failures at the base that are NOT yours.",
+    "world_is": "Folder run at the portal base 4f9f2f633dc0 with the base NativeSections swapped in: 1191 pass, 73 fail across 423 files (1289 tests). Folder run on the candidate c34d3ea5: 1196 pass, 68 fail, same files. The base-only set is the four new FWD-8 tests (no props at base) and IVE17-AC2 (a 35 s typecheck-style test that fails in the base run only). The candidate-only set is empty. The failing names are contract pins, the census, producer fixtures, route tables and a sparse-worktree gap; none imports NativeSections. The count is 25 tests short of the total on both runs (neither pass nor fail).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worker-local, not committed: C:/dev/wk-irpt-anlreq-312/.scratch/ir_folder_run.txt (candidate, 1196 pass, 68 fail) and .scratch/ir_folder_base.txt (base-swapped, 1191 pass, 73 fail); name lists .scratch/ir_fail_names_cand.txt and .scratch/ir_fail_names_base.txt",
+        "portal base 4f9f2f633dc0 (NativeSections.tsx swapped in from git show of that commit, then restored by sha256 match)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. Not chased: the failures sit outside this order's grant. The 17 may count failing files, not tests, or a different sparse set; the issuer may re-measure in a full checkout."
+  }
+]
+```
 
 ## IRPT_ANLREQ-D2-W311-S1 -- the sparse worktree does not carry data/firm_registry.json, so the ordered pytest run errors at fixture setup in 25 of 32 tests until IRPT_FIRM_REGISTRY points at the base checkout's byte-identical copy
 
@@ -27130,63 +27187,6 @@
   "world_is": "The object irpt/49financial/state/original_holdings/ART-0b6d4e6dbd0d5c28ca10a4b0bc38f486127a0d0fa54efc62f65a9eb6b8eebb05/8bfd3093b8ba004b234353359d93925f4e3dd197c9a05ccab826de5e63274215.csv remains (one version) after the run of 2026-10-19T23:10Z; its delete is AccessDenied for the CloudOps principal and no application path deletes it (W5 NONE FOUND). Together with the object of S214 the prefix holds two synthetic leftovers; no index row points at either. No client data.",
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
-```
-
-## IRPT_ANLREQ-D2-W310-S1 -- the naming gate printed a NAMING ERROR for a missing function-map folder during two commits; the commits still landed, because the sparse worktree does not carry that folder
-
-```json
-[
-  {
-    "id": "IRPT_ANLREQ-D2-W312-S2",
-    "project": "IRPT_ANLREQ",
-    "fabric": "dell2",
-    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
-    "surfaced_at": "2026-10-19T22:35:31Z",
-    "one_line": "The cell asks that a NOT_SHOWN disclosure print last; no portal type, adapter or fixture names one, so the report face takes the word NOT_SHOWN in a disclosure's text as the marker.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "spec_asserts": "TO-AR-y-418 cell change item 2 and test (5): in report mode the disclosures print once each in report order, and a NOT_SHOWN disclosure when present is the last one.",
-    "world_is": "adapt.ts maps wire disclosures[].text to a plain string list (lines 1077 and 1104). No portal file defines a NOT_SHOWN disclosure; the token appears only in SecurityAnalysis ModelTab, for a different line. reportDisclosureOrder() prints the texts without the token in report order, then the texts with it. The producer's exact disclosure wording was not read (no live call).",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "portal/src/pages/InvestorReporting/contracts/adapt.ts@4f9f2f633dc0 lines 1077 and 1104: disclosures: wire.disclosures.map((disclosure) => disclosure.text)",
-        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx@c34d3ea5: NOT_SHOWN_TOKEN and reportDisclosureOrder",
-        "portal/src/pages/InvestorReporting/__tests__/fwd8/native-sections-report-mode.test.tsx@c34d3ea5 test (5): the NOT_SHOWN fixture disclosure sits second in wire order and must print last"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "notes": "Observation only. The marker is the one assumption: if the producer words the line differently, the report face would not move it. The issuer may name the marker in the contract."
-  }
-]
-```
-
-## IRPT_ANLREQ-D2-W310-S2 -- the restored Keep path (AR-y-354 words) is the decision tree No press (AR-y-363): the kept line changes from NO_CHOICE_LINE to keptLine for that press
-
-```json
-[
-  {
-    "id": "IRPT_ANLREQ-D2-W312-S4",
-    "project": "IRPT_ANLREQ",
-    "fabric": "dell2",
-    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
-    "surfaced_at": "2026-10-19T22:53:17Z",
-    "one_line": "bun test src/pages/InvestorReporting measures 69 failures at the base (excluding the four new FWD-8 tests) and 68 on the candidate, not the 17 the cell states; IVE17-AC2 fails only in the base run.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "spec_asserts": "TO-AR-y-418 What to do (1): the rest of src/pages/InvestorReporting has 17 known failures at the base that are NOT yours.",
-    "world_is": "Folder run at the portal base 4f9f2f633dc0 with the base NativeSections swapped in: 1191 pass, 73 fail across 423 files (1289 tests). Folder run on the candidate c34d3ea5: 1196 pass, 68 fail, same files. The base-only set is the four new FWD-8 tests (no props at base) and IVE17-AC2 (a 35 s typecheck-style test that fails in the base run only). The candidate-only set is empty. The failing names are contract pins, the census, producer fixtures, route tables and a sparse-worktree gap; none imports NativeSections. The count is 25 tests short of the total on both runs (neither pass nor fail).",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "worker-local, not committed: C:/dev/wk-irpt-anlreq-312/.scratch/ir_folder_run.txt (candidate, 1196 pass, 68 fail) and .scratch/ir_folder_base.txt (base-swapped, 1191 pass, 73 fail); name lists .scratch/ir_fail_names_cand.txt and .scratch/ir_fail_names_base.txt",
-        "portal base 4f9f2f633dc0 (NativeSections.tsx swapped in from git show of that commit, then restored by sha256 match)"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "notes": "Observation only. Not chased: the failures sit outside this order's grant. The 17 may count failing files, not tests, or a different sparse set; the issuer may re-measure in a full checkout."
-  }
-]
 ```
 
 ## IRPT_ANLREQ-D2-W309-S1 -- the worktree is a sparse checkout with no infra/aws/terraform/ and no data/, so the _authz battery does not collect and the 365-passed baseline cannot be printed in this tree
@@ -27393,4 +27393,90 @@
   "disposition": "UNDER_INVESTIGATION",
   "notes": "The reordering is the worker's reading of 'where the packager exists'. The CTO or issuer may prefer a post-construction attribute instead; no action taken beyond the change in the worktree."
 }
+```
+
+## IRPT_ANLREQ-D2-W314-S1 -- the old served.py sha256 is still named in six other function-map files after the irpt-ycharts-generate pin edit (reported, not edited)
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "The old served.py sha256 30c0eb88ec38 is still named in six other function-map files after the irpt-ycharts-generate pin edit; the order says report, not edit, so they are reported here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-426 step 2: change the pin and the sha256 of the served.py staged_from entry in infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json and nothing else; print git grep for the old sha256 before and after; any OTHER place naming the old sha256 is reported in a row and not edited.",
+    "world_is": "git grep -n 30c0eb88ec38 -- infra/aws/lambda/ci matches seven lines at 3765e44f3bf: irpt-directory-search.json:40, irpt-export-render.json:126, irpt-holdings.json:106, irpt-narrative.json:79, irpt-performance-adapter.json:411, irpt-status.json:119 and irpt-ycharts-generate.json:177. At bd1894d789f (the step-2 commit) the six other files still carry 30c0eb88ec38, and HEAD:infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json:177 carries 600a934c4b34. The packaged names of the six other entries were not read; the matches are the sha256 field of entries.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git grep -n 30c0eb88ec38 3765e44f3bf -- infra/aws/lambda/ci (seven lines)",
+        "git grep -n 30c0eb88ec38 bd1894d789f -- infra/aws/lambda/ci (six lines)",
+        "git grep -n 600a934c4b34 HEAD -- infra/aws/lambda/ci (one line, irpt-ycharts-generate.json:177)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reported only; this worker edited none of the six. Their own releases move their own pins. The drift is the one the cell preflight names for the other functions that stage served.py."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W314-S2 -- AR426-y-AC3 names HEAD, so its verdict moves with every later commit
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "AR426-y-AC3 is written as map HEAD, so its verdict is a function of the commit HEAD names: it reads R37-MAP-OK at the step-2 commit and R37-MAP-BAD one commit later.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-426 AC3: python -I .../r37/check_r37.py map HEAD, expect ^R37-MAP-OK numstat=2/2 pin=720e125d31469ed60b6e698812c7be731bd6d8e8 sha256=600a934c4b34$.",
+    "world_is": "The map mode diffs <commit>~1 against <commit>. Run at bd1894d789f (the step-2 commit) map HEAD prints R37-MAP-OK numstat=2/2 pin=720e125d31469ed60b6e698812c7be731bd6d8e8 sha256=600a934c4b34, rc=0 (saved in MAP.txt). Run at 7f701cf5e6c, the outputs commit, the same invocation prints 'R37-MAP-BAD numstat lists 4 files, want exactly 1', rc=1. The explicit form map bd1894d789f5196bbc48dc00b081d10c9cc03610 prints the OK line at the current HEAD (saved in MAP_STEP2_EXPLICIT.txt).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r37/MAP.txt at 7f701cf5e6c (map HEAD run at bd1894d789f, rc=0)",
+        "worker run at HEAD 7f701cf5e6c: python -I check_r37.py map HEAD, rc=1, R37-MAP-BAD numstat lists 4 files, want exactly 1",
+        "r37/MAP_STEP2_EXPLICIT.txt (map with the explicit step-2 sha, rc=0)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The proof instance records AC3 at the step-2 commit and the explicit-sha run beside it. Whether the criterion should name the step-2 sha rather than HEAD is for the issuer to decide; the worker does not edit the criterion."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W314-S3 -- the W310-S2 row sits outside any fenced json array
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "The IRPT_ANLREQ-D2-W310-S2 object in INVESTIGATION_v1.md is not inside any fenced json array: it follows the W309-S4 array's closing fence with no opening bracket, brace or json fence before it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Investigation rows are each one object inside a fenced json array (the array's opening and closing bracket lines), and a new row is appended as a new block (surprise-channel append convention, docs/doctrine/THE_SURPRISE_CHANNEL.md).",
+    "world_is": "At 3765e44f3bf the W309-S4 array closes at line 27292 and its fence sits at line 27293. Lines 27294 to 27314 are the W310-S2 object's fields with no opening bracket, brace or fence before them; line 27315 is a closing bracket and line 27316 a bare fence. A parse of every json-tagged fenced block in the file gives 943 blocks and 0 failures, and none of them contains the W310-S2 object.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INVESTIGATION_v1.md @3765e44f3bf lines 27292-27316 (read at the worker worktree)",
+        "worker parse of every json-tagged fenced block in INVESTIGATION_v1.md at 3765e44f3bf: 943 blocks, 0 failing; the W310-S2 id lies outside every block"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reported only. The row was not edited (the rule is never to edit an existing row). Appended rows of this worker sit in their own fenced blocks after it."
+}
+]
 ```
