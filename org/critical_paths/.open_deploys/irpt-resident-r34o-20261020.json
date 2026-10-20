@@ -1,0 +1,56 @@
+{
+  "slug": "irpt-resident-r34o-20261020",
+  "title": "IRPT_ANLREQ TO-APPLY-R34O: release r34o of the resident host (FWD-10 comparison, audit wiring, Overview price pages), root /opt/irpt-resident/0485393f3a-r34o, three S3 objects, V2 in the service environment",
+  "author": "0.7.0_AE_CloudOps~IB2",
+  "status": "OPEN",
+  "opened_at": "2026-10-20T23:07:38.399180+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261020T2307Z_irpt-resident-r34o-20261020_deploy_completion.md",
+  "legs": [
+    {
+      "id": "P1",
+      "kind": "verify",
+      "target": "pre-read on the host: running root r34n, r34o root absent, queue 0 0",
+      "proof_required": "P1 STOP-READ-0 PASS",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "D1",
+      "kind": "s3-prefix",
+      "target": "three r34o objects uploaded under ec2/investor-reporting-ycharts/resident/ and read back equal",
+      "proof_required": "three VersionIds",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "D2",
+      "kind": "activation",
+      "target": "signed install on the resident host as root, running root r34o",
+      "proof_required": "install rc 0, running root r34o",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "V1",
+      "kind": "verify",
+      "target": "after-reads: members, sums, census, bindings, imports, pool, queue",
+      "proof_required": "V1 lines",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "V2",
+      "kind": "verify",
+      "target": "V2 script inside the service environment",
+      "proof_required": "V2S OK SPY KEPT and ZQXWVK NOT_KEPT",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261020T230738Z OPENED by 0.7.0_AE_CloudOps~IB2 with 5 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}
