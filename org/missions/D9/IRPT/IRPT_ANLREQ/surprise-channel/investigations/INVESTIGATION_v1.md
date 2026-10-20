@@ -28021,3 +28021,90 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W319-S1 -- AR441-y-AC3 expects sha256=e76593c79519, but the 12-character prefix of the pinned sha256 is e76593c7951a
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W319-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~319",
+    "surfaced_at": "2026-10-20T05:23:53Z",
+    "one_line": "AR441-y-AC3 and cell step 6 name the map output sha256=e76593c79519; the ticket_confirmation.py sha256 that the cell itself pins is e76593c7951a2949a42ba78dba85aa45a8eaa4a5633fe58f0e636291b2c5dc6d, whose 12-character prefix is e76593c7951a. The twelfth character is 9 in the expectation and a in the value.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-441 ACCEPTANCE AR441-y-AC3: python -I .../0.9.0_WK_IRPT_ANLREQ~319/r59/check_r37.py map, expect ^R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c79519$. Cell step 6 specifies the same printed line.",
+    "world_is": "The step-2 commit 3fac627b038f1a3e2e453bb7ca6360b08adf879c carries the ticket_confirmation.py entry with pin 752e87d46b73b8d92dc638a1040a17ad359dcfd8 and sha256 e76593c7951a2949a42ba78dba85aa45a8eaa4a5633fe58f0e636291b2c5dc6d (the cell's own step-1 sha256 print). The checker, run as specified, prints R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a (rc=0, saved as r59/MAP.txt). The expectation string does not match that line, so AC3 is FAIL by its literal expect. The worker did not edit the expectation and did not print a value other than the one the pinned sha256 yields.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 752e87d46b73b8d92dc638a1040a17ad359dcfd8:infra/aws/lambda/investor-reporting/ycharts/generate/ticket_confirmation.py | sha256sum -> e76593c7951a2949a42ba78dba85aa45a8eaa4a5633fe58f0e636291b2c5dc6d",
+        "python -I -c on that sha256 string: s[:12] = e76593c7951a; the expectation e76593c79519 compares False",
+        "r59/MAP.txt at commit 3fac627b038 (the map mode run, rc=0): R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The order is left open: AR441-y-AC3 cannot read PASS by its literal expectation. The correction (the expectation or the printed width) belongs to the issuer, not the worker. Criteria AC1 and AC2 are unaffected: AC1 prints R37V2-DIFF-OK moved=2 added=0 removed=0 same=105 movers=served.py,ticket_confirmation.py and AC2 prints the identity line exactly."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W319-S2 -- the worktree's sparse checkout omits org/surprise_channel, so the investigation schema is readable only from HEAD
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W319-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~319",
+    "surfaced_at": "2026-10-20T05:23:53Z",
+    "one_line": "The worker face names the investigation row schema at org/surprise_channel/schemas/investigation_item.schema.json. In worktree C:/dev/wk-irpt-anlreq-319 that path does not exist on disk, although HEAD tracks it; the sparse-checkout cone (.tools, data, docs, infra/aws/lambda/ci, infra/aws/lambda/investor-reporting, ...) omits org/surprise_channel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Worker face, surprise rule: a row conforms to org/surprise_channel/schemas/investigation_item.schema.json, and the investigation file is the one named by the order.",
+    "world_is": "The schema is absent from the worktree and was read with git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json. The row shape in this file follows the existing IRPT_ANLREQ rows (fenced json array under a markdown heading, id, project, fabric, surfaced_by, surfaced_at, one_line, class, hazard_standing, spec_asserts, world_is, grounding, disposition, notes).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls of org/surprise_channel/ in the worktree: No such file or directory",
+        "git ls-files org/surprise_channel lists 43 tracked paths, including schemas/investigation_item.schema.json",
+        "git sparse-checkout list: .tools, data, docs, infra/aws/lambda/ci, infra/aws/lambda/investor-reporting, ..."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No gate result depends on this row. The row gate at commit reads the investigation file; its schema read is the gate's own concern."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W319-S3 -- IRPT_ANLREQ-D2-W319-S1 is resolved: the issuer corrected the AR441-y-AC3 expectation in amend 2fa1a0957e4
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W319-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~319",
+    "surfaced_at": "2026-10-20T05:39:50Z",
+    "one_line": "Resolution of IRPT_ANLREQ-D2-W319-S1 (not an edit of that row): the AR441-y-AC3 expectation was sha256=e76593c79519, a typo; the issuer amended it to sha256=e76593c7951a in commit 2fa1a0957e4. The map mode now prints R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a, which matches the amended expectation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-441 ACCEPTANCE AR441-y-AC3 as amended by 2fa1a0957e4: expect ^R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a$.",
+    "world_is": "The map mode, run at HEAD 2fa1a0957e4 with python -I r59/check_r37.py map, prints R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a (rc=0). S1 read FAIL only against the superseded expectation e76593c79519.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log of the order file: 2fa1a0957e4 amend(IRPT_ANLREQ TO-AR-y-441, 2.0.0_SA_COO~Y2): criterion AR441-y-AC3 expected sha256=e76593c7951a",
+        "the order's AR441-y-AC3 expect line now reads sha256=e76593c7951a$",
+        "python -I r59/check_r37.py map re-run in the worktree: R37V2-MAP-OK numstat=2/2 pin=752e87d46b73 sha256=e76593c7951a, rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Resolves IRPT_ANLREQ-D2-W319-S1 by this appended row; the S1 row itself is not edited. The proof instance's AC3 row now reads PASS against the amended expectation."
+}
+]
+```
