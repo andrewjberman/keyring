@@ -1371,6 +1371,52 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "Worker face, ACCEPTANCE AC2: the control runs the Terraform-text tests of data/canonical/schwab/tests/test_firm_prefix_grants.py, '23 passed at the base, including the terraform fmt arm' (expect ^[0-9]+ passed). BOUNDS Refusal clause: a path the worker must read that is missing on disk is a surprise row and a stop on that criterion; nothing is widened.",
     "world_is": "The worktree sparse cone omits infra/aws/terraform/canonical-schwab-ec2, which the control file reads. The file exists at HEAD and is absent on disk here. 8 of the 23 control tests fail on that absence alone, identically before and after the silver.tf edit. The silver.tf edit itself passes terraform fmt -check. AC2 is recorded FAIL; the sparse set was not changed and the test was not weakened.",
     "notes": "Not reconstructed or widened: no sparse-checkout add, checkout or re-cut. AC1 (5 passed) is unaffected because it reads only silver.tf, BUILD_MANIFEST.json and git. Owner for disposition: the seat that cut wt-bf-1 (the lane gate) to widen the sparse set or re-cut the worktree, or the issuer 2.0.0_SA_COO~SB to decide whether the control belongs in this order's grant."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T22:26:24Z",
+    "one_line": "TO-AL-r4 stopped after the second failed run: the TigerVNC service starts but its console worker spins at full CPU and opens no socket on a fresh start; the box was restored (service, files, settings removed).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r4/install_invocation.json (run 2) and the run 1 output: the script's own checks 'listener is 127.0.0.1:5900 only' and 'RFB handshake' ERROR with 'nothing listens on 5900' and 'actively refused'; service TigerVNC Running, worker 'winvnc4.exe -noconsole -service_run' in session 1 (the console) alive",
+        "r4/diag1_invocation.json and r4/diag2_invocation.json: no socket owned by either winvnc4 process in netstat or Get-NetTCPConnection; the worker's CPU time grows at one core (240 s by 22:06, 342 s by 22:08); registry values LocalHost(DWord), SecurityTypes(String), Password(Binary) present",
+        "r4/watch_invocation.json: a read-only 8-minute watch of a fresh worker (start 22:11:47): NO LISTENER by 22:23:05, cpu 676 s",
+        "r4/experiment_invocation.json: ONE restart (Stop-Service, which waited ~30 s and left the old worker alive, then Start-Service) with the settings intact DID listen: listeners on ::1 and 127.0.0.1 only (so the registry key HKLM:\\SOFTWARE\\TigerVNC\\WinVNC4, LocalHost=1 and SecurityTypes=VncAuth are read by the server); the same with the key removed listened on :: and 0.0.0.0 (program defaults, which is why settings matter)",
+        "r4/restore_invocation.json: winvnc4 -unregister exit 0, unins000 /VERYSILENT exit 0, registry key and three files removed; service present False, install dir absent, 0 processes, nothing on 5900, quser unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r4 step 5 and design 2: the installed service listens on 127.0.0.1:5900 only after configuration, and install-tigervnc.ps1 passes on the box ('every line OK:'); after a second failure stop, uninstall what was installed and report.",
+    "world_is": "Three fresh starts of the service-mode worker (the first after install, and two after a complete stop with the old worker killed) spun at full CPU and opened no socket for 30 s to 11+ minutes. The only start that listened was a restart issued while the previous, still-spinning worker was alive. The cause is not established. Not established: whether the worker needs a second worker or a service stop/start sequence, a desktop event in the console session, or something else. Settings location and effect ARE established (see the experiment). Unmeasured and possible next routes for the issuer: run the server in user mode as an Administrator logon task in the console session instead of service mode; or a start sequence that reproduces the one that listened; or TLS security types.",
+    "notes": "The secret schwab/alongside/vnc-credentials now holds two versions (AWSCURRENT and AWSPREVIOUS) written by the script for a server that no longer exists; the values were never read and cannot be deleted by this order. The installer and install-tigervnc.ps1 remain in s3://opal-data-assets/code/alongside-schwab-si2/ (deleting them waits for confirmation). The draft script is committed on branch wk-al-r4-cloudops, not merged."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T22:26:24Z",
+    "one_line": "TO-AL-r3 step 4 asks that terraform show list the new policy's statement changes, but the plan prints the whole new policy as known after apply once it embeds the new secret's ARN, so that clause cannot be read from any plan of this root.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r3/plan.txt line ~158: the aws_iam_role_policy.alongside_inline change prints the old document removed and '-> (known after apply)'; terraform show -json has no after.policy",
+        "The issuer's read-only plan PLAN_READONLY_20261020_pina51bd5cad5f_ROLE_AND_VNC_SECRET.txt line 158 has the same shape",
+        "r3/step4_after_policy_from_source.txt: the statement set read from iam.tf at the pin, then r3/after.txt: the live policy read back after the apply equals it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r3 step 4: terraform show of the plan shows ONLY the statements removed and added as listed.",
+    "world_is": "The plan cannot show the new statements while the policy embeds an unknown ARN. The act used the source file at the pin as the substitute oracle before the apply and the live policy as the check after it; both agree with the order's list. An order of this shape should ask for the source read and the post-apply read, not a plan read.",
+    "notes": "Form only. The apply was Branch A on every other clause."
   }
 ]
 ```
