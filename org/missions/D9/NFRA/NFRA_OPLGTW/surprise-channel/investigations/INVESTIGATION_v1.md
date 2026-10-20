@@ -31406,3 +31406,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Recorded, not repaired: the literal values are the issuer's specification and the contract is the spec's own carrier. The question for the issuer or the CTO is whether these names must come from lib/opal_naming.py before LGIC_ENFORCE is switched on, since the next commit touching the contract would then be refused."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T21:56:10Z",
+  "id": "NFRA_OPLGTW-Z-S440",
+  "one_line": "Issuer rulings on worker ~178's two rows (OG-sk-2): W178-S1 (sparse-cone gap, ruled) and W178-S2 (naming-gate WARN on the firm_form literals: accepted, carried to the release's pre-flight)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W178-S1",
+    "NFRA_OPLGTW-Z-W178-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W178-S1: test_mx_s15_dataset_registered (tests/test_schwab_transactions.py) reads infra/aws/terraform/opal-gateway/schwab_reader_iam.tf, a folder the issuer's provisioning omitted from the worker's sparse cone, so AC2 read red in the worktree for a tree reason. The issuer added the folder to the cone and re-ran sk2.AC2 there (8 new, 29 neighbours PASS), then re-ran sk2.AC1, AC2, AC3 on the merged tree bed56db150e: PASS, PASS, PASS; the proof validates. RULED: the defect was the issuer's provisioning list (the neighbour census ran in the main tree); the next provision for any gateway cell adds infra/aws/terraform/opal-gateway.",
+      "W178-S2: the commit-time naming gate printed eight REFUSE-in-WARN verdicts on the literal keys of the contract's firm_form block, and its live read failed so the reason is partly unverified (worker). The commit and the drain landed. RULED: accepted for this cell; NOT closed: the naming gate is mechanically enforcing (CLAUDE.md rule 30), so the release's pre-flight (the issuer, before the ask) re-reads the gate on the merged tree and, if it refuses, the firm_form literals are re-pointed to builder output (a registry row) before the ask is signed."
+    ]
+  },
+  "spec_asserts": "A worker's row is a finding the issuer rules inside its own decomposition (obligation 7).",
+  "world_is": "OG-sk-2 is merged and complete; the naming-gate re-read is an owed act of the issuer before the R3c ask.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S1 is ruled and fixed in the process; S2 is accepted for the cell and the follow-up is named with its owner (the issuer, before the ask)."
+}
+```
