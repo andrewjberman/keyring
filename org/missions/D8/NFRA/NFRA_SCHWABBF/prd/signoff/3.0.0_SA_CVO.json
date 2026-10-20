@@ -1,13 +1,13 @@
 {
   "prd": "NFRA_SCHWABBF_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "6c3ded061f113ad3f862877a26e580fc330085c3",
+  "prd_version": "v0.4",
+  "prd_pin": "ab4d21cec6e61d35034a49c9ef930ce63700fa98",
   "half": "ratified-text",
-  "half_hash": "7449c7f1e75ca396ca8c03eac97f50b4e087163b0cec39007e46748f91c98a10",
-  "endpoint_hash": "a27fe4d3ee6c38d484d13b76a87529761437ce29b8577113683b63181a08cfab",
+  "half_hash": "62d3dd06557459b518c3c343f6b3bd77ed2fd0fb2f37615cb3316e5896051df6",
+  "endpoint_hash": "0424d44417d9779dcc588037feb99974d1f58c1deff54c62015e8d813f5721f7",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.2_RATIFIED_TEXT_20261020.md@c495f17652",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.3_RATIFIED_TEXT_20261020.md@da104ef52e",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-20T14:33:38Z",
-  "reason": "FWD-8 is not ratified: Andrew has not confirmed its DONE WHEN (listed OPEN AT ANDREW; no open call exists)"
+  "signed_at": "2026-10-20T14:40:06Z",
+  "reason": "CONTRACTS contradict: C-KEYFORM moves bronze to schwab/<firm>/ while C-NAMES and C-RECORD keep schwab/<master>/; C-SCOPE still excludes the Cottonwood masters FWD-8 pulls"
 }
