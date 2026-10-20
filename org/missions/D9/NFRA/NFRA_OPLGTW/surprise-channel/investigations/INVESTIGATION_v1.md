@@ -30658,3 +30658,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W170-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~170",
+    "surfaced_at": "2026-10-20T09:52:07Z",
+    "one_line": "The OG-rt-1 order gives the position read of a master-wide account reference the caller's already-authorized check (as _asset_holdings does), but its named signature _master_accounts(principal, master, date, operation, cache) has no check argument, so the helper builds its own dim_position policy check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rt-1.round-47-a-master-wide-schwab-scope-resolved-at-read-time-with-no-stored-account-list.md@6f2ddfd58e0 section 1 DO item 3(c): the helper signature without a check, and 'reuse _entries, _fetch and the engine exactly as _asset_holdings reads the position snapshot'.",
+        "CODE infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py@6f2ddfd58e0 _asset_holdings (about line 318): the position read takes the check of the dim_asset request already in flight, because a partial-account dim_asset grant is not a dim_position grant.",
+        "CODE worktree infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py, method _master_accounts (uncommitted at this write): check = self._policy_check(principal, {operation, master, dataset: dim_position}) then self._fetch(pos_entries, check)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The position read of a master-wide reference resolution reuses the caller's already-authorized check, and the helper takes (principal, master, date, operation, cache).",
+    "world_is": "The helper has no caller check, so it authorizes dim_position itself. A master-wide grant whose datasets omit dim_position therefore denies an account_ref filter (scope_denied or entitlement_denied) where the caller's dim_asset or dim_balance check would have passed. Explicit-master grants are unchanged. Not exercised by the OG-rt-1 tests, whose grants carry dim_position.",
+    "notes": "INERT -- nothing armed and no grant written. Fail-closed, so no account is exposed; the cost is a refusal on a master-wide grant that lacks dim_position. A remedy is for the issuer to choose: pass the caller's check into _master_accounts, or keep the self-built check and state that a master-wide grant must carry dim_position. Not decided by this worker."
+  }
+]
+```
