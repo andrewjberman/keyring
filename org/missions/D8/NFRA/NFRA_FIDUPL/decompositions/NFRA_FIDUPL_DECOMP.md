@@ -83,3 +83,13 @@ Maximal paths: `s-1 > s-2 > s-3 > s-7 > x-1`, `s-4 > s-7 > x-1`, `s-5 > s-7 > x-
 2. **The run record sits in the bronze tier** as table `_runs` because the builder admits no `meta` or `_ops` tier for this scope (measured). A reader of the bronze tree sees a `_runs` table beside the six. The CTO confirms or names another home.
 3. **Rule 34 and FU-s-7** (section 1, Seat).
 4. **FU-s-6 builds the start-and-stop as an SSM Automation document** (no Lambda). That is my choice from the `cot-exporter` precedent; the worker files a row if the document cannot express the lead time before the window.
+
+## 8. ADDENDUM 2026-10-20 (CTO ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_NFRA_FIDUPL_AUTOSHUTDOWN_OFF_20261020.md` @630242a029, msg 8621; Andrew-direct `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261020_125xZ_FIDELITY_SECRET_SET_AND_AUTOSHUTDOWN_OFF.md`)
+
+The CTO rules one order now, not a round-2 item. The decomposition is otherwise frozen; this is the only cell added to the round.
+
+| cell | what it builds (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FU-s-9** | Autoshutdown off for the Fidelity box: one edit of the Terraform root adds the tag `AutoShutdown=disabled` to the instance and removes the `stopInstance` step from `automation.tf` (with the `onFailure` references to it), applied by the CloudOps seat under `safe-apply` AFTER FU-x-1's automation run has ended | `infra/aws/terraform/canonical-fidelity-ec2/`; `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF, FWD-7 | WORLD |
+
+Edge: `FU-x-1 -> FU-s-9` (the apply waits until no automation execution is in progress). Executor: `0.7.0_AE_CloudOps~NFRA1`.
