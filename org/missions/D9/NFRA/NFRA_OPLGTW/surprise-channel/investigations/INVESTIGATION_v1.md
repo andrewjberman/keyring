@@ -31138,3 +31138,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Filed by the worker for the issuer. Left ARMED: the red neighbour persists in the suite until the issuer disarms it by ruling or by a test-only edit. No product file or other test was changed beyond the commit b843804461 cell set."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T14:42:27Z",
+  "id": "NFRA_OPLGTW-Z-S437",
+  "one_line": "Issuer ruling on worker ~175's row W175-S1 (BLOCKING, ARMED): two existing tests stub email_denial with a one-argument lambda that the new route_class= call breaks; the order was amended (item 5) and the stubs fixed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W175-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The worker found test_scoped_consent_r253 (line 117) and test_login_admit_r24 (line 162) stubbing data_entitlement.email_denial as `lambda email: None`; the order forbade editing them. My dry-run of the neighbours at the base ran four files and missed the r24 file: the defect was the issuer's neighbour census, not the worker's.",
+      "Ruling: the order was amended in 4713cd1b59 (item 5, two paths, ed1.AC2 with five neighbours); the worker changed only those two lambdas to `lambda email, route_class=None: None` (1329b7e25e2) and rewrote its proof. Merged as 17c53cdd2cb; the issuer re-ran ed1.AC1 (7 of 7 checks), ed1.AC2 (4 new tests, 39 of 39 neighbour tests) and ed1.AC3 on the merged tree: PASS, PASS, PASS; the proof instance validates (VALID)."
+    ]
+  },
+  "spec_asserts": "A worker's row is a finding the issuer rules inside its own decomposition (obligation 7); an ARMED row's disarm owner is the issuer.",
+  "world_is": "The two stubs accept route_class; no other test stubs email_denial (a census of tests/ for `email_denial` and `_email_denied` read before the merge). The row is disarmed by the merge.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled above with its evidence: the stubs are fixed on trunk and graded green on the merged tree."
+}
+```
