@@ -107,3 +107,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-20):** row NFRA_MCPINDEX-Z-W81-S4 ruled: the check, not the worker, was short; w5_check.py now plants the repeated-entity mutant from a c item (commit 6949b9195bb). w5.AC2 PASS on the worker's unchanged file (record `deliverables/2.0.0_SA_COO~MI/round24/W5_RERUN_20261020.txt`). Gate limb: none (a check amended, no criterion text changed).
+
+<status>complete</status>
