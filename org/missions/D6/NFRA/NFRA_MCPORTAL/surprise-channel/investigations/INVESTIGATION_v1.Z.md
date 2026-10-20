@@ -3718,3 +3718,28 @@
   "notes": "Form only. Every later worker that reads an order whole receives its record face the same way until the order is split or the read is bounded. The disarm is the issuer's: move the record face out of the order file or below a path a worker does not read."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W42-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~42",
+  "surfaced_at": "2026-10-20T19:02:30Z",
+  "one_line": "The exported change reader does not fit the audit list: getRecentChanges types GET /api/admin/changes entries without an action field and with grant Scope before and after, so the audit list reads the same route through its own checked reader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal/src/api/admin.ts lines 59-68: ChangeRecord declares tid, oid, who, when, verdict, reason, before: Scope and after: Scope; no action field.",
+      "mcportal/src/api/admin.ts lines 109-112: getRecentChanges() calls fetch('/api/admin/changes') and types the response as ChangeRecord[].",
+      "mcportal/src/api/admin.ts lines 614-624: getPersonChanges(tid, oid) filters the same route to action set_person_access for one person; the audit list needs every access action for every person."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The audit list needs every access change of every person and reads the writer's changes through an exported helper of src/api/admin.ts, the same route with the same fetch helper; if no exported helper fits, the worker refuses with a BLOCKING row naming what it needs (zo-2 face section 1).",
+  "world_is": "The exported getRecentChanges reads the route but its declared type carries no action and types before and after as grant scopes; getPersonChanges filters to one person and one action. The audit list reads the same route through auditRead.ts, checks each entry field by field, and makes no cast and no edit of admin.ts.",
+  "notes": "Form only. Judged here that no exported helper fits the audit's shape, so no BLOCKING row was filed and the criterion was not refused. The issuer may rule on whether the type should carry action, which would be an edit of admin.ts outside this order's surfaces."
+}
+```
