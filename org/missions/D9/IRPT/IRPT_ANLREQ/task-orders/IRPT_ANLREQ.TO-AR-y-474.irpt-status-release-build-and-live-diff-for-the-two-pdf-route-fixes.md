@@ -34,13 +34,15 @@ You are `0.9.0_WK_IRPT_ANLREQ~348`.
 5. **Run both, save, commit.** Save `live_diff.py`'s output to `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~348/r51/LIVE_DIFF.txt` and the selftest's to `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~348/r51/SELFTEST.txt`. Commit the record, then the tools and outputs, as separate commits.
 6. **Report** the base sha, the tool's last line, the zip's sha256, CodeSha256 and size, the `LIVE-DIFF-OK` or `-BAD` line, and any mover other than `owned_report.py` with its commit subjects.
 
+*AMENDMENT 1 (issuer, 2026-10-20 ~21:5xZ, ruling on your BLOCKING row IRPT_ANLREQ-D2-W348-S1).* TAKEN: AC3 was anchored on the wrong commit. It compared your HEAD with the pin `06cb0e999d7`, but your branch starts at `474f174e89`, and two sibling TEST files (`reports/tests/test_compare_ports.py`, `test_resident_installed.py`, AR-g-175, G2's) landed on the trunk between those two commits; they are not package inputs and are not yours. THE CRITERION NOW READS: `git diff --name-only 474f174e89407c62cec422870cb63cb47eff2e43 HEAD -- infra | wc -l` prints `0` (the worker changed no infra file; your branch base is that commit). The issuer measured it at your head `66b09d8cf4`: 0. Re-run all three criteria at your head, update the proof instance's AC3 evidence to the new invocation and its one-line output (one verbatim line per line, as before), and flip `<status>` to `complete` with the instance only on VALID. No other file changes.
+
 ---
 
 ## ACCEPTANCE (worktree root, after your last commit)
 
 <criterion id="AR474-y-AC1" cell_refs="AR-y-474"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~348/r51/live_diff.py org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~348/r51/R37_BUILD.json org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/LIVE_IRPT_STATUS_MEMBERS_20261020.json</invocation><expect>LIVE-DIFF-OK moved=1 added=0 removed=0 same=48 mover=owned_report.py has_commentary_fix=yes has_overview_fallback=yes</expect></criterion>
 <criterion id="AR474-y-AC2" cell_refs="AR-y-474"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~348/r51/live_diff.py --selftest org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~348/r51/R37_BUILD.json org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/LIVE_IRPT_STATUS_MEMBERS_20261020.json</invocation><expect>^CONTROL-FIRES$</expect></criterion>
-<criterion id="AR474-y-AC3" cell_refs="AR-y-474"><invocation>git diff --name-only 06cb0e999d7707a5d918e724305b74c0dbcecd2d HEAD -- infra | wc -l</invocation><expect>^0$</expect></criterion>
+<criterion id="AR474-y-AC3" cell_refs="AR-y-474"><invocation>git diff --name-only 474f174e89407c62cec422870cb63cb47eff2e43 HEAD -- infra | wc -l</invocation><expect>^0$</expect></criterion>
 
 <proof_of_spec>
 The instance is at
