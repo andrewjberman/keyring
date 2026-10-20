@@ -27022,35 +27022,6 @@
 
 ## IRPT_ANLREQ-D2-W312-S2 -- the NOT_SHOWN disclosure the cell names is defined nowhere in the portal; the report face moves a disclosure whose text carries the word NOT_SHOWN to the end on that unverified marker
 
-## IRPT_ANLREQ-D2-W310-S1 -- the naming gate printed a NAMING ERROR for a missing function-map folder during two commits; the commits still landed, because the sparse worktree does not carry that folder
-
-```json
-[
-  {
-    "id": "IRPT_ANLREQ-D2-W312-S2",
-    "project": "IRPT_ANLREQ",
-    "fabric": "dell2",
-    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
-    "surfaced_at": "2026-10-19T22:35:31Z",
-    "one_line": "The cell asks that a NOT_SHOWN disclosure print last; no portal type, adapter or fixture names one, so the report face takes the word NOT_SHOWN in a disclosure's text as the marker.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "spec_asserts": "TO-AR-y-418 cell change item 2 and test (5): in report mode the disclosures print once each in report order, and a NOT_SHOWN disclosure when present is the last one.",
-    "world_is": "adapt.ts maps wire disclosures[].text to a plain string list (lines 1077 and 1104). No portal file defines a NOT_SHOWN disclosure; the token appears only in SecurityAnalysis ModelTab, for a different line. reportDisclosureOrder() prints the texts without the token in report order, then the texts with it. The producer's exact disclosure wording was not read (no live call).",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "portal/src/pages/InvestorReporting/contracts/adapt.ts@4f9f2f633dc0 lines 1077 and 1104: disclosures: wire.disclosures.map((disclosure) => disclosure.text)",
-        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx@c34d3ea5: NOT_SHOWN_TOKEN and reportDisclosureOrder",
-        "portal/src/pages/InvestorReporting/__tests__/fwd8/native-sections-report-mode.test.tsx@c34d3ea5 test (5): the NOT_SHOWN fixture disclosure sits second in wire order and must print last"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "notes": "Observation only. The marker is the one assumption: if the producer words the line differently, the report face would not move it. The issuer may name the marker in the contract."
-  }
-]
-```
-
 ## IRPT_ANLREQ-D2-W312-S3 -- three report-face choices the cell does not state: a vendor section counts as a figure card; the element trace inside Technical details repeats cards only; the default face is kept as an early return
 
 ```json
@@ -27103,34 +27074,6 @@
 ]
 ```
 
-
-## IRPT_ANLREQ-D2-W310-S2 -- the restored Keep path (AR-y-354 words) is the decision tree No press (AR-y-363): the kept line changes from NO_CHOICE_LINE to keptLine for that press
-
-```json
-[
-  {
-    "id": "IRPT_ANLREQ-D2-W312-S4",
-    "project": "IRPT_ANLREQ",
-    "fabric": "dell2",
-    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
-    "surfaced_at": "2026-10-19T22:53:17Z",
-    "one_line": "bun test src/pages/InvestorReporting measures 69 failures at the base (excluding the four new FWD-8 tests) and 68 on the candidate, not the 17 the cell states; IVE17-AC2 fails only in the base run.",
-    "class": "OBSERVATION",
-    "hazard_standing": "INERT",
-    "spec_asserts": "TO-AR-y-418 What to do (1): the rest of src/pages/InvestorReporting has 17 known failures at the base that are NOT yours.",
-    "world_is": "Folder run at the portal base 4f9f2f633dc0 with the base NativeSections swapped in: 1191 pass, 73 fail across 423 files (1289 tests). Folder run on the candidate c34d3ea5: 1196 pass, 68 fail, same files. The base-only set is the four new FWD-8 tests (no props at base) and IVE17-AC2 (a 35 s typecheck-style test that fails in the base run only). The candidate-only set is empty. The failing names are contract pins, the census, producer fixtures, route tables and a sparse-worktree gap; none imports NativeSections. The count is 25 tests short of the total on both runs (neither pass nor fail).",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "worker-local, not committed: C:/dev/wk-irpt-anlreq-312/.scratch/ir_folder_run.txt (candidate, 1196 pass, 68 fail) and .scratch/ir_folder_base.txt (base-swapped, 1191 pass, 73 fail); name lists .scratch/ir_fail_names_cand.txt and .scratch/ir_fail_names_base.txt",
-        "portal base 4f9f2f633dc0 (NativeSections.tsx swapped in from git show of that commit, then restored by sha256 match)"
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "notes": "Observation only. Not chased: the failures sit outside this order's grant. The 17 may count failing files, not tests, or a different sparse set; the issuer may re-measure in a full checkout."
-  }
-]
-```
 
 ## IRPT_ANLREQ-D2-W311-S1 -- the sparse worktree does not carry data/firm_registry.json, so the ordered pytest run errors at fixture setup in 25 of 32 tests until IRPT_FIRM_REGISTRY points at the base checkout's byte-identical copy
 
@@ -27187,6 +27130,63 @@
   "world_is": "The object irpt/49financial/state/original_holdings/ART-0b6d4e6dbd0d5c28ca10a4b0bc38f486127a0d0fa54efc62f65a9eb6b8eebb05/8bfd3093b8ba004b234353359d93925f4e3dd197c9a05ccab826de5e63274215.csv remains (one version) after the run of 2026-10-19T23:10Z; its delete is AccessDenied for the CloudOps principal and no application path deletes it (W5 NONE FOUND). Together with the object of S214 the prefix holds two synthetic leftovers; no index row points at either. No client data.",
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
+```
+
+## IRPT_ANLREQ-D2-W310-S1 -- the naming gate printed a NAMING ERROR for a missing function-map folder during two commits; the commits still landed, because the sparse worktree does not carry that folder
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W312-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
+    "surfaced_at": "2026-10-19T22:35:31Z",
+    "one_line": "The cell asks that a NOT_SHOWN disclosure print last; no portal type, adapter or fixture names one, so the report face takes the word NOT_SHOWN in a disclosure's text as the marker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-418 cell change item 2 and test (5): in report mode the disclosures print once each in report order, and a NOT_SHOWN disclosure when present is the last one.",
+    "world_is": "adapt.ts maps wire disclosures[].text to a plain string list (lines 1077 and 1104). No portal file defines a NOT_SHOWN disclosure; the token appears only in SecurityAnalysis ModelTab, for a different line. reportDisclosureOrder() prints the texts without the token in report order, then the texts with it. The producer's exact disclosure wording was not read (no live call).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts@4f9f2f633dc0 lines 1077 and 1104: disclosures: wire.disclosures.map((disclosure) => disclosure.text)",
+        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx@c34d3ea5: NOT_SHOWN_TOKEN and reportDisclosureOrder",
+        "portal/src/pages/InvestorReporting/__tests__/fwd8/native-sections-report-mode.test.tsx@c34d3ea5 test (5): the NOT_SHOWN fixture disclosure sits second in wire order and must print last"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. The marker is the one assumption: if the producer words the line differently, the report face would not move it. The issuer may name the marker in the contract."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W310-S2 -- the restored Keep path (AR-y-354 words) is the decision tree No press (AR-y-363): the kept line changes from NO_CHOICE_LINE to keptLine for that press
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W312-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~312",
+    "surfaced_at": "2026-10-19T22:53:17Z",
+    "one_line": "bun test src/pages/InvestorReporting measures 69 failures at the base (excluding the four new FWD-8 tests) and 68 on the candidate, not the 17 the cell states; IVE17-AC2 fails only in the base run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-418 What to do (1): the rest of src/pages/InvestorReporting has 17 known failures at the base that are NOT yours.",
+    "world_is": "Folder run at the portal base 4f9f2f633dc0 with the base NativeSections swapped in: 1191 pass, 73 fail across 423 files (1289 tests). Folder run on the candidate c34d3ea5: 1196 pass, 68 fail, same files. The base-only set is the four new FWD-8 tests (no props at base) and IVE17-AC2 (a 35 s typecheck-style test that fails in the base run only). The candidate-only set is empty. The failing names are contract pins, the census, producer fixtures, route tables and a sparse-worktree gap; none imports NativeSections. The count is 25 tests short of the total on both runs (neither pass nor fail).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worker-local, not committed: C:/dev/wk-irpt-anlreq-312/.scratch/ir_folder_run.txt (candidate, 1196 pass, 68 fail) and .scratch/ir_folder_base.txt (base-swapped, 1191 pass, 73 fail); name lists .scratch/ir_fail_names_cand.txt and .scratch/ir_fail_names_base.txt",
+        "portal base 4f9f2f633dc0 (NativeSections.tsx swapped in from git show of that commit, then restored by sha256 match)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Observation only. Not chased: the failures sit outside this order's grant. The 17 may count failing files, not tests, or a different sparse set; the issuer may re-measure in a full checkout."
+  }
+]
 ```
 
 ## IRPT_ANLREQ-D2-W309-S1 -- the worktree is a sparse checkout with no infra/aws/terraform/ and no data/, so the _authz battery does not collect and the 365-passed baseline cannot be printed in this tree
@@ -27313,4 +27313,84 @@
     "notes": "Words ruling for the CTO: the TO names keptLine for Keep, which supersedes the AR-y-363 words on the No press. Behaviour is otherwise unchanged. Reversing the words is a one-line change in analysisRequest.ts plus the two re-pinned tests."
   }
 ]
+```
+
+## IRPT_ANLREQ-D2-W313-S1 -- The sparse worktree omits infra/aws/ec2, so 40 fixtures of the AC2 regression set error before any test body runs
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W313-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~313",
+  "surfaced_at": "2026-10-20T00:00:06Z",
+  "one_line": "The sparse worktree of 0.9.0_WK_IRPT_ANLREQ~313 does not hold infra/aws/ec2/investor-reporting-ycharts, so 40 fixture setups of the AC2 regression set error before any test body runs (test_resident_installed 13, test_resident_packager_binding 18, test_package_poll 9); the resident_installed.py build path and the resident_worker.py assembly path changed by AR-y-423 are not exercised in this worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "TO-AR-y-423 AR423-y-AC2 (the regression set of ten files, expect a passing count) runs against the cell's changes; a file the worker needs and lacks is filed as a surprise row and the part is stopped, never copied in.",
+  "world_is": "The AC2 invocation at base cf17a3ccf3f, before and after the change, prints 190 passed, 8 skipped, 40 errors and exits rc 1. Every error is FileNotFoundError on C:\\dev\\wk-irpt-anlreq-313\\infra\\aws\\ec2\\investor-reporting-ycharts\\run-ycharts-session.sh. infra/aws/ec2 is absent from the sparse checkout although the git tree at HEAD holds it. The worker did not copy the folder in; the 40 tests have no result in this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 invocation output at worktree HEAD cf17a3ccf3f, before the change: 190 passed, 8 skipped, 40 errors in 54.50s, rc 1; after the change: 190 passed, 8 skipped, 40 errors in 51.72s (scratch file .scratch/ac2_after.txt, rc 1)",
+      "error counts per file: reports/tests/test_resident_installed.py 13, reports/tests/test_resident_packager_binding.py 18, ycharts/generate/tests/test_package_poll.py 9; each traces to FileNotFoundError on infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh",
+      "git ls-tree -r --name-only HEAD infra/aws/ec2/investor-reporting-ycharts lists run-ycharts-session.sh at cf17a3ccf3f; ls infra/aws/ec2 in the worktree: no such directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocking for the AC2 invocation, not for the new tests: AC1 (11 tests) and the packager tests run green. The issuer or the lane owner decides whether infra/aws/ec2 joins the sparse set; the worker did not widen its own sparse set."
+}
+```
+
+## IRPT_ANLREQ-D2-W313-S2 -- The ticket service at this worker's base still refuses a null pdf_ref and commentary_ref, which the R20-LM7 premise says it accepts
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W313-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~313",
+  "surfaced_at": "2026-10-20T00:00:06Z",
+  "one_line": "The order's depends_on (TCKT_VNEXT.TO-R20-LM7: the ticket service accepts pdf_ref and commentary_ref both null, read at HEAD) does not hold at this worktree's base: the null-pair admission landed after cf17a3ccf3f, on box/dell2 at 99267e3a254.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-423 depends_on: TCKT_VNEXT.TO-R20-LM7 (the ticket service accepts pdf_ref and commentary_ref both null); read at HEAD.",
+  "world_is": "At base cf17a3ccf3f, infra/aws/lambda/ticket_center/lambda_function.py package_ticket (lines 1812-1818) still requires a non-empty string for pdf_ref and commentary_ref; only original_ref may be null. The null-pair admission is in 17073aff04e (the R20-LM7 build) and reaches the branch in 99267e3a254 (the drain), a child of cf17a3ccf3f. The worker read the service only, changed nothing in it, and no test of this order calls it (fakes only), so the cell is unaffected at test time. The release-order contract stands: this packager must not reach PROD before the service accepts the null pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 99267e3a254 cf17a3ccf3f: not an ancestor (rc 1); git show --stat 99267e3a254 lists infra/aws/lambda/ticket_center/lambda_function.py with 11 insertions, and its first parent is cf17a3ccf3f",
+      "infra/aws/lambda/ticket_center/lambda_function.py at HEAD cf17a3ccf3f, lines 1812-1818: the loop over PACKAGE_REF_FIELDS requires a non-empty string except for original_ref"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the flip of the O5 pair reads the premise against the branch that carries R20-LM7. No action taken on the service."
+}
+```
+
+## IRPT_ANLREQ-D2-W313-S3 -- The packager is built after the ResidentAssembly constructor, so it is not available at the assembly construction the cell names
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W313-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~313",
+  "surfaced_at": "2026-10-20T00:00:06Z",
+  "one_line": "The cell says the assembly is constructed with ready_package=getattr(packager, ...) at about line 581 of resident_installed.py, but make_packager ran after that constructor; the worker moved the packager construction ahead of the assembly (no AWS call; closures and a sys.path append only) so the assembly can take it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-423 change 3: at the assembly construction (about line 581) pass ready_package=getattr(packager, 'ready_package', None) where the packager exists; the resident runtime's closed key set does not change.",
+  "world_is": "In build_resident_runtime, the packager (make_packager with live_ticket_ports) was constructed after the ResidentAssembly call and only under bindings commentary_ready_queue_url, so no packager object existed at the assembly construction. The block now runs first and sets packager = None when the binding is absent; the assembly takes getattr(packager, 'ready_package', None); the runtime dict keys (assembly, sqs, queue_url, and under the binding package_queue_url and packager) are unchanged. The move is side-effect-free apart from the research sys.path append, which now runs before the assembly.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/resident_installed.py at base cf17a3ccf3f, build_resident_runtime: the ResidentAssembly(...) call (about line 577) precedes runtime['packager'] = make_packager(...) (about line 593)",
+      "the build_resident_runtime test that would exercise the reordered block is in the blocked file set (see IRPT_ANLREQ-D2-W313-S1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The reordering is the worker's reading of 'where the packager exists'. The CTO or issuer may prefer a post-construction attribute instead; no action taken beyond the change in the worktree."
+}
 ```
