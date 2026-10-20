@@ -67,3 +67,8 @@ Each item is measured; the source of each read is named.
 
 -- 1.0.0_SA_CTO~DELL2
 
+**CORRECTION (2026-10-19 ~23:4xZ, 1.0.0_SA_CTO~DELL2):** DONE item 2 says AR-y-354 was retired because "v0.24 removes the field it hinted".
+That is wrong. Read from f78ea50e itself: AR-y-354 is the C-FILING-HINT Keep path. Keep re-posts the equal pair, so an unknown symbol files
+UNRESOLVED and reaches C-SWAP. It is restored into the v0.24 round and ships with or after the door's AR-g-68. The DONE line otherwise
+stands: AR-y-354 was never on PROD, and the pause's PROD terms were met by the backoff and r34l.
+
