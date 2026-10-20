@@ -1175,6 +1175,27 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "BF-g-5 worker face, build step 1: 'Use the same local names for the monolith bucket (local.monolith_bucket) ... read how other roots reference opal-data-49financial and opal-data-cottonwood ... follow that, never retype a bucket where a reference exists.'",
     "world_is": "local.monolith_bucket exists only in the opal-assets root, and canonical-schwab-ec2/monolith-iam.tf uses the literal opal-data-assets. No root reaches the firm buckets through a module or a data source. The new grants therefore use literal firm-bucket names, and data/canonical/schwab/tests/test_firm_prefix_grants.py pins each bucket against its infra/logic/registry/scopes.json row.",
     "notes": "Not an alert. The box grant is in canonical-schwab-ec2 and the converter grant is in opal-assets, so one shared local would need a cross-root edit, which this order does not make."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T19:18:13Z",
+    "one_line": "Off-task, pre-existing: test_packaged_calendar_is_byte_copy (advi-49f dategate tests) fails at the worktree HEAD 41584d28e0e, because the packaged advi-49f-gold-dispatch/trading_calendar.py is not a byte copy of lib/trading_calendar.py. No file this order grants is involved; not fixed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/opal-assets/tests/test_advi_49f_gold_dispatch_dategate.py@41584d28e0e:107-109 asserts (_DIR / 'trading_calendar.py').read_bytes() == lib/trading_calendar.py read_bytes(); _DIR (line 25) = infra/aws/lambda/opal-assets/advi-49f-gold-dispatch",
+        "run at 41584d28e0e (python -m pytest on the two advi-49f test files): 1 failed, 10 passed; the AssertionError shows the packaged bytes name expected_last_trading_day(now) and the lib bytes name first_trading_day_on_or_after after a shared 1,639-character prefix"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The dategate test asserts the packaged calendar is a byte copy of lib/trading_calendar.py (test_packaged_calendar_is_byte_copy, lines 107-109).",
+    "world_is": "At 41584d28e0e the two bodies diverge after the shared docstring prefix: the packaged copy names expected_last_trading_day, lib/trading_calendar.py names first_trading_day_on_or_after. The copy-or-test drift is pre-existing and no commit of this order touches either file.",
+    "notes": "Seen while running the regression sweep of the converter family (BF-p-5). Owner for disposition: the seat that last changed lib/trading_calendar.py or the advi-49f packaging, to be named on disposition."
   }
 ]
 ```
