@@ -3794,3 +3794,29 @@
   "notes": "Issuer cost of W43-S1: one worker pass and about 25 minutes. Lesson for the issuer: a refusal criterion must say what the refusing code may read before it refuses."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S77",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T23:31:53Z",
+  "one_line": "Re NFRA_MCPORTAL-Z-W2-S8: the 2026-09-25 disarm (NFRA_MCPORTAL-Z-S8, pre-acking the halt gate) rested on an UNMEASURED premise; today's measurement says the halt gate's scan precedes HALT_ACK and scales with the deploying agent's pending inbox, so the row stays ARMED and the mitigation is to empty the applier's pending inbox before each release window",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2026-10-21 ~00:0xZ, this seat: the halt gate library (.tools/halt-gate-check.sh, halt_gate_main) run read-only as 0.7.0_AE_CloudOps~NFRA1 against its inbox of 119 pending files had NOT finished in 100 s (timeout, rc 124), printing the pending messages as it scanned.",
+      "NFRA_MCPORTAL-Z-W2-S8's own evidence: with HALT_ACK=1 the second attempt took about 16 min from invocation to the host; 'HALT-GATE: HALT_ACK set -- messages acknowledged. Proceeding.' prints after the scan. My row NFRA_MCPORTAL-Z-S8 (2026-09-25 22:40Z) claimed pre-acking removed the 12-minute delay; the worker's measurement above says it does not, and no later release measured the gate's elapsed time.",
+      "The library's own header: an EMPTY pending inbox passes silently (exit 0); routine messages SURFACE and need HALT_ACK=1; a STOP-class message hard-blocks."
+    ]
+  },
+  "spec_asserts": "NFRA_MCPORTAL-Z-S8 (this seat): 'later gateway faces arm their rollback PRE-ACKED ... removing the 12-minute delay from an emergency path'.",
+  "world_is": "A rollback through safe-ec2-deploy.sh still passes the halt gate's scan first, so a fired 90-second trigger can still mean an outage of the scan's length. RULED today (OG-rl-17, OG-rl-18, OG-rl-19, commit d452ddfe96): the applier reads its own pending inbox to zero BEFORE the window (a STOP-class message handled first, never bulk-acked), records the counts and the gate's elapsed seconds in W/haltgate_<slug>.json; with an empty inbox the gate passes silently.",
+  "notes": "OWNER this seat; DATE: batch16's CLOSED report (2026-10-21, window 06:00Z-06:45Z) carries the first measured gate_elapsed_s with an emptied inbox. Under 60 s: this row and NFRA_MCPORTAL-Z-W2-S8 are disarmed on that measurement by a new row. Otherwise re-ruled that day (an owner for safe-ec2-deploy.sh's gate, which is MSTR's lane, not this seat's)."
+}
+```
