@@ -30457,3 +30457,76 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S427's question is answered by the registry's compiler and the row is inert; the subset fact does not change OG-ms-2's signed scope, it only sharpens what the halves read, and it is recorded here for them."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~166",
+  "surfaced_at": "2026-10-20T09:49:30Z",
+  "id": "NFRA_OPLGTW-Z-W166-S1",
+  "one_line": "Section 5 of the OG-fc-1 order asks the worker to flip the order's <status> tag to complete when all three criteria PASS; the order file is outside the <paths> write grant, so this worker did not flip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TASK ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-fc-1.round-47-client-fence-kinds-and-the-resolve-envelope.md:61 @eb4ff9f43dd -- section 5: 'Flip the ONE <status> tag to complete only if all three PASS'.",
+      "TASK ORDER: the same file, lines 41-45 @eb4ff9f43dd -- the <paths> grant lists infra/aws/ec2/opal-gateway/app/client_core.py, infra/aws/ec2/opal-gateway/tests/test_og_fc1.py and the investigation channel; the order file itself is not in it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 5 of NFRA_OPLGTW.TO-OG-fc-1 expects the worker to flip the order's status tag to complete on an all-PASS run, and the general worker rule pairs that flip with the instance and deliverables in one commit.",
+  "world_is": "The status flip writes the task-order file, which no <paths> entry or W/ folder grants. The three criteria PASS and the proof instance is written and validated, but the flip is held for the issuer. Nothing else was changed outside the grant.",
+  "notes": "REC to the issuer (2.0.0_SA_COO~O): flip the status from the one-line order record after reading this worker's report, or widen the grant for this one file. No gate is implicated: the lane gate refused nothing; the flip was simply not attempted."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~166",
+  "surfaced_at": "2026-10-20T09:49:30Z",
+  "id": "NFRA_OPLGTW-Z-W166-S2",
+  "one_line": "Order D3(b) gives every merged resolve envelope a denominator of the form {candidates, by_vendor}, but D3(d) says the single-vendor shape is unchanged; the worker applied (b) to one-holder calls too, so a single-vendor resolve no longer carries the adapter's own denominator keys at top level.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_core.py:584-587 @eb4ff9f43dd -- the merge loop has no single-holder branch; merged _denominator is {candidates: len(candidates), by_vendor: {v: out.get(_denominator)}} for every holder count.",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_eclipse.py:191 @6f2ddfd58e -- the eclipse resolve denominator is {partition_rows, candidates}; infra/aws/ec2/opal-gateway/app/client_adapter_commonwealth.py:198 @6f2ddfd58e -- {rows, candidates}; the two shapes differ, so a wrapped one-holder denominator differs from the adapter's own.",
+      "tests/test_og_fc1.py test_ogfc1_d3_single_vendor_shape @eb4ff9f43dd asserts denominator candidates only. NOT MEASURED: whether any consumer reads the top-level denominator keys of a resolve envelope."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D3(b): the merged denominator is a dict whose candidates equals the merged candidate_count and whose by_vendor maps each answering vendor to that adapter's own _denominator. D3(d): the refusals key is ABSENT when nobody refused (the single-vendor shape is unchanged).",
+  "world_is": "The order does not say whether a one-holder call keeps the adapter's own denominator. The worker chose the uniform reading (one merge path for every holder count), so a one-vendor resolve now carries {candidates, by_vendor} and the adapter's keys sit under by_vendor. The AC2 control and the neighbour tests (17 files plus test_og_cl5 and test_og_ad1) pass under that reading.",
+  "notes": "REC to the issuer: rule which reading holds for one-holder calls. If the adapter's own denominator must stay at top level for one holder, the change is a single branch in client_resolve_account; no adapter file is involved."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~166",
+  "surfaced_at": "2026-10-20T09:49:30Z",
+  "id": "NFRA_OPLGTW-Z-W166-S3",
+  "one_line": "The commit-time client-data check did not screen the OG-fc-1 commit on this device: the hashed account-id list is absent at its default path, so safe-commit printed WARN and checked nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit eb4ff9f43dd: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'.",
+      "git show eb4ff9f43dd, added lines: a digit-run scan returns only the fixture last-4 '1234', the firm alias '4698' and 2026 date literals; no account-shaped value is added."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's bounds forbid a client account value in any test, record or report, and the commit-time client-data check is the mechanical screen for that.",
+  "world_is": "On this device the screen's input list is absent, so the screen could not run. The worker's own scan of the two committed files found no account-shaped value. The absence of the list is a device fact, not a verdict on the commit.",
+  "notes": "OBSERVATION: the absence is recorded, not diagnosed. Whether the list should be provisioned on this device is the device owner's call."
+}
+```
