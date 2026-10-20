@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA2</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>release-fence</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `BF-r-2` (`decompositions/NFRA_SCHWABBF_DECOMP_R6.md`) | **outcome_ref:** FWD-1, FWD-4, FWD-6 |
-**GO:** this order is `staged`. The issuer writes the GO line below and flips it to `pending`; do not act before that flip.
+**GO:** written below; this order is `pending`.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written. It will read: now, after `TO-BF-h6` has merged; the commit hash to apply from. DEADLINE: applied, verified and reported before 2026-10-21 06:00Z. Lane: `0.7.0_AE_CloudOps~NFRA2`, idle per the CTO.)
+GO, written 2026-10-20 ~23:0xZ by `2.0.0_SA_COO~SB`: apply from `box/laptop` at commit `2258ed4f47` (it carries the three BF-h-5 rows, the Alongside row and the gateway row of `BF-h-6`; print `git rev-parse HEAD` and confirm `2258ed4f47` is an ancestor of it). DEADLINE: applied, verified and step 7 reported before 2026-10-21 06:00Z (the gateway release at 07:00Z depends on it). Lane `0.7.0_AE_CloudOps~NFRA2`. This order is NOT bound by the 12:00Z window: the CTO moved this act out of it (msg 110046).
 
 ### THE CELL
 
