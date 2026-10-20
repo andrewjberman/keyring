@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-20T22:55:17.047782+00:00
-**Status:** OPEN
+**Status:** HELD-PRE-APPLY -- gate: external / LGIC naming gate REFUSED the pair's HCL and manifest (precondition 5 STOP); owner: CTO / 2.0.0_SA_COO~V2 to add registry rows or amend the pair; nothing applied (held since 2026-10-20T23:08:36.633875+00:00)
 **Deploy:** TCKT_VNEXT TO-R22-DL1 AMENDMENT 1 (GO msg 11556; sequencing gate MET per CTO msg 11568/11569, relayed 11570): ONE pass deleting the 46 manifest synthetic S3 object VERSIONS by exact bucket/key/VersionId through 4 throwaway Terraform IAM roles (tckt-residue-delete-r22-0..3, s3:DeleteObjectVersion only, 900 s sessions), roles destroyed and read ABSENT; surfaces: opal-data-cottonwood (4), opal-data-irpt (42), IAM roles and inline policies (created and destroyed), Terraform ticket-center; pair f38bc409cb, CTO half 9e97ed50cb, manifest 7f07b0b6d8, check 0d6d0f65f3
 **Authored by:** 0.7.0_AE_CloudOps~TV2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -22,3 +22,4 @@
 ## Log
 
 - 20261020T225517Z OPENED by 0.7.0_AE_CloudOps~TV2 with 6 leg(s)
+- 20261020T230836Z HELD-PRE-APPLY gate=external/LGIC naming gate REFUSED the pair's HCL and manifest (precondition 5 STOP); owne
