@@ -28984,3 +28984,88 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W327-S1 -- the builder address() takes no family and checks no registry row, so an analysis-report table is not refused at the address call
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W327-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~327",
+  "surfaced_at": "2026-10-20T17:14:09Z",
+  "one_line": "C-AUDIT-RECORD asks for a builder-made address for a new family; address() has no family argument and consults no reporting_policies row, so an unregistered table is not refused by the builder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.25 C-AUDIT-RECORD (org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md:171): a NEW analysis-report family beside ycharts_runs at a builder-made address; CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add under infra/logic/registry/.",
+  "world_is": "address(source, scope, tier, table, partition, object) at lib/opal_naming.py:2522-2530 takes no family; key() at lib/opal_naming.py:2506-2519 checks only segment form (_segment at :2488-2491), the systems key, the LONG scope and the tier. No line compares table with any registry file. The ycharts_runs row (infra/logic/registry/reporting_policies.json:71) is read by no address() caller. The only family-membership refusal is in the X10 writer, lib/opal_naming.py:2660-2661.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:2522-2530 address() signature and body @0.9.0_WK_IRPT_ANLREQ~327 worktree",
+      "lib/opal_naming.py:2506-2519 key() checks",
+      "infra/logic/registry/reporting_policies.json:71 YCHARTS_RUN row (documentary only)",
+      "lib/opal_naming.py:2660-2661 family refusal in _reporting_destination only",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W327-S2 -- a state-tier family cannot carry the no-unreferenced-expiry the audit row asks for; the validator admits a null lifetime only at platinum
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W327-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~327",
+  "surfaced_at": "2026-10-20T17:14:09Z",
+  "one_line": "C-AUDIT-RECORD says the family sits beside ycharts_runs (state tier, 30-day unreferenced lifetime) and has no unreferenced expiry; the registry validator permits a null unreferenced lifetime only at platinum.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.25 C-AUDIT-RECORD (IRPT_ANLREQ_PRD.md:171): the new family is beside ycharts_runs, and its retention is 2,555 days from filing with no unreferenced expiry.",
+  "world_is": "ycharts_runs is tier state with unreferenced_days 30 (infra/logic/registry/reporting_policies.json:71). The validator refuses unreferenced_days null unless the tier is platinum (lib/opal_naming.py:2632-2634), and the retention window for a non-accepted-only family is now + unreferenced_days (infra/aws/lambda/investor-reporting/reports/retention.py:233). So 'beside ycharts_runs' at state tier and 'no unreferenced expiry' do not both hold; the admitted form of no unreferenced expiry is platinum, as ANALYSIS (reporting_policies.json:25) and CUSTODY_REPORT (:90) use it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json:71 ycharts_runs state, unreferenced_days 30",
+      "lib/opal_naming.py:2632-2634 null lifetime only at platinum",
+      "infra/aws/lambda/investor-reporting/reports/retention.py:233 expiry from unreferenced_days",
+      "infra/logic/registry/reporting_policies.json:25 ANALYSIS platinum null lifetime",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W327-S3 -- the family name analysis-report is not admitted by the registry, and the table analysis_reports is already owned by the ANALYSIS family
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W327-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~327",
+  "surfaced_at": "2026-10-20T17:14:09Z",
+  "one_line": "C-AUDIT-RECORD names the family analysis-report; the registry admits an UPPER_SNAKE family key and a snake_case table, and analysis_reports is already the table of the ANALYSIS family in the private policy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.25 C-AUDIT-RECORD (IRPT_ANLREQ_PRD.md:171) names the new family analysis-report.",
+  "world_is": "A reporting family key must match [A-Z]+(?:_[A-Z]+)* (lib/opal_naming.py:2605) and a table must be snake_case (lib/opal_naming.py:2610; org/standards/NAMING_SCHEMA.json:51), so analysis-report is refused as written. The snake form analysis_reports is the table of ANALYSIS in the ACTIVE policy irpt-private-reporting (infra/logic/registry/reporting_policies.json:25). The distinct-table check is per policy only (lib/opal_naming.py:2603), so a second policy could reuse analysis_reports without a refusal. A new family needs a table name that is not analysis_reports.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:2605 family key regex",
+      "lib/opal_naming.py:2610 table regex",
+      "org/standards/NAMING_SCHEMA.json:51 table_case snake_case",
+      "infra/logic/registry/reporting_policies.json:25 ANALYSIS table analysis_reports",
+      "lib/opal_naming.py:2603 distinct tables checked per policy",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~327/AUDIT_RECORD_READ.md S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

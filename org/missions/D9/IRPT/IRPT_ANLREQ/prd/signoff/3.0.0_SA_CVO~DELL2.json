@@ -1,12 +1,12 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.26",
-  "prd_pin": "62631269b7db4df9937edffc8643d793f3ac94a8",
+  "prd_version": "v0.27",
+  "prd_pin": "cd00de4ecb253c9237837f7a12f72adfeecde1cd",
   "half": "ratified-text",
-  "half_hash": "ac5cbec71969b8d3b8071b21a800f8378f6af90d555e4a71ec7cfe438246a240",
+  "half_hash": "d17f285911f0398375484a7c0b94108d710497559632c6194ff215675e66d1b5",
   "endpoint_hash": "1027f8acd8b0f2a7b0a08ad3d1349084739ce97b240216070814be8ee6b49f1a",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO~DELL2/deliverables/IRPT_ANLREQ_PRD_v0.25_RATIFIED_TEXT_REVIEW_20261020.md@815c113287",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO~DELL2/deliverables/IRPT_ANLREQ_PRD_v0.25_RATIFIED_TEXT_REVIEW_20261020.md@c30a9c69d0",
   "signed_by": "3.0.0_SA_CVO~DELL2",
-  "signed_at": "2026-10-20T17:19:21Z"
+  "signed_at": "2026-10-20T17:36:13Z"
 }
