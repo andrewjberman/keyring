@@ -13405,3 +13405,29 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~85",
+  "surfaced_at": "2026-10-20T16:36:47Z",
+  "id": "NFRA_MCPINDEX-Z-W85-S1",
+  "one_line": "The battery's plant subcommand writes a planted broken tool by setting status to error only; for a sender whose recorded send carries an agreeing readback, the planted result still grades PASS (plant of send_email then grade: PASS, rc 0), so the planted-FAIL control does not hold for a sender after MX-y-2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tool_battery.py cmd_plant (worktree C:/tmp/wk-mcpindex-85, base 62604a82b8c plus the uncommitted MX-y-2 edit): sets status error, rows None, error_text planted, source_check None; leaves sent and readback in place.",
+      "plant --tool send_email over round25/fixtures/y2_results.json: PLANT tool=send_email cases=1 rc 0; grade of the planted file: GRADE tools=5 PASS=3 EMPTY-CORRECT=0 REFUSED-CORRECT=0 PREVIEW-ONLY=2 FAIL=0, send_email PASS, grade rc 0.",
+      "round22/checks/g_check.py:253-258 (G1) plants harvest_read, a tool whose result is sent false in results_min.json; its control is unaffected by MX-y-2."
+    ]
+  },
+  "spec_asserts": "tool_battery.py plant: every case of --tool is set to error, so grade reads the planted broken tool as FAIL (script docstring; the round-22 G1 control).",
+  "world_is": "Since the MX-y-2 grade change a sent result with readback agrees true grades PASS whatever its status, and plant does not clear sent or readback, so a planted sender reads PASS. Before the change every sent result read FAIL, so the plant held for senders.",
+  "notes": "OBSERVATION, INERT: among the round-22, round-23 and round-25 checks, the plant subcommand is called only by round22/checks/g_check.py (G1, harvest_read), so no served artifact or current control reads a planted sender. It ARMS when a planted FAIL control is run on a tool whose recorded send carries an agreeing readback. Not repaired in this cell: the contract is silent on plant, and the face bounds widening the output. Candidate remedy, not attempted: plant sets sent to false and drops readback, so the planted result reads FAIL tool_error. Denominator: 1 sending tool planted (send_email), 1 case.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
