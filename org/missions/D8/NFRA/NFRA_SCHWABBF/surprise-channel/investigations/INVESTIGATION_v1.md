@@ -909,6 +909,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "Order BF-k-3 worker face, per-master contract item 'keep every round-2 name working, add the new ones'; TO-BF-m3 imports this contract.",
     "world_is": "Both key files at 2103514e72 define FIRM_FORM_MASTERS and no MASTER_FIRM. The worktree is clean for the grant files at HEAD. An alias fix needs an order whose <paths> names the two key files and the test while it is non-terminal.",
     "notes": "Not an alert. Disposition for the issuer: grant the two key files in TO-BF-m3 (or re-open BF-k-3) to add MASTER_FIRM = FIRM_FORM_MASTERS inside the byte-equal block, or confirm that no caller needs the name."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S8",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T17:54:13Z",
+    "one_line": "Criterion BF4-t4-AC3 expects ^THREAD-FAIL master=08403355 day=2026-10-16, but the verdict line the tool prints is THREAD-FAIL reason=... master=..., so the anchored expectation cannot match the verdict as written; AC3 is recorded FAIL and the expectation is not weakened.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_SCHWABBF/task-orders/NFRA_SCHWABBF.TO-BF-t4.trace-silver-both-forms.md WORKER FACE, ACCEPTANCE, BF4-t4-AC3: expect '^THREAD-FAIL master=08403355 day=2026-10-16'",
+        "data/canonical/schwab/keyform/thread_trace.py at 0f92b86fe32 (base 998fe826317): the verdict is emitted as 'THREAD-FAIL reason=%s master=%s day=%s'; the real run at --form builder prints 'THREAD-FAIL reason=bronze-not-held-form-builder;second-form-found-legacy;silver-absent;silver-second-form-found-legacy master=08403355 day=2026-10-16' with rc 1, and re.search of the AC3 expect with re.M over that output is False (captured at .scratch/ac3_out.txt)",
+        "data/canonical/schwab/tests/test_thread_trace.py at 0f92b86fe32: the round-3 arm asserts 'THREAD-FAIL reason=bronze-not-held-form-builder' (reason first), and the face requires every round-3 arm to stay green and every other line to be unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF4-t4-AC3 expect: '^THREAD-FAIL master=08403355 day=2026-10-16'. Refusal clause: a criterion that cannot be met as written is stopped on, recorded in the report and as a surprise row, and the test is not weakened to pass.",
+    "world_is": "The strict firm-form trace of the real day 2026-10-16 FAILS with rc 1 as the face predicts, but its verdict line begins 'THREAD-FAIL reason='. Reordering the verdict would break the round-3 arms the face keeps green; loosening the expect would weaken the criterion. Neither was done. The rest of AC3 (rc 1, THREAD-FAIL on the real day) is met.",
+    "notes": "Not an alert and not a monitor. The issuer rules the expectation: re-cut the expect to the reason-first verdict form, or change the verdict order together with the round-3 arms. AC3 stays FAIL and the TO stays pending until that ruling."
   }
 ]
 ```
