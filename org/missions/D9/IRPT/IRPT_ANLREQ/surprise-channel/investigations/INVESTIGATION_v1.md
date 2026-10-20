@@ -27314,3 +27314,89 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W314-S1 -- the old served.py sha256 is still named in six other function-map files after the irpt-ycharts-generate pin edit (reported, not edited)
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "The old served.py sha256 30c0eb88ec38 is still named in six other function-map files after the irpt-ycharts-generate pin edit; the order says report, not edit, so they are reported here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-426 step 2: change the pin and the sha256 of the served.py staged_from entry in infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json and nothing else; print git grep for the old sha256 before and after; any OTHER place naming the old sha256 is reported in a row and not edited.",
+    "world_is": "git grep -n 30c0eb88ec38 -- infra/aws/lambda/ci matches seven lines at 3765e44f3bf: irpt-directory-search.json:40, irpt-export-render.json:126, irpt-holdings.json:106, irpt-narrative.json:79, irpt-performance-adapter.json:411, irpt-status.json:119 and irpt-ycharts-generate.json:177. At bd1894d789f (the step-2 commit) the six other files still carry 30c0eb88ec38, and HEAD:infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json:177 carries 600a934c4b34. The packaged names of the six other entries were not read; the matches are the sha256 field of entries.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git grep -n 30c0eb88ec38 3765e44f3bf -- infra/aws/lambda/ci (seven lines)",
+        "git grep -n 30c0eb88ec38 bd1894d789f -- infra/aws/lambda/ci (six lines)",
+        "git grep -n 600a934c4b34 HEAD -- infra/aws/lambda/ci (one line, irpt-ycharts-generate.json:177)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reported only; this worker edited none of the six. Their own releases move their own pins. The drift is the one the cell preflight names for the other functions that stage served.py."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W314-S2 -- AR426-y-AC3 names HEAD, so its verdict moves with every later commit
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "AR426-y-AC3 is written as map HEAD, so its verdict is a function of the commit HEAD names: it reads R37-MAP-OK at the step-2 commit and R37-MAP-BAD one commit later.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-y-426 AC3: python -I .../r37/check_r37.py map HEAD, expect ^R37-MAP-OK numstat=2/2 pin=720e125d31469ed60b6e698812c7be731bd6d8e8 sha256=600a934c4b34$.",
+    "world_is": "The map mode diffs <commit>~1 against <commit>. Run at bd1894d789f (the step-2 commit) map HEAD prints R37-MAP-OK numstat=2/2 pin=720e125d31469ed60b6e698812c7be731bd6d8e8 sha256=600a934c4b34, rc=0 (saved in MAP.txt). Run at 7f701cf5e6c, the outputs commit, the same invocation prints 'R37-MAP-BAD numstat lists 4 files, want exactly 1', rc=1. The explicit form map bd1894d789f5196bbc48dc00b081d10c9cc03610 prints the OK line at the current HEAD (saved in MAP_STEP2_EXPLICIT.txt).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r37/MAP.txt at 7f701cf5e6c (map HEAD run at bd1894d789f, rc=0)",
+        "worker run at HEAD 7f701cf5e6c: python -I check_r37.py map HEAD, rc=1, R37-MAP-BAD numstat lists 4 files, want exactly 1",
+        "r37/MAP_STEP2_EXPLICIT.txt (map with the explicit step-2 sha, rc=0)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The proof instance records AC3 at the step-2 commit and the explicit-sha run beside it. Whether the criterion should name the step-2 sha rather than HEAD is for the issuer to decide; the worker does not edit the criterion."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W314-S3 -- the W310-S2 row sits outside any fenced json array
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W314-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~314",
+    "surfaced_at": "2026-10-20T00:53:17Z",
+    "one_line": "The IRPT_ANLREQ-D2-W310-S2 object in INVESTIGATION_v1.md is not inside any fenced json array: it follows the W309-S4 array's closing fence with no opening bracket, brace or json fence before it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Investigation rows are each one object inside a fenced json array (the array's opening and closing bracket lines), and a new row is appended as a new block (surprise-channel append convention, docs/doctrine/THE_SURPRISE_CHANNEL.md).",
+    "world_is": "At 3765e44f3bf the W309-S4 array closes at line 27292 and its fence sits at line 27293. Lines 27294 to 27314 are the W310-S2 object's fields with no opening bracket, brace or fence before them; line 27315 is a closing bracket and line 27316 a bare fence. A parse of every json-tagged fenced block in the file gives 943 blocks and 0 failures, and none of them contains the W310-S2 object.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INVESTIGATION_v1.md @3765e44f3bf lines 27292-27316 (read at the worker worktree)",
+        "worker parse of every json-tagged fenced block in INVESTIGATION_v1.md at 3765e44f3bf: 943 blocks, 0 failing; the W310-S2 id lies outside every block"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reported only. The row was not edited (the rule is never to edit an existing row). Appended rows of this worker sit in their own fenced blocks after it."
+}
+]
+```
