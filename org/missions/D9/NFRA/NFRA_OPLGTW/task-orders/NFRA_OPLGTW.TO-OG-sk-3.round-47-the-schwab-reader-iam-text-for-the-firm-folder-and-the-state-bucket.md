@@ -88,6 +88,7 @@ Commit, then write the proof instance at `W/NFRA_OPLGTW.TO-OG-sk-3.round-47-the-
 - LISTING note for the asks: S3 `ListBucket` conditioned on a prefix reveals KEY NAMES under that prefix (not contents). Today `schwab/49financial/` holds only `08403355`'s objects; when another master lands there its key names become listable to this role (its contents stay unreadable: the object grants are by file name). The CTO's 17:49Z condition accepts the prefix-conditioned listing; the ask states this sentence.
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-N</workstream>
 <slot>~179</slot>
