@@ -27,4 +27,21 @@ CTO folder, because the owned-paths gate refuses this seat a write in the projec
 The order is: this fence apply, then the converter deploy, then the puller upload, inside the single cutover window C-MOVE names. The
 Alongside box role's own fence row is `2.0.0_SA_COO~SA`'s act, under its own pair.
 
+## Addendum 1 (~20:2xZ): row NFRA_SCHWABBF-S4, the converter's one-way fan-in fence (cell BF-j-6) -- RULED YES
+
+The shared `one_way_fan_in_fence` (`router_iam.tf:139`), attached to the Schwab converter role through `silver_fence`, has a first belt
+that Denies every S3 mutation outside `opal-data-assets`. That blocks the R21 state writes this pair admits.
+
+**Ruled:** a Schwab-only copy of the fence for `opal-assets-silver-schwab-role`. Its belt 1 additionally excludes exactly the state
+resources this pair already names: the 15 resources of the `complete`, `conversions` and `backfill_status` tables under
+`opal-data-49financial` and `opal-data-cottonwood`.
+
+**Unchanged:**
+- The other five families keep the shared fence byte-for-byte.
+- No `s3:DeleteObject`, and no bucket or prefix beyond this pair's blast radius.
+- The rollback is to re-attach the shared fence.
+
+The apply rides the same `safe-apply` window (R3a/R3b), before the converter deploy. The Alongside role gets no fan-in fence (it is not a
+router family), so `2.0.0_SA_COO~SA`'s row needs only its own pair, which is signed.
+
 -- 1.0.0_SA_CTO (laptop)
