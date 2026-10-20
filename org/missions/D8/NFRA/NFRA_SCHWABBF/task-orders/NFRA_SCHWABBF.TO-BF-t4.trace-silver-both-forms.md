@@ -41,8 +41,8 @@
 <criterion id="BF4-t4-AC2" cell_refs="BF-t-4"><invocation>python data/canonical/schwab/keyform/thread_trace.py --master 08403355 --day 2026-10-16 --form any</invocation><expect>^THREAD-OK master=08403355 day=2026-10-16</expect></criterion>
 `BF4-t4-AC2` -- the seam probe against the REAL neighbor: the real day 2026-10-16, still entirely in the old forms, traces under `--form any` and its silver is read from the old key. Read-only.
 
-<criterion id="BF4-t4-AC3" cell_refs="BF-t-4"><invocation>python data/canonical/schwab/keyform/thread_trace.py --master 08403355 --day 2026-10-16 --form builder</invocation><expect>^THREAD-FAIL master=08403355 day=2026-10-16</expect></criterion>
-`BF4-t4-AC3` -- the negative arm on the real store: before the cutover the strict firm-form trace of the same real day FAILS (bronze and silver are not at the firm addresses yet). Read-only.
+<criterion id="BF4-t4-AC3" cell_refs="BF-t-4"><invocation>python data/canonical/schwab/keyform/thread_trace.py --master 08403355 --day 2026-10-16 --form builder</invocation><expect>^THREAD-FAIL reason=.* master=08403355 day=2026-10-16$</expect></criterion>
+`BF4-t4-AC3` -- (issuer amendment 2026-10-20 after row W4-S8: the verdict line has always printed `reason=...` before `master=` and `day=`; the expectation names that shape) the negative arm on the real store: before the cutover the strict firm-form trace of the same real day FAILS (bronze and silver are not at the firm addresses yet). Read-only.
 
 <expected_criteria>BF4-t4-AC1,BF4-t4-AC2,BF4-t4-AC3</expected_criteria>
 
