@@ -909,6 +909,49 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "Order BF-k-3 worker face, per-master contract item 'keep every round-2 name working, add the new ones'; TO-BF-m3 imports this contract.",
     "world_is": "Both key files at 2103514e72 define FIRM_FORM_MASTERS and no MASTER_FIRM. The worktree is clean for the grant files at HEAD. An alias fix needs an order whose <paths> names the two key files and the test while it is non-terminal.",
     "notes": "Not an alert. Disposition for the issuer: grant the two key files in TO-BF-m3 (or re-open BF-k-3) to add MASTER_FIRM = FIRM_FORM_MASTERS inside the byte-equal block, or confirm that no caller needs the name."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W3-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T17:51:40Z",
+    "one_line": "The face names the firm of a master from the scopes.json row whose masters list names it, and refuses a master that is not firm-form (only 08403355 and the four Cottonwood masters are); scopes.json lists 08335338 under 49financial with no firm-form field, so that lookup alone cannot refuse 08335338.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/scopes.json@0429204ae71: the 49financial FIRM row lists masters 08242234, 08335338, 08403355; no row carries a firm-form field",
+        "data/canonical/schwab/silver/_canonical_silver_lib.py@0429204ae71 FIRM_FORM_MASTERS: the five firm-form masters as a literal mirror; data/canonical/schwab/tests/test_bronze_key_form.py@0429204ae71 asserts the same five",
+        "data/canonical/schwab/keyform/equal_sample.py (uncommitted, worktree wk-NFRA_SCHWABBF-3 over 0429204ae71): firm_of() takes membership from a literal FIRM_FORM_MASTERS mirror and the firm from scopes.json; test_firm_form_mirror_equals_silver_lib_and_scopes proves both; pytest 25 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-e4 worker face, build item 1: --form firm resolves the firm from scopes.json and refuses a master that is not a firm-form master (only 08403355 and the four Cottonwood masters are) with EQUAL-REFUSED rc 3 before any S3 call.",
+    "world_is": "scopes.json cannot by itself separate 08335338 from 08403355: both are masters of the 49financial row. The worker takes firm-form membership from the five-master literal mirror and the firm from scopes.json, so 08335338 is refused (rc 3, before any S3 call; test_firm_form_for_non_firm_master_is_refused_before_any_read). The face's named source does not carry its own refusal.",
+    "notes": "Form only, no significance judgment. The issuer may name a registry field for firm-form membership so the mirror can be retired; no change to scopes.json was made."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W3-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T17:51:40Z",
+    "one_line": "The face orders compare output lines unchanged plus a FORM line and every round-1 arm green, but four round-1 arms asserted the full compare line list exactly, so they cannot stay green without the FORM line in their expected lists.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/tests/test_equal_sample.py@0429204ae71: test_identical_store_is_equal, test_source_file_only_change_is_equal, test_reordered_rows_are_still_equal and test_still_missing_partition_stays_equal each asserted the list [EXCLUDED_LINE, \"EQUAL-OK cells=4\"] exactly",
+        "data/canonical/schwab/tests/test_equal_sample.py (uncommitted, worktree wk-NFRA_SCHWABBF-3 over 0429204ae71): the four expected lists now carry FORM before=old after=old and the _body helper skips FORM lines; every verdict and diff assertion is unchanged; pytest 25 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-e4 worker face, build item 3: output lines unchanged, plus FORM before=<old|firm> after=<old|firm> printed by compare; tests: every round-1 arm stays green.",
+    "world_is": "On exact line lists the round-1 arms and the new FORM line cannot both hold literally. The worker added FORM to the four exact expectations and left every verdict and diff assertion as written. capture output is unchanged (CAPTURED and EXCLUDED only).",
+    "notes": "Form only. Recorded so the issuer can see that the round-1 expectations gained the one line the face orders."
   }
 ]
 ```
