@@ -28782,3 +28782,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S231 -- Run 7b R: the commentary-pdf route answers UNEXPECTED because irpt-status-role is denied s3:GetObjectVersion on the retained report PDF
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S231",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T17:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7b passed B1, B2, P1 to P5, P7 (COMPLETE, four pointers), B3 and R2, then stopped at R: GET analysis/requests/{REQ}/commentary-pdf answered closed codes UNAVAILABLE,UNEXPECTED because the irpt-status Lambda's role was denied s3:GetObjectVersion on the retained Opal report PDF.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch log group /aws/lambda/irpt-status, request 92dbbb09-9958-478a-8b3a-800fdd51feb5, 2026-10-20T17:02:0xZ: INTERNAL-CALLER-CLASS admitted, then irpt_internal exception_text 'An error occurred (AccessDenied) when calling the GetObject operation: User: ...assumed-role/irpt-status-role/irpt-status is not authorized to perform: s3:GetObjectVersion on resource: arn:aws:s3:::opal-data-irpt/irpt/49financial/state/ycharts_opal_reports/ART-ed570a0dcc2f3f1f30420dc349789710e0425dd950c12b929a3964737b3870f9/c396092e57eaaecd4b...', then irpt_error operation analysis-request-commentary-pdf public_reason_code UNEXPECTED",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7b/state_e2e7b.json (route code UNAVAILABLE,UNEXPECTED; green P1 to P5; p7_final COMPLETE)"
+    ]
+  },
+  "spec_asserts": "ADDENDUM 9 / run 6 step R: the route read returns 200 with download_route.url for the owner of a request whose commentary PDF is retained (PASS is a PDF of the retained size).",
+  "world_is": "MEASURED: the denial is s3:GetObjectVersion by irpt-status-role on the object under state/ycharts_opal_reports for this run's retained PDF (a synthetic request; no client data). NOT MEASURED here: whether irpt-status-role holds s3:GetObject on that prefix, the role's actual policy statements, and whether the route reads a version id on every call or only for this object. This seat changed no IAM (the order's bound). The run's PDF object stays (see the stranded-objects row), so the route can be re-read against it after a grant if the issuer rules so. The ticket package pointers and the report face (B3) were unaffected: the failure is the route's read of the PDF only.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S232 -- Run 7b strands seven synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S232",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T17:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7b, a request that reached the commentary and the report PDF, left SEVEN synthetic state objects that the CloudOps principal cannot delete (AccessDenied); all 13 index rows and the synthetic user read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7b/state_e2e7b.json (leftover_blob_keys, leftover_delete_code AccessDenied, deleted 14 of 22 counted keys; upload_identified: 1 of 45 UPLOAD rows matched the synthetic address and the run's holdings hash, recorded at creation)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates; the order's 'if this run's own upload leaves objects your principal cannot delete, record keys by creation ... then delete what you can and file the row'.",
+  "world_is": "These objects remain, each one version: irpt/49financial/state/analysis_commentaries/ART-eb5382510e6c769ccf624da966acc7f77c13f76b4a43acff06e7df28c9f1277c/32a22849147db3045bf473bb74b5487effd9690d8ad06e82f160056c2849f8ea.json; irpt/49financial/state/extraction_evidence/ART-883b96ab4acf7bf0e8b6ba69103e0a3f3ab585548db9853d39b2cfe077032d90/e0a7f4daadd2a6e1ef6ea6d355099c217edc63e0d9ce72da52f19bc0f475dc5a.json; irpt/49financial/state/normalized_portfolios/ART-db4d5fcc293c59ed619e45c2da3269fe2a5d8e96718065b324d9641ad3c744f4/853d7ec51b764aea9ef99ce438aa31fcf98441f69f2a4f2c0355f7735838cd0b.json; irpt/49financial/state/original_holdings/ART-fe93d2291df0822809a1cf29ea26de9a0373c4b5407b0220b6505b2ae8928add/723cdf9cd7006bcb27121ef1f3b78d27ba062605c44f973d53474a7e4a414ca1.csv; irpt/49financial/state/request_compositions/ART-1da94342d9a288e559b9cbfb5b0a9674d58b898b22dc7763e6016c97a5776244/0b953c252efcba0b960098f9f4d993a37e4206f64d2fc9a100e35a3f750881cf.json; irpt/49financial/state/ycharts_opal_reports/ART-3065a72ec9e61d0e1ccd783558dff2808ef17ce330883c156f10b0d2da2563d9/4803cae2fcd0ef96e22b7dfb34264219d7f1e751bbc3454772437159f849ea8b.pdf; irpt/49financial/state/ycharts_opal_reports/ART-ed570a0dcc2f3f1f30420dc349789710e0425dd950c12b929a3964737b3870f9/c396092e57eaaecd4bcf0fba68a5ae3b93eb9239383fb19dbff3c7ea7e642b38.pdf. No index row points at them. No client data. Run 7's two objects (row S229) are separate and untouched.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
