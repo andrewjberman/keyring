@@ -66,7 +66,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-tp-1.round-47-result-caps-on-th
 - READINGS DISCLOSED TO THE CTO: (1) the default `top` of 25 for the file searches is the issuer's (a person scanning search hits reads about that many); a caller that wants more passes `top` up to 100. (2) `total` is what Graph returned (Graph pages at its own size), not the count of every match in the drive. (3) The poll cursor moves only as far as the last message served, so a capped poll never skips a message; a message from a dropped (external) sender after the cut is re-evaluated, and re-dropped, by the next poll.
 - Pre-cut: `AC1` base FAIL as expected (the answers carry all 400 items; `top` is not a parameter), `AC2` base FAIL as expected (`top=2` returns six messages; the sequence and control lines pass trivially), `AC3` base FAIL as expected (no test file). The five neighbour files pass at the base.
 
-<status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-A</workstream>
 <slot>~169</slot>

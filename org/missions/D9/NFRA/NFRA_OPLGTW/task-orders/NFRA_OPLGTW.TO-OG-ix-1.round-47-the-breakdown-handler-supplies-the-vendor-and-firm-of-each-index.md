@@ -67,6 +67,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ix-1.round-47-the-breakdown-han
 - Pre-cut: `AC1` base FAIL as expected (5 tool entries sit in the segmented channels and none carries the key); the real inventory and catalog run offline in about 3 seconds. `AC2` base FAIL as expected (no test file). The four neighbour files pass at the base (49 tests).
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-A</workstream>
 <slot>~171</slot>
