@@ -30450,3 +30450,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W332-S1 -- the proof's decomp_ref schema admits three keys, not the order's decomp_ref block
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W332-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~332",
+  "surfaced_at": "2026-10-20T21:34:27Z",
+  "one_line": "TO-AR-g-176 says to set the proof instance's decomp_ref to the order's <decomp_ref> block (decomp_doc, round, workstream, owned_cells). The proof-of-spec schema's decomp_ref object admits only doc, vintage_commit and to_ref, so those four keys cannot be written. Mapped to doc, vintage_commit and to_ref as the AR-y-450 instance does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-g-176 proof_of_spec paragraph: set the instance's decomp_ref to the order's <decomp_ref> block (the proof gate requires it).",
+  "world_is": "org/standards/PROOF_OF_SPEC.schema.json@7a995aa990f decomp_ref is an object with required doc, vintage_commit, to_ref and additionalProperties false. The block's keys decomp_doc, round, workstream and owned_cells have no slot. The instance carries doc = the decomp path, vintage_commit = 7a995aa990f and to_ref = the order path; round 60, workstream ~GREL and cell AR-g-176 are carried by the order and the decomp.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/PROOF_OF_SPEC.schema.json@7a995aa990f (properties.decomp_ref: required doc, vintage_commit, to_ref; additionalProperties false)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-176.resident-release-r34o-build-only.md@7a995aa990f (lines 75-76 the decomp_ref block; line 82 the proof instruction)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~322/IRPT_ANLREQ.TO-AR-y-450.resident-release-r34n-rebuild-with-the-packager-api-base-through-cloudfront.proof_of_spec.json (decomp_ref precedent: doc, vintage_commit, to_ref)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
