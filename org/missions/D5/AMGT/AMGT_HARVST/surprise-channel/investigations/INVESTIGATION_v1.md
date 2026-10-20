@@ -13695,5 +13695,161 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         "disposition": "UNDER_INVESTIGATION",
         "notes": "Not worked around: the expect and the verbatim evidence are unchanged. The instance stays INVALID (rc=1) and the order stays open until the checker grades this form. Form only; significance is for the CVO."
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W190-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~190",
+      "surfaced_at": "2026-10-20T19:01:48Z",
+      "one_line": "AC3 RUN-PLAN cannot read 'Plan: 11 to add': with only gold_refresh_run_enabled=true the copied cluster precondition refuses the plan (Error: Resource precondition failed, gold-refresh.tf:285) after a partial 'Plan: 9 to add' line.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-co-6 AC3 RUN-PLAN: -var gold_refresh_run_enabled=true -var gold_refresh_image_digest=sha256:<64 zeros> ends 'Plan: 11 to add, 0 to change, 0 to destroy.', with gold_refresh_build_enabled at its default false; the face says copy the dossier-refresh.tf structure, with only the listed differences.",
+      "world_is": "The copied run-half precondition on aws_ecs_cluster.gold_refresh (condition var.gold_refresh_build_enabled, gold-refresh.tf:285) refuses the run-only plan: the RUN-PLAN section reads 'Plan: 9 to add, 0 to change, 0 to destroy.' then 'Error: Resource precondition failed ... gold_refresh_run_enabled = true requires gold_refresh_build_enabled = true'. No 'Plan: 11' line exists in co6_plan.out. The same refusal is measured for dossier-refresh.tf (AMGT_HARVST-D1-W183-S7). Not edited to hide: the face forbids editing the Terraform or the expectation to match. Both other plans read as specified (DEFAULT No changes; BUILD 5 to add; BOTH 16 to add; no change or destroy in any plan).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~190/co6_plan.out @2140a014d0 lines 334-750: RUN-PLAN label, 'Plan: 9 to add' at line 735, 'Error: Resource precondition failed' at line 740",
+          "infra/aws/terraform/harvest/gold-refresh.tf @2140a014d0 line 285 (condition var.gold_refresh_build_enabled) and the run-half precondition on the task definition",
+          "infra/aws/terraform/harvest/dossier-refresh.tf @94ffc82717e lines 260-275 (the same cluster precondition) and lines 20-25 (the header)",
+          "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md @44bea64580 row AMGT_HARVST-D1-W183-S7 (the same refusal form on the dossier half)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Form only; significance is for the CVO. The order stays open on AC3 until the CVO or the CTO rules whether the build-half guard stays on the run half (then AC3 RUN-PLAN is re-stated) or the expectation is re-written. Nothing is applied."
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W190-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~190",
+      "surfaced_at": "2026-10-20T19:01:48Z",
+      "one_line": "Terraform locals are module-scoped: the first copy of gold-refresh.tf collided with 20 local names of dossier-refresh.tf in the shared harvest root (init and validate rc 1, Duplicate local value definition).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-co-6 step b and c: the 13 names sit in ONE locals block of gold-refresh.tf, copied from the dossier-refresh.tf structure, with the second locals block of literals; the face does not say the local identifiers must differ from the applied file's.",
+      "world_is": "dossier-refresh.tf already defines build_project_name, build_role_name, build_policy_name, cluster_name, task_family_name, task_role_name, task_policy_name, exec_role_name, scheduler_role_name, scheduler_policy_name, schedule_name, sg_name, ecr_repository_name, build_log_group, task_log_group, network_vpc_id, network_subnet_id, build_source_bucket, build_source_key and build_buildspec. The harvest root is one module, so the first copy failed validate with 'Duplicate local value definition' (rc 1). Fixed in the worker's own file by a gold_ prefix on those 20 identifiers, and the same prefix on the SPEC keys of co6_names.py; the name() output strings are unchanged (13 of 13 match). The rc 1 transcript was overwritten by the re-run and is reproducible from the two files.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/terraform/harvest/dossier-refresh.tf @94ffc82717e lines 36-84 (both locals blocks)",
+          "infra/aws/terraform/harvest/gold-refresh.tf @2140a014d0 lines 36-100 (the gold_ prefixed locals)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~190/co6_names.out @2140a014d0 (NAMES-CHECK terraform_literals=13 builder_match=13 mismatches=0)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~190/co6_validate.out @2140a014d0 (Success! The configuration is valid.)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Form only. The face's names and literals are unchanged in value; only identifiers differ. Any later cell that copies this structure into the same root needs the same prefix."
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W190-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~190",
+      "surfaced_at": "2026-10-20T19:01:48Z",
+      "one_line": "dossier-refresh.tf header contradicts itself on the run half's build guard: line 21 says the run half refuses to plan without the build half, line 23 says it plans whether or not the build half is enabled.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "dossier-refresh.tf header (the model the face names as the one to copy): 'The run half refuses to plan unless the build half is enabled' and 'so the run half plans whether or not the build half is enabled'.",
+      "world_is": "The two sentences describe opposite behaviour. The plan measured the refusal (gold RUN-PLAN, S1; dossier RUN-ONLY-REFUSED, AMGT_HARVST-D1-W183-S7). gold-refresh.tf follows the refusal, the behaviour the copied precondition gives, and its header states it once.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/terraform/harvest/dossier-refresh.tf @94ffc82717e lines 19-25 (both sentences)",
+          "infra/aws/terraform/harvest/dossier-refresh.tf @94ffc82717e lines 260-275 (the precondition that refuses)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~190/co6_plan.out @2140a014d0 line 740 (Error: Resource precondition failed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Form only; not edited (the dossier file is another cell's). The gold header states the refusal reading."
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W190-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~190",
+      "surfaced_at": "2026-10-20T19:01:48Z",
+      "one_line": "Commit-time naming gate prints NAMING RAISE on the two log-group template literals of gold-refresh.tf (lines 66 and 67): 'G3: the tokeniser cannot place a character of a resource name {x}'; the commit landed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "rule 30: every resource name is name() output; a builder refusal or a gate raise is a registry or rule defect to report, not a workaround.",
+      "world_is": "The naming gate (safe-commit, commit 2140a014d0) judged the 13 literal names CONFORMANT and raised on /aws/codebuild/{x} (gold-refresh.tf:66) and /aws/ecs/{x} (gold-refresh.tf:67) as LOG_GROUP: rule or registry defect. The same two template literals in dossier-refresh.tf are the cn5 form already filed (AMGT_HARVST-D1-W183-S15). The names check (co6_names.py) does not cover these two derived log-group names; they are built from the names block, not typed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/terraform/harvest/gold-refresh.tf @2140a014d0 lines 66-67",
+          "safe-commit output of commit 2140a014d0 (naming-gate NAMING RAISE lines, NAMING-GATE: WARN 18 graded)",
+          "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md @44bea64580 row AMGT_HARVST-D1-W183-S15"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Form only. The derived names are not hand-typed; the gate's tokeniser is the defect."
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W189-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~189",
+        "surfaced_at": "2026-10-20T19:01:01Z",
+        "one_line": "The worker Bash shell sets FORCE_COLOR=3, so pytest prints ANSI-coloured output and the AC1 summary line does not begin its line; the offline suite reads 16 passed when run with FORCE_COLOR unset.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-5 AC1: python -m pytest lib/research/harvest/test_gold_refresh.py -q, expect (?m)^(1[2-9]|[2-9]\\d) passed(?!.*failed) -- an anchored line match on the pytest summary.",
+        "world_is": "FORCE_COLOR=3 is set in the worker shell environment. Under it pytest wraps the summary line in ANSI escape codes, so the line begins with an escape, not a digit, and the anchored expect cannot match. The same suite run under env -u FORCE_COLOR prints '16 passed in 0.88s' on its own line, rc=0 (deliverable co5_pytest.out). No expectation was edited; the plain run is the recorded output and the environment is the finding.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~189/co5_pytest.out (plain run, this commit)",
+                "worker Bash shell environment probe: FORCE_COLOR=3 (this run)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W189-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~189",
+        "surfaced_at": "2026-10-20T19:01:01Z",
+        "one_line": "The worker worktree is a sparse checkout that leaves org/surprise_channel/ off disk; the row schema the face names is tracked at HEAD but could be read only through git show.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "The worker face names the row schema org/surprise_channel/schemas/investigation_item.schema.json as the form every appended row conforms to, a readable file in the worktree the row is written from.",
+        "world_is": "In worktree C:/dev/wk-harvst-189 (HEAD bed53abcc2) the directory org/surprise_channel/ does not exist on disk ('No such file or directory'). The file is tracked: git ls-files lists org/surprise_channel/schemas/investigation_item.schema.json and git show HEAD:<that path> returns the schema. The worktree has sparse-checkout patterns set (the first three shown: .claude/agents, .tools, infra/logic). The schema was read through git show; the row was written to the investigation file, which is on disk.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json (bed53abcc2, this run)",
+                "ls org/surprise_channel/ in C:/dev/wk-harvst-189: No such file or directory (this run)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W189-S3",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~189",
+        "surfaced_at": "2026-10-20T19:01:01Z",
+        "one_line": "The real DRY RUN of the gold driver took 4561.6 s wall, over the one-hour mark; the mention build alone took 2715.1 s over 2762 GETs and 461 MB, and the event build re-read the same bytes.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-5 step d: the real dry run runs in the background under a 120-minute ceiling, and a row is filed if its wall time is over an hour.",
+        "world_is": "co5_dryrun.out, GOLD-CENSUS: wall_seconds=4561.6, inside the ceiling, not killed; 3 GOLD-BUILD lines, written=0 would_write=3 errors=0, s3_puts=0, served_from_memory=7. Per table: article_security_mention 2715.1 s (gets 2762, bytes 461381835); chatter_daily 1503.4 s (gets 8645, bytes 752430494); chatter_event 341.4 s (gets 2762, bytes 461381835). The event build's silver-article read repeats the mention build's GET count and byte total exactly, which reads as the same silver article set read twice.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~189/co5_dryrun.out (this commit)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
