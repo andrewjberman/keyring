@@ -78,3 +78,15 @@ Read from the shipped AR-g-176 tree: `analysis_audit.audit_address` raised Addre
 AR-g-178 carries `<workstream>~GREL2</workstream>` (a third issuance of round 60; the gate keys one issuance to round x workstream).
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell.
+
+## Addendum 3 2026-10-20 (issuer): cell AR-g-179, the filing instrument for FWD-10's live read
+
+r34o is live (IB2 ledger irpt-resident-r34o-20261020 CLOSED, V2S OK). The CTO (msg 11622) asked for one synthetic Multi-Comp filing after Y2's Overview. Two measured gaps in the filing instrument of runs 7b to 7e: it never ticks a comparable (it only counts the form's five Opal-model checkboxes), and its holdings use `SYNTH-*` tickers that no price tier knows, so a comparison built from them could only read "not available". Also measured: the live comparison catalogue holds only the five Opal models (no ETF entry; the form takes an ETF through the Other ETFs chip input), so the live run is a Multi-Comp of Opal models; the ETF comparable stays proved offline by AR-g-175. The run plan (`FWD10_ONE_REAL_RUN_PLAN_20261020.md`) is amended accordingly in the run order.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-179` | a copy of the instrument with `--comparables`, the closed request line and a real-ticker holdings CSV, proved offline against a portal build at the PROD tip | the worker folder | LOCAL |
+
+AR-g-179 carries `<workstream>~GREL3</workstream>`.
+
+fanout: 1 of 1 chains, cap 8, reason: one instrument cell.
