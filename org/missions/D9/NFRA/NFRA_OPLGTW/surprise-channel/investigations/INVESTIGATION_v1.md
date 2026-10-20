@@ -30924,3 +30924,55 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Phase A stopped at step 3: GV1_BEFORE, GV1_DIFF, GV1_PREFLIGHT_DECIDE and GV1_DENY are written; no ask is written; nothing was activated. Needs the issuer's ruling on (a) or (b) and a matching amendment of gv1.AC1 if (a)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-20T12:39:07Z",
+  "id": "NFRA_OPLGTW-Z-S432",
+  "one_line": "OG-gc-1 Phase A: a person_access tools_allow record CANNOT admit the five client_* tools for Alyssa or Menachem; decide() denies them first (entitlement_denied) and person_access only narrows after it, so the order's ask (a tools_allow set) would not fix the denial.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W/GC1_FACTS.json: the gateway's own decide() on trunk code over the stored records: Alyssa (active profile and grant revision 7, granted tools = the four read-only Schwab tools) and a profile-less principal both read entitlement_denied for each of the five client tools, and admitted if the tier were master_admin; no person_access record exists in the store (0 of 29 POLICY# items).",
+      "Code: app/data_entitlement.py decide() lines 729-736 (an ACTIVE profile is confined on DATA_GRANT_TOOLS, which includes CLIENT_TOOLS, to access.tools; allowed_tools() maps only SCHWAB_TOOLS) and 737-743 (unprofiled: denied unless tier master_admin).",
+      "Code: tool_denial() lines 838-846 reads person_access only AFTER decide() admits; person_denial() only narrows; person_widens() widens only at the identity-scope floor, for an Opal principal and a served tool, never past decide()."
+    ]
+  },
+  "spec_asserts": "OG-gc-1 steps 1-3 and gc1.AC1: if a client tool is denied, write an ask for a tools_allow set (a subset of the five) that is a person_access record written by NFRA_MCPORTAL's grant writer.",
+  "world_is": "The gate that denies is entitlements (decide()), and no record this order may write moves it. The instrument is a code change (the client family's rule in data_entitlement, or allowed_tools mapping a grant operation to the client tools) or a tier-roster change at deploy time; both are outside this order and outside person_access. GC1_GATES.json records the facts with needs_write true and write_path.needs_owner_session true; I wrote NO ask, because an ask for an ineffective tools_allow record would mislead the signers.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Phase A stopped after the facts. Needs the issuer's ruling: amend the order to a code/roster cell (and then a record ask), or an Andrew open call. gc1.AC1 reads FAIL on the ask line only, by design of this finding."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-20T12:39:07Z",
+  "id": "NFRA_OPLGTW-Z-S433",
+  "one_line": "OG-gm-1 Phase A: Menachem has no profile in the grant store and no seat-readable record carries his tid and oid, so the first-grant candidate cannot be built without typing or guessing them; the order forbids both.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Strong scan of the POLICY# partitions (29 items): 6 principal_profile records, none whose e-mail names this role; 3 carry no e-mail (probe profiles); the other three are the owner, Alyssa and one more active profile.",
+      "mcportal-grant-changes-table (1 item) names no such person; the audit lake, 3 days (33739 records, 0 read errors), has 0 records by a user of this name, so there is no sign-in to read a verified principal key from.",
+      "The decomposition and FWD state hold 'Menachem's verified tid/oid' (gate G-E, OG-v-5) as still HELD; no deliverable carries the pair."
+    ]
+  },
+  "spec_asserts": "OG-gm-1: Menachem's tid and oid are read from the people/roster records the gateway's grant tools already use, NEVER typed; with no profile this is a FIRST grant that prepare() creates from them.",
+  "world_is": "The one input the first-grant candidate needs, his verified tid and oid, exists in no record readable by this seat; G-E (his verified identity) is the open gate. Phase A for gm-1 cannot start: no GM1_* record is written.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Unblocks when a record carries the verified pair (his first sign-in produces a pending profile or an audit principal key, or the issuer names the source). Not a gate I may work around."
+}
+```
