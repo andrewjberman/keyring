@@ -28411,3 +28411,91 @@
 }
 ]
 ```
+
+
+## IRPT_ANLREQ-D2-W323-S1 -- the page files the ticket but never sends the analysis request: analysisBody carries commentary_requested, which readSubmissionRequest refuses, so every I1 analysis submit on the PROD tip throws before the POST
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W323-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~323",
+  "surfaced_at": "2026-10-20T11:28:16Z",
+  "one_line": "On the PROD tip (portal f48e09dd) the Analysis Request form uploads and creates the ticket, then the page's own step reads 'Analysis: FAILED - Invalid analysis submission request': analysisBody adds commentary_requested, which readSubmissionRequest refuses because its closed key set does not hold it, so no analysis POST is ever sent and the ticket never gets a report_ref.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "ADDENDUM 9 section 2, row B2 (run 7): the page performs the upload and the analysis request; a refusal is a STOP at B2 naming the page's words. Cell AR-y-454: the browser-leg script is proved offline against a build of the PROD tip, and B2 files one request and prints the REQ id.",
+  "world_is": "Against a build of portal f48e09dd with synthetic fixtures, B2 sends POST .../investor-reporting/analysis/inputs and POST /api/scoped/tickets, then the page shows 'Analysis: FAILED - Invalid analysis submission request. The ticket stays filed.' No POST to .../investor-reporting/analysis is made, so the ticket carries no report_ref and the Open report control of B3 is never shown for it. By reading, the Retry analysis request path calls the same submit and is refused the same way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts@f48e09dd lines 651-667: analysisBody returns commentary_requested: true (line 665); sendAnalysisStep at lines 726-739 calls deps.ir.submitAnalysisRequest(analysisBody(...)).",
+      "portal/src/api/endpoints/investor-reporting.ts@f48e09dd lines 1492-1493: submitAnalysisRequest calls readSubmissionRequest(body) before any send.",
+      "portal/src/pages/InvestorReporting/contracts/submission-request.ts@f48e09dd lines 13-14 and 25: the required keys plus input_id and ticket_id are the only allowed keys; any other key throws TypeError 'Invalid analysis submission request'.",
+      "offline run of run7_browser_leg.mjs --phase b2 against a vite build of f48e09dd with fixtures_offline.json (the CALLS lines hold analysis/inputs and tickets only; the B2 line reads req=none; the page text reads Analysis FAILED - Invalid analysis submission request). Repeated twice with the same result."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer's GO decision: the one-shot live run must not press B2 on PROD until the analysis submit sends. The worker did not patch the portal (out of grant; portal changes go through a cand/ branch and approval). Consequence for this order: the offline proof is RED at B2, so AC1 and AC2 are not met and the order stays open."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W323-S2 -- the page's filing makes four API calls, not the three the cell and the composite line name: the record step POST .../tickets/{id}/report follows the analysis submit
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W323-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~323",
+  "surfaced_at": "2026-10-20T11:28:16Z",
+  "one_line": "The I1 filing sequence on the PROD tip makes four writes (upload, ticket create, analysis submit, record the report id on the ticket); the cell and the composite line name three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-y-454, the composite line: b2_calls=<the three call names in order>; the cell's B2 names the upload, the ticket creation and the analysis request.",
+  "world_is": "By reading, fileAndRequestAnalysis runs fileAnalysisRequest (upload, then ticket create), then sendAnalysisStep (analysis submit), then recordStep (ticket report write). The run7 script prints the names the page makes, so a passing run prints four: analysis-input-upload, ticket-create, analysis-request, ticket-report. The fourth is never reached on this build (row S1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts@f48e09dd lines 701-723: fileAndRequestAnalysis calls fileAnalysisRequest, then sendAnalysisStep, then recordStep.",
+      "portal/src/api/endpoints/tickets.ts@f48e09dd line 270: recordTicketReport posts to /api/scoped/tickets/{id}/report."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer: the composite line's three-name expectation is a regex on b2_calls=\\S+, so the four-name list passes it. The count is a fact of the page, not a defect."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W323-S3 -- the kept-symbol control is labelled No on the page, not Keep, and the submit control reads File Analysis Request
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W323-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~323",
+  "surfaced_at": "2026-10-20T11:28:16Z",
+  "one_line": "The page's symbol-hint presses are labelled Yes, Replace and No; no control reads Keep. The submit control reads File Analysis Request, not submit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADDENDUM 9 section 2, row B2: 'no Keep in this run' (the held-symbol press is named Keep in the run's words); the press is the submit.",
+  "world_is": "The tree's hint buttons read Yes, Replace and No (Keep appears only in comments); the form's submit reads 'File Analysis Request' and reads 'Uploading...' while creating. The fixtures never produce a finding, so no hint control was shown offline; the live run should expect the word No for any kept symbol.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx@f48e09dd lines 322-329: the Yes, Replace and No buttons.",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@f48e09dd lines 880-886: the submit button text File Analysis Request, or Uploading... while creating."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer's PAGE_NOTES reading. The run7 script uses the accessible names read from source; it presses the submit once and never presses a hint control."
+}
+]
+```
