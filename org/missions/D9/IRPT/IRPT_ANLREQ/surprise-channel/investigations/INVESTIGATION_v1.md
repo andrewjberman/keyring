@@ -28161,3 +28161,86 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-W320-S1 -- the cell's packager module is not materialized in this sparse worktree; its read path was checked at HEAD by git show only
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W320-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~320",
+  "surfaced_at": "2026-10-20T08:53:38Z",
+  "one_line": "The cell cites the packager module infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py as the reader of the commentary draft. That file is in the index at HEAD but is absent from this sparse worktree, whose sparse-checkout list is .tools, infra/aws/terraform/investor-reporting, infra/logic, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref and org/standards. The read path was verified with git show HEAD only: handle_commentary_ready at line 152 and live_read_artifact at line 421.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worktree carries the paths the task order names and the code the cell reads, so the packager read the grant serves can be checked in the working tree.",
+  "world_is": "The worktree carries the order's <paths> (resident.tf, the registry, lib/opal_naming.py and the org paths) but not infra/aws/lambda. The packager was read only from git objects at HEAD. Its line numbers are cited, not re-read from the working tree. No code was changed in that subtree and no AWS call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at 430cd08b2aa: .tools, infra/aws/terraform/investor-reporting, infra/logic, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards",
+      "ls infra/aws/lambda/ in the worktree: No such file or directory; git ls-files infra/aws/lambda/investor-reporting lists 818 indexed files",
+      "git show HEAD:infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py: line 152 def handle_commentary_ready(body, ports); line 421 def live_read_artifact(artifacts=None)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W320-S2 -- three safe-commit gates printed blind or absent results on the Terraform pin commit in this worktree; the commit still landed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W320-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~320",
+  "surfaced_at": "2026-10-20T08:53:38Z",
+  "one_line": "On the commit of the Terraform pin (430cd08b2aa) the naming gate printed NAMING ERROR for the missing function-map folder infra/aws/lambda/ci/function-map, the risk reflex answered PARTIAL_OR_BLIND (danger map 108.9 h STALE, 0 of 1 file scanned), and the client-data check WARNed that the hashed account-id list is absent. safe-commit exited 0 and the commit landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A commit through .tools/safe-commit.sh is graded by the naming gate, the risk reflex and the client-data check over the staged paths; a gate that cannot grade is reported as a refusal or as an explicit unchecked state.",
+  "world_is": "On this sparse worktree those three gates did not grade the staged resident.tf change: the source map and the danger map are not present here, and the account-id list is absent on this box. The commit proceeded with rc 0. The change is additions only (numstat 21 0), was checked by the Python checks of this order, and was not pushed; no AWS call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 430cd08b2aa: [naming-gate] NAMING ERROR function-map folder missing; [risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND, scanned 0 of 1 file(s); WARN: client-data-check: hashed account-id list ABSENT",
+      "git show --stat 430cd08b2aa: 1 file changed, 21 insertions(+), infra/aws/terraform/investor-reporting/ycharts/resident.tf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W320-S3 -- the grant formula takes every enabled client firm, while the commentary policy row carries its own firms list that the naming library's destination check consults
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W320-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~320",
+  "surfaced_at": "2026-10-20T08:53:38Z",
+  "one_line": "The cell's read grant has one prefix per key of resident_scopes (every enabled client FIRM), but the policy row irpt-anlreq-x10-v1 names its own firms, and lib/opal_naming.py _reporting_destination refuses a firm absent from policy firms. The two sets are equal today, so the grant reaches no firm the policy does not name; a client firm added to scopes.json later would receive a commentary read prefix with no policy row behind it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commentary read grant covers the client firms of the commentary policy irpt-anlreq-x10-v1, one entry per key of resident_scopes, shaped like resident_read_prefixes (cell AR-y-445).",
+  "world_is": "The formula is shaped as the cell specifies and does not consult the policy firms list; the naming library's _reporting_destination does consult it and refuses a firm outside policy firms. Measured today: FIRM client enabled scopes are 49financial, inflection and cottonwood; policy irpt-anlreq-x10-v1 firms are 49financial, cottonwood and inflection. The sets are equal and the grant does not enforce that equality.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python read of infra/logic/registry/scopes.json at 430cd08b2aa: FIRM rows with tenant.kind client and enabled true are 49financial, inflection, cottonwood (3 of 17 scopes)",
+      "infra/logic/registry/reporting_policies.json policy irpt-anlreq-x10-v1: firms [49financial, cottonwood, inflection]; family ANALYSIS_COMMENTARY tier state, table analysis_commentaries",
+      "lib/opal_naming.py _reporting_destination: if firm not in policy[firms] or family not in policy[families]: refuse (line 2660)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
