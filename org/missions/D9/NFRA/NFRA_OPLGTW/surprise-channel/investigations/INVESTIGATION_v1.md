@@ -31406,3 +31406,28 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Observation only: the order names no module path, so this row does not block OG-sk-3. Whoever reads the module by path from this checkout reads nothing."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W179-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~179",
+  "surfaced_at": "2026-10-20T21:56:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "one_line": "The commit-time naming gate graded seven REFUSE verdicts on the new Schwab locals in schwab_reader_iam.tf; the gate read its enforce file as absent in this sparse checkout and printed WARN, so the commit landed here, but the enforce file is committed at HEAD and the same seven names would refuse under it.",
+  "spec_asserts": "Task order OG-sk-3 section 1 step 1: the locals carry EXACTLY the names given (schwab_state_bucket = opal-data-49financial, the schwab/49financial/silver and state prefixes); CLAUDE.md section 4 (LGIC): every new name is name() or lookup() output, and a builder refusal is a registry row to add.",
+  "world_is": "safe-commit of 6b853afa689 printed naming-gate WARN 7 graded: schwab_reader_iam.tf:93, :97-100 and :105-106 each REFUSE as a NEW hand-kept carrier of 49financial outside a permitted context, with the advice to read it through lookup('49financial'); the window read WARN because org/mcp/naming-gate.enforce is skip-worktree in this checkout, so the 7 verdicts did not block here. The LGIC_ENFORCE flip is committed at HEAD (2.0.0_SA_COO~G, 2026-09-17). Not changed here: the names are the order's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of the OG-sk-3 commit 6b853afa689: [naming-gate] NAMING REFUSE lines for infra/aws/terraform/opal-gateway/schwab_reader_iam.tf:93,97,98,99,100,105,106 and '(WARN window: 7 REFUSE verdict(s) did not block ...)'",
+      "git show d7d029bd188:org/mcp/naming-gate.enforce (the LGIC_ENFORCE flip, present at HEAD); git ls-files -v marks it S (skip-worktree) in this checkout, so it is absent on disk here"
+    ]
+  },
+  "notes": "Filed for the issuer to rule: whether the new locals move to lookup('49financial') before the enforce window, or the gate's context rule takes a permitted-context entry for the 0840 move. Measured in the same checkout: 91,827 index entries are skip-worktree (git ls-files -v), so enforce-file and module reads here are not evidence of HEAD's state; read HEAD through git show. The LIVE-READ-FAILED note in the gate output is the gate's own live AWS pull; it is not part of this row."
+}
+```
