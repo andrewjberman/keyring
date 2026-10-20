@@ -61,7 +61,7 @@ Callers of these functions (the converters, `build_*`) are other cells' business
 - ROUND TRIP: `parse_bronze_key(bronze_key_for_file(...))` returns the inputs; `parse_legacy_bronze_key` accepts an old-form key and refuses a new-form key, and the reverse for `parse_bronze_key`; the CS-form name survives.
 - LISTERS: a stubbed listing with new-form partitions returns compact dates sorted; a listing with only old-form tokens RAISES with the count; a mixed listing returns the new-form dates only.
 - CONVERTER SEAM (name the test function with the words `converter_seam`): import `data/assets/scripts/silver/schwab_conversion.py` by path and assert that `scope_from_key`, `feed_from_key` and `date_from_key`
-  return master, feed and date for a NEW-form key built by `monolith_bronze_key` -- the neighbor that every copied object will wake up.
+  return master, feed and date for a NEW-form key built by `monolith_bronze_key` -- the neighbor that every copied object will wake up. That file does `import stream_parquet as sp` (line 66), and the module is tracked at `data/assets/scripts/lib/stream_parquet.py` (the Lambda package carries it beside the handler). Inside the test only, put `data/assets/scripts/lib` on `sys.path` before loading the converter by path. (Issuer ruling 2026-10-20 after row `NFRA_SCHWABBF-W1-S1`; no `<paths>` change, the directory is read-only.)
 
 ### ACCEPTANCE
 
