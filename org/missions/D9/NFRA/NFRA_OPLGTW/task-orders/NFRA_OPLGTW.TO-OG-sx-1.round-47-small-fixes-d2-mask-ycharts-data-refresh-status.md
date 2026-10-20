@@ -76,6 +76,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sx-1.round-47-small-fixes-d2-ma
 - Pre-cut: `AC1` base FAIL as expected (date cases 6 of 8; the mask leaves all three shapes), `AC2` base FAIL as expected (Y1 `TypeError`, Y2 absent_reason None, cap not applied, R1 `UNKNOWN`; the two controls hold), `AC3` base FAIL as expected (no test file). The 11 neighbour files pass at the base (50 tests).
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-A</workstream>
 <slot>~167</slot>

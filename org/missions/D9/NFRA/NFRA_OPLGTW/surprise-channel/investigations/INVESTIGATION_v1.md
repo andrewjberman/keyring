@@ -30658,3 +30658,201 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W170-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~170",
+    "surfaced_at": "2026-10-20T09:52:07Z",
+    "one_line": "The OG-rt-1 order gives the position read of a master-wide account reference the caller's already-authorized check (as _asset_holdings does), but its named signature _master_accounts(principal, master, date, operation, cache) has no check argument, so the helper builds its own dim_position policy check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rt-1.round-47-a-master-wide-schwab-scope-resolved-at-read-time-with-no-stored-account-list.md@6f2ddfd58e0 section 1 DO item 3(c): the helper signature without a check, and 'reuse _entries, _fetch and the engine exactly as _asset_holdings reads the position snapshot'.",
+        "CODE infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py@6f2ddfd58e0 _asset_holdings (about line 318): the position read takes the check of the dim_asset request already in flight, because a partial-account dim_asset grant is not a dim_position grant.",
+        "CODE worktree infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py, method _master_accounts (uncommitted at this write): check = self._policy_check(principal, {operation, master, dataset: dim_position}) then self._fetch(pos_entries, check)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The position read of a master-wide reference resolution reuses the caller's already-authorized check, and the helper takes (principal, master, date, operation, cache).",
+    "world_is": "The helper has no caller check, so it authorizes dim_position itself. A master-wide grant whose datasets omit dim_position therefore denies an account_ref filter (scope_denied or entitlement_denied) where the caller's dim_asset or dim_balance check would have passed. Explicit-master grants are unchanged. Not exercised by the OG-rt-1 tests, whose grants carry dim_position.",
+    "notes": "INERT -- nothing armed and no grant written. Fail-closed, so no account is exposed; the cost is a refusal on a master-wide grant that lacks dim_position. A remedy is for the issuer to choose: pass the caller's check into _master_accounts, or keep the self-built check and state that a master-wide grant must carry dim_position. Not decided by this worker."
+  }
+]
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W172-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~172",
+  "surfaced_at": "2026-10-20T09:53:47Z",
+  "one_line": "The name lookup the order directs (harvest_resolve_security) is not network-free and write-free: each call reads S3 harvest objects and writes one SERVE audit row tagged harvest_resolve_security, so every news_for_security call now does both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "OG-nf-1 worker face section 1, step 1: _security_name 'never raises, never calls the network' and 'It makes no write'; the lookup is the existing harvest_resolve_security identity lookup.",
+  "world_is": "harvest_resolve_security lists and reads the crosswalk, universe and identity objects through harvest_read (S3 list and get), and harvest_typed.audit_ok writes one SERVE audit row per call through harvest_read._audit. The change calls that lookup once per news_for_security fallback, as the order directs, so each news call now adds those S3 reads and an audit row. No criterion exercises the live path: the probes and tests fake _security_name, and the resolver's exception path is tested with a stub.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_identity.py:374-404 @6f2ddfd58e0 -- harvest_resolve_security reads the newest crosswalk and universe objects and the identity listing (ht.read_json, ht.list_keys)",
+      "CODE: infra/aws/ec2/opal-gateway/app/harvest_typed.py:45-47 @6f2ddfd58e0 -- audit_ok writes one SERVE row through harvest_read._audit for the tool name it is given",
+      "CODE: infra/aws/ec2/opal-gateway/app/news_typed.py @ worker branch wk-NFRA_OPLGTW-172 -- _security_name calls harvest_identity.harvest_resolve_security(ticker) once per news_for_security fallback"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W172-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~172",
+  "surfaced_at": "2026-10-20T09:53:47Z",
+  "one_line": "The surprise-channel schema path named by the worker's rules is absent from this worktree: the worktree is a sparse checkout that leaves org/surprise_channel/ off disk, though the file is tracked at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker rules name the row schema at org/surprise_channel/schemas/investigation_item.schema.json, read from the worktree, and the worktree carries the paths the order names.",
+  "world_is": "The order's own paths are all present. org/surprise_channel/ does not exist on disk in the worktree (ls reports no such directory), while git ls-files lists the schema at HEAD. I read the schema with git show HEAD:<path> (read only, no checkout change) and built this row against it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GIT: org/surprise_channel/schemas/investigation_item.schema.json is tracked at HEAD 6f2ddfd58e0 (git ls-files, read via git show HEAD:<path>)",
+      "GIT: git sparse-checkout list in C:/tmp/wk-og-172 names a cone (.tools, data/mdpf/config, docs/catalog, infra/aws/ec2/opal-gateway, infra/aws/lambda/ci/function-map, ...); org/surprise_channel/ is outside the printed cone and absent on disk, measured 2026-10-20"
+    ]
+  }
+}
+```
+
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~168",
+  "surfaced_at": "2026-10-20T09:55:27Z",
+  "id": "NFRA_OPLGTW-Z-W168-S1",
+  "one_line": "The order's section 5 asks for the one <status> tag to flip to complete once all three criteria pass, but the worker face carries no <status> tag and the task-order file is outside the order's <paths> grant, so this worker did not flip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order NFRA_OPLGTW.TO-OG-sz-1 section 5: flip the one <status> tag to complete only if all three criteria PASS. Section 2 and <paths> grant the worker only the named product files, the two named test files, the channel file and the deliverables folder.",
+  "world_is": "The worker face (lines 3-67 of the order file at 6f2ddfd58e) has no <status> element, and the order file itself is not in <paths>. The record face (line 68 onward) is not in this worker's context, so the tag's location was not read. All three criteria PASS and the proof instance validates; the flip is left to the issuer.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TASK ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-sz-1.round-47-the-50-kb-projection-measured-on-served-bytes-and-two-oversize-tools.md@6f2ddfd58e, lines 3-67 (worker face) and 42-50 (<paths>).",
+      "SIBLING PRECEDENT: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~161/NFRA_OPLGTW.TO-OG-pr-6.round-45-make-the-audit-lake-leg-bounded-and-audible.proof_of_spec.json, surprises entry NFRA_OPLGTW-Z-W161-S1, records the same gap."
+    ]
+  }
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~168",
+  "surfaced_at": "2026-10-20T09:55:27Z",
+  "id": "NFRA_OPLGTW-Z-W168-S2",
+  "one_line": "This worker's worktree does not materialise org/surprise_channel/, which HEAD carries with 43 files including schemas/investigation_item.schema.json, so the channel schema that the row doctrine cites does not resolve on disk in this tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row doctrine cites org/surprise_channel/schemas/investigation_item.schema.json as readable from a worker's worktree, for every new row.",
+  "world_is": "In worktree C:/tmp/wk-og-168 (branch wk-NFRA_OPLGTW-168), org/surprise_channel does not exist on disk (ls: No such file or directory). git ls-tree -r HEAD -- org/surprise_channel lists 43 files, including the schema. The schema was read from HEAD with git show; the worktree was not repaired or re-checked out.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TREE: git ls-tree -r --name-only HEAD -- org/surprise_channel at worktree C:/tmp/wk-og-168 (branch wk-NFRA_OPLGTW-168, HEAD 6f2ddfd58e0): 43 entries, including org/surprise_channel/schemas/investigation_item.schema.json and org/surprise_channel/schemas/remediation_row.schema.json.",
+      "DISK: ls -la org/surprise_channel in the same worktree: cannot access 'org/surprise_channel': No such file or directory."
+    ]
+  }
+}
+```
+
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~168",
+  "surfaced_at": "2026-10-20T10:03:42Z",
+  "id": "NFRA_OPLGTW-Z-W168-S3",
+  "one_line": "The commit gate printed WARN client-data-check: the hashed account-id list is absent on this device, so commit 39e89fed308 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate checks each commit for client account ids against the hashed list on this device, so a worker commit is graded for client data.",
+  "world_is": "C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt is absent on this device. The gate printed 'absent is not empty' and did not grade commit 39e89fed308 for client account ids. The worker's diff holds code, tests and channel rows only, and the worker printed no account number, email address or client value; the worker did not grade the diff for client data either.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GATE OUTPUT: .tools/safe-commit.sh run for commit 39e89fed308 (session output at 0.9.0_WK_NFRA_OPLGTW~168 .scratch/commit_code.out, line 49): WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids.",
+      "SIBLING PRECEDENT: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~161/NFRA_OPLGTW.TO-OG-pr-6.round-45-make-the-audit-lake-leg-bounded-and-audible.proof_of_spec.json, surprises entry NFRA_OPLGTW-Z-W161-S3, records the same WARN."
+    ]
+  }
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~169",
+  "surfaced_at": "2026-10-20T10:06:26Z",
+  "id": "NFRA_OPLGTW-Z-W169-S1",
+  "one_line": "The 50 KB projection the order names, harvest_typed.project(answer, 51200), measures compact JSON, but the answer is served as json indent=2 and runs larger; so the literal call does not bound the served answer to 51200 bytes (OG-tp-1 AC1 measures the indented rendering)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/harvest_typed.py project() at 1511679e899, lines 50-54 and 65-94: _size() is json.dumps without indent; the binary search fits the compact size to the limit, then projected_to_bytes is fixed to the compact count.",
+      "Measured in the worktree at 1511679e899 with the literal call on 100 items of 3000-byte padding and a pad sweep of 0 to 3400 bytes in steps of 37: the served indented size reached 54716 bytes (pad 370, 97 items, compact 50820), over the 51200 limit the order names.",
+      "Fix in the OG-tp-1 commit on wk-NFRA_OPLGTW-169: app/tools.py _bounded_search re-projects with the limit cut by the served excess, the envelope keys counted; a sweep of 524 cases gave worst served 51196 and zero over the limit."
+    ]
+  },
+  "spec_asserts": "OG-tp-1 step 1: the search answer is projected with harvest_typed.project(answer, 51200), and AC1 requires each answer to fit 51200 bytes as served (json indent=2).",
+  "world_is": "project() measures compact JSON, so the answer it fits to 51200 can serve above 51200 indented. The harm is live in the shared function: every caller of harvest_typed.project() inherits the compact measure, and OG-sz-1 is changing project()'s internals in parallel. NOT CLAIMED: how the other typed tools serve their answers; they were not measured here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Search tools fixed in the worker's own hunk. The disarm for the shared function belongs to the issuer, because OG-sz-1 owns project()'s internals: measure the served rendering there, or confirm the callers never serve indented."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~169",
+  "surfaced_at": "2026-10-20T10:06:26Z",
+  "id": "NFRA_OPLGTW-Z-W169-S2",
+  "one_line": "The Teams poll cursor set to the last kept message's timestamp can drop a message that shares that timestamp and was cut: the next poll serves only timestamps strictly after the cursor, so the order's claim that nothing is skipped holds only when message timestamps are distinct",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/tools.py poll_addressed_impl at infra/aws/ec2/opal-gateway/app/tools.py@1511679e899 (the OG-tp-1 hunk): when len(out) > top the answer keeps the oldest top messages and sets cursor to out[-1].timestamp_utc; the filter upstream reads ts <= since_iso as already seen.",
+      "tests/test_og_tp1.py test_ogtp1_poll_three_pages_no_loss passes on distinct timestamps only (10:01 to 10:06); the tie case is not in the probe and was not run."
+    ]
+  },
+  "spec_asserts": "OG-tp-1 step 2: the cursor is the last kept message's timestamp, so the next poll returns the rest: nothing is skipped and nothing repeats.",
+  "world_is": "A message that ties the cut timestamp and falls after the cut is never served by the next poll. Not measured: how often Graph gives two chat messages the same createdDateTime at second or sub-second precision. The pre-cut code never cut, so the boundary is created by this order's top bound. A cursor carrying an id tie-break would change the REST /teams/poll contract that teams-watch.sh reads; not made here.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left as specified. The issuer decides whether the tie case needs a tie-break before the page bound ships to the monitor."
+}
+```
