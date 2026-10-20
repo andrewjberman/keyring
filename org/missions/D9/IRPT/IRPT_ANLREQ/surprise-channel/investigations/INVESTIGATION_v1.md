@@ -29365,3 +29365,57 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W342-S5 -- the audit prefixes in the product bucket are outside the KMS encryption-context list that the Opal report prefixes of this role sit in
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:46:38Z",
+  "one_line": "On the SAME product bucket (resident_bucket), the role's Opal report PDF family (YCHARTS_OPAL_REPORT, ycdgen_opal_report_prefixes) has a Put/Get statement AND an entry in the kms:GenerateDataKey/Decrypt encryption-context list. The new audit prefixes have the Put statement but NO encryption-context entry. Whether that matters depends on whether the reporting bucket default-encrypts with the core KMS key, which this worker did not read. No KMS statement was added, per the amendment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 AMENDMENT 1 (trunk a71b17d96d): report in a row what the existing statements for ycharts_opal_reports of this role carry for the SAME bucket; add no KMS statement; the KMS need is for the issuer to decide.",
+  "world_is": "infra/aws/terraform/investor-reporting/ycharts/resident.tf@3f0b44d5b11 (same content on the trunk): statement RetainTheOpalReportPdf (lines 163-167) grants s3:PutObject, s3:GetObject, s3:GetObjectVersion on local.ycdgen_opal_report_prefixes, which is built (lines 275-278) from local.resident_bucket with family YCHARTS_OPAL_REPORT of policy irpt-ycdgen-research-v1 for each enabled ycdgen firm. Statement ReportEncryptionViaS3ForResidentFamiliesOnly (lines 229-237) grants kms:Decrypt and kms:GenerateDataKey on the core kms_key_arn, with kms:ViaService s3 and kms:EncryptionContext:aws:s3:arn StringLike over concat(resident_write_prefixes, resident_read_prefixes, ycdgen_opal_report_prefixes). local.resident_write_prefixes and resident_read_prefixes are on the reporting bucket too. resident_audit_write_prefixes (new, on local.resident_bucket) is NOT in that concat. The reporting bucket's default encryption was NOT read (remote state, no AWS call), so whether the audit put needs kms:GenerateDataKey is undetermined here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@3f0b44d5b11 lines 163-167 RetainTheOpalReportPdf",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@3f0b44d5b11 lines 229-237 ReportEncryptionViaS3ForResidentFamiliesOnly",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf@3f0b44d5b11 lines 275-278 ycdgen_opal_report_prefixes",
+      "infra/aws/terraform/investor-reporting/core/reporting_storage.tf@6f38e71fc3e line 60 reporting_bucket (remote state value not read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W342-S6 -- the cumulative bound against the cut cannot read files=1 on this branch: the trunk merge brought other lanes' infra edits, and the one resident.tf line count includes trunk-side deletions
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W342-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~342",
+  "surfaced_at": "2026-10-20T18:46:38Z",
+  "one_line": "AR-y-468 AC3 prints AUDIT-WRITE-BOUND-BAD, not the OK line. Measured against the cut 1471a6f87b6, infra/ holds six changed paths, not one. The extra five came in with the trunk merge 5143b9b2565 (AR-y-466 and other lanes' infra work), and resident.tf carries 3 trunk-side deletions. The amendment's cumulative bound, read literally, cannot pass on this branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-468 cell AC3: check_audit_write_bound.py prints AUDIT-WRITE-BOUND-OK numstat=<n>/0 files=1 when the Terraform commit added lines only to this one file. AMENDMENT 1: the cumulative bound against the cut stays additions only.",
+  "world_is": "check_audit_write_bound.py output at 3f0b44d5b11: AUDIT-WRITE-BOUND-BAD infra/aws/ec2/opal-gateway/app/admin_api.py(+2,-0) infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml(+176,-52) infra/aws/ec2/opal-gateway/tests/test_og_mp1.py(+146,-0) infra/aws/terraform/investor-reporting/ops/iam.tf(+7,-1) infra/aws/terraform/investor-reporting/ycharts/resident.tf(+21,-3) infra/logic/registry/reporting_policies.json(+1,-0). This serial's own infra commits are 6f38e71fc3e (+19/-0) and 3f0b44d5b11 (+5/-6, a revision of its own lines). The registry row is AR-y-466's (1c277930e66). The resident.tf deletions are a trunk-side reformat of the ReadTheModelReturnSeriesAndPositioning statement, merged in automatically. The check was NOT re-anchored or narrowed, because the amendment fixes the bound against the cut. Decision needed from the issuer: the anchor (the cut, or the trunk point 5143b9b2565) and whether lanes merged from the trunk are inside the bound.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_audit_write_bound.py output at 3f0b44d5b11 (AUDIT-WRITE-BOUND-BAD, six paths listed)",
+      "git diff --numstat 1471a6f87b6 HEAD -- infra/ at 3f0b44d5b11",
+      "git diff 1471a6f87b6 HEAD -- infra/aws/terraform/investor-reporting/ycharts/resident.tf (3 deletions are the ReadTheModelReturnSeriesAndPositioning reformat)",
+      "git log --author=0.9.0_WK_IRPT_ANLREQ~342 1471a6f87b6..HEAD -- infra/ (6f38e71fc3e and 3f0b44d5b11, plus merge bff0facc3d7)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
