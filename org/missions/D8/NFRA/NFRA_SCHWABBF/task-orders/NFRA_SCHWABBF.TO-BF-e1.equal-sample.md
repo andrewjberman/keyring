@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_SCHWABBF~3</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -37,6 +37,10 @@ Rewriting a day's silver happens by the converter Lambda when the moved bronze i
    Prints `CAPTURED cells=N missing=K` and writes the file. Also writes `master` and `captured_at_utc` into the file.
 2. `compare --before FILE.json`: re-reads the same cells and prints `EQUAL-OK cells=N` and exits 0 when every cell matches on `exists`, `rows`, `columns`, `numeric_sums` and `content_sha256`; otherwise prints one `EQUAL-DIFF table=T day=D field=F before=X after=Y` per difference, then `EQUAL-FAIL diffs=K`, and exits 1.
    A cell that existed before and is missing after is a DIFF. A cell recorded `exists:false` that now exists is a DIFF (a day appeared).
+2a. **Provenance column (issuer ruling 2026-10-20 after rows `NFRA_SCHWABBF-W3-S1` and `-S2`).** Real silver is string-typed and carries provenance columns (`_source_file`, `_source_as_of`, `_master_observed`, `_section`, `_schema_version`).
+   `_source_file` names the bronze key the converter read, so it MUST change when the converter re-reads the moved object; it is the one column the content hash EXCLUDES. Every other column, provenance included, stays in `content_sha256`,
+   so a changed `_source_as_of`, `_master_observed`, `_section` or `_schema_version` still reads as a DIFF. The capture file records `excluded_columns: ["_source_file"]` and both `capture` and `compare` print `EXCLUDED columns=_source_file`.
+   Also record, per cell, `source_file_values_sha256` (the sha256 of the sorted distinct `_source_file` values) but do NOT compare it. Add two test arms: a store differing only in `_source_file` -> `EQUAL-OK`; a store differing in `_source_as_of` -> `EQUAL-DIFF`.
 3. The code path takes an injectable reader so tests need no S3. There is no scheduler, no loop, no `--watch`, no state kept between runs other than the `--out` file.
 
 **Tests `data/canonical/schwab/tests/test_equal_sample.py`** (fake store): identical store -> `EQUAL-OK` rc 0; one changed numeric cell -> `EQUAL-DIFF ... field=numeric_sums` rc 1; reordered rows -> still `EQUAL-OK`; a deleted partition -> DIFF rc 1; a recorded-missing partition that appears -> DIFF rc 1;
