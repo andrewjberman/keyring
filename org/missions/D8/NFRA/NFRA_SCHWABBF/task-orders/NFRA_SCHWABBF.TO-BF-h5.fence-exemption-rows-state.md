@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_SCHWABBF~4</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -29,7 +29,7 @@
 2. `opal-data-49financial`: principal `opal-assets-silver-schwab-role` (the Schwab converter; `arn` `arn:aws:iam::313476888478:role/opal-assets-silver-schwab-role`); `actions` [`s3:GetObject`, `s3:ListBucket`, `s3:PutObject`]; `prefix` [`schwab/49financial/state/complete/`, `schwab/49financial/state/conversions/`, `schwab/49financial/state/backfill_status/`].
 3. `opal-data-cottonwood`: the same converter principal and actions; `prefix` [`schwab/cottonwood/state/complete/`, `schwab/cottonwood/state/conversions/`, `schwab/cottonwood/state/backfill_status/`].
 Each prefix must equal what `lib/opal_naming.address('schwab', <firm>, 'state', <table>, 'date=2026-10-20')` returns, cut at `/date=` (the part after `s3://<bucket>/`, plus a trailing `/`): your test derives them from `address()`, the JSON holds the literal strings. Each row's `reason` is one sentence naming the cell (`NFRA_SCHWABBF BF-h-5`, PRD v1.0 C-TIERS, state tier of the Schwab masters, PutObject on two tables for 08403355 / read-write-list on three tables). Each row's `signoff_ref` is exactly: `org/missions/D8/NFRA/NFRA_SCHWABBF/ledger/NEVER_WIDEN_BF5_STATE_FENCE_COO_HALF.md (2.0.0_SA_COO~SB) and org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_BF5_STATE_FENCE_CTO_HALF.md @4b0036c6cb (1.0.0_SA_CTO), both halves signed; the CTO's condition: fence apply, then converter deploy, then puller upload`.
-Keep the file's own formatting (indent, key order inside a row: principal, arn, reason, signoff_ref, actions, prefix, as the precedent row `opal-clientops-ews-role` in the same file has them) and its own line endings; `git diff --numstat` for the file must show only added lines (about 36).
+Keep the file's own formatting (indent, key order inside a row: principal, arn, reason, signoff_ref, actions, prefix, as the precedent row `opal-clientops-ews-role` in the same file has them) and its own line endings; `git diff --numstat` for the file must show about 36 added lines and at most 2 changed ones (the previous last row of each of the two lists gains a trailing comma); no other line moves.
 
 **What exists (read first).** `infra/logic/registry/exemptions.json` (the precedent row `opal-clientops-ews-role` under `opal-data-49financial`, prefix `schwab/49financial/state/ews_store/current/`); the renderer `infra/aws/terraform/modules/opal_name/main.tf` lines 140-300 (a scoped row stays in `fence_exemption_arns` and renders three extra Denies: any other action, objects outside the prefixes, listings outside them); the merged identity-side grants `infra/aws/terraform/opal-assets/silver.tf` (policy `silver_state_write_schwab_firm`, resource list per master and table) and `infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf` (`MonolithSchwabStateWrite`). You READ these and never edit them.
 
