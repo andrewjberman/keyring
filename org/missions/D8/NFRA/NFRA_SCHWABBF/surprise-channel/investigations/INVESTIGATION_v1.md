@@ -1239,6 +1239,29 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "Worker face, 'Keep the file's own formatting': git diff --numstat for exemptions.json must show only added lines (about 36).",
     "world_is": "Three appended rows of 8 lines each add about 24 lines, plus the two comma edits (2 added and 2 deleted), so numstat shows at least 2 deleted lines. The numstat criterion is not met as worded; the test's clause (d) is unaffected.",
     "notes": "Form only. Owner for disposition: the issuer, to state whether a deleted comma line is acceptable."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~SB",
+    "surfaced_at": "2026-10-20T20:23:54Z",
+    "one_line": "The Schwab converter role carries the shared one_way_fan_in_fence, whose belt 1 denies every S3 mutation outside opal-data-assets, so the converter can never write the state tier in the firm buckets even with the identity grant (BF-g-5) and the fence rows (BF-h-5).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~SB (issuer) with 1.0.0_SA_CTO sign-off: a schwab-only variant of the fence whose belt 1 also excludes the 15 enumerated firm state resources (never-widen, NEVER #1); cell BF-j-6",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-assets/silver.tf:533-538 aws_iam_role_policy_attachment.silver_fence, for_each = local.silver_families (includes schwab), policy_arn = aws_iam_policy.one_way_fan_in_fence.arn",
+        "infra/aws/terraform/opal-assets/router_iam.tf:139-179 statement DenyAnyS3MutationOutsideMonolith, Effect Deny, Action s3:PutObject and eight other mutations, NotResource opal-data-assets and its keys; an explicit Deny wins over the Allow of silver_state_write_schwab_firm (silver.tf:714) and over the bucket-side exemption rows (exemptions.json, BF-h-5)",
+        "the converter's state writes (completion marker, conversion manifest, backfill status) for the five firm-form masters go to s3://opal-data-49financial and s3://opal-data-cottonwood (PRD v1.0 C-TIERS), both outside the monolith"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-g-5 and BF-h-5 (merged) and the CTO's signed fence pair (@4b0036c6cb): the converter role is admitted to write the firm buckets' state prefixes, and with the identity grant and the fence rows the write succeeds.",
+    "world_is": "The identity-side explicit Deny of the shared fan-in fence refuses the converter's PutObject on those buckets whatever the grants and bucket policies say. Read from the Terraform text; the live attachment census (aws iam list-entities-for-policy) is the release act R1's check. The 49F box role has no such Deny (iam.tf: only the bd, cot and inf planes).",
+    "notes": "Not an alert. Fix shape: a schwab-only policy copy whose belt 1 NotResource adds the 15 enumerated state resources, attached in place of the shared one for the schwab role only; the other five families keep the shared fence. The same fix serves the Cottonwood masters' converter state (2.0.0_SA_COO~SA's workstream)."
   }
 ]
 ```
