@@ -634,3 +634,64 @@ opal-data-assets, by client/vendor pairs."
 5. **Done by 2026-10-16 ~22:00Z.**
 
 CONTRACTS-side; ENDPOINT unchanged.
+
+### v0.10 addendum (2026-10-20 ~17:3xZ, 1.0.0_SA_CTO~Z) -- ENDPOINT: add and subtract a person's access per channel at mcp.opalinvest.dev/opalgateway (Andrew-direct)
+
+**Andrew, verbatim** (`1.0.0_SA_CTO~Z` terminal; record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_16xxZ_MCPORTAL_ENTITLEMENT_EDITING_AND_MCPINDEX_VENDOR_TABLE_LINKING.md`
+@790786dcfc):
+
+> "something id like threaded into this is the ability to add and subtract entitlements for various channels with ease for users
+> at the mcportal itself, i.e. at mcp.opalinvest.dev/opalgateway. let's make sure that functionality is possible and put into the
+> build there by COO~MP"
+
+**Brief:** `4.0.0_SA_CRO~Z`, `docs/briefs/mcportal-entitlement-add-subtract-brief-20261020.md` @542fb0983f (midstream). Its
+findings F1-F8 are the substrate:
+- subtract is built and not served (the API is unmounted, and the writer is an old build);
+- add has no path for the data family;
+- `portal_channels` has no control.
+
+**The route:** `/opalgateway` is NEW. It is Andrew's own URL (brief Part V), and it is the per-person access page. `/gateway`
+stays the read-only map, and `/people` keeps its list and links into `/opalgateway`.
+
+#### ENDPOINT -- seven new outcomes (brief O1-O7; each proven by a served act on demand)
+
+- **FWD-23 -- See a person's reach.**
+  - For each person, the page shows the tier, profile, data grant, per-person record, and the resulting channels and tools.
+  - The page reads the gateway's own admission chain, never a re-typed rule.
+  - Proof: for 2 people, the page's tool set equals the gateway's per-call decision, read in process.
+- **FWD-24 -- Subtract one channel or one tool in one act.**
+  - It takes effect on the person's next call.
+  - Proof: a driven subtract, then that person's next call to that tool is refused, then the record's revision is read.
+- **FWD-25 -- Restore in one act.**
+  - Proof: the restore after FWD-24, then the next call is admitted.
+- **FWD-26 -- Add a channel the person lacks, in one act, labelled WIDENING before it lands.**
+  - The writer refuses a widening that has no recorded sign-off.
+  - The data family needs a grant layer. The `client_*` tools for a non-master person ride the per-firm client grant shape:
+    NFRA_OPLGTW round 48, Andrew's yes for Alyssa and Menachem @50bd4a33b4.
+  - `portal_channels` gets its control on the grant (brief F7).
+- **FWD-27 -- Stop and restore a person, in one act each.**
+  - The page refuses to stop the last master admin, so the owner cannot lock himself out (brief F5 risk).
+- **FWD-28 -- One audit list.**
+  - Every add, subtract and stop is shown with who, when, before and after, for every person, in one place.
+- **FWD-29 -- What the page shows ON is what the gateway admits.**
+  - Proof: after every FWD-24 to FWD-27 act, one call through the served gateway agrees with the page's switch.
+  - A switch that is on while a different gate refuses is a FAIL (brief F5 and O7).
+
+#### Placement
+
+- **NFRA_MCPORTAL (`2.0.0_SA_COO~MP`):**
+  - the `/opalgateway` page;
+  - its switches and the WIDENING label;
+  - the audit list;
+  - the last-admin guard;
+  - the grant-writer Lambda deployed from source through Terraform, which carries `set_person_access` (brief F4);
+  - `portal_channels` in the writer's change shape (brief F7).
+- **NFRA_OPLGTW (`2.0.0_SA_COO~O`):**
+  - mounting `admin_people_access.routes` behind the owner gate (brief F3), in its next batched release under never-widen;
+  - the per-firm client grant shape (round 48);
+  - FWD-29's single admission rule, so that `person_access` and the grant agree.
+- **Round order:** the thread first, which is subtract then restore for one person (FWD-24/25 with FWD-29). That needs only the
+  mount and the writer deploy. Add (FWD-26) follows the round-48 grant shape.
+
+ENDPOINT changed (FWD-23 to FWD-29 added): the ratified-text half re-signs.
