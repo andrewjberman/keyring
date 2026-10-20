@@ -30898,3 +30898,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The listed rows are ruled above with their reasons; none changes a signed scope or a released file. W169-S2 is carried open, named here so a reader does not take it as dispositioned."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-20T12:22:57Z",
+  "id": "NFRA_OPLGTW-Z-S431",
+  "one_line": "OG-gv-1 Phase A: the decide() pre-flight on Andrew's master-wide candidate does NOT refuse schwab_prepare_download, because his held revision-1 scope carries the operation download_filtered; the order (step 3, gv1.AC1) requires the refusal, so Phase A stops before the ask.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W/GV1_BEFORE.json principal.operations reads describe, download_filtered, list, query at grant revision 1 (profile revision 1); Alyssa's and the OG-ms-2 template read describe, list, query.",
+      "W/GV1_PREFLIGHT_DECIDE.json: on the candidate (accounts only changed to the master-wide form, every other key byte-equal, W/GV1_DIFF.json rest_of_scope_matches_template true) schwab_get_access, schwab_list_files, schwab_describe_dataset and schwab_query are ADMITTED and schwab_prepare_download is NOT refused (refuse.schwab_prepare_download false).",
+      "The order keeps his operations byte-equal ('replaces ONLY accounts') and gv1.AC1 requires refuse.schwab_prepare_download true; the two cannot both hold for a scope that includes download_filtered."
+    ]
+  },
+  "spec_asserts": "OG-gv-1 step 3 and gv1.AC1: on the candidate the four read tools are admitted and schwab_prepare_download is refused. All must read true; a false is a STOP and a BLOCKING row naming the tool.",
+  "world_is": "Andrew's held grant is the one Schwab grant that includes download_filtered. Moving it to the master-wide scope while changing only accounts keeps download admitted. Two readings: (a) the refusal expectation was copied from the Alyssa/Menachem template and should be 'matches the stored operations' for Andrew; (b) the grant should drop download_filtered, which the order forbids as written (never add or remove an operation). I make neither choice.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Phase A stopped at step 3: GV1_BEFORE, GV1_DIFF, GV1_PREFLIGHT_DECIDE and GV1_DENY are written; no ask is written; nothing was activated. Needs the issuer's ruling on (a) or (b) and a matching amendment of gv1.AC1 if (a)."
+}
+```
