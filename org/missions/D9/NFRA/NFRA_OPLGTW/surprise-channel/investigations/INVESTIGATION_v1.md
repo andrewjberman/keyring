@@ -30734,3 +30734,74 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   }
 }
 ```
+
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~168",
+  "surfaced_at": "2026-10-20T09:55:27Z",
+  "id": "NFRA_OPLGTW-Z-W168-S1",
+  "one_line": "The order's section 5 asks for the one <status> tag to flip to complete once all three criteria pass, but the worker face carries no <status> tag and the task-order file is outside the order's <paths> grant, so this worker did not flip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order NFRA_OPLGTW.TO-OG-sz-1 section 5: flip the one <status> tag to complete only if all three criteria PASS. Section 2 and <paths> grant the worker only the named product files, the two named test files, the channel file and the deliverables folder.",
+  "world_is": "The worker face (lines 3-67 of the order file at 6f2ddfd58e) has no <status> element, and the order file itself is not in <paths>. The record face (line 68 onward) is not in this worker's context, so the tag's location was not read. All three criteria PASS and the proof instance validates; the flip is left to the issuer.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TASK ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-sz-1.round-47-the-50-kb-projection-measured-on-served-bytes-and-two-oversize-tools.md@6f2ddfd58e, lines 3-67 (worker face) and 42-50 (<paths>).",
+      "SIBLING PRECEDENT: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~161/NFRA_OPLGTW.TO-OG-pr-6.round-45-make-the-audit-lake-leg-bounded-and-audible.proof_of_spec.json, surprises entry NFRA_OPLGTW-Z-W161-S1, records the same gap."
+    ]
+  }
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~168",
+  "surfaced_at": "2026-10-20T09:55:27Z",
+  "id": "NFRA_OPLGTW-Z-W168-S2",
+  "one_line": "This worker's worktree does not materialise org/surprise_channel/, which HEAD carries with 43 files including schemas/investigation_item.schema.json, so the channel schema that the row doctrine cites does not resolve on disk in this tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row doctrine cites org/surprise_channel/schemas/investigation_item.schema.json as readable from a worker's worktree, for every new row.",
+  "world_is": "In worktree C:/tmp/wk-og-168 (branch wk-NFRA_OPLGTW-168), org/surprise_channel does not exist on disk (ls: No such file or directory). git ls-tree -r HEAD -- org/surprise_channel lists 43 files, including the schema. The schema was read from HEAD with git show; the worktree was not repaired or re-checked out.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TREE: git ls-tree -r --name-only HEAD -- org/surprise_channel at worktree C:/tmp/wk-og-168 (branch wk-NFRA_OPLGTW-168, HEAD 6f2ddfd58e0): 43 entries, including org/surprise_channel/schemas/investigation_item.schema.json and org/surprise_channel/schemas/remediation_row.schema.json.",
+      "DISK: ls -la org/surprise_channel in the same worktree: cannot access 'org/surprise_channel': No such file or directory."
+    ]
+  }
+}
+```
+
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~168",
+  "surfaced_at": "2026-10-20T10:03:42Z",
+  "id": "NFRA_OPLGTW-Z-W168-S3",
+  "one_line": "The commit gate printed WARN client-data-check: the hashed account-id list is absent on this device, so commit 39e89fed308 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate checks each commit for client account ids against the hashed list on this device, so a worker commit is graded for client data.",
+  "world_is": "C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt is absent on this device. The gate printed 'absent is not empty' and did not grade commit 39e89fed308 for client account ids. The worker's diff holds code, tests and channel rows only, and the worker printed no account number, email address or client value; the worker did not grade the diff for client data either.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GATE OUTPUT: .tools/safe-commit.sh run for commit 39e89fed308 (session output at 0.9.0_WK_NFRA_OPLGTW~168 .scratch/commit_code.out, line 49): WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids.",
+      "SIBLING PRECEDENT: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~161/NFRA_OPLGTW.TO-OG-pr-6.round-45-make-the-audit-lake-leg-bounded-and-audible.proof_of_spec.json, surprises entry NFRA_OPLGTW-Z-W161-S3, records the same WARN."
+    ]
+  }
+}
+```
