@@ -39,6 +39,13 @@ The converter reads the master from path segment 1. Under the firm form segment 
 2. Apply the identical change to the twin and regenerate/adjust `BUILD_MANIFEST.json` the way its generator does. After your change the twin's `schwab_conversion.py` must again be byte-equal to the source.
 3. Test `data/assets/scripts/silver/tests/test_schwab_scope_from_filename.py` (load the converter by path with `data/assets/scripts/lib` first on `sys.path`: it imports `stream_parquet`): old form, firm form for each of the seven masters (08242234, 08335338, 08403355 under `49financial`; 08719286, 08134043, 08165601, 08480305 under `cottonwood`), the staging form; a firm-form key whose file name has no master prefix RAISES; a firm-form key whose file-name master is not 8 digits RAISES; `feed_from_key` and `date_from_key` agree on a firm-form key; the twin is byte-equal to the source (compare file bytes); and `BUILD_MANIFEST.json` still parses and lists `schwab_conversion.py`.
 
+4. **Issuer ruling 2026-10-20 after rows `NFRA_SCHWABBF-W5-S2` and `-S3` (amendment; the cell's intent is "the consumer tolerates the firm form", and these two modules are consumers that read the key by position).** Extend the same change to:
+   - `data/assets/scripts/silver/conversion_manifest.py`: `_key_scope(key)` (line ~398) and `_bronze_type_and_date(key)` (line ~403, which accepts only an 8-digit folder after the type; the firm form's folder is `date=YYYY-MM-DD` and must yield the same `(type, YYYY-MM-DD)`). Old master form behavior stays.
+   - `data/assets/scripts/silver/set_identity_guard.py`: `parse_bronze_key(key, scope)` (line ~63; today it requires `parts[1] == scope` and an 8-digit `parts[4]`, so a firm-form key returns `None` and the guard would count ZERO bronze for the master and say nothing). For the firm form it must return `(type, YYYY-MM-DD)` ONLY when the file name starts with `{scope}.`, so two masters sharing a folder never count each other's files; old form unchanged.
+   - Both files' deployed twins in `infra/aws/lambda/opal-assets/opal-assets-silver-schwab/`, byte-equal to the source after your change, and their existing test files `data/assets/scripts/silver/tests/test_conversion_manifest.py` and `test_set_identity_guard.py` (add tests whose names contain `firm_form`).
+   - Census where the `bronze_keys` census that feeds the guard and the manifest is LISTED (the S3 prefix it lists, in `schwab_runtime.py` or elsewhere in the vendored set). If it lists by `schwab/{scope}/bronze/` it misses firm-form keys: change it in `schwab_runtime.py` (source and twin) so it lists the firm folder filtered by the file-name master as well as the old prefix, and add a `firm_form` test; if it already lists correctly, say so in the report.
+   Keep all existing behavior for old-form keys (stored keys stay old-form until the cutover).
+
 ### ACCEPTANCE
 
 <criterion id="BF2-c2-AC1" cell_refs="BF-c-2"><invocation>python -m pytest data/assets/scripts/silver/tests/test_schwab_scope_from_filename.py -q -p no:cacheprovider --color=no</invocation><expect>^[0-9]+ passed[ ,]</expect></criterion>
@@ -47,7 +54,10 @@ The converter reads the master from path segment 1. Under the firm form segment 
 <criterion id="BF2-c2-AC2" cell_refs="BF-c-2"><invocation>python -m pytest data/assets/scripts/silver/tests/test_schwab_runtime.py -q -p no:cacheprovider --color=no</invocation><expect>^[0-9]+ passed[ ,]</expect></criterion>
 `BF2-c2-AC2` -- the control against the REAL neighbor: the converter's own runtime tests still pass (11 passed at the base).
 
-<expected_criteria>BF2-c2-AC1,BF2-c2-AC2</expected_criteria>
+<criterion id="BF2-c2-AC3" cell_refs="BF-c-2"><invocation>python -m pytest data/assets/scripts/silver/tests/test_set_identity_guard.py data/assets/scripts/silver/tests/test_conversion_manifest.py -q -p no:cacheprovider --color=no -k firm_form</invocation><expect>^[0-9]+ passed[ ,]</expect></criterion>
+`BF2-c2-AC3` -- the two by-position consumers (set-identity guard and conversion manifest) read a firm-form key, master-filtered by the file name (added by the issuer ruling above).
+
+<expected_criteria>BF2-c2-AC1,BF2-c2-AC2,BF2-c2-AC3</expected_criteria>
 
 Dry-run at the base 2026-10-20: AC1 "no tests ran" (rc 4) -- FAIL as expected; AC2 `11 passed` -- PASS as expected (a control that must stay green).
 
@@ -62,6 +72,14 @@ data/assets/scripts/silver/schwab_conversion.py
 infra/aws/lambda/opal-assets/opal-assets-silver-schwab/schwab_conversion.py
 infra/aws/lambda/opal-assets/opal-assets-silver-schwab/BUILD_MANIFEST.json
 data/assets/scripts/silver/tests/test_schwab_scope_from_filename.py
+data/assets/scripts/silver/conversion_manifest.py
+data/assets/scripts/silver/set_identity_guard.py
+data/assets/scripts/silver/schwab_runtime.py
+infra/aws/lambda/opal-assets/opal-assets-silver-schwab/conversion_manifest.py
+infra/aws/lambda/opal-assets/opal-assets-silver-schwab/set_identity_guard.py
+infra/aws/lambda/opal-assets/opal-assets-silver-schwab/schwab_runtime.py
+data/assets/scripts/silver/tests/test_conversion_manifest.py
+data/assets/scripts/silver/tests/test_set_identity_guard.py
 org/missions/D8/NFRA/NFRA_SCHWABBF/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
