@@ -12844,6 +12844,51 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W78-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~78",
+    "surfaced_at": "2026-10-20T13:33:01Z",
+    "one_line": "W2 ruling 1 cannot be met for opal_asker_query case K2-18: its chat_id and message_id placeholders have no real value in the catalog or the gateway code, so the not-run plan holds the tool preview-only and names the write it needs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "W2 face ruling 1: an unrun case with a placeholder argument is run through its depends_on field, or superseded by a new case that carries a real value from the catalog rows or the gateway code, or is owned by staff only when it is a client account identifier.",
+    "world_is": "K2-18 carries the placeholders '<chat id of a recent Teams message from a profiled asker>' and '<message id of that message>' with no depends_on, and its source_hint says it needs the ids of a live recent Teams message. DATA_CATALOG.yaml holds no chat_id (grep count 0). The tool reads chat_id and message_id through the caller's delegated token to find the asker. None of the three routes applies, so the plan is preview-only and the reason names the write: a live Teams message from a profiled asker must be written first. Premise row NFRA_MCPINDEX-Z-W68-S2 already records the placeholder.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/cases_all_20261019.json case K2-18 @277ad324045 (read 2026-10-20T13:33Z)",
+        "infra/aws/ec2/opal-gateway/app/tools.py:1943 opal_asker_query definition @277ad324045 (read 2026-10-20T13:33Z)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml: grep -c chat_id returns 0 @277ad324045 (read 2026-10-20T13:33Z)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~78/not_run_plan.json entry opal_asker_query (worktree, not yet committed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W78-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~78",
+    "surfaced_at": "2026-10-20T13:33:01Z",
+    "one_line": "W2 ruling 3 cannot be applied as written to the test sends: reply_email's recipient is the original sender of K6-02, not the tester mailbox, and the tester alias for send_email, create_draft and send_chat_message is bound by no case or repo file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "W2 face ruling 3: test_send applies to send_email, reply_email and create_draft (tester mailbox) and to send_chat_message (tester chat), with test_send.case_id one of the entry's case_ids.",
+    "world_is": "K6-46 (create_draft) and K6-51 (send_email) carry no to argument, so each is refused before its function runs. K6-50 (send_chat_message) takes its chat_id from list_chats case K6-23, not from the tester chat. K6-47 (reply_email) replies to message K6-02, so its recipient is that message sender. The plan names test_send on the tester alias for create_draft, send_email and send_chat_message, and leaves reply_email null. The drain must bind each alias to a real address or chat, and no case or repo file holds one. Related rows: NFRA_MCPINDEX-Z-W67-S8 (send_email confirm false is a live send) and NFRA_MCPINDEX-Z-W67-S9 (create_draft writes at once).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/cases_all_20261019.json cases K6-46, K6-47, K6-50, K6-51 @277ad324045 (read 2026-10-20T13:33Z)",
+        "infra/aws/ec2/opal-gateway/app/tools.py:469 create_draft, :483 send_email, :503 reply_email, :1799 send_chat_message @277ad324045 (read 2026-10-20T13:33Z)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/ledger/ROUND_ANALYSIS.round23.md:45 (open call c5c2 yes recorded) @277ad324045"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
