@@ -1262,6 +1262,29 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "BF-g-5 and BF-h-5 (merged) and the CTO's signed fence pair (@4b0036c6cb): the converter role is admitted to write the firm buckets' state prefixes, and with the identity grant and the fence rows the write succeeds.",
     "world_is": "The identity-side explicit Deny of the shared fan-in fence refuses the converter's PutObject on those buckets whatever the grants and bucket policies say. Read from the Terraform text; the live attachment census (aws iam list-entities-for-policy) is the release act R1's check. The 49F box role has no such Deny (iam.tf: only the bd, cot and inf planes).",
     "notes": "Not an alert. Fix shape: a schwab-only policy copy whose belt 1 NotResource adds the 15 enumerated state resources, attached in place of the shared one for the schwab role only; the other five families keep the shared fence. The same fix serves the Cottonwood masters' converter state (2.0.0_SA_COO~SA's workstream)."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S7",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T20:46:19Z",
+    "one_line": "BF-k-6 AC2 cannot pass in this worktree: data/canonical/schwab/tests/test_firm_prefix_grants.py reads infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf, which is committed at HEAD but absent on disk because the worktree sparse set omits that folder. 8 of the 23 control tests fail (15 passed), so the order's '23 passed at the base' premise does not hold here.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wt-bf-1 HEAD 6e162e86b66 on branch wk-NFRA_SCHWABBF-1; git sparse-checkout list names infra/aws/terraform/opal-assets, infra/aws/lambda/opal-assets/opal-assets-silver-schwab, data/canonical/schwab, lib, infra/logic and no infra/aws/terraform/canonical-schwab-ec2",
+        "git ls-tree HEAD infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf: 100644 blob 21349da3821fa0090b5d194b4369dbacb83e3b64 (committed); the file is not on disk in the worktree",
+        "python -m pytest data/canonical/schwab/tests/test_firm_prefix_grants.py -q -p no:cacheprovider --color=no: '8 failed, 15 passed in 0.47s' after the silver.tf edit and '8 failed, 15 passed in 0.58s' before it; 7 tests raise FileNotFoundError on infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf and test_fmt_edited_files returns rc=2 'No file or directory at infra\\aws\\terraform\\canonical-schwab-ec2\\monolith-iam.tf'",
+        "terraform fmt -check -no-color infra/aws/terraform/opal-assets/silver.tf on the edited file (read-only, not a criterion): rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, ACCEPTANCE AC2: the control runs the Terraform-text tests of data/canonical/schwab/tests/test_firm_prefix_grants.py, '23 passed at the base, including the terraform fmt arm' (expect ^[0-9]+ passed). BOUNDS Refusal clause: a path the worker must read that is missing on disk is a surprise row and a stop on that criterion; nothing is widened.",
+    "world_is": "The worktree sparse cone omits infra/aws/terraform/canonical-schwab-ec2, which the control file reads. The file exists at HEAD and is absent on disk here. 8 of the 23 control tests fail on that absence alone, identically before and after the silver.tf edit. The silver.tf edit itself passes terraform fmt -check. AC2 is recorded FAIL; the sparse set was not changed and the test was not weakened.",
+    "notes": "Not reconstructed or widened: no sparse-checkout add, checkout or re-cut. AC1 (5 passed) is unaffected because it reads only silver.tf, BUILD_MANIFEST.json and git. Owner for disposition: the seat that cut wt-bf-1 (the lane gate) to widen the sparse set or re-cut the worktree, or the issuer 2.0.0_SA_COO~SB to decide whether the control belongs in this order's grant."
   }
 ]
 ```
