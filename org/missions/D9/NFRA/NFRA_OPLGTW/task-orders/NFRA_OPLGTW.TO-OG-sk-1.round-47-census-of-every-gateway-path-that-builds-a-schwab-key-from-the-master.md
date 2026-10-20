@@ -64,6 +64,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sk-1.round-47-census-of-every-g
 - Pre-cut: `AC1` and `AC2` base FAIL as expected (no census). Arm: a scratch census built from the same sweep (56 entries) read `AC1` PASS and `AC2` PASS (with a deliberately wrong cited line `AC2` read NOT OK, the negative control), then was deleted.
 
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-L</workstream>
 <slot>~177</slot>
