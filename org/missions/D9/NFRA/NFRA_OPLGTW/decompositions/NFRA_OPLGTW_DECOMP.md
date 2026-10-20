@@ -3153,3 +3153,11 @@ Chain `{OG-fc-1, OG-sx-1, OG-sz-1, OG-mg-3, OG-tp-1, OG-ix-1, OG-nf-1} -> OG-rl-
 | `OG-sz-2` | `_wide_trade_part(120)` and its two row-count assertions become 80 (and the docstring/comments naming 120) | `tests/test_og_rv2.py` | WORLD (gateway floor) | `~173` | worker-light | none |
 
 One chain `{OG-sz-2}`; `fanout: 1 worker of 1 chain, cap 8` (`~173`); it joins `OG-rl-17`'s take list. Checks `sz2.AC1` and `sz2.AC2`: base FAIL as expected; fed a scratch copy with 120 replaced by 80 (PASS on both), restored. Gate limb: `to-pipeline-gate` on the newly added tree order.
+
+**R3-T.124 amendment A4 (2.0.0_SA_COO~O, round 47, ~11:3xZ, workstream ENRICH-R47-E): the applier cell `OG-rl-18`, the master-wide Schwab scope release (`batch17`), STAGED.** `OG-rt-1` (drained `fd69a7cb77`) is held out of `OG-rl-17` so the entitlement parser has its own release and rollback. The code is inert until a grant names `["*"]`; an old gateway reads a stored sentinel as Malformed, so this release is live BEFORE any grant names it.
+
+| cell | what | writes | risk | slot | class | after |
+|---|---|---|---|---|---|---|
+| `OG-rl-18` | the four files of `OG-rt-1` (`data_entitlement.py`, `account_ref.py`, the schwab integration, `tests/test_og_rt1.py`), whole from trunk, on the live ref; Phase A (re-cut, probes on the candidate tree, no stored sentinel, three-half ask) when `OG-rl-17` is CLOSED; Phase B in a window not before one day after batch16 and not before 2026-10-22 06:00Z; then the landing | release, ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier | `OG-rl-17` CLOSED |
+
+Chain `{OG-rt-1} -> OG-rl-18 -> {OG-gv-1, OG-gm-1}`; `fanout: 0 workers of 1 chain, cap 8`. Checks `rl18.AC1` and `rl18.AC2`: base FAIL as expected. Gate limb: `to-pipeline-gate` on the newly added tree order.

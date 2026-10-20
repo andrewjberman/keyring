@@ -1,0 +1,66 @@
+# TO IRPT_ANLREQ.TO-AR-y-454.run7-browser-leg-script-proved-offline-against-a-build-of-the-prod-tip -- BUILD AND PROVE OFFLINE: write the browser-leg script of run 7 (B1 read the Analysis Request form, B2 file one request through the page, B3 press Open report) and prove it against a local build of the PROD tip with fixture answers; nothing is called on the network, nothing is filed, nothing is deployed
+
+<to_id>IRPT_ANLREQ.TO-AR-y-454.run7-browser-leg-script-proved-offline-against-a-build-of-the-prod-tip</to_id>
+<project>IRPT_ANLREQ</project>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~323</issued_to>
+<issued_by>2.0.0_SA_COO~Y2</issued_by>
+<issued_date>2026-10-20</issued_date>
+<status>pending</status>
+<direct_act>false</direct_act>
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>43</round>
+<workstream>ZZ113</workstream>
+
+**Directive:** D9 | **Fabric:** dell2 | **Risk:** LOCAL (a script and fixtures in the worker deliverables; a build in the worker's own portal worktree) | **Decomp cell:** `AR-y-454` (`decompositions/IRPT_ANLREQ_DECOMP_R40A_Y.md`) | **outcome_ref:** FWD-2, FWD-1 and FWD-8 read through the page on PROD (run 7, ADDENDUM 9) | **depends_on:** ADDENDUM 9 (CTO half signed, CTO msg 11301; its section 2 rows B, B1, B2, B3), the run 7 order (cell AR-y-452), the CTO's note (msg 11308: the throwaway Playwright script for B2 is fine under ADDENDUM 9's terms)
+
+---
+
+## WORKER FACE
+
+You are `0.9.0_WK_IRPT_ANLREQ~323`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-323` (branch `wk-IRPT_ANLREQ-323`), provisioned by the issuer from the current branch. First confirm `org/` and `.tools/` exist. Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~323 <0.9.0_WK_IRPT_ANLREQ~323@opal.agent>" -F <msgfile> -- <paths>`; write every message file with the Write tool; do not pre-`git add`. A commit may take longer than 120 s: give it up to 400 s and check `git log` before retrying. The worktree may show a modified `.parquet` fixture and ` M portal`: never commit either. A row id has the form `IRPT_ANLREQ-D2-W323-S<k>`; `surfaced_at` = `date -u +%FT%TZ`; APPEND only to `org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md` (0 deletions), class OBSERVATION or BLOCKING. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (ruff clean; no single-letter names `l`, `O`, `I`; no non-ASCII).
+- **No AWS call, no network, no push, no deploy.** The proof instance copies the shape of `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~306/IRPT_ANLREQ.TO-AR-y-406.resident-release-r34l-build-only-two-movers.proof_of_spec.json` (read it first; `git show HEAD:<path>` if absent), with `to_id` exactly the order's id, a `controls.mutant` that FIRES (named in the cell) and a `controls.determinism` really run; run `python .tools/proof-of-spec-check.py <instance> "<ids>"` with THIS worktree's own `.tools/` and flip `<status>` to `complete` (commit alone) only on VALID.
+
+### THE CELL (`AR-y-454`, inlined)
+
+*Context.* Run 7 (order `org/tier2_senior/0.7.0_AE_CloudOps~IB2/task_orders/IRPT_ANLREQ.TO-RUN-COMMENTARY-E2E-7.staff-filing-through-the-portal-page-on-prod-ib2.md`, ADDENDUM 9 `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/irpt_status_release/NEVER_WIDEN_PACKET_E2E_COMMENTARY_RUN_ADDENDUM9_RUN7_FILES_THROUGH_THE_PORTAL_PAGE_COO_HALF_20261020.md`) has the operator `0.7.0_AE_CloudOps~IB2` drive the LIVE PROD portal page in a headless browser as a synthetic Opal staff user: B1 reads the New Analysis Request form, B2 fills it and submits ONE request, B3 presses Open report on the finished ticket. The repository's instrument `portal/scripts/ui-smoke.mjs` renders a route, takes `--click`/`--fill`/`--type`/`--option` steps and a real bearer with `--token @file`, and renders a deployed site with `--origin`, or a vite build from disk with `--dist <dir>` (no server, no network), but it has NO way to attach a file. The live run is one-shot (no second filing is allowed after a red hop), so the script must be proved BEFORE it is used. Your cell is that proof, offline.
+
+*The build and the fixtures.* Your portal worktree is `C:/dev/wk-irpt-anlreq-323/portal` at `origin/PROD` `f48e09ddf95e` (the live PROD code; node_modules linked; read-only for you: commit nothing there). 1. Build the app from it: `bun run build` in that folder (a vite build into its `dist/`; no network is needed; if it needs more than the linked node_modules, STOP with a BLOCKING row naming what). 2. Read, at that tree, `portal/scripts/ui-smoke.mjs` (the header, the auth stub at the `/auth/refresh` route, the `--token` branch, `--fixtures`, `--dist`) and `portal/scripts/ui-dist.mjs`, and the Ticket Center source: `portal/src/pages/TicketCenter/` (the New Ticket control, the ticket type chooser, the Analysis Request form: its field labels, the Firm chooser, the household field, the Advisor field and its optional label, the models list at first paint, the file input, the submit control and the states it shows; `analysisRequest.ts` for the calls it makes: the upload, the ticket creation, the analysis request; the open ticket view and its Open report control). 3. Write `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/fixtures_offline.json` (the shape ui-smoke's `--fixtures` takes) answering every API call the form and the ticket view make with SYNTHETIC bodies: the firm list (three firms `49financial`, `cottonwood`, `inflection`), the model catalogue (five Opal models), the upload result (state NORMALIZED with an upload id and input id), the ticket creation (a ticket id of the shape `TCK-20261020-deadbeef`), the analysis request (a REQ id `REQ-` plus 24 hex), a ticket whose `package` map holds all four refs, and the sections response with a handful of VALUE sections; invent no real name or figure (the household is `E2E7 SYNTHETIC`). 4. Write `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/run7_browser_leg.mjs` (Node, ES module, the only imports `playwright-core` and `node:` built-ins; it resolves `playwright-core` from the portal worktree you pass with `--portal <dir>`, because it lives outside that tree). Options: `--origin <url>` (a deployed site) or `--dist <dir>` (a build served from disk by the same Playwright routing ui-smoke uses; read ui-dist.mjs and import nothing from the portal tree that you cannot reach by `--portal`; copy the few lines you need), `--fixtures <json>` (offline only), `--token-file <path>` (a real bearer, sent the way ui-smoke's `--token` sends it; absent: the inert stub session), `--holdings <csv path>`, `--firm 49financial`, `--household "E2E7 SYNTHETIC"`, `--out <dir>` for screenshots, `--phase b1|b2|b3|all`, and `--ticket <id>` for phase b3 on a ticket that already exists. It uses the page's own controls by their accessible names read in step 2, attaches the file with `setInputFiles` on the page's file input, submits ONCE, never presses Keep, and never makes a second submit. Output: ONLY closed lines, no URL, no token, no header, no file content: `B1 form labels=<n> advisor=<optional|required|absent> report_type=<absent|present> commentary=<absent|present> firms=<comma list of firm names the chooser lists> models=<n>`; `B2 filed <ok ticket=<TCK-id> req=<REQ-id or none> at=<HH:MM:SSZ>|REFUSED <closed words the page showed>>` where the ticket id and REQ id are read from the page or from the call answers the page received; `B3 report face=<yes|no> headings=<n> value=<yes|no>`; and each phase also prints `CALLS <method path-without-query>` lines for the API calls the page made (paths only). A screenshot per phase is saved under `--out`. It exits non-zero and prints `B-LEG-BAD <phase> <why>` when a control is not found (name the control it looked for). 5. The offline composite: `--offline` runs b1, b2 and b3 in order against `--dist` with the fixtures and prints ONE final line `B-LEG-OFFLINE-OK b1_labels=<n> advisor=optional report_type=absent commentary=absent firms=3 models=5 b2_calls=<the three call names in order> b3_face=yes`, else `B-LEG-OFFLINE-BAD <why>`. 6. DIFFERENCE CONTROL (required): a second fixtures file `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/fixtures_offline_noreport.json` in which the ticket view has no report face (the Open report control cannot reach the report); the same command with it MUST print `B-LEG-OFFLINE-BAD b3 ...`. 7. Leak control: save the stdout of the AC1 command as `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/OFFLINE_STDOUT.txt`; that file and `PAGE_NOTES.md` hold no `eyJ` run of 10 or more token characters, no `http` URL and no `Bearer `. 8. Record in `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/PAGE_NOTES.md` the accessible names, the call sequence and every place the page's behaviour differs from what ADDENDUM 9 section 2 assumes (for example a control that is absent, a different label, a step the issuer did not name): the issuer reads it before the GO. 9. Commit your files; write the proof instance and flip on VALID.
+
+---
+
+## ACCEPTANCE
+
+<criterion id="AR454-y-AC1" cell_refs="AR-y-454"><invocation>node org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/run7_browser_leg.mjs --offline --portal C:/dev/wk-irpt-anlreq-323/portal --dist C:/dev/wk-irpt-anlreq-323/portal/dist --fixtures org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/fixtures_offline.json --holdings org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/holdings_sample.csv --out org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/shots_offline</invocation><expect>^B-LEG-OFFLINE-OK b1_labels=[0-9]+ advisor=optional report_type=absent commentary=absent firms=3 models=5 b2_calls=\S+ b3_face=yes$</expect></criterion>
+<criterion id="AR454-y-AC2" cell_refs="AR-y-454"><invocation>node org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/run7_browser_leg.mjs --offline --portal C:/dev/wk-irpt-anlreq-323/portal --dist C:/dev/wk-irpt-anlreq-323/portal/dist --fixtures org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/fixtures_offline_noreport.json --holdings org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/holdings_sample.csv --out org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/shots_noreport</invocation><expect>^B-LEG-OFFLINE-BAD b3 </expect></criterion>
+<criterion id="AR454-y-AC3" cell_refs="AR-y-454"><invocation>cat org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/PAGE_NOTES.md org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/OFFLINE_STDOUT.txt | grep -c -E 'eyJ[A-Za-z0-9_-]{10,}|https?://|Bearer '</invocation><expect>^0$</expect></criterion>
+
+
+
+<proof_of_spec>
+Criterion ids: see ACCEPTANCE. The instance is at
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/IRPT_ANLREQ.TO-AR-y-454.run7-browser-leg-script-proved-offline-against-a-build-of-the-prod-tip.proof_of_spec.json`.
+Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-454.run7-browser-leg-script-proved-offline-against-a-build-of-the-prod-tip`. Validate it AFTER its commit with
+`python .tools/proof-of-spec-check.py <instance> "AR454-y-AC1,AR454-y-AC2,AR454-y-AC3"`; flip `<status>` to `complete` only when it prints VALID.
+</proof_of_spec>
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R40A_Y.md</decomp_doc>
+<owned_cells>AR-y-454</owned_cells>
+</decomp_ref>
+
+- **Grant.** The `<paths>` block, this order's file (status line only) and the surprise investigation file are the only repository places you write.
+
+<paths>
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~323/
+org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-454.run7-browser-leg-script-proved-offline-against-a-build-of-the-prod-tip.md
+org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+<preflight>
+comp-blast: DECLARED-NOT-APPLICABLE -- a Node script, fixtures and notes in the worker deliverables, and a vite build in the worker's own portal worktree; no network call, no deploy, no filing, no token; nothing runs against PROD.
+comp-routes: DECLARED-NOT-APPLICABLE. comp-cache: DECLARED-NOT-APPLICABLE. comp-schedule: DECLARED-NOT-APPLICABLE. comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call by the worker.
+comp-adversary: RUN -- by reading ADDENDUM 9 and the run 7 order against this cell; the lens: a script that passes offline because the fixtures answer more than the page asks (record every call in CALLS and compare with analysisRequest.ts), a control the script cannot find reported as success, a second submit, a Keep press, a printed token or URL, a screenshot of a real name or figure (fixtures are synthetic), the difference control that cannot fire (the no-report fixtures must print BAD). NOT seen (blind): the live PROD pages for a real staff user (firm list, catalogue), the live ticket view; denominator: three criteria.
+</preflight>
