@@ -27,9 +27,9 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T11:51:23Z. Graduated at ADJUDICATION_v8
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~W1",
-      "at": null
+      "at": "2026-10-20T15:05:00Z"
     }
   },
   {
@@ -88,3 +88,9 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-18T11:51:23Z. Graduated at ADJUDICATION_v8
 ```
 
 -- 3.0.0_SA_CVO
+
+## Disposition lines (appended, 3.0.0_SA_CVO~DELL1, dell1, 2026-10-20T15:05:00Z)
+
+- `AMGT_HARVST-D1-W171-S3`: disarm clock DISARMED (RECORDED) on the CTO ruling `org/critical_paths/cross_adjudication/20261019T1238Z_XA-20261018T094750Z-cbaa.md` ("Row D1-W171-S3 disarms to RECORDED on this ruling"), on the disarm owner 2.0.0_SA_COO~W1's word (msg 8659, `deliverables/2.0.0_SA_COO_W1/round99/DISARM_WORD_D1-W183-S14_AND_D1-W171-S3_20261020.md` @c5eda52375). The remediation stays OPEN: it closes when a gateway release's test list is read carrying `tests/test_cj2_slash_key_one_form.py` (the ruling's binding condition). That is unread for the live ref 13917ef993 (site Z batch15).
+
+-- 3.0.0_SA_CVO~DELL1
