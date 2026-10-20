@@ -5,10 +5,10 @@
  "project": "NFRA_SCHWABBF",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-schwabbf-schwab-masters-backfill-canonical-paths-brief-20261020.md@f0e33a4317",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
  "status": "DRAFT"
 }
 ```
@@ -85,7 +85,23 @@ CONFIRMED by Andrew 2026-10-20 ~13:0xZ. The source, verbatim from step 2, is
                     login
          ACCEPT     The day Cottonwood says "Schwab has opened them", the honest
                     answer is "it is landing", and nothing new had to be built
+
+  FWD-8  Cottonwood's four Schwab account groups land every business day, with
+         their full history, through Alongside's own Schwab login on its own
+         Schwab box
+         DONE WHEN  EXERCISED -- one trace: a Cottonwood account group's day pulled by
+                    the Alongside box, stored at the builder's address and read; then
+                    the history back to Schwab's floor read as held. The one-time
+                    sign-in that starts the box's session is a person's act (it may
+                    need a Schwab security code); everything after it runs on its own
+         ACCEPT     An analyst reads a Cottonwood client's Schwab positions for
+                    yesterday and for a day in late 2023 from Opal's own store, and
+                    nobody kept a login open to get them
 ```
+
+FWD-8 was ADDED at v0.2 on Andrew-direct 2026-10-20 ~13:4xZ
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_134xZ_ALONGSIDE_SCHWAB_CREDENTIALS_AND_ALONGSIDE_PULLER.md`). FWD-7 stays: it
+covers a master that Schwab opens to Opal's existing login. FWD-8 is the route he named for Cottonwood.
 
 ## CONTRACTS
 
@@ -101,6 +117,7 @@ CONFIRMED by Andrew 2026-10-20 ~13:0xZ. The source, verbatim from step 2, is
 | C-RECORD | the record cell | **One read-only record of held days** per master and file type, beside the existing manifests under `schwab/<master>/meta/` (its address comes from the builder). For each business day in Schwab's served range it shows held or missing, judged by `lib/trading_calendar.py`. It sends nothing (moratorium). | FWD-3's read against a listing of the store |
 | C-EQUAL | the cutover cell | **FWD-5 is one read at the change, never a standing comparator** (Andrew's veto on parity comparators). Before step 1 the issuer records silver and gold figures for a named sample of days per master; after step 4 it rebuilds those days and compares. Any difference stops the cutover before step 5. | the before and after files, committed with the change record |
 | C-DAILY | the key-form cell | **The daily puller writes the builder form from the cutover release on** (FWD-6). `sdd-daily-pull.ps1` is re-uploaded to its code home by the same release; the schedule targets are unchanged. | the first scheduled fire after the cutover lands at the builder address |
+| C-ALONGSIDE | the Alongside box cells; NFRA CloudOps lane (applies) | **The Alongside Schwab Box: the exact same setup and logic as the existing 49F Schwab Box, explicitly labeled as an Alongside box** (Andrew-direct ~13:5xZ: "it should be exact same setup and logic as already exists with the 49 schwab box. this one should explicitly be labeled as an alongside box"). It is a copy of `canonical-schwab-ec2` and `canonical-schwab-si2` (same Windows host, SI2 app, Administrator vault, SSM-to-scheduled-task hand-off, lock and puller), with every name carrying the `alongside` scope from the builder and the device named "Alongside Schwab Box" (FWD-8). It is a Windows EC2 that holds Alongside's own SDD session and refresh token in its own Administrator vault. It never shares the existing box's session, lockfile or schedule slots, and its fires are staggered from the 49F fires. **Credentials:** `schwab/alongside/sdd-credentials` (created 2026-10-20 ~13:4xZ, JSON `username` and `password`, graded CONFORMANT). The box role reads exactly that secret, and the Terraform root adopts it by `import` with `prevent_destroy`, never by recreating it. **The first sign-in is a person's act:** the session is human-established in the SI2 app, and once established the puller rides it. **Masters:** only the four Cottonwood masters, each a MASTER scope row under firm `cottonwood` (CRO rows) and each an enumerated IAM write to `schwab/<master>/bronze` in builder form. The first read after the session exists is that login's own entitlement list (`FetchDetails/UserMasters.aspx`): whether it sees the four is unmeasured until then, and a master it does not see is named, not assumed. **Backfill:** C-BACKFILL's rules per master, to Schwab's floor. All names come from the builder, and every apply goes through `safe-apply`. | the entitlement read; FWD-8's trace |
 | C-ONBOARD | the onboarding cell | **A newly entitled master needs one setup entry, not code** (FWD-7). The master list moves from three hard-coded places (the puller's `ValidateSet`, the IAM resource enumeration and the schedule's `local.si2_daily` map) into the schedule map alone. The IAM statements and the puller's master check are derived from that map, so adding a master is a registry scope row (CRO) plus one map entry, applied by `safe-apply`. Masters stay enumerated, never wildcarded (`SCHWAB_AUTO_PULL_DESIGN.md` 4.8 and the IAM rule). The backfill for a new master runs the same cell with its own floor. | a dry plan that adds a fourth map entry and changes only that master's schedule and IAM statement |
 
 ## THE DECISIONS -- CLOSED AT L4
@@ -116,6 +133,10 @@ CONFIRMED by Andrew 2026-10-20 ~13:0xZ. The source, verbatim from step 2, is
 
 ## OPEN AT ANDREW (acts only he can do)
 
+- **Confirm FWD-8** (added at v0.2 on his word).
+- **The one-time sign-in on the Alongside box:** Andrew RDPs into the Alongside Schwab Box once it exists and signs into the SI2 app with
+  Alongside's Schwab login (Andrew-direct ~13:5xZ: "I will need to RDP into the EC2 box most likely to get that done"). The box's
+  RDP access is set up for that sitting and closed after it, as the 49F box's is.
 - **Confirm the delete of the old keys** at C-MOVE step 5, once FWD-5's read is clean. He names the change window.
 - **Cottonwood's Schwab entitlement** of the four masters (Cottonwood and Schwab). This is FWD-7's qualified wait.
 
@@ -126,6 +147,10 @@ CONFIRMED by Andrew 2026-10-20 ~13:0xZ. The source, verbatim from step 2, is
 2. **The move script and its dry run** (C-MOVE steps 1-2 against a listing, nothing written), with the sample of days for C-EQUAL recorded.
 3. **The cutover** (C-MOVE steps 1-4, C-EQUAL), under its never-widen pair and change record, with step 5 held for Andrew's confirmation.
 4. **FWD-1's thread:** backfill 08403355's oldest served day (C-BACKFILL), convert it (C-PARSE), and read its balances from silver.
+
+A parallel workstream (C-ALONGSIDE, FWD-8) needs no wait on the cutover beyond the key form: (a) the CRO's scope rows for the four Cottonwood
+masters; (b) the Alongside box's Terraform root and puller copy, in builder form from the start; (c) the person's sign-in; (d) the
+entitlement read; (e) one Cottonwood day end to end, then its backfill.
 
 Later rounds enrich: the full backfill for the three masters (FWD-2), the held-days record (FWD-3), and the onboarding path (FWD-7).
 
@@ -150,6 +175,11 @@ Later rounds enrich: the full backfill for the three masters (FWD-2), the held-d
 - **Repo:** the key function and its mirror, every reader the census names, the puller, the Terraform root, and this tree.
 
 ## CHANGE LOG
+
+- **v0.2 (~13:5xZ 2026-10-20), same sitting:** C-ALONGSIDE is an exact copy of the 49F Schwab Box, labeled Alongside, and Andrew RDPs in for the
+  first sign-in (his words, quoted in the row and under OPEN AT ANDREW).
+- **v0.2 (~13:5xZ 2026-10-20):** on Andrew-direct ~13:4xZ, FWD-8 ADDED, C-ALONGSIDE added, the Alongside workstream named, and two acts
+  added to OPEN AT ANDREW (confirm FWD-8; the box's first sign-in). The ENDPOINT changed, so the ratified-text half re-signs.
 
 - **v0.1 (~13:1xZ 2026-10-20):** first draft on the confirmed endpoint and Andrew's three answers. Contracts C-SCOPE to C-ONBOARD; decisions
   1-5; the old-key delete held for Andrew's confirmation.
