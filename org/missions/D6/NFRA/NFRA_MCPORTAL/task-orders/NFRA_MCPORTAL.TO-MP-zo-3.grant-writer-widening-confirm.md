@@ -77,7 +77,7 @@ run `proof-of-spec-check.py` on it as the worker rules say, and report once, wit
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** cut at the OGW round-1 issuance (decomposition v20) from PRD v0.10 FWD-26 (the writer refuses a widening that has no recorded sign-off; the verified owner's confirm IS the sign-off; everyone else needs the three halves, not built here) and the CVO's note (a test that the writer REFUSES a WIDENING confirm from a non-owner master_admin principal). `portal_channels` in the change shape is NOT in this cell: the grant's `ScopeChange` lives in the gateway source the Lambda stages from the live release (NFRA_OPLGTW). The writer is deployed through Terraform by `MP-pd-7` Act A after this order drains. Risk is WORLD only because the to-pipeline-gate's path floor says a Lambda source path is infrastructure (spine v3.19 L6); this order deploys nothing and calls no AWS API.
-Check dry-run at the base: see the issuance commit.
+zo3.AC1 base: FAIL as expected (pytest 35 passed, 1 FAILED -- the stale test; named tests present in sources 1 of 5; min 40 passed), run in the provisioned slot-43 worktree, 2026-10-20 ~18:3xZ.
 
 <status>pending</status>
 <round>1</round>
