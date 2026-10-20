@@ -28680,3 +28680,56 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S229 -- Run 7 strands two synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S229",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T15:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7 stopped at B2 after the PAGE's upload, and the two synthetic state objects that upload wrote (original holdings and normalized portfolio) could not be deleted by the CloudOps principal (AccessDenied); the five index rows read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7/state_e2e7.json (leftover_blob_keys, leftover_delete_code AccessDenied; upload_attribution: 1 of 45 UPLOAD rows carried both the synthetic address and the run's unique holdings hash)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates (section 4 of the E2E packet and the CTO's condition on the deletes); the order's bound 'delete only keys recorded at creation'.",
+  "world_is": "These objects remain, each one version: irpt/49financial/state/normalized_portfolios/ART-5a1a67abc5d09030b15dd6fe0cf2d671920085895f3bdac428ce85d5892b968c/7bdffca77f6b8d26fad366b008d7b84c2d40ceac4f8b8b94e8662db4fa545c06.json; irpt/49financial/state/original_holdings/ART-c8577e1707abb65da6e5aad9c6b4245d886aa55f6e8f4d58a3754af266f9c6dd/cb8119d37c52f1d23be7cb113ab0dd1873466a8d5721346cd83caf246e77f2b0.csv. Because the filing stopped before a ticket id existed, the driver could not record the upload's keys at creation; this seat identified the one upload row set by the synthetic address AND the holdings hash (45 UPLOAD rows read, 1 matched), recorded its keys, then deleted the five index rows (upload, normalization, input, two artifacts), each read back ABSENT. The order says delete only keys recorded at creation: the issuer rules whether that reading was in bounds. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S230 -- Run 7 B2: the PROD page uploads, then the ticket create is refused ("the ticket could not be created") for an unseeded staff filer who leaves Advisor blank
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S230",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T15:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "On the PROD page (portal-v2.1.248) the unseeded synthetic staff user filled the Analysis Request form with Advisor blank and pressed File Analysis Request ONCE: the page posted the upload twice (the second after RESOLVING), then POST /api/scoped/tickets, and showed 'Nothing is known to be filed: the ticket could not be created.' No analysis request was sent; run 7 stopped at B2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7/run_e2e7.log (BROWSER lines of phase b2: CALLS directory/resolve, analysis/inputs x2, tickets; B2 filed REFUSED words)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:115 (analysis_request question advisor required True) and :733-747 (_validate_answers refuses a missing required answer: \"answer 'advisor' is required\") @HEAD",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:186-187 (staff placeholder 'Advisor (optional)') per the AR-y-454 PAGE_NOTES.md"
+    ]
+  },
+  "spec_asserts": "ADDENDUM 9 section 2: B1 reads Advisor labelled optional and B2 files without a refusal for a staff user with no advisor; v0.24 FWD-1 (the unseeded staff filing) and FWD-2.",
+  "world_is": "MEASURED: B1 read 12 labels, Advisor optional, no report-type and no commentary control, three firms, five models; B2 made exactly these calls in order (directory/resolve, analysis/inputs twice, tickets) and no analysis POST and no ticket-report POST; the page words are the ones in one_line. NOT MEASURED: the HTTP status and body of POST /api/scoped/tickets (the ticket service log group holds one invocation at the filing second, START, END, REPORT 35 ms, and no line naming a status; the browser script prints no status). INFERRED, not measured: the cause is the ticket service's required 'advisor' answer for analysis_request at HEAD (a blank Advisor is refused 400) set against the staff form that labels Advisor optional; the DEPLOYED ticket-service bytes were not diffed against the repo (CLAUDE.md rule 22a CODE), and run 6, which sent an advisor text through the API, created its ticket. The disposition (the page sending an advisor placeholder, the service accepting a blank advisor from a staff filer, or run 7 re-ruled with an advisor) is the issuer's. No second filing was made and no Keep was pressed.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
