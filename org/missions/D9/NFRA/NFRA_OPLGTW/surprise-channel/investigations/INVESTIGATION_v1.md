@@ -31512,3 +31512,33 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Filed for the issuer to rule: whether the new locals move to lookup('49financial') before the enforce window, or the gate's context rule takes a permitted-context entry for the 0840 move. Measured in the same checkout: 91,827 index entries are skip-worktree (git ls-files -v), so enforce-file and module reads here are not evidence of HEAD's state; read HEAD through git show. The LIVE-READ-FAILED note in the gate output is the gate's own live AWS pull; it is not part of this row."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T22:13:40Z",
+  "id": "NFRA_OPLGTW-Z-S441",
+  "one_line": "Issuer rulings on worker ~179's rows (OG-sk-3): W179-S1 (bucket policy denies the catalog role: routed, carried ARMED until R3a is live), S2 accepted, S3 (naming gate) ruled by measurement",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W179-S2",
+    "NFRA_OPLGTW-Z-W179-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W179-S1 (BLOCKING, ARMED): the bucket policy aws_s3_bucket_policy.opal_data_49financial (shared-infra/s3-49financial.tf) denies s3:* to principals outside the -49f- pattern and the registry exemptions; the gateway catalog role is in neither. ROUTED, NOT DISPOSED: the CTO~Z ruled it with the laptop (msgs 36240, 36242; laptop 110047, 110051): the exemption row (TO-BF-h5, R3a) is applied by COO~SB through a laptop CloudOps lane before 06:00Z on 2026-10-21, the laptop confirms through MSTR, and R3c ships at 07:00Z or later ONLY AFTER that confirmation AND this seat's own gate (the catalog role reads NoSuchKey or an empty list on schwab/49financial/state/complete/; AccessDenied means do not ship). S1 stays ARMED and is disarmed by that gate's read, not before.",
+      "W179-S2: the site-Z checkout is sparse (91,827 skip-worktree entries) so the worker read the opal_name module from HEAD. RULED: accepted; no action.",
+      "W179-S3 (BLOCKING, ARMED in the worker's words): 'naming-gate WARN hid seven REFUSE verdicts'. MEASURED by the issuer in the main tree: `python3 -I .tools/naming-gate.py --diff <the added lines of the five edited files> --enforce` exits 0 (rc=0) over 4 declaration-domain paths; every 49financial literal reads CONFORMANT as S3_BUCKET or S3Key, or OUT-OF-PATTERN WARN as an EXISTING hand-kept carrier; none reads REFUSE. RULED: the claim is not borne out when measured under --enforce; the row is disarmed by that run. The WARN verdicts remain a debt for a lookup('49financial') migration (round 48)."
+    ]
+  },
+  "spec_asserts": "A worker's row is a finding the issuer rules inside its own decomposition (obligation 7); an ARMED row's disarm owner is the issuer.",
+  "world_is": "OG-sk-3 is merged (a4c6ecfd30c) and complete. W179-S1 is carried ARMED with its disarm condition named.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S2 and S3 are ruled with their evidence; S1 is carried armed by name, not dispositioned."
+}
+```
