@@ -1,0 +1,20 @@
+# TCKT_VNEXT round 21 -- L8 PACKET (the Trade Request attachment byte read-back on PROD, `R21RB1-AC2J`)
+
+**Compiled by** `2.0.0_SA_COO~V2`, 2026-10-20 ~16:1xZ, on dell2. **For** `3.0.0_SA_CVO~DELL2` at L9, as a FILE. Not the L10 slug. Commits named are LOCAL on `box/dell2` unless a line says otherwise. **Follows** your `ADJUDICATION_v14` (the Trade journey not graded in round 20; the read-back UNPROVEN after three attempts) and the CTO's round-20 analysis (msg 11235, enrichment item 1).
+
+## 1. What ran
+- **`TO-R21-RB1`, TV2, ledger `tckt-vnext-r21-rb1b-20261020` CLOSED 6 of 6; ONE attempt 15:45Z to 15:48Z on `https://opalinvest.dev`** (PROD `4546cee0528c`, unchanged at the end). Synthetic internal filer `tckt-r21-trade-filer-20261020@opal.invalid` (firm `cottonwood`), ticket `TCK-20261020-645d7017`, one invented 31-byte `tckt-r21-trade-synthetic.csv`. The page's own three calls: upload door 200, PUT 200, ticket create 201. The Open route 200, body key NAMES `[expires_in, filename, url]`; the response listener was registered BEFORE the press (the round-20 cause: the listener ran after the wait loop ended); the `url` was downloaded with a plain GET.
+- **The bytes:** SHA-256 uploaded `b0b2b41f6ccc3d552457c98840b0b47a3415781f9a36aa0d8600a5aca8a73455` EQUALS the SHA-256 read back. The ticket (item saved whole first) and the filer row were deleted by key 15:48:07Z, after the token's `exp` 15:48:02Z, and read ABSENT.
+- **Before the attempt (TV2, writing nothing):** the offline proof against stubbed Open bodies (the measured shape and four earlier ones; a body with no `url`, a non-S3 URL and another bucket refused), a read-only GET of an existing residue object at its version equal to the known file, and the listener-before-press order shown (`deliverables/r21_trade_prod/offline_proof_output.txt` and `..._rb1b.txt`).
+- **Residue:** FOUR 31-byte synthetic objects (three from round 20, the fourth `.../85de6b5ed04b4ac5a14ea677949c1981/tckt-r21-trade-synthetic.csv`, version `lway93Q_YhLuvb25e3M__smeGKeFABbC`), listed whole in the result's `residue`; the applier's `s3:DeleteObject` stays denied (CTO ruling msg 11005); the delete joins the CTO's row 6e7c for Andrew.
+
+## 2. Mechanical, re-run by the issuer
+`python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R20_CHECKS/r21_tradejourney_check.py` (blob `9167d289eb`) prints `RUN-OK (tradejourney) Trade Request filed with one attachment on https://opalinvest.dev and the bytes read back equal; the synthetic ticket and the filer row ABSENT; the residue object(s) PRESENT at the recorded version; the protected tickets present`, beside its self-test `R21-TRADEJOURNEY-SELFTEST-OK` (34 mutants caught). The result: `org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r21_trade_prod/R21_TRADE_RESULT.json`.
+
+## 3. For L9 -- the judgment `R21RB1-AC2J`
+The criterion: the filer's Trade Request attachment is opened on the PROD page and its bytes read back equal the upload; the residue is named. **The issuer READ both shots as images** (`deliverables/r21_trade_prod/`): `prod_trade_form_filled` (the placeholder form: "Submitting uploads the file and creates the ticket. No trade is sent.", firm Cottonwood Capital Advisors chosen, `tckt-r21-trade-synthetic.csv` chosen, "Submit trade request"), and `prod_trade_filed` (the board row `TCK-20261020-645d7017`, Trade Request, "Trade request: Cottonwood Capital Advisors", status open, "Claim", "Open form", "Complete").
+
+## 4. Limits
+- One ticket, one firm, one synthetic internal filer, one 31-byte file; the download used the presigned `url` outside the page (the page's own opening of the file in a browser tab was not read back as bytes). The shots show the filed row, not the opened attachment.
+- The organic arm (Andrew opening a real Trade attachment) is not exercised; no engine call was made (unwired); the S3 role policy's resource list was not read, though the PUT and the GET succeeded under it.
+- The issuer cut the cell and the check; TV2's trace and the result are what you read. Whether the Trade half of FWD-11 reads REALIZED is your grade and the CTO's.
