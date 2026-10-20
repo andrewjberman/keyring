@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_SCHWABBF_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "ebad019c125a3107d3b7c58308a57e4e4ba557e0",
+  "prd_version": "v0.2",
+  "prd_pin": "6c3ded061f113ad3f862877a26e580fc330085c3",
   "half": "ratified-text",
-  "half_hash": "93998f28b0b19a15e7b15aa30a8707b54b71870d2767a30ae6f84d7548914632",
-  "endpoint_hash": "2b8d9daa6028486c21dac0474a696f60e9f4b28cff4e5101fbe564c62e0c0b22",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.1_RATIFIED_TEXT_20261020.md@389e038b1b",
+  "half_hash": "7449c7f1e75ca396ca8c03eac97f50b4e087163b0cec39007e46748f91c98a10",
+  "endpoint_hash": "a27fe4d3ee6c38d484d13b76a87529761437ce29b8577113683b63181a08cfab",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_SCHWABBF_v0.2_RATIFIED_TEXT_20261020.md@c495f17652",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-20T13:15:27Z"
+  "signed_at": "2026-10-20T14:33:38Z",
+  "reason": "FWD-8 is not ratified: Andrew has not confirmed its DONE WHEN (listed OPEN AT ANDREW; no open call exists)"
 }
