@@ -909,6 +909,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "Order BF-k-3 worker face, per-master contract item 'keep every round-2 name working, add the new ones'; TO-BF-m3 imports this contract.",
     "world_is": "Both key files at 2103514e72 define FIRM_FORM_MASTERS and no MASTER_FIRM. The worktree is clean for the grant files at HEAD. An alias fix needs an order whose <paths> names the two key files and the test while it is non-terminal.",
     "notes": "Not an alert. Disposition for the issuer: grant the two key files in TO-BF-m3 (or re-open BF-k-3) to add MASTER_FIRM = FIRM_FORM_MASTERS inside the byte-equal block, or confirm that no caller needs the name."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W2-S8",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~2",
+    "surfaced_at": "2026-10-20T17:52:37Z",
+    "one_line": "The order lists only the source prefix for the live silver plan, which cannot see a destination, so the tool also lists the firm-form silver prefix schwab/49financial/silver/ (read-only) to make the idempotent re-plan reachable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/keyform/move_bronze_key_form.py@0429204ae71 list_live: the live listing reads only schwab/08403355/bronze/ (the old prefix), so a firm-form destination is never listed and already is 0 on any live plan",
+        "live run in worktree wt-bf-2 (tool uncommitted, 2026-10-20 17:52Z): plan --tier silver --master 08403355 printed MOVE-PLAN tier=silver in_scope=7581 foreign=0 copy=7581 already=0 events=0",
+        "data/canonical/schwab/keyform/move_bronze_key_form.py (worktree, uncommitted) list_live_silver: lists schwab/49financial/silver/ beside the source prefix; plan_silver_from_listing counts a destination only by exact key match"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-m4 worker face, build step 2: 'Silver plan: list schwab/08403355/silver/ (live, read-only, paginated) or take --listing-file.' Build step 3 and the idempotence clause: 'A destination that already exists is already (idempotent re-plan).'",
+    "world_is": "A source-only listing cannot observe a destination, so a live silver plan reports already=0 whether or not the copy has run. The tool lists the firm-form silver prefix as well, read-only. The bronze live path (list_live) has the same gap for its firm-form destinations and is unchanged, because the bronze output is byte-identical by the order. The copy step is not affected: _copy_one head-checks each destination and skips a size match.",
+    "notes": "Not an alert. Disposition for the issuer: keep the destination listing for the silver tier, or refuse it and accept already=0 on a live plan. The bronze gap is the same question and is not decided here."
   }
 ]
 ```
