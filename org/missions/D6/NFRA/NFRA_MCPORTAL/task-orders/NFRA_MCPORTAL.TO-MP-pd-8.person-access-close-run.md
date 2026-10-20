@@ -98,7 +98,7 @@ and back on, one tool switched off and back on, and the person stopped and resto
 store and honoured on that person's next gateway call"). Check dry-run at base: AC1 FAIL (run file absent); green and red arms exercised with
 synthetic files. The test principal is NOT chosen here: it must have a real Entra login to call the gateway.
 
-<status>staged</status>
+<status>cancelled in place -- superseded by MP-zo-4 (OGW round 2, decomposition OGW2.1), 2026-10-20 ~23:3xZ</status>
 <round>2</round>
 <workstream>PC</workstream>
 <slot>~30</slot>

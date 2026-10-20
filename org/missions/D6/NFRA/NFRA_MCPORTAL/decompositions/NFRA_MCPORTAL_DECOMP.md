@@ -2001,3 +2001,33 @@ The acts are Andrew's: the writer verifies the owner's signed header, which no s
 Chain: one worker, one order. Depends on nothing in this repo: it waits on batch17 and Andrew's sitting.
 
 Staging, stated: the order is held as a DRAFT at `deliverables/2.0.0_SA_COO~MP/ogw/staged/NFRA_MCPORTAL.TO-MP-zo-4.opalgateway-close-run.DRAFT.md`, NOT in `task-orders/`, because `to-pipeline-gate` refuses a second order into a round that already has an issuance at HEAD (ONE ISSUER PER ROUND; tried 2026-10-20 ~21:2xZ, refused). It is issued as the next round's recut (the CTO's round-1 analysis enrichment list, or an L10 addendum) with `<status>pending</status>` and the GO; the check `ogw/checks/zo4.AC1.sh` is final.
+
+
+# v21 -- WORKSTREAM OGW, ROUND 2: the close run, the four 26-day rows, the face-only extract (2026-10-20 ~23:2xZ, 2.0.0_SA_COO~MP)
+
+Source: the CTO's `ledger/ROUND_ANALYSIS.ogw-round1.md` @9c3fa0bbe6 (answers the CVO's slug `ADJUDICATION_v12.Z` @f26d2b962b; ferry msg 36244). PRD v0.10 @9b4bbcfbb9 unchanged. Round 1 is closed by that analysis: 3 orders and `MP-pd-7` terminal, every row dispositioned. The list has four items; each is placed below, none is cut for coverage alone.
+
+## OGW2.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~23:2xZ)
+
+- The writer is live: `MP-pd-7` closed 2026-10-20T20:23:42Z (CodeSha256 `RUGwtI9t...`); a no-header `set_person_access` invoke answers `REFUSED NO-OWNER-HEADER` (re-run at 23:1xZ).
+- The gateway is still `13917ef993`: `admin_people_access.py` is NOT in it. The mount `OG-mp-1` is `2.0.0_SA_COO~O`'s batch17 (`OG-rl-18`, not before 2026-10-22T06:00Z), pinning mcportal `f90f03a`.
+- Open call `sitez-20261020T212417Z-ee12` (Andrew names the test principal; one sitting) is with the box CTO.
+- `.tools/open-calls` / `comp-surprise --armed --project NFRA_MCPORTAL`: 5 ARMED after the CVO's adjudication; the four 26-day rows are `Z-W2-S8`, `Z-W3-S2`, `Z-C-S3`, `Z-C-S8`.
+
+## OGW2.1 CELL `MP-zo-4` -- the close run of the thread on `/opalgateway`  (worker read-and-grade; risk WORLD; FWD-24, 25, 27, 28, 29; supersedes `MP-pd-8`; list item 1 and item 2's gateway side)
+
+As OGW1.7, now issued: one test principal, six ops by Andrew from the page, read three ways (store under the operator role, change history with `who`, the principal's own call through the served gateway agreeing with each switch). New third criterion `AC3` (mechanical, read from git at the live release's commit): the gateway mounts `admin_people_access.routes` and both handlers sit behind `owner_only` (the CVO's W1' note, gateway side). The writer side of W1' (refuse a non-owner `master_admin`'s widening confirm) is `MP-zo-3`'s fifth test, drained at `55b33623db1` (40 passed): NOT re-cut, said here so item 2 is placed and not dropped. The served arm of W1' needs a real non-owner `master_admin` session whose signed header no seat holds, so it is stated as unproven served, not graded. Gate: the order is ISSUED `pending` and carries "GO owed"; the GO (test principal, tool calls, window, Andrew's words) is written after batch17 and the sitting. `MP-pd-8` is cancelled in place at this issuance.
+
+## OGW2.2 CELL `MP-zo-5` -- evidence for the four 26-day ARMED rows  (worker read; risk SERVED; list item 3)
+
+One worker, reads only: for `Z-W3-S2` (owner key) and `Z-C-S8` (writer imports) the deployed function's no-header answer and the deployed zip's members; for `Z-C-S3` (`owned-paths-validate`, a `.tools/` fix, owner `1.0.0_SA_CTO`) and `Z-W2-S8` (the rollback script's halt-gate, owner `2.0.0_SA_COO~O`) the source lines and last commit. Output `row_evidence.json`: each row `DISARM` with a MEASURED item, or `OWNER_DATE`. The issuer then sends the CVO an L8 packet (only a CVO `adjudicates` row or a remediation row moves a worker row's clock) and asks the two owners for a date. Chain: one worker, runs now.
+
+## OGW2.3 THE FACE-ONLY EXTRACT  (issuer direct act; list item 4, row `Z-W42-S2`)
+
+`deliverables/2.0.0_SA_COO~MP/face_extract.py <order>` writes the order's lines above the RECORD FACE marker to `deliverables/2.0.0_SA_COO~MP/worker-faces/<TO id>.face.md`, refusing when the marker is absent or a record-face token starts a line above it. The worker prompt for the judged round names that file and says not to open the order. Extracts for `MP-zo-4` and `MP-zo-5` are committed with this issuance. Below the size floor and LOCAL: no order.
+
+## OGW2.4 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+- Two chains by write set: `MP-zo-4` (waits on the GO) and `MP-zo-5` (runs now). `fanout: 1 spawned now of 2 chains, cap 8` (zo-4 is issued but gated, not spawned).
+- Not claimed: that FWD-23 to FWD-29 are REALIZED (no served proof until the close run); that W1' holds served (stated above); that the four rows are disarmed (the worker proposes, the CVO adjudicates).
+- Deferred, unchanged: FWD-26 add and `portal_channels` (NFRA_OPLGTW round 48).
