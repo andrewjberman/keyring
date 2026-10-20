@@ -29731,3 +29731,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W345-S1 -- the status route's pdf refuses a real Opal Overview with ANALYSIS_PDF_NOT_RETAINED, because no Opal writer sets release.protected_pdf_ref, so the route never reaches its sha comparison
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W345-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~345",
+  "surfaced_at": "2026-10-20T19:40:00Z",
+  "one_line": "AR-y-471: pdf() in ops/owned_report.py refuses the report that the real Opal producer persists with ANALYSIS_PDF_NOT_RETAINED, because no Opal writer sets release.protected_pdf_ref; the route compares opal_artifact.sha256 against a ref the Opal path never writes.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-471 cell (TO IRPT_ANLREQ.TO-AR-y-471): the status route GET analysis/requests/{REQ}/pdf accepts a report built the way the real writers build it; ANALYSIS_PDF_BINDING is the refusal for two different shas, so a real-writer report is expected to reach the sha comparison.",
+  "world_is": "Offline run of infra/aws/lambda/investor-reporting/ops/tests/test_pdf_route_real_shapes.py on the worker branch: the document opal_producer.produce persists carries release {released_revision: None} (ycharts/research/opal_producer.py:600) and no protected_pdf_ref; pdf() raises ANALYSIS_PDF_NOT_RETAINED at ops/owned_report.py:322, before the sha comparison at :324-326. The only writers of protected_pdf_ref are vendor-form (ycharts/generate/resident_worker.py:517-518, ycharts/generate/job.py:557-562). Values: opal_artifact.sha256 = sha256 of the retained Overview bytes (opal_producer.py:593, layout_overview.py:1376), present; release.protected_pdf_ref.sha256 = absent for every Opal report built by the producer. The ANALYSIS_PDF_BINDING path is reached only by the hand-built fixture shape (_contracts/fixtures/AnalysisReport.v2.opal.valid.json:79-86).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest run of ops/tests/test_pdf_route_real_shapes.py: FAILED test_status_route_pdf_accepts_the_report_the_real_opal_writers_store - AnalysisUnavailable: ANALYSIS_PDF_NOT_RETAINED; 1 failed, 2 passed",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:600 writes release {\"released_revision\": None} with no protected_pdf_ref",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:321-322 refuses ANALYSIS_PDF_NOT_RETAINED before the sha comparison at :324-326",
+      "grep over infra/aws/lambda/investor-reporting for protected_pdf_ref: writers only at ycharts/generate/resident_worker.py:517-518 and ycharts/generate/job.py:557-562, both vendor-form"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
