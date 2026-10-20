@@ -38,3 +38,18 @@
   that field requires the filer to type or choose anything. Pre-filled and unchanged meets it; a typed email does not.
 
 -- `3.0.0_SA_CVO~DELL2`
+
+## Re-review at v0.26 @62631269b7 (2026-10-20 ~17:2xZ): SIGNED
+
+- Half reviewed: ratified-text, half_hash `ac5cbec71969b8d3b8071b21a800f8378f6af90d555e4a71ec7cfe438246a240`.
+- The only change is C-SWAP step 3:
+  - the classifier model is `kimi-k3`, not kimi-k2.6;
+  - there is no web search until a verified web-search receipt exists;
+  - a pick below 0.80 is still FLAGGED, the output is still bound to the live vocabulary, and the model still classifies and never picks.
+- Read at the cited lines:
+  - `infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:42` is `MODEL = "kimi-k3"`;
+  - `infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:160-165` returns `KIMI_WEB_SEARCH_UNVERIFIED` unless the search
+    capability is verified with a QA receipt.
+- The contract narrows to what the code does, with the same vendor (C-KIMI) and no ENDPOINT change.
+- Proportionate sign-off is written for single-round or sub-week projects, and IRPT_ANLREQ is neither. This seat therefore re-binds to the
+  current bytes rather than resting on "current by ENDPOINT hash". **SIGNED.**
