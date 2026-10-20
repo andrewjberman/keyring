@@ -1035,6 +1035,28 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "TO FR-s-5 item 2: one aws_ssm_parameter of type SecureString for the per-G list, its name from the HCL builder (system fidelity, scope alongside); a builder refusal is a surprise row and that piece stops.",
     "world_is": "No kind in the registry names an SSM parameter, so the builder cannot produce its name. The parameter, its box-role read grant (TO item 3) and the output perg_parameter_name are not built. The schedule switch (variables.tf, schedule.tf) is built and plans as No changes at its default.",
     "notes": "The stopped piece needs a registry kind for SSM parameters (or a ruling that parameter names are graded by a grammar). FR5-AC3 cannot reach its expected plan (1 to add) until that is ruled. No G number and no typed name was used."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S3",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-20T16:05:00Z",
+    "one_line": "The FR-s-6 order names box/daily.py _real_daily_deps for the one wiring edit, but _real_daily_deps lives in box/run.py, which is not in the order's paths, so the refusal that W5-S2 names cannot be removed under this grant; the adapters are built and tested, and a scratch wiring of run.py passes all six adapter tests.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "box/run.py line 270 (worktree wk-NFRA_FIDUPL-5 at HEAD c8aa40c577): def _real_daily_deps(config); line 279 raises RuntimeError with the attribute refusal; box/daily.py defines no _real_daily_deps",
+        "NFRA_FIDUPL.TO-FR-s-6.adapters.md paths block: adapters.py, tests/test_adapters.py, box/daily.py and the investigation file; box/run.py is not granted",
+        "scratch copy of box/run.py with the refusal replaced by ContextRequest, make_account_lister and GSwitcher, run in the same worktree: tests/test_adapters.py 6 passed rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FR-s-6 wiring: the one edit of box/daily.py _real_daily_deps makes attribute build ContextRequest(handle.context), a GSwitcher on it and make_account_lister, then call attribute.sweep_attribution, and delete the refusal path.",
+    "world_is": "The wiring target is in box/run.py, outside the grant, so the daily attribute stage still refuses and every daily run still reports partial. FR6-AC1 cannot pass as written until the grant or the location is ruled.",
+    "notes": "Decision for the COO: add box/run.py to the FR-s-6 paths (a 6-line change in one function), or move the attribute wrapper into box/daily.py and have run.py call it. This worker did not edit run.py."
   }
 ]
 ```

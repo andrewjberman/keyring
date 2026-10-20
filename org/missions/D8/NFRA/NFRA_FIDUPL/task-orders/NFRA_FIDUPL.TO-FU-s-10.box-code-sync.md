@@ -44,6 +44,10 @@ FU-s-2 repair 5 (the failed-request trace: header names, body key names, respons
 
 Round 2 added modules on the box path (`gswitch.py`, `attribute.py`, `split.py`, `backfill.py`, `box/daily.py`; `adapters.py` follows) and changed `box/run.py`. The check `fu10m` now compares EVERY `*.py` directly under `infra/aws/ec2/canonical-fidelity/` and every `*.py` and `*.sh` under its `box/` (not tests) with the box, so the third delivery ships all of them: deliver the full current set from head c8aa40c577 or later, not only seven names; the expectation reads `all N shipped files` for the N the check finds (now 13).
 
+### REOPENED (issuer, 2026-10-20 ~16:05Z) -- fifth delivery, the round-2 set is FROZEN at f3a4761ed5
+
+FR-s-6 is merged: `adapters.py` is new and `box/run.py` changed (the daily attribute stage is wired). Deliver the full current set from head f3a4761ed5 or later (13 files now), a NEW ledger (slug `nfra-fidupl-box-code-sync-5-<date>`), check `fu10m`, same rules (no bootstrap, no sign-in, no start or stop). Thank you for the fourth delivery. Nothing else of round 2 is pending in the repo; if a file changes after this I will say so.
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
