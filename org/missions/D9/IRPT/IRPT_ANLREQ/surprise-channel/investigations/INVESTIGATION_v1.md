@@ -30012,3 +30012,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W346-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~346",
+  "surfaced_at": "2026-10-20T20:10:57Z",
+  "one_line": "AR-y-472: the route's Overview fallback types the producer's logical-id format '<request_id>-overview-<sha256>' inline; the producer writes it inline too, and no cross-check names it on the producer side, unlike the commentary id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-472 cell (TO IRPT_ANLREQ.TO-AR-y-472): pdf() resolves the retained Opal Overview through the artifact binding the producer retains it under, read from the producer, not invented; the commentary side (ops/owned_report.py commentary_pdf, and its cross-check named in the owned_report.py comment beside COMMENTARY_FAMILY) keeps the logical-id format in one named helper that a test ties to the producer.",
+  "world_is": "ycharts/research/opal_producer.py:686 writes the Overview under the logical id \"%s-overview-%s\" % (request_id, run_doc[\"report\"][\"sha256\"]) as an inline format in produce(); there is no named helper beside commentary_logical_id (opal_producer.py:529) or package_logical_id (opal_producer.py:524). The route's fallback in ops/owned_report.py pdf types the same format string. The real-shape test runs the producer and the route together, so a format change in the producer fails that one test; no producer-side test names the Overview format, and the AR-y-472 grant (ops/owned_report.py and its test) cannot add one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:686 at commit 9caa35f08a6 (parent 197a491eef5): \"%s-overview-%s\" % (request_id, run_doc[\"report\"][\"sha256\"]) inline in produce(), not a helper",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py:524-531 at 9caa35f08a6: package_logical_id and commentary_logical_id are the named helpers for the other two retained PDFs",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py pdf() fallback at 9caa35f08a6: artifact_id = _binding(..., \"%s-overview-%s\" % (request_id, sha))",
+      "the three route test files at 9caa35f08a6: 44 passed; test_pdf_route_real_shapes.py runs produce() and pdf() together, so the shared format is exercised only through that test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
