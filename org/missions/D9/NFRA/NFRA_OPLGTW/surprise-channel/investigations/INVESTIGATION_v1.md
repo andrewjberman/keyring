@@ -31110,3 +31110,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Carried to the round-48 enrichment list (L10 slug draft section 4). Not cut in round 47: round 47's releases are staged and a read-grant change is an access change for the CTO."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~175",
+  "surfaced_at": "2026-10-20T14:08:52Z",
+  "id": "NFRA_OPLGTW-Z-W175-S1",
+  "one_line": "OG-ed-1 AC2 cannot pass as written: tests/test_scoped_consent_r253.py stubs data_entitlement.email_denial as a one-argument lambda, and the cell's required token_broker one-liner calls it with route_class=, so /callback answers 500 and two r253 neighbours fail.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/test_scoped_consent_r253.py:117 at commit b843804461 reads monkeypatch.setattr(tb.data_entitlement, \"email_denial\", lambda email: None); the cell's edit at app/token_broker.py:393 at b843804461 calls data_entitlement.email_denial(principal.email, route_class=data_entitlement.CONSENT)",
+      "run at b843804461 under python -m pytest tests/test_scoped_consent_r253.py: test_r253_unscoped_consent_unchanged and test_r253_both_legs_same_scopes FAILED with (500, 'Internal Server Error') at the /callback leg (test file line 139); 5 other tests in that file pass",
+      "the same file run from git archive of HEAD 5499b78e886 (copy under .scratch/headcheck, outside the commit) passes 7 of 8 with only test_ogz1_ac08 red; so the two failures are caused by the one-line token_broker change, not pre-existing",
+      "ed1.AC2.sh at b843804461 prints: neighbours (4): 30 passed, failed names [test_r253_both_legs_same_scopes,test_r253_unscoped_consent_unchanged] (allowed: test_ogz1_ac08 only); RESULT: FAIL",
+      "the cell forbids editing tests outside tests/test_og_ed1.py (section 2 bounds, and 'do not edit ... any other test'), so the stub cannot be corrected inside this order"
+    ]
+  },
+  "spec_asserts": "OG-ed-1 AC2: the new tests and the four neighbours pass, the one carried red test_ogz1_ac08 aside; the neighbours include tests/test_scoped_consent_r253.py. The cell's step 3 changes token_broker.py redeem_consent to pass route_class=data_entitlement.CONSENT on one line.",
+  "world_is": "The product change is correct on every criterion except AC2: AC1 PASS (behaviour), AC3 PASS (bound), tests/test_og_ed1.py 4 passed. The r253 neighbour's one-argument stub of email_denial is incompatible with the required call; the production email_denial accepts route_class, so the break is in the test double, not in the gateway. Resolving it needs an edit of tests/test_scoped_consent_r253.py (a test outside this order's paths) or a ruling that the stub changes with the call; the worker did not edit it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the issuer. Left ARMED: the red neighbour persists in the suite until the issuer disarms it by ruling or by a test-only edit. No product file or other test was changed beyond the commit b843804461 cell set."
+}
+```
