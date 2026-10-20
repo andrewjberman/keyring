@@ -65,15 +65,15 @@ Author: 3.0.0_SA_CVO~DELL1 (dell1), 2026-10-20T16:28:00Z. Graduated at ADJUDICAT
     "owner": "0.0.0_AB_MSTR",
     "round": "v99",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "0.0.0_AB_MSTR",
       "round": "v99"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.0.0_AB_MSTR",
-      "at": null
+      "at": "2026-10-20T17:11:00Z"
     }
   },
   {
@@ -91,15 +91,15 @@ Author: 3.0.0_SA_CVO~DELL1 (dell1), 2026-10-20T16:28:00Z. Graduated at ADJUDICAT
     "owner": "0.0.0_AB_MSTR",
     "round": "v99",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "0.0.0_AB_MSTR",
       "round": "v99"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.0.0_AB_MSTR",
-      "at": null
+      "at": "2026-10-20T17:11:00Z"
     }
   },
   {
@@ -117,15 +117,19 @@ Author: 3.0.0_SA_CVO~DELL1 (dell1), 2026-10-20T16:28:00Z. Graduated at ADJUDICAT
     "owner": "0.0.0_AB_MSTR",
     "round": "v99",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "0.0.0_AB_MSTR",
-      "round": "v99"
+      "round": "v99",
+      "closure": {
+        "reason": "ACCEPTED_BY_RULING",
+        "pointer": "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md@c7381f6135 (ADVI_COTBKF-D1-S6: the dell1 account-id scan is unprovisioned BY DESIGN on Andrew's 2026-10-09 word; CTO no-restore, msg 8731)"
+      }
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.0.0_AB_MSTR",
-      "at": null
+      "at": "2026-10-20T17:11:00Z"
     }
   },
   {
@@ -162,5 +166,14 @@ Author: 3.0.0_SA_CVO~DELL1 (dell1), 2026-10-20T16:28:00Z. Graduated at ADJUDICAT
 ## Disposition lines (appended, 3.0.0_SA_CVO~DELL1, dell1, 2026-10-20T16:45:00Z)
 
 - `AMGT_HARVST-D1-W183-S10`: the disarm is NOT written; the clock stays ARMED. The disarm owner 0.0.0_AB_MSTR~DELL1 (msg 8717) landed a YAML load of buildspec*.yml in `.tools/commit_gate_runner.py` (6f17a0569b, in HEAD and on origin/box/dell1), with a ScannerError negative control. The decisive control fails: the buildspec that failed the live CodeBuild run (row S65), `git show d8f3448b9b:infra/aws/harvest/dossier-refresh/buildspec.yml`, reads `OK: pre-commit gate clean for 1 of 1 file(s)`, rc 0, on this seat's run of `python .tools/commit_gate_runner.py <file>`. That file is valid YAML: `yaml.safe_load` succeeds, and its two defective items parse as one-key MAPPINGS (`{'echo "SMOKE': ...}`, `{'echo "Push complete': ...}`), not strings. CodeBuild refuses that shape (YAML_FILE_ERROR), and a YAML load cannot see it. Close condition, restated to the row's own defect: the commit path refuses a buildspec in which any `phases.*.commands` item is not a string, with the d8f3448b9b file as its positive control.
+
+-- 3.0.0_SA_CVO~DELL1
+
+## Disposition lines (appended, 3.0.0_SA_CVO~DELL1, dell1, 2026-10-20T17:11:00Z)
+
+- `AMGT_HARVST-D1-W183-S10`: DISARMED and REMEDIATED. bff9f2d966 (0.0.0_AB_MSTR~DELL1, in HEAD) refuses a non-string `phases.*.commands` or `finally` item. This seat ran `python .tools/commit_gate_runner.py` on four files: the S65 buildspec as it failed CodeBuild (`git show d8f3448b9b:...`) reads rc 1; the repaired HEAD buildspec reads rc 0; a valid sample reads rc 0; a mapping-item sample reads rc 1. My earlier refusal (bcb40719f9) is answered.
+- `AMGT_HARVST-D1-W183-S11`: DISARMED and REMEDIATED. 97cb3abc4c (in HEAD) makes `resolve_risk_map` read the main tree's map when a linked worktree's own map is stale. This seat drove that function in a fresh linked worktree at HEAD (C:/dev/cvo-s11-ctl), treated as non-sparse, with its own committed map STALE and a refusing rebuild. NEW code reads "linked worktree: own map STALE; read the MAIN tree's map ... no build here"; the pre-fix code (97cb3abc4c^) reads "NOT-DECIDABLE: build guard refused: linked worktree", which is the row's blindness. The cure holds only while the main map is fresh (23.8h old at this read, not stale), so that half stays with W183-S17, which stays ARMED.
+- `AMGT_HARVST-D1-W183-S16`: DISARMED and CLOSED_UNREMEDIATED, BY DESIGN on Andrew's 2026-10-09 word (c7381f6135) and the CTO's no-restore ruling (msg 8731). Dell1 commits stay unchecked for client account ids; that is the declared limit.
+- `AMGT_HARVST-D1-W183-S17`: still ARMED. The danger-map refresh has no schedule (MSTR~DELL1 msg 8726).
 
 -- 3.0.0_SA_CVO~DELL1
