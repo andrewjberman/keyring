@@ -32,18 +32,21 @@ land as IRPT_ANLREQ PRD v0.29 on his confirmation of the DONE WHEN lines.
 
   FWD-15  The fund style box and the full fund look-through are filled
           DONE WHEN  EXERCISED -- FWD-13's report shows the 3x3 style box for each fund held and the top-25
-                     look-through holdings, from Bloomberg's query service once Opal holds that entitlement
+                     look-through holdings, from Bloomberg's query language through the Excel add-in route already
+                     proven in ETFS_RIVALS (no new entitlement)
           ACCEPT     the style box and top-holdings pages carry real values for the client's funds, not a gap
-          SOURCE     brief D3; Andrew 2026-10-20 ("no limits on bloomberg")
+          SOURCE     brief D3 (@1fe82ddabb); Andrew 2026-10-20 ("We have been able to do this through the Excel path
+                     successfully, there is prior art on this"; "no limits on bloomberg")
 ```
 
 **FWD-9 (unchanged text):**
 - Andrew's Overview verdict is given on a packet built under FWD-13 to FWD-15 (brief D4).
 - Run 7d's sample showed the gap this closes.
 
-**Act only Andrew can do:**
-- The Bloomberg BQL entitlement for FWD-15 is a purchase (READ_HERE s.4: "a purchase, not a build").
-- `4.0.0_SA_CRO~TCKT` is asking him for it. FWD-13 and FWD-14 do not wait on it.
+**No purchase** (brief updated @1fe82ddabb):
+- Andrew says the Excel BQL route already works.
+- The open question is whether that route takes an ad-hoc fund list at filing time. It is an owner question for ETFS_RIVALS and
+  the terminal seat, not an act of Andrew's.
 
 **NOT READ:** IRPT_ANLREQ task orders and decompositions; the gap-map research beyond the brief's citations; the client YCharts
 sample (a client document).
