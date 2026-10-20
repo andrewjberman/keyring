@@ -1417,6 +1417,29 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r3 step 4: terraform show of the plan shows ONLY the statements removed and added as listed.",
     "world_is": "The plan cannot show the new statements while the policy embeds an unknown ARN. The act used the source file at the pin as the substitute oracle before the apply and the live policy as the check after it; both agree with the order's list. An order of this shape should ask for the source read and the post-apply read, not a plan read.",
     "notes": "Form only. The apply was Branch A on every other clause."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S7",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA2",
+    "surfaced_at": "2026-10-20T22:51:27Z",
+    "one_line": "TO-BF-r2 step 3 stopped at the plan: the -target of the two bucket policies also plans 10 creates (5 firm buckets and 5 public access blocks), because the policy's reference to aws_s3_bucket.lgic_firm[each.key] pulls the whole resource into the target; nothing was applied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA2/r2/plan_targeted.txt: 'Plan: 10 to add, 2 to change, 0 to destroy' for -target=aws_s3_bucket_policy.opal_data_49financial -target='aws_s3_bucket_policy.lgic_firm[\"cottonwood\"]' in infra/aws/terraform/shared-infra at box/laptop abcd77ec6a (2258ed4f47 is an ancestor); the 10 creates are aws_s3_bucket.lgic_firm and aws_s3_bucket_public_access_block.lgic_firm for abidingwealth, alongside, keilfinancial, lighthousewealth and vmwealth",
+        "terraform show -json of the saved plan: actions create=10, update=2, no-op=6; the two updates are the two policies and nothing else",
+        "org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA2/r2/before_49f.json, before_cw.json (live, read before the plan) against org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA2/r2/planned_49f.json, planned_cw.json (the plan's after documents): 49financial 42 -> 54 statements, cottonwood 7 -> 14; 0 statements removed; DenyForeignFirmPrincipals differs only by ArnNotLike additions (49f: quartz-si2-spike-role, opal-assets-silver-schwab-role, gateway-schwab-catalog-read-role; cottonwood: opal-assets-silver-schwab-role, schwab-alongside-si2-box-role); the other pre-existing statements differ only as scalar versus single-element list, which IAM reads the same",
+        "No apply, no put-bucket-policy and no other write was made; the ledger entry nfra-schwabbf-fence-rows-early-20261021 stays OPEN with leg L1 unproven"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-r2 step 3: the -target of aws_s3_bucket_policy.opal_data_49financial and the cottonwood instance of aws_s3_bucket_policy.lgic_firm plans two in-place updates and no other resource; any other resource is a STOP with no apply.",
+    "world_is": "The targeted plan reads 10 to add, 2 to change, 0 to destroy. The two changes are exactly the five signed rows (49financial gains 12 statements, cottonwood 7, plus the ArnNotLike additions). The 10 creates are other firms' registry buckets that no pair read for this order covers. Terraform pulls the whole aws_s3_bucket.lgic_firm resource into the target because the policy's for_each reference to it is not instance-specific.",
+    "notes": "Options for the issuer and the CTO, none taken here: (a) rule that the five rows go in by put-bucket-policy of the planned documents saved beside this row (the order's own fallback tool; a later targeted plan should then read 0 changes on these two policies); (b) rule that the 10 firm-bucket creates are in scope; (c) hold for the owner of the firm-bucket creation. Deadline 2026-10-21 06:00Z."
   }
 ]
 ```
