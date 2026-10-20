@@ -31354,3 +31354,55 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "S1 to S4 are ruled above with their evidence; S5 is carried armed by name, not dispositioned."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W179-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~179",
+  "surfaced_at": "2026-10-20T21:48:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "one_line": "The completion marker's bucket opal-data-49financial has a resource policy that explicitly denies s3:* to every principal outside the -49f- role pattern and the registry exemptions; the gateway catalog reader is outside both, so its granted read of the 0840 state object is refused at the door after the move.",
+  "spec_asserts": "Task order OG-sk-3 section 1 step 3: when a bucket policy denies principals it does not list and does not name the gateway catalog role, file a BLOCKING row; do NOT edit that bucket policy (it is outside the order).",
+  "world_is": "infra/aws/terraform/shared-infra/s3-49financial.tf:114-146 declares aws_s3_bucket_policy.opal_data_49financial: Deny Principal * on Action s3:* over the bucket and its objects, with Condition ArnNotLike aws:PrincipalArn = module opal_name fence_patterns['49financial'] (the *-49f-* role pattern) plus fence_exemption_arns for the bucket. gateway-schwab-catalog-read-role matches neither, and infra/logic/registry/exemptions.json opal-data-49financial holds no gateway row. needs_change is true for the BLOCKING owner to route; the policy is not edited here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-49financial.tf:114-146 @d7d029bd188 (the bucket policy: Deny Principal * s3:* with ArnNotLike on the fence patterns and exemption ARNs)",
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf:129-130 @d7d029bd188 (fence_patterns 49financial = the *-49f-* role pattern; read via git show, the path is skip-worktree in this checkout)",
+      "infra/logic/registry/exemptions.json:11-240 @d7d029bd188 (opal-data-49financial exemption principals: none named gateway-schwab-catalog-read-role)",
+      "infra/logic/registry/exemptions.json:369-377 @d7d029bd188 (opal-data-49financial grants: irpt-holdings-role only)"
+    ]
+  },
+  "notes": "Filed by OG-sk-3 (round 47). The gateway's reader IAM text (infra/aws/terraform/opal-gateway/schwab_reader_iam.tf) is edited and names the state object; the resource policy is the second door. Measured from the text of the policy, not from a live AWS read: no AWS call was made."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W179-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~179",
+  "surfaced_at": "2026-10-20T21:48:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The site-Z worktree does not carry infra/aws/terraform/modules/opal_name on disk: the six tracked files are skip-worktree in this checkout, so the module that derives the bucket fence patterns can be read only through git show.",
+  "spec_asserts": "Task order OG-sk-3 section 3 and section 1 step 3: the worker reads the bucket-side fact against the files it cites in the worktree, which the order grants by its paths.",
+  "world_is": "git ls-files -v reports S (skip-worktree) for infra/aws/terraform/modules/opal_name/* while the same paths are indexed at HEAD; core.sparseCheckout is true in this checkout. The module's files are absent from the disk, so a read-by-path there returns no file; the evidence used for needs_change was read from HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -v infra/aws/terraform/modules/opal_name @d7d029bd188 (S flag on six files; the directory is absent from the disk of worktree wk-NFRA_OPLGTW-179)",
+      "git config core.sparseCheckout @d7d029bd188 (true in this checkout)",
+      "git show d7d029bd188:infra/aws/terraform/modules/opal_name/generated_locals.tf:129-130 (the fence_patterns the bucket policy reads)"
+    ]
+  },
+  "notes": "Observation only: the order names no module path, so this row does not block OG-sk-3. Whoever reads the module by path from this checkout reads nothing."
+}
+```
