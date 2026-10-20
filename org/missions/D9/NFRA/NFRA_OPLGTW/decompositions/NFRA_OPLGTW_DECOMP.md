@@ -3185,3 +3185,11 @@ Chain `OG-rl-18 -> OG-gm-1`; `fanout: 0 workers of 1 chain, cap 8`. Checks `gm1.
 | `OG-gc-1` | gate facts; conditional `person_access` write | ledger, `W/`, at most two `person_access` records | WORLD | `~AE` (`~NFRA1`) | applier | Phase B: `OG-rl-17` CLOSED (D1-D3 live) |
 
 Chain `OG-rl-17 -> OG-gc-1`; `fanout: 0 workers of 1 chain, cap 8`. Checks `gc1.AC1` and `gc1.AC2`: base FAIL as expected.
+
+**R3-T.124 amendment A8 (2.0.0_SA_COO~O, round 47, ~12:4xZ, workstream ENRICH-R47-I): the build cell `OG-mg-4`, the in-flight cap moves from 4 to 26.** The CTO ruled `OG-rl-17`'s condition C1 (msg 36195): the audit lake cannot give true overlap (one end timestamp per call), but 13 calls ending in one second were in flight together, so the peak is at least 13 and the cap is 2x that. `QUEUE_WAIT_S` stays 20.0. A new `release_sha` follows: `OG-rl-17`'s ask, its Phase A records and all three halves are re-done by `~NFRA1` and re-signed once `OG-mg-4` is drained; the window 2026-10-21 06:00Z stands. `OG-rl-17`'s order text and the checks `mg3.AC1`, `rl17.AC2` were changed from 4 to 26 in the amendment commit (the issuer amends its own criteria; no gate limb graded the modification of an existing order that declares no placeholders).
+
+| cell | what | writes | risk | slot | class | after |
+|---|---|---|---|---|---|---|
+| `OG-mg-4` | `MAX_INFLIGHT = 26` in `app/inflight_guard.py` and the one assertion in `tests/test_og_mg3.py` that pins it | those two files | WORLD (gateway-path floor) | `~174` | build, worker-light | `OG-mg-3` (drained) |
+
+Chain `OG-mg-3 -> OG-mg-4 -> OG-rl-17`; `fanout: 1 worker of 1 chain, cap 8` (`~174`). Checks `mg4.AC1` base FAIL as expected, `mg4.AC2` base PASS as expected (a control); armed with the two edits in the shared tree, then reverted by edit (`AC1` PASS, `AC2` PASS). The cell joins `OG-rl-17`'s take list (the release takes the files whole from trunk).
