@@ -1,0 +1,18 @@
+# Drive log 2026-10-20 02Z to 05Z -- 2.0.0_SA_COO~Y2, IRPT_ANLREQ (host desktop-n8rjv0a)
+
+Written ~05:2xZ from commits and broker ids; it lists acts and decisions, not tick-by-tick narrative.
+
+## What the live runs measured (each run found one more layer between a filing and a report)
+- Run 5 (02:04Z) stopped at U: my holdings bytes held a SECOND unknown row (`APPL`), so the door held two blocking findings and the Keep rule (exactly one) rightly sent nothing. My fixture defect; ADDENDUM 7 (CTO half @9b7d4f55c9) dropped the row.
+- Run 5B (02:33Z): the Keep worked (NORMALIZED), then the resident refused the request twice (`CLOSED_COMPOSITION_REQUIRED`). IB2's read (`A_COMPOSITION_REFUSAL.txt`): journal `COMPOSITION-REFUSED step=2 ValidationError`. I validated the retained composition against the schema set inside the running r34l tarball: one error, `additionalProperties@browser` (`commentary_requested`); the running copy of `AnalysisSubmissionRequest.schema.json` is the 10-07 base blob `a7370fcd237`, trunk's `92cc5673589` carries the field. The portal and every run send it.
+- Run 5C (04:02Z, field omitted): the schema step passes, then `RecipeRefused` x3. On the retained 5C document the repository's `prepare_normalized_upload` says "holdings row has no provider receipt" (SPY, AGG, TIMXX are KEPT_BY_HISTORY). The request took the VENDOR producer: `producer_for` picks OPAL only for the 2-name allow list or a `ticket_confirmed` record; `confirm_ticket` needs ticket source `dashboard_form:` (set only by `/tickets/submit`); the Ticket Center creates tickets by `/tickets`, source `"portal"`.
+- Run 5D (05:01Z, the allow-listed principal `fwd1-staff-r41b@opal.invalid`, field omitted): PASS. READY 25 s after submit; R2 sections n=3 (VALUE 1, NOT_AVAILABLE 2), 0 builder-only, 0 not-in-this-version (Andrew's cards check; was about 425 cards). Receipt `irpt_anlreq_commentary_e2e5d/A_E2E5D.txt`.
+
+## Acts
+- Cut and built: AR-y-429 (Ticket Center repair, merged `32be01c436a`, branch `96d4e00a`, row a173 approved, portal DEV `7d5ba57ec6`); AR-y-430 (r34m, superseded), AR-y-438 (r34m v2: six members, schema added; tar `00e1d165...`; merged `b019fd26cbc`; packet v2 blob `3a0301a1ce`, CTO half `ee2a5c16456`); AR-y-436 (offline repro: not reproduced at HEAD, the live cause was the schema set, merged `8f38cae101a`); AR-y-440 (confirm_ticket stamps a `/tickets` analysis_request by its creator, CTO msg 11206, merged `57fbab70491`); AR-y-441 (door Lambda rebuild v2, two movers, running).
+- IB2 orders: run 5B, 5C, 5D, TO-READ-COMPOSITION-REFUSAL (done), TO-READ-APPL-SUGGEST (waits), TO-APPLY-R37 and TO-APPLY-R34M (rewritten to the rebuilt artifacts; r34m v2 GO sent 05:03Z with a start guard: not after 05:20Z).
+- IB2's mail latency is 10 to 20 minutes (its watcher expires; my unstick and MSTR's cannot focus its tab); every GO is sent early and guarded.
+- Order slips of mine: the run 5B order file's id line reads `E2E-5BB` (a double rename in its generator); the AR-y-430 cut message says "other four of the five files" where the count is two (corrected in `fc57568e92`).
+
+## Open
+IB2's window is closed 05:45Z to 07:00Z (gateway resize); then, in the CTO's order: r37 version 2 (door: O1 + confirm fix; worker 319 building; packet v2 drafted, CTO half to ask), r34m v2 (packet signed both halves), run 6 (the unseeded staff filing, ADDENDUM 8 COO half cut, CTO half to ask), TO-READ-APPL-SUGGEST. PROD promote of the Ticket Center set only after r34m v2 reads V2S OK and r37 v2 is live (CTO msg 11203). Window 5 held; rows 65a1, a392, 544d, 6e7c, 128f (Andrew's deletions); armed rows W90-S3, W103-S4, W166-S1, W291-S2, S207, S211, S215; dispositions of W314, W315, W316, W317, W318, W310-S3 rows; test worktree `pw-anlreq-base`.
