@@ -43,10 +43,10 @@
 
 ### ACCEPTANCE
 
-<criterion id="FU11-AC1" cell_refs="FU-s-11"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu11f</invocation><expect>R1-FU11-OK feasibility record carries 4 facts</expect></criterion>
+<criterion id="FU11-AC1" cell_refs="FU-s-11"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu11f</invocation><expect>R1-FU11-OK feasibility record carries 4 facts</expect></criterion>
 `FU11-AC1` -- Part 1: the feasibility record exists with its four facts.
 
-<criterion id="FU11-AC2" cell_refs="FU-s-11"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu11s</invocation><expect>R1-FU11S-OK agent-driven headful sign-in recorded values-free</expect></criterion>
+<criterion id="FU11-AC2" cell_refs="FU-s-11"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu11s</invocation><expect>R1-FU11S-OK agent-driven headful sign-in recorded values-free</expect></criterion>
 `FU11-AC2` -- Part 2 (after GO): the agent-driven sign-in record shows `outcome=SIGNED_IN`, the plugin as driver and a headful browser. A second criterion, with its reason: it is the outcome Andrew asked for and the first cannot see it.
 
 <expected_criteria>FU11-AC1,FU11-AC2</expected_criteria>
