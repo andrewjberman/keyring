@@ -12866,6 +12866,27 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W82-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~82",
+    "surfaced_at": "2026-10-20T13:33:28Z",
+    "one_line": "the work commit 5e0bcdd9cf printed NAMING ERROR 'function-map folder missing' for C:/tmp/wk-mcpindex-82/infra/aws/lambda/ci/function-map/ and WARN 'client-data-check: hashed account-id list ABSENT', and the commit still returned rc=0; the same two conditions as the sibling row NFRA_MCPINDEX-Z-W76-S41.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project. The face's <paths> grant does not name infra/aws/lambda/ci, and the worktree sparse list does not carry it.",
+    "world_is": "bash .tools/safe-commit.sh --author ... -F .scratch/msg_w6_work.txt -- workflows/gateway_battery/routing_table.py workflows/gateway_battery/tests/test_routing_serves.py org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md printed the naming-gate NAMING ERROR for the missing function-map folder and the client-data WARN (account-id list absent), then '[msg-verify] committed 5e0bcdd9cf' with rc=0. The commit-gate line read 'checked 2 of 3 file(s)' for the py gate; the markdown file was not a py file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... -- (3 paths): rc=0; output in C:/tmp/wk-mcpindex-82/.scratch/commit_work.log lines 9-14, 39, 44 (read 2026-10-20T13:33Z)",
+        "git -C C:/tmp/wk-mcpindex-82 log --oneline -1: 5e0bcdd9cf NFRA_MCPINDEX MX-w-6 (0.9.0_WK_NFRA_MCPINDEX~82): --serves-out writes the TRACED set"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
