@@ -13651,3 +13651,29 @@ carries none.
   "notes": "OBSERVATION, INERT: this worker's commit touched workflows/gateway_battery only. Whether the sparse cone should carry the function-map folder is the issuer's call; nothing in MX-y-6 reads the naming result."
 }
 ```
+
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~90",
+  "surfaced_at": "2026-10-20T18:48:14Z",
+  "id": "NFRA_MCPINDEX-Z-W90-S1",
+  "one_line": "The census gives 0 rows and no dated partition for opal-data-inf silver/api_dims/, but that rows figure is read from one schema object (billing snapshot 2020-03-22) while the prefix holds 9192 parquet objects, so the census does not establish that the table is empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/4.0.0_SA_CRO~Y/census.json#opal-data-inf/silver/api_dims/ (rows 0, partitions 0, objects 10913, parquet 9192, schema_key silver/api_dims/billing/snapshot_date=2020-03-22/data.parquet)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~90/uncatalogued_rows.json (the api_dims item, disposition reason, caveat inside its reason text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order takes the census as the authority on table contents, and its reason case covers an empty table, so a zero row census figure is read as empty.",
+  "world_is": "The census row figure for opal-data-inf silver/api_dims/ comes from one schema object, 0 rows, while the prefix holds 9192 parquet objects; the table was not counted across its objects.",
+  "notes": "OBSERVATION, INERT: the api_dims item is written as a reason on the census figure with the caveat stated in its text. No criterion grades the row count beyond the census; the CVO or issuer decides whether a count of all objects is needed."
+}
+```
