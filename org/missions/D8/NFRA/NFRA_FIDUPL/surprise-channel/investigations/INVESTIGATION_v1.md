@@ -661,6 +661,51 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "FU-s-7 item 5 and row W4-S6: the instance runs from the apply until FU-x-1's first automation run stops it; tell the issuer if the apply-to-FU-x-1 gap exceeds 24 hours.",
     "world_is": "A standing estate enforcer stops EC2 instances overnight (this one 3.6 hours after creation). The stopped state is the box's normal between-runs state; the delivered code and the venv are on its EBS root and survive a stop. Whether the enforcer exempts a tagged instance is not measured here.",
     "notes": "Not restarted: starting it is the automation document's job at the first run (the schedule rules are DISABLED). Nobody stopped it by hand."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-20T13:03:05Z",
+    "one_line": "The run automation fails at its first step because the automation role has no ec2:DescribeInstanceStatus, so the one run ended Failed before the wrapper ran; the stop step failed the same way, and the box was stopped by the stop call anyway.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~NFRA1",
+    "spec_asserts": "FU-x-1 WHAT TO BUILD 1: start the same automation the schedule uses by hand and wait for the execution to end; the wrapper runs once and the record is written (worker reference section 6; automation.tf runs the wrapper after start and Online).",
+    "world_is": "Execution b065d07e-53e7-47b6-9c07-476c21f1d6df (document fidelity-alongside-uploader-document) ended Failed at 13:02Z. startInstance and stopInstance failed with 'not authorized to perform: ec2:DescribeInstanceStatus' for the assumed role fidelity-alongside-automation-role; waitForOnline and runWrapper stayed Pending, so no command was sent and no sign-in ran. The worktree automation.tf grants ec2:StartInstances, ec2:StopInstances and ec2:DescribeInstances only (its one ec2 describe statement is line 61). The stop call still reached the instance: it was stopped at 13:01:44 GMT (User initiated). Every later run of this document fails the same way before the wrapper runs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ssm get-automation-execution --automation-execution-id b065d07e-53e7-47b6-9c07-476c21f1d6df (2026-10-20 ~13:02Z): AutomationExecutionStatus Failed; startInstance Failed and stopInstance Failed with the DescribeInstanceStatus 403; waitForOnline Pending; runWrapper Pending",
+        "grep of infra/aws/terraform/canonical-fidelity-ec2 in worktree C:/tmp/fidupl-w1 at commit 11e907bb20: automation.tf line 61 is the only ec2:DescribeInstances statement and no DescribeInstanceStatus appears",
+        "aws ec2 describe-instances i-028e830f7226cc685 at 2026-10-20T13:02:32Z: State stopped, StateTransitionReason User initiated (2026-10-20 13:01:44 GMT)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken on the automation or its role: the grant is not this order's. Not retried, per the issuer's one-run bound. The box was started again by this worker for the single recon run. The fix is an IAM statement for ec2:DescribeInstanceStatus in automation.tf (CloudOps seat) and a re-apply; until then a scheduled run would fail before the wrapper."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-20T13:06:17Z",
+    "one_line": "The one live recon sign-in ended with a Playwright TimeoutError before any text message was sent, so the live Wealthscape login steps do not match the unmeasured selectors; no trace was kept, so the failing step is not known.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FU-s-2 PlaywrightDriver and FU-x-1 WHAT TO BUILD 3: signin_recon --run-live on the box mints a session through signin.open_session (login page, username, password, OTPSMS factor, text message) and prints the two counts-only blocks.",
+    "world_is": "SSM command 91fa5057-3f37-4551-937e-0fab48001569 on i-028e830f7226cc685 ran /opt/fidelity-uploader/venv/bin/python signin_recon.py --run-live from 13:04:16Z to 13:05:34Z and returned RECON_RC=1 with stderr 'ERROR: live read failed: TimeoutError'. The read-only Quo probe after it printed QUO-PROBE-OK line=PNEJ5tafLm sender_messages=4, the same count as the 2026-10-19 baseline, so no Fidelity text was sent: the attempt did not reach the factor step. The run took about 70 seconds, which fits one 60000 ms selector wait; the step is not known (inference). No trace or screenshot was written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ssm get-command-invocation --command-id 91fa5057-3f37-4551-937e-0fab48001569 (2026-10-20 13:05Z): Status Success, StandardOutputContent RECON_RC=1, StandardErrorContent 'ERROR: live read failed: TimeoutError'",
+        "python infra/aws/ec2/canonical-fidelity/quo_otp.py --probe in worktree C:/tmp/fidupl-w1 at 2026-10-20 13:05:55Z: QUO-PROBE-OK line=PNEJ5tafLm sender_messages=4 (baseline 4 measured 2026-10-19)",
+        "signin.py PlaywrightDriver selectors (input[name='username'], input[type='password'], button[type='submit']) are the unmeasured assumptions listed in NFRA_FIDUPL-D1-W1-S3"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No retry, per the issuer's one-attempt bound. The next live attempt needs a trace (Playwright tracing or a page dump with no values) and a decision by the issuer. The sign-in leg is not proven; FU-x-1 criteria FX1-AC2 and FX1-AC3 have no output."
   }
 ]
 ```
