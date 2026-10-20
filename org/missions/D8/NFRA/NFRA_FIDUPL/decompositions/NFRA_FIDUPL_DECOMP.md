@@ -123,3 +123,13 @@ Track B's drive splits at the secrets: the secret-bearing steps (the username an
 | **FU-s-12** | `box/agent_fill.py` (the box-side helper: `username`, `password`, `code` commands over CDP at 127.0.0.1) and `agent_drive.py` (the dell1 controller: SSM port forward, CDP attach, the open/factor/send steps, the helper calls over SSM, a values-free record), with tests, on fakes | `infra/aws/ec2/canonical-fidelity/box/agent_fill.py`, `.../agent_drive.py`, `.../tests/test_agent_fill.py`, `.../tests/test_agent_drive.py` | C-TENANCY | WORLD (floor; fakes only in effect) |
 
 Edge: `FU-s-2 -> FU-s-12 -> FU-s-11`. Executor: a worker of the COO.
+
+## 12. ADDENDUM 2026-10-20 ~21:10Z (issuer, CTO msg 8793 item 4; no spec change)
+
+The first by-hand start of the run automation (execution 9c7fa8c2) showed `Failed` on its `runWrapper` step although the command ran: the automation role may `ssm:SendCommand` and `ssm:GetCommandInvocation` but not `ssm:ListCommands` / `ssm:ListCommandInvocations`, which the `aws:runCommand` action calls to verify the command. The schedule would show every run as Failed. One root edit and one apply.
+
+| cell | what it builds (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FU-s-13** | Add `ssm:ListCommands` and `ssm:ListCommandInvocations` to the automation role's policy in `infra/aws/terraform/canonical-fidelity-ec2/automation.tf`, and apply with `safe-apply` | `infra/aws/terraform/canonical-fidelity-ec2/`; `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF | WORLD |
+
+Edge: `FU-s-9 -> FU-s-13`. Executor: `0.7.0_AE_CloudOps~NFRA1`.
