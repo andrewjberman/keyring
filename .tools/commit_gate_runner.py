@@ -859,12 +859,38 @@ def process_files(files: list[str]) -> int:
             import yaml as _yaml
             try:
                 with open(f, encoding="utf-8") as _fh:
-                    _yaml.safe_load(_fh)
+                    _bs = _yaml.safe_load(_fh)
             except (_yaml.YAMLError, UnicodeDecodeError, OSError) as e:
                 _echo(f"BLOCKED: {f} is not valid YAML -- {type(e).__name__}: {e}", sys.stderr)
                 _echo("         A malformed buildspec fails the CodeBuild run, not the commit. "
                       "Common cause: an unquoted ': ' inside a list item -- quote the item.",
                       sys.stderr)
+                return 1
+            # A file can be valid YAML and still be a broken buildspec: an unquoted ': ' in a commands
+            # item parses as a MAPPING, not a string (d8f3448b9b, the dossier-refresh buildspec that
+            # failed the live build, loads clean). CodeBuild needs every commands item to be a string.
+            _bad = []
+            _phases = _bs.get("phases") if isinstance(_bs, dict) else None
+            if isinstance(_phases, dict):
+                for _pn, _ph in _phases.items():
+                    if not isinstance(_ph, dict):
+                        continue
+                    for _key in ("commands", "finally"):
+                        _items = _ph.get(_key)
+                        if _items is None:
+                            continue
+                        if not isinstance(_items, list):
+                            _bad.append(f"phases.{_pn}.{_key} is a {type(_items).__name__}, not a list")
+                            continue
+                        for _i, _it in enumerate(_items):
+                            if not isinstance(_it, str):
+                                _bad.append(f"phases.{_pn}.{_key}[{_i}] is a {type(_it).__name__}, not a string")
+            if _bad:
+                _echo(f"BLOCKED: {f} parses as YAML but is not a valid buildspec:", sys.stderr)
+                for _b in _bad:
+                    _echo(f"         {_b}", sys.stderr)
+                _echo("         Common cause: an unquoted ': ' inside a commands item reads as a "
+                      "mapping. Quote the item.", sys.stderr)
                 return 1
             checked += 1
         else:
