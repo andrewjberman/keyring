@@ -15,7 +15,7 @@
 // By default it ARMS the account, walks, and DISARMS in a finally block (always, even on failure).
 import { createRequire } from 'node:module'
 import { execFileSync } from 'node:child_process'
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { isSignInPage } from './signin_detect.mjs'
@@ -102,6 +102,17 @@ for (let i = 0; i < argv.length; i++) {
   // answer's SHAPE (key names and category tokens only, never a value). Writes into analysis-request.json.
   else if (a === '--card-census') opt.cardCensus = true
   else if (a === '--no-login') opt.login = false
+  // --forced <rules.json> (AMGT_RESAPP round 126, CTO msg 8584): force ONE named GET answer on the running build, the page code and
+  // the backend staying real. The file is a JSON array of rules {label, match (a regex over the request URL), mode, ...}:
+  //   mode "status": answer 500 (or `status`) with a small JSON error;  mode "abort": the request fails;
+  //   mode "patch":  the REAL answer is fetched, then `set` (dotted paths to values) and `delete` (dotted paths) are applied to its
+  //                  JSON body and it is answered (a 200 body the backend did not send): NAMED as forced in forced.json.
+  // Only GET requests are touched; every other request still meets the guard. forced.json (beside findings.json) lists each rule
+  // and how many requests it answered.
+  else if (a === '--forced') opt.forced = String(argv[++i] || '')
+  // --forced-press "<label>" (repeatable, with --security): press the header button with that exact label ("Export as a document" or
+  // "Print" only), AFTER the forced rules are in place, so the request the press makes is the forced one and no document is made.
+  else if (a === '--forced-press') (opt.forcedPresses = opt.forcedPresses || []).push(String(argv[++i] || ''))
   // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
   // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
   else if (a === '--settle-extra-ms') opt.settleExtraMs = Number(argv[++i])
@@ -142,6 +153,7 @@ const py = (cmd, extraEnv = {}, ...args) => execFileSync('python', [ACCOUNT, cmd
 // ---- the network guard: the admitted classes ----------------------------------------------------------------------
 const ADMITTED_POST = [/\/auth\/login$/, /\/auth\/refresh$/, /\/auth\/logout$/,
   /\/api\/scoped\/investor-reporting\/directory\/resolve$/, /\/api\/scoped\/investor-reporting\/selections$/]
+const forcedAnswered = [] // --forced rules and how many requests each answered (written to forced.json)
 const DO_NOT_CLICK = /export|generate|submit|upload|delete|remove|save|send|approve|execute|reset|sign ?out|log ?out|logout|create|contact support/i
 const guard = []
 const netlog = []
@@ -719,6 +731,22 @@ async function walkSecurityAnalysis(page, route) {
       await settle(page, 2500)
       await waitForLoaded(page)
       await checks(page, `${sec}-press-${pk}`)
+    }
+    // --forced-press: only the two header buttons named here; the forced rules make their request fail, so nothing is generated.
+    let fp = 0
+    for (const label of opt.forcedPresses || []) {
+      fp += 1
+      step = `amgt ${sec} forced-press ${fp}`
+      if (!['Export as a document', 'Print'].includes(label)) { findings.push({ step, check: 'walker:press-refused', claim: 'measured', observed: `--forced-press "${label}" is not one of the two allowed buttons; not pressed` }); continue }
+      if (!opt.forced) { findings.push({ step, check: 'walker:press-refused', claim: 'measured', observed: `--forced-press "${label}" needs --forced (a rule that fails its request); not pressed` }); continue }
+      const btn = page.getByRole('button', { name: label, exact: true }).first()
+      if (!(await btn.count().catch(() => 0))) { findings.push({ step, check: 'walker:press-not-found', claim: 'measured', observed: `--forced-press "${label}": no button` }); continue }
+      await btn.click({ timeout: 4000 }).catch(() => {})
+      await settle(page, 4000)
+      await checks(page, `${sec}-forced-press-${fp}`)
+      // The print preview closes on a backdrop click (Escape does not); a press with no modal open clicks the page corner harmlessly.
+      await page.mouse.click(5, 5).catch(() => {})
+      await page.waitForTimeout(500)
     }
     await walkTimelineDays(page, sec)
     await walkTimeline(page, sec)
@@ -1663,6 +1691,43 @@ try {
     guard.push([step, m, p].join('\t'))
     return route.abort('blockedbyclient')
   })
+  // --forced: registered AFTER the guard so it answers first; GET only, everything else falls back to the guard.
+  if (opt.forced) {
+    const rules = JSON.parse(readFileSync(opt.forced, 'utf8'))
+    const dotted = (o, pathStr, fn) => { const ks = pathStr.split('.'); let cur = o; for (let i = 0; i < ks.length - 1; i += 1) { if (cur == null || typeof cur !== 'object') return false; cur = cur[ks[i]] } if (cur == null || typeof cur !== 'object') return false; fn(cur, ks[ks.length - 1]); return true }
+    for (const rule of rules) {
+      const rx = new RegExp(rule.match)
+      const rec = { label: rule.label, match: rule.match, mode: rule.mode, answered: 0, patched_paths: [], status: rule.status ?? null }
+      forcedAnswered.push(rec)
+      await page.route(rx, async (route) => {
+        if (route.request().method() !== 'GET') return route.fallback()
+        rec.answered += 1
+        if (rule.mode === 'abort') return route.abort('failed')
+        if (rule.mode === 'status') return route.fulfill({ status: rule.status || 500, contentType: 'application/json', body: JSON.stringify({ error: 'forced by the walker' }) })
+        if (rule.mode === 'patch') {
+          const real = await route.fetch()
+          let j
+          try { j = await real.json() } catch { return route.fulfill({ response: real }) }
+          rec.body_keys = Object.keys(j).slice(0, 40) // key NAMES only, so a rule's paths can be written against the real envelope
+          if (j && typeof j.data === 'object' && j.data) rec.data_keys = Object.keys(j.data).slice(0, 40)
+          // A path is tried on the body as served, then under `data.` (an enveloped answer); the paths that took are recorded.
+          // `$KEY` inside a `set` value is replaced by the answer's own security_key (a cite is "<security_key>/<element>").
+          const keyed = (v) => JSON.parse(JSON.stringify(v).split('$KEY').join(String(j.security_key ?? '')))
+          for (const [k, v0] of Object.entries(rule.set || {})) {
+            const v = keyed(v0)
+            if (dotted(j, k, (o, key) => { o[key] = v })) rec.patched_paths.push('set ' + k)
+            else if (dotted(j, 'data.' + k, (o, key) => { o[key] = v })) rec.patched_paths.push('set data.' + k)
+          }
+          for (const k of rule.delete || []) {
+            if (dotted(j, k, (o, key) => { delete o[key] })) rec.patched_paths.push('delete ' + k)
+            else if (dotted(j, 'data.' + k, (o, key) => { delete o[key] })) rec.patched_paths.push('delete data.' + k)
+          }
+          return route.fulfill({ response: real, json: j })
+        }
+        return route.fallback()
+      })
+    }
+  }
 
   // login through the local dev build
   if (opt.login) {
@@ -1940,6 +2005,8 @@ try {
   for (const f of unique) counts[f.check] = (counts[f.check] || 0) + 1
   const doc = { schema_version: '1.1', tool: 'ui-walk', stamp, base: opt.base, routes: opt.routes, clients: opt.clients, minutes: +((Date.now() - t0) / 60000).toFixed(1), screenshots: shotN, raw_finding_count: findings.length, finding_count: unique.length, counts, guard_aborts: guard.length, telemetry_stubbed: stubbed, api_issues: apiIssues, console_errors: consoleErrors, drill_paths: drillPaths, findings: unique }
   writeFileSync(path.join(OUT, 'findings.json'), JSON.stringify(doc, null, 1))
+  if (opt.forced) writeFileSync(path.join(OUT, 'forced.json'), JSON.stringify({ rules_file: opt.forced, rules: forcedAnswered, note: 'FORCED reads: the build, the login and the page code are real; the named answers were forced or patched' }, null, 1))
+  if (opt.forced) log('FORCED RULES:', forcedAnswered.map((r) => `${r.label}=${r.answered} answered${r.patched_paths.length ? ' (' + r.patched_paths.join(',') + ')' : ''}`).join('; '))
   if (windowPressRecords.length) writeFileSync(path.join(OUT, 'window-press.json'), JSON.stringify(windowPressRecords, null, 1))
   if (loadStates.length) writeFileSync(path.join(OUT, 'load-states.json'), JSON.stringify(loadStates, null, 1))
   if (timelineDays.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
