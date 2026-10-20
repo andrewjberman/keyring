@@ -1239,6 +1239,50 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "Worker face, 'Keep the file's own formatting': git diff --numstat for exemptions.json must show only added lines (about 36).",
     "world_is": "Three appended rows of 8 lines each add about 24 lines, plus the two comma edits (2 added and 2 deleted), so numstat shows at least 2 deleted lines. The numstat criterion is not met as worded; the test's clause (d) is unaffected.",
     "notes": "Form only. Owner for disposition: the issuer, to state whether a deleted comma line is acceptable."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W15-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~15",
+    "surfaced_at": "2026-10-20T20:37:29Z",
+    "one_line": "The Alongside puller copy at HEAD still writes master-scope _ops and has no state-tier functions, so removing the MonolithSchwabOpsWrite grant is safe only after the AL-p-2 puller re-sync lands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~SA",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/alongside-schwab-si2/sdd-daily-pull.ps1 at HEAD 5af57b99d0: monolith branch sets OPSROOT = schwab/$Master/_ops (line 68) and writes the run manifest under it (lines 680-681, WARN 'check the _ops grant' on failure); no Get-StateBucket function is defined in that copy",
+        "org/missions/D8/NFRA/NFRA_SCHWABBF/task-orders/NFRA_SCHWABBF.TO-AL-p2.alongside-puller-resync.md: the re-sync that adds the state-tier functions to the Alongside copy",
+        "Measured by git show HEAD of both files at 5af57b99d0; the puller was read, not executed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, Build 1 and CTO condition 6: the box role's master-scope MonolithSchwabOpsWrite and MonolithSchwabMetaPullsWrite statements are removed because the puller no longer writes them for a firm-form master.",
+    "world_is": "The Alongside puller copy at HEAD still writes its run manifest to schwab/$Master/_ops in opal-data-assets (the grant this edit removes), and the state-tier writer that replaces it arrives only with AL-p-2. The IAM edit therefore denies that write from the moment it is applied; the apply must follow the AL-p-2 landing. The edit itself is text only and nothing is applied.",
+    "notes": "Form only. The apply is already gated by CTO condition 6 and by both fence halves; the disarm owner sequences the apply behind the AL-p-2 re-sync."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W15-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~15",
+    "surfaced_at": "2026-10-20T20:37:29Z",
+    "one_line": "The worker worktree is a sparse checkout that omits org/surprise_channel/, so the row schema is not on disk there and was read at HEAD with git show.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In the worktree C:/Users/AndrewBerman/Desktop/wt-al-15, git sparse-checkout list shows .tools, data/canonical/schwab/tests, infra/aws/terraform/alongside-schwab-ec2, infra/aws/terraform/modules and infra/aws/terraform/shared-infra (first five entries)",
+        "ls org/surprise_channel in the worktree returns 'No such file or directory' while git ls-files org/surprise_channel lists 43 tracked files at HEAD 5af57b99d0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face, the surprise contract: the row is filed in the named investigation file, with the row schema as its form.",
+    "world_is": "The named investigation file and every path in the write grant are present in the worktree. The schema file org/surprise_channel/schemas/investigation_item.schema.json is absent from the worktree on disk, so the form was checked from git show HEAD. No grant path is affected.",
+    "notes": "Form only. Owner for disposition: the issuer, to decide whether the worker worktrees need the surprise_channel path in their sparse set."
   }
 ]
 ```
