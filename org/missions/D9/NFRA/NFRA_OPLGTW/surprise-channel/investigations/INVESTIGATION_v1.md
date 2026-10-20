@@ -31354,3 +31354,55 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "S1 to S4 are ruled above with their evidence; S5 is carried armed by name, not dispositioned."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W178-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~178",
+  "surfaced_at": "2026-10-20T21:29:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "OG-sk-2 criterion AC2 cannot pass in this worktree: the neighbour test test_mx_s15_dataset_registered reads a Terraform file that the worktree's sparse checkout does not materialise.",
+  "spec_asserts": "Task order OG-sk-2 section 4, AC2: the new tests and the four neighbours pass (29 tests at the base; test_ogv2_a12 is the only carried red).",
+  "world_is": "Worktree C:/tmp/wk-og-178 (branch wk-NFRA_OPLGTW-178, HEAD f364ec802ea): test_mx_s15_dataset_registered (tests/test_schwab_transactions.py:71) raises FileNotFoundError on infra/aws/terraform/opal-gateway/schwab_reader_iam.tf. The file is tracked at HEAD (git ls-files lists it) but the worktree's sparse-checkout cone omits infra/aws/terraform/opal-gateway (git sparse-checkout list; git ls-files -v shows 53 skip-worktree entries under that folder). Measured: the new file tests/test_og_sk2.py 8 passed, 0 failed; the four neighbours 28 passed, 1 failed of 29. The failure is not in the edit set and is not caused by the OG-sk-2 edits.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_schwab_transactions.py:71 (reads _TF = infra/aws/terraform/opal-gateway/schwab_reader_iam.tf)",
+      "git sparse-checkout list in C:/tmp/wk-og-178 omits infra/aws/terraform/opal-gateway (lists infra/aws/terraform/opal-assets only)",
+      "git ls-files -- infra/aws/terraform/opal-gateway/schwab_reader_iam.tf in C:/tmp/wk-og-178 lists the file at HEAD f364ec802ea while the path does not exist on disk",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r47/checks/sk2.AC2.sh (the neighbour list it runs)"
+    ]
+  },
+  "notes": "Worktree materialisation condition, not a product defect. Not repaired here: widening the sparse checkout or checking the file out is outside this worker's write grant and the order's bounds. The issuer must either materialise infra/aws/terraform/opal-gateway in this worktree or name the neighbour as carried for OG-sk-2 before AC2 can grade PASS."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W178-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~178",
+  "surfaced_at": "2026-10-20T21:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The firm_form block the task order specifies holds hand-typed 49financial S3 names, which the commit-time naming gate refuses in its WARN window.",
+  "spec_asserts": "Task order OG-sk-2 section 1 step 1 gives the firm_form key as literal values (state_bucket opal-data-49financial, silver and completion prefixes under schwab/49financial/). Rule 30 (CLAUDE.md): every S3 address and resource name is lib/opal_naming.py output, and a hand-typed carrier is a refusal.",
+  "world_is": "The commit of the firm_form key (2f86838dc4, both contract copies) ran the naming gate: 8 REFUSE verdicts, one each on deploy/NFRA_OPLGTW_CONTRACT.json lines 379 (state_bucket), 380 (four silver_prefixes), 381 (completion_prefix) and 382 (backfill_status_prefix), each 'a NEW hand-kept carrier of 49financial outside every permitted context'. The gate reports WARN, not ENFORCE, so the commit landed. The gate's own live read failed (LIVE-READ-FAILED, comp-find aws census rc=2), so its reason is partly unverified here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json:379 (state_bucket literal opal-data-49financial)",
+      "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json:380 (silver_prefixes literal schwab/49financial/silver/)",
+      "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json:381 (completion_prefix literal schwab/49financial/state/complete/)",
+      "commit 2f86838dc48 on wk-NFRA_OPLGTW-178: safe-commit naming-gate output, WARN window, 8 REFUSE verdict(s) did not block"
+    ]
+  },
+  "notes": "Recorded, not repaired: the literal values are the issuer's specification and the contract is the spec's own carrier. The question for the issuer or the CTO is whether these names must come from lib/opal_naming.py before LGIC_ENFORCE is switched on, since the next commit touching the contract would then be refused."
+}
+```
