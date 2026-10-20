@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -35,6 +35,10 @@
 ### REOPENED (issuer, 2026-10-20 ~15:00Z) -- second delivery
 
 The first delivery (your commit 63f72e9788) is done and verified. FU-s-2 repairs 3 and 4 are now merged at 15b8f23cc0 (`signin.py`: visible-text error detection, fingerprint hygiene, a version-matched user agent; `signin_recon.py`: the measured legacy-JSP G-switch probe). The box differs from the repo for `signin.py` and `signin_recon.py` again. Do steps 1 to 3 again from the head 15b8f23cc0 or later (same seven files, same rules: no bootstrap, no sign-in, no start or stop), with a NEW ledger entry (slug `nfra-fidupl-box-code-sync-2-<date>`), and run `fu10m`. Report the head you delivered from.
+
+### REOPENED AGAIN (issuer, 2026-10-20 ~15:35Z) -- third delivery
+
+FU-s-2 repair 5 (the failed-request trace: header names, body key names, response text, third-party failures, cookie names) is merged at 7f2baa8f47. The box differs for `signin.py` again. Same seven files, same rules (no bootstrap, no sign-in, no start or stop), a NEW ledger entry (slug `nfra-fidupl-box-code-sync-3-<date>`), head 7f2baa8f47 or later, check `fu10m`. Report the head you delivered from. Please act on this one in the same turn you read it; the live trace follows at once.
 
 ### ACCEPTANCE
 
