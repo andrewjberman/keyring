@@ -85,6 +85,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ms-2.round-46-add-master-084033
 
 <status>staged</status>
 <status>pending</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-G</workstream>
 <slot>~AE</slot>
