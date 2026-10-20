@@ -57,7 +57,7 @@ The sign-in now launches a HEADED Google Chrome under a virtual display. Before 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
 `FU10-AC1` -- the seven shipped files on the box match the repo by md5.
 
-<criterion id="FU10-AC2" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu10x</invocation><expect>R1-FU10X-OK Xvfb present and a headed Chromium launches under it</expect></criterion>
+<criterion id="FU10-AC2" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu10x</invocation><expect>R1-FU10X-OK Xvfb present and a headed Google Chrome launches under it</expect></criterion>
 `FU10-AC2` -- a second criterion, with its reason: the code md5s cannot see that the box can run a headed browser, which is the whole point of the sixth delivery.
 
 <expected_criteria>FU10-AC1,FU10-AC2</expected_criteria>
