@@ -728,6 +728,49 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No action taken. The trace-login run is FU-x-1's live proof and costs at most one text message per attempt."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "4.0.0_SA_CRO~DELL1",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "one_line": "Black Diamond's copy of Cottonwood's Fidelity rep codes puts 636 of 655 accounts under two G numbers (PRIMARY and SECONDARY) and only 3 under an advisor G number, so a per-G pull may land most accounts twice and may not separate advisors.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "PRD v0.4.4 C-BACKFILL and C-TENANCY: backfill and daily pulls per G number, Cottonwood's seven first; FWD-9 splits each firm's files on the G Number.",
+    "world_is": "In Black Diamond's 2026-10-19 Cottonwood allocations export (forwardfill_v2), the 655 Fidelity accounts carry these rep code sets: PRIMARY+SECONDARY 633, PRIMARY+SECONDARY+RUBOTTOM 2, PRIMARY+SECONDARY+BASS 1, PRIMARY only 11, none 8. SHIPLEY, the G475 and the G482 numbers carry 0. This is Black Diamond's field, not Fidelity's: what the Wealthscape export returns per G number is not measured. If it behaves the same, two per-G pulls return the same account twice, and the advisor G numbers do not carry the advisor books.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-10-19.xlsx, read 2026-10-20 ~13:5xZ: 1,503 rows, 855 distinct AccountID; Rep Code sets grouped per AccountID over Custodian starting Fidelity (655 accounts)",
+        "G number labels from org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_133xZ_COTBOOKS_NO_BD_DEPENDENCY_CUSTODIAN_FIRST.md (masked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken. The first per-G Wealthscape read answers it: print accounts per G number and accounts present under 2+ G numbers. Context: docs/briefs/advi-cotbooks-custodian-first-rebrief-20261020.md F3."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W1-S11",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~1",
+    "surfaced_at": "2026-10-20T13:48:28Z",
+    "one_line": "The FU-x-1 attempt-2 trace-login run did not reach the text request: the username step reported OK but the page stayed on the username screen, so the password step timed out after 20 seconds with the password field never shown.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FU-x-1 WHAT TO BUILD 0 (ATTEMPT 2): signin_recon.py --trace-login drives the username, the password, the factor choice and the request for the text; the trace must reach the text request before steps 1 and 3 run (worker reference section 3, login steps 1 to 4).",
+    "world_is": "SSM command e0b78633-eb35-4e48-8efa-a20709672470 on i-028e830f7226cc685 (2026-10-20 13:47:30Z to 13:48:02Z) returned Status Success with stdout TRACE-LOGIN-FAIL LoginStepError:submit_password and TRACE_RC=1. The failing trace line is: step=submit_password path=/ title=\"Wealthscape Login\" elapsed=20.2s outcome=FAIL:TimeoutError. The step before it, step=submit_username path=/ title=\"Wealthscape Login\" elapsed=0.2s outcome=OK, did not navigate: the outline at the failure still shows input id=userInput and no password field. Which element the Next click hit, and whether the username was accepted, is NOT measured by the trace (inference: the click did not advance the page, for example because the fill or the ng-click binding did not register, or the redirect-info step did not load the page-2 app). No text message was sent, since the run stopped before the factor step.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ssm get-command-invocation --command-id e0b78633-eb35-4e48-8efa-a20709672470 on i-028e830f7226cc685 (2026-10-20 13:48Z): Status Success; StandardOutputContent carries the trace lines and TRACE-LOGIN-FAIL LoginStepError:submit_password; StandardErrorContent empty",
+        "the trace outline at the failure lists el tag=input type=text kind=other id=userInput and el tag=input type=submit, and no password element; the page path stayed / with title Wealthscape Login",
+        "CRO research RESEARCH_20261020_NFRA_FIDUPL_LOGIN_DOM_FROM_HAR2.md page 1: #userInput fill then input[type=submit][value=Next] ng-click (the measured selectors the driver tried first)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No retry, per the order: step 0 failed, so steps 1 and 3 were not run and no text was requested. The fix needs a trace that records the page state after the Next click (URL and the outline without the fill), which is a worker repair in a later order, or the issuer's decision. The box stays RUNNING, AutoShutdown=disabled."
   }
 ]
 ```
