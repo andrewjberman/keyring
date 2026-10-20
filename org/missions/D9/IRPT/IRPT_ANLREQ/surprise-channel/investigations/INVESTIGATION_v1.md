@@ -29837,3 +29837,103 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W343-S5 -- the audit source's ticket table is read from IRPT_TICKETS_TABLE, which make_packager did not carry: the resident host's value is not measured
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W343-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~343",
+  "surfaced_at": "2026-10-20T19:46:52Z",
+  "one_line": "AMENDMENT 1 says make_packager reads the ticket table and DynamoDB client it already uses. It does not: make_packager's ports carry jobs_table and the factory's DynamoDB client, but no ticket table name. The worker reads the existing environment variable IRPT_TICKETS_TABLE (the name generate_installed.py reads for the confirm port) and passes it as tickets_table from build_resident_runtime. Whether the resident host sets that variable is not measured here. When it is unset, the packager's audit ports are not supplied, the attach records AUDIT_PORTS_UNWIRED in its result, and nothing is printed for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-469 AMENDMENT 1: audit_source from make_audit_source over the ticket table and DynamoDB client make_packager already uses; the cell: adding no new environment variable if one exists.",
+  "world_is": "reports/resident_installed.py@32e6fd51c2 make_packager (new keyword tickets_table=None; audit ports only when it is a non-empty string); build_resident_runtime passes os.environ.get('IRPT_TICKETS_TABLE') (TICKETS_TABLE_ENV). generate_installed.py l.55 and l.363-366 read the same name for the confirm port. The resident bindings file carries no ticket table key (load_bindings and REQUIRED/OPTIONAL_QUEUES, resident_installed.py l.49-54). The resident host's environment is not read (blind).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@32e6fd51c2 TICKETS_TABLE_ENV, make_packager audit block, build_resident_runtime make_packager call",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py@1f568643128 l.55, l.363-366 (the confirm port's read of IRPT_TICKETS_TABLE)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W343-S6 -- the new ticket_audit_source.py is not listed in the generate function-map, which lists ticket_confirmation.py; an import in make_packager fails loudly on a package that omits it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W343-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~343",
+  "surfaced_at": "2026-10-20T19:46:52Z",
+  "one_line": "make_packager imports ticket_audit_source inside the function, with no try block, when IRPT_TICKETS_TABLE is set. The packaging map infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json lists ticket_confirmation.py (l.42, l.660-662) and does not list ticket_audit_source.py. Whether the resident release is built from that map is not measured here. If it is not, the resident fails at build time, not silently, on the first deploy that sets the variable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-469 AMENDMENT 1 (write set): the grant names ticket_audit_source.py and does not name the function-map; the release that ships the module is a later order.",
+  "world_is": "infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json@1f568643128: ticket_confirmation.py at l.42 and l.660-662; no ticket_audit_source.py entry (measured with a native Grep). resident_installed.py@32e6fd51c2 make_packager: 'from ticket_audit_source import make_audit_source' inside the IRPT_TICKETS_TABLE branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/function-map/irpt-ycharts-generate.json@1f568643128 l.42, l.660-662 (ticket_confirmation.py only)",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@32e6fd51c2 make_packager (the import)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W343-S7 -- the audit put does not carry the repository's IfNoneMatch, so a replace attach overwrites the same key as the amendment requires; the content type is set to application/json
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W343-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~343",
+  "surfaced_at": "2026-10-20T19:46:52Z",
+  "one_line": "The reporting repository's put uses IfNoneMatch='*' (write once per key). The audit must write the same stable key again on a commentary attach, which supersedes the READY record (analysis_audit.py _stable_name). audit_put therefore calls put_object without IfNoneMatch and sets ContentType to application/json. This is a choice the amendment did not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-469 AMENDMENT 1: audit_put writes the audit JSON through the S3 client the factory builds, to the bucket and key the writer computes; the writer's own docstring: a replace attach writes the same (bucket, key) again.",
+  "world_is": "reports/repository.py@1f568643128 l.540-541: put_object(Bucket, Key, Body, ContentType, IfNoneMatch='*'). reports/resident_installed.py@32e6fd51c2 make_packager: audit_put = put_object(Bucket, Key, Body, ContentType='application/json') with no IfNoneMatch. reports/analysis_audit.py _stable_name (the key depends on the request id only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/repository.py@1f568643128 l.540-541",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@32e6fd51c2 make_packager audit_put",
+      "infra/aws/lambda/investor-reporting/reports/analysis_audit.py@1f568643128 _stable_name docstring"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W343-S8 -- AMENDMENT 1 expected one existing test to change for filer.user_type; none asserted it required, so one test was added instead of an edit
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W343-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~343",
+  "surfaced_at": "2026-10-20T19:46:52Z",
+  "one_line": "AMENDMENT 1 asked to change only the test(s) that asserted filer.user_type required. Measured: test_analysis_audit.py asserted it nowhere (its filer linkage test removes the principal, and its user_type assertion at l.211 is a present value). The worker added one test that asserts the nullable type and the required key, and changed no existing test. The count is 25 (24 before, plus the one). The 24 stayed green.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-469 AMENDMENT 1 (S2): in reports/tests/test_analysis_audit.py change only what the old requirement asserted; every other test stays green (24 before).",
+  "world_is": "reports/tests/test_analysis_audit.py@32e6fd51c2: 24 existing tests unchanged and green; one new test test_filer_user_type_is_string_or_null_and_its_key_stays_required (the schema's type list, a null user_type validates, a missing key is refused). Run: 25 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py@1f568643128 (24 passed) and @32e6fd51c2 (25 passed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
