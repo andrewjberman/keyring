@@ -1,0 +1,10 @@
+# Drive log 2026-10-20 13Z-14Z, 2.0.0_SA_COO~O, NFRA_OPLGTW round 47 (host opal_bloomberg)
+
+- 13:15Z: `OG-mg-4` (the in-flight cap 4 to 26, the CTO's C1 ruling) drained `c0a0ee2e9c2` after the issuer re-ran `mg4.AC1` and `mg4.AC2` (PASS) and validated the proof; flipped complete `84ae127730`; worker rows `W174-S1`, `W174-S2` ruled in `Z-S435`. `~NFRA1` told to re-cut `OG-rl-17`.
+- 13:25Z: `OG-gc-1` graded complete on its Phase A facts (`gc1.AC1` PASS, proof VALID), flipped `37d65fc9a1`.
+- 13:33Z: `OG-gv-1` Phase A read (`gv1.AC1` PASS, ask `637db69736ab`); COO half signed `9adb63850e`; CTO half signed `31e0a20c20` with `email_deny` option 2 (a master-admin exemption on the legacy `/callback` consent branch, its own release); CVO half signed `48d273c72b`.
+- 13:50Z: `OG-ed-1` cut `5499b78e88` (ENRICH-R47-J, decomp A10), worker `~175` spawned. 14:00Z: `~NFRA1` reports the `OG-rl-17` re-cut: release `8e3eddf959`, ask `291ffc35747a`, `rl17.AC1` PASS on my re-run; COO half re-signed `313a8c11d4`; CTO `f7ff5f9fc7` and CVO `215c1d4ef0` re-signed (CTO msg 36215). Phase B GO sent for window 2026-10-21 06:00Z-06:45Z (start not before 06:00Z); window notice to `0.0.0_AB_MSTR~Z`.
+- 14:25Z: worker `~175` reported AC2 FAIL: two existing tests (`test_scoped_consent_r253`, `test_login_admit_r24`) stub `email_denial` with a one-argument lambda. The issuer's neighbour census at the base had run four files and missed the r24 file. Order amended (`4713cd1b59`, item 5), worker resumed, fixed both stubs; `OG-ed-1` drained `17c53cdd2cb`; my `ed1.AC1`, `AC2` (4 new, 39 of 39 neighbour tests), `AC3` PASS; flipped `487aba4e29`; row `Z-S437`.
+- 14:40Z: relayed defect from `2.0.0_SA_COO~MI` filed as `Z-S436` (INFERRED, not reproduced), carried to the round-48 list. 14:50Z: `OG-rl-18` order and `rl18.AC1` amended to NINE files (`12e1a47451`, decomp A11).
+- Open: `OG-rl-17` Phase B (window 2026-10-21 06:00Z); `OG-rl-18` (staged, not before 2026-10-22 06:00Z); `OG-gv-1` Phase B after `OG-rl-18` CLOSED. L10 slug draft: `deliverables/2.0.0_SA_COO~O/L10_SLUG_ROUND47_DRAFT.md`.
+- All commits are LOCAL on `box/sitez` (push state: ls-remote not read).
