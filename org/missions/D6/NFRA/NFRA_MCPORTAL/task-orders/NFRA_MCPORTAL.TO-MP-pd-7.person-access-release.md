@@ -92,8 +92,8 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/I
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the close commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-pd-7"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pd/checks/pd7a.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; closed=yes; sentinel=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MP-pd-7"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pd/checks/pd7a.AC2.sh; echo "exit=$?"</invocation><expect>lambda sha equals the close report's; deployed lambda_function.py holds WIDEN-NO-CONFIRM and widening_signoff; no-header invoke REFUSED NO-OWNER-HEADER -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-pd-7"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pd/checks/pd7a.AC1.sh; echo "exit=$?"</invocation><expect>(?s)entry files at HEAD=\d+; closed=yes; sentinel=no; listed OPEN/HELD=0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MP-pd-7"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pd/checks/pd7a.AC2.sh; echo "exit=$?"</invocation><expect>(?s)sha_got=\S+ sha_want=\S+;.*REFUSED NO-OWNER-HEADER.*tokens: True.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -112,7 +112,9 @@ invokes; the rollback and its measured time; and any row.
 
 Checks dry-run at the base (2026-10-20 ~19:4xZ): `pd7a.AC1.sh` FAIL (entry files at HEAD=0), `pd7a.AC2.sh` FAIL (close report absent); the AC2 steps run against the live function with the close-report read bypassed read: sha `894RI63/G4h019yxAGP7E+wQzrpZIfJoMaLhzpTTyck=`, no-header `set_person_access` REFUSED NO-OWNER-HEADER, deployed bytes hold both widening tokens: False. One check defect found and fixed in the dry run: `list-functions --query "...|[0]"` prints one "None" per page (the old pd7 AC2 had it); the name is now picked with grep. GO issued 2026-10-20 ~19:5xZ (`deliverables/2.0.0_SA_COO~MP/pd/GO_MP-pd-7.md`); the lane `0.7.0_AE_CloudOps~NFRA1` has no folder or run yet, so MSTR~Z is asked to seat it before the order is sent.
 
-<status>pending -- GO issued; waits on the lane being seated and the never-widen pair</status>
+**AMENDMENT A3 (the issuer's, 2026-10-20 ~20:3xZ), after the lane's report:** the two `<expect>` strings were prose, so proof-of-spec-check marked the lane's instance INVALID; they are now regexes (the lane's suggestion, `(?s)` prefixed) matching the checks' real output. The issuer's defect, not the lane's. The lane regenerates the instance. Gate limb that graded the modification: none expected (to-pipeline-gate grades a modified order only for `<placeholders>`, NONE). The act itself: closed 2026-10-20T20:23:42Z by the lane (plan 0/1/0, apply 237.4 s, CodeSha256 894RI63... -> RUGwtI9t8UKV8VpyCeArffZFwHeuUm4QhOIJU+nAJjg=); the issuer re-ran `pd7a.AC1.sh` and `pd7a.AC2.sh` itself at ~20:3xZ and both read PASS.
+
+<status>pending -- GO issued 2026-10-20; the lane closed the act 20:23:42Z (issuer re-ran AC1 and AC2: PASS); the order flips to complete when the lane's instance reads VALID</status>
 <round>2</round>
 <workstream>PC</workstream>
 <fabric>site-z</fabric>
