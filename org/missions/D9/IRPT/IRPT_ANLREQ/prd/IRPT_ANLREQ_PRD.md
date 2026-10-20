@@ -5,10 +5,10 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.24",
+ "prd_version": "v0.25",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
  "status": "DRAFT"
 }
 ```
@@ -101,6 +101,43 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
          ACCEPT     a person who opens a report reads the report, not a list of hundreds of cards it cannot interpret
          SOURCE     Andrew's 2026-10-19 Ticket Center walk (CRO~TCKT brief @b01824a2a1, O6; G6: 427 cards, 3 with values, for
                     REQ-d6231c013ae90519c67d18e9)
+
+  FWD-9  Andrew judges the Opal Overview against the YCharts sample he supplied
+         DONE WHEN  EXERCISED -- an Opal person files an Overview (no comparables) on the live product, opens the Opal-generated
+                    report from the ticket, and Andrew reads it beside the 2026-09-16 YCharts Comprehensive Overview sample and
+                    gives a verdict. It does not hold FWD-10
+         ACCEPT     Andrew says, having read both, whether the Opal Overview looks correct and has the right information; anything
+                    he names as wrong or missing becomes work on the Overview pages
+         SOURCE     Andrew 2026-10-20 ("I just need to see that export in a sample run to gauge whether it looks correct and has
+                    the right information", record @f2581e90b9); engine brief @e197f63e58 O1; approved as written ~16:0xZ
+
+  FWD-10 (Core, first) A reader can tell how the portfolio did against each comparable it was compared with
+         DONE WHEN  EXERCISED -- one Multi-Comp filed on the live product (two Opal models and one ETF) shows, for the portfolio
+                    and each comparable: a cumulative return chart over one common window, periodic total returns, risk figures
+                    (standard deviation, Sharpe, Sortino, drawdown, alpha and beta, each against a stated reference) and asset
+                    allocation side by side. Opal computes every figure from prices and held data, and the page states the common
+                    window and its rule; a model comparable's window starts no earlier than 2024-04-30 (C-MODEL-SOURCE)
+         ACCEPT     a person reading the report can answer "did this portfolio beat each model I picked, and with how much risk"
+                    without opening YCharts; nothing Opal can work out from prices it already holds is shown as unavailable
+         SOURCE     Andrew 2026-10-20 ("We can start with Core to get a functioning chart out"); brief O2 and Part III; approved
+                    as written ~16:0xZ
+
+  FWD-11 (Parity, starts as soon as FWD-10 is met) The Opal Comparison and Multi-Comp reports carry every kind of information the
+         YCharts versions do
+         DONE WHEN  EXERCISED -- one Comparison and one Multi-Comp, filed after FWD-10 is met, show for the portfolio and each
+                    comparable: region and country, style and market cap, sector, bond sector, credit quality and maturity,
+                    fundamentals, the risk/reward scatter, standardized returns and the holdings tables
+         ACCEPT     someone who knows the YCharts comparison and multi reports finds each kind of information in the Opal report,
+                    or a plain sentence saying why it is missing for that comparable
+         SOURCE     Andrew 2026-10-20 ("as soon as we get that done, the build for the full parity version should get started");
+                    brief O3; approved as written ~16:0xZ
+
+  FWD-12 A part of the report Opal cannot fill says so in words
+         DONE WHEN  EXERCISED -- in a report where some comparable has no source for a part, that place on the page reads "not
+                    available for <comparable>: <reason>"; the PDF carries no construction cards
+         ACCEPT     a reader never meets a blank or silently missing section; each gap says what is missing and why, and the report
+                    still reads as a report
+         SOURCE     brief O4; approved as written ~16:0xZ
 ```
 
 ## 1. What exists (the CRO's nine-hop trace @9076346655, plus this session's measured changes)
@@ -130,6 +167,8 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 | C-PRICES: where prices come from (restated v0.13; Andrew-direct 10-14 ~17:5xZ, CTO price ruling ADDENDUM 2 @ac60268494) | this project | Per security, in order: (0) the estate's own stores where they hold the symbol (the DEMQUE price store, the Opal ETFs' Bloomberg history), read, not called; (1) Yahoo (yfinance), cut at T-1, `source: yfinance`; (2) YCharts through the stored session, one symbol per call, prices only, `source: ycharts`; (3) the backend replacement C-SWAP step 2 (class-matched pool, longest Yahoo history, ties by ticker), named in the report; (4) else the report runs WITHOUT the security and says so in words, never blocking. Bloomberg is OUT of this chain. Every price carries its source as a claim field. **There is no price-date input (v0.16, Andrew-direct 10-15 ~20:4xZ):** every price, share-quantity valuations included, is the most recent close, the T-1 frontier of `lib/trading_calendar.py`, stated in the report as the as-of. The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts report, figure or PDF. |
 | C-FILING-HINT: the unmatched-ticker decision tree at filing (v0.12; restated v0.15, v0.18; restated v0.19 to Andrew-direct 10-15 ~21:5xZ, the decision tree; v0.22 yfinance first) | this project | **The door's check asks yfinance first (v0.22, Andrew-direct 10-16 ~15:2xZ): a holding yfinance keeps at T-1 is KNOWN with no YCharts call; YCharts is asked only for a symbol yfinance does not keep.** Every holding the upload door cannot match is CHECKED by the door, then: (A) **the ticker does not exist** (`TICKER_NOT_FOUND`): it is treated as a possible typo, and the form shows 'Did you mean <symbol> (<name>)?' (the door's own provider-verified `suggestion`) with three answers. **Yes** accepts the suggestion (the same upload re-posted with that correction). **Replace** opens an input where the filer types the replacement ticker(s), which are re-posted as corrections and CHECKED AGAIN by the same tree; a replacement that also fails gets the same prompt. **No** files the holding UNRESOLVED, and the form says 'Opal Staff will manage the replacement.' With no suggestion, the prompt offers Replace and No only. (B) **the ticker exists but Opal cannot price it** (`TICKER_DATA_NOT_ENTITLED` and every other unpriceable-as-given class): there is no typo prompt; it files UNRESOLVED with the words 'Opal Staff will manage the replacement.' Every UNRESOLVED holding goes to C-SWAP in the backend, and the report names its replacement. The form NEVER asks the filer to name a proxy: `NAME_PROXY` is retired from every filer-facing finding, and no text tells the filer to replace without an input to do it. Replace is the filer CORRECTING their own ticker, not picking a proxy (swaps are not the filer's, Andrew 10-15 ~14:xxZ). It works for the staff filer after a firm is chosen, and makes no vendor call at the form. |
 | C-HOP-FAILURE: how a failed hop reaches the ticket (v0.20; design fork from `2.0.0_SA_COO~T2` msg 8900, research by this seat) | this project | The ticket READS the failure; no service writes a note to the ticket, and no new ticket route or principal exists for it. (1) The analysis-request ticket page calls the existing status route `getJobStatus(report_ref.request_id, firm)` and shows the state, the failed step and its words. (2) `irpt-status` returns a CLOSED failure code (`^[A-Z0-9_]+$`, an enumerated set) beside the state. Each code maps to words in one table in `status.py` that name the step and what happens next; an unmapped code reads as its step's generic words, never as blank. (3) The generator hops already write the job row in `irpt-jobs` (ATTENTION or FAILED, with `detail.code`). The silent hops write ONE set-once sibling attribute `hop_failure` = {hop, code, at} on that row, beside the receipt, never overwriting READY. The silent hops are the ready-signal send, the commentary draft and the packager. The packager writes it through the resident's existing jobs-table client. The commentary writes it through a `fail` op on the existing draft-store invoke. (4) Writers of `hop_failure`: exactly those three hops, one value per request. (5) A recovered hop (v0.21): the page shows a failure ONLY while the request is unfinished (no package attached). A request whose package is attached shows its completion, and the set-once value stays on the row as history. |
+| C-MODEL-SOURCE: the Opal model data the report engine reads (v0.25; CTO ruling R1 @665110f9c2, key corrected @b9de1e559d, on the CRO research @c05a6b6841) | this project | FWD-10 returns, risk and the chart read the firm-neutral model return series `opal-data-portal-v2` `json/benchmarks/model_portfolio_timeseries.json` (rows date, model_code UST/ST/INT/LT/ULT, model_return, benchmark_return, rfr; inception 2024-04-30) through ONE read grant on the resident policy under a never-widen pair. FWD-10 asset allocation reads the models' CURRENT weights from the registered firm-neutral positioning surface, dated on the page at the T-1 frontier. FWD-11 reads a dated JSON extract `{as_of: {model_code: {ticker: weight}}}` written by the yang job, at a builder address after a new registry row (rule 30); the resident never unpickles. The model-code map (UST to ULT to the catalogue's five Opal models) is one committed artifact. REJECTED: the MDPF composition tables and the gateway composition tool, which are keyed by firm (CLAUDE.md section 5). |
+| C-AUDIT-RECORD: one audit JSON per analysis request (v0.25; CTO ruling R3 @665110f9c2; Andrew 2026-10-20 "a structured JSON for that audit reporting") | this project | A NEW `analysis-report` family beside `ycharts_runs` (run.json unchanged; LGIC R19), in each firm's bucket at a builder-made address, with a published JSON Schema that a consumer rejects a malformed record against. It carries four linkages: the ticket, the form as filed, the filer, and the package and commentary pointers. Retention: 2,555 days from filing, with no unreferenced expiry (the driver's ruling; Andrew stated none; his word changes it). |
 | C-NAMES: rule 30 | consumed; LGIC | Every new S3 address and resource name is `lib/opal_naming.py` `address()` / `name()` output, printed in the order that writes it. |
 
 ## 2. THREAD -- FWD-1, round 1
@@ -631,5 +670,39 @@ accepted because the CRO wrote the brief (proportionate sign-off).
 - **CRO brief half** (`4.0.0_SA_CRO~PRFRPT`, review @115e85c6bd): BRIEF COVERAGE row 1 no longer offers report types; row 5
   carries the any-firm, never-refused, unseeded bar; the midstream brief's O1-O7 have their own rows.
 - Nothing else moves: no outcome, contract or surface changes.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.25 (2026-10-20 ~16:0xZ, 1.0.0_SA_CTO~DELL2) -- the report engine, Core then parity (FWD-9 to FWD-12); the model source, swap leg and audit record (ENDPOINT and CONTRACTS change; both halves re-open)
+
+**Andrew-direct:**
+- `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_160xZ_FWD_9_TO_12_DONE_WHEN_APPROVED.md`: "These are approved as
+  written". This is the L2 confirmation of the `/endpoint --forward` draft
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_IRPT_ANLREQ_REPORT_ENGINE_20261020.md` @bffa5709a9.
+- His walkthrough answers @f2581e90b9.
+
+**Brief:** `docs/briefs/irpt-anlreq-report-engine-core-then-parity-brief-20261020.md` @e197f63e58 (`4.0.0_SA_CRO~TCKT`).
+
+**What changes:**
+- **ENDPOINT:** FWD-9 to FWD-12 are appended (next unused numbers); FWD-1 to FWD-8 are unchanged.
+  - FWD-9 does not hold FWD-10.
+  - FWD-11 starts as soon as FWD-10 is met.
+- **CONTRACTS:** C-MODEL-SOURCE (R1) and C-AUDIT-RECORD (R3) are new.
+  - The swap model leg (R2) is C-SWAP as already written: wire the classification and the model proposals that `swap_pass`
+    passes as a literal `[]`. The model widens the pool and never picks; a pick below 0.80 is flagged; no new vendor. It grades
+    under FWD-2.
+- **Front end:** Andrew's walk items 2, 4, 5 and 7 are built by `4.0.0_SA_CRO~TCKT` (rows 500c, 4664 and 37f6, approved).
+  They sit inside FWD-1 and FWD-2 as written. The form asks for an Advisor presenting, pre-filled with the filer and required,
+  because the ticket service requires it (run 7 B2); there is no date field and no Variant or commentary row.
+
+**Boundary:**
+- The engine workstream `2.0.0_SA_COO~G2` (C-ABSORB b) owns FWD-10, FWD-11 and C-MODEL-SOURCE.
+- `2.0.0_SA_COO~Y2` owns the swap leg, C-AUDIT-RECORD and FWD-9's Overview filing.
+- IRPT_DASHBD's TWR engine is relied on, not owned.
+- Every new S3 address is builder output (C-NAMES).
+
+**Sign-off:**
+- ENDPOINT and CONTRACTS changed, so `3.0.0_SA_CVO~DELL2` signs the ratified-text half.
+- The brief half is accepted because the CRO wrote the brief (proportionate sign-off).
 
 -- 1.0.0_SA_CTO~DELL2
