@@ -28832,3 +28832,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W330-S3 -- AR-g-173 names statistic_of for the risk figures, but the layout engine has no 2-year std dev or max drawdown
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T17:35:19Z",
+  "one_line": "AR-g-173 names the layout's statistic helpers for the risk figures, but the engine offers std_dev and max_drawdown only for 1y, 3y, 5y, 10y and 15y, so the 2-year risk of the FWD-10 window is built on the engine's own helpers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-173 (cell, Risk): std_dev is the sample standard deviation x sqrt(12) x 100 over the last years whole years; max_drawdown is over those same years; 'reuse those helpers where they fit'. years = min(5, floor(window years)), which is 2 for the FWD-10 window (2.5 years).",
+  "world_is": "layout_overview._STATS (line 233) lists std_dev and max_drawdown with periods 1y,3y,5y,10y,15y (max_drawdown also 'all'); _STAT_ID (line 242) matches only those forms, so statistic_of('std_dev_2y') and statistic_of('max_drawdown_2y') raise _NA. comparables.py computes both with lo._month_returns, lo._sample_var and lo._window_start (the engine's own helpers, the same arithmetic as statistic_of), and sharpe, sortino, alpha and beta with lo._risk_stat, which takes any years. layout_overview.py is not in this grant and is unchanged. The checker's calibrate arm compares the 3y values only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@4ec6bad212 (_STATS lines 233-241; _STAT_ID line 242)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/comparables.py@4ec6bad212 (_std_dev, _max_drawdown, _risk)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-173.compare-record-and-allocation-arithmetic.md@a5b0ef4b5cd (cell, Risk)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W330-S4 -- AR-g-173 keeps each path to its own last observation, not to the common window end
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T17:35:19Z",
+  "one_line": "AR-g-173 defines the window end as the earliest last observation but says a path runs from the window start on, with no end cut; a row whose last observation is later than the window end therefore has returns and risk that run past the window end.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-173 (cell, Window): 'end = the EARLIEST last observation among them'. (cell, Path): 'path = its points from start on'. No clause cuts a path at the window end.",
+  "world_is": "comparables.py _rebased keeps every point from the window start to the row's own last point, so a portfolio or comparable whose series ends after the window end reads its returns and risk to that later date while the window record names the earlier end. Every series in the checker's fixtures and in the tests ends on 2026-10-14, so no criterion grades the case. Built as the literal reading (points from start on, no end cut); the CTO or the issuer decides whether the path stops at the window end.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/comparables.py@4ec6bad212 (_rebased, build_compare window)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-173.compare-record-and-allocation-arithmetic.md@a5b0ef4b5cd (cell, Window and Path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
