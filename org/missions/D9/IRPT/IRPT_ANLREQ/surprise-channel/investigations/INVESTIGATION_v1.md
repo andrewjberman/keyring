@@ -28883,3 +28883,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W330-S5 -- R8 says no vendor name anywhere on the page, but a pricing-on page prints "Data: YCharts" in its footer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W330-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~330",
+  "surfaced_at": "2026-10-20T18:06:22Z",
+  "one_line": "AR-g-174 says no vendor name anywhere on the page (R8); the layout footer of a pricing-on page prints 'Data: YCharts' on every section, so such a page names the vendor whatever its comparison elements say. The five compare elements add no vendor name; the footer is pre-existing and outside this cell's grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-174 (The change, HTML): 'No vendor name anywhere on the page (R8).' AR-g-175 (checker arms_build_175): the rendered page of a pricing=True producer run must not contain 'YCharts' or 'ycharts' outside 'Licensed market data'.",
+  "world_is": "layout_overview.py build() writes _e(SOURCE_CREDIT if pricing else OPAL_SOURCE_CREDIT) into every section footer (lines 1447 and 1486); SOURCE_CREDIT is 'Data: YCharts' (line 69) and OPAL_SOURCE_CREDIT is 'Data: Opal Capital' (line 70). Measured in this cell: the HTML of the pricing=True test page carries the footer span 'Data: YCharts'. The per-element fragments of the five compare elements carry no vendor name (test_no_vendor_name_in_any_compare_element_fragment passes). Not run: the cell 175 arm, whose producer code is not on this branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@57349135ee (SOURCE_CREDIT line 69, OPAL_SOURCE_CREDIT line 70, footer writes at lines 1447 and 1486)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_compare_elements.py@57349135ee (test_the_built_page_names_every_row_and_prints_every_gap_line_and_the_note: the failure output showed the footer span Data: YCharts)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-174.layout-comparison-section-elements.md (cell, The change, HTML: 'No vendor name anywhere on the page (R8)')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
