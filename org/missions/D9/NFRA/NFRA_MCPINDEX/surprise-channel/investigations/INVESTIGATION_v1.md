@@ -12844,6 +12844,268 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W78-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~78",
+    "surfaced_at": "2026-10-20T13:33:01Z",
+    "one_line": "W2 ruling 1 cannot be met for opal_asker_query case K2-18: its chat_id and message_id placeholders have no real value in the catalog or the gateway code, so the not-run plan holds the tool preview-only and names the write it needs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "W2 face ruling 1: an unrun case with a placeholder argument is run through its depends_on field, or superseded by a new case that carries a real value from the catalog rows or the gateway code, or is owned by staff only when it is a client account identifier.",
+    "world_is": "K2-18 carries the placeholders '<chat id of a recent Teams message from a profiled asker>' and '<message id of that message>' with no depends_on, and its source_hint says it needs the ids of a live recent Teams message. DATA_CATALOG.yaml holds no chat_id (grep count 0). The tool reads chat_id and message_id through the caller's delegated token to find the asker. None of the three routes applies, so the plan is preview-only and the reason names the write: a live Teams message from a profiled asker must be written first. Premise row NFRA_MCPINDEX-Z-W68-S2 already records the placeholder.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/cases_all_20261019.json case K2-18 @277ad324045 (read 2026-10-20T13:33Z)",
+        "infra/aws/ec2/opal-gateway/app/tools.py:1943 opal_asker_query definition @277ad324045 (read 2026-10-20T13:33Z)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml: grep -c chat_id returns 0 @277ad324045 (read 2026-10-20T13:33Z)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~78/not_run_plan.json entry opal_asker_query (worktree, not yet committed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W78-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~78",
+    "surfaced_at": "2026-10-20T13:33:01Z",
+    "one_line": "W2 ruling 3 cannot be applied as written to the test sends: reply_email's recipient is the original sender of K6-02, not the tester mailbox, and the tester alias for send_email, create_draft and send_chat_message is bound by no case or repo file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "W2 face ruling 3: test_send applies to send_email, reply_email and create_draft (tester mailbox) and to send_chat_message (tester chat), with test_send.case_id one of the entry's case_ids.",
+    "world_is": "K6-46 (create_draft) and K6-51 (send_email) carry no to argument, so each is refused before its function runs. K6-50 (send_chat_message) takes its chat_id from list_chats case K6-23, not from the tester chat. K6-47 (reply_email) replies to message K6-02, so its recipient is that message sender. The plan names test_send on the tester alias for create_draft, send_email and send_chat_message, and leaves reply_email null. The drain must bind each alias to a real address or chat, and no case or repo file holds one. Related rows: NFRA_MCPINDEX-Z-W67-S8 (send_email confirm false is a live send) and NFRA_MCPINDEX-Z-W67-S9 (create_draft writes at once).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/cases_all_20261019.json cases K6-46, K6-47, K6-50, K6-51 @277ad324045 (read 2026-10-20T13:33Z)",
+        "infra/aws/ec2/opal-gateway/app/tools.py:469 create_draft, :483 send_email, :503 reply_email, :1799 send_chat_message @277ad324045 (read 2026-10-20T13:33Z)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/ledger/ROUND_ANALYSIS.round23.md:45 (open call c5c2 yes recorded) @277ad324045"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W79-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~79",
+    "surfaced_at": "2026-10-20T13:20:56Z",
+    "one_line": "MX-w-3 cannot be built: the worktree does not carry infra/aws/ec2/opal-gateway/app (the catalog and every cite root), and the face's one permitted sparse add (workflows/gateway_battery) does not bring it in.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree C:/tmp/wk-mcpindex-79 @277ad324045 (branch wk-NFRA_MCPINDEX-79): test -d org and test -d .tools pass (TREE-OK); ls infra/aws/ec2/opal-gateway/ -> No such file or directory",
+        "git -C C:/tmp/wk-mcpindex-79 sparse-checkout list (after git sparse-checkout add workflows/gateway_battery, rc=0): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/gateway_battery; neither infra/aws/ec2/opal-gateway/app nor workflows/atom_decomposition is listed",
+        "git ls-tree HEAD infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml -> 100644 blob 2cbe275d03c9a5af85afefabc604e26b71e9be12, so the path is in HEAD and outside the sparse cone",
+        "bash .../round24/checks/w3.AC1.sh <link_fixes.json> (exit=1, output .scratch/ac1_out.txt): routing_table_w3.InputError: catalog unreadable: infra\\aws\\ec2\\opal-gateway\\app\\refs\\DATA_CATALOG.yaml (No such file or directory); w3.AC2.sh the same, exit=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Face section 1 Steps 0 and Surfaces and section 3: the worktree already carries the sparse folders workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app; the only sparse change I may make is git sparse-checkout add workflows/gateway_battery; the checks read the catalog at infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml.",
+    "world_is": "The worktree carries neither folder: both are outside the sparse cone and the catalog path does not exist on disk, so the checks cannot load the catalog and no link_fixes.json can be graded or grounded. The cell is blocked, not built. I did not widen the sparse cone or reconstruct the tree.",
+    "notes": "Blocking for MX-w-3 criteria AC1 and AC2. Disarm owner 2.0.0_SA_COO~MI decides whether to re-cut this worker's worktree with the opal-gateway app folder in its sparse set, or to re-issue. The routing and source-set inputs (round23 ROUTING_TABLE, round22 census, source_sets_* under ~71..~76) are present; only the catalog and code cites are missing."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W79-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~79",
+    "surfaced_at": "2026-10-20T13:40:00Z",
+    "one_line": "The proof-of-spec commit 552f6fecf4 printed NAMING ERROR 'function-map folder missing' for C:/tmp/wk-mcpindex-79/infra/aws/lambda/ci/function-map/, and the commit still returned rc=0; the same condition as NFRA_MCPINDEX-Z-W76-S41.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author ... -F .scratch/msg_s2_proof.txt -- (2 paths, instance and session_log): rc=0; output in C:/tmp/wk-mcpindex-79/.scratch/commit_proof.log, line '[naming-gate] NAMING ERROR function-map folder missing' (read 2026-10-20T13:40Z)",
+        "git -C C:/tmp/wk-mcpindex-79 log --oneline -1: 552f6fecf43 NFRA_MCPINDEX MX-w-3 (0.9.0_WK_NFRA_MCPINDEX~79): proof instance, BLOCKED (AC1 FAIL, AC2 FAIL)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Commit gate: a commit that the naming gate refuses returns a refusal and is not landed (rc nonzero).",
+    "world_is": "The naming gate printed NAMING ERROR for a missing function-map folder and the commit landed at rc=0; the same as W76-S41. The folder is outside my sparse cone, so the gate could not read it.",
+    "notes": "Not a refusal from my side; the sibling row NFRA_MCPINDEX-Z-W76-S41 records the same class. Disarm owner not set: INERT."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W79-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~79",
+    "surfaced_at": "2026-10-20T14:01:21Z",
+    "one_line": "The traced integration cite for schwab_describe_dataset (integration.py:516) lands inside schwab_list_files; describe_dataset is at lines 549-580.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-79/infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:516 read 2026-10-20T14:01Z: a date_invalid ServiceError inside async def list_files (defined at line 505)",
+        "same file: line 549 async def describe_dataset; line 561 schema = qry.DATASET_SCHEMAS[d], the only dataset read of the describe body",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/ROUTING_TABLE_20261019.json tools[schwab_describe_dataset].source_set[0].cite = app/integrations/schwab/integration.py:516"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The routing table's source set for schwab_describe_dataset cites app/integrations/schwab/integration.py:516 as the describe tool's integration read.",
+    "world_is": "Line 516 is in the list_files date validation. The describe body reads no bucket object (it reads the pinned DATASET_SCHEMAS entry and the grant), so the pair was resolved on the describe body (remove), not on the cite.",
+    "notes": "Fix owner: the source-set trace. No edit made in this worker's tree; link_fixes.json basis for schwab_describe_dataset records the grounding used."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W79-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~79",
+    "surfaced_at": "2026-10-20T14:01:21Z",
+    "one_line": "The issuer table reads news_market_mood add candidates as none, but the link rule overlaps 8 unlinked catalog rows, one of which names the two singletons the tool reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "recomputed 2026-10-20 with workflows/gateway_battery/routing_table.py s3_matches (catalog 320 entities; source sets ~71..~76): candidates news.01.history-summary-family, news.02.history-articles-family, news.03.live-singletons, portal_etfs_positioning, portal_mdpf_account_distribution, portal_mdpf_aggregate_aua, portal_mdpf_aum_metrics, portal_mdpf_model_benchmarks",
+        "source set of news_market_mood: one s3 source, bucket opal-data-portal-v2 prefix json/sentiment/, cite app/news_typed.py:497",
+        "C:/tmp/wk-mcpindex-79/infra/aws/ec2/opal-gateway/app/news_typed.py:497-498 read only FEAR_GREED_KEY and KEYWORD_SENTIMENTS_KEY"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 24 MX-w-3 table: news_market_mood add candidates are none that is not already linked; the measured candidates are the only rows that overlap a source of the tool and are not yet linked.",
+    "world_is": "Eight unlinked rows overlap the source by the link rule. Five have an empty prefix in opal-data-portal-v2, which the rule matches to every key in the bucket and the tool never reads. news.03.live-singletons names the two singletons the tool does read. No add was made (smallest act); the adds are the issuer's call.",
+    "notes": "The premise that no unlinked row overlaps fails for this tool. Adds in link_fixes.json for news_market_mood: none."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W79-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~79",
+    "surfaced_at": "2026-10-20T14:01:21Z",
+    "one_line": "The traced sources of harvest_get_research name the underscore prefixes only; the code also reads the hyphen twins through a live-spelling fallback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-79/infra/aws/ec2/opal-gateway/app/harvest_research.py:91-103 _live_listing: the canonical prefix is listed first; the hyphen twin (alt) is listed only when the canonical holds no key",
+        "same file: line 379 reads the research_continuation listing through _live_listing; line 410 reads the research_report listing through _live_listing; lines 27-31 state research_dossier is read at its canonical spelling only",
+        "C:/tmp/wk-mcpindex-79/infra/aws/ec2/opal-gateway/app/harvest_identity.py:157-175 _hyphen_twin and _live_prefix; line 302 reads the research_dossier listing through it for resolve_security"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The routing table source set for harvest_get_research lists research_report, research_continuation and research_dossier at underscore spellings (app/harvest_research.py:52-57); the link rule grades the hyphen rows MISROUTED.",
+    "world_is": "The code reads the hyphen twins of research_report and research_continuation when the canonical prefix is empty, so those two rows are kept with the fallback as the reason. The hyphen research-dossier row is never read (lines 30-31) and is removed. The trace records no conditional twin reads.",
+    "notes": "A trace gap rather than a routing defect. For the issuer to decide whether the source-set trace should record conditional live-spelling reads."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W79-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~79",
+    "surfaced_at": "2026-10-20T14:01:21Z",
+    "one_line": "Catalog row opal_data_news_v2_gold_trending_reports names news_trending_topics as its read_tool, but no code under app/ reads trending_reports or the opal-data-news-v2 bucket.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-79/infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:16388-16402: tools news_trending_topics, read_tool news_trending_topics, bucket opal-data-news-v2, prefix trending_reports/",
+        "Grep over C:/tmp/wk-mcpindex-79/infra/aws/ec2/opal-gateway/app *.py for trending_reports and news-v2 returned no hit (2026-10-20)",
+        "C:/tmp/wk-mcpindex-79/infra/aws/ec2/opal-gateway/app/news_typed.py:394 the trending tool reads only the NEWS_TRENDING_TABLE store"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The catalog row's read_tool and tools fields state that news_trending_topics reads the trending_reports prefix of the opal-data-news-v2 bucket.",
+    "world_is": "No code path reads that bucket or prefix. The link is removed in link_fixes.json. The catalog's read_tool claim is not supported by the code under app/.",
+    "notes": "Catalog correction is the issuer's; no edit made in this worker's tree."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W82-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~82",
+    "surfaced_at": "2026-10-20T13:22:58Z",
+    "one_line": "the worktree did not carry infra/aws/ec2/opal-gateway/app (the catalog refs/DATA_CATALOG.yaml that criterion AC2 reads), although the face says it does; added that folder by git sparse-checkout add, the one sparse change the face allows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 step 0: the worktree already carries the sparse folders workflows/gateway_battery, workflows/gateway_battery/tests, workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app. Face section 1 names infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml as an input of AC2.",
+    "world_is": "At box/sitez cut 277ad324045 the worktree sparse list held .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards and workflows/gateway_battery. infra/aws/ec2/opal-gateway/app and workflows/atom_decomposition were absent (ls rc non-zero). After git sparse-checkout add infra/aws/ec2/opal-gateway/app the catalog file is present. workflows/atom_decomposition stays absent; no criterion reads it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/tmp/wk-mcpindex-82 sparse-checkout list, read 2026-10-20 before the add: no infra/aws/ec2/opal-gateway/app line",
+        "ls C:/tmp/wk-mcpindex-82/infra/aws/ec2/opal-gateway/app: No such file or directory (read 2026-10-20)",
+        "git sparse-checkout add infra/aws/ec2/opal-gateway/app: rc=0; infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml present afterwards"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W82-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~82",
+    "surfaced_at": "2026-10-20T13:33:28Z",
+    "one_line": "the work commit 5e0bcdd9cf printed NAMING ERROR 'function-map folder missing' for C:/tmp/wk-mcpindex-82/infra/aws/lambda/ci/function-map/ and WARN 'client-data-check: hashed account-id list ABSENT', and the commit still returned rc=0; the same two conditions as the sibling row NFRA_MCPINDEX-Z-W76-S41.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 2, BOUNDS 5: a commit through the naming gate needs a staged .json under this project's home if it must derive the project. The face's <paths> grant does not name infra/aws/lambda/ci, and the worktree sparse list does not carry it.",
+    "world_is": "bash .tools/safe-commit.sh --author ... -F .scratch/msg_w6_work.txt -- workflows/gateway_battery/routing_table.py workflows/gateway_battery/tests/test_routing_serves.py org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md printed the naming-gate NAMING ERROR for the missing function-map folder and the client-data WARN (account-id list absent), then '[msg-verify] committed 5e0bcdd9cf' with rc=0. The commit-gate line read 'checked 2 of 3 file(s)' for the py gate; the markdown file was not a py file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... -- (3 paths): rc=0; output in C:/tmp/wk-mcpindex-82/.scratch/commit_work.log lines 9-14, 39, 44 (read 2026-10-20T13:33Z)",
+        "git -C C:/tmp/wk-mcpindex-82 log --oneline -1: 5e0bcdd9cf NFRA_MCPINDEX MX-w-6 (0.9.0_WK_NFRA_MCPINDEX~82): --serves-out writes the TRACED set"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W83-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~83",
+    "surfaced_at": "2026-10-20T13:38:42Z",
+    "one_line": "The naming gate printed NAMING ERROR (function-map folder missing for infra/aws/lambda/ci/function-map/) on commit 848ed42093 in this sparse worktree, and the commit landed without that gate grading it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "The commit gate (safe-commit, which runs the naming gate) grades the staged paths; the face's <paths> grant names no infra/aws/lambda/ci folder and the worktree sparse list does not carry one.",
+    "world_is": "safe-commit output of 848ed42093 (C:/tmp/wk-mcpindex-83/.scratch/commit_work.log line 14): '[naming-gate] NAMING ERROR function-map folder missing ...', then '[msg-verify] committed 848ed42093' and rc=0. The naming gate graded nothing for this commit; the commit-gate line read 'OK: pre-commit gate clean for 2 of 2 file(s)'. The same condition is filed as NFRA_MCPINDEX-Z-W76-S41.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output: C:/tmp/wk-mcpindex-83/.scratch/commit_work.log line 14 (read 2026-10-20T13:38Z); commit 848ed420932 on wk-NFRA_MCPINDEX-83 (LOCAL)",
+        "precedent row: org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md row NFRA_MCPINDEX-Z-W76-S41 (the same NAMING ERROR at commit b5595abaa1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W83-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~83",
+    "surfaced_at": "2026-10-20T13:38:42Z",
+    "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on commit 848ed42093: its danger map is 113.5h old (STALE) and it scanned 0 of 2 staged files, so it cleared nothing in this diff.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "The face's preflight declares comp-adversary DECLARED-NOT-APPLICABLE and states no risk-reflex result; the face does not say the reflex runs in a sparse worktree or what answer state a commit must carry.",
+    "world_is": "safe-commit output of 848ed42093 (C:/tmp/wk-mcpindex-83/.scratch/commit_work.log lines 1-8): '[risk-reflex] danger map: 113.5h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'NOT-DECIDABLE: danger map STALE', 'WITHIN BUDGET: scanned 0 of 2 file(s)'. Its REBUILD line points at the main tree's org/modules/graph/nerves-risk-edges.json. The commit proceeded; the same answer state is recorded in the earlier rows of this channel for commits 00c51aac7c and e3bd819412.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output: C:/tmp/wk-mcpindex-83/.scratch/commit_work.log lines 1-8 (read 2026-10-20T13:38Z); commit 848ed420932 on wk-NFRA_MCPINDEX-83 (LOCAL)",
+        "precedent rows: org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md entries whose world_is cites commits 00c51aac7c and e3bd819412 (PARTIAL_OR_BLIND, scanned 0 of 2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
@@ -12874,5 +13136,272 @@ carries none.
   "world_is": "The /gateway page groups these tools under buckets they do not (only) read, the same class as part 1's P2.",
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Fix owner per the CTO routing: 2.0.0_SA_COO~MI, round 23 routing arm."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_MCPINDEX-Z-W77-S1",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~77",
+  "surfaced_at": "2026-10-20T13:21:55Z",
+  "one_line": "The face's premise that the worktree already carries workflows/gateway_battery failed: the sparse cone lacked it, and I added it with the one permitted sparse change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/wk-mcpindex-77 at HEAD 277ad324045 (branch wk-NFRA_MCPINDEX-77): git sparse-checkout list before the change printed 8 entries (.tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards); workflows/gateway_battery absent; ls workflows/gateway_battery: No such file or directory (read 2026-10-20).",
+      "git ls-tree -r --name-only HEAD workflows/gateway_battery at 277ad324045 holds 16 files (7 scripts, 9 tests); after git sparse-checkout add workflows/gateway_battery the worktree lists the same 16 files."
+    ]
+  },
+  "spec_asserts": "Task order NFRA_MCPINDEX.TO-MX-w-1.source-compare, section 1 step 0: the worktree already carries the sparse folder workflows/gateway_battery; git sparse-checkout add is the only sparse change permitted if another folder is missing.",
+  "world_is": "The folder was in HEAD but outside the worktree's sparse cone. I ran git sparse-checkout add workflows/gateway_battery and changed nothing else in the sparse set; the sparse change is worktree configuration and is not committed.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced by 0.9.0_WK_NFRA_MCPINDEX~77 on MX-w-1. The issuer may want the worktree cut for the L7 spawn to carry the folders its orders name."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPINDEX-Z-W77-S2",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~77",
+  "surfaced_at": "2026-10-20T13:21:55Z",
+  "one_line": "The listing helper the contract names, partition_windows.list_row, returns no key names, so the Contents-key date tokens need a mirrored paging loop in source_compare.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "workflows/gateway_battery/partition_windows.py@277ad324045 lines 112-134 (list_row): it returns (partitions, saw_entries) where partitions holds only CommonPrefixes matching <prefix><key>=YYYY-MM-DD/; Contents[].Key values are never returned.",
+      "Fixtures org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round24/fixtures/w1_fake.json: bkt-g2|p2/ holds the key p2/20261016.json and bkt-h|ph/ holds ph/2026-10-16.json; neither is a CommonPrefix, so list_row cannot read their tokens (read 2026-10-20)."
+    ]
+  },
+  "spec_asserts": "W1 contract: for an s3 source the instrument lists keys under bucket+prefix by importing the listing helper of partition_windows.py, and source_dates are the YYYY-MM-DD, date=YYYY-MM-DD and YYYYMMDD tokens found in the listed keys.",
+  "world_is": "The helper returns the date partitions and an entries flag, not the keys. source_compare.py imports the client, build_client, load_json_object and Refused from partition_windows and mirrors its paging loop (same kwargs, Delimiter /, ContinuationToken while IsTruncated); partition_windows.py is not edited.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced by 0.9.0_WK_NFRA_MCPINDEX~77 on MX-w-1. The contract's wording and the helper's return shape disagree; a later cell may want list_row to return keys."
+}
+```
+
+```json
+[
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~80",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "id": "NFRA_MCPINDEX-Z-W80-S1",
+    "one_line": "The worktree did not carry the two sparse folders the MX-w-4 face says it already carries: infra/aws/ec2/opal-gateway/app and workflows/atom_decomposition were absent until git sparse-checkout add ran.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-w-4 face step 0: the worktree already carries the sparse folders workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app; git sparse-checkout add is the only sparse change the worker may make.",
+    "world_is": "At HEAD 277ad324045 both folders exist as trees. The worktree sparse list held .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref and org/standards only. After git sparse-checkout add infra/aws/ec2/opal-gateway/app workflows/atom_decomposition (rc=0) both folders are present and the list holds them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/tmp/wk-mcpindex-80 sparse-checkout list, before and after the add (read 2026-10-20T13:4xZ)",
+        "git -C C:/tmp/wk-mcpindex-80 ls-tree -d HEAD infra/aws/ec2/ and workflows/ (both folders present as trees)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The worker ran only the sparse change the face sanctions; no other tree change was made."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~80",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "id": "NFRA_MCPINDEX-Z-W80-S2",
+    "one_line": "The YCharts 403 body head is captured by the client and dropped by the tool answer, so the round 23 record cannot tell an entitlement refusal from a request-shape refusal for K5-04 and K5-06.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-w-4 step 1: decide whether a YCharts refusal is a code, data or battery cause from the evidence in the record.",
+    "world_is": "integrations/ycharts/client.py:109 stores error_body_head for every non-200 response. integrations/ycharts/integration.py:98-102 carries only http_status and absent_reason upstream_http_403 into the answer. results_all K5-04 and K5-06 keep only the text http_status 403 with points or series empty, so the vendor body that would name the refusal is not in the record.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/ycharts/client.py:109 (read 2026-10-20T13:4xZ)",
+        "infra/aws/ec2/opal-gateway/app/integrations/ycharts/integration.py:98-102 (read 2026-10-20T13:4xZ)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/results_all_20261019.json#K5-04 and #K5-06"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The cause for both YCharts tools is recorded as data (the session is live: K5-01, K5-02, K5-05, K5-07 return 200). Carrying error_body_head into the answer would let a later round confirm it."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~80",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "id": "NFRA_MCPINDEX-Z-W80-S3",
+    "one_line": "No project code produces the Microsoft 365 mail data behind inspect_email_attachment, so the data-cause owner for K6-09 is the carrier project NFRA_MCPINDEX and not a producer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-w-4 contract: a battery or data cause names the producing project code as owner.",
+    "world_is": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~76/source_sets_m365.json names the vendor microsoft for both list_email_attachments and inspect_email_attachment (Graph /me/messages). The worktree names no M365 producer project. The 242-byte gap between listed size 15441 and inspected bytes 15199 is between two reads of the same Graph resource, and tools.py:438-463 reports the measured content length, so the attribution is data with owner NFRA_MCPINDEX as carrier.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "source_sets_m365.json tool inspect_email_attachment (vendors microsoft; cite app/tools.py:432)",
+        "infra/aws/ec2/opal-gateway/app/tools.py:438-463 and graph.py:97 (raw bytes returned for non-JSON content)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer should name the producer of record for Microsoft-served data before the next attribution round."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~80",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "id": "NFRA_MCPINDEX-Z-W80-S4",
+    "one_line": "Row NFRA_MCPINDEX-Z-W22-S6 is reached by an ordinary request: portal_get_security_scan on an absent universe returns a raw AccessDenied for s3:ListBucket on opal-data-portal-v2 (K2-31, round 23), with no object removed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "NFRA_MCPINDEX-Z-W22-S6: the internal reader role has GetObject and no ListBucket, so an absent object reads AccessDenied; INERT because every key the catalog names exists, and it matters only when a portal object is removed.",
+    "world_is": "K2-31 asks for the absent universe k2-no-such-universe and receives AccessDenied for s3:ListBucket. portal_macro.py:54 and :149 map only NoSuchKey, 404 and NotFound to absent, so an absent universe is reached without any object removal. The grant decision is the same one Z-W22-S6 recorded.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/results_all_20261019.json#K2-31",
+        "infra/aws/ec2/opal-gateway/app/portal_macro.py:149 (read 2026-10-20T13:4xZ)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The MX-w-4 attribution for K2-31 is code (grant), owner 2.0.0_SA_COO~O. The hazard standing is the issuer's to re-grade."
+  }
+]
+```
+
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S1",
+  "one_line": "MX-w-5 premise: 32 of the 36 tool_member_b refusals read S3 sources that an existing catalog row already describes (same bucket and prefix, or a placeholder key template); only the 4 others are not described by a row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "refusals[] class tool_member_b (36 items): org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round23/evidence/COVERAGE_after_apply_20261019.json@277ad324045",
+      "rows matched on bucket and prefix (or key_template): infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@277ad324045 -- e.g. blackdiamond_live_unrealized (silver/unrealized/), opal_data_portal_v2_served_trending_latest (json/trending/latest.json), opal_data_mdpf_feeds_model_composition (key_template mdpf/feeds/model_composition/<firm>/, line 16387)",
+      "measured in worktree C:/tmp/wk-mcpindex-81 by .scratch/analyze2.py (scratch, not committed): the script left undescribed only the 23 harvest prefixes read by harvest_list and harvest_read and the 3 daily/<partner>/ sources of etfs_get_partner_ownership"
+    ]
+  },
+  "spec_asserts": "The round-23 coverage refusals (tool_member_b, 36 tools) each read data that no catalog row describes yet, so each needs a new catalog row or a (c) reason.",
+  "world_is": "32 of the 36 tools have every s3 source matched by an existing row (etfs_get_partner_ownership and mdpf_get_model_composition by a placeholder template). mdpf_get_security_classification and harvest_get_published_analysis read a store or an integration, and harvest_list and harvest_read browse caller-chosen prefixes. The refusal premise does not match the rows' own bucket and prefix.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S2",
+  "one_line": "harvest_list and harvest_read read 23 undescribed harvest prefixes, but an item holds one row: harvest_list takes harvest_amgt for amgt/ and the other 22 prefixes have no row in this coverage file",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/harvest_read.py:30-33 (SERVED_PREFIXES, 24 entries): infra/aws/ec2/opal-gateway/app/harvest_read.py@277ad324045",
+      "source set of harvest_list and harvest_read: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~74/source_sets_harvest.json@277ad324045",
+      "harvest_packs (prefix packs/) is the only served prefix a row describes: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@277ad324045"
+    ]
+  },
+  "spec_asserts": "Each tool's undescribed source gets one row for that object family; two tools reading one undescribed object share that row (the first in list order takes row, the other takes c).",
+  "world_is": "harvest_list and harvest_read each read the 24 served prefixes; 23 are described by no row. The shape allows one row per item, so the cell gives harvest_list one row (amgt/) and harvest_read c naming it. The 22 other families stay undescribed in this file.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S3",
+  "one_line": "MX-w-5 says a source is described when a row has the same bucket and prefix, but two catalog rows describe their sources only through a placeholder template; I read those 5 sources as described",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal_data_etfs_gold_daily_partner_ownership: prefix daily/, key_template daily/{partner}/{YYYY-MM-DD}.json (silver_datasets, infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@277ad324045 line 14826 onward); read by etfs_get_partner_ownership",
+      "opal_data_mdpf_feeds_model_composition: prefix and key_template mdpf/feeds/model_composition/<firm>/ (DATA_CATALOG.yaml@277ad324045 lines 16310-16387); read by mdpf_get_model_composition",
+      "the sources: app/etfs_ownership.py:287 (daily/49financial/, daily/cottonwood/, daily/inflection/) and app/portal_served.py:248 (mdpf/feeds/model_composition/49financial/, .../inflection/)"
+    ]
+  },
+  "spec_asserts": "A source is DESCRIBED when a catalog row has the same bucket and the same prefix (or, for a portal object, names the same key).",
+  "world_is": "No row prefix equals a concrete source prefix such as daily/49financial/ or mdpf/feeds/model_composition/49financial/. The two tools take c and name their rows as the link, a judgment the issuer should confirm at the drain.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S4",
+  "one_line": "w5_check.py AC2 plants the mutant 'two items with one entity' only when a second row item exists and plants no row mutant when none exists; the honest coverage has one row item, so AC2 cannot run its full mutant set as written",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round24/checks/w5_check.py@277ad324045 (mutants_ac2: the 'two items with one entity' mutant is added under `if others:`, and all row mutants under `if r is not None`)",
+      "run in worktree C:/tmp/wk-mcpindex-81 at the coverage file written by 0.9.0_WK_NFRA_MCPINDEX~81: info rows=1 c=35; 8 ok, 0 failed; RESULT: PASS; the mutant line for 'two items with one entity' is absent"
+    ]
+  },
+  "spec_asserts": "AC2 expect: the planted mutants (an entity already in the catalog, a bucket no source names, a vendor outside the vocabulary, two items with one entity, a three-word reason, a cite to a missing file, a cite past the end of the file) are each refused -- RESULT: PASS -- exit=0.",
+  "world_is": "AC2 exits 0 with six of the seven named mutants planted. The worker did not add a second row item to reach the seventh, since no source supports a second row. AC2 is refused as written, with this measurement.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~81",
+  "surfaced_at": "2026-10-20T13:42:04Z",
+  "id": "NFRA_MCPINDEX-Z-W81-S5",
+  "one_line": "The MX-w-5 worktree was cut without the two sparse folders the face names (infra/aws/ec2/opal-gateway/app and workflows/atom_decomposition); added with git sparse-checkout add",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-81 before the add (HEAD 277ad324045): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards",
+      "the add was the one sparse change the face permits: git sparse-checkout add infra/aws/ec2/opal-gateway/app, then add workflows/atom_decomposition"
+    ]
+  },
+  "spec_asserts": "The worktree carries the sparse folders workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app.",
+  "world_is": "Neither folder was in the sparse set; DATA_CATALOG.yaml was absent until the add. After the add both folders are present.",
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```

@@ -33,11 +33,12 @@ DO, in these files and nothing else:
    - `test_oged1_ac02`: a NON-admin WITH a deny record gets 403 on class CONSENT and the record was read; the same non-admin against an unreadable store gets 503; a lookalike of the admin (`xandrew@opalinvest.com`) with a record gets 403.
    - `test_oged1_ac03`: `token_broker.redeem_consent` with `_exchange_code`, `verify_upstream_id_token`, `oidc_nonce`, `_consent_scope_list`, `_write_cache`, `_principal_owner` and `_email_owner` stubbed: for the admin with a deny record it RETURNS the principal; for the non-admin with a record it raises `token_broker.EmailDenied` with `status == 403`.
    - `test_oged1_ac04`: `inspect.getsource(server)` (import `app.server` as `tests/test_og_en14.py` does) shows the legacy consent branch passes `route_class=data_entitlement.CONSENT` to `_email_denied`, and `asyncio.run(server._email_denied(ADMIN))` with no class is still 403 for the admin with a record.
-   Do not edit `tests/test_og_en14.py`, `tests/test_email_deny.py` or any other test.
+   Do not edit `tests/test_og_en14.py`, `tests/test_email_deny.py` or any test other than the two named in item 5.
+5. (AMENDED 2026-10-20 ~14:2xZ, ruling on worker row Z-W175-S1) Two EXISTING tests stub the function you changed with a one-argument lambda, which now raises `TypeError` at the new `route_class=` call: `tests/test_scoped_consent_r253.py` (about line 117) and `tests/test_login_admit_r24.py` (about line 162) both read `monkeypatch.setattr(tb.data_entitlement, "email_denial", lambda email: None)` (r24 spells it `h.mp.setattr(...)`). In each, change ONLY that lambda to `lambda email, route_class=None: None`. No other line of either file changes.
 
 ## 2. BOUNDS
 
-- Write only the four files above, `W/` and, if a row is needed, the channel. No other product file, no other test, no release, no deploy, no AWS call.
+- Write only the files above (the four of items 1 to 4 and the two stubs of item 5), `W/` and, if a row is needed, the channel. No other product file, no other test, no release, no deploy, no AWS call.
 - Never: push, `git stash`, rebase, `checkout --` or `clean`.
 - REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
 
@@ -48,6 +49,8 @@ infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/app/server.py
 infra/aws/ec2/opal-gateway/app/token_broker.py
 infra/aws/ec2/opal-gateway/tests/test_og_ed1.py
+infra/aws/ec2/opal-gateway/tests/test_scoped_consent_r253.py
+infra/aws/ec2/opal-gateway/tests/test_login_admit_r24.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -57,11 +60,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-ed-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r47/checks/ed1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)class consent: not denied, store reads 0: ok.*non-admin with a deny record, class consent: 403 and the record was read: ok.*unreadable store, class consent: 503: ok.*NO class keeps today's verdict: 403: ok.*lookalike of the admin, class consent: 403: ok.*redeem_consent for the master admin with a deny record returns: ok.*redeem_consent for the non-admin with a deny record denied: ok.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-ed-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r47/checks/ed1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)new file tests/test_og_ed1\.py: (?:[4-9]|[1-9]\d+) passed, 0 failed.*neighbours \(4\): [1-9]\d* passed, failed names \[\].*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ed-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r47/checks/ed1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)new file tests/test_og_ed1\.py: (?:[4-9]|[1-9]\d+) passed, 0 failed.*neighbours \(5\): [1-9]\d* passed, failed names \[\].*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-ed-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r47/checks/ed1.AC3.sh; echo "exit=$?"</invocation><expect>(?s)app/data_entitlement\.py against the pin:.*: ok.*app/server\.py against the pin:.*: ok.*app/token_broker\.py against the pin:.*: ok.*tests/test_og_ed1\.py: (?:[4-9]|[1-9]\d+) test functions.*: ok.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
-- `AC1`: the behaviour, graded by a script of the issuer's, independent of your tests. `AC2`: your tests and the four neighbours pass (the one carried red, `test_ogz1_ac08`, is allowed). `AC3` (a bound): the edit is the exemption and its two call sites, against the pinned blobs.
+- `AC1`: the behaviour, graded by a script of the issuer's, independent of your tests. `AC2`: your tests and the five neighbours pass (the one carried red, `test_ogz1_ac08`, is allowed). `AC3` (a bound): the edit is the exemption and its two call sites, against the pinned blobs.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -74,6 +77,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ed-1.round-47-the-master-admin-
 - Widening, plainly: a master admin whose email has an `email_deny` record can complete the legacy `/callback` consent sign-in (before: 403); no other email's verdict changes; no tool, grant or scope changes.
 - `<risk>WORLD</risk>` is the gateway-path floor. Pre-cut: `AC1` base FAIL as expected (admin denied, reads 2; `redeem_consent` denies the admin); `AC2` base FAIL as expected (new test file absent); `AC3` base FAIL as expected (0 lines changed, no test file). Arm: the three product edits applied in the shared tree read `AC1` PASS and `AC3` PASS on the three bounds (the test-file count read 0, as expected), then were reverted by edit. The four neighbours read 32 passed and 1 failed (`test_ogz1_ac08`, the carried red) at the base.
 - Pins: `data_entitlement.py` blob `aff1cf560f`, `server.py` blob `9d740ed043`, `token_broker.py` blob `e5df633a37`. `server.py` and `token_broker.py` equal the live ref (`13917ef993`) at the issuance, so `OG-rl-18`'s take list gains them whole.
+- AMENDED 2026-10-20 ~14:2xZ (2.0.0_SA_COO~O, ruling on worker row NFRA_OPLGTW-Z-W175-S1): the worker found that two existing tests stub `email_denial` with a one-argument lambda (my dry-run of the neighbours at the base ran four files and missed `test_login_admit_r24.py`, which also stubs it). Item 5 and two `<paths>` entries added; `ed1.AC2` gains `tests/test_login_admit_r24.py` as a fifth neighbour (7 passed at the base). Gate limb: none graded (an existing tree order that declares no placeholders).
 
 <status>pending</status>
 <round>47</round>
