@@ -27802,3 +27802,140 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-W318-S1 -- the order's cut anchor grep for TO-AR-y-440 moves onto the worker's own commits once they name the token
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W318-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~318",
+    "surfaced_at": "2026-10-20T04:47:02Z",
+    "one_line": "The order's anchor git log --format=%H --grep='TO-AR-y-440' -1 names the newest commit carrying the token; the cut commit f83176c2a61 is the only such commit at the cut, but the worker's proof and flip commits name the order's to_id, which carries the token, so the anchor would move onto a worker commit and the changed-since diff would be empty. The bound check anchors on the cut's message phrase instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order step (4): check_confirm_bound.py lists the files changed since the cut commit, the cut anchored by git log --format=%H --grep='TO-AR-y-440' -1.",
+    "world_is": "At HEAD f83176c2a61 (the cut) both the order's grep and a grep for the phrase 'to worker slot 318' return f83176c2a61. The worker's product commit 752e87d46b7 does not carry the token TO-AR-y-440 (its subject uses AR-y-440), so the literal anchor still holds after it. The proof-instance and flip commits name the order's to_id, which carries the token, so the literal anchor would move onto a worker commit once they land. The script uses the phrase 'to worker slot 318' with --fixed-strings.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --format=%H --grep='TO-AR-y-440' -1 at /c/dev/wk-irpt-anlreq-318 before the worker's commits returns f83176c2a61b7dd8180ec21c4747df7c4f46bb31",
+        "git log --format=%H --fixed-strings --grep='to worker slot 318' -1 at the same worktree returns f83176c2a61b7dd8180ec21c4747df7c4f46bb31",
+        "product commit 752e87d46b7 subject: feat(IRPT_ANLREQ AR-y-440): confirm_ticket stamps an analysis_request filed through /tickets by its creator"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W318-S2 -- the order's bound rule 'every changed path under ycharts/generate/' cannot hold literally, because the worker must commit org/ record paths in the same change set
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W318-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~318",
+    "surfaced_at": "2026-10-20T04:47:02Z",
+    "one_line": "Acceptance AC3 and cell step (4) require every changed path since the cut to be under infra/aws/lambda/investor-reporting/ycharts/generate/, but the same order requires the worker to commit its deliverables folder, its order status line and its surprise rows under org/; the check counts only non-org/ paths as product and applies the prefix to those.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AC3: python -I .../check_confirm_bound.py prints CONFIRM-BOUND-OK files=[2-6] only when every changed path is under infra/aws/lambda/investor-reporting/ycharts/generate/ and n is 2 to 6.",
+    "world_is": "The cut-to-HEAD diff carries the two product files and, once committed, the record paths under org/ (order status, proof instance, surprise rows, check script). A literal all-paths rule returns BAD on the record paths alone. The script excludes org/ from the product count and grades the two product files: n=2 is in range and both lie under the prefix.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "order <paths> block lists org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~318/, the order file and the INVESTIGATION_v1.md file alongside the two product paths",
+        "check_confirm_bound.py at /c/dev/wk-irpt-anlreq-318/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~318/ prints CONFIRM-BOUND-BAD (files=0) before the product commit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W318-S3 -- the three named existing ticket test files pin neither confirm_ticket nor the source-portal rule, so no existing test was updated
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W318-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~318",
+    "surfaced_at": "2026-10-20T04:47:02Z",
+    "one_line": "The cell's conditional instruction to update a test that pins source portal -> False finds no such test: test_ticket_stamp.py, test_ticket_binding.py and test_producer_for_ticket.py never import ticket_confirmation, and their stamp tests inject confirm as a Mock, so their 13-pass baseline does not exercise the confirm rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order step (1): the three existing files pin the current confirm and stamp; a test that pins 'source portal -> False' is updated to pin the new rule, keeping its intent, weakening nothing.",
+    "world_is": "Grep of the worktree's investor-reporting tree for make_confirm_ticket or ticket_confirmation returns the module, reports/generate_installed.py and the submission-service wiring, with no test file. Baseline before the change: 13 passed, 10 subtests passed (rc 0). After the change: the same 13 and 10 pass. The new file test_ticket_confirmation_create_path.py is the only test that pins the confirm rule.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -n make_confirm_ticket|ticket_confirmation|confirm_ticket over /c/dev/wk-irpt-anlreq-318/infra/aws/lambda/investor-reporting returns no test file except test_ticket_stamp.py line 158 (confirm_ticket=confirm, a Mock argument)",
+        "cd infra/aws/lambda/investor-reporting && python -m pytest -q --color=no -p no:cacheprovider ycharts/generate/tests/test_ticket_stamp.py ycharts/generate/tests/test_ticket_binding.py ycharts/generate/tests/test_producer_for_ticket.py printed 13 passed, 10 subtests passed rc=0 before the change"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W318-S4 -- the module docstring stated the old creation-path rule, and the worker rewrote that paragraph although the cell said change nothing else in the file
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W318-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~318",
+    "surfaced_at": "2026-10-20T04:47:02Z",
+    "one_line": "The module docstring said confirm is True only for source starting dashboard_form: with requester.email equal to the principal, which the new rule makes false; the worker rewrote that paragraph to state both cases, a change outside the function body that the cell's change nothing else clause did not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order cell, The change: change nothing else in the file and no other product file.",
+    "world_is": "Commit 752e87d46b7 changes the docstring paragraph (lines 3-7) and the confirm branch. The function signature, the TICKET_ID shape check, the single GetItem, the exception handling and the dashboard_form branch semantics are unchanged. A reader of the pre-change docstring would be misled about the rule, so the rewrite is disclosed here rather than reverted.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 752e87d46b7 -- infra/aws/lambda/investor-reporting/ycharts/generate/ticket_confirmation.py (2 files changed, 103 insertions, 9 deletions across the commit)",
+        "pre-change docstring lines 3-7 at f83176c2a61 read: confirm is True only when ... source starts with dashboard_form: (the only creation path whose requester email is server-derived) ..."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W318-S5 -- the commit gates reported the client-data hash list absent and the risk-reflex danger map stale, so this commit was not checked by those two gates
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W318-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~318",
+    "surfaced_at": "2026-10-20T04:47:02Z",
+    "one_line": "safe-commit of 752e87d46b7 printed WARN client-data-check: the hashed account-id list is absent on this device, so the commit was not checked for client account ids; the pre-commit risk reflex reported its danger map 104.8h old, STALE, with ANSWER STATE PARTIAL_OR_BLIND and 0 of 2 files scanned; the naming gate reported the function-map folder missing. The change is two synthetic-only files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order cell, step (5): commit the product files through safe-commit.sh; the commit gate passes the change clean.",
+    "world_is": "The Python gate (commit-gate.sh, ruff, strict-utf8) passed for both files and the surprise-row and task-order gates passed. The client-data check, the risk reflex and the naming gate did not clear the diff; their outputs are verbatim in the safe-commit run for 752e87d46b7. The synthetic fixtures carry no account ids; that is the worker's reading, not a gate verdict.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output at 752e87d46b7: WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt (this commit was NOT checked for client account ids)",
+        "safe-commit output at 752e87d46b7: [risk-reflex] danger map: 104.8h old !! STALE; ANSWER STATE: PARTIAL_OR_BLIND; WITHIN BUDGET: scanned 0 of 2 file(s)",
+        "safe-commit output at 752e87d46b7: [naming-gate] NAMING ERROR function-map folder missing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
