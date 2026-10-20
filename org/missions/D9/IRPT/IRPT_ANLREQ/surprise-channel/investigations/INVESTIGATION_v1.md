@@ -27676,3 +27676,52 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W316-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~316",
+  "surfaced_at": "2026-10-20T03:23:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The offline replica of the run 5B request composition is admitted by CompositionAdmission.validate at HEAD, both with three KEPT_BY_HISTORY rows and with the fourth UNRESOLVED/KEPT_AS_TYPED row, so the inferred cause of the CLOSED_COMPOSITION_REQUIRED refusal (the unresolved row) is not reproduced by this code path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~316/repro_composition.py run at HEAD b8e0e961034: REPRO-A step=none class=none; REPRO-B step=none class=none detail=-; REPRO-C step=2 class=ValidationError (two runs identical)",
+      "tamper probe (.scratch/probe_step5.py, not committed): analysis_dollars, history.rows and the UNRESOLVED resolution each refuse at step 5, so step 5 reads the kept and unresolved rows",
+      "5B receipt org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e5b/A_E2E5B.txt (commit bf400c4eadd), NOTE P4: the refusal read as the unresolved row, flagged there as an inference and not a measurement",
+      "git diff --quiet of the five composition files between pin C 2a3aaa2815 and HEAD: rc 0 (identical)"
+    ]
+  },
+  "spec_asserts": "The 5B receipt NOTE P4 attributes the CLOSED_COMPOSITION_REQUIRED refusal to the kept-as-typed unresolved row leaving the composition not closed, and TO-AR-y-436 treats the three-row case as the one that can pass run 5C once the refusing step is known.",
+  "world_is": "At HEAD the composition contract admits both kept-row compositions offline (step=none for A and B). Step 5 is live. The live cause of the refusal is not reproduced here and stays unmeasured: the resident journal line COMPOSITION-REFUSED step=<n> was never matched to the request."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W316-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~316",
+  "surfaced_at": "2026-10-20T03:23:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The product's own accepted-composition test world (intake/tests/test_retained_uploads.py, used by ycharts/generate/tests/test_composition_refusal_cause.py) is reachable from a plain script only through a pytest-internal call, FixtureFunctionDefinition._get_wrapped_function.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~316/repro_composition.py baseline() calls test_retention.world._get_wrapped_function() and retained.world._get_wrapped_function(raw) (pytest 9.1.1 in this interpreter)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_retained_uploads.py:60-79 and :147-169 (the world fixture and the submission helper)"
+    ]
+  },
+  "spec_asserts": "Acceptance builds a valid request composition from the product's own functions and fixtures, without a hand-written document (TO-AR-y-436 WORKER FACE, what to do step 1).",
+  "world_is": "The only path to an accepted composition is the pytest fixture chain. No public, non-pytest builder for the accepted composition was found in the repository, so a plain script depends on a pytest internal."
+}
+```
