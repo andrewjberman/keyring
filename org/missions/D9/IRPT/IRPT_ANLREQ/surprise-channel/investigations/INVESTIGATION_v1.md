@@ -30554,3 +30554,52 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-S238 -- eighteen blocking or armed rows dismissed on measured state (run 7d PASS)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S238",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-20T22:20:00Z",
+  "one_line": "Eighteen BLOCKING or ARMED rows of today's work are dismissed on measured state: the defects they named are fixed on the trunk and, for the three live ones (S230, S231, S233) and W345-S1, proven by run 7d (RUN-DONE PASS, both report PDFs opened from a real request filed through the PROD page).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W326-S2",
+    "IRPT_ANLREQ-D2-W328-S1",
+    "IRPT_ANLREQ-D2-W328-S2",
+    "IRPT_ANLREQ-D2-W340-S1",
+    "IRPT_ANLREQ-D2-W341-S1",
+    "IRPT_ANLREQ-D2-W341-S2",
+    "IRPT_ANLREQ-D2-W341-S4",
+    "IRPT_ANLREQ-D2-W341-S9",
+    "IRPT_ANLREQ-D2-W342-S1",
+    "IRPT_ANLREQ-D2-W342-S2",
+    "IRPT_ANLREQ-D2-W342-S6",
+    "IRPT_ANLREQ-D2-W343-S1",
+    "IRPT_ANLREQ-D2-W343-S2",
+    "IRPT_ANLREQ-D2-W345-S1",
+    "IRPT_ANLREQ-D2-W348-S1",
+    "IRPT_ANLREQ-D2-S230",
+    "IRPT_ANLREQ-D2-S231",
+    "IRPT_ANLREQ-D2-S233"
+  ],
+  "spec_asserts": "Each row names a defect or a bound that blocked a cell or a run: S230 the page dropped a blank Advisor and the ticket service refused the create; S231 irpt-status-role was denied s3:GetObjectVersion on the retained Opal report PDF; S233 the commentary route compared the PDF's sha with the draft's; W345-S1 the Overview route refused every real Opal report; the W3xx rows are worker findings on the issuer's own orders (a wrong file, a wrong anchor, a wrong control, a missing KMS entry) or on code the issuer had ruled on.",
+  "world_is": "MEASURED 2026-10-20 ~22:2xZ by this seat from the receipts and the repository: run 7d (IB2 msg 11546, A_E2E7D.txt, RUN-DONE PASS) filed ticket TCK-20261020-7d5b0bf1 through the PROD page with the Advisor pre-filled (S230), the Overview route /pdf answered a 231470-byte PDF (re-read by this seat: %PDF, sha256 22a754c7965a, 39 pages) and the commentary route a 45182-byte PDF (W345-S1, S233), with no AccessDenied (S231: the status grant is live, 21 resources, ledger irpt-status-opal-report-read-20261020 CLOSED; the code release r37 is live at CodeSha256 B4R0dZqB..., ledger irpt-status-r37-20261020 CLOSED). W328-S1/S2 and W340-S1 and W342-S1/S2/S6 and W341-S1/S2/S4/S9 and W343-S1/S2 and W348-S1 were each ruled by an amendment of the order they concern (task-orders AR-y-463, 466, 467, 468, 469, 474) and the corrected work is drained on the trunk with its criteria re-run by this seat. W326-S2 (the swap classifier model and web search) was ruled by the CTO (msg 11455, kimi-k3, no web search, flag below 0.80); the swap-leg build cells are not cut yet. NOT dismissed here: the residue rows S229, S232, S234, S237 (synthetic objects the CloudOps principal cannot delete; they close when the one delete pass runs), W343-S9 and the rows of workers 330, 331 and 333 (G2's).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7d/A_E2E7D.txt",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r37/A_AFTER_R37.txt",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_statusgrant/A_AFTER_STATUSGRANT.txt"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Each defect is fixed on the trunk, and the ones that were live defects are proven fixed by run 7d on the PROD page; the rows that were findings on the issuer's own orders are taken by the amendments. The swap-leg question of W326-S2 was decided by the CTO; building it is a later cell, not an open hazard."
+}
+]
+```
