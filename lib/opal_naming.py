@@ -2729,6 +2729,27 @@ def name(system, scope, function, kind, qualifier=None, fifo=False):
     return "-".join([system] + body + words + [kind]) + (".fifo" if fifo else "")
 
 
+def secret_name(system, scope, purpose):
+    """{system}/{scope}/{purpose} (NAMING_SCHEMA.json secret.grammar): the builder for a SECRET, which takes the
+    slash grammar of Section S, not name()'s dash grammar. Takes the scope's LONG form and writes its SHORT form;
+    scope None is a shared secret and carries no scope slot (S3). purpose is one or more lowercase kebab segments
+    joined by / (S4), its last word the credential's kind (credentials, token, key, password, certificate)."""
+    reg, schema, v = _registry(), _schema(), _vocab()
+    if system != "opal" and system not in v.v1:
+        raise ValueError("system %r is not a systems.json key (nor the reserved opal)" % (system,))
+    parts = [system]
+    if scope is not None:
+        parts.append(_long_scope(reg, scope, NAME_SCOPE_CLASSES)["short"])
+    if not isinstance(purpose, str) or not purpose:
+        raise ValueError("purpose must be a non-empty string: %r" % (purpose,))
+    segs = purpose.split("/")
+    for seg in segs:
+        for t in _kebab("purpose", seg):
+            if t in v.scope or t == "bd" or t in schema["refused_tokens"]:
+                raise ValueError("%r in the purpose is a scope or refused token; pass the scope as scope" % t)
+    return "/".join(parts + segs)
+
+
 # The shapes the vectors are built over: (system, function, qualifier, kind), each crossed with every
 # FIRM, GLOBAL and MASTER scope row and with no scope.
 _VECTOR_SHAPES = (("mdpf", "publisher", None, "role"), ("blackdiamond", "session", "gold", "lambda"),
