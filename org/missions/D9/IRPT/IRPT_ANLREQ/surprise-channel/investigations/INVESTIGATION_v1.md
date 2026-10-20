@@ -27480,3 +27480,32 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W310-S3 -- the firm-list hold of CTO item 4 applies only while no firm is chosen, because the AR-y-416 test (7) pins that a chosen firm is never held for the list's readiness
+
+```json
+[
+{
+    "id": "IRPT_ANLREQ-D2-W310-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~310",
+    "surfaced_at": "2026-10-20T01:42:55Z",
+    "one_line": "CTO item 4 (Loading the firm list... / the Try again words for an internal filer while firms is null) and the AR-y-416 test (7) (a chosen firm is never held for the list's readiness) meet in submitHeldReason; the worker applied the firm-list words only while no firm is chosen, and left test (7) unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-429 item 4 (CTO msg 11159): for an internal filer while firms is null the held line says Loading the firm list... (or the failed words); the existing pin analysis-form-derived.test.tsx test (7) asserts that a list still loading, or a failed read, holds nothing once a firm is chosen. The order says to keep each pinned intent and weaken no assertion.",
+    "world_is": "The page never reaches the conflicting state: filingFirm returns '' while firms is null, so the form's firm is always empty then. The two statements meet only in the pure function. The worker scoped the firm-list words to firm '' in submitHeldReason (portal commit 96d4e00a, src/pages/TicketCenter/analysisRequest.ts), so a chosen firm is never held for readiness, and test (7) at 8942a0d70ed3 (src/pages/TicketCenter/__tests__/analysis-form-derived.test.tsx lines 235-237) stands unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/TicketCenter/__tests__/analysis-form-derived.test.tsx@8942a0d70ed3 lines 235-237 (test (7) assertions on firms null with firm fir_alpha)",
+        "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx@8942a0d70ed3 filingFirm: firms null returns '' (line 103)",
+        "portal/src/pages/TicketCenter/analysisRequest.ts@96d4e00a submitHeldReason internal branch: the firm-list words sit under firm === ''"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reported only. No existing row was edited. Whether the pin or the hold is the intent is for the CTO or the CVO to rule; the commit's test suite is green on the scoped reading (272 pass, 0 fail)."
+}
+]
+```
