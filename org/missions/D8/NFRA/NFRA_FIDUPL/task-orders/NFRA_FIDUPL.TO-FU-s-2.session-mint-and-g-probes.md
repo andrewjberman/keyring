@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -106,6 +106,13 @@ Add six tests to the EXISTING `tests/test_login_trace.py`: `test_launch_is_heade
 
 REPAIR 7 merged at b3550a4d0b WITHOUT the browser channel, because the Andrew-direct amendment (real Google Chrome, CTO ruling @c618ca8c8c) reached the order after the first build began. Do only this remainder, as REPAIR 7's text above already states it (read its first item again): (a) `_launch` passes `channel="chrome"` to `launch_persistent_context`, still headful; (b) `_installed_version` launches the same channel for the version probe, so the user agent matches the installed Chrome; (c) `box/bootstrap.sh`, `amzn` branch, also installs the Google Chrome stable RPM by dnf from `https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm` (a failure is a WARN, as for the other packages); (d) `test_launch_is_headed_under_a_started_xvfb` also asserts the `channel` keyword is `"chrome"` and the version-probe launch uses it too. No test is added or renamed: FU2-AC4 stays at twenty-five. Fakes only; no live call. Refresh the proof instance and flip to complete only when the four criteria and `fu5b` PASS.
 
+### REPAIR 9 (issuer, 2026-10-20 ~17:05Z) -- the first live launch on the box closed before any page
+
+The issuer ran `--trace-login` once on the box with the REPAIR 8 code (SSM command b4e13269-5001-47d2-9981-2a5f981cf284): `TargetClosedError`, no page, no Fidelity traffic. Running `signin._launch` on the box and printing the launch error (a diagnostic with no sign-in) gave: Playwright's banner "Looks like you launched a headed browser without having a XServer running", with `DISPLAY` unset in the shell. The code starts a child Xvfb but waits a fixed `XVFB_WAIT_S` of 1.0 second and then launches; on this box the X socket is evidently not there yet. Two changes in `signin.py`, no other file:
+1. **Wait for the X socket, not a clock.** `_ensure_display` after starting the child Xvfb polls for the display's socket file `<X_SOCKET_DIR>/X<n>` (n from the display string, for example `:99` gives `X99`) every 0.1 s, for up to `XVFB_READY_S` = 15 seconds, and returns only when it exists. If the child exits first, or the socket never appears, it terminates the child and raises `DisplayError` naming only the display and the seconds waited. `X_SOCKET_DIR = "/tmp/.X11-unix"` is a module constant so tests can point it at a tmp dir. Keep `XVFB_WAIT_S` out of the code (remove it and its use in the existing test that monkeypatches it, `test_login_trace.py` near line 862, replacing that line with the socket directory patch).
+2. **Puller's Chrome runs with extensions disabled** (CTO ruling 8724): add `--disable-extensions` to `LAUNCH_ARGS`.
+Add two tests to the EXISTING `tests/test_login_trace.py`: `test_display_waits_for_the_x_socket` (a fake child whose socket file appears after a few polls: the call returns only then; and a variant where it never appears: `DisplayError`, child terminated), `test_launch_args_disable_extensions`. FU2-AC4 now needs twenty-seven; fu2a, fu2b, fu2c and fu5b must still pass. Fakes only: no AWS, no live call, no sign-in.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -118,7 +125,7 @@ REPAIR 7 merged at b3550a4d0b WITHOUT the browser channel, because the Andrew-di
 `FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the twenty-five login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+`FU2-AC4` -- the twenty-seven login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 
