@@ -73,3 +73,23 @@
     must admit those two pointers as null.
   - **A replace attach** (`prior_attached_at`) must supersede the record, not write a second one silently.
   - The audit-record cell is graded on both cases.
+
+## Re-review at v0.28 @ea3014a892 (2026-10-20 ~18:3xZ): SIGNED
+
+- Half reviewed: ratified-text, half_hash `e57510bcab0b820530b27ce2f4be3e8cce6b4cafce2c57a796caa6f625ace562`.
+- **The change:** C-AUDIT-RECORD's address moves from "each firm's bucket" to `opal-data-irpt/irpt/<firm>/platinum/analysis_audit/`: the
+  IRPT product bucket, with the firm in the key prefix.
+- **Andrew's words**, read verbatim in
+  `org/tier1_exec/4.0.0_SA_CRO~TCKT/deliverables/ANDREW_DIRECT_20261020_15xxZ_TCKT_SYNTHESIS_ANSWERS.md` @f2581e90b9, line 25: "I believe we
+  just have an analysis-report folder in each firm's bucket that these get dropped off within, using lgic naming standards of course".
+  - The location is hedged ("I believe"), and it defers to LGIC.
+  - LGIC's `reporting_destination` homes every IRPT retained family in the product bucket under the firm prefix. Following the builder is
+    conformance (rule 30), not a departure.
+  - The shape (shared bucket, key prefix, firm-bound principal) is the one CLAUDE.md admits for cross-firm separation.
+- **The fence.** `infra/aws/terraform/investor-reporting/ycharts/resident.tf` 228-241 states that the firm buckets deny any principal
+  without the firm's scope slot (`DenyForeignFirmPrincipals`). Writing there would need a per-firm principal, a never-widen-class act
+  (there is a precedent: YCDGEN's research writes).
+- **SIGNED.**
+- **Recommendation, not a condition: tell Andrew now, not at close-out.** His word "changes it". If he wants the firm buckets after
+  records are written, the remedy is a migration plus a per-firm principal. One line to him before the audit cells ship costs less than
+  that.

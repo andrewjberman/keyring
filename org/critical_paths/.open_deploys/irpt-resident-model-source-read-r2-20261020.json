@@ -1,0 +1,48 @@
+{
+  "slug": "irpt-resident-model-source-read-r2-20261020",
+  "title": "IRPT_ANLREQ TO-APPLY-MODELGRANT v2: one-statement IAM grant (s3:GetObject on two exact keys of opal-data-portal-v2) on aws_iam_role_policy.runner_resident, re-pin 680818fdb3e",
+  "author": "0.7.0_AE_CloudOps~IB2",
+  "status": "OPEN",
+  "opened_at": "2026-10-20T18:40:59.897291+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261020T1840Z_irpt-resident-model-source-read-r2-20261020_deploy_completion.md",
+  "legs": [
+    {
+      "id": "R0",
+      "kind": "verify",
+      "target": "before-reads: live policy Sid list and sha256, four baseline simulations",
+      "proof_required": "R0 baseline implicitDeny on all four",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "C",
+      "kind": "verify",
+      "target": "scoped plan at the re-pin reads 0 to add 1 to change 0 to destroy with exactly one added statement",
+      "proof_required": "plan output and diff read",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "A",
+      "kind": "activation",
+      "target": "safe-apply of the saved plan",
+      "proof_required": "Apply complete 0 added 1 changed 0 destroyed",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "V",
+      "kind": "verify",
+      "target": "after-reads G1 to G4: byte-equal other statements, simulation, replan No changes, host-role reads of both objects",
+      "proof_required": "G1 G2 G3 G4 lines",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261020T184059Z OPENED by 0.7.0_AE_CloudOps~IB2 with 4 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}

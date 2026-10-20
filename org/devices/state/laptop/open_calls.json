@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-20T14:56:45Z",
+ "written_at": "2026-10-20T16:45:36Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -2129,7 +2129,7 @@
    "source": "org/missions/D8/NFRA/NFRA_SCHWABBF/prd/NFRA_SCHWABBF_PRD.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-20T14:56:45Z",
    "kind": "fork",
    "context": "Today schwab/<master>/{_ops,bronze,meta,silver}; C-KEYFORM moves bronze to schwab/<firm>/ on Andrew's ~14:3xZ word. Bronze alone leaves the vendor in two scopes (CVO v0.4 item 4).",
@@ -2150,7 +2150,21 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-20T16:45:36Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_163xZ_SCHWABBF_0824_OUT_FOCUS_COTTONWOOD_AND_0840.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-20T15:03:12Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": "Andrew's call: served-output scope of Schwab silver/meta/_ops (a move of served data across every silver reader); asked of him 2026-10-20 ~15:0xZ"
+   }
   }
  ]
 }

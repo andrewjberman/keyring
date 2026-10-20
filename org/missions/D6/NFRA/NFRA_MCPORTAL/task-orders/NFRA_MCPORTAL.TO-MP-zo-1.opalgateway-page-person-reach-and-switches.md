@@ -91,7 +91,7 @@ run `proof-of-spec-check.py` on it as the worker rules say, and report once, wit
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** cut at the OGW round-1 issuance (decomposition v20) from PRD v0.10 (text 9b4bbcfbb9, ADMITTED) and the CTO's cut instruction (file ferry 2026-10-20 17:50Z, broker down). Thread first: subtract and restore for one person. The served half (the mount `OG-mp-1`, the writer deploy, the bundle release, the driven FWD-29 proof) is NOT in this order. FWD-26 add and the WIDENING label wait on NFRA_OPLGTW round 48.
-Check dry-run at the base: see the issuance commit.
+zo1.AC1 base: FAIL as expected (`bun test src` 79 pass, 0 fail; named tests present in sources 0 of 7; min 86), run in the provisioned slot-42 worktree at mcportal 21ad404, 2026-10-20 ~18:3xZ.
 
 <status>pending</status>
 <round>1</round>

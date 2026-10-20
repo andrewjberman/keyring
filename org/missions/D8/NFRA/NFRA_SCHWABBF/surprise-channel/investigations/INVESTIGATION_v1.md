@@ -629,6 +629,439 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-p1 FIRST ACT: if the worktree does not carry the paths the task order names, that is a BLOCKING row and the worker stops; the order's <paths> block names infra/aws/ec2/alongside-schwab-si2/sdd-daily-pull.ps1 as the write grant.",
     "world_is": "The worktree carries the copy's tracked-parent folder only as an excluded cone path, so the grant path is not addressable to git here. The copy (698 lines, two named changes at lines 1-2 and 37) and the test pass on disk (AC1 5 passed rc=0; AC2 COPY-DIFF-OK changed_non_comment_lines=1 rc=0) but are NOT committed. The worker did not change the sparse cone, did not git add, and did not reconstruct the tree; the order's flip to complete is withheld.",
     "notes": "The cone change or a re-cut of the worktree is the COO's or the lane owner's act; a worker does not widen its own checkout. The on-disk copy is unchanged and is the input to the commit once the path is addressable."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W11-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~11",
+    "surfaced_at": "2026-10-20T16:20:11Z",
+    "one_line": "The worktree's sparse-checkout cone (11 entries, cut before the order's new folder existed) omits infra/aws/terraform/alongside-schwab-ec2/, so git refuses to index the granted new root and safe-commit refuses the commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in C:/Users/AndrewBerman/Desktop/wt-al-11 at base ae487c676890b37699a259e2f85c83871844c49c: .tools, data/canonical/schwab/tests, infra/aws/terraform/canonical-schwab-ec2, infra/aws/terraform/modules, infra/logic, lib, org/devices, org/missions/D8/NFRA/NFRA_SCHWABBF, org/modules/graph, org/ref, org/standards (no alongside-schwab-ec2 entry)",
+        "git add -n infra/aws/terraform/alongside-schwab-ec2/main.tf: 'The following paths and/or pathspecs matched paths that exist outside of your sparse-checkout definition, so will not be updated in the index'; positive control git add -n infra/aws/terraform/canonical-schwab-ec2/main.tf prints nothing",
+        "bash .tools/safe-commit.sh of the five new .tf paths and the test refused rc=1 with 'pathspec ... did not match any file(s) known to git'; git log -1 at the worktree still reads ae487c67689"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-a1 <paths> names infra/aws/terraform/alongside-schwab-ec2/{main,masters,iam,secrets,box}.tf as the write grant, and the worker commits its granted files with safe-commit.sh.",
+    "world_is": "The grant names the folder and the lane admits it, but the worktree's sparse cone does not, so the index refuses the path. The root is built and its test passes (13 passed). The worker adds only the granted folder to its own worktree's cone (git sparse-checkout add of that one path) so the commit can stage it; no other path is added and no tree is rebuilt.",
+    "notes": "Plumbing, not a grant change: the write grant is unchanged. A lane that creates a new folder under a sparse parent needs that folder in the cone before the commit. Not an alert and not a monitor."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W12-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~12",
+    "surfaced_at": "2026-10-20T16:22:30Z",
+    "one_line": "The granted folder infra/aws/ec2/alongside-schwab-si2/ is outside this worktree's sparse-checkout definition, so git refuses to stage the four deliverables there and the cell cannot commit them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/Users/AndrewBerman/Desktop/wt-al-12 sparse-checkout list (worktree branch wk-NFRA_SCHWABBF-12, cut from box/laptop at ae487c67689) lists .tools, data/canonical/schwab/tests, infra/aws/ec2/canonical-schwab-si2, infra/aws/terraform/canonical-schwab-ec2, infra/logic/registry, lib, org/devices, org/missions/D8/NFRA/NFRA_SCHWABBF, org/modules/graph, org/ref, org/standards; infra/aws/ec2/alongside-schwab-si2 is not among them",
+        "git -C C:/Users/AndrewBerman/Desktop/wt-al-12 add --dry-run infra/aws/ec2/alongside-schwab-si2/keep-console.ps1 returned rc=1: 'matched paths that exist outside of your sparse-checkout definition, so will not be updated in the index'",
+        "org/missions/D8/NFRA/NFRA_SCHWABBF/task-orders/NFRA_SCHWABBF.TO-AL-p1.alongside-box-puller-copy.md line 30 writes into the same folder, so the same block applies to the sibling cell AL-p-1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-e1 (worker face, first act and Bounds): the worktree must carry the granted paths; a granted path the worktree lacks is a BLOCKING row on that criterion, never an override. The write grant names infra/aws/ec2/alongside-schwab-si2/{keep-console.ps1,bootstrap.ps1,sdd-entitlements.ps1,RUNBOOK_ALONGSIDE_SITTING.md}.",
+    "world_is": "The worktree's sparse set omits the new folder, so safe-commit cannot stage the scripts. The four files exist on disk and the pytest criteria pass against them on disk; nothing in the folder is committed. The worker did not change the sparse-checkout definition, because widening the worktree is the lane owner's call.",
+    "notes": "Remedy for the lane owner, not applied by this worker: add the folder to this worktree's sparse definition (git sparse-checkout add infra/aws/ec2/alongside-schwab-si2) or re-cut the worktree with it, then commit with safe-commit. Untracked files on disk: infra/aws/ec2/alongside-schwab-si2/keep-console.ps1, bootstrap.ps1, sdd-entitlements.ps1, RUNBOOK_ALONGSIDE_SITTING.md. The test file data/canonical/schwab/tests/test_alongside_box_scripts.py is in a materialized path and is also untracked."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W12-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~12",
+    "surfaced_at": "2026-10-20T16:22:30Z",
+    "one_line": "The order names sdd-harness.ps1 as the read-first reference for the UserMasters request and response, but no file of that name exists in this repo at any ref, so the entitlement request and response shapes are unverified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/Users/AndrewBerman/Desktop/wt-al-12 ls-files then a pattern match for sdd-harness returned no tracked path at HEAD ae487c67689; git log --all --oneline -- '*sdd-harness*' returned zero commits (no add or delete in any ref)",
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1 lines 413-420 (Invoke-Sdd, the only SI2 POST shape in the repo) and line 441 (FetchDetails/SpecificFileDetails.aspx) are the in-repo references; no UserMasters response type appears in the repo"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-e1 worker face, item 3: sdd-entitlements.ps1 does what sdd-harness.ps1 does for UserMasters.aspx, and the order says to read sdd-harness.ps1 whole (5.8 KB) first.",
+    "world_is": "The entitlement script names DownloadUserMastersRequest and DownloadUserMastersResponse in the Schwab.SI.SI2Desktop.Contract.Download namespace; the request name comes from the order, the response name is a guess, and the master list is found by reflection. If the shape does not match, the script exits 9 and prints the response property names; it never reports a list it did not read.",
+    "notes": "Not an alert and not a monitor. The issuer supplies the harness or confirms the names. The first live run of sdd-entitlements.ps1 (runbook step h) is the proof of shape."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T16:57:54Z",
+    "one_line": "The pre-existing registry-error arm of thread_trace's test suite traced master 99999999, which is outside the five masters, so the new C-SCOPE refusal answers it before the registry is read; the arm was rewritten, not kept as an ERROR arm.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/tests/test_thread_trace.py at worktree HEAD 998fe826317 (pre-edit): test_master_with_no_registered_firm_is_an_error traces master 99999999 and asserts rc 3 with an ERROR line",
+        "data/canonical/schwab/keyform/thread_trace.py main() after this order's edit: the IN_SCOPE refusal (TRACE-REFUSED, rc 3) sits before firm_of(), so the pre-edit arm would read TRACE-REFUSED and fail its ERROR assertion"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-t3 BOUNDS and build item 3: rework the test file by keeping the firm-form arms and replacing only the arms that trace 0833 or 0824; the order names no other arm and does not say what happens to the registry-error path.",
+    "world_is": "The one arm that exercised the registry-error path used 99999999, which is outside the five, so the refusal answers it first. The arm now asserts the refusal, and a new arm patches IN_SCOPE to an unregistered master to keep the registry-error ERROR path covered. No criterion of this order depends on the old arm.",
+    "notes": "Not an alert and not a monitor. Recorded so the round-3 analysis can see the test rewrite; the issuer may confirm it or name another shape."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S7",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T17:03:47Z",
+    "one_line": "The order says any master outside the five prints TRACE-REFUSED, but the registry's cottonwood masters list names z09, which is not eight digits, so the real tool prints ERROR: --master must be 8 digits (rc 3) for it, because the format check runs before the scope check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/scopes.json: the FIRM row key cottonwood lists masters z09, 08719286, 08134043, 08165601, 08480305 (read at worktree HEAD 998fe826317)",
+        "data/canonical/schwab/keyform/thread_trace.py main() at commit f76106a0c5: the _MASTER eight-digit check returns ERROR before the IN_SCOPE refusal; real run python data/canonical/schwab/keyform/thread_trace.py --master z09 --day 2026-10-16 --form any printed ERROR: --master must be 8 digits and rc=3"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-t3 build item 1: a trace of any master outside the five prints TRACE-REFUSED master=M out of scope and exits 3 before any S3 call.",
+    "world_is": "For z09 the tool exits 3 before any S3 call, as the order requires, but the printed line is the format ERROR, not TRACE-REFUSED. The order's acceptance does not probe z09, so no criterion grades the line. Code was not changed in this order.",
+    "notes": "Not an alert and not a monitor. The issuer decides whether the refusal should precede the format check (a one-line move) or whether z09 is out of the order's master family."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W3-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T17:02:45Z",
+    "one_line": "The order says Get-FirmOf THROWS for a master outside 'the set' of firm-form masters, but also requires the seven-master map to equal the registry and 0824 and 0833 to get a non-throwing legacy key; I kept the seven-master map as the throw boundary and put firm-form membership in a separate Test-FirmForm.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1@6c4675f585a lines 150-162: Get-FirmOf is the seven-master literal map and throws for a master outside it; this build leaves it unchanged",
+        "data/canonical/schwab/tests/test_sdd_daily_pull_key_form.py@6c4675f585a test_key_parity_firm_map_equals_registry_for_seven_masters: the registry check covers all seven masters, so a firm-only throw boundary would fail it for 08242234 and 08335338",
+        "NFRA_SCHWABBF.TO-BF-w3.puller-per-master.md WORKER FACE item 1 ('Get-FirmOf THROWS for a master outside the set') versus item 3 (0824 and 0833 take the PRE-ROUND key)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-w3 worker face, build item 1: 'Get-FirmOf THROWS for a master outside the set', where the set is the firm-form set 08403355 and the four Cottonwood masters; item 3 requires 0824 and 0833 to take the pre-round key path.",
+    "world_is": "The two items cannot both hold literally. A Get-FirmOf that throws for 0824 and 0833 breaks the pre-round key path and the seven-master registry test. The build keeps Get-FirmOf as the seven-master map (throws only for an unknown master), makes Get-BronzeKeyDir and Get-ListingPrefixes call it first so an unknown master still throws, and adds Test-FirmForm for the five-master firm-form membership. Behaviour matches the order's stated outcomes; only the throw boundary wording differs.",
+    "notes": "Form only, no significance judgment. The issuer may confirm the reading or name a different boundary; no change to the script is needed for the reading the build took."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W6-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~6",
+    "surfaced_at": "2026-10-20T17:02:47Z",
+    "one_line": "The face asks for hand runs in tests/opal_name.tftest.hcl, a file whose header says GENERATED and do-not-edit-by-hand; the Cottonwood and 08403355 runs arrive only by regeneration, and the generator renders no secret_name run, so those runs were placed in the hand-written tests/fifo.tftest.hcl.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl lines 1-2 at base 998fe826317: 'GENERATED by lib/opal_naming.py ... do not edit by hand; regenerate with: python lib/opal_naming.py generate --out <dir> --target infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl'",
+        "lib/opal_naming.py line 71 TFTEST_PATH names that file; generate() line 2786+ routes it through _gen_tftest (line 1742), which renders one run per build_vectors() row and no secret shape",
+        "python lib/opal_naming.py generate --out .scratch/gen --target infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl rc=0, WROTE 35274 bytes; coverage run now reads length(var.vectors) == 80 (was 40)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-n3 worker face, Build step 2: extend tests/opal_name.tftest.hcl with runs for a Cottonwood master scope, 08403355 and secret_name (at least three vectors taken from the library's own output).",
+    "world_is": "The generated file cannot carry a hand edit (a hand run is overwritten at the next generate). The Cottonwood and 08403355 coverage is already in the regenerated vectors (MASTER and FIRM rows of scopes.json feed build_vectors()). The secret_name runs were written into tests/fifo.tftest.hcl, the hand-written file in the grant, with its header updated to say so.",
+    "notes": "Not an alert and not a monitor. A ruling is needed only on where secret_name runs should live long-term: a new generator renderer or a hand file. The module test count at this commit is 95 passed, 0 failed."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W6-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~6",
+    "surfaced_at": "2026-10-20T17:02:47Z",
+    "one_line": "output.name refuses any system given without function and kind, and terraform test evaluates every module output on every run, so a secret_name run that carries system and purpose fails output.name's precondition; the fix keys name_asked off purpose being null.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform -chdir=infra/aws/terraform/modules/opal_name test -no-color, after the carrier regeneration and before the fix: 'Failure! 1 passed, 2 failed, 92 skipped.' with 'Error: Module output value precondition failed ... on main.tf line 71, in output secret_name' raised inside fifo_queue and vector_00 (runs that never set purpose)",
+        "the same suite after the fix (main.tf name_asked = (system != null && purpose == null) || function != null || kind != null; secret_asked = purpose != null): 'Success! 95 passed, 0 failed.'",
+        "output name's scope precondition (main.tf line 49-52 at base) is unconditional and was left unchanged; output secret_name's scope precondition is now conditional on secret_asked"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-n3 worker face, Build step 3: add the secret_name output and its variables (system, scope, purpose), leaving every existing output and variable byte-identical in behavior.",
+    "world_is": "The two outputs share the system input. A secret run necessarily sets system, which output.name's half-asked refusal reads as a name request, so no run that asks for a secret can pass every output's precondition under the base name_asked. For every input set with purpose null the new name_asked expression is identical to the base expression, so no existing name behavior moves. Any name-side reviewer should read the one changed line in main.tf.",
+    "notes": "Not an alert and not a monitor. The change is confined to main.tf locals name_asked and secret_asked and the secret output's preconditions; the existing refuses_* runs in tests/opal_name.tftest.hcl pass unchanged."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W6-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~6",
+    "surfaced_at": "2026-10-20T17:02:47Z",
+    "one_line": "The regenerated carrier adds four FIRM rows the cell does not name (keilfinancial, abidingwealth, lighthousewealth, vmwealth), and the vector count moves from 40 to 80: the committed carrier was built from an older registry than HEAD's scopes.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "base generated_locals.tf header at 998fe826317: registry@6572bee9a8823233; base opal_name.tftest.hcl header: registry@91ab05f549f647ae (two different stale stamps in one module)",
+        "python lib/opal_naming.py generate --out .scratch/gen --target .../generated_locals.tf: 'GENERATE: 1 written ... at registry@94c3a84b838d2f23'; header registry@0b67aaa9f50da4cd; scope_short gains keilfinancial, abidingwealth, lighthousewealth, vmwealth (FIRM) and 08403355, 08719286, 08134043, 08165601, 08480305 (MASTER)",
+        "python lib/opal_naming.py generate ... tests/vectors.json: 17557 bytes; 4 shapes x 20 scopes (None + 19 FIRM/GLOBAL/MASTER rows) = 80 vectors, was 40"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-n3 worker face, Build step 1: the new file contains all seven masters in its scope maps; do not change any other generated target. The cell names Cottonwood 08719286, 08134043, 08165601, 08480305 and 49financial 08242234, 08335338, 08403355 as the rows the regeneration adds.",
+    "world_is": "All seven masters are present, as asserted. The regeneration also carries the four FIRM rows above, which scopes.json holds at HEAD and which the generator renders as the registry says. Nothing was excluded, because the generator's output is the carrier's definition.",
+    "notes": "Not an alert and not a monitor. The extra FIRM rows are in the carrier and in the 80 vectors; the Terraform roots that read them are unchanged by this cell. Surfaced for the CTO's round-3 analysis."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W11-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~11",
+    "surfaced_at": "2026-10-20T17:10:16Z",
+    "one_line": "The amendment's key/value baseline for the regenerated name table reads 83 before and 123 after; a count of the same five sections (fence_patterns, scope_bucket, scope_class, scope_long, scope_short) gives 79 and 119, with the same 40 added and 0 removed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show d2df0d6f0c3:infra/aws/terraform/modules/opal_name/generated_locals.tf (5575 bytes): five sections count 16+16+26+16+5 = 79 map-key lines at four-space indent",
+        "python lib/opal_naming.py generate --out <system scratchpad>/amend_gen/out --target infra/aws/terraform/modules/opal_name/generated_locals.tf wrote 7705 bytes at registry@94c3a84b838d2f23; the same five sections count 25+25+35+25+9 = 119; tuple-level diff (section, key, value) gives 40 added, 0 removed",
+        "the regenerated repo file (infra/aws/terraform/modules/opal_name/generated_locals.tf) differs from HEAD only by the registry-hash header line and the added entries when whitespace is ignored (git diff -w)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-a1 amendment, Defect 1: the issuer's measurement of the generator run is 83 key/value entries before, 123 after, 40 added, 0 removed, in the five named sections.",
+    "world_is": "The added (40) and removed (0) counts agree. The before and after baselines are each 4 higher in the issuer's count than in the worker's count over the same five sections, a constant offset the regeneration does not change; the worker could not identify which four entries the issuer's method counts. The regenerated table is purely additive, so the offset does not change the fix.",
+    "notes": "Not an alert and not a monitor. The issuer confirms the counting method for the four-entry offset; the worker printed both numbers and did not adjust its own count to match."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:03:41Z",
+    "one_line": "The bronze move script and its test still encode the all-firm key grammar: after the per-master rule (PRD v0.7 C-KEYFORM), 10 of 19 move-script tests fail, because the move plans 0824 and 0833 into the firm form that the key functions no longer produce.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/canonical/schwab/tests/test_move_bronze_key_form.py -q in worktree wt-bf-1 (branch wk-NFRA_SCHWABBF-1, base HEAD 6c4675f585a plus the BF-k-3 key-function edits): 10 failed, 9 passed",
+        "data/canonical/schwab/keyform/move_bronze_key_form.py@6c4675f585a:35 SCOPE_MASTERS = (\"08242234\", \"08335338\", \"08403355\"); under the per-master key functions its plan raises PlanRefused 'two planned sources map to one destination' for 08242234 (move_bronze_key_form.py:115)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order BF-k-3 names the two key-function files and the bronze key test as its write grant and names no other consumer; its worker face states that 0824 and 0833 keep the pre-round key bytes.",
+    "world_is": "data/canonical/schwab/keyform/move_bronze_key_form.py still plans every legacy key of 08242234 and 08335338 into the firm form. With the per-master functions the planned destination equals the source, so the plan refuses and writes nothing. The move script has no per-master rule and its test expects 0824 under 49financial.",
+    "notes": "Not an alert and not a monitor. The move script and its test sit outside BF-k-3's grant; the rework needs an order from the issuer of the keyform move. Measured by this worker on LOCAL only: no S3, no move run."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:03:41Z",
+    "one_line": "The per-master rule's 'any OTHER master' branch accepts every eight-digit master, so an unregistered eight-digit master resolves silently to the old form, where the round-2 all-firm functions refused it through the MASTER_FIRM lookup.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live probe in worktree wt-bf-1 after BF-k-3: monolith_bronze_key('acc','20231017','08999999') returns 'schwab/08999999/bronze/acc/20231017/08999999.CRS20231017.ACC.zip'; monolith_bronze_key('acc','20231017','4698') raises KeyError",
+        "data/black_diamond/scripts/bronze/_monolith_bronze.py@6c4675f585a:71-79 MASTER_FIRM was the only master lookup; the BF-k-3 _master_form() accepts any eight-digit string that is not in FIRM_FORM_MASTERS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.7 C-KEYFORM item 2 as quoted in order BF-k-3: 'any OTHER master -> TODAY's partition'; firm_of raises for any master not in the firm-form set.",
+    "world_is": "Both key files return the pre-round old-form key for any eight-digit master outside FIRM_FORM_MASTERS, registered or not. Only a malformed (non-eight-digit) master raises. Today's callers resolve the master through master_for(), which holds only 08335338 and 08242234, so no live path reaches an unregistered master.",
+    "notes": "The literal spec was implemented as written; this row records the silence in the spec (no registry refusal for an unregistered eight-digit master). Disposition for the CTO or the issuer to choose: refuse non-registered masters, or accept them by name."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W1-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:12:27Z",
+    "one_line": "The round-2 name MASTER_FIRM was renamed to FIRM_FORM_MASTERS with no alias, although the order asks every round-2 name to keep working. The alias was written and then refused at commit by the owned-paths lane gate, because TO-BF-k3 was already complete, so the committed key functions lack MASTER_FIRM.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/bronze/_monolith_bronze.py@6c4675f585a:71 defined MASTER_FIRM as the seven-master map; at 57310f7877 and 2103514e72 neither key file defines MASTER_FIRM, and a Grep of the worktree data/ tree for MASTER_FIRM returns no code match (docs only)",
+        "safe-commit of the alias in worktree wt-bf-1 (log .scratch/commit_c.log): owned-paths lane violation for both key files, 'no NON-TERMINAL task order at HEAD issued_to this serial names this path', after TO-BF-k3 flipped to complete at 2103514e72"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order BF-k-3 worker face, per-master contract item 'keep every round-2 name working, add the new ones'; TO-BF-m3 imports this contract.",
+    "world_is": "Both key files at 2103514e72 define FIRM_FORM_MASTERS and no MASTER_FIRM. The worktree is clean for the grant files at HEAD. An alias fix needs an order whose <paths> names the two key files and the test while it is non-terminal.",
+    "notes": "Not an alert. Disposition for the issuer: grant the two key files in TO-BF-m3 (or re-open BF-k-3) to add MASTER_FIRM = FIRM_FORM_MASTERS inside the byte-equal block, or confirm that no caller needs the name."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W3-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T17:51:40Z",
+    "one_line": "The face names the firm of a master from the scopes.json row whose masters list names it, and refuses a master that is not firm-form (only 08403355 and the four Cottonwood masters are); scopes.json lists 08335338 under 49financial with no firm-form field, so that lookup alone cannot refuse 08335338.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/scopes.json@0429204ae71: the 49financial FIRM row lists masters 08242234, 08335338, 08403355; no row carries a firm-form field",
+        "data/canonical/schwab/silver/_canonical_silver_lib.py@0429204ae71 FIRM_FORM_MASTERS: the five firm-form masters as a literal mirror; data/canonical/schwab/tests/test_bronze_key_form.py@0429204ae71 asserts the same five",
+        "data/canonical/schwab/keyform/equal_sample.py (uncommitted, worktree wk-NFRA_SCHWABBF-3 over 0429204ae71): firm_of() takes membership from a literal FIRM_FORM_MASTERS mirror and the firm from scopes.json; test_firm_form_mirror_equals_silver_lib_and_scopes proves both; pytest 25 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-e4 worker face, build item 1: --form firm resolves the firm from scopes.json and refuses a master that is not a firm-form master (only 08403355 and the four Cottonwood masters are) with EQUAL-REFUSED rc 3 before any S3 call.",
+    "world_is": "scopes.json cannot by itself separate 08335338 from 08403355: both are masters of the 49financial row. The worker takes firm-form membership from the five-master literal mirror and the firm from scopes.json, so 08335338 is refused (rc 3, before any S3 call; test_firm_form_for_non_firm_master_is_refused_before_any_read). The face's named source does not carry its own refusal.",
+    "notes": "Form only, no significance judgment. The issuer may name a registry field for firm-form membership so the mirror can be retired; no change to scopes.json was made."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W3-S6",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T17:51:40Z",
+    "one_line": "The face orders compare output lines unchanged plus a FORM line and every round-1 arm green, but four round-1 arms asserted the full compare line list exactly, so they cannot stay green without the FORM line in their expected lists.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/tests/test_equal_sample.py@0429204ae71: test_identical_store_is_equal, test_source_file_only_change_is_equal, test_reordered_rows_are_still_equal and test_still_missing_partition_stays_equal each asserted the list [EXCLUDED_LINE, \"EQUAL-OK cells=4\"] exactly",
+        "data/canonical/schwab/tests/test_equal_sample.py (uncommitted, worktree wk-NFRA_SCHWABBF-3 over 0429204ae71): the four expected lists now carry FORM before=old after=old and the _body helper skips FORM lines; every verdict and diff assertion is unchanged; pytest 25 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-e4 worker face, build item 3: output lines unchanged, plus FORM before=<old|firm> after=<old|firm> printed by compare; tests: every round-1 arm stays green.",
+    "world_is": "On exact line lists the round-1 arms and the new FORM line cannot both hold literally. The worker added FORM to the four exact expectations and left every verdict and diff assertion as written. capture output is unchanged (CAPTURED and EXCLUDED only).",
+    "notes": "Form only. Recorded so the issuer can see that the round-1 expectations gained the one line the face orders."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S8",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T17:50:26Z",
+    "one_line": "The code commit c959c9abdf passed safe-commit rc 0 while two checks read nothing in this sparse worktree, the same blind state as NFRA_SCHWABBF-W5-S7 on commit 0af3a73506: the risk reflex answered PARTIAL_OR_BLIND on a danger map 117.9h old, and the naming gate printed NAMING ERROR for the missing function-map folder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for commit c959c9abdf on branch wk-NFRA_SCHWABBF-5: '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND' with 'danger map: 117.9h old !! STALE' and 'WITHIN BUDGET: scanned 0 of 2 file(s)'",
+        "safe-commit output for commit c959c9abdf: '[naming-gate] NAMING ERROR function-map folder missing: ...wt-bf-5/infra/aws/lambda/ci/function-map/', then 'committed c959c9abdf' with rc=0",
+        "NFRA_SCHWABBF-W5-S7 (investigations/INVESTIGATION_v1.md, same file) records the identical state on 0af3a73506"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker rules: a commit passes .tools/safe-commit.sh; the commit-gate reports the checks it ran per file.",
+    "world_is": "The commit-gate checks for the two files of c959c9abdf were clean (2 of 2). The risk reflex and naming gate did not grade this diff in this worktree, and the commit was not blocked by either. Their verdicts for this commit are therefore not evidence of a clean diff. The sibling row NFRA_SCHWABBF-W5-S7 is not edited."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-20T18:03:14Z",
+    "one_line": "TO-AL-r1 step 9 cannot be met: the new Alongside box (stock Windows Server 2022) has no AWS CLI v2 at C:/Program Files/Amazon/AWSCLIV2/aws.exe, so bootstrap.ps1 cannot be downloaded and would throw at its own line 21 if it were there; the box is built and idle, bootstrap and reboot not run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command 39c62a93-26e4-4d16-b25c-d1acfea82a75 on i-0825aa0ed88342d67: status Success rc 0 but stdout carries no OK: line and stderr reads \"The term 'C:/Program Files/Amazon/AWSCLIV2/aws.exe' is not recognized\" (saved: deliverables/0.7.0_AE_CloudOps~NFRA1/r1/bootstrap_invocation.json)",
+        "Read-only SSM probe 1a7822f0-176a-4263-aba7-865280d76347: os=Windows Server 2022 Datacenter; exists C:/schwab-sdd=True; exists C:/schwab-sdd/bootstrap.ps1=False; exists AWSCLIV2 dir=False; Get-Command aws=none; Amazon dirs=cfn-bootstrap,EC2Launch,SSM,XenTools; modules=AWSPowerShell (saved: r1/probe_readonly.txt)",
+        "infra/aws/ec2/alongside-schwab-si2/bootstrap.ps1 lines 19-21: comment says the CLI is installed for the box user, then 'if (-not (Test-Path -LiteralPath $AWS)) { throw \"aws.exe not found at $AWS\" }'; nothing in the file installs it",
+        "aws secretsmanager describe-secret schwab/alongside/ec2-credentials after the run: VersionIdsToStages null (no AWSCURRENT version), so the generated password was never written"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r1 step 9: the box has C:/Program Files/Amazon/AWSCLIV2/aws.exe, the S3 copy of bootstrap.ps1 succeeds and every bootstrap step line reads OK:.",
+    "world_is": "The Terraform root creates the instance from a stock Windows Server 2022 image that carries AWS Tools for PowerShell (module AWSPowerShell) but not the AWS CLI v2; the 49F box had it installed by hand. Steps 0-8 passed (apply 1 import / 17 add / 0 change / 0 destroy, 0-diff plan, four uploads matched). Steps 9-11 are not run: no bootstrap, no reboot, no quser, no port-forward test. Candidate fixes for the issuer: the root's user_data installs AWS CLI v2 (a .tf edit, forbidden to this order), or an install step is added to this order (MSI from the AWS download URL or an S3-staged MSI). Not improvised here.",
+    "notes": "The box is running, holds no Schwab session, ports closed, four rules DISABLED. It bills while running (t3.large). Ledger nfra-schwabbf-alongside-box-build-20261020 legs L1 and L2 closed, L3 and L4 open and put on hold."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W2-S8",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~2",
+    "surfaced_at": "2026-10-20T17:52:37Z",
+    "one_line": "The order lists only the source prefix for the live silver plan, which cannot see a destination, so the tool also lists the firm-form silver prefix schwab/49financial/silver/ (read-only) to make the idempotent re-plan reachable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/keyform/move_bronze_key_form.py@0429204ae71 list_live: the live listing reads only schwab/08403355/bronze/ (the old prefix), so a firm-form destination is never listed and already is 0 on any live plan",
+        "live run in worktree wt-bf-2 (tool uncommitted, 2026-10-20 17:52Z): plan --tier silver --master 08403355 printed MOVE-PLAN tier=silver in_scope=7581 foreign=0 copy=7581 already=0 events=0",
+        "data/canonical/schwab/keyform/move_bronze_key_form.py (worktree, uncommitted) list_live_silver: lists schwab/49financial/silver/ beside the source prefix; plan_silver_from_listing counts a destination only by exact key match"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-m4 worker face, build step 2: 'Silver plan: list schwab/08403355/silver/ (live, read-only, paginated) or take --listing-file.' Build step 3 and the idempotence clause: 'A destination that already exists is already (idempotent re-plan).'",
+    "world_is": "A source-only listing cannot observe a destination, so a live silver plan reports already=0 whether or not the copy has run. The tool lists the firm-form silver prefix as well, read-only. The bronze live path (list_live) has the same gap for its firm-form destinations and is unchanged, because the bronze output is byte-identical by the order. The copy step is not affected: _copy_one head-checks each destination and skips a size match.",
+    "notes": "Not an alert. Disposition for the issuer: keep the destination listing for the silver tier, or refuse it and accept already=0 on a live plan. The bronze gap is the same question and is not decided here."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W4-S8",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~4",
+    "surfaced_at": "2026-10-20T17:54:13Z",
+    "one_line": "Criterion BF4-t4-AC3 expects ^THREAD-FAIL master=08403355 day=2026-10-16, but the verdict line the tool prints is THREAD-FAIL reason=... master=..., so the anchored expectation cannot match the verdict as written; AC3 is recorded FAIL and the expectation is not weakened.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_SCHWABBF/task-orders/NFRA_SCHWABBF.TO-BF-t4.trace-silver-both-forms.md WORKER FACE, ACCEPTANCE, BF4-t4-AC3: expect '^THREAD-FAIL master=08403355 day=2026-10-16'",
+        "data/canonical/schwab/keyform/thread_trace.py at 0f92b86fe32 (base 998fe826317): the verdict is emitted as 'THREAD-FAIL reason=%s master=%s day=%s'; the real run at --form builder prints 'THREAD-FAIL reason=bronze-not-held-form-builder;second-form-found-legacy;silver-absent;silver-second-form-found-legacy master=08403355 day=2026-10-16' with rc 1, and re.search of the AC3 expect with re.M over that output is False (captured at .scratch/ac3_out.txt)",
+        "data/canonical/schwab/tests/test_thread_trace.py at 0f92b86fe32: the round-3 arm asserts 'THREAD-FAIL reason=bronze-not-held-form-builder' (reason first), and the face requires every round-3 arm to stay green and every other line to be unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF4-t4-AC3 expect: '^THREAD-FAIL master=08403355 day=2026-10-16'. Refusal clause: a criterion that cannot be met as written is stopped on, recorded in the report and as a surprise row, and the test is not weakened to pass.",
+    "world_is": "The strict firm-form trace of the real day 2026-10-16 FAILS with rc 1 as the face predicts, but its verdict line begins 'THREAD-FAIL reason='. Reordering the verdict would break the round-3 arms the face keeps green; loosening the expect would weaken the criterion. Neither was done. The rest of AC3 (rc 1, THREAD-FAIL on the real day) is met.",
+    "notes": "Not an alert and not a monitor. The issuer rules the expectation: re-cut the expect to the reason-first verdict form, or change the verdict order together with the round-3 arms. AC3 stays FAIL and the TO stays pending until that ruling."
+  }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W1-S5",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~1",
+    "surfaced_at": "2026-10-20T17:57:23Z",
+    "one_line": "The BF-s-4 face names a leaf such as schwab_projections.py for the firm silver key rule; the rule was placed in conversion_manifest.py instead, because schwab_projections imports pyarrow through schwab_schemas and conversion_manifest is the light module the closure validator imports without pyarrow.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/schwab_schemas.py@0429204ae71:54 'import pyarrow as pa'; data/assets/scripts/silver/schwab_projections.py@0429204ae71:27 'import pyarrow as pa' and :29 'import schwab_schemas as sch'",
+        "data/assets/scripts/silver/conversion_manifest.py@0429204ae71:36 'Light on purpose (no pyarrow)'; :713-714 build_closure imports schwab_conversion and set_identity_guard lazily because 'neither is needed by the v1 marker or by the validator'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BF-s-4 worker face, build item 1: ONE pure function in the Schwab-only code, put where the import direction allows with no cycle, 'a leaf such as schwab_projections.py, imported by the others'.",
+    "world_is": "A rule in schwab_projections.py would make conversion_manifest.py, which the closure validator imports without pyarrow, depend on schwab_projections and so on pyarrow. The rule now lives in conversion_manifest.py (it already owns FIRMS and the key-claim rule and imports only silver_registry). schwab_projections.dim_key, the converter's three fact-key sites, the set-identity guard and the runtime census all call through it. Old-form keys are byte-identical to the pre-round code (test OLD).",
+    "notes": "Not an alert. Disposition for the CVO or the issuer: accept conversion_manifest.py as the one rule's home, or name another leaf that carries no pyarrow import. No behavior depends on the choice; the tests pass against the chosen home."
   }
 ]
 ```

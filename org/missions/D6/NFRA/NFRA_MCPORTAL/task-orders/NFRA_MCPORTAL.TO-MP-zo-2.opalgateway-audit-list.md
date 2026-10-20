@@ -71,7 +71,7 @@ run `proof-of-spec-check.py` on it as the worker rules say, and report once, wit
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** cut at the OGW round-1 issuance (decomposition v20) from PRD v0.10 FWD-28 and the CVO's cure W2 (every driven act appears in the list with actor, time and before/after; a change written outside the page's writer is flagged `unattributed`). Queued second on slot ~42 behind MP-zo-1 (one chain). The page proves on a mocked fetch; the served proof of FWD-28 (a driven act appearing in the live list, and a store-direct write in a test tree flagged) is part of the close run, not this order.
-Check dry-run at the base: see the issuance commit.
+zo2.AC1 base: FAIL as expected (`bun test src` 79 pass, 0 fail; named tests present in sources 0 of 3; min 89), run in the provisioned slot-42 worktree at mcportal 21ad404, 2026-10-20 ~18:3xZ.
 
 <status>pending</status>
 <round>1</round>
