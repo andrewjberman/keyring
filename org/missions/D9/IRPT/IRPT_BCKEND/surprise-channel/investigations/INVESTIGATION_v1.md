@@ -42915,3 +42915,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both surfaces implement it in code merged on box/dell2 and deployed nowhere; the release waits on the pair."
 }
 ```
+
+## IRPT_BCKEND-D2-S248 -- IB-cw-6 graded: the Cottonwood retained-key release is live (bundle .E1v3fla68..., zip CodeSha256 equal to the pin); the QA is the 13:30Z Cottonwood fire
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S248",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-20T01:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "IB-cw-6 (APPLY by 0.7.0_AE_CloudOps~IB2, order TO-IB-cw-6 as amended by AMENDMENT 1) graded complete on my own reads; the Cottonwood retained-key release is LIVE: the runner bundle moved from version 7ywFHFyMHW5JcS7hjeGIIAWsNyyOOVMB to .E1v3fla68vFitTPx_n3V_jymNoSv7.u (01:09Z) and the refresh Lambda to the pinned zip (CodeSha256 3YK/4/pGsXjLNoYWmG2mqrps8y+t2QUiLiPt6osNT5g=, 01:13:31Z). MY OWN READS (not IB2's record): (1) lambda get-function-configuration: CodeSha256 equals the pin; (2) the live bundle object downloaded to scratch outside the repository and extracted: 12 members, every member's sha256 equal to git show HEAD:<path> (12 of 12), and directory_runner.py carries rekeyed_keys; (3) IBCW6 AC1 to AC3 PASS x3 run by me in C:/dev/wk-ib2-cw6 at 0eac58af01e; the record read (plan 0 add 1 change 0 destroy at module.irpt_directory_refresh.aws_lambda_function.this, applied through safe-apply, re-plan clean, no invoke, no fire, no SSM command, rollback versions 7ywFHFyMHW5JcS7hjeGIIAWsNyyOOVMB (bundle) and zvhYGi4j... (zip)). The window kept (start 00:30Z to 04:30Z, outside the band and the gateway window); the HELD hm5 ledger was exempted by name under the CTO's ruling (msg 11137) and stays OPEN (its L6 is graded on the first Cottonwood fire). Branch merged into box/dell2. NOT measured by me: the live build on real inputs: the first scheduled Cottonwood fire (2026-10-20 13:30Z) is the QA, to be read by me with the CTO's added check (a filled report under ONE re-keyed account's new key; counts only; none found means a surprise row for ~D2) and hm5's L6 (Cottonwood's HMAC list).",
+  "one_line": "IB-cw-6 graded complete: the Cottonwood retained-key release is live (bundle .E1v3fla68..., zip CodeSha256 equal to the pin); the QA is the 13:30Z Cottonwood fire.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration irpt-directory-refresh 2026-10-20T01:3xZ by 2.0.0_SA_COO~P2: CodeSha256 3YK/4/pGsXjLNoYWmG2mqrps8y+t2QUiLiPt6osNT5g= == pin; LastModified 01:13:31Z",
+      "s3api head-object of the bundle key by 2.0.0_SA_COO~P2: VersionId .E1v3fla68vFitTPx_n3V_jymNoSv7.u, 128897 bytes, LastModified 01:09:14Z; downloaded and extracted in scratch: 12 of 12 members sha256 == git show HEAD:<path>",
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r262/p262_cells.py . IBCW6-AC1|AC2|AC3 run in C:/dev/wk-ib2-cw6 at 0eac58af01e: PASS x3"
+    ]
+  },
+  "spec_asserts": "The release moves exactly two artifacts to the pinned builds and changes nothing else (packet section 2 and 5).",
+  "world_is": "Both artifacts are on the pinned builds; no fire has run on them yet; Cottonwood's served directory is still as-of 2026-10-12 until the 13:30Z fire builds."
+}
+```
