@@ -53,3 +53,16 @@ The never-widen pair for the grant (COO + CTO halves), the Terraform apply (Clou
 (i) Domain: the FIVE elements FWD-10's DONE WHEN names (window, chart, returns, risk, allocation) over up to five comparables; the denominator of comparables is the filer's list (1 to 5), printed on the page; the maps' vendor-call counts (Comparison 351, Multi 144) are NOT this round's domain (FWD-11). (ii) One grain per element: a row per portfolio or comparable. (iii) One intent: a reader answers "did this portfolio beat each model I picked, and with how much risk". (iv) What this cut does NOT move: the Overview, the price pages, the maps' vendor-call elements, the Ticket Center, the resident's Overview binding.
 
 fanout: 2 of 2 chains, cap 8, reason: chain A is a data-dependency chain of four cells on frozen contracts; chain B is the independent infrastructure grant.
+
+## Addendum 2026-10-20 (issuer, after the chain A drain at 51e86c27cd0): the release cell and one stale test
+
+These two orders are one second issuance of round 60 and carry their own `<workstream>~GREL</workstream>` (the TO gate keys one issuance to round x workstream). The decomposition's "after the drain" step, the FWD-10 resident release, is cut as a cell so a worker builds and proves it; the issuer rules inside its own decomposition. Y2 ruled (msg 11518) that this seat builds the next resident release (r34o) and that it carries 2.0.0_SA_COO~Y2's audit wiring (AR-y-467, AR-y-469) as well. Measured at pin `3f1961ceab12c934b2510e2047589351ba3539e6` by a rehearsal build outside the repository: against the running r34n the release moves 11 members and adds 6 (323 members), import smoke 86 of 86. Two of the movers are not this round's work and ride the pin: `ycharts/research/overview_map.json` (the round-57 price pages' map) with the layout and producer that read it, and `lib/trading_calendar.py` (an additive function by another seat). They are named in the never-widen packet, not decided here.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-176` | the r34o tarball, package sums and four host scripts from the pin, a build record and a proof (BUILD ONLY, stage folder outside the repository) | the worker folder `r61/` | LOCAL |
+| `AR-g-177` | the stale NOT_IN_THIS_VERSION assertion of `test_opal_thread_ready_end_to_end` (AR-y-408 removed those sections) | that one test file | WORLD (the gate's floor for an infrastructure path, though only a test file moves) |
+
+Chains: AR-g-176 and AR-g-177 are independent of each other and of the earlier cells (all merged). Checker for 176: `checks/ar_release_checks.py` (record, tree, scripts), calibrated on the rehearsal with mutants. Then the issuer's steps: the never-widen pair for r34o (COO and CTO halves), the CloudOps apply, and the one real run (`deliverables/2.0.0_SA_COO~G2/FWD10_ONE_REAL_RUN_PLAN_20261020.md`).
+
+fanout: 2 of 2 chains, cap 8, reason: the release build and the stale-test fix are independent single-cell chains.
