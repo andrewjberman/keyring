@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-20T13:02:15Z",
+ "written_at": "2026-10-20T14:56:45Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -2120,6 +2120,37 @@
     "ruled_by": "andrew",
     "xadj": null
    }
+  },
+  {
+   "id": "laptop-20261020T145645Z-6814",
+   "project": "NFRA_SCHWABBF",
+   "subject": "Move Schwab silver, meta and _ops to firm scope too (schwab/<firm>/...) in the same cutover as bronze: yes / bronze only?",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/missions/D8/NFRA/NFRA_SCHWABBF/prd/NFRA_SCHWABBF_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-20T14:56:45Z",
+   "kind": "fork",
+   "context": "Today schwab/<master>/{_ops,bronze,meta,silver}; C-KEYFORM moves bronze to schwab/<firm>/ on Andrew's ~14:3xZ word. Bronze alone leaves the vendor in two scopes (CVO v0.4 item 4).",
+   "rec": "Yes, all tiers in one cutover: it matches blackdiamond/49financial/{bronze,silver}; every silver reader (Positioning, early warning, gateway Schwab tools) changes and is checked in the same release.",
+   "scope": {
+    "measured_at": "2026-10-20T14:56:45Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }
