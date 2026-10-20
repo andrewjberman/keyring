@@ -952,6 +952,27 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-e4 worker face, build item 3: output lines unchanged, plus FORM before=<old|firm> after=<old|firm> printed by compare; tests: every round-1 arm stays green.",
     "world_is": "On exact line lists the round-1 arms and the new FORM line cannot both hold literally. The worker added FORM to the four exact expectations and left every verdict and diff assertion as written. capture output is unchanged (CAPTURED and EXCLUDED only).",
     "notes": "Form only. Recorded so the issuer can see that the round-1 expectations gained the one line the face orders."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W5-S8",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~5",
+    "surfaced_at": "2026-10-20T17:50:26Z",
+    "one_line": "The code commit c959c9abdf passed safe-commit rc 0 while two checks read nothing in this sparse worktree, the same blind state as NFRA_SCHWABBF-W5-S7 on commit 0af3a73506: the risk reflex answered PARTIAL_OR_BLIND on a danger map 117.9h old, and the naming gate printed NAMING ERROR for the missing function-map folder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for commit c959c9abdf on branch wk-NFRA_SCHWABBF-5: '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND' with 'danger map: 117.9h old !! STALE' and 'WITHIN BUDGET: scanned 0 of 2 file(s)'",
+        "safe-commit output for commit c959c9abdf: '[naming-gate] NAMING ERROR function-map folder missing: ...wt-bf-5/infra/aws/lambda/ci/function-map/', then 'committed c959c9abdf' with rc=0",
+        "NFRA_SCHWABBF-W5-S7 (investigations/INVESTIGATION_v1.md, same file) records the identical state on 0af3a73506"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker rules: a commit passes .tools/safe-commit.sh; the commit-gate reports the checks it ran per file.",
+    "world_is": "The commit-gate checks for the two files of c959c9abdf were clean (2 of 2). The risk reflex and naming gate did not grade this diff in this worktree, and the commit was not blocked by either. Their verdicts for this commit are therefore not evidence of a clean diff. The sibling row NFRA_SCHWABBF-W5-S7 is not edited."
   }
 ]
 ```
