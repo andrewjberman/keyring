@@ -563,6 +563,72 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Worker rules: a commit passes .tools/safe-commit.sh; the commit-gate reports the checks it ran per file.",
     "world_is": "The commit-gate checks for the three .py files were clean (3 of 3). The risk reflex and naming gate did not grade this diff in this worktree, and the commit was not blocked by either. Their verdicts for this commit are therefore not evidence of a clean diff."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W13-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~13",
+    "surfaced_at": "2026-10-20T16:16:58Z",
+    "one_line": "The order names the Cottonwood Schwab masters as the masters field of the registry rows whose firm is cottonwood and vendor is schwab; in scopes.json that field sits on the cottonwood FIRM row, while the schwab master rows carry only key, so the worker read the four masters from the MASTER rows' key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/scopes.json@ae487c67689 rows key 08719286, 08134043, 08165601, 08480305: class MASTER, firm cottonwood, vendor schwab (the four Cottonwood Schwab masters; no masters field on these rows)",
+        "infra/logic/registry/scopes.json@ae487c67689 row key cottonwood: class FIRM, masters [z09, 08719286, 08134043, 08165601, 08480305] (z09 is vendor blackdiamond, excluded by the vendor filter)",
+        "data/canonical/schwab/tests/test_alongside_puller.py master_set test reads the MASTER rows key; the set equals the FIRM row masters less z09 (both sets are the same four ids)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-p1 MASTER SET: the ValidateSet of the copy equals the masters of the registry rows in infra/logic/registry/scopes.json whose firm is cottonwood and vendor is schwab, both ways.",
+    "world_is": "The four Cottonwood Schwab masters are the MASTER-class rows with firm cottonwood and vendor schwab (key = master id). The masters list the order names is held on the cottonwood FIRM row and includes z09, a Black Diamond master. The set is identical either way (08719286, 08134043, 08165601, 08480305), so the check grades the same four ids.",
+    "notes": "Form only: the registry holds the same four ids under two shapes. No change to scopes.json is proposed by this row."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W13-S2",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~13",
+    "surfaced_at": "2026-10-20T16:16:58Z",
+    "one_line": "The worktree's sparse checkout excludes org/surprise_channel from disk while the folder is tracked at HEAD, so the row schema the worker rules name (org/surprise_channel/schemas/investigation_item.schema.json) is readable only through git show, not as a file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config core.sparseCheckout in C:/Users/AndrewBerman/Desktop/wt-al-13 prints true; git ls-files -- org/surprise_channel lists 43 tracked files at ae487c67689",
+        "ls org/surprise_channel in C:/Users/AndrewBerman/Desktop/wt-al-13 returns no such file; git status --short -- org/surprise_channel is empty (no deletions shown)",
+        "git ls-tree HEAD org/surprise_channel/schemas/investigation_item.schema.json returns blob 696468806e9e8163a32b71c65d18d3a98ca318c2; git show of that path succeeds"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker surprise-row rule: a row is written per org/surprise_channel/schemas/investigation_item.schema.json, and the row gate reads the channel at the worktree.",
+    "world_is": "The schema and the rest of the channel are tracked but not on disk in this worktree. The worker read the schema with git show and did not widen the sparse checkout or reconstruct the folder, which the order forbids. Whether the row gate finds its schema from this worktree is not measured here.",
+    "notes": "Form only. The gate run at commit is the measurement that answers the open half."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W13-S3",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~13",
+    "surfaced_at": "2026-10-20T16:21:17Z",
+    "one_line": "The worktree's sparse-checkout cone omits infra/aws/ec2/alongside-schwab-si2, the granted path of the Alongside copy, so git cannot track or stage the copy and safe-commit refuses it; the order's flip to complete cannot be committed from this worktree.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in C:/Users/AndrewBerman/Desktop/wt-al-13 at ae487c67689 lists .tools, data/canonical/schwab/tests, infra/aws/ec2/canonical-schwab-si2, infra/logic, lib, org/devices, org/missions/D8/NFRA/NFRA_SCHWABBF, org/modules/graph, org/ref, org/standards; infra/aws/ec2/alongside-schwab-si2 is absent (grep -c alongside prints 0)",
+        "git ls-files -- infra/aws/ec2/alongside-schwab-si2 prints 0 tracked files; the copy at that path is untracked on disk",
+        "bash .tools/safe-commit.sh -F ... -- infra/aws/ec2/alongside-schwab-si2/sdd-daily-pull.ps1 ... returned 'error: pathspec ... did not match any file(s) known to git' and committed nothing (rc=1); the surprise-row gate ran OK on this file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-p1 FIRST ACT: if the worktree does not carry the paths the task order names, that is a BLOCKING row and the worker stops; the order's <paths> block names infra/aws/ec2/alongside-schwab-si2/sdd-daily-pull.ps1 as the write grant.",
+    "world_is": "The worktree carries the copy's tracked-parent folder only as an excluded cone path, so the grant path is not addressable to git here. The copy (698 lines, two named changes at lines 1-2 and 37) and the test pass on disk (AC1 5 passed rc=0; AC2 COPY-DIFF-OK changed_non_comment_lines=1 rc=0) but are NOT committed. The worker did not change the sparse cone, did not git add, and did not reconstruct the tree; the order's flip to complete is withheld.",
+    "notes": "The cone change or a re-cut of the worktree is the COO's or the lane owner's act; a worker does not widen its own checkout. The on-disk copy is unchanged and is the input to the commit once the path is addressable."
   }
 ]
 ```
