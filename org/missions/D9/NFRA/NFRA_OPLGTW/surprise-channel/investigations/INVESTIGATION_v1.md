@@ -30504,3 +30504,27 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   }
 }
 ```
+
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~168",
+  "surfaced_at": "2026-10-20T10:03:42Z",
+  "id": "NFRA_OPLGTW-Z-W168-S3",
+  "one_line": "The commit gate printed WARN client-data-check: the hashed account-id list is absent on this device, so commit 39e89fed308 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate checks each commit for client account ids against the hashed list on this device, so a worker commit is graded for client data.",
+  "world_is": "C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt is absent on this device. The gate printed 'absent is not empty' and did not grade commit 39e89fed308 for client account ids. The worker's diff holds code, tests and channel rows only, and the worker printed no account number, email address or client value; the worker did not grade the diff for client data either.",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GATE OUTPUT: .tools/safe-commit.sh run for commit 39e89fed308 (session output at 0.9.0_WK_NFRA_OPLGTW~168 .scratch/commit_code.out, line 49): WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids.",
+      "SIBLING PRECEDENT: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~161/NFRA_OPLGTW.TO-OG-pr-6.round-45-make-the-audit-lake-leg-bounded-and-audible.proof_of_spec.json, surprises entry NFRA_OPLGTW-Z-W161-S3, records the same WARN."
+    ]
+  }
+}
+```
