@@ -12844,6 +12844,28 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W82-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~82",
+    "surfaced_at": "2026-10-20T13:22:58Z",
+    "one_line": "the worktree did not carry infra/aws/ec2/opal-gateway/app (the catalog refs/DATA_CATALOG.yaml that criterion AC2 reads), although the face says it does; added that folder by git sparse-checkout add, the one sparse change the face allows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Face section 1 step 0: the worktree already carries the sparse folders workflows/gateway_battery, workflows/gateway_battery/tests, workflows/atom_decomposition and infra/aws/ec2/opal-gateway/app. Face section 1 names infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml as an input of AC2.",
+    "world_is": "At box/sitez cut 277ad324045 the worktree sparse list held .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards and workflows/gateway_battery. infra/aws/ec2/opal-gateway/app and workflows/atom_decomposition were absent (ls rc non-zero). After git sparse-checkout add infra/aws/ec2/opal-gateway/app the catalog file is present. workflows/atom_decomposition stays absent; no criterion reads it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/tmp/wk-mcpindex-82 sparse-checkout list, read 2026-10-20 before the add: no infra/aws/ec2/opal-gateway/app line",
+        "ls C:/tmp/wk-mcpindex-82/infra/aws/ec2/opal-gateway/app: No such file or directory (read 2026-10-20)",
+        "git sparse-checkout add infra/aws/ec2/opal-gateway/app: rc=0; infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml present afterwards"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
