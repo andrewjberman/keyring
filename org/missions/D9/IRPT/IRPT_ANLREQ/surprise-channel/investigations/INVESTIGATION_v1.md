@@ -30476,3 +30476,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W333-S1 -- AR-g-177 AC1 cannot be collected in this sparse worktree: the test imports test_retained_uploads.py, which is tracked at HEAD but absent on disk
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W333-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~333",
+  "surfaced_at": "2026-10-20T21:28:56Z",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-333 is sparse (core.sparseCheckout=true; info/sparse-checkout excludes infra/aws/lambda/investor-reporting/ycharts/generate/tests/). The AR-g-177 test file is on disk, but its import chain needs test_retained_uploads.py, which is indexed at HEAD 7a995aa990f and absent on disk. AC1 cannot be collected, so the 3-passed criterion cannot be run and the cell edit cannot be verified. Stopped as the bar requires; no sparse-checkout, checkout or copy was made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-g-177 bar: the worktree carries the paths the task order names; AC1 invocation (python -m pytest ... ycharts/generate/tests/test_opal_thread_integration.py) gives 3 passed. Cell: run from infra/aws/lambda/investor-reporting.",
+  "world_is": "From the worktree root, AC1 gives rc=2 'ERROR collecting ... ModuleNotFoundError: No module named test_retained_uploads' (raised at test_frozen_worker.py:17, via test_resident_worker.py:21 and test_opal_thread_integration.py:28). From infra/aws/lambda/investor-reporting the same error, rc=2. ls of ycharts/generate/tests/test_retained_uploads.py: No such file. git ls-files lists it (count 1). Over the worktree's indexed files under infra/aws/lambda/investor-reporting, 743 are absent on disk (test -e loop).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_frozen_worker.py:17 @ 7a995aa990f (import of test_retained_uploads)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_opal_thread_integration.py:28 @ 7a995aa990f (import of test_resident_worker)",
+      "git rev-parse --git-path info/sparse-checkout in worktree wk-irpt-anlreq-333 (the excluded generate/tests/ pattern)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W333-S2 -- AR-g-177 AC2 cannot run: its test file ycharts/research/tests/test_opal_producer_not_in_this_version.py is tracked at HEAD but absent on disk
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W333-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~333",
+  "surfaced_at": "2026-10-20T21:28:56Z",
+  "one_line": "The AR-g-177 acceptance criterion AC2 names infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_not_in_this_version.py. The file is indexed at HEAD 7a995aa990f, but the directory ycharts/research/tests/ does not exist in the sparse worktree, so the invocation cannot find it. Not run from the main tree: the criterion names the worktree and a copy would answer about another tree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-g-177 AC2: python -m pytest --color=no -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_not_in_this_version.py gives passed, run at the worktree root.",
+  "world_is": "From the worktree root: 'ERROR: file or directory not found: infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_not_in_this_version.py', rc=4, no tests ran. ls of ycharts/research/tests/: No such file or directory. git ls-files lists the file (count 1) at HEAD 7a995aa990f.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_not_in_this_version.py @ 7a995aa990f (tracked)",
+      "pytest invocation at the worktree root C:/dev/wk-irpt-anlreq-333, rc=4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
