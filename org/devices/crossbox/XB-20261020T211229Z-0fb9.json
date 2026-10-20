@@ -11,8 +11,8 @@
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/CALL_SITEZ_CLOSE_T34_PROOF_20261020.md",
  "opened_at": "2026-10-20T21:12:29Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-20T21:14:15Z",
+  "bus_message_id": "e8543bcd-6b06-4d2a-9c4e-fc576322bf33"
  },
  "ack_bus_message_id": null,
  "closed_from": {
