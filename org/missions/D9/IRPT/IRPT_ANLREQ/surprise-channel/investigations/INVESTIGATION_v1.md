@@ -27749,3 +27749,56 @@
   "world_is": "No provenance key is added. member_overrides already exists in r34l with value {} and the override sets its value. The r58 check allows exactly the changed provenance keys package_pin and member_overrides and requires member_overrides to equal the one override; the build passed with changed 6 added 0 removed 0."
 }
 ```
+
+## IRPT_ANLREQ-D2-S221 -- Run 5C strands three synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S221",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T04:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 5C stranded three more synthetic state objects the CloudOps principal cannot delete (the same three kinds as run 5B).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state_e2e5c.json (irpt_anlreq_commentary_e2e5c): three deletes answered AccessDenied for the CloudOps principal on 2026-10-20T04:32Z; 12 of the 15 distinct recorded keys read ABSENT",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates (section 4 of the E2E packet and the CTO's condition on the deletes).",
+  "world_is": "These objects remain, each one version: irpt/49financial/state/normalized_portfolios/ART-6d6b011a133c6d40a33669be7a0eebf1ed1387cafd352b153fc7b75357c25c6b/6d075d4a1b70204baec0df8ee8665e6c9a8bda4f29e1c429b96618e6e05c8a36.json; irpt/49financial/state/original_holdings/ART-786d14f53dfcdbfe4f7931ad46dd05d377d5df878060ff3a7748618038cea30a/fe099d42d99fcc5d6b20abe9fd5eb76ecefb4611a9b779bcc2b75078d4274d7c.csv; irpt/49financial/state/request_compositions/ART-6e97d95355d83d2107e649a89f38ab6ffbd7ab2b358e452d368d86af4e00146d/8d8cd76a39419d78dfb31de82170d78d6a148a79f07a2abb868e0fdc93621ef7.json. No index row points at them. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S222 -- The r34l resident refuses a clean three-row request at the recipe step (RecipeRefused) after the schema step passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S222",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-20T04:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "With commentary_requested omitted, the r34l resident passes the composition step but refuses the request at the RECIPE step (RecipeRefused), so the clean three-row request also never reaches READY.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "A_E2E5C.txt (irpt_anlreq_commentary_e2e5c): U ok keep=not-needed, T ok, S ok REQ-948597d16f8e5da8f6d64677, P1 red at the 30 minute budget (job RECEIVED, outbox SENT)",
+      "the resident journal read-only: zero COMPOSITION-REFUSED lines since 2026-10-20T04:02Z; retained_for_retry class=RecipeRefused code=- at 04:02:32Z, 04:17:33Z and 04:32:34Z (one per 900 s redelivery)",
+      "ycharts/generate/normalized_input.py raises RecipeRefused at 17 places; the journal carries the class only, so which one fired is not measured"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2 of the commentary run order: with commentary_requested omitted the request reaches READY and the sections read is the release proof of r34l.",
+  "world_is": "The request is accepted and passes the composition check, then is retained for retry at the recipe step every 900 s; the job stays RECEIVED. Run 5B (CLOSED_COMPOSITION_REQUIRED) and run 5C (RecipeRefused) are two successive refusals of the same journey. No client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
