@@ -15180,3 +15180,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 2.0.0_SA_COO~C (the apply contract). Command output and file metadata only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-D1-S26 -- sixth dell1 exit event: COO~W1, CloudOps~SC1 (1 ms apart) and CloudOps~DELL1 at 21:34:45Z to 21:34:49Z, no kill line; first respawn pair died inside a minute, second held; cause not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S26",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-20T21:48:00Z",
+  "one_line": "Three dell1 seats ended 21:34:45Z to 21:34:49Z with no kill line: COO~W1 and CloudOps~SC1 at 21:34:45.320Z and .319Z (1 ms apart), CloudOps~DELL1 at 21:34:49.055Z. Each seat's last entry is its own inbox Monitor stopped, status killed. The reaper ran after (21:39:25Z, targets=0). The first respawn of W1 and SC1 at 21:42:48Z and 21:42:50Z died inside a minute; a second spawn of each held. Cause not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: transcripts identified by dominant tool-call serial fields. COO~W1 (d4a5227d) last written 21:34:45.420Z, last entry a queue-operation stamped 21:34:45.320Z, summary 'Monitor Inbox stream for 2.0.0_SA_COO~W1 (re-arm) stopped', status killed; last API response 21:10:39Z. CloudOps~SC1 (df0f6f62) last written 21:34:45.420Z, last entry stamped 21:34:45.319Z, summary 'Monitor inbox watcher for 0.7.0_AE_CloudOps~SC1 stopped', status killed; last API response 21:27:38Z. CloudOps~DELL1 (e8d5e6c8) last written 21:34:49.156Z, last entry stamped 21:34:49.055Z, summary 'Monitor inbox watcher for 0.7.0_AE_CloudOps~DELL1 (re-armed) stopped', status killed; last API response 21:18:51Z. The write time is a transcript time; the process end time was not read.",
+      "MEASURED at 21:40Z: 0 claude.exe for the three serials; 10 serials live (MSTR, H2, CloudOps~NFRA1, CTO, C1, P1, Q1, CVO, CRO~DELL1, CRO~FIDELITY); one WindowsTerminal process, boot 10-15 15:46Z; no KILL or FORCE-KILL line in the spawn audit. seat-liveness read them UNKNOWN (process-blind) because the broker heartbeat was 4 min old. The kill-maint pass at 21:39:25Z (targets=0, killed=0, sessions 30 to 24) ran 4 min 40 s after the ends; the prior pass 20:39:06Z (targets=0).",
+      "MEASURED context: quota at 21:41:08Z reads five-hour 15% and seven-day 28%; quser reads one console session, idle 1 day 8 h 59 min. The installed claude binary, its shim and the update marker are unchanged since 10-08 (2.1.293; checked again 21:44Z). Interval since the previous end event (Q1, S25, 14:51:32Z): 6 h 43 min with no end.",
+      "MEASURED, the respawns: on the dell1 CTO's ruling (msg 8824: W1 yes, SC1 yes, CloudOps~DELL1 no, idle with no open order) W1 and SC1 were spawned at 21:42:48Z (pid 41100) and 21:42:50Z (pid 23824) with -Tab AMGT_HARVST; both claude.exe and both spawn hosts were gone at 21:43:43Z and no new transcript file existed for either. A second spawn of each, W1 at 21:44:37Z (pid 35988) and SC1 at 21:45:33Z (pid 9224), held: 2 claude.exe carry each serial at 21:45:57Z. The cause of the first pair dying is not measured. The first pair came up 8 min after the ends.",
+      "RELAYED (bus 5552896e, 21:42:59Z, laptop manager): no laptop seat ended near 21:34Z; its census reads the same 10 claude.exe seats as at 21:3xZ and no kill line since the spawn at 18:44Z. dell2 and site Z were asked at 21:41Z and had not answered at filing. The dell1 CTO reads the shared last entry and the 1 ms pairs as one harness event killing sessions that share a notification path (msg 8824); that is his reading and is not measured here. Cites S21 to S25; none edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat session ends by its own exit, a kill line or a reap; none of the last two is on record for these three.",
+  "world_is": "Three seats ended within 4 s with no kill line, each with its own inbox Monitor stopped as the last entry, and the reaper ran minutes later with no targets. A fresh spawn pair died inside a minute and a second pair held. No cause is identified and none is claimed.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts, file metadata and harness notification summaries only; no transcript content."
+}
+```
