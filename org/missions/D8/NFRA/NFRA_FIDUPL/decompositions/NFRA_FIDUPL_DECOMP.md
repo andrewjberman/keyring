@@ -110,6 +110,6 @@ Track B of the sign-in ruling: a repeatable AGENT-DRIVEN headful fallback, besid
 
 | cell | what it builds (one adapter) | write set | PRD rows | risk |
 |---|---|---|---|---|
-| **FU-s-11** | Measure whether the Claude-in-Chrome plugin and a Claude session run on the box with real Google Chrome on a display the agent can drive (same profile directory as the puller), then, when the issuer says GO, one agent-driven headful sign-in to the text-message code, recorded values-free | `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF | WORLD |
+| **FU-s-11** | (RE-CUT 2026-10-20 ~18:35Z on the CTO ruling 8750 of Andrew's steer: no Claude account or plugin on the box) The box's real Google Chrome runs headful on its own profile with a localhost-only CDP port, so a dell1 agent can drive it through an SSM port forward; then one agent-driven headful sign-in to the text-message code, recorded values-free | `org/critical_paths/change_management/`; `org/critical_paths/.open_deploys/` | C-TF | WORLD |
 
 Edge: `FU-s-10 -> FU-s-11`. Executor: `0.7.0_AE_CloudOps~NFRA1`.
