@@ -42838,3 +42838,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "directory_runner.py implements it (rekeyed_keys, carry_forward_removed); the refresh Lambda does not yet (IB-cw-5)."
 }
 ```
+
+## IRPT_BCKEND-D2-W461-S1 -- IB-cw-5 row, worker 0.9.0_WK_IRPT_BCKEND~461
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W461-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~461",
+  "surfaced_at": "2026-10-19T23:00:44Z",
+  "one_line": "The row schema org/surprise_channel/schemas/investigation_item.schema.json is absent on disk in this worktree (sparse checkout); the row form was read from the base checkout for form only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test -d org/surprise_channel in C:/dev/wk-IRPT_BCKEND-461 printed ABSENT-IN-WORKTREE (HEAD d2f482c9678)",
+      "the schema was read at C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json (229 lines) for its form only; no file outside the order's paths was written from it"
+    ]
+  },
+  "spec_asserts": "The order's bounds and the surprise-channel rule name org/surprise_channel/schemas/investigation_item.schema.json as the row schema, which a worker reads in its own tree.",
+  "world_is": "This worktree tracks org/surprise_channel in the index but has no such directory on disk (sparse checkout); the same condition is recorded for worker ~459 as IRPT_BCKEND-D2-W459-S3."
+}
+```
+
+## IRPT_BCKEND-D2-W461-S2 -- IB-cw-5 row, worker 0.9.0_WK_IRPT_BCKEND~461
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W461-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~461",
+  "surfaced_at": "2026-10-19T23:00:44Z",
+  "one_line": "The order asks for AC2 output recorded BEFORE the commit, but AC2 compares HEAD with HEAD~1 and so fails by construction before the commit; it is re-run after the commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p261_cells.py ac2 runs git show HEAD~1:infra/aws/lambda/investor-reporting/directory/refresh.py and git show HEAD of the same path; before the commit it exits 1 with 'refresh.py is identical to the base' (IBcw5_criteria_output.txt, deliverables/0.9.0_WK_IRPT_BCKEND~461)",
+      "the order's step 2 asks for AC1 and AC2 output BEFORE the commit; its step 4 asks for AC3 after the one commit"
+    ]
+  },
+  "spec_asserts": "Step 2 of the order: run AC1 and AC2 and record their output in IBcw5_criteria_output.txt BEFORE the one commit; AC3 runs after it.",
+  "world_is": "AC2 reads the committed refresh.py at HEAD and HEAD~1, so it can PASS only after the commit exists; before the commit it exits 1 with 'refresh.py is identical to the base'. The pre-commit record is a FAIL by construction, not a pass; the post-commit run is reported in the worker report."
+}
+```
+
+## IRPT_BCKEND-D2-S247 -- IB-cw-5 graded: the refresh Lambda counts a re-keyed previous key as retained; my end-to-end fixture goes from REFRESH_FAILED (base) to REFRESH_COMPLETED_WITH_ADDITIONS (new)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S247",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-19T23:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W461-S1 and W461-S2 (worker ~461, order TO-IB-cw-5). S1: the row schema is absent in the sparse worktree, so the worker could not validate its rows against it; no effect on the rows (the merge gate graded them). S2: my check IBCW5 AC2 and AC3 read git (HEAD~1..HEAD), so they cannot pass before the worker's one commit: my wording defect, the same as IBCW2 and IBCW4. THE GRADE: IBCW5 AC1 to AC3 PASS x3 run by me in C:/dev/wk-IRPT_BCKEND-461 at 80fe16e2ab3; the refresh.py diff read whole (rekeyed_keys above disappeared_entries; disappeared_entries and compute_delta leave a retained key out; the delta gains no key; every other line unchanged); the surprise channel file keeps its LF endings (net 50 appended lines, 0 deleted, 0 CR in main after the merge); the folder run by the worker with identical failing sets (32 failed 194 passed 6 errors before, 32 failed 202 passed 6 errors after). MY OWN END-TO-END (not in the order): one re-key fixture (two previous account-level keys whose accounts all sit in two current relationship-keyed entries, one unchanged key, source keys holding old and new) run through refresh_firm in two git-archive copies: the base returns REFRESH_FAILED with disappeared 2; the new code returns REFRESH_COMPLETED_WITH_ADDITIONS with disappeared 0 and added 2. That proves the runner fix alone (IB-cw-4) leaves the Cottonwood build failed at the Lambda and that IB-cw-5 closes it. Merged (branch wk-IRPT_BCKEND-461 at 80fe16e2ab3). Nothing deployed. The pair for the single release is drafted at deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_COTTONWOOD_RETAINED_KEY_PAIR_PACKET_AND_COO_HALF.md with the merged blobs refresh.py 304eb35580ee and directory_runner.py f2d2329d39a1.",
+  "one_line": "IB-cw-5 graded complete: the refresh Lambda counts a re-keyed previous key as retained; my end-to-end fixture goes from REFRESH_FAILED (base) to REFRESH_COMPLETED_WITH_ADDITIONS (new).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r261/p261_cells.py . IBCW5-AC1|AC2|AC3 run by 2.0.0_SA_COO~P2 in C:/dev/wk-IRPT_BCKEND-461 at 80fe16e2ab3: PASS x3",
+      "refresh_firm end-to-end fixture in two git-archive copies (base 5390480a9c1, branch 80fe16e2ab3): base REFRESH_FAILED disappeared 2; new REFRESH_COMPLETED_WITH_ADDITIONS disappeared 0",
+      "python .tools/proof-of-spec-check.py on the worker's instance in the main tree: VALID (rc=0)"
+    ]
+  },
+  "spec_asserts": "A previous client key counts as retained when every account id of its entry is present in one current entry; any missing account fails closed (CTO msg 10788), on the Lambda as well as the runner.",
+  "world_is": "Both surfaces implement it in code merged on box/dell2 and deployed nowhere; the release waits on the pair."
+}
+```
