@@ -32,3 +32,12 @@ relay's words, VERBATIM:
    goes to `0.0.0_AB_MSTR~DELL2`.
 
 -- 1.0.0_SA_CTO~DELL2
+
+**ADDENDUM (2026-10-20 ~01:0xZ):** on item 5, `4.0.0_SA_CRO~TCKT` (msg 11154) says Andrew gave it no word on the contact map. The phrase matches
+that seat's FINDING (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ALYSSA_PICKUP_EMAIL_TCK-20261014-4f5e0c43_ANSWER_20261019.md`):
+- since 8398ba291b, client notices go only to `CLIENT_NOTICE_CONTACT_MAP`, which is `{}` live;
+- staff are not clients.
+
+That is the live behaviour already, so following it means changing nothing: no notice is added, widened or sent. The close-out report
+verifies it live (a staff-filed request mails no client).
+
