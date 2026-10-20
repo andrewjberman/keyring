@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -50,6 +50,16 @@ FU-x-1's one live recon run (worker row NFRA_FIDUPL-D1-W1-S9, SSM command 91fa50
 4. Tests, with fakes, in the new file `tests/test_login_trace.py`: `test_trace_records_step_outline_without_values`, `test_trace_stops_at_first_failing_step`, `test_trace_never_records_secret_or_code`, `test_locators_found_by_type_not_by_assumed_name`, `test_trace_mode_stops_after_sms_request`.
 5. Read `org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md` section 10 if it exists (the issuer adds the CRO's login-page listing there when it arrives). Add AC4 to your proof instance (four criteria), re-validate, and flip to complete only when all four PASS. You touch no AWS and make no live call; FU-x-1 runs it live.
 
+### REPAIR 2 (issuer, 2026-10-20 ~14:15Z; this order is REOPENED a second time) -- the trace showed the Next click did not advance the page
+
+FU-x-1 attempt 2 ran your `--trace-login` on the real box (SSM command e0b78633-eb35-4e48-8efa-a20709672470; worker row NFRA_FIDUPL-D1-W1-S11). Verbatim: `open_login OK`, `submit_username OK` (0.2 s), then `submit_password FAIL:TimeoutError` after 20.2 s, with the page still on the username screen (path `/`, title "Wealthscape Login"): the visible elements were the Username label, `input#userInput` (name `userID`), the "Remember my username" checkbox (`#rememberMe`, name `rememberMyUsername`) and one `input[type=submit]`, and no password element. So the Next click did not move the page, and the trace cannot say why. Extend the trace so the NEXT run says why. Add to the step trace, for every step, all of it values-free:
+1. **Network calls in the step window:** for each XHR, fetch or document request that started during the step: method, URL path (no query string, no host beyond the first label), HTTP status or the failure text, and the resource type; at most 40 lines per step; never a header, cookie or body.
+2. **Form state before the Next click:** whether the form's validity check passes, whether the submit control is disabled, the names of the hidden inputs and, for each, only whether it is non-empty (true or false), and whether the username input's value is non-empty (true or false).
+3. **What the page said after the Next click:** wait up to 20 s for EITHER the password component to be visible OR a visible alert or error element (`[role=alert]`, or any element whose class contains `error`, `invalid` or `alert`); record which came first and the error element's visible text cut to 80 characters (a public UI sentence, never an entered value).
+4. **Console errors:** the count and the first three messages cut to 80 characters with any URL reduced to its path.
+5. **Fingerprint facts:** the user-agent string, the value of `navigator.webdriver`, whether `window.chrome` exists, and the viewport size.
+Add five tests to the EXISTING file `tests/test_login_trace.py` (keep its five): `test_trace_records_network_calls_without_bodies`, `test_trace_records_form_state_without_values`, `test_trace_records_error_text_after_next`, `test_trace_records_console_error_count`, `test_trace_records_fingerprint_facts`. Do not change the Next-click mechanism yet except that after the click you MUST wait for the page change or the error as in item 3; if you can see from the CRO's listing (reference section 10) that a different control submits the form, use it and say so in a surprise row. Same rules: criterion FU2-AC4 now needs all ten tests; refresh your proof instance for four criteria, flip to complete only when all four PASS; you make no AWS call and no live call.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -62,7 +72,7 @@ FU-x-1's one live recon run (worker row NFRA_FIDUPL-D1-W1-S9, SSM command 91fa50
 `FU2-AC3` -- the five G-switch probe tests exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the five login-trace tests exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+`FU2-AC4` -- the ten login-trace tests (the five of the first repair and the five of REPAIR 2) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 
