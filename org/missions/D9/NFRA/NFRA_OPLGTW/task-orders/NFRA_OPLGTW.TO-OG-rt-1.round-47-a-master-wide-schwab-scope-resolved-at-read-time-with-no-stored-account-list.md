@@ -72,7 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rt-1.round-47-a-master-wide-sch
 - READINGS DISCLOSED TO THE CTO: (1) the stored sentinel is `["*"]` under the existing `accounts` key, not a new scope key, so an old gateway reading a new grant would call it Malformed (denying the principal): the release ORDER matters (this code live before any grant names `*`), and the grant order's Phase A must say so. (2) For a master-wide master the account-reference resolver enumerates the master's accounts from the newest complete `dim_position` snapshot, so a reference to an account with no position row in that snapshot does not resolve; that is the issuer's choice of "current accounts" and is stated in the code comment. (3) The dim_asset restriction (the CUSIPs a grant's accounts hold) uses the whole master's positions for a master-wide master, which is what "the master's full accounts" means. (4) Nothing here changes who may be granted a master: `scope.masters` is unchanged.
 - Pre-cut: `AC1` base FAIL as expected (the master-wide scope is Malformed; the four refusal controls pass trivially), `AC2` base FAIL as expected (early exit: the scope does not parse), `AC3` base FAIL as expected (no test file). `AC1` and `AC2` were both fed a reference implementation in a scratch copy (about 40 changed lines in `data_entitlement.py`, `account_ref.py` and the integration's helper) and read PASS on every line, then it was discarded. The seven neighbour files pass at the base except the carried red `test_ogz1_ac08` (72 passed).
 
-<status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-A</workstream>
 <slot>~170</slot>
