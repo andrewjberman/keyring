@@ -13405,3 +13405,54 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~89",
+  "surfaced_at": "2026-10-20T16:40:30Z",
+  "id": "NFRA_MCPINDEX-Z-W89-S1",
+  "one_line": "The worker definition gives a row id as <CODE>-W<n>-S<k>, but on this site-Z box the row gate names the worker form <CODE>-Z-W<n>-S<k>; the order's own id NFRA_MCPINDEX-Z-W89-S<k> follows the gate, so this row is minted in the Z form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/surprise-row-gate.py@62604a82b8c (fabric-identity message at lines 2185-2186: a row on site Z is written <CODE>-Z-S<n>, worker <CODE>-Z-W<n>-S<k>)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md@62604a82b8c (site-Z rows NFRA_MCPINDEX-Z-W81-S1..S5 carry the Z form)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker definition names the row id form <CODE>-W<n>-S<k>, with n the slot of the worker's serial.",
+  "world_is": "On site Z the row gate requires the worker form <CODE>-Z-W<n>-S<k> for the fabric-identity check, and the existing site-Z worker rows carry it.",
+  "notes": "OBSERVATION, INERT: no criterion of MX-y-6 reads the id form. The row is minted in the form the gate admits. The CVO records whether the laptop-form definition needs a site-Z clause."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~89",
+  "surfaced_at": "2026-10-20T16:40:30Z",
+  "id": "NFRA_MCPINDEX-Z-W89-S2",
+  "one_line": "The naming gate printed NAMING ERROR function-map folder missing (infra/aws/lambda/ci/function-map/ is outside this worktree's sparse cone) on the work commit 8535d944356; the commit landed anyway, so the naming check did not grade that commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at 62604a82b8c (the cone holds .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/*, workflows/atom_decomposition, workflows/gateway_battery; no infra/aws/lambda path)",
+      "safe-commit output for 8535d944356: [naming-gate] NAMING ERROR function-map folder missing: ... (the Lambda source map is read from this folder; nothing is graded from a copy), then the commit landed with rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit gate runs the naming gate on a commit of workflow files in this worktree and grades it.",
+  "world_is": "The naming gate could not read its function-map folder from this sparse worktree, reported NAMING ERROR for it, and the commit proceeded without a graded naming check.",
+  "notes": "OBSERVATION, INERT: this worker's commit touched workflows/gateway_battery only. Whether the sparse cone should carry the function-map folder is the issuer's call; nothing in MX-y-6 reads the naming result."
+}
+```
