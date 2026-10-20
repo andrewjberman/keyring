@@ -30457,3 +30457,33 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S427's question is answered by the registry's compiler and the row is inert; the subset fact does not change OG-ms-2's signed scope, it only sharpens what the halves read, and it is recorded here for them."
 }
 ```
+
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-20T09:39:32Z",
+  "id": "NFRA_OPLGTW-Z-S429",
+  "one_line": "Issuer disposition of NFRA_OPLGTW-Z-S402 (the audit lake leg under production traffic): OG-ev-13 read a full day and the verdict is HOLDS",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S402"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ev-13 (executor 0.7.0_AE_CloudOps~NFRA1, record AUDIT_LEG_24H.json, proof instance VALID at 1b4f15a249): window 2026-10-19T07:44:53Z to 2026-10-20T07:48:00Z, journal audit-lake WARN lines 0 (last count 0, no classes), 25 of 25 hours carry 20 or more POST /mcp lines and the lake keeps pace in every one (lowest ratio 0.67 at 2026-10-20T06Z, the hour holding the executor's own sampler probes), throttle constant 60.0 at the pinned sha 13917ef993, verdict HOLDS by the rule fixed before the run.",
+      "The issuer ran ev13.AC1 itself after the report: RESULT PASS (task order flipped complete, commit 6d8ee49043).",
+      "The 2026-10-19T02:00Z hour of 2,896 objects (about 7 times the baseline hour) was read in full (2,896 of 2,896 bodies, 0 read errors): two event classes, gw_cred_observe 1,248 and ms_site_children 1,244, make 86 percent; the 2026-10-20T02Z hour holds 3,070 objects, so the hour recurs daily and is a schedule, not a fault."
+    ]
+  },
+  "spec_asserts": "Z-S402: the audit lake put is bounded and audible, and a failed put is reported; open until a window of production traffic is read.",
+  "world_is": "A full day of production traffic (25 of 25 hours with 20 or more POST /mcp lines) wrote no lake-put failure line and the lake kept pace with the journal in every busy hour. NOT CLAIMED: that the lake would report a failure class the service has not met (a day with no failure is a day with none, not a proof of the path); the first failure line is still the instrument that says so.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S402 waited on one thing, a window of production traffic read against the lake; OG-ev-13 read it and the verdict is HOLDS. The row's mechanism (a bounded, audible put) is unchanged and stays in force."
+}
+```
