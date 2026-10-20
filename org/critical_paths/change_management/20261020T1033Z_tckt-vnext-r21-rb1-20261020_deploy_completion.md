@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-20T10:33:30.614266+00:00
-**Status:** OPEN
+**Status:** CLOSED -- REFUSED BY GATE, nothing created -- closed 20261020T123913Z
 **Deploy:** TCKT_VNEXT TO-R21-RB1 (GO msg 11305, CTO round-20 analysis msg 11235): ONE PROD attempt of the Trade attachment BYTE READ-BACK on https://opalinvest.dev: one synthetic internal filer files one Trade Request with one invented csv, opens the attachment (listener registered before the press), downloads the Open body url with a plain GET, sha256 read equals sha256 uploaded; ticket and filer row deleted by key; the object STAYS as a fourth residue; surfaces: opal-tickets, opal-users-v2, s3 opal-data-cottonwood trade-form prefix (one object created, none deleted); check 9167d289eb
 **Authored by:** 0.7.0_AE_CloudOps~TV2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -23,3 +23,4 @@
 
 - 20261020T103330Z OPENED by 0.7.0_AE_CloudOps~TV2 with 6 leg(s)
 - 20261020T103727Z LEG O1 closed: OFFLINE-PROOF OK (10:36Z, nothing written; deliverables/r21_trade_prod/offline_proof_output.txt): (1) parser against stu
+- 20261020T123913Z CLOSED -- REFUSED BY GATE before apply, world untouched: NOT STARTED, closed per COO AMENDMENT 3 (CTO note msg 11344) before the ledger's 3.0 h window reads RED at 13:33Z; the start waits for 14:15Z AND 2.0.0_SA_COO~Y2's word that IRPT_ANLREQ run 7 is terminal (AMENDMENT 2, CTO ruling 11330). Refusals: 'hold --pre-apply' REFUSED because leg O1 (the offline proof, which writes nothing) carries proof; plain 'hold' REFUSED because the apply leg F1 is open.
