@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ticket Center Analysis Request - End-to-End State</title>
+<style>
+  @page { size: Letter; margin: 0.55in 0.6in; }
+  :root { --ink:#163372; --muted:#4A5878; --line:#C4CBDB; --bg:#F4F6FA; --ok:#0B7A4B; --bad:#B42318; --warn:#9A6700; --band:#0A1733; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.42; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4pt; letter-spacing: .3px; }
+  h2 { font-size: 14.5pt; margin: 0 0 6pt; padding-bottom: 4pt; border-bottom: 2px solid var(--ink); }
+  h3 { font-size: 11pt; margin: 10pt 0 3pt; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+  p { margin: 4pt 0; }
+  ul, ol { margin: 3pt 0 3pt 16pt; padding: 0; }
+  li { margin: 1.5pt 0; }
+  code { font-family: Consolas, monospace; font-size: 9pt; background: #EEF1F7; padding: 0 3px; border-radius: 3px; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .sub { color: var(--muted); font-size: 11pt; margin-bottom: 12pt; }
+  .verdict { border: 1px solid var(--line); border-left: 5px solid var(--bad); padding: 8pt 10pt; margin: 10pt 0; background: #fff; }
+  .verdict b { color: var(--bad); }
+  table { border-collapse: collapse; width: 100%; margin: 6pt 0; font-size: 9.5pt; }
+  th, td { border: 1px solid var(--line); padding: 4pt 6pt; text-align: left; vertical-align: top; }
+  th { background: #EEF1F7; }
+  .tag { display: inline-block; font-size: 8pt; font-weight: 700; padding: 1pt 6pt; border-radius: 9pt; color: #fff; white-space: nowrap; }
+  .t-ok { background: var(--ok); } .t-bad { background: var(--bad); } .t-warn { background: var(--warn); } .t-off { background: #6B7280; } .t-fe { background:#5F3BE3; }
+  .shot { border: 1px solid var(--line); display:block; width:auto; max-width: 100%; max-height: 470px; margin: 6pt auto 2pt; }
+  .two .shot { max-height: 300px; }
+  .cap { font-size: 8.5pt; color: var(--muted); margin-bottom: 6pt; }
+  .cols { display: flex; gap: 12pt; }
+  .cols > div { flex: 1; }
+  .box { border: 1px solid var(--line); border-radius: 4px; padding: 6pt 8pt; background: #fff; margin: 6pt 0; }
+  .box.fe { border-left: 4px solid #5F3BE3; }
+  .box.be { border-left: 4px solid var(--ink); }
+  .box.q  { border-left: 4px solid var(--warn); background: #FFFBEB; }
+  .box.st { border-left: 4px solid var(--ok); }
+  .lbl { font-weight: 700; font-size: 9pt; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 2pt; }
+  .flow { display: flex; flex-wrap: wrap; gap: 4pt; align-items: center; margin: 8pt 0; }
+  .flow span.n { border: 1px solid var(--line); background: #fff; border-radius: 4px; padding: 3pt 6pt; font-size: 8.5pt; }
+  .flow span.n.bad { border-color: var(--bad); color: var(--bad); font-weight: 700; }
+  .flow span.n.warn { border-color: var(--warn); color: var(--warn); font-weight: 700; }
+  .flow span.a { color: var(--muted); }
+  .small { font-size: 8.5pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="page">
+  <h1>Ticket Center: Analysis Request</h1>
+  <div class="sub">End-to-end state, front end and back end, step by step &middot; as of Tuesday Oct 20, 2026, 9:21 AM ET<br>
+  Prepared by 4.0.0_SA_CRO~TCKT for Andrew's voice memo &middot; project IRPT_ANLREQ (PRD v0.24)</div>
+
+  <div class="verdict">
+    <b>Bottom line:</b> the cleanup from your Oct 19 walk is live on PROD: no email, type or commentary fields, models at
+    first paint, staff never refused, and "Open report" shows the report. <b>But a filing from the PROD page cannot reach a
+    report today.</b> The page's own check refuses the new "commentary on" flag. The fix is approved and on DEV, but was not
+    on PROD at 9:21 AM. Beyond that, <b>no ticket has yet received the four attachments</b>: the two causes found in run 6
+    are fixed live but unproven. Run 7 (about 10:15 AM) is the first proof.
+  </div>
+
+  <h3>The journey in one line</h3>
+  <div class="flow">
+    <span class="n">1 Board</span><span class="a">&rarr;</span>
+    <span class="n">2 New Ticket</span><span class="a">&rarr;</span>
+    <span class="n">3 Form</span><span class="a">&rarr;</span>
+    <span class="n">4 Upload check</span><span class="a">&rarr;</span>
+    <span class="n">5 Ticket created</span><span class="a">&rarr;</span>
+    <span class="n bad">6 Analysis submit</span><span class="a">&rarr;</span>
+    <span class="n">7 Report id on ticket</span><span class="a">&rarr;</span>
+    <span class="n">8 Report generated</span><span class="a">&rarr;</span>
+    <span class="n warn">9 Commentary PDF</span><span class="a">&rarr;</span>
+    <span class="n warn">10 Four attachments</span><span class="a">&rarr;</span>
+    <span class="n">11 Open report</span>
+  </div>
+
+  <h3>State of every step</h3>
+  <table>
+    <tr><th>#</th><th>Step</th><th>Front end (PROD page)</th><th>Back end</th></tr>
+    <tr><td>1</td><td>Open Ticket Center</td><td><span class="tag t-ok">LIVE</span> since 5:28 AM</td><td><span class="tag t-ok">LIVE</span></td></tr>
+    <tr><td>2</td><td>New Ticket, choose Analysis Request</td><td><span class="tag t-ok">LIVE</span> defaults to Service Request</td><td>n/a</td></tr>
+    <tr><td>3</td><td>Fill the form</td><td><span class="tag t-ok">LIVE</span> new form</td><td><span class="tag t-ok">LIVE</span> firm list</td></tr>
+    <tr><td>4</td><td>Upload check ("Did you mean")</td><td><span class="tag t-ok">LIVE</span> (offline-proved)</td><td><span class="tag t-ok">PROVEN</span> run 6, staff never refused</td></tr>
+    <tr><td>5</td><td>Ticket created</td><td><span class="tag t-ok">LIVE</span></td><td><span class="tag t-ok">PROVEN</span> run 6</td></tr>
+    <tr><td>6</td><td>Analysis submitted</td><td><span class="tag t-bad">BROKEN ON PROD</span> page refuses itself</td><td><span class="tag t-ok">PROVEN</span> run 6 (API)</td></tr>
+    <tr><td>7</td><td>Report id saved on ticket</td><td><span class="tag t-bad">BLOCKED</span> by step 6</td><td><span class="tag t-off">UNEXERCISED</span></td></tr>
+    <tr><td>8</td><td>Report generated (Opal producer)</td><td>n/a</td><td><span class="tag t-ok">PROVEN</span> run 6, READY in ~30 s</td></tr>
+    <tr><td>9</td><td>Commentary drafted, then PDF</td><td>n/a</td><td>Draft <span class="tag t-ok">PROVEN</span>; PDF <span class="tag t-warn">NEVER REACHED</span></td></tr>
+    <tr><td>10</td><td>Four attachments on the ticket</td><td><span class="tag t-off">UNEXERCISED</span></td><td><span class="tag t-warn">FIXED, UNPROVEN</span> run 7</td></tr>
+    <tr><td>11</td><td>Open report / open files</td><td><span class="tag t-ok">LIVE</span> report face proven (3 sections, not 425 cards)</td><td><span class="tag t-ok">LIVE</span></td></tr>
+    <tr><td>12</td><td>A failed step shows on the ticket</td><td><span class="tag t-off">UNEXERCISED</span></td><td><span class="tag t-off">UNEXERCISED</span></td></tr>
+    <tr><td>13</td><td>Emails to people</td><td colspan="2"><span class="tag t-off">NONE BY DESIGN</span> both email lists are empty</td></tr>
+  </table>
+
+  <h3>How to read this document</h3>
+  <ul>
+    <li><b>Screenshots</b> are the real portal code, rendered on this machine with <b>synthetic data</b> (no client data, no
+      AWS calls). Two builds were used: <b>"PROD today"</b> = portal <code>f48e09dd</code>, exactly what is live; <b>"PROD +
+      fix"</b> = <code>e9ca1106</code>, the approved submit fix that is waiting to be promoted.</li>
+    <li><b>PROVEN</b> = a live run left a receipt. <b>UNEXERCISED</b> = deployed, never run end to end. Runs 5 and 6 called the
+      APIs directly. <b>No staff user has filed through the PROD page yet</b> (0 analysis tickets since 5:28 AM).</li>
+    <li>Each step ends with <b>Questions for your memo</b>: things I saw that look vestigial or unclear. They are not decided.</li>
+  </ul>
+</section>
+
+<!-- STEP 1-2 -->
+<section class="page two">
+  <h2>Steps 1-2 &middot; Open the Ticket Center, press New Ticket</h2>
+  <img class="shot" src="shots/c_01_board.png">
+  <div class="cap">Step 1, PROD today: the Ticket Center with an empty board (Open / In Progress / Completed tabs).</div>
+  <img class="shot" src="shots/c_02_new_ticket_default.png">
+  <div class="cap">Step 2, PROD today: New Ticket opens as <b>Service Request</b>; the filer must switch the type to Analysis Request.</div>
+  <div class="cols">
+    <div class="box fe"><div class="lbl">Front end</div>The page is shown to Opal staff only. Loading it reads the open tickets
+      and their counts. New Ticket opens a panel whose first control is the ticket type.</div>
+    <div class="box be"><div class="lbl">Back end</div>Ticket service Lambda <code>opal-ticket-api</code>, table
+      <code>opal-tickets</code>, behind the portal API authorizer. Calls: <code>GET /tickets?status=open</code>,
+      <code>GET /tickets/metrics</code>. Nothing starts an analysis here.</div>
+  </div>
+  <div class="box q"><div class="lbl">Questions for your memo</div>
+    <ul><li>Should "Analysis Request" be the default type for staff, or a separate button, given it is the main workflow?</li></ul></div>
+</section>
+
+<!-- STEP 3 -->
+<section class="page two">
+  <h2>Step 3 &middot; Fill in the Analysis Request form</h2>
+  <img class="shot" src="shots/c_03_analysis_form_empty.png">
+  <div class="cap">PROD today, empty: no report-type dropdown, no email field, no commentary box. The five Opal models are on screen at once. Submit is held until a title is given.</div>
+  <img class="shot" src="shots/c_04_analysis_form_filled.png">
+  <div class="cap">PROD today, filled: firm chosen (49 Financial), two Opal models checked (= Multi-Comp by count), holdings file attached; File Analysis Request is enabled.</div>
+  <div class="cols">
+    <div class="box fe"><div class="lbl">Front end</div>Fields: Title, Advisor (optional), Firm, Household (required), Opal
+      model checkboxes (static list, larger text), Other ETFs, a date field, Holdings file. The report type is derived from
+      how many comparables are picked: 0 Overview, 1 Comparison, 2+ Multi-Comp.</div>
+    <div class="box be"><div class="lbl">Back end</div>Opening the form asks the directory service for the firms
+      (<code>POST /investor-reporting/directory/resolve</code>). The models need <b>no call</b>. The ETF catalogue is fetched
+      only when Other ETFs is typed.</div>
+  </div>
+  <div class="box q"><div class="lbl">Questions for your memo</div><ul>
+    <li><b>The date field (mm/dd/yyyy) has no visible label.</b> It is "Needed by". Keep it, label it, or remove it? (Price dates were retired on Oct 15.)</li>
+    <li>The <b>Advisor</b> name field is still there (optional). You removed the email; is the advisor name still wanted?</li>
+    <li>The "Compare against" heading is still small; only the model names were enlarged.</li>
+    <li>Household is required; Title is required. Is the title needed, or could it be derived (household + type)?</li></ul></div>
+</section>
+
+<!-- STEP 4 -->
+<section class="page">
+  <h2>Step 4 &middot; The upload check ("Did you mean")</h2>
+  <img class="shot" src="shots/c_05_did_you_mean.png">
+  <div class="cap">PROD today: a holdings row with an unknown ticker (SPYY) gets "Did you mean SPY?" with Yes / Replace / No. Nothing is filed until it is answered.</div>
+  <div class="cols">
+    <div class="box fe"><div class="lbl">Front end</div>Pressing File Analysis Request first sends the holdings file. If a
+      ticker does not exist, the form shows the door's suggestion: <b>Yes</b> accepts it, <b>Replace</b> lets you type a
+      ticker (checked again), <b>No</b> files it as-is with "Opal Staff will manage the replacement". A ticker that exists but
+      cannot be priced is filed without a prompt and replaced in the back end.</div>
+    <div class="box be"><div class="lbl">Back end</div>The "upload door", Lambda <code>irpt-ycharts-generate</code>
+      (<code>intake/uploads.py</code>). It checks every ticker against Yahoo first, then YCharts only for symbols Yahoo lacks.
+      It stores the original file and its normalized form under <code>irpt/&lt;firm&gt;/state/</code>.
+      <b>Staff are never refused for a missing advisor:</b> the owner falls back to the signed-in staff user
+      (<code>served.py</code>, release r37, live since 3:10 AM).</div>
+  </div>
+  <div class="box st"><div class="lbl">State</div><span class="tag t-ok">PROVEN</span> through the API in run 6 (4:02 AM): an
+    unseeded staff user with no advisor uploaded and was accepted. The Yes/Replace/No prompt is proven only offline. The
+    "kept unknown ticker &rarr; back-end replacement" path has <b>never been run past this step</b>.</div>
+  <div class="box q"><div class="lbl">Questions for your memo</div><ul>
+    <li>Is Yes / Replace / No the behavior you want, or should unknown tickers always go straight to Opal staff?</li></ul></div>
+</section>
+
+<!-- STEP 5-6 broken -->
+<section class="page two">
+  <h2>Steps 5-6 &middot; Ticket created, then the analysis is submitted <span class="tag t-bad">BROKEN ON PROD</span></h2>
+  <img class="shot" src="shots/c_06_prod_submit_fails.png">
+  <div class="cap">PROD today, after pressing File Analysis Request: "Upload: done. Ticket filed. <b>Analysis: FAILED - Invalid analysis submission request.</b> Record: not attempted."</div>
+  <img class="shot" src="shots/c_12_prod_ticket_no_report.png">
+  <div class="cap">PROD today, the board afterwards: the ticket exists with no report. The row offers "Retry analysis request", which fails the same way.</div>
+  <div class="cols">
+    <div class="box fe"><div class="lbl">Front end (what breaks)</div>The page makes four writes in order: upload &rarr;
+      create ticket &rarr; <b>submit analysis</b> &rarr; save report id. Yesterday's cleanup made every request carry
+      "commentary on". The page's own pre-send check (<code>contracts/submission-request.ts</code>) still rejects that field.
+      So the third write is never sent, and the ticket is left with no report.</div>
+    <div class="box be"><div class="lbl">Back end</div>Ticket service writes the ticket; routing names manav@ and alyssa@ as
+      the assignee pool; it starts open and unclaimed. The analysis service <b>accepts</b> "commentary on" (fixed live in
+      r34m, 3:30 AM). The defect is <b>only on the page</b>.</div>
+  </div>
+  <div class="box st"><div class="lbl">State and fix</div>Found by worker 323 at 7:28 AM (row IRPT_ANLREQ-D2-W323-S1). Fixed
+    in <code>e9ca1106</code> (a one-word change plus tests), CTO-approved 8:02 AM, promote order to the deploy seat cut 8:01 AM.
+    <b>Not on PROD at 9:21 AM</b> (PROD is still the 5:20 AM release). Until it lands, no one can file from the page.</div>
+</section>
+
+<!-- STEP 6-7 fixed -->
+<section class="page">
+  <h2>Steps 6-7 &middot; The same filing with the fix (what PROD will do once promoted)</h2>
+  <img class="shot" src="shots/c_07_fixed_submit_ok.png">
+  <div class="cap">PROD + fix: "Upload: done. Ticket filed. Analysis: requested (REQ-...). Record: report saved on the ticket." (The empty board here is a limitation of the synthetic data, not a defect.)</div>
+  <div class="cols">
+    <div class="box fe"><div class="lbl">Front end</div>All four writes happen, and the page reports each one. The form closes. The ticket row gets an
+      "Open report" button because the report id is now saved on it.</div>
+    <div class="box be"><div class="lbl">Back end</div><code>POST /investor-reporting/analysis</code> &rarr;
+      <code>submission.py</code> derives the type from the comparable count (variant "auto"), records the request in
+      <code>irpt-requests</code>, stamps a staff filing <code>ticket_confirmed</code> (this routes it to Opal's own report
+      builder; r37 fix) and queues it for the report host. Then <code>POST /tickets/{id}/report</code> saves the id.</div>
+  </div>
+  <div class="box st"><div class="lbl">State</div>Submit: <span class="tag t-ok">PROVEN</span> through the API in run 6 (REQ
+    accepted 4:02 AM). From the page: proven only offline on the fix build. Saving the report id: <span class="tag t-off">UNEXERCISED</span> live.</div>
+  <div class="box q"><div class="lbl">Questions for your memo</div><ul>
+    <li>After filing, there is no on-screen sign that the report is being built. Do you want a visible "generating / ready" status on the row?</li></ul></div>
+</section>
+
+<!-- STEP 8-9 backend -->
+<section class="page">
+  <h2>Steps 8-9 &middot; Back end: the report and the commentary (no screen)</h2>
+  <div class="box be"><div class="lbl">Step 8 &middot; Report generated <span class="tag t-ok">PROVEN</span></div>
+    <ul>
+      <li>An always-on EC2 host (the "resident", release r34n since 6:58 AM) takes the request from the queue.</li>
+      <li>It routes a staff filing to <b>Opal's producer</b> (not a YCharts report).</li>
+      <li>It prices each holding in order: Opal's own stores &rarr; Yahoo (T-1) &rarr; YCharts, one symbol, price only &rarr;
+        a class-matched replacement (C-SWAP) &rarr; otherwise left out, and the report says so.</li>
+      <li>It builds the report PDF, stores it, and marks the job READY.</li>
+      <li>Run 6: READY in about 30 seconds.</li>
+    </ul>
+    <p class="small">Not yet read: the content of a staff Multi-Comp PDF since the fixes. On Oct 19 a Multi-Comp run made no comparison data calls.</p></div>
+  <div class="box be"><div class="lbl">Step 9 &middot; Commentary drafted, then rendered as a PDF</div>
+    <ul>
+      <li>At READY the commentary drafter (the Kimi model) writes the investment commentary from the report's key figures. It
+        uses no client identity and is marked DRAFT.</li>
+      <li><b>Draft: <span class="tag t-ok">PROVEN</span></b> (run 6, 4:04 AM).</li>
+      <li>The host was not allowed to read the draft back. That was fixed live at 6:04 AM (IAM grant).</li>
+      <li><b>Standalone commentary PDF: <span class="tag t-warn">NEVER REACHED</span></b>. Run 6 stopped at the attach step
+        before rendering it.</li>
+    </ul></div>
+  <div class="box q"><div class="lbl">Questions for your memo</div><ul>
+    <li>What must the commentary cover for a Multi-Comp (portfolio vs each model)? It is drafted from the report, so a thin report gives thin commentary.</li></ul></div>
+</section>
+
+<!-- STEP 10 -->
+<section class="page two">
+  <h2>Step 10 &middot; The four attachments land on the open ticket <span class="tag t-warn">FIXED, UNPROVEN</span></h2>
+  <img class="shot" src="shots/c_08_board_waiting.png">
+  <div class="cap">PROD + fix, while the back end works: the ticket is open and unclaimed, with "Open report", but no files yet.</div>
+  <img class="shot" src="shots/c_09_board_package.png">
+  <div class="cap">PROD + fix, the target end state: "Report package": Original file, Form as filled (a table), Open Report, Open Commentary.</div>
+  <div class="cols">
+    <div class="box fe"><div class="lbl">Front end</div>The row expands into the report package. Each file opens through a
+      short-lived signed link. "Form as filled" prints the answers as a table.</div>
+    <div class="box be"><div class="lbl">Back end</div>The host's packager posts the file pointers to
+      <code>POST /tickets/{id}/package</code> as service account <code>svc-irpt-packager</code> (allowed firms: 49financial,
+      cottonwood, inflection). Three files go at READY without waiting for commentary; the commentary PDF is added when it exists.</div>
+  </div>
+  <div class="box st"><div class="lbl">State</div><b>No real ticket has ever received a package.</b> Run 6 failed here: the
+    attach was refused (403) because the packager called the API's direct address. Fixed live at 6:58 AM (it now goes
+    through the portal address; a probe was admitted). Run 7 at about 10:15 AM is the proof.</div>
+  <div class="box q"><div class="lbl">Questions for your memo</div><ul>
+    <li>"Form as filled" still prints <b>Variant</b> and <b>Add commentary: Yes</b> rows for fields the form no longer has. Remove them?</li>
+    <li>Should the ticket move to <b>In Progress</b> or <b>Completed</b> automatically when the package lands? Today it stays Open and unclaimed.</li></ul></div>
+</section>
+
+<!-- STEP 11 -->
+<section class="page">
+  <h2>Step 11 &middot; Open report <span class="tag t-ok">LIVE</span></h2>
+  <img class="shot" src="shots/c_11_technical_details.png">
+  <div class="cap">PROD + fix, synthetic report: the report's figures as cards (label, value, unit, as-of, source). "Technical details" (opened here) holds the validation and the element trace, which used to fill the screen with ~425 "not available" cards.</div>
+  <div class="cols">
+    <div class="box fe"><div class="lbl">Front end</div>"Open report" shows the report's own sections in "report mode". The
+      internal trace is folded under Technical details.</div>
+    <div class="box be"><div class="lbl">Back end</div><code>GET /investor-reporting/analysis/{requestId}/sections</code>
+      returns the retained sections from the generated report.</div>
+  </div>
+  <div class="box st"><div class="lbl">State</div><span class="tag t-ok">PROVEN</span> on a real report (run 5D): 3 sections
+    (1 with a value) instead of about 425 cards.</div>
+  <div class="box q"><div class="lbl">Questions for your memo</div><ul>
+    <li>With the PDF attached, is an on-screen "Open report" of figure cards still wanted, or should it simply open the PDF?</li>
+    <li>A real report showed only 1 of 3 sections with a value. What figures must a report show to be useful?</li></ul></div>
+</section>
+
+<!-- STEP 12-13 + gaps -->
+<section class="page">
+  <h2>Steps 12-13 &middot; Failures and emails; what is not proven</h2>
+  <div class="box be"><div class="lbl">Step 12 &middot; A failed step shows on the ticket <span class="tag t-off">UNEXERCISED</span></div>
+    The ready signal, the commentary draft and the packager each record one failure on the job. The ticket row reads it and
+    shows, in fixed words, which step failed and what happens next. The message disappears once the package lands. No run
+    has yet driven a failure on purpose to see it on a ticket.</div>
+  <div class="box be"><div class="lbl">Step 13 &middot; Emails <span class="tag t-off">NONE BY DESIGN</span></div>
+    Nothing is emailed for an analysis request. The client notice list and the internal distribution list are both empty.
+    Nobody is told when a package lands.</div>
+
+  <h3>Not yet proven</h3>
+  <ol>
+    <li>A staff user filing through the <b>PROD page</b> end to end (blocked at step 6 until the fix is promoted).</li>
+    <li>The <b>four attachments</b> on a real open ticket (run 7, about 10:15 AM).</li>
+    <li>The standalone <b>commentary PDF</b> being rendered and attached.</li>
+    <li>A kept unknown ticker being <b>replaced in the back end</b> (C-SWAP) and named in the report.</li>
+    <li>A <b>Multi-Comp report's comparison figures</b>, read in the PDF.</li>
+    <li>The <b>failure display</b> for a deliberately failed step.</li>
+    <li><b>Another firm</b> being refused the ticket and its files.</li>
+  </ol>
+
+  <h3>Open defects and owners</h3>
+  <table>
+    <tr><th>Defect</th><th>Owner</th><th>State at 9:21 AM</th></tr>
+    <tr><td>Page refuses its own analysis submit ("commentary on" flag)</td><td>Deploy seat 0.4.0_DT_ClientPlatform~DELL2 (order TO-PROMOTE-GUARD); issuer 2.0.0_SA_COO~Y2</td><td>Fixed on DEV (e9ca1106); <b>not on PROD</b></td></tr>
+    <tr><td>No real ticket has ever received a package</td><td>2.0.0_SA_COO~Y2; run by 0.7.0_AE_CloudOps~IB2 (run 7)</td><td>Both causes fixed live; unproven</td></tr>
+    <tr><td>"Variant" / "Add commentary" rows left in Form as filled</td><td>2.0.0_SA_COO~Y2</td><td>Open</td></tr>
+    <tr><td>Run 6 test objects could not be deleted (AccessDenied); 1 commentary message in the dead-letter queue</td><td>0.7.0_AE_CloudOps~IB2</td><td>Open</td></tr>
+  </table>
+
+  <h3>What I need from your memo</h3>
+  <ul>
+    <li>For each step: <b>keep / change / remove</b>, especially the questions in the amber boxes.</li>
+    <li>What "done" looks like to you: I propose <b>you file your own sample on PROD and open all four files</b> on the ticket.</li>
+    <li>Then I run <code>/closer-drive</code> on IRPT_ANLREQ and work the list to that bar in one pass.</li>
+  </ul>
+  <p class="small">Sources: the backend trace (built from the IRPT_ANLREQ PRD v0.24, the COO's state file FWD_STATE_V024_20261020.md
+  v6, and the IB2 receipts for r37, r34m, r34n, the IAM grant, run 6 and the packager 403), the run 7 page notes of worker 323,
+  and the portal origin/PROD read at 13:21Z. The screenshots were rendered on dell2 from the portal builds f48e09dd and e9ca1106
+  with synthetic data.</p>
+</section>
+
+</body>
+</html>
