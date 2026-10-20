@@ -70,11 +70,11 @@ TEST_FILES = {
     "fu12h": ("%s/tests/test_agent_fill.py" % CF, [
         "test_username_step_fills_and_never_prints_the_value", "test_password_step_reports_factor_names_only",
         "test_code_step_reads_quo_and_reports_authorize_status_only", "test_attach_uses_localhost_cdp_only",
-        "test_failure_prints_the_class_name_only"]),
+        "test_failure_prints_the_class_name_only", "test_failure_json_carries_a_redacted_detail_and_trace"]),
     "fu12d": ("%s/tests/test_agent_drive.py" % CF, [
         "test_forward_command_targets_the_cdp_port", "test_helper_is_invoked_over_ssm_with_a_fixed_command",
         "test_drive_order_and_record_are_values_free", "test_refused_password_ends_the_run_with_a_refused_record",
-        "test_drive_module_reads_no_secret"]),
+        "test_drive_module_reads_no_secret", "test_close_kills_the_forward_process_tree"]),
     "fr6": ("%s/tests/test_adapters.py" % CF, [
         "test_get_text_follows_redirect_and_returns_text", "test_post_form_sends_urlencoded_body_without_logging_values",
         "test_account_lister_pages_until_short_page", "test_extract_accounts_finds_list_by_key_not_by_container_name",
