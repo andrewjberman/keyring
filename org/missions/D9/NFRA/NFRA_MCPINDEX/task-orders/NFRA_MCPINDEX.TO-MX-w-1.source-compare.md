@@ -96,7 +96,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round 24, workstream GATEWAY, worker ~77. Source: the CTO's round-23 analysis `ledger/ROUND_ANALYSIS.round23.md` (`1.0.0_SA_CTO~Z`, 2026-10-20 ~12:3xZ), item 1 (`source_unchecked`, 35 tools), and PRD v0.19 @7c42c0c743. Decomposition `org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.round24-GATEWAY.md` (the contracts R24.3 are frozen at the cut; the clarifications in section 1 are the issuer's reading of what W1 leaves open and the checks grade exactly them). Base dry-runs 2026-10-20: w1.AC1 base: FAIL as expected (script absent); w1.AC2 base: FAIL as expected (script absent); w1.AC3 base: FAIL as expected (test file absent). A scratch reference implementation kept outside the repository (it imports the merged `partition_windows.py`) passes w1.AC1 (14 of 14 arms), w1.AC2 (9 of 9) and w1.AC3 (7 tests); a planted mutant that ignores `answer_source` when choosing the source FAILs w1.AC1 on three arms. The checks prove the comparison and its refusals on fixtures, not that a live listing is dated the way the fixtures are, which the live run finds. Gate limb that graded this order: the L6 gate at the issuance commit.
 
-<status>issued</status>
+<status>complete</status>
 <round>24</round>
 <workstream>GATEWAY</workstream>
 <fabric>site-z</fabric>
