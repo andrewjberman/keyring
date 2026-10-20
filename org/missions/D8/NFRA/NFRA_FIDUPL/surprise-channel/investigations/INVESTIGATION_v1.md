@@ -1057,6 +1057,27 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "FR-s-6 wiring: the one edit of box/daily.py _real_daily_deps makes attribute build ContextRequest(handle.context), a GSwitcher on it and make_account_lister, then call attribute.sweep_attribution, and delete the refusal path.",
     "world_is": "The wiring target is in box/run.py, outside the grant, so the daily attribute stage still refuses and every daily run still reports partial. FR6-AC1 cannot pass as written until the grant or the location is ruled.",
     "notes": "Decision for the COO: add box/run.py to the FR-s-6 paths (a 6-line change in one function), or move the attribute wrapper into box/daily.py and have run.py call it. This worker did not edit run.py."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S4",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-20T17:10:00Z",
+    "one_line": "The request-side field names for paging accountList.json past 2,000 rows are assumed to be start and sessionCacheId, the same words the response carries on pageResponse; the CRO measured the response only, so the request names are unmeasured and the first live multi-page pull settles them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261020_NFRA_FIDUPL_ACCOUNTLIST_SHAPE.md section Paging past 2,000 and Not measured: the request form in the capture carried only length, accountNumber, sourceCode and custodianCode",
+        "infra/aws/ec2/canonical-fidelity/adapters.py make_account_lister sends start=<rows collected> from the second page and sessionCacheId when the response carried a non-null one"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "REPAIR of FR-s-6: page by pageResponse.available, sending start and sessionCacheId on later pages; the request-side names are an assumption to file as one row.",
+    "world_is": "If the live API names the request fields differently, a later page returns the first page again or no rows. The lister counts and returns DISTINCT account numbers, so repeats cannot fill the total: it either reaches available with distinct numbers or fails loud with the two counts (short of available). It never returns a silent short or duplicated list.",
+    "notes": "Settled by the first live multi-page pull, which is the issuer's check on the box. No account value is printed by the pull's counts."
   }
 ]
 ```
