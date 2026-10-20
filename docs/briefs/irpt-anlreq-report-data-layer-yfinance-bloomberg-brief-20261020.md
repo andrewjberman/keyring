@@ -74,13 +74,20 @@ gap map (cited below as GM and its section numbers).
   3. otherwise the report says in words what is missing for that holding (FWD-12).
 - Each value carries its source as a claim field (yfinance / bloomberg), as prices already do (C-PRICES).
 
-### D3 -- The style box and the full look-through are not left out for want of a Bloomberg entitlement
-- The 3x3 stock style box for funds (9 elements) has no yfinance source (M). The plain Bloomberg reference fields do
-  not clearly serve it (I).
-- The full constituent look-through behind the top-25 table needs BQL.
-- BQL is "User not authorized" on this terminal (M, READ_HERE s.4).
-- Andrew said "no limits on bloomberg ... it has to get done". The BQL entitlement is the clean way to meet D3.
-- **Buying it is his act, named as an act** (Part V).
+### D3 -- The style box and the full look-through use the proven Excel BQL route (no purchase)
+- The 3x3 stock style box for funds (9 elements) has no yfinance source (M).
+- The full constituent look-through behind the top-25 table needs fund holdings.
+- Raw `//blp/bqlsvc` is "User not authorized" (M, READ_HERE s.4). **But the Bloomberg Excel add-in runs BQL on this
+  same entitlement (M):**
+  - `=BQL.Query("get(id()) for(holdings('<T> US Equity'))","showallcols=true")` returned full current and dated
+    holdings (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/BBG_EXCEL_ACCESS_VERIFIED.md`,
+    2026-09-29).
+  - It is in production as the ETFS_RIVALS collector `data/etfs/scripts/rivalfunds/collector_bloomberg.py`: an Excel
+    COM automation on the terminal machine, under a `bbg_budget` ledger.
+- Andrew, 2026-10-20, answering whether to buy BQL: "We have been able to do this through the Excel path successfully,
+  there is prior art on this".
+- So D3 reuses that route for each fund a client holds (holdings, then constituent characteristics through D2), and the
+  style box is computed from the constituents. No entitlement purchase is needed.
 
 ### D4 -- Andrew judges the filled packet against the YCharts sample
 - The FWD-9 judgement is repeated on a packet built under D1 to D3.
@@ -137,8 +144,8 @@ Fill counts (GM s.3, of 244 not-available elements):
 - **The terminal is signed in when a request files.** The sign-in is two-phase, with a 2-attempt budget
   (READ_HERE s.2).
 - **Every new S3 address is builder output** (C-NAMES). The characteristics cache needs a registry row (GM s.5).
-- **ACT FOR ANDREW:** the BQL entitlement is a purchase (READ_HERE s.4: "a purchase, not a build"). His "no limits"
-  is read as permission to propose it. This seat asks him for the act explicitly; it is not assumed.
+- **The Excel BQL route serves an ad-hoc fund list at filing**, not only the ETFS_RIVALS daily universe, within its
+  budget ledger. This is an owner question for the collector (ETFS_RIVALS) and the terminal seat.
 
 ## PART VI -- STATUS (NOT OUTCOME-BEARING), measured 2026-10-20 ~22:xxZ
 

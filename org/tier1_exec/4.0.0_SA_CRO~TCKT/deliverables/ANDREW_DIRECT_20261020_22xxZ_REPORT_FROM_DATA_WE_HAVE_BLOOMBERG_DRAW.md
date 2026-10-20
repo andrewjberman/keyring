@@ -26,6 +26,14 @@ A fourth follow-on message, same session, verbatim:
 
 > I do not give a shit what this packet looks like as long as it has a bunch of charts and concentrations and etc. on it
 
+His answer (~22:3xZ) to this seat's question on whether to buy the Bloomberg BQL entitlement for fund look-through,
+verbatim:
+
+> We have been able to do this through the Excel path successfully, there is prior art on this
+
+(Prior art: `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/BBG_EXCEL_ACCESS_VERIFIED.md`; in
+production as `data/etfs/scripts/rivalfunds/collector_bloomberg.py`. No purchase is needed.)
+
 Read by this seat (his words above govern):
 Two more follow-on messages, same session, verbatim:
 
