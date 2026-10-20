@@ -373,5 +373,12 @@
     "cancelled",
     "failed",
     "operator_revision"
-  ]
+  ],
+  "firm_form": {
+    "masters": {"08403355": "49financial"},
+    "state_bucket": "opal-data-49financial",
+    "silver_prefixes": ["schwab/49financial/silver/dim_position/", "schwab/49financial/silver/dim_balance/", "schwab/49financial/silver/dim_asset/", "schwab/49financial/silver/dim_transaction/"],
+    "completion_prefix": "schwab/49financial/state/complete/",
+    "backfill_status_prefix": "schwab/49financial/state/backfill_status/"
+  }
 }
