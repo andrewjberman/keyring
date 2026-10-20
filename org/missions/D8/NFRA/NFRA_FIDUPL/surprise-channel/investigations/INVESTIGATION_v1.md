@@ -728,6 +728,27 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No action taken. The trace-login run is FU-x-1's live proof and costs at most one text message per attempt."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "4.0.0_SA_CRO~DELL1",
+    "surfaced_at": "2026-10-20T13:50:00Z",
+    "one_line": "Black Diamond's copy of Cottonwood's Fidelity rep codes puts 636 of 655 accounts under two G numbers (PRIMARY and SECONDARY) and only 3 under an advisor G number, so a per-G pull may land most accounts twice and may not separate advisors.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "PRD v0.4.4 C-BACKFILL and C-TENANCY: backfill and daily pulls per G number, Cottonwood's seven first; FWD-9 splits each firm's files on the G Number.",
+    "world_is": "In Black Diamond's 2026-10-19 Cottonwood allocations export (forwardfill_v2), the 655 Fidelity accounts carry these rep code sets: PRIMARY+SECONDARY 633, PRIMARY+SECONDARY+RUBOTTOM 2, PRIMARY+SECONDARY+BASS 1, PRIMARY only 11, none 8. SHIPLEY, the G475 and the G482 numbers carry 0. This is Black Diamond's field, not Fidelity's: what the Wealthscape export returns per G number is not measured. If it behaves the same, two per-G pulls return the same account twice, and the advisor G numbers do not carry the advisor books.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-cot/forwardfill_v2/allocations/ALLOCATIONS_DAILY_2026-10-19.xlsx, read 2026-10-20 ~13:5xZ: 1,503 rows, 855 distinct AccountID; Rep Code sets grouped per AccountID over Custodian starting Fidelity (655 accounts)",
+        "G number labels from org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261020_133xZ_COTBOOKS_NO_BD_DEPENDENCY_CUSTODIAN_FIRST.md (masked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No action taken. The first per-G Wealthscape read answers it: print accounts per G number and accounts present under 2+ G numbers. Context: docs/briefs/advi-cotbooks-custodian-first-rebrief-20261020.md F3."
   }
 ]
 ```
