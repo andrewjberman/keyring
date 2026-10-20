@@ -28499,3 +28499,87 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W324-S1 -- the order file cannot be committed from this worker branch: the TO gate refuses a worker's new task order and reads a decomposition index that this branch lacks
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W324-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~324",
+  "surfaced_at": "2026-10-20T11:47:19Z",
+  "one_line": "The face asks the worker to commit the TO file alone; to-pipeline-gate refuses it (new task order under a worker serial; cell AR-y-455 absent from the decomposition index on this branch). The file already sits on box/dell2 at 4a84119872.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face of AR-y-455: commit the order file alone with safe-commit (its status stays pending) so the worker branch carries it; the flip to complete is a later commit of the same file.",
+  "world_is": "safe-commit exits rc=1 (to-pipeline-gate REFUSED, 5 violations): a NEW tree task order under 0.9.0_WK_IRPT_ANLREQ~324 (LD-0521 A3: only 2.0.0_SA_COO or a ~lane of it issues task orders); owned_cells and criteria cite AR-y-455, which the decomposition index on this branch lacks (151 cell ids read). Worktree HEAD is 85f73842ee2, cut before 4a84119872. box/dell2 already contains 4a84119872 (git merge-base --is-ancestor 4a84119872 box/dell2 = yes), so the file is on the shared trunk. The order file is left untracked in this worktree; nothing was overridden with the pipeline-override line. A flip to complete on this branch is refused for the same reason until the file is on the branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-455.ticket-center-body-passes-the-real-submission-guard-commentary-requested.md@4a84119872 (file present; status pending)",
+      ".tools/to-pipeline-gate.py refusal text, safe-commit of the order file at worktree HEAD 85f73842ee2 (rc=1, 5 violations)",
+      "git merge-base --is-ancestor 4a84119872 box/dell2 returned success"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer (2.0.0_SA_COO~Y2): a worker-branch copy of a COO-issued TO cannot be re-committed by a worker; the issuer owns the status flip to complete on the trunk. The portal change and proof instance continue under the grant."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W324-S2 -- the cell names InvestorReportingClient; the class that carries submitAnalysisRequest is LiveClient
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W324-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~324",
+  "surfaced_at": "2026-10-20T11:52:21Z",
+  "one_line": "The face's seam test names InvestorReportingClient.prototype.submitAnalysisRequest; no such class exists in the client file. The method is on LiveClient.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face AR-y-455 test (5): InvestorReportingClient.prototype.submitAnalysisRequest called on a minimal object whose send is a recording stub.",
+  "world_is": "portal/src/api/endpoints/investor-reporting.ts@dd2b20ac58fe has export class LiveClient implements InvestorReportingApi (line 1030) carrying submitAnalysisRequest (line 1492) and a private send (line 1060); a grep for InvestorReportingClient in that file returns no match. The seam test calls LiveClient.prototype.submitAnalysisRequest with a recording stub as this, so the same method and the same send seam are exercised. Commit 5967f5a9 on wk-IRPT_ANLREQ-324-portal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/investor-reporting.ts@dd2b20ac58fe line 1030: export class LiveClient implements InvestorReportingApi",
+      "portal/src/api/endpoints/investor-reporting.ts@dd2b20ac58fe line 1492: submitAnalysisRequest(body, scope) calls this.send('analysis-requests', ...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer: the class name in the face is a naming slip; the seam is the same method on the same file. No change to the guard or the client was made for it."
+}
+]
+```
+## IRPT_ANLREQ-D2-W324-S3 -- the difference control swaps the guard file in place for one run, because the test's import is a relative path
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W324-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~324",
+  "surfaced_at": "2026-10-20T11:52:21Z",
+  "one_line": "The face asks for the reverted guard in a scratch copy; bun resolves the test's guard import by path inside the portal tree, so the difference control swapped the guard file in place and restored it with a sha256 check.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face DIFFERENCE CONTROL: with the guard edit reverted in a scratch copy of the file (do not touch the committed one), tests (1) and (5) must fail.",
+  "world_is": "The test file imports ../contracts/submission-request by relative path; a copy outside the tree is not what the import resolves to. mutant_check.py writes the pre-edit bytes (git show dd2b20ac58fe:<guard>) over the guard file for one bun run, then writes the saved committed bytes back; the restored sha256 matched the committed sha256 (0aa1e357...f7ef). The committed file was never committed in the reverted state; git status of the portal stayed clean.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~324/mutant_check.py: swap, one bun run, restore with sha256 check",
+      "portal commit 5967f5a9 on wk-IRPT_ANLREQ-324-portal; the run printed MUTANT-FIRES with 2 failing named tests"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer: the in-place swap is the only way the relative import exercises the reverted guard; the committed file is unchanged at the end of the run."
+}
+]
+```
