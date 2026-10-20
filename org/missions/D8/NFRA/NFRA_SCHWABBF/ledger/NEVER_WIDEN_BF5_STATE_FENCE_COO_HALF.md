@@ -2,7 +2,7 @@
 
 **Signer:** `2.0.0_SA_COO~SB` | **Date:** 2026-10-20 ~19:3xZ | **Act covered:** THREE new rows in `infra/logic/registry/exemptions.json` (two under `opal-data-49financial`, one under `opal-data-cottonwood`) and the shared-infra apply that regenerates the two fences from them |
 **Read against:** `infra/aws/terraform/shared-infra/s3-49financial.tf:114-137` and `s3-lgic-firm-buckets.tf:142-170` (statement `DenyForeignFirmPrincipals`, read by worker `0.9.0_WK_NFRA_SCHWABBF~4`); `infra/aws/terraform/modules/opal_name/main.tf:140-300` (the scoped-row renderer); the precedent row `opal-clientops-ews-role` and its pair `org/missions/D7/TCKT/TCKT_EARLYWARN/ledger/NEVER_WIDEN_EWS_D2_STORE_FENCE_COO_HALF.md`; PRD v1.0 C-TIERS (Andrew-direct ~17:0xZ: "a, yes. this needs to go through the same full bronze/silver process that the other masters go through.") |
-**The other half:** `1.0.0_SA_CTO`, `ledger/NEVER_WIDEN_BF5_STATE_FENCE_CTO_HALF.md` -- NOT yet written; this half is **SIGNED CONDITIONALLY: it takes effect only when the CTO half exists and names the same blast radius.**
+**The other half:** `1.0.0_SA_CTO`, `org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_BF5_STATE_FENCE_CTO_HALF.md` @4b0036c6cb (msg 109991) -- WRITTEN and SIGNED at the same blast radius (3 rows, 2 principals, 2 buckets, no delete); this half's condition is met. The CTO's one condition, adopted here: within the one cutover window the fence applies first, then the converter deploy, then the puller upload.
 
 **Verdict:** SIGNED for the blast radius below, and ONLY it, once the CTO half is written.
 
