@@ -31193,3 +31193,130 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Proposed fix (the worker's): in _stamp_of test the date=YYYY-MM-DD partition before the part stamp. CTO round-24 analysis item 2: a code fault goes to 2.0.0_SA_COO~O as a defect row."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W177-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~177",
+  "surfaced_at": "2026-10-20T20:45:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "OG-sk-1 premise count does not hold: DATA_CATALOG.yaml names the 0840 master on 150 lines at this HEAD, not the 144 the task order states.",
+  "spec_asserts": "Task order OG-sk-1 DO step 1 states that app/refs/DATA_CATALOG.yaml has 144 lines naming the 0840 master.",
+  "world_is": "A line count of the master id in app/refs/DATA_CATALOG.yaml at HEAD d6dd7671848 returns 150 matching lines. The census cites lines by content, so the census does not depend on the count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:13151 (prefix row naming the 0840 master's dim_asset silver tree)",
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:1404 (entity list naming the 0840 master)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-sk-1.round-47-census-of-every-gateway-path-that-builds-a-schwab-key-from-the-master.md (DO step 1)"
+    ]
+  },
+  "notes": "Worker 177 records the measured count; no edit. The count is a premise figure in the task order, not a gate."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W177-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~177",
+  "surfaced_at": "2026-10-20T20:45:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "OG-sk-1 premise location and rule do not hold: _master_accounts lives in the Schwab integration module and reads the snapshot of the request business date, not the newest dim_position snapshot.",
+  "spec_asserts": "Task order OG-sk-1 DO step 1 names app/data_entitlement.py as the home of _master_accounts, which reads the newest dim_position snapshot.",
+  "world_is": "The only _master_accounts that reads a snapshot is async def _master_accounts in app/integrations/schwab/integration.py:364-396; it is called with q.business_date (integration.py:665) and the download date (integration.py:981). data_entitlement.py:357 is a different helper with a different signature. The newest-date rule is latest_qualified_date, which this seat did not trace further.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:364 (the async _master_accounts definition)",
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:665 (called with q.business_date)",
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py:357 (a different helper named _master_accounts)"
+    ]
+  },
+  "notes": "The census cites integration.py for this path. The dual-read cell must not assume a newest-partition lookup at this call."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W177-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~177",
+  "surfaced_at": "2026-10-20T20:45:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The relayed layout moves silver, meta and _ops but names no bronze destination, while the gateway checks closure bronze keys against the old bronze prefix.",
+  "spec_asserts": "The relayed layout in task order OG-sk-1 section 1 gives the destination of silver, meta, _ops and the two rolling objects; it gives none for bronze.",
+  "world_is": "catalog.py:456 builds the bronze prefix as schwab/<master>/bronze/<type>/<ymd>/, and catalog.py:459 records any closure bronze object outside it as F_INCONSISTENT_GRAIN. Bronze has this one reader in app/ and tests/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py:456 (bronze prefix builder)",
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py:459 (F_INCONSISTENT_GRAIN on a bronze object outside its partition)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-sk-1.round-47-census-of-every-gateway-path-that-builds-a-schwab-key-from-the-master.md (section 1, the relayed layout)"
+    ]
+  },
+  "notes": "The census records bronze as edit NONE with the reason that the destination is undecided. The CTO or the issuer must name the bronze destination before OG-sk-2 cuts."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W177-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~177",
+  "surfaced_at": "2026-10-20T20:45:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The gateway's key model cannot express the dual read as the task order specifies it: its fences are folder-prefix tests, the contract parser refuses any non-master folder shape, and the contract carries one source bucket.",
+  "spec_asserts": "Task order OG-sk-1 section 1: the gateway reads the new form first and the old form second, fenced by file name (master.parquet, master.name), never by the folder alone.",
+  "world_is": "catalog.py:603, :628 and :993 admit keys by folder startswith, with no file-name test. catalog.py:545 takes the master from the folder segment. catalog.py:233-246 raises ContractUnavailable for any data or completion prefix outside the old shape. The contract carries one source_bucket (deploy contract line 302) and the completion read at catalog.py:997 uses that single bucket. A contract-only edit would fail closed at load.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py:233-246 (parse_contract shape refusals)",
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py:545 (master from the folder segment)",
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py:603 (folder-prefix admission)",
+      "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json:302 (single source_bucket)"
+    ]
+  },
+  "notes": "This is a capability gap for OG-sk-2 to close in code, not in the contract alone. Recorded for the cell that cuts the build."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W177-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~177",
+  "surfaced_at": "2026-10-20T20:45:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "one_line": "If the 0840 move lands before a dual-read release ships, the gateway's old-form reads of that master find nothing and it serves no Schwab dates for it.",
+  "spec_asserts": "Task order OG-sk-1 section 1 and the CTO ruling: the gateway edit ships as a dual read before the cutover window, so the old form stays readable when the new form is absent.",
+  "world_is": "The gateway reads only the old form for the 0840 master: contract data_prefixes (deploy contract line 312) and completion_prefixes (line 320). catalog.py:993 refuses any completion key outside those prefixes and catalog.py:787 lists only the old completion prefix. Relayed: the move removes the old objects, so the old-form completion listing returns nothing.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json:320 (old-form completion prefix for the 0840 master)",
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py:787 (completion listing on the old prefix)",
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py:993 (completion key refused outside the old prefixes)"
+    ]
+  },
+  "notes": "The move's effect is relayed (laptop CTO), not measured by this seat. The disarm is the dual-read release landing before the move; the issuer owns the timing."
+}
+```
