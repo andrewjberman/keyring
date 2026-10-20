@@ -1012,6 +1012,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "Reference section 11: sweep_attribution reads the form, switches every option, calls the injected account lister, and restores the starting G; the daily stage runs it with the session's request object.",
     "world_is": "The session does not expose the request object the switch needs, and the account lister has no named constructor, so the production attribute stage cannot be built from the documented surfaces. The land stage is unaffected and runs first.",
     "notes": "A repaired adapter or a named lister constructor is a new cell; this worker did not invent either. ARMED because each scheduled daily run would end partial with no attribution until the owner rules."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S1",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-20T15:14:00Z",
+    "one_line": "The name builder has no kind for an SSM parameter: name() refuses every candidate kind (parameter, param, secret, config), so the per-G SSM parameter and the box role's read grant on it cannot be named, and that piece of TO FR-s-5 is stopped.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -I -c \"import sys; sys.path.insert(0,'lib'); import opal_naming as o; o.name('fidelity','alongside','perg','parameter')\" at HEAD fa72c37046 raised ValueError: kind 'parameter' is neither a NAMING_SCHEMA.json kind nor a cadence; param, secret and config were refused the same way",
+        "org/standards/NAMING_SCHEMA.json kind.values has no SSM parameter member; kind.by_type maps no SSM parameter type; tf_unmapped_own_name lists aws_ssm_parameter with the attribute name (its own name, not graded by kind)",
+        "name('fidelity','alongside','perg','policy') and ('perg','document') are accepted, but each would mis-state the resource type as an IAM policy or an SSM document; not used",
+        "infra/aws/terraform/modules/opal_name/variables.tf validates kind by lowercase kebab-case only, so the HCL builder would emit a name for any kind word; that name would not be the registry's, so it was not used"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO FR-s-5 item 2: one aws_ssm_parameter of type SecureString for the per-G list, its name from the HCL builder (system fidelity, scope alongside); a builder refusal is a surprise row and that piece stops.",
+    "world_is": "No kind in the registry names an SSM parameter, so the builder cannot produce its name. The parameter, its box-role read grant (TO item 3) and the output perg_parameter_name are not built. The schedule switch (variables.tf, schedule.tf) is built and plans as No changes at its default.",
+    "notes": "The stopped piece needs a registry kind for SSM parameters (or a ruling that parameter names are graded by a grammar). FR5-AC3 cannot reach its expected plan (1 to add) until that is ruled. No G number and no typed name was used."
   }
 ]
 ```
