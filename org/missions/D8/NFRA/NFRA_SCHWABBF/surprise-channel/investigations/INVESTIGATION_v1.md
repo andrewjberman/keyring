@@ -1084,5 +1084,27 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "world_is": "Windows accepts forward slashes in PowerShell file paths, but msiexec parses its own arguments and returns 1619 (package could not be opened) for a forward-slash package path. The act used the same download and the same msiexec call with the backslash path (JSON-escaped by the non-shell writer); no other install route was used.",
     "notes": "Form only: the order text for any later box build should carry the backslash MSI path."
   }
+  ,
+  {
+    "id": "NFRA_SCHWABBF-W3-S7",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T19:14:04Z",
+    "one_line": "The code commit 09839fddaa passed safe-commit rc 0 while two pre-commit checks read nothing in this sparse worktree, the same blind state as NFRA_SCHWABBF-W5-S7 and NFRA_SCHWABBF-W5-S8: the risk reflex answered PARTIAL_OR_BLIND on a danger map 119.2h old, and the naming gate printed NAMING ERROR for the missing function-map folder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output on 09839fddaaaf (wk-NFRA_SCHWABBF-3): [risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND, danger map 119.2h old, scanned 0 of 3 file(s); [naming-gate] NAMING ERROR function-map folder missing (infra/aws/lambda/ci/function-map/); commit rc 0",
+        "09839fddaaaf: 3 files changed, 529 insertions(+), 12 deletions(-): data/canonical/schwab/keyform/move_bronze_key_form.py, data/canonical/schwab/tests/test_move_bronze_key_form.py, data/canonical/schwab/tests/fixtures/move_listing_state.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The pre-commit gates (commit-gate, naming gate, risk reflex) read the staged paths of each commit in this worktree.",
+    "world_is": "In this sparse worktree the naming gate cannot find its function-map folder and the risk reflex's danger map is stale; both print without failing the commit, so those two checks were not graded for 09839fddaaaf. The same condition is recorded at NFRA_SCHWABBF-W5-S7 and NFRA_SCHWABBF-W5-S8.",
+    "notes": "Form only. Recorded per commit, as the W5 rows are. No action taken; the sparse worktree is not rebuilt."
+  }
 ]
 ```
