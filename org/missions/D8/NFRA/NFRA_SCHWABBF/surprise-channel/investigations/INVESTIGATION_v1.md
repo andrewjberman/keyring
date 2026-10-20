@@ -694,6 +694,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-e1 worker face, item 3: sdd-entitlements.ps1 does what sdd-harness.ps1 does for UserMasters.aspx, and the order says to read sdd-harness.ps1 whole (5.8 KB) first.",
     "world_is": "The entitlement script names DownloadUserMastersRequest and DownloadUserMastersResponse in the Schwab.SI.SI2Desktop.Contract.Download namespace; the request name comes from the order, the response name is a guess, and the master list is found by reflection. If the shape does not match, the script exits 9 and prints the response property names; it never reports a list it did not read.",
     "notes": "Not an alert and not a monitor. The issuer supplies the harness or confirms the names. The first live run of sdd-entitlements.ps1 (runbook step h) is the proof of shape."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W3-S4",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~3",
+    "surfaced_at": "2026-10-20T17:02:45Z",
+    "one_line": "The order says Get-FirmOf THROWS for a master outside 'the set' of firm-form masters, but also requires the seven-master map to equal the registry and 0824 and 0833 to get a non-throwing legacy key; I kept the seven-master map as the throw boundary and put firm-form membership in a separate Test-FirmForm.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1@6c4675f585a lines 150-162: Get-FirmOf is the seven-master literal map and throws for a master outside it; this build leaves it unchanged",
+        "data/canonical/schwab/tests/test_sdd_daily_pull_key_form.py@6c4675f585a test_key_parity_firm_map_equals_registry_for_seven_masters: the registry check covers all seven masters, so a firm-only throw boundary would fail it for 08242234 and 08335338",
+        "NFRA_SCHWABBF.TO-BF-w3.puller-per-master.md WORKER FACE item 1 ('Get-FirmOf THROWS for a master outside the set') versus item 3 (0824 and 0833 take the PRE-ROUND key)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-w3 worker face, build item 1: 'Get-FirmOf THROWS for a master outside the set', where the set is the firm-form set 08403355 and the four Cottonwood masters; item 3 requires 0824 and 0833 to take the pre-round key path.",
+    "world_is": "The two items cannot both hold literally. A Get-FirmOf that throws for 0824 and 0833 breaks the pre-round key path and the seven-master registry test. The build keeps Get-FirmOf as the seven-master map (throws only for an unknown master), makes Get-BronzeKeyDir and Get-ListingPrefixes call it first so an unknown master still throws, and adds Test-FirmForm for the five-master firm-form membership. Behaviour matches the order's stated outcomes; only the throw boundary wording differs.",
+    "notes": "Form only, no significance judgment. The issuer may confirm the reading or name a different boundary; no change to the script is needed for the reading the build took."
   }
 ]
 ```
