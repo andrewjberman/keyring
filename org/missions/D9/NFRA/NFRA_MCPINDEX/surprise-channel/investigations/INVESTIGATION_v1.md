@@ -13405,3 +13405,249 @@ carries none.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~84",
+  "surfaced_at": "2026-10-20T16:36:47Z",
+  "id": "NFRA_MCPINDEX-Z-W84-S1",
+  "one_line": "The naming gate printed NAMING ERROR (function-map folder missing from this sparse worktree) on the commit of MX-y-1; the commit landed with rc 0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 70635dad511 (LOCAL on wk-NFRA_MCPINDEX-84): the commit-gate output in C:/tmp/wk-mcpindex-84/.scratch/commit1.log line 14 reads [naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-84\\infra/aws/lambda/ci/function-map/ and the commit then printed its commit line with rc 0",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-84 (after the step 0 add): .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery -- infra/aws/lambda is not in the cone"
+    ]
+  },
+  "spec_asserts": "A commit through safe-commit.sh in this worktree is graded by the naming gate, which prints an OK grade for the staged files or refuses the commit.",
+  "world_is": "The naming gate printed NAMING ERROR for the missing function-map folder, which the cone does not carry, and printed no OK line for the naming grade of the two staged files. The commit landed with rc 0 at 70635dad511. The gate's own text says nothing is graded from a copy.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~84",
+  "surfaced_at": "2026-10-20T16:36:47Z",
+  "id": "NFRA_MCPINDEX-Z-W84-S2",
+  "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on the MX-y-1 commit: its danger map is STALE and it scanned 0 of 2 files",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/wk-mcpindex-84/.scratch/commit1.log lines 1-8: [risk-reflex] danger map 116.6h old STALE; ANSWER STATE PARTIAL_OR_BLIND; NOT-DECIDABLE; WITHIN BUDGET scanned 0 of 2 file(s); REBUILD names the MAIN tree's map since a sparse worktree has no build here",
+      "commit 70635dad511 (LOCAL on wk-NFRA_MCPINDEX-84) landed rc 0 with the reflex line printed"
+    ]
+  },
+  "spec_asserts": "The pre-commit risk reflex grades the staged diff against its danger map and answers with a verdict on that diff.",
+  "world_is": "The reflex had a stale danger map and graded 0 of the 2 staged files; it answered PARTIAL_OR_BLIND and stated that it could not clear the diff. The commit landed without a reflex verdict on the diff.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~85",
+  "surfaced_at": "2026-10-20T16:36:47Z",
+  "id": "NFRA_MCPINDEX-Z-W85-S1",
+  "one_line": "The battery's plant subcommand writes a planted broken tool by setting status to error only; for a sender whose recorded send carries an agreeing readback, the planted result still grades PASS (plant of send_email then grade: PASS, rc 0), so the planted-FAIL control does not hold for a sender after MX-y-2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tool_battery.py cmd_plant (worktree C:/tmp/wk-mcpindex-85, base 62604a82b8c plus the uncommitted MX-y-2 edit): sets status error, rows None, error_text planted, source_check None; leaves sent and readback in place.",
+      "plant --tool send_email over round25/fixtures/y2_results.json: PLANT tool=send_email cases=1 rc 0; grade of the planted file: GRADE tools=5 PASS=3 EMPTY-CORRECT=0 REFUSED-CORRECT=0 PREVIEW-ONLY=2 FAIL=0, send_email PASS, grade rc 0.",
+      "round22/checks/g_check.py:253-258 (G1) plants harvest_read, a tool whose result is sent false in results_min.json; its control is unaffected by MX-y-2."
+    ]
+  },
+  "spec_asserts": "tool_battery.py plant: every case of --tool is set to error, so grade reads the planted broken tool as FAIL (script docstring; the round-22 G1 control).",
+  "world_is": "Since the MX-y-2 grade change a sent result with readback agrees true grades PASS whatever its status, and plant does not clear sent or readback, so a planted sender reads PASS. Before the change every sent result read FAIL, so the plant held for senders.",
+  "notes": "OBSERVATION, INERT: among the round-22, round-23 and round-25 checks, the plant subcommand is called only by round22/checks/g_check.py (G1, harvest_read), so no served artifact or current control reads a planted sender. It ARMS when a planted FAIL control is run on a tool whose recorded send carries an agreeing readback. Not repaired in this cell: the contract is silent on plant, and the face bounds widening the output. Candidate remedy, not attempted: plant sets sent to false and drops readback, so the planted result reads FAIL tool_error. Denominator: 1 sending tool planted (send_email), 1 case.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~85",
+  "surfaced_at": "2026-10-20T16:48:18Z",
+  "id": "NFRA_MCPINDEX-Z-W85-S2",
+  "one_line": "The commit gate's naming gate printed NAMING ERROR for the function-map folder infra/aws/lambda/ci/function-map/, which this sparse worktree does not carry; both MX-y-2 commits landed with the naming gate's verdict unread.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 4ea645f8afb (C:/tmp/wk-mcpindex-85/.scratch/commit_i.log line 16) and for a84b4af364d (.scratch/commit_ii.log line 12): '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\wk-mcpindex-85\\infra/aws/lambda/ci/function-map/'; both commits returned rc 0 and both landed.",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-85 at the cut: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery; infra/aws/lambda/ci/ is not in the set."
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4 rule 30: the commit-time naming gate REFUSES names today (LGIC_ENFORCE); a builder or gate that cannot read its registry folder is a finding, not a pass.",
+  "world_is": "In this sparse worktree the naming gate could not read the function-map folder it needs, printed NAMING ERROR on both commits, and did not refuse either. Neither commit names a Lambda resource or a registry name, so nothing this cell wrote was graded by that gate.",
+  "notes": "OBSERVATION, INERT: the cell's paths carry no resource name. The same class was filed on the sibling worktree as NFRA_MCPINDEX-Z-W83-S1. It ARMS when a commit from a sparse worktree that lacks the function-map folder names a resource. Denominator: 2 commits, 2 NAMING ERROR lines, 0 refusals.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~86",
+  "surfaced_at": "2026-10-20T16:39:59Z",
+  "id": "NFRA_MCPINDEX-Z-W86-S1",
+  "one_line": "The naming gate cannot run in the worktree: it reads infra/aws/lambda/ci/function-map/, which the sparse cone does not hold; the MX-y-3 commit is held",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/naming-gate.py --diff .scratch/y3_work.diff --enforce --staged-paths .scratch/y3_staged.txt exited rc=1 with: NAMING ERROR function-map folder missing: C:/tmp/wk-mcpindex-86/infra/aws/lambda/ci/function-map/ (run at HEAD 62604a82b8c)",
+      ".tools/naming-gate.py FUNCTION_MAP_DIR at line 1109 and function_map_problem() at line 1294 refuse when that folder is absent",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-86 at HEAD 62604a82b8c: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition; infra/aws/lambda/ci is not in it",
+      "face section 1 step 0 permits one sparse change (the four named folders); face section 2 item 3 requires the naming gate to exit 0 before commit"
+    ]
+  },
+  "spec_asserts": "Before any commit, python .tools/naming-gate.py --diff <diff> --enforce --staged-paths <file> must exit 0 in the worktree (face section 2 item 3).",
+  "world_is": "The gate exits 1 with NAMING ERROR in the worktree because its function-map input is outside the sparse cone. AC1, AC2 and AC3 PASS by output (23/23, 11/11, 87 passed). Nothing is committed; no folder was added and none copied. The local checks pass: py_compile, ruff py39, ASCII (0 non-ASCII added lines).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~86",
+  "surfaced_at": "2026-10-20T16:39:59Z",
+  "id": "NFRA_MCPINDEX-Z-W86-S2",
+  "one_line": "The surprise-channel schema org/surprise_channel/schemas/investigation_item.schema.json is absent from the worktree (org/surprise_channel is outside the sparse cone), so this row was shaped after the sibling rows of this file and not schema-checked",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of C:/tmp/wk-mcpindex-86/org/surprise_channel/schemas/investigation_item.schema.json returned: File does not exist (HEAD 62604a82b8c)",
+      "git sparse-checkout list at HEAD 62604a82b8c does not name org/surprise_channel"
+    ]
+  },
+  "spec_asserts": "A row is appended per org/surprise_channel/schemas/investigation_item.schema.json (face section 3 and the worker rules, surprise paragraph).",
+  "world_is": "The schema file is not in the worktree. The row carries the same keys as the rows already in this investigation file (project, fabric, surfaced_by, surfaced_at, id, one_line, class, hazard_standing, grounding, spec_asserts, world_is, disposition).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~87",
+  "surfaced_at": "2026-10-20T16:38:00Z",
+  "id": "NFRA_MCPINDEX-Z-W87-S1",
+  "one_line": "The commit gate printed a NAMING ERROR for the function-map folder and a risk-reflex PARTIAL_OR_BLIND read, and safe-commit still returned rc 0 and landed e70e101542f; this worktree's sparse cone does not carry infra/aws/lambda/ci/function-map/",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for e70e101542f in C:/tmp/wk-mcpindex-87: '[naming-gate] NAMING ERROR function-map folder missing: C:/tmp/wk-mcpindex-87/infra/aws/lambda/ci/function-map/' then '[wk-NFRA_MCPINDEX-87 e70e101542] feat(NFRA_MCPINDEX round 25 GATEWAY ...'; the commit reported rc=0",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-87 at HEAD 62604a82b8c: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery; ls of infra/aws/lambda/ci/function-map returns no such directory"
+    ]
+  },
+  "spec_asserts": "The face says the commit gate runs py_compile, the naming gate and ruff for py39, and a commit through safe-commit.sh is graded by those gates before it lands.",
+  "world_is": "The naming gate printed NAMING ERROR (function-map folder absent from this sparse worktree) and did not refuse; the risk-reflex printed ANSWER STATE PARTIAL_OR_BLIND (danger map 116.6h STALE, 0 of 2 files scanned). The commit landed at rc 0. The naming gate's verdict on the two staged files is therefore not established by that log; this row records the form only.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~88",
+  "surfaced_at": "2026-10-20T16:43:19Z",
+  "id": "NFRA_MCPINDEX-Z-W88-S1",
+  "one_line": "The commit-time naming gate printed NAMING ERROR for the function-map folder infra/aws/lambda/ci/function-map/, which the sparse worktree does not carry, and the commit still landed with rc=0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh of the harvest data file at HEAD 62604a82b8c in C:/tmp/wk-mcpindex-88 printed '[naming-gate] NAMING ERROR function-map folder missing: C:/tmp/wk-mcpindex-88/infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)' and then 'rc=0' with commit e6dc31419e4",
+      "git sparse-checkout list in C:/tmp/wk-mcpindex-88 at HEAD 62604a82b8c: .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/ref, org/standards, workflows/atom_decomposition, workflows/gateway_battery (no infra/aws/lambda/ci)"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4 states that the commit-time naming gate REFUSES names today (LGIC_ENFORCE), so a NAMING ERROR from that gate is a refusal of the commit.",
+  "world_is": "The gate printed NAMING ERROR for a staged JSON data file under the project home and the commit landed with rc=0. Whether the gate grades any name when its function-map folder is absent is not measured by this worker; the commit was not refused.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~89",
+  "surfaced_at": "2026-10-20T16:40:30Z",
+  "id": "NFRA_MCPINDEX-Z-W89-S1",
+  "one_line": "The worker definition gives a row id as <CODE>-W<n>-S<k>, but on this site-Z box the row gate names the worker form <CODE>-Z-W<n>-S<k>; the order's own id NFRA_MCPINDEX-Z-W89-S<k> follows the gate, so this row is minted in the Z form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/surprise-row-gate.py@62604a82b8c (fabric-identity message at lines 2185-2186: a row on site Z is written <CODE>-Z-S<n>, worker <CODE>-Z-W<n>-S<k>)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md@62604a82b8c (site-Z rows NFRA_MCPINDEX-Z-W81-S1..S5 carry the Z form)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker definition names the row id form <CODE>-W<n>-S<k>, with n the slot of the worker's serial.",
+  "world_is": "On site Z the row gate requires the worker form <CODE>-Z-W<n>-S<k> for the fabric-identity check, and the existing site-Z worker rows carry it.",
+  "notes": "OBSERVATION, INERT: no criterion of MX-y-6 reads the id form. The row is minted in the form the gate admits. The CVO records whether the laptop-form definition needs a site-Z clause."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~89",
+  "surfaced_at": "2026-10-20T16:40:30Z",
+  "id": "NFRA_MCPINDEX-Z-W89-S2",
+  "one_line": "The naming gate printed NAMING ERROR function-map folder missing (infra/aws/lambda/ci/function-map/ is outside this worktree's sparse cone) on the work commit 8535d944356; the commit landed anyway, so the naming check did not grade that commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at 62604a82b8c (the cone holds .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/*, workflows/atom_decomposition, workflows/gateway_battery; no infra/aws/lambda path)",
+      "safe-commit output for 8535d944356: [naming-gate] NAMING ERROR function-map folder missing: ... (the Lambda source map is read from this folder; nothing is graded from a copy), then the commit landed with rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit gate runs the naming gate on a commit of workflow files in this worktree and grades it.",
+  "world_is": "The naming gate could not read its function-map folder from this sparse worktree, reported NAMING ERROR for it, and the commit proceeded without a graded naming check.",
+  "notes": "OBSERVATION, INERT: this worker's commit touched workflows/gateway_battery only. Whether the sparse cone should carry the function-map folder is the issuer's call; nothing in MX-y-6 reads the naming result."
+}
+```
