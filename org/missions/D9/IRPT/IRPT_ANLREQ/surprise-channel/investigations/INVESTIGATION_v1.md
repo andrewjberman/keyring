@@ -28908,3 +28908,79 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-W331-S1
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W331-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~331",
+  "surfaced_at": "2026-10-20T17:07:26Z",
+  "one_line": "safe-commit printed WARN client-data-check: the hashed account-id list is absent on this box, so commit 50f7c709af2 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO face step 3 and CLAUDE.md rule 14a: commit with .tools/safe-commit.sh, whose commit checks run on the commit; the face names no client-data exception.",
+  "world_is": "The commit of resident.tf (50f7c709af2, 16 insertions) printed 'WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids'. Absent is not empty. By inspection the added lines carry a bucket name and two object keys and no account id, but the check did not run. Every later commit from this box is unchecked for client account ids until the list is placed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 50f7c709af2 (WARN client-data-check line, worktree C:/dev/wk-irpt-anlreq-331)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-172.terraform-read-grant-model-series-and-positioning.md worker face step 3 (commit with safe-commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2"
+}
+```
+
+## IRPT_ANLREQ-D2-W331-S2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W331-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~331",
+  "surfaced_at": "2026-10-20T17:07:26Z",
+  "one_line": "The face's step order (edit, run the criteria, then commit) cannot grade an edit: ar_grant_check.py reads the committed diff against the merge-base, so the code was committed before any criterion ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO face steps 1-3: 1. Make the edit. 2. Run the three criteria. 3. Commit (code), then the proof and the status flip as separate commits.",
+  "world_is": "ar_grant_check.py build and guard read 'git diff -U0 <merge-base> HEAD -- resident.tf' and the committed name list, so an uncommitted edit is invisible to them. Measured: the edit was made (numstat 16 0 against HEAD a5b0ef4b5cd), the code was committed as 50f7c709af2, and only then did the three criteria run, each printing its OK RESULT line at rc 0. The merge-base with box/dell2 read a5b0ef4b5cd, the parent of the code commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_grant_check.py lines 29-36 (base = git merge-base HEAD box/dell2; added_text = git diff base HEAD)",
+      "commit 50f7c709af2 (resident.tf, 16 insertions, 0 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W331-S3
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W331-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~331",
+  "surfaced_at": "2026-10-20T17:07:26Z",
+  "one_line": "The commit-time risk reflex answered PARTIAL_OR_BLIND (danger map 117.1 h old, STALE) and could not clear resident.tf in this sparse worktree; the commit gate still passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO face step 3 (commit with .tools/safe-commit.sh); RECORD FACE preflight names comp-blast and comp-iam as the risk reads for this cell, recorded by the issuer by reading.",
+  "world_is": "The pre-commit risk reflex (comp-pulse diff on resident.tf) printed ANSWER STATE PARTIAL_OR_BLIND, 'danger map STALE', 'REBUILD: read the MAIN tree's map (C:/dev/ajb_workspace/org/modules/graph/nerves-risk-edges.json); no build here', and 'scanned 0 of 1 file(s)'. The reflex is not checked-clean. This worker did not re-read the main tree's map: the cell's risk reads are the issuer's preflight, and the commit went through the gate chain (naming, to-pipeline, surprise-row gates OK).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 50f7c709af2 ([risk-reflex] lines: ANSWER STATE PARTIAL_OR_BLIND, danger map STALE)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-172.terraform-read-grant-model-series-and-positioning.md RECORD FACE preflight comp-blast and comp-iam"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
