@@ -71,6 +71,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-13.round-46-the-audit-lake-l
 - Pre-cut: `AC1` base FAIL as expected (the record is absent). Synthetic arms fed to the check: a clean day reads `HOLDS` (PASS); 3 WARN lines read `FAILS_SEEN` (PASS); a busy hour where the lake lags reads `UNDETERMINED` (PASS); a verdict that contradicts the rule FAILS; a window under 24 hours FAILS; an anomaly hour with only 100 of 2896 bodies read FAILS; a wrong throttle constant FAILS.
 
 <status>staged</status>
+<status>complete</status>
 <round>46</round>
 <workstream>ENRICH-R46-A</workstream>
 <slot>~AE</slot>
