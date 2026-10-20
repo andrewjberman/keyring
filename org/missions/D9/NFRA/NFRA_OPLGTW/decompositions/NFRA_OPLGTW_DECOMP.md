@@ -3161,3 +3161,27 @@ One chain `{OG-sz-2}`; `fanout: 1 worker of 1 chain, cap 8` (`~173`); it joins `
 | `OG-rl-18` | the four files of `OG-rt-1` (`data_entitlement.py`, `account_ref.py`, the schwab integration, `tests/test_og_rt1.py`), whole from trunk, on the live ref; Phase A (re-cut, probes on the candidate tree, no stored sentinel, three-half ask) when `OG-rl-17` is CLOSED; Phase B in a window not before one day after batch16 and not before 2026-10-22 06:00Z; then the landing | release, ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier | `OG-rl-17` CLOSED |
 
 Chain `{OG-rt-1} -> OG-rl-18 -> {OG-gv-1, OG-gm-1}`; `fanout: 0 workers of 1 chain, cap 8`. Checks `rl18.AC1` and `rl18.AC2`: base FAIL as expected. Gate limb: `to-pipeline-gate` on the newly added tree order.
+
+**R3-T.124 amendment A5 (2.0.0_SA_COO~O, round 47, workstream ENRICH-R47-F): the applier cell `OG-gv-1`, Andrew's Schwab grant moves to the master-wide scope, STAGED.** Andrew's two original masters stay; only `accounts` becomes `["*"]` ("there shouldnt be a persisted list"). Phase A (before/diff/decide records, the `email_deny` finding with facts and options and no delete, the three-half ask) runs on trunk code; Phase B only after the `OG-rl-18` ledger is CLOSED and the live marker equals its release.
+
+| cell | what | writes | risk | slot | class | after |
+|---|---|---|---|---|---|---|
+| `OG-gv-1` | grant move to `accounts[master] = ["*"]` for the two original masters | grant records, ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier | Phase B: `OG-rl-18` CLOSED |
+
+Chain `{OG-rt-1} -> OG-rl-18 -> OG-gv-1`; `fanout: 0 workers of 1 chain, cap 8`. Checks `gv1.AC1` and `gv1.AC2` (via `grantcheck.py`): base FAIL as expected. Gate limb: `to-pipeline-gate` on the newly added tree order.
+
+**R3-T.124 amendment A6 (ENRICH-R47-G): the applier cell `OG-gm-1`, Menachem's Schwab grant, master-wide, STAGED.** Alyssa's current scope minus master `08403355` (Andrew's word for her alone), `accounts` `["*"]` on the two originals, no download. Method is `OG-gv-1`'s. Reading disclosed to the CTO: "the same shape as Alyssa's" read as her scope minus the third master.
+
+| cell | what | writes | risk | slot | class | after |
+|---|---|---|---|---|---|---|
+| `OG-gm-1` | Menachem's Schwab grant, first grant if no profile | profile and grant records, ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier | Phase B: `OG-rl-18` CLOSED |
+
+Chain `OG-rl-18 -> OG-gm-1`; `fanout: 0 workers of 1 chain, cap 8`. Checks `gm1.AC1` and `gm1.AC2`: base FAIL as expected.
+
+**R3-T.124 amendment A7 (ENRICH-R47-H): the applier cell `OG-gc-1`, the `client_*` tools for Alyssa and Menachem, STAGED.** Facts first: which gate denies the five tools is not established, so Phase A reads every gate per principal and writes a three-half ask only if a gate needs a `person_access` record. `person_access` is NFRA_MCPORTAL's writer's; if no seat-owned path exists the order stops at an Andrew open call.
+
+| cell | what | writes | risk | slot | class | after |
+|---|---|---|---|---|---|---|
+| `OG-gc-1` | gate facts; conditional `person_access` write | ledger, `W/`, at most two `person_access` records | WORLD | `~AE` (`~NFRA1`) | applier | Phase B: `OG-rl-17` CLOSED (D1-D3 live) |
+
+Chain `OG-rl-17 -> OG-gc-1`; `fanout: 0 workers of 1 chain, cap 8`. Checks `gc1.AC1` and `gc1.AC2`: base FAIL as expected.
