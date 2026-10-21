@@ -1,0 +1,79 @@
+# NFRA_OPLGTW task order -- `OG-cs-6` -- the folder reader's IAM text: one read role over the three served buckets that no policy statement lets reach a bronze or raw prefix (cli-shim workstream, wave 3; PRD v3.19 FWD-23, the CVO's cure at v3.19)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP_CLISHIM.round48.md</decomp_doc>
+<owned_cells>OG-cs-6</owned_cells>
+</decomp_ref>
+<to_id>NFRA_OPLGTW.TO-OG-cs-6</to_id>
+<issued_to>0.9.0_WK_NFRA_OPLGTW~186</issued_to>
+<issued_by>2.0.0_SA_COO~O</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- Terraform text only; nothing is applied, scheduled or deployed by this cell.
+comp-iam: DECLARED-NOT-APPLICABLE -- this cell WRITES the text of an IAM role and policy as a file; it applies none of it (no `terraform init`, `plan` or `apply`, no AWS call). The apply is a separate never-widen order to the CloudOps seat, with its own halves.
+comp-adversary: DECLARED-NOT-APPLICABLE -- the act is PRD v3.19 FWD-23 (ADMITTED) and the CVO's cure (no grant reaches a bronze or raw prefix, whole-bucket grants included), applied as text with no deploy.
+EGRESS CLASS, declared: NONE.
+</preflight>
+
+## 1. THE CELL -- `OG-cs-6` (decomposition `NFRA_OPLGTW_DECOMP_CLISHIM.round48.md`, workstream CLISHIM-C, wave 3)
+
+WHY. The folder tools read objects of the three served buckets `opal-data-assets`, `opal-data-etfs` and `opal-data-portal-v2` through ONE S3 reader identity that the gateway assumes. The shim's own prefix check refuses a bronze or raw path; the CVO's cure adds a second wall in IAM so a code defect cannot read one. This cell writes the Terraform text of that identity in ONE new file, `infra/aws/terraform/opal-gateway/folder_reader_iam.tf`. READ `infra/aws/terraform/opal-gateway/schwab_reader_iam.tf` first (its generated-once ExternalId secret, its secret resource policy, its role with an ExternalId trust, its inline policy with `DenyAllNonReadActions` first, its gateway `sts:AssumeRole` policy): this file is the same pattern over the three buckets, and you copy its structure, not its Schwab prefixes. Do not edit that file or any other `.tf`.
+
+WHAT THE FILE CREATES (names are `lib/opal_naming.py` `name()` output, and the probe reads them back from the builder; do not hand-type a variant):
+1. `aws_secretsmanager_secret.folder_reader_external_id`, name `opal/mcp/opal-gateway-folder-reader-external-id` (the `opal/mcp/` secret convention of `schwab_reader_iam.tf`; the builder has no secret kind), `prevent_destroy`, plus an `aws_secretsmanager_secret_version` whose `secret_string` is `jsonencode({ external_id = uuid() })` with `ignore_changes = [secret_string]` (generated once), plus an `aws_secretsmanager_secret_policy` letting `aws_iam_role.gw` read it (`secretsmanager:GetSecretValue`) like the Schwab one.
+2. ONE `aws_iam_role` named `gateway-folder-read-role`: trust admits only `aws_iam_role.gw.arn` with `sts:ExternalId` equal to `jsondecode(aws_secretsmanager_secret_version.folder_reader_external_id.secret_string)["external_id"]`; tags `Project = "NFRA_OPLGTW"`, `Purpose = "folder-read"`.
+3. ONE `aws_iam_role_policy` on it with these statements: `DenyAllNonReadActions` (Deny, `NotAction` the three read actions, Resource `*`); `DenyBronzeAndRawReads` (Deny `s3:GetObject` and `s3:GetObjectVersion` on, for EACH of the three buckets, the four forms `arn:aws:s3:::<bucket>/bronze/*`, `arn:aws:s3:::<bucket>/*/bronze/*`, `arn:aws:s3:::<bucket>/raw/*`, `arn:aws:s3:::<bucket>/*/raw/*`: twelve resources); `AllowFolderObjectReads` (Allow `s3:GetObject`, `s3:GetObjectVersion` on exactly `arn:aws:s3:::<bucket>/*` for the three buckets); `AllowFolderListing` (Allow `s3:ListBucket` on exactly the three bucket ARNs). No Allow carries a bare `*` resource, an action outside those three, or any other bucket.
+4. ONE `aws_iam_role_policy` named `gateway-assume-folder-reader-policy` on `aws_iam_role.gw` with one statement: `sts:AssumeRole` on exactly the new role's ARN.
+5. An `output` for the role ARN and one for the secret name, like the Schwab file.
+Start the file with a comment block of the same shape as the Schwab one (design of record: this order and the decomposition; what the file creates; the bronze/raw wall; that nothing is applied here). No KMS grant and no bucket policy (the buckets read as SSE-S3 and the file changes no bucket).
+
+## 2. TESTS
+
+None beyond the criteria: this cell writes Terraform text, and its checks are the two probes of section 5.
+
+## 3. BOUNDS
+
+- Write only the file named in section 4 and, if a row is needed, the channel. No other `.tf`, no `variables.tf`, no state file, no `terraform init`, `plan` or `apply`, no AWS call, no release.
+- Counts and hashes only: no account number, ExternalId value or token in any file (the ExternalId is generated by `uuid()` at apply, never typed).
+- Never: push, `git stash`, rebase, `checkout --` or `clean`.
+- REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
+
+## 4. SURFACES
+
+<paths>
+infra/aws/terraform/opal-gateway/folder_reader_iam.tf
+org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+`W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~186/` (the tree convention grants it). Rows: id `NFRA_OPLGTW-Z-W186-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`. `terraform fmt` may be run on the one file (formatting only).
+
+## 5. PROOF OF SPEC (literal; run from your worktree root after your commit)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="OG-cs-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs6.AC1.sh; echo "exit=$?"</invocation><expect>(?s)balanced, one aws_iam_role .*: ok.*the Allow statements: .*bad actions \[\], bare \* \[\]\): ok.*a Deny of GetObject and GetObjectVersion names all 12 bronze and raw forms .*: ok.*a Deny of every non-read action \(NotAction\) is present: ok.*the trust admits only the gateway role under an sts:ExternalId .*: ok.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-cs-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs6.AC2.sh org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cs-6.cli-shim-the-folder-reader-iam-text.md; echo "exit=$?"</invocation><expect>(?s)files that differ under infra/aws/terraform/opal-gateway: .*folder_reader_iam\.tf \(want exactly .*\): ok.*terraform fmt -check accepts folder_reader_iam\.tf: ok.*RESULT: PASS.*exit=0</expect></criterion>
+</proof_of_spec>
+
+- `AC1` (the statements, read from the text, the names read back from the builder) and `AC2` (the footprint is exactly the one file and `terraform fmt -check` accepts it) are graded by issuer-written probes.
+
+## 6. WHEN YOU ARE DONE
+
+Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cs-6.cli-shim-the-folder-reader-iam-text.proof_of_spec.json`. Validate it after your last commit with `python3 -I .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cs-6.cli-shim-the-folder-reader-iam-text.md` (`python3`, not `python`: ruling msg 35901). Report once; the `<status>` flip is the issuer's.
+
+<!-- ===================== RECORD FACE ===================== -->
+
+**ISSUER NOTES:**
+- Workstream CLISHIM-C, wave 3, decomposition `NFRA_OPLGTW_DECOMP_CLISHIM.round48.md`. Source: PRD v3.19 FWD-23, the CVO's cure at v3.19, the CTO's msgs 36299 and 36300. The decomposition named this cell an applier cell; it is cut as the TEXT (a worker) and the APPLY is the release order (OG-cs-9, CloudOps). Amendment to be recorded in the decomposition at the cut.
+- Widening, plainly: none by this order (a file nothing applies). The apply WIDENS the gateway's S3 read from the Schwab silver prefixes and the other typed readers to every non-bronze, non-raw object of the three served buckets, for the folder tools only; it is never-widen-gated at the release order with CTO, COO and CVO halves.
+- DISCLOSED READINGS: (1) IAM cannot hide a `bronze/` or `raw/` PREFIX from `ListBucket` (it lists as a common prefix); the shim omits them from the list view and refuses any read beneath, and IAM denies the object reads; (2) the four wildcard forms deny a segment named exactly `bronze` or `raw` at any depth (a `*` in an ARN spans `/`); a folder merely CONTAINING the word (`raw_prices/`) is not denied by IAM and is not refused by the shim either (it matches whole segments); (3) the secret name follows the `opal/mcp/` convention because the builder has no secret kind.
+- Pre-cut: `AC1` base FAIL as expected (`folder_reader_iam.tf` absent). Armed on a SCRATCH tf (`terraform fmt`-clean): `AC1` reads OK on all five arms, and the negative controls (one raw form removed; a bare `*` Allow resource) each read NO. `AC2` is dry-run after the cut commit (the order must exist at a commit first).
+
+<status>pending</status>
+<round>48</round>
+<workstream>CLISHIM-C</workstream>
+<slot>~186</slot>
+<fabric>site-z</fabric>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
