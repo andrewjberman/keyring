@@ -130,6 +130,41 @@ if ($Peek -and -not $OutFile) {
     $OutFile = Join-Path $env:TEMP "unstick_peek_${safe}_${ts}.png"
 }
 
+# CASE 0 -- FIRST, by process (a seat spawned with -Tab <PROJECT> is titled by project, so its tab never matches the serial).
+# Find the seat's host process by the serial in its COMMAND LINE (every spawned seat is a powershell.exe whose
+# command line ends with `# OPAL_SPAWN_MARKER_v1: <serial>`) and read or key THAT console through
+# .tools\unstick_console.ps1. No window is focused and no tab is cycled, so a sibling tab that shares the
+# project title cannot be keyed by mistake. (CTO ruling 8873, 2026-10-21.)
+$rxSerial = [regex]::Escape($Serial)
+$hosts3 = @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" | Where-Object {
+    $_.ProcessId -ne $PID -and $_.CommandLine -notlike '*Where-Object*' -and
+    $_.CommandLine -match "OPAL_SPAWN_MARKER_v1: $rxSerial(?![A-Za-z0-9~])" })
+if ($hosts3.Count -eq 1) {
+    $hp = [int]$hosts3[0].ProcessId
+    $helper = Join-Path $PSScriptRoot 'unstick_console.ps1'
+    $liveClaude = @(Get-CimInstance Win32_Process -Filter "Name='claude.exe' and ParentProcessId=$hp").Count
+    if ($DryRun -and -not $Peek) { Write-Host "[unstick] DRY-RUN: no tab is titled '$Serial', but its host process is pid $hp (found by the serial in its command line). Would use its console for '$Keys'."; exit 0 }
+    $ts3 = [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ')
+    $res = Join-Path $env:TEMP "unstick_console_${ts3}_$hp.txt"
+    if ($Peek) {
+        $txt = if ($OutFile -match '\.png$') { $OutFile -replace '\.png$', '.txt' } else { $OutFile }
+        $pr = Start-Process powershell -ArgumentList @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $helper, '-TargetPid', $hp, '-Mode', 'peek', '-OutFile', $txt) -WindowStyle Hidden -Wait -PassThru
+        if ($pr.ExitCode -eq 0) { Write-Host "[unstick] PEEKED '$Serial' by process (host pid $hp, console text) -> $txt  [no keystrokes sent]" -ForegroundColor Cyan; exit 0 }
+        Write-Host "[unstick] console peek failed (helper exit $($pr.ExitCode)): $(Get-Content $txt -ErrorAction SilentlyContinue) -- nothing sent" -ForegroundColor Red; exit 3
+    }
+    if ($liveClaude -lt 1) { Write-Host "[unstick] host pid $hp for '$Serial' has NO live claude.exe child (the seat is gone, the window left at a shell prompt). Not keying it." -ForegroundColor Yellow; exit 2 }
+    # Keys: '<body>{ENTER}', '{ENTER}' or plain characters. Other SendKeys syntax (^ % + {TAB} ...) needs a real window.
+    $body = $Keys; $press = $false
+    if ($Keys -match '^(.*)\{ENTER\}$') { $body = $Matches[1]; $press = $true }
+    if ($body -match '[\^%+~{}()\[\]]') { Write-Host "[unstick] the process path types plain text and Enter only; '$Keys' uses SendKeys syntax it cannot send. Nothing sent." -ForegroundColor Yellow; exit 2 }
+    $args3 = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $helper, '-TargetPid', $hp, '-Mode', 'keys', '-Text', $body, '-OutFile', $res)
+    if ($press) { $args3 += '-Enter' }
+    $pr = Start-Process powershell -ArgumentList $args3 -WindowStyle Hidden -Wait -PassThru
+    if ($pr.ExitCode -eq 0) { Write-Host "[unstick] SENT '$Keys' to '$Serial' by process (host pid $hp, its console only)" -ForegroundColor Green; exit 0 }
+    Write-Host "[unstick] console send failed (helper exit $($pr.ExitCode)): $(Get-Content $res -ErrorAction SilentlyContinue) -- treat as NOT sent" -ForegroundColor Red; exit 3
+}
+if ($hosts3.Count -gt 1) { Write-Host "[unstick] '$Serial' matches $($hosts3.Count) host processes (pids $(($hosts3 | ForEach-Object { $_.ProcessId }) -join ',')); refusing to guess. Nothing sent." -ForegroundColor Yellow; exit 2 }
+
 # Candidate windows: any process that hosts terminal tabs.
 $termNames = @('WindowsTerminal', 'OpenConsole', 'conhost', 'cmd', 'powershell', 'pwsh')
 $wins = [UnstickWin]::Windows() | ForEach-Object {
@@ -180,5 +215,5 @@ foreach ($w in $hosts) {
     if ($sent) { exit 0 }
 }
 
-Write-Host "[unstick] NOT FOUND: no tab titled '$Serial' in any terminal window. Precondition: the tab must be TITLED with the serial at creation. Nothing sent." -ForegroundColor Yellow
+Write-Host "[unstick] NOT FOUND: no tab titled '$Serial' in any terminal window, and no host process carries its spawn marker. Nothing sent." -ForegroundColor Yellow
 exit 2
