@@ -31754,3 +31754,33 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S253 -- S222 resolved on G2's read; S220 stays live until run 7L
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S253",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T09:30:00Z",
+  "one_line": "S222 (r34l RecipeRefused) is resolved on 2.0.0_SA_COO~G2's measured read; S220 (kept unknown ticker refused CLOSED_COMPOSITION_REQUIRED) stays LIVE until G2's run 7L reads an unknown-ticker filing on the live resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S222"
+  ],
+  "spec_asserts": "S222: with commentary_requested omitted the r34l resident refused the request at the recipe step. S220: a request carrying a kept-as-typed unknown row was accepted by the door and then refused CLOSED_COMPOSITION_REQUIRED.",
+  "world_is": "G2's read org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/S220_S222_DISPOSITION_READS_20261021.md (a6f55a4119), reported in msg 11963 and not re-measured by this seat: S222, on the r34s modules, omitting commentary_requested is not refused; the vendor-path prepare refused history-priced holdings with or without the field (the S249 class), cured by AR-g-182 and proven by run 7J (PASS). S220: G2 names no commit that makes the door refuse an unknown ticker; by design NOT_KEPT stays UNRESOLVED for Keep and swap; its refusal was the S245 packaging defect (cured in r34q; inferred, run 5B's composition is deleted); a live unknown-ticker read (run 7L, one filing) is open. This seat has not read the S220 evidence itself.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/S220_S222_DISPOSITION_READS_20261021.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S222 only: cured by AR-g-182 and proven by run 7J per G2's measured read. S220 is NOT dismissed here: it stays live (UNDER_INVESTIGATION) until run 7L reads."
+}
+]
+```
