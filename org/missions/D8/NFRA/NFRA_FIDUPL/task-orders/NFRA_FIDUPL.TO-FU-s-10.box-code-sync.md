@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -103,6 +103,10 @@ Your row D1-S10 was right and is fixed (FT-s-2 REPAIR 1: `box/run.py` `_check_ac
 ### REOPENED (issuer, 2026-10-21 ~03:05Z) -- twentieth delivery: box/daily.py prints the AdapterShapeError message, head a721306c27f
 
 Your row D1-S11 is acted on (FT-s-2 REPAIR 2: `box/daily.py` prints `ERROR: attribute shape: <message>` and records `attribute_error` for `AdapterShapeError` only, every other exception stays class-only; module suite 209 passed). Deliver the shipped set from head a721306c27f or later (only `box/daily.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-20-<date>`), `fu10m`. Same rules: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
+
+### REOPENED (issuer, 2026-10-21 ~03:50Z) -- twenty-first delivery: adapters.py (the lister finds the live page-2 form) and box/daily.py, head 42e7faa2120
+
+Your row D1-S12 is acted on (FR-s-6 REPAIR 1 and 2: the account lister tries a table of eleven paging forms, keeps the first that adds distinct rows, stops at once on a 401 or 403; `box/daily.py` prints `OK: accountList paging form=<index>`; module suite 212 passed). Deliver the shipped set from head 42e7faa2120 or later (`adapters.py` and `box/daily.py` differ), a NEW ledger (slug `nfra-fidupl-box-code-sync-21-<date>`), `fu10m`. Same rules: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
 
 ### ACCEPTANCE
 
