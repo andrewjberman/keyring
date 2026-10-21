@@ -15381,3 +15381,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Cites S21 to S29; none edited. Counts and times only."
 }
 ```
+
+## NFRA_CTLPLN-D1-S32 -- the dell1 seat ends of S29: same three seats ended twice today, each group within 90 s, all six ending with the client's exit-time cost record; actor not identified
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S32",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-21T15:45:00Z",
+  "one_line": "The dell1 seat ends of S29 now have a measured time and shape: the same three seats (W1, Q1, SC1) ended twice today, each time within 90 seconds or less, and every one of the six transcripts ends with the cost-state record the client writes at an orderly exit; the actor is not identified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, first group (transcript last-write and first-entry times, UTC, 2026-10-21): 2388e72a first entry 10-20 23:54:32 (SC1's 23:54:29 spawn) last write 12:41:07; fd81af6a first 10-20 21:44:40, last 12:42:25; 73f0ea72 first 10-20 15:29:28, last 12:42:33. So the 12:39Z liveness read still saw them alive and all three ended between 12:41:07 and 12:42:33, inside 86 seconds.",
+      "MEASURED, second group (the three sessions this seat started at 13:44 to 13:45Z after S29): cb0bfc76 first 13:45:30, last 14:52:30.657; 78e1f49f first 13:44:09, last 14:52:37.364; 6e968b81 first 13:45:02, last 14:52:38.326. All three ended inside 8 seconds, at 14:52:30 to 14:52:38. The seat-liveness read at 14:39Z saw them alive; the 15:39Z read did not.",
+      "MEASURED, shape of the last entries (type fields only, no content read): every one of the six ends with a cost-state record followed by a queue-operation record (the first group also shows last-prompt). cost-state is the usage summary the client writes when a session exits in order. NOT tested here: whether a forced termination of the process writes it as well, so this is a shape, not a proof of how they ended.",
+      "MEASURED, no act of this seat or the reaper: org/mcp/agent-spawn-audit.log holds no KILL or FORCE-KILL row for today; KILL-MAINT-RUN rows at 12:39:25Z, 14:39:18Z and 15:39:15Z read targets=0 killed=0; the second group ended 11 minutes after a pass that read targets=0.",
+      "RECORDED, timing: the 14:52:30 to 14:52:38Z ends precede by about 90 seconds the CTO's relay of the Andrew-direct word at 14:54:03Z (msg 9108, verbatim: 'There is no need to keep spawning the MDPF_DEMQUE COO ... AMGT_HARVST COO and CloudOps agent'). The CTO's own question to Andrew on closing windows is still open in this seat's list. This is a coincidence of time, not an identified actor.",
+      "NOT explained: who or what quit the sessions. No Windows event, no Remote Desktop event on dell1 near either group (S31). dell2 (nine seats 10-20 13:08:24Z to 13:08:50Z) and site Z (CRO~Y) were not measured here."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat session ends by an act of its owner, its issuer or a manager, and that act leaves a record the manager can read.",
+  "world_is": "Six sessions ended in order (shape only), in two groups of three, at 12:41Z to 12:42Z and 14:52Z, with no manager act and no OS event. The actor is unknown. Under Andrew-direct msg 9108 this seat does not respawn them.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Cites S21 to S31; none edited. Times, counts and record types only; no transcript content."
+}
+```
