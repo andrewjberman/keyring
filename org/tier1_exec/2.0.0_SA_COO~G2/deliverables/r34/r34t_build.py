@@ -29,8 +29,9 @@ REACH = "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r32/r32_reachability.py"  #
 R32_DIR = "C:/dev/irpt-release-r34s-g2"  # the r34s stage folder: the OLD root is the r34s tarball that runs on the host
 R32_TAR = R32_DIR + "/irpt-resident-0485393f3a-r34s.tar.gz"
 R32_TAR_SHA = "fa950681774268d2108eb7ca141ec150213d0d6e482dad498d13870a90d87b14"
-EXPECT_CHANGED = ["SHA256SUMS", "reports/resident_bindings.json", "ycharts/research/layout_overview.py", "ycharts/research/opal_producer.py", "ycharts/research/portfolio_series.py"]  # the bindings differ only as checked below
-EXPECT_ADDED = []
+EXPECT_CHANGED = ["SHA256SUMS", "reports/build_resident_package.py", "reports/resident_bindings.json", "reports/resident_installed.py", "ycharts/generate/resident_worker.py",
+                  "ycharts/research/layout_overview.py", "ycharts/research/model_source.py", "ycharts/research/opal_producer.py", "ycharts/research/swap_pass.py"]  # the bindings differ only as checked below
+EXPECT_ADDED = ["etf_classification_model.py", "ycharts/research/swap_model.py"]
 POOL_SRC = "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r34/swap_pool.json"
 R31_SCRIPTS = "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144"
 STATE_JSON = "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/recipe_evidence/state_st32_from_bindings.json"
@@ -160,7 +161,7 @@ def main():
     keys_added = sorted(set(bindings) - set(bindings32))
     keys_changed = sorted(k for k in bindings if k in bindings32 and bindings[k] != bindings32[k])
     prov_changed = sorted(k for k in set(bindings["provenance"]) | set(bindings32["provenance"]) if bindings["provenance"].get(k) != bindings32["provenance"].get(k))
-    if (keys_added != [] or keys_changed != ["provenance"] or bindings.get("tickets_table") != "opal-tickets" or bindings32.get("tickets_table") != "opal-tickets"
+    if (keys_added != ["opal_swap_model"] or bindings.get("opal_swap_model") != {"enabled": True} or keys_changed != ["provenance"] or bindings.get("tickets_table") != "opal-tickets" or bindings32.get("tickets_table") != "opal-tickets"
             or prov_changed != ["package_pin"]
             or bindings["provenance"]["package_pin"] != pin or bindings["provenance"]["files_from_count"] != stdout_a.get("files_from_count")
             or bindings["opal_map"] != bindings32["opal_map"]
@@ -168,8 +169,8 @@ def main():
         bad("the bindings differ from r34s in more than the provenance (package_pin, files_from): added %s changed %s provenance %s tickets_table %r" % (keys_added, keys_changed, prov_changed, bindings.get("tickets_table")))
     if bindings["provenance"]["member_overrides"] != {"docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json": "7f1eab530cde4661e9a559bf45439ebdbf73dab2"}:
         bad("provenance.member_overrides is %r, want exactly the one override of the submission schema" % (bindings["provenance"]["member_overrides"],))
-    if bindings["provenance"]["members_added"] != bindings32["provenance"]["members_added"]:
-        bad("members_added is not the r34s list unchanged: %r" % (bindings["provenance"]["members_added"],))
+    if [m["packaged"] for m in bindings["provenance"]["members_added"]] != [m["packaged"] for m in bindings32["provenance"]["members_added"]] + ["etf_classification_model.py"]:
+        bad("members_added is not the r34s list plus etf_classification_model.py: %r" % (bindings["provenance"]["members_added"],))
     # the registry: EVERY revision r34n carried keeps its policy_sha256 (a revision that has rows is never edited, CTO msg 11639); the new
     # audit revision is the only addition (the policy hash is computed by each tree's own lib/opal_naming.py in a fresh interpreter)
     r34n_tar = "C:/dev/irpt-release-r35h/irpt-resident-0485393f3a-r34n.tar.gz"
