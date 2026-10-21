@@ -13913,3 +13913,27 @@ carries none.
   "notes": "OBSERVATION, INERT: no effect on the MX-u-2 cites or the gap row S1; recorded so the drain reads the premise as partly failed. No fix in this project."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~96",
+  "surfaced_at": "2026-10-21T08:18:17Z",
+  "id": "NFRA_MCPINDEX-Z-W96-S1",
+  "one_line": "The labels contract's guard 5 refuses only a newline or a carriage return, but its section promises one line per entry; an ASCII vertical tab, form feed, or file, group or record separator passes every guard and str.splitlines() splits a line on it, so the section gains lines the contract does not describe. I kept the contract's guard set as written (smallest thing, no widening) and left the gap for the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-u-3.sheets-labels.md (section 1, contract guard 5: any of the four texts holds a non-ASCII character or a line break (\\n or \\r))",
+      "python 3.14.8 at the worker worktree: len(('a' + chr(11) + 'b').splitlines()) == 2, and the same for chr(12), chr(28), chr(29), chr(30); chr(9) stays one line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Guard 5 refuses a non-ASCII character or a line break (\\n or \\r) in any of the four texts; the section is one line per entry.",
+  "world_is": "The ASCII controls VT, FF, FS, GS and RS are not refused and are line boundaries to str.splitlines(), so a text carrying one renders as more than one entry line in the section.",
+  "notes": "OBSERVATION, INERT: no hazard is armed; the cell's criteria never plant these controls. The issuer decides whether guard 5 widens at a later round."
+}
+```
