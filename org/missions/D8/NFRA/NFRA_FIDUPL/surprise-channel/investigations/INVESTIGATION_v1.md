@@ -1213,6 +1213,94 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "TO-FT-s-5 criterion FT-s-5-AC1: ft5i reads R1-FT5I-OK the box role may put the per-G list secret and not the credentials, via an IAM simulator run with the Wealthscape credentials as the negative control.",
     "world_is": "The grant is live and exactly one secret wide. The checker's single multi-resource simulation cannot see it (the simulator's two-or-more resource ARN mode), so AC1 reads FAIL while the single-resource simulations read allowed on the per-G secret and implicitDeny on the credentials.",
     "notes": "Not edited: the checker is the COO's and outside this order's grant. Fix for the issuer: two simulate_principal_policy calls, one ResourceArn each, in box_put_grant. FT-s-5-AC1 is recorded FAIL by its own invocation; the order stays pending until the checker is fixed and ft5i re-run, or the issuer accepts the single-call evidence."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S3",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T01:36:45Z",
+    "one_line": "The per-G stop_reason closed set (entitlement, retention, open_date, run_cap, none) has no value for the planner's lander-failure stop, so backfill_run.py maps a lander failure to none.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/backfill.py (worktree wk-NFRA_FIDUPL-7, HEAD 6bd116284f5): STOP_LANDER = 'lander failure', returned by _walk_kind when the injected lander raises",
+        "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12: the per-G record stop_reason is entitlement|retention|open_date|run_cap|none",
+        "infra/aws/ec2/canonical-fidelity/backfill_run.py (uncommitted at filing) ROW_REASON maps STOP_LANDER to none; tests/test_backfill_run.py test_lander_failure_reads_none_and_stays_resumable passes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 12: backfill_run per-G record stop_reason is one of entitlement, retention, open_date, run_cap or none.",
+    "world_is": "The planner emits five stop reasons and the closed set has five values with no slot for a lander failure. A row reading none for a lander failure is indistinguishable from a 20-year-cap stop. The runner keeps the planner's reason in the stored record, where a lander failure stays resumable; only the row reads none.",
+    "notes": "For the COO to rule: add a value (for example lander_failure) to the closed set, or keep none. Nothing acts on it until ruled."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S4",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T01:36:45Z",
+    "one_line": "Reference section 12 names only records.sessions_today() for the runner's records, but the daily sign-in cap cannot grow without a write path and a per-G resume needs per-kind earliest dates, so backfill_run.py takes load, save and note_session and stores a kinds map beside the row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12, backfill runner bullet: the only records method named is sessions_today(); the per-G record is {rows:[{ordinal, earliest_date, stop_reason}], remaining}",
+        "infra/aws/ec2/canonical-fidelity/backfill.py: backfill_g returns one entry per kind (earliest_date_served, stop_reason); a single per-G earliest across kinds would skip one kind's windows on resume",
+        "infra/aws/ec2/canonical-fidelity/backfill_run.py (uncommitted at filing): run() calls records.load(), records.save(g, stored), records.note_session() before session_factory(), and the stored record is {kinds: {kind: {earliest, reason}}}; the returned row keeps the three named keys"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 12: backfill_run.run(plan_inputs, export_client, lander, session_factory, records, caps) with records.sessions_today() as the records method, and a per-G record of ordinal, earliest_date and stop_reason.",
+    "world_is": "No named method records a sign-in, so sessions_today() would never grow past zero; the runner counts a sign-in attempt through note_session() before opening a session, and a refused sign-in is counted too. The stored per-G record keeps per-kind earliest dates and reasons; the output row is the named three keys.",
+    "notes": "The records store is keyed by the G value (memory or the box work directory) and never echoes it. The box wiring that supplies the store is not in this cell."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T01:36:45Z",
+    "one_line": "Reference section 12 says a G with a recorded earliest date resumes from it, but backfill_run.py does not re-walk a kind at a final stop (entitlement, retention, account open date, the 20-year cap), since each re-walk would spend a run's export cap on a refused window every day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12 and the cell FT-s-4: 'a G with a recorded earliest date resumes from it, never refetches landed windows'",
+        "infra/aws/ec2/canonical-fidelity/backfill.py: a refused window ends a kind with entitlement refusal and that refusal is the account's answer for the window, not a transient failure",
+        "infra/aws/ec2/canonical-fidelity/backfill_run.py (uncommitted at filing): _walk_g keeps a kind whose reason is terminal and resumes only run-cap or lander-failure stops, from the recorded earliest less one day; tests/test_backfill_run.py test_terminal_g_is_not_walked_again"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reference section 12 and the cell FT-s-4: a G with a recorded earliest date resumes from it, never refetches landed windows.",
+    "world_is": "A run-cap or lander-failure stop resumes from the recorded earliest date less one day. An entitlement, retention, open-date or 20-year-cap stop is final for its kind and the walk is not repeated. The runner also clamps the walk at the 20-year cap measured from the run's own today, because the planner measures its cap from the top of a resumed walk and would otherwise reach past 20 years.",
+    "notes": "For the COO to confirm or reverse. Pinned by test_terminal_g_is_not_walked_again and test_resumes_from_the_recorded_earliest_date."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T01:36:45Z",
+    "one_line": "The completion step flips the TO status of NFRA_FIDUPL.TO-FT-s-4 to complete, but that file is not in this order's paths block, so the worker cannot make the flip; the criterion passes and the instance validates.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_FIDUPL.TO-FT-s-4 paths block lists infra/aws/ec2/canonical-fidelity/backfill_run.py, infra/aws/ec2/canonical-fidelity/tests/test_backfill_run.py and this investigation file only",
+        "worker face PROOF step: flip the task order status to complete in the same commit as the instance; the TO file carries status pending at box/dell1 6bd116284f5",
+        "same gap as NFRA_FIDUPL-D1-W2-S6 on the FU-s-4 order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face PROOF step: flip the task order status to complete in the same commit as the instance and the deliverables, once the FT-s-4-AC1 criterion PASSes.",
+    "world_is": "The grant admits no path to the TO file, so the flip falls to the issuer or the gate. FT-s-4-AC1 PASSes (R1-FT4-OK passed=7) and the instance validates at code commit ea910790b1; the order stays pending on the worker side until the issuer flips it.",
+    "notes": "Worker stopped before the flip; the instance and the code are committed LOCAL on wk-NFRA_FIDUPL-7. The COO or the gate owns the flip."
   }
 ]
 ```
