@@ -1,13 +1,13 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v3.17",
-  "prd_pin": "0723d15aa8df9360e4642bee7ea5fed239fb8c57",
+  "prd_version": "v3.18",
+  "prd_pin": "1b5bf868274c5b6e83322088bb0a0cb81157f09c",
   "half": "ratified-text",
-  "half_hash": "555c74c021f7ea73c3f29f2ee2207ea603f23bb66c30b4a7e392995378749955",
-  "endpoint_hash": "18622a31f500ad252ebe624f4fe3f5aac5c82209e154e1ed918ec8e28089a908",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v3.17_RATIFIED_TEXT_20261021_Z.md@e60beaa4849",
+  "half_hash": "904b6c7ad45da63683b2d99217dd33ebf5a55b07420f326ebc66664eb25a09e1",
+  "endpoint_hash": "c60828126fc4d36a9df9161a7cd0583e2518500d27f45687a45aae770cb3e641",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v3.18_RATIFIED_TEXT_20261021_Z.md@78774c1f949",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-21T14:01:53Z",
-  "reason": "v3.17: FWD-23 withdrawn; ENDPOINT byte-equal to the v3.1 signature"
+  "signed_at": "2026-10-21T14:59:44Z",
+  "reason": "v3.18: V1 FWD-24 whole-bucket grant reaches bronze; state the exclusion and add the refused-bronze arm"
 }
