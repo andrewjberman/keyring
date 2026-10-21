@@ -117,7 +117,12 @@ TEST_FILES = {
         "test_wall_budget_stops_the_walk_and_writes_the_record",
         "test_request_lines_name_method_path_status_and_secs",
         "test_the_record_is_rewritten_after_every_day_and_marked_partial_until_the_end",
-        "test_sigterm_ends_the_walk_with_a_stop_and_the_logout"]),
+        "test_sigterm_ends_the_walk_with_a_stop_and_the_logout",
+        "test_download_reads_in_the_browser_with_an_idle_stall_bound",
+        "test_a_stalled_file_is_missing_with_its_reason_and_the_day_lands_its_other_files",
+        "test_missing_files_are_retried_once_at_the_end_inside_the_budget",
+        "test_record_names_earliest_served_per_file_type_and_the_transact_source",
+        "test_a_day_with_no_served_file_is_a_named_result_and_the_walk_goes_on"]),
     "ft4": ("%s/tests/test_backfill_run.py" % CF, [
         "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
         "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",
