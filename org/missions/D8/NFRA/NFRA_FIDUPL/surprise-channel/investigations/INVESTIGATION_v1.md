@@ -1871,6 +1871,51 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "TO-FR-s-6 REPAIR 1 and 2 (issuer msg 8966): the lister tries eleven candidate paging forms for page 2 and keeps the first that adds distinct rows; FT-s-8 step 2 then reaches 5204 and splits.",
     "world_is": "All eleven candidate forms returned no new distinct rows, none was refused with a 401 or 403, and the lister fell back to its loud failure at 2000 of 5204. The live page-2 form is therefore outside the table. Nothing was split; no firm prefix was written. This was the third sign-in in its trailing hour (02:49Z, 03:04Z, 03:29Z); no recovery sign-in fired (recovery not-needed).",
     "notes": "Not retried (one attempt per the GO; the issuer also bars any sign-in before 04:30Z) and nothing edited. For the issuer: guessing further forms spends sign-ins; the page-2 request has to be MEASURED, values-free, from a signed-in session (the agent Chrome driver on the box, CDP) or from the CRO's capture, then adapters.py corrected once. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2; FT-s-8 stays pending."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T05:02:00Z",
+    "one_line": "gswitch.GSwitcher raises GSwitchError with fixed text and no HTTP status on any non-200 change-form read or G switch answer, so the g_export_probe 401/403 stop cannot be applied to those requests; a refused switch is followed by the next ordinal's switch POST.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P1 (owns whether a switch refusal must end the live probe; the order's stop-on-ANY-request cannot be met for switch and form reads without a gswitch change, which this worker may not make; the live run is not ordered from this worktree until ruled)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/gswitch.py@83a888fca62 lines 76-79: read_form raises GSwitchError('read_form: change form refused') when the status is not 200; the status is not carried",
+        "infra/aws/ec2/canonical-fidelity/gswitch.py@83a888fca62 lines 82-89: switch raises GSwitchError('switch: answer refused') when the status is not 200 and GSwitchError('switch: current cell did not match ...') on a mismatch; no status is carried in either exception",
+        "infra/aws/ec2/canonical-fidelity/box/g_export_probe.py (worker worktree wk-NFRA_FIDUPL-6, uncommitted at filing): _one_ordinal emits 'switched=error=<class name>' and goes on to the next ordinal, as TO-FT-s-10 names; the stop applies to the status and download answers, which carry their status",
+        "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FT-s-10.g-export-probe.md: 'A status 401 or 403 on ANY request ends the probe at once'"
+      ]
+    },
+    "spec_asserts": "TO-FT-s-10 WHAT TO BUILD item 2: a status 401 or 403 on ANY request emits 'PROBE stop: HTTP <s>' and ends the probe at once; the finally then skips the restore switch.",
+    "world_is": "On a 401 or 403 answer to a change-form read or a G switch the probe cannot see the status. A refused switch emits switched=error=GSwitchError and the probe sends the next ordinal's switch POST, up to three more before the restore; a refused form read ends the probe through the ERROR line. The 401/403 stop therefore holds for the status list and the download only.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not fixed in this cell: the order bars editing gswitch.py. For the issuer before the live run (TO-FT-s-8, CTO msg 8990): either gswitch returns the status with its GSwitchError, or a refused switch stops the probe. Nothing is run live from this worktree."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T05:02:00Z",
+    "one_line": "TO-FT-s-10 does not fix the row scope of profiles, requests and ids_sha8, nor the line-break rule of rows and line1_sha8, so the probe chose all status rows and bytes.splitlines(); the issuer must confirm these before comparing its 5009-row file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FT-s-10.g-export-probe.md: 'profiles=<distinct profileId count> requests=<distinct requestId count> ids_sha8=<... sha1 of the sorted requestIds ...>' names no row scope; 'line1_sha8=<... sha256 of the first line's bytes>' names no line-break rule",
+        "infra/aws/ec2/canonical-fidelity/box/g_export_probe.py (worker worktree wk-NFRA_FIDUPL-6, uncommitted at filing): module docstring 'Hash definitions' and _status_facts / _account_facts"
+      ]
+    },
+    "spec_asserts": "TO-FT-s-10 WHAT TO BUILD item 2: the counts and hashes let the issuer compare the probe's output with the 5009-row file already landed.",
+    "world_is": "The order does not define the scope or the line-break rule, so a count or hash computed over a different scope or rule will not match the issuer's figure even when the bytes are the same.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Chosen: profiles, requests and ids_sha8 over every dict row of a 200 status list; rows and line1_sha8 over bytes.splitlines() (CR, LF and CRLF), line1 empty when there is no line. The definitions are printed in the module docstring; the issuer confirms before comparing."
   }
 ]
 ```
