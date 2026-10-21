@@ -152,3 +152,15 @@ Run 7J (Multi-Comp on r34r, PASS: packager ATTACHED, audit AUDIT_WRITTEN, 60 pag
 Both carry `<workstream>~GREL8</workstream>` (one issuance); they share no file and no edge. Checkers `checks/ar_window_checks.py` (arms portfolio, tests) and `checks/ar_gapnote_checks.py` (arms gaps, placeholder, tests) were calibrated against reference fixes in scratch worktrees and seven mutants. Then the release r34s (AR-g-188) carries both under the CTO's pair, and run 7K reads the result.
 
 fanout: 2 of 2 chains, cap 8, reason: two independent cells with disjoint write sets.
+
+## Addendum 9 2026-10-21 (issuer): cell AR-g-187, the re-pin after AR-g-186's one CSS rule
+
+AR-g-185 (merged 44240238b9f) and AR-g-186 (merged 8faec6ba970) are verified on the full tree (window portfolio OK and tests 76; gapnote gaps OK, placeholder OK, tests 85; ruff clean). The issuer's drain run of the whole `ycharts/research/tests` directory (708 tests) found two failures outside the workers' paths: `test_layout_commentary.py::test_a_no_commentary_is_byte_identical_to_today` and `test_commentary_standalone_pdf.py::test_b_build_is_byte_identical_to_base_with_and_without_the_commentary_keyword`, which pin the sha256 of the fixture Overview's HTML. Measured: the one added `.cmp` page-style line is the ONLY difference (removing it restores both old pinned hashes exactly, 475b060b6e2b and 790d953d59fb); the new values are 3d6dfd48d3a4... (no commentary) and a9d38267d285... (with commentary). Worker 359's AR186-g-AC3 read FAIL in its sparse worktree (a shared module, `v2_portal/_shared/etf_classifications_dynamodb.py`, outside the cone: row W359-S1, the issuer's sparse-cone gap); on the full tree it reads `AR-GAPNOTE-tests-OK passed=85` (`deliverables/2.0.0_SA_COO~G2/AR186_AC3_ISSUER_REGRADE_20261021.md`).
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-187` | the three pinned hashes of two tests move to the measured values | `test_layout_commentary.py`, `test_commentary_standalone_pdf.py` | WORLD (infrastructure path floor) |
+
+AR-g-187 carries `<workstream>~GREL9</workstream>`. Then the release r34s (AR-g-188) carries AR-g-185, AR-g-186 and AR-g-187.
+
+fanout: 1 of 1 chains, cap 8, reason: one test-pin cell.
