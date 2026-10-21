@@ -1873,6 +1873,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "notes": "Not retried (one attempt per the GO; the issuer also bars any sign-in before 04:30Z) and nothing edited. For the issuer: guessing further forms spends sign-ins; the page-2 request has to be MEASURED, values-free, from a signed-in session (the agent Chrome driver on the box, CDP) or from the CRO's capture, then adapters.py corrected once. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2; FT-s-8 stays pending."
   },
   {
+    "id": "NFRA_FIDUPL-D1-S14",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T06:08:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "The TO-FT-s-11 live backfill run ended with run_error=TimeoutError after its one sign-in: the walk never started (walk null), no stop reason, no day landed, so FT-s-11-AC1 reads FAIL.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM fa3700a4-30fe-414f-a377-f41a083b7663 on i-028e830f7226cc685 at 06:01:20Z (the issuer's order GO 9004, ONE attempt, no retry), status Success, stdout verbatim: 'ERROR: backfill run did not finish: TimeoutError' / 'ERROR: backfill run_id=20261021T060121Z scope=domain sign_ins=1 stop=none' / six 'FILETYPE <type> days=0 bytes=0 earliest=none' lines / exit=1",
+        "s3://opal-data-assets/fidelity/alongside/bronze/_runs/20261021/backfill-20261021T060121Z.json (1074 bytes, finished 06:03:36Z): backfill true, run_error 'TimeoutError', sign_ins 1, stop {evidence none, reason none}, walk null, per_file_type all six days 0 bytes 0 earliest_date null, caps max_days 125 max_exports_per_run 12 max_sessions_per_day 2",
+        "fidupl_round_checks.py ft11r: R1-FT11R-FAIL run_error=TimeoutError",
+        "aws s3api list-objects-v2 under fidelity/alongside/bronze/ with LastModified from 06:00Z excluding _runs/: 0 keys; a run record _runs/20261019/run-20261021T060236Z.json (2789 bytes, 06:02:37Z) was also written during the run (content not read)"
+      ]
+    },
+    "spec_asserts": "TO-FT-s-11 step 2 and FT-s-11-AC1: one run of backfill_main.py signs in once, walks the New York calendar back through the Export Status list, lands each COMPLETED day by content date, and writes ONE completion record with a stop reason.",
+    "world_is": "The run signed in once and raised TimeoutError before the walk began (walk null); the completion record names the error and no stop reason. Nothing was landed (0 data keys), the starting G state is not part of this walk, and no 401, 403 or lockout line appears. Which request timed out is not in the output or the record.",
+    "notes": "Not retried (one attempt per the order) and nothing edited. For the issuer: the record carries the error class only; the failing step (a stage that wrote the 06:02:37Z run record, or the Export Status read) and its fixed-text detail need to be printed, as was done for the AdapterShapeError (row D1-S11). Sign-in count: this was the 3rd in its trailing hour (05:31Z, 05:46Z, 06:01Z); no recovery sign-in exists in this walk, so none fired. A re-run needs the issuer's new GO and my count at that time."
+  },
+  {
     "id": "NFRA_FIDUPL-D1-W6-S6",
     "project": "NFRA_FIDUPL",
     "fabric": "dell1",
