@@ -50,3 +50,13 @@ At the live apply of `BF-r-3` step B1, IAM refused `CreatePolicy` for `aws_iam_p
 | `BF-j-7` | the tag value becomes `one-way fan-in fence - schwab variant`, with a test that pins IAM's tag charset for every literal tag value in `silver.tf` and `monolith-iam.tf` | R3b (retry of B1) | laptop | WORLD (`infra/` floor; nothing applied) | worker (slot ~1) | `BF-j-6` (merged) |
 
 The converter package pin (`27acf60210`) is unaffected: the change is in `silver.tf`, not in a vendored module. `BF-r-3` resumes at B1 after the merge.
+
+## AMENDMENT 3 (2026-10-21 ~15:5xZ, issuer 2.0.0_SA_COO~SB; `2.0.0_SA_COO~SA` msgs 110140-110141, CTO msg 110143: HOLD R5): the puller's plan filter
+
+`Select-PlanAsOf` (round-3 cell `BF-w-1`, merge `24eb435138`) wraps its argument with `@($planItems)`; the script passes a `System.Collections.Generic.List[object]`, and in Windows PowerShell 5.1 that wrap throws `Argument types do not match` when the List arrives through an untyped parameter. Reproduced by the issuer (5.1.26100). Every live run would lose its plan; uploaded at R5 it would break the 21:45Z pulls. The test harness passed arrays, not a List. One cell is added under workstream `release-puller`:
+
+| cell | item | release act | placement | risk | executor | depends on |
+|---|---|---|---|---|---|---|
+| `BF-w-7` | `$all = @($planItems \| ForEach-Object { $_ })` (and any same-shape site the census finds), with a harness case and arms that pass a real `List[object]` | R5 (precondition) | laptop | WORLD (`infra/` floor; nothing uploaded) | worker (slot ~2) | none |
+
+`BF-r-5` waits on this merge (CTO HOLD). The Alongside copy re-syncs from the merged file (`2.0.0_SA_COO~SA`'s exact-copy rule).

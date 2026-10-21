@@ -36,7 +36,8 @@ Later rounds enrich to every table, then the gold union.
          silver table of the matching Schwab schema
          DONE WHEN  APPLIED -- for each landed family (accounts, positions,
                     balances, securities and prices, transactions, open lots,
-                    realized gain/loss) a schema parity read compares the
+                    realized gain/loss, unrealized gain/loss) a schema parity
+                    read compares the
                     Fidelity table against its Schwab twin -- column names, types,
                     units, enum values, grain -- and prints the denominator
                     (tables compared of tables landed)
@@ -86,6 +87,16 @@ Later rounds enrich to every table, then the gold union.
          SOURCE     brief O3; Andrew-direct ~15:38Z ("construct the necessary
                     tables in gold by the config")
 
+  FWD-6  Every home, address and name of the Fidelity silver and the gold
+         union comes from the canon's builders
+         DONE WHEN  APPLIED -- each silver and gold address is printed by
+                    lib/opal_naming.py address() and each resource name by
+                    name(), cited in the PRD; a builder refusal is a registry row
+                    added, never a typed path
+         ACCEPT     A reader of the PRD finds builder output beside every new
+                    address and name; the naming gate refuses nothing at commit
+         SOURCE     CLAUDE.md rule 30; brief Part II third row
+
   FWD-7  Every account in gold is attributed to its advisor or firm from the
          custodian's own grouping id, never from a downstream vendor
          DONE WHEN  EXERCISED -- the mapping config (custodian, native group id)
@@ -101,16 +112,6 @@ Later rounds enrich to every table, then the gold union.
                     G Number from Fidelity and the Master Account Number from
                     Schwab ... in some mapping config ... rather than rely on
                     downstream data vendor inputs")
-
-  FWD-6  Every home, address and name of the Fidelity silver and the gold
-         union comes from the canon's builders
-         DONE WHEN  APPLIED -- each silver and gold address is printed by
-                    lib/opal_naming.py address() and each resource name by
-                    name(), cited in the PRD; a builder refusal is a registry row
-                    added, never a typed path
-         ACCEPT     A reader of the PRD finds builder output beside every new
-                    address and name; the naming gate refuses nothing at commit
-         SOURCE     CLAUDE.md rule 30; brief Part II third row
 ```
 
 ## Questions the brief leaves open, and who settles them (none is an outcome)
