@@ -15265,3 +15265,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts and file metadata only; no transcript content."
 }
 ```
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-21T12:08:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~Z",
+  "one_line": "A Python 3.15.0 all-users install with Add to Path (10-20 12:06-12:07 local, run as SYSTEM) put C:\\Program Files\\Python315, which has no boto3, first on the site Z Machine PATH; two scheduled tasks that call bare python now fail: OPAL_BBGTML_freshness_check (CHECK-ERROR) and OPAL_D7_ticket_intake (every pass since 10-20 12:09:46 local).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Machine PATH (registry, read 11:40Z): first entries C:\\Program Files\\Python315 and its Scripts. C:\\Program Files\\Python315\\python.exe imports without boto3 (ModuleNotFoundError). Python311 and Python314 import boto3.",
+      "Application log, MsiInstaller, 2026-10-20 12:06-12:07 local: Python 3.15.0 Add to Path, pip Bootstrap and the other 3.15.0 components installed successfully; the user on the event is S-1-5-18 (SYSTEM), client process 30512. Who started the installer is NOT established.",
+      "OPAL_D7_ticket_intake runs run_intake.cmd (bare python -m integrations.ticketing.intake.runner) every 5 min: runner.log holds 235 'intake pass exit 1' lines with ModuleNotFoundError boto3 (runner.py line 60), the first at 10-20 12:09:46 local.",
+      "OPAL_BBGTML_freshness_check (bare python, freshness_check.py): LastTaskResult 3 at 10-21 07:30 local; the same script run once with the Python311 path at 11:41Z returned PASS (data_as_of 2026-10-20, 1 trading day behind).",
+      "Census of 216 scheduled tasks (178 enabled): 0 call bare python directly; 4 run a .cmd with a bare python line (2 enabled, 2 disabled); 4 run shell scripts not read. CTO~Z ruling msg 36273: the owners pin their launchers to the Python311 path; no boto3 into 3.15.",
+      "CTO~Z msg 36275 (11:53Z, read by this seat): run_intake.cmd now uses the %LOCALAPPDATA% Python311 path (@696c3f9733, LOCAL); one exercise at 07:49 local shows the boto3 error gone; the pass still exits 2 (TEAMS-IDENTITY-FAIL, no opal-gateway-bbg token), an older failure (945 of 945 passes since 10-17 exited 2; last exit 0 on 2026-09-03) that Python 3.15 had masked; open call sitez-20261021T115341Z-5966 for Andrew."
+    ]
+  },
+  "spec_asserts": "A scheduled task that needs boto3 resolves an interpreter that has it (the other launchers pin the Python311 path).",
+  "world_is": "One enabled task still resolves Python 3.15 and fails: OPAL_BBGTML_freshness_check (its pin is 0.0.3_BG_BBGTerminal's act, per CTO~Z ruling 36273). OPAL_D7_ticket_intake was re-pinned by CTO~Z at 696c3f9733 (LOCAL, not pushed as read by this seat) and no longer fails on boto3; it exits 2 for an older reason. The Python315 PATH entry is still first, so any future bare-python caller on this box resolves it.",
+  "notes": "Disarm when freshness_check.cmd pins Python311 and a scheduled run exits 0, or when the Python315 PATH entry is moved or boto3 is vetted into it (CTO~Z ruled no boto3 into 3.15). Nothing was edited by this seat. 4 tasks that run shell scripts were not read for bare python."
+}
+```
