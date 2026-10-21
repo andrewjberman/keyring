@@ -139,3 +139,16 @@ AR-g-182 (merged 6422a8dc359) and AR-g-183 (merged c02fdd2fd64) are verified on 
 AR-g-184 carries `<workstream>~GREL7</workstream>`.
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell.
+
+## Addendum 8 2026-10-21 (issuer): cells AR-g-185 and AR-g-186, the fixes of the 7J read
+
+Run 7J (Multi-Comp on r34r, PASS: packager ATTACHED, audit AUDIT_WRITTEN, 60 pages) was read page by page (`deliverables/2.0.0_SA_COO~G2/FWD10_READ_RUN7J_20261021.md`). The Opal model rows reproduce exactly; the PORTFOLIO row does not (YTD 10.66 page against 8.83; 1Y 13.37 against 11.12; drawdown -15.94 against -13.60). Cause measured by exact reproduction (page to three decimals): the filed amounts are applied at the start of the 10-year price window (`PRICE_HISTORY_YEARS`, 2016-10-20) and the path is cut and rebased at the common window start (2024-04-30), by which date the filed SPY 44 percent has drifted to 60.1 percent. The 7f Overview sample reproduces exactly under the same formula (its caption states the semantics), so FWD-9's figures are not defective on this test. Also found: a false sentence "Not available: no row of this section has a value." under three tables of a report whose rows all carry values, the 3Y, 5Y and 10Y n/a cells unexplained in words, a stranded heading, and a raw `{portfolio_name}` in Overview labels. My AR-g-175 tests used price histories that began at the models' first observation, so the drift could not appear (the third premise gap of the fake-shape kind this round).
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-185` | `buy_and_hold_from`; `_price_stage` returns its series and amounts; `_compare_stage` re-applies the amounts at the common window start; tests | `portfolio_series.py`, `opal_producer.py`, `test_portfolio_series.py`, `test_compare_producer.py` | WORLD (infrastructure path floor) |
+| `AR-g-186` | no false gap sentence; the n/a periods explained in words; `.cmp` keep-together; no raw placeholder; tests | `layout_overview.py`, `test_layout_overview.py`, `test_compare_elements.py` | WORLD (infrastructure path floor) |
+
+Both carry `<workstream>~GREL8</workstream>` (one issuance); they share no file and no edge. Checkers `checks/ar_window_checks.py` (arms portfolio, tests) and `checks/ar_gapnote_checks.py` (arms gaps, placeholder, tests) were calibrated against reference fixes in scratch worktrees and seven mutants. Then the release r34s (AR-g-188) carries both under the CTO's pair, and run 7K reads the result.
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells with disjoint write sets.
