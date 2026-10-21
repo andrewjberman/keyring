@@ -92,6 +92,10 @@ FU-s-4 REPAIR 1 (the lander reads each file's own date column and the run record
 
 Merged since your sixteenth delivery: FT-s-1 (`switcher_list.py`, `perg_seed.py`), FT-s-2 (`box/daily.py`, `box/run.py`), FT-s-3 (`signin_recover.py`), FT-s-4 (`backfill_run.py`), FT-s-7 (`backfill_adapter.py`, `backfill_main.py`, a REPAIR 2 is still in build and ships later), FU-s-2 REPAIR 17 (`signin.py`); `land.py` and `split.py` are already on the box. Deliver the shipped set from head 39524cb59c0 or later. Several files are NEW at the code root `/opt/fidelity-uploader/` next to `land.py` (`switcher_list.py`, `perg_seed.py`, `signin_recover.py`, `backfill_run.py`, `backfill_adapter.py`, `backfill_main.py`), so keep the same relative layout you used before. Use a NEW ledger (slug `nfra-fidupl-box-code-sync-17-<date>`). The `fu10m` check compares every `.py` file at the code root plus `box/`, so it reads the enlarged set by itself. Same rules: file copy only, no browser, no sign-in, nothing under either profile directory, leave `fidelity-agent-chrome.service` as it is, and do not touch `/opt/fidelity-uploader/work`. One line to the issuer when done.
 
+### REOPENED (issuer, 2026-10-21 ~03:00Z) -- eighteenth delivery: split.py (null account column) and the backfill seam fix, head f75a19d0646
+
+Merged since your seventeenth delivery: FR-s-2 REPAIR 4 (`split.py`: prices and security are not split) and FT-s-7 REPAIR 2 (`backfill_adapter.py`, `backfill_main.py`, `backfill_run.py`). Deliver the shipped set from head f75a19d0646 or later, a NEW ledger (slug `nfra-fidupl-box-code-sync-18-<date>`), check `fu10m`. Same rules: file copy only, no browser, no sign-in, nothing under either profile directory or `/opt/fidelity-uploader/work`, the agent Chrome unit and `config.json` as they are. One line to the issuer when done: the daily-mode proof run (TO-FT-s-8 step 2) waits on it.
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
