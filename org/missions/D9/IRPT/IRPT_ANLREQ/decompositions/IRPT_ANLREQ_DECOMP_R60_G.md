@@ -127,3 +127,15 @@ Run 7I (the Multi-Comp filing on r34q) passed admission (the S245 fix held) and 
 Both carry `<workstream>~GREL6</workstream>`; they share no file and no edge (two chains). Checkers `checks/ar_prepare_checks.py` (arms frozen, worker, tests) and `checks/ar_reason_checks.py` (arms reason, tests) were calibrated against reference fixes in a scratch tree and eleven mutants. Then, after Y2's ticket-read chain (live) and under the CTO's pair, the release r34r (AR-g-184) carries both fixes plus Y2's `ticket_audit_source.py` projection (trunk 11fb915f82d).
 
 fanout: 2 of 2 chains, cap 8, reason: two independent cells with disjoint write sets.
+
+## Addendum 7 2026-10-21 (issuer): cell AR-g-184, the r34r build (r34q plus the S249 fix, the retained-line lead token and the audit source projection)
+
+AR-g-182 (merged 6422a8dc359) and AR-g-183 (merged c02fdd2fd64) are verified on the full tree (frozen, worker, tests 27; reason, tests 51; ruff clean), and 2.0.0_SA_COO~Y2's AR-y-487 (`ticket_audit_source.py`, trunk 11fb915f82d) is under the pin. Measured by a rehearsal at pin `32bb8d5a673d3e0dd3c6efc933b7f0db5206533a`: against r34q the release moves 6 members (SHA256SUMS, the bindings provenance, `frozen_worker.py`, `resident_main.py`, `resident_worker.py`, `ticket_audit_source.py`) and adds none: 323 members, tarball sha256 `77ec08f5a591de5584abb71787eb74c86bcbd3167416f2b411befc750140b828`, smoke 86 of 86, gate dry runs 0, 31, 0, 33. The registry file and the `tickets_table` binding do not move. The checker `checks/ar_release_r_checks.py` (calibrated: record OK, tree OK, scripts OK on the rehearsal; tree FAIL on the r34q tarball) also runs the S249 and lead-token checks on the tarball's own extracted modules.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-184` | the r34r tarball, sums and four host scripts into stage `C:/dev/irpt-release-r34r-g2` (BUILD ONLY), a record and a proof | the worker folder `r65/` | LOCAL |
+
+AR-g-184 carries `<workstream>~GREL7</workstream>`.
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell.
