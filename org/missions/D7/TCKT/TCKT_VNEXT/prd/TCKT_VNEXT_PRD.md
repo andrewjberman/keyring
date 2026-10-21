@@ -5,7 +5,7 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "dell2",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -334,14 +334,26 @@ from NFRA_OPSWKF to this project for its upload-only form, and its engine-submit
   in this project. `org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md` C-ABSORB item (e) moved "TCKT_VNEXT's Analysis Request
   scope" into IRPT_ANLREQ, and item (c) moved the commentary drafter. ADDENDUM 2 already moved C-PACKAGE and FWD-9. This addendum
   states what that move means for the ENDPOINT, so the close has a denominator.
-- **MOVED to IRPT_ANLREQ, graded there and never here:** FWD-1 (the Analysis Request thread), FWD-3 (the file turned back at
-  filing), FWD-6 (commentary on the ticket), FWD-8 (an advisor files an Analysis Request) and FWD-9 (the package on the open ticket).
-  Their numbers stay theirs in this list and are not reused. This project no longer promises them, because IRPT_ANLREQ does. No
-  capability is dropped from the estate.
+- **Where each outcome goes (v0.8, on `3.0.0_SA_CVO~DELL2`'s review @b433d35198).** Each line names its carrier. None of these is
+  graded here, and their numbers are never reused.
+  - **FWD-1 and FWD-9:** MOVED. Graded as IRPT_ANLREQ FWD-1, the four attachments on the open ticket.
+  - **FWD-3:**
+    - The unpriceable-holding part is SUPERSEDED by IRPT_ANLREQ C-SWAP, so the filer is never asked (Andrew-direct 2026-10-15,
+      IRPT_ANLREQ v0.18).
+    - The sheet-shape part (several accounts, a totals row) is CARRIED by IRPT_ANLREQ C-STOREDINPUT and the reader's door checks, as a
+      contract with no outcome. It is UNGRADED. `1.0.0_SA_CTO~DELL2` decides at the next IRPT_ANLREQ round analysis whether it becomes
+      an IRPT_ANLREQ outcome.
+  - **FWD-6:**
+    - The draft is MOVED, graded as the commentary attachment of IRPT_ANLREQ FWD-1.
+    - The sender record (who sent the final commentary, and when) is PARKED in IRPT_ANLREQ's enrichment list (`commentary_sent`), owner
+      `2.0.0_SA_COO~Y2`. It is ungraded until cut.
+  - **FWD-8:** SUPERSEDED by Andrew-direct 2026-10-14 ~15:2xZ: the Ticket Center is shown to Opal users only, and the filer is Opal staff
+    (IRPT_ANLREQ v0.6). It is kept as IRPT_ANLREQ's organic arm, which waits on the Ticket Center being shown to client users. Neither
+    project grades it.
 - **FWD-2 is split:**
   - The TICKET arm (another firm's sign-in refused on the ticket) stays here, under C-FENCE.
-  - The FILE arm (refused on the attached file and the report reference) moved with C-PACKAGE. IRPT_ANLREQ's ENDPOINT cites it
-    ("TCKT_VNEXT FWD-2; C-PACKAGE firm check").
+  - The FILE arm (refused on the attached file and the report reference) is MOVED. It is graded under IRPT_ANLREQ C-PACKAGE, which
+    IRPT_ANLREQ's ENDPOINT cites ("TCKT_VNEXT FWD-2; C-PACKAGE firm check").
 - **Stays here:** FWD-2 (ticket arm), FWD-4 (the filer works and finishes their own ticket, any type), FWD-5 (one queue for every
   type), FWD-7 (a second request type as data), FWD-10 (Trade Request) and FWD-11 (Meeting Request).
 - **Close:** TCKT_VNEXT closes when `3.0.0_SA_CVO~DELL2` grades FWD-2 (ticket arm), FWD-4 and FWD-5 on the evidence on file. FWD-7,
