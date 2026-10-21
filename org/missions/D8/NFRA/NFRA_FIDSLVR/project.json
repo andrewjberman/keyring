@@ -5,7 +5,7 @@
   "fabric": "dell1",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-10-21",
   "registered_under_tree": "2026-10-21",
   "placement": "DELL1",
@@ -17,11 +17,13 @@
   ],
   "name": "Fidelity silver formulated exactly as Schwab silver: every Fidelity bronze fact family converted to the matching Schwab silver fact_*/dim_* schema (names, types, grain), the unmappable named per table, silver advancing as bronze lands, and one gold layer built by config from the uniform silvers, attributing accounts by the custodian-native grouping id (G Number, Master Account Number)",
   "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew-direct 2026-10-21 ~15:20Z via 4.0.0_SA_CRO~FIDELITY ('silver fidelity and silver schwab formulated the exact same way ... a master gold layer'; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261021_1520Z_FIDUPL_ALL_FACT_TABLES.md @abdd501318). Sibling of NFRA_FIDUPL, whose bronze is the input contract (it starts no pull of its own), and of the Schwab silver converter opal-assets-silver-schwab, whose schema is matched and never altered. Round 1 thread: Schwab-reading code runs unchanged on the Fidelity fact_rps for one date. The real labor is the per-field reconciliation (a DS builder class). Every address and name from lib/opal_naming.py (rule 30). No alerts (moratorium).",
-  "phase": "2026-10-21 ~15:4xZ (1.0.0_SA_CTO~DELL1): L2 endpoint FWD-1..7 written (FWD-7: attribution by the custodian-native grouping id via a mapping config, Andrew-direct ~15:35Z); L3 registered under D8. L4 PRD drafts on this endpoint; L4-R waits on Andrew's confirmation of the DONE WHEN lines. COO lane unseated; capacity read at seating (cap 3).",
+  "phase": "2026-10-21 ~15:5xZ (1.0.0_SA_CTO~DELL1): L4 PRD v0.1 DRAFT written on endpoint @5c8ca94a34 and brief @cc707deac8; ratified-text half delivered to 3.0.0_SA_CVO~DELL1; L4-R waits on Andrew confirming the DONE WHEN lines (open-calls act row); MSTR seats the COO lane on signing (2 of 3 live at 15:39Z). 2026-10-21 ~15:4xZ (1.0.0_SA_CTO~DELL1): L2 endpoint FWD-1..7 written (FWD-7: attribution by the custodian-native grouping id via a mapping config, Andrew-direct ~15:35Z); L3 registered under D8. L4 PRD drafts on this endpoint; L4-R waits on Andrew's confirmation of the DONE WHEN lines. COO lane unseated; capacity read at seating (cap 3).",
   "blocking": null,
   "brief_ref": "docs/briefs/nfra-fidslvr-fidelity-silver-to-schwab-schema-brief-20261021.md@cc707deac8",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_FIDSLVR_20261021.md",
-  "prds": [],
+  "prds": [
+    "org/missions/D8/NFRA/NFRA_FIDSLVR/prd/NFRA_FIDSLVR_PRD.md"
+  ],
   "decompositions": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1",

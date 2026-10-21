@@ -4,10 +4,10 @@
  "directive": "D8",
  "macro_code": "NFRA",
  "fabric": "dell1",
- "dep_stage": "REGISTERED",
+ "dep_stage": "PRD",
  "status": "active",
  "name": "Fidelity silver formulated exactly as Schwab silver: every Fidelity bronze fact family converted to the matching Schwab silver fact_*/dim_* schema (names, types, grain), the unmappable named per table, silver advancing as bronze lands, and one gold layer built by config from the uniform silvers, attributing accounts by the custodian-native grouping id (G Number, Master Account Number)",
  "generated_from": "org/missions/D8/NFRA/NFRA_FIDSLVR/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-21T15:40:40Z"
+ "generated_at": "2026-10-21T15:47:53Z"
 }
