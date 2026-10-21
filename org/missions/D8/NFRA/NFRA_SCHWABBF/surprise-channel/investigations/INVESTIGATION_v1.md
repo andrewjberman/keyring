@@ -1483,6 +1483,27 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "Release plan section 1 and section 6: the state copy writes six tables of 08403355 under schwab/49financial/state/<table>/date=D/08403355.<name>, and the move tool's plan on each tier reads copy=0 already=N afterwards.",
     "world_is": "The destination prefix holds a sibling family's object under ews_store/, outside the five tables the copy writes (complete, conversions, pulls, daily_pull, backfill_status). A verify that counts or lists the whole destination prefix, rather than the tables, would count one key it does not own. The fence read-admission of the copy identity is proven on this prefix (rc=0).",
     "notes": "Form only for the copy; named so the issuer can confirm the move tool's verify scopes by table."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S10",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T11:36:37Z",
+    "one_line": "The silver converter has reserved concurrency 2 and already throttled 4 of 10 invocations after the 10:45Z pull; the bronze copy (R4c) fires it 6,074 times, so the drain time and the 'DLQ 0' proof are set by that cap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r1/census_converter_capacity.txt: get-function-concurrency ReservedConcurrentExecutions 2; timeout 600 s; MaximumRetryAttempts 2; OnFailure destination opal-assets-silver-dlq; no MaximumEventAgeInSeconds in the event invoke config",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r1/census_converter_capacity.txt: CloudWatch AWS/Lambda for opal-assets-silver-schwab over 10:38-11:35Z on 2026-10-21 (the 10:45Z pull day): Invocations 10, Errors 0, Throttles 4, Duration max 4,291 ms, sum 22,953 ms; DLQ queue 0 messages, 0 not visible, 0 delayed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RELEASE_PLAN_R5_0840_ALL_TIERS.md section 1 and 2 (R4c): the bronze copy fires 6,074 converter events; TO-BF-r1 L6 proof: move tool verify rc 0, DLQ 0.",
+    "world_is": "Ten pull-day invocations used 22,953 ms in total (about 2.3 s each on average, 4.3 s at most) and four of them were throttled by the cap of 2. The copy's 6,074 events, at the pull-day average, are about 3.9 hours of converter time; spread over 2 concurrent executions, about 1.9 hours (about 3.6 hours if every key took the 4.3 s maximum). Throttled asynchronous events are retried by Lambda; how long they may wait before they go to the DLQ is the event age limit, which is not set here (AWS's default for asynchronous invocation is 6 hours). Not measured: the converter's duration on a firm-form key, and whether the cap, the retries or the sweep's own invocations change the order.",
+    "notes": "For the issuer: the L6 DLQ-0 proof and the window to 20:00Z depend on this drain time. This order changes nothing about the function."
   }
 ]
 ```
