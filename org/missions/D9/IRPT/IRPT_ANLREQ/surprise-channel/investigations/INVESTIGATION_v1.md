@@ -27080,6 +27080,9 @@
 ```
 
 ## IRPT_ANLREQ-D2-W312-S4 -- the cell's "17 known failures at the base" in src/pages/InvestorReporting is not reproduced: the folder run in this sparse worktree has 69 non-new failures at base, and one test flips between runs
+```json
+[
+  {
     "id": "IRPT_ANLREQ-D2-W310-S1",
     "project": "IRPT_ANLREQ",
     "fabric": "dell2",
@@ -27291,6 +27294,9 @@
 }
 ]
 ```
+```json
+[
+  {
     "id": "IRPT_ANLREQ-D2-W310-S2",
     "project": "IRPT_ANLREQ",
     "fabric": "dell2",
