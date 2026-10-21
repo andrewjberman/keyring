@@ -92,11 +92,13 @@ TEST_FILES = {
         "test_one_fetch_serves_all_six_kinds_for_a_day", "test_main_signs_in_once_and_respects_the_session_cap",
         "test_completion_record_per_file_type_earliest_volume_and_limit",
         "test_non_trading_days_are_skipped_not_stops", "test_three_consecutive_empty_trading_days_are_the_retention_stop",
-        "test_main_walks_the_signed_in_domain_once_not_per_g"]),
+        "test_main_walks_the_signed_in_domain_once_not_per_g",
+        "test_real_runner_planner_and_adapter_walk_end_to_end_on_fakes"]),
     "ft4": ("%s/tests/test_backfill_run.py" % CF, [
         "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
         "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",
-        "test_never_prints_g_numbers"]),
+        "test_never_prints_g_numbers",
+        "test_skipped_non_trading_days_do_not_consume_the_export_cap"]),
     "fu12h": ("%s/tests/test_agent_fill.py" % CF, [
         "test_username_step_fills_and_never_prints_the_value", "test_password_step_reports_factor_names_only",
         "test_code_step_reads_quo_and_reports_authorize_status_only", "test_attach_uses_localhost_cdp_only",
