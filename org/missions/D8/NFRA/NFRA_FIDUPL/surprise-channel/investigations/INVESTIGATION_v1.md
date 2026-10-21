@@ -1409,6 +1409,179 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "The round checker is one file; the criterion invocation it names resolves to the same checker bytes in every tree that runs the round.",
     "world_is": "Two copies of the round checker differ: the main tree carries ft7 and a changed IAM check that the worktree's tracked copy does not. The FT-s-3 entry is identical in both, so the FT-s-3 result does not depend on which copy runs.",
     "notes": "Not fixed: the checker is the COO's and outside this order's grant. Decision for the COO: commit or align the checker so one tree carries the bytes the round grades."
-  }
+  },
+{
+  "id": "NFRA_FIDUPL-D1-W8-S1",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:45:10Z",
+  "one_line": "fetch_day takes no G, so a multi-G backfill run in one session fetches the signed-in G's day under every G key; the adapter keys its cache by (g, day) and never switches G.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/fetch.py@57170cd231c line 61: def fetch_day(session, date_string, out_dir, now=None) has no G parameter; the session is the only account selector",
+      "infra/aws/ec2/canonical-fidelity/backfill_adapter.py@cb74c7aeec8 _day(): the cache key is (g, day) and fetch_day is called with the session wrapper, with no G switch between G values"
+    ]
+  },
+  "spec_asserts": "The order's adapter takes the G argument, accepts it and never prints it, and fetches the day for that G (FT-s-7 item 1).",
+  "world_is": "The adapter cannot select a G. Whatever G the one signed-in session holds is what the day folder contains. A runner that walks two G numbers in one session would land the same account's files under both G keys' windows.",
+  "notes": "No live call was made; this is read from the code. Disarm: the runner must switch the session to each G before that G's windows, or the issuer must confirm the runner signs in per G. Recorded, not fixed here: the switch belongs to the runner or the switcher, outside this order's grant."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S2",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:45:10Z",
+  "one_line": "The planner's KINDS, EMPTY and COMPLETED constants do not match the six file-type kinds and the served value the FT-s-7 order names for the adapter.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/backfill.py@57170cd231c line 13: KINDS = (transactions, positions_balances); backfill_g lines 127-128 raise ValueError for any other kind",
+      "infra/aws/ec2/canonical-fidelity/backfill.py@57170cd231c lines 14-15 and 92-95: COMPLETED and EMPTY; an EMPTY window is skipped with continue, not a stop",
+      "infra/aws/ec2/canonical-fidelity/backfill_adapter.py@cb74c7aeec8 wait() returns the string served, and request_export accepts the six file-type kinds"
+    ]
+  },
+  "spec_asserts": "FT-s-7 item 1: the adapter implements the planner's ExportClient, and wait returns served for a day that carries files; an EMPTY listing raises RetentionLimit.",
+  "world_is": "The planner's own vocabulary differs in three places: its kinds are two names, its status is COMPLETED or EMPTY, and an EMPTY window continues the walk instead of stopping it. The adapter follows the order (six kinds, served, empty is a stop). A runner that calls backfill_g directly would reject the six kinds, and one that reads the planner's EMPTY as a skip would not stop on the adapter's empty listing.",
+  "notes": "The adapter was built to the order. The runner (FT-s-4) must use the same vocabulary as the adapter, and the issuer rules which vocabulary wins; no planner line was edited."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S3",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:45:10Z",
+  "one_line": "The planner yields calendar-day windows of 30 days by default, and a weekday holiday returns an empty listing that the order reads as a retention stop; the adapter refuses weekend and multi-day windows but cannot see a holiday.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/backfill.py@57170cd231c line 48: plan_windows(today, floor_date, chunk_days=30), and lines 58-65 yield every calendar day back to the floor",
+      "infra/aws/ec2/canonical-fidelity/backfill_adapter.py@cb74c7aeec8 request_export raises ValueError for a weekend date_to and for date_from != date_to",
+      "infra/aws/ec2/canonical-fidelity/backfill_adapter.py@cb74c7aeec8 _fetch_once: an empty status list raises RetentionLimit (evidence empty listing); a holiday has no status rows, so it looks the same"
+    ]
+  },
+  "spec_asserts": "FT-s-7 item 1: one business day is one window, and the walk stops when the channel refuses or returns empty.",
+  "world_is": "A runner fed the planner's defaults fails loudly on its first window (30-day span or a weekend). A runner fed business days still meets exchange holidays as empty listings, which the walk reads as the retention limit and stops early, so the recorded earliest date would be too recent. No trading-calendar check exists in the adapter.",
+  "notes": "Disarm: the runner must hand the adapter single-day business-day windows from the trading calendar, and the issuer must confirm a holiday empty listing is not a retention stop before the live run. Not built here: the calendar belongs to the runner, outside this grant."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S4",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:45:10Z",
+  "one_line": "fetch_day returns the same listing for an empty status list and for a partial day, so the listing alone cannot tell retention from an unfinished export.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/fetch.py@57170cd231c lines 74-76: fewer than six COMPLETED rows set missing to all six and failure to export not generated yet; no count is kept",
+      "infra/aws/ec2/canonical-fidelity/backfill_adapter.py@cb74c7aeec8 _StatusTap counts statusElements of the status list itself, so zero rows is the only empty-listing test"
+    ]
+  },
+  "spec_asserts": "FT-s-7 item 1: an EMPTY listing raises RetentionLimit and any other failure propagates.",
+  "world_is": "Read from the code, a day with some but not all six files and a day with no rows produce identical listings. The adapter wraps the session and counts the status rows, so a partial day propagates as DayIncomplete. The fetch module does not expose the count.",
+  "notes": "Resolved in the adapter; recorded because fetch.py's listing contract does not carry the count and a future caller could read the listing alone."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S5",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:45:10Z",
+  "one_line": "FetchError carries its HTTP status only in the message text, and a refused download never raises, so the entitlement mapping parses text and a download refusal is not classified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/fetch.py@57170cd231c line 69: raise FetchError(status list refused: HTTP %s) with no status attribute",
+      "infra/aws/ec2/canonical-fidelity/fetch.py@57170cd231c lines 83-86: a refused download sets listing failure to download refused and does not raise",
+      "infra/aws/ec2/canonical-fidelity/backfill_adapter.py@cb74c7aeec8 _fetch_once parses the status from the message with HTTP nnn and maps 401, 403 and 404 only"
+    ]
+  },
+  "spec_asserts": "FT-s-7 item 1: an HTTP refusal (a FetchError that carries a 401, 403 or 404-class status) raises EntitlementRefused.",
+  "world_is": "The status is recoverable only by parsing the message. A refused download is a listing failure, not an exception, so it reaches the adapter as DayIncomplete and propagates. It is not reported as an entitlement stop.",
+  "notes": "Recorded for the issuer: an attribute on FetchError would remove the text parse. The download refusal is treated as an unclassified failure, which propagates and does not count as a stop."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S6",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:45:10Z",
+  "one_line": "The completion record's stop reasons have no session-cap value, so a run refused by the session-count rule is recorded as reason none with evidence session cap reached.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FT-s-7.backfill-adapter-and-main.md item 2: the stop is retention, entitlement, run_cap, open_date or none",
+      "infra/aws/ec2/canonical-fidelity/backfill_main.py@cb74c7aeec8 _record / the session cap branch in main(): reason none, evidence session cap reached"
+    ]
+  },
+  "spec_asserts": "FT-s-7 item 2: the completion record stop reason is one of retention, entitlement, run_cap, open_date or none.",
+  "world_is": "The enumeration has no value for a session-count refusal. The record marks it as none with the evidence text, and sign_ins 0 keeps it out of the count.",
+  "notes": "Issuer to confirm a session_cap value or accept none with this evidence. No enumeration value was added unilaterally."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S7",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:45:10Z",
+  "one_line": "The runner interface in reference section 12 leaves plan_inputs, the lander call shape, the records class and the session_factory call pattern undefined, and backfill_run.py is not in this worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12: backfill_run.run(plan_inputs, export_client, lander, session_factory, records, caps) with no shape for the first three and the records object",
+      "infra/aws/ec2/canonical-fidelity/backfill_main.py@cb74c7aeec8 main() passes plan_inputs with keys today, floor_date, max_days and perg; lander(folder, *args); records from the factory; sessions_today() on it"
+    ]
+  },
+  "spec_asserts": "FT-s-7 item 2: main calls backfill_run.run(...) and counts sessions through records.sessions_today().",
+  "world_is": "backfill_run is imported lazily and does not exist in this worktree (FT-s-4 builds it in parallel). The shape main passes is the one this module chose, so the runner must accept it. Until FT-s-4 lands, the real path cannot be exercised.",
+  "notes": "Tests use fakes for run and records. The issuer reconciles the shape with FT-s-4 at its merge."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S8",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:52:00Z",
+  "one_line": "The criterion's relative checker path resolves in the worktree to a different copy of fidupl_round_checks.py than the main tree copy the order names; both print R1-FT7-OK passed=9.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "md5sum of org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py in worktree C:/tmp/fidupl-w8: 0f15f1f2d0028531c3d5b5a513570d52",
+      "md5sum of C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py (main tree): e28a2e8903183a97791aca2dcc89861d"
+    ]
+  },
+  "spec_asserts": "FT-s-7 criterion invocation: python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft7 (relative path); the order's worker face says run the main tree's checker by absolute path.",
+  "world_is": "The relative path, run from the worktree, reaches a checker copy whose bytes differ from the main tree copy. The ft7 verdict is identical in both (R1-FT7-OK passed=9). The worker ran the main-tree copy by absolute path as directed, and recorded the criterion text as the invocation.",
+  "notes": "Not reconciled here: which checker copy is authoritative is the issuer's call (the checker is the COO's file, outside this grant). The divergence is recorded, not fixed."
+}
 ]
 ```
