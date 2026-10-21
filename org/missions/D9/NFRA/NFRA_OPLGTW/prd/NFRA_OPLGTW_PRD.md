@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.14",
+  "prd_version": "v3.15",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -27,7 +27,8 @@
     "FWD-19",
     "FWD-20",
     "FWD-21",
-    "FWD-22"
+    "FWD-22",
+    "FWD-23"
   ],
   "status": "RATIFIED"
 }
@@ -287,6 +288,25 @@ Admission is unchanged: the Opal-users-only gate (v2.3 item 4), C2, tier admissi
 S3, Lambda or DynamoDB read by a gateway role is a widening with its never-widen sign-off (CLAUDE.md NEVER-1). No
 resource name is typed (rule 30). Answers project to 50 KB by default (G1 section 3). A last-4 that is ambiguous within a firm returns
 the candidates, never a guess. Freshness is stated in trading days.
+
+FWD-23  — A granted principal reads the full Schwab silver: every fact table of every master, every column (v3.15)
+
+DONE WHEN: EXERCISED — for each contract master (`08242234`, `08335338`, `08403355`), one driven call per silver fact table
+(`fact_acc`, `fact_rld`, `fact_rlu`, `fact_rlw`, `fact_rly`, `fact_rps`, `fact_rps_s2`, `fact_rtu`, `fact_rty`, `fact_sec`,
+`fact_trn`, `fact_uln`, `fact_ult`, `fact_upn`, `fact_upt`) by a granted principal returns rows whose column set equals the
+silver schema minus the forbidden classes, and whose row count for one account and one business date equals a direct read
+of the silver object. A client's accounts are found by name and by account number from `fact_acc`, and an account's
+transactions are listed by trade date from `fact_trn`. The organic case, a principal without the grant, is refused with 0
+reads.
+
+ACCEPT: Fields are generated from the converter's pinned silver schemas, never typed; an undocumented column is served.
+Forbidden, until Andrew's word moves them: `tax_identifier`, `mailing_address`, `email_address`, `phone_number`, the
+hidden-operand classes. One master per call, A14 caps and C3 closure unchanged. The reader IAM over the fact prefixes is a
+widening with its never-widen sign-off.
+
+SOURCE: Andrew-direct 2026-10-21: "The gateway should be exposing the full silver fact tables, that is the entire point";
+"if we are only exposing dims, and not the trn acc etc tables, this is pointless, it needs to be able to provide the full
+data"; "Make sure that is enabled".
 
 PROOF: Per landed group, one driven call. Negative arms: a non-Opal principal refused; for a client-data group, a
 no-firm call and a two-firm call refused; an ambiguous last-4 returns candidates.
@@ -1540,3 +1560,48 @@ Release `56c0f8ce1d` makes the five `client_*` tools NATIVE, so they admit any O
 4. **v3.12 item 7 ("under its grant") is met by master_admin for the client group tonight.** Per-firm holders follow with item 3.
 
 CONTRACTS-side under FWD-22; ENDPOINT unchanged.
+
+### v3.15 addendum (2026-10-21 ~13:4xZ, 1.0.0_SA_CTO~Z) -- FWD-23: the full Schwab silver, every fact table, through the gateway (Andrew-direct)
+
+Input: Andrew-direct 2026-10-21 at the `1.0.0_SA_CTO~Z` terminal, verbatim in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261021_13xxZ_MENACHEM_ENTITLEMENTS_ALL_INDICES_ASSETS_AND_SCHWAB_CONFIRM_LIVENESS.md`:
+"The gateway should be exposing the full silver fact tables, that is the entire point"; "if we are only exposing dims, and
+not the trn acc etc tables, this is pointless, it needs to be able to provide the full data"; "Make sure that is enabled".
+
+**Measured 2026-10-21 by this seat.** Each master's silver holds 19 tables: 15 vendor-shaped facts (`fact_acc`, `fact_rld`,
+`fact_rlu`, `fact_rlw`, `fact_rly`, `fact_rps`, `fact_rps_s2`, `fact_rtu`, `fact_rty`, `fact_sec`, `fact_trn`, `fact_uln`,
+`fact_ult`, `fact_upn`, `fact_upt`; listing of `opal-data-assets/schwab/08242234/silver/`) and 4 `dim_` projections. A `dim_`
+is a column select of one fact with an equal row count (`data/assets/scripts/silver/schwab_projections.py`, the projection
+law). The served contract (`org/standards/NFRA_OPLGTW_CONTRACT.json`) holds only the 4 `dim_` datasets with 11, 9, 9 and 15
+columns, and still lists `raw_account_id` and `account_title` as forbidden. **v2.0's FWD-10 and FWD-11 (account identity,
+`fact_acc`, lots) were specified 2026-10-08 and are not served.** This addendum subsumes them.
+
+**FWD-23 (ENDPOINT).** A granted principal asks the gateway for any row of any Schwab silver fact table of any master in
+the contract (`08242234`, `08335338`, `08403355`), for any business date in the window, and gets the silver row: every
+column the silver holds, under its silver name and type, except the forbidden classes below. In particular a person can
+(a) find a client's accounts by name or by account number from `fact_acc`, and (b) list an account's transactions by trade
+date from `fact_trn`. Proof: for each master, one call per fact table returns rows whose column set equals the silver
+schema minus the forbidden columns, and whose row count for one account and date equals a direct read of the silver
+object; the organic case (a principal without the grant) is refused with 0 reads.
+
+**Contracts.**
+1. **C3 datasets.** `datasets` and `data_prefixes` gain the 15 facts for every master. The contract's per-dataset `fields`
+   are GENERATED from the silver schemas the converter pins (`schwab_schemas.SPECS`), never typed. A column's meaning is
+   carried from the vendor layout where recorded and reads `undocumented` otherwise; an undocumented column is SERVED (this
+   replaces v2.0 item 2's "a column with no measured meaning is not served").
+2. **C2 field classes.** `account_identity` (v2.0 item 1) is served. Stay forbidden, by Andrew's 10-08 answer, until his
+   word moves them: `tax_identifier`, `mailing_address`, `email_address`, `phone_number`, and the three hidden-operand
+   classes. The class of each silver column is printed by the build from the schema, and a column the print cannot class is
+   shown to this seat before it ships.
+3. **Grants.** A grant names datasets; a master-wide grant (OG-rt-1) may name `"*"` for every dataset of the contract.
+   Authorized `account_identity` holders: Andrew, Alyssa, and Menachem (Andrew-direct 2026-10-21: "full data", and his
+   concern "an easy way to scan for clients").
+4. **Rules that do not move.** One master per call; the query and export caps (A14); C3's closure rule (a date is served only
+   when its completion record names it); the audit record for `account_identity` responses holds counts only.
+
+**Order of work for `2.0.0_SA_COO~O`.** (i) the contract and engine generation for the 15 facts plus the reader IAM over
+their prefixes (a never-widen act with halves); (ii) the per-firm client grant shape named in v3.14 item 3, which Menachem's
+`client_*` access also waits on; both ahead of every other round-48 cell.
+
+**Sign-off.** ENDPOINT (FWD-23) and CONTRACTS (C2, C3) change. The ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The
+brief half is Andrew's own words above (PROPORTIONATE SIGN-OFF).

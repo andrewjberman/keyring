@@ -40,3 +40,20 @@
 Routed: the grant and the person_access narrowing to 2.0.0_SA_COO~O (msg 20261021T131937Z), after batch17's ledger CLOSED.
 The two manuals are built by this seat off git (Desktop + scratchpad), with no client identifiers; delivery to him is
 Andrew's (call 7def).
+
+## Answers to this seat's three questions, and the Schwab silver direction, VERBATIM
+
+> 1.) Yes. 2.) Yes agreed. 3.) No he needs it now, let's get him in there. As long as the schwab data is correct. The premise
+> here is that we should just be pulling schwab silver, that data is typed deduplicated raws, not transformed in any way, so
+> it should be complete. My only concern is if there is not an easy way to scan for clients, but it should have full table
+> access for all schwab account silver tables, so dont see why there would be an issue there?
+
+> The gateway should be exposing the full silver fact tables, that is the entire point
+
+> if we are only exposing dims, and not the trn acc etc tables, this is pointless, it needs to be able to provide the full data
+
+> Make sure that is enabled
+
+Reading: (1) Menachem keeps the M365 tools; (2) the six portal_index tools stay off; (3) he signs in now and holds the floor
+until the narrowing lands. The Schwab direction is NFRA_OPLGTW PRD v3.15 FWD-23 (every silver fact table, every column except
+the forbidden classes of 10-08), with Menachem an authorized account-identity holder.
