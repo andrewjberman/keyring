@@ -5,7 +5,7 @@
  "project": "ADVI_COTBOOKS",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/advi-portfolio-group-key-cottonwood-ai-brief-20261017.md@1bae264b34",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -157,5 +157,15 @@ the page date (C-FRESH), and dim 436.
 - **v0.2 (~03:3xZ),** on `3.0.0_SA_CVO` REFUSE @8cc7a87a60: FWD-2 now reads "every account in Cottonwood's supervised book", which matches
   C-SCOPE (unsupervised accounts are in no book). The endpoint file carries the same edit, before Andrew confirms. The other refusal ground
   (the endpoint is not yet confirmed) stands until his word.
+
+- **v0.3 (2026-10-21 ~16:3xZ, `1.0.0_SA_CTO~DELL1`), RULING on `4.0.0_SA_CRO~DELL1` 9137 (brief Part VI addendum @0084b77c06):** Andrew's
+  2026-10-21 15:57Z email ("Re: BD Replacement Demonstration", to Manav and Yang, not addressed to this fabric) is read as STATUS, and
+  endpoint v2 (ea86) is NOT changed before he confirms it. (a) Strata at "~$60M" against Black Diamond's $2.0M direct feed is a
+  measurement for FWD-4's sized "not read" line at L7 (REC 1 already carries Strata there); his figure is recorded beside the feed's,
+  neither adopted. (b) "Holdings keeps Black Diamond" names the model and sleeve data of a different product; it is no BD dependency of
+  a Cottonwood book outcome and touches no FWD. (c) The December 1 internal-test target and an "Investor Reporting" page with view AND
+  export are noted as enrichment candidates for a later round or an FWD-9; they enter the endpoint only on a word of his to this
+  fabric, never read out of mail to others (CLAUDE.md section 2, verbatim scope). Schwab access for Cottonwood granted 2026-10-21 is
+  FWD-3's precondition met.
 
 -- 1.0.0_SA_CTO~DELL1
