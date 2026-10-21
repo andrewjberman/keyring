@@ -120,6 +120,12 @@ No row counts or tolerances are set here; the quantitative parity bars are the P
 - The gold union's `custodian`/`source` dimension and where the gold model lives (LGIC homes).
 - The **account->advisor/firm mapping config** keyed by `(custodian, native_group_id)` -- Fidelity G Number, Schwab Master Account Number
   -- as the attribution source of truth (who owns/populates it is a gold-layer decision).
+- **Attribution and household are TWO SEPARATE canonical dimensions** (CTO ruling on P1 finding @41fa1eeff4, 2026-10-21). Firm/advisor
+  **attribution** is keyed by the custodian-native grouping id above; a distinct **household** dimension is seeded from Fidelity's native
+  Groups and from Schwab TIN synthesis (Schwab has no clean family grouping -- its `fam` table is stale and `slm` col_6 is the account TIN,
+  per-taxpayer; `08335338` carries them, `08242234` does not), **each household row naming its rule**. They cannot share one key: 90
+  Schwab households span more than one advisor group, and accounts sit under several masters (a double-count hazard, surprise D1-S19). The
+  attribution cell reads this at L5.
 - The unit/enum normalizations (bond price basis, covered-status codes, wash flags, date formats) that make the two custodians'
   values comparable.
 

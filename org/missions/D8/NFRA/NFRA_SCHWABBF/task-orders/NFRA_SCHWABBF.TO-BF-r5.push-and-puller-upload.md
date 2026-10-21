@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>release-0840</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `BF-r-5` (`decompositions/NFRA_SCHWABBF_DECOMP_R6.md`) | **outcome_ref:** FWD-1, FWD-4, FWD-6 |
-**GO:** this order is `staged`. The issuer writes the GO line below and flips it to `pending`; do not act before that flip.
+**GO:** written below; this order is `pending`.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written. It will read: inside 2026-10-21 12:00-20:00Z and finishing by 21:30Z; `TO-BF-r4` complete with its three verifies clean and the DLQ at 0; no pull fire has fallen since R4c began.)
+GO, written 2026-10-21 ~17:3xZ by `2.0.0_SA_COO~SB`: begin now, in parallel with the converter drain of `TO-BF-r4` (the drain does not touch the puller or the key function; keep watching it and close L6 as `TO-BF-r4` says). Preconditions met: the three copies are verified (state 6,946, silver 7,595, bronze 6,084, all exit 0); R6 `equal_sample.py compare --form firm` read `EQUAL-OK cells=25` at 17:24Z (the copied silver equals the old-form capture; the converter does not rewrite existing equal silver, so the first converter-written silver is the R8 day). The puller you upload is the FIXED one: work from `box/laptop` at a commit that contains `e2fea02fad` (the `Select-PlanAsOf` List fix, `TO-BF-w7`; print `git merge-base --is-ancestor e2fea02fad HEAD`), and before the upload print line 305 of the repo file: it must read `$all = @($planItems | ForEach-Object { $_ })`, else STOP. DEADLINE: both ledger entries closed or reported before 20:00Z; the CTO's line is 21:30Z and the next pull fire is 21:45Z. If the push or the upload cannot finish, tell me before 19:45Z.
 
 ### THE CELL
 
@@ -32,7 +32,7 @@
 
 1. Preconditions, printed: the verify lines of `BF-r-4` are exit 0; `date -u` is before 21:30Z and no fire (09:45, 10:15, 10:45, 21:45) fell since the R4c copy started (read the box's `C:/schwab-sdd/daily/08403355/daily-pull.log` tail over SSM, read only, and the S3 listing for old-form keys of today's date). If a fire already wrote an old-form key for 08403355, STOP and report.
 2. Open the SECOND ledger entry: `python .tools/deploy_ledger.py open --slug nfra-schwabbf-0840-key-function-and-puller-20261021 --title "NFRA_SCHWABBF 0840 key function and puller" --author 0.7.0_AE_CloudOps~NFRA1 --window-hours 4` with legs `L7|code-deploy|data/black_diamond/scripts/bronze/_monolith_bronze.py to its code home (the pre-push gate deploys it)|head-object ETag equals the repo file's md5` and `L8|s3-upload|infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1 to s3://opal-data-assets/code/canonical-schwab-si2/sdd-daily-pull.ps1|head-object ETag equals the repo file's md5`. The entry NAMES `data/black_diamond/scripts/bronze/_monolith_bronze.py` (the deploy gate holds that file until an OPEN entry names it). Commit the entry and its sentinel together, paths-only.
-3. PUSH: the pin the GO line names must be on origin. Run the push of `box/laptop` the way the box does (`.tools/box-sync.sh`, or `git push origin box/laptop`); print the pre-push gate's output (it deploys `_monolith_bronze.py`); verify with `git ls-remote origin box/laptop` that the remote head contains the pin (`git merge-base --is-ancestor <pin> <remote head>`; print both). Verify the deploy: `head-object` (and `list-object-versions`, newest version) of the code object the gate printed, its ETag against `md5sum` of the repo file `data/black_diamond/scripts/bronze/_monolith_bronze.py`. Close leg L7 with the proof.
+3. PUSH: the pin the GO line names must be on origin. Run the push of `box/laptop` the way the box does (`.tools/box-sync.sh`, or `git push origin box/laptop`); print the pre-push gate's output (it deploys `_monolith_bronze.py`); verify with `git ls-remote origin box/laptop` that the remote head contains the pin (`git merge-base --is-ancestor <pin> <remote head>`; print both). Verify the deploy: `head-object` (and `list-object-versions`, newest version) of the code object the gate printed, its ETag against `md5sum` of the repo file `data/black_diamond/scripts/bronze/_monolith_bronze.py`. If the gate printed NO deploy for `_monolith_bronze.py` (amendment 2: the gate deploys this box's diff against origin/CLOUD, and the file is already on CLOUD, so the push deploys nothing; MSTR measured this at 17:33:54Z), then the deploy is YOURS under the open second entry: run the same deploy route the pre-push gate uses for that one file (read `.tools/safe_deploy_core.py` and the pre-push deploy section for the exact call and the S3 key; do not hand-type a key) for ONLY `data/black_diamond/scripts/bronze/_monolith_bronze.py`, print the call and its output, then verify with `head-object` (ETag equals the repo file's md5, LastModified now) and keep the previous object version id as the rollback. Close leg L7 with the proof.
 4. UPLOAD THE PULLER (after the verify, never before): print `md5sum` and size of `infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1`; print the CURRENT object's ETag and VersionId (the rollback); `aws s3 cp infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1 s3://opal-data-assets/code/canonical-schwab-si2/sdd-daily-pull.ps1 --sse AES256`; `head-object` again: the ETag equals the md5. Read how the box picks the script up in the precedent entry `org/critical_paths/change_management/20261009T0205Z_nfra-oplgtw-og-tm-1-taxsma-master_deploy_completion.md` (leg L4 and the lines after it) and do exactly that, nothing more. Close leg L8 with the proof.
 5a. COMMIT THE BUILD RECORD of `TO-BF-r3` step B3a: the upload script rewrote `artifact_sha256` in `infra/aws/lambda/ci/function-map/opal-assets-silver-schwab.json` (diff saved at `org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB3a_function_map_diff.txt`: one value, `U6l7D4fU...` -> `R6EGliwG...`). Your worktree holds that change uncommitted; commit that ONE file with `safe-commit.sh` paths-only before the push in step 3 (my own commit of it was refused by the lane `IRPT_COMPLETION_SOURCE_MAP`; if yours is refused too, STOP on this step, say so, and carry on; the file is bookkeeping, not a gate for the cutover).
 5. Close both ledger entries only when every leg of each carries proof (`deploy_ledger.py close`). Leave the first entry open if any of L1-L6 lacks proof, and say so. Save outputs under `org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r5/`, commit paths-only, report.
