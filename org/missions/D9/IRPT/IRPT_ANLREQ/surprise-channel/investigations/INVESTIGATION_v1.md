@@ -31515,7 +31515,6 @@
 }
 ```
 
-
 ## IRPT_ANLREQ-D2-W362-S1 -- the commit path's client-data-check ran as ABSENT on this box, so the two AR-y-489 commits were not checked for client account ids
 
 ```json
@@ -31540,5 +31539,60 @@
   "spec_asserts": "Every commit is checked for client account ids by the commit path (the client-data-check WARN text names the check as the one that does not run when its list is absent).",
   "world_is": "On dell2 the hashed account-id list is absent and the variable is unset, so the check does not run; the commit reports this as WARN and proceeds. The two AR-y-489 commits carry the Opal principal account id 313476888478 (the account the order names) and were not checked by this gate. The fact is on this box only; I did not verify the other fabrics.",
   "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-W359-S1 -- the tests arm of AR-g-186 cannot reach rc 0 in this worktree: a pre-existing test reads a shared module the sparse checkout does not materialise
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W359-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~359",
+  "surfaced_at": "2026-10-21T07:48:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "In worktree C:/dev/wk-irpt-anlreq-359 the path infra/aws/lambda/v2_portal/_shared/ is not materialised (the sparse checkout names only infra/aws/lambda/investor-reporting), so test_layout_overview.py::test_no_second_classification_read_default_client_is_the_etf_classifier fails with LayoutRefused; the AC3 tests arm (rc 0, at least 80 passed) cannot pass here whatever the cell's code does.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@2c4c5b93913 _default_classifier: the fallback is HERE.parents[2] / 'v2_portal' / '_shared' and raises LayoutRefused when that directory is absent (the worktree has no infra/aws/lambda/v2_portal)",
+      "git ls-tree -r --name-only HEAD | grep etf_classifications_dynamodb: infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py is tracked at HEAD (also at 149a090a44a in C:/dev/ajb_workspace)",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-359: .tools, data, docs/contracts/investor-reporting, infra/aws/ec2/investor-reporting-ycharts, infra/aws/lambda/investor-reporting (no infra/aws/lambda/v2_portal)",
+      "measured after AR-g-186 code (uncommitted at filing): python -m pytest over the four owned files gives 84 passed, 1 failed; the failure is the one test above with LayoutRefused. At base 76 passed, 1 failed (the order states 77 at the base). With PYTHONPATH=C:/dev/ajb_workspace/infra/aws/lambda/v2_portal/_shared (read only, nothing written to the worktree) the same test passes"
+    ]
+  },
+  "spec_asserts": "TO-AR-g-186 AC3: the four owned layout test files pass (77 at the base) and at least 80 ran; the checker's tests arm exits 0 and prints AR-GAPNOTE-tests-OK passed=N.",
+  "world_is": "The test reads a module outside the lambda tree that this worktree does not materialise, and the order forbids both a sparse-checkout change and writes outside its paths. The cell's own eight new tests pass and AC1 and AC2 pass; only AC3 is held by this test. The worker did not copy the module into the tree and did not edit the test.",
+  "notes": "Filed by the worker. Not remediated: no sparse change, no copy of the module, no test edit. The resolution is a grant or a sparse-cone change decided by the issuer or the CloudOps seat, not by this worker."
+}
+```
+
+## IRPT_ANLREQ-D2-W358-S1 -- the producer file carries a CTO HOLD ruling on workstream G that TO-AR-g-185 does not name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W358-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~358",
+  "surfaced_at": "2026-10-21T07:49:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex for the AR-g-185 commit (79f011e64ea) cited a CTO HOLD ruling on workstream G that touches opal_producer.py; TO-AR-g-185 names no hold and records no un-hold trigger.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/org/critical_paths/cross_adjudication/20261019T2312Z_XA-20261019T231010Z-2064.md:43-45 (main tree; ruled by 1.0.0_SA_CTO 2026-10-19T23:12:56Z: HOLD workstream G until the Analysis Request v0.24 release READ on PROD is recorded by dell2's CTO; cutting the portfolio-side map cells first, then, because the price pages share opal_producer.py with AR-y-415..419)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R60_G.md:149 (AR-g-185 sequenced for round 60 workstream ~GREL8, release r34s under the CTO's pair)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-185.multicomp-portfolio-path-from-the-common-window-start-not-the-price-window-start.md (depends_on: the 7J read and CTO msg 11932; no hold named)",
+      "pre-commit gate output of 79f011e64ea: comp-pulse diff, [HOLD] opal_producer.py, cites XA-20261019T231010Z-2064.md:39; the commit was not blocked"
+    ]
+  },
+  "spec_asserts": "A cell is cut for a workstream the CTO has ruled on; the order's depends_on names the 7J read and CTO msg 11932 and says nothing of a hold, so the un-hold trigger is the issuer's to state.",
+  "world_is": "The CTO ruling of 2026-10-19 holds workstream G, names the Analysis Request v0.24 READ on PROD as the un-hold trigger, and warns that a second writer on opal_producer.py collides with AR-y-415..419. The round-60 decomposition and the 2026-10-20 issuance post-date it and sequence AR-g-185 for release. This worker did not verify that the trigger was recorded, and committed the cell as the order directs."
 }
 ```
