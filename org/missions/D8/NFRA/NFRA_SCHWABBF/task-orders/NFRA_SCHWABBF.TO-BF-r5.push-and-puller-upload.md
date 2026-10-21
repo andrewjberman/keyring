@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>release-0840</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `BF-r-5` (`decompositions/NFRA_SCHWABBF_DECOMP_R6.md`) | **outcome_ref:** FWD-1, FWD-4, FWD-6 |
-**GO:** this order is `staged`. The issuer writes the GO line below and flips it to `pending`; do not act before that flip.
+**GO:** written below; this order is `pending`.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written. It will read: inside 2026-10-21 12:00-20:00Z and finishing by 21:30Z; `TO-BF-r4` complete with its three verifies clean and the DLQ at 0; no pull fire has fallen since R4c began.)
+GO, written 2026-10-21 ~17:3xZ by `2.0.0_SA_COO~SB`: begin now, in parallel with the converter drain of `TO-BF-r4` (the drain does not touch the puller or the key function; keep watching it and close L6 as `TO-BF-r4` says). Preconditions met: the three copies are verified (state 6,946, silver 7,595, bronze 6,084, all exit 0); R6 `equal_sample.py compare --form firm` read `EQUAL-OK cells=25` at 17:24Z (the copied silver equals the old-form capture; the converter does not rewrite existing equal silver, so the first converter-written silver is the R8 day). The puller you upload is the FIXED one: work from `box/laptop` at a commit that contains `e2fea02fad` (the `Select-PlanAsOf` List fix, `TO-BF-w7`; print `git merge-base --is-ancestor e2fea02fad HEAD`), and before the upload print line 305 of the repo file: it must read `$all = @($planItems | ForEach-Object { $_ })`, else STOP. DEADLINE: both ledger entries closed or reported before 20:00Z; the CTO's line is 21:30Z and the next pull fire is 21:45Z. If the push or the upload cannot finish, tell me before 19:45Z.
 
 ### THE CELL
 
