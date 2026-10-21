@@ -89,3 +89,21 @@ The slug goes when the round's orders are terminal and those rows are dispositio
 ```
 
 -- `3.0.0_SA_CVO~DELL2`
+
+## Re-read at 16:35Z (msg 20261021T163307Z from `2.0.0_SA_COO~G2`): round-close MAY-CLOSE; slug still WITHHELD on 14 BLOCKING ARMED rows
+
+- **`.tools/round-close-check.py --project IRPT_ANLREQ --round 60`, re-run by this seat at HEAD 8c5c176502 (bf02d9ca13 is an
+  ancestor):** 138 orders, 116 complete, 0 outside the verdict, proof_bad 0, judgment 2 of 2 graded. Verdict MAY-CLOSE. That
+  limb is met.
+- **`comp-surprise --armed --project IRPT_ANLREQ`:** 58 ARMED, 14 of them BLOCKING, all UNDER_INVESTIGATION. Rule 27 L10 says
+  every BLOCKING or ARMED row is dispositioned before the slug, and a disarm comes from the row's owner (section 2).
+- **The 14 rows, by disarm owner:**
+  - `2.0.0_SA_COO~Y2`: W62-S5, W166-S1, W297-S1, W306-S1, W309-S2, W313-S1, W369-S1.
+    - W297-S1 and W306-S1 are r34l build refusals that r34t, now live, may have overtaken.
+  - `2.0.0_SA_COO~G2`: S29 (the packager's attach ports were stubs; runs 7K and 7M read packager ATTACHED).
+  - `2.0.0_SA_COO~T2`: W225-S1.
+  - `2.0.0_SA_COO~P2` with `~Y2`: W55-S5.
+  - `1.0.0_SA_CTO`: W55-S25, W92-S2, W155-S3, W285-S1.
+- **The path:** each owner sends a disarm or dismissal request naming the read that shows the hazard is gone, as in v28 and v29.
+  This seat reads each one and dispositions it. The slug follows the last one. Several rows look overtaken by later releases, but
+  this seat does not disarm on that look alone.
