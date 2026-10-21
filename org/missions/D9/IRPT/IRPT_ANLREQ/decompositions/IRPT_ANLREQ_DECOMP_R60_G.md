@@ -202,3 +202,15 @@ AR-g-189 (merged 7f1b3f4424c) and AR-g-190 (merged f3db0c52634) are verified on 
 Both carry `<workstream>~GREL12</workstream>` and one worker (slot 382, queue 191 then 192): they share `layout_overview.py` (the dispatch write-set rule). `checks/ar_enrich2_checks.py` (arms excl, p21, tests191, tests192) was dry-run at the base (all FAIL) and calibrated against the reference fixes in a sparse scratch worktree (excl OK, p21 OK) and five mutants, each of which fails. The scratch run of the whole research test directory with the reference fixes showed one test broken by AR-g-192's rule (`test_wired_statistics_compute_from_the_kept_benchmark_and_the_held_yield`, now named in the cell) and none by AR-g-191. Then the release r34t (AR-g-193) carries AR-g-189 to AR-g-192 and Y2's swap leg (AR-y-494, drained 3dac9960e2b); run 7M reads the result.
 
 fanout: 1 of 1 chains, cap 8, reason: two cells sharing layout_overview.py are one chain for one worker.
+
+## Addendum 13 2026-10-21 (issuer): cell AR-g-193, the filing instrument types an ETF into the form's Other ETFs field (run 7M)
+
+The CTO's run 7M (msg 11977) is one live Multi-Comp with two Opal models and one typed ETF. The filing instrument (AR-g-179, `deliverables/0.9.0_WK_IRPT_ANLREQ~335/run7_browser_leg.mjs`) ticks models with `--comparables` and types nothing into the form's "Other ETFs" input (its PAGE_NOTES item 7 says so). The issuer found that the instrument passes offline only against the PROD portal tip it was built for (234cddba2d83): at the DEV tip fcbf2bce B1 reads "the Advisor is not pre-filled with the signed-in filer name", so the worktree for this cell is provisioned at the PROD tip.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-193` | a copy of the instrument with `--other-etfs` (types the tickers, prints `B2 other_etfs=<n>`, trailing ` other_etfs=<n>` on the OK line), proved offline | `deliverables/0.9.0_WK_IRPT_ANLREQ~383/` | LOCAL |
+
+`AR-g-193` carries `<workstream>~GREL13</workstream>`. It shares no file with AR-g-191/192 (worker 382, one chain). The 7M order itself (IB2) is cut after the r34t release is live. Run 7M as a Multi-Comp reads the ETF and the per-model dates live; the exclusion line and page 21 are read live in an Overview run (Y2's 7N, which should carry a kept unknown ticker as well as BREIT), and the exclusion line is proved at producer level on the real multi map (`checks/ar_enrich2_checks.py excl`, multicomp case).
+
+fanout: 2 of 2 chains, cap 8, reason: the instrument cell shares no file with the layout chain; portal_ref: 234cddba2d837df16380f039fad1c227a472d7e5 (the PROD tip the instrument was built against).
