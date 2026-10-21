@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~3</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -41,9 +41,13 @@ Build `split.py` and `tests/test_split.py` to worker reference section 11 (the `
 
 Your split record carries ordinal ids and counts where the order asked for the account lists. The issuer rules: **the S3 run record `split-<run_id>.json` MUST hold the actual account-number strings in `unplaced` and `conflicts`** (the FWD-9 bar is that someone can see WHICH accounts could not be placed). It lives under `fidelity/alongside/bronze/_runs/`, the same staging prefix that already holds every account in the pull; that is not an output. What stays forbidden is any print, log line, exception message or CLI output carrying an account value or a G number: the CLI and the logs still print counts only. Change the record to carry the lists, keep the printed output counts-only, and add the test `test_record_lists_unplaced_and_conflict_accounts` to your `tests/test_split.py` (a recording fake S3 holding the record, with made-up account strings; assert the record contains them AND the captured stdout, stderr and logs do not). Your rows W3-S6, S7 and S8 are accepted as built (an account under one mapped and one unmapped G is unplaced; different bytes at a destination are refused; the stricter exit code). FR2-AC1 now needs ten. Refresh the proof instance and flip when it PASSES.
 
+### REPAIR 3 (issuer, 2026-10-21 ~01:15Z, URGENT) -- the lander's date helper now takes the file name; split.py still calls it the old way
+
+FU-s-4 REPAIR 1 (merged a71eb71abb0) made the content date a per-file column: the lander's helper is now `land._content_date(data, name)` (position, prices, security: column 0; balance: 3; account: 16; transact: 17). `split.py` line 170 still calls `land._content_date(data)`, so the module suite shows `TypeError: _content_date() missing 1 required positional argument: 'name'` in eleven tests (the issuer's regression: the lander repair order did not name this caller). Change `split.py` only (plus the tests): call `land._content_date(data, name)` with the file's own name (the loop variable already holds it), and read the failing message in the same place as today. Update the synthetic fixtures of the split tests (and any other test in `tests/test_split.py` or a helper it uses) so the date sits in each file's own column instead of field 0 for balance, account and transact; test names stay as they are. FR-s-2's criterion (`fidupl_round_checks.py fr2`) must read OK again, and the whole module suite must have no failure: run `python -m pytest -q -p no:cacheprovider infra/aws/ec2/canonical-fidelity/tests` in your worktree and put its last line in your report. The checker is `fidupl_round_checks.py`. Fakes only. FAST: the re-land waits.
+
 ### ACCEPTANCE
 
-<criterion id="FR2-AC1" cell_refs="FR-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fr2</invocation><expect>R1-FR2-OK passed=\d+</expect></criterion>
+<criterion id="FR2-AC1" cell_refs="FR-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fr2</invocation><expect>R1-FR2-OK passed=\d+</expect></criterion>
 `FR2-AC1` -- the ten named split tests (the nine and `test_record_lists_unplaced_and_conflict_accounts`) exist and pass.
 
 <expected_criteria>FR2-AC1</expected_criteria>
