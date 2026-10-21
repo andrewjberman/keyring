@@ -31648,3 +31648,31 @@
   "notes": "Not remediated: no sparse change and no copy of the folder, per the order's bounds."
 }
 ```
+
+## IRPT_ANLREQ-D2-W365-S1 -- the r34s build wrote its tarball and scripts, then raised FileNotFoundError at the record write because the r66 folder named by the order was absent, and the stage folder it left blocked the rerun
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W365-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~365",
+  "surfaced_at": "2026-10-21T08:37:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The r34s builder completed the full build and then crashed at its record write (FileNotFoundError, r66 folder absent in the worktree); the aborted stage folder then refused a rerun, so it was moved aside (not deleted) and the rebuild printed R34S-BUILD-OK.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r34s_build.py@2c7aba67c1a line 284: with open(args.record, \"w\", encoding=\"ascii\", newline=\"\\n\") as fh -- the record is written only after the full build, with no folder creation",
+      "worktree .scratch/r34s_build.log (first run, rc=1): the build printed a NOTE line and then FileNotFoundError for org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~365/r66/RESIDENT_R34S_BUILD.json; no R34S-BUILD-OK line",
+      "worktree HEAD 758fc0429df: the deliverables folder 0.9.0_WK_IRPT_ANLREQ~365/r66/ is named in the order's paths block and was absent before this worker created it",
+      "first-run stage C:/dev/irpt-release-r34s-g2 held the full output (tarball 1155397 bytes); moved unchanged to C:/dev/_aborted_r34s_stage_attempt1 so the builder's must-not-exist check passes; second run .scratch/r34s_build2.log printed R34S-BUILD-OK 323 members rc=0"
+    ]
+  },
+  "spec_asserts": "The order names the record path under the deliverables r66/ folder, and its paths block grants that folder, so the r34s build with --record at that path is expected to write RESIDENT_R34S_BUILD.json there.",
+  "world_is": "The folder r66/ was not present in the worktree at HEAD 758fc0429df, so the record write failed after a complete build and the first run gave no OK line. The builder refuses an existing --out, so the stage folder left by the first run blocked a clean rerun; it was renamed aside, not deleted, and the rebuild from the same pin reproduced the rehearsal tarball sha256 fa950681774268d2108eb7ca141ec150213d0d6e482dad498d13870a90d87b14.",
+  "notes": "Not remediated in the tools (no edit to r34s_build.py, no edit to the checker). The worker created r66/ inside its granted paths. The renamed folder C:/dev/_aborted_r34s_stage_attempt1 is outside the repository and holds an identical first-run build; it can be deleted by its owner."
+}
+```
