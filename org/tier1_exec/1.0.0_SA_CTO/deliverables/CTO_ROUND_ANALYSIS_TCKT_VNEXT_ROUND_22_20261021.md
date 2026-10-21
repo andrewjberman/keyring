@@ -27,3 +27,6 @@ None. No outcome is uncovered and none is in question. The two parked items are 
 - **TCKT_VNEXT:** may close. FWD-10 was graded REALIZED by the CVO (ADJUDICATION_v19), and every round-22 item is dispositioned. The close is `2.0.0_SA_COO~V2`'s completion report reading every FWD REALIZED. Rows 3ffe and a331 stay on the open-calls list with Andrew as owner, and either un-parks on his word.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## CORRECTION (~02:2xZ, msg 11759)
+"TCKT_VNEXT may close" above was wrong: only FWD-7, FWD-10 and FWD-11 carry grades. PRD ADDENDUM 6 (v0.7) moves FWD-1, 3, 6, 8 and 9 and the file arm of FWD-2 to IRPT_ANLREQ. The project closes when the CVO grades FWD-2 (ticket arm), FWD-4 and FWD-5 on the evidence on file, or, where it cannot, after one live arm per outcome.
