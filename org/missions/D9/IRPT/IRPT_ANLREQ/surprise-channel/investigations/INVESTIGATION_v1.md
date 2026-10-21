@@ -31514,3 +31514,31 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W362-S1 -- the commit path's client-data-check ran as ABSENT on this box, so the two AR-y-489 commits were not checked for client account ids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W362-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~362",
+  "surfaced_at": "2026-10-21T07:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "safe-commit.sh printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids' on both worker commits (8857d23ffc6 and e44dd19b500); OPAL_ACCOUNT_ID_HASHES is unset on this box, so every commit here is unchecked until the list is placed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh WARN line printed on the commit of 8857d23ffc6 (infra/aws/terraform/investor-reporting/ycharts/irpt_residue_delete_r35.tf) in worktree wk-IRPT_ANLREQ-362",
+      "safe-commit.sh WARN line printed on the commit of e44dd19b500 (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~362/check_residue_roles.py) in worktree wk-IRPT_ANLREQ-362",
+      "C:\\Users\\Test\\.opal\\account_id_hashes.txt is absent (ls read at 2026-10-21T07:38Z); OPAL_ACCOUNT_ID_HASHES is unset in the worker shell"
+    ]
+  },
+  "spec_asserts": "Every commit is checked for client account ids by the commit path (the client-data-check WARN text names the check as the one that does not run when its list is absent).",
+  "world_is": "On dell2 the hashed account-id list is absent and the variable is unset, so the check does not run; the commit reports this as WARN and proceeds. The two AR-y-489 commits carry the Opal principal account id 313476888478 (the account the order names) and were not checked by this gate. The fact is on this box only; I did not verify the other fabrics.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
