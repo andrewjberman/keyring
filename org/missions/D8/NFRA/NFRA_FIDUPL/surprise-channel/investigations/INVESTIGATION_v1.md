@@ -1801,6 +1801,30 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "TO-FT-s-8 step 2: one run of box/run.py on config.daily.json (prices and security null) signs in once, switches the G number 31 times and writes the split; REPAIR 4 of FR-s-2 gave split.py null account columns.",
     "world_is": "The config validator in box/run.py was not widened to admit null with split.py, so the daily config copy the order requires cannot load. The run refused before doing anything on the box or at Fidelity; config.json, config.daily.json, work/, both profiles and the agent Chrome unit are unchanged.",
     "notes": "Not edited: box/run.py is shipped repo code outside this order's grant, and the issuer allowed ONE attempt with no retry. Fix for the issuer: _check_account_columns accepts None for the unsplit files (prices.txt, security.txt) and a test for it; then one more delivery and a new GO. config.daily.json needs no change. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S11",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T02:58:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "The TO-FT-s-8 daily-mode proof run landed but its attribute stage ended AdapterShapeError, so no split ran and no firm prefix was written; run.py prints only the class name, not the fixed-text shape message.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM 8ee2bbf6-a733-4e30-b32c-0aed29f9a7b6 on i-028e830f7226cc685 at 02:49Z (the issuer's GO 8950, ONE attempt, no retry), status Success, stdout verbatim: 'ERROR: stage attribute did not finish: AdapterShapeError' / 'SKIP: split (no attribution)' / 'SKIP: coverage counts (attribution did not finish)' / 'OK: coverage record written' / 'WARN: partial run: land landed; not finished: attribute' / 'ERROR: daily run 20261021T024959Z business_day=2026-10-20 rc=1' / exit=1",
+        "s3://opal-data-assets/fidelity/alongside/bronze/_runs/20261019/run-20261021T025115Z.json: outcome ALL_LANDED, failed_step null, failure_class null (the land stage is clean)",
+        "s3://opal-data-assets/fidelity/alongside/bronze/_runs/20261020/coverage-20261021T024959Z.json: counts null, unattributed null, cross_check checked false, logout statuses 204 and 400, recovery not-needed",
+        "aws s3api list-objects-v2 for fidelity/{cottonwood,inflection,49financial,keilfinancial,abidingwealth,lighthousewealth,vmwealth}/: 0 keys under every one of the seven prefixes; fidupl_round_checks.py ft8r: R1-FT8R-FAIL no split record under s3://opal-data-assets/fidelity/alongside/bronze/_runs/",
+        "adapters.py raises AdapterShapeError at lines 115, 146, 156, 208 and 214 (top-level shape, a row with no scalar key, no pageResponse.available, collected short of available); which one fired is not in the run's output"
+      ]
+    },
+    "spec_asserts": "TO-FT-s-8 step 2: one run of box/run.py on config.daily.json signs in once, sweeps the 31 G numbers, pages accountList, and writes the split under fidelity/<firm>/ plus the coverage record; FT-s-8-AC2 expects four files split and at least three firms with rows.",
+    "world_is": "The land stage finished; the attribute stage (switcher sweep / accountList paging through adapters.py) raised AdapterShapeError against the live responses, so split and the coverage counts were skipped. The logout statuses 204 and 400 are as the coverage record shows. Nothing was written under any firm prefix. config.json, work/, both profiles and the agent Chrome unit were not touched by me.",
+    "notes": "Not retried (one attempt per the GO). Which AdapterShapeError message fired is the missing fact: run.py logs the class name only, while adapters.py's messages are fixed text naming keys and types, never values. For the issuer: print that fixed text in the stage line (or in the coverage record's failure field) and re-cut; the box needs no change. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2; FT-s-8 stays pending."
   }
 ]
 ```
