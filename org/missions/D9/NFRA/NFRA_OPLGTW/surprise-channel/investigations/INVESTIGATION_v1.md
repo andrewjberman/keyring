@@ -31801,3 +31801,55 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:22:00Z",
+    "one_line": "The stdin-spawn failure in row S1 did not reproduce: cs2.AC3.sh read RESULT: PASS, exit=0 on two runs after the module was committed, the module bytes being unchanged from the failing run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row S1 states that cs2.AC3.sh, invoked from stdin, cannot read PASS on this Windows device.",
+    "world_is": "The one failing run (before the commit) printed OSError Errno 22 from the spawn child. Two later runs at the committed tree (edd78166b63), one diagnostic and one in criterion form, both read RESULT: PASS, exit=0, with zero Traceback, OSError or NOT OK lines. The failure is therefore intermittent and unreproduced, not a fixed property of the device. S1 is left as filed for the issuer to weigh; this row only corrects its wording.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC3.sh in worktree C:/tmp/wk-og-182 @edd78166b63 (criterion form, output kept in a worker-local scratch file) -- RESULT: PASS, exit=0, zero Traceback or OSError lines.",
+        "RUN: the same check at @edd78166b63 as a diagnostic (output kept in a worker-local scratch file) -- RESULT: PASS, zero Traceback or OSError lines; the module infra/aws/ec2/opal-gateway/app/folder_tools.py is byte-identical across the failing and passing runs (committed as edd78166b63, unchanged after the first run)."
+      ]
+    },
+    "notes": "Read with S1: the BLOCKING class of S1 rests on one failing run, so the issuer should decide its disposition on the reproduction rate, not on the single observation. S3 and S4 are the other OBSERVATION rows of this worker."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:30:00Z",
+    "one_line": "The order's AC1 expect pattern does not match the AC1 check's own output: 'deny wins .*: ok' needs a space after 'wins', and the check prints 'deny wins:'.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AC1 expect, as written in the order: '...refused for the sibling master with no S3 call: ok.*deny wins .*: ok.*RESULT: PASS.*exit=0'.",
+    "world_is": "The check cs2.AC1.sh prints 'deny wins: a denied sub-folder is refused for a whole-bucket grant: ok' (colon directly after 'wins'), then 'RESULT: PASS' and exit=0. The expect pattern requires 'deny wins ' with a space, so it does not match the check's output: the regex search for the full expect fails at that segment. The check's own predicate passes; the expect as written does not.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cs-2.cli-shim-the-folder-tools-list-describe-query.md @bcbef740d72 -- the AC1 proof_of_spec <expect> carries 'deny wins .*: ok'.",
+        "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC1.sh in worktree C:/tmp/wk-og-182 @edd78166b63 -- output line 'deny wins: a denied sub-folder is refused for a whole-bucket grant: ok', then RESULT: PASS, exit=0; a python re.search of the expect with its 'deny wins .*: ok' segment fails on this output."
+      ]
+    },
+    "notes": "Not fixed by the worker: the expect is the issuer's criterion and changing it would change the criterion. The issuer decides whether the expect is corrected (one space) or the check's wording changes. The AC1 row of this worker's proof instance is recorded FAIL against the expect as written."
+  }
+]
+```
