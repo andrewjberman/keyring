@@ -4183,3 +4183,28 @@
   "notes": "ARMED with S2: the same stored state. The order's wording covers both readings. disarm_owner 2.0.0_SA_COO~MP decides whether the guard checks only the entries a change adds, or every entry it carries; the worker built the every-entry reading and did not widen the order."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S84",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-21T16:00:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "MP-zh-1 drained: the page no longer offers a switch for, nor posts, a channel or tool name the gateway cannot read (answers NFRA_OPLGTW-Z-S447 for the page); Z-W48-S1 accepted; Z-W48-S2 and Z-W48-S3 ruled INERT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Drain 283d193a2c2; zh1.AC1 PASS (2 of 2 named tests, 93 pass, 0 fail) and zh1.AC2 PASS (tsc rc 0), re-run by the issuer in the slot-48 worktree at 3987e77e95f; mcportal f939e3e (4 files; personAccess.ts +55 with channelIdReadable and toolNameReadable copying data_entitlement.py :254 and :250; people.test.tsx +88 with one import line changed, no assertion changed); the worker's mutant (guard forced off) fails the guard test.",
+      "Z-W48-S1: the gateway file named read-only was outside the sparse cone; the worker read the HEAD blob and the patterns match the gateway's at HEAD. Accepted.",
+      "Z-W48-S2 and Z-W48-S3: a name ALREADY stored unreadable cannot be switched back on from the page, and the guard (which reads every entry a change carries) refuses other list toggles for that person. INERT: before the mount is live no record can exist, and the page never writes such a name after this cell; a record that already holds one fails closed at the gateway and needs a writer-side repair, which is not a page switch."
+    ]
+  },
+  "spec_asserts": "Row NFRA_OPLGTW-Z-S447: no name the gateway cannot read goes into any person_access list by the People panel.",
+  "world_is": "Fixed on the page and proven on fixtures and a mutant; not on the host. The code is LOCAL on wk-NFRA_MCPORTAL-48-mcportal at f939e3e (on a577f99); DEV advance is MSTR~Z's and the batch17 bundle pin (today a577f99afc81) moves to it. FWD-30's folder strings stay held for COO~O's CS-1 (the reader's pattern would change, and this guard's patterns with it).",
+  "notes": "Disarm_owner is this seat; INERT. Not claimed: that the gateway reader is the only reader of these names."
+}
+```

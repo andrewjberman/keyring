@@ -79,6 +79,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cs-1.cli-shim-folder-grant-and-
 - Pre-cut: `AC1` base FAIL as expected (`app.folder_grant` absent); `AC2` base FAIL as expected (a folder string raises Malformed; 0 added); `AC3` base FAIL as expected. Arms on a SCRATCH copy of the gateway app (the shared tree untouched): `AC1` all eleven arms read ok on a scratch `folder_grant.py`; `AC2`'s three behaviour arms read ok with the one-line scratch parser (its size lower bound reads NOT OK for a one-line edit, as designed). Pin: `data_entitlement.py` blob `881da34cda`.
 
 <status>pending</status>
+<status>complete</status>
 <round>48</round>
 <workstream>CLISHIM-A</workstream>
 <slot>~180</slot>

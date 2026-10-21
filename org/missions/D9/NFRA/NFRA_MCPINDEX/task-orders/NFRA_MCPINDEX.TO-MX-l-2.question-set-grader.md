@@ -100,3 +100,4 @@ Base dry-runs 2026-10-21 (script and test file absent): `l2.AC1` base: FAIL as e
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>

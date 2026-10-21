@@ -141,3 +141,14 @@ Measured 2026-10-21 (record `deliverables/2.0.0_SA_COO~P1/FIDUPL_historical_live
 | **FV-s-3** | CloudOps delivers the shipped set to the box and runs the walk until every type has stopped | ledger paths | C-BACKFILL | WORLD |
 
 Chains: FV-s-1 then FV-s-2 (FV-s-2 calls `land.land_psn`) then FV-s-3: one chain, one worker queue for the first two. Executor of FV-s-3: `0.7.0_AE_CloudOps~NFRA1`. Workstreams: fidelity-r3-histwalk-build (FV-s-1, FV-s-2) and fidelity-r3-histwalk-live (FV-s-3).
+
+## 16. Addendum 2026-10-21 ~16:40Z (CTO msgs 9117 and 9121, Andrew-direct: every Fidelity fact table; bronze JSON for the API surfaces)
+
+Measured 2026-10-21 (records `FIDUPL_depth_experiments_20261021.md` and the 16:21Z session, section 16 of the worker face): transactions come from `historical-transactions` (ISO dates, one account per call allows 366 days; a batch of accounts is limited to 93 days, 200 accounts, and a 2,000-row answer is silently capped, so the build uses one account per call); realized lots from `retrieve-realized-gain-loss/detail` (500 lots per answer, `offset` does NOT page: completeness is read from `totalCount` and the date range is split until it matches); open lots from `open-lots` (limit 2,000, the unrealized surface); the book is the 5,013 accounts of the landed `account.txt` (the account list stops at 2,000 rows), 57 of 60 sampled accounts outside that list answer with line of business `IWS`.
+
+| cell | what it does | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FW-s-1** | `api_walk.py`: one sign-in, per account the three API surfaces as raw JSON bronze (`api_transactions`, `api_realized_lots`, `api_open_lots`), floors and counts in one run record, state file resumes | `api_walk.py`, `tests/test_api_walk.py`, `tests/test_api_walk_seam.py` | C-BACKFILL | WORLD (infra path floor) |
+| **FW-s-2** | CloudOps delivers it and runs it (chained, alternating with the Historical walk, never overlapping) until every surface has covered every account | ledger paths | C-BACKFILL | WORLD |
+
+Chain: FW-s-1 then FW-s-2. The daily pull of these surfaces (a `--mode daily`, then the schedule) is a later cell after the backfill is proven. Executor of FW-s-2: `0.7.0_AE_CloudOps~NFRA1`. Workstreams: fidelity-r3-apiwalk-build (FW-s-1) and fidelity-r3-apiwalk-live (FW-s-2).
