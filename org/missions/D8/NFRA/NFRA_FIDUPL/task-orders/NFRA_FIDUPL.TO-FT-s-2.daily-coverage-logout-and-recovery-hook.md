@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~5</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -37,6 +37,10 @@
 ### REOPENED (issuer, 2026-10-21 ~02:15Z) -- apply your saved AttachError patch
 
 Your row W5-S8 is right: the fix for `signin_recover.AttachError` (both it and `signin.SigninError` mean `recovery: failed`; an ImportError means `recovery: unavailable`) could not be committed under a complete order. The order is pending again so the lane grants your paths. Apply `.scratch/attach_fix.patch` in your worktree, commit, re-run `fidupl_round_checks.py ft2` and `fr4`, the whole module suite, re-pin the proof instance and flip to complete. No new test name.
+
+### REPAIR 1 (issuer, 2026-10-21 ~02:42Z; CloudOps row D1-S10) -- run.py rejects the null account column that split.py now accepts
+
+The first daily-mode proof run stopped at the config check, before any sign-in: `ERROR: config account_columns value for prices.txt is not a column index` (exit 2), from `box/run.py` `_check_account_columns` (about line 84). FR-s-2 REPAIR 4 lets `split.py` take `null` for `prices.txt` and `security.txt` (they have no account number in any column); `run.py`'s own pointer check was not changed with it. Change `box/run.py` and `tests/test_box_daily.py` only: `_check_account_columns` accepts `None` for `prices.txt` and `security.txt` ONLY (a null for position, balance, transact or account is still refused with the same message naming the file), and an integer still works for all six. Add ONE test to the EXISTING `tests/test_box_daily.py`: `test_check_pointers_accepts_null_account_column_only_for_prices_and_security` (a config with the measured map, account 0, position 5, balance 0, transact 0, prices null, security null, passes `check_pointers`; a null for position raises the same `ConfigError`). FT-s-2-AC1 (`ft2`) now needs eight named; FT-s-2-AC2 (`fr4`) must still pass. The whole module suite: no failure, last line in your report. Search for any OTHER place that reads `account_columns` as integers (for example `daily.py`) and report it as a row if you find one: the run on the box must get past the config check, the attribution stage and the split with the measured map. Synthetic data only. The checker is `fidupl_round_checks.py`. FAST.
 
 ### ACCEPTANCE
 

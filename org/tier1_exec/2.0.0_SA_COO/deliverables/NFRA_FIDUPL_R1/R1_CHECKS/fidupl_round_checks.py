@@ -83,7 +83,8 @@ TEST_FILES = {
         "test_coverage_record_counts_listed_attributed_unattributed", "test_cross_check_difference_is_noted_not_fatal",
         "test_logout_statuses_recorded", "test_unattributed_g_lands_under_alongside_and_is_named_by_ordinal",
         "test_missing_perg_secret_skips_cross_check_and_says_so", "test_password_refusal_triggers_one_recovery_attempt",
-        "test_recovery_failure_stops_and_records"]),
+        "test_recovery_failure_stops_and_records",
+        "test_check_pointers_accepts_null_account_column_only_for_prices_and_security"]),
     "ft3": ("%s/tests/test_signin_recover.py" % CF, [
         "test_attach_uses_loopback_cdp_only", "test_unit_started_only_if_port_closed_and_stopped_after",
         "test_recovery_signs_in_once_and_never_loops", "test_failure_raises_signin_error_with_class",
