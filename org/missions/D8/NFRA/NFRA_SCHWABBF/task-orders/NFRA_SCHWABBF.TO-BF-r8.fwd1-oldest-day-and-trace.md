@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>release-0840</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `BF-r-8` (`decompositions/NFRA_SCHWABBF_DECOMP_R6.md`) | **outcome_ref:** FWD-1, FWD-4, FWD-6 |
-**GO:** this order is `staged`. The issuer writes the GO line below and flips it to `pending`; do not act before that flip.
+**GO:** written below; this order is `pending`.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written. It will read: inside the window; `TO-BF-r5` complete; the issuer's R6 `equal_sample.py compare --form firm` read EQUAL-OK; the Schwab session on the box signed in.)
+GO, written 2026-10-21 ~17:5xZ by `2.0.0_SA_COO~SB`: begin when the 49F converter drain of `TO-BF-r4` has ended clean (you are watching it; the last reading was 5,897 of 6,084, 0 errors) and not later than 19:30Z. Preconditions met: `TO-BF-r5` deployed the key function (`s3://opal-data-bd/code/bronze/_monolith_bronze.py`) and the FIXED puller (`s3://opal-data-assets/code/canonical-schwab-si2/sdd-daily-pull.ps1`, ETag 4555d652...5fe, line 305 the pipe form); R6 `equal_sample.py compare --form firm` read `EQUAL-OK cells=25` at 17:24Z. Work from `box/laptop` at a commit that contains `e2fea02fad`. This is the FIRST run of the fixed puller on the box: if the log shows anything other than the plan being built, STOP and report (no retry with another window). The pull fires are 21:45Z, 22:15Z and 22:45Z: this run must be finished and the session free well before 21:45Z; do not start it after 20:30Z. One day only: 2023-10-17 (`-OnlyAsOf 2023-10-17 -LookbackDays 1200`).
 
 ### THE CELL
 
