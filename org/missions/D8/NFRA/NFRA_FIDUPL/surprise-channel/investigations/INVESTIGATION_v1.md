@@ -1896,6 +1896,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "notes": "Not retried (one attempt per the order) and nothing edited. For the issuer: the record carries the error class only; the failing step (a stage that wrote the 06:02:37Z run record, or the Export Status read) and its fixed-text detail need to be printed, as was done for the AdapterShapeError (row D1-S11). Sign-in count: this was the 3rd in its trailing hour (05:31Z, 05:46Z, 06:01Z); no recovery sign-in exists in this walk, so none fired. A re-run needs the issuer's new GO and my count at that time."
   },
   {
+    "id": "NFRA_FIDUPL-D1-S15",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T07:06:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "The TO-FT-s-11 step 3B backfill rerun ran the whole SSM cap of 900 s and was stopped (status TimedOut) with no stdout, no completion record and no data landed, so the walk does not finish inside the cap and a stopped run prints nothing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM bfd976a6-b9e4-4162-8bb7-1124a1d2bd8b on i-028e830f7226cc685, started 06:47:20Z (the issuer's GO 9009, ONE attempt, no retry), executionTimeout 900: InProgress at 06:58:13Z, TimedOut at 07:02:25Z; the whole output was the single stderr calendar WARN line, no stdout and no 'exit=' line",
+        "aws s3api list-objects-v2 under fidelity/alongside/bronze/_runs/ from 06:40Z: one key, _runs/20261019/run-20261021T064829Z.json (2789 bytes, 06:48:31Z); no backfill-<run id>.json completion record",
+        "the same listing under fidelity/alongside/bronze/ excluding _runs/ from 06:40Z: 0 keys",
+        "SSM pgrep after the stop: no backfill_main, perg_seed, signin, box/run.py, paging_probe or g_export process; fidelity-agent-chrome.service active"
+      ]
+    },
+    "spec_asserts": "TO-FT-s-11 step 3B and FT-s-11-AC1: one run of backfill_main.py (defaults 125 days, 12 exports, 2 sessions a day, 120 s request timeout) ends by itself with a completion record, a stop reason and the DAY lines, inside the SSM executionTimeout of 900.",
+    "world_is": "The run did not end by itself inside 900 s. The program prints its DAY and FILETYPE lines and writes its completion record only at the end, so being stopped by the cap left neither. One run record was written about 70 s in and no data was landed. Whether the Fidelity session was logged out is not known (the stop may have skipped the logout path); no process remains on the box.",
+    "notes": "Not retried and nothing edited. For the issuer: (1) a run that can last past the cap needs its own heartbeat lines (a DAY line per day flushed as it is read) and a wall-clock budget below the SSM cap that stops it cleanly with the completion record and the logout, or an executionTimeout above the run's own budget; (2) with 120 s per request and up to 12 exports the worst case is far over 900 s, so the budget decides the answer, not the calendar. Sign-ins in the trailing hour: 06:01Z mine, about 06:32Z the issuer's, 06:47Z this run; none fired as a recovery. A ledger was not opened before this rerun (my omission); a post-hoc entry records it."
+  },
+  {
     "id": "NFRA_FIDUPL-D1-W6-S6",
     "project": "NFRA_FIDUPL",
     "fabric": "dell1",
