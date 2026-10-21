@@ -1342,6 +1342,27 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
   "spec_asserts": "FT-s-7 item 2: main calls backfill_run.run(...) and counts sessions through records.sessions_today().",
   "world_is": "backfill_run is imported lazily and does not exist in this worktree (FT-s-4 builds it in parallel). The shape main passes is the one this module chose, so the runner must accept it. Until FT-s-4 lands, the real path cannot be exercised.",
   "notes": "Tests use fakes for run and records. The issuer reconciles the shape with FT-s-4 at its merge."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S8",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T01:52:00Z",
+  "one_line": "The criterion's relative checker path resolves in the worktree to a different copy of fidupl_round_checks.py than the main tree copy the order names; both print R1-FT7-OK passed=9.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "md5sum of org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py in worktree C:/tmp/fidupl-w8: 0f15f1f2d0028531c3d5b5a513570d52",
+      "md5sum of C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py (main tree): e28a2e8903183a97791aca2dcc89861d"
+    ]
+  },
+  "spec_asserts": "FT-s-7 criterion invocation: python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft7 (relative path); the order's worker face says run the main tree's checker by absolute path.",
+  "world_is": "The relative path, run from the worktree, reaches a checker copy whose bytes differ from the main tree copy. The ft7 verdict is identical in both (R1-FT7-OK passed=9). The worker ran the main-tree copy by absolute path as directed, and recorded the criterion text as the invocation.",
+  "notes": "Not reconciled here: which checker copy is authoritative is the issuer's call (the checker is the COO's file, outside this grant). The divergence is recorded, not fixed."
 }
 ]
 ```
