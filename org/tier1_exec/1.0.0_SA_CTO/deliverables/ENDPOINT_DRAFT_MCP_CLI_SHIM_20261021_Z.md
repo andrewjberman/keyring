@@ -21,8 +21,12 @@ October 1 and October 20" and "how many accounts held DIVZ on Friday, and their 
   - (c) a `query` of `fact_trn` for one account between two trade dates returns at most one page plus a cursor, and the
     row count equals a direct read of the same files;
   - (d) a name filter on `fact_acc` finds the client's accounts;
-  - (e) an aggregate over the 21.1M-row Commonwealth/Cottonwood `account_day_value` answers inside the engine's memory
-    and time ceilings, without the file loaded whole on the gateway.
+  - (e) Orion/Inflection `fact_transactions` (1.53M rows, 31 row groups): one account between two dates answers inside the
+    engine's memory and time ceilings, without the file loaded whole on the gateway;
+  - (f) Cottonwood Black Diamond transactions and fees return their rows, with the MM/DD/YYYY dates parsed (part-1 D2),
+    and the count equals a direct read.
+  - First cut, per Andrew's ~14:0xZ addendum (brief @8c8fa480de): Schwab, Orion, Cottonwood Black Diamond only. SmartX,
+    Eclipse, Commonwealth and the rest are deferred.
 - Negative arm: the same query by a principal without the folder is refused by folder name, with 0 reads.
 
 **FWD-24 (NFRA_OPLGTW): the entitlement is a bucket or a folder, per person, and nothing else.**
@@ -45,5 +49,4 @@ October 1 and October 20" and "how many accounts held DIVZ on Friday, and their 
    - REC: keep the four classes plus date of birth out, by column name in Parquet, and keep bronze out of every grant.
 2. **The typed tools** (`client_*`, `schwab_*`, `etfs_*`, `portal_*`).
    - REC: keep them as conveniences until FWD-23 is proven on the thread; retire each one the generic query replaces.
-3. **The SmartX mixed-firm folder** (one file holds several firms).
-   - REC: grantable to Opal staff only, never to a partner-firm login.
+3. **The SmartX mixed-firm folder** (one file holds several firms): deferred with SmartX by the ~14:0xZ addendum. No call now.
