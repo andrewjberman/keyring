@@ -77,3 +77,13 @@ column layouts, which one live request settles (the CTO schedules it; the box ca
 
 **Plain second answer to ms:** we can backfill positions, balances and prices ~120 days, and transactions several months (deeper on
 measure), with no action needed from Andrew. Accounts and securities are reference data with only a current snapshot.
+
+## THIRD ANSWER (2026-10-21 ~14:15Z) -- the 120-day cap is NOT a hard cap (measured)
+
+A live probe (COO record @3131b59046) stepped the Historical export's `historicalDate` back past 120 days: positions served to
+**2026-06-15 (~128 days)**, prices to **2026-06-18 (~124 days)**. Older dates (150..730) were **accepted, not refused** -- they returned
+"COMPLETED WITH ERRORS, file does not exist." So there is **no artificial 120-day cap**: the backfill reaches as far as Fidelity actually
+holds the data (~4 months for positions/prices), and simply runs out beyond that with "no file," never a refusal. 15 files landed over 8
+dates; as-of = the requested date. Transactions depth is being probed next (the per-account custom-range call, parameters now resolved).
+
+**Plain:** positions/balances/prices backfill ~4 months (data-availability limit, not a 120 cap); transactions depth to follow.
