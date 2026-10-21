@@ -50,3 +50,19 @@ open for him; whether J1 accepts this read is the CTO's ruling (asked 16:58Z).
 `create_user_v2.py --firm opal-capital --email jai@opalinvest.com --name "Jai Mukraj" --role user --no-ses`, once,
 between ADVI1's BEFORE (Count 0) and AFTER (Count 1) email-index reads. Then one gateway `create_draft` to
 Yang@opalinvest.com (username, firm/tier, the Forgot-password first step); nothing sent.
+
+## 6. Result (measured)
+
+- J1 source ruling: 1.0.0_SA_CTO~DELL1 msgs 9169/9171 (order amended @f83e33639e) accept the Opal-tenant calendar read.
+  Source quoted: invite "OCIO IC", 2026-10-20 14:00-15:00Z, organizer Austin Graff <Austin@opalinvest.com>, optional
+  attendee "Jai Mukraj" <Jai@opalinvest.com>, response accepted.
+- ADVI1 BEFORE read: email-index Count 0 at 2026-10-21T17:00:16Z (msg 9172).
+- J2: one run of `j123_insert.py` at 2026-10-21T17:00:49Z, rc=0: `USER#jai@opalinvest.com/PROFILE written
+  (firm=opal-capital, tier=internal, role=user)`, `FIRM#opal-capital/MEMBER#jai@opalinvest.com written`,
+  must_change=True, no SES call. The script's closing line "user receives SES email" is boilerplate; `--no-ses` sent nothing.
+- J3: gateway `create_draft` to Yang@opalinvest.com, subject "Dashboard login for Jai is set up", created
+  2026-10-21T17:01:03Z, `isDraft: true`, internetMessageId
+  `<PH0P220MB050655A1CAC2C4316428FE6DBF662@PH0P220MB0506.NAMP220.PROD.OUTLOOK.COM>`. Nothing was sent.
+- NOT EXERCISED: Jai's own Forgot-password reset and first sign-in (user journey); the draft names
+  https://opalinvest.dev as the login page, which is INFERRED from the 2026-10-08 reset-endpoint log and not read from a
+  route table. Andrew checks both before he sends.
