@@ -32325,3 +32325,51 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-W385-S1 -- the commit gate's client-data check did not run on the AR-g-195 commit: the hashed account-id list is absent on this box
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W385-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~385",
+  "surfaced_at": "2026-10-21T16:01:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, so commit edda8fbfaff (two lambda-tree files) was NOT checked for client account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of edda8fbfaff in C:/dev/wk-irpt-anlreq-385 (WARN line: 'absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there')"
+    ]
+  },
+  "spec_asserts": "The commit gate checks every commit for client account ids (the hashed list is the instrument).",
+  "world_is": "On this box the hashed account-id list is not at its default path and OPAL_ACCOUNT_ID_HASHES is not set for this worker session; the gate reported absent, not empty, so no check ran for this commit. The commit's content is a palette literal and a test file, with no account id in either."
+}
+```
+
+## IRPT_ANLREQ-D2-W385-S2 -- the naming gate reports its function-map folder missing in this sparse worktree, during the AR-g-195 commit
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W385-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~385",
+  "surfaced_at": "2026-10-21T16:01:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed NAMING ERROR function-map folder missing at infra/aws/lambda/ci/function-map/ in the sparse worktree; the commit landed and the naming gate graded nothing from a copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of edda8fbfaff in C:/dev/wk-irpt-anlreq-385 (NAMING ERROR line, 'nothing is graded from a copy')"
+    ]
+  },
+  "spec_asserts": "The naming gate reads the Lambda source function-map folder for a commit that touches a lambda-tree file.",
+  "world_is": "The folder infra/aws/lambda/ci/function-map/ is outside this worker's sparse cone, so the naming gate could not read it for the commit. The same message was recorded for the TO-AR-g-170 producer commit (IRPT_ANLREQ-D2-W308-S3)."
+}
+```
