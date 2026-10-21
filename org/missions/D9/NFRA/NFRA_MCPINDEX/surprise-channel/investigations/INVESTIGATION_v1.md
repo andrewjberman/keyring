@@ -13937,3 +13937,28 @@ carries none.
   "notes": "OBSERVATION, INERT: no hazard is armed; the cell's criteria never plant these controls. The issuer decides whether guard 5 widens at a later round."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~97",
+  "surfaced_at": "2026-10-21T16:17:13Z",
+  "id": "NFRA_MCPINDEX-Z-W97-S1",
+  "one_line": "The commit gate of 87e6ff13379 could not run its client account-id check: the hashed account-id list is absent on this box, so the commit printed WARN and was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run for 87e6ff13379 (branch wk-NFRA_MCPINDEX-97): WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids",
+      "the commit holds two files only: workflows/atom_decomposition/emit_catalog_v02.py and workflows/atom_decomposition/tests/test_size_class.py (git show --stat 87e6ff13379)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit gate checks each commit for client account ids (client-data-check) before it lands.",
+  "world_is": "On this box the hashed account-id list is absent, so the check did not run for 87e6ff13379; the commit is LOCAL on wk-NFRA_MCPINDEX-97 and not pushed.",
+  "notes": "ARMED until the issuer or the drain runs the client-data check on the commit with the list present (OPAL_ACCOUNT_ID_HASHES or the default path). Recorded, not fixed here."
+}
+```
