@@ -15294,3 +15294,60 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Disarm when freshness_check.cmd pins Python311 and a scheduled run exits 0, or when the Python315 PATH entry is moved or boto3 is vetted into it (CTO~Z ruled no boto3 into 3.15). Nothing was edited by this seat. 4 tasks that run shell scripts were not read for bare python."
 }
 ```
+
+## NFRA_CTLPLN-D1-S29 -- three dell1 seats (W1, Q1, SC1) ended between the 12:39Z and 13:39Z reads with no recorded act; re-seated; cause not measured
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S29",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-21T13:52:00Z",
+  "one_line": "Three dell1 seats (2.0.0_SA_COO~W1, 2.0.0_SA_COO~Q1, 0.7.0_AE_CloudOps~SC1) were running at the 12:39Z liveness read and had no process at the 13:39Z read; no kill, reaper pass or Windows crash, hang or shutdown event accounts for it, and the cause is not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, before: seat-liveness at 12:39Z listed SC1 (HUNG by label, pid 56344,29124, 1 open order AMGT_HARVST.TO-HVST-co-7), Q1 (QUIET, pid 56852,46348, nothing for 805m) and W1 (QUIET, pid 35988,47368, nothing for 239m); 13 seats.",
+      "MEASURED, after: seat-liveness at 13:39Z listed 11 seats and none of the three; the kill-maint session map went 28 to 24 sessions. At 13:43Z a claude.exe serial-token scan (extracted token compared with -eq) read 0 for each of the three and 2 for the control 0.7.0_AE_CloudOps~NFRA1; a spawn-marker host scan read 0 for each.",
+      "MEASURED, not the reaper and not a kill by this seat: KILL-MAINT-RUN rows at 12:39:25Z and 13:39:13Z read targets=0 killed=0; org/mcp/agent-spawn-audit.log holds no KILL or FORCE-KILL row after 2026-10-20T23:54:28Z (SC1, by this seat, an earlier act).",
+      "MEASURED, no crash trace: Get-WinEvent over the Application log (Application Error, Windows Error Reporting, Application Hang, .NET Runtime, or a message naming claude or powershell) and the System log (ids 1074, 6005, 6006, 6008, 41, 7036), window 11:41Z to 13:41Z, returned no matching events.",
+      "MEASURED, the act: pre-flight read zero live processes for each; this seat re-seated W1 (13:44:08Z), SC1 (about 13:45Z) and Q1 (13:45:29Z) with spawn-agent.ps1 and read-pointer hints. At 13:47:44Z each had 2 claude.exe and a seat-liveness line.",
+      "NOT explained: the time of the end inside 12:39Z to 13:39Z, and whether it was one event or three. No claim of cause. Same shape as the seat ends of rows S21 to S27 (a session whose whole process tree is gone). 4.0.0_SA_CRO~P first appears in the 13:39Z read; its identity-guard line is 13:00:10Z and no spawn row of this seat exists for it, so it was started by something else. No transcript content read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat that holds an open order or a standing drive loop keeps a live process until it, its issuer or a manager ends it.",
+  "world_is": "Three seats ended with no recorded act by a manager, the reaper or the OS error logs. Their inbox state: W1 and Q1 0 unread, SC1 8 unread (a backlog from before). They are re-seated and alive, so no work waits on this; an unwritten state they held is not recoverable by this seat.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts and process facts only. Cites S21 to S27; none edited."
+}
+```
+
+## NFRA_CTLPLN-D1-S30 -- S28 verified for CloudOps~NFRA1: inbox root 0, mail delivered as events
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S30",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-21T13:53:00Z",
+  "one_line": "Verification of the S28 fix: CloudOps~NFRA1, whose watcher now reads the correct inbox folder, has 0 unclaimed messages in its inbox root and 77 in read/ at 13:51Z, and its inbox events reached the seat; S28 can move from UNDER_INVESTIGATION once an owner reads this.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, now: org/mcp/inbox/0.7.0_AE_CloudOps/~NFRA1/ holds 0 .md files in its root and 77 in read/ (counted 13:51Z).",
+      "MEASURED, at the time of the fix (this seat, about 00:30Z 2026-10-21): the root held 34 unclaimed files before the re-armed watcher and 0 after, with 20 [INBOX] events between 00:30:10Z and 00:30:16Z. These are this seat's earlier readings, not re-read now.",
+      "NOT measured here: SC1, which was re-seated at 13:45Z and has 8 older unread files; the fix covers the watcher folder, so its backlog is the old S28 backlog, not new mail."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An inbox watcher armed for a serial reads the folder the broker delivers that serial's mail to (the S28 assertion).",
+  "world_is": "For NFRA1 the assertion holds: its root is empty and its mail was delivered as events. The fix is on CLOUD at 9fe08639a3.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Cites S28; does not edit it. Counts only."
+}
+```
