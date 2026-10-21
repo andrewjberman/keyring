@@ -1682,6 +1682,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "NFRA_SCHWABBF.TO-AL-p3 WORKER FACE, dry-run note: AC1 has no state_tier test yet; write the state_tier arm first and watch it fail against the stale copy (which lacks Get-StateBucket).",
     "world_is": "The state_tier tests exist at base 5bb233992d and pass against the stale copy, because the stale copy already carries the state-tier functions; the only stale defect is the bare $all = @($planItems) line in Select-PlanAsOf. The order's own text ('The existing state_tier test stays') agrees with the tree, not with the dry-run note. Built as: state_tier tests kept unchanged, plan_list_wrap arm added and failing against the stale copy before the rebuild.",
     "notes": "Not an alert. No change to the state_tier tests. The order's AC1 selection (master_set or syntax or state_tier or plan_list_wrap) passes after the rebuild with 8 passed."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W20-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~20",
+    "surfaced_at": "2026-10-21T17:13:12Z",
+    "one_line": "AL4-c4-AC3 cannot go green as written in this worktree: the six existing converter test files run '5 failed, 116 passed' at the base e7421536db8, not the '121 passed' the order names, because the worktree's sparse-checkout cone omits the test inputs of five of them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree wt-al-20 sparse-checkout list (git sparse-checkout list) at base e7421536db8 names data/assets/scripts, infra/aws/lambda/opal-assets/opal-assets-silver-schwab, infra/logic, lib and org/*, and not workflows/ nor the other infra/aws/lambda/opal-assets/* twin directories; ls infra/aws/lambda/opal-assets in the worktree shows only opal-assets-silver-schwab while git ls-files lists opal-assets-silver-etf, -eclipse, -orion and -blackdiamond.",
+        "python -m pytest on the six existing files, before any edit, printed '5 failed, 116 passed in 5.46s' rc=1: test_schwab_silver_firm_key.py::test_KEY_firm_masters_x_tables_x_dates_equal_the_builder_plus_the_master_file_name (assert 0 == 18: the catalog glob at test_schwab_silver_firm_key.py:33 reads workflows/atom_decomposition/catalog_entries, outside the cone) and four test_schwab_state_firm_key.py::test_TWIN_each_backfill_status_copy_is_byte_equal_to_the_shared_writer arms (FileNotFoundError on infra/aws/lambda/opal-assets/opal-assets-silver-{etf,eclipse,orion,blackdiamond}/backfill_status.py).",
+        "after this worker's edits the same six files plus test_cottonwood_basis_labels.py print '5 failed, 121 passed' with the same five ids; AC1 (5 passed) and AC2 (1 passed) pass by output. The refusal clause is applied: the criterion is not weakened, and the sparse cone is not widened or rebuilt."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_SCHWABBF.TO-AL-c4 ACCEPTANCE AL4-c4-AC3 (expect ^[0-9]+ passed with no failure over the six existing converter test files plus the new file) and its dry-run note: the six existing files alone are 121 passed at the base, a control.",
+    "world_is": "The base run of the six files is 116 passed and 5 failed (121 collected). The five failures are environmental: the sparse-checkout cone of this worktree omits workflows/atom_decomposition/catalog_entries and four Lambda twin directories that the tests read. The build passes AC1 and AC2; AC3 fails as written on the cone, not on the edited code.",
+    "notes": "Not an alert. Disposition for the issuer: AC3 needs a worktree whose cone covers those paths, or an order that names the five ids as known environmental failures; the issuer or CTO rules which. The order stays open on AC3. Nothing deployed or run against AWS."
   }
 ]
 ```
