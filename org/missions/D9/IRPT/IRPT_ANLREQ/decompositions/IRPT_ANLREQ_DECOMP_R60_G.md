@@ -164,3 +164,15 @@ AR-g-185 (merged 44240238b9f) and AR-g-186 (merged 8faec6ba970) are verified on 
 AR-g-187 carries `<workstream>~GREL9</workstream>`. Then the release r34s (AR-g-188) carries AR-g-185, AR-g-186 and AR-g-187.
 
 fanout: 1 of 1 chains, cap 8, reason: one test-pin cell.
+
+## Addendum 10 2026-10-21 (issuer): cell AR-g-188, the r34s build (r34r plus the Multi-Comp portfolio path and the report presentation fixes)
+
+AR-g-185 (44240238b9f), AR-g-186 (8faec6ba970) and AR-g-187 (5fd1e793f2f) are merged and verified on the full tree; the drain run of `ycharts/research/tests`, `test_compare_ports.py`, `test_resident_main.py` and `test_frozen_worker.py` reads 741 passed. Measured by a rehearsal at pin `5fd1e793f2fe7e3eabdac88d178c411c3d51ab0b`: against r34r the release moves 5 members (SHA256SUMS, the bindings provenance.package_pin only, `layout_overview.py`, `opal_producer.py`, `portfolio_series.py`) and adds none: 323 members, tarball sha256 `fa950681774268d2108eb7ca141ec150213d0d6e482dad498d13870a90d87b14`. The registry file, the `tickets_table` binding and the files-from list (50 lines) do not move. The checker `checks/ar_release_s_checks.py` (calibrated: record OK, tree OK, scripts OK on the rehearsal; tree FAIL on the r34r tarball) also checks that the shipped source carries `buy_and_hold_from`, its caller and the `.cmp` rule.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-188` | the r34s tarball, sums and four host scripts into stage `C:/dev/irpt-release-r34s-g2` (BUILD ONLY), a record and a proof | the worker folder `r66/` | LOCAL |
+
+AR-g-188 carries `<workstream>~GREL10</workstream>` (worker slot 365: branch 364 is a drain helper branch).
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell.
