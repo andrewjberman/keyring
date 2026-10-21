@@ -1582,6 +1582,50 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
   "spec_asserts": "FT-s-7 criterion invocation: python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft7 (relative path); the order's worker face says run the main tree's checker by absolute path.",
   "world_is": "The relative path, run from the worktree, reaches a checker copy whose bytes differ from the main tree copy. The ft7 verdict is identical in both (R1-FT7-OK passed=9). The worker ran the main-tree copy by absolute path as directed, and recorded the criterion text as the invocation.",
   "notes": "Not reconciled here: which checker copy is authoritative is the issuer's call (the checker is the COO's file, outside this grant). The divergence is recorded, not fixed."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S9",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T02:01:13Z",
+  "one_line": "The merged runner cannot drive the merged adapter: it accepts only the planner's two kinds, the planner needs COMPLETED and bytes where the adapter returns served and a folder, so the live walk cannot run end to end.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/backfill_run.py@55b6d748907 line 173: run() raises ValueError unknown export kind for any kind outside backfill.KINDS (transactions, positions_balances); main passes the six file-type kinds",
+      "measured: main driven with the real backfill_run.run and the test fakes raised ValueError before any sign-in (run_error ValueError, sign_ins 0) -- scratch check, not committed",
+      "infra/aws/ec2/canonical-fidelity/backfill.py@55b6d748907 lines 96-97: a wait() status other than COMPLETED raises RuntimeError; the adapter returns served per the order",
+      "infra/aws/ec2/canonical-fidelity/backfill.py@55b6d748907 lines 98 and 106: the planner writes the bytes returned by download() into export.bin; the adapter returns the day folder"
+    ]
+  },
+  "spec_asserts": "FT-s-7 item 1 (order): wait returns served and download returns the day's folder for the lander; FT-s-4 (reference section 12): the runner walks backfill.py's planner with the planner's kinds, statuses and download contract.",
+  "world_is": "Both sides are correct to their own spec and the two specs disagree on the kind vocabulary, the status word and the download payload. The fakes in both test files never cross the seam, so the suites pass. A live run through backfill_main stops at the runner's kind check before any sign-in: no harm, no walk.",
+  "notes": "The fix is a contract decision for the issuer (one vocabulary across the planner, runner and adapter), not a local edit: it touches backfill.py and backfill_run.py, outside this grant. Until it is made the box command must not be run live. Extends S2."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S10",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T02:01:13Z",
+  "one_line": "The runner counts every request_export against max_exports_per_run, including the skipped non-trading days the adapter answers without a request, so the 12-export cap covers about eight trading days per run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/backfill_run.py@55b6d748907 lines 94-100: _Walk.request_export increments self.exports before delegating to the client, so a skipped day is counted",
+      "infra/aws/ec2/canonical-fidelity/backfill_main.py@d7123e46c24 plan_inputs chunk_days 1: one window per calendar day, weekends and holidays included"
+    ]
+  },
+  "spec_asserts": "REPAIR 1 item 2 (order): a non-trading day is skipped WITHOUT a request.",
+  "world_is": "The adapter sends no channel request for a skipped day, but the runner's cap counter still counts it. With twelve exports a run walks at most twelve calendar days, about eight trading days, and then stops with run_cap. The stop is safe (the walk resumes on the next run) but the per-run rate is lower than the cap implies.",
+  "notes": "The counter is the runner's; the adapter cannot change it from inside its grant. The issuer rules whether skipped days are free (a runner change) or the cap is sized in calendar days."
 }
 ]
 ```
