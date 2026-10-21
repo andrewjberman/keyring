@@ -1,0 +1,6 @@
+keyring v2
+source: Opal-Capital/ajb_workspace origin/CLOUD @c96578b6c30ccf210fb6dd8ec13519a825739e47
+built: 2026-10-21T21:35:50Z by 4.0.0_SA_CRO~P on dell1
+history: each key file keeps its own history (exact-path filter); data files excluded
+adds over v1: lib fabric modules, docs/briefs, tier1_exec deliverables
+not included (see private-account/archive): project deliverables, tier2/3 seat deliverables, closed-project record, data files
