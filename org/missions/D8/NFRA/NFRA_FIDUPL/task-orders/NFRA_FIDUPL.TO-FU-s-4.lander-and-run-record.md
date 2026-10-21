@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~2</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -45,6 +45,14 @@ The first live pull (run `20261021T004450Z`; record `C:/Dev/ajb_workspace/org/mi
 3. Re-landing the same handoff folder is already idempotent (`skipped_existing` when the sha256 matches); a test pins it.
 Add four tests to the EXISTING `tests/test_land.py`: `test_content_date_column_is_per_file` (synthetic first rows with the date in the mapped column of each of the six names, and a decoy different date in another column of balance, account and transact: the mapped column wins), `test_row_shorter_than_the_date_column_is_unreadable`, `test_record_outcome_partial_when_some_files_land` (three good, three unreadable: `outcome` is `PARTIAL`, counts 3 and 3, non-zero exit; and an all-good run reads `ALL_LANDED`, an all-bad one `FAILED`), `test_relanding_the_same_files_skips_existing`. Existing tests whose synthetic fixtures put the date in field 0 of account, balance or transact are updated to the new columns without renaming. FU4-AC1 now needs fourteen; the `fu4d` dry run still reads `dests=6`. The checker is `fidupl_round_checks.py`. SYNTHETIC data only: the real export files are never read. Fakes only. FAST.
 
+### REPAIR 2 (issuer, 2026-10-21 ~09:25Z; CTO msg 9045) -- a file whose as-of date is not a trading day lands under the last trading day on or before it
+
+Live fact (the first backfill landing, 2026-10-21 09:05Z): `account.txt` of the export of 2026-10-19 carries an as-of column of 20261017 (a Saturday: the calendar day before the export), while the other five files carry 20261016 (the last trading day). The lander refused it (`failed_step date`, `content date is not a trading day`). The same would hit every Monday's daily export (account as-of Sunday), first on 2026-10-26. CTO ruling: a file's landing date is the last trading day on or before its content as-of date, from `lib/trading_calendar.py` (the one frontier), so `account.txt` lands beside its siblings; the run record carries both dates so nothing is hidden; a weekday holiday follows the same rule. Change `land.py`, `tests/test_land.py`, `split.py` and `tests/test_split.py` only (all four are in your `<paths>` block now):
+1. `land.py`: a public function `landing_date(day)` returns `day` when `trading_calendar.is_trading_day(day)` and otherwise `trading_calendar.prev_trading_day(day)` (the last trading day before a non-trading day, i.e. on or before it); the fail-closed `CalendarCoverageError` still propagates as today (the existing calendar failure step stays). `_examine` no longer fails a non-trading as-of: each entry carries `content_as_of` (the measured as-of, `YYYYMMDD`) and `content_date` (the date the file is addressed under = `landing_date`; the value every consumer already reads), `trading_day` (whether the AS-OF day is a trading day, as measured). `CLASS_NOT_TRADING` and its failure path are removed (keep the constant only if another module imports it: check with a search first). A file whose as-of is unreadable still fails as today.
+2. The run record: per-file entries carry `content_as_of` and `content_date` (already in `keys`: add `content_as_of`); `business_date_in_content` stays the first dated file's `content_date`; `calendar.note` compares the `content_date` values. Nothing else about the record changes.
+3. `split.py`: wherever it takes the content date of a file for its destination (`day = land._content_date(data, name)` or equivalent), apply `land.landing_date(day)` so the firm files land under the same date as the lander's. Nothing else changes.
+4. Tests: in `tests/test_land.py` REPLACE `test_non_trading_day_is_failure` by `test_non_trading_as_of_lands_under_the_last_trading_day_on_or_before_it` (a Saturday as-of lands under the Friday, a Sunday as-of under the Friday, a weekday NYSE holiday under the prior trading day; each entry has `content_as_of` and `content_date` and the destination key carries the `content_date`) and ADD `test_run_record_carries_both_dates_per_file` (the record's file entries hold both dates, `business_date_in_content` equals the first `content_date`). In `tests/test_split.py` ADD `test_split_lands_a_weekend_as_of_under_the_prior_trading_day` (a synthetic account.txt with a Saturday as-of and a position.txt with the Friday: both firm destinations carry the Friday). FU4-AC1 (`fu4`) now needs the list as the checker prints it (fourteen names, `test_non_trading_day_is_failure` gone, two new); the `fr2` check gains the one split test (thirteen named). FU4-AC2 (`fu4d`, six destinations) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only. FAST.
+
 ### ACCEPTANCE
 
 <criterion id="FU4-AC1" cell_refs="FU-s-4"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu4</invocation><expect>R1-FU4-OK passed=\d+</expect></criterion>
@@ -74,6 +82,8 @@ Reads (outside the grant):
 <paths>
 infra/aws/ec2/canonical-fidelity/land.py
 infra/aws/ec2/canonical-fidelity/tests/test_land.py
+infra/aws/ec2/canonical-fidelity/split.py
+infra/aws/ec2/canonical-fidelity/tests/test_split.py
 org/missions/D8/NFRA/NFRA_FIDUPL/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

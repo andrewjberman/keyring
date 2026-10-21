@@ -1965,6 +1965,30 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "notes": "Not retried (a stall or budget stop is an answer per the issuer) and no cookie or profile touched. For the issuer: (1) the stall point is one file of one day, repeated in two runs, so a per-file bound below the wall budget would let the other five land; (2) the record should say stop=budget and name the stalled file; (3) the earliest-date answer for deliverable 2 so far is 2026-10-20 fully served (earliest_served) and 2026-10-19 five of six. Sign-ins in the trailing hour ending 08:22Z: 07:22Z mine, 07:49Z the issuer's refused attempt, 08:22Z this run."
   },
   {
+    "id": "NFRA_FIDUPL-D1-S18",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T09:10:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "The step 3E backfill landed four files of the 2026-10-19 export for the first time (balance, position, prices, security, keys under content date 20261016), but transact.txt of 2026-10-19 ran to the wall budget despite the 90 s cap, account.txt was served and not landed, the record dates read 20261019 against keys at 20261016, and the record again ends TargetClosedError with stop none.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM f26b9129-0448-419c-8838-4515ce3da500 on i-028e830f7226cc685 at 08:56:14Z (the issuer's GO 9038 and update 9040, ONE attempt, --max-seconds 480 --max-sessions 8, executionTimeout 660), Success, exit 1: 'FILE_LANDED 2026-10-19 files=4', 'DAY 2026-10-19 result=budget secs=461', 'ERROR: backfill run did not finish: TargetClosedError', 'CLOSE ok secs=0', stop=none; verbatim in the deliverable NFRA_FIDUPL.TO-FT-s-11.backfill_probe1_step3E_output.md",
+        "s3://opal-data-assets/fidelity/alongside/bronze/_runs/20261021/backfill-20261021T085615Z.json (2871 bytes): day 2026-10-19 files account/balance/position/prices/security 'ok', transact 'interrupted_WallBudget', landed_on_stop 4, missing ['transact.txt'], secs 461; per_file_type balance/position/prices/security earliest_date 20261019 days 1 with bytes 1223747/30326543/645722/655578, account and transact days 0 bytes 0 earliest_served 20261020; run_error TargetClosedError, stop none",
+        "aws s3api list-objects-v2 under fidelity/alongside/bronze/ excluding _runs/ from 08:50Z: exactly four keys, balance/20261016/balance.txt, position/20261016/position.txt, prices/20261016/prices.txt, security/20261016/security.txt, all 09:05:17Z; run records _runs/20261019/run-20261021T085734Z.json and _runs/20261017/run-20261021T090516Z.json",
+        "fidupl_round_checks.py ft11r: R1-FT11R-FAIL run_error=TargetClosedError",
+        "rows NFRA_FIDUPL-D1-S16 and D1-S17: the same 2026-10-19 day stalled on its last file in the two earlier runs (452 s, 471 s)"
+      ]
+    },
+    "spec_asserts": "Step 3E and msg 9038: a stalled file is cut at 90 s and named missing, the day lands its served files, and the walk goes on to earlier days (2026-10-16 and before); FT-s-11-AC1 expects a record with no run error and a stop reason.",
+    "world_is": "The day landed its served files on stop (four) but the 90 s cap did not end the transact.txt request: the day ran 461 s, so the walk never moved to an earlier day. Three discrepancies sit in the output and are not resolved here: (1) account.txt of 2026-10-19 reads ok in the record but is not among the four landed keys; (2) the four landed keys are under content date 20261016 while the record's earliest_date for them is 20261019 and a run record sits under _runs/20261017/; (3) stop is none and run_error is TargetClosedError although the day result is budget.",
+    "notes": "Not retried (a stall or budget stop is an answer per the issuer) and no cookie or profile touched. For the issuer: the earliest date the channel served is 2026-10-19 (five of six files) and the first landed content date is 20261016; the open acts are the transact.txt stall, the account.txt non-landing and the stop reason. Sign-ins in the trailing hour ending 08:56Z: 08:22Z and 08:56Z, both mine."
+  },
+  {
     "id": "NFRA_FIDUPL-D1-W6-S6",
     "project": "NFRA_FIDUPL",
     "fabric": "dell1",
