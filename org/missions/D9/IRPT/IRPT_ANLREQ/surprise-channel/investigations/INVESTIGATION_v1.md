@@ -32373,3 +32373,53 @@
   "world_is": "The folder infra/aws/lambda/ci/function-map/ is outside this worker's sparse cone, so the naming gate could not read it for the commit. The same message was recorded for the TO-AR-g-170 producer commit (IRPT_ANLREQ-D2-W308-S3)."
 }
 ```
+
+## IRPT_ANLREQ-D2-W370-S1 -- AR-y-498 edits one assertion of test_layout_excluded_line.py and renames its replaced-only test function, which the order did not name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W370-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~370",
+  "surfaced_at": "2026-10-21T16:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The replaced-only test of test_layout_excluded_line.py asserted whole-page equality with the no-key HTML, which the change makes false by design. I edited that assertion (it now removes the replaced line before comparing) and scoped the docstring as ordered. I also renamed the function, because its old name asserts no line and is false after the change; the order names no rename.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_excluded_line.py@6b78440f7d3 (base: test_only_replaced_records_give_no_line_and_the_same_html_as_no_key asserts with_replaced == without)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-498.overview-prints-the-replaced-in-all-figures-line-under-the-left-out-line.md@6b78440f7d3 (the permitted edit: the ABSENCE assertion; docstring sentence scoped with 'in the left-out line' and nothing else)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_excluded_line.py@67c138a6e04 (the edited assertion and test_only_replaced_records_give_no_left_out_line_and_only_the_replaced_line_is_added)"
+    ]
+  },
+  "spec_asserts": "The order permits editing tests/test_layout_excluded_line.py ONLY where an assertion asserts the ABSENCE of a replaced ticker in the whole page, and says the docstring sentence stays true with 'in the left-out line' added and nothing else reworded.",
+  "world_is": "After the change the replaced-only case of that test fails by design, since its whole-page equality now differs by the replaced line. The assertion was edited to remove the replaced line before comparing; the docstring was scoped as ordered. The function was renamed from test_only_replaced_records_give_no_line_and_the_same_html_as_no_key to test_only_replaced_records_give_no_left_out_line_and_only_the_replaced_line_is_added. Every other test in the file is unchanged."
+}
+```
+
+## IRPT_ANLREQ-D2-W370-S2 -- AR-y-498 sequences the proof validation after its commit and the status flip with the instance in one commit, which the order does not reconcile
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W370-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~370",
+  "surfaced_at": "2026-10-21T16:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says to validate the instance AFTER its commit and to flip the status to complete with the instance in one commit, only on VALID. A flip inside that commit cannot be validated after it. I validated the working-tree instance (the check script commit is already pinned), flipped the status in the same commit as the instance, and re-ran the validation on the committed instance.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-498.overview-prints-the-replaced-in-all-figures-line-under-the-left-out-line.md@6b78440f7d3 (proof_of_spec block: 'Validate it AFTER its commit'; WORKER FACE: flip with the instance, one commit, only on VALID)"
+    ]
+  },
+  "spec_asserts": "The proof_of_spec block says: validate the instance AFTER its commit, and flip the status to complete only when the check prints VALID. The worker face says: flip the status to complete (with the instance, one commit) only on VALID.",
+  "world_is": "Both readings can be honoured only by validating twice: once on the working tree before the single commit, and once on the committed instance after it. The order does not say which validation counts for the flip. The committed instance and the flip commit are the same bytes that were validated before commit."
+}
+```
