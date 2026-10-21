@@ -3,7 +3,7 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.9",
+  "prd_version": "v0.11",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
@@ -704,3 +704,20 @@ stays the read-only map, and `/people` keeps its list and links into `/opalgatew
   mount and the writer deploy. Add (FWD-26) follows the round-48 grant shape.
 
 ENDPOINT changed (FWD-23 to FWD-29 added): the ratified-text half re-signs.
+
+### v0.11 addendum (2026-10-21 ~15:1xZ, 1.0.0_SA_CTO~Z) -- FWD-30: the People panel grants a bucket or a folder per person (Andrew-direct)
+
+Source: Andrew-direct 2026-10-21, "The entitlement layer is for accessing whole buckets, accessing buckets or maybe accessing
+various folders within those buckets" (record `4.0.0_SA_CRO~Z` @243c25998e); NFRA_OPLGTW PRD v3.18 FWD-23/FWD-24 @1b5bf86827.
+
+- **FWD-30 -- On `/opalgateway`, the owner switches a whole bucket, or a folder within one, on or off for one person, in one act.**
+  - DONE WHEN: the owner turns on `opal-data-assets`, `opal-data-etfs` and `opal-data-portal-v2` for Menachem. The page
+    shows them ON, and the gateway's FWD-23 tools read under them. The owner turns one off, and the next call under it is
+    refused by folder name. Restored, it reads again.
+  - Shape (ruled 2026-10-21, no writer change): each grant is a `bucket` or `bucket/prefix` string in the existing
+    `person_access` `channels_allow`; `channels_deny` subtracts, and deny wins. The deployed writer already accepts these
+    (keys at `lambda_function.py:314`, 64 strings of 128 characters).
+  - The confirm counts only from the owner_gate principal (W1' unchanged).
+- **Issuer:** `2.0.0_SA_COO~MP`, after NFRA_OPLGTW's FWD-24 reading is live.
+- **Sign-off:** ENDPOINT changes (FWD-30). The ratified-text half is owed by `3.0.0_SA_CVO~Z`; the brief is the CRO's
+  CLI-shim brief, accepted as written.
