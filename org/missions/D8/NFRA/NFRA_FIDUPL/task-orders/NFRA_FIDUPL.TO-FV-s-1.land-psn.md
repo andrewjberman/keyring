@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~6</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -33,6 +33,10 @@ In `land.py` (Python 3.9, ASCII):
 2. `land_psn(path, scope, s3=None, now=None, dry_run=False)`: read the file's bytes (a missing or unreadable file is a failed entry, step `read`, like `_examine`). Build the entry with `_entry(PSN_NAME)`, set `bytes` and `sha256`, take the as-of from `_psn_content_date` (None gives `_fail(entry, "date", CLASS_DATE_UNREADABLE, ...)`), set `content_as_of`, `trading_day` and `content_date` exactly as `_examine` does (`landing_date`, `CalendarCoverageError` fails closed with step `calendar`), then call `_land_one(entry, data, scope, dry_run, client)` unchanged (its stem comes from the entry name, so the key is `address("fidelity", scope, "bronze", "position_balance_fl", <content date>, "position_balance_fl.psn")`). Write ONE run record exactly as `land()` does (same keys; `files` holds the one public entry; `outcome` ALL_LANDED when the entry's action is in OK_ACTIONS, else FAILED; `business_date_in_content` the landing date; a dry run writes nothing). Return the record.
 3. CLI: `main` accepts `--psn PATH` as an alternative to `--handoff-dir` (exactly one of the two is required; `--scope` and `--dry-run` as today) and prints the same `ERROR:` and summary lines as the handoff path. `--handoff-dir` behaviour is unchanged.
 4. Tests in the NEW `tests/test_land_psn.py` (fakes only; the file bytes are synthetic: 156-character lines whose characters 17 to 22 read the MMDDYY, e.g. `("A" * 17) + "101526" + (" " * 133)` plus CRLF; no real data): `test_psn_date_is_read_from_offset_17_as_mmddyy`, `test_psn_lands_under_the_content_date_with_the_fixed_table_name` (the put key is `fidelity/alongside/bronze/position_balance_fl/20261015/position_balance_fl.psn` and the record has `outcome` ALL_LANDED and the run record put), `test_psn_unreadable_date_is_a_named_failure_and_lands_nothing` (no put of the file; failure class `content date unreadable`), `test_psn_existing_identical_is_skipped_and_different_is_not_overwritten` (`skipped_existing`; a different body at the key is a failed `land` step and no put), `test_psn_non_trading_asof_lands_under_the_prior_trading_day` (a Saturday as-of lands under the Friday and the entry keeps both dates).
+
+### REPAIR 1 (issuer, 2026-10-21 ~15:05Z) -- the psn run record must not overwrite the CSV lander's record
+
+`hist_walk` lands a day's position and prices through `land()` and the psn file through `land_psn()` within the same second and for the same content date, so both write `_runs/<date>/run-<id>.json` with the same second-resolution id and the second put overwrites the first record. Change `land_psn` only: its run id (used for the record key AND the record's `run_id` field) is `<%Y%m%dT%H%M%SZ>-psn`. Add to `tests/test_land_psn.py` the test `test_psn_run_record_key_does_not_collide_with_the_csv_lander_record_of_the_same_second` (call `land()` on a synthetic six-file handoff and `land_psn()` with the same `now` and the same content date against ONE FakeS3: two different run-record keys, both present, the CSV record's `run_id` unchanged). FV-s-1-AC1 (`fv1`) now needs SIX named tests; FV-s-1-AC2 (`fu4`) must still pass. The whole module suite: no failure, last line in your report.
 
 ### ACCEPTANCE
 
