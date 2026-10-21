@@ -13962,3 +13962,27 @@ carries none.
   "notes": "ARMED until the issuer or the drain runs the client-data check on the commit with the list present (OPAL_ACCOUNT_ID_HASHES or the default path). Recorded, not fixed here."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~98",
+  "surfaced_at": "2026-10-21T16:14:13Z",
+  "id": "NFRA_MCPINDEX-Z-W98-S1",
+  "one_line": "The commit gate printed WARN that the hashed account-id list is ABSENT on this device, so my work commit 94f481714d was NOT checked for client account ids; absent is not empty. I did not set the list or change the gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of the work commit 94f481714df8223e0db08cba219ff64738116391 (task order MX-l-2, paths workflows/gateway_battery/fwd26_grade.py and workflows/gateway_battery/tests/test_fwd26_grade.py): WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt",
+      "ls of C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt at 2026-10-21T16:14:13Z: No such file or directory; grep of the two committed files for the eight-digit master ids of the question set: 0 hits in each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit gate runs its client-data check on each staged commit and grades the staged content against the hashed account-id list, so a commit is checked for client account ids.",
+  "world_is": "On this device the hashed list is absent, so the gate printed WARN and did not check commit 94f481714d. The two staged files are a standard-library grader script and its unit tests; they hold no master id of the question set.",
+  "notes": "OBSERVATION, INERT: no hazard is armed; the staged files carry no account id by grep. The gate degraded to WARN rather than refusing, which is the designed absent-is-not-empty path. Whether this device should hold the list is for the issuer or the CTO to decide."
+}
+```
