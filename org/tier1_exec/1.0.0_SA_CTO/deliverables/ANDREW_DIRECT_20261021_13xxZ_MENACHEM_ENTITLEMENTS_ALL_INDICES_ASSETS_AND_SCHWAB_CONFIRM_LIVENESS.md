@@ -30,3 +30,13 @@
   schwab (5), not blackdiamond (1); those need a data grant. ycharts and opal_portal need tier standard.
 - The narrowing mechanism (person_access, read at dispatch) is live in the served release 2923d1ee99; it is written only by
   the grant-writer Lambda (live since 10-20) on the owner's confirm, whose page route ships in batch17 (2026-10-22 06:45Z).
+
+## Fourth message, VERBATIM (the manuals)
+
+> Yes then I will need a pdf instruction manual for human reads as well as json instruction manual that his claude can read.
+> This should cover how the database is set up, how to query different items for different firms/clients/accounts, etc. One
+> thing he mentioned is to be able to query based on transaction date, so i'd want to see that laid out.
+
+Routed: the grant and the person_access narrowing to 2.0.0_SA_COO~O (msg 20261021T131937Z), after batch17's ledger CLOSED.
+The two manuals are built by this seat off git (Desktop + scratchpad), with no client identifiers; delivery to him is
+Andrew's (call 7def).
