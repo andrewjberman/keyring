@@ -639,6 +639,86 @@ def _tf_out(name):
 
 
 
+def daily_config_copy():
+    tag = "R1-FT8C"
+    try:
+        import time
+
+        import boto3
+        rc, iid = _tf_out("instance_id")
+        if rc != 0 or not re.match(r"^i-[0-9a-f]+$", iid):
+            return out("%s-FAIL no instance_id output (rc=%s)" % (tag, rc))
+        py = ("import json; c=json.load(open('/opt/fidelity-uploader/config.daily.json')); "
+              "print('mode=%s' % c.get('mode')); print('labels=%d' % len(c.get('firm_labels') or {})); "
+              "ac=c.get('account_columns') or {}; print('cols=' + ','.join('%s:%s' % (k, ac[k]) for k in sorted(ac))); "
+              "print('perg=%s' % ('perg_secret_id' in c))")
+        ssm = boto3.client("ssm", region_name="us-east-1")
+        cid = ssm.send_command(InstanceIds=[iid], DocumentName="AWS-RunShellScript",
+                               Parameters={"commands": ['/opt/fidelity-uploader/venv/bin/python -c "%s"' % py]})["Command"]["CommandId"]
+        inv = {"Status": "Pending"}
+        for _ in range(30):
+            time.sleep(3)
+            try:
+                inv = ssm.get_command_invocation(CommandId=cid, InstanceId=iid)
+            except Exception:  # noqa: BLE001
+                continue
+            if inv["Status"] in ("Success", "Failed", "TimedOut", "Cancelled"):
+                break
+        so = inv.get("StandardOutputContent", "")
+        want = "cols=account.txt:0,balance.txt:0,position.txt:5,prices.txt:None,security.txt:None,transact.txt:0"
+        if inv["Status"] != "Success" or "mode=daily" not in so or want not in so or "perg=True" not in so:
+            return out("%s-FAIL ssm status=%s; the daily config copy is absent or wrong" % (tag, inv["Status"]))
+        n = re.search(r"labels=(\d+)", so)
+        if not n or int(n.group(1)) < 7:
+            return out("%s-FAIL firm_labels holds fewer than 7 entries" % tag)
+        return out("%s-OK daily config copy: mode daily, %s firm labels, the measured account columns, perg pointer" % (tag, n.group(1)))
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
+
+def split_record_proof():
+    tag = "R1-FT8R"
+    try:
+        sys.path.insert(0, "lib")
+        import boto3
+        import opal_naming
+        prefix = opal_naming.address("fidelity", "alongside", "bronze", "_runs", "00000000").rsplit("/00000000", 1)[0] + "/"
+        m = re.match(r"s3://([^/]+)/(.*)$", prefix)
+        s3 = boto3.client("s3", region_name="us-east-1")
+        best = None
+        for pg in s3.get_paginator("list_objects_v2").paginate(Bucket=m.group(1), Prefix=m.group(2)):
+            for o in pg.get("Contents", []):
+                if "/split-" in o["Key"] and (best is None or o["LastModified"] > best["LastModified"]):
+                    best = o
+        if best is None:
+            return out("%s-FAIL no split record under %s" % (tag, prefix))
+        rec = json.loads(s3.get_object(Bucket=m.group(1), Key=best["Key"])["Body"].read().decode("utf-8"))
+        firms = set()
+        for f in rec.get("files", []):
+            for firm, fe in (f.get("firms") or {}).items():
+                if fe.get("action") in ("landed", "skipped_existing") and fe.get("rows_written"):
+                    firms.add(firm)
+        not_split = sorted(x.get("name") for x in (rec.get("not_split") or []))
+        bad = []
+        if rec.get("failures"):
+            bad.append("failures=%d" % len(rec["failures"]))
+        if rec.get("firms_without_scope"):
+            bad.append("firms_without_scope=%d" % len(rec["firms_without_scope"]))
+        if rec.get("conflicts"):
+            bad.append("conflicts=%d" % len(rec["conflicts"]))
+        if (rec.get("counts") or {}).get("files_split") != 4:
+            bad.append("files_split=%s" % (rec.get("counts") or {}).get("files_split"))
+        if not_split != ["prices.txt", "security.txt"]:
+            bad.append("not_split=%s" % ",".join(not_split))
+        if len(firms) < 3:
+            bad.append("firms_with_rows=%d" % len(firms))
+        if bad:
+            return out("%s-FAIL %s" % (tag, " ".join(bad)))
+        return out("%s-OK split record: 4 files split, %d firms with rows, prices and security unsplit, no failure or conflict" % (tag, len(firms)))
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
+
 def _perg_arn():
     import boto3
     sm = boto3.client("secretsmanager", region_name="us-east-1")
@@ -870,7 +950,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 

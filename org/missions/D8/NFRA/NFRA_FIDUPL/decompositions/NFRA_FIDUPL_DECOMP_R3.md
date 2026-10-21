@@ -49,3 +49,13 @@ Andrew's method: on-demand exports at progressively earlier dates until the chan
 | **FT-s-7** | The real backfill adapter over `fetch.fetch_day` (one business day per window; empty status = retention stop, refusal = entitlement stop) and `backfill_main.py`, the box command that signs in once, walks back through `backfill_run.run`, lands each served day and writes the completion record | `infra/aws/ec2/canonical-fidelity/backfill_adapter.py`, `.../backfill_main.py`, `.../tests/test_backfill_adapter.py` | C-BACKFILL, FWD-6 | WORLD |
 
 Edge: `FT-s-4 -> FT-s-7` (the runner's interface, reference section 12). Executor: worker slot ~8.
+
+## 7. Addendum 2026-10-21 ~02:50Z (issuer, CTO msg 8940: the firm split is Andrew's deliverable 1; GO on a daily-mode proof run on a config copy)
+
+Measured on the box (names and indexes only): the account-number column is account 0, position 5, balance 0, transact 0; prices and security carry none. The proof run exercises, once, the stages that have only run on fakes: the switcher sweep over the 31 G numbers, the account lister's paging, the split under `fidelity/<firm>/`, and the coverage record, on a COPY of the box config so the scheduled fires keep running the raw land.
+
+| cell | what it builds (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-8** | On the box: create `config.daily.json` (the config plus `mode`, `firm_labels`, `account_columns`), and on the issuer's GO run `box/run.py` once on it; read the per-firm counts | the same Terraform root and ledger paths (a ledger for the config file and the run) | C-TENANCY, FWD-9 | WORLD |
+
+Edge: `FR-s-2 REPAIR 4 -> FT-s-8` (a delivery of `split.py` sits between). Executor: `0.7.0_AE_CloudOps~NFRA1` (rule 34).
