@@ -31754,3 +31754,49 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W366-S1 -- the interface and the cell disagree on a proposals list that mixes a str with a non-str element
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W366-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~366",
+  "surfaced_at": "2026-10-21T09:21:10Z",
+  "one_line": "AR-y-492's interface says a non-str element in the proposals list means no proposals for that symbol; its cell says keep only the non-blank str elements. The pass follows the cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-492, interface item 1: the pass treats a raise, a non-list or a non-str element as no proposals for that symbol. Cell item 1: accept only a list, keep only the elements that are non-blank str, cap the list at 20.",
+  "world_is": "The two sentences differ for a list that mixes a str and a non-str element: the interface drops the whole list, the cell keeps the str elements. I implemented the cell's filter (_proposals_for in swap_pass.py, commit 5edf36edf7b). Every admitted proposal is still class-checked by swap_replacement.choose_replacement, so neither reading can admit a wrong-class security. The test and the check cover a list whose elements are all non-str, not a mixed list.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-492.swap-pass-takes-the-model-proposals-and-classification-ports-and-carries-the-low-confidence-flag.md@be3885c233a",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@5edf36edf7b"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W366-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~366",
+  "surfaced_at": "2026-10-21T09:21:10Z",
+  "one_line": "safe-commit printed WARN that the hashed client account-id list is absent on this box, so the code commit was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-492 says commit with .tools/safe-commit.sh and names no client-data check and no account-id list.",
+  "world_is": "safe-commit printed: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids. The commit adds no account id: the swap code and its test carry only made-up tickers. I did not place or invent the list. The gate's verdict on this box is therefore unmeasured for commit 5edf36edf7b.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of commit 5edf36edf7b (the client-data-check WARN line, read at commit time)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
