@@ -30,4 +30,11 @@ Given at the laptop 1.0.0_SA_CTO terminal, VERBATIM:
   - `eclipse/inflection`: 1,928 enumerated, **39 written and verified** (the days held up since 10-18), 0 missing, failed 0.
 - **Next:** the scheduled 13:05Z and 17:05Z fires carry on from here.
 
+## 2026-10-21 ~13:1xZ, VERBATIM
+
+> "Also I can do RDP for ALongside box, that is fine"
+
+TigerVNC failed twice on the box (TO-AL-r4, row S5; the box was restored). The sitting is now by RDP through the SSM port forward, as in
+the runbook. TO-AL-r4 is cancelled.
+
 -- 1.0.0_SA_CTO (laptop)
