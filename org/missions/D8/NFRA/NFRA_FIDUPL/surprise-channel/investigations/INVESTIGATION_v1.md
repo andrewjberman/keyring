@@ -2180,6 +2180,95 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "world_is": "The naming gate reported the Lambda function-map folder absent from this worktree and printed a NAMING ERROR; nothing in this order's paths reads that folder, and the commit completed.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not investigated further (off-task). The owner of the naming gate's folder in a worktree decides whether the message is expected."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T14:38:29Z",
+    "one_line": "The worktree C:/tmp/fidupl-w6 is a sparse checkout that omits org/surprise_channel/: the directory is absent on disk, its schema is readable only from the HEAD tree, and the worker could not read the channel's schema from its own tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config --get core.sparseCheckout in C:/tmp/fidupl-w6 printed true (2026-10-21T14:38Z); git sparse-checkout list printed 10 cone entries",
+        "ls org/surprise_channel in C:/tmp/fidupl-w6 printed: No such file or directory; git ls-files org/surprise_channel listed 43 tracked files",
+        "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json parsed as JSON; its required fields are id, surfaced_by, surfaced_at, one_line, class, grounding, disposition"
+      ]
+    },
+    "spec_asserts": "Worker face: the worktree carries the paths the task order names, and the rules named in it (the schema at org/surprise_channel/schemas/) are readable from the worktree.",
+    "world_is": "The worktree is a sparse checkout (core.sparseCheckout=true, 10 cone entries). org/surprise_channel/ is tracked at HEAD but absent on disk, so the schema was read from the HEAD tree. The task order's own paths are present on disk.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not investigated further (off-task). The owner of the worktree cone decides whether the channel belongs in worker cones; this row only records the observed state."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T14:38:29Z",
+    "one_line": "The pre-commit risk reflex answered PARTIAL_OR_BLIND on the FV-s-1 lander commit (danger map 45.3h old, 0 of 2 files scanned), and the commit went through with the reflex undecided.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... -F .scratch/msg_fvs1_code.txt -- infra/aws/ec2/canonical-fidelity/land.py infra/aws/ec2/canonical-fidelity/tests/test_land_psn.py (commit f76f55946d3) printed [risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND and danger map: 45.3h old STALE",
+        "the same output printed WITHIN BUDGET: scanned 0 of 2 file(s) and NOT-DECIDABLE: danger map STALE -- the reflex CANNOT clear this diff",
+        "the commit then printed [wk-NFRA_FIDUPL-6 f76f55946d3] committed with 2 files changed"
+      ]
+    },
+    "spec_asserts": "Worker face: the pre-commit gate clears the commit as checked clean, or the reflex states what it could not decide.",
+    "world_is": "On a sparse worktree the danger map is read from the main tree's map (C:/Dev/ajb_workspace/org/modules/graph/nerves-risk-edges.json) and was 45.3h old; the reflex scanned none of the two files and the commit completed on an undecided reflex.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not investigated further (off-task). The lander diff is synthetic-fixture code with no cloud or infra change. The owner of the danger map's refresh decides whether a stale map is a standing gap."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T14:38:29Z",
+    "one_line": "The client-data check did not run on the FV-s-1 lander commit: the hashed account-id list is absent on this box, so the commit was not checked for client account ids, and every later commit on this box is unchecked until the list is placed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P1 (issuer; routes the placement of the box's hashed account-id list to its owner -- this seat does not hold that list and does not know its owner)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh (commit f76f55946d3) printed: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+        "ls C:/Users/Test/.opal/account_id_hashes.txt printed: No such file or directory",
+        "the commit's two paths hold synthetic fixtures written by this worker; no real export was read"
+      ]
+    },
+    "spec_asserts": "Commit gate: the client account-id check runs on every commit on this box, against the hashed account-id list that the box is given.",
+    "world_is": "The hashed account-id list is absent on dell1 (C:/Users/Test/.opal/account_id_hashes.txt), so the client-data check prints WARN and checks nothing; the gate output says absent is not empty.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Armed because the gap persists into every future commit on this box while the list is absent. The disarm owner routes the list; this seat only surfaces it."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S11",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T14:38:29Z",
+    "one_line": "The naming gate printed NAMING ERROR function-map folder missing on the FV-s-1 lander commit, and the commit returned rc 0; the same mechanism as NFRA_FIDUPL-D1-W2-S17, here caused by the sparse cone that omits the folder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh (commit f76f55946d3) printed: [naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\fidupl-w6\\infra/aws/lambda/ci/function-map/",
+        "git ls-tree -r --name-only HEAD infra/aws/lambda/ci/function-map printed 243 tracked files; ls -d infra/aws/lambda/ci/function-map printed No such file or directory",
+        "the same output printed [wk-NFRA_FIDUPL-6 f76f55946d3] committed and [msg-verify] MATCH"
+      ]
+    },
+    "spec_asserts": "Worker face: every commit goes through safe-commit.sh, and its gates run clean for the paths committed.",
+    "world_is": "The naming gate reads the Lambda function-map folder, which is tracked at HEAD (243 files) but absent on disk in this sparse worktree; nothing in this order's paths reads that folder, and the commit completed.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not investigated further (off-task). A repeat of NFRA_FIDUPL-D1-W2-S17 with a sparse-cone cause (see NFRA_FIDUPL-D1-W6-S8). The owner of the naming gate decides whether the message is expected in a sparse worktree."
   }
 ]
 ```
