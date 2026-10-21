@@ -1682,6 +1682,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "NFRA_SCHWABBF.TO-AL-p3 WORKER FACE, dry-run note: AC1 has no state_tier test yet; write the state_tier arm first and watch it fail against the stale copy (which lacks Get-StateBucket).",
     "world_is": "The state_tier tests exist at base 5bb233992d and pass against the stale copy, because the stale copy already carries the state-tier functions; the only stale defect is the bare $all = @($planItems) line in Select-PlanAsOf. The order's own text ('The existing state_tier test stays') agrees with the tree, not with the dry-run note. Built as: state_tier tests kept unchanged, plan_list_wrap arm added and failing against the stale copy before the rebuild.",
     "notes": "Not an alert. No change to the state_tier tests. The order's AC1 selection (master_set or syntax or state_tier or plan_list_wrap) passes after the rebuild with 8 passed."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S17",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T16:55:16Z",
+    "one_line": "Landing Cottonwood master 08719286 bronze files (71, schwab/cottonwood/bronze/) fires the converter opal-assets-silver-schwab, which raises ManifestError: master '08719286' has no basis label; the events retry and reach the shared DLQ opal-assets-silver-dlq, beside the 49financial drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch log group /aws/lambda/opal-assets-silver-schwab, from 2026-10-21T16:36Z: '[ERROR] ManifestError: master 08719286 has no basis label' at conversion_manifest.py line 158 via schwab_runtime.py run_event line 229 (41 hits at 16:50Z, the 49F error count read 0 by the log split)",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step4_fullpull_08719286_fixed.json: DAILY PULL OK downloaded=71, LANDING GUARD ok; r2/step5_keys_08719286.json: 71 keys under schwab/cottonwood/bronze/",
+        "opal-assets-silver-dlq: ApproximateNumberOfMessages read 1 at 16:49Z and 16:50Z (reads 0 before the Cottonwood landing)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r2 step 5: the silver hop may read NOT-HELD because the converter's firm event rule and state-tier IAM are later acts; the order does not say landing bronze fires the converter on a master it has no basis label for.",
+    "world_is": "A firm event rule already routes schwab/cottonwood/bronze/ puts to the converter. The converter's conversion_manifest has no basis label for 08719286, so every event raises, retries, and (after the async retry limit) lands in the shared DLQ. The 49financial drain (TO-BF-r4) is unaffected so far: 49F errors read 0 and COO~SB ruled the L6 reading is by key family (msg 110151). Owner of the basis label: 2.0.0_SA_COO~SA (the Cottonwood workstream), told by COO~SB. I touched no converter, rule or concurrency. The three other masters will raise the same error on landing if their labels are also absent (unmeasured).",
+    "notes": "Cottonwood DLQ messages are left alone: no purge, no redrive (COO~SB ruling)."
   }
 ]
 ```
