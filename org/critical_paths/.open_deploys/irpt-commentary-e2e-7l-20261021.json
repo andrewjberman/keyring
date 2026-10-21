@@ -1,0 +1,64 @@
+{
+  "slug": "irpt-commentary-e2e-7l-20261021",
+  "title": "IRPT_ANLREQ TO-RUN-COMMENTARY-E2E-7L: one synthetic Overview with the kept unknown ticker ZQXWVK on the r34s resident, via the API driver; PDF saved for the issuer outside the repository",
+  "author": "0.7.0_AE_CloudOps~IB2",
+  "status": "OPEN",
+  "opened_at": "2026-10-21T09:42:14.546681+00:00",
+  "window_hours": 3.0,
+  "entry_path": "org/critical_paths/change_management/20261021T0942Z_irpt-commentary-e2e-7l-20261021_deploy_completion.md",
+  "legs": [
+    {
+      "id": "A",
+      "kind": "verify",
+      "target": "mint the synthetic staff user and the synthetic advisor, login",
+      "proof_required": "A mint, A2 advisor, L login lines",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "U",
+      "kind": "verify",
+      "target": "upload the holdings (re-post while RESOLVING) and the Keep re-post for ZQXWVK, then the ticket",
+      "proof_required": "U line with keep and reason, T line",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "S",
+      "kind": "verify",
+      "target": "submit one Overview request, no comparables",
+      "proof_required": "S line",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "P",
+      "kind": "verify",
+      "target": "poll P1, P4, P6 kept-row; a job not READY is an answer",
+      "proof_required": "hops green or the answer named",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "R",
+      "kind": "verify",
+      "target": "Overview route /pdf, R3 save outside the repository, R5 placeholder page count",
+      "proof_required": "R, R3, R5 lines",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "D",
+      "kind": "verify",
+      "target": "delete only the recorded keys, residue listed with VersionIds",
+      "proof_required": "deleted n of m, residue file",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261021T094214Z OPENED by 0.7.0_AE_CloudOps~IB2 with 6 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell2"
+}
