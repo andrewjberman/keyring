@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -147,6 +147,13 @@ The 23:33Z run (`C:/Dev/ajb_workspace/org/missions/D8/NFRA/NFRA_FIDUPL/deliverab
 1. **`_authorize` took no authorize response.** The box helper's `_authorize` waited 20 s and noted `authorize_seen=[]` (the page was already on the home page, and the authorize call is not one the wait can see in this browser). Make it succeed as soon as EITHER a 2xx authorize response was recorded OR the page's URL path contains `professional-platform-summary` or starts with `/singlecontainer/` or the page title contains `Home Experience`; poll through `self._sleep` to the same deadline; on a timeout it still raises the same `TimeoutError` and the `authorize_seen` note stays. Note `authorize via=response|home_page`.
 2. **`_select_factor` raced the page transition** (first run: it raised right after the password step; 90 s later the same call passed in 0.8 s). Before it does anything, `_select_factor` waits (poll to the step timeout, through `self._sleep`, tolerating a navigation exception as `_after_next` does) until the verify page is present: a visible button whose text starts with `Text me the code` (case-insensitive) or one of the older factor choices. It still clicks nothing there. A timeout raises as today.
 Add two tests to the EXISTING `tests/test_login_trace.py`: `test_authorize_accepts_the_home_page_as_success` (no authorize response ever, but the fake page's URL path and title read as the home page: the step passes with `authorize via=home_page`; and the variant with a 2xx response: `via=response`), `test_select_factor_waits_for_the_verify_page` (the fake page shows the button only after three polls, the first two queries raise a plain Exception subclass named Error: the step passes). FU2-AC4 now needs forty-one; fu2a, fu2b, fu2c and fu5b must still pass. The checker is `fidupl_round_checks.py`. Fakes only. Be FAST: the live run is waiting.
+
+### REPAIR 15 (issuer, 2026-10-21 ~00:10Z; CTO 8875, URGENT) -- the Playwright-launched Chrome forges a Windows identity on Linux; drop every forged fingerprint
+
+The Track A run at 00:02Z (trace: `C:/Dev/ajb_workspace/org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/2.0.0_SA_COO~P1/FU-x-1_trackA_run_00z_abck0_403.txt`) read the Akamai verdict `0` before the password POST and was still refused, while the OS-launched Chrome driven over CDP (Track B) was accepted with the same behavior. The Playwright launch in `_launch` presents a forged identity: a Windows `user_agent` (`UA_TEMPLATE`, "Windows NT 10.0; Win64") on a Linux machine, plus the `INIT_SCRIPT` that forges `window.chrome`, `languages` and `plugins`. Remove the forgeries so the browser presents as itself:
+1. In `_launch`, delete the `user_agent=user_agent_for(version)` argument and the `context.add_init_script(INIT_SCRIPT)` call. Delete the now-unused `UA_TEMPLATE`, `user_agent_for`, `_installed_version` use in `_launch` (keep `_installed_version` only if something else calls it; otherwise delete it too) and the `INIT_SCRIPT`, `HIDE_WEBDRIVER` and `FINGERPRINT_INIT` constants IF nothing else uses them. KEEP the launch arguments as they are (`--disable-blink-features=AutomationControlled`, `--no-sandbox`, `--disable-setuid-sandbox`, `--disable-extensions`), `channel`, `headless=False`, the viewport, locale and timezone, the persistent profile, the Xvfb handling and every human-input, `_abck` and logout behavior of REPAIRS 12 to 14.
+2. The trace's fingerprint footer keeps reading what the page reports (user agent, `navigator.webdriver`, `window.chrome`); it only reports, it forges nothing.
+3. Two existing tests assert the forgery and are REPLACED (same slot, new names, the checker list is updated): `test_fingerprint_sets_window_chrome_and_languages` becomes `test_launch_adds_no_init_script` (the fake `launch_persistent_context` context receives no `add_init_script` call), and `test_user_agent_matches_installed_chromium_version` becomes `test_launch_passes_no_user_agent_override` (the `launch_persistent_context` kwargs hold no `user_agent` key). Any other test that asserts the forged identity is updated to the new behavior without renaming. FU2-AC4 stays at forty-one; fu2a, fu2b, fu2c and fu5b must still pass. The checker is `fidupl_round_checks.py`. Fakes only. Be FAST: the live run waits.
 
 ### ACCEPTANCE
 
