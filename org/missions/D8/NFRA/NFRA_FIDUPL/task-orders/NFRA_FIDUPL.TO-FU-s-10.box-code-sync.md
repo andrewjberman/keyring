@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -75,6 +75,10 @@ FU-s-2 REPAIR 13 is merged (real key presses, a pointer path, the `_abck` verdic
 ### REOPENED (issuer, 2026-10-20 ~23:46Z) -- thirteenth delivery, URGENT: signin.py changed at 567486eb857 (REPAIR 14)
 
 FU-s-2 REPAIR 14 is merged (authorize accepts the signed-in home page; select_factor waits for the verify page). Deliver the shipped set from head 567486eb857 or later (only `signin.py` differs from your twelfth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-13-<date>`), check `fu10m`, same rules: file copy only, no browser, no sign-in, nothing under either profile directory, leave `fidelity-agent-chrome.service` as it is. Tell the issuer in one line the moment `fu10m` reads OK: the Track A run waits on it.
+
+### REOPENED (issuer, 2026-10-21 ~00:15Z) -- fourteenth delivery, URGENT: signin.py changed at 34ebdc69d5d (REPAIR 15)
+
+FU-s-2 REPAIR 15 is merged (the Playwright launch no longer forges a user agent or an init script). Deliver the shipped set from head 34ebdc69d5d or later (only `signin.py` differs from your thirteenth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-14-<date>`), check `fu10m`, same rules: file copy only, no browser, no sign-in, nothing under either profile directory, leave `fidelity-agent-chrome.service` as it is. Tell the issuer in one line the moment `fu10m` reads OK: the Track A run waits on it.
 
 ### ACCEPTANCE
 
