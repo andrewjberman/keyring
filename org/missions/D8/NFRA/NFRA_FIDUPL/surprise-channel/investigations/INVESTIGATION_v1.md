@@ -1939,6 +1939,28 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "world_is": "The order does not define the scope or the line-break rule, so a count or hash computed over a different scope or rule will not match the issuer's figure even when the bytes are the same.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Chosen: profiles, requests and ids_sha8 over every dict row of a 200 status list; rows and line1_sha8 over bytes.splitlines() (CR, LF and CRLF), line1 empty when there is no line. The definitions are printed in the module docstring; the issuer confirms before comparing."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W8-S11",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+    "surfaced_at": "2026-10-21T06:15:36Z",
+    "one_line": "REPAIR 3 premise fails: the walk makes two non-skipped wait jobs per trading day (one per planner kind), so a DAY line printed per job would give two lines per day and reach the 130-entry days cap after 65 trading days.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/backfill.py@8bd0df7fd84 _walk_kind: for each window of plan_windows(today, cap_date, chunk_days) it calls client.request_export and client.wait for the one kind passed in",
+        "infra/aws/ec2/canonical-fidelity/backfill_run.py@8bd0df7fd84 _walk_g: 'for kind in kinds: bf.backfill_g(walk, target[\"g\"], (kind,), top, ...)' walks the same days once per kind (KINDS = transactions, positions_balances)",
+        "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FT-s-7.backfill-adapter-and-main.md REPAIR 3 item 2: 'prints ... when the job is NOT skipped' under the heading 'One line per trading day', and 'at most 130 entries'"
+      ]
+    },
+    "spec_asserts": "TO-FT-s-7 REPAIR 3 item 2: _StopTap.wait prints one DAY line per trading day when the job is not skipped, and the record's days list holds at most 130 entries, one per trading day.",
+    "world_is": "The planner calls wait once per kind for each trading day, so two non-skipped jobs reach the tap per day. A line per job would print each day twice and double the days list.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Resolved in worker commit 06cc1128b87 (wk-NFRA_FIDUPL-8): one DAY line and one days entry per trading day; the first wait of a day is its answer and a repeat wait, answered from the adapter's day cache, adds nothing. Skipped non-trading days print nothing and are not listed. The issuer confirms this reading before the next live run."
   }
 ]
 ```

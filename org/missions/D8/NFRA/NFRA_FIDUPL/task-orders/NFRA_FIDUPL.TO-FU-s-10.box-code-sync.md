@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -123,6 +123,10 @@ Both probes are merged (TO-FT-s-10 incl. REPAIR 1: the G-scoped export probe; TO
 ### REOPENED (issuer, 2026-10-21 ~05:40Z) -- twenty-fifth delivery: box/g_export_probe.py with the day argument, head 0a429399ac8
 
 The first live run of the G-export probe used day 2026-10-21 (no export exists yet), so it said nothing about the G number. REPAIR 2 of TO-FT-s-10 adds an optional day argument (module suite 226 passed). Deliver the shipped set from head 0a429399ac8 or later (only `box/g_export_probe.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-25-<date>`), `fu10m` (23 files). Same rules: file copy only, nothing else touched. One line to the issuer.
+
+### REOPENED (issuer, 2026-10-21 ~06:22Z) -- twenty-sixth delivery: backfill_main.py with the DAY lines and the long request timeout, head eaa67a5fb09
+
+Your row D1-S14 is acted on (TO-FT-s-7 REPAIR 3: a 120 s request timeout, one `DAY <date> result=...` line per trading day, a `days` list in the record, a timeout as a named stop with its date; module suite 229 passed). Deliver the shipped set from head eaa67a5fb09 or later (only `backfill_main.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-26-<date>`), `fu10m` (23 files). Same rules: file copy only, nothing else touched. One line to the issuer.
 
 ### ACCEPTANCE
 
