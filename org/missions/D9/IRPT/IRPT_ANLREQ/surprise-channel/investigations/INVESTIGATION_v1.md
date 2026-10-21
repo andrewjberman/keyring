@@ -31754,3 +31754,57 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W367-S1 -- the cell's propose rule says upper-case then match, and its test sentence says drop lower-case; the adapter keeps the strict match
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W367-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~367",
+  "surfaced_at": "2026-10-21T09:20:00Z",
+  "one_line": "The AR-y-493 cell says keep the proposal elements that match [A-Z0-9.-]{1,12} after upper-casing, and its test sentence says drop lower-case strings; both cannot hold, so the adapter matches each element as given and drops a lower-case one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-493 cell, step 3 (propose), line 40: keep elements that match [A-Z0-9.-]{1,12} after upper-casing; the tests sentence, line 43: propose drops the symbol and lower-case or too-long strings. Interface item 2 says at most max_proposals upper-cased tickers matching [A-Z0-9.-]{1,12}.",
+  "world_is": "Upper-casing before the match keeps a lower-case element (spy becomes SPY), so the drop of lower-case strings cannot hold under that reading. swap_model.py at 643cdcf6304 matches each element as given: a lower-case element is dropped, the symbol and duplicates are dropped, and the output is upper-case by construction. The test file pins this reading. The issuer or the CTO decides which reading the close uses. A dropped element only reduces the proposals; the pass still needs a class match and Yahoo history, so the standing is INERT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-493.swap-model-adapter-classifies-inside-the-pool-vocabulary-and-proposes-class-matched-tickers.md@be3885c233a lines 40 and 43",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_model.py@643cdcf6304 function _tickers: _TICKER.fullmatch(item) on the element as given"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W367-S2 -- swap_pass.swap_holdings has no proposals parameter at this base; the AR-y-492 pass port is not in this tree, and this cell does not import swap_pass
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W367-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~367",
+  "surfaced_at": "2026-10-21T09:20:00Z",
+  "one_line": "swap_pass.swap_holdings at this base has the signature without proposals; the sibling cell AR-y-492 owns that port and is not built in this tree; AR-y-493's three criteria do not import swap_pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Interface item 1 (shared by the three cells of the swap leg): swap_pass.swap_holdings(rows, pool, *, classify=None, history_days, proposals=None), with the pass treating a raise, a non-list or a non-str element as no proposals.",
+  "world_is": "At 643cdcf6304 swap_holdings is def swap_holdings(rows, pool, *, classify=None, history_days) with no proposals parameter. The task order for the port, IRPT_ANLREQ.TO-AR-y-492, is in the task-orders folder and is not built here. The adapter in swap_model.py returns the item-2 shapes and imports no swap_pass, so this cell does not depend on the port; the integrated swap leg needs the AR-y-492 port before the pass can take proposals. Owner of the port: the AR-y-492 issuer's worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@be3885c233a line 180: def swap_holdings(rows, pool, *, classify=None, history_days):",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-492.swap-pass-takes-the-model-proposals-and-classification-ports-and-carries-the-low-confidence-flag.md@be3885c233a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
