@@ -129,3 +129,15 @@ CloudTrail for the 10:45Z leg (StartAutomationExecution 10:45:04Z, schedule role
 | **FT-s-15** | `schedule.tf`: add `automation-execution/*` to the policy's first statement; safe-apply; simulate all three forms; then ONE temporary one-shot EventBridge rule (same role, same target, same input), read its execution, delete it | `schedule.tf`, the ledger paths, one temporary rule | C-SCHEDULE | WORLD |
 
 Executor: `0.7.0_AE_CloudOps~NFRA1`. Workstream fidelity-r3-schedulethird.
+
+## 15. Addendum 2026-10-21 ~14:40Z (CTO msg 9101: the Historical backfill walk)
+
+Measured 2026-10-21 (record `deliverables/2.0.0_SA_COO~P1/FIDUPL_historical_live_request_and_cap_probe_20261021.md`, and the PBL read below): `POST /ssc/importexport/wc/channel/export/v1/historicalExport.json` answers `S` and the files appear in the Export Status list of the REQUEST day. Custom (the daily's saved profile, `fileTypes` POS and PRC) returns `position<MMDDYY>.txt` and `prices<MMDDYY>.txt` in the standing layouts (62 and 44 comma columns, as-of date in column 0 = the requested date). Standard Format A (`exportFormat "1"`, `fileFormat "FL"`, `fileTypes ["PBL"]`, `indicatorName "AN"`) returns ONE fixed-length file `FI<MMDDYY>.psn` (positions as 156-character records and balances as 56-character records, CRLF; the as-of date is the six characters MMDDYY at offset 17 of every record; 96,822 records for 2026-10-15). A date past the data window is accepted and finishes COMPLETED WITH ERRORS; its download is a 125-byte `<status>` stub reading "The file you requested does not exist". Proven floor on 2026-10-21: positions 2026-06-15, prices 2026-06-18; balances unmeasured.
+
+| cell | what it does | write set | PRC rows | risk |
+|---|---|---|---|---|
+| **FV-s-1** | `land.py` learns the `.psn` file: content date from MMDDYY at offset 17, address stem `position_balance_fl`, name `position_balance_fl.psn`, the same never-overwrite and run record | `land.py`, `tests/test_land_psn.py` | C-BACKFILL | WORLD (infra path floor) |
+| **FV-s-2** | `hist_walk.py`: one sign-in, per trading day newest first one Custom POST (position, prices) and one Standard A POST (PBL), find the new rows in the request-day list, download, EMPTY on the does-not-exist stub, land by content date, three consecutive empties stop a type, state file resumes, one record | `hist_walk.py`, `tests/test_hist_walk.py`, `tests/test_hist_walk_seam.py` | C-BACKFILL | WORLD (infra path floor) |
+| **FV-s-3** | CloudOps delivers the shipped set to the box and runs the walk until every type has stopped | ledger paths | C-BACKFILL | WORLD |
+
+Chains: FV-s-1 then FV-s-2 (FV-s-2 calls `land.land_psn`) then FV-s-3: one chain, one worker queue for the first two. Executor of FV-s-3: `0.7.0_AE_CloudOps~NFRA1`. Workstreams: fidelity-r3-histwalk-build (FV-s-1, FV-s-2) and fidelity-r3-histwalk-live (FV-s-3).
