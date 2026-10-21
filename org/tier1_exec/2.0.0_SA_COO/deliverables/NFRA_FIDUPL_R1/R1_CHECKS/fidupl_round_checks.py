@@ -72,7 +72,8 @@ TEST_FILES = {
         "test_account_under_two_firms_listed_not_landed", "test_unplaced_accounts_listed",
         "test_unregistered_firm_scope_listed_not_landed", "test_raw_line_bytes_preserved",
         "test_dry_run_writes_nothing", "test_record_has_counts_and_lists",
-        "test_unmapped_label_listed_not_landed", "test_record_lists_unplaced_and_conflict_accounts"]),
+        "test_unmapped_label_listed_not_landed", "test_record_lists_unplaced_and_conflict_accounts",
+        "test_null_account_column_means_the_file_is_not_split", "test_null_account_column_allowed_only_for_prices_and_security"]),
     "ft1": ("%s/tests/test_switcher_list.py" % CF, [
         "test_parses_value_and_label_per_option", "test_label_maps_to_registry_firm_by_substring",
         "test_unmatched_label_goes_to_alongside_unattributed", "test_cross_check_counts_added_and_dropped_only",
