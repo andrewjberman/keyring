@@ -47,3 +47,20 @@ submission and the Historical export ran in pop-up windows that were never recor
 
 - The export-create request and the Historical export (absent from all HARs; need one capture).
 - Whether `historical-transactions` custom range has its own max look-back (the empty/refusal response will show it).
+
+## Addendum (~14:16Z): the historical-transactions custom-range parameters (CTO 9100)
+
+From the transaction-history JS bundle and the captured calls (names/enums only):
+- **`timePeriodOption`** values (bundle `InputOptionModel`): `daysPast1, daysPast5, daysPast10, daysPast15, daysPast30, daysPast60,
+  daysPast90, currentYear,` **`custom`**. For a backfill range use **`custom`**.
+- **`searchBy`**: the captured calls use **`none`** (= no sub-search; the whole account). Other enum values seen: `cashManagement` (a
+  filter). **Use `searchBy="none"`** for a full pull.
+- **`dateField`**: `T` (trade date), as captured.
+- **`customTimePeriodFromDate` / `customTimePeriodToDate`**: the range. Format not shown in captures (the captured calls were daysPast/
+  currentYear with these null); it is almost certainly `MM/DD/YYYY` (matching the Historical export's `historicalDate`). Confirm on the
+  first call.
+- **`accounts`**: `[{accountNumber, accountSource:"BROK", lineOfBusiness:"IWS"}]` per account.
+- Optional: `excludeCoreBrokerage` (bool), `cmType`, `currencyCode`, `securityId`, `transactionType` (null for a full pull).
+
+**Full body for the probe:** `{timePeriodOption:"custom", customTimePeriodFromDate, customTimePeriodToDate, dateField:"T", searchBy:"none",
+accounts:[...], excludeCoreBrokerage}`. P1 resumes the per-account transaction floor probe on this.
