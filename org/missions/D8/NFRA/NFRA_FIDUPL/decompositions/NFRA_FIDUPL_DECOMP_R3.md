@@ -109,3 +109,13 @@ After the FT-s-12 apply the 10:15Z leg again showed FailedInvocations 1. CloudTr
 | **FT-s-13** | `schedule.tf`: the schedule policy's first statement gains the resource `arn:aws:ssm:<region>:<account>:document/<document name>`; safe-apply; read back by simulation | `schedule.tf`, the ledger paths | C-SCHEDULE | WORLD |
 
 Executor: `0.7.0_AE_CloudOps~NFRA1` (rule 34). Workstream fidelity-r3-schedulepolicy.
+
+## 13. Addendum 2026-10-21 ~10:32Z (issuer: the account-wide GetCommandInvocation grant was not needed)
+
+The manual start of the run document at 10:27:27Z succeeded end to end (startInstance, waitForOnline, runWrapper; ALL_LANDED 6 of 6). CloudTrail for the Automation role shows ListCommandInvocations calls and NO `GetCommandInvocation` call, so the account-wide `ssm:GetCommandInvocation` grant added at 10:26Z (FT-s-13 step 2B, on the CTO's ask to cover every step) is not used and is wider than the role needs. FT-s-14 reverts it.
+
+| cell | what it does | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-14** | `automation.tf`: remove `ssm:GetCommandInvocation` from `ListOwnCommandStar`; safe-apply | `automation.tf`, ledger | C-SCHEDULE | WORLD |
+
+Executor: `0.7.0_AE_CloudOps~NFRA1`. Workstream fidelity-r3-automationrevert.
