@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~5</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -51,6 +51,10 @@ The daily-mode proof run reached the first G number's account list: page 1 retur
 3. The lister exposes the index of the form in use as the attribute `lister.paging_form` (None until a second page was needed). `box/daily.py`: after the attribution stage finishes, print ONE line `OK: accountList paging form=<index>` when the attribute is not None (nothing when it is None or the lister has no such attribute); record it as `paging_form` in the coverage record. Names the candidate's INDEX only, never a field value.
 4. Everything else stays: distinct counting, `PAGE_CAP`, the PII drop, counts-only errors, the `finally` restore. The existing tests keep passing unchanged (form 0 is today's form).
 5. Two tests in the EXISTING `tests/test_adapters.py`: `test_lister_tries_other_paging_forms_and_keeps_the_one_that_yields_new_rows` (a fake that returns new rows only for form 3 `offset`: the lister ends with every row, `lister.paging_form == 3`, and a SECOND call of the same lister sends form 3 for its page 2 without trying forms 0-2 again) and `test_lister_names_the_forms_tried_when_none_yields_new_rows` (a fake that never pages: `AdapterShapeError` whose message holds the counts and the form range and no value). FR6-AC1 (`fr6`) now needs twelve named; FR6-AC2 (`fr4`) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only (fakes). The checker is `fidupl_round_checks.py`. FAST: a live re-run waits on it.
+
+### REPAIR 2 (issuer, 2026-10-21 ~03:40Z; review of REPAIR 1) -- a 401 or 403 on a candidate form must stop the search, not try the next form
+
+Standing rule of this project: any 403 or lockout signal means stop and report, never keep sending. REPAIR 1's `fetch` turns EVERY non-200 and every exception on a candidate page into "no new rows" and moves to the next form, so a 403 would be answered with up to ten more requests. Change `adapters.py` (`fetch`, later-page branch) and `tests/test_adapters.py` only: a later page whose status is 401 or 403 raises `AdapterError("accountList refused: HTTP %s")` at once (the same text the first page uses), ending the lister call and the search; every other non-200 and every other exception stays "no new rows". ONE test in the EXISTING `tests/test_adapters.py`: `test_lister_stops_at_once_on_an_auth_refusal_of_a_candidate_form` (a fake whose second request answers 403: `AdapterError`, and the fake saw exactly two requests; with a 500 instead the lister goes on to the next form). FR6-AC1 (`fr6`) now needs thirteen named; FR6-AC2 (`fr4`) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only. The checker is `fidupl_round_checks.py`. FAST.
 
 ### ACCEPTANCE
 
