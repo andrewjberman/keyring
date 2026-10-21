@@ -99,3 +99,13 @@ The first scheduled fire (rule `fidelity-alongside-fetch-leg-1-daily`, 09:45Z) r
 | **FT-s-12** | `schedule.tf`: the three targets' `arn` gains `:$DEFAULT`; safe-apply; read back | `schedule.tf`, the ledger paths | C-SCHEDULE | WORLD |
 
 Executor: `0.7.0_AE_CloudOps~NFRA1` (rule 34). Workstream fidelity-r3-schedulefix.
+
+## 12. Addendum 2026-10-21 ~10:20Z (issuer: the suffix was not the cause; CloudTrail names it)
+
+After the FT-s-12 apply the 10:15Z leg again showed FailedInvocations 1. CloudTrail (`StartAutomationExecution`, 10:15:02Z, assumed role `fidelity-alongside-schedule-role`) answers: AccessDenied, "not authorized to perform ssm:StartAutomationExecution on resource arn:aws:ssm:us-east-1:313476888478:document/fidelity-alongside-uploader-document because no identity-based policy allows" it. SSM authorizes the start on the DOCUMENT ARN (`:document/<name>`); the schedule role's policy allows only the `automation-definition/<name>` forms (which `aws_ssm_document.run.arn` yields). The same single document, one more ARN form.
+
+| cell | what it does (one fix) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-13** | `schedule.tf`: the schedule policy's first statement gains the resource `arn:aws:ssm:<region>:<account>:document/<document name>`; safe-apply; read back by simulation | `schedule.tf`, the ledger paths | C-SCHEDULE | WORLD |
+
+Executor: `0.7.0_AE_CloudOps~NFRA1` (rule 34). Workstream fidelity-r3-schedulepolicy.
