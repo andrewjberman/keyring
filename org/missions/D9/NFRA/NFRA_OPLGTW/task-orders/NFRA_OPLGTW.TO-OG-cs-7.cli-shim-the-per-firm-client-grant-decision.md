@@ -74,6 +74,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cs-7.cli-shim-the-per-firm-clie
 - AMENDED 2026-10-21 ~17:3xZ (2.0.0_SA_COO~O, worker ~185's BLOCKING row Z-W185-S1): the AC1 expect text required a space after `pair` where the probe's own label has a comma (`... cover no client pair, and a client entry ...`); the defect was mine, in the expect, not the module. The expect now reads `cover no client pair.*: ok`; the probe is unchanged. Gate limb: none graded (an existing tree order that declares no placeholders).
 
 <status>pending</status>
+<status>complete</status>
 <round>48</round>
 <workstream>CLISHIM-C</workstream>
 <slot>~185</slot>

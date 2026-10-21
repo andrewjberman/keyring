@@ -60,7 +60,7 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 ## 5. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-cs-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC1.sh; echo "exit=$?"</invocation><expect>(?s)refusals answer folder_refused naming the folder, guard_denied true .*: ok.*refusals made ZERO S3 calls \(0\): ok.*bronze/ NOT shown .*: ok.*two table prefixes .*: ok.*key, size and last_modified .*: ok.*truncated and next_start_after are carried .*: ok.*refused for the sibling master with no S3 call: ok.*deny wins .*: ok.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-cs-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC1.sh; echo "exit=$?"</invocation><expect>(?s)refusals answer folder_refused naming the folder, guard_denied true .*: ok.*refusals made ZERO S3 calls \(0\): ok.*bronze/ NOT shown .*: ok.*two table prefixes .*: ok.*key, size and last_modified .*: ok.*truncated and next_start_after are carried .*: ok.*refused for the sibling master with no S3 call: ok.*deny wins.*: ok.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-cs-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC2.sh; echo "exit=$?"</invocation><expect>(?s)refusals answer folder_refused, guard_denied true, an error naming the folder: ok.*refusals made ZERO S3 calls \(0\): ok.*columns in file order, sensitive classes dropped and named .*: ok.*only the footer was read through ranged GETs: \d+ bytes of \d+: ok.*junk answers not_parquet and an absent object answers not_found, neither raises .*: ok.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-cs-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC3.sh; echo "exit=$?"</invocation><expect>(?s)a refused path answers folder_refused with ZERO S3 calls \(0\): ok.*INVALID_REQUEST with ZERO downloads .*: ok.*LIMIT_EXCEEDED with ZERO downloads .*: ok.*a rows request answers .*: ok.*an aggregate request answers .*: ok.*the default page is 100 of 300 .*: ok.*the next page continues with no overlap .*: ok.*INVALID_REQUEST .*: ok.*refused for the sibling master .*: ok.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
@@ -79,7 +79,10 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cs-2.cli-shim-the-folder-tools-
 - DISCLOSED READINGS: (1) a folder query reads at most 13 objects and 64 MiB compressed in all (the engine's own caps); a larger table is narrowed by path; (2) the columns the plan may use come from the FIRST object's footer, so a folder whose objects differ in schema is a disclosed limit; (3) the cursor's `master` and `dataset` dimensions carry the bucket and the folder key because the binding needs seven non-empty dimensions; (4) the five dropped classes and the bronze/raw omission are the only things hidden.
 - Pre-cut: `AC1`, `AC2` and `AC3` base FAIL as expected (`app.folder_tools` absent). Arming: the three probes are graded green against the worker's module at the drain; a probe that fails for a reason that is the probe's own is the issuer's defect, amended with the gate limb named.
 
+- AMENDED 2026-10-21 ~18:0xZ (2.0.0_SA_COO~O, worker ~182's BLOCKING row Z-W182-S6): the AC1 expect required a space after `deny wins` where the probe's label reads `deny wins: a denied sub-folder ...`; the defect was mine, in the expect. It now reads `deny wins.*: ok`; the probe is unchanged. Gate limb: none graded (an existing tree order that declares no placeholders).
+
 <status>pending</status>
+<status>complete</status>
 <round>48</round>
 <workstream>CLISHIM-C</workstream>
 <slot>~182</slot>
