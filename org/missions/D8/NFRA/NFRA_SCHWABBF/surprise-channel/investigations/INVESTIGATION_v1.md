@@ -1440,6 +1440,49 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-r2 step 3: the -target of aws_s3_bucket_policy.opal_data_49financial and the cottonwood instance of aws_s3_bucket_policy.lgic_firm plans two in-place updates and no other resource; any other resource is a STOP with no apply.",
     "world_is": "The targeted plan reads 10 to add, 2 to change, 0 to destroy. The two changes are exactly the five signed rows (49financial gains 12 statements, cottonwood 7, plus the ArnNotLike additions). The 10 creates are other firms' registry buckets that no pair read for this order covers. Terraform pulls the whole aws_s3_bucket.lgic_firm resource into the target because the policy's for_each reference to it is not instance-specific.",
     "notes": "Options for the issuer and the CTO, none taken here: (a) rule that the five rows go in by put-bucket-policy of the planned documents saved beside this row (the order's own fallback tool; a later targeted plan should then read 0 changes on these two policies); (b) rule that the 10 firm-bucket creates are in scope; (c) hold for the owner of the firm-bucket creation. Deadline 2026-10-21 06:00Z."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S8",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T11:25:47Z",
+    "one_line": "An ENABLED daily rule fires the schwab silver converter in sweep mode at 12:15Z, inside the 12:00-20:00Z cutover window, and the release plan's list of fires (09:45, 10:15, 10:45, 21:45, 22:15, 22:45Z) does not include it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r1/census_2e_ecs_events.txt: rule opal-assets-silver-schwab-sweep-daily ENABLED, cron(15 12 * * ? *), target the Lambda opal-assets-silver-schwab (163 rules read, 141 scheduled)",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r1/census_2e_sweep_rule.txt: describe-rule Description 'Daily reconciliation sweep for the schwab silver converter: bronze<->silver per-folder set-identity, convert misses, drain+report DLQ, verdict to meta/. Load-bearing, not belt (ruling 22).'; target input {\"mode\":\"sweep\"}",
+        "RELEASE_PLAN_R5_0840_ALL_TIERS.md section 2 row R4c and the CTO half condition 1 name the six pull fires only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-r1 preflight and the CTO half condition 1: the window 12:00-20:00Z sits between the 10:45 and 21:45 fires; no fire lands between the bronze copy (R4c) and the puller upload (R5).",
+    "world_is": "The six fires are the Schwab pull rules. The converter's own sweep is a seventh scheduled act at 12:15Z, 15 minutes after the window opens. It reconciles bronze against silver per folder and converts what it finds missing, and it writes its verdict under meta/. Not measured: whether the sweep reads the firm-form prefixes after R3b, what it does to a half-copied bronze folder during R4c, and whether its verdict write under meta/ is affected by the state-tier switch. The window has not started; nothing is running now.",
+    "notes": "For the issuer to decide before 12:15Z: order R3b-R4c around the sweep, or read the sweep's handler at the pin. This order does not touch the rule (Bounds: no EventBridge rule is edited)."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S9",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T11:25:47Z",
+    "one_line": "The destination state prefix s3://opal-data-49financial/schwab/49financial/state/ already holds one key of another family (ews_store/current/ews.db, written by the ECS task opal-clientops-ews-task), so the copy's destination prefix is not empty.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r1/census_2a_2d.txt step 2d: list-objects-v2 --max-keys 5 on opal-data-49financial prefix schwab/49financial/state/ rc=0, KeyCount 1, IsTruncated False, key schwab/49financial/state/ews_store/current/ews.db; the cottonwood state prefix returned KeyCount 0",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r1/census_2e_ecs_events.txt: ECS family opal-clientops-ews-task (taskRole opal-clientops-ews-role), env EWS_PERSIST_KEY=schwab/49financial/state/ews_store/current/ews.db (12 ACTIVE families read, 1 mentions schwab)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Release plan section 1 and section 6: the state copy writes six tables of 08403355 under schwab/49financial/state/<table>/date=D/08403355.<name>, and the move tool's plan on each tier reads copy=0 already=N afterwards.",
+    "world_is": "The destination prefix holds a sibling family's object under ews_store/, outside the five tables the copy writes (complete, conversions, pulls, daily_pull, backfill_status). A verify that counts or lists the whole destination prefix, rather than the tables, would count one key it does not own. The fence read-admission of the copy identity is proven on this prefix (rc=0).",
+    "notes": "Form only for the copy; named so the issuer can confirm the move tool's verify scopes by table."
   }
 ]
 ```
