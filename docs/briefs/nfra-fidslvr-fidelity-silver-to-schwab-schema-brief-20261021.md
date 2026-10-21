@@ -29,6 +29,11 @@ table's schema. Nothing Fidelity provides is stranded in bronze.
 An analyst asking a cross-custodian question (holdings, lots, realized gains across a household that has both Schwab and Fidelity accounts)
 reads one gold model that unions the two silvers on a `custodian`/`source` dimension, with no per-custodian branching in the gold logic.
 
+**Attribution key (Andrew-direct 15:35Z):** the gold master attributes each account to its advisor/firm from the **custodian-native
+grouping id** -- Fidelity **G Number**, Schwab **Master Account Number** -- via a **mapping config** `(custodian, native_group_id) ->
+advisor/firm`, resolved at the custodial level and REPLACING any downstream data-vendor assignment. The native id travels on every silver
+row (from `fact_acc`) so gold can join to the config without a vendor lookup.
+
 ### O4 -- The unmappable is named, not hidden
 Where a Fidelity source has a field the Schwab schema lacks (or vice versa), the gap is recorded per table -- carried in an extension
 column, or explicitly dropped with its reason -- so no field is silently lost and no Schwab column is silently null-filled.
@@ -91,6 +96,8 @@ No row counts or tolerances are set here; the quantitative parity bars are the P
   in the endpoint map.
 - The Schwab silver per-table column schema, read as the conformance target (not altered).
 - The gold union's `custodian`/`source` dimension and where the gold model lives (LGIC homes).
+- The **account->advisor/firm mapping config** keyed by `(custodian, native_group_id)` -- Fidelity G Number, Schwab Master Account Number
+  -- as the attribution source of truth (who owns/populates it is a gold-layer decision).
 - The unit/enum normalizations (bond price basis, covered-status codes, wash flags, date formats) that make the two custodians'
   values comparable.
 
@@ -111,6 +118,8 @@ Measured 2026-10-21: Fidelity bronze is landing (6 export families daily; positi
   is a PRD/DS call.
 - It does not size the per-account extraction cost for the lot/G-L bronze (that is NFRA_FIDUPL's).
 - It did not re-verify each Schwab silver column this pass; the table list is measured, the per-column schema is read at build.
+- It does not confirm which Fidelity `account.txt` / `fact_acc` field carries the G Number (the native grouping id for attribution), nor
+  Schwab's Master Account Number field -- that per-field confirmation is the gold attribution step's first check.
 
 ---
 
