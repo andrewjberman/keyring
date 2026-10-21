@@ -108,6 +108,10 @@ Your row D1-S11 is acted on (FT-s-2 REPAIR 2: `box/daily.py` prints `ERROR: attr
 
 Your row D1-S12 is acted on (FR-s-6 REPAIR 1 and 2: the account lister tries a table of eleven paging forms, keeps the first that adds distinct rows, stops at once on a 401 or 403; `box/daily.py` prints `OK: accountList paging form=<index>`; module suite 212 passed). Deliver the shipped set from head 42e7faa2120 or later (`adapters.py` and `box/daily.py` differ), a NEW ledger (slug `nfra-fidupl-box-code-sync-21-<date>`), `fu10m`. Same rules: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
 
+### REOPENED (issuer, 2026-10-21 ~03:55Z) -- twenty-second delivery: the NEW file box/paging_probe.py, head 5c1f823d269
+
+Your row D1-S13 is acted on: no candidate paging form worked, so a read-only probe measures the live form (TO-FT-s-9, merged; module suite 215 passed). Deliver the shipped set from head 5c1f823d269 or later: `box/paging_probe.py` is a NEW file (the box set grows to 22), a NEW ledger (slug `nfra-fidupl-box-code-sync-22-<date>`), `fu10m` (expect all 22 match). Same rules: file copy only, nothing else touched. One line to the issuer. Then the run (one sign-in, NOT before 04:30Z): `/opt/fidelity-uploader/venv/bin/python /opt/fidelity-uploader/box/paging_probe.py /opt/fidelity-uploader/config.json` on my GO message, stdout verbatim (counts only).
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
