@@ -31853,3 +31853,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:40:00Z",
+    "one_line": "The issuer's cs2.AC3.sh and cs_foot.sh in the worker's worktree changed on disk at 17:06:07Z, uncommitted: the one AC3 FAIL ran the committed stdin revision and the later PASS runs ran a file-probe revision, so S1 and S5 compared two check revisions, not one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "The AC3 criterion invokes a fixed check script; S5 says the module bytes were unchanged across the failing and passing runs, so the flip was the environment, and the determinism control compares same-input runs.",
+    "world_is": "At HEAD (commit bcbef740d72 and the worker's edd78166b63) cs2.AC3.sh feeds its probe through python3 -I - on stdin. The working copy, modified at 17:06:07Z (local 13:06:07) and not committed, writes the probe to a file with a main guard (a _probe function). cs_foot.sh is also modified, uncommitted. The one FAIL (exit=1, OSError Errno 22 on the <stdin> spawn path) ran the HEAD revision; the PASS runs from 17:06Z on ran the working copy. The two same-revision runs of the working copy gave identical 10-line outputs.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DIFF: git diff of org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC3.sh in worktree C:/tmp/wk-og-182 @edd78166b63 -- working copy differs from HEAD in content; HEAD carries the stdin body (PYEOF heredoc), the working copy a _probe function; the change is not in any commit.",
+        "MTIME: ls -l of cs2.AC3.sh and cs_foot.sh -- 13:06:07 local (17:06:07Z), against the worker's first AC3 FAIL run before the 17:03Z row S1 and the later PASS runs."
+      ]
+    },
+    "notes": "Disarm (owner 2.0.0_SA_COO~O): commit the revised probe or revert the working copy, so that the graded check and the committed check are one revision. The worker did not edit either file and holds no write surface on them. The determinism control of the proof instance is recorded on the revised check only, with the superseded-revision FAIL named as a different input."
+  }
+]
+```
