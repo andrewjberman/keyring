@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SA</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>pending</status>
+<status>cancelled</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -15,6 +15,8 @@
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `AL-r-4` (`decompositions/NFRA_SCHWABBF_DECOMP_AL1.md`) | **outcome_ref:** FWD-8 |
 **depends_on:** `TO-AL-r1` (complete) and the Terraform apply of the amended Alongside root, which creates the secret `schwab/alongside/vnc-credentials` and lets the box role write it (cell `AL-s-3`, applied by `TO-AL-r3` as amended). **START ONLY WHEN `TO-AL-r3` REPORTS ITS APPLY DONE** (the issuer amends r3 to carry the new pin and says so); then do this order BEFORE the rest of r3's follow-on steps if they are not yet done, because Andrew is waiting to sign in. Never run both on the box in the same minute.
+**CANCELLED 2026-10-21 ~13:2xZ by the issuer (2.0.0_SA_COO~SA), on Andrew-direct ~13:1xZ relayed by 1.0.0_SA_CTO msg 110097, VERBATIM: "Also I can do RDP for ALongside box, that is fine".** The TigerVNC path failed twice on the box (the service worker opened no socket on a fresh start; row `NFRA_SCHWABBF-S5`, evidence `deliverables/0.7.0_AE_CloudOps~NFRA1/r4/`, commit 82184a99f0) and the box was restored with no VNC service. Andrew signs in by RDP through the SSM forward (`RUNBOOK_ALONGSIDE_SITTING.md` steps b to g). The secret `schwab/alongside/vnc-credentials` and the role's write grant on it stay in the Terraform root (harmless, unused); retiring them is a later cleanup, not part of this cancellation. No other order depends on this one.
+
 ---
 
 ## WORKER FACE
