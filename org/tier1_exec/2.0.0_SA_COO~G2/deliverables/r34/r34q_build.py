@@ -192,10 +192,15 @@ def main():
             bad("policy hashes unreadable in %s: %s" % (root, got.stderr[-160:]))
         return json.loads(got.stdout.strip().splitlines()[-1])
     ph_new, ph_old = policy_hashes(x34), policy_hashes(x_r34n)
+    # a moved hash is tolerated ONLY for a revision that is PENDING_ENFORCEMENT in both trees (it can hold no retention rows: retention
+    # needs an ACTIVE revision; the census of the r34o hashes found 0 rows under it) and only the dashbd revision (IRPT_DASHBD's work in
+    # progress, edited on trunk since r34n); any ACTIVE revision that moved is a refusal (CTO msg 11639)
     moved = sorted(k for k in ph_old if ph_new.get(k) != ph_old[k])
+    bad_moved = [k for k in moved if k != "irpt-dashbd-x10-v1" or ph_old[k][0] != "PENDING_ENFORCEMENT" or ph_new[k][0] != "PENDING_ENFORCEMENT"]
     added_revs = sorted(set(ph_new) - set(ph_old))
-    if moved or added_revs != ["irpt-anlreq-audit-x10-v1"] or ph_new["irpt-anlreq-audit-x10-v1"][0] != "ACTIVE":
-        bad("registry revisions: moved %s added %s (want none moved, only irpt-anlreq-audit-x10-v1 added and ACTIVE)" % (moved, added_revs))
+    if bad_moved or added_revs != ["irpt-anlreq-audit-x10-v1"] or ph_new["irpt-anlreq-audit-x10-v1"][0] != "ACTIVE":
+        bad("registry revisions: moved %s (not tolerated: %s) added %s (want no ACTIVE revision moved, only irpt-anlreq-audit-x10-v1 added and ACTIVE)" % (moved, bad_moved, added_revs))
+    print("NOTE registry revisions moved but tolerated (PENDING_ENFORCEMENT in both, no rows possible): %s" % moved)
     if bindings["opal_pricing"] != {"enabled": True, "tiers": ["estate", "yfinance", "ycharts"]} or bindings32["opal_pricing"] != bindings["opal_pricing"]:
         bad("opal_pricing is not exactly the tiers estate, yfinance, ycharts (enabled) in both r34p and r34q: %r -> %r" % (bindings32["opal_pricing"], bindings["opal_pricing"]))
     if bindings["ycharts_window_budget"] != {"calls": 6, "window_s": 390} or bindings32["ycharts_window_budget"] != bindings["ycharts_window_budget"]:
