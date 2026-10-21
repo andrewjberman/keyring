@@ -4,59 +4,50 @@
  "project": "TCKT_VNEXT",
  "round": 23,
  "graded_by": "1.0.0_SA_CTO~DELL2",
- "graded_utc": "2026-10-21T04:2xZ",
- "graded_against_prd_version": "v0.9",
  "report_ref": "org/missions/D7/TCKT/TCKT_VNEXT/ledger/COMPLETION_REPORT.round23.json@f512f51f81",
- "packet_ref": "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R23_FWD5_BOARD_CLAIM.md",
- "slug_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v22.md@9a1c51722b",
- "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_23_20261021.md@8d2f5dd365",
- "preconditions_measured": {
-  "outcomes_in_header": "6 of 6 graded REALIZED by the CVO (ADJUDICATION_v14, v19, v21, v22)",
-  "report_rows": "6"
- },
- "dep_stage": "COMPLETE",
  "rows": [
   {
    "fwd_id": "FWD-2",
    "verdict": "REALIZED",
-   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v21.md",
+   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v21.md@3e6cb07b527",
    "state_observed": "EXERCISED",
-   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v21; read, not re-derived. the ticket arm: an other-firm direct invoke refused with 403 (round 6), re-runnable on demand."
+   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v21; read, not re-derived. the ticket arm: an other-firm direct invoke refused with 403 (round 6), re-runnable on demand. Context: CVO slug ADJUDICATION_v22 @9a1c51722b; CTO analysis CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_23_20261021.md @8d2f5dd365; graded against PRD v0.9."
   },
   {
    "fwd_id": "FWD-4",
    "verdict": "REALIZED",
-   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v21.md",
+   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v21.md@3e6cb07b527",
    "state_observed": "EXERCISED",
-   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v21; read, not re-derived. the R20 DEV run: tckt-r20-filer filed, claimed and completed TCK-20261017-da2a1987 (run_events.txt)."
+   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v21; read, not re-derived. the R20 DEV run: tckt-r20-filer filed, claimed and completed TCK-20261017-da2a1987 (run_events.txt). Context: CVO slug ADJUDICATION_v22 @9a1c51722b; CTO analysis CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_23_20261021.md @8d2f5dd365; graded against PRD v0.9."
   },
   {
    "fwd_id": "FWD-5",
    "verdict": "REALIZED",
-   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v22.md",
+   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v22.md@9a1c51722b0",
    "state_observed": "EXERCISED",
-   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v22; read, not re-derived. R23-fv-1: three open requests of three types with type and age on the row; the picker claimed one from the board, a claim POST 200 with no ticket GET."
+   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v22; read, not re-derived. R23-fv-1: three open requests of three types with type and age on the row; the picker claimed one from the board, a claim POST 200 with no ticket GET. Context: CVO slug ADJUDICATION_v22 @9a1c51722b; CTO analysis CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_23_20261021.md @8d2f5dd365; graded against PRD v0.9."
   },
   {
    "fwd_id": "FWD-7",
    "verdict": "REALIZED",
-   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v19.md",
+   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v19.md@1b2b83d18bc",
    "state_observed": "EXERCISED",
-   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v19; read, not re-derived. graded on FWD-10 by PRD ADDENDUM 5: the Trade Request is the second type, added as a definition."
+   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v19; read, not re-derived. graded on FWD-10 by PRD ADDENDUM 5: the Trade Request is the second type, added as a definition. Context: CVO slug ADJUDICATION_v22 @9a1c51722b; CTO analysis CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_23_20261021.md @8d2f5dd365; graded against PRD v0.9."
   },
   {
    "fwd_id": "FWD-10",
    "verdict": "REALIZED",
-   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v19.md",
+   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v19.md@1b2b83d18bc",
    "state_observed": "EXERCISED",
-   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v19; read, not re-derived. Trade Request on PROD: door 200, PUT 200, ticket 201, Open 200, uploaded sha equals the read-back (round 21); DEV leg by identity (round-21 analysis)."
+   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v19; read, not re-derived. Trade Request on PROD: door 200, PUT 200, ticket 201, Open 200, uploaded sha equals the read-back (round 21); DEV leg by identity (round-21 analysis). Context: CVO slug ADJUDICATION_v22 @9a1c51722b; CTO analysis CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_23_20261021.md @8d2f5dd365; graded against PRD v0.9."
   },
   {
    "fwd_id": "FWD-11",
    "verdict": "REALIZED",
-   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v14.md",
+   "artifact_ref": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/adjudications/ADJUDICATION_v14.md@76c1694cb70",
    "state_observed": "EXERCISED",
-   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v14; read, not re-derived. Meeting Request to the coordinator, confirmed on the dashboard."
+   "note": "Graded REALIZED by 3.0.0_SA_CVO~DELL2 in ADJUDICATION_v14; read, not re-derived. Meeting Request to the coordinator, confirmed on the dashboard. Context: CVO slug ADJUDICATION_v22 @9a1c51722b; CTO analysis CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_23_20261021.md @8d2f5dd365; graded against PRD v0.9."
   }
- ]
+ ],
+ "graded_utc": "2026-10-21T04:25Z"
 }
