@@ -1,6 +1,6 @@
 # ENDPOINT (step 2, /endpoint --forward) -- NFRA_FIDSLVR: Fidelity silver formulated exactly as Schwab silver, for one gold union (`1.0.0_SA_CTO~DELL1`, 2026-10-21 ~15:4xZ)
 
-**Brief:** `docs/briefs/nfra-fidslvr-fidelity-silver-to-schwab-schema-brief-20261021.md` @cc707deac8 (`4.0.0_SA_CRO~FIDELITY`, measured
+**Brief:** `docs/briefs/nfra-fidslvr-fidelity-silver-to-schwab-schema-brief-20261021.md` @3d94f8cbe0 (`4.0.0_SA_CRO~FIDELITY`, measured
 2026-10-21 ~15:30Z; amended ~15:37Z with the gold attribution key and the no-bespoke-master refinement, Andrew-direct ~15:35Z and ~15:38Z,
 `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261021_1535Z_GOLD_MASTER_CUSTODIAL_ATTRIBUTION_KEY.md`).
 
@@ -10,63 +10,79 @@ including open tax lots and realized and unrealized gain/loss; "silver fidelity 
 master gold layer". CTO ruling splitting bronze (NFRA_FIDUPL) from silver (this project):
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_NFRA_FIDUPL_ALL_FACT_TABLES_BRONZE_AND_FIDELITY_SILVER_SIBLING_20261021.md` @6180f77c84.
 
-**Project code (registered at L3 in this commit):** `NFRA_FIDSLVR`, macro NFRA, directive D8, placement DELL1. Sibling of `NFRA_FIDUPL`
+**Design ruled by Andrew (Option B), ~15:55Z via `4.0.0_SA_CRO~FIDELITY`
+(`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261021_1555Z_FIDSLVR_OPTION_B_NATIVE_SILVER_CONFIG_GOLD.md`), VERBATIM: "Yse lets
+go with B here". Silver is custodian-NATIVE and lossless; a matching config (canonical dictionary) holds the conforming logic; GOLD is
+constructed from that config; the canonical gold schema is seeded from the Schwab silver layout. **Re-cut (v2 of this record):** FWD-1 and
+FWD-2 move their proof from silver to the Fidelity-derived GOLD; FWD-3..7 stand (FWD-3's map IS the config). Andrew confirmed the DONE WHEN
+set with that one change (the CRO's relay, msg 9141): open-calls act cc75 closes on this record.
+
+**Project code (registered at L3 @5c8ca94a34):** `NFRA_FIDSLVR`, macro NFRA, directive D8, placement DELL1. Sibling of `NFRA_FIDUPL`
 (its bronze is this project's input contract) and of the Schwab silver converter `opal-assets-silver-schwab` (its schema is matched,
 never altered).
 
-**Thread (round 1):** ONE fact table end to end -- Fidelity positions (`fact_rps`) for one business date, read by code written for Schwab.
-Later rounds enrich to every table, then the gold union.
+**Thread (round 1):** ONE fact end to end -- Fidelity positions, bronze to native silver to the canonical gold positions table through the
+config, for one business date, read by code written against the canonical (Schwab-seeded) schema. Later rounds enrich to every table.
 
 ```
-  FWD-1  A data engineer points the code that reads Schwab silver positions
-         at the Fidelity silver positions table for one business date, and
-         it runs unchanged
-         DONE WHEN  EXERCISED -- one existing Schwab-reading read (a query or
-                    reader the estate already runs against Schwab fact_rps) is
-                    run on demand against the Fidelity fact_rps partition for
-                    one date and returns rows; the same read against the Schwab
-                    fact_rps for the same date is the positive control, printed
-                    beside it
+  FWD-1  A data engineer points the code that reads the canonical positions
+         table at the Fidelity-derived GOLD positions table for one business
+         date, and it runs unchanged
+         DONE WHEN  EXERCISED -- one existing read written against the canonical
+                    (Schwab-seeded) positions schema is run on demand against the
+                    Fidelity-derived gold positions partition for one date and
+                    returns rows; the same read against the Schwab-derived gold
+                    positions for the same date is the positive control, printed
+                    beside it; the Fidelity rows are traced back through the config
+                    to the native silver row and the bronze file they came from
          ACCEPT     The engineer changed no code and no column name; the two
-                    results have the same columns and types, and the Fidelity
-                    rows carry Fidelity's accounts and securities
-         SOURCE     brief Part I, candidate thread; O1; Part III first test
+                    results have the same columns and types; the Fidelity rows carry
+                    Fidelity's accounts and securities; silver underneath still holds
+                    Fidelity's own fields, untouched
+         SOURCE     brief Part I thread (Option B), O1; Andrew ~15:55Z "lets go with B"
 
-  FWD-2  Every Fidelity fact family that NFRA_FIDUPL lands in bronze has a
-         silver table of the matching Schwab schema
+  FWD-2  Every Fidelity fact family NFRA_FIDUPL lands in bronze reaches a
+         native, lossless silver table AND a canonical gold table through the
+         matching config
          DONE WHEN  APPLIED -- for each landed family (accounts, positions,
                     balances, securities and prices, transactions, open lots,
-                    realized gain/loss, unrealized gain/loss) a schema parity
-                    read compares the
-                    Fidelity table against its Schwab twin -- column names, types,
-                    units, enum values, grain -- and prints the denominator
-                    (tables compared of tables landed)
-         ACCEPT     A reviewer finds the same columns, types and grain on every
-                    compared pair, and no family stranded in bronze with no silver
-                    table; a family bronze has not landed yet is named as such,
-                    never counted as matched
-         SOURCE     brief O2; Part IV items 1-3
+                    realized gain/loss, unrealized gain/loss): (a) the silver table
+                    is read and every bronze field is found on it, unrenamed and
+                    unretyped; (b) the gold table built from it is read against the
+                    canonical schema -- column names, types, units, enum values,
+                    grain -- and the config row that produced each column is
+                    printed; the denominator (families compared of families landed)
+                    is printed; a family bronze has not landed yet is named as such,
+                    never counted
+         ACCEPT     A reviewer finds nothing Fidelity provides stranded or
+                    discarded: Fidelity-only richness (the household Groups) sits in
+                    silver and surfaces in gold once a canonical table is defined
+                    for it; every gold column traces to one config row
+         SOURCE     brief O2, O2b; Part IV items 1-3
 
   FWD-3  Where the two custodians' fields do not map one to one, the gap is
-         named per table, never hidden
-         DONE WHEN  APPLIED -- the per-field reconciliation map is read, and
-                    one field known not to map (a Fidelity field the Schwab
-                    schema lacks, and one Schwab column Fidelity cannot fill) is
-                    found there with its disposition (extension column, or
-                    dropped with the reason)
-         ACCEPT     No Fidelity field is silently lost and no Schwab column is
-                    silently null-filled; a query-time surprise about a column is
-                    a failure of this outcome
-         SOURCE     brief O4; Part VII first two items
+         named in the matching config, never hidden
+         DONE WHEN  APPLIED -- the matching config (the per-field reconciliation
+                    map: custodian field -> canonical gold field, transform,
+                    approximate-match note) is read, and one field known not to
+                    map (a Fidelity field with no canonical column, and one
+                    canonical column Fidelity cannot fill) is found there with its
+                    disposition (custodian-specific column in gold, or left
+                    unmapped with the reason)
+         ACCEPT     No Fidelity field is silently lost and no canonical column is
+                    silently null-filled; changing a mapping edits the config and
+                    rebuilds gold, never silver; a query-time surprise about a
+                    column is a failure of this outcome
+         SOURCE     brief O2b, O4; Part VII first two items
 
-  FWD-4  Silver advances as bronze lands, for the daily pull and for the
-         backfilled history
+  FWD-4  Silver, and the gold built from it, advance as bronze lands, for the
+         daily pull and for the backfilled history
          DONE WHEN  EXERCISED -- one daily bronze landing is converted on demand
-                    and its silver partition read; one backfilled date (a date
-                    before the schedule began) is converted on demand and read;
-                    one date bronze does not hold is run and the record names the
-                    missing input instead of writing an empty partition
-         ACCEPT     An analyst reading silver for a date finds it as soon as the
+                    and its silver and gold partitions read; one backfilled date
+                    (a date before the schedule began) is converted on demand and
+                    read; one date bronze does not hold is run and the record names
+                    the missing input instead of writing an empty partition
+         ACCEPT     An analyst reading gold for a date finds it as soon as the
                     bronze for that date exists, partitioned by business date, and
                     can tell a date Fidelity never served from a date not yet
                     converted
@@ -123,7 +139,7 @@ Later rounds enrich to every table, then the gold union.
 - **Where the gold union lives** (tier home, tenancy): rule 30, the canon's builders at L4; not a seat's choice.
 - **A true shared-schema change** (the Schwab silver would have to move): a joint decision with the Schwab silver's owner, named in the
   PRD as out of scope for round 1.
-- **Andrew's confirmation of these DONE WHEN lines** (Andrew-direct 2026-09-03: "i will confirm CTO's 'DONE WHEN' from their
-  /endpoint --forward"): the L4 PRD is drafted on this endpoint now; L4-R waits on that word and on nothing else.
+- **Andrew's confirmation of these DONE WHEN lines:** GIVEN with the Option B re-cut (~15:55Z via the CRO, msg 9141: "Andrew confirmed
+  the DONE WHEN set with this one change"). cc75 closes on this record; L4-R proceeds.
 
 -- 1.0.0_SA_CTO~DELL1

@@ -1,13 +1,13 @@
 {
   "prd": "ADVI_COTBOOKS_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "05143c53b083a212de3a0ce5c909dac14b4be2ce",
+  "prd_version": "v0.5",
+  "prd_pin": "4aec35f0c49a9c8d4b8cf7f72006f064f16020d1",
   "half": "ratified-text",
-  "half_hash": "64c7ee61baba2a90fc7824f3e9c134f0cfd74a610faabe2e5ccb3fd9f4bb9142",
-  "endpoint_hash": "2658ee217cf962c50cfda9b63afa3fdbede79ee5ac7ab8029ff0b41c5810472f",
+  "half_hash": "0b7be2e5da1098b545864fc4afff770a2bf839b06b46b4d877d7e20778fb0eed",
+  "endpoint_hash": "c7d454fb2e61760fb8bbe27a006af13005c1fab5fe447c8bf6f5d72fdc8e0334",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ADVI_COTBOOKS_v0.3_RATIFIED_TEXT_20261021.md@1d11ff88d89",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ADVI_COTBOOKS_v0.5_RATIFIED_TEXT_20261021.md@b46fd669c2b",
   "signed_by": "3.0.0_SA_CVO~DELL1",
-  "signed_at": "2026-10-21T16:30:36Z",
-  "reason": "ENDPOINT is the retired 10-17 FWD-1..6 text superseded by endpoint v2 (10-20, 8 outcomes); v2 unconfirmed (ea86 OPEN)"
+  "signed_at": "2026-10-21T16:43:56Z",
+  "reason": "ea86 OPEN (v2 unconfirmed); REC-2 exception now named in C-NOBD (ground 2 closed)"
 }
