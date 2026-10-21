@@ -1757,6 +1757,27 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "The worker flips the task-order status to complete in the same commit as the proof instance once the criterion PASSes (the user's order for this run).",
     "world_is": "The grant admits no path to the TO file, so the status flip cannot be committed by this worker. The criterion FR2-AC1 is graded here and the instance is pinned; the status stays pending for the issuer or the gate.",
     "notes": "Criterion FR2-AC1 is the BLOCKING criterion of this row for the flip only; the code and tests criterion is unaffected. Recurring: W3-S6 filed the same gap in round 1."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S11",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-21T02:40:00Z",
+    "one_line": "The FR2-AC1 invocation names a relative checker path that resolves in the worktree, but that worktree copy of fidupl_round_checks.py differs from the main tree's copy (the file the order names), so the two are not the same checker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cmp of org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py in wk-NFRA_FIDUPL-3 against C:/Dev/ajb_workspace copy: differ at char 35702, line 642",
+        "the same fr2 invocation returns R1-FR2-OK passed=13 (rc 0) from the worktree copy and from the main-tree copy by absolute path"
+      ]
+    },
+    "spec_asserts": "TO FR-s-2 REPAIR 4 and the REPORT line: run the criterion with the main tree's checker by absolute path; the criterion's invocation names the relative path org/tier1_exec/.../fidupl_round_checks.py fr2.",
+    "world_is": "The relative path in the criterion resolves to a worktree copy that is not the main tree's copy. For the fr2 target both print R1-FR2-OK passed=13; the difference sits at line 642, outside the fr2 path.",
+    "notes": "For the issuer: the checker is a shared file and the worktree copy lags or leads the main tree. The main-tree absolute-path run is the run the order names; the proof records both."
   }
 ]
 ```
