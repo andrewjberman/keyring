@@ -32272,3 +32272,56 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-S258 -- Run 7N strands eight synthetic S3 objects (nine versions), the audit record and the retained report PDF among them, that the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S258",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T15:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7N (RUN-DONE PASS: Overview PDF 43 pages with BREIT swapped and ZQXWVK left out, packager ATTACHED, audit AUDIT_WRITTEN) leaves EIGHT synthetic S3 objects (nine versions) that the CloudOps principal cannot delete, the audit record (one key, two versions) and the retained report PDF among them; the index rows and the synthetic users read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7n/residue_7n.json (bucket, key, version_id, size for each version, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7n/state_e2e7n.json (deleted 17 of 25 recorded keys ABSENT; u: packager ATTACHED, audit AUDIT_WRITTEN)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7m/residue_7m.json (the same eight-object shape in run 7M, row S257)"
+    ]
+  },
+  "spec_asserts": "The order rule that a run deletes only keys recorded at creation and lists the residue its principal cannot delete in residue_7n.json.",
+  "world_is": "These objects remain, bucket opal-data-irpt: irpt/49financial/platinum/analysis_audit/ART-a03c628a25e8212bb8563f41651226c7b905fc2c728b11a3d71f7e33bc9ab3d2/a03c628a25e8212bb8563f41651226c7b905fc2c728b11a3d71f7e33bc9ab3d2.json (VersionId UKZhPDjSTUTrld9795m5GiWZxXZYem_O); irpt/49financial/platinum/analysis_audit/ART-a03c628a25e8212bb8563f41651226c7b905fc2c728b11a3d71f7e33bc9ab3d2/a03c628a25e8212bb8563f41651226c7b905fc2c728b11a3d71f7e33bc9ab3d2.json (VersionId v4r2eSAhuvfzu8sdVtEoH_Be.lnrrE_Q); irpt/49financial/state/analysis_commentaries/ART-40646de9339fba42b7d91518b57d9eb9566a44a52ef85e1a75e617e423cd6ab3/4c13fcd0f3a504deb2a3c74c8d3c493eaaf9da336f4fe1d384bc2fd5d67dc751.json (VersionId yYkM2nAOF2cF2peRo7LmONJ.kwAvAzuV); irpt/49financial/state/extraction_evidence/ART-d47985a042bf4cfff8d486e22a9c882f7f4bfa585026733f9637e5170df68636/ef3954643addc12982392be2f932313e7dd25f230ba73a7113dd82309fc60c66.json (VersionId GLI5DzP_Y212AGFgCNYkIZeJ_TR_Ig4j); irpt/49financial/state/normalized_portfolios/ART-531b8b6d6662f572c9e70b2518850aa8588b9448c63443d522ee234603c1f93f/f56fa8e2bc2cc4428c896d872ca0f66e9ad4352ca44a45564bc8b3e1cdfb73ce.json (VersionId lRtTzwTXEBGjo814lCip3NoDia.0NC1H); irpt/49financial/state/original_holdings/ART-082af75cbd3aa994139f5668f498d35a5ab1392735877051b7894e7c03f2d508/e012d9ea3853fef28a565b5b1fb0572dc69d1c8649d0350911e584c6fee9755c.csv (VersionId pRxtsFsjajjkqP5HLcj7RTodKCgxP_UQ); irpt/49financial/state/request_compositions/ART-653b7824a65608fa5ce5bb6833cfd9dd519c92db728ba75c7b95859b4b570dff/33c9aa2a22d4adacc4ffcd572cdac50ffa5bb4321a3a2d1e6a664148cfde16b8.json (VersionId P_L1KdVxMhlgLUxNdsiOrdf77fJ25ISh); irpt/49financial/state/ycharts_opal_reports/ART-9c543f5b3e7844c0b095ce3625ccbf004acf395172d455dc606511e9d805a30a/03e89e4ec346043072a6eafeaea3b4a90d5a64eceaf02b907acaa57fa1df5f2b.pdf (VersionId K1t3jczMtcyd0lZlWee7PcHO40s_Y6t7); irpt/49financial/state/ycharts_opal_reports/ART-afd990432ce90ab12f0bb3128af0ddfc2bac61c4b1714822f0dc78c2dc6fd181/0c2c05b7bc4a4e73e13d8761fd25ea8430dccf73c3b4b8e18cc9793d342447f4.pdf (VersionId eUt9oc_0pJAX.vmuhLs6WHzxAm6tmtAg). Request REQ-fcea18409c7a02212028c571, ticket TCK-20261021-cc706caa.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S259 -- Run 7N finds no per-row swap record (classified_by, low_confidence) in the retained r34t run document
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S259",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T15:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Run 7N could not read the per-row swap record the order names (classified_by, low_confidence, confidence, sources, candidates_priced, dropped_reasons, pool_stale per row): the retained run document of r34t carries only the swap counts, the pool claim and one disclosure sentence per row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7n/state_e2e7n.json (hops P6: composition rows resolution UNRESOLVED, method KEPT_AS_TYPED for both; no swap record fields found in 8 documents read)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7n/A_E2E7N.txt (P6 and NOTE P6 lines)"
+    ]
+  },
+  "spec_asserts": "Order TO-RUN-COMMENTARY-E2E-7N P6 and the GO message: r34t carries classified_by and low_confidence per row, readable from the request's retained run document.",
+  "world_is": "The extraction_evidence document (object under irpt/49financial/platinum/extraction_evidence/, listed in residue_7n.json) holds effective_inputs.settings.swap = {swapped 1, left_out 1, pool_as_of 2026-10-16, pool_claim held, pool_stale false} and two disclosures with id SWAP: BREIT is replaced by CTO (same asset class and sub asset class; longest Yahoo history), ZQXWVK is not analysed; Opal Staff will manage the replacement. The request item, the frozen composition document, the input document, the audit record (keys filed_at, filer, firm_id, form_as_filed, package, request_id, schema_version, ticket, written_at) and the commentary record hold no classified_by, low_confidence, confidence, sources, candidates_priced or dropped_reasons field for either symbol. So a model classification, if made, left no per-row trace in the records this seat can read.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```

@@ -24,7 +24,7 @@
 
 **FV-s-3** -- The CTO (msg 9101) ruled the Historical backfill walk: positions, balances and prices, one POST per trading day from 2026-10-15 backward to the proven floor, landed by content date, a type stopping after three consecutive "file does not exist" answers. The box command is `/opt/fidelity-uploader/hist_walk.py` (cells FV-s-1 and FV-s-2). Deliver it, then run it until it reports `all_types_stopped`. The walk resumes across runs from a state file on the box and lands each file by `address()`; a day already landed is skipped.
 
-**HOLD.** Do nothing until the issuer's message "FV-s-2 merged at <head>". Then:
+**RELEASED (issuer, 2026-10-21 ~15:15Z).** FV-s-1 and FV-s-2 are merged at 2b6b766c8fa (box/dell1, LOCAL). Deliver from that head or later. The issuer's own read-only session is at about 15:20Z (one sign-in, possibly two); start the FIRST run at 15:50Z or later. Then:
 
 ### WHAT TO DO
 
@@ -33,7 +33,8 @@
    `/opt/fidelity-uploader/venv/bin/python -u /opt/fidelity-uploader/hist_walk.py --config /opt/fidelity-uploader/config.json --max-days 20 --max-seconds 900`
    Record the stdout lines verbatim and read stderr. The command resumes where the last run stopped (state file) and ends with a `STOP <reason>` line.
 3. **Chaining.** After a run whose stop is `day_cap`, `budget` or `terminated`, run the same command again, but only when (a) your own sign-in count in the trailing hour is under 3 (each run is ONE sign-in; count the issuer's and the standing runs too: the three scheduled legs fire at 09:45Z, 10:15Z and 10:45Z, so no run may start between 09:20Z and 11:00Z, and none may overlap a leg), (b) at most 2 runs start in any rolling hour, and (c) the previous run's stop was not `auth`, `error` or `refused`. Send the issuer ONE short message per run (stop, days walked, earliest landed per type). Stop chaining on any 401, 403 or lockout line, an `auth` or `error` stop, or a `refused` type (report the exact text); do NOT retry those. Do not touch any cookie or profile directory; the agent Chrome unit is not to be touched.
-4. When a run ends `all_types_stopped`, run `fidupl_round_checks.py fv3r` and `fu10m`, close the ledger entries, and report: per type the earliest landed date, days landed, bytes; the stop evidence per type; the number of runs and sign-ins.
+4. **Gap-fill pass** (a day that ended `NOROW`, `DL_FAILED` or `LAND_FAILED` is walked past and never revisited). After the first `all_types_stopped`, list from the run records every day with such a result. If there are none, go to step 5. If there are, run the same command once more with a second state file so the walk starts again at the top: add `--state /opt/fidelity-uploader/work/histwalk_gap.json --start 2026-10-15` (days already landed cost no request; each type ends again after three empty days). Repeat that command (same state file) until a run lands nothing new, or three runs, whichever comes first, and report any day still unlanded with its result.
+5. When the walk has finished, run `fidupl_round_checks.py fv3r` and `fu10m`, close the ledger entries, and report: per type the earliest landed date, days landed, bytes; the stop evidence per type; the number of runs and sign-ins.
 
 ### ACCEPTANCE
 
