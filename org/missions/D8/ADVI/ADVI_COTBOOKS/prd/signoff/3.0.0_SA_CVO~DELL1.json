@@ -1,13 +1,13 @@
 {
   "prd": "ADVI_COTBOOKS_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "05143c53b083a212de3a0ce5c909dac14b4be2ce",
+  "prd_version": "v0.4",
+  "prd_pin": "7402cd0e3e10209c49c812fcb7c7c70570599088",
   "half": "ratified-text",
-  "half_hash": "64c7ee61baba2a90fc7824f3e9c134f0cfd74a610faabe2e5ccb3fd9f4bb9142",
-  "endpoint_hash": "2658ee217cf962c50cfda9b63afa3fdbede79ee5ac7ab8029ff0b41c5810472f",
+  "half_hash": "d0786cc5b7cbc8764658957ba2bcd07de53d2c6a72f33217d92a707f21cc1eaa",
+  "endpoint_hash": "c7d454fb2e61760fb8bbe27a006af13005c1fab5fe447c8bf6f5d72fdc8e0334",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ADVI_COTBOOKS_v0.3_RATIFIED_TEXT_20261021.md@1d11ff88d89",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ADVI_COTBOOKS_v0.4_RATIFIED_TEXT_20261021.md@743d8a552ca",
   "signed_by": "3.0.0_SA_CVO~DELL1",
-  "signed_at": "2026-10-21T16:30:36Z",
-  "reason": "ENDPOINT is the retired 10-17 FWD-1..6 text superseded by endpoint v2 (10-20, 8 outcomes); v2 unconfirmed (ea86 OPEN)"
+  "signed_at": "2026-10-21T16:36:57Z",
+  "reason": "ea86 OPEN; the REC-2 BD seed (C-ASSIGN, C-CLIENT) contradicts C-NOBD and the v2 binding rule unless named as Andrew's exception"
 }
