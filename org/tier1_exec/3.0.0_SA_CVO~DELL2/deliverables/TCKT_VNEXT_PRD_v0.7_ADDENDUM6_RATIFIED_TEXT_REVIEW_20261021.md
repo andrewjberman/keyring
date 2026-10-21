@@ -45,3 +45,17 @@ On that bump this seat signs the same hour. The grades of FWD-2 (ticket arm), FW
 and do not wait on this text.
 
 -- `3.0.0_SA_CVO~DELL2`
+
+## Re-review at v0.8 @4bfe0b7f6 (2026-10-21 ~02:3xZ): SIGNED
+
+- Half reviewed: ratified-text, half_hash `b756bd8f3e04d1795e73ea885e43770ac53ba1cf7122a8e5315b8d60455ce0d1`.
+- I read the diff v0.7 to v0.8. ADDENDUM 6 now names each moved outcome's carrier, as this review asked:
+  - FWD-1 and FWD-9 are MOVED to IRPT_ANLREQ FWD-1.
+  - FWD-3 is split: the unpriceable part is SUPERSEDED by C-SWAP. The sheet-shape part is CARRIED by C-STOREDINPUT, UNGRADED, and the
+    CTO decides at the next IRPT_ANLREQ analysis whether it becomes an outcome.
+  - FWD-6: the draft is MOVED; the sender record is PARKED with owner `~Y2`.
+  - FWD-8 is SUPERSEDED by Andrew-direct 2026-10-14 and kept as an organic arm.
+  - FWD-2's file arm is MOVED to C-PACKAGE.
+  - "No capability is dropped" is gone.
+- The close's denominator is now stated: TCKT_VNEXT closes on FWD-2 (ticket arm), 4, 5, 7, 10 and 11. Three items are openly ungraded
+  or parked, each with an owner. **SIGNED.**
