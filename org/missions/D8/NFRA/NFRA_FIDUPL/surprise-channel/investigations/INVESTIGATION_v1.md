@@ -1919,6 +1919,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "notes": "Not retried and nothing edited. For the issuer: (1) a run that can last past the cap needs its own heartbeat lines (a DAY line per day flushed as it is read) and a wall-clock budget below the SSM cap that stops it cleanly with the completion record and the logout, or an executionTimeout above the run's own budget; (2) with 120 s per request and up to 12 exports the worst case is far over 900 s, so the budget decides the answer, not the calendar. Sign-ins in the trailing hour: 06:01Z mine, about 06:32Z the issuer's, 06:47Z this run; none fired as a recovery. A ledger was not opened before this rerun (my omission); a post-hoc entry records it."
   },
   {
+    "id": "NFRA_FIDUPL-D1-S16",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T07:40:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "The bounded backfill (step 3C) ended by itself at its wall budget but its record reads run_error=TargetClosedError with stop=none and days=0 for every file type, although day 2026-10-20 printed completed and day 2026-10-19 hung on one downloadExport.do for 452 s.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM 1441ca48-d06c-42c6-9750-90239de00c39 on i-028e830f7226cc685 at 07:22:16Z (the issuer's GO 9019, ONE attempt, executionTimeout 660, --max-seconds 480 --max-sessions 4), Success, stdout lines verbatim in the deliverable NFRA_FIDUPL.TO-FT-s-11.backfill_probe1_step3C_output.md: 'DAY 2026-10-21 result=empty secs=0' / 'DAY 2026-10-20 result=completed secs=30' / 'REQ GET downloadExport.do status=error:WallBudget secs=452' / 'DAY 2026-10-19 result=budget secs=473' / 'ERROR: backfill run did not finish: TargetClosedError' / 'CLOSE ok secs=0' / 'stop=none' / six FILETYPE lines days=0 bytes=0 earliest=none / exit=1",
+        "s3://opal-data-assets/fidelity/alongside/bronze/_runs/20261021/backfill-20261021T072217Z.json (1373 bytes): run_error TargetClosedError, stop {reason none, evidence none}, sign_ins 1, walk null, days [2026-10-21 empty 0; 2026-10-20 completed 30; 2026-10-19 budget 473], per_file_type all zero",
+        "fidupl_round_checks.py ft11r: R1-FT11R-FAIL run_error=TargetClosedError; 0 data keys under fidelity/alongside/bronze/ (non-_runs) since 07:20Z",
+        "the box ran the 170a9c69ce8 file; the issuer's update msg 9026 (head 3d8b85fd61d: per-day partial record, SIGTERM logout) was sent at 07:28:41Z, after the run began, and was delivered at 07:33Z"
+      ]
+    },
+    "spec_asserts": "Step 3C: the run prints every DAY, REQ, SIGNIN and CLOSE line, stops itself at its wall budget with a stop reason, and writes the record; FT-s-11-AC1 expects a record with no run error and a stop reason.",
+    "world_is": "The run behaved as designed up to the budget: sign-in, one empty day, one completed day, then a single download that ran 452 s until the wall budget, and a clean CLOSE (logout). After the budget it raised TargetClosedError, so the record carries a run error, no stop reason and zero counts; it is not stated whether day 2026-10-20 was counted as already landed, and no data key was written.",
+    "notes": "Not retried (budget and timeout stops are an answer per the issuer) and nothing edited. For the issuer: (1) the budget stop is not recorded as stop=budget and the error class hides it; (2) the counts and the earliest date for a completed day are zero in the record, so the answer to deliverable 2 (earliest date, days, bytes) is not readable from it; (3) the 2026-10-19 download that hangs is the live finding. Sign-ins in the trailing hour: the issuer's 07:08Z, 06:47Z mine, this run 07:22Z."
+  },
+  {
     "id": "NFRA_FIDUPL-D1-W6-S6",
     "project": "NFRA_FIDUPL",
     "fabric": "dell1",
