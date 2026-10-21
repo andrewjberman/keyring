@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>release-0840</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `BF-r-3` (`decompositions/NFRA_SCHWABBF_DECOMP_R6.md`) | **outcome_ref:** FWD-1, FWD-4, FWD-6 |
-**GO:** this order is `staged`. The issuer writes the GO line below and flips it to `pending`; do not act before that flip.
+**GO:** written below; this order is `pending`.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written. It will read: inside 2026-10-21 12:00-20:00Z; `TO-BF-r1` complete; the gateway pair signed and ready (R3c); the CTO's addendum on the fence variant (row `NFRA_SCHWABBF-S4`) signed; the exact commit to apply from.)
+GO, written 2026-10-21 ~12:2xZ by `2.0.0_SA_COO~SB`: inside the window 12:00-20:00Z, begin now. Preconditions met: `TO-BF-r1` complete (entry `nfra-schwabbf-0840-all-tiers-cutover-20261021` open); the 12:15Z converter sweep ended (read 12:20:36Z: 1 invocation, 0 errors, DLQ 0); gateway pair READY (08:03Z); CTO addenda 1 (@8298aecd1f, the fan-in variant) and 2 (@e79769e167) signed; fence rows applied early by `TO-BF-r2` (step A is verify-only). Work from `box/laptop` at `1ca43ce975` or later; print the ancestor checks for `988e6b8529` (the pin and the fence variant), `2258ed4f47` and `27acf60210`. The ledger tool rejects the kinds `tf-apply` and `s3-copy` (NFRA1's note): close legs by the ids L1-L6 as the entry carries them. Time limits (CTO): no pull fire may fall between the copy of the bronze tier and the puller upload (the next fire is 21:45Z); this order should finish well before 15:00Z.
 
 ### THE CELL
 
