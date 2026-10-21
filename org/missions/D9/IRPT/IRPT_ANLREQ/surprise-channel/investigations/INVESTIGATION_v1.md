@@ -30861,3 +30861,67 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-S242 -- run 7e's RetentionRefused cured by r34p; run 7f attached; 7e's DLQ message deleted
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S242",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T01:35:00Z",
+  "one_line": "Run 7e's RetentionRefused (S239) is cured: its cause was r34o's in-place edit of the registry row irpt-anlreq-x10-v1; r34p restored it and run 7f then attached normally (outcome=ATTACHED, Overview 42 pages, commentary 2 pages). Run 7e's dead-lettered message was deleted from the commentary-ready DLQ.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S239"
+  ],
+  "spec_asserts": "S239: the r34o resident logged retained_for_retry class=RetentionRefused at the packager where r34n had attached; cause not measured.",
+  "world_is": "MEASURED 2026-10-21 ~01:3xZ by this seat. Cause: AR-y-466 added the family ANALYSIS_AUDIT inside the row irpt-anlreq-x10-v1, which moved its policy_sha256 (8edbe84b05765c36 to cfed04bb8c2f1982, G2's computation from the packaged r34n and r34o trees); retention.py binds each reference to its revision's hash (CTO ruling msgs 11637, 11640). Cure: r34p (r34o minus the registry change) live on root 0485393f3a-r34p, V2S OK (IB2 msg 11688; its census 11672: 0 rows under the new hash). Proof: run 7f (IB2 msg 11723, A_E2E7F.txt, RUN-DONE PASS) filed TCK-20261021-bdecca98 through the PROD page, packager outcome=ATTACHED at 01:15:16Z; this seat re-read the saved Overview (%PDF-1.4, 262121 bytes, sha256 74d8b3e803c2, 42 page objects, %%EOF). The trunk is repaired by AR-y-481 (drained f0abc252167): irpt-anlreq-x10-v1 equal to its pre-AR-y-466 bytes, ANALYSIS_AUDIT in its own row irpt-anlreq-audit-x10-v1 (PENDING_ENFORCEMENT). DLQ: the commentary-ready DLQ read 3 after run 7e; one message carried request_id REQ-719a4d55ff1992f3724978d9 (run 7e's own, tenant 49financial); this seat deleted that one message at ~01:33Z under the CTO's word (msg 11727) and the DLQ reads 2; the next message read carries REQ-7206be963b5d2108980885ca, which is run 6's (A_E2E6.txt); the third message was not seen and is not identified here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7e/A_E2E7E.txt (P4 line, RetentionRefused)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7f/A_E2E7F.txt (RUN-DONE PASS; packager ATTACHED; DLQ before=3 after=3)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34p/A_AFTER_R34P.txt (V1 cure hashes, V2S OK)",
+      "infra/aws/lambda/investor-reporting/reports/retention.py lines 53-88 and 147 (the policy hash binding)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The refusal's cause is measured and removed on the live resident; run 7f attached with no refusal. The trunk carries the repaired registry. The two DLQ messages that remain are older than run 7e and are recorded here, not mine to purge without a word."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W351-S1 -- the builder cannot write the tickets_table binding: no file the builder reads holds the ticket table name
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W351-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~351",
+  "surfaced_at": "2026-10-21T01:11:12Z",
+  "one_line": "TO-AR-y-483 step 2 says the builder writes tickets_table from a file it already reads or git-shows from the pin, and to STOP before editing the builder if none holds the name. None does, so the builder is not edited; the resident's change (1) and its tests are committed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-483 step (2): add tickets_table to the builder bindings, read the table name exactly as the queue names are read (NAMES.json). If NO file the builder reads or git-shows from the pin holds the name, STOP before editing the builder, append a BLOCKING row naming the candidate sources, still make change (1) and its tests, and report.",
+  "world_is": "The builder's JSON reads are NAMES.json only (json.loads of git show PIN:data/transcripts/scripts/commentary/NAMES.json, 11 top-level keys, no ticket entry). It git-shows the registry JSON files and the census as opaque members and never parses them for values. Candidates checked at PIN 2eb26945a00: (a) NAMES.json holds no ticket key; (b) infra/logic/registry/catalog_fork_keys.json:5284 has the prose key_template 'n/a -- table opal-tickets' under backup key c-2cb42abec4ad, and :5363 has the catalog id dynamodb_opal_tickets, neither a name field; (c) registry/root_map.json ticket-center is a root-map entry with no table name; (d) registry/systems.json:429 and :463 hold owner_basis prose only; (e) registry/resources.json has no ticket line; (f) the census source docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json has no ticket line. The name is typed only in HCL, which the builder does not read: infra/aws/terraform/ticket-center/main.tf:48 (name = opal-tickets) and infra/aws/terraform/investor-reporting/ycharts/generate.tf:424 (IRPT_TICKETS_TABLE = opal-tickets). Consequence while open: the bindings file carries no tickets_table, so the resident runs with the binding absent and an attach records AUDIT_PORTS_UNWIRED, the pre-wiring state. The issuer takes the source question to the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py@2eb26945a00 lines 100 and 108-133 (the only json.loads is NAMES.json; bindings dict has no ticket key)",
+      "data/transcripts/scripts/commentary/NAMES.json@2eb26945a00 (11 top-level keys; grep ticket returns no line)",
+      "infra/logic/registry/catalog_fork_keys.json@2eb26945a00 lines 5284 and 5363",
+      "infra/aws/terraform/ticket-center/main.tf@2eb26945a00 line 48",
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf@2eb26945a00 line 424",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@5adb77937a6 (change 1: optional tickets_table binding, env read removed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
