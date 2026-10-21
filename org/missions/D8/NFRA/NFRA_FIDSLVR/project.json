@@ -1,0 +1,36 @@
+{
+  "project_code": "NFRA_FIDSLVR",
+  "macro_code": "NFRA",
+  "directive": "D8",
+  "fabric": "dell1",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-10-21",
+  "registered_under_tree": "2026-10-21",
+  "placement": "DELL1",
+  "pods": [],
+  "related": [
+    "NFRA_FIDUPL",
+    "BD_SCHWABCONV",
+    "NFRA_SCHWABBF"
+  ],
+  "name": "Fidelity silver formulated exactly as Schwab silver: every Fidelity bronze fact family converted to the matching Schwab silver fact_*/dim_* schema (names, types, grain), the unmappable named per table, silver advancing as bronze lands, and one gold layer built by config from the uniform silvers, attributing accounts by the custodian-native grouping id (G Number, Master Account Number)",
+  "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew-direct 2026-10-21 ~15:20Z via 4.0.0_SA_CRO~FIDELITY ('silver fidelity and silver schwab formulated the exact same way ... a master gold layer'; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261021_1520Z_FIDUPL_ALL_FACT_TABLES.md @abdd501318). Sibling of NFRA_FIDUPL, whose bronze is the input contract (it starts no pull of its own), and of the Schwab silver converter opal-assets-silver-schwab, whose schema is matched and never altered. Round 1 thread: Schwab-reading code runs unchanged on the Fidelity fact_rps for one date. The real labor is the per-field reconciliation (a DS builder class). Every address and name from lib/opal_naming.py (rule 30). No alerts (moratorium).",
+  "phase": "2026-10-21 ~15:4xZ (1.0.0_SA_CTO~DELL1): L2 endpoint FWD-1..7 written (FWD-7: attribution by the custodian-native grouping id via a mapping config, Andrew-direct ~15:35Z); L3 registered under D8. L4 PRD drafts on this endpoint; L4-R waits on Andrew's confirmation of the DONE WHEN lines. COO lane unseated; capacity read at seating (cap 3).",
+  "blocking": null,
+  "brief_ref": "docs/briefs/nfra-fidslvr-fidelity-silver-to-schwab-schema-brief-20261021.md@cc707deac8",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_FIDSLVR_20261021.md",
+  "prds": [],
+  "decompositions": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~DELL1",
+    "coo": null,
+    "cvo": "3.0.0_SA_CVO~DELL1",
+    "cro": "4.0.0_SA_CRO~FIDELITY"
+  },
+  "coo_lane": null,
+  "rulings": [
+    "SCOPE SPLIT -- CTO ruling 2026-10-21 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_NFRA_FIDUPL_ALL_FACT_TABLES_BRONZE_AND_FIDELITY_SILVER_SIBLING_20261021.md @6180f77c84): bronze of every Fidelity fact table is NFRA_FIDUPL's; silver to the Schwab schema and the gold union are this project's; a shared-schema change is a joint decision, never a unilateral edit here."
+  ]
+}
