@@ -2078,3 +2078,23 @@ The DONE WHEN of FWD-30: the owner turns on `opal-data-assets`, `opal-data-etfs`
 - Not cut: the gate is `2.0.0_SA_COO~O`'s release (target 2026-10-23T06:00Z) and the v3.19 cure. The orders are held as DRAFTS in `deliverables/2.0.0_SA_COO~MP/ogb/staged/` (outside `task-orders/`).
 - Not decided: whether a bucket's switch should also list a person's existing `channels_allow` entries that are plain channel ids (not buckets); the draft shows only bucket-kind channels and `bucket/prefix` strings. Stated for the CTO.
 - The deny-wins reading is the gateway's (FWD-24); the page only writes the strings.
+
+
+# v24 -- WORKSTREAM OGH, ROUND 1: the page must not write a name the gateway cannot read (2026-10-21 ~16:4xZ, 2.0.0_SA_COO~MP)
+
+Source: NFRA_OPLGTW row `Z-S447` (ARMED, owner `2.0.0_SA_COO~O`) and the CTO's hazard message 15:17Z: the gateway's `person_access` reader accepts `channels_*` entries only as `^[a-z][a-z0-9_]{0,63}$` and `tools_*` entries as `^[a-z][a-z0-9_]{0,99}$` (`app/data_entitlement.py` :250, :254, :591-594); any other entry makes the whole record Malformed and every tool of that person fails closed. The writer checks only "non-empty string, at most 128 characters" (`lambda_function.py` :339-344), so it accepts what the reader rejects.
+
+## OGH1.0 WHAT IS MEASURED (issuer, 2026-10-21 ~16:3xZ)
+
+- The shipped channel switch writes `channels_deny: [<channel.id>]` (`mcportal/src/pages/people/personAccess.ts` :34; the view passes `channel.id`). On the live breakdown (served capture `deliverables/2.0.0_SA_COO~MP/gwz/capture/served_breakdown_capture_20261021_at_2923d1ee99.json`) the 14 channel ids are: `opal-data-assets`, `opal-data-etfs`, `opal-data-harvest`, `opal-data-mdpf`, `opal-data-portal-v2` (the five bucket ids carry hyphens and FAIL the reader's pattern), and `dynamodb`, `blackdiamond`, `globgrph`, `opal_discover`, `opal_portal`, `portal_index`, `schwab`, `ycharts`, `m365` (pass). So once the mount `OG-mp-1` is live (batch17, not before 2026-10-22T06:00Z), turning a bucket channel OFF from either the People page or `/opalgateway` would write a record the gateway reads as Malformed: that person's every tool fails closed. The page is the defect, not only the FWD-30 draft.
+- Tool names are shaped `[a-z][a-z0-9_]*` in the registered set; the same guard covers them.
+
+## OGH1.1 CELL `MP-zh-1` -- a switch for a name the gateway cannot read is disabled, and no change that holds one is posted  (shared view; one chain; LOCAL; FWD-29)
+
+`channelIdReadable` and `toolNameReadable` (pure, in `personAccess.ts`, the gateway's two patterns copied with their source lines named in a comment). In the shared access view (People and `/opalgateway`), a channel or tool switch whose name is not readable is disabled and says once `Not switchable yet: the gateway cannot read this name.`; the panel's post path refuses any change that would put an unreadable name into any of the four lists (no request is sent), the way the last-admin guard refuses. TWO tests by name. Mechanical: AC1 (`zh1.AC1.sh`: named tests present 2 of 2, `bun test src` 93 or more pass, 0 fail), AC2 (`zh1.AC2.sh`: tsc clean). Ships before the batch17 window in the bundle pin (the pin is re-sent to `2.0.0_SA_COO~O`). The gate: none; cut now. The close run `MP-zo-4`'s GO names a channel whose id is readable (not an `opal-data-*` bucket).
+
+## OGH1.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+- Does NOT fix the folder-grant path: FWD-30 (`MP-zb-1`, held) waits on `2.0.0_SA_COO~O`'s parser cell `CS-1`, which would relax the reader; this cell would then be revisited (the patterns it copies change with the reader).
+- A writer-side refusal of the same entries (a Lambda change) is available and NOT taken here: it would need a never-widen pair and would have to be relaxed when `CS-1` lands. Stated for the CTO.
+- `fanout: 1 of 1 chains, cap 8`; independent of `MP-zo-4` (deliverables only) and of the held `MP-zb-1`.
