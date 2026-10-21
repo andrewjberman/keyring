@@ -31969,3 +31969,113 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W368-S1 -- the release builder does not package the swap classifier module, so a resident carrying the pool binding would fail every job at the model import
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W368-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~368",
+  "surfaced_at": "2026-10-21T10:00:00Z",
+  "one_line": "AR-y-494 says the release builder packages etf_classification_model.py, but the builder packages only the investor-reporting DIRS and that module lives under v2_portal/_shared, so the built resident does not carry it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-494 (the preflight and step 3): the release builder 2.0.0_SA_COO~G2 packages swap_model.py and etf_classification_model.py; do NOT change the file list or package members of build_resident_package.py. Interface item 2: make_swap_model imports the classifier as a sibling module at the package root.",
+  "world_is": "etf_classification_model.py is at infra/aws/lambda/v2_portal/_shared/etf_classification_model.py. build_resident_package.py DIRS (lines 37-38) do not include that folder and no add() names it, so the built tar carries swap_model.py without the classifier module it imports. The bindings the builder writes carry no opal_swap_pool, so _swap_extras returns None and nothing imports the model in the shipped bindings: INERT today. It becomes ARMED when a release adds the pool binding without packaging the classifier, because every listed job would then raise at the import. The three offline criteria run from source and do not depend on the package.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py@1a7a048ecfc line 42: MODEL = \"kimi-k3\" (the classifier module the adapter imports by its bare name)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py@1a7a048ecfc lines 37-38: the DIRS list, with no v2_portal/_shared entry and no add() of the classifier module",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_model.py@1a7a048ecfc def make_swap_model at line 102: the default import of etf_classification_model when model_module is None"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the packaging: 2.0.0_SA_COO~G2 (the release builder). The order does not say the classifier path; this row records the gap for that owner. No change was made to the builder's file list."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W368-S2 -- the offline resident test had to put the v2_portal shared folder on sys.path, because make_swap_model imports the classifier by its bare name
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W368-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~368",
+  "surfaced_at": "2026-10-21T10:05:00Z",
+  "one_line": "The enabled-binding test runs the real extras(), which imports the classifier by bare name, so the test had to add the v2_portal shared folder to sys.path; the order names no path for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-494 item 4 (tests): enabled plus the pool binding plus a fake secrets client gives a swap dict with model_classify and proposals callables; the fakes are the injected send only, with no network.",
+  "world_is": "make_swap_model with no model_module imports etf_classification_model by its bare name. The new test reports/tests/test_resident_swap_model_binding.py inserts infra/aws/lambda/v2_portal/_shared into sys.path, the same path test_swap_model.py already uses, and stubs kimi_port.kimi_send with a recorder while socket.socket is replaced. The classifier module is imported only; nothing is sent. Existing tests are not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_swap_model.py@1a7a048ecfc lines 10-11: the existing sys.path insertion for v2_portal/_shared",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_swap_model_binding.py@3ab0178 the sys.path loop over ycharts/research and the v2_portal/_shared folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W368-S3 -- the producer reads a lookup answer that is not a dict as no usable class, so the model is asked for it; the order lists only None and a dict that lacks a class pair
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W368-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~368",
+  "surfaced_at": "2026-10-21T10:10:00Z",
+  "one_line": "AR-y-494 names the model fallback for a lookup answer of None or a dict lacking a class pair; a lookup answer that is neither a dict nor None is not named, and the code treats it as unusable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-494 item 1: model_classify(symbol) is consulted ONLY when the lookup answered None or a dict lacking a non-blank asset_class or sub_asset_class.",
+  "world_is": "The order does not say what a non-dict, non-None lookup answer does. swap_pass ignores such an answer and falls back to the pool (_symbol_class). The composed classify in opal_producer.py (_swap_classify with _usable_class) treats it as unusable and asks the model. With no model port the lookup is returned unchanged, as before. No test pins the non-dict case; the tests pin None and a dict with a blank asset_class. The reading is recorded for review.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@1a7a048ecfc lines 121-143 _symbol_class: a non-dict classify answer falls back to the pool",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py@3ab0178 _usable_class and _swap_classify: the model is asked when the answer is not a dict with both class parts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W381-S1 -- AR-g-190 does not say whether a portfolio whose data_as_of is present as JSON null is absent or malformed; I refused it as malformed
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W381-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~381",
+    "surfaced_at": "2026-10-21T10:02:12Z",
+    "one_line": "The order's read rule has two branches (absent: the file-level date; present and not a YYYY-MM-DD day: refuse). A portfolio whose data_as_of key holds JSON null sits in neither wording; I took key presence as 'present', so null is refused naming the code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-g-190 step 1: for each model code, take the portfolio entry's data_as_of. Absent: the file-level data_as_of. Present and not a YYYY-MM-DD day (the file's _parse_day): _refuse naming the code.",
+    "world_is": "The order names no rule for a null value. The code tests key presence ('data_as_of' in entry): a missing key takes the file-level date, and a null value fails _parse_day and is refused. Test test_a_malformed_per_portfolio_data_as_of_is_refused_naming_the_code[None] pins this. The other reading, null equals absent and falls back to the file date, would change one branch of read_allocation and one parametrized case; no live object is known to carry a null today.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/model_source.py@5c8ede09163 read_allocation: 'if \"data_as_of\" in entry' branch, _parse_day refusal",
+        "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_model_source.py@5c8ede09163 test_a_malformed_per_portfolio_data_as_of_is_refused_naming_the_code, parameter None"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
