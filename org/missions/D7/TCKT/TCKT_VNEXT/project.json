@@ -5,7 +5,7 @@
   "fabric": "dell2",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-08-31",
   "registered_under_tree": "2026-10-07",
   "placement": "DELL2",
@@ -43,5 +43,5 @@
   "coo_lane": "2.0.0_SA_COO~V2",
   "phase": "L4 PRD v0.1 DRAFT (1.0.0_SA_CTO~DELL2); L4-R halves owed: 3.0.0_SA_CVO ratified-text, brief half accepted (the CRO wrote the brief) or a live COO not holding the round.",
   "placement_ruling": "Laptop 1.0.0_SA_CTO ruling 106359 (2026-10-07): D7 and its one member placed on DELL2 on Andrew's word at the laptop 4.0.0_SA_CRO terminal; placement commit 98fcdce272.",
-  "last_updated": "2026-10-09"
+  "last_updated": "2026-10-21"
 }
