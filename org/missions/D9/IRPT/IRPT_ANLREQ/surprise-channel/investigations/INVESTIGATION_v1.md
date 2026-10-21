@@ -30894,3 +30894,34 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W351-S1 -- the builder cannot write the tickets_table binding: no file the builder reads holds the ticket table name
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W351-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~351",
+  "surfaced_at": "2026-10-21T01:11:12Z",
+  "one_line": "TO-AR-y-483 step 2 says the builder writes tickets_table from a file it already reads or git-shows from the pin, and to STOP before editing the builder if none holds the name. None does, so the builder is not edited; the resident's change (1) and its tests are committed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-483 step (2): add tickets_table to the builder bindings, read the table name exactly as the queue names are read (NAMES.json). If NO file the builder reads or git-shows from the pin holds the name, STOP before editing the builder, append a BLOCKING row naming the candidate sources, still make change (1) and its tests, and report.",
+  "world_is": "The builder's JSON reads are NAMES.json only (json.loads of git show PIN:data/transcripts/scripts/commentary/NAMES.json, 11 top-level keys, no ticket entry). It git-shows the registry JSON files and the census as opaque members and never parses them for values. Candidates checked at PIN 2eb26945a00: (a) NAMES.json holds no ticket key; (b) infra/logic/registry/catalog_fork_keys.json:5284 has the prose key_template 'n/a -- table opal-tickets' under backup key c-2cb42abec4ad, and :5363 has the catalog id dynamodb_opal_tickets, neither a name field; (c) registry/root_map.json ticket-center is a root-map entry with no table name; (d) registry/systems.json:429 and :463 hold owner_basis prose only; (e) registry/resources.json has no ticket line; (f) the census source docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json has no ticket line. The name is typed only in HCL, which the builder does not read: infra/aws/terraform/ticket-center/main.tf:48 (name = opal-tickets) and infra/aws/terraform/investor-reporting/ycharts/generate.tf:424 (IRPT_TICKETS_TABLE = opal-tickets). Consequence while open: the bindings file carries no tickets_table, so the resident runs with the binding absent and an attach records AUDIT_PORTS_UNWIRED, the pre-wiring state. The issuer takes the source question to the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py@2eb26945a00 lines 100 and 108-133 (the only json.loads is NAMES.json; bindings dict has no ticket key)",
+      "data/transcripts/scripts/commentary/NAMES.json@2eb26945a00 (11 top-level keys; grep ticket returns no line)",
+      "infra/logic/registry/catalog_fork_keys.json@2eb26945a00 lines 5284 and 5363",
+      "infra/aws/terraform/ticket-center/main.tf@2eb26945a00 line 48",
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf@2eb26945a00 line 424",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@5adb77937a6 (change 1: optional tickets_table binding, env read removed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
