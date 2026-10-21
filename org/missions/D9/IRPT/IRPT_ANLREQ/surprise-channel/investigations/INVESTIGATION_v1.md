@@ -31514,3 +31514,31 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-W359-S1 -- the tests arm of AR-g-186 cannot reach rc 0 in this worktree: a pre-existing test reads a shared module the sparse checkout does not materialise
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W359-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~359",
+  "surfaced_at": "2026-10-21T07:48:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "In worktree C:/dev/wk-irpt-anlreq-359 the path infra/aws/lambda/v2_portal/_shared/ is not materialised (the sparse checkout names only infra/aws/lambda/investor-reporting), so test_layout_overview.py::test_no_second_classification_read_default_client_is_the_etf_classifier fails with LayoutRefused; the AC3 tests arm (rc 0, at least 80 passed) cannot pass here whatever the cell's code does.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py@2c4c5b93913 _default_classifier: the fallback is HERE.parents[2] / 'v2_portal' / '_shared' and raises LayoutRefused when that directory is absent (the worktree has no infra/aws/lambda/v2_portal)",
+      "git ls-tree -r --name-only HEAD | grep etf_classifications_dynamodb: infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py is tracked at HEAD (also at 149a090a44a in C:/dev/ajb_workspace)",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-359: .tools, data, docs/contracts/investor-reporting, infra/aws/ec2/investor-reporting-ycharts, infra/aws/lambda/investor-reporting (no infra/aws/lambda/v2_portal)",
+      "measured after AR-g-186 code (uncommitted at filing): python -m pytest over the four owned files gives 84 passed, 1 failed; the failure is the one test above with LayoutRefused. At base 76 passed, 1 failed (the order states 77 at the base). With PYTHONPATH=C:/dev/ajb_workspace/infra/aws/lambda/v2_portal/_shared (read only, nothing written to the worktree) the same test passes"
+    ]
+  },
+  "spec_asserts": "TO-AR-g-186 AC3: the four owned layout test files pass (77 at the base) and at least 80 ran; the checker's tests arm exits 0 and prints AR-GAPNOTE-tests-OK passed=N.",
+  "world_is": "The test reads a module outside the lambda tree that this worktree does not materialise, and the order forbids both a sparse-checkout change and writes outside its paths. The cell's own eight new tests pass and AC1 and AC2 pass; only AC3 is held by this test. The worker did not copy the module into the tree and did not edit the test.",
+  "notes": "Filed by the worker. Not remediated: no sparse change, no copy of the module, no test edit. The resolution is a grant or a sparse-cone change decided by the issuer or the CloudOps seat, not by this worker."
+}
+```
