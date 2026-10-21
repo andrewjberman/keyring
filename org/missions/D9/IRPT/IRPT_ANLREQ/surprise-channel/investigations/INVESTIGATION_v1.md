@@ -31911,3 +31911,30 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S255 -- Run 7L strands eight synthetic S3 objects (nine versions), the audit record and the retained report PDF among them, that the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S255",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T09:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7L (RUN-DONE PASS: Overview PDF 42 pages, packager ATTACHED, audit AUDIT_WRITTEN) leaves EIGHT synthetic S3 objects (nine versions) that the CloudOps principal cannot delete, the audit record (one key, two versions) and the retained report PDF among them; the index rows and the synthetic users read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7l/residue_7l.json (bucket, key, version_id, size for each version, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7l/state_e2e7l.json (deleted 17 of 25 recorded keys ABSENT; u: packager ATTACHED, audit AUDIT_WRITTEN)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7k/residue_7k.json (the same eight-object shape in run 7k, row S254)"
+    ]
+  },
+  "spec_asserts": "The order's rule that a run deletes only keys recorded at creation and lists the residue its principal cannot delete in residue_7l.json.",
+  "world_is": "These objects remain, bucket opal-data-irpt: irpt/49financial/platinum/analysis_audit/ART-21e894afe0bbaab65f3a14fc9492260f61712ffa2913c6c64045c9b9ee75f9b9/21e894afe0bbaab65f3a14fc9492260f61712ffa2913c6c64045c9b9ee75f9b9.json (VersionId G5SG3Swd3QaTenkAyOQ4mF6eV047sa0r); irpt/49financial/platinum/analysis_audit/ART-21e894afe0bbaab65f3a14fc9492260f61712ffa2913c6c64045c9b9ee75f9b9/21e894afe0bbaab65f3a14fc9492260f61712ffa2913c6c64045c9b9ee75f9b9.json (VersionId BExfAzeKAZPQAV7m0EgTbFrDMywWDu7w); irpt/49financial/state/analysis_commentaries/ART-a36bb0b5a0ddb3de16c12c4af6fff7aab240009c8985c69cbc7bb3f851077ead/571ee4c61d3c2ab6a0cf0875b5122b789462cf5c060776b904f934f0d4daf70f.json (VersionId .lSVaaTwEhQSAuSzhHfmmztiTmkeLn8a); irpt/49financial/state/extraction_evidence/ART-2e31ad2b9ad3a8f87c723efeeafe8fbcb066ea29f4a35af5dd4e1a6608e99bed/ee4ddbe4101c98361ef36482f2873717cb1f147ba0f1fd2c27e67b7977cd84c6.json (VersionId 2BaUXVPcO2..95MxpN3i4T1aGhmLLdw8); irpt/49financial/state/normalized_portfolios/ART-de8a4608099394a24d25a0ddf663899cda6a3eee2484549efd659b45f78f6559/5d755ba449cdfc95b182f820a90dcc4896cf01a9730a517515e2e207f19ca1c9.json (VersionId _.FlH1p6eXvYYizLkF2HIUjS1JILK032); irpt/49financial/state/original_holdings/ART-b3f59381e8dec9cb8ce7a0a276e044e9713f778f72125b9cc8757b583b676c06/230f7aa29aa326961c6e5eb08344f10f66542b42cc3eb7879dc9dc6ed560552f.csv (VersionId 8h1qOFowYPHWVpVtLTaok6ZN8mljCX7v); irpt/49financial/state/request_compositions/ART-1b176ce909aa86670020422577ac734c5e564ac38e99a8061cb6b5ed5e9b403b/6b0b5236468746b5bcdf0f864aea22e3438b5eabdb48a0b188dedac35eec0706.json (VersionId 4EEndSR3bl6cmDURlul1c.r4QimaQqwE); irpt/49financial/state/ycharts_opal_reports/ART-294fc2875ca925436ef9b9554054410a3980d78866ae98d25b349cd9d6f34884/be9b2b7bc8913e9bc83cbd84c4d3c5b836cbfba696c806aed7ed16e89e0679e5.pdf (VersionId TqE6eCUQVaWpBJNvMZ1O3NTZ2R8kaq3B); irpt/49financial/state/ycharts_opal_reports/ART-2d9e03b4ba0cf82ef0c87b52501d2a20c5930b5dc75ea8f786f33002a9844d7d/36fb99fee268636593942f8a2439ffb83905c0c3e9969b762bdfbc1ce44e19e2.pdf (VersionId QLC6pq61uFfE7rZFXTCWSqFM65nHT1JM). Request REQ-de7555f49544199204061b8a, ticket TCK-20261021-553ca002.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
