@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~8</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -40,14 +40,24 @@ Your rows were right and the merge (18a3954c22e) carries your work. Two changes,
 2. **A holiday is not a retention stop (row S3).** A day for which `trading_calendar.is_trading_day` (`lib/trading_calendar.py`) is False is SKIPPED without a request and is never a stop. An EMPTY listing on a trading day counts toward the stop only as the THIRD consecutive empty trading day: the walk stops then, with the evidence text `empty listing x3` and the earliest SERVED date as the floor; one or two empty trading days followed by a served day do not stop the walk.
 Add three tests to the EXISTING `tests/test_backfill_adapter.py`: `test_non_trading_days_are_skipped_not_stops`, `test_three_consecutive_empty_trading_days_are_the_retention_stop`, `test_main_walks_the_signed_in_domain_once_not_per_g`. FT-s-7-AC1 now needs eight named tests (your nine plus these may pass as eleven; the check requires the eight named ones present). Fakes only. Run the whole module suite and put its last line in your report.
 
+### REPAIR 2 (issuer, 2026-10-21 ~02:40Z) -- your row W8-S9 is the live blocker, and S10 with it; this order now ALSO owns `backfill_run.py` and its tests
+
+Your REPAIR 1 is merged (47a415f440a). Row S9 is right: the planner (`backfill.py`: `KINDS = ("transactions", "positions_balances")`, a window is COMPLETED or EMPTY, the download returns the export bytes) and the runner (`backfill_run.py`, which accepts only those two kinds) were built in parallel with your adapter, which speaks "served" and returns a folder; through the real runner the box command dies with a `ValueError` before any sign-in. Make the live path run end to end through the REAL planner and runner on fakes:
+1. **Conform the ADAPTER and `backfill_main.py` to the planner's contract**, not the other way (`backfill.py` is NOT yours: do not edit it; if a planner word truly cannot carry the standing exports, file a row and stop that piece). Map the standing day to the planner's vocabulary: `wait` returns the planner's COMPLETED constant (or raises its two stop exceptions as today); both planner kinds are served from the same one-day fetch (the six files of a day come together; cache per day); `download` returns what the planner's lander call expects (read `_walk_kind` in `backfill.py` and `backfill_run.py` for the lander's signature and give it the day's folder through the runner's own lander seam, or the bytes if that is what the contract says). The completion record still names the SIX file types from the day's folder (the `land.py` partition), whatever the planner calls its kinds.
+2. **Row S10, in `backfill_run.py`:** a day the adapter skips as a non-trading day must NOT count against `max_exports_per_run`; only a real export request counts. Fix it there.
+3. Two tests: `test_real_runner_planner_and_adapter_walk_end_to_end_on_fakes` in `tests/test_backfill_adapter.py` (wire the REAL `backfill.py`, `backfill_run.py`, your adapter and main with a fake session, fake `fetch_day` and a fake lander: a served day lands, three empty trading days stop the walk, holidays are skipped; no `ValueError`), and `test_skipped_non_trading_days_do_not_consume_the_export_cap` in `tests/test_backfill_run.py`. FT-s-7-AC1 (`ft7`) needs nine named; a second criterion FT-s-7-AC2 (`ft4`) needs the runner's six named. Every earlier test of both files keeps passing. Fakes only. The whole module suite last line in your report.
+
 ### ACCEPTANCE
 
 <criterion id="FT-s-7-AC1" cell_refs="FT-s-7"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft7</invocation><expect>R1-FT7-OK passed=\d+</expect></criterion>
-`FT-s-7-AC1` -- the eight named tests exist and pass.
+`FT-s-7-AC1` -- the nine named adapter tests exist and pass.
 
-<expected_criteria>FT-s-7-AC1</expected_criteria>
+<criterion id="FT-s-7-AC2" cell_refs="FT-s-7"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft4</invocation><expect>R1-FT4-OK passed=\d+</expect></criterion>
+`FT-s-7-AC2` -- a second criterion, with its reason: the runner's tests (six named) must pass after the S10 fix.
 
-Dry-run at the base: `FT-s-7-AC1` base: FAIL as expected.
+<expected_criteria>FT-s-7-AC1,FT-s-7-AC2</expected_criteria>
+
+Dry-run at the base: `FT-s-7-AC1` base: FAIL as expected (REPAIR 2: one named test missing); `FT-s-7-AC2` base: FAIL as expected (one named test missing).
 
 ## BOUNDS
 
@@ -56,6 +66,8 @@ Dry-run at the base: `FT-s-7-AC1` base: FAIL as expected.
 - **Refusal clause.** A premise that fails is a surprise row in the investigation file (`NFRA_FIDUPL-D1-<your slot>-S<k>`, next unused) and you stop that piece.
 
 <paths>
+infra/aws/ec2/canonical-fidelity/backfill_run.py
+infra/aws/ec2/canonical-fidelity/tests/test_backfill_run.py
 infra/aws/ec2/canonical-fidelity/backfill_adapter.py
 infra/aws/ec2/canonical-fidelity/backfill_main.py
 infra/aws/ec2/canonical-fidelity/tests/test_backfill_adapter.py
@@ -68,7 +80,7 @@ org/missions/D8/NFRA/NFRA_FIDUPL/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: FT-s-7-AC1. Instance at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/0.9.0_WK_NFRA_FIDUPL~8/NFRA_FIDUPL.TO-FT-s-7.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> FT-s-7-AC1` BEFORE the flip. Commit the work first, then pin.
+Criterion ids: FT-s-7-AC1, FT-s-7-AC2. Instance at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/0.9.0_WK_NFRA_FIDUPL~8/NFRA_FIDUPL.TO-FT-s-7.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> FT-s-7-AC1,FT-s-7-AC2` BEFORE the flip. Commit the work first, then pin.
 </proof_of_spec>
 
 **REPORT:** the criterion with output verbatim, the proof instance, every surprise row id, commits.
