@@ -12,8 +12,8 @@
       "kind": "ec2-baked-asset",
       "target": "/opt/fidelity-uploader/config.daily.json = config.json plus mode, firm_labels, account_columns only; config.json untouched",
       "proof_required": "key-name list, json.tool valid, config.json md5 equal before and after; ft8c R1-FT8C-OK",
-      "proof": null,
-      "closed_at": null
+      "proof": "SSM 579ca70f-d093-4570-a38f-e7bfe1931914 on i-028e830f7226cc685: config.daily.json written (config.json via sed plus the three keys mode, firm_labels, account_columns); venv python -m json.tool json-valid; config.json md5 d4f475b0af92d1b25be378b69178dd4e before and after (untouched); key names: perg_secret_id profile_dir quo_line_id quo_secret_id quo_sender region repo_root scope wealthscape_secret_id work_dir mode firm_labels account_columns. ft8c: R1-FT8C-OK daily config copy: mode daily, 7 firm labels, the measured account columns, perg pointer. No sign-in.",
+      "closed_at": "20261021T022738Z"
     },
     {
       "id": "L2",
@@ -25,7 +25,8 @@
     }
   ],
   "log": [
-    "20261021T022646Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 2 leg(s)"
+    "20261021T022646Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 2 leg(s)",
+    "20261021T022738Z LEG L1 closed: SSM 579ca70f-d093-4570-a38f-e7bfe1931914 on i-028e830f7226cc685: config.daily.json written (config.json via sed plus the"
   ],
   "last_red_at": null,
   "device": "dell1"
