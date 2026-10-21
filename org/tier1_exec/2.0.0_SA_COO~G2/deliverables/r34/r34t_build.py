@@ -162,11 +162,11 @@ def main():
     keys_changed = sorted(k for k in bindings if k in bindings32 and bindings[k] != bindings32[k])
     prov_changed = sorted(k for k in set(bindings["provenance"]) | set(bindings32["provenance"]) if bindings["provenance"].get(k) != bindings32["provenance"].get(k))
     if (keys_added != ["opal_swap_model"] or bindings.get("opal_swap_model") != {"enabled": True} or keys_changed != ["provenance"] or bindings.get("tickets_table") != "opal-tickets" or bindings32.get("tickets_table") != "opal-tickets"
-            or prov_changed != ["package_pin"]
+            or prov_changed != ["files_from_count", "files_from_sha256", "members_added", "package_pin"]
             or bindings["provenance"]["package_pin"] != pin or bindings["provenance"]["files_from_count"] != stdout_a.get("files_from_count")
             or bindings["opal_map"] != bindings32["opal_map"]
             or bindings["packager"] != bindings32["packager"] or bindings["packager"].get("api_base") != "https://opalinvest.dev"):
-        bad("the bindings differ from r34s in more than the provenance (package_pin, files_from): added %s changed %s provenance %s tickets_table %r" % (keys_added, keys_changed, prov_changed, bindings.get("tickets_table")))
+        bad("the bindings differ from r34s in more than the opal_swap_model key and the provenance (package_pin, files_from, members_added): added %s changed %s provenance %s tickets_table %r" % (keys_added, keys_changed, prov_changed, bindings.get("tickets_table")))
     if bindings["provenance"]["member_overrides"] != {"docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json": "7f1eab530cde4661e9a559bf45439ebdbf73dab2"}:
         bad("provenance.member_overrides is %r, want exactly the one override of the submission schema" % (bindings["provenance"]["member_overrides"],))
     if [m["packaged"] for m in bindings["provenance"]["members_added"]] != [m["packaged"] for m in bindings32["provenance"]["members_added"]] + ["etf_classification_model.py"]:
