@@ -12,24 +12,24 @@
       "kind": "verify",
       "target": "shared-infra: the 5 fence rows on the opal-data-49financial and opal-data-cottonwood bucket policies, applied EARLY by TO-BF-r2 under entry nfra-schwabbf-fence-rows-early-20261021 (CTO ruling msg 110046)",
       "proof_required": "get-bucket-policy read shows the rows still present",
-      "proof": null,
-      "closed_at": null
+      "proof": "org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepA_verify.txt : live policies of opal-data-49financial (54 statements) and opal-data-cottonwood (14) equal TO-BF-r2 after_49f.json and after_cw.json exactly; rows present (box, converter x2, gateway read, Alongside box)",
+      "closed_at": "20261021T132751Z"
     },
     {
       "id": "L2",
       "kind": "activation",
       "target": "[order kind tf-apply] opal-assets: schwab fence variant, firm read/write/state grants, firm event rules, converter package; starts only after the 12:15Z opal-assets-silver-schwab-sweep-daily fire has ended",
       "proof_required": "policy reads, notification config, function config",
-      "proof": null,
-      "closed_at": null
+      "proof": "org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB_C_final_verify.txt , org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_b1_v2.txt (2 added), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_b2.txt (3 added), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB3a_upload.txt + org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB3a_head_after.json (artifact VersionId hsSPL.FCiS3N0U9LZBp0eQ_5WgQPD8aI, content-sha256 R6EGliwG...), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_b3.txt (1 changed: code hash, version, OPAL_BUILD_COMMIT 27acf60210), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_b4.txt + org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB4_verify.txt (14 rules, 12 of 12 originals identical, 2 new), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_b5.txt (1 destroyed, shared fence detached from the schwab role only), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB_C_zero_diff.txt (No changes)",
+      "closed_at": "20261021T132751Z"
     },
     {
       "id": "L3",
       "kind": "activation",
       "target": "[order kind tf-apply] canonical-schwab-ec2: box MonolithSchwabStateWrite",
       "proof_required": "get-role-policy",
-      "proof": null,
-      "closed_at": null
+      "proof": "org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_c.txt (1 changed, 0 destroyed), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepC_plan_set_diff.txt (MonolithSchwabStateWrite added; List and Write gained entries only; nothing removed; no Delete), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB_C_final_verify.txt L3 section (live policy has the 5 statements), org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB_C_zero_diff.txt (No changes); rollback copy org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepC_rollback_policy_document.json",
+      "closed_at": "20261021T132752Z"
     },
     {
       "id": "L4",
@@ -57,7 +57,10 @@
     }
   ],
   "log": [
-    "20261021T112908Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 6 leg(s)"
+    "20261021T112908Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 6 leg(s)",
+    "20261021T132751Z LEG L1 closed: org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepA_verify.txt : live policies of opal-data",
+    "20261021T132751Z LEG L2 closed: org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB_C_final_verify.txt , org/missions/D8/NF",
+    "20261021T132752Z LEG L3 closed: org/missions/D8/NFRA/NFRA_SCHWABBF/deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_c.txt (1 changed, 0 destroyed), org/mis"
   ],
   "last_red_at": null,
   "device": "laptop"

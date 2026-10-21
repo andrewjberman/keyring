@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>release-0840</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `BF-r-4` (`decompositions/NFRA_SCHWABBF_DECOMP_R6.md`) | **outcome_ref:** FWD-1, FWD-4, FWD-6 |
-**GO:** this order is `staged`. The issuer writes the GO line below and flips it to `pending`; do not act before that flip.
+**GO:** written below; this order is `pending`.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written. It will read: inside 2026-10-21 12:00-20:00Z; `TO-BF-r3` complete and its legs L1-L3 closed; the gateway pair ready; the commit to run the tool from.)
+GO, written 2026-10-21 ~13:3xZ by `2.0.0_SA_COO~SB`: inside the window 12:00-20:00Z, begin now. Preconditions met: `TO-BF-r3` complete (legs L1-L3 closed: the fence rows, the schwab converter's variant fence, firm grants, new package `hsSPL.FCiS3N0U9LZBp0eQ_5WgQPD8aI`, the two firm event rules, the box statement); gateway pair READY (08:03Z); the 12:15Z sweep ended. Work from `box/laptop` at a commit that contains `237f9d51e5` (print the ancestor check). The ledger kinds are `activation`/`s3-prefix` (the tool rejects `s3-copy`): close legs L4, L5, L6 by their ids. The bronze tier (R4c) starts only at or before 20:30Z; no pull fire falls before 21:45Z. Because the ew_store object `schwab/49financial/state/ews_store/current/ews.db` lives in the same state prefix (row S9), count the destination state keys by `/08403355.` only.
 
 ### THE CELL
 
