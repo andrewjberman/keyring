@@ -31153,3 +31153,34 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S248 -- the 8 older irpt-generation-dlq messages age out; S247 closed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S248",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T03:55:00Z",
+  "one_line": "The 8 older messages in irpt-generation-dlq are left to age out; S247 is closed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S247"
+  ],
+  "spec_asserts": "S247: 8 messages dated 2026-10-07 to 2026-10-09 remain in irpt-generation-dlq and were not shown to be synthetic.",
+  "world_is": "CTO msg 11838 (read by this seat 2026-10-21 ~03:4xZ): irpt-generation-dlq MessageRetentionPeriod 1209600 s (14 days), 8 messages; a standard queue keeps the original enqueue time across the move to the DLQ, so the 10-07 to 10-09 messages expire on their own between about 10-21 and 10-23; the XB_0162 reconciliation already records them. No delete on dates alone; nothing further to do.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 11838 (queue attribute read by the CTO)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/XB_0162_EIGHT_RECONCILING_WRITES_RETURN_COMPLETE_20261011.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The messages age out under the queue's 14-day retention; they are recorded by the reconciliation; deleting them on their dates alone is not warranted."
+}
+]
+```
