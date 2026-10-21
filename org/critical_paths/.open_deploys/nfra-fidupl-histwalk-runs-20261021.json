@@ -1,0 +1,24 @@
+{
+  "slug": "nfra-fidupl-histwalk-runs-20261021",
+  "title": "NFRA_FIDUPL FV-s-3 steps 2-4: the Historical backfill walk (hist_walk.py, --max-days 20 --max-seconds 900, SSM executionTimeout 1200), chained runs with one sign-in each, then the gap-fill pass; landing only under fidelity/alongside/bronze/ by address(), never overwriting",
+  "author": "0.7.0_AE_CloudOps~NFRA1",
+  "status": "OPEN",
+  "opened_at": "2026-10-21T15:12:01.949409+00:00",
+  "window_hours": 12.0,
+  "entry_path": "org/critical_paths/change_management/20261021T1512Z_nfra-fidupl-histwalk-runs-20261021_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "activation",
+      "target": "the walk runs through all_types_stopped plus the gap-fill pass (at most 2 runs in any rolling hour, each ONE sign-in, none overlapping the 09:45Z-10:45Z legs); each run's stop, days walked and earliest landed per type recorded",
+      "proof_required": "per-run stdout, fv3r R1-FV3R-OK histwalk complete, fu10m R1-FU10M-OK all",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261021T151201Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 1 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell1"
+}
