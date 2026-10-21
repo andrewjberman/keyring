@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~8</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -63,6 +63,13 @@ The second live run (SSM bfd976a6, started 06:47:20Z) ran the full 900 s executi
 3. **Request lines.** The `LongRequestSession` (REPAIR 3) prints, flushed, one line per request after it returns or raises: `REQ <POST|GET> <last path segment, no query> status=<s|error:<class name>> secs=<int>`. No header, body, parameter or id is printed.
 4. **Session lines.** Print `SIGNIN ok secs=<int>` right after `open_session` returns (the sign-in is the lazy first call) and `CLOSE ok|failed secs=<int>` after the logout.
 5. Three tests in the EXISTING `tests/test_backfill_adapter.py` (fakes; no network): `test_every_progress_line_is_flushed` (a fake stdout whose `flush` is counted: after `main`, every line written was followed by a flush), `test_wall_budget_stops_the_walk_and_writes_the_record` (an injected clock that passes the deadline after the first day: output `DAY <date> result=budget secs=0`, record `stop.reason` `budget`, run_error None, return 0; and a second case with `signal.signal` and `signal.alarm` monkeypatched to record: `alarm(max_seconds + 60)` armed once and `alarm(0)` before the close), `test_request_lines_name_method_path_status_and_secs` (over a fake context: a `REQ POST ... status=200 secs=0` line and one `status=error:TimeoutError` line, and the output holds no query string, no token and no id). FT-s-7-AC1 (`ft7`) now needs FIFTEEN named; FT-s-7-AC2 (`ft4`) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only. The checker is `fidupl_round_checks.py`. FAST: the next live run waits on it.
+
+### REPAIR 5 (issuer, 2026-10-21 ~07:25Z; CTO msg 9018 ruling 1) -- evidence must survive a kill: the record per day, and SIGTERM runs the logout
+
+REPAIR 4 flushes every line and bounds the walk, but the completion record is still written only at the end, and a plain kill (SSM's executionTimeout sends SIGTERM) skips the logout. Change `backfill_main.py` and `tests/test_backfill_adapter.py` only:
+1. **The record after every day.** After each trading day's DAY line, `main` rewrites the completion record to the same S3 address (`put_record`, same key as the final write) with `"partial": true` and everything known so far (`days`, `per_file_type` as tallied so far, `stop` `{"reason": "none", "evidence": "walk in progress"}`, `sign_ins`). The final write replaces it with `"partial": false` (a new key on every record; the session-cap counter `sessions_today` keeps reading the same files and the `backfill` marker). A failure of a partial write prints `WARN: partial record not written (<class name>)` and goes on; it never stops the walk.
+2. **SIGTERM runs the logout.** Where `signal.SIGTERM` can be handled (it can on the box), `main` installs a handler that raises `WallBudget` with the stop `("terminated", "SIGTERM received after <last DAY date or none>")`; the existing close path then logs out, the final record is written (stop reason `terminated`) and the run returns 0, within the same flow as the budget stop (print `WARN: terminated by SIGTERM`). The previous handler is restored at the end.
+3. Two tests in the EXISTING `tests/test_backfill_adapter.py` (fakes; no network; `signal` patched where needed): `test_the_record_is_rewritten_after_every_day_and_marked_partial_until_the_end` (a three-trading-day fake walk: the fake `put_record` sees the key written after each day with `partial` true and a growing `days` list, and the last write has `partial` false), `test_sigterm_ends_the_walk_with_a_stop_and_the_logout` (the handler registered for SIGTERM, called mid-walk: the stop reason is `terminated`, `session.close` was called once, the final record has `partial` false, and the return code is 0). FT-s-7-AC1 (`ft7`) now needs SEVENTEEN named; FT-s-7-AC2 (`ft4`) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only. The checker is `fidupl_round_checks.py`. FAST.
 
 ### ACCEPTANCE
 
