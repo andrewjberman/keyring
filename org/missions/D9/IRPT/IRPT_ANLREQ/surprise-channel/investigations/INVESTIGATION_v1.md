@@ -31569,3 +31569,30 @@
   "notes": "Filed by the worker. Not remediated: no sparse change, no copy of the module, no test edit. The resolution is a grant or a sparse-cone change decided by the issuer or the CloudOps seat, not by this worker."
 }
 ```
+
+## IRPT_ANLREQ-D2-W358-S1 -- the producer file carries a CTO HOLD ruling on workstream G that TO-AR-g-185 does not name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W358-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~358",
+  "surfaced_at": "2026-10-21T07:49:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex for the AR-g-185 commit (79f011e64ea) cited a CTO HOLD ruling on workstream G that touches opal_producer.py; TO-AR-g-185 names no hold and records no un-hold trigger.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/org/critical_paths/cross_adjudication/20261019T2312Z_XA-20261019T231010Z-2064.md:43-45 (main tree; ruled by 1.0.0_SA_CTO 2026-10-19T23:12:56Z: HOLD workstream G until the Analysis Request v0.24 release READ on PROD is recorded by dell2's CTO; cutting the portfolio-side map cells first, then, because the price pages share opal_producer.py with AR-y-415..419)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R60_G.md:149 (AR-g-185 sequenced for round 60 workstream ~GREL8, release r34s under the CTO's pair)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-185.multicomp-portfolio-path-from-the-common-window-start-not-the-price-window-start.md (depends_on: the 7J read and CTO msg 11932; no hold named)",
+      "pre-commit gate output of 79f011e64ea: comp-pulse diff, [HOLD] opal_producer.py, cites XA-20261019T231010Z-2064.md:39; the commit was not blocked"
+    ]
+  },
+  "spec_asserts": "A cell is cut for a workstream the CTO has ruled on; the order's depends_on names the 7J read and CTO msg 11932 and says nothing of a hold, so the un-hold trigger is the issuer's to state.",
+  "world_is": "The CTO ruling of 2026-10-19 holds workstream G, names the Analysis Request v0.24 READ on PROD as the un-hold trigger, and warns that a second writer on opal_producer.py collides with AR-y-415..419. The round-60 decomposition and the 2026-10-20 issuance post-date it and sequence AR-g-185 for release. This worker did not verify that the trigger was recorded, and committed the cell as the order directs."
+}
+```
