@@ -111,3 +111,4 @@ Base dry-runs 2026-10-21 (option, constants and functions absent): `l1.AC1` base
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>

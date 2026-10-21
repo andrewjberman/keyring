@@ -69,6 +69,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cs-5.cli-shim-the-access-post-c
 - Pre-cut: `AC1` base FAIL as expected (a non-bool `widening_confirm` is accepted); `AC2` base FAIL as expected (the keyword is unexpected); `AC3` base FAIL as expected (0 added, the new test file absent). Pin: `admin_people_access.py` blob `65f9faa4a9`.
 
 <status>pending</status>
+<status>complete</status>
 <round>48</round>
 <workstream>CLISHIM-A</workstream>
 <slot>~181</slot>
