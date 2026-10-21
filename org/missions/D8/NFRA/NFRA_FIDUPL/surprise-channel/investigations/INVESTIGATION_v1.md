@@ -2269,6 +2269,49 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "world_is": "The naming gate reads the Lambda function-map folder, which is tracked at HEAD (243 files) but absent on disk in this sparse worktree; nothing in this order's paths reads that folder, and the commit completed.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not investigated further (off-task). A repeat of NFRA_FIDUPL-D1-W2-S17 with a sparse-cone cause (see NFRA_FIDUPL-D1-W6-S8). The owner of the naming gate decides whether the message is expected in a sparse worktree."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S12",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T15:01:21Z",
+    "one_line": "The FV-s-2 task order names LongRequestSession as a symbol to import from backfill_main.py, but that class is defined inside backfill_main._real_deps (a closure), so it cannot be imported; hist_walk reaches it only through the open/fetch session deps that _real_deps returns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep of C:/tmp/fidupl-w6/infra/aws/ec2/canonical-fidelity for LongRequestSession printed only backfill_main.py:745 (class LongRequestSession(fetch.PlaywrightSession), indented inside def _real_deps at line 728)",
+        "backfill_main.py module-level definitions (grep ^def|^class) list no LongRequestSession; _real_deps returns fetch_session as a closure over LongRequestSession (line 819-820)"
+      ]
+    },
+    "spec_asserts": "FV-s-2 worker face, Read first: backfill_main.py (main, _real_deps and its LongRequestSession ... you IMPORT from it and do not edit it).",
+    "world_is": "LongRequestSession is a nested class of _real_deps; it has no module-level name to import. The walk takes the same behaviour through backfill_main._real_deps()['fetch_session'], which is what hist_walk does.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not investigated further (off-task). hist_walk imports backfill_main and calls its _real_deps; no edit to backfill_main was needed. The order's wording is the only mismatch."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S13",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T15:01:21Z",
+    "one_line": "land.land writes one run record per call, and a day folder holding only position.txt and prices.txt makes it record the four absent SIX names as failed read entries, so each walked day writes a PARTIAL run record under _runs even though both files land.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "land.py _examine: a file not present in the handoff directory yields _fail(entry, 'read', None, 'file absent from the handoff directory') (land.py, the _examine function)",
+        "land.py land(): outcome is ALL_LANDED only when every entry is in OK_ACTIONS, PARTIAL when some landed and some failed; the record is put to _runs on every non-dry call",
+        "hist_walk.py _settle reads the per-file entry for position.txt and prices.txt, so the day result is LANDED for both; the run-level PARTIAL is not read"
+      ]
+    },
+    "spec_asserts": "FV-s-2 WHAT TO BUILD item 4: the position and prices files land through land(folder, scope) after a listing.json whose missing names are the SIX names not present; the lander is called unchanged.",
+    "world_is": "The walk's per-day land() call writes a PARTIAL run record for each day that has only two of the six files; the per-file results are correct, the run records carry four read failures per day.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not investigated further (off-task). The spec is followed as written. Whether a two-file run record belongs under _runs is an owner decision (the lander's run-record design), not this seat's."
   }
 ]
 ```
