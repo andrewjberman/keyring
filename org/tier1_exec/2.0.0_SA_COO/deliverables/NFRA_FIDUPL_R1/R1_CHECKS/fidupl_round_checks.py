@@ -94,7 +94,8 @@ TEST_FILES = {
         "test_probe_prints_counts_only_for_page_one_forms_and_prefixes", "test_probe_stops_at_once_on_an_auth_refusal",
         "test_probe_closes_the_session_and_prints_no_account_number",
         "test_probe_reports_start_zero_variant_and_session_follow_up",
-        "test_probe_sweeps_g_ordinals_reading_only_available_and_restores_start_g"]),
+        "test_probe_sweeps_g_ordinals_reading_only_available_and_restores_start_g",
+        "test_probe_v3_hashes_cookies_lists_and_tile_per_ordinal_and_skips_restore_on_auth_stop"]),
     "ft7": ("%s/tests/test_backfill_adapter.py" % CF, [
         "test_empty_status_for_a_day_is_a_retention_stop", "test_refusal_is_an_entitlement_stop",
         "test_one_fetch_serves_all_six_kinds_for_a_day", "test_main_signs_in_once_and_respects_the_session_cap",
