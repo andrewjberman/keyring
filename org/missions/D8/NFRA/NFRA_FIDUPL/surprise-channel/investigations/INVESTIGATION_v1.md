@@ -1942,6 +1942,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "notes": "Not retried (budget and timeout stops are an answer per the issuer) and nothing edited. For the issuer: (1) the budget stop is not recorded as stop=budget and the error class hides it; (2) the counts and the earliest date for a completed day are zero in the record, so the answer to deliverable 2 (earliest date, days, bytes) is not readable from it; (3) the 2026-10-19 download that hangs is the live finding. Sign-ins in the trailing hour: the issuer's 07:08Z, 06:47Z mine, this run 07:22Z."
   },
   {
+    "id": "NFRA_FIDUPL-D1-S17",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T08:40:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "The step 3D backfill served 2026-10-20 (six files) and five of six files of 2026-10-19, but the sixth 2026-10-19 file never returned inside the 480 s budget, the five served files were not landed, and the record again reads TargetClosedError, stop none, days 0 bytes 0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM 52b0a403-ade6-4b44-b3c6-77bc8e87c4d9 on i-028e830f7226cc685 at 08:22:16Z (the issuer's GO 9032, ONE attempt, --max-seconds 480 --max-sessions 6, executionTimeout 660), Success, exit 1: 11 FILE lines (six for 2026-10-20, five for 2026-10-19, all status 200 with byte counts), 'DAY 2026-10-19 result=budget secs=471', 'ERROR: backfill run did not finish: TargetClosedError', 'CLOSE ok secs=0', stop=none, six FILETYPE lines days=0 bytes=0 earliest=none; verbatim in the deliverable NFRA_FIDUPL.TO-FT-s-11.backfill_probe1_step3D_output.md",
+        "s3://opal-data-assets/fidelity/alongside/bronze/_runs/20261021/backfill-20261021T082217Z.json (2525 bytes): run_error TargetClosedError, stop {none, none}, days [2026-10-21 empty, files all 'empty listing'; 2026-10-20 completed 31 s, six files ok, missing none; 2026-10-19 budget 471 s, no files list], per_file_type earliest_served 20261020 and served_days 1 for all six, days 0 bytes 0, earliest_date null",
+        "fidupl_round_checks.py ft11r: R1-FT11R-FAIL run_error=TargetClosedError; aws s3api list-objects-v2 under fidelity/alongside/bronze/ excluding _runs/ from 08:20Z: 0 keys",
+        "row NFRA_FIDUPL-D1-S16 (step 3C): the same 2026-10-19 day stalled on one download in the previous run (452 s), and the same TargetClosedError followed the budget"
+      ]
+    },
+    "spec_asserts": "Step 3D: the run reads each download inside the browser with a 120 s idle bound, lands a partly served day's files, retries the missing files once at the end and writes the record after every day; FT-s-11-AC1 expects a record with no run error and a stop reason.",
+    "world_is": "The 120 s idle bound did not end the stalled 2026-10-19 download before the 480 s wall budget (the day took 471 s), so the budget ended the day before the partly served files were landed or the missing one retried; nothing was landed. The channel serves 2026-10-20 and five of six files of 2026-10-19; the sixth file of 2026-10-19 is the stall (not named in the output). The run closed its session (CLOSE ok) and then raised TargetClosedError, which hides the budget stop in the record.",
+    "notes": "Not retried (a stall or budget stop is an answer per the issuer) and no cookie or profile touched. For the issuer: (1) the stall point is one file of one day, repeated in two runs, so a per-file bound below the wall budget would let the other five land; (2) the record should say stop=budget and name the stalled file; (3) the earliest-date answer for deliverable 2 so far is 2026-10-20 fully served (earliest_served) and 2026-10-19 five of six. Sign-ins in the trailing hour ending 08:22Z: 07:22Z mine, 07:49Z the issuer's refused attempt, 08:22Z this run."
+  },
+  {
     "id": "NFRA_FIDUPL-D1-W6-S6",
     "project": "NFRA_FIDUPL",
     "fabric": "dell1",
