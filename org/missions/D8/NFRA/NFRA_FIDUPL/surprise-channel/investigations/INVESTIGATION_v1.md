@@ -1778,6 +1778,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "TO FR-s-2 REPAIR 4 and the REPORT line: run the criterion with the main tree's checker by absolute path; the criterion's invocation names the relative path org/tier1_exec/.../fidupl_round_checks.py fr2.",
     "world_is": "The relative path in the criterion resolves to a worktree copy that is not the main tree's copy. For the fr2 target both print R1-FR2-OK passed=13; the difference sits at line 642, outside the fr2 path.",
     "notes": "For the issuer: the checker is a shared file and the worktree copy lags or leads the main tree. The main-tree absolute-path run is the run the order names; the proof records both."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T02:42:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "box/run.py rejects the null account columns the order and split.py require, so the TO-FT-s-8 daily-mode proof run refused at config validation, before any secret read or sign-in.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM 82fbe072-9e23-455e-938d-f3a5e74e53a5 on i-028e830f7226cc685 at 02:37Z (the issuer's GO 8946, one attempt): /opt/fidelity-uploader/venv/bin/python /opt/fidelity-uploader/box/run.py /opt/fidelity-uploader/config.daily.json printed exactly: 'ERROR: config account_columns value for prices.txt is not a column index' then exit=2",
+        "infra/aws/ec2/canonical-fidelity/box/run.py line 84: _check_account_columns raises when 'isinstance(column, bool) or not isinstance(column, int) or not 0 <= column <= 200', so a JSON null (None) for prices.txt or security.txt is refused",
+        "box/run.py main(), lines 306-310: check_pointers(config) runs before _run_daily_mode / run_once; a ConfigError returns 2 with only the ERROR line, before read_secret and open_session, so no Fidelity sign-in happened",
+        "TO-FT-s-8 step 1 and ft8c: account_columns carries prices.txt null and security.txt null (ft8c R1-FT8C-OK); the delivered split.py (eighteenth delivery, fu10m R1-FU10M-OK 21 files) takes a null account column for those two files"
+      ]
+    },
+    "spec_asserts": "TO-FT-s-8 step 2: one run of box/run.py on config.daily.json (prices and security null) signs in once, switches the G number 31 times and writes the split; REPAIR 4 of FR-s-2 gave split.py null account columns.",
+    "world_is": "The config validator in box/run.py was not widened to admit null with split.py, so the daily config copy the order requires cannot load. The run refused before doing anything on the box or at Fidelity; config.json, config.daily.json, work/, both profiles and the agent Chrome unit are unchanged.",
+    "notes": "Not edited: box/run.py is shipped repo code outside this order's grant, and the issuer allowed ONE attempt with no retry. Fix for the issuer: _check_account_columns accepts None for the unsplit files (prices.txt, security.txt) and a test for it; then one more delivery and a new GO. config.daily.json needs no change. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2."
   }
 ]
 ```
