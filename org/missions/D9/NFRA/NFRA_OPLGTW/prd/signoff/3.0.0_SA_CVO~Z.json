@@ -1,13 +1,13 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v3.19",
-  "prd_pin": "788a27f4ee745225cdc60ed6eff8c50fa8445282",
+  "prd_version": "v3.20",
+  "prd_pin": "6c343f20c4a4c3376a060c1eb1efb1eee5331135",
   "half": "ratified-text",
-  "half_hash": "e731f8982ce78345132bc0ef0ed1e5de8ae1f0d7e83761d530c94c752abe9b2e",
-  "endpoint_hash": "0e499e40e739d68ebf3198e1cb6292acaa11d721be7cb46b79541d448f05237a",
+  "half_hash": "1a270afc62f231f3e0516c68267cf40542dabf42daa60fb6eaa24b9e3a3cfce6",
+  "endpoint_hash": "d2722218aea7cb8a2f2e4f3118b6b30228f2ffda8b373dd3fbd6b1e399814b64",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v3.19_RATIFIED_TEXT_20261021_Z.md@002bb361fa6",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v3.20_RATIFIED_TEXT_20261021_Z.md@a5a17278f16",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-21T15:10:35Z",
-  "reason": "v3.19: V1 MET, no grant reaches bronze"
+  "signed_at": "2026-10-21T17:36:16Z",
+  "reason": "v3.20 placement fix, no DONE WHEN changed"
 }
