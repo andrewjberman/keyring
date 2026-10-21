@@ -31542,3 +31542,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "S2 and S3 are ruled with their evidence; S1 is carried armed by name, not dispositioned."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-21T06:53:25Z",
+  "id": "NFRA_OPLGTW-Z-S442",
+  "one_line": "batch16 read-back: the applier's public health sampler recorded 11 timeouts and one 502 in 966 samples over 37 minutes, none attributed, with no pre-release baseline to compare against",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W/rl17_pb/sampler.jsonl (read by the issuer 2026-10-21 06:5xZ): 966 samples from 06:02:15Z to 06:39:16Z = 954 code 401 (the unauthenticated edge answer the sampler treats as alive), 11 TimeoutError, 1 code 502 (06:03:59Z, inside the deploy window 06:02:52Z-06:04:14Z). Timeouts at 06:03:21, 06:08:21, 06:15:08, 06:17:37, 06:18:19, 06:18:26, 06:29:19, 06:34:32, 06:34:39, 06:34:46, 06:35:19 (UTC).",
+      "Two of the timeouts (06:18:19Z, 06:18:26Z) fall inside the eight-call load window (06:18:17Z-06:19:47Z recorded in W/RL17_PROOFS.json); the in-load internal /health read 90 of 90 samples at 200, slowest 438 ms, service peak 170.8 MB; pid and NRestarts unchanged through the read-back (the applier's ferry 06:4xZ). The other nine fall outside the load.",
+      "The applier disclosed the timeouts as 12 single samples of 7-14 s; the issuer's count from the file is 11 timeouts plus the one 502. The counts differ by the 502, which the applier's ferry does not name."
+    ]
+  },
+  "spec_asserts": "rl17.AC2 and rl17.AC3 grade the service by counts read on the host (health 200, restarts 0, 30 minutes with 0 triggers) and the internal /health samples during the load; no criterion reads the public edge's answer rate.",
+  "world_is": "On the public path 12 of 966 probes (about 1.2 percent) did not answer 200-or-401, spread across the window; the host-side measures read clean. NOT KNOWN: the rate before the release (no baseline was taken), whether the timeouts sit on the edge, the tunnel or the service, and whether the two inside the load window were caused by it. Nothing here moves a verdict: AC1, AC2 and AC3 read PASS.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer's plan, inside this decomposition: round 48 carries one read, not a monitor: take the same public-path sampler for a bounded unarmed hour in a window with no release and compare the rate with this window's; the answer names which of the two it is. Counts only; no identity, address or token in any record."
+}
+```
