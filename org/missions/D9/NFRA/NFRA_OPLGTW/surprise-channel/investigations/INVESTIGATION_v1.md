@@ -31595,3 +31595,32 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Issuer's plan, inside this decomposition: round 48 carries one read, not a monitor: the service's RSS at the start, after one quiet hour and after one hour of normal traffic, counts only, to say whether it is a plateau; if it grows toward MemoryHigh the issuer re-opens with a new row."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-21T08:28:43Z",
+  "id": "NFRA_OPLGTW-Z-S444",
+  "one_line": "Issuer rulings on the live batch16 proofs: Z-S420 (gateway down for every user) DISARMED on its own stated condition; Z-S410 (Cottonwood false zero) stays ARMED for fees, its transactions half is proven live",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S420"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Z-S420's stated disarm condition: the target reads healthy and one live call answers. Read by the issuer from the applier's records and my own check runs on the merged tree: ledger nfra-oplgtw-gateway-release-batch16 CLOSED 06:44Z; release 8e3eddf959 live, marker equal, health 200, NRestarts 0, one pid through a 30-minute read-back (W/CODE16_SERVED.json); 345 audit records and 978 POST /mcp journal lines in the same 30 minutes; an eight-call parallel load of the large tools completed 8 of 8 with 0 gateway_busy and 0 other errors, internal /health 90 of 90 at 200, service peak 170.8 MB (W/RL17_PROOFS.json); rl17.AC2 and rl17.AC3 PASS. Release R3c (2923d1ee99) followed on top: ledger CLOSED 07:55Z, health 200, restarts 0.",
+      "The cause of the 17:30Z outage was never established; the oversize-reply hypothesis (Z-S413, projection P4-P7) is the fix the release carries (aggregate AUA 51188 bytes, opal_discover 48505 bytes, each at most 51200), and the in-flight guard (limit 26) is live. Row Z-S442 records separately that the public sampler read 12 non-answers in 966 probes with no baseline.",
+      "Z-S410: W/RL17_PROOFS.json d2 reads client_get_transactions for a Cottonwood Black Diamond account over 2026-07-20 to 2026-10-20: 2 transactions (the false zero of the transactions half is gone). The fees half (client_get_fees) was NOT read live in Phase B, and the source's rolling file still holds only the dates of one file, so a 13-month window cannot be served as a full history."
+    ]
+  },
+  "spec_asserts": "A hazard row is disarmed when its own stated condition is measured on the live system; a row stays ARMED for any half no live read has covered.",
+  "world_is": "Z-S420 is disarmed on its stated condition; its cause stays unestablished and is carried by the release's fixes, not proven by them. Z-S410 stays ARMED: do not quote an empty Cottonwood fee list as no fees; the transactions answer reads 2 rows live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S420 disarmed on its own condition with the live evidence above. Z-S410 is not adjudicated here: its fees half has no live read yet, so the row stands ARMED and round 48 carries one live fee read (the advisor tables vendor items 3-10 include client_get_fees)."
+}
+```
