@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.16",
+  "prd_version": "v3.17",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -27,8 +27,7 @@
     "FWD-19",
     "FWD-20",
     "FWD-21",
-    "FWD-22",
-    "FWD-23"
+    "FWD-22"
   ],
   "status": "RATIFIED"
 }
@@ -288,28 +287,6 @@ Admission is unchanged: the Opal-users-only gate (v2.3 item 4), C2, tier admissi
 S3, Lambda or DynamoDB read by a gateway role is a widening with its never-widen sign-off (CLAUDE.md NEVER-1). No
 resource name is typed (rule 30). Answers project to 50 KB by default (G1 section 3). A last-4 that is ambiguous within a firm returns
 the candidates, never a guess. Freshness is stated in trading days.
-
-FWD-23  — A granted principal lists and reads the Opal data folders through the gateway as with the AWS CLI (v3.16)
-
-DONE WHEN: EXERCISED — a granted principal, through two gateway tools, (1) lists any prefix of `opal-data-assets`,
-`opal-data-etfs` and `opal-data-portal-v2` (one page of keys with size and LastModified, the sub-prefixes one level down,
-and a continuation token), and (2) reads any object there: Parquet as rows with optional columns, filters and a row limit;
-JSON parsed; text as text. A read may name one date-partitioned table folder with a date range and filters, and is
-answered over those partitions in one call. Proof: listing `schwab/<master>/silver/` shows all 19 tables for each of
-`08242234`, `08335338`, `08403355`; a read of `fact_trn` filtered to one account and a trade-date range returns rows whose
-count equals a direct read of the same objects; a read of `fact_acc` filtered on a name finds that client's accounts; a
-principal without the grant is refused with 0 reads.
-
-ACCEPT: Built on the estate's existing list/read tools (`app/harvest_read.py` pattern) and the Schwab DuckDB engine
-(`engine.py`, its memory and time ceilings); no per-table contract, no typed field lists, every column served under its
-silver name. Dropped at read, by column name, until Andrew's word moves them: tax identifiers, mailing addresses, email
-addresses, phone numbers (Andrew 2026-10-21: agreed). Allowed prefixes are a list in code, never a typed bucket name
-outside the builder (rule 30). The reader IAM over those prefixes is a widening with its never-widen sign-off.
-
-SOURCE: Andrew-direct 2026-10-21: "The gateway should be exposing the full silver fact tables, that is the entire point";
-"if we are only exposing dims, and not the trn acc etc tables, this is pointless, it needs to be able to provide the full
-data"; "Make sure that is enabled"; "the point here is really to just give menachem an aws cli over mcp. he just needs to
-be able to query these folders as i do via aws cli, it should not be excessively complicated."
 
 PROOF: Per landed group, one driven call. Negative arms: a non-Opal principal refused; for a client-data group, a
 no-firm call and a two-firm call refused; an ambiguous last-4 returns candidates.
@@ -1628,3 +1605,14 @@ question about tax ids, addresses, email and phone: "I agree with your rec" (kee
 
 **Sign-off.** ENDPOINT (FWD-23) changes before its first signature. The ratified-text half is owed by `3.0.0_SA_CVO~Z` at
 this version; the brief half is Andrew's words (PROPORTIONATE).
+
+### v3.17 addendum (2026-10-21 ~14:1xZ, 1.0.0_SA_CTO~Z) -- FWD-23 leaves the ENDPOINT until Andrew's spec and the CRO brief land
+
+Andrew-direct 2026-10-21, verbatim: "yeah the purpose here is to intentionally be light, i will transcribe a spec on the
+intention of how this should work and send it to CRO for a brief."
+
+1. **FWD-23 is withdrawn from the ENDPOINT section and the header** (restored to the v3.14 bytes). The brief comes first
+   (L1, `4.0.0_SA_CRO`); this seat writes the endpoint from it. The v3.15 and v3.16 text above stays as INPUT to that
+   brief, not as ratified text.
+2. **Why now.** v3.15/v3.16 moved the ENDPOINT hash and left both L4-R halves stale, which withheld the round-47 issuance of
+   Menachem's Schwab grant and narrowing (OG-gm-2, OG-pa-1) that Andrew wants now. Restoring the ENDPOINT releases them.
