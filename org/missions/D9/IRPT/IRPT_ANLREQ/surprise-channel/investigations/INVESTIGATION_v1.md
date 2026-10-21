@@ -31404,3 +31404,32 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-W355-S1 -- the AR-g-182 worktree's sparse checkout omits data/firm_registry.json, so the owned tests error at base (21 of 25)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W355-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~355",
+  "surfaced_at": "2026-10-21T05:16:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The worktree C:/dev/wk-irpt-anlreq-355 is a sparse checkout whose cone omits data/, so data/firm_registry.json (tracked at HEAD) is not materialized; ids._find_registry raises IdRefused and 21 of the 25 baseline tests in the two owned files ERROR until IRPT_FIRM_REGISTRY names a copy of the registry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-355 git sparse-checkout list (10 entries; no data/ entry) and ls data/firm_registry.json (no such file) at e09dff18956",
+      "git ls-files -- data/firm_registry.json lists the tracked file at HEAD; git show HEAD:data/firm_registry.json is 5326 bytes and byte-identical to C:/dev/ajb_workspace/data/firm_registry.json",
+      "infra/aws/lambda/investor-reporting/_ids/ids.py _find_registry: env IRPT_FIRM_REGISTRY first, then a bounded walk for data/firm_registry.json, then a copy beside the module; raises IdRefused when none is found",
+      "baseline pytest of ycharts/generate/tests/test_frozen_worker.py and reports/tests/test_compare_ports.py: 4 passed, 21 errors (IdRefused); with IRPT_FIRM_REGISTRY=C:/dev/wk-irpt-anlreq-355/.scratch/firm_registry_HEAD.json: 25 passed"
+    ]
+  },
+  "spec_asserts": "The order runs the owned test files with plain python -m pytest from infra/aws/lambda/investor-reporting and records 25 passing at base; the worktree carries the paths the order names and its tests run as written.",
+  "world_is": "The worktree materializes no data/ directory, so the registry the ids module reads at test time is absent. The worker did not run git sparse-checkout and did not write into the tree: it wrote git show HEAD:data/firm_registry.json into the worktree scratch folder and exported IRPT_FIRM_REGISTRY to that copy for each test and checker run. The checker's tests arm inherits that environment from its caller, so its PASS depends on the variable being set in the invoking shell.",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "notes": "Every worker provisioned in this sparse shape meets the same IdRefused; the issuer owns the worktree's sparse cone. No tree file was changed for this row."
+}
+```
