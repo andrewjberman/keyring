@@ -364,7 +364,8 @@ def x1_run():
         if best is None:
             return out("%s-FAIL no run record under %s" % (tag, prefix))
         rec = json.loads(s3.get_object(Bucket=m.group(1), Key=best["Key"])["Body"].read().decode("utf-8"))
-        landed = [f for f in rec.get("files", []) if f.get("action") == "landed"]
+        # a file already in S3 with the same bytes (skipped_existing) is as landed as one put by this run
+        landed = [f for f in rec.get("files", []) if f.get("action") in ("landed", "skipped_existing")]
         failed_files = [f for f in rec.get("files", []) if f.get("action") == "failed"]
         if (rec.get("source") != "automated" or rec.get("failure_class") or rec.get("failed_step")
                 or rec.get("run_error") or failed_files or len(landed) != 6):
