@@ -176,8 +176,11 @@ def _to_status_match(text):
 # owner and the condition that un-parks it). It is therefore not an open order of the round, and it must not pin every later
 # slug's watermark. It RE-ENTERS the census the moment its issuer flips the status back (pending / staged / issued), so
 # nothing is lost: this reads a parked order as not-open, never as done.
+# `not_met` is TERMINAL AND NOT CLEAN: the order ended with a failed criterion and does not reopen, the same word
+# round-close-check.py counts as terminal (1.0.0_SA_CTO ruling RULINGS_PARKED_BUS_ITEMS_20261017_1350Z.md item 2;
+# 3.0.0_SA_CVO~DELL2 ADJUDICATION_v36 found the two gates disagreeing on it).
 TERMINAL_TO_WORDS = ("complete", "completed", "closed", "done", "superseded", "cancelled", "canceled", "withdrawn",
-                     "parked")
+                     "parked", "not_met")
 
 # GATE (iii), SECOND LIMB -- record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_
 # APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md. A NEW route-carrying row under a TREE project is
