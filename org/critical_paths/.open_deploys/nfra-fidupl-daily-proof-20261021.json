@@ -1,0 +1,32 @@
+{
+  "slug": "nfra-fidupl-daily-proof-20261021",
+  "title": "NFRA_FIDUPL FT-s-8: config.daily.json on the box (step 1, no sign-in); the daily-mode proof run held for the issuer's GO",
+  "author": "0.7.0_AE_CloudOps~NFRA1",
+  "status": "OPEN",
+  "opened_at": "2026-10-21T02:26:46.685569+00:00",
+  "window_hours": 24.0,
+  "entry_path": "org/critical_paths/change_management/20261021T0226Z_nfra-fidupl-daily-proof-20261021_deploy_completion.md",
+  "legs": [
+    {
+      "id": "L1",
+      "kind": "ec2-baked-asset",
+      "target": "/opt/fidelity-uploader/config.daily.json = config.json plus mode, firm_labels, account_columns only; config.json untouched",
+      "proof_required": "key-name list, json.tool valid, config.json md5 equal before and after; ft8c R1-FT8C-OK",
+      "proof": null,
+      "closed_at": null
+    },
+    {
+      "id": "L2",
+      "kind": "activation",
+      "target": "ONE run of box/run.py on config.daily.json (one sign-in, 31-fold G switch) - HELD for the issuer's GO",
+      "proof_required": "stdout lines verbatim; ft8r R1-FT8R-OK",
+      "proof": null,
+      "closed_at": null
+    }
+  ],
+  "log": [
+    "20261021T022646Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 2 leg(s)"
+  ],
+  "last_red_at": null,
+  "device": "dell1"
+}
