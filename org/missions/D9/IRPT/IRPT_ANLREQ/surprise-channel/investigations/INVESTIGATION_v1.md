@@ -31705,3 +31705,52 @@
   "notes": "Order left pending: AC1 is FAIL by its literal expectation, so no status flip. AC2 (selftest) passes. Check script committed as the second commit of this order; proof instance records AC1 FAIL."
 }
 ```
+
+## IRPT_ANLREQ-D2-S252 -- residue rows of runs 5c-7j closed on measured state; S225 and four worker rows closed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S252",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T09:05:00Z",
+  "one_line": "The synthetic residue rows of runs 5c to 7j (S221, S223, S224, S229, S232, S234, S237, S240, S241, S244, S246, S250, S251) are closed: every listed version is deleted; S225 and four worker rows are closed on measured state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S221",
+    "IRPT_ANLREQ-D2-S223",
+    "IRPT_ANLREQ-D2-S224",
+    "IRPT_ANLREQ-D2-S225",
+    "IRPT_ANLREQ-D2-S229",
+    "IRPT_ANLREQ-D2-S232",
+    "IRPT_ANLREQ-D2-S234",
+    "IRPT_ANLREQ-D2-S237",
+    "IRPT_ANLREQ-D2-S240",
+    "IRPT_ANLREQ-D2-S241",
+    "IRPT_ANLREQ-D2-S244",
+    "IRPT_ANLREQ-D2-S246",
+    "IRPT_ANLREQ-D2-S250",
+    "IRPT_ANLREQ-D2-S251",
+    "IRPT_ANLREQ-D2-W350-S1",
+    "IRPT_ANLREQ-D2-W351-S1",
+    "IRPT_ANLREQ-D2-W362-S1",
+    "IRPT_ANLREQ-D2-W364-S1"
+  ],
+  "spec_asserts": "Each residue row says the CloudOps principal cannot delete synthetic state objects a named run left in opal-data-irpt, and stays ARMED until a delete pass runs; S225 says the READY and commentary attach left no package on the ticket in run 6; the worker rows name an order's own defects (AC3 collection order, builder source of the ticket table, a commit-gate warning, a stale check base).",
+  "world_is": "MEASURED 2026-10-21 ~08:40Z-09:05Z by this seat. RESIDUE: V2's round-22 manifest (org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R22_DELETE/R22_DELETE_MANIFEST.json, runs 4 to 7d, 42 versions) read ABSENT 42 of 42 by head-object with the VersionId (TV2's pass, msg 11733); my supplement manifest (7963026db4, runs 7e to 7j, 29 versions, including the two run-7J analysis_audit versions) read ABSENT 29 of 29, the audit key lists 0 versions and 0 markers, the three throwaway roles read NoSuchEntity, and the whole-root plan of the ycharts stack at the removal commit 86b73badcca read No changes (IB2 msg 11952, ledger irpt-residue-delete-7e7j-20261021 CLOSED); Andrew's 8 retained objects read PRESENT before and after. The 4 cottonwood trade-form objects are NOT these rows and remain recorded residue (R22_COTTONWOOD_RESIDUE_RECORD.json). S225: run 6's missing package is cured: the ticket carried the package at runs 7d and 7f (both PDFs opened) and run 7J's audit record holds all four package refs (re-read here, schema-valid). W350-S1: AC3 was re-ordered by AMENDMENT 1 of AR-y-481. W351-S1: ruled A by the CTO (msg 11713) and built by AR-y-484 (drained 651ad7eac81). W364-S1: the stale base was corrected by AMENDMENT 1 of AR-y-491 (drained 86b73badcca). W362-S1: the commit-gate WARN is the box lacking the hashed client-account list; the only account number the commits carry is Opal's own AWS account id, which every Terraform ARN in the tree already names; no client account id was authored.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_residue_delete_7e7j/A_RESIDUE_DELETE.txt",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R22_DELETE/R22_DELETE_MANIFEST.json",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/synthetic_residue_delete_list_supplement_runs7e_7j_20261021.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Every named object version is deleted and read ABSENT, the throwaway roles are gone, the whole-root plan reads No changes; S225 and the four worker rows are closed by the cited amendments and the later passing runs. S220 and S222 are NOT closed here (see the issuer's report to the CTO)."
+}
+]
+```
