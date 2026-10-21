@@ -1301,6 +1301,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "Worker face PROOF step: flip the task order status to complete in the same commit as the instance and the deliverables, once the FT-s-4-AC1 criterion PASSes.",
     "world_is": "The grant admits no path to the TO file, so the flip falls to the issuer or the gate. FT-s-4-AC1 PASSes (R1-FT4-OK passed=7) and the instance validates at code commit ea910790b1; the order stays pending on the worker side until the issuer flips it.",
     "notes": "Worker stopped before the flip; the instance and the code are committed LOCAL on wk-NFRA_FIDUPL-7. The COO or the gate owns the flip."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W4-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~4",
+    "surfaced_at": "2026-10-21T01:37:00Z",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P1",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "one_line": "box/run.py refuses any config.json that carries perg_secret_id: ALLOWED_KEYS has no such key, so check_pointers raises before any run mode dispatches.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/box/run.py@6bd116284f5 lines 21-25: ALLOWED_KEYS lists wealthscape_secret_id, quo_secret_id, quo_line_id, quo_sender, scope, region, profile_dir, work_dir, repo_root, mode, firm_labels, account_columns; perg_secret_id is absent",
+        "local call in worktree C:/tmp/fidupl-w4 at cede76602d, no AWS and no secret: run.check_pointers(config) with a synthetic config carrying perg_secret_id printed 'REFUSED: config holds keys that are not pointers: perg_secret_id'",
+        "org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md@6bd116284f5 section 12 names config.json key perg_secret_id (the per-G secret id)"
+      ]
+    },
+    "spec_asserts": "REFERENCE section 12 (round 3): the box config.json carries the key perg_secret_id, and section 7 keeps config.json to POINTERS; box/run.py main() is the box's config gate and refuses keys outside its ALLOWED_KEYS.",
+    "world_is": "ALLOWED_KEYS in box/run.py does not list perg_secret_id, so a config carrying the key is refused with 'config holds keys that are not pointers' before any once or daily run starts. perg_seed.py (FT-s-1) does not call check_pointers and reads the key directly, so FT-s-1 is not affected.",
+    "notes": "Not edited: box/run.py is outside FT-s-1's grant. Disarm is the issuer's: add perg_secret_id to ALLOWED_KEYS as a string pointer in the cell that writes the key into config.json, or confirm where the key is written. ARMED until a config carrying the key passes check_pointers on the box. Measured on the local worktree only; the box config.json was not read."
   }
 ]
 ```
