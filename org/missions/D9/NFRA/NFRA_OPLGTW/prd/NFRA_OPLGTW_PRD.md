@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.17",
+  "prd_version": "v3.19",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -27,7 +27,9 @@
     "FWD-19",
     "FWD-20",
     "FWD-21",
-    "FWD-22"
+    "FWD-22",
+    "FWD-23",
+    "FWD-24"
   ],
   "status": "RATIFIED"
 }
@@ -287,6 +289,34 @@ Admission is unchanged: the Opal-users-only gate (v2.3 item 4), C2, tier admissi
 S3, Lambda or DynamoDB read by a gateway role is a widening with its never-widen sign-off (CLAUDE.md NEVER-1). No
 resource name is typed (rule 30). Answers project to 50 KB by default (G1 section 3). A last-4 that is ambiguous within a firm returns
 the candidates, never a guess. Freshness is stated in trading days.
+
+FWD-23  — The AWS CLI over MCP: a granted person lists, describes and queries the folders they may read (v3.18)
+
+DONE WHEN: EXERCISED — a granted principal, through the served gateway: (a) lists `schwab/<master>/silver/` and sees every
+table, as `aws s3 ls` would; (b) describes `fact_trn`, getting columns and types with no rows read; (c) queries `fact_trn`
+for one account between two trade dates and gets at most one page plus a cursor, the row count equal to a direct read of the
+same files; (d) finds a client's accounts by a name filter on `fact_acc`; (e) queries Orion/Inflection `fact_transactions`
+(1.53M rows) for one account between two dates inside the engine's memory and time ceilings, the file never loaded whole on
+the gateway; (f) reads Cottonwood Black Diamond transactions and fees with their MM/DD/YYYY dates parsed, the count equal to
+a direct read. The same query by a principal without the folder is refused by folder name with 0 reads. First cut: Schwab,
+Orion, Cottonwood Black Diamond; SmartX, Eclipse, Commonwealth and the rest are deferred.
+
+ACCEPT: No custom tables and no redaction layer, with one exception Andrew agreed: tax identifiers, mailing addresses, email
+addresses, phone numbers and date of birth are dropped by column name, and bronze is in no grant. Built on the Schwab
+DuckDB child (`engine.py`, `cursor.py`) and the list/read pattern of `app/harvest_read.py`. No caller string becomes SQL text
+outside the engine's closed grammar. Every page has a row and byte ceiling; a question too big for a page answers with a
+total or a cursor, never a dump. The existing typed tools stay until FWD-23 is proven on this thread; each one it replaces is
+then retired (Andrew: "Sure"). Reader IAM over the folders is a widening with its never-widen sign-off.
+
+FWD-24  — The entitlement is a bucket or a folder, per person, and nothing else (v3.18)
+
+DONE WHEN: EXERCISED — the owner grants Menachem `opal-data-assets/`, `opal-data-etfs/` and `opal-data-portal-v2/` in one act;
+he reads under them through FWD-23's tools and is refused under `opal-data-harvest/`. A bucket or folder grant never reaches a
+bronze or raw prefix (for example `schwab/<master>/bronze/`): the shim's prefix check and the reader IAM both exclude them, and
+a bronze read under Menachem's whole-bucket `opal-data-assets/` grant is refused with 0 reads. The contract's per-account,
+per-column and masked-reference clauses are revised to say they are superseded.
+
+SOURCE: Andrew-direct 2026-10-21 (records `4.0.0_SA_CRO~Z` @243c25998e and @8c8fa480de; the `1.0.0_SA_CTO~Z` Menachem record): "this is really just an AWSCLI put on top of an MCP"; "The entitlement layer is for accessing whole buckets, accessing buckets or maybe accessing various folders within those buckets"; "the most important thing for now is that the tables that are in there, for both Schwab and Orion (and Cottonwood Black Diamond), are manageable in the current state." Brief `docs/briefs/mcp-cli-shim-bounded-query-brief-20261021.md` @8c8fa480de.
 
 PROOF: Per landed group, one driven call. Negative arms: a non-Opal principal refused; for a client-data group, a
 no-firm call and a two-firm call refused; an ambiguous last-4 returns candidates.
@@ -1616,3 +1646,22 @@ intention of how this should work and send it to CRO for a brief."
    brief, not as ratified text.
 2. **Why now.** v3.15/v3.16 moved the ENDPOINT hash and left both L4-R halves stale, which withheld the round-47 issuance of
    Menachem's Schwab grant and narrowing (OG-gm-2, OG-pa-1) that Andrew wants now. Restoring the ENDPOINT releases them.
+
+### v3.18 addendum (2026-10-21 ~15:xxZ, 1.0.0_SA_CTO~Z) -- FWD-23 and FWD-24: the MCP as an AWS-CLI shim, folder entitlement (Andrew-confirmed)
+
+Andrew-direct 2026-10-21, at this terminal, on this seat's endpoint draft
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_DRAFT_MCP_CLI_SHIM_20261021_Z.md` @08c62c6f21): "1.) If it's easy to do this
+and does not add excess complication, sure, keep the Tax IDs and so on. 2.) Sure." Read as: the five sensitive classes are
+dropped by column name (simple), and the typed tools stay until FWD-23 is proven, then the ones it replaces retire.
+
+- FWD-23 and FWD-24 enter the ENDPOINT. The brief is `4.0.0_SA_CRO~Z`'s, accepted as written (PROPORTIONATE).
+- v3.15 and v3.16 are superseded by this text.
+- Issuer: `2.0.0_SA_COO~O`, first in round 48 with the per-firm client grant shape. The MCPORTAL folder switch is
+  `2.0.0_SA_COO~MP`'s; the light index is NFRA_MCPINDEX FWD-26.
+- **Sign-off:** ENDPOINT changes; the ratified-text half is owed by `3.0.0_SA_CVO~Z`.
+
+### v3.19 addendum (2026-10-21 ~15:3xZ, 1.0.0_SA_CTO~Z) -- cure of the CVO refusal @78774c1f94: no grant reaches bronze
+
+FWD-24 now states that a bucket or folder grant never reaches a bronze or raw prefix (shim prefix check plus reader IAM), and
+its proof adds a refused bronze read under the whole-bucket `opal-data-assets/` grant. ENDPOINT changes; the ratified-text half
+is owed by `3.0.0_SA_CVO~Z`.
