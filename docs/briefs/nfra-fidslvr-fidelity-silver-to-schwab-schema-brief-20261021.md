@@ -11,19 +11,34 @@ Fidelity surface catalog + the Fidelity->Schwab table map). Sibling of NFRA_FIDU
 
 ## PART I -- THE OUTCOME TERRITORY
 
-**Candidate thread (FWD-1):** a data engineer who already reads a Schwab silver `fact_*` table points the same code at the Fidelity
-silver `fact_*` table of the same name and it works unchanged -- same columns, same types, same grain -- for one fact table
-(`fact_rps`, positions) end to end, one business date. Round 1 proves that one table matches; later rounds enrich to every table.
+**DESIGN: OPTION B (Andrew-direct ~15:5xZ).** Silver is **custodian-native and lossless** -- Fidelity silver carries Fidelity's own
+fields as they come from bronze. A **matching config / canonical dictionary** holds the conforming logic, and the **gold** layer is built
+from it. The uniformity is a GOLD property, produced by the config, not forced into silver. The canonical gold schema is **seeded from the
+Schwab silver layout** (so existing Schwab readers meet a familiar shape and Schwab's own mapping is near-identity), but is now a
+deliberate canonical, not one custodian's accident. Rejected alternative (Option A, conform-at-silver): it would strand Fidelity-only
+richness -- e.g. household Groups, for which Schwab has NO table in silver OR bronze (measured) -- and bake a possibly-wrong field
+equivalence into the durable layer.
 
-### O1 -- A reader cannot tell the custodian apart at silver
-A data engineer reading `fact_acc`, `fact_rps`, `fact_rps_s2`, `fact_sec`, `fact_trn`, `fact_uln`/`fact_ult`, `fact_rld` for Fidelity gets
-the **same schema** (column names, types, units, enum values, grain) as the Schwab silver tables of those names. Code written for Schwab
-runs on Fidelity with no change.
+**Candidate thread (FWD-1):** a data engineer who already reads the Schwab (canonical) positions table points the same code at the
+**Fidelity-derived GOLD** positions table and it runs unchanged -- same columns, types, grain -- for one fact (positions), one business
+date, end to end. Round 1 proves that one table conforms through the config; later rounds enrich to every table.
 
-### O2 -- Every bronze fact table reaches a silver table of the Schwab schema
+### O1 -- A reader cannot tell the custodian apart at GOLD
+A data engineer reading the canonical gold tables (positions, accounts, securities, transactions, lots, realized G/L) gets the **same
+schema** regardless of custodian; code written against the canonical (Schwab-seeded) schema runs on the Fidelity-derived gold with no
+change. Silver stays custodian-native; the uniformity is produced at gold by the config.
+
+### O2 -- Every bronze fact family reaches a native-faithful silver table AND a canonical gold table via the config
 For each Fidelity bronze fact family NFRA_FIDUPL lands -- accounts, positions, balances, securities/prices, transactions, open tax lots,
-realized gain/loss (and unrealized, at lot grain) -- there is a corresponding silver parquet table built to the matching Schwab silver
-table's schema. Nothing Fidelity provides is stranded in bronze.
+realized gain/loss (and unrealized, at lot grain) -- there is (a) a silver parquet table carrying Fidelity's OWN fields losslessly, and
+(b) a canonical gold table built from it by the matching config. Fidelity-only richness (the household Groups) is **preserved in silver**
+and surfaced in gold when a canonical table is defined; nothing Fidelity provides is stranded or discarded.
+
+### O2b -- The matching config is the single, readable source of conforming truth
+A **config/matching table** records, per canonical gold field, which custodian field feeds it and the transform (rename, unit, enum map),
+with a note where the match is only **approximate** (custodians word fields differently -- Andrew's caveat). Gold is constructed from this
+config; changing a mapping edits the config and rebuilds gold, **never silver**. The config IS the coalescing logic -- explicit,
+inspectable, versioned -- and it is the project's central artifact.
 
 ### O3 -- One gold layer serves both custodians from the uniform silvers + the config (no bespoke master required)
 An analyst asking a cross-custodian question (holdings, lots, realized gains across a household that has both Schwab and Fidelity accounts)
@@ -39,13 +54,15 @@ the needed tables by configuration** -- union the uniform silvers, attribute via
 master. Whether gold is a config-driven assembly (views) or a materialized set is a gold-layer/DS decision; the uniform silver + config is
 what makes either cheap.
 
-### O4 -- The unmappable is named, not hidden
-Where a Fidelity source has a field the Schwab schema lacks (or vice versa), the gap is recorded per table -- carried in an extension
-column, or explicitly dropped with its reason -- so no field is silently lost and no Schwab column is silently null-filled.
+### O4 -- The unmappable is named in the config, not hidden
+Where a Fidelity field has no canonical gold field (or a canonical field no custodian fills), the gap is recorded **in the matching
+config** -- surfaced as an extension/custodian-specific column in gold, or explicitly left unmapped with its reason -- so no field is
+silently lost and no canonical column is silently null-filled. A query-time surprise about a column is a failure of this outcome.
 
 ### O5 -- Silver runs off bronze as landed, daily and for the backfill
-The converter consumes NFRA_FIDUPL's bronze exactly as it lands (daily and the backfilled history: transactions to ~2021-12, realized
-lots to 2018), partitioned by business date, so silver advances automatically as bronze does.
+The native silver converter consumes NFRA_FIDUPL's bronze exactly as it lands (daily and the backfilled history: transactions to
+~2021-12, realized lots to 2018), partitioned by business date, so silver -- and the gold built from it -- advances automatically as
+bronze does.
 
 ---
 
@@ -53,26 +70,26 @@ lots to 2018), partitioned by business date, so silver advances automatically as
 
 | This project (NFRA_FIDSLVR) OWNS | Relies on, does not change |
 |---|---|
-| The Fidelity silver converters (bronze -> parquet `fact_*`/`dim_*` to the Schwab schema) | NFRA_FIDUPL's bronze landing (the raw .txt/JSON fact files) -- the input contract |
-| The per-field reconciliation map (Fidelity field -> Schwab silver column) | The Schwab silver schema (`opal-assets-silver-schwab`), which it matches and never alters |
-| The master gold union model across custodians, on a `custodian` dimension | LGIC naming (`lib/opal_naming.py`), the `fidelity` scopes already registered |
+| The Fidelity **native** silver converters (bronze -> parquet carrying Fidelity's own fields, lossless) | NFRA_FIDUPL's bronze landing (the raw .txt/JSON fact files) -- the input contract |
+| The **matching config / canonical dictionary** (custodian field -> canonical gold field + transforms + approximate-match notes) -- the central artifact | The Schwab silver schema (`opal-assets-silver-schwab`), read as the SEED for the canonical gold schema, never altered |
+| The **config-driven gold constructor** (canonical tables + `custodian` dimension + native-id attribution) | LGIC naming (`lib/opal_naming.py`), the `fidelity` scopes already registered |
 
 **Named siblings:**
 - **NFRA_FIDUPL** -- lands all the Fidelity bronze fact tables (incl. open lots, realized/unrealized G/L as build cells). Upstream; this
   project starts where its bronze ends.
-- **The Schwab silver (`opal-assets-silver-schwab`)** -- the schema template. This project conforms to it; if a true shared-schema change
-  is needed, that is a joint decision, not a unilateral edit here.
+- **The Schwab silver (`opal-assets-silver-schwab`)** -- the **seed** for the canonical gold schema. Not altered. Schwab may itself be
+  re-expressed through the same config later (its mapping is near-identity); that is a joint decision, not a unilateral edit here.
 - **The per-firm split** (NFRA_FIDUPL) -- orthogonal; silver is built on the Alongside bronze regardless of firm attribution.
 
 ---
 
 ## PART III -- THE QUALITATIVE BAR
 
-- A Schwab silver reader runs unchanged on the Fidelity silver table of the same name -- the test Andrew set ("formulated the exact same
-  way"). Disputable: point real Schwab-reading code at the Fidelity table and see it run or fail.
-- An analyst answers a both-custodians question from one gold model without custodian-specific code.
-- A reviewer comparing a Fidelity `fact_*` table against its Schwab twin finds the same columns/types/grain, and every divergence named in
-  the reconciliation map rather than discovered at query time.
+- A Schwab (canonical) reader runs unchanged on the **Fidelity-derived gold** table of the same name -- the test Andrew set, applied at
+  gold under Option B. Disputable: point real Schwab-reading code at the Fidelity gold table and see it run or fail.
+- An analyst answers a both-custodians question from one gold layer without custodian-specific code.
+- A reviewer reads the **matching config** and finds every Fidelity<->canonical divergence named there with its disposition, rather than
+  discovering a column surprise at query time; Fidelity silver, read directly, is faithful to Fidelity's own field names.
 
 No row counts or tolerances are set here; the quantitative parity bars are the PRD's.
 
