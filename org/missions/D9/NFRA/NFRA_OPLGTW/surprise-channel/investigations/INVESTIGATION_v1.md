@@ -31568,3 +31568,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Issuer's plan, inside this decomposition: round 48 carries one read, not a monitor: take the same public-path sampler for a bounded unarmed hour in a window with no release and compare the rate with this window's; the answer names which of the two it is. Counts only; no identity, address or token in any record."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-21T08:04:28Z",
+  "id": "NFRA_OPLGTW-Z-S443",
+  "one_line": "R3c read-back: gateway service memory rose from 211 to 973 MB within 100 s of the restart and sat at 881 MB; the applier shows its own steps did not cause it, the cause is not established",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W/r3c_pb/readback.jsonl (read by the issuer): service_rss_mb 211 at 07:21:17Z (baseline, 40 s after the restart), 439 at 07:21:57Z, 973.5 at 07:22:56Z, then 880.9 flat through 07:36:56Z; health 200 and NRestarts 0 on every probe; host memory 15-17 percent; MemoryHigh 5600 MB.",
+      "W/r3c_pb/memory_observation.json and the applier's ferry 07:41Z: the rise finished before the applier's first request to the service (07:23:06Z); its 27-tool read, dual-read listing and probe ran in fresh guarded processes, not in the service; the journal shows real-caller traffic in those minutes (POST /mcp 28 lines at 07:20, 4 at 07:21, 3 at 07:22). RssAnon 840 MB, RssFile 62 MB, 20 threads, no child processes, cgroup peak 967 MB.",
+      "Batch16's read-back (same unit, the release before this one) stayed near 170 MB at the 8-call peak (W/rl17_memory_at_peak.json), so 881 MB is about five times that level.",
+      "Disclosed with it, not part of the cause: the pending-inbox recount before the deploy was not repeated at 07:18:45Z (pending 0 read at 07:09:26Z; W/haltgate_r3c.json), and the gate's elapsed time is bounded at 105 s for the whole wrapper (07:18:45Z-07:20:30Z), not measured alone, which leaves the 60 s trigger of NFRA_MCPORTAL-Z-S81 neither fired nor cleared."
+    ]
+  },
+  "spec_asserts": "The OG-rl-19 order names no memory trigger and rl19.AC2 grades the read-back by health, restarts and host memory; the monitor's carried 700 MB line is not an order trigger.",
+  "world_is": "After the R3c restart the service holds about 881 MB, against about 170 MB through batch16. The bound that guards it is MemoryHigh 5600 MB (host 15-17 percent), so nothing in the order fires. NOT KNOWN: what in the first minutes of real traffic holds the memory, and whether it grows with more traffic or stays; one flat reading over 15 minutes does not say.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer's plan, inside this decomposition: round 48 carries one read, not a monitor: the service's RSS at the start, after one quiet hour and after one hour of normal traffic, counts only, to say whether it is a plateau; if it grows toward MemoryHigh the issuer re-opens with a new row."
+}
+```

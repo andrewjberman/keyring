@@ -31596,3 +31596,55 @@
   "world_is": "The CTO ruling of 2026-10-19 holds workstream G, names the Analysis Request v0.24 READ on PROD as the un-hold trigger, and warns that a second writer on opal_producer.py collides with AR-y-415..419. The round-60 decomposition and the 2026-10-20 issuance post-date it and sequence AR-g-185 for release. This worker did not verify that the trigger was recorded, and committed the cell as the order directs."
 }
 ```
+
+## IRPT_ANLREQ-D2-W363-S1 -- the commit path's client-data-check ran as ABSENT for the AR-g-187 commit 9f38a7ed4a5, the same box condition as IRPT_ANLREQ-D2-W362-S1
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W363-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~363",
+  "surfaced_at": "2026-10-21T08:17:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "safe-commit.sh printed WARN client-data-check hashed account-id list ABSENT on the AR-g-187 commit 9f38a7ed4a5, so that commit was not checked for client account ids; the list is still absent on this box (same condition as IRPT_ANLREQ-D2-W362-S1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh WARN line printed on the commit of 9f38a7ed4a5 (the two test files in the AR-g-187 cell) in worktree wk-IRPT_ANLREQ-363",
+      "IRPT_ANLREQ-D2-W362-S1 at org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md records the same ABSENT WARN on this box and names the disarm owner"
+    ]
+  },
+  "spec_asserts": "Every commit is checked for client account ids by the commit path; the order names no client-data check and no exception for it.",
+  "world_is": "On this box the hashed account-id list is absent, so the check does not run and the commit proceeds with a WARN. The commit diff holds three hex hash constants and their comments and no account identifier, so the unchecked state carries no visible client data here; the check itself was not run.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-W363-S2 -- the naming gate printed NAMING ERROR for a missing function-map folder in this sparse worktree and the AR-g-187 commit was accepted anyway
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W363-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~363",
+  "surfaced_at": "2026-10-21T08:17:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit.sh printed NAMING ERROR function-map folder missing at infra/aws/lambda/ci/function-map/ on the AR-g-187 commit 9f38a7ed4a5; the naming gate could not grade in this sparse worktree and the commit was accepted with rc 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh naming-gate line on the commit of 9f38a7ed4a5 in worktree wk-IRPT_ANLREQ-363: NAMING ERROR function-map folder missing (the Lambda source map is read from this folder; nothing is graded from a copy)",
+      "safe-commit.sh exit 0 and msg-verify MATCH for 9f38a7ed4a5 in the same commit output"
+    ]
+  },
+  "spec_asserts": "The commit gate grades names before a commit lands; the order names the acceptance invocations and no naming grade, and the worker must not run a sparse-checkout change.",
+  "world_is": "This sparse worktree does not carry the function-map folder, so the naming gate prints ERROR and does not grade; the commit still lands. The AR-g-187 diff touches no Lambda name, address or resource, so the inert case holds for this commit only.",
+  "notes": "Not remediated: no sparse change and no copy of the folder, per the order's bounds."
+}
+```
