@@ -72,6 +72,24 @@ TEST_FILES = {
         "test_unregistered_firm_scope_listed_not_landed", "test_raw_line_bytes_preserved",
         "test_dry_run_writes_nothing", "test_record_has_counts_and_lists",
         "test_unmapped_label_listed_not_landed", "test_record_lists_unplaced_and_conflict_accounts"]),
+    "ft1": ("%s/tests/test_switcher_list.py" % CF, [
+        "test_parses_value_and_label_per_option", "test_label_maps_to_registry_firm_by_substring",
+        "test_unmatched_label_goes_to_alongside_unattributed", "test_cross_check_counts_added_and_dropped_only",
+        "test_seed_payload_is_measured_claim_with_read_time", "test_seed_prints_counts_only_and_never_a_g",
+        "test_seed_puts_one_secret_value_and_logs_out"]),
+    "ft2": ("%s/tests/test_box_daily.py" % CF, [
+        "test_coverage_record_counts_listed_attributed_unattributed", "test_cross_check_difference_is_noted_not_fatal",
+        "test_logout_statuses_recorded", "test_unattributed_g_lands_under_alongside_and_is_named_by_ordinal",
+        "test_missing_perg_secret_skips_cross_check_and_says_so", "test_password_refusal_triggers_one_recovery_attempt",
+        "test_recovery_failure_stops_and_records"]),
+    "ft3": ("%s/tests/test_signin_recover.py" % CF, [
+        "test_attach_uses_loopback_cdp_only", "test_unit_started_only_if_port_closed_and_stopped_after",
+        "test_recovery_signs_in_once_and_never_loops", "test_failure_raises_signin_error_with_class",
+        "test_close_logs_out"]),
+    "ft4": ("%s/tests/test_backfill_run.py" % CF, [
+        "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
+        "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",
+        "test_never_prints_g_numbers"]),
     "fu12h": ("%s/tests/test_agent_fill.py" % CF, [
         "test_username_step_fills_and_never_prints_the_value", "test_password_step_reports_factor_names_only",
         "test_code_step_reads_quo_and_reports_authorize_status_only", "test_attach_uses_localhost_cdp_only",
@@ -610,6 +628,65 @@ def _tf_out(name):
     return rc, o.strip()
 
 
+
+def _perg_arn():
+    import boto3
+    sm = boto3.client("secretsmanager", region_name="us-east-1")
+    return sm.describe_secret(SecretId="fidelity/alongside/perg-list")["ARN"]
+
+
+def box_put_grant():
+    tag = "R1-FT5I"
+    try:
+        import boto3
+        rc, role = _tf_out("role_arn")
+        if rc != 0 or not role.startswith("arn:aws:iam::"):
+            return out("%s-FAIL no role_arn output (rc=%s)" % (tag, rc))
+        iam = boto3.client("iam", region_name="us-east-1")
+        perg = _perg_arn()
+        rc2, wsec = _tf_out("wealthscape_secret_id")
+        res = iam.simulate_principal_policy(PolicySourceArn=role, ActionNames=["secretsmanager:PutSecretValue"],
+                                            ResourceArns=[perg, wsec])["EvaluationResults"]
+        got = dict((r["EvalResourceName"], r["EvalDecision"]) for r in res)
+        if got.get(perg) != "allowed":
+            return out("%s-FAIL the box role may not put the per-G list secret" % tag)
+        if got.get(wsec) == "allowed":
+            return out("%s-FAIL the box role may ALSO put the Wealthscape credentials (too wide)" % tag)
+        return out("%s-OK the box role may put the per-G list secret and not the credentials" % tag)
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
+
+def perg_version():
+    tag = "R1-FT6V"
+    try:
+        import boto3
+        sm = boto3.client("secretsmanager", region_name="us-east-1")
+        d = sm.describe_secret(SecretId="fidelity/alongside/perg-list")
+        stages = [s for v in (d.get("VersionIdsToStages") or {}).values() for s in v]
+        if "AWSCURRENT" not in stages:
+            return out("%s-FAIL the per-G list secret has no current version" % tag)
+        vid = [k for k, v in d["VersionIdsToStages"].items() if "AWSCURRENT" in v][0]
+        return out("%s-OK the per-G list secret has a current version %s" % (tag, vid[:8]))
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
+
+def rules_enabled():
+    tag = "R1-FT6R"
+    try:
+        import boto3
+        ev = boto3.client("events", region_name="us-east-1")
+        rules = [r for r in ev.list_rules(NamePrefix="fidelity")["Rules"]]
+        if len(rules) != 3:
+            return out("%s-FAIL %d fidelity rules, expected 3" % (tag, len(rules)))
+        off = [r["Name"][:30] for r in rules if r["State"] != "ENABLED"]
+        if off:
+            return out("%s-FAIL not enabled: %s" % (tag, ",".join(off)))
+        return out("%s-OK the three schedule rules are ENABLED" % tag)
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
 def automation_iam():
     tag = "R1-FU13I"
     try:
@@ -781,7 +858,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 
