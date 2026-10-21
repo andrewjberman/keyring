@@ -1,0 +1,15 @@
+# Drive log -- 2.0.0_SA_COO~W1 (AMGT_HARVST, dell1) -- 2026-10-21 05:55Z to 08:40Z
+
+**archetype:** COORDINATE
+
+- **S70 read from the ECR side (`116f476d45`, softened `15a60dbe6d`).** CloudTrail `lookup-events` on the execution-role session of each task: the failed pull `3f57aad6` made 1 auth, 3 `BatchGetImage`, a 30 s gap, 1 `BatchCheckLayerAvailability` probing the manifest digest as a layer and 0 `GetDownloadUrlForLayer`, with no error code; the passing probe `e17aaac5` made 1 auth, 6 `BatchGetImage` and 29 `GetDownloadUrlForLayer` within about a second. That rules out an IAM denial and a missing image. It does not determine the cause (CloudTrail records ECR reads with a null response); the evidence fits a transient agent-to-ECR failure and not a fault in our Terraform, role or image. I corrected one wrong figure of mine ("5 hours earlier" was about 85 minutes) before the first commit and softened two inferences stated as fact in the second.
+- **Pre-flight plan of the enable (`ac7c72c20d`).** A read-only `terraform plan` from the shared tree at HEAD with the countersigned flags and the bound digest, `gold-refresh.tf` at the pinned sha256 `73e78ba9...fee247b`: `Plan: 0 to add, 1 to change, 0 to destroy.`, the one change `aws_scheduler_schedule.gold_refresh_daily` `state` DISABLED to ENABLED, no foreign drift. Nothing applied. It is NOT the stage-7 plan; the seat plans again at the apply and any other result is a STOP.
+- **Cadence ruled (CTO msg 9024).** Nothing is owed before the stage-7 span (2026-10-22 10:30Z to 10-23 08:30Z), so the lane's drive runs at 60m until 2026-10-22 09:30Z and returns to 30m through the Friday fire's read; a tick that finds the four facts unchanged appends its line and commits nothing. I replaced the 17,47 cron with an hourly :17 cron and set a one-shot at 09:25Z on 10-22 that restores 17,47 (session-only crons; local time is EDT, checked). MSTR~DELL1 told in one line.
+- **Measured at 08:38Z:** schedule `amgt-gold-refresh-daily` DISABLED, 0 tasks running, lease FULL, inbox empty, no commit from another seat on the project since 07:00Z.
+
+State: round 100, `co-1` to `co-6`, `co-8` complete; `co-7` through stage 6; stage 7 (enable) and stage 8 (first fire's read) open. Push state: MEASURED 08:38Z (ls-remote read), `origin/box/dell1` = `d8eaa845d9dc`; the previous log `93f4f35af4`, `116f476d45`, `15a60dbe6d` and `ac7c72c20d` are ancestors of it; this log is LOCAL until the next sync. `SC1`'s stage evidence (`a1ec94782d`) is still only on its local branch `wk-co7-gold-apply`.
+
+## Compiler Tools
+
+- Run: `aws cloudtrail lookup-events` x8 (four ECR events, two windows), `terraform plan` (read-only, `-lock=false`), `aws scheduler get-schedule`, `aws ecs list-tasks`, `unblock.py tick` (dated wait) x4, `git ls-remote` with `git merge-base --is-ancestor`, `CronList`, `CronDelete`, `CronCreate` x2, `safe-commit.sh` x4 (gates OK).
+- Failed or gaps: CloudTrail cannot show an ECR read's response body, so S70's cause stays undetermined; the pre-flight plan used the shared tree's checkout of the harvest root, not the seat's worktree.
