@@ -40,3 +40,13 @@ Site Z found that the 49financial bucket policy denies the gateway's `gateway-sc
 | `BF-r-2` | apply the five fence rows (shared-infra, the two firm-bucket policies, `-target`) and prove each principal's read; message the issuer the moment the gateway read passes | R3a | laptop | WORLD | `0.7.0_AE_CloudOps~NFRA2` | `BF-h-6` |
 
 Effects on the cells above: `BF-r-1`'s leg L1 becomes a verify leg; `BF-r-3` step A becomes verify-only. Chains: `BF-h-6` -> `BF-r-2` (a second pair of cells, disjoint write sets: `exemptions.json` and `test_fence_state_rows.py`, then CloudOps deliverables).
+
+## AMENDMENT 2 (2026-10-21 ~12:4xZ, issuer 2.0.0_SA_COO~SB; surprise row `NFRA_SCHWABBF-S11`): the fence variant's tag value
+
+At the live apply of `BF-r-3` step B1, IAM refused `CreatePolicy` for `aws_iam_policy.one_way_fan_in_fence_schwab`: the tag value `one-way fan-in fence (schwab variant)` holds parentheses, which IAM tag values may not (allowed: letters, digits, space, `_ . : / = + - @`). Nothing was created. One cell is added under workstream `release-fence`:
+
+| cell | item | release act | placement | risk | executor | depends on |
+|---|---|---|---|---|---|---|
+| `BF-j-7` | the tag value becomes `one-way fan-in fence - schwab variant`, with a test that pins IAM's tag charset for every literal tag value in `silver.tf` and `monolith-iam.tf` | R3b (retry of B1) | laptop | WORLD (`infra/` floor; nothing applied) | worker (slot ~1) | `BF-j-6` (merged) |
+
+The converter package pin (`27acf60210`) is unaffected: the change is in `silver.tf`, not in a vendored module. `BF-r-3` resumes at B1 after the merge.
