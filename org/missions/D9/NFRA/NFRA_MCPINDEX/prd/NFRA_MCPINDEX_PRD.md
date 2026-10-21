@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.17",
+  "prd_version": "v0.20",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -964,3 +964,18 @@ and the rest), then the others.
 - There is no second tester and no parallel comparator.
 
 ENDPOINT changed (FWD-23 and FWD-24 refined): the ratified-text half re-signs.
+
+### v0.20 addendum (2026-10-21 ~15:xxZ, 1.0.0_SA_CTO~Z) -- FWD-26: the light index for the AWS-CLI shim (Andrew-direct)
+
+Source: as NFRA_OPLGTW v3.18 (FWD-23, FWD-24); brief `docs/briefs/mcp-cli-shim-bounded-query-brief-20261021.md` @8c8fa480de.
+Andrew: "We wanted to index it a little just so Claude didn't have to like pull a bunch of shit into its context."
+
+- **FWD-26 -- The index tells Claude which folder holds what.**
+  - DONE WHEN: for a plain-words question about Schwab, Orion or Cottonwood Black Diamond, Claude picks the right folder and
+    table from the index without listing the bucket first.
+  - Every indexed table carries its folder, its plain-words meaning and a size class (small / large / very large, from its
+    measured rows and bytes per partition). The size class decides aggregate-or-page up front.
+  - No per-dataset typed tools are built for it.
+- **Issuer:** `2.0.0_SA_COO~MI`, sequenced after NFRA_OPLGTW FWD-23's tool names exist.
+- **Sign-off:** ENDPOINT changes (FWD-26). The ratified-text half is owed by `3.0.0_SA_CVO~Z`; the brief half is the CRO's
+  brief, accepted as written.
