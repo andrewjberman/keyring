@@ -112,7 +112,10 @@ TEST_FILES = {
         "test_real_runner_planner_and_adapter_walk_end_to_end_on_fakes",
         "test_wait_prints_one_day_line_per_trading_day_and_the_record_lists_days",
         "test_a_request_timeout_is_a_named_stop_with_its_date",
-        "test_real_fetch_session_uses_a_long_request_timeout"]),
+        "test_real_fetch_session_uses_a_long_request_timeout",
+        "test_every_progress_line_is_flushed",
+        "test_wall_budget_stops_the_walk_and_writes_the_record",
+        "test_request_lines_name_method_path_status_and_secs"]),
     "ft4": ("%s/tests/test_backfill_run.py" % CF, [
         "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
         "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",
