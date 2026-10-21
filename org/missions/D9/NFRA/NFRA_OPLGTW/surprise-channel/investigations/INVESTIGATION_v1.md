@@ -31705,3 +31705,27 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Disarm: the cli-shim FWD-24 gateway cell is live and read back, or the grant writer refuses a channels_ entry that the gateway would not parse. Until then NO bucket or bucket/prefix string goes into channels_allow or channels_deny by any route (the People panel included). Told to the CTO and COO~MP by ferry."
 }
 ```
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~186",
+  "surfaced_at": "2026-10-21T17:08:29Z",
+  "id": "NFRA_OPLGTW-Z-W186-S1",
+  "one_line": "The secret resource policy of the folder reader's ExternalId secret names Resource = the secret's own ARN, not Resource = \"*\" as schwab_reader_iam.tf does, because the OG-cs-6 probe refuses any Allow in the file with a bare * resource.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-gateway/folder_reader_iam.tf line 65 @fb0d6be5182 -- Resource = aws_secretsmanager_secret.folder_reader_external_id.arn, in the secret resource policy granting GetSecretValue to aws_iam_role.gw.arn.",
+      "infra/aws/terraform/opal-gateway/schwab_reader_iam.tf lines 137-149 @fb0d6be5182 -- the Schwab secret resource policy carries Resource = \"*\" on an Allow statement.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs6.AC1.sh @fb0d6be5182 -- the Allow scan runs over every Sid in the file and fails on any Resource = \"*\" in an Allow (bad * [] reads empty for this file)."
+    ]
+  },
+  "spec_asserts": "OG-cs-6 section 1 item 1: the secret resource policy is written 'like the Schwab one', and section 1 item 3 and AC1 forbid a bare * resource on any Allow.",
+  "world_is": "Both cannot hold literally in one file: the Schwab secret policy uses Resource = \"*\", which the AC1 probe reads as a bare * Allow. The file uses the secret's own ARN, which grants GetSecretValue on exactly that secret and is the narrower reading. Cell text and AC1 both pass at fb0d6be5182.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the worker chose the narrower resource and did not widen the order. The issuer may ratify the ARN form or ask for the Schwab form and a probe edit. Nothing is applied, so nothing is armed."
+}
+```
