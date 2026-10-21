@@ -71,6 +71,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cs-6.cli-shim-the-folder-reader
 - Pre-cut: `AC1` base FAIL as expected (`folder_reader_iam.tf` absent). Armed on a SCRATCH tf (`terraform fmt`-clean): `AC1` reads OK on all five arms, and the negative controls (one raw form removed; a bare `*` Allow resource) each read NO. `AC2` is dry-run after the cut commit (the order must exist at a commit first).
 
 <status>pending</status>
+<status>complete</status>
 <round>48</round>
 <workstream>CLISHIM-C</workstream>
 <slot>~186</slot>
