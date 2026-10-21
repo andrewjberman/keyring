@@ -1848,6 +1848,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "Row D1-W5-S4 and FR-s-6 REPAIR: page accountList by pageResponse.available, sending start and sessionCacheId on later pages; the proof run reaches the 5204 available (31 G numbers, 8 firms) and writes the split.",
     "world_is": "The first page returns 2000 rows and available 5204, and the following requests do not deliver new distinct rows under the assumed names, so the loop ends at 2000 distinct. The lister counted distinct numbers and failed loud with the two counts, as designed; nothing was split and no firm prefix was written. Which G number the sweep was on when it stopped is not in the output.",
     "notes": "Not retried (one attempt per the GO) and nothing edited. For the issuer: the live request form for page 2 has to be measured (a values-free capture of the second accountList request's field NAMES from the signed-in session, e.g. by the agent Chrome driver), then adapters.py corrected and delivered once more. The box needs no other change. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2; FT-s-8 stays pending."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S13",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T03:36:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "None of the lister's eleven candidate page-2 forms (0-10) added a row on the live API: accountList still ends at 2000 of 5204, so no split ran; no 401 or 403 and no recovery sign-in.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM e6929c3d-e1ab-49ed-8bfd-c5b27eccaa58 on i-028e830f7226cc685 at 03:29Z (the issuer's GO 8969, ONE attempt, no retry), status Success, stdout verbatim: 'ERROR: stage attribute did not finish: AdapterShapeError' / 'ERROR: attribute shape: accountList paging: no form added rows; tried forms 0-10; collected 2000 of 5204 available' / 'SKIP: split (no attribution)' / 'SKIP: coverage counts (attribution did not finish)' / 'OK: coverage record written' / 'WARN: partial run: land landed; not finished: attribute' / 'ERROR: daily run 20261021T032948Z business_day=2026-10-20 rc=1' / exit=1; no 'OK: accountList paging form=' line",
+        "s3://opal-data-assets/fidelity/alongside/bronze/_runs/20261020/coverage-20261021T032948Z.json: attribute_error as above, paging_form null, counts null, recovery 'not-needed', logout statuses 204 and 400; land record _runs/20261019/run-20261021T033100Z.json",
+        "fidelity/{cottonwood,inflection,49financial,keilfinancial,abidingwealth,lighthousewealth,vmwealth}/ hold 0 keys; fidupl_round_checks.py ft8r: R1-FT8R-FAIL no split record under s3://opal-data-assets/fidelity/alongside/bronze/_runs/",
+        "row NFRA_FIDUPL-D1-S12 (same failure before the lister tried candidate forms); no 401 or 403 line in the output"
+      ]
+    },
+    "spec_asserts": "TO-FR-s-6 REPAIR 1 and 2 (issuer msg 8966): the lister tries eleven candidate paging forms for page 2 and keeps the first that adds distinct rows; FT-s-8 step 2 then reaches 5204 and splits.",
+    "world_is": "All eleven candidate forms returned no new distinct rows, none was refused with a 401 or 403, and the lister fell back to its loud failure at 2000 of 5204. The live page-2 form is therefore outside the table. Nothing was split; no firm prefix was written. This was the third sign-in in its trailing hour (02:49Z, 03:04Z, 03:29Z); no recovery sign-in fired (recovery not-needed).",
+    "notes": "Not retried (one attempt per the GO; the issuer also bars any sign-in before 04:30Z) and nothing edited. For the issuer: guessing further forms spends sign-ins; the page-2 request has to be MEASURED, values-free, from a signed-in session (the agent Chrome driver on the box, CDP) or from the CRO's capture, then adapters.py corrected once. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2; FT-s-8 stays pending."
   }
 ]
 ```
