@@ -87,3 +87,14 @@ holds the data (~4 months for positions/prices), and simply runs out beyond that
 dates; as-of = the requested date. Transactions depth is being probed next (the per-account custom-range call, parameters now resolved).
 
 **Plain:** positions/balances/prices backfill ~4 months (data-availability limit, not a 120 cap); transactions depth to follow.
+
+## FOURTH ANSWER (2026-10-21 ~15:30Z) -- full depth per surface (transactions + realized lots measured)
+
+The COO's depth experiments (`FIDUPL_depth_experiments_20261021.md`) measured the deeper surfaces:
+- **Transactions:** history reaches **~2021-12** (first transactions 2021-12-08..10; that is the accounts' age, not a Fidelity cap).
+  One call serves at most **366 days**, so the backfill windows per year per account.
+- **Realized gain/loss:** closed lots from **2018-07**, with acquisition dates back to **2013**; a 30-year start is accepted, 500 lots/page.
+- **Positions/balances/prices:** ~4 months, as the THIRD answer measured.
+
+**Full depth, plain:** transactions ~4 years, realized G/L to 2018 (lots acquired as far back as 2013), positions/prices ~4 months,
+accounts/securities current snapshot. All replayable from the signed-in session, no Andrew act.
