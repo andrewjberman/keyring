@@ -13986,3 +13986,28 @@ carries none.
   "notes": "OBSERVATION, INERT: no hazard is armed; the staged files carry no account id by grep. The gate degraded to WARN rather than refusing, which is the designed absent-is-not-empty path. Whether this device should hold the list is for the issuer or the CTO to decide."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MI",
+  "surfaced_at": "2026-10-21T16:38:26Z",
+  "id": "NFRA_MCPINDEX-Z-S141",
+  "one_line": "Disarms NFRA_MCPINDEX-Z-W97-S1 (the client account-id check could not run on commit 87e6ff13379): the issuer scanned the commit's added lines by hand and found no account identifier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 87e6ff13379 (MX-l-1): 2 files, 453 added lines: workflows/atom_decomposition/emit_catalog_v02.py and tests/test_size_class.py",
+      "the only digit runs of six or more in the added lines are the threshold test values 8388607, 8388608, 25165823, 25165824, 999999, 1000000 and 9000000; no z08 token, no account-like assignment, no e-mail address (issuer scan 2026-10-21)"
+    ]
+  },
+  "spec_asserts": "A commit is checked for client account ids before it lands; where the hashed list is absent the check cannot run and is done another way.",
+  "world_is": "The hashed account-id list is absent on this box (a device condition, unchanged); the commit's added lines were read directly and hold no account identifier.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard in NFRA_MCPINDEX-Z-W97-S1 is that a commit went unchecked for client account ids; the issuer performed the check by hand on the added lines and it is clean, so the commit is safe to merge and push. The missing list remains a device condition, recorded in W97-S1 and not fixed here."
+}
+```

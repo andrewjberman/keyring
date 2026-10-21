@@ -76,6 +76,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cs-8.cli-shim-the-contract-says
 - Pre-cut: `AC1` base FAIL as expected (no `fwd24_supersession`, version 1.4); `AC2` base FAIL as expected (the new test absent). Pin: both contract copies are blob `e24c1fcc85` at the cut.
 
 <status>pending</status>
+<status>complete</status>
 <round>48</round>
 <workstream>CLISHIM-B</workstream>
 <slot>~184</slot>
