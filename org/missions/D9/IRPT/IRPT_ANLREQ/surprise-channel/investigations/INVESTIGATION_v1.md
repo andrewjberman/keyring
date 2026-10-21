@@ -32373,3 +32373,85 @@
   "world_is": "The folder infra/aws/lambda/ci/function-map/ is outside this worker's sparse cone, so the naming gate could not read it for the commit. The same message was recorded for the TO-AR-g-170 producer commit (IRPT_ANLREQ-D2-W308-S3)."
 }
 ```
+
+## IRPT_ANLREQ-D2-W370-S1 -- AR-y-498 edits one assertion of test_layout_excluded_line.py and renames its replaced-only test function, which the order did not name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W370-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~370",
+  "surfaced_at": "2026-10-21T16:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The replaced-only test of test_layout_excluded_line.py asserted whole-page equality with the no-key HTML, which the change makes false by design. I edited that assertion (it now removes the replaced line before comparing) and scoped the docstring as ordered. I also renamed the function, because its old name asserts no line and is false after the change; the order names no rename.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_excluded_line.py@6b78440f7d3 (base: test_only_replaced_records_give_no_line_and_the_same_html_as_no_key asserts with_replaced == without)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-498.overview-prints-the-replaced-in-all-figures-line-under-the-left-out-line.md@6b78440f7d3 (the permitted edit: the ABSENCE assertion; docstring sentence scoped with 'in the left-out line' and nothing else)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_excluded_line.py@67c138a6e04 (the edited assertion and test_only_replaced_records_give_no_left_out_line_and_only_the_replaced_line_is_added)"
+    ]
+  },
+  "spec_asserts": "The order permits editing tests/test_layout_excluded_line.py ONLY where an assertion asserts the ABSENCE of a replaced ticker in the whole page, and says the docstring sentence stays true with 'in the left-out line' added and nothing else reworded.",
+  "world_is": "After the change the replaced-only case of that test fails by design, since its whole-page equality now differs by the replaced line. The assertion was edited to remove the replaced line before comparing; the docstring was scoped as ordered. The function was renamed from test_only_replaced_records_give_no_line_and_the_same_html_as_no_key to test_only_replaced_records_give_no_left_out_line_and_only_the_replaced_line_is_added. Every other test in the file is unchanged."
+}
+```
+
+## IRPT_ANLREQ-D2-W370-S2 -- AR-y-498 sequences the proof validation after its commit and the status flip with the instance in one commit, which the order does not reconcile
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W370-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~370",
+  "surfaced_at": "2026-10-21T16:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says to validate the instance AFTER its commit and to flip the status to complete with the instance in one commit, only on VALID. A flip inside that commit cannot be validated after it. I validated the working-tree instance (the check script commit is already pinned), flipped the status in the same commit as the instance, and re-ran the validation on the committed instance.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-498.overview-prints-the-replaced-in-all-figures-line-under-the-left-out-line.md@6b78440f7d3 (proof_of_spec block: 'Validate it AFTER its commit'; WORKER FACE: flip with the instance, one commit, only on VALID)"
+    ]
+  },
+  "spec_asserts": "The proof_of_spec block says: validate the instance AFTER its commit, and flip the status to complete only when the check prints VALID. The worker face says: flip the status to complete (with the instance, one commit) only on VALID.",
+  "world_is": "Both readings can be honoured only by validating twice: once on the working tree before the single commit, and once on the committed instance after it. The order does not say which validation counts for the flip. The committed instance and the flip commit are the same bytes that were validated before commit."
+}
+```
+
+## IRPT_ANLREQ-D2-S260 -- W369-S1 disarmed, W368-S1 closed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S260",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T16:50:00Z",
+  "one_line": "W369-S1 (BLOCKING, ARMED) is disarmed: the conflict it named was resolved by AMENDMENT 1 and the cell is drained; W368-S1 is closed by the live swap read of run 7N.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W369-S1",
+    "IRPT_ANLREQ-D2-W368-S1"
+  ],
+  "spec_asserts": "W369-S1: AR-y-497's three new MODEL record keys and the order's 'no existing sibling test edited' cannot both hold (AR-y-492's test asserted the old exact key set). W368-S1: AR-y-494 says the release builder packages etf_classification_model.py, but the repository builder packages only the investor-reporting directories.",
+  "world_is": "MEASURED 2026-10-21 by this seat. W369-S1: AMENDMENT 1 of AR-y-497 (committed d61505c72e4 in the worker's worktree, then drained in 8217034dd5b) allowed that ONE assertion to change; I re-ran the cell's criteria on the worker's branch (check line, 4 mutants, 106 passed) and drained it; the cell AR-y-497 is complete. W368-S1: G2's r34t packaged swap_model.py and etf_classification_model.py (IB2's receipt irpt_anlreq_r34t/A_AFTER_R34T.txt: members 9 of 9, fix words yes, V2S OK) and run 7N (IB2 msg 15:18Z, A_E2E7N.txt) then ran the model leg on the live resident: BREIT was replaced by CTO and ZQXWVK left out, which cannot happen without the classifier module in the package.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34t/A_AFTER_R34T.txt",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7n/A_E2E7N.txt"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both named gaps are closed on measured state: the amendment and drain for W369-S1, the packaged classifier and the live swap for W368-S1."
+}
+]
+```
