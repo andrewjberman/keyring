@@ -32423,3 +32423,35 @@
   "world_is": "Both readings can be honoured only by validating twice: once on the working tree before the single commit, and once on the committed instance after it. The order does not say which validation counts for the flip. The committed instance and the flip commit are the same bytes that were validated before commit."
 }
 ```
+
+## IRPT_ANLREQ-D2-S260 -- W369-S1 disarmed, W368-S1 closed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S260",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T16:50:00Z",
+  "one_line": "W369-S1 (BLOCKING, ARMED) is disarmed: the conflict it named was resolved by AMENDMENT 1 and the cell is drained; W368-S1 is closed by the live swap read of run 7N.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W369-S1",
+    "IRPT_ANLREQ-D2-W368-S1"
+  ],
+  "spec_asserts": "W369-S1: AR-y-497's three new MODEL record keys and the order's 'no existing sibling test edited' cannot both hold (AR-y-492's test asserted the old exact key set). W368-S1: AR-y-494 says the release builder packages etf_classification_model.py, but the repository builder packages only the investor-reporting directories.",
+  "world_is": "MEASURED 2026-10-21 by this seat. W369-S1: AMENDMENT 1 of AR-y-497 (committed d61505c72e4 in the worker's worktree, then drained in 8217034dd5b) allowed that ONE assertion to change; I re-ran the cell's criteria on the worker's branch (check line, 4 mutants, 106 passed) and drained it; the cell AR-y-497 is complete. W368-S1: G2's r34t packaged swap_model.py and etf_classification_model.py (IB2's receipt irpt_anlreq_r34t/A_AFTER_R34T.txt: members 9 of 9, fix words yes, V2S OK) and run 7N (IB2 msg 15:18Z, A_E2E7N.txt) then ran the model leg on the live resident: BREIT was replaced by CTO and ZQXWVK left out, which cannot happen without the classifier module in the package.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34t/A_AFTER_R34T.txt",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7n/A_E2E7N.txt"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both named gaps are closed on measured state: the amendment and drain for W369-S1, the packaged classifier and the live swap for W368-S1."
+}
+]
+```
