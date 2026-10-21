@@ -116,6 +116,10 @@ Your row D1-S13 is acted on: no candidate paging form worked, so a read-only pro
 
 The CTO ruled (msg 8986) that the per-G sweep is the source and that book sizes come first. Probe v2 is merged (TO-FT-s-9 REPAIR 1; module suite 217 passed). Deliver the shipped set from head 217476105df or later (only `box/paging_probe.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-23-<date>`), `fu10m` (22 files). Same rules: file copy only, nothing else touched. One line to the issuer; the GO for the run (TO-FT-s-8 step 2P, second run) is already in the order text.
 
+### REOPENED (issuer, 2026-10-21 ~05:15Z) -- twenty-fourth delivery: the NEW file box/g_export_probe.py and box/paging_probe.py v3, head a773bcaa09f
+
+Both probes are merged (TO-FT-s-10 incl. REPAIR 1: the G-scoped export probe; TO-FT-s-9 REPAIR 2: probe v3; module suite 225 passed). Deliver the shipped set from head a773bcaa09f or later: `box/g_export_probe.py` is a NEW file (the box set grows to 23) and `box/paging_probe.py` differs; a NEW ledger (slug `nfra-fidupl-box-code-sync-24-<date>`); `fu10m` (expect all 23 match). Same rules: file copy only, nothing else touched. One line to the issuer.
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
