@@ -31125,3 +31125,31 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-S247 -- irpt-generation-dlq: 2 synthetic deleted, 8 older left (counts only)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S247",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T03:50:00Z",
+  "one_line": "irpt-generation-dlq held 10 older messages after run 7H's was deleted: 2 were run 5b/5c synthetic requests and are deleted; 8 predate 10-09 and are left (not shown to be synthetic). The DLQ reads 8.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB2's TO-READ DLQ delete order expected irpt-generation-dlq to read empty once run 7H's message was gone; CTO msg 11832 ruled: match each message to a run receipt, delete the synthetic ones by handle, leave real ones, report counts.",
+  "world_is": "MEASURED 2026-10-21 ~03:4xZ by this seat. COUNTS ONLY. Ten older messages, matched by request id against the deliverables trees: 2 dated 2026-10-20 (02:34Z, 04:02Z) are run 5b's and run 5c's own requests (state_e2e5b.json, state_e2e5c.json), synthetic: both deleted by receipt handle, no purge. 8 dated 2026-10-07 to 2026-10-09 (1 cottonwood 10-07, 1 cottonwood 10-08, 6 49financial 10-09) are the ones the ANL reconciliation recorded (XB_0162_EIGHT_RECONCILING_WRITES_RETURN_COMPLETE_20261011.md) with failure classes LayoutRefused, ClientError and RetentionExpired; IB2's inventory (irpt_anlreq_dlq_inventory/A_DLQ_INVENTORY.txt) shows the two cottonwood requests without a ticket and one 49financial request (10-09 14:59Z, the TO-APPLY-t1 commentary first apply) with one. This seat did NOT establish that any of the 8 is synthetic, so none was deleted. DLQ after: 8 visible, 0 not visible (read after the 30 s visibility expired). IB2's deviation (messages held invisible during enumeration, then returned together) changed nothing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_dlq_inventory/A_DLQ_INVENTORY.txt",
+      "org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/XB_0162_EIGHT_RECONCILING_WRITES_RETURN_COMPLETE_20261011.md",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_7h_dlq_delete/A_DLQ_DELETE.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
