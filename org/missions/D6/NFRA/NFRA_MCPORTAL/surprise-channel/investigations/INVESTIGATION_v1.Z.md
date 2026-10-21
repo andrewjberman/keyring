@@ -4029,3 +4029,29 @@
   "notes": "Disarm_owner is this seat; INERT because nothing writes or serves from this finding. Closed when MP-zp-1 drains and the issuer re-renders."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W46-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~46",
+  "surfaced_at": "2026-10-21T01:50:59Z",
+  "one_line": "The TO's second named test (the audit list reads again after the panel writes a change: a mock fetch counting GETs of /api/admin/changes, one at load and one after a write, the new entry shown) cannot be mounted under bun test: mcportal has no DOM and no test renderer, so the effect-driven re-read is unexercisable; the test is refused and the code change is committed untested.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal@98c0065 (branch wk-NFRA_MCPORTAL-46-mcportal): OpalGateway.tsx, OpalGatewayView.tsx, PersonAccessPanel.tsx carry the onWritten callback and the writes counter summed into auditKey; the audit list's re-read is wired but no test mounts it. The only test added is 'a stopped person's tool and channel switches read off ...'.",
+      "mcportal/package.json: dependencies react, react-dom, react-router-dom; devDependencies @types/bun, @types/node, @types/react, @types/react-dom, @vitejs/plugin-react, typescript, vite. No happy-dom, jsdom, linkedom, react-test-renderer or @testing-library package. node_modules@ links 46 top-level entries (react, react-dom, react-router, scheduler, vite, ...), none of them a DOM library. bun.lock carries no such package.",
+      "Measured under bun 1.3.14 in mcportal: `bun -e \"console.log(typeof document, typeof window)\"` prints 'undefined undefined'; `import('react-dom/client')` then createRoot({}).render(null) throws 'Target container is not a DOM element.' renderToStaticMarkup runs no effects, so the AuditList and PersonAccessPanel reads never run under it.",
+      "Post-commit `bun test src`: 90 pass, 0 fail, 11 files (baseline 89 at f90f03a plus the one new test). The TO floor of 91 needs both new tests; zp1.AC1.sh reads 'named tests present in sources 1 of 2; pass=90 (min 91); RESULT: FAIL'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO MP-zp-1 section 1 item 3: two tests, each by its exact name, the second mocking fetch and counting GETs of /api/admin/changes (one at load, one more after a write completes, and the new entry shown); section 2 item 3: if a criterion cannot be met without a file outside section 3, refuse it and file a BLOCKING row; bounds forbid package.json, bun.lock and bun install.",
+  "world_is": "A mount-capable test for the audit re-read needs a DOM library or a test renderer, which means a package.json and bun.lock change (outside the worker grant) and a bun install (forbidden in the TO). A hand-rolled DOM shim inside the test would be a new harness, not the minimum that works. The re-read is therefore committed but has no executed proof; defect 2 of the render (FWD-28) stays unverified until a DOM test harness is granted or a mount path is decided.",
+  "notes": "Decision for the issuer (2.0.0_SA_COO~MP): either grant a DOM test dependency (package.json and bun.lock in a cell's paths, with the install run by the issuer), or accept a non-mount proof for the re-read. Disarm is not a worker act; INERT because nothing serves from the branch and the mcportal commit is not pushed. The People page is unchanged: its tests pass unmodified. The workspace worktree shows mcportal as modified only because the gitlink moved; the gitlink is outside the worker grant and was not committed."
+}
+```
