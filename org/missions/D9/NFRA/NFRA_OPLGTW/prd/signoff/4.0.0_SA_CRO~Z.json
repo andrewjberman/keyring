@@ -1,12 +1,12 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v3.19",
-  "prd_pin": "788a27f4ee745225cdc60ed6eff8c50fa8445282",
+  "prd_version": "v3.20",
+  "prd_pin": "6c343f20c4a4c3376a060c1eb1efb1eee5331135",
   "half": "brief",
-  "half_hash": "f2dc937bc27bbb1a2a0c06bf4aa7728e0806d166b35760cecb3574610dbe4bee",
-  "endpoint_hash": "0e499e40e739d68ebf3198e1cb6292acaa11d721be7cb46b79541d448f05237a",
+  "half_hash": "d64e9e2b83bd160c9a0e42677f5cac5bbc15da21f8f2bc5bc3b5474e79c76fcc",
+  "endpoint_hash": "d2722218aea7cb8a2f2e4f3118b6b30228f2ffda8b373dd3fbd6b1e399814b64",
   "verdict": "SIGNED",
   "review_ref": "docs/briefs/mcp-cli-shim-bounded-query-brief-20261021.md@8c8fa480de",
   "signed_by": "4.0.0_SA_CRO~Z",
-  "signed_at": "2026-10-21T15:16:57Z"
+  "signed_at": "2026-10-21T17:39:55Z"
 }

@@ -4208,3 +4208,28 @@
   "notes": "Disarm_owner is this seat; INERT. Not claimed: that the gateway reader is the only reader of these names."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S85",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-21T17:30:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Z-S84's INERT ruling on Z-W48-S2 and Z-W48-S3 is withdrawn after CVO row Z-C-S69: batch17 IS the mount, so both stay ARMED until the served bundle is read back carrying MP-zh-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO relay of CVO ADJUDICATION_v18.Z @534c84ea21, row Z-C-S69 (ferry 20261021T172908Z): W48-S2/S3 were ruled INERT 'before the mount', but batch17 is the mount; disarm only when the served bundle carries zh-1, read back after batch17.",
+      "Z-S84 premise that no record can hold an unreadable name before the mount is live was read for the gateway's current state; it did not cover the release that mounts the writer path. The CVO's reading governs.",
+      "The cure is already in the release: the batch17 pin is mcportal f939e3ee86 (MP-zh-1), in OG-rl-18 via COO~O's commit c7298454b0; DEV head read by ls-remote at 2026-10-21T17:24Z is f939e3ee86b4f12b28e9e30d32c2d0d870a34573."
+    ]
+  },
+  "spec_asserts": "Row Z-S84: Z-W48-S2 and Z-W48-S3 ruled INERT.",
+  "world_is": "Z-W48-S2 and Z-W48-S3 remain ARMED (disarm_owner 2.0.0_SA_COO~MP). Disarm condition: after batch17 the served /opalgateway bundle carries MP-zh-1 (read back from the served bundle, not from the pin), then the issuer ferries the read-back to the CVO.",
+  "notes": "Supersedes the INERT clause of Z-S84 only; the rest of Z-S84 (Z-W48-S1 accepted, MP-zh-1 drained) stands. Not claimed: that the served bundle carries zh-1 today (batch17 is not live)."
+}
+```
