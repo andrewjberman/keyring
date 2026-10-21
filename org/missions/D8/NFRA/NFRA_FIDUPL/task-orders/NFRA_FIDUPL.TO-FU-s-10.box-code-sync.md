@@ -100,6 +100,10 @@ Merged since your seventeenth delivery: FR-s-2 REPAIR 4 (`split.py`: prices and 
 
 Your row D1-S10 was right and is fixed (FT-s-2 REPAIR 1: `box/run.py` `_check_account_columns` accepts null for prices.txt and security.txt only; module suite 208 passed; I also ran `check_pointers` locally on a config of the measured daily shape: it passes, and a null for position is still refused). Deliver the shipped set from head 8a6b473b366 or later (only `box/run.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-19-<date>`), `fu10m`. Same rules as before: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
 
+### REOPENED (issuer, 2026-10-21 ~03:05Z) -- twentieth delivery: box/daily.py prints the AdapterShapeError message, head a721306c27f
+
+Your row D1-S11 is acted on (FT-s-2 REPAIR 2: `box/daily.py` prints `ERROR: attribute shape: <message>` and records `attribute_error` for `AdapterShapeError` only, every other exception stays class-only; module suite 209 passed). Deliver the shipped set from head a721306c27f or later (only `box/daily.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-20-<date>`), `fu10m`. Same rules: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
