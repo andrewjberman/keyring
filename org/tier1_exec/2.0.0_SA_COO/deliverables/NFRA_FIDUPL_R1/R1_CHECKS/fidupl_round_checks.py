@@ -152,12 +152,17 @@ def tests(cid):
 
 
 def synth_handoff(d, date="20261016", with_listing=True):
-    """Six synthetic files: quoted CSV, no header, content date first, no client data."""
+    """Six synthetic files: quoted CSV, no header, no client data. The content date sits in the file's own column
+    (position, prices, security: 0; balance: 3; account: 16; transact: 17), as the CRO confirmed from the live files."""
+    date_col = {"balance.txt": 3, "account.txt": 16, "transact.txt": 17}
     for n in SIX:
+        col = date_col.get(n, 0)
         with open(os.path.join(d, n), "w", newline="", encoding="ascii") as f:
             w = csv.writer(f, quoting=csv.QUOTE_ALL)
-            w.writerow([date, "SYNTH", n, "1"])
-            w.writerow([date, "SYNTH", n, "2"])
+            for k in ("1", "2"):
+                row = ["SYNTH", n, k] + ["X"] * 18
+                row[col] = date
+                w.writerow(row)
     if with_listing:
         rows = []
         for n in SIX:
