@@ -115,7 +115,9 @@ TEST_FILES = {
         "test_real_fetch_session_uses_a_long_request_timeout",
         "test_every_progress_line_is_flushed",
         "test_wall_budget_stops_the_walk_and_writes_the_record",
-        "test_request_lines_name_method_path_status_and_secs"]),
+        "test_request_lines_name_method_path_status_and_secs",
+        "test_the_record_is_rewritten_after_every_day_and_marked_partial_until_the_end",
+        "test_sigterm_ends_the_walk_with_a_stop_and_the_logout"]),
     "ft4": ("%s/tests/test_backfill_run.py" % CF, [
         "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
         "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",
