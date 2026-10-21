@@ -1638,6 +1638,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r2 step 4 (re-amended @7da6b2250d): the unchanged puller over the 10-day window accounts for itself (DENOMINATOR line) and lands the files; the landed date= keys give D.",
     "world_is": "The run enumerated 71 files and canonicalized all 71, then the download loop accounted for none and the guard raised. Both this and the earlier 40 of 40 exit-9 probes sit after 'canonicalized 71/71', so the common reading is that the per-file items carry a shape the later loop does not match in this scheduled-task context (an AsOfDATE or type field the loop reads as empty). That reading is unmeasured; the puller is an exact copy I may not edit and the order says do not retry another window. Nothing was written to S3, no other master was pulled, the session lock was released, the task unregistered, rules DISABLED. The run used the SNS argument, so the FATAL may have paged the alert topic.",
     "notes": "Stopped per the order's clause: the run died, log tail reported, no retry. TO-AL-r2 steps 4 and 5 and the TO-AL-r6 gate remain unmet."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W2-S9",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~2",
+    "surfaced_at": "2026-10-21T16:01:03Z",
+    "one_line": "The census of the script's @(...) sites cannot settle line 519 (foreach over @($obj.FileDetailList)): the type of FileDetailList comes from a vendor assembly ($ctAsm) that is not in the worktree, and a direct @() of a real List throws on this Windows PowerShell 5.1, so that site is left unchanged and unverified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1@7c3cbb03091 line 519: foreach ($f in @($obj.FileDetailList)) {; line 478 $searchRespT = $ctAsm.GetType(...SpecificFileDetailsResponse); line 515 DeserializeWithCompression MakeGenericMethod($searchRespT). The worktree holds no declaration of FileDetailList (grep of infra/aws/ec2/canonical-schwab-si2 returns only the consumers).",
+        "probe run in the worktree scratch folder (.scratch/probe_census.ps1, Windows PowerShell 5.1): direct_wrap THREW: Argument types do not match; fn_wrap THREW: Argument types do not match; foreach over @($list) THREW: Argument types do not match.",
+        "infra/aws/ec2/canonical-schwab-si2/sdd-backfill-08335338.ps1@7c3cbb03091 line 114: return @($obj.FileDetailList) (same shape; outside the TO-BF-w7 grant, not read further)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-BF-w7 CELL build step 1: census every @($x) site where $x may be a System.Collections.Generic.List[...] passed through an untyped parameter or variable; apply the pipe form at at-risk sites, and change nothing and say so for a site that is not at risk.",
+    "world_is": "Line 519 wraps a property of a vendor deserialized object in @() inside foreach. Whether that property is a generic List is not decided by anything in the worktree. If it is, the daily pull throws at line 519 before the plan is built, the same way it threw at line 305. Not changed here: the census could not decide the site, and the grant does not reach the vendor assembly.",
+    "notes": "Not an alert. Disposition for the issuer: read the vendor type of FileDetailList and, if it is a List, apply the same pipe form at sdd-daily-pull.ps1 line 519 and at the backfill's line 114. Nothing was run against Schwab or AWS."
   }
 ]
 ```
