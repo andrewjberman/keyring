@@ -2312,6 +2312,133 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "world_is": "The walk's per-day land() call writes a PARTIAL run record for each day that has only two of the six files; the per-file results are correct, the run records carry four read failures per day.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not investigated further (off-task). The spec is followed as written. Whether a two-file run record belongs under _runs is an owner decision (the lander's run-record design), not this seat's."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T16:47:59Z",
+    "one_line": "The walk sends each account as the string read from the book, in accountNumber and in accountNumbers; the order does not say whether the API takes a JSON string or a JSON number.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "api_walk.py book_from_bytes returns str values; _tx_body and the realized and open bodies send them unchanged (worktree C:/tmp/fidupl-w7, uncommitted at filing)",
+        "TO NFRA_FIDUPL.TO-FW-s-1 WORKER FACE measured facts: the transactions body names accountNumber as <n>, the realized body names accountNumbers as [<n>] (7402cd0e3e1)"
+      ]
+    },
+    "spec_asserts": "TO FW-s-1 measured facts: the transactions body is {\"accounts\": [{\"accountNumber\": <n>, ...}]} and the realized body is {\"accountNumbers\": [<n>]}; <n> is not typed as a string or a number.",
+    "world_is": "The book is read as CSV text (latin-1), so every account is a string. The live type the API accepts is not among the measured facts. A type mismatch would answer a non-200 on the first call, recorded ERROR per account.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Built on fakes only, so not verified live. The issuer confirms the accepted type before TO-FW-s-2 runs. The walk does not convert the value."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T16:47:59Z",
+    "one_line": "The ten-window transactions cap (3,650 days) ends an account with older history as ERROR on every run, against the cell's 'as far back as the API serves'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "api_walk.py MAX_WINDOWS = 10 and _tx_account raises AccountError at the cap; WINDOW_STEP_DAYS = 365 (worktree C:/tmp/fidupl-w7, uncommitted at filing)",
+        "TO NFRA_FIDUPL.TO-FW-s-1 THE CELL ('as far back as the API serves') and WHAT TO BUILD item 4 ('At most 10 windows per account') (7402cd0e3e1)"
+      ]
+    },
+    "spec_asserts": "TO FW-s-1 THE CELL: every fact table 'as far back as the API serves'. WHAT TO BUILD item 4: 'At most 10 windows per account (a safety stop recorded ERROR)'.",
+    "world_is": "Ten windows of 365 days reach about ten years back. An account whose rows go further back is recorded ERROR at the tenth window. The retry on the next run reads the same windows from head, reaches the cap again, and the account ends ERROR with attempts 2, so its older history is never landed. The order does not say which bound governs.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Built as written (cap 10). The issuer decides whether the cap rises, or the realized-style split applies to transactions, before TO-FW-s-2."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T16:47:59Z",
+    "one_line": "A one-day transactions window that answers 2,000 rows or more cannot be split, and the order does not say what lands for it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "api_walk.py _tx_window: an answer with n >= ROW_CAP on a one-day window sets out['incomplete'] and lands the answer as it is (worktree C:/tmp/fidupl-w7, uncommitted at filing)",
+        "TO NFRA_FIDUPL.TO-FW-s-1 WHAT TO BUILD item 4: the split 'recursively down to one day' names no rule at the one-day cap (7402cd0e3e1)"
+      ]
+    },
+    "spec_asserts": "TO FW-s-1 item 4: 'If a window answer holds 2,000 rows or more, split that window in two halves (whole days) and request each half instead of landing the capped answer, recursively down to one day.' No rule for a one-day answer at the cap.",
+    "world_is": "The walk lands the capped one-day answer as it is and marks the account INCOMPLETE. The rows past the cap for that day are not reachable by the window split.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Built as an INCOMPLETE leaf, mirroring the realized one-day short answer. Not confirmed by the issuer."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T16:47:59Z",
+    "one_line": "A run that walks every selected surface once while an ERROR account still awaits its retry ends with the stop reason 'surface_end', which the order does not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "api_walk.py _walk raises Halt('surface_end') when an account is unfinished and Halt('all_done') when none is (worktree C:/tmp/fidupl-w7, uncommitted at filing)",
+        "TO NFRA_FIDUPL.TO-FW-s-1 WHAT TO BUILD item 7 lists the stops auth, throttled, budget, terminated, error, all_done and account_cap; item 9 names 'test_wall_budget_and_surface_end_the_run_with_a_named_stop' (7402cd0e3e1)"
+      ]
+    },
+    "spec_asserts": "TO FW-s-1 item 7 names the stops auth, throttled, budget, terminated, error, all_done and account_cap. Item 9 names a test 'test_wall_budget_and_surface_end_the_run_with_a_named_stop' but no reason for the surface end.",
+    "world_is": "The run ends 'surface_end' when every selected surface has been walked once and at least one account is unfinished (ERROR with attempts 1). 'all_done' is used only when no account is unfinished.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The name is the implementer's. The issuer confirms or renames it."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S11",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T16:47:59Z",
+    "one_line": "The state entries carry rows and attempts, and an in-progress account is saved with result null, beyond the order's {result, earliest}.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "api_walk.py _one_account writes {result, earliest, rows, attempts} and an in-progress entry with result None before the account is walked (worktree C:/tmp/fidupl-w7, uncommitted at filing)",
+        "api_walk.py _real_deps and the deps list carry no body read (accounts, head, put, put_record only), so windows that already exist cannot be re-read for their dates (worktree)",
+        "TO NFRA_FIDUPL.TO-FW-s-1 WHAT TO BUILD item 2: 'a map account -> {\"result\": ..., \"earliest\": ...}' and 'record attempts' (7402cd0e3e1)"
+      ]
+    },
+    "spec_asserts": "TO FW-s-1 item 2: per surface, a map account -> {result, earliest}. An ERROR account is retried once on the NEXT run only and records attempts.",
+    "world_is": "Each entry also carries rows and attempts. An account in progress is saved with result null, so an interrupted walk keeps its earliest date and row count across runs. Windows that already exist cannot be read again (no body read in deps), so their dates are known only from the saved state. A SIGKILL between saves loses the in-progress values; the auth, throttle, budget and SIGTERM stops save the state first.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The extra keys serve the record's counts and the earliest content date. The issuer confirms the entry shape."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W7-S12",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~7",
+    "surfaced_at": "2026-10-21T16:47:59Z",
+    "one_line": "The order gives no metadata for an open-lots object; the walk writes sha256, rows and total.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "api_walk.py _open_account passes meta {total} to _put, which adds sha256 and rows (worktree C:/tmp/fidupl-w7, uncommitted at filing)",
+        "TO NFRA_FIDUPL.TO-FW-s-1 WHAT TO BUILD item 6 names the open-lots key and the DONE and INCOMPLETE rule but no metadata (7402cd0e3e1)"
+      ]
+    },
+    "spec_asserts": "TO FW-s-1 item 4 gives transactions metadata {sha256, rows, from, to}. Item 5 gives realized 'the same body rule and metadata' with total. Item 6 gives no metadata for the open-lots object.",
+    "world_is": "Open-lots objects carry {sha256, rows, total}. The total is the answer's totalCount, which the INCOMPLETE flag depends on.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "total is the only key added beyond the realized pattern. The issuer confirms it."
   }
 ]
 ```
