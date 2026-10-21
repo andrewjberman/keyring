@@ -57,3 +57,12 @@ Andrew's (call 7def).
 Reading: (1) Menachem keeps the M365 tools; (2) the six portal_index tools stay off; (3) he signs in now and holds the floor
 until the narrowing lands. The Schwab direction is NFRA_OPLGTW PRD v3.15 FWD-23 (every silver fact table, every column except
 the forbidden classes of 10-08), with Menachem an authorized account-identity holder.
+
+## Sixth message, VERBATIM
+
+> I agree with your rec on the "one question" footer point. With that said, the point here is really to just give menachem an
+> aws cli over mcp. he just needs to be able to query these folders as i do via aws cli, it should not be excessively
+> complicated.
+
+Applied: NFRA_OPLGTW PRD v3.16 reshapes FWD-23 to two tools (list, read) over the three buckets' folders; tax ids, mailing
+addresses, email and phone stay out.
