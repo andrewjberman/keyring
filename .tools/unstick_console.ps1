@@ -20,6 +20,7 @@ param(
     [Parameter(Mandatory = $true)][int]$TargetPid,
     [Parameter(Mandatory = $true)][ValidateSet('peek', 'keys')][string]$Mode,
     [string]$Text = '',
+    [string]$TextFile = '',      # the body from a file: spaces and quotes survive (Start-Process does not quote)
     [switch]$Enter,
     [Parameter(Mandatory = $true)][string]$OutFile
 )
@@ -54,6 +55,8 @@ public static class UCon {
   public static extern bool WriteConsoleInputW(IntPtr h, INPUT_RECORD[] buf, uint len, out uint written);
 }
 "@
+
+if ($TextFile) { $Text = [IO.File]::ReadAllText($TextFile) }
 
 [UCon]::FreeConsole() | Out-Null
 if (-not [UCon]::AttachConsole([uint32]$TargetPid)) {
