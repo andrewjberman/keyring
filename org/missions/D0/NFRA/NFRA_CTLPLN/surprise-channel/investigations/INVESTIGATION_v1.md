@@ -15411,3 +15411,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Cites S21 to S31; none edited. Times, counts and record types only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-D1-S33 -- 15 ended sessions on dell1 and dell2 carry the exit-time cost record; the one forced-stop control lacks it; the ends read as orderly exits, actor unknown
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S33",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-21T15:55:00Z",
+  "one_line": "The exit-time cost record of S32 is on all 15 ended sessions measured on dell1 and dell2 (6 and 9), and a control, the one session this seat stopped by force, lacks it; so the ends read as orderly exits by whoever or whatever quit them, not forced stops; the actor is still not identified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REPORTED by 0.0.0_AB_MSTR~DELL2 (bus 3b491445, 15:48Z, a retraction of its 15:47Z read): over the last 6 records, all 9 dell2 transcripts of the 10-20 13:08:24Z to 13:08:50Z loss carry a cost-state record in the final 5, and 7 of 9 show the order cost-state, last-prompt, cost-state, queue-operation. Its first read looked at the last record only, which was the wrong measure; this seat's first comparison was wrong for the same reason until the two measures were aligned. dell2 read record types only.",
+      "MEASURED here (S32): the 6 dell1 transcripts of the 12:41Z to 12:42Z and 14:52Z ends all carry cost-state in their last 4 records, followed by queue-operation.",
+      "MEASURED, control (n=1): the session of 0.7.0_AE_CloudOps~SC1 that this seat stopped by force with kill-agent.ps1 at 2026-10-20T23:54:28Z (transcript 9d18e715, first entry 22:54:27, last write 23:54:27, 1243794 bytes) ends in the record types mode, permission-mode, atis-latch, system, system, system, with NO cost-state in its last 6. So a forced stop of a seat left no cost-state in the one case measured.",
+      "READ together: 15 ended sessions on two boxes carry the exit-time cost record and the single forced-stop control does not. That is consistent with the client having run its exit routine, which a forced stop did not allow in the control. It is one control, so a different forced-stop path is not ruled out.",
+      "NOT explained: who or what quit the sessions, and why in groups (86 s, 8 s, 26 s). No transcript content read by this seat."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A manager can tell, from a seat's transcript tail, whether a session was stopped by force or exited in order.",
+  "world_is": "For the one forced stop measured the tail has no cost-state; for 15 unexplained ends it has. The ends look like orderly exits (a typed quit or a closed window) rather than a crash or a forced stop. The actor is unknown.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Cites S29, S31, S32; none edited. Record types and times only."
+}
+```
