@@ -3365,3 +3365,29 @@ used as fixtures is a different read with a different denominator.
   "world_is": "The served and the current DEV New Ticket form for Service Request and Other have no firm control and send no requester_firm; the service then takes the token's firmId (opal-capital), which is outside the identity's allowedFirmIds [cottonwood], and refuses the create (400 by the source reading). The Trade Request and Meeting Request forms send answers.firm, which is why R21 passed with the same identity shape. A pass needs either an identity whose token and row firmId is cottonwood, or a form that sends requester_firm: both are the issuer's or the CTO's call. Not claimed: the exact 400 text; that a firmId of cottonwood on the token would be accepted by the authorizer."
 }
 ```
+
+## TCKT_VNEXT-D2-S66 -- TO-R23-F51: with staff-shaped identities the DEV Service Request create succeeded (S65 resolved by measurement), but the picker's full-page board shot also renders a real open Analysis Request's expanded panels (firm, household identifier, advisor name, commentary draft), so step (f) stopped the run and both shots were deleted.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-21T03:22:00Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S66",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-R23-F51: with staff-shaped identities the DEV Service Request create succeeded (S65 resolved by measurement), but the picker's full-page board shot also renders a real open Analysis Request's expanded panels (firm, household identifier, advisor name, commentary draft), so step (f) stopped the run and both shots were deleted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r23_fwd5_dev/run_output_attempt2_id_capture_stop.txt and the ledger tckt-vnext-r23-f51b-20261021: TCK-20261021-c31f5347 service_request open by the filer 03:03:05Z with rows firmId opal-capital, scope_all_firms BOOL true, no allowedFirmIds; the same page and token shape that returned 400 with allowedFirmIds [cottonwood] (S65)",
+      "R23_FWD5_TRACE.json and run_output.txt (final run 03:13Z): two tickets filed (ids read back from the table), board rows read as the picker (types Service Request and Other, age 'under a minute', Claim control present), the picker's claim from the board answered 200; R23_FWD5_TICKET_ITEMS.json: chosen in_progress under the picker with events created then claimed, other open and unassigned (saved by hand: the script's get-item call used .tools/aws without .cmd)",
+      "step (f) review of the two full-page PNGs (273201 and 265240 bytes) by this seat: the Open tab lists Andrew's real analysis request TCK-20261020-b1d61f80 with its Report package panel (a firm, a household identifier and an advisor name) and its commentary draft expanded inline, and the Response Metrics panel lists staff addresses; both PNGs deleted, never committed"
+    ]
+  },
+  "spec_asserts": "TO-R23-F51 step (f): REVIEW the two shots for any client account id or client name beyond ticket id, type, title, requester and age; if one is visible, STOP, delete the shots, report which column, do not commit them. AC2J: the full-board shot shows several open requests of more than one type together.",
+  "world_is": "The Ticket Center board for an internal identity is not a clean ticket list: a real open analysis request renders its Report package and commentary panels inline under its row on the Open tab, and the Response Metrics panel lists staff addresses, so a full-page shot of the staff board carries data beyond the five allowed columns whenever a real analysis request is open. The FWD-5 behaviour itself was exercised and measured (rows read, claim 200 from the board, records saved); the visual evidence is not committable. Not claimed: that a shot clipped to the table rows, or taken when no real analysis request is open, would be acceptable to the CVO."
+}
+```
