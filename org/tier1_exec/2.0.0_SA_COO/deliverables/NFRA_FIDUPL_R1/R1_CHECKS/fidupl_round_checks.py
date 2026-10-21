@@ -107,7 +107,9 @@ TEST_FILES = {
         "test_address_called_at_landing_time", "test_content_date_from_first_field",
         "test_unreadable_date_is_failure_not_guess", "test_non_trading_day_is_failure",
         "test_same_sha_lands_once", "test_run_record_shape", "test_missing_file_exits_nonzero",
-        "test_never_writes_outside_fidelity_prefix"]),
+        "test_never_writes_outside_fidelity_prefix",
+        "test_content_date_column_is_per_file", "test_row_shorter_than_the_date_column_is_unreadable",
+        "test_record_outcome_partial_when_some_files_land", "test_relanding_the_same_files_skips_existing"]),
     "fu5": ("%s/tests/test_box_run.py" % CF, [
         "test_calls_signin_fetch_land_in_order", "test_stage_failure_exits_nonzero",
         "test_failure_still_writes_record_via_lander", "test_no_secret_in_environment",
