@@ -1,13 +1,13 @@
 {
   "prd": "ADVI_COTBOOKS_PRD.md",
-  "prd_version": "v0.4",
-  "prd_pin": "7402cd0e3e10209c49c812fcb7c7c70570599088",
+  "prd_version": "v0.5",
+  "prd_pin": "4aec35f0c49a9c8d4b8cf7f72006f064f16020d1",
   "half": "ratified-text",
-  "half_hash": "d0786cc5b7cbc8764658957ba2bcd07de53d2c6a72f33217d92a707f21cc1eaa",
+  "half_hash": "0b7be2e5da1098b545864fc4afff770a2bf839b06b46b4d877d7e20778fb0eed",
   "endpoint_hash": "c7d454fb2e61760fb8bbe27a006af13005c1fab5fe447c8bf6f5d72fdc8e0334",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ADVI_COTBOOKS_v0.4_RATIFIED_TEXT_20261021.md@743d8a552ca",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ADVI_COTBOOKS_v0.5_RATIFIED_TEXT_20261021.md@b46fd669c2b",
   "signed_by": "3.0.0_SA_CVO~DELL1",
-  "signed_at": "2026-10-21T16:36:57Z",
-  "reason": "ea86 OPEN; the REC-2 BD seed (C-ASSIGN, C-CLIENT) contradicts C-NOBD and the v2 binding rule unless named as Andrew's exception"
+  "signed_at": "2026-10-21T16:43:56Z",
+  "reason": "ea86 OPEN (v2 unconfirmed); REC-2 exception now named in C-NOBD (ground 2 closed)"
 }
