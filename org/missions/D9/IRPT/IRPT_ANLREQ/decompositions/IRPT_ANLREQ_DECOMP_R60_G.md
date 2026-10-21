@@ -114,3 +114,16 @@ Run 7H (the Multi-Comp filing on r34p) was refused at the resident's replay of t
 AR-g-181 carries `<workstream>~GREL5</workstream>`.
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell.
+
+## Addendum 6 2026-10-21 (issuer): cells AR-g-182 and AR-g-183, the S249 fix and the retained-line lead token
+
+Run 7I (the Multi-Comp filing on r34q) passed admission (the S245 fix held) and stopped at the next hop: `retained_for_retry class=RecipeRefused code=-` three times (row S249, IB2 msg 11887; CTO msg 11890). Measured by replaying 7I's retained synthetic composition (`checks/fixtures/composition_7i_synthetic.json`) through the r34q modules: `FrozenCompositionWorker.prepare` -> `prepare_normalized_upload` raised `RecipeRefused: holdings row has no provider receipt` (the run's four ETF holdings are YFINANCE_HISTORY checks with no vendor receipt). The Opal comparison path never uploads to the vendor. A second defect sits behind it: `_opal_comparables` reads `key`, `label`, `ticker` off catalogue entries that carry `name`, `security_type`, `source_id`, `vendor_id` (no key; the key is the catalogue's dict key), so the producer would have received key None for every model. My AR-g-175 tests faked `frozen` with the wrong shape.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-182` | `prepare(upload=False)` plus `comparison_keys`; `_opal_comparables` on the real catalogue shape; tests | `frozen_worker.py`, `resident_worker.py`, `test_frozen_worker.py`, `test_compare_ports.py` | WORLD (infrastructure path floor) |
+| `AR-g-183` | `retained_reason` carries `lead=<token>` for our own Refused/Attention classes (CTO item 2); tests | `resident_main.py`, `test_resident_main.py` | WORLD (infrastructure path floor) |
+
+Both carry `<workstream>~GREL6</workstream>`; they share no file and no edge (two chains). Checkers `checks/ar_prepare_checks.py` (arms frozen, worker, tests) and `checks/ar_reason_checks.py` (arms reason, tests) were calibrated against reference fixes in a scratch tree and eleven mutants. Then, after Y2's ticket-read chain (live) and under the CTO's pair, the release r34r (AR-g-184) carries both fixes plus Y2's `ticket_audit_source.py` projection (trunk 11fb915f82d).
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells with disjoint write sets.
