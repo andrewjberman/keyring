@@ -250,6 +250,8 @@ def main(argv=None):
                         help='optional binding ycharts_window_budget, e.g. {"calls": 6, "window_s": 390}: the host-wide YCharts call budget per window')
     parser.add_argument("--tickets-table", metavar="NAME", default=None,
                         help='optional binding tickets_table, e.g. opal-tickets: the ticket table the resident\'s audit source reads (r34q)')
+    parser.add_argument("--library-at-pin", action="store_true",
+                        help="package ycharts-host/ycharts_session.js from --pin (the trunk file) instead of --base-pin (r34u: the W328-S1 WAF repair)")
     parser.add_argument("--opal-swap-model-binding", metavar="JSON", default=None,
                         help='optional binding opal_swap_model, exactly {"enabled": true|false}: the C-SWAP model leg (r34t)')
     parser.add_argument("--member", action="append", default=[], metavar="PACKAGED_PATH=REPO_PATH",
@@ -327,7 +329,7 @@ def main(argv=None):
         overrides[repo_path] = other
     members["census/" + CENSUS.rsplit("/", 1)[1]] = (git("rev-parse", args.census_pin).strip(), CENSUS)
     members["ycharts-host/run-ycharts-session.sh"] = (base, WRAPPER)
-    members["ycharts-host/ycharts_session.js"] = (base, LIBRARY)
+    members["ycharts-host/ycharts_session.js"] = (pin if args.library_at_pin else base, LIBRARY)  # r34u: --library-at-pin takes the trunk file
 
     added_members = []
     for item in args.member:

@@ -238,3 +238,15 @@ FWD-10 is REALIZED (ADJUDICATION_v31 @5d81dd2251). The CTO's note: on the 7M cha
 AR-g-195 carries `<workstream>~GREL16</workstream>` (worker slot 385). `checks/ar_palette_checks.py` (arms palette, tests) was dry-run at the base (both FAIL) and calibrated in-process against the reference palette (OK) and four mutants (duplicate colours, a too-light colour, a near-identical pair, the old four), each of which fails. It ships in r34u with AR-y-497.
 
 fanout: 1 of 1 chains, cap 8, reason: one cell.
+
+## Addendum 16 2026-10-21 (issuer): cell AR-g-196, the r34u build
+
+The CTO ruled (msgs of 16:44Z and 16:55Z) that r34u carries Y2's AR-y-497 and AR-y-498, this seat's AR-g-195 and the trunk host capture library `infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js` (the W328-S1 WAF repair; the file is in neither builder tarball today: both ship the base pin's `a1c28801`, 10 WAF tokens, against the trunk's `db43e9f9`, 25), moving `LIBRARY_SHA256` and `capture.library_sha256` with it. Built into the tooling and tested: the package builder's `--library-at-pin` flag; the host install script wants the new library after the install (it backs the old copy up as `ycharts_session.js.before-<root>`); the pre-read reads the old one; the rollback restores the kept old copy BEFORE the old root's installer (that root's factory pins the old library), with exits 12, 13 and 14, tested against temp files in five cases. Rehearsal at pin 1a7cfac868: `R34U-BUILD-OK`, 325 members, 5 changed (SHA256SUMS, reports/resident_bindings.json, ycharts-host/ycharts_session.js, ycharts/research/layout_overview.py, ycharts/research/swap_pass.py), 0 added, smoke 87, gate dry runs 0, 31, 0, 33, tarball sha256 9c5a32955524...; `checks/ar_release_u_checks.py` OK on the rehearsal and refusing the r34t tarball, a record missing the library mover and the r34t stage.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-196` | the r34u tarball, sums and four host scripts into stage `C:/dev/irpt-release-r34u-g2` (BUILD ONLY), a record and a proof | the worker folder `r68/` | LOCAL |
+
+AR-g-196 carries `<workstream>~GREL17</workstream>` (worker slot 386).
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell.
