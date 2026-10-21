@@ -32455,3 +32455,30 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W386-S1 -- the r34u tarball lists the library member as ./ycharts-host/ycharts_session.js, not the order's ycharts-host/ycharts_session.js
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W386-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~386",
+  "surfaced_at": "2026-10-21T17:25:18Z",
+  "one_line": "AR-g-196 step 3 and criterion AC2 name the tarball member ycharts-host/ycharts_session.js; the built r34u tarball lists it as ./ycharts-host/ycharts_session.js (leading ./). The checker's tree arm passes on the tarball; the library member is present with the trunk sha256.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-196 step 3 asks whether the tarball's member ycharts-host/ycharts_session.js has sha256 db43e9f9 (it must). AC2 names the mover ycharts-host/ycharts_session.js.",
+  "world_is": "MEASURED 2026-10-21 by this seat: python tarfile over C:/dev/irpt-release-r34u-g2/irpt-resident-0485393f3a-r34u.tar.gz (sha256 a659745f2ccf3e38eb7474ac182717b27d82f515e74c851680ac108b2bd15bd9, 325 members) lists the member as ./ycharts-host/ycharts_session.js with sha256 db43e9f9744e697098120e11dd862a1348ffea05c6307f980dc24e7ea530a216. A lookup by the unprefixed name raises KeyError. The build record's delta_vs_r34t.changed names the unprefixed path, and the record arm of the checker passes on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~386/r68/RESIDENT_R34U_BUILD.json",
+      "C:/dev/irpt-release-r34u-g2/irpt-resident-0485393f3a-r34u.tar.gz"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
