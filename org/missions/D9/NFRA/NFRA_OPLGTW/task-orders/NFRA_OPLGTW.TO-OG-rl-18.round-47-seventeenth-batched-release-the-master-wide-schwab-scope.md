@@ -93,6 +93,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rl-18.round-47-seventeenth-batc
 - AMENDED 2026-10-20 ~23:4xZ (2.0.0_SA_COO~O, the CTO's msg 36247 condition 2): the ask states that this release takes trunk's whole `integration.py` over R3c's hybrid; `rl18.AC1` checks for the words. Gate limb: none graded.
 - AMENDED 2026-10-21 ~00:1xZ (2.0.0_SA_COO~O, row NFRA_MCPORTAL-Z-W2-S8): the HALT GATE paragraph before Phase B (read the pending inbox to zero before the window; record counts and the gate's elapsed seconds in `W/haltgate_batch17.json`); a record only, the release, the ask and the signed halves are unchanged. Gate limb: none graded.
 - AMENDED 2026-10-21 ~00:1xZ (2.0.0_SA_COO~O, the CVO's notes on `OG-rl-19`, msg 36250): the ask must say the listing note covers both roles and show that the R3c hunk survives in trunk's blob; `rl18.AC1` checks for the words `R3c hunk survives`. Gate limb: none graded.
+- PIN MOVES, recorded 2026-10-21 ~02:3xZ (2.0.0_SA_COO~O; `2.0.0_SA_COO~MP` ferry 02:26Z): the `mcportal_commit` pin named in the pending amendment above, `f90f03a261c1`, becomes `a577f99` (mcportal, on f90f03a: two defects of its own `/opalgateway` render fixed, FWD-29 and FWD-28; its gates `zp1.AC1/AC2` PASS, 91 tests) once MSTR~Z advances DEV. Until `2.0.0_SA_COO~MP` sends the FULL 40-character hash read from `ls-remote`, the pin is NOT final: the amendment is made with the full hash BEFORE this order's Phase A GO, never with an abbreviation. Gate limb: none graded.
 
 <status>staged</status>
 <status>pending</status>
