@@ -176,3 +176,16 @@ AR-g-185 (44240238b9f), AR-g-186 (8faec6ba970) and AR-g-187 (5fd1e793f2f) are me
 AR-g-188 carries `<workstream>~GREL10</workstream>` (worker slot 365: branch 364 is a drain helper branch).
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell.
+
+## Addendum 11 2026-10-21 (issuer): cells AR-g-189 and AR-g-190, the CTO's FWD-10 enrichment (msg 11977, round analysis @e1ed2d1914)
+
+The round analysis grades FWD-10 realized as written (one ETF) and names two enrichments: (1) measure read-only on r34s whether an ETF typed in the form's "Other ETFs" field reaches `_compare_stage` as a priced comparable; no -> one wiring cell, failing-first, in the next release, then run 7M; (2) page 60 prints each model's own as-of date, in the same release. Measured (`deliverables/2.0.0_SA_COO~G2/ETF_TYPED_PATH_MEASUREMENT_20261021.md`, commit b452a85c42, instrument `checks/etf_typed_measure.py`): the door admits a classified ETF but drops the entry's `key`, so `_opal_comparables` yields ticker None and `_compare_stage` takes the empty "other" branch. The AR-g-182 tests (and `ar_prepare_checks.py`'s worker arm, a fourth premise-gap of the fake-shape kind) handed in an ETF entry carrying a `key` the door never retains; the new checker `checks/ar_enrich_checks.py` runs the REAL door.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-189` | `_opal_comparables` takes an ETF's ticker from the catalogue key; tests on the door's real entry shape | `resident_worker.py`, `reports/tests/test_compare_ports.py` | WORLD (infrastructure path floor) |
+| `AR-g-190` | `read_allocation` returns each model's own `data_as_of` (`as_of_by_code`); `_compare_stage` uses it; tests | `model_source.py`, `opal_producer.py`, `test_model_source.py`, `test_compare_producer.py` | WORLD (infrastructure path floor) |
+
+Both carry `<workstream>~GREL11</workstream>` (one issuance); they share no file and no edge. `checks/ar_enrich_checks.py` (arms etfkey, asof, tests189, tests190) was dry-run at the base (all four FAIL) and calibrated against the reference fixes in a sparse scratch worktree (etfkey OK, asof OK) and six mutants (ticker never, ticker on every entry, file date always, no fallback to the file date, producer ignoring the per-code date; one equivalent mutant, ticker from `vendor_id`, reads OK by design). `opal_producer.py` is also in Y2's `AR-y-494` write set (a different function, `_swap_stage`); the merges are the issuer's drain. Then the release r34t (AR-g-191) carries both, and run 7M (two Opal models plus one typed ETF) reads the result.
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells with disjoint write sets.
