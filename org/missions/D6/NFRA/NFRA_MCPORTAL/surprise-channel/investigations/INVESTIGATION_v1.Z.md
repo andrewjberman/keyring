@@ -3919,3 +3919,29 @@
   "notes": "Seat-row id Z-S78: Z-S77 is COO~O's."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S79",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-21T00:12:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Proposes a disposition for the nine items the CTO named (message 2026-10-21 00:08Z) as blocking the remediation row for Z-W3-S2: Z-W16-S1, S3, S4 and Z-W31-S4 answered by issuer amendments; Z-S63 and Z-S77 stay open with owners; Z-W31-S6, Z-W31-S7 REMEDIATED by the catalog; Z-W25-S2 NOT_A_DEFECT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~MP/ogw/OGW_R2_NINE_ROWS_PACKET_20261021.md (the table, per row, with its basis).",
+      "Z-W31-S6/S7: app/refs/DATA_CATALOG.yaml at the live release 13917ef993, tool_index block lines 1349-3356: vendor 23, firm 23, serves 7, kind store 15, source_group 127; the rows recorded zero of each.",
+      "Z-W31-S4: task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md line 128, AC1 expect restated as a regex by AMENDMENT 2, order complete.",
+      "Z-S63: ls ~/.opal on site Z at 2026-10-21 ~00:1xZ: demque/ and ps-lock/, no account_id_hashes.txt."
+    ]
+  },
+  "spec_asserts": "Nine items stand against the row gate's refusal of the Z-W3-S2 remediation row: 6 undispositioned (S63, S77, W16-S1, W16-S3, W16-S4, W31-S4) and 3 graduated without a remediation (W25-S2, W31-S6, W31-S7).",
+  "world_is": "Proposals only: the clock of a worker row moves by the CVO's adjudicates row or a remediation row. Z-S63 remains a live hazard (the client-data check is blind on this box) with an owner-and-date ask to 0.0.0_AB_MSTR~Z; Z-S77 is COO~O's with its own disarm date 2026-10-21. W31-S7's REMEDIATED proposal is stated as non-zero counts, not completeness.",
+  "notes": "This seat takes no override and writes no remediation row (the CVO's)."
+}
+```
