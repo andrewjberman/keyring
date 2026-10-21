@@ -1660,6 +1660,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO-BF-w7 CELL build step 1: census every @($x) site where $x may be a System.Collections.Generic.List[...] passed through an untyped parameter or variable; apply the pipe form at at-risk sites, and change nothing and say so for a site that is not at risk.",
     "world_is": "Line 519 wraps a property of a vendor deserialized object in @() inside foreach. Whether that property is a generic List is not decided by anything in the worktree. If it is, the daily pull throws at line 519 before the plan is built, the same way it threw at line 305. Not changed here: the census could not decide the site, and the grant does not reach the vendor assembly.",
     "notes": "Not an alert. Disposition for the issuer: read the vendor type of FileDetailList and, if it is a List, apply the same pipe form at sdd-daily-pull.ps1 line 519 and at the backfill's line 114. Nothing was run against Schwab or AWS."
+  },
+  {
+    "id": "NFRA_SCHWABBF-W19-S1",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_SCHWABBF~19",
+    "surfaced_at": "2026-10-21T16:20:23Z",
+    "one_line": "The TO-AL-p3 dry-run note says the state_tier arm has no test at the base and would fail against the stale Alongside copy, but the two state_tier tests already exist at base 5bb233992d and pass against the stale copy, so the failing control for this order is the new plan_list_wrap arm.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/tests/test_alongside_puller.py at base 5bb233992d (added by 67434e2f292): test_state_tier_functions_present_and_cottonwood_bucket_mapped and test_state_tier_cottonwood_masters_are_firm_form, read at the worktree path before the edit.",
+        "control run in the worktree before the copy was rebuilt: python -m pytest data/canonical/schwab/tests/test_alongside_puller.py -q -p no:cacheprovider --color=no -k \"master_set or syntax or state_tier\" printed '7 passed in 0.35s' rc=0 against infra/aws/ec2/alongside-schwab-si2/sdd-daily-pull.ps1 at HEAD, which carries Get-StateBucket, Get-StateKey and Get-RunRecordDests.",
+        "the same stale copy fails only the new plan_list_wrap arm: '1 failed, 7 passed', the failure is the missing List-wrap line (the copy holds the bare $all = @($planItems) at line 307)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_SCHWABBF.TO-AL-p3 WORKER FACE, dry-run note: AC1 has no state_tier test yet; write the state_tier arm first and watch it fail against the stale copy (which lacks Get-StateBucket).",
+    "world_is": "The state_tier tests exist at base 5bb233992d and pass against the stale copy, because the stale copy already carries the state-tier functions; the only stale defect is the bare $all = @($planItems) line in Select-PlanAsOf. The order's own text ('The existing state_tier test stays') agrees with the tree, not with the dry-run note. Built as: state_tier tests kept unchanged, plan_list_wrap arm added and failing against the stale copy before the rebuild.",
+    "notes": "Not an alert. No change to the state_tier tests. The order's AC1 selection (master_set or syntax or state_tier or plan_list_wrap) passes after the rebuild with 8 passed."
   }
 ]
 ```
