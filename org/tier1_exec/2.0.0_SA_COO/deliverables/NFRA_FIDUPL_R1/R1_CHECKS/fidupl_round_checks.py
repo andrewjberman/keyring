@@ -678,6 +678,29 @@ def _tf_out(name):
 
 
 
+def rule_targets():
+    tag = "R1-FT12T"
+    try:
+        names = []
+        for n in ("1", "2", "3"):
+            names.append("fidelity-alongside-fetch-leg-%s-daily" % n)
+        bad = []
+        arns = []
+        import boto3
+        ev = boto3.client("events", region_name="us-east-1")
+        for name in names:
+            tg = ev.list_targets_by_rule(Rule=name).get("Targets", [])
+            arn = tg[0]["Arn"] if len(tg) == 1 else ""
+            arns.append(arn)
+            if not arn.endswith(":$DEFAULT"):
+                bad.append(name[-9:])
+        if bad:
+            return out("%s-FAIL the target ARN does not end in :$DEFAULT for %s" % (tag, ",".join(bad)))
+        return out("%s-OK rule targets: all %d end in :$DEFAULT" % (tag, len(names)))
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
+
 def backfill_record():
     tag = "R1-FT11R"
     try:
@@ -1028,7 +1051,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft11r": backfill_record, "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft11r": backfill_record, "ft12t": rule_targets, "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 
