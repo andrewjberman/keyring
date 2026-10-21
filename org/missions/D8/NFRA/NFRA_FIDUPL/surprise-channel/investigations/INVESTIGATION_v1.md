@@ -1582,6 +1582,137 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
   "spec_asserts": "FT-s-7 criterion invocation: python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft7 (relative path); the order's worker face says run the main tree's checker by absolute path.",
   "world_is": "The relative path, run from the worktree, reaches a checker copy whose bytes differ from the main tree copy. The ft7 verdict is identical in both (R1-FT7-OK passed=9). The worker ran the main-tree copy by absolute path as directed, and recorded the criterion text as the invocation.",
   "notes": "Not reconciled here: which checker copy is authoritative is the issuer's call (the checker is the COO's file, outside this grant). The divergence is recorded, not fixed."
+},
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-21T01:40:00Z",
+    "one_line": "FT-s-2 reads the logout statuses from the session object (session.logout_statuses), but signin.Session exposes no such attribute: the close writes the statuses only as a text line into the driver's trace, so the coverage record's logout is null on every live run until the session surfaces them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/signin.py@6bd116284f5 line 1129: self._post_lines.append(\"logout statuses=%s,%s\" % (first, second)) inside WealthscapeDriver.logout()",
+        "infra/aws/ec2/canonical-fidelity/signin.py@6bd116284f5 lines 1162-1169: Session.close() calls the driver's logout() through getattr and sets no attribute on the session object",
+        "comp-find 'logout_statuses|perg_secret_id|perg-list' over infra/aws/ec2/canonical-fidelity in worktree C:/tmp/fidupl-w5 (2026-10-21T01:3xZ): 0 hit(s) across 31 file(s) scanned"
+      ]
+    },
+    "spec_asserts": "TO FT-s-2 item 2: read the logout statuses from the session object (session.logout_statuses if present, else None) and put them in the coverage record as logout; the session close already logs out (logout statuses=a,b in the driver's trace).",
+    "world_is": "No class in signin.py at 6bd116284f5 carries a logout_statuses attribute. The statuses exist only in the driver's _post_lines trace text, so getattr(session, 'logout_statuses', None) returns None and the coverage record's logout field is null on the live path.",
+    "notes": "Not fixed here: signin.py is outside this order's grant. The coverage record reads getattr(session, 'logout_statuses', None) exactly as the order says and carries the value when a session supplies it. Decision for the COO: whether signin.Session should expose the statuses (a signin.py change in a later cell) or the coverage record should read them from the trace file."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-21T01:40:00Z",
+    "one_line": "FT-s-2 names the unattributed landing 'under alongside', but split.py places an account whose label matches no firm_labels entry under unplaced and writes nothing for it; the alongside scope comes only from switcher_list's no-match rule, so the coverage record reports a scope and makes no landing claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py@6bd116284f5 _placement(): an unmapped label adds its accounts to acct_unmapped; _classify() returns ('unplaced', None) for them",
+        "infra/aws/ec2/canonical-fidelity/split.py@6bd116284f5 split_day(): _dest(firm, ...) is called only for firms that have accounts in by_firm, so no object is written for an unplaced account",
+        "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12 (switcher_list.firm_for_label: no match returns ('alongside', False))"
+      ]
+    },
+    "spec_asserts": "TO FT-s-2 item 1 and its counts: 'unattributed landed under alongside, named by ordinal only'; the test name test_unattributed_g_lands_under_alongside_and_is_named_by_ordinal.",
+    "world_is": "The split stage does not land an unattributed label under alongside: its accounts are listed under unplaced and no file is written for them. Whether any object lands under alongside depends on the box's firm_labels pointers, which this stage does not read.",
+    "notes": "Recorded as the coverage record's unattributed.firm_scopes (the switcher's scope), with the ordinal list. The test asserts the scope and the ordinal, never a landed object. Decision for the COO: whether unattributed accounts should land under alongside (a split.py change outside this grant) or stay unplaced as split.py has them."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-21T01:40:00Z",
+    "one_line": "The premise that config.json already carries perg_secret_id and that the code reads it is false at the base: check_pointers rejects the unknown key and no module reads it; this cell adds the key to the pointer allow-list and the secret-id check in box/run.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/box/run.py@6bd116284f5 ALLOWED_KEYS (lines 21-25) holds no perg_secret_id, so check_pointers raises ConfigError 'config holds keys that are not pointers' for a config that carries it",
+        "comp-find 'logout_statuses|perg_secret_id|perg-list' over infra/aws/ec2/canonical-fidelity in worktree C:/tmp/fidupl-w5 (2026-10-21T01:3xZ): 0 hit(s) across 31 file(s) scanned"
+      ]
+    },
+    "spec_asserts": "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12: config.json key perg_secret_id holds the per-G secret id (the code reads it; a missing key means no cross-check).",
+    "world_is": "At 6bd116284f5 no module reads perg_secret_id and the pointer check refuses it, so the key cannot reach the daily stage. This cell admits the key to the allow-list and to the secret-id check, and wires read_perg and write_coverage as daily deps in box/run.py _real_daily_deps (the reference names no dep for the per-G read or the coverage write).",
+    "notes": "The box config.json does not carry the key until the box is provisioned; a missing key gives checked false with one SKIP line, as the reference says. The added deps are the only wiring the order did not name."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-21T01:53:25Z",
+    "one_line": "The coordinator's fix (recover_session raises signin_recover.AttachError, which must stop the run with the original refusal) cannot be committed by this worker: the order is complete at HEAD 177617a95d, the owned-paths lane gate treats a terminal order as granting nothing, and the gate refuses run.py and tests/test_box_daily.py.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git commit of box/run.py and tests/test_box_daily.py through .tools/safe-commit.sh at 2026-10-21T01:52Z (worktree C:/tmp/fidupl-w5): 'owned-paths lane violation(s)' with 'no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'",
+        "NFRA_FIDUPL.TO-FT-s-2 status at HEAD 177617a95dc: <status>complete</status> (the flip commit, admitted while the order was pending)",
+        "the fix is uncommitted in the worktree; its diff is saved at .scratch/attach_fix.patch in C:/tmp/fidupl-w5 (not committed)"
+      ]
+    },
+    "spec_asserts": "Coordinator interface fact (box/dell1 signin_recover.py: class AttachError(Exception) raised when the unit does not start, the CDP port does not open, or no page exists): a recovery failure of any kind records recovery failed and stops the run with the original refusal.",
+    "world_is": "HEAD 177617a95dc treats AttachError as a run error rather than the refusal, because the hook re-raises the recovery exception. The corrected hook and its test are uncommitted. The lane gate grants no paths to a complete order, so the worker cannot commit the correction.",
+    "notes": "Not overridden: no GIT_COMMIT_AUTHOR_OVERRIDE and no force. Decision for the COO: reopen this order or issue a follow-up order that names box/run.py and tests/test_box_daily.py, then the worker or the COO commits .scratch/attach_fix.patch. The order status is left complete at HEAD as committed."
+  },
+{
+  "id": "NFRA_FIDUPL-D1-W8-S9",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T02:01:13Z",
+  "one_line": "The merged runner cannot drive the merged adapter: it accepts only the planner's two kinds, the planner needs COMPLETED and bytes where the adapter returns served and a folder, so the live walk cannot run end to end.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/backfill_run.py@55b6d748907 line 173: run() raises ValueError unknown export kind for any kind outside backfill.KINDS (transactions, positions_balances); main passes the six file-type kinds",
+      "measured: main driven with the real backfill_run.run and the test fakes raised ValueError before any sign-in (run_error ValueError, sign_ins 0) -- scratch check, not committed",
+      "infra/aws/ec2/canonical-fidelity/backfill.py@55b6d748907 lines 96-97: a wait() status other than COMPLETED raises RuntimeError; the adapter returns served per the order",
+      "infra/aws/ec2/canonical-fidelity/backfill.py@55b6d748907 lines 98 and 106: the planner writes the bytes returned by download() into export.bin; the adapter returns the day folder"
+    ]
+  },
+  "spec_asserts": "FT-s-7 item 1 (order): wait returns served and download returns the day's folder for the lander; FT-s-4 (reference section 12): the runner walks backfill.py's planner with the planner's kinds, statuses and download contract.",
+  "world_is": "Both sides are correct to their own spec and the two specs disagree on the kind vocabulary, the status word and the download payload. The fakes in both test files never cross the seam, so the suites pass. A live run through backfill_main stops at the runner's kind check before any sign-in: no harm, no walk.",
+  "notes": "The fix is a contract decision for the issuer (one vocabulary across the planner, runner and adapter), not a local edit: it touches backfill.py and backfill_run.py, outside this grant. Until it is made the box command must not be run live. Extends S2."
+},
+{
+  "id": "NFRA_FIDUPL-D1-W8-S10",
+  "project": "NFRA_FIDUPL",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~8",
+  "surfaced_at": "2026-10-21T02:01:13Z",
+  "one_line": "The runner counts every request_export against max_exports_per_run, including the skipped non-trading days the adapter answers without a request, so the 12-export cap covers about eight trading days per run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/canonical-fidelity/backfill_run.py@55b6d748907 lines 94-100: _Walk.request_export increments self.exports before delegating to the client, so a skipped day is counted",
+      "infra/aws/ec2/canonical-fidelity/backfill_main.py@d7123e46c24 plan_inputs chunk_days 1: one window per calendar day, weekends and holidays included"
+    ]
+  },
+  "spec_asserts": "REPAIR 1 item 2 (order): a non-trading day is skipped WITHOUT a request.",
+  "world_is": "The adapter sends no channel request for a skipped day, but the runner's cap counter still counts it. With twelve exports a run walks at most twelve calendar days, about eight trading days, and then stops with run_cap. The stop is safe (the walk resumes on the next run) but the per-run rate is lower than the cap implies.",
+  "notes": "The counter is the runner's; the adapter cannot change it from inside its grant. The issuer rules whether skipped days are free (a runner change) or the cap is sized in calendar days."
 }
 ]
 ```

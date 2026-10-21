@@ -163,6 +163,10 @@ The 00:32Z Track A run on the puller profile (record: `C:/Dev/ajb_workspace/org/
 3. Record every authorize status seen (a small list of integers, not just the last) in a new attribute `self._authorize_statuses` filled by `_on_response`; `_authorize_status` keeps meaning the latest.
 Add ONE test to the EXISTING `tests/test_login_trace.py`: `test_authorize_keeps_polling_after_a_non_2xx_answer` (a fake page: first a 403 authorize answer, later a 200: the step passes with `authorize via=response`; a variant with only 403 answers and no home page ends False with the `authorize statuses=403` note at the deadline). FU2-AC4 now needs forty-two; fu2a, fu2b, fu2c and fu5b must still pass. The checker is `fidupl_round_checks.py`. Fakes only. FAST.
 
+### REPAIR 17 (issuer, 2026-10-21 ~02:20Z; worker ~5 row W5-S5) -- the session close logs out but the daily record cannot read the statuses
+
+`Session.close()` already calls `PlaywrightDriver.logout()` (live: `logout statuses=204,400`), but the statuses only reach the trace text. The daily coverage record (FT-s-2) reads `session.logout_statuses` and finds nothing, so its `logout` field is null on the box. Change `signin.py` only: `PlaywrightDriver.logout()` also stores the two integer statuses as `self.logout_statuses = (first, second)` (or `None` when it failed or has not run); `Session.close()` copies the driver's value to `self.logout_statuses` after the logout and before it closes the context, and never raises. Add ONE test to the EXISTING `tests/test_login_trace.py`: `test_session_exposes_logout_statuses_after_close` (a fake request returning 204 then 400: `session.logout_statuses == (204, 400)` after `close()`; and a failing request gives `None`). FU2-AC4 now needs forty-three; fu2a, fu2b, fu2c and fu5b must still pass. The checker is `fidupl_round_checks.py`. Fakes only.
+
 ### ACCEPTANCE
 
 <criterion id="FU2-AC1" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2a</invocation><expect>R1-FU2A-OK passed=\d+</expect></criterion>
@@ -175,7 +179,7 @@ Add ONE test to the EXISTING `tests/test_login_trace.py`: `test_authorize_keeps_
 `FU2-AC3` -- the eight G-switch probe tests (the five originals and the three of REPAIR 3) exist and pass.
 
 <criterion id="FU2-AC4" cell_refs="FU-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu2t</invocation><expect>R1-FU2T-OK passed=\d+</expect></criterion>
-`FU2-AC4` -- the forty-two login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9, one from REPAIR 10, two from REPAIR 11, three from REPAIR 12, six from REPAIR 13, two from REPAIR 14, one from REPAIR 16) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
+`FU2-AC4` -- the forty-three login-trace tests (five from the first repair, five from REPAIR 2, three from REPAIR 4, three from REPAIR 5, three from REPAIR 6, six from REPAIR 7, two from REPAIR 9, one from REPAIR 10, two from REPAIR 11, three from REPAIR 12, six from REPAIR 13, two from REPAIR 14, one from REPAIR 16, one from REPAIR 17) exist and pass. A fourth criterion, with its reason: the live sign-in failed at an unknown step and the first three criteria cannot see the live page.
 
 <expected_criteria>FU2-AC1,FU2-AC2,FU2-AC3,FU2-AC4</expected_criteria>
 
