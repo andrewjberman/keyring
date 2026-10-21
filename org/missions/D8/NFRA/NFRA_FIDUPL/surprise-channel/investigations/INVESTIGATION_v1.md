@@ -1713,6 +1713,50 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
   "spec_asserts": "REPAIR 1 item 2 (order): a non-trading day is skipped WITHOUT a request.",
   "world_is": "The adapter sends no channel request for a skipped day, but the runner's cap counter still counts it. With twelve exports a run walks at most twelve calendar days, about eight trading days, and then stops with run_cap. The stop is safe (the walk resumes on the next run) but the per-run rate is lower than the cap implies.",
   "notes": "The counter is the runner's; the adapter cannot change it from inside its grant. The issuer rules whether skipped days are free (a runner change) or the cap is sized in calendar days."
-}
+},
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-21T02:27:02Z",
+    "one_line": "REPAIR 3 names a split.py call at line 170 that still passes one argument to the lander's content-date helper; at the cut the call already passes the file name and the eleven split tests pass, so no REPAIR 3 change was needed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py@fdd09568862 line 170: day = land._content_date(data, name)",
+        "infra/aws/ec2/canonical-fidelity/tests/test_split.py@fdd09568862: 11 def test_ functions; python -m pytest on test_split.py at the cut: 11 passed",
+        "NFRA_FIDUPL.TO-FR-s-2.firm-split.md REPAIR 3 (issuer, 2026-10-21 ~01:15Z) states the call still takes one argument"
+      ]
+    },
+    "spec_asserts": "TO FR-s-2 REPAIR 3: split.py line 170 still calls land._content_date(data); the module suite shows TypeError in eleven tests.",
+    "world_is": "At the cut fdd09568862 the call at line 170 already passes name, and the module suite had no TypeError. The REPAIR 3 premise did not hold at the cut; the fixtures already place each date in its file's own column.",
+    "notes": "For the issuer: the REPAIR 3 text describes a state that the base no longer holds. REPAIR 4 was built on the cut as it stands (commit 4ab5a764205)."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W3-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~3",
+    "surfaced_at": "2026-10-21T02:27:02Z",
+    "one_line": "The flip of NFRA_FIDUPL.TO-FR-s-2 to complete needs a write to the task-order file, which the worker grant (the paths block: split.py, tests/test_split.py, the investigation file) does not name.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FR-s-2.firm-split.md@fdd09568862 line 8: <status>pending</status>",
+        "same file lines 76-80: the paths block names split.py, tests/test_split.py and the investigation file only",
+        "NFRA_FIDUPL-D1-W3-S6 (round 1, same gap): the grant admits no path to the TO file"
+      ]
+    },
+    "spec_asserts": "The worker flips the task-order status to complete in the same commit as the proof instance once the criterion PASSes (the user's order for this run).",
+    "world_is": "The grant admits no path to the TO file, so the status flip cannot be committed by this worker. The criterion FR2-AC1 is graded here and the instance is pinned; the status stays pending for the issuer or the gate.",
+    "notes": "Criterion FR2-AC1 is the BLOCKING criterion of this row for the flip only; the code and tests criterion is unaffected. Recurring: W3-S6 filed the same gap in round 1."
+  }
 ]
 ```
