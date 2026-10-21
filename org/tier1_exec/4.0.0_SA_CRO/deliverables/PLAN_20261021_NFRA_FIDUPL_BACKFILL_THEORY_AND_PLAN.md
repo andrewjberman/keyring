@@ -65,3 +65,21 @@ feed), which is a business decision, not a pipeline step. Within the ~120-day / 
 Backfill positions/balances/prices to ~120 days and transactions to several months, driven by the box per the method above, landed by
 content date, reported back (earliest date per type, volume, the empirical floors). Accounts/securities stay current-snapshot. First step:
 one Historical export run to fix layout + landing, then step both routes back. No Andrew act required inside this reach.
+
+## 8. Addendum (~12:45Z, Andrew): IS 120 days a real cap? -- the probe to settle it
+
+**The 120 is UI-observed, NOT a tested server limit.** It was read from the Historical export wizard's date-picker range
+("today-120 to yesterday"); no one has POSTed an older `historicalDate` to see if the server refuses. The picker range may be a display
+default while the backend serves more. So the cap is UNPROVEN.
+
+**The probe (COO-owned, read-only, no Andrew act):**
+1. **Historical export past 120:** replay `POST /export/v1/historicalExport.json` with `historicalDate` stepped earlier -- 150, 180, 270,
+   365, 730 days back. Classify each SERVED / EMPTY / REFUSED; the first REFUSED (with its exact validation text) is the true cap for
+   positions/balances/prices. Space the calls; one session.
+2. **Transactions past ~5 months:** step the `historical-transactions` `customTimePeriodFromDate` back year by year for a sample account
+   until EMPTY; record the floor (likely multi-year).
+3. **Record** the exact proven floor per file type, with the refusal/empty evidence, and whether the 120 held or broke.
+
+**Outcome:** either 120 is confirmed a hard cap (then >120-day positions history needs the official Fidelity feed -- a business decision),
+or the server serves older dates and the real depth is whatever the probe reaches. Until this runs, state the positions depth as
+"at least 120 days, true cap unproven."
