@@ -166,6 +166,17 @@ def tickets_table_binding(text):
     return text
 
 
+def swap_model_binding(text):
+    """The `opal_swap_model` binding (IRPT_ANLREQ C-SWAP model leg, AR-y-494, r34t): exactly {"enabled": bool}, the resident installer's own rule (SWAP_MODEL_BINDING_INVALID)."""
+    try:
+        value = json.loads(text)
+    except ValueError:
+        raise SystemExit("BINDING_SWAP_MODEL_JSON")
+    if not isinstance(value, dict) or set(value) != {"enabled"} or type(value["enabled"]) is not bool:
+        raise SystemExit("BINDING_SWAP_MODEL_SHAPE")
+    return value
+
+
 def window_budget_binding(text):
     """The `ycharts_window_budget` binding from its JSON text, refused by the resident installer's own rule (RESIDENT_WINDOW_BUDGET_BINDING)."""
     import math
@@ -239,6 +250,8 @@ def main(argv=None):
                         help='optional binding ycharts_window_budget, e.g. {"calls": 6, "window_s": 390}: the host-wide YCharts call budget per window')
     parser.add_argument("--tickets-table", metavar="NAME", default=None,
                         help='optional binding tickets_table, e.g. opal-tickets: the ticket table the resident\'s audit source reads (r34q)')
+    parser.add_argument("--opal-swap-model-binding", metavar="JSON", default=None,
+                        help='optional binding opal_swap_model, exactly {"enabled": true|false}: the C-SWAP model leg (r34t)')
     parser.add_argument("--member", action="append", default=[], metavar="PACKAGED_PATH=REPO_PATH",
                         help="package the tracked file REPO_PATH at --pin as the member PACKAGED_PATH (repeatable); "
                              "recorded in the bindings provenance as members_added")
@@ -268,6 +281,7 @@ def main(argv=None):
     pricing = pricing_binding(args.opal_pricing_binding) if args.opal_pricing_binding is not None else None
     budget = window_budget_binding(args.ycharts_window_budget) if args.ycharts_window_budget is not None else None
     tickets_table = tickets_table_binding(args.tickets_table) if args.tickets_table is not None else None
+    swap_model = swap_model_binding(args.opal_swap_model_binding) if args.opal_swap_model_binding is not None else None
     pin = git("rev-parse", args.pin).strip()
     base = git("rev-parse", args.base_pin).strip() if args.base_pin else pin
     listed, list_sha = (read_list(args.files_from) if args.files_from else ([], None))
@@ -393,6 +407,8 @@ def main(argv=None):
         bindings["ycharts_window_budget"] = budget
     if tickets_table is not None:
         bindings["tickets_table"] = tickets_table
+    if swap_model is not None:
+        bindings["opal_swap_model"] = swap_model
     if added_members:
         bindings["provenance"]["members_added"] = [
             {"packaged": packaged, "repo_path": repo_path, "sha256": next(d for d, p in sums if p == packaged)}
