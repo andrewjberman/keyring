@@ -31705,3 +31705,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Disarm: the cli-shim FWD-24 gateway cell is live and read back, or the grant writer refuses a channels_ entry that the gateway would not parse. Until then NO bucket or bucket/prefix string goes into channels_allow or channels_deny by any route (the People panel included). Told to the CTO and COO~MP by ferry."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~185",
+  "surfaced_at": "2026-10-21T17:16:50Z",
+  "id": "NFRA_OPLGTW-Z-W185-S1",
+  "one_line": "OG-cs-7 AC1 expect requires 'pair ' (a space) in the served-bucket label, but the issuer probe cs7.AC1.sh prints 'pair,' (a comma): no client_grant.py can match that line, so AC1 is not met as written; the probe itself reads RESULT: PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs7.AC1.sh (tracked @9b822ff34a9): the served-bucket say() label is 'served-bucket folder entries cover no client pair, and a client entry covers no folder read' (comma after 'pair')",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cs-7.cli-shim-the-per-firm-client-grant-decision.md section 5, AC1 expect (@9b822ff34a9): '.*served-bucket folder entries cover no client pair .*: ok' (a space after 'pair')",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~185/NFRA_OPLGTW.TO-OG-cs-7.cli-shim-the-per-firm-client-grant-decision.proof_of_spec.json (@cff31fb4386): validator reports VIOLATION acceptance[AC1] status=PASS but output_evidence does NOT match expect; a per-segment match isolates that one segment"
+    ]
+  },
+  "spec_asserts": "OG-cs-7 section 5 AC1: the probe output must match the expect, whose served-bucket segment is 'served-bucket folder entries cover no client pair .*: ok' before '.*RESULT: PASS.*exit=0'.",
+  "world_is": "The issuer probe prints the served-bucket label with a comma after 'pair', so the expect's segment (a space after 'pair') cannot match any output of any app/client_grant.py. The probe's own verdict is RESULT: PASS exit=0 and its other nine labels match their segments. The probe and the order are outside the worker's paths, so the fix is the issuer's: align the label or the expect.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker-side only: AC1 is recorded FAIL with this row id; AC2 PASS (module and 15 tests unaffected). Issuer-side fix: the probe label or the expect text. No live hazard: an order graded FAIL stays open and serves nothing."
+}
+```
