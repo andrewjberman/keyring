@@ -66,3 +66,10 @@ the forbidden classes of 10-08), with Menachem an authorized account-identity ho
 
 Applied: NFRA_OPLGTW PRD v3.16 reshapes FWD-23 to two tools (list, read) over the three buckets' folders; tax ids, mailing
 addresses, email and phone stay out.
+
+## Seventh message, VERBATIM
+
+> yeah the purpose here is to intentionally be light, i will transcribe a spec on the intention of how this should work and
+> send it to CRO for a brief.
+
+Applied: PRD v3.17 withdraws FWD-23 from the ENDPOINT until the CRO brief lands; v3.15/v3.16 stay as input to it.
