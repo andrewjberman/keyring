@@ -2052,3 +2052,49 @@ Two behaviours, two named tests (`a stopped person's tool and channel switches r
 - One chain, one worker (slot ~46). `fanout: 1 of 1 chains, cap 8`. Independent of `MP-zo-4` (which writes only its deliverables).
 - Not in this cut (stated, handed to the next enrichment list): the History and audit rows list bookkeeping fields (`revision`, `expect_revision`, `updated_at`) and a first write shows the whole record `none to ...`: a readability polish, not a defect against an FWD.
 - Nothing here deploys: the change reaches the host only in a bundle release that pins the new mcportal commit; batch17 pins `f90f03a` today, so `2.0.0_SA_COO~O` is told the new pin before its Phase A GO if this lands first.
+
+
+# v23 -- WORKSTREAM OGB, ROUND 1 (DRAFTED, NOT CUT): FWD-30, the People panel grants a bucket or a folder per person (2026-10-21 ~16:0xZ, 2.0.0_SA_COO~MP)
+
+Source: PRD v0.11 @52d9b2a986 (FWD-30, Andrew-direct 2026-10-21; ratified-text SIGNED by `3.0.0_SA_CVO~Z`, ADMITTED); the CTO's ruling 14:57Z (a grant is a `bucket` or `bucket/prefix` string in `channels_allow`, `channels_deny` subtracts, deny wins, no writer change); the CVO's relay 15:08Z ("draft your FWD-30 cell now; cut it when COO~O's FWD-24 reading of channels_allow folder strings is live").
+
+## OGB1.0 WHAT IS MEASURED BEFORE THE DRAFT
+
+- The deployed writer (MP-pd-7, `lambda_function.py` :314, :339-344) accepts `bucket` and `bucket/prefix` strings in `channels_allow` and `channels_deny` (64 strings of 128 characters); any add to `channels_allow` is a WIDENING and is refused `WIDEN-NO-CONFIRM` unless the event carries `widening_confirm: true` (:418).
+- The mounted access POST (`app/admin_people_access.py` :108-137) drops `widening_confirm`; `2.0.0_SA_COO~O` accepted it as a named criterion of its FWD-24 gateway cell (first release target 2026-10-23T06:00Z, ferry 15:36Z). The page sends the field only after that release.
+- The page can list buckets: the gateway breakdown (`getGatewayBreakdown`, `src/api/admin.ts`) carries channels with `kind: 'bucket'`. The People data lists only what a person already reaches, so the bucket list for a switch comes from the breakdown. Folders are not enumerated by any route: a folder is typed as a prefix under a chosen bucket.
+- The POST body is `{change, expect_revision}` (`src/api/admin.ts` :609); a `widening_confirm` boolean is the one addition.
+
+## OGB1.1 CELL `MP-zb-1` -- a per-person bucket/folder list on `/opalgateway` that writes `bucket` and `bucket/prefix` strings  (page chain; LOCAL; FWD-30)
+
+In the picked person's section, a list of buckets (from the breakdown) and the folders already in the person's `channels_allow`, each with a switch. Rules, one function each in `personAccess.ts`, all pure and tested without mounting: turning a bucket or folder ON the first time ADDS its string to `channels_allow` (a WIDENING: the page labels it before it lands, asks the owner to confirm, and sends `widening_confirm: true` in that one POST only); turning it OFF adds the string to `channels_deny` (deny wins; `channels_allow` is not edited); restoring removes the string from `channels_deny` (no confirm). An "add a folder" control takes a bucket and a prefix and builds `bucket/prefix`. THREE tests, by name (written at the cut). `api/admin.ts` gains the optional `widening_confirm` boolean on the POST body only. Mechanical: AC1 named tests + `bun test src` pass floor, AC2 tsc. Dependencies: `2.0.0_SA_COO~O`'s FWD-24 reading AND the `widening_confirm` release live; the CVO's note: the no-bronze cure (NFRA_OPLGTW v3.19) lands first.
+
+## OGB1.2 CELL `MP-zb-2` -- the FWD-30 close run  (worker read-and-grade; WORLD; after zb-1 ships in a bundle release)
+
+The DONE WHEN of FWD-30: the owner turns on `opal-data-assets`, `opal-data-etfs` and `opal-data-portal-v2` for Menachem from the page; the page shows them ON; the gateway's FWD-23 tools read under them (the test principal's own calls); one folder turned off is refused by folder name; restored, it reads again. Same shape and checks as `MP-zo-4` (store, history with `who`, served call), plus the confirm: the history entry of each add carries `widening_signoff`. The acts are Andrew's (one sitting; the owner's signed header).
+
+## OGB1.3 EDGES AND WHAT THIS DRAFT DOES NOT CLAIM
+
+- Not cut: the gate is `2.0.0_SA_COO~O`'s release (target 2026-10-23T06:00Z) and the v3.19 cure. The orders are held as DRAFTS in `deliverables/2.0.0_SA_COO~MP/ogb/staged/` (outside `task-orders/`).
+- Not decided: whether a bucket's switch should also list a person's existing `channels_allow` entries that are plain channel ids (not buckets); the draft shows only bucket-kind channels and `bucket/prefix` strings. Stated for the CTO.
+- The deny-wins reading is the gateway's (FWD-24); the page only writes the strings.
+
+
+# v24 -- WORKSTREAM OGH, ROUND 1: the page must not write a name the gateway cannot read (2026-10-21 ~16:4xZ, 2.0.0_SA_COO~MP)
+
+Source: NFRA_OPLGTW row `Z-S447` (ARMED, owner `2.0.0_SA_COO~O`) and the CTO's hazard message 15:17Z: the gateway's `person_access` reader accepts `channels_*` entries only as `^[a-z][a-z0-9_]{0,63}$` and `tools_*` entries as `^[a-z][a-z0-9_]{0,99}$` (`app/data_entitlement.py` :250, :254, :591-594); any other entry makes the whole record Malformed and every tool of that person fails closed. The writer checks only "non-empty string, at most 128 characters" (`lambda_function.py` :339-344), so it accepts what the reader rejects.
+
+## OGH1.0 WHAT IS MEASURED (issuer, 2026-10-21 ~16:3xZ)
+
+- The shipped channel switch writes `channels_deny: [<channel.id>]` (`mcportal/src/pages/people/personAccess.ts` :34; the view passes `channel.id`). On the live breakdown (served capture `deliverables/2.0.0_SA_COO~MP/gwz/capture/served_breakdown_capture_20261021_at_2923d1ee99.json`) the 14 channel ids are: `opal-data-assets`, `opal-data-etfs`, `opal-data-harvest`, `opal-data-mdpf`, `opal-data-portal-v2` (the five bucket ids carry hyphens and FAIL the reader's pattern), and `dynamodb`, `blackdiamond`, `globgrph`, `opal_discover`, `opal_portal`, `portal_index`, `schwab`, `ycharts`, `m365` (pass). So once the mount `OG-mp-1` is live (batch17, not before 2026-10-22T06:00Z), turning a bucket channel OFF from either the People page or `/opalgateway` would write a record the gateway reads as Malformed: that person's every tool fails closed. The page is the defect, not only the FWD-30 draft.
+- Tool names are shaped `[a-z][a-z0-9_]*` in the registered set; the same guard covers them.
+
+## OGH1.1 CELL `MP-zh-1` -- a switch for a name the gateway cannot read is disabled, and no change that holds one is posted  (shared view; one chain; LOCAL; FWD-29)
+
+`channelIdReadable` and `toolNameReadable` (pure, in `personAccess.ts`, the gateway's two patterns copied with their source lines named in a comment). In the shared access view (People and `/opalgateway`), a channel or tool switch whose name is not readable is disabled and says once `Not switchable yet: the gateway cannot read this name.`; the panel's post path refuses any change that would put an unreadable name into any of the four lists (no request is sent), the way the last-admin guard refuses. TWO tests by name. Mechanical: AC1 (`zh1.AC1.sh`: named tests present 2 of 2, `bun test src` 93 or more pass, 0 fail), AC2 (`zh1.AC2.sh`: tsc clean). Ships before the batch17 window in the bundle pin (the pin is re-sent to `2.0.0_SA_COO~O`). The gate: none; cut now. The close run `MP-zo-4`'s GO names a channel whose id is readable (not an `opal-data-*` bucket).
+
+## OGH1.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+- Does NOT fix the folder-grant path: FWD-30 (`MP-zb-1`, held) waits on `2.0.0_SA_COO~O`'s parser cell `CS-1`, which would relax the reader; this cell would then be revisited (the patterns it copies change with the reader).
+- A writer-side refusal of the same entries (a Lambda change) is available and NOT taken here: it would need a never-widen pair and would have to be relaxed when `CS-1` lands. Stated for the CTO.
+- `fanout: 1 of 1 chains, cap 8`; independent of `MP-zo-4` (deliverables only) and of the held `MP-zb-1`.

@@ -31678,3 +31678,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "The count was the issuer's error; amended in the order and the check with the take list unchanged; the applier's cut was right and proceeds."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-21T15:17:37Z",
+  "id": "NFRA_OPLGTW-Z-S447",
+  "one_line": "FWD-24 as ruled (a bucket or bucket/prefix string in person_access channels_allow) would make that person's whole record Malformed at the gateway: the channel parser accepts only [a-z][a-z0-9_]{0,63}",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py line 254: _CHANNEL = re.compile(r\"^[a-z][a-z0-9_]{0,63}$\"); parse_person_access (lines 575-596) runs _names(rec[field], ..., _CHANNEL) over channels_allow and channels_deny and raises Malformed on 'an entry of the wrong shape'. A hyphen (opal-data-assets) or a slash (a bucket/prefix) does not match.",
+      "Malformed is 'treated as an unavailable store': the caller fails closed with person_record_unavailable (data_entitlement.py lines 560-575 docstring and PERSON_UNAVAILABLE). So one folder string in either channels_ list makes EVERY tool refuse for that person, not just the folder tools.",
+      "In the gateway a 'channel' is an integration id or 'native' (channel_of, line 626), not a bucket; the CTO's FWD-24 shape (msg 36300: a 'bucket' or 'bucket/prefix' string in channels_allow) was ruled on the WRITER's limits (64 strings of up to 128 characters, COO~MP's measure), which the writer accepts; the reader's pattern was not part of that measure.",
+      "Live now: R3c 2923d1ee99 carries this parser; batch17 does not change data_entitlement._CHANNEL (its only change there is the master-admin consent exemption and the master-wide scope)."
+    ]
+  },
+  "spec_asserts": "A folder grant written as a bucket or bucket/prefix string in channels_allow (the CTO's ruling, msg 36300) is read by the gateway as a folder grant.",
+  "world_is": "Any such string written today makes the person's record unreadable and the gateway fails closed for all of that person's tools. NOT done by anyone yet: nothing has been written (Menachem has no record; the OG-pa-1 narrowing writes tools_deny tool names, which match the tool-name pattern). The cli-shim FWD-24 cell must change parse_person_access to accept a folder string in the channels_ lists (and say what a channel id and a folder string each mean) BEFORE any folder string is written.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: the cli-shim FWD-24 gateway cell is live and read back, or the grant writer refuses a channels_ entry that the gateway would not parse. Until then NO bucket or bucket/prefix string goes into channels_allow or channels_deny by any route (the People panel included). Told to the CTO and COO~MP by ferry."
+}
+```
