@@ -5,7 +5,7 @@
  "project": "NFRA_FIDSLVR",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-fidslvr-fidelity-silver-to-schwab-schema-brief-20261021.md@cc707deac8",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -54,7 +54,8 @@ ENDPOINT is re-pasted here.
          silver table of the matching Schwab schema
          DONE WHEN  APPLIED -- for each landed family (accounts, positions,
                     balances, securities and prices, transactions, open lots,
-                    realized gain/loss) a schema parity read compares the
+                    realized gain/loss, unrealized gain/loss) a schema parity
+                    read compares the
                     Fidelity table against its Schwab twin -- column names, types,
                     units, enum values, grain -- and prints the denominator
                     (tables compared of tables landed)
@@ -125,7 +126,10 @@ ENDPOINT is re-pasted here.
                     native id on every silver account row and the attribution it
                     resolved to, with no vendor assignment consulted; the config
                     is the single source of attribution
-         SOURCE     brief O3 attribution key; Andrew-direct ~15:35Z
+         SOURCE     brief O3 attribution key; Andrew-direct ~15:35Z ("use the
+                    G Number from Fidelity and the Master Account Number from
+                    Schwab ... in some mapping config ... rather than rely on
+                    downstream data vendor inputs")
 ```
 
 ## CONTRACTS
@@ -198,5 +202,6 @@ FWD-7).
 
 ## CHANGE LOG
 
+- **v0.2 (2026-10-21 ~15:5xZ, `1.0.0_SA_CTO~DELL1`):** CVO REFUSE @51518ac061 answered: FWD-2 names unrealized gain/loss (Andrew ~15:20Z verbatim; Schwab twins fact_uln/fact_ult) in the L2 record; FWD-6 and FWD-7 restored to the record's order; the ENDPOINT block re-pasted verbatim from the L2 record.
 - **v0.1 (2026-10-21 ~15:5xZ, `1.0.0_SA_CTO~DELL1`):** DRAFT on endpoint @5c8ca94a34 and brief @cc707deac8. L4-R waits on Andrew's
   confirmation of the DONE WHEN lines; the CVO's ratified-text half is delivered now so it can be read in parallel.
