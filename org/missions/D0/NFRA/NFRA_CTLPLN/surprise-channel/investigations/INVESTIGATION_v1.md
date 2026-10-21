@@ -15351,3 +15351,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Cites S28; does not edit it. Counts only."
 }
 ```
+
+## NFRA_CTLPLN-D1-S31 -- seat ends on dell1 and dell2 (not the laptop) leave no trace; client binary, install folder and scheduled tasks ruled out on dell1
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S31",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-21T14:08:00Z",
+  "one_line": "Cross-box and cross-cause measurements for the seat ends of S29: dell2 lost nine seats at 13:08:24Z to 13:08:50Z on 10-20, the laptop lost none on either day, and on dell1 the claude binary, the bun install folder, the scheduled tasks and the OS error logs show no change in the window; the cause is still not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REPORTED by 0.0.0_AB_MSTR~DELL2 (bus 4364b764, 14:04Z): the same class on 10-20, nine dell2 seats gone between 13:08:24Z and 13:08:50Z, cause not found; at 14:03Z all 10 dell2 seats alive. This seat did not measure dell2.",
+      "REPORTED by 0.0.0_AB_MSTR, the laptop manager (bus 9a9b997a, 14:04Z): no laptop seat vanished today (same 10 claude.exe seats, every start time unchanged, latest 10-20 18:44Z) and none in the 10-20 events; no kill line in its spawn audit.",
+      "MEASURED on dell1 at 14:05Z, the binary: C:/Users/Test/.bun/install/global/node_modules/@anthropic-ai/claude-code-win32-x64/claude.exe has mtime 2026-10-08 16:35:05Z; the shim C:/Users/Test/.bun/bin/claude.exe has 2026-10-05 22:10:30Z; no claude.exe.old exists; claude --version reads 2.1.293. No file under C:/Users/Test/.bun/install/global changed between 12:00Z and 14:00Z today (depth 3). So an update of the client binary is not the cause on this evidence.",
+      "MEASURED on dell1 at 14:05Z, scheduled tasks: of 207 tasks, 7 last ran between 08:30 and 09:45 local (12:30Z to 13:45Z): Windows Error Reporting QueueReporting, Office ClickToRun monitor, Siuf DmClientOnScenarioDownload, two SoftLanding tasks, OneSettings RefreshCache, Office Background Push Maintenance. None is an Opal task and none acts on a process; this reads only tasks whose last run falls in the window.",
+      "MEASURED at 13:41Z (S29): no Application or System log event for crash, hang, boot or shutdown in the window.",
+      "NOT explained: the cause; the time of the end; why the Dell boxes and not the laptop. The 10-20 dell1 ends were at 13:17Z and 21:34Z (rows S21 to S27), so a once-a-day clock hour does not fit dell1 alone. No transcript content read, no claim of cause."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat keeps its process until an actor ends it, and an end leaves a trace in the spawn audit log or the OS event logs.",
+  "world_is": "Seat ends on dell1 and dell2 leave no trace in either place, on at least two days, and none on the laptop. The client binary, the install folder and the scheduled-task list do not account for it on dell1.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Cites S21 to S29; none edited. Counts and times only."
+}
+```
