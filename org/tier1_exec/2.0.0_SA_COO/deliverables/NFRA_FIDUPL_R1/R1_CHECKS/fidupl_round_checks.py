@@ -125,7 +125,9 @@ TEST_FILES = {
     "fw1": ("%s/tests/test_api_walk.py" % CF, [
         "test_accounts_are_read_from_the_newest_landed_account_file_column_zero",
         "test_transaction_windows_are_consecutive_non_overlapping_and_at_most_365_days_anchored_once",
-        "test_an_account_walks_windows_back_until_the_first_empty_window_and_lands_each_by_window_end",
+        "test_an_account_walks_windows_back_until_the_stop_rule_and_lands_each_by_window_end",
+        "test_two_consecutive_empty_windows_or_an_empty_window_from_the_sixth_on_end_an_account",
+        "test_skipped_windows_and_ranges_still_count_toward_the_earliest_content_date",
         "test_a_window_with_2000_rows_is_split_in_halves",
         "test_an_existing_window_is_not_fetched_again_and_an_existing_empty_window_ends_the_account",
         "test_a_422_security_violation_is_no_access_recorded_and_not_retried",

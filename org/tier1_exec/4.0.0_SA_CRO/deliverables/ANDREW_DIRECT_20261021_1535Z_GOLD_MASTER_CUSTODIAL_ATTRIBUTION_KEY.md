@@ -20,3 +20,13 @@ Refinement: a standing master gold UNION TABLE may be unnecessary. Because the t
 **construct the needed tables by configuration** -- union the uniform silvers and attribute via the mapping config -- rather than
 materialize one bespoke master. Whether gold is a config-driven assembly (views/queries) or a materialized table is a gold-layer/DS
 decision at L2/L4; the design does not presume a physical master.
+
+## Addendum ~16:3xZ (VERBATIM): the Schwab household question goes to the COO
+> Yes, put the COO on the Schwab household question
+
+Directive: 2.0.0_SA_COO~P1 investigates how households exist on the Schwab side, since Schwab has NO family/household table in silver OR
+bronze (measured; feed = acc, rld/rlu/rlw/rly, rps, rtu/rty, sec, tcf/tcfx, tnn, trn, uln/ult, upn/upt). Questions: (1) does any Schwab
+feed field carry household/grouping/relationship data (the Master Account Number master->sub structure, or the unexplained tcf/tcfx/tnn
+types)? (2) if not, can households be SYNTHESIZED from the Master Account relationships? (3) how does that reconcile with Fidelity's 58
+native Groups so the gold household/attribution dimension is consistent across custodians? Output: a finding the NFRA_FIDSLVR config/gold
+attribution design consumes. Read-only.
