@@ -31184,3 +31184,32 @@
 }
 ]
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W360-S1 -- the two pre-commit instruments printed NOT-CHECKED on both AR-y-486 commits
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W360-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~360",
+  "surfaced_at": "2026-10-21T04:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On both AR-y-486 commits safe-commit printed two pre-commit lines that did not decide: the client-data check (hashed account-id list absent on this box) and the risk reflex (danger map stale; the linked-worktree build guard refused). The commit-gate and the naming gate did pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/resident_ticket_read_policy.tf@604767de49cafe23cf94df4ae2a7fbf0796df8fb (the file committed; it carries no literal account id, the ARN is built from data.aws_caller_identity)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~360/check_ticket_read_policy.py@e54e7f0b45f85406e9cf39c542d880d6d8ea4e13 (the check script committed)",
+      "safe-commit output of 604767de49c and e54e7f0b45f: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'; '[risk-reflex] NOT-DECIDABLE: danger map STALE ... linked worktree ... ANSWER STATE: PARTIAL_OR_BLIND'"
+    ]
+  },
+  "spec_asserts": "The order names only the commit path: safe-commit.sh with the message file, and commit-gate.sh on each .py. It does not name a client-data check or a risk-reflex run, and it does not say what a pre-commit run cannot decide on this box.",
+  "world_is": "MEASURED by this seat 2026-10-21 ~04:1xZ on 604767de49c and e54e7f0b45f: the client-data check did not run (its account-id list is absent on this box, so the commit was not checked for client account ids); the risk reflex scanned 0 of 1 file (danger map 128.3 h old, STALE; the build guard refuses a linked worktree). commit-gate.sh passed on the script (All checks passed; 1 of 1 file), and the naming gate passed on the .tf (NAMING CONFORMANT irpt-ticket-audit-read-policy). The two commits are not cleared by the client-data check or by the risk reflex.",
+  "notes": "Not a premise failure of the order: the order's own gates passed. Filed because a capability the commit path prints as present did not decide. No action taken; the owner of the account-id list and the danger map decides whether either matters for this box."
+}
+```
