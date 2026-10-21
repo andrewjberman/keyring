@@ -41,6 +41,7 @@ infra/aws/lambda/investor-reporting/ycharts/research/price_form_ycharts.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_source.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_transport_ycharts.py
 infra/aws/lambda/investor-reporting/ycharts/research/runner.py
+infra/aws/lambda/investor-reporting/ycharts/research/swap_model.py
 infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py
 infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py
 infra/aws/lambda/investor-reporting/ycharts/research/tr_level.py
