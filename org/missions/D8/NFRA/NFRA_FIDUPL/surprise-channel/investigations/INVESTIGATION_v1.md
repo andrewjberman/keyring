@@ -1825,6 +1825,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "TO-FT-s-8 step 2: one run of box/run.py on config.daily.json signs in once, sweeps the 31 G numbers, pages accountList, and writes the split under fidelity/<firm>/ plus the coverage record; FT-s-8-AC2 expects four files split and at least three firms with rows.",
     "world_is": "The land stage finished; the attribute stage (switcher sweep / accountList paging through adapters.py) raised AdapterShapeError against the live responses, so split and the coverage counts were skipped. The logout statuses 204 and 400 are as the coverage record shows. Nothing was written under any firm prefix. config.json, work/, both profiles and the agent Chrome unit were not touched by me.",
     "notes": "Not retried (one attempt per the GO). Which AdapterShapeError message fired is the missing fact: run.py logs the class name only, while adapters.py's messages are fixed text naming keys and types, never values. For the issuer: print that fixed text in the stage line (or in the coverage record's failure field) and re-cut; the box needs no change. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2; FT-s-8 stays pending."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S12",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T03:12:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "one_line": "The live accountList paging stops at the first 2000 rows (collected 2000 of 5204 available), so the attribute stage fails loud and no split runs: the request-side paging field names assumed in row D1-W5-S4 do not page on the live API.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM 2e549230-5b30-485b-8fa7-96eaff99b906 on i-028e830f7226cc685 at 03:04Z (the issuer's GO 8957, ONE attempt, no retry), status Success, stdout verbatim: 'ERROR: stage attribute did not finish: AdapterShapeError' / 'ERROR: attribute shape: accountList short of total: collected 2000 of 5204 available' / 'SKIP: split (no attribution)' / 'SKIP: coverage counts (attribution did not finish)' / 'OK: coverage record written' / 'WARN: partial run: land landed; not finished: attribute' / 'ERROR: daily run 20261021T030437Z business_day=2026-10-20 rc=1' / exit=1",
+        "s3://opal-data-assets/fidelity/alongside/bronze/_runs/20261020/coverage-20261021T030437Z.json: attribute_error 'accountList short of total: collected 2000 of 5204 available', counts null, unattributed null, logout 204 and 400; run record _runs/20261019/run-20261021T030546Z.json 2789 bytes (land stage)",
+        "adapters.py line 214 raises 'accountList short of total: collected %d of %d available' only when the page loop ends short of pageResponse.available; fidelity/{cottonwood,inflection,49financial,keilfinancial,abidingwealth,lighthousewealth,vmwealth}/ hold 0 keys; fidupl_round_checks.py ft8r: R1-FT8R-FAIL no split record",
+        "row NFRA_FIDUPL-D1-W5-S4 (worker 0.9.0_WK_NFRA_FIDUPL~5): 'the request-side names are an assumption ... a later page returns the first page again or no rows ... fails loud with the two counts (short of available)' -- the live outcome is exactly that branch"
+      ]
+    },
+    "spec_asserts": "Row D1-W5-S4 and FR-s-6 REPAIR: page accountList by pageResponse.available, sending start and sessionCacheId on later pages; the proof run reaches the 5204 available (31 G numbers, 8 firms) and writes the split.",
+    "world_is": "The first page returns 2000 rows and available 5204, and the following requests do not deliver new distinct rows under the assumed names, so the loop ends at 2000 distinct. The lister counted distinct numbers and failed loud with the two counts, as designed; nothing was split and no firm prefix was written. Which G number the sweep was on when it stopped is not in the output.",
+    "notes": "Not retried (one attempt per the GO) and nothing edited. For the issuer: the live request form for page 2 has to be measured (a values-free capture of the second accountList request's field NAMES from the signed-in session, e.g. by the agent Chrome driver), then adapters.py corrected and delivered once more. The box needs no other change. Ledger nfra-fidupl-daily-proof-20261021 stays open on L2; FT-s-8 stays pending."
   }
 ]
 ```

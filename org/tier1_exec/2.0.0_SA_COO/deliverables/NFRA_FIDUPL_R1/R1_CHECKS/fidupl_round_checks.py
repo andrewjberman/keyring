@@ -115,7 +115,9 @@ TEST_FILES = {
         "test_account_lister_pages_until_short_page", "test_extract_accounts_finds_list_by_key_not_by_container_name",
         "test_extract_failure_names_only_keys", "test_daily_real_deps_use_adapters",
         "test_extract_accounts_uses_measured_container_and_number_key", "test_lister_stops_at_available_total",
-        "test_lister_sends_session_cache_id_on_later_pages", "test_lister_fails_loud_when_short_of_available"]),
+        "test_lister_sends_session_cache_id_on_later_pages", "test_lister_fails_loud_when_short_of_available",
+        "test_lister_tries_other_paging_forms_and_keeps_the_one_that_yields_new_rows",
+        "test_lister_names_the_forms_tried_when_none_yields_new_rows"]),
     "fr3": ("%s/tests/test_backfill.py" % CF, [
         "test_windows_walk_backward_in_chunks", "test_stops_on_entitlement_refusal_and_names_it",
         "test_stops_on_retention_limit_and_names_it", "test_stops_at_account_open_date",
