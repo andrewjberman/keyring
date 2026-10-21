@@ -31648,3 +31648,32 @@
   "notes": "Not remediated: no sparse change and no copy of the folder, per the order's bounds."
 }
 ```
+
+## IRPT_ANLREQ-D2-W364-S1 -- the AR-y-491 check's infra-diff predicate expects one line at base 1e6073761ca, but seven other infra paths changed since that base, so AC1 reads BAD after the deletion
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W364-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~364",
+  "surfaced_at": "2026-10-21T08:35:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order's check predicate git diff --name-status 1e6073761ca HEAD -- infra/ must print exactly one line; the base is 51 commits behind HEAD and seven other infra paths changed on them, so after the deletion the predicate prints 8 lines and AR491-y-AC1 reads RESIDUE-TF-REMOVED-BAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1e6073761ca HEAD rc=0 and git rev-list --count 1e6073761ca..HEAD printed 51 at HEAD 4c7935fe2c8 (worktree wk-IRPT_ANLREQ-364, before the deletion)",
+      "git diff --name-status 1e6073761ca 4c7935fe2c8 -- infra/ printed 7 M lines before the deletion: infra/aws/ec2/EC2_MANIFEST.json, infra/aws/ec2/canonical-fidelity/backfill_adapter.py, backfill_main.py, tests/test_backfill_adapter.py, infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md, and two infra/aws/lambda/investor-reporting/ycharts/research/tests files",
+      "git log --oneline 1e6073761ca..HEAD -- those seven paths lists 9f38a7ed4a5, 4a296baa5da, 587ee7637f9, 39d0d5e6419 among the commits that changed them",
+      "deletion commit 13596bc0b25 removes only infra/aws/terraform/investor-reporting/ycharts/irpt_residue_delete_r35.tf (1 file changed, 80 deletions); base blob 1e6073761ca:<path> is 8897a25273c8547c2ba0d6f9fdd3ce76849fdddf and the path is untracked (git ls-files prints nothing)",
+      "check_tf_removed.py (uncommitted in this worktree at 13596bc0b25) run without flags: RESIDUE-TF-REMOVED-BAD infra diff has 8 lines, not 1; infra diff line is not a D for the path (rc=1); --selftest printed CONTROL-FIRES (rc=0)"
+    ]
+  },
+  "spec_asserts": "AR-y-491 ACCEPTANCE AR491-y-AC1 (order IRPT_ANLREQ.TO-AR-y-491 at HEAD 4c7935fe2c8): the check prints RESIDUE-TF-REMOVED tracked=0 infra_changes=1 deletion=yes content_blob_in_history=8897a25273, where infra_changes is the line count of git diff --name-status 1e6073761ca HEAD -- infra/, which the order says prints exactly one line, a D for the path.",
+  "world_is": "The base 1e6073761ca is an ancestor of HEAD with 51 commits between them, and seven other infra paths changed on those commits. After the deletion the same diff prints 8 lines (7 M and 1 D), so the literal predicate cannot read infra_changes=1 at this base. The deletion itself is correct: the path is untracked and the base blob is 8897a25273. The worker did not edit the expectation or the base; the issuer decides which base or expectation the close reads.",
+  "notes": "Order left pending: AC1 is FAIL by its literal expectation, so no status flip. AC2 (selftest) passes. Check script committed as the second commit of this order; proof instance records AC1 FAIL."
+}
+```
