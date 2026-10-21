@@ -104,6 +104,23 @@ TEST_FILES = {
         "test_probe_reports_start_zero_variant_and_session_follow_up",
         "test_probe_sweeps_g_ordinals_reading_only_available_and_restores_start_g",
         "test_probe_v3_hashes_cookies_lists_and_tile_per_ordinal_and_skips_restore_on_auth_stop"]),
+    "fv1": ("%s/tests/test_land_psn.py" % CF, [
+        "test_psn_date_is_read_from_offset_17_as_mmddyy", "test_psn_lands_under_the_content_date_with_the_fixed_table_name",
+        "test_psn_unreadable_date_is_a_named_failure_and_lands_nothing",
+        "test_psn_existing_identical_is_skipped_and_different_is_not_overwritten",
+        "test_psn_non_trading_asof_lands_under_the_prior_trading_day"]),
+    "fv2": ("%s/tests/test_hist_walk.py" % CF, [
+        "test_one_custom_and_one_standard_request_per_trading_day_newest_first", "test_request_bodies_carry_the_measured_keys",
+        "test_files_are_found_by_name_among_new_rows_of_the_request_day_and_downloaded",
+        "test_a_does_not_exist_stub_is_empty_with_its_text", "test_three_consecutive_empties_stop_that_type_only",
+        "test_days_already_landed_are_skipped_without_a_request", "test_an_auth_refusal_stops_the_run_at_once",
+        "test_a_non_success_create_answer_is_recorded_refused_and_stops_the_types_it_covers",
+        "test_state_file_resumes_the_next_run", "test_day_cap_and_wall_budget_end_the_run_with_a_named_stop",
+        "test_the_record_names_earliest_landed_days_and_stop_per_type",
+        "test_main_signs_in_once_prints_day_lines_and_closes_the_session",
+        "test_profile_is_resolved_from_the_standing_rows_and_unresolved_is_a_named_stop"]),
+    "fv2s": ("%s/tests/test_hist_walk_seam.py" % CF, [
+        "test_real_lander_lands_position_prices_and_psn_by_content_date_on_a_fake_s3"]),
     "ft7": ("%s/tests/test_backfill_adapter.py" % CF, [
         "test_empty_status_for_a_day_is_a_retention_stop", "test_refusal_is_an_entitlement_stop",
         "test_one_fetch_serves_all_six_kinds_for_a_day", "test_main_signs_in_once_and_respects_the_session_cap",
@@ -798,6 +815,43 @@ def backfill_record():
         return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
 
 
+def histwalk_record():
+    tag = "R1-FV3R"
+    try:
+        sys.path.insert(0, "lib")
+        import boto3
+        import opal_naming
+        prefix = opal_naming.address("fidelity", "alongside", "bronze", "_runs", "00000000").rsplit("/00000000", 1)[0] + "/"
+        m = re.match(r"s3://([^/]+)/(.*)$", prefix)
+        s3 = boto3.client("s3", region_name="us-east-1")
+        best = None
+        scanned = 0
+        for pg in s3.get_paginator("list_objects_v2").paginate(Bucket=m.group(1), Prefix=m.group(2)):
+            for o in pg.get("Contents", []):
+                scanned += 1
+                base = o["Key"].rsplit("/", 1)[-1]
+                if base.startswith("histwalk-2") and (best is None or o["LastModified"] > best["LastModified"]):
+                    best = o
+        if best is None:
+            return out("%s-FAIL no histwalk record under %s (scanned %d keys)" % (tag, prefix, scanned))
+        rec = json.loads(s3.get_object(Bucket=m.group(1), Key=best["Key"])["Body"].read().decode("utf-8"))
+        bad = []
+        if rec.get("histwalk") is not True:
+            bad.append("histwalk marker")
+        if rec.get("run_error"):
+            bad.append("run_error=%s" % rec.get("run_error"))
+        stop = rec.get("stop") or {}
+        if stop.get("reason") != "all_types_stopped":
+            bad.append("stop=%s (the walk is not finished)" % stop.get("reason"))
+        if bad:
+            return out("%s-FAIL %s" % (tag, " ".join(bad)))
+        per = rec.get("per_type") or {}
+        earliest = ",".join("%s:%s" % (k, (per.get(k) or {}).get("earliest_landed")) for k in sorted(per))
+        return out("%s-OK histwalk complete: earliest landed %s" % (tag, earliest))
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
+
 def daily_config_copy():
     tag = "R1-FT8C"
     try:
@@ -1109,7 +1163,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft11r": backfill_record, "ft12t": rule_targets, "ft13s": schedule_start_allowed, "ft14a": automation_getcmd_revoked, "ft15s": schedule_start_three_forms, "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft11r": backfill_record, "ft12t": rule_targets, "ft13s": schedule_start_allowed, "ft14a": automation_getcmd_revoked, "ft15s": schedule_start_three_forms, "fv1": lambda: tests("fv1"), "fv2": lambda: tests("fv2"), "fv2s": lambda: tests("fv2s"), "fv3r": histwalk_record, "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 
