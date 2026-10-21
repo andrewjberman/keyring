@@ -215,6 +215,21 @@ Measured 2026-10-20 13:4xZ to 13:5xZ:
   accounts; Portfolio Group Rubottom 431, Bass 239, Shipley 228, No Advisor 106, NULL 1).
 - The 2026-10-17 endpoint (FWD-1..6) is open call 0cf5's subject; Andrew answered it with this re-frame.
 
+**Added 2026-10-21 ~16:2xZ, from Andrew's own email** ("Re: BD Replacement Demonstration", 2026-10-21 15:57Z, to Manav and
+Yang, cc Austin; read through the gateway, not addressed to this seat). Recorded as status, not as a ruling on the endpoint:
+- **Target and scope, his words:** "a December 1 target for internal testing for Cottonwood"; (1) "Daily intake of Schwab and
+  Fidelity data for all associated G-Numbers/Master Accounts"; (2) "Ability to view and export this data via an 'Investor
+  Reporting' page on the Dashboard". Billing and trading "should not be in scope of this deliverable".
+- **Access:** Fidelity (Alongside's master) granted 2026-10-20, daily download "tentatively proved"; Schwab granted for Cottonwood
+  2026-10-21, adapter in progress. Backfill not yet determined for any source.
+- **Strata, his figure:** "~60m outside of these assets in another custodian (Strata)", with no service possible without
+  custodial access. **This differs from F1:** Black Diamond's direct Strata Trust feed carries 8 accounts and $2.0M. The gap is
+  close to F1's manual and alternative class ($68.9M, 114 accounts), which may be alternatives held at Strata and entered in
+  Black Diamond by hand. Not verified; F1's Strata row should be read with this note.
+- **Holdings keeps Black Diamond, his words:** "For Cottonwood this employs Black Diamond, because Black Diamond is where their
+  model data is stored and traded. This is complete and functional today." The model and sleeve data is a Black Diamond input
+  his email retains; whether it is a "critical function" under the 2026-10-20 goal is his call, not this brief's.
+
 ## PART VII -- WHAT THIS BRIEF DOES NOT CLAIM
 
 - **No Fidelity file was read.** F3's rep codes are Black Diamond's copy; what Wealthscape returns per G number, and what it carries
