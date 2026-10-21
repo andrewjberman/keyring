@@ -24,7 +24,7 @@
 
 **FW-s-2** -- The CTO (msgs 9117 and 9121, Andrew-direct) ruled the per-account API surfaces landed as raw bronze JSON: transactions in 365-day windows back to the first empty window, realized lots over a 30-year range split until complete, and open (unrealized) lots as a daily snapshot. The box command is `/opt/fidelity-uploader/api_walk.py` (cell FW-s-1). Deliver it, then run it until it reports `all_done`. The walk resumes across runs from a state file on the box.
 
-**HOLD.** Do nothing until the issuer's message "FW-s-1 merged at <head>". Then:
+**RELEASED (issuer, 2026-10-21 ~17:12Z).** FW-s-1 is merged at 9e1b18a592f (box/dell1, LOCAL). Deliver from that head or later (only `api_walk.py` is new; deliver it while no run is in progress on the box). The first api_walk run starts only after TO-FV-s-3's current run has ended, under the sign-in rules of step 3. Then:
 
 ### WHAT TO DO
 
