@@ -30779,3 +30779,58 @@
   "notes": "INERT: comments only. Left as the order states."
 }
 ```
+
+## IRPT_ANLREQ-D2-W335-S1 -- the cell's double-quoted comparable refusal is stripped by the instrument's own clean(), so AC3's expected line cannot match it; printed with single quotes
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W335-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~335",
+  "surfaced_at": "2026-10-20T23:39:22Z",
+  "one_line": "The cell text asks for the refusal comparable \"<label>\" not found, but the instrument's clean() keeps no double quote, so the printed line cannot match AC3's expectation; the copy prints the label in single quotes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-g-179 step 2: a label that matches no checkbox fails the leg with the existing Bad error comparable <double-quoted label> not found; criterion AR179-g-AC3 expects a line matching B-LEG-OFFLINE-BAD .*comparable .No Such Model. not found.",
+  "world_is": "clean() in the copy keeps only letters, digits, space and the marks .,'()=- and strips every other character, so a double quote is removed before printing. The double-quoted message would print comparable No Such Model not found, which the AC3 regex does not match. The copy throws comparable 'No Such Model' not found (single quotes survive clean()); AC3 then prints B-LEG-OFFLINE-BAD b2 comparable 'No Such Model' not found and passes. Nothing was pressed; the leg failed in phase b2 before the submit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/run7_browser_leg.mjs@72fcc0fe61c line 74 (clean: the allowed character set)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-179.filing-instrument-ticks-opal-model-comparables-and-files-real-tickers.md@72fcc0fe61c line 48 (AC3 expectation)",
+      "worker output .scratch/ac3.out in wk-IRPT_ANLREQ-335 (B-LEG-OFFLINE-BAD b2 comparable 'No Such Model' not found; rc 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W335-S2 -- the cell's composite line B-LEG-OK does not exist in this copy; only the offline composite line carries the new fields
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W335-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~335",
+  "surfaced_at": "2026-10-20T23:39:22Z",
+  "one_line": "Cell step 3 asks for the new fields on the composite OK line (B-LEG-OFFLINE-OK or B-LEG-OK), but the script prints no composite line on the live path, so there is no B-LEG-OK to extend.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-g-179 step 3: add the closing fields to the end of the composite OK line (B-LEG-OFFLINE-OK / B-LEG-OK).",
+  "world_is": "The ~325 script's live path (no --offline) ends after the B1, B2 and B3 lines and prints no OK line; only the offline branch prints B-LEG-OFFLINE-OK. The copy extends the offline composite line only and adds no live composite line, which is outside the cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/run7_browser_leg.mjs@72fcc0fe61c lines 384-436 (main: the live branch prints no composite line)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-179.filing-instrument-ticks-opal-model-comparables-and-files-real-tickers.md@72fcc0fe61c line 37 (step 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```

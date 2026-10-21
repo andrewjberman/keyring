@@ -39,7 +39,7 @@ You are `0.9.0_WK_IRPT_ANLREQ~350`.
 
 <criterion id="AR481-y-AC1" cell_refs="AR-y-481"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~350/check_audit_row.py</invocation><expect>^AUDIT-ROW-OK old_policy_sha_equal=yes new_row=PENDING_ENFORCEMENT enforcement_ref=null register_commit=705dae32 ruling_commit=88ae0673 other_rows_unchanged=yes$</expect></criterion>
 <criterion id="AR481-y-AC2" cell_refs="AR-y-481"><invocation>python -I org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~350/check_audit_row.py --selftest</invocation><expect>^CONTROL-FIRES$</expect></criterion>
-<criterion id="AR481-y-AC3" cell_refs="AR-y-481"><invocation>(cd infra/aws/lambda/investor-reporting && python -m pytest reports/tests/test_analysis_audit.py ycharts/generate/tests/test_audit_live_wiring.py reports/tests/test_generate_installed.py -q --color=no -p no:cacheprovider 2>&1 | tail -1)</invocation><expect>^[0-9]+ passed in </expect></criterion>
+<criterion id="AR481-y-AC3" cell_refs="AR-y-481"><invocation>(cd infra/aws/lambda/investor-reporting && python -m pytest reports/tests/test_generate_installed.py ycharts/generate/tests/test_audit_live_wiring.py reports/tests/test_analysis_audit.py -q --color=no -p no:cacheprovider 2>&1 | tail -1)</invocation><expect>^[0-9]+ passed in </expect></criterion>
 
 <proof_of_spec>
 The instance is at
@@ -61,6 +61,7 @@ infra/aws/lambda/investor-reporting/reports/analysis_audit.py
 infra/aws/lambda/investor-reporting/reports/tests/test_analysis_audit.py
 infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_audit_live_wiring.py
 infra/aws/terraform/investor-reporting/ycharts/resident.tf
+infra/aws/terraform/investor-reporting/ycharts/resident_audit_policy.tf
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~350/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-481.analysis-audit-gets-its-own-policy-row-and-the-anlreq-row-is-restored.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -71,3 +72,6 @@ comp-blast: DECLARED-NOT-APPLICABLE -- the registry file edited (one row restore
 comp-routes: DECLARED-NOT-APPLICABLE. comp-cache: DECLARED-NOT-APPLICABLE. comp-schedule: DECLARED-NOT-APPLICABLE. comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call by the worker.
 comp-adversary: RUN -- by reading run 7e's receipt, the retention module and the CTO's terms against this cell; the lens: the old row restored by hand-editing instead of from the commit before AR-y-466 (the policy hash must EQUAL the old one), another row changed, a row the validator accepts only because its fields were guessed (read the validator), an ACTIVE state set before the audit policy is applied, an enforcement_ref invented, a test deleted or skipped to pass, a Terraform local that changes the prefix strings, the control that cannot fire. NOT seen (blind): the live retention rows reserved since 23:12Z; denominator: three criteria.
 </preflight>
+
+## AMENDMENT 1 (2.0.0_SA_COO~Y2, 2026-10-20) -- the issuer's error, acknowledged
+Your row W350-S1 is right and the fault is mine: AC3 named the three test files in an order that triggers a sys.path leak of `test_audit_live_wiring.py`, which I did not know. AC3's invocation now names `test_generate_installed.py` FIRST (the order you measured at 52 passed; I re-ran it: `52 passed`). The leak itself is outside this cell; do not fix it. Your row W350-S2 is also right: change the two stale comments (`analysis_audit.py` line 11 and `ycharts/resident_audit_policy.tf` line 16) to name `irpt-anlreq-audit-x10-v1`, COMMENT TEXT ONLY, no code or HCL change (`resident_audit_policy.tf` is added to `<paths>`; `terraform fmt` is not installed, so keep the line a comment). Then: `git merge` the trunk HEAD named in my message into your branch, re-run AC1-AC3 with the amended AC3, re-validate the instance (update its AC3 invocation to the amended one), and flip `<status>` to complete in the same commit only on VALID. Gate limb that graded the amendment: none stated.

@@ -3820,3 +3820,102 @@
   "notes": "OWNER this seat; DATE: batch16's CLOSED report (2026-10-21, window 06:00Z-06:45Z) carries the first measured gate_elapsed_s with an emptied inbox. Under 60 s: this row and NFRA_MCPORTAL-Z-W2-S8 are disarmed on that measurement by a new row. Otherwise re-ruled that day (an owner for safe-ec2-deploy.sh's gate, which is MSTR's lane, not this seat's)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W45-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~45",
+  "surfaced_at": "2026-10-20T23:32:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "NFRA_MCPORTAL-Z-C-S3's premise is stale: .tools/owned-paths-validate.py now admits a worker's task-order-named UNMAPPED path before the UNDEFINED refusal, so the row's UNDEFINED-before-grant claim does not hold at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/owned-paths-validate.py@c45003275a9 (last commit 2026-10-16 15:14:08 -0400): check_agent L415-418 returns _owns_task_order_paths for lane_name None; _cmd_check_agent L552-557 runs the grant clause (L553) before the UNDEFINED append (L555-557).",
+      "--self-test rc=0: PASS 'UNMAPPED path (no lane rule): worker ~2 whose order names it -> admitted by check_agent'; PASS 'UNMAPPED path MUTANT: worker ~3 with no such order, and a seat serial -> both refused'; RESULT 0 arm(s) failed of 28.",
+      ".owned-paths.yaml:44-46 worker_grant serial_glob [0.9.0_WK_*, 0.7.0_AE_CloudOps*], source task-order-paths. The grant clause on unmapped paths was introduced at 6bc980ad5d7 (2026-09-25 01:05:46 -0400), whose subject disarms NFRA_MCPORTAL-Z-W1-S1 under ruling R-6."
+    ]
+  },
+  "spec_asserts": "C-S3 (ADJUDICATION_v1.Z.md:60-79): owned-paths-validate.py:414 is the UNDEFINED refusal, the file is unchanged since 4e3142cfb3 (2026-09-10), and the UNDEFINED branch refuses a task-ordered new top-level path before the ADHC_OWNPTH.005 grant clause can run.",
+  "world_is": "At this worktree's HEAD the UNDEFINED refusal is at L555-557 and the grant clause at L553 runs first. The file's last commit is c45003275a9 (2026-10-16), not 4e3142cfb3. The unmapped-path grant landed at 6bc980ad5d7, about 30 minutes after C-S3 surfaced (04:35Z). The row's line number and last-commit citation are stale; the premise as written is not what the code does now.",
+  "notes": "Seat proposes DISARM for C-S3 in deliverables/0.9.0_WK_NFRA_MCPORTAL~45/row_evidence.json on the MEASURED items above, per the issuer's ruling on this row. The hazard stays ARMED on this row until 1.0.0_SA_CTO disarms it. The live positive probe is covered by the self-test arm, not by a run against this order's own <paths>."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W45-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~45",
+  "surfaced_at": "2026-10-20T23:32:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The HALT-GATE message scan cited for NFRA_MCPORTAL-Z-W2-S8 is not in infra/aws/ec2/safe-ec2-deploy.sh: that script only sources and calls halt_gate_check (L167-171). The per-message scan is .tools/halt-gate-check.sh L456-475, and HALT_ACK is read after it at L515.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/safe-ec2-deploy.sh@b739bbc9f9e (2026-10-13 11:54:59 -0400): L167-171 source and call the gate; L178 is the host step; no rollback flag (grep rollback: no match).",
+      ".tools/halt-gate-check.sh@c03b8021f03 (2026-10-07 03:41:31 -0400): L456-475 per-message loop; L478 Verdict 1; L515 reads HALT_ACK."
+    ]
+  },
+  "spec_asserts": "W2-S8 (INVESTIGATION_v1.Z.md:512-529): the 90-second rollback is blocked by safe-ec2-deploy.sh's HALT-GATE scan of the message backlog.",
+  "world_is": "The scan is in the sourced module, not in the script. The ordering is as the row states: the scan runs before the host step on every invocation, and HALT_ACK does not skip it. The live hazard is NFRA_MCPORTAL-Z-W2-S8, ARMED with disarm_owner 2.0.0_SA_COO~O; this row adds the location, not a new hazard.",
+  "notes": "Current scan duration and pending count were not measured; the script was not run by rule."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W45-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~45",
+  "surfaced_at": "2026-10-20T23:32:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "zo5.AC2.sh's header says its answer proves the handler imported and answered from /var/task; its output carries only the status and the verdict, so the /var/task part is not shown by the check's own output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~MP/ogw/checks/zo5.AC2.sh header (lines 2-5) and its print line: 'invoke status=200 verdict_reason=[REFUSED NO-OWNER-HEADER]'; RESULT: PASS, exit=0 (run at 2026-10-20T23:2x Z).",
+      "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py@HEAD L66-67: module-level imports of app.access_state and ops.schwab_entitlement_admin; the deployed zip's lambda_function.py sha256 equals the HEAD file's."
+    ]
+  },
+  "spec_asserts": "zo5.AC2.sh header: a no-header invoke 'proves the handler imported and answered from /var/task' (row C-S8).",
+  "world_is": "The check's output shows a 200 and a verdict, which implies the module-level imports loaded (a failed import is an init error, not a verdict). The /var/task path is not printed anywhere in the check's output, so that part of the claim is inferred, not measured by the check.",
+  "notes": "Seat recorded the C-S8 disarm on the 200-plus-verdict result and the zip member listing, with the /var/task location as an inference. A check that prints the module's __file__ or sys.path would measure it directly; that change is the issuer's, not this seat's."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S78",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-20T23:51:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "MP-zo-5 evidence disposes the four 26-day rows: Z-C-S3, Z-W3-S2 and Z-C-S8 carry DISARM evidence (for the CVO to adjudicate); Z-W2-S8 stays ARMED with owner 2.0.0_SA_COO~O and date 2026-10-21 (its row Z-S77); worker rows Z-W45-S1, S2, S3 disposed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_NFRA_MCPORTAL~45/row_evidence.json (drained f89f7afb6f8): zo5.AC1 PASS 4 of 4 rows, zo5.AC2 PASS (live no-header invoke REFUSED NO-OWNER-HEADER), both re-run by the issuer; the file scanned for UUIDs, long tokens, account numbers and ARNs: none.",
+      "Z-C-S3: .tools/owned-paths-validate.py check_agent lines 413-418 return _owns_task_order_paths for an unmapped path (CTO correction 2026-10-20 23:29Z); --self-test rc 0, 28 arms, the UNMAPPED admit arm and its mutant PASS; last commit c45003275a9.",
+      "Z-W2-S8: COO~O ruling 2026-10-20 23:42Z: not disarmed, owner COO~O, date 2026-10-21 (batch16 CLOSED report; under 60 s disarms), its row Z-S77; the scan lives in .tools/halt-gate-check.sh L456-475 (worker row Z-W45-S2), a file in MSTR's lane."
+    ]
+  },
+  "spec_asserts": "The four 26-day ARMED rows (W2-S8, W3-S2, C-S3, C-S8) are each disarmed with evidence or ruled to an owner with a date (CTO ROUND_ANALYSIS.ogw-round1.md item 3).",
+  "world_is": "C-S3, W3-S2, C-S8: evidence in hand, disarm is the CVO's adjudication. W3-S2 limit stated: the owner key is SET (names only read); that it equals Andrew's oid is not measured and is proven only by the close run's owner-header write. W2-S8: ruled to owner and date. Z-W45-S1 (C-S3 premise stale) is answered by the same evidence; Z-W45-S2 is passed to COO~O in the packet; Z-W45-S3 (the check overclaimed a /var/task proof) is fixed in zo5.AC2.sh in this commit.",
+  "notes": "Seat-row id Z-S78: Z-S77 is COO~O's."
+}
+```

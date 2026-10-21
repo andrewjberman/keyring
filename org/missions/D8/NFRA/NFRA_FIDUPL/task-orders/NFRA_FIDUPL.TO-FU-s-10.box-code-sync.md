@@ -72,6 +72,10 @@ FU-s-12 REPAIR 1 is merged (the helper failure line carries a redacted detail an
 
 FU-s-2 REPAIR 13 is merged (real key presses, a pointer path, the `_abck` verdict read before the password POST). Deliver the shipped set from head d8a0d567a79 or later (only `signin.py` differs from your eleventh delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-12-<date>`), check `fu10m`, same rules: a file copy only, no browser run, no sign-in, nothing under either profile directory, and leave `fidelity-agent-chrome.service` running. Tell the issuer in one line the moment `fu10m` reads OK; the live run waits on it.
 
+### REOPENED (issuer, 2026-10-20 ~23:46Z) -- thirteenth delivery, URGENT: signin.py changed at 567486eb857 (REPAIR 14)
+
+FU-s-2 REPAIR 14 is merged (authorize accepts the signed-in home page; select_factor waits for the verify page). Deliver the shipped set from head 567486eb857 or later (only `signin.py` differs from your twelfth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-13-<date>`), check `fu10m`, same rules: file copy only, no browser, no sign-in, nothing under either profile directory, leave `fidelity-agent-chrome.service` as it is. Tell the issuer in one line the moment `fu10m` reads OK: the Track A run waits on it.
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
