@@ -135,6 +135,7 @@ if ($Peek -and -not $OutFile) {
 # command line ends with `# OPAL_SPAWN_MARKER_v1: <serial>`) and read or key THAT console through
 # .tools\unstick_console.ps1. No window is focused and no tab is cycled, so a sibling tab that shares the
 # project title cannot be keyed by mistake. (CTO ruling 8873, 2026-10-21.)
+function Q([string]$s) { '"' + ($s -replace '"', '\"') + '"' }
 $rxSerial = [regex]::Escape($Serial)
 $hosts3 = @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" | Where-Object {
     $_.ProcessId -ne $PID -and $_.CommandLine -notlike '*Where-Object*' -and
@@ -148,7 +149,9 @@ if ($hosts3.Count -eq 1) {
     $res = Join-Path $env:TEMP "unstick_console_${ts3}_$hp.txt"
     if ($Peek) {
         $txt = if ($OutFile -match '\.png$') { $OutFile -replace '\.png$', '.txt' } else { $OutFile }
-        $pr = Start-Process powershell -ArgumentList @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $helper, '-TargetPid', $hp, '-Mode', 'peek', '-OutFile', $txt) -WindowStyle Hidden -Wait -PassThru
+        # Start-Process joins -ArgumentList with spaces and does NOT quote: a path or a body with a space split into
+        # separate arguments (dell2's report, 2026-10-21; site Z's workspace path has a space). Quote every value.
+        $pr = Start-Process powershell -ArgumentList @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Q $helper), '-TargetPid', $hp, '-Mode', 'peek', '-OutFile', (Q $txt)) -WindowStyle Hidden -Wait -PassThru
         if ($pr.ExitCode -eq 0) { Write-Host "[unstick] PEEKED '$Serial' by process (host pid $hp, console text) -> $txt  [no keystrokes sent]" -ForegroundColor Cyan; exit 0 }
         Write-Host "[unstick] console peek failed (helper exit $($pr.ExitCode)): $(Get-Content $txt -ErrorAction SilentlyContinue) -- nothing sent" -ForegroundColor Red; exit 3
     }
@@ -157,9 +160,13 @@ if ($hosts3.Count -eq 1) {
     $body = $Keys; $press = $false
     if ($Keys -match '^(.*)\{ENTER\}$') { $body = $Matches[1]; $press = $true }
     if ($body -match '[\^%+~{}()\[\]]') { Write-Host "[unstick] the process path types plain text and Enter only; '$Keys' uses SendKeys syntax it cannot send. Nothing sent." -ForegroundColor Yellow; exit 2 }
-    $args3 = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $helper, '-TargetPid', $hp, '-Mode', 'keys', '-Text', $body, '-OutFile', $res)
+    # The body travels in a FILE (-TextFile), so spaces, quotes and any other character cannot split or corrupt the argument line.
+    $tf = Join-Path $env:TEMP "unstick_text_${ts3}_$hp.txt"
+    [IO.File]::WriteAllText($tf, $body, (New-Object System.Text.UTF8Encoding $false))
+    $args3 = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Q $helper), '-TargetPid', $hp, '-Mode', 'keys', '-TextFile', (Q $tf), '-OutFile', (Q $res))
     if ($press) { $args3 += '-Enter' }
     $pr = Start-Process powershell -ArgumentList $args3 -WindowStyle Hidden -Wait -PassThru
+    Remove-Item -LiteralPath $tf -ErrorAction SilentlyContinue
     if ($pr.ExitCode -eq 0) { Write-Host "[unstick] SENT '$Keys' to '$Serial' by process (host pid $hp, its console only)" -ForegroundColor Green; exit 0 }
     Write-Host "[unstick] console send failed (helper exit $($pr.ExitCode)): $(Get-Content $res -ErrorAction SilentlyContinue) -- treat as NOT sent" -ForegroundColor Red; exit 3
 }

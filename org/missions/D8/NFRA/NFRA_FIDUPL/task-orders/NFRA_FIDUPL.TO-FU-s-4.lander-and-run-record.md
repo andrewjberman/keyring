@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~2</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-19</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -37,12 +37,20 @@ Build `infra/aws/ec2/canonical-fidelity/land.py` and `tests/test_land.py` to ref
 5. Exit code 0 only when `failure_class` is null and every file is `landed` or `skipped_existing`; a missing file, a non-trading-day date or any listing failure exits non-zero AFTER writing the record.
 6. Tests (a fake S3 that RECORDS every call; synthetic six-file fixtures): `test_lands_six_to_builder_addresses`, `test_scope_is_a_parameter` (a second scope changes every destination), `test_address_called_at_landing_time` (monkeypatch `opal_naming.address` and assert it is called per file during `land`, not at import), `test_content_date_from_first_field`, `test_unreadable_date_is_failure_not_guess`, `test_non_trading_day_is_failure` (use a Saturday date), `test_same_sha_lands_once`, `test_run_record_shape`, `test_missing_file_exits_nonzero`, `test_never_writes_outside_fidelity_prefix`.
 
+### REPAIR 1 (issuer, 2026-10-21 ~00:55Z; CTO 8891, CRO 8890) -- the content date is a per-file column, and a partly landed run must say PARTIAL
+
+The first live pull (run `20261021T004450Z`; record `C:/Dev/ajb_workspace/org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/2.0.0_SA_COO~P1/FU-x-1_first_landed_day_20261019.md`, read it whole) landed position, prices and security and refused account, balance and transact with `first field of the first row is not an 8-digit YYYYMMDD date`: the date is not field 0 in those three. The CRO confirmed the as-of date columns (0-based): position 0, prices 0, security 0, **balance 3, account 16, transact 17**; transact fields 52 and 57 are per-row trade and settle dates and must NOT be used. Changes in `land.py` only:
+1. **Per-file date column.** A module constant `DATE_COLUMN = {"position.txt": 0, "prices.txt": 0, "security.txt": 0, "balance.txt": 3, "account.txt": 16, "transact.txt": 17}`; `_content_date(data, name)` reads that column of the first row (a file name not in the map reads column 0); a first row shorter than the column, or a value that is not a valid 8-digit `YYYYMMDD`, is `None` and fails exactly as today (`content date unreadable`, step `date`). `_examine` passes the name.
+2. **A run-level outcome.** The run record gains `outcome`: `ALL_LANDED` when every file's action is in `OK_ACTIONS`; `PARTIAL` when at least one file is `landed` or `skipped_existing` AND at least one is `failed`; `FAILED` otherwise (nothing landed, or a listing failure). It also gains `landed_count` and `failed_count` (integers). `failed_step`, `failure_class` and `reason` keep describing the first failure as today (a PARTIAL run still exits non-zero through `exit_code`, which is unchanged), so the record no longer reads as a total failure when three files landed. The printed `OK:` / `ERROR:` lines are unchanged except that `main` also prints `OUTCOME: <outcome>`.
+3. Re-landing the same handoff folder is already idempotent (`skipped_existing` when the sha256 matches); a test pins it.
+Add four tests to the EXISTING `tests/test_land.py`: `test_content_date_column_is_per_file` (synthetic first rows with the date in the mapped column of each of the six names, and a decoy different date in another column of balance, account and transact: the mapped column wins), `test_row_shorter_than_the_date_column_is_unreadable`, `test_record_outcome_partial_when_some_files_land` (three good, three unreadable: `outcome` is `PARTIAL`, counts 3 and 3, non-zero exit; and an all-good run reads `ALL_LANDED`, an all-bad one `FAILED`), `test_relanding_the_same_files_skips_existing`. Existing tests whose synthetic fixtures put the date in field 0 of account, balance or transact are updated to the new columns without renaming. FU4-AC1 now needs fourteen; the `fu4d` dry run still reads `dests=6`. The checker is `fidupl_round_checks.py`. SYNTHETIC data only: the real export files are never read. Fakes only. FAST.
+
 ### ACCEPTANCE
 
-<criterion id="FU4-AC1" cell_refs="FU-s-4"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu4</invocation><expect>R1-FU4-OK passed=\d+</expect></criterion>
+<criterion id="FU4-AC1" cell_refs="FU-s-4"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu4</invocation><expect>R1-FU4-OK passed=\d+</expect></criterion>
 `FU4-AC1` -- the ten named tests exist and pass.
 
-<criterion id="FU4-AC2" cell_refs="FU-s-4"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fu4d</invocation><expect>R1-FU4D-OK dests=6</expect></criterion>
+<criterion id="FU4-AC2" cell_refs="FU-s-4"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu4d</invocation><expect>R1-FU4D-OK dests=6</expect></criterion>
 `FU4-AC2` -- the real naming builder resolves all six destinations in a dry run.
 
 <expected_criteria>FU4-AC1,FU4-AC2</expected_criteria>
