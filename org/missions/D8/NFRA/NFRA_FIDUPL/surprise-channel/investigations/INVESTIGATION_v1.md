@@ -1190,6 +1190,71 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "REPAIR 1 (issuer, 2026-10-21) and FU4-AC2: the fu4d dry run still reads dests=6 (expect R1-FU4D-OK dests=6), and the checker's synthetic handoff is the fixture for that run.",
     "world_is": "The checker's synth_handoff writes the as-of date in field 0 of all six synthetic files. Under the per-file columns of REPAIR 1, balance (column 3), account (column 16) and transact (column 17) are unreadable in that fixture, so the dry run prints three DRYRUN lines, reads dests=3 and exits 1. The lander follows the repaired rule; no lander rule reaches dests=6 on this fixture as written.",
     "notes": "Not edited: the checker is the COO's (org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/) and outside this order's grant. The lander and its tests are committed at ca6db55395 and FU4-AC1 passes. FU4-AC2 is recorded FAIL and the order stays open. Decision for the COO: point synth_handoff at the per-file columns, then re-run fu4d; the lander is not to be reverted to field 0 to pass it."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-21T01:40:00Z",
+    "one_line": "FT-s-2 reads the logout statuses from the session object (session.logout_statuses), but signin.Session exposes no such attribute: the close writes the statuses only as a text line into the driver's trace, so the coverage record's logout is null on every live run until the session surfaces them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/signin.py@6bd116284f5 line 1129: self._post_lines.append(\"logout statuses=%s,%s\" % (first, second)) inside WealthscapeDriver.logout()",
+        "infra/aws/ec2/canonical-fidelity/signin.py@6bd116284f5 lines 1162-1169: Session.close() calls the driver's logout() through getattr and sets no attribute on the session object",
+        "comp-find 'logout_statuses|perg_secret_id|perg-list' over infra/aws/ec2/canonical-fidelity in worktree C:/tmp/fidupl-w5 (2026-10-21T01:3xZ): 0 hit(s) across 31 file(s) scanned"
+      ]
+    },
+    "spec_asserts": "TO FT-s-2 item 2: read the logout statuses from the session object (session.logout_statuses if present, else None) and put them in the coverage record as logout; the session close already logs out (logout statuses=a,b in the driver's trace).",
+    "world_is": "No class in signin.py at 6bd116284f5 carries a logout_statuses attribute. The statuses exist only in the driver's _post_lines trace text, so getattr(session, 'logout_statuses', None) returns None and the coverage record's logout field is null on the live path.",
+    "notes": "Not fixed here: signin.py is outside this order's grant. The coverage record reads getattr(session, 'logout_statuses', None) exactly as the order says and carries the value when a session supplies it. Decision for the COO: whether signin.Session should expose the statuses (a signin.py change in a later cell) or the coverage record should read them from the trace file."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S6",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-21T01:40:00Z",
+    "one_line": "FT-s-2 names the unattributed landing 'under alongside', but split.py places an account whose label matches no firm_labels entry under unplaced and writes nothing for it; the alongside scope comes only from switcher_list's no-match rule, so the coverage record reports a scope and makes no landing claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py@6bd116284f5 _placement(): an unmapped label adds its accounts to acct_unmapped; _classify() returns ('unplaced', None) for them",
+        "infra/aws/ec2/canonical-fidelity/split.py@6bd116284f5 split_day(): _dest(firm, ...) is called only for firms that have accounts in by_firm, so no object is written for an unplaced account",
+        "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12 (switcher_list.firm_for_label: no match returns ('alongside', False))"
+      ]
+    },
+    "spec_asserts": "TO FT-s-2 item 1 and its counts: 'unattributed landed under alongside, named by ordinal only'; the test name test_unattributed_g_lands_under_alongside_and_is_named_by_ordinal.",
+    "world_is": "The split stage does not land an unattributed label under alongside: its accounts are listed under unplaced and no file is written for them. Whether any object lands under alongside depends on the box's firm_labels pointers, which this stage does not read.",
+    "notes": "Recorded as the coverage record's unattributed.firm_scopes (the switcher's scope), with the ordinal list. The test asserts the scope and the ordinal, never a landed object. Decision for the COO: whether unattributed accounts should land under alongside (a split.py change outside this grant) or stay unplaced as split.py has them."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S7",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-21T01:40:00Z",
+    "one_line": "The premise that config.json already carries perg_secret_id and that the code reads it is false at the base: check_pointers rejects the unknown key and no module reads it; this cell adds the key to the pointer allow-list and the secret-id check in box/run.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/box/run.py@6bd116284f5 ALLOWED_KEYS (lines 21-25) holds no perg_secret_id, so check_pointers raises ConfigError 'config holds keys that are not pointers' for a config that carries it",
+        "comp-find 'logout_statuses|perg_secret_id|perg-list' over infra/aws/ec2/canonical-fidelity in worktree C:/tmp/fidupl-w5 (2026-10-21T01:3xZ): 0 hit(s) across 31 file(s) scanned"
+      ]
+    },
+    "spec_asserts": "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12: config.json key perg_secret_id holds the per-G secret id (the code reads it; a missing key means no cross-check).",
+    "world_is": "At 6bd116284f5 no module reads perg_secret_id and the pointer check refuses it, so the key cannot reach the daily stage. This cell admits the key to the allow-list and to the secret-id check, and wires read_perg and write_coverage as daily deps in box/run.py _real_daily_deps (the reference names no dep for the per-G read or the coverage write).",
+    "notes": "The box config.json does not carry the key until the box is provisioned; a missing key gives checked false with one SKIP line, as the reference says. The added deps are the only wiring the order did not name."
   }
 ]
 ```
