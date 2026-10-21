@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.18",
+  "prd_version": "v3.19",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -311,8 +311,10 @@ then retired (Andrew: "Sure"). Reader IAM over the folders is a widening with it
 FWD-24  — The entitlement is a bucket or a folder, per person, and nothing else (v3.18)
 
 DONE WHEN: EXERCISED — the owner grants Menachem `opal-data-assets/`, `opal-data-etfs/` and `opal-data-portal-v2/` in one act;
-he reads under them through FWD-23's tools and is refused under `opal-data-harvest/`. The contract's per-account, per-column
-and masked-reference clauses are revised to say they are superseded.
+he reads under them through FWD-23's tools and is refused under `opal-data-harvest/`. A bucket or folder grant never reaches a
+bronze or raw prefix (for example `schwab/<master>/bronze/`): the shim's prefix check and the reader IAM both exclude them, and
+a bronze read under Menachem's whole-bucket `opal-data-assets/` grant is refused with 0 reads. The contract's per-account,
+per-column and masked-reference clauses are revised to say they are superseded.
 
 SOURCE: Andrew-direct 2026-10-21 (records `4.0.0_SA_CRO~Z` @243c25998e and @8c8fa480de; the `1.0.0_SA_CTO~Z` Menachem record): "this is really just an AWSCLI put on top of an MCP"; "The entitlement layer is for accessing whole buckets, accessing buckets or maybe accessing various folders within those buckets"; "the most important thing for now is that the tables that are in there, for both Schwab and Orion (and Cottonwood Black Diamond), are manageable in the current state." Brief `docs/briefs/mcp-cli-shim-bounded-query-brief-20261021.md` @8c8fa480de.
 
@@ -1657,3 +1659,9 @@ dropped by column name (simple), and the typed tools stay until FWD-23 is proven
 - Issuer: `2.0.0_SA_COO~O`, first in round 48 with the per-firm client grant shape. The MCPORTAL folder switch is
   `2.0.0_SA_COO~MP`'s; the light index is NFRA_MCPINDEX FWD-26.
 - **Sign-off:** ENDPOINT changes; the ratified-text half is owed by `3.0.0_SA_CVO~Z`.
+
+### v3.19 addendum (2026-10-21 ~15:3xZ, 1.0.0_SA_CTO~Z) -- cure of the CVO refusal @78774c1f94: no grant reaches bronze
+
+FWD-24 now states that a bucket or folder grant never reaches a bronze or raw prefix (shim prefix check plus reader IAM), and
+its proof adds a refused bronze read under the whole-bucket `opal-data-assets/` grant. ENDPOINT changes; the ratified-text half
+is owed by `3.0.0_SA_CVO~Z`.
