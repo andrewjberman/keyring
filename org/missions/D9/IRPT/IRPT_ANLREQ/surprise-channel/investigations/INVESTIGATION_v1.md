@@ -31184,3 +31184,85 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W361-S1 -- test_audit_live_wiring test_1 asserts the old call shape, so the projection change breaks it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W361-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~361",
+  "surfaced_at": "2026-10-21T04:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order allows an edit to test_audit_live_wiring.py only where an assertion depends on filer_user_type being read. test_1 asserts the exact recorded GetItem call, which the required ProjectionExpression and ExpressionAttributeNames change, so that assertion failed without an edit. It was updated to the new call shape; no other assertion in test_1 changed.",
+  "spec_asserts": "AR-y-487 cell, the test edit: 'Update test_audit_live_wiring.py only where an existing assertion depends on filer_user_type being read from the item (read it; keep every other assertion; no test deleted or skipped).'",
+  "world_is": "test_audit_live_wiring.py test_1 asserts dynamo.calls equals [{TableName, Key, ConsistentRead}] exactly. That assertion does not read filer_user_type, but the cell's change makes the recorded call carry ProjectionExpression and ExpressionAttributeNames, so it fails until its expected call is updated to the four-alias projection.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_audit_live_wiring.py@6dcfac8fbe1 (test_1 call assertion, now the four-alias projection)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/ticket_audit_source.py@6dcfac8fbe1 (the get_item call with ProjectionExpression=_PROJECTION)"
+    ]
+  },
+  "notes": "Edit confined to the one asserted call. Every other assertion in test_1 and in the file is unchanged."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W361-S2 -- test_11 keeps its name though its assertion now states the opposite contract
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W361-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~361",
+  "surfaced_at": "2026-10-21T04:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "test_11 in test_audit_live_wiring.py is still named test_11_a_user_type_the_item_carries_is_passed_through, but after this cell its assertion is that the user type is NOT read and comes back None. The name was kept because the order says no test is deleted, and a rename changes the test identity.",
+  "spec_asserts": "AR-y-487 cell: update the file only where an assertion depends on filer_user_type being read; no test deleted or skipped.",
+  "world_is": "The test named 'is passed through' now asserts filer_user_type is None and that 'client' does not appear in the result. The name and the assertion contradict each other until the name is changed by its owner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_audit_live_wiring.py@6dcfac8fbe1 (def test_11_a_user_type_the_item_carries_is_passed_through, with the None assertion)"
+    ]
+  },
+  "notes": "A rename to a name that states the new contract is a one-line follow-up for the file's owner; the worker did not make it."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W361-S3 -- a sys.path insert in the new test file breaks test_generate_installed collection
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W361-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~361",
+  "surfaced_at": "2026-10-21T04:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks the new test file to follow the sys.path style of the existing audit tests. With that style, the AC3 pytest line fails at collection: test_generate_installed.py asserts that its module-level entry is ycharts/generate/entry.py and gets ops/entry.py. The new file loads ticket_audit_source.py by file path instead, and the AC3 line as written then passes (57 passed).",
+  "spec_asserts": "AR-y-487 cell: 'New test file ... (hermetic, fake dynamodb client recording its call, in the style of the existing audit tests)'. AR-y-487 grant: test_audit_live_wiring.py leaks sys.path at module level (row W350-S1), listed last-but-one in the pytest line.",
+  "world_is": "Measured in the worktree: test_ticket_audit_projection.py with a sys.path insert of generate/, collected before reports/tests/test_generate_installed.py, gives 'ERROR collecting ... AssertionError' on the entry path. Without the insert the same pair gives 19 passed, and the AC3 line as written gives 57 passed, rc 0. The same failure pattern is the W350-S1 row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py@6dcfac8fbe1 (module-level assert on sys.modules['entry'] at line 32)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ticket_audit_projection.py@6dcfac8fbe1 (loads ticket_audit_source.py through importlib.util.spec_from_file_location, no sys.path change)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (row IRPT_ANLREQ-D2-W350-S1, the earlier measurement of the same collection pattern)"
+    ]
+  },
+  "notes": "The W350-S1 leak in test_audit_live_wiring.py is not fixed here; it is outside this grant."
+}
+```
