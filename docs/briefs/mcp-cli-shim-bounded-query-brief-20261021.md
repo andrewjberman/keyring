@@ -18,6 +18,24 @@ The CTO folds this into 2.0.0_SA_COO~O (NFRA_OPLGTW) and 2.0.0_SA_COO~MI (NFRA_M
 - "We obviously want to do this in such a way where Claude is not pulling in ... 5000000 rows into context"
 - "we can retain a control plane"
 
+## PRIORITY (Andrew, addendum ~14:0xZ, record `ANDREW_DIRECT_20261021_14xxZ_ADDENDUM_PRIORITY_SCHWAB_ORION_COTTONWOOD_BD.md`)
+
+> "the most important thing for now is that the tables that are in there, for both Schwab and Orion (and Cottonwood Black
+> Diamond), are manageable in the current state."
+
+Analysis moves to Schwab and Fidelity; SmartX, Orion, Eclipse and Black Diamond serve models and model management. SmartX "and
+etc" are deferred. So **F7's firm-fence gaps (SmartX, Eclipse, Commonwealth) are out of the first cut**, and the round-1 scope
+is the three named sources, measured below.
+
+| Source | Today's tables (largest single file) | Served by | Manageable now? |
+|---|---|---|---|
+| **Schwab** `schwab/<master>/silver/` (3 masters, 18-20 tables each) | `dim_position` 106k-110k rows / 2.5 MB; `dim_balance` ~7.7k; `dim_transaction` ~7k per day; `fact_rlw/rly/rlu/uln/ult` 219k-384k rows, 5-8 row groups, 18-42 MB per partition | `schwab_*`, through the bounded DuckDB child (256 MiB, page 100 / cap 500 rows, cursor), for the 4 `dim_*` datasets. The `fact_*` tables are served by no tool | **Yes for the 4 granted datasets**: bounded and paged. A 13-month `dim_transaction` window is ~270 partitions, past the engine's 12-object / 64 MB source cap, so long windows need the engine to page by partition. The `fact_*` tables fit one partition per job (42 MB < 64 MB) |
+| **Orion** `orion/inflection/silver/` (5 tables) | `fact_transactions` 1.53M rows / 31 row groups / 34 MB (one snapshot, 160 partitions); `fact_performance` 485k; `fact_positions` 37k | `client_*`, but **not answering today** (part-1 D1: no fence kind for orion) | **Not as currently coded.** The `client_*` path downloads the whole object and converts it to Python. Fixing D1 on that path would load 1.5M rows into the gateway per transactions call. Orion needs the DuckDB child (or an account filter before conversion, `read_account_rows`) as part of the D1 fix |
+| **Cottonwood Black Diamond** `blackdiamond/cottonwood/silver/` (14 tables) | largest 61,730 rows, one row group, one file per partition | `client_*` | **Yes on size.** Correctness needs part-1 D2 (MM/DD/YYYY dates drop every transaction and fee row), not paging |
+
+The 21.1M-row file is **Commonwealth**/Cottonwood, not Black Diamond/Cottonwood, so under this priority it is deferred with the
+other non-Schwab sources. Its adapter is also not answering (D1).
+
 ## PART 0 -- How the blind constraint was honoured, and where it bent
 
 **Not read:** either project's task orders, or their phase and blocking fields.
