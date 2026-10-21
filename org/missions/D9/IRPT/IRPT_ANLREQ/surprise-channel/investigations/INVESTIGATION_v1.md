@@ -31487,3 +31487,30 @@
   "notes": "Filed by the worker. Not remediated: no test edit, no copy of the wrapper into the tree. Interacts with row S1 (the registry); both are needed to reach the 51-pass denominator."
 }
 ```
+
+## IRPT_ANLREQ-D2-S251 -- Run 7j strands eight synthetic S3 objects (nine versions), the audit record and the retained report PDF among them, that the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S251",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7j (RUN-DONE PASS: Multi-Comp PDF 60 pages, packager ATTACHED, audit AUDIT_WRITTEN) leaves EIGHT synthetic S3 objects (nine versions) that the CloudOps principal cannot delete, among them the audit record the resident wrote (one key, two versions) and the retained report PDF; 13 index rows and the synthetic user read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7j/residue_7j.json (bucket, key, version_id, size for each version, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7j/state_e2e7j.json (leftover_delete_code AccessDenied; upload_identified 1 of 47 UPLOAD rows matched the synthetic address and the run holdings hash; u: packager ATTACHED, audit AUDIT_WRITTEN)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair rule that a run deletes what it creates; the order: residue list in residue_7j.json.",
+  "world_is": "These objects remain, bucket opal-data-irpt: irpt/49financial/platinum/analysis_audit/ART-a99d9d6876536259d2cd6693c4cd58fe49b1ad5df46d384046fe1d0e0d04f186/a99d9d6876536259d2cd6693c4cd58fe49b1ad5df46d384046fe1d0e0d04f186.json (VersionId Q2NapjZfntYiLY1.YAIH3PJshm0rXfAO); irpt/49financial/platinum/analysis_audit/ART-a99d9d6876536259d2cd6693c4cd58fe49b1ad5df46d384046fe1d0e0d04f186/a99d9d6876536259d2cd6693c4cd58fe49b1ad5df46d384046fe1d0e0d04f186.json (VersionId bwo3sSYbtm6XHHD4JjX4ELuvax6hw7B3); irpt/49financial/state/analysis_commentaries/ART-e2b7996f71e20e5634aa3046a00be0442621fdaf6eb77d230bd2c3faa2cb6c81/07cc126453d2c85a3727eaeff3aac65c03c3b3a3c523d393f5763bca11c0fae8.json (VersionId Xlia_4M7u8KYIUFbNTTGKU0YyB6gnAg6); irpt/49financial/state/extraction_evidence/ART-14f7852fbdafe471dcb743db7eb43218353c4e6fd4b087456d074f0224943eba/e50f36b04add85dbd37d235fef978c2ea34bbc7bd819bebd1313104f61711281.json (VersionId Qz.Vce4cyMrFGjK83hyNFRpNg1xTOEEB); irpt/49financial/state/normalized_portfolios/ART-4eb3ca42a4514708f98a4a8cb613690df23e0d4690fac69439074ece96ae73b1/6fcdebed48e5bb34ca4dd1bc37615e5f2a19a3c6502d62f00075a38155a0272d.json (VersionId UUM1GMNTk1Z35y0hBN5l_VrHUkEVrXuS); irpt/49financial/state/original_holdings/ART-3930408939fa9291fee3bc7c0222c999445c62352b96b897e9ae055c65fdd631/e06adcd797a086cdc6d8940a03a5159a9ae81f80f39f109dc7bae471d708d2d4.csv (VersionId U07pEeLeDw.mKhcMOw_CwgkJhx67WSi1); irpt/49financial/state/request_compositions/ART-fdf625f8f4a548cdf76ff88381cd061eaeecefac752acd11c191ea515fccce3a/c4b7a86486aac9d80d716d8ebf1a0f13041ff5fd71f7c91bfb2da1c01a84e0b1.json (VersionId f9iVkt9zuHmg6qrdrVa7k2dCrux8S9u2); irpt/49financial/state/ycharts_opal_reports/ART-9a06887f592ea3c3f3c904df9513ed72494e6938e21fef0a956d672134c8924d/7338db962c3cd9e0602332cf244e8c98b5504319bbf8c5b6945bc72e10295096.pdf (VersionId z1h39xwv31iRIyhUcyvq3UYr3_TWmuOS); irpt/49financial/state/ycharts_opal_reports/ART-ff25fddbd43e7baf30b005a3f4df82e6245d6002118d8adb5e080c3756d5585e/46bc9043237a96634bb835540d45b2c9763317721fac7553822859e7cb4c480f.pdf (VersionId zFK.fWxHscfcCpnQ.1iwHYTGliAettJ6). The two analysis_audit versions are the audit record the resident wrote (the CloudOps principal holds no delete on that prefix and was not asked to). No index row points at the others. The synthetic holdings carry no client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
