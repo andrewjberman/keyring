@@ -1255,6 +1255,28 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "NFRA_FIDUPL_R1_WORKER_REFERENCE.md section 12: config.json key perg_secret_id holds the per-G secret id (the code reads it; a missing key means no cross-check).",
     "world_is": "At 6bd116284f5 no module reads perg_secret_id and the pointer check refuses it, so the key cannot reach the daily stage. This cell admits the key to the allow-list and to the secret-id check, and wires read_perg and write_coverage as daily deps in box/run.py _real_daily_deps (the reference names no dep for the per-G read or the coverage write).",
     "notes": "The box config.json does not carry the key until the box is provisioned; a missing key gives checked false with one SKIP line, as the reference says. The added deps are the only wiring the order did not name."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W5-S8",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~5",
+    "surfaced_at": "2026-10-21T01:53:25Z",
+    "one_line": "The coordinator's fix (recover_session raises signin_recover.AttachError, which must stop the run with the original refusal) cannot be committed by this worker: the order is complete at HEAD 177617a95d, the owned-paths lane gate treats a terminal order as granting nothing, and the gate refuses run.py and tests/test_box_daily.py.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git commit of box/run.py and tests/test_box_daily.py through .tools/safe-commit.sh at 2026-10-21T01:52Z (worktree C:/tmp/fidupl-w5): 'owned-paths lane violation(s)' with 'no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'",
+        "NFRA_FIDUPL.TO-FT-s-2 status at HEAD 177617a95dc: <status>complete</status> (the flip commit, admitted while the order was pending)",
+        "the fix is uncommitted in the worktree; its diff is saved at .scratch/attach_fix.patch in C:/tmp/fidupl-w5 (not committed)"
+      ]
+    },
+    "spec_asserts": "Coordinator interface fact (box/dell1 signin_recover.py: class AttachError(Exception) raised when the unit does not start, the CDP port does not open, or no page exists): a recovery failure of any kind records recovery failed and stops the run with the original refusal.",
+    "world_is": "HEAD 177617a95dc treats AttachError as a run error rather than the refusal, because the hook re-raises the recovery exception. The corrected hook and its test are uncommitted. The lane gate grants no paths to a complete order, so the worker cannot commit the correction.",
+    "notes": "Not overridden: no GIT_COMMIT_AUTHOR_OVERRIDE and no force. Decision for the COO: reopen this order or issue a follow-up order that names box/run.py and tests/test_box_daily.py, then the worker or the COO commits .scratch/attach_fix.patch. The order status is left complete at HEAD as committed."
   }
 ]
 ```
