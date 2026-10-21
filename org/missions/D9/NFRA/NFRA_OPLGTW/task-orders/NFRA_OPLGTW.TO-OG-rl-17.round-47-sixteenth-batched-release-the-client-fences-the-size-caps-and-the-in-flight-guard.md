@@ -91,6 +91,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rl-17.round-47-sixteenth-batche
 
 <status>staged</status>
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-C</workstream>
 <slot>~AE</slot>
