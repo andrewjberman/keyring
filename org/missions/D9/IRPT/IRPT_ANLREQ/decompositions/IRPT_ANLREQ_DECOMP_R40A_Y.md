@@ -207,6 +207,7 @@
 - `AR-y-486` (workstream `ZZ145`, worker `~360`): the Terraform source of ONE customer-managed policy on irpt-ycharts-runner-role: dynamodb:GetItem only on table opal-tickets only, Null guard plus ForAllValues attributes ticket_id, ticket_type, answers, created_at (CTO ruling A, msg 11858). Gate limb that graded the amendment: none stated.
 - `AR-y-487` (workstream `ZZ146`, worker `~361`): ticket_audit_source.py reads the ticket with an exact four-attribute ProjectionExpression and drops the filer_user_type read (same ruling); ships in a release after r34q. Gate limb that graded the amendment: none stated.
 - `AR-y-488` (workstream `ZZ147`) is an APPLY cell for `0.7.0_AE_CloudOps~IB2`: the attribute-restricted ticket-read managed policy on irpt-ycharts-runner-role (pair signed: COO blob 2f30cbbe6e, CTO half @f53f3bc644 msg 11881), simulations of five arms BEFORE apply, scoped plan 2/0/0; starts only on my GO after run 7I is terminal. Gate limb that graded the amendment: none stated.
+- `AR-y-489` (workstream `ZZ148`, worker `~362`): the Terraform source of three throwaway delete roles (12+12+5 versions) for the 29-version synthetic residue manifest of runs 7e-7j (blob 7963026db4), V2's R22 method (CTO ruling msg 11928); an IB2 apply cell (AR-y-490) follows under its own pair. Gate limb that graded the amendment: none stated.
 - Not in this round: the Shares price-source READ cell (CTO 7546), the portal partner-firm filing page (its own route), the delete of the sitting's objects (a call the CTO registers for Andrew).
 
 fanout: 2 of 2 chains for workers per cut (AR-y-323 worker slot 131, AR-y-324 worker slot 132), cap 8, reason: the Lambda zip and the resident tarball are independent builds of different packages with disjoint staged names; the release-29b apply chain is the applier's.
@@ -353,3 +354,4 @@ fanout: 1 of 1 chain (AR-y-484, worker ~352, workstream ZZ143), cap 8, reason: o
 fanout: 1 of 1 chain (AR-y-485, worker ~353, workstream ZZ144), cap 8, reason: one registry flip; r34q (G2) builds from it.
 fanout: 2 of 2 chains (AR-y-486 worker ~360 workstream ZZ145; AR-y-487 worker ~361 workstream ZZ146), cap 8, reason: disjoint write surfaces (one new .tf; one .py and its tests); the pair and the IB2 apply follow AR-y-486.
 fanout: 1 of 1 chain for the applier (AR-y-488, lane 0.7.0_AE_CloudOps~IB2, workstream ZZ147), cap 8, reason: one IAM apply, never alongside another IB2 act.
+fanout: 1 of 1 chain (AR-y-489, worker ~362, workstream ZZ148), cap 8, reason: one new .tf; the pair and the IB2 pass follow it.
