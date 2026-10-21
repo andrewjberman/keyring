@@ -3973,3 +3973,34 @@
   "notes": "Filed by this seat, the disarm_owner of Z-S63. An earlier ferry of mine (00:20Z) called this a fabric-wide finding and said the set-aside had no stated reason; both were wrong and were withdrawn in a correction at 00:21Z. This row disarms Z-S63 only; Z-W37-S1 was already disarmed for MP-pf-7 by Z-S62. No account id, hash or list was read, copied or sent."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S81",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-21T00:42:14Z",
+  "one_line": "DISARMS NFRA_MCPORTAL-Z-W2-S8 and NFRA_MCPORTAL-Z-S77 (both owner this seat): the halt gate, run exactly as the deploy runs it (release tree, the trunk c0a0ee2e9c overlay, empty pending inbox), completed in 0.8 s; the last release's whole wrapper run took 149 s with 97 pending files inside it; the rollback decision point still assumes 720 s",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "DISMISSED_WITH_REASON",
+  "adjudicates": [
+    "NFRA_MCPORTAL-Z-W2-S8",
+    "NFRA_MCPORTAL-Z-S77"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/haltgate_batch16.json (committed f482e4376fa, content sha256 prefix e09a8e510b41): gate_elapsed_s_dry 0.8, gate_complete true, rc 0, read at 2026-10-21T00:36Z, run by 0.7.0_AE_CloudOps~NFRA1 as the deploy runs it: halt_gate_check sourced from the release tree's .tools/halt-gate-check.sh with the step-7 overlay (trunk c0a0ee2e9c), HALT_ACK and HALT_OVERRIDE unset, on an EMPTY pending inbox (119 files read to zero at 2026-10-20T23:49:57Z, 0 STOP-class).",
+      "The same record: the last release's wrapper run (2026-10-20 06:26:24Z to the manifest's deployed_at 06:28:53Z, 149 s with the service restart 8 s and 2 s) scanned 97 pending files inside that time, so the scan with 97 files was under 149 s on the deploy's own path.",
+      "CONTRADICTING MEASUREMENT, ruled: this seat ran the gate library from the shared tree's HEAD copy (.tools/halt-gate-check.sh at HEAD, not the overlay) read-only as the same agent and it did not finish in 100 s with 119 and with 1 pending file, printing deploy-completion ledger lines. That is a different code version and path from the deploy's (the overlay of trunk c0a0ee2e9c); the deploy's own path is the one a rollback runs.",
+      "Not measured: the gate on the deploy's path WITH a pending file (NFRA1 declined: it would have blocked its own mail). Guard instead: the applier recounts its pending inbox at 05:45Z, right before the deploy and right before any rollback and reads it to zero first (OG-rl-17 HALT GATE paragraph, commits d452ddfe96, a63dd85068, eae94018ec, ef6d521999), and the rollback decision point uses max(measured, 720 s): 06:38:30Z for a window ending 06:55Z."
+    ]
+  },
+  "spec_asserts": "NFRA_MCPORTAL-Z-W2-S8: a triggered rollback would sit 12-15 minutes in the halt gate. NFRA_MCPORTAL-Z-S77 (this seat): ARMED until the gate's elapsed time is measured under 60 s on a batch16 rollback path (the CTO's msg 36257).",
+  "world_is": "On the deploy's own path the gate is not the long pole: 0.8 s on an emptied inbox. The remaining hazard (an inbox that refills) is guarded by three recounts and a conservative decision point.",
+  "dismissal_reason": "The CTO's criterion (msg 36257: disarm on a measured halt-gate scan under 60 s) is met on the deploy's own path (0.8 s, committed record cited above); the contradicting shared-tree measurement is a different code path and is recorded, not hidden; batch16's own ledger line will carry gate_elapsed_s at the deploy and this seat will re-open the question by a new row if it reads over 60 s."
+}
+```
