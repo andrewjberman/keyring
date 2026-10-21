@@ -31911,3 +31911,30 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W381-S1 -- AR-g-190 does not say whether a portfolio whose data_as_of is present as JSON null is absent or malformed; I refused it as malformed
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W381-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~381",
+    "surfaced_at": "2026-10-21T10:02:12Z",
+    "one_line": "The order's read rule has two branches (absent: the file-level date; present and not a YYYY-MM-DD day: refuse). A portfolio whose data_as_of key holds JSON null sits in neither wording; I took key presence as 'present', so null is refused naming the code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-g-190 step 1: for each model code, take the portfolio entry's data_as_of. Absent: the file-level data_as_of. Present and not a YYYY-MM-DD day (the file's _parse_day): _refuse naming the code.",
+    "world_is": "The order names no rule for a null value. The code tests key presence ('data_as_of' in entry): a missing key takes the file-level date, and a null value fails _parse_day and is refused. Test test_a_malformed_per_portfolio_data_as_of_is_refused_naming_the_code[None] pins this. The other reading, null equals absent and falls back to the file date, would change one branch of read_allocation and one parametrized case; no live object is known to carry a null today.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/model_source.py@5c8ede09163 read_allocation: 'if \"data_as_of\" in entry' branch, _parse_day refusal",
+        "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_model_source.py@5c8ede09163 test_a_malformed_per_portfolio_data_as_of_is_refused_naming_the_code, parameter None"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
