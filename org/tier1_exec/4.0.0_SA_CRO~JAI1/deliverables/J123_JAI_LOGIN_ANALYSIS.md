@@ -66,3 +66,28 @@ Yang@opalinvest.com (username, firm/tier, the Forgot-password first step); nothi
 - NOT EXERCISED: Jai's own Forgot-password reset and first sign-in (user journey); the draft names
   https://opalinvest.dev as the login page, which is INFERRED from the 2026-10-08 reset-endpoint log and not read from a
   route table. Andrew checks both before he sends.
+
+## 7. Andrew-direct and the send
+
+ANDREW-DIRECT, dell1 terminal to 4.0.0_SA_CRO~JAI1, 2026-10-21 ~17:0xZ, verbatim: "confirm the login URL from the portal
+route config + once we know the account is good to go send the draft to yang"
+
+Login URL, MEASURED (supersedes the INFERRED line in section 6):
+- Route config: `portal/src/App.tsx:601-603` declares `/login`, `/forgot-password`, `/reset-password`;
+  `portal/src/pages/auth/LoginPage.tsx:182-185` links "Forgot password?" to `/forgot-password`.
+- Domain: `infra/aws/terraform/portal-auth/cloudfront-distribution.tf:110` aliases `opalinvest.dev`, `www.opalinvest.dev`;
+  live `cloudfront get-distribution EVTSA9VEHNZVH`: Deployed, enabled, same aliases.
+- Served: `https://opalinvest.dev/login` 200, `https://opalinvest.dev/forgot-password` 200.
+
+Account good to go, MEASURED at 17:0xZ:
+- `opal-users-v2` PROFILE: firmId opal-capital, tier internal, role user, status active, name "Jai Mukraj"
+  (first Jai / last Mukraj), mustChangePassword true, mfaEnabled false / mfaChannel none; key set equals the script's
+  contract. `FIRM#opal-capital/MEMBER#jai@opalinvest.com` present (role user). email-index Count 1.
+- Reset path: `infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts:644-669` `forgotPassword` looks up
+  `getUser(email.toLowerCase())` with no firm filter; the stored email is lowercase. Sender domain `opalinvest.dev`
+  SES identity: VerificationStatus Success.
+- Still NOT EXERCISED: Jai's own reset and first sign-in.
+
+SENT on Andrew's word: gateway `send_email` to Yang@opalinvest.com, subject "Dashboard login for Jai is set up", body
+identical to the 17:01:03Z draft; Sent Items shows it at 2026-10-21T17:07:54Z. The 17:01:03Z draft still sits in
+Drafts (the gateway has no draft-delete or draft-send tool); a second send from it would duplicate.
