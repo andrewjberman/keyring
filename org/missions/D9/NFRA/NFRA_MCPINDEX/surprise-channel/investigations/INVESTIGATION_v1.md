@@ -13831,3 +13831,28 @@ carries none.
   "notes": "OBSERVATION, INERT: the issuer chooses the entity name at the drain. The naming choice is the only departure from the silver convention in MX-z-4 output."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~94",
+  "surfaced_at": "2026-10-21T08:19:28Z",
+  "id": "NFRA_MCPINDEX-Z-W94-S1",
+  "one_line": "The commit gates checked none of the .json deliverable platform_labels.json: commit-gate reads only .py/.sh/.tf, the risk-reflex danger map is STALE, and client-data-check WARNs that the hashed account-id list is absent on this device, so the account-id screen did not run on that commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~94/platform_labels.json@4d746c99f70 (the one file of the commit; a .json)",
+      "safe-commit output of 4d746c99f70: '[commit-gate] WARN: commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED'; '[risk-reflex] danger map: 132.4h old !! STALE'; 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A commit touching a deliverable under the mission tree is screened by the commit-time gates, including the client account-id screen, before it lands.",
+  "world_is": "On this device the commit-gate and the client account-id screen both returned without checking the .json file, and the risk reflex could not clear it; the file was checked by the worker only by reading it, since it holds no account number, name or data value (its strings are adapter code identifiers and line numbers).",
+  "notes": "OBSERVATION, INERT for this commit: the file was read in full and carries no client identifier. The standing gap (no hashed list on this device, the commit gate skipping .json) is for the issuer and the gate owners to disposition at the drain."
+}
+```
