@@ -2054,6 +2054,132 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "world_is": "The planner calls wait once per kind for each trading day, so two non-skipped jobs reach the tap per day. A line per job would print each day twice and double the days list.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Resolved in worker commit 06cc1128b87 (wk-NFRA_FIDUPL-8): one DAY line and one days entry per trading day; the first wait of a day is its answer and a repeat wait, answered from the adapter's day cache, adds nothing. Skipped non-trading days print nothing and are not listed. The issuer confirms this reading before the next live run."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S12",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-21T09:19:06Z",
+    "one_line": "The order text says FU4-AC1 needs fourteen named tests, but the checker's fu4 list as committed names fifteen; the fu4 run reads passed=16 and passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py@7ac44b0bf3c TEST_FILES fu4 list (lines 171-179) lists 15 test names: the REPAIR 1 fourteen with test_non_trading_day_is_failure absent and two REPAIR 2 names present",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu4 at f4289cfcb83 (worktree) printed R1-FU4-OK passed=16 rc=0"
+      ]
+    },
+    "spec_asserts": "TO-FU-s-4 REPAIR 2: FU4-AC1 (fu4) now needs the list as the checker prints it (fourteen names, test_non_trading_day_is_failure gone, two new).",
+    "world_is": "The checker's fu4 list holds fifteen names: the fourteen of REPAIR 1 with test_non_trading_day_is_failure replaced by two names. The check's bar is passed >= names, so it reads OK with the fifteen names present.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No edit: the checker is the COO's and outside this order's grant. The count in the order text is the only disagreement; the check passes on the names it lists."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S13",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-21T09:19:06Z",
+    "one_line": "split.py's refusal text for an unreadable as-of still says first field of the first row, although the as-of has been read from the per-file DATE_COLUMN since REPAIR 1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/split.py@7ac44b0bf3c line 179: failures.append((name, 'date', 'first field of the first row is not an 8-digit YYYYMMDD date'))",
+        "infra/aws/ec2/canonical-fidelity/land.py@7ac44b0bf3c lines 102-107: _content_date reads DATE_COLUMN.get(name, 0) of the first row (REPAIR 1 per-file column)"
+      ]
+    },
+    "spec_asserts": "TO-FU-s-4 REPAIR 2 item 3: split.py changes only where it takes the content date of a file; nothing else changes.",
+    "world_is": "The text names field 0 of the first row, the rule REPAIR 1 replaced. It is left as written because the order names nothing else in split.py to change; the same rule holds for the new landing_date line at f4289cfcb83.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not edited (outside the REPAIR 2 change). The issuer decides whether the text is corrected in a later repair."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S14",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-21T09:19:06Z",
+    "one_line": "The run record's calendar.trading_day reads the first dated file's as-of flag, so a run that lands every file under Friday with a Saturday account as-of reads trading_day false beside outcome ALL_LANDED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/land.py@f4289cfcb83 record: 'calendar': {'trading_day': dated[0]['trading_day'] ...} with account.txt first of SIX",
+        "infra/aws/ec2/canonical-fidelity/tests/test_land.py@f4289cfcb83 test_run_record_carries_both_dates_per_file asserts calendar.trading_day is False and outcome ALL_LANDED for the same run"
+      ]
+    },
+    "spec_asserts": "TO-FU-s-4 REPAIR 2 item 2: calendar.note compares the content_date values; nothing else about the record changes.",
+    "world_is": "calendar.trading_day is unchanged and reports the as-of flag of the first dated file. In the live case that file is account.txt with a Saturday as-of, so the record-level flag reads false on a run whose six files all landed under Friday 2026-10-16. Per-file content_as_of keeps the as-of visible.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Kept as the order says (nothing else about the record changes). The issuer decides whether calendar.trading_day should read the landing day's flag in a later repair."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S15",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-21T09:19:06Z",
+    "one_line": "A CalendarCoverageError now leaves content_date null (no landing date can be computed), where the lander carried the as-of, and split.py records a calendar failure instead of raising.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/land.py@7ac44b0bf3c _examine set content_date from the as-of before the calendar try block; @f4289cfcb83 the try block computes is_trading_day and landing_date, and a coverage error returns a calendar failure with content_date unset",
+        "infra/aws/ec2/canonical-fidelity/split.py@f4289cfcb83 split_day wraps landing_date in try/except CalendarCoverageError and appends (name, 'calendar', ...); split.py@7ac44b0bf3c had no calendar call"
+      ]
+    },
+    "spec_asserts": "TO-FU-s-4 REPAIR 2 item 1: the fail-closed CalendarCoverageError still propagates as today (the existing calendar failure step stays); content_date is the landing date.",
+    "world_is": "No landing date exists when the calendar cannot answer, so the coverage path carries content_as_of and a null content_date, and the business date falls to the next dated file. split.py had no calendar call, so the new except is an addition the order did not name. No test pins the coverage path (the fallback covers 2010-2027).",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Chosen to fail closed without a guessed date. The issuer confirms this reading; the coverage path is not exercised by any criterion."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S16",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-21T09:19:06Z",
+    "one_line": "The order's status flip to complete sits in the TO file, which is outside this order's paths block, so this worker leaves the order at pending.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FU-s-4.lander-and-run-record.md@7ac44b0bf3c <paths> block names land.py, tests/test_land.py, split.py, tests/test_split.py and the investigation file only",
+        "the same order's REPAIR 2 text: flip the order's status to complete only when both criteria PASS"
+      ]
+    },
+    "spec_asserts": "TO-FU-s-4 REPAIR 2 closing line: flip the order's status to complete only when both criteria PASS.",
+    "world_is": "Both criteria PASS by output at f4289cfcb83 (fu4 passed=16, fu4d dests=6). The status line lives in a file outside the grant, so the lane gate admits no flip from this worker; the order stays pending in the worktree.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer flips the status, as on REPAIR 1 (row NFRA_FIDUPL-D1-W2-S6). Disarm is not an ARMED hazard: the row is INERT."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S17",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-21T09:19:06Z",
+    "one_line": "safe-commit printed a naming-gate NAMING ERROR (function-map folder missing in this worktree) on the REPAIR 2 commit; the commit still returned rc 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... -F .scratch/msg_code.txt -- (4 paths) at worktree C:/tmp/fidupl-w2, output line: [naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\fidupl-w2\\infra/aws/lambda/ci/function-map/",
+        "the same output: [wk-NFRA_FIDUPL-2 f4289cfcb83] committed, 4 files changed, and [msg-verify] MATCH"
+      ]
+    },
+    "spec_asserts": "Worker face: every commit goes through safe-commit.sh, and its gates run clean for the paths committed.",
+    "world_is": "The naming gate reported the Lambda function-map folder absent from this worktree and printed a NAMING ERROR; nothing in this order's paths reads that folder, and the commit completed.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not investigated further (off-task). The owner of the naming gate's folder in a worktree decides whether the message is expected."
   }
 ]
 ```
