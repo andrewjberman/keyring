@@ -31705,3 +31705,99 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Disarm: the cli-shim FWD-24 gateway cell is live and read back, or the grant writer refuses a channels_ entry that the gateway would not parse. Until then NO bucket or bucket/prefix string goes into channels_allow or channels_deny by any route (the People panel included). Told to the CTO and COO~MP by ferry."
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:03:00Z",
+    "one_line": "cs2.AC3.sh, invoked as written (python3 -I - on stdin), cannot read PASS on this Windows device: the real engine's spawn child cannot re-import a stdin __main__, so every query job fails.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "AC3 (cs2.AC3.sh) runs the REAL ExecutionEngine from a 'python3 -I -' stdin script and must read RESULT: PASS with exit=0 for the query cell.",
+    "world_is": "On site Z (Windows, Python 3.11.9) the engine's multiprocessing spawn child fails with OSError Errno 22 naming the '<stdin>' main path, so each query job fails and the check reads seven lines NOT OK, RESULT: FAIL, exit=1. The same body saved to a file and run as 'python3 -I <file>' reads OK on every line, exit=0, after a first block of nine NOT OK lines printed by a spawn child that re-executes the body (the body has no __main__ guard).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC3.sh from worktree C:/tmp/wk-og-182 @bcbef740d72 -- last line RESULT: FAIL, exit=1; deciding line 'a rows request answers the five lowest quantities of account 3 (columns None, matched None, returned None): NOT OK'.",
+        "ENGINE: infra/aws/ec2/opal-gateway/app/integrations/schwab/engine.py:1077 @bcbef740d72 -- self._ctx = multiprocessing.get_context('spawn'); the child traceback ends in OSError [Errno 22] Invalid argument on the '<stdin>' main path.",
+        "FILE RUN: the same check body saved to a worker-local scratch file and run as python3 -I <file> from the same worktree @bcbef740d72 -- final line OK, exit=0, all nine say-lines ok (cursor paging, aggregate and rows included)."
+      ]
+    },
+    "notes": "Disarm: the issuer re-points the AC3 invocation at a file-based body, or runs it on the EC2 Linux gateway box, or adds a __main__ guard to its check. The worker holds no write surface on the check (it lies outside the order's paths) and did not edit it. The worker's own tests run under pytest, where __main__ is a real file."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:03:30Z",
+    "one_line": "query_object has no defined answer for a path whose key is empty (the bucket root): the cursor binding needs a non-empty dataset.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "query_object binds the cursor to dataset=<key> and answers the query for a table folder or one .parquet object; the order names no answer for a path whose key is empty.",
+    "world_is": "bind_key refuses an empty dataset (ValueError: a binding key needs every dimension; dataset is missing), so a bucket-root query cannot be bound. The implementation answers code INVALID_REQUEST, error 'the path names no table folder or parquet object', after folder_decision and before any S3 call.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/cursor.py:69-70 @bcbef740d72 -- a dimension that is None or an empty str/list/tuple/dict raises ValueError before the key is built.",
+        "CODE: infra/aws/ec2/opal-gateway/app/folder_tools.py in worktree C:/tmp/wk-og-182 (uncommitted at this write, on top of bcbef740d72) -- the key == '' guard in _query, after the folder_decision call and before any S3 call."
+      ]
+    },
+    "notes": "No disarm needed: the answer is a zero-S3 refusal, so the gap cannot read or download anything. The issuer may name the bucket-root answer in a later order if a root listing is wanted."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:20:00Z",
+    "one_line": "The order's next_cursor rule (offset + returned < matched) issues a cursor for an aggregate query, because matched_rows counts the source rows and not the output groups.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "query_object answers next_cursor ONLY when offset + returned_rows < matched_rows, and matched_rows is the count of matching rows the query returns on.",
+    "world_is": "In aggregate mode matched_rows is the count of SOURCE rows (300 for a sum by account over 300 rows) and returned_rows is the group count (10). The literal rule therefore issues a next_cursor for an aggregate whose every group is already returned; the next page is empty. The implementation applies the rule literally and the test asserts the observed values.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/engine.py:762 @bcbef740d72 -- matched = count of sql_plan.count_sql, which counts source rows before the GROUP BY.",
+        "RUN: infra/aws/ec2/opal-gateway/tests/test_cs2_folder_tools.py::test_query_aggregate_request_answers_one_row_per_group in worktree C:/tmp/wk-og-182 -- observed matched_rows 300, returned_rows 10, next_cursor present (17 passed, rc 0)."
+      ]
+    },
+    "notes": "Not harmful as a read: the empty next page answers zero rows and no data leaves the gate. The issuer decides whether an aggregate carries a cursor; the worker applied the order's rule as written."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:21:00Z",
+    "one_line": "On this Windows device the engine's spawn path prints faulthandler 'Windows fatal exception: access violation' dumps while the cs2 tests run; the tests still pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The cs2 test file runs offline under pytest and passes every test; a clean run is the expected output.",
+    "world_is": "Two runs of the test file printed faulthandler 'Windows fatal exception: access violation' dumps: the first (before two fixture fixes) had seven failing tests and six dumps; the second passed all 17 tests, rc 0, with seven dumps. Every dump's current-thread stack sits in engine.py submit -> multiprocessing Popen.start (popen_spawn_win32.py line 75). The cause is not isolated; the dumps do not change any result the tests assert.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: python3 -I -m pytest tests/test_cs2_folder_tools.py in infra/aws/ec2/opal-gateway of worktree C:/tmp/wk-og-182 (new files uncommitted, on top of bcbef740d72) -- 17 passed in 11.81s, rc 0; output kept in a worker-local scratch file.",
+        "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/engine.py:1296 @bcbef740d72 -- the engine's submit calls the spawn process start, the frame in every dump."
+      ]
+    },
+    "notes": "Scope: this Windows device only; the gateway runs on the EC2 Linux box, where the dump was not observed by this worker. The S1 row (stdin spawn) and this row share the spawn path on Windows and should be read together by the issuer."
+  }
+]
+```
