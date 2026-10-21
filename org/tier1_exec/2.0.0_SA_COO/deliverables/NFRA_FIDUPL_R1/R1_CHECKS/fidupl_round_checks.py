@@ -649,9 +649,11 @@ def box_put_grant():
         iam = boto3.client("iam", region_name="us-east-1")
         perg = _perg_arn()
         rc2, wsec = _tf_out("wealthscape_secret_id")
-        res = iam.simulate_principal_policy(PolicySourceArn=role, ActionNames=["secretsmanager:PutSecretValue"],
-                                            ResourceArns=[perg, wsec])["EvaluationResults"]
-        got = dict((r["EvalResourceName"], r["EvalDecision"]) for r in res)
+        got = {}
+        for arn in (perg, wsec):  # one ARN per call: the simulator folds several resources into one verdict
+            res = iam.simulate_principal_policy(PolicySourceArn=role, ActionNames=["secretsmanager:PutSecretValue"],
+                                                ResourceArns=[arn])["EvaluationResults"]
+            got[arn] = res[0]["EvalDecision"]
         if got.get(perg) != "allowed":
             return out("%s-FAIL the box role may not put the per-G list secret" % tag)
         if got.get(wsec) == "allowed":

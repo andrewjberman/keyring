@@ -1190,6 +1190,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "REPAIR 1 (issuer, 2026-10-21) and FU4-AC2: the fu4d dry run still reads dests=6 (expect R1-FU4D-OK dests=6), and the checker's synthetic handoff is the fixture for that run.",
     "world_is": "The checker's synth_handoff writes the as-of date in field 0 of all six synthetic files. Under the per-file columns of REPAIR 1, balance (column 3), account (column 16) and transact (column 17) are unreadable in that fixture, so the dry run prints three DRYRUN lines, reads dests=3 and exits 1. The lander follows the repaired rule; no lander rule reaches dests=6 on this fixture as written.",
     "notes": "Not edited: the checker is the COO's (org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/) and outside this order's grant. The lander and its tests are committed at ca6db55395 and FU4-AC1 passes. FU4-AC2 is recorded FAIL and the order stays open. Decision for the COO: point synth_handoff at the per-file columns, then re-run fu4d; the lander is not to be reverted to field 0 to pass it."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-S9",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T01:40:00Z",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "one_line": "The ft5i check simulates PutSecretValue with two resource ARNs in one call, which the IAM simulator collapses to one templated result, so it reads FAIL on a role that holds the grant.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft5i at 2026-10-21T01:38Z printed: R1-FT5I-FAIL the box role may not put the per-G list secret",
+        "aws iam get-role-policy fidelity-alongside-uploader-policy: statement PergSecretPut = secretsmanager:PutSecretValue on arn:aws:secretsmanager:us-east-1:313476888478:secret:fidelity/alongside/perg-list-WIANxc only (applied by safe-apply, post-apply plan No changes rc=0)",
+        "aws iam simulate-principal-policy, ONE resource per call, same role and action: perg-list-WIANxc -> allowed; wealthscape-credentials-gREoMF -> implicitDeny; positive control GetSecretValue on perg-list-WIANxc -> allowed",
+        "the same call with both ARNs: one result row whose EvalResourceName is the template arn:aws:secretsmanager:${Region}:${Account}:secret:${SecretId} and EvalDecision implicitDeny, so the checker's dict has no entry for the perg ARN (box_put_grant line ~648, got.get(perg))"
+      ]
+    },
+    "spec_asserts": "TO-FT-s-5 criterion FT-s-5-AC1: ft5i reads R1-FT5I-OK the box role may put the per-G list secret and not the credentials, via an IAM simulator run with the Wealthscape credentials as the negative control.",
+    "world_is": "The grant is live and exactly one secret wide. The checker's single multi-resource simulation cannot see it (the simulator's two-or-more resource ARN mode), so AC1 reads FAIL while the single-resource simulations read allowed on the per-G secret and implicitDeny on the credentials.",
+    "notes": "Not edited: the checker is the COO's and outside this order's grant. Fix for the issuer: two simulate_principal_policy calls, one ResourceArn each, in box_put_grant. FT-s-5-AC1 is recorded FAIL by its own invocation; the order stays pending until the checker is fixed and ft5i re-run, or the issuer accepts the single-call evidence."
   }
 ]
 ```
