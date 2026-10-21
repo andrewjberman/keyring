@@ -31911,3 +31911,171 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S255 -- Run 7L strands eight synthetic S3 objects (nine versions), the audit record and the retained report PDF among them, that the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S255",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T09:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7L (RUN-DONE PASS: Overview PDF 42 pages, packager ATTACHED, audit AUDIT_WRITTEN) leaves EIGHT synthetic S3 objects (nine versions) that the CloudOps principal cannot delete, the audit record (one key, two versions) and the retained report PDF among them; the index rows and the synthetic users read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7l/residue_7l.json (bucket, key, version_id, size for each version, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7l/state_e2e7l.json (deleted 17 of 25 recorded keys ABSENT; u: packager ATTACHED, audit AUDIT_WRITTEN)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7k/residue_7k.json (the same eight-object shape in run 7k, row S254)"
+    ]
+  },
+  "spec_asserts": "The order's rule that a run deletes only keys recorded at creation and lists the residue its principal cannot delete in residue_7l.json.",
+  "world_is": "These objects remain, bucket opal-data-irpt: irpt/49financial/platinum/analysis_audit/ART-21e894afe0bbaab65f3a14fc9492260f61712ffa2913c6c64045c9b9ee75f9b9/21e894afe0bbaab65f3a14fc9492260f61712ffa2913c6c64045c9b9ee75f9b9.json (VersionId G5SG3Swd3QaTenkAyOQ4mF6eV047sa0r); irpt/49financial/platinum/analysis_audit/ART-21e894afe0bbaab65f3a14fc9492260f61712ffa2913c6c64045c9b9ee75f9b9/21e894afe0bbaab65f3a14fc9492260f61712ffa2913c6c64045c9b9ee75f9b9.json (VersionId BExfAzeKAZPQAV7m0EgTbFrDMywWDu7w); irpt/49financial/state/analysis_commentaries/ART-a36bb0b5a0ddb3de16c12c4af6fff7aab240009c8985c69cbc7bb3f851077ead/571ee4c61d3c2ab6a0cf0875b5122b789462cf5c060776b904f934f0d4daf70f.json (VersionId .lSVaaTwEhQSAuSzhHfmmztiTmkeLn8a); irpt/49financial/state/extraction_evidence/ART-2e31ad2b9ad3a8f87c723efeeafe8fbcb066ea29f4a35af5dd4e1a6608e99bed/ee4ddbe4101c98361ef36482f2873717cb1f147ba0f1fd2c27e67b7977cd84c6.json (VersionId 2BaUXVPcO2..95MxpN3i4T1aGhmLLdw8); irpt/49financial/state/normalized_portfolios/ART-de8a4608099394a24d25a0ddf663899cda6a3eee2484549efd659b45f78f6559/5d755ba449cdfc95b182f820a90dcc4896cf01a9730a517515e2e207f19ca1c9.json (VersionId _.FlH1p6eXvYYizLkF2HIUjS1JILK032); irpt/49financial/state/original_holdings/ART-b3f59381e8dec9cb8ce7a0a276e044e9713f778f72125b9cc8757b583b676c06/230f7aa29aa326961c6e5eb08344f10f66542b42cc3eb7879dc9dc6ed560552f.csv (VersionId 8h1qOFowYPHWVpVtLTaok6ZN8mljCX7v); irpt/49financial/state/request_compositions/ART-1b176ce909aa86670020422577ac734c5e564ac38e99a8061cb6b5ed5e9b403b/6b0b5236468746b5bcdf0f864aea22e3438b5eabdb48a0b188dedac35eec0706.json (VersionId 4EEndSR3bl6cmDURlul1c.r4QimaQqwE); irpt/49financial/state/ycharts_opal_reports/ART-294fc2875ca925436ef9b9554054410a3980d78866ae98d25b349cd9d6f34884/be9b2b7bc8913e9bc83cbd84c4d3c5b836cbfba696c806aed7ed16e89e0679e5.pdf (VersionId TqE6eCUQVaWpBJNvMZ1O3NTZ2R8kaq3B); irpt/49financial/state/ycharts_opal_reports/ART-2d9e03b4ba0cf82ef0c87b52501d2a20c5930b5dc75ea8f786f33002a9844d7d/36fb99fee268636593942f8a2439ffb83905c0c3e9969b762bdfbc1ce44e19e2.pdf (VersionId QLC6pq61uFfE7rZFXTCWSqFM65nHT1JM). Request REQ-de7555f49544199204061b8a, ticket TCK-20261021-553ca002.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_ANLREQ-D2-S256 -- S220 closed on run 7L's live read
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S256",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T10:10:00Z",
+  "one_line": "S220 is closed on a live read: run 7L filed an Overview carrying the kept unknown ticker ZQXWVK on r34s; the door showed the reason, the resident accepted the kept row, the job reached READY, the packager ATTACHED, and the report names ZQXWVK as not analysed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S220"
+  ],
+  "spec_asserts": "S220: a request carrying a kept-as-typed unknown row ZQXWVK was accepted by the door and then refused CLOSED_COMPOSITION_REQUIRED by the resident, never reaching READY.",
+  "world_is": "MEASURED 2026-10-21 ~10:00Z by IB2 (run 7L, msg 11981, A_E2E7L.txt, RUN-DONE PASS) and re-read by this seat for the saved file. The upload answered NEEDS_CORRECTION with the finding TICKER_NOT_FOUND for ZQXWVK and the door's message (the data provider does not recognize the ticker; accept the suggestion, type the correct ticker, or leave it for Opal Staff, who will manage the replacement); the Keep re-post was accepted. Request REQ-de7555f49544199204061b8a reached READY (P1), the packager outcome was ATTACHED (P4), the frozen row for ZQXWVK read UNRESOLVED / KEPT_AS_TYPED and the swap record named it NOT_ANALYSED (the swap model leg is not yet shipped). The Overview PDF was saved as C:/dev/andrew_samples/Opal_Overview_sample_post_r34s.pdf: 260336 bytes, sha256 prefix be9b2b7bc891, 42 pages, %PDF-1.4 and %%EOF, re-read here. G2's live placeholder read: IB2 counted 0 of 42 pages containing the literal {portfolio_name} (pypdf absent on this box, so that count is IB2's, not re-measured here). Dead-letter queue unchanged, none from this request. The refusal of run 5B was the S245 packaging defect, cured in r34q (G2's read, msg 11963).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7l/A_E2E7L.txt",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/S220_S222_DISPOSITION_READS_20261021.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The live read the CTO approved (msg 11970) shows the door's reason to the filer and the kept unknown row passing the resident to READY and ATTACHED; the refusal of run 5B no longer occurs on r34s."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W368-S1 -- the release builder does not package the swap classifier module, so a resident carrying the pool binding would fail every job at the model import
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W368-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~368",
+  "surfaced_at": "2026-10-21T10:00:00Z",
+  "one_line": "AR-y-494 says the release builder packages etf_classification_model.py, but the builder packages only the investor-reporting DIRS and that module lives under v2_portal/_shared, so the built resident does not carry it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-494 (the preflight and step 3): the release builder 2.0.0_SA_COO~G2 packages swap_model.py and etf_classification_model.py; do NOT change the file list or package members of build_resident_package.py. Interface item 2: make_swap_model imports the classifier as a sibling module at the package root.",
+  "world_is": "etf_classification_model.py is at infra/aws/lambda/v2_portal/_shared/etf_classification_model.py. build_resident_package.py DIRS (lines 37-38) do not include that folder and no add() names it, so the built tar carries swap_model.py without the classifier module it imports. The bindings the builder writes carry no opal_swap_pool, so _swap_extras returns None and nothing imports the model in the shipped bindings: INERT today. It becomes ARMED when a release adds the pool binding without packaging the classifier, because every listed job would then raise at the import. The three offline criteria run from source and do not depend on the package.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py@1a7a048ecfc line 42: MODEL = \"kimi-k3\" (the classifier module the adapter imports by its bare name)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py@1a7a048ecfc lines 37-38: the DIRS list, with no v2_portal/_shared entry and no add() of the classifier module",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_model.py@1a7a048ecfc def make_swap_model at line 102: the default import of etf_classification_model when model_module is None"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the packaging: 2.0.0_SA_COO~G2 (the release builder). The order does not say the classifier path; this row records the gap for that owner. No change was made to the builder's file list."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W368-S2 -- the offline resident test had to put the v2_portal shared folder on sys.path, because make_swap_model imports the classifier by its bare name
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W368-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~368",
+  "surfaced_at": "2026-10-21T10:05:00Z",
+  "one_line": "The enabled-binding test runs the real extras(), which imports the classifier by bare name, so the test had to add the v2_portal shared folder to sys.path; the order names no path for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-494 item 4 (tests): enabled plus the pool binding plus a fake secrets client gives a swap dict with model_classify and proposals callables; the fakes are the injected send only, with no network.",
+  "world_is": "make_swap_model with no model_module imports etf_classification_model by its bare name. The new test reports/tests/test_resident_swap_model_binding.py inserts infra/aws/lambda/v2_portal/_shared into sys.path, the same path test_swap_model.py already uses, and stubs kimi_port.kimi_send with a recorder while socket.socket is replaced. The classifier module is imported only; nothing is sent. Existing tests are not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_swap_model.py@1a7a048ecfc lines 10-11: the existing sys.path insertion for v2_portal/_shared",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_swap_model_binding.py@3ab0178 the sys.path loop over ycharts/research and the v2_portal/_shared folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W368-S3 -- the producer reads a lookup answer that is not a dict as no usable class, so the model is asked for it; the order lists only None and a dict that lacks a class pair
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W368-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~368",
+  "surfaced_at": "2026-10-21T10:10:00Z",
+  "one_line": "AR-y-494 names the model fallback for a lookup answer of None or a dict lacking a class pair; a lookup answer that is neither a dict nor None is not named, and the code treats it as unusable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-494 item 1: model_classify(symbol) is consulted ONLY when the lookup answered None or a dict lacking a non-blank asset_class or sub_asset_class.",
+  "world_is": "The order does not say what a non-dict, non-None lookup answer does. swap_pass ignores such an answer and falls back to the pool (_symbol_class). The composed classify in opal_producer.py (_swap_classify with _usable_class) treats it as unusable and asks the model. With no model port the lookup is returned unchanged, as before. No test pins the non-dict case; the tests pin None and a dict with a blank asset_class. The reading is recorded for review.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@1a7a048ecfc lines 121-143 _symbol_class: a non-dict classify answer falls back to the pool",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py@3ab0178 _usable_class and _swap_classify: the model is asked when the answer is not a dict with both class parts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W381-S1 -- AR-g-190 does not say whether a portfolio whose data_as_of is present as JSON null is absent or malformed; I refused it as malformed
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W381-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~381",
+    "surfaced_at": "2026-10-21T10:02:12Z",
+    "one_line": "The order's read rule has two branches (absent: the file-level date; present and not a YYYY-MM-DD day: refuse). A portfolio whose data_as_of key holds JSON null sits in neither wording; I took key presence as 'present', so null is refused naming the code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-g-190 step 1: for each model code, take the portfolio entry's data_as_of. Absent: the file-level data_as_of. Present and not a YYYY-MM-DD day (the file's _parse_day): _refuse naming the code.",
+    "world_is": "The order names no rule for a null value. The code tests key presence ('data_as_of' in entry): a missing key takes the file-level date, and a null value fails _parse_day and is refused. Test test_a_malformed_per_portfolio_data_as_of_is_refused_naming_the_code[None] pins this. The other reading, null equals absent and falls back to the file date, would change one branch of read_allocation and one parametrized case; no live object is known to carry a null today.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/model_source.py@5c8ede09163 read_allocation: 'if \"data_as_of\" in entry' branch, _parse_day refusal",
+        "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_model_source.py@5c8ede09163 test_a_malformed_per_portfolio_data_as_of_is_refused_naming_the_code, parameter None"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
