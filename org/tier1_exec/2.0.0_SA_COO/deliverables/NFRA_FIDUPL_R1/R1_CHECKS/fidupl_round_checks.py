@@ -94,7 +94,8 @@ TEST_FILES = {
         "test_g_export_probe_prints_counts_and_hashes_per_ordinal_without_values",
         "test_g_export_probe_includes_the_start_ordinal_and_dedupes",
         "test_g_export_probe_stops_on_auth_refusal_and_skips_restore",
-        "test_g_export_probe_closes_session_and_restores_start_g"]),
+        "test_g_export_probe_closes_session_and_restores_start_g",
+        "test_g_export_probe_stops_at_once_on_a_refused_switch_and_skips_restore"]),
     "ft9": ("%s/tests/test_paging_probe.py" % CF, [
         "test_probe_prints_counts_only_for_page_one_forms_and_prefixes", "test_probe_stops_at_once_on_an_auth_refusal",
         "test_probe_closes_the_session_and_prints_no_account_number",

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~6</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -37,6 +37,10 @@
    - A status 401 or 403 on ANY request emits `PROBE stop: HTTP <s>` and ends the probe at once; the `finally` then must NOT send the restore switch and emits `PROBE gexp restore=skipped`. Otherwise the `finally` calls `switcher.restore(start)` and emits `PROBE gexp restore=ok` or `restore=failed`. End with `PROBE gexp done requests=<n>`. At most 60 requests in all.
 3. Never print, log or return a G number, a label, an account number, a requestId, a profileId, a cookie, a token or any response text: counts, statuses, ordinals and hashes only.
 4. Tests in the NEW `tests/test_g_export_probe.py` (fakes; synthetic bytes such as `b"SYN-0001,x"` followed by a second line `SYN-0002,y`; a fake switcher and a fake context in the style of `tests/test_paging_probe.py`): `test_g_export_probe_prints_counts_and_hashes_per_ordinal_without_values` (three ordinals whose fake downloads differ show differing sha8 and rows, and the output holds no `SYN-`, no G value and no requestId), `test_g_export_probe_includes_the_start_ordinal_and_dedupes` (start ordinal 2 with wanted (0, 1, 15) tests 2, 0, 1 only when the fake has 3 options, and never one ordinal twice), `test_g_export_probe_stops_on_auth_refusal_and_skips_restore` (a 403 on the second ordinal's status post: `PROBE stop: HTTP 403`, `restore=skipped`, no restore POST), `test_g_export_probe_closes_session_and_restores_start_g` (`main` with injected fakes: `close()` once, `restore=ok`, and the start G is switched back last).
+
+### REPAIR 1 (issuer, 2026-10-21 ~05:05Z; disarms your ARMED row D1-W6-S6, accepts D1-W6-S7) -- a refused switch ends the probe
+
+`gswitch.GSwitcher` raises `GSwitchError` for a refused change form or switch answer, with no HTTP status, so the 401/403 stop cannot see it and the next ordinal's switch POST would follow a refusal. Rule (project: a refusal means stop and report): ANY `GSwitchError` from `switcher.read_form()` or `switcher.switch(...)` ends the probe at once. Change `box/g_export_probe.py` and `tests/test_g_export_probe.py` only: in `_one_ordinal` (and for the initial `read_form`), a `GSwitchError` emits `PROBE gexp ordinal=<i> switched=error=GSwitchError` (the form read: `PROBE gexp form=error=GSwitchError`), then `PROBE stop: switch refused`, raises the same internal stop as the 401/403 case, and the `finally` emits `PROBE gexp restore=skipped` (no restore POST: the session is logged out right after and the G state is session-only). Any OTHER exception on a switch still goes on to the next ordinal as built. Your row S7 definitions (rows = lines with a non-space byte by `splitlines()`, `line1_sha8`, `sha8` of the whole bytes, `ids_sha8` over every status row) are ACCEPTED as written. Add ONE test to the EXISTING `tests/test_g_export_probe.py`: `test_g_export_probe_stops_at_once_on_a_refused_switch_and_skips_restore` (a fake switcher whose second `switch` raises `GSwitchError`: the output holds `PROBE stop: switch refused` and `restore=skipped`, the fake saw exactly two switch calls and no restore, and a third ordinal is never switched). FT-s-10-AC1 (`ft10`) now needs FIVE named; FT-s-10-AC2 (`fr4`) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only. FAST.
 
 ### ACCEPTANCE
 
