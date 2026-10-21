@@ -79,3 +79,13 @@ The 31-fold G switch left accountList at available=5204 every time (probe v2). T
 | **FT-s-10** | `box/g_export_probe.py`: one sign-in, switch, status list + account.txt download under up to four ordinals, hashes and counts only, restore in a finally | `box/g_export_probe.py`, `tests/test_g_export_probe.py` | C-TENANCY, FWD-9 | WORLD (infra path floor) |
 
 Edge: `FT-s-10 -> FT-s-8` (the probe's result cuts the daily-mode design). Workstream fidelity-r3-gexport, a write set disjoint from fidelity-r3-split and fidelity-r3-paging. Executor of the run: `0.7.0_AE_CloudOps~NFRA1` under TO-FT-s-8 (amended).
+
+## 10. Addendum 2026-10-21 ~06:00Z (issuer, CTO msg 8999: hold the G probes; drive the BACKFILL now at the rep level)
+
+The CTO ruled (msg 8999) that the exports are rep-level and the G switch scopes nothing we export, and asked for backfill probe 1 now: the FT-s-7 walk (`backfill_main.py`), one sign-in, landing by content date under `fidelity/alongside/bronze/`, reporting the first earlier-date result as served, empty or refused with the date.
+
+| cell | what it does (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-11** | On the box, once: `backfill_main.py` over the signed-in domain; read the completion record | the change-management ledger paths | C-BACKFILL, FWD-9 | WORLD |
+
+Edge: none (the box code is already delivered). Executor: `0.7.0_AE_CloudOps~NFRA1` (rule 34). Workstream fidelity-r3-backfill-live, a write set disjoint from the others.
