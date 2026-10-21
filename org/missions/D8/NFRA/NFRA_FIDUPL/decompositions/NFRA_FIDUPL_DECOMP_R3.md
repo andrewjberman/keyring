@@ -69,3 +69,13 @@ The account lister's page 1 returns 2000 rows of 5204 available and none of the 
 | **FT-s-9** | `box/paging_probe.py`: one sign-in, page 1, the eleven forms and a 36-character prefix sweep, counts-only lines, logout in a finally | `box/paging_probe.py`, `tests/test_paging_probe.py` | C-TENANCY, FWD-9 | WORLD (infra path floor) |
 
 Edge: `FT-s-9 -> FT-s-8` (the probe's measurement cuts the next lister repair). Executor: worker slot ~5; the run is 0.7.0_AE_CloudOps~NFRA1 under TO-FT-s-8 (amended); workstream fidelity-r3-paging, a write set disjoint from fidelity-r3-split.
+
+## 9. Addendum 2026-10-21 ~05:00Z (issuer, CTO msg 8990: the G switch scopes the DOWNLOADS, not accountList; probe the export under three G numbers)
+
+The 31-fold G switch left accountList at available=5204 every time (probe v2). The CTO ruled (msg 8990) that accountList is a rep-book view the switch does not scope, and that the six files pulled under a G are that G's book. The cheapest proof is one sign-in that, for the start G and two others, switches, reads the Export Status list for the business day and downloads account.txt only, printing counts and hashes beside the 5009-row landed file. Different per G = the per-G download IS the split.
+
+| cell | what it builds (one module) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-10** | `box/g_export_probe.py`: one sign-in, switch, status list + account.txt download under up to four ordinals, hashes and counts only, restore in a finally | `box/g_export_probe.py`, `tests/test_g_export_probe.py` | C-TENANCY, FWD-9 | WORLD (infra path floor) |
+
+Edge: `FT-s-10 -> FT-s-8` (the probe's result cuts the daily-mode design). Workstream fidelity-r3-gexport, a write set disjoint from fidelity-r3-split and fidelity-r3-paging. Executor of the run: `0.7.0_AE_CloudOps~NFRA1` under TO-FT-s-8 (amended).
