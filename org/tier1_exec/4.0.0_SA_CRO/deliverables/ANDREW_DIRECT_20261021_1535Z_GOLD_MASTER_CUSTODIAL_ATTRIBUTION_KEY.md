@@ -12,3 +12,11 @@ The master gold layer attributes every account to its advisor/firm from the **cu
 **G Number**, Schwab's **Master Account Number** -- held in a **mapping config** (`(custodian, native_group_id) -> advisor/firm`). This is
 the source of truth for account->advisor attribution, REPLACING any downstream data-vendor assignment. Attribution is resolved at the
 custodial level, upstream of vendors.
+
+## Addendum ~15:38Z (VERBATIM)
+> we may not even need the master gold table because you could just construct the necessary tables in gold by the config
+
+Refinement: a standing master gold UNION TABLE may be unnecessary. Because the two silvers are formulated identically, the gold layer can
+**construct the needed tables by configuration** -- union the uniform silvers and attribute via the mapping config -- rather than
+materialize one bespoke master. Whether gold is a config-driven assembly (views/queries) or a materialized table is a gold-layer/DS
+decision at L2/L4; the design does not presume a physical master.

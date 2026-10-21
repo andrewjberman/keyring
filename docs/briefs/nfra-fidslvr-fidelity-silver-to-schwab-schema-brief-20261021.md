@@ -25,7 +25,7 @@ For each Fidelity bronze fact family NFRA_FIDUPL lands -- accounts, positions, b
 realized gain/loss (and unrealized, at lot grain) -- there is a corresponding silver parquet table built to the matching Schwab silver
 table's schema. Nothing Fidelity provides is stranded in bronze.
 
-### O3 -- A master gold layer serves both custodians from one model
+### O3 -- One gold layer serves both custodians from the uniform silvers + the config (no bespoke master required)
 An analyst asking a cross-custodian question (holdings, lots, realized gains across a household that has both Schwab and Fidelity accounts)
 reads one gold model that unions the two silvers on a `custodian`/`source` dimension, with no per-custodian branching in the gold logic.
 
@@ -33,6 +33,11 @@ reads one gold model that unions the two silvers on a `custodian`/`source` dimen
 grouping id** -- Fidelity **G Number**, Schwab **Master Account Number** -- via a **mapping config** `(custodian, native_group_id) ->
 advisor/firm`, resolved at the custodial level and REPLACING any downstream data-vendor assignment. The native id travels on every silver
 row (from `fact_acc`) so gold can join to the config without a vendor lookup.
+
+**No standing master table presumed (Andrew-direct 15:38Z):** because the two silvers are formulated identically, gold can **construct
+the needed tables by configuration** -- union the uniform silvers, attribute via the mapping config -- rather than materialize a bespoke
+master. Whether gold is a config-driven assembly (views) or a materialized set is a gold-layer/DS decision; the uniform silver + config is
+what makes either cheap.
 
 ### O4 -- The unmappable is named, not hidden
 Where a Fidelity source has a field the Schwab schema lacks (or vice versa), the gap is recorded per table -- carried in an extension
