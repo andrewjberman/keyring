@@ -32162,3 +32162,86 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W369-S1 -- the AR-y-497 record keys break an existing sibling test that asserts the exact MODEL record key set, so AR497-y-AC3 cannot pass without editing that test
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W369-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~369",
+  "surfaced_at": "2026-10-21T11:38:29Z",
+  "one_line": "The order requires the three new MODEL keys (asset_class, sub_asset_class, model_confidence) and also requires test_swap_pass_model_ports.py to pass unedited, but its test_a_low_confidence_model_classification_is_carried_into_the_record asserts set(record) equals an exact key set that the new keys make unequal. AC3 fails 1 of 106; the test file is outside my paths and the order forbids editing existing tests, so the branch carries one red existing test.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "The order (cell and ACCEPTANCE AC3) says the record gains exactly three keys for MODEL rows, and that test_swap_pass_model_ports.py must still pass; it also says no existing test is edited, deleted or skipped.",
+  "world_is": "At 67bb3e5e89f the three keys are added for MODEL rows as specified. Running the AC3 invocation gives 1 failed, 105 passed (the failing test is test_a_low_confidence_model_classification_is_carried_into_the_record, E: extra items asset_class, sub_asset_class, model_confidence). The failing assertion is the exact set at lines 184-186 of that test, which pins the MODEL record to today's keys. Both halves of the order cannot hold together; the code change is kept as the order states it and the test is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_swap_pass_model_ports.py@67bb3e5e89f lines 184-186 (exact set assert on a MODEL record)",
+      "AC3 run in the worktree at 67bb3e5e89f: 1 failed, 105 passed (six sibling files)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@67bb3e5e89f _record, the three keys added under if model"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W369-S2 -- the order's module docstring sentence that lists the model fields does not exist; the module docstring names no fields, so I added one sentence naming the three keys
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W369-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~369",
+  "surfaced_at": "2026-10-21T11:38:29Z",
+  "one_line": "The order says to update the module docstring sentence that lists the model fields to name the three keys. The swap_pass module docstring lists no model fields; the only field list is the MODEL_FIELDS constant and the _symbol_class docstring. I added one sentence to the module docstring naming the three keys and the low-confidence sentence, and left _symbol_class unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-497 change text: Update the module docstring sentence that lists the model fields to name the three keys.",
+  "world_is": "swap_pass.py module docstring (lines 1-11 at 59bf475c1ef) has no sentence listing model fields; MODEL_FIELDS (line 36) and the _symbol_class docstring list confidence, low_confidence and classified_by. The three new keys are named in a new docstring sentence at 67bb3e5e89f.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@59bf475c1ef module docstring lines 1-11 (no model field list)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@59bf475c1ef MODEL_FIELDS constant and _symbol_class docstring (the only field list)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W369-S3 -- the order keys the low-confidence sentence on the classification's low_confidence flag but excludes not-from-the-model rows in the same breath; I keyed it on the flag, which is the same field the record's low_confidence reads
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W369-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~369",
+  "surfaced_at": "2026-10-21T11:38:29Z",
+  "one_line": "The order's named-sentence rule applies to a REPLACED swap whose classification carries low_confidence True, but its exclusion list says named is byte-equal for every swap that is not from the model. The two overlap only when a non-model classification carries low_confidence True. I implemented the flag test, matching the record's own low_confidence field; no producer in the research folder sets low_confidence outside the model's classify, so the overlap has no live case.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-497 SECOND CHANGE: named of a REPLACED swap whose classification carries low_confidence True gets one sentence; named for every other swap (not low confidence, not REPLACED, not from the model) is byte-equal to today's.",
+  "world_is": "Grep of the worktree ycharts/research folder finds low_confidence in swap_pass.py, swap_model.py and the tests only; swap_model.py is the sole setter. _record computes low as classification.get('low_confidence') is True and _named keys the sentence on that value, so a non-model classification carrying low_confidence True would receive the sentence. No such classification exists in the code measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_model.py@67bb3e5e89f (sole setter of low_confidence in the research folder, by Grep)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@67bb3e5e89f _named low test and _record low computation"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
