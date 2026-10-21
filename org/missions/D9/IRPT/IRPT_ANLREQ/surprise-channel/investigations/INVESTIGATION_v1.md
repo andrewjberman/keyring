@@ -30925,3 +30925,59 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W352-S1 -- the client-data check could not run on this box, so the AR-y-484 build commit was not checked for client account ids
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W352-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~352",
+  "surfaced_at": "2026-10-21T01:41:44Z",
+  "one_line": "safe-commit.sh printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, so commit 907f5ba0b5b was NOT checked for client account ids. The commit adds one literal table-name line and one stdlib test; reading the diff shows no account id, but that reading is not the gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-484 commits through .tools/safe-commit.sh with a message file, and reads the gate output as the commit's gate record. It names no client-data check and does not say that check may be absent on the box.",
+  "world_is": "On dell2 the hashed account-id list is not at the default path and OPAL_ACCOUNT_ID_HASHES is unset. safe-commit.sh printed WARN (absent is not empty) and still exited 0 with the commit landed: 907f5ba0b5b, two files, 202 insertions. The client-data check therefore did not grade this commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "907f5ba0b5b@wk-IRPT_ANLREQ-352 (safe-commit.sh output, WARN client-data-check line, msg-verify MATCH)",
+      "1381adf0f87@wk-IRPT_ANLREQ-352 (check-script commit; the same WARN client-data-check line, held in .scratch/commit_b.log)",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py@907f5ba0b5b (one added line, the tickets_table binding)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_tickets_table_pin.py@907f5ba0b5b (new file, stdlib only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W352-S2 -- the risk reflex could not decide the AR-y-484 diff: danger map STALE, and the build guard refused the linked worktree
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W352-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~352",
+  "surfaced_at": "2026-10-21T01:41:44Z",
+  "one_line": "The pre-commit risk reflex printed NOT-DECIDABLE for commit 907f5ba0b5b: the danger map is 125.7h old (STALE), the build guard refused this linked worktree (git-dir differs from git-common-dir), ANSWER STATE PARTIAL_OR_BLIND, 0 of 2 files scanned. The commit went through; the reflex's answer for this diff is not-decidable, not checked clean.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-484 names no risk reflex. Its preflight declares comp-blast, comp-routes, comp-cache, comp-schedule and comp-iam not applicable and runs comp-adversary by reading the builder, the Terraform resource and the CTO ruling.",
+  "world_is": "On a linked worktree (C:/dev/wk-irpt-anlreq-352) the risk reflex reads its danger map as stale and cannot clear any file in the diff. The AR-y-484 build diff was therefore reviewed by reading against the order's preflight, not by the reflex.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "907f5ba0b5b@wk-IRPT_ANLREQ-352 (safe-commit.sh output, [risk-reflex] block: danger map 125.7h STALE, NOT-DECIDABLE, WITHIN BUDGET scanned 0 of 2)",
+      "1381adf0f87@wk-IRPT_ANLREQ-352 (check-script commit; the same [risk-reflex] NOT-DECIDABLE lines, held in .scratch/commit_b.log)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
