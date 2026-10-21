@@ -1726,6 +1726,28 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "NFRA_SCHWABBF.TO-AL-c4 ACCEPTANCE AL4-c4-AC3 (expect ^[0-9]+ passed with no failure over the six existing converter test files plus the new file) and its dry-run note: the six existing files alone are 121 passed at the base, a control.",
     "world_is": "The base run of the six files is 116 passed and 5 failed (121 collected). The five failures are environmental: the sparse-checkout cone of this worktree omits workflows/atom_decomposition/catalog_entries and four Lambda twin directories that the tests read. The build passes AC1 and AC2; AC3 fails as written on the cone, not on the edited code.",
     "notes": "Not an alert. Disposition for the issuer: AC3 needs a worktree whose cone covers those paths, or an order that names the five ids as known environmental failures; the issuer or CTO rules which. The order stays open on AC3. Nothing deployed or run against AWS."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S18",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T17:44:40Z",
+    "one_line": "TO-BF-r5 step 2 names ledger leg kinds code-deploy and s3-upload, but deploy_ledger.py open accepts only activation, ec2-baked-asset, git, s3-prefix, tf-lambda and verify; I opened the entry with activation for both legs (the precedent entry's L4 for this same puller upload used activation).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/deploy_ledger.py open ... --leg 'L7|code-deploy|...' printed: ERROR: leg kind 'code-deploy' not in ['activation', 'ec2-baked-asset', 'git', 's3-prefix', 'tf-lambda', 'verify'] (nothing opened)",
+        "org/critical_paths/change_management/20261021T1732Z_nfra-schwabbf-0840-key-function-and-puller-20261021_deploy_completion.md: both legs [activation]; id, target and proof_required text verbatim from the order",
+        "org/critical_paths/change_management/20261009T0205Z_nfra-oplgtw-og-tm-1-taxsma-master_deploy_completion.md L4: the same puller upload recorded as activation"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-r5 step 2: open the second entry with legs L7 kind code-deploy and L8 kind s3-upload.",
+    "world_is": "The ledger tool's kind set has no code-deploy or s3-upload, so the order's literal command is refused. The legs carry the same id, target and proof text with kind activation; the closed entry reads all 2 legs proven. The substitution is a label only (no tool behaviour differs by these kinds that I measured); whether a future gate keys on the kind is unmeasured.",
+    "notes": "Same finding class as the earlier substitution at TO-BF-r4 (activation for copy legs)."
   }
 ]
 ```
