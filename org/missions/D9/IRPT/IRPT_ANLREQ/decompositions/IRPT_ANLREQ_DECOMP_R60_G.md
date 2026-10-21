@@ -90,3 +90,15 @@ r34o is live (IB2 ledger irpt-resident-r34o-20261020 CLOSED, V2S OK). The CTO (m
 AR-g-179 carries `<workstream>~GREL3</workstream>`.
 
 fanout: 1 of 1 chains, cap 8, reason: one instrument cell.
+
+## Addendum 4 2026-10-21 (issuer): cell AR-g-180, the r34p build (r34o minus the registry change)
+
+Run 7e (Y2's Overview filing) stopped at P4 on r34o with RetentionRefused where run 7d passed on r34n. Measured lead (this seat, msg 11637): r34o's one non-code change, `infra/logic/registry/reporting_policies.json`, moved the policy_sha256 of `irpt-anlreq-x10-v1` (8edbe84b05765c36 to cfed04bb8c2f1982) and `irpt-dashbd-x10-v1`; retention.py:147 refuses any row whose stored hash differs from its revision's current hash. CTO ruling (A), msg 11639: r34p = r34o minus that file; a revision that has rows is never edited; ANALYSIS_AUDIT returns later as a NEW revision. Measured by a rehearsal at pin `919bb891fa72dd706493f094c9b4412503fcf42a`: against r34o the release moves 3 members (SHA256SUMS, the registry file, the bindings provenance) and adds none; the checker also requires every policy hash to equal r34n's.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-180` | the r34p tarball, sums and four host scripts into stage `C:/dev/irpt-release-r34p-g2` (BUILD ONLY), a record and a proof | the worker folder `r63/` | LOCAL |
+
+AR-g-180 carries `<workstream>~GREL4</workstream>`.
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell.
