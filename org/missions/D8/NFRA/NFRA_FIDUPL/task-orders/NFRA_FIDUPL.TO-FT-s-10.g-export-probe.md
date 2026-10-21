@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~6</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -41,6 +41,10 @@
 ### REPAIR 1 (issuer, 2026-10-21 ~05:05Z; disarms your ARMED row D1-W6-S6, accepts D1-W6-S7) -- a refused switch ends the probe
 
 `gswitch.GSwitcher` raises `GSwitchError` for a refused change form or switch answer, with no HTTP status, so the 401/403 stop cannot see it and the next ordinal's switch POST would follow a refusal. Rule (project: a refusal means stop and report): ANY `GSwitchError` from `switcher.read_form()` or `switcher.switch(...)` ends the probe at once. Change `box/g_export_probe.py` and `tests/test_g_export_probe.py` only: in `_one_ordinal` (and for the initial `read_form`), a `GSwitchError` emits `PROBE gexp ordinal=<i> switched=error=GSwitchError` (the form read: `PROBE gexp form=error=GSwitchError`), then `PROBE stop: switch refused`, raises the same internal stop as the 401/403 case, and the `finally` emits `PROBE gexp restore=skipped` (no restore POST: the session is logged out right after and the G state is session-only). Any OTHER exception on a switch still goes on to the next ordinal as built. Your row S7 definitions (rows = lines with a non-space byte by `splitlines()`, `line1_sha8`, `sha8` of the whole bytes, `ids_sha8` over every status row) are ACCEPTED as written. Add ONE test to the EXISTING `tests/test_g_export_probe.py`: `test_g_export_probe_stops_at_once_on_a_refused_switch_and_skips_restore` (a fake switcher whose second `switch` raises `GSwitchError`: the output holds `PROBE stop: switch refused` and `restore=skipped`, the fake saw exactly two switch calls and no restore, and a third ordinal is never switched). FT-s-10-AC1 (`ft10`) now needs FIVE named; FT-s-10-AC2 (`fr4`) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only. FAST.
+
+### REPAIR 2 (issuer, 2026-10-21 ~05:40Z; the first live run) -- the probe used a day that has no export yet
+
+The first live run (one sign-in, 8 requests, no 401/403, restore ok) printed `day=2026-10-21` and, for ALL THREE ordinals, `status=200 elements=0`: the New York calendar day had just rolled over (01:31 local) and the export for 2026-10-21 does not exist until the morning, so the run says nothing about the G number. The daily runs of the last night read `business_day=2026-10-20`. Change `box/g_export_probe.py` and `tests/test_g_export_probe.py` only: `main` takes an OPTIONAL second command-line argument, the day, `YYYY-MM-DD`, checked with `fetch.DATE_RE`; when present it replaces the computed `day`; a value that does not match prints `ERROR: day refused` and returns 2 BEFORE any sign-in (no secret read). When absent the behaviour is as built. The `PROBE gexp count=... day=...` line stays. ONE test in the EXISTING `tests/test_g_export_probe.py`: `test_g_export_probe_takes_an_explicit_day_argument` (a fake run with `argv=[config_path, "2026-10-20"]` posts `dateString` `2026-10-20` in the status body; a malformed day returns 2, prints `ERROR: day refused` and the fake `open_session` was never called). FT-s-10-AC1 (`ft10`) now needs SIX named; FT-s-10-AC2 (`fr4`) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only. FAST.
 
 ### ACCEPTANCE
 
