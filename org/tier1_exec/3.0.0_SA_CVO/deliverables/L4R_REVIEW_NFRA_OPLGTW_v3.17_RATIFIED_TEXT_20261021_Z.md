@@ -20,6 +20,14 @@ to HEAD:
 The ENDPOINT is therefore byte-equal to the section this seat signed at v3.1. The "drift" the status line shows is only my
 own last stamp's bytes.
 
+**The bound.**
+- The ratified-text half's own hash is `555c74c021f7`, computed at HEAD. It also covers CONTRACTS, which moved from v3.2 to
+  v3.14 in CONTRACTS-side addenda.
+- This seat did not re-read those addenda as text here. Several reached it piece by piece through never-widen halves, for
+  example the v3.2 firm-scoped reader roles (this seat's REC) and the v3.14 client_* fail-closed admission.
+- The stamp binds to the ENDPOINT (spine v3.19). A CONTRACTS wording change re-opens nothing, and this signature says no
+  more than that.
+
 ## A correction to my own record
 
 - My refusal stamp of 13:5xZ (`L4R_REVIEW_NFRA_OPLGTW_v3.15_RATIFIED_TEXT_20261021_Z.md` @30e41b770c) bound to
