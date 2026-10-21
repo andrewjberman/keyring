@@ -109,7 +109,10 @@ TEST_FILES = {
         "test_completion_record_per_file_type_earliest_volume_and_limit",
         "test_non_trading_days_are_skipped_not_stops", "test_three_consecutive_empty_trading_days_are_the_retention_stop",
         "test_main_walks_the_signed_in_domain_once_not_per_g",
-        "test_real_runner_planner_and_adapter_walk_end_to_end_on_fakes"]),
+        "test_real_runner_planner_and_adapter_walk_end_to_end_on_fakes",
+        "test_wait_prints_one_day_line_per_trading_day_and_the_record_lists_days",
+        "test_a_request_timeout_is_a_named_stop_with_its_date",
+        "test_real_fetch_session_uses_a_long_request_timeout"]),
     "ft4": ("%s/tests/test_backfill_run.py" % CF, [
         "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
         "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",
