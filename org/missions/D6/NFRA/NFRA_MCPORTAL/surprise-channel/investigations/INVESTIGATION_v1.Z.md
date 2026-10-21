@@ -3894,3 +3894,28 @@
   "notes": "Seat recorded the C-S8 disarm on the 200-plus-verdict result and the zip member listing, with the /var/task location as an inference. A check that prints the module's __file__ or sys.path would measure it directly; that change is the issuer's, not this seat's."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S78",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-20T23:51:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "MP-zo-5 evidence disposes the four 26-day rows: Z-C-S3, Z-W3-S2 and Z-C-S8 carry DISARM evidence (for the CVO to adjudicate); Z-W2-S8 stays ARMED with owner 2.0.0_SA_COO~O and date 2026-10-21 (its row Z-S77); worker rows Z-W45-S1, S2, S3 disposed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_NFRA_MCPORTAL~45/row_evidence.json (drained f89f7afb6f8): zo5.AC1 PASS 4 of 4 rows, zo5.AC2 PASS (live no-header invoke REFUSED NO-OWNER-HEADER), both re-run by the issuer; the file scanned for UUIDs, long tokens, account numbers and ARNs: none.",
+      "Z-C-S3: .tools/owned-paths-validate.py check_agent lines 413-418 return _owns_task_order_paths for an unmapped path (CTO correction 2026-10-20 23:29Z); --self-test rc 0, 28 arms, the UNMAPPED admit arm and its mutant PASS; last commit c45003275a9.",
+      "Z-W2-S8: COO~O ruling 2026-10-20 23:42Z: not disarmed, owner COO~O, date 2026-10-21 (batch16 CLOSED report; under 60 s disarms), its row Z-S77; the scan lives in .tools/halt-gate-check.sh L456-475 (worker row Z-W45-S2), a file in MSTR's lane."
+    ]
+  },
+  "spec_asserts": "The four 26-day ARMED rows (W2-S8, W3-S2, C-S3, C-S8) are each disarmed with evidence or ruled to an owner with a date (CTO ROUND_ANALYSIS.ogw-round1.md item 3).",
+  "world_is": "C-S3, W3-S2, C-S8: evidence in hand, disarm is the CVO's adjudication. W3-S2 limit stated: the owner key is SET (names only read); that it equals Andrew's oid is not measured and is proven only by the close run's owner-header write. W2-S8: ruled to owner and date. Z-W45-S1 (C-S3 premise stale) is answered by the same evidence; Z-W45-S2 is passed to COO~O in the packet; Z-W45-S3 (the check overclaimed a /var/task proof) is fixed in zo5.AC2.sh in this commit.",
+  "notes": "Seat-row id Z-S78: Z-S77 is COO~O's."
+}
+```
