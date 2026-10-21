@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -139,6 +139,10 @@ Your row D1-S16 is acted on (TO-FT-s-7 REPAIR 5 and 6, CTO msg 9029: a per-downl
 ### REOPENED (issuer, 2026-10-21 ~08:45Z) -- twenty-ninth delivery: backfill_main.py with the 90 s total cap per file, head 36c38b49fbc
 
 Your row D1-S17 is acted on (TO-FT-s-7 REPAIR 7, CTO msg 9035: a total timer of 90 s per file beside the 120 s idle bound, reasons `stalled_total_<secs>`; module suite 240 passed). Deliver the shipped set from head 36c38b49fbc or later (only `backfill_main.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-29-<date>`), `fu10m` (23 files). Same rules: file copy only, nothing else touched. One line to the issuer.
+
+### REOPENED (issuer, 2026-10-21 ~11:12Z) -- thirtieth delivery: land.py, split.py, backfill_main.py and backfill_adapter.py, head a973776db99
+
+The schedule path is proven (one-shot 11:05Z Success, FT-s-15). Held until now so no fire ran on unproven code: the lander rule (a file whose as-of is not a trading day lands under the last trading day on or before it; TO-FU-s-4 REPAIR 2, with `split.py` following it) and the backfill repairs 8 and 9 (`--skip-files`, per-file landing reasons, an exception is the stop). Deliver the shipped set from head a973776db99 or later (`land.py`, `split.py`, `backfill_main.py` and `backfill_adapter.py` differ; module suite 247 passed), a NEW ledger (slug `nfra-fidupl-box-code-sync-30-<date>`), `fu10m` (23 files). Same rules: file copy only, nothing else touched, no cookie or profile directory. NOTE: `land.py` is the lander the scheduled run uses tomorrow at 09:45Z; read the delivery back by `fu10m` and by one dry import on the box (`/opt/fidelity-uploader/venv/bin/python -c "import land"` run from the code root, nothing else). One line to the issuer.
 
 ### ACCEPTANCE
 
