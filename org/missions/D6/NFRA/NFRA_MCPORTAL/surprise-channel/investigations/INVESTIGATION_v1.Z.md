@@ -4080,3 +4080,28 @@
   "notes": "Issuer to decide: either accept the tick as part of 'Refresh' (the existing read) and reword the name, or grant a separate tick counter. The earlier row NFRA_MCPORTAL-Z-W46-S1 is resolved on the test side by the issuer's amendment (the pure test replaces the refused mount test); this row does not reopen it. Disarm is not a worker act; INERT because nothing serves from the branch and nothing is pushed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S83",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-21T02:17:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "MP-zp-1 drained: Z-S82's two page defects are fixed and re-rendered (a stopped person's switches read off and disabled with the line; the audit list re-reads after one write); Z-W46-S1 was the issuer's defect (AMENDMENT 1); Z-W46-S2 ruled accepted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Drain 0f08b14b624; zp1.AC1 PASS (2 of 2 named tests, 91 pass, 0 fail) and zp1.AC2 PASS (tsc rc 0), re-run by the issuer in the slot-46 worktree at a1f873e17cf; mcportal a577f99 (98c0065 + a577f99), 8 files all inside the order's paths.",
+      "Issuer re-render of the built page from the worktree (vite :5174, fixtures through playwright route mocks): after ONE tool-off write the audit list showed 1 row without Refresh; after stop all 3 switches read off/disabled and the page said 'the gateway admits nothing'; after restore all 3 read on/enabled and the list held 4 rows. Screenshot: deliverables/2.0.0_SA_COO~MP/ogw/render_20261021/og_stopped_after_fix.png.",
+      "Z-W46-S1: the first face needed a mounted test and mcportal has no DOM under bun (zo-1 had reported it): the issuer's defect, AMENDMENT 1 239227e0cf. Z-W46-S2: the 60 s auto-refresh tick advances the same read counter the audit key is built from; ruled ACCEPTED: the tick is part of Refresh and the list was re-read on the tick before this change too."
+    ]
+  },
+  "spec_asserts": "Row Z-S82: FWD-29 (a switch reads on only when the gateway admits) and FWD-28 (every driven act appears in the audit list).",
+  "world_is": "Both fixed on the page and proven by the issuer's render on fixtures; not yet on the host. The code is LOCAL on the nested mcportal branch wk-NFRA_MCPORTAL-46-mcportal at a577f99; DEV advance is MSTR~Z's act and the batch17 bundle pin (today f90f03a) moves to it if this lands first. The served page is looked at at the close run.",
+  "notes": "Disarm_owner is this seat; INERT. Z-S82 closes when the page is looked at served."
+}
+```
