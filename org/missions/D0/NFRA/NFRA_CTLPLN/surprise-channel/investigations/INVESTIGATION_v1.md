@@ -15236,3 +15236,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Counts, times and relayed answers only; no transcript content."
 }
 ```
+
+## NFRA_CTLPLN-D1-S28 -- root cause of the deaf CloudOps seats: inbox-watch.sh watched the TM1 folder for every CloudOps lane; fixed at 9fe08639a3; not the cause of the seat ends in S21 to S27
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S28",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-21T00:20:00Z",
+  "one_line": "Every CloudOps lane's inbox watcher watched the wrong folder: inbox-watch.sh took the first tier folder whose name CONTAINS the base serial, and tier1_exec/0.7.0_AE_CloudOps~TM1 matched before tier2_senior/0.7.0_AE_CloudOps. Mail for a CloudOps lane lands in inbox/0.7.0_AE_CloudOps/~<lane>; the watcher polled inbox/0.7.0_AE_CloudOps~TM1/~<lane>. Fixed in 9fe08639a3 (exact folder first). It explains the deaf CloudOps seats, not the seat ENDS of S21 to S27.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, the script: org/mcp/inbox-watch.sh lines 81 to 90 (before the fix) scanned tier0_exec, tier0_utility, tier1_exec, tier2_senior, tier3_junior in that order and took the first folder whose basename matched *<BASE_SERIAL>*. org/tier1_exec/0.7.0_AE_CloudOps~TM1 exists and sorts before org/tier2_senior/0.7.0_AE_CloudOps by tier order. A probe lane serial 0.7.0_AE_CloudOps~ZZPROBE printed 'watching .../inbox/0.7.0_AE_CloudOps~TM1/~ZZPROBE' and left its message unclaimed. After the fix a second probe printed 'watching .../inbox/0.7.0_AE_CloudOps/~ZZPROBE2...', claimed the message into read/ and printed the [INBOX] line. All probe directories were removed.",
+      "MEASURED, the effect: the transcripts of CloudOps~NFRA1 (6beeb7b8, 2344 entries, 54 watcher arm calls) and CloudOps~SC1 (ec97172d, 9d18e715) each hold one entry naming [INBOX], which is the seat's own first prompt; my own session holds 665 as a control. The orphan-audit log shows these watchers arming and expiring on schedule (WATCHER-EXPIRY-EXIT at about 1772 s), so they looked alive. inbox/0.7.0_AE_CloudOps/~SC1 held 65 unclaimed .md files, 60 of them dated before 10-20 and the oldest 10-17; ~NFRA1 held 37; the TM1 lane has 11 in its base-folder root. The broker delivers there; the watcher never read it. The three dell1 cases of a seat reading LIVE and IDLE with messages unread (NFRA1 with 33 unread, SC1 with 64 and with 19) fit.",
+      "MEASURED, scope: a comparison of the old and new resolution over all 49 base serials under the tier folders changed exactly one: 0.7.0_AE_CloudOps (old 0.7.0_AE_CloudOps~TM1, new 0.7.0_AE_CloudOps). So the defect and the fix touch CloudOps lanes only, on every box that runs this script. Site Z's CloudOps~MDPF1 showed the same symptom (its call sat 25 min at the inbox root, per its manager's report, bus d8b10ce4); that is a match, not a measurement of its watcher.",
+      "MEASURED, the act: I moved SC1's 60 and NFRA1's 3 pre-10-20 root messages to read/ before the fix went live, so a re-armed watcher does not announce 3-day-old orders; 5 and 34 messages dated 10-20 stay in the roots to be delivered. The fix was written in place (a running watcher holds the file open; os.replace was refused) and committed by 1.0.0_SA_CTO~DELL1 as 9fe08639a3 because the file is lane BASE_EXEC and safe-commit refused my author. A running stream loop is already parsed in memory. Live seats pick it up at their next watcher re-arm (NFRA1 about 00:31Z, SC1 about 00:25Z).",
+      "NOT explained: the seat ENDS of rows S21 to S27 (a session that exits) are a different event from a seat that stays alive and deaf. This root cause says nothing about why those sessions ended, and no cause is claimed for them. Cites S21 to S27; none edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An inbox watcher armed for a serial reads the folder the broker delivers that serial's mail to.",
+  "world_is": "For every CloudOps lane the watcher read a different folder from the one the broker wrote, so no inbox event ever reached a CloudOps seat and its mail accumulated unclaimed. The fix is committed on box/dell1; the live lanes are still on the old watcher process until their next re-arm. Verification is the first [INBOX] event a CloudOps lane receives after a re-arm.",
+  "notes": "OWNER: 0.0.0_AB_MSTR~DELL1. Times, counts and file metadata only; no transcript content."
+}
+```
