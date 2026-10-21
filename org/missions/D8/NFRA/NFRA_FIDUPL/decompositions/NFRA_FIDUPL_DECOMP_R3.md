@@ -89,3 +89,13 @@ The CTO ruled (msg 8999) that the exports are rep-level and the G switch scopes 
 | **FT-s-11** | On the box, once: `backfill_main.py` over the signed-in domain; read the completion record | the change-management ledger paths | C-BACKFILL, FWD-9 | WORLD |
 
 Edge: none (the box code is already delivered). Executor: `0.7.0_AE_CloudOps~NFRA1` (rule 34). Workstream fidelity-r3-backfill-live, a write set disjoint from the others.
+
+## 11. Addendum 2026-10-21 ~09:57Z (issuer, CTO msgs 9047 and 9048: the 09:45Z fire failed at the EventBridge-to-SSM hop)
+
+The first scheduled fire (rule `fidelity-alongside-fetch-leg-1-daily`, 09:45Z) recorded FailedInvocations 1 and no automation execution: the target ARN as applied is `arn:aws:ssm:us-east-1:313476888478:automation-definition/fidelity-alongside-uploader-document` with no version suffix, and an EventBridge target for an SSM Automation document needs `:$DEFAULT` (or a version). The schedule role's policy already allows `ssm:StartAutomationExecution` on the document with and without a suffix and `iam:PassRole` on the automation role for `ssm.amazonaws.com` (the simulator's implicitDeny on PassRole comes from its missing `iam:PassedToService` context, not from the policy).
+
+| cell | what it does (one fix) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-12** | `schedule.tf`: the three targets' `arn` gains `:$DEFAULT`; safe-apply; read back | `schedule.tf`, the ledger paths | C-SCHEDULE | WORLD |
+
+Executor: `0.7.0_AE_CloudOps~NFRA1` (rule 34). Workstream fidelity-r3-schedulefix.
