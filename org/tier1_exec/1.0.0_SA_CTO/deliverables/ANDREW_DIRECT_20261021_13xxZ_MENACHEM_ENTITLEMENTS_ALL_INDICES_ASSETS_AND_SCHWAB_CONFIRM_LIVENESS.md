@@ -73,3 +73,10 @@ addresses, email and phone stay out.
 > send it to CRO for a brief.
 
 Applied: PRD v3.17 withdraws FWD-23 from the ENDPOINT until the CRO brief lands; v3.15/v3.16 stay as input to it.
+
+## Eighth message, VERBATIM (on the CLI-shim endpoint draft @08c62c6f21)
+
+> 1.) If it's easy to do this and does not add excess complication, sure, keep the Tax IDs and so on. 2.) Sure.
+
+Applied: NFRA_OPLGTW v3.18 FWD-23/FWD-24 and NFRA_MCPINDEX v0.20 FWD-26. Sensitive classes dropped by column name; typed tools
+kept until FWD-23 is proven, then retired where replaced.
