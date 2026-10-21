@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.19",
+  "prd_version": "v3.20",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -290,6 +290,13 @@ S3, Lambda or DynamoDB read by a gateway role is a widening with its never-widen
 resource name is typed (rule 30). Answers project to 50 KB by default (G1 section 3). A last-4 that is ambiguous within a firm returns
 the candidates, never a guess. Freshness is stated in trading days.
 
+PROOF: Per landed group, one driven call. Negative arms: a non-Opal principal refused; for a client-data group, a
+no-firm call and a two-firm call refused; an ambiguous last-4 returns candidates.
+
+SOURCE: Andrew-direct 2026-10-14 ~12:4xZ, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_124xZ_GATEWAY_DATA_CONTRACTS_CENSUS_CRO_FANOUT.md` ("we need these tables to be accessible with fluid
+tooling"; "forking by firm and by last 4 digits account absolutely needs to be included in any kind of client data
+bucket").
+
 FWD-23  — The AWS CLI over MCP: a granted person lists, describes and queries the folders they may read (v3.18)
 
 DONE WHEN: EXERCISED — a granted principal, through the served gateway: (a) lists `schwab/<master>/silver/` and sees every
@@ -308,6 +315,11 @@ outside the engine's closed grammar. Every page has a row and byte ceiling; a qu
 total or a cursor, never a dump. The existing typed tools stay until FWD-23 is proven on this thread; each one it replaces is
 then retired (Andrew: "Sure"). Reader IAM over the folders is a widening with its never-widen sign-off.
 
+PROOF: The thread, driven through the served gateway by a granted principal: (a) to (f) above, each read back against
+a direct read of the same objects; the refused call by a principal without the folder, with 0 reads.
+
+SOURCE: Andrew-direct 2026-10-21 (records `4.0.0_SA_CRO~Z` @243c25998e and @8c8fa480de; the `1.0.0_SA_CTO~Z` Menachem record): "this is really just an AWSCLI put on top of an MCP"; "The entitlement layer is for accessing whole buckets, accessing buckets or maybe accessing various folders within those buckets"; "the most important thing for now is that the tables that are in there, for both Schwab and Orion (and Cottonwood Black Diamond), are manageable in the current state." Brief `docs/briefs/mcp-cli-shim-bounded-query-brief-20261021.md` @8c8fa480de.
+
 FWD-24  — The entitlement is a bucket or a folder, per person, and nothing else (v3.18)
 
 DONE WHEN: EXERCISED — the owner grants Menachem `opal-data-assets/`, `opal-data-etfs/` and `opal-data-portal-v2/` in one act;
@@ -316,14 +328,10 @@ bronze or raw prefix (for example `schwab/<master>/bronze/`): the shim's prefix 
 a bronze read under Menachem's whole-bucket `opal-data-assets/` grant is refused with 0 reads. The contract's per-account,
 per-column and masked-reference clauses are revised to say they are superseded.
 
+PROOF: The owner's one grant act for Menachem, then his reads under the three buckets; a refused read under
+`opal-data-harvest/`; a refused bronze read under his whole-bucket `opal-data-assets/` grant, each with 0 reads.
+
 SOURCE: Andrew-direct 2026-10-21 (records `4.0.0_SA_CRO~Z` @243c25998e and @8c8fa480de; the `1.0.0_SA_CTO~Z` Menachem record): "this is really just an AWSCLI put on top of an MCP"; "The entitlement layer is for accessing whole buckets, accessing buckets or maybe accessing various folders within those buckets"; "the most important thing for now is that the tables that are in there, for both Schwab and Orion (and Cottonwood Black Diamond), are manageable in the current state." Brief `docs/briefs/mcp-cli-shim-bounded-query-brief-20261021.md` @8c8fa480de.
-
-PROOF: Per landed group, one driven call. Negative arms: a non-Opal principal refused; for a client-data group, a
-no-firm call and a two-firm call refused; an ambiguous last-4 returns candidates.
-
-SOURCE: Andrew-direct 2026-10-14 ~12:4xZ, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_124xZ_GATEWAY_DATA_CONTRACTS_CENSUS_CRO_FANOUT.md` ("we need these tables to be accessible with fluid
-tooling"; "forking by firm and by last 4 digits account absolutely needs to be included in any kind of client data
-bucket").
 
 ## CONTRACTS
 
@@ -1665,3 +1673,9 @@ dropped by column name (simple), and the typed tools stay until FWD-23 is proven
 FWD-24 now states that a bucket or folder grant never reaches a bronze or raw prefix (shim prefix check plus reader IAM), and
 its proof adds a refused bronze read under the whole-bucket `opal-data-assets/` grant. ENDPOINT changes; the ratified-text half
 is owed by `3.0.0_SA_CVO~Z`.
+
+### v3.20 addendum (2026-10-21 ~17:4xZ, 1.0.0_SA_CTO~Z) -- placement fix (the CRO's note @2e452725da): no outcome changes
+
+FWD-22's PROOF and SOURCE return under its own card. FWD-23 and FWD-24 each carry their own PROOF and SOURCE. Text moved,
+nothing added to any DONE WHEN. Landed after the cli-shim issuance was complete (`c10c5afe39`), so no cut was withheld. The
+ENDPOINT hash moves; the ratified-text half (`3.0.0_SA_CVO~Z`) and the brief half (`4.0.0_SA_CRO~Z`) re-stamp.
