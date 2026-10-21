@@ -31676,3 +31676,138 @@
   "notes": "Not remediated in the tools (no edit to r34s_build.py, no edit to the checker). The worker created r66/ inside its granted paths. The renamed folder C:/dev/_aborted_r34s_stage_attempt1 is outside the repository and holds an identical first-run build; it can be deleted by its owner."
 }
 ```
+
+## IRPT_ANLREQ-D2-W364-S1 -- the AR-y-491 check's infra-diff predicate expects one line at base 1e6073761ca, but seven other infra paths changed since that base, so AC1 reads BAD after the deletion
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W364-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~364",
+  "surfaced_at": "2026-10-21T08:35:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order's check predicate git diff --name-status 1e6073761ca HEAD -- infra/ must print exactly one line; the base is 51 commits behind HEAD and seven other infra paths changed on them, so after the deletion the predicate prints 8 lines and AR491-y-AC1 reads RESIDUE-TF-REMOVED-BAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1e6073761ca HEAD rc=0 and git rev-list --count 1e6073761ca..HEAD printed 51 at HEAD 4c7935fe2c8 (worktree wk-IRPT_ANLREQ-364, before the deletion)",
+      "git diff --name-status 1e6073761ca 4c7935fe2c8 -- infra/ printed 7 M lines before the deletion: infra/aws/ec2/EC2_MANIFEST.json, infra/aws/ec2/canonical-fidelity/backfill_adapter.py, backfill_main.py, tests/test_backfill_adapter.py, infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md, and two infra/aws/lambda/investor-reporting/ycharts/research/tests files",
+      "git log --oneline 1e6073761ca..HEAD -- those seven paths lists 9f38a7ed4a5, 4a296baa5da, 587ee7637f9, 39d0d5e6419 among the commits that changed them",
+      "deletion commit 13596bc0b25 removes only infra/aws/terraform/investor-reporting/ycharts/irpt_residue_delete_r35.tf (1 file changed, 80 deletions); base blob 1e6073761ca:<path> is 8897a25273c8547c2ba0d6f9fdd3ce76849fdddf and the path is untracked (git ls-files prints nothing)",
+      "check_tf_removed.py (uncommitted in this worktree at 13596bc0b25) run without flags: RESIDUE-TF-REMOVED-BAD infra diff has 8 lines, not 1; infra diff line is not a D for the path (rc=1); --selftest printed CONTROL-FIRES (rc=0)"
+    ]
+  },
+  "spec_asserts": "AR-y-491 ACCEPTANCE AR491-y-AC1 (order IRPT_ANLREQ.TO-AR-y-491 at HEAD 4c7935fe2c8): the check prints RESIDUE-TF-REMOVED tracked=0 infra_changes=1 deletion=yes content_blob_in_history=8897a25273, where infra_changes is the line count of git diff --name-status 1e6073761ca HEAD -- infra/, which the order says prints exactly one line, a D for the path.",
+  "world_is": "The base 1e6073761ca is an ancestor of HEAD with 51 commits between them, and seven other infra paths changed on those commits. After the deletion the same diff prints 8 lines (7 M and 1 D), so the literal predicate cannot read infra_changes=1 at this base. The deletion itself is correct: the path is untracked and the base blob is 8897a25273. The worker did not edit the expectation or the base; the issuer decides which base or expectation the close reads.",
+  "notes": "Order left pending: AC1 is FAIL by its literal expectation, so no status flip. AC2 (selftest) passes. Check script committed as the second commit of this order; proof instance records AC1 FAIL."
+}
+```
+
+## IRPT_ANLREQ-D2-S252 -- residue rows of runs 5c-7j closed on measured state; S225 and four worker rows closed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S252",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T09:05:00Z",
+  "one_line": "The synthetic residue rows of runs 5c to 7j (S221, S223, S224, S229, S232, S234, S237, S240, S241, S244, S246, S250, S251) are closed: every listed version is deleted; S225 and four worker rows are closed on measured state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S221",
+    "IRPT_ANLREQ-D2-S223",
+    "IRPT_ANLREQ-D2-S224",
+    "IRPT_ANLREQ-D2-S225",
+    "IRPT_ANLREQ-D2-S229",
+    "IRPT_ANLREQ-D2-S232",
+    "IRPT_ANLREQ-D2-S234",
+    "IRPT_ANLREQ-D2-S237",
+    "IRPT_ANLREQ-D2-S240",
+    "IRPT_ANLREQ-D2-S241",
+    "IRPT_ANLREQ-D2-S244",
+    "IRPT_ANLREQ-D2-S246",
+    "IRPT_ANLREQ-D2-S250",
+    "IRPT_ANLREQ-D2-S251",
+    "IRPT_ANLREQ-D2-W350-S1",
+    "IRPT_ANLREQ-D2-W351-S1",
+    "IRPT_ANLREQ-D2-W362-S1",
+    "IRPT_ANLREQ-D2-W364-S1"
+  ],
+  "spec_asserts": "Each residue row says the CloudOps principal cannot delete synthetic state objects a named run left in opal-data-irpt, and stays ARMED until a delete pass runs; S225 says the READY and commentary attach left no package on the ticket in run 6; the worker rows name an order's own defects (AC3 collection order, builder source of the ticket table, a commit-gate warning, a stale check base).",
+  "world_is": "MEASURED 2026-10-21 ~08:40Z-09:05Z by this seat. RESIDUE: V2's round-22 manifest (org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R22_DELETE/R22_DELETE_MANIFEST.json, runs 4 to 7d, 42 versions) read ABSENT 42 of 42 by head-object with the VersionId (TV2's pass, msg 11733); my supplement manifest (7963026db4, runs 7e to 7j, 29 versions, including the two run-7J analysis_audit versions) read ABSENT 29 of 29, the audit key lists 0 versions and 0 markers, the three throwaway roles read NoSuchEntity, and the whole-root plan of the ycharts stack at the removal commit 86b73badcca read No changes (IB2 msg 11952, ledger irpt-residue-delete-7e7j-20261021 CLOSED); Andrew's 8 retained objects read PRESENT before and after. The 4 cottonwood trade-form objects are NOT these rows and remain recorded residue (R22_COTTONWOOD_RESIDUE_RECORD.json). S225: run 6's missing package is cured: the ticket carried the package at runs 7d and 7f (both PDFs opened) and run 7J's audit record holds all four package refs (re-read here, schema-valid). W350-S1: AC3 was re-ordered by AMENDMENT 1 of AR-y-481. W351-S1: ruled A by the CTO (msg 11713) and built by AR-y-484 (drained 651ad7eac81). W364-S1: the stale base was corrected by AMENDMENT 1 of AR-y-491 (drained 86b73badcca). W362-S1: the commit-gate WARN is the box lacking the hashed client-account list; the only account number the commits carry is Opal's own AWS account id, which every Terraform ARN in the tree already names; no client account id was authored.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_residue_delete_7e7j/A_RESIDUE_DELETE.txt",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R22_DELETE/R22_DELETE_MANIFEST.json",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/synthetic_residue_delete_list_supplement_runs7e_7j_20261021.json"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Every named object version is deleted and read ABSENT, the throwaway roles are gone, the whole-root plan reads No changes; S225 and the four worker rows are closed by the cited amendments and the later passing runs. S220 and S222 are NOT closed here (see the issuer's report to the CTO)."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S253 -- S222 resolved on G2's read; S220 stays live until run 7L
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S253",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T09:30:00Z",
+  "one_line": "S222 (r34l RecipeRefused) is resolved on 2.0.0_SA_COO~G2's measured read; S220 (kept unknown ticker refused CLOSED_COMPOSITION_REQUIRED) stays LIVE until G2's run 7L reads an unknown-ticker filing on the live resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S222"
+  ],
+  "spec_asserts": "S222: with commentary_requested omitted the r34l resident refused the request at the recipe step. S220: a request carrying a kept-as-typed unknown row was accepted by the door and then refused CLOSED_COMPOSITION_REQUIRED.",
+  "world_is": "G2's read org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/S220_S222_DISPOSITION_READS_20261021.md (a6f55a4119), reported in msg 11963 and not re-measured by this seat: S222, on the r34s modules, omitting commentary_requested is not refused; the vendor-path prepare refused history-priced holdings with or without the field (the S249 class), cured by AR-g-182 and proven by run 7J (PASS). S220: G2 names no commit that makes the door refuse an unknown ticker; by design NOT_KEPT stays UNRESOLVED for Keep and swap; its refusal was the S245 packaging defect (cured in r34q; inferred, run 5B's composition is deleted); a live unknown-ticker read (run 7L, one filing) is open. This seat has not read the S220 evidence itself.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/S220_S222_DISPOSITION_READS_20261021.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S222 only: cured by AR-g-182 and proven by run 7J per G2's measured read. S220 is NOT dismissed here: it stays live (UNDER_INVESTIGATION) until run 7L reads."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S254 -- Run 7k strands eight synthetic S3 objects (nine versions), the audit record and the retained report PDF among them, that the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S254",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T09:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7k (RUN-DONE PASS: Multi-Comp PDF 60 pages, packager ATTACHED, audit AUDIT_WRITTEN) leaves EIGHT synthetic S3 objects (nine versions) that the CloudOps principal cannot delete, among them the audit record the resident wrote (one key, two versions) and the retained report PDF; 13 index rows and the synthetic user read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7k/residue_7k.json (bucket, key, version_id, size for each version, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7k/state_e2e7k.json (leftover_delete_code AccessDenied; u: packager ATTACHED, audit AUDIT_WRITTEN)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair rule that a run deletes what it creates; the order: residue list in residue_7k.json.",
+  "world_is": "These objects remain, bucket opal-data-irpt: irpt/49financial/platinum/analysis_audit/ART-32dd396f2eaee6bafd221db092d9e6635847b778052f92289c77610f6c6657ee/32dd396f2eaee6bafd221db092d9e6635847b778052f92289c77610f6c6657ee.json (VersionId YFQbLl2d3PKoXTePngnBgoICfUgZv2lb); irpt/49financial/platinum/analysis_audit/ART-32dd396f2eaee6bafd221db092d9e6635847b778052f92289c77610f6c6657ee/32dd396f2eaee6bafd221db092d9e6635847b778052f92289c77610f6c6657ee.json (VersionId bwNWmMgqeP6YT0OvnhjWRGW0G7AYICNW); irpt/49financial/state/analysis_commentaries/ART-add8ac3882feb67fc763e23b55d292fc21b83a6f183d5c95de49edefe7793860/38d58e6a0a09a22733846951a5e4fa3477ad15869cd5bc4d323efb0d6957f439.json (VersionId YC15DroHZcsKBzocuw7Wj1M6qpoWttwG); irpt/49financial/state/extraction_evidence/ART-4d46e30520e65806c62d20bfebb5977442c098a512ddbd2745b691e39846d80b/b538e3a5ab914ea856f359aa6db1c83fc6ddd73753347cbda0b35fd027c402bd.json (VersionId TcbCMf1L0f0emKsnGITwCJ2Mr6A0twfr); irpt/49financial/state/normalized_portfolios/ART-6912aaeb9ff8aabf3222671e71f99979826e83fc1d301f851cf9b0970df7349c/0f97fe99afb7df0f734018ae17318d7139c7fb732fd29fdfaecde3669c7e9971.json (VersionId iECR9WyC1RsF7m6ymlrFGL7qBtdBK1Lr); irpt/49financial/state/original_holdings/ART-2d8954799cf18faf28dafb6a686e08574bda817c4e51944a1172fb0400ce2848/a0edb28fd0ee5b456c9aeb06e582174ecd58ae3dc522583537ae65c40b7df1af.csv (VersionId 0UMR_Uk_wjMC_7p_H7ibCFibsqrTNFhh); irpt/49financial/state/request_compositions/ART-856d5ed86555acbdd7e5865ee5e7e58bcc709c111de6172d2ef2a5a1af02b6d0/b183d4dff1e5e131eb353f459dd7b96a721f4e8b450326f45ae009e5bc4da79e.json (VersionId BhhmNHGizJUNsr3.zVyy68jc2HCJ80wh); irpt/49financial/state/ycharts_opal_reports/ART-139f537981a803dab8c87d9791ccc51fe861c73cca0bc3e828cf5c3ce9c02c4b/65a13e6a1901b9ae31aeab1a8c67d0baf41bae836b7c58e045d100db12ce8ff5.pdf (VersionId B9cSxHn6YnUKNdVBWDQJGIhDl6DT9pAn); irpt/49financial/state/ycharts_opal_reports/ART-ff3fdbfa0e4a625d801208722e5deff71f475f515ab9298793545c02575de2d9/2fc0ad5f87268a34b9c9a51e33577a50edbb5c1eb9d46359b2531978d0369a92.pdf (VersionId inie6naJWsh5Eb41vBQuJI.2FqcwUcqw). The two analysis_audit versions are the audit record the resident wrote. No index row points at the others. The synthetic holdings carry no client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```

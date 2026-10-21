@@ -73,7 +73,8 @@ TEST_FILES = {
         "test_unregistered_firm_scope_listed_not_landed", "test_raw_line_bytes_preserved",
         "test_dry_run_writes_nothing", "test_record_has_counts_and_lists",
         "test_unmapped_label_listed_not_landed", "test_record_lists_unplaced_and_conflict_accounts",
-        "test_null_account_column_means_the_file_is_not_split", "test_null_account_column_allowed_only_for_prices_and_security"]),
+        "test_null_account_column_means_the_file_is_not_split", "test_null_account_column_allowed_only_for_prices_and_security",
+        "test_split_lands_a_weekend_as_of_under_the_prior_trading_day"]),
     "ft1": ("%s/tests/test_switcher_list.py" % CF, [
         "test_parses_value_and_label_per_option", "test_label_maps_to_registry_firm_by_substring",
         "test_unmatched_label_goes_to_alongside_unattributed", "test_cross_check_counts_added_and_dropped_only",
@@ -125,7 +126,10 @@ TEST_FILES = {
         "test_a_day_with_no_served_file_is_a_named_result_and_the_walk_goes_on",
         "test_a_slow_trickle_is_cut_by_the_total_cap_and_named_stalled_total",
         "test_files_downloaded_before_a_mid_day_stop_are_landed_before_the_stop_propagates",
-        "test_a_failed_partial_landing_is_named_and_never_hides_the_original_stop"]),
+        "test_a_failed_partial_landing_is_named_and_never_hides_the_original_stop",
+        "test_skip_files_option_requests_nothing_for_that_file_and_names_it_skipped",
+        "test_landing_failures_are_named_per_file_in_the_day_entry",
+        "test_a_run_that_ends_on_an_exception_writes_it_as_its_stop_with_the_day"]),
     "ft4": ("%s/tests/test_backfill_run.py" % CF, [
         "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
         "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",
@@ -167,7 +171,8 @@ TEST_FILES = {
     "fu4": ("%s/tests/test_land.py" % CF, [
         "test_lands_six_to_builder_addresses", "test_scope_is_a_parameter",
         "test_address_called_at_landing_time", "test_content_date_from_first_field",
-        "test_unreadable_date_is_failure_not_guess", "test_non_trading_day_is_failure",
+        "test_unreadable_date_is_failure_not_guess", "test_non_trading_as_of_lands_under_the_last_trading_day_on_or_before_it",
+        "test_run_record_carries_both_dates_per_file",
         "test_same_sha_lands_once", "test_run_record_shape", "test_missing_file_exits_nonzero",
         "test_never_writes_outside_fidelity_prefix",
         "test_content_date_column_is_per_file", "test_row_shorter_than_the_date_column_is_unreadable",
