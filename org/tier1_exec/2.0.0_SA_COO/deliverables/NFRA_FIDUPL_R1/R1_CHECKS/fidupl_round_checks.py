@@ -73,7 +73,8 @@ TEST_FILES = {
         "test_unregistered_firm_scope_listed_not_landed", "test_raw_line_bytes_preserved",
         "test_dry_run_writes_nothing", "test_record_has_counts_and_lists",
         "test_unmapped_label_listed_not_landed", "test_record_lists_unplaced_and_conflict_accounts",
-        "test_null_account_column_means_the_file_is_not_split", "test_null_account_column_allowed_only_for_prices_and_security"]),
+        "test_null_account_column_means_the_file_is_not_split", "test_null_account_column_allowed_only_for_prices_and_security",
+        "test_split_lands_a_weekend_as_of_under_the_prior_trading_day"]),
     "ft1": ("%s/tests/test_switcher_list.py" % CF, [
         "test_parses_value_and_label_per_option", "test_label_maps_to_registry_firm_by_substring",
         "test_unmatched_label_goes_to_alongside_unattributed", "test_cross_check_counts_added_and_dropped_only",
@@ -170,7 +171,8 @@ TEST_FILES = {
     "fu4": ("%s/tests/test_land.py" % CF, [
         "test_lands_six_to_builder_addresses", "test_scope_is_a_parameter",
         "test_address_called_at_landing_time", "test_content_date_from_first_field",
-        "test_unreadable_date_is_failure_not_guess", "test_non_trading_day_is_failure",
+        "test_unreadable_date_is_failure_not_guess", "test_non_trading_as_of_lands_under_the_last_trading_day_on_or_before_it",
+        "test_run_record_carries_both_dates_per_file",
         "test_same_sha_lands_once", "test_run_record_shape", "test_missing_file_exits_nonzero",
         "test_never_writes_outside_fidelity_prefix",
         "test_content_date_column_is_per_file", "test_row_shorter_than_the_date_column_is_unreadable",
