@@ -31012,3 +31012,31 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S244 -- Run 7g stops at B2: the page's holdings review refuses holdings_fwd10.csv; one undeletable synthetic object
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S244",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T02:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7g stopped at B2: the PROD page's holdings review refused holdings_fwd10.csv at the upload step (\"Review required the file needs a correction\"), so no Multi-Comp request was filed; one synthetic original-holdings object stays that the CloudOps principal cannot delete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7g/run_e2e7g.log (the instrument's closed lines: B2 comparables ticked=2, B2 request variant=none comparison_keys=0, B2 filed REFUSED Review required the file needs a correction.)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7g/state_e2e7g.json (stopped_at B2, stop_code B2_REFUSED, leftover_delete_code AccessDenied, upload_identified 1 of 47 UPLOAD rows)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7g/residue_7g.json (bucket, key, version_id, size of the one object)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~335/holdings_fwd10.csv (sha256 7b19a57a563df670861cb90950c1b8e1046882a73e87476cb3daa7f0505c3453; header identifier,quantity,units; four public ETF tickers)"
+    ]
+  },
+  "spec_asserts": "The 7g order: the instrument files one Multi-Comp request through the PROD page with holdings_fwd10.csv and two Opal models ticked (B2 request variant=multicomp comparison_keys=2); the order stops at B2 on any other value.",
+  "world_is": "The form accepted the two comparables (ticked=2) and one press; the page POSTed the file to analysis/inputs and showed its review refusal; it sent no ticket and no analysis request. The page's findings (finding codes, rows, suggestions) were NOT read, so the cause is not measured: the instrument's offline proof used fixtures, and holdings_fwd10.csv differs in shape from the file earlier live runs filed (Ticker,Dollars,Acct Market Value, synthetic tickers); whether that shape is what the review refuses is unmeasured. The upload rows and the user read ABSENT after D; this object remains, one version, bucket opal-data-irpt: irpt/49financial/state/original_holdings/ART-f0edf9e618b065e69eccda2fd679ce9d107082c3f56ca57072d0b8068c7bd9ea/7b19a57a563df670861cb90950c1b8e1046882a73e87476cb3daa7f0505c3453.csv (VersionId 4fDHC.tn94e.RQA_TlZwSyJR2TD18am_). No index row points at it. The synthetic file holds no client data.",
+  "disarm_owner": "2.0.0_SA_COO~G2"
+}
+```
