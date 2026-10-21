@@ -31624,3 +31624,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "Z-S420 disarmed on its own condition with the live evidence above. Z-S410 is not adjudicated here: its fees half has no live read yet, so the row stands ARMED and round 48 carries one live fee read (the advisor tables vendor items 3-10 include client_get_fees)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-21T08:37:10Z",
+  "id": "NFRA_OPLGTW-Z-S445",
+  "one_line": "OG-rl-18 Phase A: rl18.AC1 cannot read PASS as written -- the take list is twelve gateway files, so base..release differs in 13 paths with the manifest, and the check wants 12.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "rl18.AC1.sh's own TAKE variable names 12 gateway paths (data_entitlement, account_ref, schwab/integration, test_og_rt1, server, token_broker, test_og_ed1, test_scoped_consent_r253, test_login_admit_r24, admin_api, test_og_mp1, DATA_CATALOG.yaml); the order's prose counts them as eleven (4 + 5 + 2 + the catalog = 12).",
+      "git diff --name-only 2923d1ee99 7863a9d65b (the release, cut whole from trunk daff5d69d7) lists 13 paths: the 12 and EC2_MANIFEST.json; every one of the 12 differs from the live ref (live-to-trunk hunks 1 to 198).",
+      "The check line reads: files differing 13 (want 12: the eleven and the manifest); every other count on that line reads its want (outside 0, missing 0, not byte-equal 0, barred 0); the manifest line reads one key, mcportal_commit, 21ad40432cae -> a577f99afc81; the catalog md5 line reads yes."
+    ]
+  },
+  "spec_asserts": "OG-rl-18: the take list is eleven files plus one manifest key, and rl18.AC1 requires `files differing 12`.",
+  "world_is": "The take list as the check itself spells it is twelve files; with the one manifest key the diff is 13. Dropping any one file would break its own cell (all twelve are named by cells and tests), so the order's count is the slip. The release is cut on all twelve. rl18.AC1 reads FAIL on this one number until the issuer amends the check and the regex to 13 (twelve and the manifest).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Needs the issuer's amendment of rl18.AC1 (the n = 12 test and the expect text). Not a gate I may work around; everything else in Phase A proceeds."
+}
+```
