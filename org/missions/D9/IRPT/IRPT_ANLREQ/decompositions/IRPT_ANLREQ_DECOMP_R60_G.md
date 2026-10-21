@@ -226,3 +226,15 @@ AR-g-189 to AR-g-192 are merged and verified on the full tree (29e7175108f: `ar_
 AR-g-194 carries `<workstream>~GREL14</workstream>` (worker slot 384).
 
 fanout: 3 of 3 chains, cap 8, reason: the build cell is independent of the instrument cell AR-g-193 (no shared file).
+
+## Addendum 15 2026-10-21 (issuer): cell AR-g-195, six distinct chart series colours (CTO ADJ v31 note on run 7M)
+
+FWD-10 is REALIZED (ADJUDICATION_v31 @5d81dd2251). The CTO's note: on the 7M chart Opal Long-Term (#0A1733) and the typed ETF (#000000) are indistinguishable (contrast 1.18:1); one cell, distinct series colours with a minimum contrast check, shipping in r34u beside AR-y-497. Measured cause: `_palette` holds four colours (purple, navy, midnight, black) and the line chart cycles them, so the fifth line repeats the first and three of four are near-black; a Multi-Comp can carry six lines. Reference palette measured by the issuer: purple and navy from the brand, four chart-only colours (#D95F02, #00897B, #C2185B, #8A6D00): each at least 3.8:1 against white, every pair at least 43 apart in CIE76 Delta E; the checker's thresholds are 3.0:1 and 30.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-195` | six distinct line colours; a new test file | `layout_overview.py`, `test_layout_chart_palette.py`, `test_compare_elements.py` (only if it pins a colour) | WORLD (infrastructure path floor) |
+
+AR-g-195 carries `<workstream>~GREL16</workstream>` (worker slot 385). `checks/ar_palette_checks.py` (arms palette, tests) was dry-run at the base (both FAIL) and calibrated in-process against the reference palette (OK) and four mutants (duplicate colours, a too-light colour, a near-identical pair, the old four), each of which fails. It ships in r34u with AR-y-497.
+
+fanout: 1 of 1 chains, cap 8, reason: one cell.
