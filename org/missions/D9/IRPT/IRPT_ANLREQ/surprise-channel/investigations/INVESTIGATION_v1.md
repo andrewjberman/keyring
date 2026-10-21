@@ -31404,3 +31404,57 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-W356-S1 -- the sparse worktree omits data/firm_registry.json, so the four test files the tests arm runs fail at base (22 passed, 11 failed, 18 errors)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W356-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~356",
+  "surfaced_at": "2026-10-21T05:17:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "In worktree C:/dev/wk-irpt-anlreq-356 the file data/firm_registry.json is absent (sparse checkout), so ycharts tests that build a firm id fail with IdRefused and KeyComponentRefused REGISTRY_UNREADABLE; the order's premise that the four files pass at 49 at the base does not hold here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/firm_registry.json@e09dff18956 (blob cdb9f785e043cd69e451c545dc384e598431b263, present at HEAD, absent from the worktree; `git sparse-checkout list` names only .tools, docs/contracts/investor-reporting, infra/aws/lambda/investor-reporting, infra/logic, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards)",
+      "infra/aws/lambda/investor-reporting/_keys/keys.py@e09dff18956 lines 122-155 (REGISTRY_ENV IRPT_FIRM_REGISTRY; raises REGISTRY_UNREADABLE when no candidate is found)",
+      "measured at base in the worktree before any edit of resident_main.py: `python -m pytest -q -p no:cacheprovider` over the four files gives 11 failed, 20 passed, 18 errors (49 ran); with my two added tests 22 passed, 11 failed, 18 errors (51 ran). With IRPT_FIRM_REGISTRY pointed at a scratch copy of the committed blob (.scratch/firm_registry.json, not in the worktree tree) the same run gives 42 passed, 9 errors; the 9 residual errors are row S2"
+    ]
+  },
+  "spec_asserts": "TO-AR-g-183 AC2: the four test files that read the retained line pass (49 at the base) and at least 51 ran, in the worker worktree that the order names.",
+  "world_is": "The worktree carries the named paths (org/, .tools/, the lambda tree, resident_main.py, its test file) but not the repo-root data/ folder, which the registry resolver needs. Nothing in the named paths can supply it; the only sanctioned override is the env var IRPT_FIRM_REGISTRY, which this worker did not set for the verdict. The tests arm therefore cannot PASS in this worktree as the order is written.",
+  "notes": "Filed by the worker, not remediated: no sparse-checkout change, no copy into the tree, no test edit. Disposition for the issuer: decide whether the worktree scope for this order includes data/firm_registry.json or the arm runs against a full checkout. Row S2 is the second missing input."
+}
+```
+
+## IRPT_ANLREQ-D2-W356-S2 -- the sparse worktree omits infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh, which test_package_poll.py copies and reads: 9 errors remain even with the registry supplied
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W356-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~356",
+  "surfaced_at": "2026-10-21T05:17:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "In worktree C:/dev/wk-irpt-anlreq-356 the directory infra/aws/ec2/investor-reporting-ycharts/ is absent (sparse checkout), so nine test_package_poll.py tests error with FileNotFoundError on WRAPPER (run-ycharts-session.sh) and LIBRARY (ycharts_session.js) even after the registry is supplied; the tests arm cannot reach 51 passed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_package_poll.py@e09dff18956 lines 34-35 (WRAPPER = ROOT / infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh; LIBRARY = .../ycharts_session.js) and line 164 (shutil.copy(WRAPPER, ...))",
+      "git ls-tree HEAD -- infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh: blob 37addb67897f8fdd95c7621c5c9584779a9bc70b (committed at HEAD, absent from the worktree; the sparse list does not name infra/aws/ec2)",
+      "measured: with IRPT_FIRM_REGISTRY set to a scratch copy of the committed registry, `python -m pytest` over the four files gives 42 passed, 9 errors, every error FileNotFoundError on C:\\dev\\wk-irpt-anlreq-356\\infra\\aws\\ec2\\investor-reporting-ycharts\\run-ycharts-session.sh"
+    ]
+  },
+  "spec_asserts": "TO-AR-g-183 AC2: the tests arm passes with rc 0 and at least 51 passed; the test files read only their own tree.",
+  "world_is": "The test file reads a file outside the lambda tree that the worktree does not materialise. No override exists in the test, and the order forbids both a sparse-checkout change and writes outside its paths, so the 9 errors are not closable by this worker.",
+  "notes": "Filed by the worker. Not remediated: no test edit, no copy of the wrapper into the tree. Interacts with row S1 (the registry); both are needed to reach the 51-pass denominator."
+}
+```
