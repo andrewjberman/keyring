@@ -96,6 +96,10 @@ Merged since your sixteenth delivery: FT-s-1 (`switcher_list.py`, `perg_seed.py`
 
 Merged since your seventeenth delivery: FR-s-2 REPAIR 4 (`split.py`: prices and security are not split) and FT-s-7 REPAIR 2 (`backfill_adapter.py`, `backfill_main.py`, `backfill_run.py`). Deliver the shipped set from head f75a19d0646 or later, a NEW ledger (slug `nfra-fidupl-box-code-sync-18-<date>`), check `fu10m`. Same rules: file copy only, no browser, no sign-in, nothing under either profile directory or `/opt/fidelity-uploader/work`, the agent Chrome unit and `config.json` as they are. One line to the issuer when done: the daily-mode proof run (TO-FT-s-8 step 2) waits on it.
 
+### REOPENED (issuer, 2026-10-21 ~03:10Z) -- nineteenth delivery: box/run.py accepts the null account column, head 8a6b473b366
+
+Your row D1-S10 was right and is fixed (FT-s-2 REPAIR 1: `box/run.py` `_check_account_columns` accepts null for prices.txt and security.txt only; module suite 208 passed; I also ran `check_pointers` locally on a config of the measured daily shape: it passes, and a null for position is still refused). Deliver the shipped set from head 8a6b473b366 or later (only `box/run.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-19-<date>`), `fu10m`. Same rules as before: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
