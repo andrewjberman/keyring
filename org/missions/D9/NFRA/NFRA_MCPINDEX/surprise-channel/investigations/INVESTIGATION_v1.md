@@ -13831,3 +13831,109 @@ carries none.
   "notes": "OBSERVATION, INERT: the issuer chooses the entity name at the drain. The naming choice is the only departure from the silver convention in MX-z-4 output."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~94",
+  "surfaced_at": "2026-10-21T08:19:28Z",
+  "id": "NFRA_MCPINDEX-Z-W94-S1",
+  "one_line": "The commit gates checked none of the .json deliverable platform_labels.json: commit-gate reads only .py/.sh/.tf, the risk-reflex danger map is STALE, and client-data-check WARNs that the hashed account-id list is absent on this device, so the account-id screen did not run on that commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~94/platform_labels.json@4d746c99f70 (the one file of the commit; a .json)",
+      "safe-commit output of 4d746c99f70: '[commit-gate] WARN: commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED'; '[risk-reflex] danger map: 132.4h old !! STALE'; 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A commit touching a deliverable under the mission tree is screened by the commit-time gates, including the client account-id screen, before it lands.",
+  "world_is": "On this device the commit-gate and the client account-id screen both returned without checking the .json file, and the risk reflex could not clear it; the file was checked by the worker only by reading it, since it holds no account number, name or data value (its strings are adapter code identifiers and line numbers).",
+  "notes": "OBSERVATION, INERT for this commit: the file was read in full and carries no client identifier. The standing gap (no hashed list on this device, the commit gate skipping .json) is for the issuer and the gate owners to disposition at the drain."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~95",
+  "surfaced_at": "2026-10-21T08:23:46Z",
+  "id": "NFRA_MCPINDEX-Z-W95-S1",
+  "one_line": "The Commonwealth silver feed opal-data-assets/commonwealth/cottonwood/silver/ (12 catalogued tables) has newest partition 2026-06-23, 83 trading days behind the T-1 frontier at 2026-10-21; no scheduled writer exists, the producer is a manual landing plus hand-run silver builders, and the owner is ADVI_COTBKF.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/bronze/commonwealth_landing.py:149 (--apply is the only write switch; the landing is a dry run unless a person passes it)",
+      "workflows/atom_decomposition/catalog_entries/opal_data_assets_silver_commonwealth_cottonwood_transactions.yaml:49 (schedule: none, a one-time delivery converted by hand-run scripts 2026-10-06..10-09)",
+      "workflows/atom_decomposition/catalog_entries/opal_data_assets_silver_commonwealth_cottonwood_transactions.yaml:38 (a closed historical delivery; custody ended at the 2026-06-23 cut-over)",
+      "infra/aws/terraform/opal-assets/silver.tf:293 (silver_sweep_slots: blackdiamond, orion, eclipse, schwab, etf, smartx; no commonwealth key)",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_commonwealth.py:6 (Commonwealth is ONE CLOSED DELIVERY: every table has one partition, date=2026-06-23)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/4.0.0_SA_CRO~Y/census.json:1338 (daily_returns newest_modified_utc 2026-10-16 with partition still 2026-06-23)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round26/evidence/ROUND26_REPORT.md:23 (as_of 2026-06-23 = the newest partition, 83 trading days behind)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each catalogued silver feed has a named producer on a schedule that writes its newest partition within the trading-day frontier.",
+  "world_is": "All twelve catalogued Commonwealth silver tables hold one partition, 2026-06-23 (price_evidence holds 2022-10-12), 83 trading days behind; the writers are a manual --apply landing and hand-run silver builders, and no schedule in the repository names them.",
+  "notes": "OBSERVATION, INERT: the gap the contract requires; no fix in this project. The issuer 2.0.0_SA_COO~MI is the disarm owner and relays the owner and schedule at the drain. Producer kind manual is the reading the repository supports; see the deliverable commonwealth_producer.json."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~95",
+  "surfaced_at": "2026-10-21T08:39:00Z",
+  "id": "NFRA_MCPINDEX-Z-W95-S2",
+  "one_line": "Worker face premise partly fails: the silver builders' headers do not all name ADVI_COTBKF (commonwealth_daily_returns.py names no project; transactions and crosswalk do), and infra/aws is not consumers-only, since shared-infra s3-lgic-firm-buckets.tf:202 declares a commonwealth CRM bronze prefix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_returns.py (grep -c ADVI_COTBKF = 0 at HEAD of the worktree)",
+      "data/assets/scripts/silver/commonwealth_transactions.py:1 (names ADVI_COTBKF CB-a-2)",
+      "data/assets/scripts/silver/commonwealth_crosswalk.py:1 (names ADVI_COTBKF CB-c-3)",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:202 (lgic_crm_prefix = commonwealth/<firm>/bronze/crm/; a bronze CRM prefix, not the silver feed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every hand-run silver builder of the Commonwealth family names its owning project in its header, and infra/aws holds Commonwealth only in consumers.",
+  "world_is": "The owner was still resolvable from two of the three builder headers and the silver feed has no infrastructure writer, so the producer, schedule and owner cites stand; the premise wording is wider than the repository.",
+  "notes": "OBSERVATION, INERT: no effect on the MX-u-2 cites or the gap row S1; recorded so the drain reads the premise as partly failed. No fix in this project."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~96",
+  "surfaced_at": "2026-10-21T08:18:17Z",
+  "id": "NFRA_MCPINDEX-Z-W96-S1",
+  "one_line": "The labels contract's guard 5 refuses only a newline or a carriage return, but its section promises one line per entry; an ASCII vertical tab, form feed, or file, group or record separator passes every guard and str.splitlines() splits a line on it, so the section gains lines the contract does not describe. I kept the contract's guard set as written (smallest thing, no widening) and left the gap for the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-u-3.sheets-labels.md (section 1, contract guard 5: any of the four texts holds a non-ASCII character or a line break (\\n or \\r))",
+      "python 3.14.8 at the worker worktree: len(('a' + chr(11) + 'b').splitlines()) == 2, and the same for chr(12), chr(28), chr(29), chr(30); chr(9) stays one line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Guard 5 refuses a non-ASCII character or a line break (\\n or \\r) in any of the four texts; the section is one line per entry.",
+  "world_is": "The ASCII controls VT, FF, FS, GS and RS are not refused and are line boundaries to str.splitlines(), so a text carrying one renders as more than one entry line in the section.",
+  "notes": "OBSERVATION, INERT: no hazard is armed; the cell's criteria never plant these controls. The issuer decides whether guard 5 widens at a later round."
+}
+```
