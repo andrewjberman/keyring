@@ -58,7 +58,10 @@ oracle, because the keystroke proves delivery, not submission.)
   (`unstick_console.ps1`, AttachConsole): no focus, no tab cycling, so a project-titled tab (`-Tab
   <PROJECT>`) is reachable and a sibling tab with the same title cannot be keyed. It refuses to key a
   host with no live `claude.exe` child, and it sends plain text plus `{ENTER}` only (no `^ % +` SendKeys).
-  Not measured on a live claude seat: keys into a claude composer; peek first and verify the submit.
+  Measured once on a live claude seat (2026-10-21 13:21Z, 2.0.0_SA_COO~P1, idle at an empty composer, no
+  inbox watcher running): one plain-text line plus `{ENTER}` typed, submitted, and the seat resumed (a second
+  peek ~90 s later showed it reading its mail). The body cannot carry a `~` (the serial of a lane); still peek
+  first and verify the submit with a second peek.
 - **Fallback: the tab TITLED with the lane serial at creation** (WT `suppressApplicationTitle`
   pins creation titles) is used when no host process carries the serial's marker (a manually
   launched Codex/lane tab). Untitled, unmarked tabs are correctly NOT found.
