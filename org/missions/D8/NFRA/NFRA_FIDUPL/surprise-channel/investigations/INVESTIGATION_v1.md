@@ -1167,6 +1167,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "REPAIR 1 item 2 (agent_drive.py _close): after terminate() and the wait, kill the forward's whole process tree with taskkill /PID <pid> /T /F on Windows, so the next run does not attach through a dead tunnel left by session-manager-plugin.exe.",
     "world_is": "On Windows the order's sequence does not reach the child: after the parent exits, taskkill /T has no parent-child chain to follow and returns rc 128. The controller now kills the tree while the parent is alive (before terminate) and keeps the order's kill after the wait. Measured on a local parent and child pair only; the live aws.exe and session-manager-plugin.exe pair is not measured here.",
     "notes": "Hazard stands until the first live run confirms that the forward port is free after close. Disarm is the issuer's: confirm on the next live drive that no session-manager-plugin.exe holds 127.0.0.1:9222 after the record is printed. The deviation from the written order's sequence is in the commit that carries this row."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W2-S11",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~2",
+    "surfaced_at": "2026-10-21T01:02:00Z",
+    "one_line": "The REPAIR 1 criterion FU4-AC2 (fu4d) cannot reach dests=6: the checker's synthetic handoff puts the date in field 0 of all six files, and the repaired per-file as-of columns read balance column 3, account column 16 and transact column 17, which that fixture does not carry.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu4d, cwd /c/tmp/fidupl-w2 at 2026-10-21T01:01Z, printed: R1-FU4D-FAIL rc=1 dests=3 last=ERROR: failed_step=date failure_class=content date unreadable",
+        "fidupl_round_checks.py synth_handoff line 159 (main checkout read 2026-10-21): w.writerow([date, 'SYNTH', n, '1']) for every one of the six names, so the date is in field 0 only",
+        "land.py at commit ca6db55395: DATE_COLUMN balance 3, account 16, transact 17, the rest 0; the fixture's balance row has 4 fields with '1' in column 3, and its account and transact rows are shorter than column 16 and column 17",
+        "python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu4 at ca6db55395 printed R1-FU4-OK passed=15 (the fourteen named tests plus one)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "REPAIR 1 (issuer, 2026-10-21) and FU4-AC2: the fu4d dry run still reads dests=6 (expect R1-FU4D-OK dests=6), and the checker's synthetic handoff is the fixture for that run.",
+    "world_is": "The checker's synth_handoff writes the as-of date in field 0 of all six synthetic files. Under the per-file columns of REPAIR 1, balance (column 3), account (column 16) and transact (column 17) are unreadable in that fixture, so the dry run prints three DRYRUN lines, reads dests=3 and exits 1. The lander follows the repaired rule; no lander rule reaches dests=6 on this fixture as written.",
+    "notes": "Not edited: the checker is the COO's (org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/) and outside this order's grant. The lander and its tests are committed at ca6db55395 and FU4-AC1 passes. FU4-AC2 is recorded FAIL and the order stays open. Decision for the COO: point synth_handoff at the per-file columns, then re-run fu4d; the lander is not to be reverted to field 0 to pass it."
   }
 ]
 ```
