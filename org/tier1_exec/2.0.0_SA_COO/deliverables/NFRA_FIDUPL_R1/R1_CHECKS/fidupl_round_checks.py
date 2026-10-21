@@ -90,6 +90,11 @@ TEST_FILES = {
         "test_attach_uses_loopback_cdp_only", "test_unit_started_only_if_port_closed_and_stopped_after",
         "test_recovery_signs_in_once_and_never_loops", "test_failure_raises_signin_error_with_class",
         "test_close_logs_out"]),
+    "ft10": ("%s/tests/test_g_export_probe.py" % CF, [
+        "test_g_export_probe_prints_counts_and_hashes_per_ordinal_without_values",
+        "test_g_export_probe_includes_the_start_ordinal_and_dedupes",
+        "test_g_export_probe_stops_on_auth_refusal_and_skips_restore",
+        "test_g_export_probe_closes_session_and_restores_start_g"]),
     "ft9": ("%s/tests/test_paging_probe.py" % CF, [
         "test_probe_prints_counts_only_for_page_one_forms_and_prefixes", "test_probe_stops_at_once_on_an_auth_refusal",
         "test_probe_closes_the_session_and_prints_no_account_number",
@@ -961,7 +966,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 
