@@ -49,6 +49,6 @@ What worked: reading the served state myself after each lane report; a read-only
 
 ## Next Steps
 
-1. `0.7.0_AE_CloudOps~NFRA2` has no open order: release the lane (`/mstr-kill`), since rule 34 seats one lane per macro.
+1. `0.7.0_AE_CloudOps~NFRA2` has no open order from this seat. NOT killed: its broker summary (07:3xZ) shows it also completed `TO-BF-r2` (NFRA_SCHWABBF, another COO's order), so it now serves a sibling project; whether the second NFRA lane stays is a decision for the COO seats using it and for MSTR (rule 34: one lane per macro per box), not this seat's.
 2. [`1.0.0_SA_CTO`] NFRA_SCHWABBF's pending Terraform change in `opal-assets` belongs to its owner; nothing for this seat.
 3. The scheduled fire of 2026-10-22 07:05Z is the next unattended proof; expect no growth beyond real changes.
