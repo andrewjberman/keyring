@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~5</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -33,6 +33,10 @@
 3. In `box/run.py`: where `open_session` raises a `SigninError` whose class is the refused class, call `signin_recover.recover_session(config, creds, otp)` ONCE through a lazy import (the module may not be on the box yet: an ImportError is recorded as `recovery: unavailable`); success continues the run with that session; a second failure stops the run with the refusal and `recovery: failed`. The record carries `recovery`.
 4. Seven tests in `tests/test_box_daily.py` (names in the criterion), fakes for everything. Existing tests keep their names.
 **Fakes only.** No AWS call, no live call, no sign-in, no real secret, no real export file; every test uses synthetic data. ASCII, Python 3.9 syntax, ruff py39 clean.
+
+### REOPENED (issuer, 2026-10-21 ~02:15Z) -- apply your saved AttachError patch
+
+Your row W5-S8 is right: the fix for `signin_recover.AttachError` (both it and `signin.SigninError` mean `recovery: failed`; an ImportError means `recovery: unavailable`) could not be committed under a complete order. The order is pending again so the lane grants your paths. Apply `.scratch/attach_fix.patch` in your worktree, commit, re-run `fidupl_round_checks.py ft2` and `fr4`, the whole module suite, re-pin the proof instance and flip to complete. No new test name.
 
 ### ACCEPTANCE
 

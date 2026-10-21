@@ -2045,7 +2045,7 @@ Source: the issuer rendered the built page (mcportal f90f03a, vite on :5174, fix
 
 ## OGP1.1 CELL `MP-zp-1` -- a stopped person's switches read OFF and are disabled; the audit list re-reads after a write  (view; one chain; LOCAL; FWD-29, FWD-28)
 
-Two behaviours, two named tests (`a stopped person's tool and channel switches read off and are disabled on the opalgateway page, and the page says the gateway admits nothing`; `the opalgateway audit list reads again after the panel writes a change`). The stopped reading is an optional prop (default off) on the shared access view so People is unchanged; the re-read is an optional callback on the panel. Mechanical criteria: AC1 `zp1.AC1.sh` (named tests present 2 of 2, `bun test src` 91 or more pass, 0 fail), AC2 `zp1.AC2.sh` (type check clean). No judgment criterion.
+Two behaviours, two named tests (`a stopped person's tool and channel switches read off and are disabled on the opalgateway page, and the page says the gateway admits nothing`; `the opalgateway audit list read key advances when a write finishes and when Refresh is pressed, and not otherwise`, a pure test of the read-key rule). AMENDED 2026-10-21 after worker ~46's row Z-W46-S1: the second test as first written needed a mounted component and mcportal has no DOM under bun test; the wiring is proved by the issuer's render after the drain. The stopped reading is an optional prop (default off) on the shared access view so People is unchanged; the re-read is an optional callback on the panel. Mechanical criteria: AC1 `zp1.AC1.sh` (named tests present 2 of 2, `bun test src` 91 or more pass, 0 fail), AC2 `zp1.AC2.sh` (type check clean). No judgment criterion.
 
 ## OGP1.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
 
