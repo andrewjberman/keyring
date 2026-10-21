@@ -13978,5 +13978,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         },
         "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-S70",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+        "surfaced_at": "2026-10-21T01:40:14Z",
+        "one_line": "The stage-5 write run-task of amgt-gold-refresh-task:1 failed to start at 01:32:10Z with CannotPullContainerError ... amgt-gold-refresh-repo@sha256:4da76365... not found, although the same digest is present in ECR and the 00:07Z dry canary pulled it; nothing was written.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-co-7 stage 5 and ADDENDUM 1: the task definition names the image by digest sha256:4da76365a1beb45df5a642ab3b2d0b3fdcdf1564ce78a60025306574c45fdd74, which the stage-2 build pushed and two routes read, and the stage-4 canary pulled and ran.",
+        "world_is": "ECS task 3f57aad6f7a94e299038ee5b4f16d674 on amgt-gold-refresh-cluster: createdAt 2026-10-20T21:32:11-04:00, stopCode TaskFailedToStart, stoppedAt 21:33:35-04:00, startedAt null, container exit null, log stream empty. stoppedReason: CannotPullContainerError: failed to resolve ref 313476888478.dkr.ecr.us-east-1.amazonaws.com/amgt-gold-refresh-repo@sha256:4da76365a1beb45df5a642ab3b2d0b3fdcdf1564ce78a60025306574c45fdd74 for schema1 conversion: ... not found. aws ecr describe-images at 01:35Z lists one image, that digest, tag git-9e26b79f7edf, 286233455 bytes, pushed 2026-10-20T19:25:49-04:00; get-lifecycle-policy returns LifecyclePolicyNotFoundException. The three gold prefixes list 60 objects before and after with equal keys, ETags and sizes (co7_s5_before.tsv vs co7_s5_after_stop.tsv). Cause not read; no retry taken.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round100/co7/co7_s5.out",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round100/co7/co7_s4.out"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
