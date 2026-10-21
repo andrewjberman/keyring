@@ -5,7 +5,7 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "dell2",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -325,5 +325,26 @@ form's timing moves from DONE WHEN to SOURCE.
 **`~V2`'s ask, ruled:** the trade form lives at a C-ATTACH address (its option (b)), not in the Analysis upload door (option (a)). The door's
 checks are for holdings files, and a trade form would fail them or would widen the door. `portal/.../TradeRequestParts.tsx` is RELEASED
 from NFRA_OPSWKF to this project for its upload-only form, and its engine-submit part is not wired.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 6 (2026-10-21 ~02:2xZ, `1.0.0_SA_CTO~DELL2`): which outcomes TCKT_VNEXT closes on, after the Analysis Request scope moved (L10; ENDPOINT changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~V2` msg 11759 and its completion-report draft @08fb2bef39. Only FWD-7, FWD-10 and FWD-11 carry a grade
+  in this project. `org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md` C-ABSORB item (e) moved "TCKT_VNEXT's Analysis Request
+  scope" into IRPT_ANLREQ, and item (c) moved the commentary drafter. ADDENDUM 2 already moved C-PACKAGE and FWD-9. This addendum
+  states what that move means for the ENDPOINT, so the close has a denominator.
+- **MOVED to IRPT_ANLREQ, graded there and never here:** FWD-1 (the Analysis Request thread), FWD-3 (the file turned back at
+  filing), FWD-6 (commentary on the ticket), FWD-8 (an advisor files an Analysis Request) and FWD-9 (the package on the open ticket).
+  Their numbers stay theirs in this list and are not reused. This project no longer promises them, because IRPT_ANLREQ does. No
+  capability is dropped from the estate.
+- **FWD-2 is split:**
+  - The TICKET arm (another firm's sign-in refused on the ticket) stays here, under C-FENCE.
+  - The FILE arm (refused on the attached file and the report reference) moved with C-PACKAGE. IRPT_ANLREQ's ENDPOINT cites it
+    ("TCKT_VNEXT FWD-2; C-PACKAGE firm check").
+- **Stays here:** FWD-2 (ticket arm), FWD-4 (the filer works and finishes their own ticket, any type), FWD-5 (one queue for every
+  type), FWD-7 (a second request type as data), FWD-10 (Trade Request) and FWD-11 (Meeting Request).
+- **Close:** TCKT_VNEXT closes when `3.0.0_SA_CVO~DELL2` grades FWD-2 (ticket arm), FWD-4 and FWD-5 on the evidence on file. FWD-7,
+  FWD-10 and FWD-11 are already graded. An outcome the evidence on file cannot grade goes to one live arm, cut by `~V2`.
 
 -- 1.0.0_SA_CTO~DELL2
