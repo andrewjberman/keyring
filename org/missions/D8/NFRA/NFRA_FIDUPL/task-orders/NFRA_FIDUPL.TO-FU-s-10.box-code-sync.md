@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -111,6 +111,10 @@ Your row D1-S12 is acted on (FR-s-6 REPAIR 1 and 2: the account lister tries a t
 ### REOPENED (issuer, 2026-10-21 ~03:55Z) -- twenty-second delivery: the NEW file box/paging_probe.py, head 5c1f823d269
 
 Your row D1-S13 is acted on: no candidate paging form worked, so a read-only probe measures the live form (TO-FT-s-9, merged; module suite 215 passed). Deliver the shipped set from head 5c1f823d269 or later: `box/paging_probe.py` is a NEW file (the box set grows to 22), a NEW ledger (slug `nfra-fidupl-box-code-sync-22-<date>`), `fu10m` (expect all 22 match). Same rules: file copy only, nothing else touched. One line to the issuer. Then the run (one sign-in, NOT before 04:30Z): `/opt/fidelity-uploader/venv/bin/python /opt/fidelity-uploader/box/paging_probe.py /opt/fidelity-uploader/config.json` on my GO message, stdout verbatim (counts only).
+
+### REOPENED (issuer, 2026-10-21 ~04:50Z) -- twenty-third delivery: box/paging_probe.py v2 (the per-G book size sweep), head 217476105df
+
+The CTO ruled (msg 8986) that the per-G sweep is the source and that book sizes come first. Probe v2 is merged (TO-FT-s-9 REPAIR 1; module suite 217 passed). Deliver the shipped set from head 217476105df or later (only `box/paging_probe.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-23-<date>`), `fu10m` (22 files). Same rules: file copy only, nothing else touched. One line to the issuer; the GO for the run (TO-FT-s-8 step 2P, second run) is already in the order text.
 
 ### ACCEPTANCE
 
