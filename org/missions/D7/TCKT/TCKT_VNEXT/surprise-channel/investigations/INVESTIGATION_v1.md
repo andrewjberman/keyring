@@ -3339,3 +3339,29 @@ used as fixtures is a different read with a different denominator.
   "world_is": "A byte-level append made through the worker's edit tool re-wrote the endings of the existing rows, so the committed diff of an append-only file was about 2,900 changed lines for 52 added. The content of the existing rows is unchanged (diff ignoring CR at end of line is 52 insertions). Not claimed: that any other channel file was affected."
 }
 ```
+
+## TCKT_VNEXT-D2-S65 -- TO-R23-F51 stopped at the first ticket create on DEV: the page's New Ticket form (Service Request) got HTTP 400 for an internal identity whose token firmId is opal-capital and whose profile allowedFirmIds is [cottonwood]; no ticket was created.
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-21T02:55:00Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S65",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-R23-F51 stopped at the first ticket create on DEV: the page's New Ticket form (Service Request) got HTTP 400 for an internal identity whose token firmId is opal-capital and whose profile allowedFirmIds is [cottonwood]; no ticket was created.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r23_fwd5_dev/R23_FWD5_TRACE.json: statuses {'POST /api/scoped/tickets as filer': 400}, request census 1 POST localhost:5174 /api/scoped/tickets; run_output.txt 02:42:30Z STOP waiting for 'Ticket created.'; scan of opal-tickets at 02:42:49Z and the removal census at 02:49:32Z: 38 tickets, 0 with created_by the filer",
+      "infra/aws/lambda/ticket_center/lambda_function.py lines 1424-1428 (create_ticket): for the untyped types the requester firm is body.requester_firm or the token's firmId, then _create_firm_allowed -> _firm_allowed checks it against the principal's allowedFirmIds; src/pages/TicketCenter/TicketCenter.tsx handleCreate (served 539b1ee7 and origin/DEV fb5f5796) sends only ticket_type, title and description, so requester_firm is never sent",
+      "CAUSE IS READ FROM SOURCE, NOT MEASURED: the 400 response body was not captured and the ticket service logged no event for the request (0 events 02:42:00Z to 02:43:30Z)"
+    ]
+  },
+  "spec_asserts": "TO-R23-F51 (AMENDMENT-free text): identities with firmId opal-capital and allowedFirmIds [cottonwood]; the filer files ONE Service Request and ONE Other ticket 'each for firm cottonwood' through the page's own New Ticket form.",
+  "world_is": "The served and the current DEV New Ticket form for Service Request and Other have no firm control and send no requester_firm; the service then takes the token's firmId (opal-capital), which is outside the identity's allowedFirmIds [cottonwood], and refuses the create (400 by the source reading). The Trade Request and Meeting Request forms send answers.firm, which is why R21 passed with the same identity shape. A pass needs either an identity whose token and row firmId is cottonwood, or a form that sends requester_firm: both are the issuer's or the CTO's call. Not claimed: the exact 400 text; that a firmId of cottonwood on the token would be accepted by the authorizer."
+}
+```

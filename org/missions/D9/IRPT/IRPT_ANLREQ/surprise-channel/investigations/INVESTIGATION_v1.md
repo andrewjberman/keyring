@@ -31040,3 +31040,57 @@
   "disarm_owner": "2.0.0_SA_COO~G2"
 }
 ```
+
+## IRPT_ANLREQ-D2-S245 -- Run 7h: the r34p resident refuses the Multi-Comp request with CLOSED_COMPOSITION_REQUIRED, job never READY
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S245",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T02:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Run 7h filed the Multi-Comp request (the page accepted the corrected holdings file, variant=multicomp comparison_keys=2) but the r34p resident refused it three times with SubmissionRefused code=CLOSED_COMPOSITION_REQUIRED, so the job never reached READY and no PDF exists.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7h/ssm_window_out.txt (SSM command 8162abab-00a2-40d4-b085-821d822c7ecc: the resident journal tokens of 02:11 to 02:45Z; COMPOSITION-REFUSED step=3 error_class=SubmissionRefused and retained_for_retry class=SubmissionRefused code=CLOSED_COMPOSITION_REQUIRED at 02:11:11Z, 02:26:11Z and 02:41:12Z)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7h/state_e2e7h.json (B2 filed ok ticket TCK-20261021-c553ca50, green empty, stopped_at P1, stop_code NOT_READY_IN_BUDGET)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7h/A_E2E7H.txt (the receipt)"
+    ]
+  },
+  "spec_asserts": "The 7h order: the resident reads the two model objects, prices the four holdings and brings the Multi-Comp request to READY within the poll budget, then the report PDF route answers a PDF with the comparison section.",
+  "world_is": "The Overview variant went READY on the same resident (run 7f). The Multi-Comp request was received at 02:11:11Z and refused at composition step 3 with the closed code CLOSED_COMPOSITION_REQUIRED, then received again at 02:26 and 02:41 (visibility timeout 900 s) with the same refusal. Which composition is required and how the request's composition differs from an Overview's is NOT measured here (journal lines carry class and code only; the request rows were deleted by D before this read). The message is still in flight in irpt-generation (received 3 of 5; redrive to irpt-generation-dlq at the 5th receive, about 03:11Z to 03:26Z); its rows are gone, so it cannot succeed. This seat did not touch the queue.",
+  "notes": "Nothing in the signed r34p pair claimed the Multi-Comp path; whether the refusal is the intended closed behaviour for this request shape is the issuer's and the CTO's to judge."
+}
+```
+
+## IRPT_ANLREQ-D2-S246 -- Run 7h strands three synthetic state objects the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S246",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T02:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7h leaves THREE synthetic state objects that the CloudOps principal cannot delete (AccessDenied); 9 index rows and the synthetic user read ABSENT. Exact keys and VersionIds are in residue_7h.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7h/residue_7h.json (bucket, key, version_id, size for each of three objects, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7h/state_e2e7h.json (leftover_delete_code AccessDenied; upload_identified 1 of 47 UPLOAD rows matched the synthetic address and the run's holdings hash, recorded at creation)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates; the order's 'residue list in residue_7h.json'.",
+  "world_is": "These objects remain, one version each, bucket opal-data-irpt: irpt/49financial/state/normalized_portfolios/ART-2b45cf878395a80501a985aa341435d6bcafef80844fd3e45afb2069affdcd42/08d9066a8a690eedca829573f2cfe43a1b235c81ad801371cf8ab537362d2cb1.json (VersionId C4ThmUGgKDOglS11XyMQMbf315a1qL46); irpt/49financial/state/original_holdings/ART-6c86c60cf0ad72eb0c497b1feb8eca73337f84bbf96fa414b3f27211921e4afb/1c20745eff0e400f6512aac24057a8500f204ce7a1b02594d9da1138a464ad5f.csv (VersionId _.wfwm9yeDuSuomEYCn0iS2JKU0Z.yNn); irpt/49financial/state/request_compositions/ART-fba87436b742bcb33bc9e21d72db22993af8fbeebc2bc24d2e5c7f357f80191b/5c7b6098b6339c39f3e9baa8858156af8ac89aed075e79826d2916b2bb9735e2.json (VersionId id2RLEvCUdnmKTv0_ekHQ2RcANbER7sY). No index row points at them. The synthetic holdings carry no client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```

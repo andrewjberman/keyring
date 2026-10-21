@@ -21,6 +21,7 @@ infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py
 infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py
 infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
 infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+infra/aws/lambda/investor-reporting/ycharts/generate/submission.py
 infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py
 infra/aws/lambda/investor-reporting/ycharts/generate/ticket_audit_source.py
 infra/aws/lambda/investor-reporting/ycharts/generate/ticket_confirmation.py
