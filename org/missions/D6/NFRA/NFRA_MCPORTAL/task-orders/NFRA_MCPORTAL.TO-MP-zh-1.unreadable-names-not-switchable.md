@@ -70,7 +70,7 @@ Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_
 
 **ISSUER NOTES:** cut at once on `2.0.0_SA_COO~O`'s row `NFRA_OPLGTW-Z-S447` and the CTO's hazard message (15:17Z): the shipped panel can write a hyphen channel id that the gateway reader calls Malformed once the mount (`OG-mp-1`, batch17, not before 2026-10-22T06:00Z) is live. Measured by the issuer (served capture of the 14 channel ids against the reader's pattern; `personAccess.ts` :34). A SEPARATE workstream (OGH) because `to-pipeline-gate` allows one issuance per workstream round and OGP, OGW round 2 already have theirs; the write surface overlaps the DONE `MP-zp-1` files only (no live order). Must ship in the batch17 bundle pin: the issuer re-sends the new mcportal commit to `2.0.0_SA_COO~O` at the drain and asks MSTR~Z to advance DEV. Checks dry-run at base in the provisioned slot-48 worktree (mcportal a577f99, 2026-10-21 ~16:5xZ): zh1.AC1 FAIL as expected (`bun test src` 91 pass, 0 fail; named tests present in sources 0 of 2; min 93); zh1.AC2 passes at base (tsc rc 0) by design: a type-check guard against the worker's edit, not a build criterion.
 
-<status>pending</status>
+<status>complete -- drained 283d193a2c2 (worker 0.9.0_WK_NFRA_MCPORTAL~48); AC1 PASS: named tests 2 of 2, bun test src 93 pass 0 fail; AC2 PASS: tsc rc 0 (issuer re-ran both); mutant control fails; mcportal f939e3e (LOCAL on branch wk-NFRA_MCPORTAL-48-mcportal until MSTR~Z pushes DEV). Rows Z-W48-S1 accepted, S2 and S3 ruled INERT (issuer row follows in the channel).</status>
 <round>1</round>
 <workstream>OGH</workstream>
 <slot>~48</slot>
