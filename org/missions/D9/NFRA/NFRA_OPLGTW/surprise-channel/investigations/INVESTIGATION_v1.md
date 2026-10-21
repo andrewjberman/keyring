@@ -31755,3 +31755,178 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Worker-side only: AC1 is recorded FAIL with this row id; AC2 PASS (module and 15 tests unaffected). Issuer-side fix: the probe label or the expect text. No live hazard: an order graded FAIL stays open and serves nothing."
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:03:00Z",
+    "one_line": "cs2.AC3.sh, invoked as written (python3 -I - on stdin), cannot read PASS on this Windows device: the real engine's spawn child cannot re-import a stdin __main__, so every query job fails.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "AC3 (cs2.AC3.sh) runs the REAL ExecutionEngine from a 'python3 -I -' stdin script and must read RESULT: PASS with exit=0 for the query cell.",
+    "world_is": "On site Z (Windows, Python 3.11.9) the engine's multiprocessing spawn child fails with OSError Errno 22 naming the '<stdin>' main path, so each query job fails and the check reads seven lines NOT OK, RESULT: FAIL, exit=1. The same body saved to a file and run as 'python3 -I <file>' reads OK on every line, exit=0, after a first block of nine NOT OK lines printed by a spawn child that re-executes the body (the body has no __main__ guard).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC3.sh from worktree C:/tmp/wk-og-182 @bcbef740d72 -- last line RESULT: FAIL, exit=1; deciding line 'a rows request answers the five lowest quantities of account 3 (columns None, matched None, returned None): NOT OK'.",
+        "ENGINE: infra/aws/ec2/opal-gateway/app/integrations/schwab/engine.py:1077 @bcbef740d72 -- self._ctx = multiprocessing.get_context('spawn'); the child traceback ends in OSError [Errno 22] Invalid argument on the '<stdin>' main path.",
+        "FILE RUN: the same check body saved to a worker-local scratch file and run as python3 -I <file> from the same worktree @bcbef740d72 -- final line OK, exit=0, all nine say-lines ok (cursor paging, aggregate and rows included)."
+      ]
+    },
+    "notes": "Disarm: the issuer re-points the AC3 invocation at a file-based body, or runs it on the EC2 Linux gateway box, or adds a __main__ guard to its check. The worker holds no write surface on the check (it lies outside the order's paths) and did not edit it. The worker's own tests run under pytest, where __main__ is a real file."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:03:30Z",
+    "one_line": "query_object has no defined answer for a path whose key is empty (the bucket root): the cursor binding needs a non-empty dataset.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "query_object binds the cursor to dataset=<key> and answers the query for a table folder or one .parquet object; the order names no answer for a path whose key is empty.",
+    "world_is": "bind_key refuses an empty dataset (ValueError: a binding key needs every dimension; dataset is missing), so a bucket-root query cannot be bound. The implementation answers code INVALID_REQUEST, error 'the path names no table folder or parquet object', after folder_decision and before any S3 call.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/cursor.py:69-70 @bcbef740d72 -- a dimension that is None or an empty str/list/tuple/dict raises ValueError before the key is built.",
+        "CODE: infra/aws/ec2/opal-gateway/app/folder_tools.py in worktree C:/tmp/wk-og-182 (uncommitted at this write, on top of bcbef740d72) -- the key == '' guard in _query, after the folder_decision call and before any S3 call."
+      ]
+    },
+    "notes": "No disarm needed: the answer is a zero-S3 refusal, so the gap cannot read or download anything. The issuer may name the bucket-root answer in a later order if a root listing is wanted."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:20:00Z",
+    "one_line": "The order's next_cursor rule (offset + returned < matched) issues a cursor for an aggregate query, because matched_rows counts the source rows and not the output groups.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "query_object answers next_cursor ONLY when offset + returned_rows < matched_rows, and matched_rows is the count of matching rows the query returns on.",
+    "world_is": "In aggregate mode matched_rows is the count of SOURCE rows (300 for a sum by account over 300 rows) and returned_rows is the group count (10). The literal rule therefore issues a next_cursor for an aggregate whose every group is already returned; the next page is empty. The implementation applies the rule literally and the test asserts the observed values.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/engine.py:762 @bcbef740d72 -- matched = count of sql_plan.count_sql, which counts source rows before the GROUP BY.",
+        "RUN: infra/aws/ec2/opal-gateway/tests/test_cs2_folder_tools.py::test_query_aggregate_request_answers_one_row_per_group in worktree C:/tmp/wk-og-182 -- observed matched_rows 300, returned_rows 10, next_cursor present (17 passed, rc 0)."
+      ]
+    },
+    "notes": "Not harmful as a read: the empty next page answers zero rows and no data leaves the gate. The issuer decides whether an aggregate carries a cursor; the worker applied the order's rule as written."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:21:00Z",
+    "one_line": "On this Windows device the engine's spawn path prints faulthandler 'Windows fatal exception: access violation' dumps while the cs2 tests run; the tests still pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The cs2 test file runs offline under pytest and passes every test; a clean run is the expected output.",
+    "world_is": "Two runs of the test file printed faulthandler 'Windows fatal exception: access violation' dumps: the first (before two fixture fixes) had seven failing tests and six dumps; the second passed all 17 tests, rc 0, with seven dumps. Every dump's current-thread stack sits in engine.py submit -> multiprocessing Popen.start (popen_spawn_win32.py line 75). The cause is not isolated; the dumps do not change any result the tests assert.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: python3 -I -m pytest tests/test_cs2_folder_tools.py in infra/aws/ec2/opal-gateway of worktree C:/tmp/wk-og-182 (new files uncommitted, on top of bcbef740d72) -- 17 passed in 11.81s, rc 0; output kept in a worker-local scratch file.",
+        "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/engine.py:1296 @bcbef740d72 -- the engine's submit calls the spawn process start, the frame in every dump."
+      ]
+    },
+    "notes": "Scope: this Windows device only; the gateway runs on the EC2 Linux box, where the dump was not observed by this worker. The S1 row (stdin spawn) and this row share the spawn path on Windows and should be read together by the issuer."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:22:00Z",
+    "one_line": "The stdin-spawn failure in row S1 did not reproduce: cs2.AC3.sh read RESULT: PASS, exit=0 on two runs after the module was committed, the module bytes being unchanged from the failing run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row S1 states that cs2.AC3.sh, invoked from stdin, cannot read PASS on this Windows device.",
+    "world_is": "The one failing run (before the commit) printed OSError Errno 22 from the spawn child. Two later runs at the committed tree (edd78166b63), one diagnostic and one in criterion form, both read RESULT: PASS, exit=0, with zero Traceback, OSError or NOT OK lines. The failure is therefore intermittent and unreproduced, not a fixed property of the device. S1 is left as filed for the issuer to weigh; this row only corrects its wording.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC3.sh in worktree C:/tmp/wk-og-182 @edd78166b63 (criterion form, output kept in a worker-local scratch file) -- RESULT: PASS, exit=0, zero Traceback or OSError lines.",
+        "RUN: the same check at @edd78166b63 as a diagnostic (output kept in a worker-local scratch file) -- RESULT: PASS, zero Traceback or OSError lines; the module infra/aws/ec2/opal-gateway/app/folder_tools.py is byte-identical across the failing and passing runs (committed as edd78166b63, unchanged after the first run)."
+      ]
+    },
+    "notes": "Read with S1: the BLOCKING class of S1 rests on one failing run, so the issuer should decide its disposition on the reproduction rate, not on the single observation. S3 and S4 are the other OBSERVATION rows of this worker."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:30:00Z",
+    "one_line": "The order's AC1 expect pattern does not match the AC1 check's own output: 'deny wins .*: ok' needs a space after 'wins', and the check prints 'deny wins:'.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AC1 expect, as written in the order: '...refused for the sibling master with no S3 call: ok.*deny wins .*: ok.*RESULT: PASS.*exit=0'.",
+    "world_is": "The check cs2.AC1.sh prints 'deny wins: a denied sub-folder is refused for a whole-bucket grant: ok' (colon directly after 'wins'), then 'RESULT: PASS' and exit=0. The expect pattern requires 'deny wins ' with a space, so it does not match the check's output: the regex search for the full expect fails at that segment. The check's own predicate passes; the expect as written does not.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cs-2.cli-shim-the-folder-tools-list-describe-query.md @bcbef740d72 -- the AC1 proof_of_spec <expect> carries 'deny wins .*: ok'.",
+        "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC1.sh in worktree C:/tmp/wk-og-182 @edd78166b63 -- output line 'deny wins: a denied sub-folder is refused for a whole-bucket grant: ok', then RESULT: PASS, exit=0; a python re.search of the expect with its 'deny wins .*: ok' segment fails on this output."
+      ]
+    },
+    "notes": "Not fixed by the worker: the expect is the issuer's criterion and changing it would change the criterion. The issuer decides whether the expect is corrected (one space) or the check's wording changes. The AC1 row of this worker's proof instance is recorded FAIL against the expect as written."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W182-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~182",
+    "surfaced_at": "2026-10-21T17:40:00Z",
+    "one_line": "The issuer's cs2.AC3.sh and cs_foot.sh in the worker's worktree changed on disk at 17:06:07Z, uncommitted: the one AC3 FAIL ran the committed stdin revision and the later PASS runs ran a file-probe revision, so S1 and S5 compared two check revisions, not one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "The AC3 criterion invokes a fixed check script; S5 says the module bytes were unchanged across the failing and passing runs, so the flip was the environment, and the determinism control compares same-input runs.",
+    "world_is": "At HEAD (commit bcbef740d72 and the worker's edd78166b63) cs2.AC3.sh feeds its probe through python3 -I - on stdin. The working copy, modified at 17:06:07Z (local 13:06:07) and not committed, writes the probe to a file with a main guard (a _probe function). cs_foot.sh is also modified, uncommitted. The one FAIL (exit=1, OSError Errno 22 on the <stdin> spawn path) ran the HEAD revision; the PASS runs from 17:06Z on ran the working copy. The two same-revision runs of the working copy gave identical 10-line outputs.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DIFF: git diff of org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/clishim/checks/cs2.AC3.sh in worktree C:/tmp/wk-og-182 @edd78166b63 -- working copy differs from HEAD in content; HEAD carries the stdin body (PYEOF heredoc), the working copy a _probe function; the change is not in any commit.",
+        "MTIME: ls -l of cs2.AC3.sh and cs_foot.sh -- 13:06:07 local (17:06:07Z), against the worker's first AC3 FAIL run before the 17:03Z row S1 and the later PASS runs."
+      ]
+    },
+    "notes": "Disarm (owner 2.0.0_SA_COO~O): commit the revised probe or revert the working copy, so that the graded check and the committed check are one revision. The worker did not edit either file and holds no write surface on them. The determinism control of the proof instance is recorded on the revised check only, with the superseded-revision FAIL named as a different input."
+  }
+]
+```
