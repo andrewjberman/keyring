@@ -1190,6 +1190,29 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "REPAIR 1 (issuer, 2026-10-21) and FU4-AC2: the fu4d dry run still reads dests=6 (expect R1-FU4D-OK dests=6), and the checker's synthetic handoff is the fixture for that run.",
     "world_is": "The checker's synth_handoff writes the as-of date in field 0 of all six synthetic files. Under the per-file columns of REPAIR 1, balance (column 3), account (column 16) and transact (column 17) are unreadable in that fixture, so the dry run prints three DRYRUN lines, reads dests=3 and exits 1. The lander follows the repaired rule; no lander rule reaches dests=6 on this fixture as written.",
     "notes": "Not edited: the checker is the COO's (org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/) and outside this order's grant. The lander and its tests are committed at ca6db55395 and FU4-AC1 passes. FU4-AC2 is recorded FAIL and the order stays open. Decision for the COO: point synth_handoff at the per-file columns, then re-run fu4d; the lander is not to be reverted to field 0 to pass it."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W4-S10",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~4",
+    "surfaced_at": "2026-10-21T01:37:00Z",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P1",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "one_line": "box/run.py refuses any config.json that carries perg_secret_id: ALLOWED_KEYS has no such key, so check_pointers raises before any run mode dispatches.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/canonical-fidelity/box/run.py@6bd116284f5 lines 21-25: ALLOWED_KEYS lists wealthscape_secret_id, quo_secret_id, quo_line_id, quo_sender, scope, region, profile_dir, work_dir, repo_root, mode, firm_labels, account_columns; perg_secret_id is absent",
+        "local call in worktree C:/tmp/fidupl-w4 at cede76602d, no AWS and no secret: run.check_pointers(config) with a synthetic config carrying perg_secret_id printed 'REFUSED: config holds keys that are not pointers: perg_secret_id'",
+        "org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md@6bd116284f5 section 12 names config.json key perg_secret_id (the per-G secret id)"
+      ]
+    },
+    "spec_asserts": "REFERENCE section 12 (round 3): the box config.json carries the key perg_secret_id, and section 7 keeps config.json to POINTERS; box/run.py main() is the box's config gate and refuses keys outside its ALLOWED_KEYS.",
+    "world_is": "ALLOWED_KEYS in box/run.py does not list perg_secret_id, so a config carrying the key is refused with 'config holds keys that are not pointers' before any once or daily run starts. perg_seed.py (FT-s-1) does not call check_pointers and reads the key directly, so FT-s-1 is not affected.",
+    "notes": "Not edited: box/run.py is outside FT-s-1's grant. Disarm is the issuer's: add perg_secret_id to ALLOWED_KEYS as a string pointer in the cell that writes the key into config.json, or confirm where the key is written. ARMED until a config carrying the key passes check_pointers on the box. Measured on the local worktree only; the box config.json was not read."
   }
 ]
 ```
