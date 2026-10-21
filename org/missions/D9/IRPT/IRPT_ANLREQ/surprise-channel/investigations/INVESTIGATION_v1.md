@@ -32079,3 +32079,30 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W380-S1 -- the naming gate printed a NAMING ERROR for a missing function-map folder during the AR-g-189 code commit; the commit landed
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W380-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~380",
+  "surfaced_at": "2026-10-21T10:05:14Z",
+  "one_line": "The naming gate printed a NAMING ERROR for the missing function-map folder during the AR-g-189 code commit; the commit landed anyway.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-189 Worker face: commit with bash .tools/safe-commit.sh and the commit is the gate's clean pass over the two dispatched paths; the order names no naming-gate step.",
+  "world_is": "safe-commit.sh on wk-IRPT_ANLREQ-380 printed '[naming-gate] NAMING ERROR function-map folder missing: C:\\dev\\wk-irpt-anlreq-380\\infra/aws/lambda/ci/function-map/' while the commit-gate, to-pipeline-gate and surprise-row-gate printed OK; the commit 21205a2836e landed with msg-verify MATCH. The sparse worktree does not carry infra/aws/lambda/ci/function-map. Nothing in this order reads that folder; the commit is local and nothing is deployed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of commit 21205a2836e on branch wk-IRPT_ANLREQ-380: '[naming-gate] NAMING ERROR function-map folder missing' followed by 'committed 21205a2836' and 'msg-verify MATCH len=1097'",
+      "git log --oneline -1 21205a2836e on wk-IRPT_ANLREQ-380 (the code commit that carries resident_worker.py and test_compare_ports.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
