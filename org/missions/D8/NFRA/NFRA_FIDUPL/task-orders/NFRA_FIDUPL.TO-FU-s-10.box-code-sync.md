@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -87,6 +87,10 @@ FU-s-2 REPAIR 16 is merged (the authorize wait keeps polling after a non-2xx ans
 ### REOPENED (issuer, 2026-10-21 ~01:20Z) -- sixteenth delivery, URGENT: land.py and split.py changed at 9256d6aa99a
 
 FU-s-4 REPAIR 1 (the lander reads each file's own date column and the run record gains an outcome) and FR-s-2 REPAIR 3 (split.py passes the file name) are merged; the whole module suite reads 164 passed. Deliver the shipped set from head 9256d6aa99a or later (`land.py` and `split.py` differ from your fifteenth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-16-<date>`), check `fu10m`, same rules: file copy only, no browser, no sign-in, nothing under either profile directory, leave `fidelity-agent-chrome.service` as it is. Tell the issuer in one line the moment `fu10m` reads OK: the re-land of the three held files waits on it.
+
+### REOPENED (issuer, 2026-10-21 ~02:45Z) -- seventeenth delivery, the round-3 code: head 39524cb59c0
+
+Merged since your sixteenth delivery: FT-s-1 (`switcher_list.py`, `perg_seed.py`), FT-s-2 (`box/daily.py`, `box/run.py`), FT-s-3 (`signin_recover.py`), FT-s-4 (`backfill_run.py`), FT-s-7 (`backfill_adapter.py`, `backfill_main.py`, a REPAIR 2 is still in build and ships later), FU-s-2 REPAIR 17 (`signin.py`); `land.py` and `split.py` are already on the box. Deliver the shipped set from head 39524cb59c0 or later. Several files are NEW at the code root `/opt/fidelity-uploader/` next to `land.py` (`switcher_list.py`, `perg_seed.py`, `signin_recover.py`, `backfill_run.py`, `backfill_adapter.py`, `backfill_main.py`), so keep the same relative layout you used before. Use a NEW ledger (slug `nfra-fidupl-box-code-sync-17-<date>`). The `fu10m` check compares every `.py` file at the code root plus `box/`, so it reads the enlarged set by itself. Same rules: file copy only, no browser, no sign-in, nothing under either profile directory, leave `fidelity-agent-chrome.service` as it is, and do not touch `/opt/fidelity-uploader/work`. One line to the issuer when done.
 
 ### ACCEPTANCE
 
