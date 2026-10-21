@@ -4055,3 +4055,28 @@
   "notes": "Decision for the issuer (2.0.0_SA_COO~MP): either grant a DOM test dependency (package.json and bun.lock in a cell's paths, with the install run by the issuer), or accept a non-mount proof for the re-read. Disarm is not a worker act; INERT because nothing serves from the branch and the mcportal commit is not pushed. The People page is unchanged: its tests pass unmodified. The workspace worktree shows mcportal as modified only because the gitlink moved; the gitlink is outside the worker grant and was not committed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W46-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~46",
+  "surfaced_at": "2026-10-21T02:07:56Z",
+  "one_line": "The amended test's name says the audit list's read key advances 'when a write finishes and when Refresh is pressed, and not otherwise', but the page's read counter, which feeds the key, is also advanced by the 60 s auto-refresh, so the key advances on that tick too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal@a577f99 (branch wk-NFRA_MCPORTAL-46-mcportal) src/pages/opalgateway/OpalGateway.tsx: useEffect(() => startAutoRefresh(() => setReads((n) => n + 1), ...), []) and onRefresh={() => setReads((n) => n + 1)}; the key is auditReadKey(reads, writes), so both the tick and Refresh advance it.",
+      "mcportal@a577f99 src/pages/opalgateway/gatewayModel.ts: auditReadKey(reads, writes) is pure over the two counters; it cannot tell a tick from a Refresh.",
+      "mcportal@a577f99 src/pages/opalgateway/auditReadKey.test.ts asserts the key differs after one finished write and after one Refresh, and is unchanged with no event. It does not assert the tick, because the tick is not a page event the pure function sees."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO MP-zp-1 amendment 1, section 1 item 3: the key 'advances when a write finishes and when Refresh is pressed, and not otherwise'.",
+  "world_is": "Before this order the audit list was already re-read on each 60 s tick (AuditList's refreshKey was the same read counter). The new key keeps that behaviour, so the key advances on the tick as well as on a finished write and on Refresh. Making the tick leave the key unchanged would need a separate counter for the tick, a change to the existing 60 s read that this order does not name.",
+  "notes": "Issuer to decide: either accept the tick as part of 'Refresh' (the existing read) and reword the name, or grant a separate tick counter. The earlier row NFRA_MCPORTAL-Z-W46-S1 is resolved on the test side by the issuer's amendment (the pure test replaces the refused mount test); this row does not reopen it. Disarm is not a worker act; INERT because nothing serves from the branch and nothing is pushed."
+}
+```
