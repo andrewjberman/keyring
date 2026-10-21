@@ -68,7 +68,7 @@ Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_
 
 **ISSUER NOTES:** cut in the OGW round-2 issuance (decomposition OGW2.2) from the CTO's `ledger/ROUND_ANALYSIS.ogw-round1.md` item 3 ("each one is disarmed with its evidence, or ruled to an owner with a date; none is carried silently"). Rows W3-S2 and C-S8 are the issuer's own reading of the writer deploy (MP-pd-7, closed 2026-10-20T20:23:42Z: the deployed function answers REFUSED NO-OWNER-HEADER before and after, so it imports and carries its owner key); the worker re-measures. Rows C-S3 (fabric tool, `1.0.0_SA_CTO`) and W2-S8 (the gateway release script, `2.0.0_SA_COO~O`) are not this project's product: the worker documents the state and the issuer asks the owner for a date. Only a CVO `adjudicates` row or a remediation row moves a worker row's clock; the issuer sends the worker's file to the CVO as an L8 packet. AC2 passes at base by design (it is an independent probe of the world the evidence describes, not a build check); AC1 FAILS at base (the file is absent) and its green and red arms were exercised with synthetic files.
 
-<status>pending</status>
+<status>complete -- drained f89f7afb6f8 (worker 0.9.0_WK_NFRA_MCPORTAL~45); AC1 PASS (4 of 4 rows) and AC2 PASS (issuer re-ran both); proof instance VALID; DISARM proposals W3-S2, C-S8, C-S3; W2-S8 OWNER_DATE 2.0.0_SA_COO~O 2026-10-21. Issuer row Z-S78.</status>
 <round>2</round>
 <workstream>OGW</workstream>
 <slot>~45</slot>
