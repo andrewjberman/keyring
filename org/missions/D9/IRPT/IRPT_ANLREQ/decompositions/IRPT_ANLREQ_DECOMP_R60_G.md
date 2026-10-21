@@ -102,3 +102,15 @@ Run 7e (Y2's Overview filing) stopped at P4 on r34o with RetentionRefused where 
 AR-g-180 carries `<workstream>~GREL4</workstream>`.
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell.
+
+## Addendum 5 2026-10-21 (issuer): cell AR-g-181, the r34q build (r34p plus the S245 admission fix, the tickets_table binding and the audit revision)
+
+Run 7H (the Multi-Comp filing on r34p) was refused at the resident's replay of the frozen composition (row S245, CLOSED_COMPOSITION_REQUIRED): the packaged `ycharts/generate/submission.py` lacks `commentary_requested`. Measured by `checks/ar_admission_replay.py` on the run's retained synthetic composition: r34o and r34p tarballs fail at step 3, the same tarball with trunk's `submission.py` passes all five steps. r34q also ships 2.0.0_SA_COO~Y2's tickets_table binding (AR-y-483/484) and the registry file with the NEW revision `irpt-anlreq-audit-x10-v1` (ACTIVE since msg 11816). Measured by a rehearsal at pin `21cb4e857df85da3e0d3e14c83cb4c78c9a94b83`: against r34p the release moves 7 members and adds none: 323 members, tarball sha256 `f757171891f3924458123168abe2ccbba87d4b5bc12821cfa0f59b0f38b9266b`. The one policy hash that moved against r34n is `irpt-dashbd-x10-v1` (PENDING_ENFORCEMENT in both trees, 0 retention rows possible); the checker tolerates that revision alone.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-181` | the r34q tarball, sums and four host scripts into stage `C:/dev/irpt-release-r34q-g2` (BUILD ONLY), a record and a proof | the worker folder `r64/` | LOCAL |
+
+AR-g-181 carries `<workstream>~GREL5</workstream>`.
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell.
