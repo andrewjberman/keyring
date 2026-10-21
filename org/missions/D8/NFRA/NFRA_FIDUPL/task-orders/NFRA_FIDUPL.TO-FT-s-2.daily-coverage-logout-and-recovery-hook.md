@@ -1,0 +1,84 @@
+# TO NFRA_FIDUPL.TO-FT-s-2 -- daily-coverage-logout-and-recovery-hook -- coverage record, logout statuses, one recovery attempt
+
+<to_id>NFRA_FIDUPL.TO-FT-s-2</to_id>
+<project>NFRA_FIDUPL</project>
+<issued_to>0.9.0_WK_NFRA_FIDUPL~5</issued_to>
+<issued_by>2.0.0_SA_COO~P1</issued_by>
+<issued_date>2026-10-21</issued_date>
+<status>pending</status>
+<direct_act>false</direct_act>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>3</round>
+<workstream>fidelity-r3</workstream>
+
+**Directive:** D8 | **Fabric:** dell1 | **Decomp cell:** `FT-s-2` (`decompositions/NFRA_FIDUPL_DECOMP_R3.md` section 2) | **outcome_ref:** FWD-3, FWD-9 |
+**depends_on:** none (built on fakes; interfaces in reference section 12)
+
+---
+
+## WORKER FACE
+
+### THE CELL
+
+**FT-s-2** -- Make the daily run report what it covered and how it ended. Each run (1) reads the switcher list it already iterates in the attribution sweep, maps labels with `switcher_list.firm_for_label`, and writes a COVERAGE record next to the split record (counts: listed, attributed, unattributed landed under `alongside`, named by ordinal only) with the cross-check against the per-G secret (`added`, `dropped`, or `checked:false` when the secret or its config key is absent); (2) records the logout statuses the session close produced; (3) on a password refusal tries `signin_recover.recover_session` ONCE and records `recovery: attempted|succeeded|failed`, never looped.
+
+**Read first (paths in your worktree):** `org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_R1_WORKER_REFERENCE.md` sections 1 (rules), 7 (box layout), 9 to 12 (interfaces; section 12 is this round's); `box/daily.py`, `box/run.py`, `attribute.py`, `split.py` (the split record's writer is the pattern for the coverage record), `signin.py` (`SigninError`, `Session.close`).
+
+### WHAT TO BUILD
+
+1. In `box/daily.py`: after the attribution sweep, build the coverage record and write it beside the split record through the same address builder and writer (`address('fidelity', <scope>, 'bronze', '_runs', <business day>, 'coverage-<run id>.json')` if that is how the split record is addressed; follow it exactly). Counts only; unattributed G numbers by ordinal. The cross-check difference is NOTED in the record and printed as counts, never fatal. A missing `perg_secret_id` or an unreadable secret gives `checked:false` and one line saying so.
+2. The logout statuses: the session close already logs out (`logout statuses=a,b` in the driver's trace); read them from the session object (`session.logout_statuses` if present, else `None`) and put them in the coverage record as `logout`.
+3. In `box/run.py`: where `open_session` raises a `SigninError` whose class is the refused class, call `signin_recover.recover_session(config, creds, otp)` ONCE through a lazy import (the module may not be on the box yet: an ImportError is recorded as `recovery: unavailable`); success continues the run with that session; a second failure stops the run with the refusal and `recovery: failed`. The record carries `recovery`.
+4. Seven tests in `tests/test_box_daily.py` (names in the criterion), fakes for everything. Existing tests keep their names.
+**Fakes only.** No AWS call, no live call, no sign-in, no real secret, no real export file; every test uses synthetic data. ASCII, Python 3.9 syntax, ruff py39 clean.
+
+### ACCEPTANCE
+
+<criterion id="FT-s-2-AC1" cell_refs="FT-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft2</invocation><expect>R1-FT2-OK passed=\d+</expect></criterion>
+`FT-s-2-AC1` -- the seven named tests exist and pass; the earlier daily tests still pass (the check runs the whole file).
+
+<criterion id="FT-s-2-AC2" cell_refs="FT-s-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fr4</invocation><expect>R1-FR4-OK passed=\d+</expect></criterion>
+`FT-s-2-AC2` -- a second criterion, with its reason: the round-2 daily-orchestration tests must still pass after the edit.
+
+<expected_criteria>FT-s-2-AC1,FT-s-2-AC2</expected_criteria>
+
+Dry-run at the base: `FT-s-2-AC1` base: FAIL as expected; `FT-s-2-AC2` base: PASS as expected (a control: the round-2 tests pass before the edit)
+
+## BOUNDS
+
+- **Grant.** The `<paths>` block below and your deliverables folder. Everything else named here you READ.
+- **WORLD by the floor**, fakes in effect. Nothing runs on the box from this order.
+- **Refusal clause.** A premise that fails is a surprise row in the investigation file (`NFRA_FIDUPL-D1-<your slot>-S<k>`, next unused) and you stop that piece.
+
+<paths>
+infra/aws/ec2/canonical-fidelity/box/daily.py
+infra/aws/ec2/canonical-fidelity/box/run.py
+infra/aws/ec2/canonical-fidelity/tests/test_box_daily.py
+org/missions/D8/NFRA/NFRA_FIDUPL/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D8/NFRA/NFRA_FIDUPL/decompositions/NFRA_FIDUPL_DECOMP_R3.md</decomp_doc> (round 3), cell `FT-s-2`.
+<owned_cells>FT-s-2</owned_cells>
+</decomp_ref>
+
+<proof_of_spec>
+Criterion ids: FT-s-2-AC1,FT-s-2-AC2. Instance at `org/missions/D8/NFRA/NFRA_FIDUPL/deliverables/0.9.0_WK_NFRA_FIDUPL~5/NFRA_FIDUPL.TO-FT-s-2.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> FT-s-2-AC1,FT-s-2-AC2` BEFORE the flip. Commit the work first, then pin.
+</proof_of_spec>
+
+**REPORT:** the criteria with output verbatim, the proof instance, every surprise row id, commits.
+
+---
+
+## RECORD FACE
+
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule is touched; denominator 0 schedules changed.
+comp-iam: DECLARED-NOT-APPLICABLE -- no grant changes; denominator 0 IAM statements changed.
+comp-adversary: DECLARED-NOT-APPLICABLE -- built on fakes; runs when the live round touches the surface.
+lane: the paths block.
+</preflight>
+
+Source: CTO msgs 8891 and 8909; PRD v0.5 @c4f8dc3d51; the first landed day (run record run-20261021T012004Z).
