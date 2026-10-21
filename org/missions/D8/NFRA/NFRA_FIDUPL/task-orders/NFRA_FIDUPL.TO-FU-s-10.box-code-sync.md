@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -131,6 +131,10 @@ Your row D1-S14 is acted on (TO-FT-s-7 REPAIR 3: a 120 s request timeout, one `D
 ### REOPENED (issuer, 2026-10-21 ~07:20Z) -- twenty-seventh delivery: backfill_main.py with flushed output, a wall budget and REQ lines, head 170a9c69ce8
 
 Your row D1-S15 is acted on (TO-FT-s-7 REPAIR 4: every line flushed, `--max-seconds` wall budget with a SIGALRM safety net, REQ/SIGNIN/CLOSE lines; module suite 232 passed). Deliver the shipped set from head 170a9c69ce8 or later (only `backfill_main.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-27-<date>`), `fu10m` (23 files). Same rules: file copy only, nothing else touched. One line to the issuer.
+
+### REOPENED (issuer, 2026-10-21 ~07:55Z) -- twenty-eighth delivery: backfill_main.py and backfill_adapter.py (browser-side downloads with a stall bound, partial days), head ae14ca78251
+
+Your row D1-S16 is acted on (TO-FT-s-7 REPAIR 5 and 6, CTO msg 9029: a per-download 120 s idle stall bound read inside the browser, a day lands its served files with the stalled one named missing, one retry at the end, earliest served per file type, the per-day partial record and the SIGTERM logout; module suite 239 passed). Deliver the shipped set from head ae14ca78251 or later (`backfill_main.py` and `backfill_adapter.py` differ), a NEW ledger (slug `nfra-fidupl-box-code-sync-28-<date>`), `fu10m` (23 files). Same rules: file copy only, nothing else touched. One line to the issuer.
 
 ### ACCEPTANCE
 
