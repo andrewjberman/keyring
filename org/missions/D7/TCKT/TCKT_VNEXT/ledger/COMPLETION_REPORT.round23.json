@@ -1,0 +1,161 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "TCKT_VNEXT",
+ "round": 23,
+ "written_by": "2.0.0_SA_COO~V2",
+ "written_utc": "2026-10-21T04:13Z",
+ "decomposition_ref": "org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_DECOMP_R23.md@eb509cbf7c7",
+ "denominators": {
+  "fwd_in_prd_header": 6,
+  "cells_in_decomposition": 1,
+  "task_orders": 2,
+  "task_orders_terminal_with_valid_proof": 1
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a sign-in belonging to a different firm (a test account at that firm, made for the purpose) tries both and is refused, and the attempt can be repeated on demand for Andrew to watch",
+   "cells": [
+    {
+     "cell_id": "R6-fn-1",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-RUN-R6-fn1.fwd2-direct-invoke-five-gets-dell2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-RUN-R6-fn1.fwd2-direct-invoke-five-gets-dell2.proof_of_spec.json@04ce1b2fc53"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "TICKET ARM ONLY, the close set of PRD v0.8 ADDENDUM 6 (the file arm moved to IRPT_ANLREQ C-PACKAGE). Graded REALIZED by the CVO in ADJUDICATION_v21 from the round-6 direct invokes (a client-class refusal, 403; a direct invoke, not a browser sign-in)."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one Opal sign-in files a request, claims it and completes it, on DEV",
+   "cells": [
+    {
+     "cell_id": "R20-rv-3",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-R20-RV.filer-reads-a-meeting-outcome-before-and-after-completion-and-the-meeting-form-rendered-tv2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-R20-RV.filer-reads-a-meeting-outcome-before-and-after-completion-and-the-meeting-form-rendered-tv2.proof_of_spec.json@f4881ad525c"
+      }
+     ]
+    },
+    {
+     "cell_id": "R18-mt-5",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-R18-RUN.one-live-run-of-the-trade-form-and-the-meeting-request-on-dev",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-R18-RUN.one-live-run-of-the-trade-form-and-the-meeting-request-on-dev.proof_of_spec.json@7c1c4854b9d"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The R20 DEV run: one filer filed, claimed and completed its own ticket (run_events.txt on localhost:5174). Graded REALIZED by the CVO in ADJUDICATION_v21."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- an Opal person picks the next request to work from the queue alone",
+   "cells": [
+    {
+     "cell_id": "R23-fv-1",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-R23-F51.fwd5-picker-claims-from-the-board-on-dev-tv2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-R23-F51.fwd5-picker-claims-from-the-board-on-dev-tv2.proof_of_spec.json@47eb1bbfd08"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "The round-23 live arm: two open tickets of different types on the DEV board, a second identity claimed one from the board without opening either. Graded REALIZED by the CVO in ADJUDICATION_v22 after a local read of the private full board."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a second type, defined by someone who did not build the first, is filed by a person",
+   "cells": [
+    {
+     "cell_id": "R18-tf-5",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-R18-REL.ticket-service-release-meeting-route-attachment-routes-and-permission",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-R18-REL.ticket-service-release-meeting-route-attachment-routes-and-permission.proof_of_spec.json@d12b0d3579e"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Graded on FWD-10 by the PRD's ADDENDUM 5 (line 305): the Trade Request is the second type, defined as data in the type table and filed by a person; REALIZED with FWD-10."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- on DEV, then PROD by 2026-10-24: a synthetic Opal staff user opens the Ticket Center, chooses Trade Request, chooses the firm, uploads the trade request form, and submits; the OPEN ticket carries the uploaded form as an attachment opened from the ticket page. Until the real form arrives, a placeholder form is named as such; the real form is a swap of that one file",
+   "cells": [
+    {
+     "cell_id": "R21-rv-1",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-R21-RB1.trade-attachment-byte-read-back-on-the-prod-site-tv2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-R21-RB1.trade-attachment-byte-read-back-on-the-prod-site-tv2.proof_of_spec.json@37f94e82c44"
+      }
+     ]
+    },
+    {
+     "cell_id": "R18-tf-5",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-R18-REL.ticket-service-release-meeting-route-attachment-routes-and-permission",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-R18-REL.ticket-service-release-meeting-route-attachment-routes-and-permission.proof_of_spec.json@d12b0d3579e"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "PROD Trade journey exercised with the bytes read back equal (R21-rv-1); the DEV leg satisfied by identity (DEV and PROD Trade code differ by 0 lines, one ticket service). Graded REALIZED by the CVO in ADJUDICATION_v19."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- on DEV, then PROD by 2026-10-24: a synthetic Opal staff user files a Meeting Request (who, purpose, proposed times); the OPEN ticket lands in the coordinator's queue; the coordinator confirms one time or proposes another on the ticket; the filer sees the outcome on the same ticket. In-house, no Calendly",
+   "cells": [
+    {
+     "cell_id": "R18-mt-5",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-R18-RUN.one-live-run-of-the-trade-form-and-the-meeting-request-on-dev",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-R18-RUN.one-live-run-of-the-trade-form-and-the-meeting-request-on-dev.proof_of_spec.json@7c1c4854b9d"
+      }
+     ]
+    },
+    {
+     "cell_id": "R20-rv-3",
+     "task_orders": [
+      {
+       "id": "TCKT_VNEXT.TO-R20-PROD2.synthetic-filer-files-and-coordinator-confirms-a-meeting-request-on-the-prod-site-tv2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/TCKT_VNEXT.TO-R20-PROD2.synthetic-filer-files-and-coordinator-confirms-a-meeting-request-on-the-prod-site-tv2.proof_of_spec.json@5160c2249aa"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Meeting Request filed, confirmed by the coordinator and read by the filer on DEV and PROD. Graded REALIZED by the CVO in ADJUDICATION_v14."
+  }
+ ]
+}
