@@ -1504,6 +1504,29 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "RELEASE_PLAN_R5_0840_ALL_TIERS.md section 1 and 2 (R4c): the bronze copy fires 6,074 converter events; TO-BF-r1 L6 proof: move tool verify rc 0, DLQ 0.",
     "world_is": "Ten pull-day invocations used 22,953 ms in total (about 2.3 s each on average, 4.3 s at most) and four of them were throttled by the cap of 2. The copy's 6,074 events, at the pull-day average, are about 3.9 hours of converter time; spread over 2 concurrent executions, about 1.9 hours (about 3.6 hours if every key took the 4.3 s maximum). Throttled asynchronous events are retried by Lambda; how long they may wait before they go to the DLQ is the event age limit, which is not set here (AWS's default for asynchronous invocation is 6 hours). Not measured: the converter's duration on a firm-form key, and whether the cap, the retries or the sweep's own invocations change the order.",
     "notes": "For the issuer: the L6 DLQ-0 proof and the window to 20:00Z depend on this drain time. This order changes nothing about the function."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S11",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T12:30:19Z",
+    "one_line": "TO-BF-r3 step B1 failed at the IAM API: the tag value 'one-way fan-in fence (schwab variant)' on aws_iam_policy.one_way_fan_in_fence_schwab (silver.tf line 608) holds parentheses, which IAM tag values reject; the plan passed because Terraform does not check tag characters. Nothing was created.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r3/plan_b1.txt: 'Plan: 2 to add, 0 to change, 0 to destroy.' with the two expected addresses; the policy's tags show Purpose = 'one-way fan-in fence (schwab variant)'",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_b1.txt: 'Error: creating IAM Policy (opal-assets-one-way-fan-in-fence-schwab): ... CreatePolicy, StatusCode: 400 ... ValidationError: 1 validation error detected: Value at tags.2.member.value failed to satisfy constraint: Member must satisfy regular expression pattern: [\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*' (RequestID 83634adf-5553-4428-a7e7-bc91a0163d4f); the failing resource is on silver.tf line 554, its tags on line 608",
+        "aws iam get-policy for arn:aws:iam::313476888478:policy/opal-assets-one-way-fan-in-fence-schwab after the failure: NoSuchEntity (nothing was created, so the attachment was never attempted)",
+        "A scan of the literal tag values in silver.tf and the canonical-schwab-ec2 root found no other value with parentheses or other characters outside the IAM set (line 526's match is the interpolation ${each.key} of a role already in state)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-r3 step B1: the plan of the two targets, 2 to add, applies; the variant fence and its attachment exist afterwards.",
+    "world_is": "The IAM CreatePolicy API accepts tag values made of letters, digits, spaces and _ . : / = + - @ only. The text 'one-way fan-in fence (schwab variant)' has '(' and ')'. A one-token fix in silver.tf line 608, for example 'one-way fan-in fence - schwab variant', passes the pattern. This order may not edit a .tf file (Bounds: a defect is a report, the issuer re-cuts), so the apply is stopped at B1; B2 to B5 and step C were not started because B5 detaches the shared fence and depends on B1. Step A (the fence rows) passed. The window 12:00-20:00Z has time left.",
+    "notes": "Re-pin needed: after the fix lands on box/laptop, redo steps B1 to B5 and C from the new commit. The test data/canonical/schwab/tests/test_converter_fan_in_fence.py checks the two resource lists, not the tag characters; a check of tag characters against the IAM pattern would have caught this at the cut."
   }
 ]
 ```
