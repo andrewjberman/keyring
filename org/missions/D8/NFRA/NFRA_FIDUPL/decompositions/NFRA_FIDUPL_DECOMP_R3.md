@@ -59,3 +59,13 @@ Measured on the box (names and indexes only): the account-number column is accou
 | **FT-s-8** | On the box: create `config.daily.json` (the config plus `mode`, `firm_labels`, `account_columns`), and on the issuer's GO run `box/run.py` once on it; read the per-firm counts | the same Terraform root and ledger paths (a ledger for the config file and the run) | C-TENANCY, FWD-9 | WORLD |
 
 Edge: `FR-s-2 REPAIR 4 -> FT-s-8` (a delivery of `split.py` sits between). Executor: `0.7.0_AE_CloudOps~NFRA1` (rule 34).
+
+## 8. Addendum 2026-10-21 ~03:45Z (issuer: the live proof run found no working page-2 form among eleven candidates, CloudOps row D1-S13)
+
+The account lister's page 1 returns 2000 rows of 5204 available and none of the eleven candidate paging forms (FR-s-6 REPAIR 1) added a row. The form has to be MEASURED, not guessed again. The cheapest measurement that settles it is a read-only probe in one signed-in session on the current G: per candidate form its status, row count, new-row count and the response's own `pageResponse` and `statuses` codes; and the `accountNumber` search semantics (one request per leading character with `length` 1, reading only `available`), because the human UI may narrow by search and never page.
+
+| cell | what it builds (one module) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-9** | `box/paging_probe.py`: one sign-in, page 1, the eleven forms and a 36-character prefix sweep, counts-only lines, logout in a finally | `box/paging_probe.py`, `tests/test_paging_probe.py` | C-TENANCY, FWD-9 | WORLD (infra path floor) |
+
+Edge: `FT-s-9 -> FT-s-8` (the probe's measurement cuts the next lister repair). Executor: worker slot ~5; the run is 0.7.0_AE_CloudOps~NFRA1 under TO-FT-s-8 (amended); workstream fidelity-r3-paging, a write set disjoint from fidelity-r3-split.
