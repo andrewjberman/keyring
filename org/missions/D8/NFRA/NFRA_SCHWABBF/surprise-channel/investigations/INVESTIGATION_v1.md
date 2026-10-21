@@ -1570,6 +1570,30 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "CLAUDE.md rule 30: every resource name is name() output; the commit-time naming gate refuses names today.",
     "world_is": "The three policies exist under the hand-typed names that the TO-BF-r3 order and the release plan list. Nothing broke; if the gate's enforcement is switched on, a re-plan of this root would flag them. Renaming an inline policy replaces it, so it is a later cell's decision.",
     "notes": "Form only. The same run printed a placement-step error that came from my sparse worktree lacking an unrelated .tf file, not from the repo."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S14",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T15:13:40Z",
+    "one_line": "TO-AL-r2 step 4 cannot be met as written: for all four entitled Cottonwood masters the puller exits 9 (the served window holds NO file for D = 2026-10-20), so no bronze landed and the step 5 landed read and the trace have nothing to read.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/entitlements.json and step3_entitlement_invocation.json: the login lists 4 masters, all 4 requested ENTITLED (08719286, 08134043, 08165601, 08480305), task exit 0, identity EC2AMAZ-EM1EPHR\\Administrator",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step4_day_D.txt: today (US Eastern) 2026-10-21 Wednesday; prev_trading_day(2026-10-21) = 2026-10-20 Tuesday, is_trading_day True",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step4_pull_08719286.json, step4_pull_08134043.json, step4_pull_08165601.json, step4_pull_08480305.json: each task exit code 9; each log reads 'SINGLE WIDE SEARCH 2026-10-11..2026-10-21 -> ENUMERATED=N distinct files' (N = 71, 78, 78, 78), 'canonicalized N/N files', then 'FATAL OnlyAsOf=2026-10-20: the served window holds NO file for that day (the floor moved, or it is not a business day). Exiting 9, never 0.'",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step5_landed_read.txt: 0 keys in total under s3://opal-data-assets/schwab/cottonwood/bronze/ (denominator 0); 0 keys for each of the four masters",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step4_cleanup_check.json: no scheduled task named Opal* left, no session lock, administrator console Active, 4 of 4 rules DISABLED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r2 step 4: for each ENTITLED master, the pull of the last trading day D ends 'DAILY PULL OK'; a day with no files on a trading day dies loud, report it, do not retry with another window. Step 5: landed keys equal the builder address and thread_trace reads the bronze hop held.",
+    "world_is": "Each master's served window (2026-10-11..2026-10-21) holds 71 to 78 distinct files, yet none whose AsOf partition date is 2026-10-20. The puller names two readings of its own exit: the floor moved, or the day is not a business day for the feed. The latter is not true by the calendar (2026-10-20 is a Tuesday trading day). What is NOT measured: which partition dates the 71 to 78 files carry, whether Schwab has yet published 2026-10-20 for the Cottonwood masters (the 49F masters' T-1 files arrive after 09:45Z), and whether the new Cottonwood accounts' data starts later than D. I did not retry with another window or run an enumerate-only call, as the order says. Nothing was written to S3. FWD-8's one trace and the AL-r6 gate step 1 (read one day end to end) depend on the same missing day.",
+    "notes": "For the issuer (2.0.0_SA_COO~SA): choose the day for the first trace, for example the newest partition date the window actually holds (an enumerate-only read of the window would show it without downloading), then re-cut step 4 for that day. The box, the login and the four entitlements are sound: entitlement exit 0, session lock acquired and released four times, token read as Administrator."
   }
 ]
 ```
