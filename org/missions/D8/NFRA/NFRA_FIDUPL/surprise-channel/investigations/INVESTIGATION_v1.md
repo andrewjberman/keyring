@@ -1190,6 +1190,91 @@ seat's row is `NFRA_FIDUPL-D1-S<k>`; the CVO's adjudication rows live in `../adj
     "spec_asserts": "REPAIR 1 (issuer, 2026-10-21) and FU4-AC2: the fu4d dry run still reads dests=6 (expect R1-FU4D-OK dests=6), and the checker's synthetic handoff is the fixture for that run.",
     "world_is": "The checker's synth_handoff writes the as-of date in field 0 of all six synthetic files. Under the per-file columns of REPAIR 1, balance (column 3), account (column 16) and transact (column 17) are unreadable in that fixture, so the dry run prints three DRYRUN lines, reads dests=3 and exits 1. The lander follows the repaired rule; no lander rule reaches dests=6 on this fixture as written.",
     "notes": "Not edited: the checker is the COO's (org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/) and outside this order's grant. The lander and its tests are committed at ca6db55395 and FU4-AC1 passes. FU4-AC2 is recorded FAIL and the order stays open. Decision for the COO: point synth_handoff at the per-file columns, then re-run fu4d; the lander is not to be reverted to field 0 to pass it."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S2",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T01:36:22Z",
+    "one_line": "The FT-s-3 status flip edits the task-order file, which is not in the order's <paths> grant; the grant names two code files and this investigation file only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/NFRA/NFRA_FIDUPL/task-orders/NFRA_FIDUPL.TO-FT-s-3.in-run-signin-recovery.md lines 50-54 at worktree HEAD d8d168cbaa6: the <paths> block lists infra/aws/ec2/canonical-fidelity/signin_recover.py, infra/aws/ec2/canonical-fidelity/tests/test_signin_recover.py and the INVESTIGATION_v1.md file",
+        "the same order, BOUNDS line 46: 'Grant. The <paths> block below and your deliverables folder'; line 62 orders the proof instance pinned and the order flipped to complete",
+        "the worker standing rule orders the flip of the task order's <status> to complete committed together with the instance and deliverables"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BOUNDS, Grant: the <paths> block and the deliverables folder are the worker's write surface; everything else the order names is read.",
+    "world_is": "The standing flip step writes the task-order file of this order (one line, the status), which the grant does not name. The flip is made on that one file and nothing else in it is touched.",
+    "notes": "Decision for the COO: whether the flip rides a grant line for the task-order file or is made by the issuer on the drain. The lane gate's behaviour on this commit is recorded in the commit report, not measured here."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S3",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T01:36:22Z",
+    "one_line": "On this device the client-data check of safe-commit did not grade the FT-s-3 code commit: the hashed account-id list is absent at the path the gate reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for commit d8d168cbaa6 printed: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).'",
+        "the commit holds two synthetic-fixture files (signin_recover.py and tests/test_signin_recover.py) and no client data was typed into either"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The safe-commit client-data check grades each commit against the hashed account-id list; a commit is only graded when the list is present.",
+    "world_is": "On this device the list is absent, so the check printed a WARN and graded nothing for this commit. The commit is recorded as not checked for client account ids.",
+    "notes": "Not fixed by this worker: the list's placement is outside this order's grant. The owner of the device's list decides whether the list is restored on dell1."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S4",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T01:36:22Z",
+    "one_line": "The worktree is sparse: infra/aws/lambda/ci is absent, so the naming gate prints NAMING ERROR on a commit that touches no Lambda path, and the commit still lands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for commit d8d168cbaa6 printed: '[naming-gate] NAMING ERROR function-map folder missing: C:\\tmp\\fidupl-w6\\infra/aws/lambda/ci/function-map/ (the Lambda source map is read from this folder; nothing is graded from a copy)'",
+        "bash test -d infra/aws/lambda/ci in the worktree printed 'lambda-ci-present: no'; the same commit printed '[commit-gate] OK: pre-commit gate clean for 2 of 2 file(s)' and the commit landed as d8d168cbaa6"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The naming gate grades the Lambda source map read from infra/aws/lambda/ci/function-map/ and reports a missing folder as NAMING ERROR.",
+    "world_is": "On this worktree the folder is absent. The ERROR line printed and the commit landed, so on this path the line did not refuse the commit.",
+    "notes": "Not fixed: the worktree is the lane's checkout and is not rebuilt here (the order forbids reconstructing the tree). Whether the gate's ERROR is a refusal on a full checkout is not measured."
+  },
+  {
+    "id": "NFRA_FIDUPL-D1-W6-S5",
+    "project": "NFRA_FIDUPL",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_NFRA_FIDUPL~6",
+    "surfaced_at": "2026-10-21T01:36:22Z",
+    "one_line": "The worktree's tracked copy of the round checker differs from the main-tree copy the COO named: the main tree carries an ft7 entry and a changed IAM simulate block; the ft3 entry is identical in both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "diff of org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py: worktree HEAD d8d168cbaa6 (tracked, last changed at 6bd116284f5) against C:/Dev/ajb_workspace copy: hunk at line 88 adds the ft7 entry in the main tree; hunk at lines 648-650 changes the IAM simulate call to one ARN per call in the main tree; the dispatch line 861 differs by the ft7 addition",
+        "lines 85-88 (TEST_FILES ft3 entry) are not in the diff; python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft3 run from C:/tmp/fidupl-w6 printed R1-FT3-OK passed=5 rc=0; the same command with the main-tree absolute path printed the same line"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round checker is one file; the criterion invocation it names resolves to the same checker bytes in every tree that runs the round.",
+    "world_is": "Two copies of the round checker differ: the main tree carries ft7 and a changed IAM check that the worktree's tracked copy does not. The FT-s-3 entry is identical in both, so the FT-s-3 result does not depend on which copy runs.",
+    "notes": "Not fixed: the checker is the COO's and outside this order's grant. Decision for the COO: commit or align the checker so one tree carries the bytes the round grades."
   }
 ]
 ```
