@@ -125,7 +125,10 @@ TEST_FILES = {
         "test_a_day_with_no_served_file_is_a_named_result_and_the_walk_goes_on",
         "test_a_slow_trickle_is_cut_by_the_total_cap_and_named_stalled_total",
         "test_files_downloaded_before_a_mid_day_stop_are_landed_before_the_stop_propagates",
-        "test_a_failed_partial_landing_is_named_and_never_hides_the_original_stop"]),
+        "test_a_failed_partial_landing_is_named_and_never_hides_the_original_stop",
+        "test_skip_files_option_requests_nothing_for_that_file_and_names_it_skipped",
+        "test_landing_failures_are_named_per_file_in_the_day_entry",
+        "test_a_run_that_ends_on_an_exception_writes_it_as_its_stop_with_the_day"]),
     "ft4": ("%s/tests/test_backfill_run.py" % CF, [
         "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
         "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",
