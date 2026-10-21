@@ -31938,3 +31938,34 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+## IRPT_ANLREQ-D2-S256 -- S220 closed on run 7L's live read
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S256",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T10:10:00Z",
+  "one_line": "S220 is closed on a live read: run 7L filed an Overview carrying the kept unknown ticker ZQXWVK on r34s; the door showed the reason, the resident accepted the kept row, the job reached READY, the packager ATTACHED, and the report names ZQXWVK as not analysed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S220"
+  ],
+  "spec_asserts": "S220: a request carrying a kept-as-typed unknown row ZQXWVK was accepted by the door and then refused CLOSED_COMPOSITION_REQUIRED by the resident, never reaching READY.",
+  "world_is": "MEASURED 2026-10-21 ~10:00Z by IB2 (run 7L, msg 11981, A_E2E7L.txt, RUN-DONE PASS) and re-read by this seat for the saved file. The upload answered NEEDS_CORRECTION with the finding TICKER_NOT_FOUND for ZQXWVK and the door's message (the data provider does not recognize the ticker; accept the suggestion, type the correct ticker, or leave it for Opal Staff, who will manage the replacement); the Keep re-post was accepted. Request REQ-de7555f49544199204061b8a reached READY (P1), the packager outcome was ATTACHED (P4), the frozen row for ZQXWVK read UNRESOLVED / KEPT_AS_TYPED and the swap record named it NOT_ANALYSED (the swap model leg is not yet shipped). The Overview PDF was saved as C:/dev/andrew_samples/Opal_Overview_sample_post_r34s.pdf: 260336 bytes, sha256 prefix be9b2b7bc891, 42 pages, %PDF-1.4 and %%EOF, re-read here. G2's live placeholder read: IB2 counted 0 of 42 pages containing the literal {portfolio_name} (pypdf absent on this box, so that count is IB2's, not re-measured here). Dead-letter queue unchanged, none from this request. The refusal of run 5B was the S245 packaging defect, cured in r34q (G2's read, msg 11963).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7l/A_E2E7L.txt",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/S220_S222_DISPOSITION_READS_20261021.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The live read the CTO approved (msg 11970) shows the door's reason to the filer and the kept unknown row passing the resident to READY and ATTACHED; the refusal of run 5B no longer occurs on r34s."
+}
+]
+```
