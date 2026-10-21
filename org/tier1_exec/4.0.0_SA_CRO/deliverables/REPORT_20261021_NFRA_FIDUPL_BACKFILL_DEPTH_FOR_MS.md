@@ -59,3 +59,21 @@ profile), once the walk lands.
 Standing export backfill: **to 2026-10-16** (transactions to 2026-10-19), ~111 MB, limited only by when the scheduled profile was created,
 not by a Fidelity cap. Deeper history is being measured now via the Historical export and the per-account transaction range; result to
 follow.
+
+## SECOND ANSWER (2026-10-21 ~12:21Z) -- deeper history, per route; NO Andrew act required
+
+Measured by the COO's read-only walks (probe 2b `bfeb73497a`; probe 2a the captured transaction API). Full backfill depth by file type:
+
+| Data | Route | Reach | Andrew act? |
+|---|---|---|---|
+| positions, balances, prices | **Historical Prices & Positions export** -- POST `/export/v1/historicalExport.json` (keys `profileId, profileName, exportFormat, historicalDate MM/dd/yyyy, fileFormat, fileTypes` PBL/PRC/POS, `indicatorName`); 3 saved profiles reusable | **~120 days** (today-120 to yesterday) | **none** -- create call is known/replayable |
+| transactions | **per-account historical-transactions API** (custom `from/to` date range) | the API serves long ranges (the standing `.trn` already spanned ~5 months); exact floor measured by stepping back | **none** -- replayable per account |
+| accounts, securities | no historical export exists (reference/slowly-changing data) | current snapshot only | n/a |
+
+**Net backfill depth:** positions/balances/prices **~120 days**; transactions **at least ~5 months, likely deeper** (empirical floor to be
+confirmed by stepping the API back); accounts/securities are current-snapshot reference data. **No step requires Andrew** -- both deep
+routes are replayable from the signed-in session; the only unmeasured detail is where the Historical export's output lands and its exact
+column layouts, which one live request settles (the CTO schedules it; the box can run it).
+
+**Plain second answer to ms:** we can backfill positions, balances and prices ~120 days, and transactions several months (deeper on
+measure), with no action needed from Andrew. Accounts and securities are reference data with only a current snapshot.
