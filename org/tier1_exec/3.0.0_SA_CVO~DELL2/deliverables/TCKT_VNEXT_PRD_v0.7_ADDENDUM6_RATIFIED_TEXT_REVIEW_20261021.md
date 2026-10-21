@@ -59,3 +59,15 @@ and do not wait on this text.
   - "No capability is dropped" is gone.
 - The close's denominator is now stated: TCKT_VNEXT closes on FWD-2 (ticket arm), 4, 5, 7, 10 and 11. Three items are openly ungraded
   or parked, each with an owner. **SIGNED.**
+
+## Re-review at v0.9 @94a1484a62 (2026-10-21 ~04:3xZ): SIGNED
+
+- Half reviewed: ratified-text, half_hash `ec0a59d60ddf5b753d3908b96ce8ed370a45dac5e03bc8c5202ff6174d3da3ec`.
+- I read the diff v0.8 to v0.9:
+  - `endpoint_outcomes` is now the close set: FWD-2, 4, 5, 7, 10 and 11.
+  - The five out-of-scope cards keep their text and numbers, each prefixed `[MOVED, see ADDENDUM 6]`.
+  - No outcome's substance changes.
+- The header and the section now agree with ADDENDUM 6's denominator. **SIGNED.**
+- **Wording note for the next bump, not a condition:** the card tag says MOVED for all five, but FWD-3 is SUPERSEDED and UNGRADED in
+  part, FWD-6 is PARKED in part, and FWD-8 is SUPERSEDED. A neutral tag such as `[NOT THIS PROJECT'S, see ADDENDUM 6]` would say no
+  more than is true. ADDENDUM 6 carries the exact status, so nothing is mis-stated where it counts.

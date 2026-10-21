@@ -5,10 +5,10 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "dell2",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
+ "endpoint_outcomes": ["FWD-2", "FWD-4", "FWD-5", "FWD-7", "FWD-10", "FWD-11"],
  "status": "DRAFT"
 }
 ```
@@ -24,7 +24,7 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
 ## ENDPOINT (step 2, /endpoint --forward)
 
 ```
-  FWD-1  Alyssa files an Analysis Request with a holdings file and opens the finished report from the same ticket
+  [MOVED, see ADDENDUM 6] FWD-1  Alyssa files an Analysis Request with a holdings file and opens the finished report from the same ticket
          DONE WHEN  EXERCISED -- on DEV, an Opal sign-in in Alyssa's role files one request (one household, one account, an Overview report, the default fee)
                     with a real holdings file and follows it to the report opened on the ticket; Alyssa's own first real request grades it again (the organic arm)
          ACCEPT     someone at Opal files the request with the file attached, the report is made from that file without anyone re-typing the holdings, and the
@@ -38,7 +38,7 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
                     done again at any time; a statement that it is refused does not count
          SOURCE     brief O2, finding F7, Part V
 
-  FWD-3  The person filing learns at once when the file will not work, before anyone at Opal sees it
+  [MOVED, see ADDENDUM 6] FWD-3  The person filing learns at once when the file will not work, before anyone at Opal sees it
          DONE WHEN  EXERCISED -- a known-bad sheet (several accounts in one file, a totals row, a holding that cannot be priced) is turned back with what to
                     fix, and a known-good sheet goes through; Alyssa's own two test sheets grade it again when she supplies them (the organic arm)
          ACCEPT     a file that today would come back from Alyssa by email comes back from the form instead, saying what to fix; the good file files normally
@@ -54,7 +54,7 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
          ACCEPT     an Opal person reads each request's type and how long it has waited from the queue itself, and opens only the ones that are theirs
          SOURCE     brief O6
 
-  FWD-6  When a request asks for commentary, the draft appears on the same ticket for an Opal person, and the ticket shows who sent the final commentary and when
+  [MOVED, see ADDENDUM 6] FWD-6  When a request asks for commentary, the draft appears on the same ticket for an Opal person, and the ticket shows who sent the final commentary and when
          DONE WHEN  EXERCISED -- one request with commentary asked for: the draft read on the ticket and the sender recorded
          ACCEPT     an Opal person finds the draft beside the report on the ticket, reviews it, and anyone opening the ticket later can tell who sent the final
                     commentary to the advisor and when
@@ -65,14 +65,14 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
          ACCEPT     the second request type has its own questions and its own destination, someone files it, and the Analysis Request works exactly as before
          SOURCE     brief O7, finding F6; which type is second is decided after FWD-1 has run, on what the tickets show
 
-  FWD-8  An advisor files an Analysis Request themselves and follows it to the finished report
+  [MOVED, see ADDENDUM 6] FWD-8  An advisor files an Analysis Request themselves and follows it to the finished report
          DONE WHEN  EXERCISED -- one advisor who has never seen the Ticket Center files a request with their own file, unaided
          ACCEPT     an advisor at a client firm files a request without being walked through it and opens the finished report from their ticket
          SOURCE     brief O8, call B
          WAIT       QUALIFIED: Andrew removed the client "Submit a Request" item in August. The client-facing surface returns only on his explicit word,
                     after FWD-1 has run on real requests. That word is the one wait this outcome carries.
 
-  FWD-9  An open Analysis Request ticket carries its finished package: the report, the branded Opal PDF with the commentary, and the original Excel
+  [MOVED, see ADDENDUM 6] FWD-9  An open Analysis Request ticket carries its finished package: the report, the branded Opal PDF with the commentary, and the original Excel
          DONE WHEN  EXERCISED -- one seat-filed request on DEV; its open ticket carries all three files, each opened from the ticket page by an Opal person
          ACCEPT     an Opal person opens the request's ticket while it is still open and finds the report, the branded PDF with the commentary and the
                     advisor's original Excel there, without asking anyone; the attach is refused for another ticket type, a closed ticket and a human caller
@@ -360,3 +360,8 @@ from NFRA_OPSWKF to this project for its upload-only form, and its engine-submit
   FWD-10 and FWD-11 are already graded. An outcome the evidence on file cannot grade goes to one live arm, cut by `~V2`.
 
 -- 1.0.0_SA_CTO~DELL2
+
+**v0.9 (2026-10-21 ~04:2xZ, `1.0.0_SA_CTO~DELL2`): ADDENDUM 6 carried into the ENDPOINT section and the header (ENDPOINT changed: the ratified-text half re-opens).**
+- The five moved cards keep their text and their numbers. Each now opens `[MOVED, see ADDENDUM 6]`, so this project no longer DEFINES them as its own outcomes. The ADDENDUM 6 line for each names its carrier: MOVED, SUPERSEDED, PARKED or UNGRADED.
+- The header's `endpoint_outcomes` lists the close set: FWD-2 (ticket arm), 4, 5, 7, 10 and 11.
+- The close check (R6) then grades exactly that set, and the step-4 gate sees the header and the section agree. No outcome's substance changes.
