@@ -4105,3 +4105,81 @@
   "notes": "Disarm_owner is this seat; INERT. Z-S82 closes when the page is looked at served."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W48-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~48",
+  "surfaced_at": "2026-10-21T15:48:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "MP-zh-1 names infra/aws/ec2/opal-gateway/app/data_entitlement.py as read-only at the worktree path, but the workspace worktree's sparse cone omits infra/aws; the file was read from its HEAD blob instead and the regexes match the order's text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/mp-ogh-48 sparse-checkout list omits infra/aws (cone: .tools, infra/logic/registry, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/modules/graph, org/ref, org/standards); ls infra/aws/ in that worktree returns no such directory.",
+      "git ls-tree HEAD infra/aws/ec2/opal-gateway/app/data_entitlement.py returns blob 881da34cda892e22d588c184505de624a96b36d2 at workspace HEAD of wk-NFRA_MCPORTAL-48.",
+      "git show HEAD:infra/aws/ec2/opal-gateway/app/data_entitlement.py: line 250 _TOOL_NAME = ^[a-z][a-z0-9_]{0,99}$, line 254 _CHANNEL = ^[a-z][a-z0-9_]{0,63}$, lines 590-591 the four-field loop, parse_person_access at line 575; all as the order states."
+    ]
+  },
+  "spec_asserts": "MP-zh-1 section 3 lists the gateway file under 'Read, never write' at the workspace worktree path, and the order's preflight reads it as evidence for the regex text.",
+  "world_is": "The file is tracked at HEAD and absent from the materialised worktree. No criterion reads it at run time: AC1 greps mcportal/src and AC2 runs tsc. The order's line numbers and regexes hold at the blob read.",
+  "notes": "Filed for the record. The read was made with git show of the worktree's own HEAD, not by rebuilding the tree. Hazard INERT."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W48-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~48",
+  "surfaced_at": "2026-10-21T15:48:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A channel or tool already stored under a name the gateway cannot read cannot be switched back on from the page: MP-zh-1's rule disables that switch, so no page toggle can remove the stored entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal f939e3e personAccess.ts: channelSwitchChange returns null when channelIdReadable(id) is false; toolSwitchChange returns null when toolNameReadable(name) is false.",
+      "mcportal f939e3e PersonAccessView.tsx: the channel and tool inputs take disabled={busy || readsOff || change === null}; a switch reads off when its name is in the record's deny list, so a stored entry shows off with no way to send the toggle that removes it.",
+      "Test 'a channel or tool whose name the gateway cannot read has a disabled switch and builds no change, while a readable one switches as before' passes at f939e3e (people.test.tsx, 12 of 12 in src/pages/people), so the disabled state is asserted, not inferred."
+    ]
+  },
+  "spec_asserts": "MP-zh-1 bullet 2: a channel switch whose channel.id is not readable, and a tool switch whose tool.name is not readable, is rendered DISABLED.",
+  "world_is": "Before this fix the page's channel switch wrote channels_deny with the raw id, so a hyphenated channel turned OFF stored an entry the gateway reads as unreadable, and every tool of that person fails closed. After this fix that channel's switch is disabled while off, so the only page act that would clear the entry is refused. Stop and restore still post (they carry no lists). The grant writer, which the order says accepts any non-empty string up to 128 characters, is not in this order's paths and still accepts such names; this fix changes the page only.",
+  "notes": "ARMED: a stored unreadable entry is now a state the page cannot clear. disarm_owner 2.0.0_SA_COO~MP decides (a) whether an OFF switch on an unreadable id may be turned ON, a change that only removes the entry, and (b) whether the grant writer refuses such names, a surface outside this order. The worker did not decide either and did not widen the order."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W48-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~48",
+  "surfaced_at": "2026-10-21T15:48:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "MP-zh-1's guard reads any change that would put an unreadable name into a list; a change carries each whole list, so a list already holding a stored unreadable entry refuses every readable toggle for that person, and the order does not say whether a stored entry counts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcportal f939e3e personAccess.ts unreadableNameRefusal scans every entry of tools_allow, tools_deny, channels_allow and channels_deny in the change, not only the entries the change adds.",
+      "mcportal f939e3e personAccess.ts postUnlessRefused returns null before postUnlessStopLocked whenever unreadableNameRefusal is non-null, so a stop or restore (no lists in the change) still posts.",
+      "Test 'no change that puts an unreadable name into any of the four lists is ever posted' at f939e3e covers changes that add an unreadable name; no test covers a stored entry, and a mutant that disables the guard fails that test (rc=1, 11 pass, 1 fail)."
+    ]
+  },
+  "spec_asserts": "MP-zh-1 bullet 3: the panel's post path refuses any change that would put an unreadable name into any of the four lists.",
+  "world_is": "For a person whose record already holds an unreadable entry, every readable list toggle is refused with 'Not sent: the gateway cannot read this name.', and no request is sent. The page cannot repair the record while that entry stands (see NFRA_MCPORTAL-Z-W48-S2).",
+  "notes": "ARMED with S2: the same stored state. The order's wording covers both readings. disarm_owner 2.0.0_SA_COO~MP decides whether the guard checks only the entries a change adds, or every entry it carries; the worker built the every-entry reading and did not widen the order."
+}
+```
