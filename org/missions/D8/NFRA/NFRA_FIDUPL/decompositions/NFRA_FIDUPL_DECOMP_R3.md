@@ -152,3 +152,13 @@ Measured 2026-10-21 (records `FIDUPL_depth_experiments_20261021.md` and the 16:2
 | **FW-s-2** | CloudOps delivers it and runs it (chained, alternating with the Historical walk, never overlapping) until every surface has covered every account | ledger paths | C-BACKFILL | WORLD |
 
 Chain: FW-s-1 then FW-s-2. The daily pull of these surfaces (a `--mode daily`, then the schedule) is a later cell after the backfill is proven. Executor of FW-s-2: `0.7.0_AE_CloudOps~NFRA1`. Workstreams: fidelity-r3-apiwalk-build (FW-s-1) and fidelity-r3-apiwalk-live (FW-s-2).
+
+## 17. Addendum 2026-10-21 ~18:05Z (CloudOps runs 2 to 4: three robustness gaps in the two walks)
+
+Observed in the live runs: (1) a failed sign-in prints only the exception class `SigninError`, with no step, so a failure cannot be read (the exception carries `failure_class`); (2) a transient 504 on the Export Status list read ended a Historical walk run as an error; (3) SSM cuts a command's stdout at 24 KB, so the STOP, CLOSE and OK lines of a long run are lost.
+
+| cell | what it does | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FX-s-1** | both walks print the sign-in failure class; `hist_walk` retries a 5xx status-list read up to three times; both write their final lines to stderr as well | `hist_walk.py`, `api_walk.py`, `tests/test_walk_robust.py` | C-BACKFILL | WORLD (infra path floor) |
+
+Workstream fidelity-r3-walkrobust. Delivered by CloudOps between runs on the issuer's message.

@@ -142,6 +142,11 @@ TEST_FILES = {
         "test_stdout_never_carries_an_account_number"]),
     "fw1s": ("%s/tests/test_api_walk_seam.py" % CF, [
         "test_real_address_builder_keys_the_three_surfaces_on_a_fake_s3"]),
+    "fx1": ("%s/tests/test_walk_robust.py" % CF, [
+        "test_a_failed_sign_in_prints_its_failure_class_and_the_stop_evidence_carries_it",
+        "test_hist_walk_retries_a_5xx_status_list_read_up_to_three_times",
+        "test_hist_walk_does_not_retry_a_4xx_or_an_auth_status",
+        "test_the_final_stop_and_ok_lines_also_go_to_stderr_in_both_modules"]),
     "ft7": ("%s/tests/test_backfill_adapter.py" % CF, [
         "test_empty_status_for_a_day_is_a_retention_stop", "test_refusal_is_an_entitlement_stop",
         "test_one_fetch_serves_all_six_kinds_for_a_day", "test_main_signs_in_once_and_respects_the_session_cap",
@@ -1221,7 +1226,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft11r": backfill_record, "ft12t": rule_targets, "ft13s": schedule_start_allowed, "ft14a": automation_getcmd_revoked, "ft15s": schedule_start_three_forms, "fv1": lambda: tests("fv1"), "fv2": lambda: tests("fv2"), "fv2s": lambda: tests("fv2s"), "fv3r": histwalk_record, "fw1": lambda: tests("fw1"), "fw1s": lambda: tests("fw1s"), "fw2r": apiwalk_record, "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft11r": backfill_record, "ft12t": rule_targets, "ft13s": schedule_start_allowed, "ft14a": automation_getcmd_revoked, "ft15s": schedule_start_three_forms, "fv1": lambda: tests("fv1"), "fv2": lambda: tests("fv2"), "fv2s": lambda: tests("fv2s"), "fv3r": histwalk_record, "fw1": lambda: tests("fw1"), "fw1s": lambda: tests("fw1s"), "fw2r": apiwalk_record, "fx1": lambda: tests("fx1"), "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 
