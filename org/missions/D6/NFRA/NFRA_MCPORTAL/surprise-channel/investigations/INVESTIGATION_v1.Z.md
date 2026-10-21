@@ -4004,3 +4004,28 @@
   "dismissal_reason": "The CTO's criterion (msg 36257: disarm on a measured halt-gate scan under 60 s) is met on the deploy's own path (0.8 s, committed record cited above); the contradicting shared-tree measurement is a different code path and is recorded, not hidden; batch16's own ledger line will carry gate_elapsed_s at the deploy and this seat will re-open the question by a new row if it reads over 60 s."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S82",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-21T01:30:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The issuer's own render of /opalgateway (mcportal f90f03a, fixtures) shows two page defects against FWD-29 and FWD-28 that the unit tests do not: a STOPPED person's switches still read ON, and the audit list does not re-read after a panel write until Refresh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~MP/ogw/render_20261021/og_stopped.png: Access section reads 'Status: stopped', button 'Restore this person', every channel and tool checkbox checked.",
+      "deliverables/2.0.0_SA_COO~MP/ogw/render_20261021/og_after_refresh.png and the run's text: after four writes the audit list read 'No access changes recorded.' until Refresh, then 4 set_person_access rows.",
+      "The render drove: tool off then on (two POSTs {change, expect_revision}), stop, restore; the last-master-admin guard showed its text with the stop control disabled; the Playwright mock's first version failed because /src/api/admin.ts matched an /api/ route, a mock defect, not the page's."
+    ]
+  },
+  "spec_asserts": "FWD-29: what the page shows ON is what the gateway admits (a switch on while a gate refuses is a FAIL). FWD-28: every driven act appears in the one audit list.",
+  "world_is": "Both are page-only and fixture-proven: the real served page is not looked at. They matter for Andrew's one sitting. Cut as workstream OGP round 1 cell MP-zp-1 (decomposition v22) with two tests; History row noise (revision, expect_revision, updated_at, first-write whole record) is handed to the next enrichment list.",
+  "notes": "Disarm_owner is this seat; INERT because nothing writes or serves from this finding. Closed when MP-zp-1 drains and the issuer re-renders."
+}
+```

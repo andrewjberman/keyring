@@ -2031,3 +2031,24 @@ One worker, reads only: for `Z-W3-S2` (owner key) and `Z-C-S8` (writer imports) 
 - Two chains by write set: `MP-zo-4` (waits on the GO) and `MP-zo-5` (runs now). `fanout: 1 spawned now of 2 chains, cap 8` (zo-4 is issued but gated, not spawned).
 - Not claimed: that FWD-23 to FWD-29 are REALIZED (no served proof until the close run); that W1' holds served (stated above); that the four rows are disarmed (the worker proposes, the CVO adjudicates).
 - Deferred, unchanged: FWD-26 add and `portal_channels` (NFRA_OPLGTW round 48).
+
+
+# v22 -- WORKSTREAM OGP, ROUND 1: the issuer's own look at /opalgateway, two defects against FWD-29 and FWD-28 (2026-10-21 ~01:4xZ, 2.0.0_SA_COO~MP)
+
+Source: the issuer rendered the built page (mcportal f90f03a, vite on :5174, fixtures through playwright route mocks) before Andrew's sitting and drove one person through a tool off and on, then stop and restore. Screenshots: `deliverables/2.0.0_SA_COO~MP/ogw/render_20261021/` (`og_landing.png`, `og_stopped.png`, `og_after_refresh.png`). PRD v0.10 unchanged. A new WORKSTREAM, not a recut of OGW: `to-pipeline-gate` allows one issuance per workstream round, OGW round 2 already has its issuance, and this write surface is disjoint from every live order.
+
+## OGP1.0 WHAT WAS SEEN (measured, not inferred)
+
+- After "Stop this person" the Access section reads `Status: stopped` and the button `Restore this person`, but every channel and tool switch stays CHECKED. A stopped person is admitted nothing, so a switch that reads on is a page that disagrees with the gateway (FWD-29's own failure case).
+- After four changes written from the panel, the audit list at the foot read `No access changes recorded.`; after Refresh it listed all four. FWD-28 wants every driven act in the list.
+- Worked as designed in the same run: the tool off and on each posted one change `{change, expect_revision}` and the switch followed the re-read; stop and restore each posted one change; the last-master-admin guard showed its text and disabled the stop control for a sole master_admin.
+
+## OGP1.1 CELL `MP-zp-1` -- a stopped person's switches read OFF and are disabled; the audit list re-reads after a write  (view; one chain; LOCAL; FWD-29, FWD-28)
+
+Two behaviours, two named tests (`a stopped person's tool and channel switches read off and are disabled on the opalgateway page, and the page says the gateway admits nothing`; `the opalgateway audit list reads again after the panel writes a change`). The stopped reading is an optional prop (default off) on the shared access view so People is unchanged; the re-read is an optional callback on the panel. Mechanical criteria: AC1 `zp1.AC1.sh` (named tests present 2 of 2, `bun test src` 91 or more pass, 0 fail), AC2 `zp1.AC2.sh` (type check clean). No judgment criterion.
+
+## OGP1.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+- One chain, one worker (slot ~46). `fanout: 1 of 1 chains, cap 8`. Independent of `MP-zo-4` (which writes only its deliverables).
+- Not in this cut (stated, handed to the next enrichment list): the History and audit rows list bookkeeping fields (`revision`, `expect_revision`, `updated_at`) and a first write shows the whole record `none to ...`: a readability polish, not a defect against an FWD.
+- Nothing here deploys: the change reaches the host only in a bundle release that pins the new mcportal commit; batch17 pins `f90f03a` today, so `2.0.0_SA_COO~O` is told the new pin before its Phase A GO if this lands first.

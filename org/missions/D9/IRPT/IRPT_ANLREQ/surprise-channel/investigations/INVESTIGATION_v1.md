@@ -30925,3 +30925,34 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S243 -- the commentary-ready DLQ is empty (two older synthetic messages deleted by handle)
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S243",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T01:50:00Z",
+  "one_line": "The commentary-ready DLQ is empty: the two older dead-lettered messages (run 6's and the 2026-10-15 synthetic request of the r37 reads) were identified by request id and deleted by receipt handle.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S242"
+  ],
+  "spec_asserts": "S242 said two DLQ messages remained, one of them unidentified.",
+  "world_is": "MEASURED 2026-10-21 ~01:4xZ by this seat (CTO msg 11729). The two remaining messages carried REQ-7206be963b5d2108980885ca (SentTimestamp 2026-10-20 08:04:01Z; run 6, A_E2E6.txt) and REQ-d47252fe74634d0c5cdd8067 (SentTimestamp 2026-10-15 17:01:54Z; IB2's r37 receipt A_AFTER_R37.txt line 5 names it 'synthetic request', ticket TCK-20261015-944c84f8 in S-row keyed reads; it is not Andrew's TCK-20261020-b1d61f80). Both deleted by receipt handle, no purge. DLQ count after: ApproximateNumberOfMessages 0, NotVisible 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e6/A_E2E6.txt",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r37/A_AFTER_R37.txt (S5, G3/G4 notes)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both messages were synthetic and matched run receipts; the DLQ reads 0."
+}
+]
+```
