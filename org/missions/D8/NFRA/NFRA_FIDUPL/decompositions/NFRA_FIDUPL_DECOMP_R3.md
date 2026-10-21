@@ -39,3 +39,13 @@ Data edges: `FT-s-1 -> FT-s-6`, `FT-s-2 -> FT-s-6`, `FT-s-5 -> FT-s-6` (delivery
 ## 5. Battery
 
 `comp-iam`: RUN at FT-s-5 (one statement added) and FT-s-6; BLIND to the root's computed names. `comp-schedule`: RUN at FT-s-6 (three rules turned ON). `comp-adversary`: RUN-NOT-APPLICABLE until FT-s-6 (the schedule is the first standing automated sign-in).
+
+## 6. Addendum 2026-10-21 ~01:50Z (issuer, CTO relay of Andrew-direct MSTR 8912: the earliest date is found empirically, nothing waits on Andrew)
+
+Andrew's method: on-demand exports at progressively earlier dates until the channel refuses or returns empty; land what it gives; the completion record names, per file type, the earliest business date landed, the total volume and any hard limit with its evidence. The measured calls already exist (`status.json` with a `dateString`, then `downloadExport.do`, `fetch.fetch_day`), so a past business day is one `fetch_day`. This closes gap 1 of section 1 for the first empirical pass without his capture.
+
+| cell | what it builds (one adapter) | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-7** | The real backfill adapter over `fetch.fetch_day` (one business day per window; empty status = retention stop, refusal = entitlement stop) and `backfill_main.py`, the box command that signs in once, walks back through `backfill_run.run`, lands each served day and writes the completion record | `infra/aws/ec2/canonical-fidelity/backfill_adapter.py`, `.../backfill_main.py`, `.../tests/test_backfill_adapter.py` | C-BACKFILL, FWD-6 | WORLD |
+
+Edge: `FT-s-4 -> FT-s-7` (the runner's interface, reference section 12). Executor: worker slot ~8.
