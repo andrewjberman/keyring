@@ -30,3 +30,20 @@ feed field carry household/grouping/relationship data (the Master Account Number
 types)? (2) if not, can households be SYNTHESIZED from the Master Account relationships? (3) how does that reconcile with Fidelity's 58
 native Groups so the gold household/attribution dimension is consistent across custodians? Output: a finding the NFRA_FIDSLVR config/gold
 attribution design consumes. Read-only.
+
+## COO finding ~17:45Z (msg 9187, FIDUPL_schwab_household_finding_20261021.md @41fa1eeff4) + design implication
+
+**Correction to the earlier .fam claim:** "Schwab has no household table" held only for master **08242234** (the one the CRO checked).
+Master **08335338 DOES carry `fam` (stale 2026-08-10) and `slm` (live)**. The Option B decision stands regardless (fam is stale, slm is
+per-taxpayer not per-family, and households span advisor groups -- see below), but the clincher was overstated: it is now "no CLEAN,
+current family grouping," not "no table."
+
+**What Schwab actually has:** `slm` col_6 = the account **TIN** (7,589/7,589 cottonwood), i.e. per-taxpayer, not per-family. `tcf/tcfx/tnn`
+= confirmations + 1099s, no grouping. Master Account Number is one value per account file; accounts sit under several masters (7,589
+shared -> a double-count hazard if a master is treated as a household).
+
+**Households are synthesizable:** 4,471 TIN-households over 7,638 open accounts (~3,432 by the CRO household rule).
+
+**DESIGN IMPLICATION (feeds the PRD):** firm/advisor **attribution** and **household** are TWO SEPARATE dimensions -- 90 households span
+>1 advisor group. So the gold config models them separately: (a) firm-attribution config keyed by custodian-native grouping id (G Number /
+Master Account Number); (b) a household dimension keyed by TIN on Schwab and by native Groups on Fidelity. Not one key. Surprise D1-S19 filed.
