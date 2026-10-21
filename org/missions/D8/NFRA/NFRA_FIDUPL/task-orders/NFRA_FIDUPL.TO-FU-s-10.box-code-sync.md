@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -119,6 +119,10 @@ The CTO ruled (msg 8986) that the per-G sweep is the source and that book sizes 
 ### REOPENED (issuer, 2026-10-21 ~05:15Z) -- twenty-fourth delivery: the NEW file box/g_export_probe.py and box/paging_probe.py v3, head a773bcaa09f
 
 Both probes are merged (TO-FT-s-10 incl. REPAIR 1: the G-scoped export probe; TO-FT-s-9 REPAIR 2: probe v3; module suite 225 passed). Deliver the shipped set from head a773bcaa09f or later: `box/g_export_probe.py` is a NEW file (the box set grows to 23) and `box/paging_probe.py` differs; a NEW ledger (slug `nfra-fidupl-box-code-sync-24-<date>`); `fu10m` (expect all 23 match). Same rules: file copy only, nothing else touched. One line to the issuer.
+
+### REOPENED (issuer, 2026-10-21 ~05:40Z) -- twenty-fifth delivery: box/g_export_probe.py with the day argument, head 0a429399ac8
+
+The first live run of the G-export probe used day 2026-10-21 (no export exists yet), so it said nothing about the G number. REPAIR 2 of TO-FT-s-10 adds an optional day argument (module suite 226 passed). Deliver the shipped set from head 0a429399ac8 or later (only `box/g_export_probe.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-25-<date>`), `fu10m` (23 files). Same rules: file copy only, nothing else touched. One line to the issuer.
 
 ### ACCEPTANCE
 
