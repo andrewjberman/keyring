@@ -119,3 +119,13 @@ The manual start of the run document at 10:27:27Z succeeded end to end (startIns
 | **FT-s-14** | `automation.tf`: remove `ssm:GetCommandInvocation` from `ListOwnCommandStar`; safe-apply | `automation.tf`, ledger | C-SCHEDULE | WORLD |
 
 Executor: `0.7.0_AE_CloudOps~NFRA1`. Workstream fidelity-r3-automationrevert.
+
+## 14. Addendum 2026-10-21 ~10:55Z (CTO msg 9065: the 10:45Z leg failed on a THIRD resource form)
+
+CloudTrail for the 10:45Z leg (StartAutomationExecution 10:45:04Z, schedule role): AccessDenied on `arn:aws:ssm:us-east-1:313476888478:automation-execution/*`. SSM authorizes the start against three resource forms (automation-definition, document, automation-execution); the schedule policy names two. Today's three scheduled legs are spent; the schedule is unproven until tomorrow 09:45Z unless the ROLE path is proven by one one-shot run today.
+
+| cell | what it does | write set | PRD rows | risk |
+|---|---|---|---|---|
+| **FT-s-15** | `schedule.tf`: add `automation-execution/*` to the policy's first statement; safe-apply; simulate all three forms; then ONE temporary one-shot EventBridge rule (same role, same target, same input), read its execution, delete it | `schedule.tf`, the ledger paths, one temporary rule | C-SCHEDULE | WORLD |
+
+Executor: `0.7.0_AE_CloudOps~NFRA1`. Workstream fidelity-r3-schedulethird.
