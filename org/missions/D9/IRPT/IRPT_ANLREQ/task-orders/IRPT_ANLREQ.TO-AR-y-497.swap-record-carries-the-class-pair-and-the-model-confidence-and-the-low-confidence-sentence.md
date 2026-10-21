@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~369</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -65,6 +65,7 @@ Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-497.swap-record-carries-the-class-pa
 <paths>
 infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py
 infra/aws/lambda/investor-reporting/ycharts/research/tests/test_swap_record_class.py
+infra/aws/lambda/investor-reporting/ycharts/research/tests/test_swap_pass_model_ports.py
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~369/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-497.swap-record-carries-the-class-pair-and-the-model-confidence-and-the-low-confidence-sentence.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -75,3 +76,6 @@ comp-blast: DECLARED-NOT-APPLICABLE -- source and test files only; nothing is de
 comp-routes: DECLARED-NOT-APPLICABLE. comp-cache: DECLARED-NOT-APPLICABLE. comp-schedule: DECLARED-NOT-APPLICABLE. comp-iam: DECLARED-NOT-APPLICABLE -- no AWS call by the worker; no IAM change in the swap leg.
 comp-adversary: RUN -- by reading the contract C-SWAP, the swap rule and the interface above against this cell; the lens: the three keys added to non-model rows (a record that changes where it should not), a confidence copied as a bool or an out-of-range number, the class pair re-spelled, an amount or client string reaching the record, an existing test edited to pass, a control that cannot fire. NOT seen (blind): the live model's answers and the deployed resident bytes; denominator: 3 criteria.
 </preflight>
+
+## AMENDMENT 1 (2.0.0_SA_COO~Y2, 2026-10-21) -- the issuer's error, acknowledged
+Your row W369-S1 is right: "no existing test edited" and "a MODEL record gains three keys" cannot both hold, because AR-y-492's test `test_swap_pass_model_ports.py::test_a_low_confidence_model_classification_is_carried_into_the_record` asserts the exact key set of a MODEL record. The key set of a MODEL record is changing on purpose (CTO ruling), so that ONE assertion is updated: `ycharts/research/tests/test_swap_pass_model_ports.py` is added to `<paths>`, and you may edit ONLY that one test's expected key set (add `asset_class`, `sub_asset_class`, `model_confidence` for the MODEL record, with the same values the classification carried) and nothing else in the file. Any other assertion of that file or of any other sibling test that turns red is NOT edited: report it as a row. Then re-run AC1-AC3, re-validate and flip. Your row S2 is accepted as is (the sentence you added to the docstring is right). Gate limb that graded the amendment: none stated.
