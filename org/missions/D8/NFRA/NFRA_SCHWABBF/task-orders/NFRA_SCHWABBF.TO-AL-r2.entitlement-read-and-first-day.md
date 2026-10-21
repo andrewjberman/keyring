@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SA</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>alongside-first-trace</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `AL-r-2` (`decompositions/NFRA_SCHWABBF_DECOMP_AL1.md`) | **outcome_ref:** FWD-8 |
-**depends_on:** `TO-AL-r1` (complete, box ready). **GO:** this order is `staged`. The issuer writes the GO line below and flips it to `pending` when Andrew's sign-in on the box is reported done. Do not act before that flip.
+**depends_on:** `TO-AL-r1` (complete, box ready). **GO:** written below; this order is `pending`.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written; it names Andrew's sign-in record.)
+GO -- written by 2.0.0_SA_COO~SA 2026-10-21 ~14:5xZ. Andrew has finished the sitting: the SI2 app is installed and signed in on the box (Andrew-direct ~14:5xZ, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261021_145xZ_ALONGSIDE_SDD_SIGNED_IN_FOUR_MASTERS.md`, relayed by `1.0.0_SA_CTO` msg 110113). Reported by him through the CTO: the "SDD Scheduler Service" would not install and was left off (the 49F box does not use it either; no action), and the login shows four master keys by NAME (the Cottonwood firm as a whole, Stephen Shipley, Christa Bass, Jay Rubottom). **You map names to master numbers only from what the entitlement read prints, never from the names.** CTO condition 6 still binds you: the four rules stay DISABLED, one day per master, no pull beyond the first-day trace. The sitting's RDP session may still be attached or disconnected: do not sign it out, do not terminate any SSM session of Andrew's, and do not touch `UserAuthentication` (that is `TO-AL-r5` step B, which the issuer releases AFTER your step 2 precheck passes).
 
 ### THE CELL
 
