@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -99,6 +99,10 @@ Merged since your seventeenth delivery: FR-s-2 REPAIR 4 (`split.py`: prices and 
 ### REOPENED (issuer, 2026-10-21 ~03:10Z) -- nineteenth delivery: box/run.py accepts the null account column, head 8a6b473b366
 
 Your row D1-S10 was right and is fixed (FT-s-2 REPAIR 1: `box/run.py` `_check_account_columns` accepts null for prices.txt and security.txt only; module suite 208 passed; I also ran `check_pointers` locally on a config of the measured daily shape: it passes, and a null for position is still refused). Deliver the shipped set from head 8a6b473b366 or later (only `box/run.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-19-<date>`), `fu10m`. Same rules as before: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
+
+### REOPENED (issuer, 2026-10-21 ~03:05Z) -- twentieth delivery: box/daily.py prints the AdapterShapeError message, head a721306c27f
+
+Your row D1-S11 is acted on (FT-s-2 REPAIR 2: `box/daily.py` prints `ERROR: attribute shape: <message>` and records `attribute_error` for `AdapterShapeError` only, every other exception stays class-only; module suite 209 passed). Deliver the shipped set from head a721306c27f or later (only `box/daily.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-20-<date>`), `fu10m`. Same rules: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
 
 ### ACCEPTANCE
 
