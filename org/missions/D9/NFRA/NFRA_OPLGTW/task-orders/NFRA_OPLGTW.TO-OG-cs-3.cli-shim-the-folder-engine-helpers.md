@@ -74,6 +74,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cs-3.cli-shim-the-folder-engine
 - Pre-cut: `AC1` and `AC2` base FAIL as expected (`app.folder_engine` absent); `AC3` base FAIL as expected. Arm on a SCRATCH copy of the gateway app (the shared tree untouched): a scratch `folder_engine.py` reads `AC1` OK (all seven arms) and `AC2` OK (all six arms; the footer read cost 65,536 of 357,521 bytes).
 
 <status>pending</status>
+<status>complete</status>
 <round>48</round>
 <workstream>CLISHIM-B</workstream>
 <slot>~183</slot>
