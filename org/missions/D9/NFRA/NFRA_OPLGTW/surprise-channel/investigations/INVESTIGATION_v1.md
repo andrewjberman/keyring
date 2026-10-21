@@ -31650,3 +31650,31 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Needs the issuer's amendment of rl18.AC1 (the n = 12 test and the expect text). Not a gate I may work around; everything else in Phase A proceeds."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-21T08:44:15Z",
+  "id": "NFRA_OPLGTW-Z-S446",
+  "one_line": "Issuer ruling on the applier's row Z-S445 (OG-rl-18): the take list is twelve gateway files and 13 paths differ with the manifest key; the count in the order and rl18.AC1 was the issuer's miscount since amendment A12, now corrected",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S445"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The issuer counted the TAKE variable of rl18.AC1.sh: 12 entries (4 of OG-rt-1, 5 of OG-ed-1, 2 of OG-mp-1, and app/refs/DATA_CATALOG.yaml). 4 + 5 + 2 is 11 code files; the amendment A12 of 2026-10-20 wrote 'ten', and the check's want of 10, later 11 and 12 with the catalog and manifest, inherited it. No check ran against a release until Phase A, so the miscount stayed unseen.",
+      "The applier's ferry 08:36Z: release 7863a9d65b11170a30d663d76834104eadd6ce6a cut on the live ref 2923d1ee99 with all twelve files; on its dry run every other AC1 count reads its want (outside 0, missing 0, not byte-equal to trunk 0, barred 0, one manifest key a577f99afc81, catalog md5 yes, harvest 4 of 4)."
+    ]
+  },
+  "spec_asserts": "A criterion's count of files equals the take list the same criterion names.",
+  "world_is": "The criterion disagreed with its own take list by one. RULED: the take list is right, the count was wrong. rl18.AC1 now tests 13 differing paths (twelve files and the manifest key); the order's text, bounds and expect string say twelve and 13; nothing is dropped, because each file is named by a cell and differs from the live ref.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The count was the issuer's error; amended in the order and the check with the take list unchanged; the applier's cut was right and proceeds."
+}
+```
