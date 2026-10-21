@@ -1,6 +1,6 @@
 """BUILD the release-34q resident tarball and its four host scripts from a pin (BUILD ONLY: nothing is uploaded, installed, applied or run on a host).
 
-usage: python -I r34q_build.py --pin <full 40-hex commit> --out <stage folder outside the repository> --record <RESIDENT_R34P_BUILD.json to write>
+usage: python -I r34q_build.py --pin <full 40-hex commit> --out <stage folder outside the repository> --record <RESIDENT_R34Q_BUILD.json to write>
 
 Run it from the repository root (or any worktree of it). The stage folder must not exist yet. It refuses unless the builder, the packer, the
 clock wrapper, the smoke and the files-from list on disk equal the same files at the pin, and the script generator (make_scripts_r34q.py, a copy
@@ -9,7 +9,7 @@ install starts); build twice under one fixed clock and compare member by member;
 removed; the build REFUSES unless exactly SHA256SUMS, reports/resident_bindings.json (only provenance.package_pin changes), ycharts/generate/resident_worker.py,
 ycharts/research/opal_packager.py and reports/resident_installed.py changed, and nothing is added or removed); the import smoke; derive the four host scripts from the r31 set over the
 r34p root; `bash -n` each; dry-run the two sha256 gates (an unchanged copy passes, a one-byte copy refuses); write the record.
-Prints one RESULT line: R34P-BUILD-OK <members> ... or R34P-BUILD-BAD <why>. ASCII only. No aws call of any kind.
+Prints one RESULT line: R34Q-BUILD-OK <members> ... or R34Q-BUILD-BAD <why>. ASCII only. No aws call of any kind.
 """
 import argparse
 import hashlib
@@ -51,11 +51,12 @@ BUILD_ARGS = [
     "--analysis-ready-queue-url", "https://sqs.us-east-1.amazonaws.com/313476888478/outlook-global-commentary-draft-analysis-ready-queue",
     "--commentary-ready-queue-url", "https://sqs.us-east-1.amazonaws.com/313476888478/outlook-global-commentary-draft-commentary-ready-queue",
     "--packager", "api_base=https://opalinvest.dev,secret_name=opal/ticketing/svc-irpt-packager",
+    "--tickets-table", "opal-tickets",  # the audit source's ticket table (AR-y-483/484; ticket-center/main.tf names it)
 ]
 
 
 def bad(why):
-    print("R34P-BUILD-BAD %s" % why)
+    print("R34Q-BUILD-BAD %s" % why)
     sys.exit(1)
 
 
@@ -191,10 +192,15 @@ def main():
             bad("policy hashes unreadable in %s: %s" % (root, got.stderr[-160:]))
         return json.loads(got.stdout.strip().splitlines()[-1])
     ph_new, ph_old = policy_hashes(x34), policy_hashes(x_r34n)
+    # a moved hash is tolerated ONLY for a revision that is PENDING_ENFORCEMENT in both trees (it can hold no retention rows: retention
+    # needs an ACTIVE revision; the census of the r34o hashes found 0 rows under it) and only the dashbd revision (IRPT_DASHBD's work in
+    # progress, edited on trunk since r34n); any ACTIVE revision that moved is a refusal (CTO msg 11639)
     moved = sorted(k for k in ph_old if ph_new.get(k) != ph_old[k])
+    bad_moved = [k for k in moved if k != "irpt-dashbd-x10-v1" or ph_old[k][0] != "PENDING_ENFORCEMENT" or ph_new[k][0] != "PENDING_ENFORCEMENT"]
     added_revs = sorted(set(ph_new) - set(ph_old))
-    if moved or added_revs != ["irpt-anlreq-audit-x10-v1"] or ph_new["irpt-anlreq-audit-x10-v1"][0] != "ACTIVE":
-        bad("registry revisions: moved %s added %s (want none moved, only irpt-anlreq-audit-x10-v1 added and ACTIVE)" % (moved, added_revs))
+    if bad_moved or added_revs != ["irpt-anlreq-audit-x10-v1"] or ph_new["irpt-anlreq-audit-x10-v1"][0] != "ACTIVE":
+        bad("registry revisions: moved %s (not tolerated: %s) added %s (want no ACTIVE revision moved, only irpt-anlreq-audit-x10-v1 added and ACTIVE)" % (moved, bad_moved, added_revs))
+    print("NOTE registry revisions moved but tolerated (PENDING_ENFORCEMENT in both, no rows possible): %s" % moved)
     if bindings["opal_pricing"] != {"enabled": True, "tiers": ["estate", "yfinance", "ycharts"]} or bindings32["opal_pricing"] != bindings["opal_pricing"]:
         bad("opal_pricing is not exactly the tiers estate, yfinance, ycharts (enabled) in both r34p and r34q: %r -> %r" % (bindings32["opal_pricing"], bindings["opal_pricing"]))
     if bindings["ycharts_window_budget"] != {"calls": 6, "window_s": 390} or bindings32["ycharts_window_budget"] != bindings["ycharts_window_budget"]:
@@ -254,7 +260,7 @@ def main():
     pool_doc = json.load(open(x34 + "/ycharts/research/swap_pool.json", encoding="utf-8"))
     producer_line = next(ln for ln in worker_text.split("\n") if ln.startswith("OPAL_PRODUCER_PRINCIPALS"))
     record = {
-        "schema_version": "irpt-resident-r34q-build-v1", "record_id": "RESIDENT_R34P_BUILD", "issued_by": "2.0.0_SA_COO~G2",
+        "schema_version": "irpt-resident-r34q-build-v1", "record_id": "RESIDENT_R34Q_BUILD", "issued_by": "2.0.0_SA_COO~G2",
         "scope_statement": "BUILD ONLY: nothing was uploaded, installed, applied, invoked or run on a host; no aws call was made.",
         "artifact": {"path": tar_path, "bytes": os.path.getsize(tar_path), "sha256": sha_file(tar_path), "member_count": len(w34),
                      "sha256sums_file": {"path": sums_path, "sha256": sha_file(sums_path), "lines": len(open(sums_path).read().splitlines())}},
@@ -277,7 +283,7 @@ def main():
     }
     with open(args.record, "w", encoding="ascii", newline="\n") as fh:
         fh.write(json.dumps(record, indent=2, sort_keys=True) + "\n")
-    print("R34P-BUILD-OK %d members, builds identical %d of %d, changed %d added %d removed %d, scripts %d, tar %s" % (
+    print("R34Q-BUILD-OK %d members, builds identical %d of %d, changed %d added %d removed %d, scripts %d, tar %s" % (
         len(w34), len(a), len(a), len(changed), len(added), len(removed), len(scripts), record["artifact"]["sha256"]))
     return 0
 
