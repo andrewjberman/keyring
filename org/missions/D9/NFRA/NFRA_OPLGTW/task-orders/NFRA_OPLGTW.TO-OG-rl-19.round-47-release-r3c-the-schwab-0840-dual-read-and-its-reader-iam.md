@@ -101,6 +101,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rl-19.round-47-release-r3c-the-
 
 <status>staged</status>
 <status>pending</status>
+<status>complete</status>
 <round>47</round>
 <workstream>ENRICH-R47-O</workstream>
 <slot>~AE</slot>
