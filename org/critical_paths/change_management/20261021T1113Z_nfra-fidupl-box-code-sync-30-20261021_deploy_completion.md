@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-21T11:13:57.331483+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261021T111503Z
 **Deploy:** NFRA_FIDUPL FU-s-10 thirtieth delivery: land.py, split.py, backfill_main.py, backfill_adapter.py from HEAD 6c410be6b81 (contains a973776db99); file copy plus one dry import; land.py is tomorrow's 09:45Z lander
 **Authored by:** 0.7.0_AE_CloudOps~NFRA1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,8 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | ec2-baked-asset | every shipped file at /opt/fidelity-uploader equals the repo; land.py imports on the box (thirtieth delivery) | SSM md5sum of the RUNNING files; fu10m R1-FU10M-OK all N shipped files; dry import rc 0 |  | OPEN |
+| L1 | ec2-baked-asset | every shipped file at /opt/fidelity-uploader equals the repo; land.py imports on the box (thirtieth delivery) | SSM md5sum of the RUNNING files; fu10m R1-FU10M-OK all N shipped files; dry import rc 0 | Thirtieth delivery from HEAD 09dd73d79e2 (contains a973776db99) over SSM, sha256 HASH-MATCH: backfill_adapter.py, backfill_main.py, land.py, split.py (19 others already equal). fu10m: R1-FU10M-OK all 23 shipped files match the repo on the box. Dry import on the box from the code root (venv python -c 'import land'): rc 0, no output. land.py is tomorrow's 09:45Z lander. File copy plus that one import only: config.json, config.daily.json, work/, both profiles and fidelity-agent-chrome.service not touched; no sign-in; no cookie touched. | CLOSED 20261021T111502Z |
 
 ## Log
 
 - 20261021T111357Z OPENED by 0.7.0_AE_CloudOps~NFRA1 with 1 leg(s)
+- 20261021T111502Z LEG L1 closed: Thirtieth delivery from HEAD 09dd73d79e2 (contains a973776db99) over SSM, sha256 HASH-MATCH: backfill_adapter.py, backfi
+- 20261021T111503Z CLOSED -- all 1 legs proven
