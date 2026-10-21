@@ -30834,3 +30834,30 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S241 -- Run 7f strands seven synthetic state objects (both retained report PDFs among them) the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S241",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T01:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7f, a request whose two report PDFs opened (the Overview, 42 pages, and the commentary, 2 pages), left SEVEN synthetic state objects, including both retained PDFs, that the CloudOps principal cannot delete (AccessDenied); 13 index rows and the synthetic user read ABSENT. Exact keys and VersionIds are in residue_7f.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7f/residue_7f.json (bucket, key, version_id, size for each of seven objects, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_commentary_e2e7f/state_e2e7f.json (leftover_delete_code AccessDenied; upload_identified: 1 of 47 UPLOAD rows matched the synthetic address and the run's holdings hash, recorded at creation)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair's rule that a run deletes what it creates; the order's 'for this run's own residue that your principal cannot delete, list each exact key and its VersionId in residue_7f.json and file the row'.",
+  "world_is": "These objects remain, one version each, bucket opal-data-irpt: irpt/49financial/state/analysis_commentaries/ART-ae38d40148927dd697fe5489e94cd692203a760785db37633e77fbe7d12e6b72/796c8251ad888a8d6f1867dc152908da23e6bb9e4459fae3e5d8cd56193615da.json (VersionId qlhAajGJDbGzvX00sk.G3Ppn9RmGrl..); irpt/49financial/state/extraction_evidence/ART-62423fc3e88228befbbce3657cf38db73c69b9528b324acb26c13a9fa635e2a6/45201eb0e32ab11077e2cbb9a15bce927348f9f91dc0474254e99731675e92cb.json (VersionId gRfEPNWWBU5ew6rlUQOrnX7NF1A1TwZh); irpt/49financial/state/normalized_portfolios/ART-3999de3be9630ec6818f2a322e0a7341c1a0c2fdb327106c6c595b461c116ce6/fb3edebd68a7897a978da16cf929ad3f195fd79d920d25ad9f2f87e25ef5616b.json (VersionId eeN0GG7Y4rLW49PUsC1E4VOklhHy374B); irpt/49financial/state/original_holdings/ART-87504ab2955c0be5e5b1b4972677f8df9743ee2afde3095af6b417fe23e797ba/dfb01a2c1201dde9baebaa6120e8887d03e25cb405182c9fd86ea96c85688042.csv (VersionId Zj05iBWFlk9b6iubrWfmvWAua9n.RjBT); irpt/49financial/state/request_compositions/ART-ec82b458cf79678f8d4bf957253ab8e763d70dfe81d3b9511392572dd7d8782c/f0bbb01ca8ecdef3d4ac13dc0a8a3c9074848749cb0798eff4a031d1a9661e01.json (VersionId DDluzsOvue4_sHTobevh77cp.Sj4Ecgx); irpt/49financial/state/ycharts_opal_reports/ART-0eb1ae4e92160e320bd70ad5d189d39307358ef2b3f04ae763318c378d476428/74d8b3e803c2821368d9b3588b9c4c649c89ffdc45ed673ee879f2283d90b9c1.pdf (VersionId e16.4ZW7J7KRlkyCjlz72SSy7i2BDjpg); irpt/49financial/state/ycharts_opal_reports/ART-267c653f87db2dc66d0bf4de0591065eb165513ffcb75e2cdaf85e346f4e9324/9026e1de3398732ea0841fd16a80e76ff0473215bf7a7a7be6e3b156c4fa44c4.pdf (VersionId .3LoK5YkuIh2hGud9eUhe9RGsBsvGrFt). No index row points at them. The synthetic holdings carry no client data. The leftover objects of runs 7 (S229), 7b (S232), 7c (S234), 7d (S237) and 7e (S240) also remain.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
