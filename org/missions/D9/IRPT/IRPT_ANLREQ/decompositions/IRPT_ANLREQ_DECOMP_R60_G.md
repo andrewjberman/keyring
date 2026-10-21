@@ -214,3 +214,15 @@ The CTO's run 7M (msg 11977) is one live Multi-Comp with two Opal models and one
 `AR-g-193` carries `<workstream>~GREL13</workstream>`. It shares no file with AR-g-191/192 (worker 382, one chain). The 7M order itself (IB2) is cut after the r34t release is live. Run 7M as a Multi-Comp reads the ETF and the per-model dates live; the exclusion line and page 21 are read live in an Overview run (Y2's 7N, which should carry a kept unknown ticker as well as BREIT), and the exclusion line is proved at producer level on the real multi map (`checks/ar_enrich2_checks.py excl`, multicomp case).
 
 fanout: 2 of 2 chains, cap 8, reason: the instrument cell shares no file with the layout chain; portal_ref: 234cddba2d837df16380f039fad1c227a472d7e5 (the PROD tip the instrument was built against).
+
+## Addendum 14 2026-10-21 (issuer): cell AR-g-194, the r34t build
+
+AR-g-189 to AR-g-192 are merged and verified on the full tree (29e7175108f: `ar_enrich_checks.py` four arms and `ar_enrich2_checks.py` four arms OK; the drain run of `ycharts/research/tests`, `test_resident_main.py`, `test_frozen_worker.py` and `test_compare_ports.py` reads 804 passed), with the C-SWAP model leg of the other COO already on the trunk (3dac9960e2b). Measured by rehearsal at pin d458b8111e (`R34T-BUILD-OK`: 325 members, builds identical 325 of 325, changed 9, added 2, removed 0, smoke 87 of 87, gate dry runs 0, 31, 0, 33, tarball sha256 fcc15e8cef51b9ff755e2f5458c8064fd1fe1885ca255873e38d1dd83a4683a4): the release moves SHA256SUMS, reports/build_resident_package.py, reports/resident_bindings.json, reports/resident_installed.py, ycharts/generate/resident_worker.py, ycharts/research/layout_overview.py, model_source.py, opal_producer.py, swap_pass.py and adds etf_classification_model.py and ycharts/research/swap_model.py. `checks/ar_release_t_checks.py` (record, tree, scripts) reads OK on the rehearsal and refuses the r34s tarball offered as r34t and a record missing a mover.
+
+| cell | what is produced | write set | risk |
+|---|---|---|---|
+| `AR-g-194` | the r34t tarball, sums and four host scripts into stage `C:/dev/irpt-release-r34t-g2` (BUILD ONLY), a record and a proof | the worker folder `r67/` | LOCAL |
+
+AR-g-194 carries `<workstream>~GREL14</workstream>` (worker slot 384).
+
+fanout: 3 of 3 chains, cap 8, reason: the build cell is independent of the instrument cell AR-g-193 (no shared file).
