@@ -84,6 +84,10 @@ FU-s-2 REPAIR 15 is merged (the Playwright launch no longer forges a user agent 
 
 FU-s-2 REPAIR 16 is merged (the authorize wait keeps polling after a non-2xx answer). Fidelity signed the puller in at 00:32Z and our wait said refused; this delivery lets the next run land a day. Deliver the shipped set from head 47219723923 or later (only `signin.py` differs from your fourteenth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-15-<date>`), check `fu10m`, same rules: file copy only, no browser, no sign-in, nothing under either profile directory, leave `fidelity-agent-chrome.service` as it is. Tell the issuer in one line the moment `fu10m` reads OK.
 
+### REOPENED (issuer, 2026-10-21 ~01:20Z) -- sixteenth delivery, URGENT: land.py and split.py changed at 9256d6aa99a
+
+FU-s-4 REPAIR 1 (the lander reads each file's own date column and the run record gains an outcome) and FR-s-2 REPAIR 3 (split.py passes the file name) are merged; the whole module suite reads 164 passed. Deliver the shipped set from head 9256d6aa99a or later (`land.py` and `split.py` differ from your fifteenth delivery), a NEW ledger (slug `nfra-fidupl-box-code-sync-16-<date>`), check `fu10m`, same rules: file copy only, no browser, no sign-in, nothing under either profile directory, leave `fidelity-agent-chrome.service` as it is. Tell the issuer in one line the moment `fu10m` reads OK: the re-land of the three held files waits on it.
+
 ### ACCEPTANCE
 
 <criterion id="FU10-AC1" cell_refs="FU-s-10"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fu10m</invocation><expect>R1-FU10M-OK all \d+ shipped files match the repo on the box</expect></criterion>
