@@ -31094,3 +31094,34 @@
   "disarm_owner": "2.0.0_SA_COO~Y2"
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W353-S1 -- AR-y-485 names "controls kind is script"; the reference instance carries script as an artifact kind
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W353-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~353",
+  "surfaced_at": "2026-10-21T03:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The AR-y-485 worker face says the proof instance's controls kind is script. In the AR-y-459 reference instance and in PROOF_OF_SPEC.schema.json, script is an artifacts_produced kind and controls carries only mutant and determinism. The instance was built to that shape.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-485.audit-policy-row-flips-to-active-with-the-applied-audit-policy-commit.md@7e876c89cda (WORKER FACE, the proof_of_spec clause: 'its controls kind is script')",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~325/IRPT_ANLREQ.TO-AR-y-459.run7b-browser-leg-script-re-proved-offline-against-the-advisor-required-form.proof_of_spec.json (artifacts_produced entries carry kind script; the controls block has keys mutant and determinism only)",
+      "org/standards/PROOF_OF_SPEC.schema.json else branch (controls: required mutant and determinism, additionalProperties false)"
+    ]
+  },
+  "spec_asserts": "Worker face, proof_of_spec clause: the instance copies the shape of the AR-y-459 instance, 'read it first; its controls kind is script'.",
+  "world_is": "In that instance and in the schema, the kind script sits on each artifacts_produced entry (the check script carries kind script and a commit_or_etag). The controls block has no kind field. The AR-y-485 instance was built with the check script as a kind script artifact pinned to its commit, and controls as mutant and determinism.",
+  "notes": "Verdict on the proof is the checker's exit code only. No criterion, path or expectation changed."
+}
+```
+
+---
