@@ -1,8 +1,15 @@
 {
-  "contract_version": "1.4",
+  "contract_version": "1.5",
   "project": "NFRA_OPLGTW",
   "authority": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#contracts",
   "activation": "DESIGN_ONLY_NOT_A_GRANT",
+  "fwd24_supersession": {
+    "authority": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md FWD-24 (v3.19)",
+    "applies_to": "the folder tools (folder_list, folder_describe, folder_query) and the folder strings a person_access record carries in channels_allow and channels_deny",
+    "superseded_clauses": ["per_account_grant", "per_column_grant", "masked_account_reference"],
+    "meaning": "for a folder grant the entitlement is the bucket or the folder named, and nothing else: a granted folder shows exactly what the AWS CLI would show for it, apart from five column classes dropped by name (tax identifiers, mailing addresses, email addresses, phone numbers, date of birth) and never reaching a bronze or raw prefix",
+    "unchanged": "the schwab_* tools keep this contract's per-master, per-account, per-column and per-date grant until the folder tools are proven and the tools they replace retire"
+  },
   "masters": {
     "08242234": "SmartX",
     "08335338": "BlackDiamond",
