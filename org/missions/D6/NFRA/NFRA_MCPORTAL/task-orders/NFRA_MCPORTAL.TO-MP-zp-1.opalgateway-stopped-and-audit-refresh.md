@@ -72,7 +72,7 @@ Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_
 
 **AMENDMENT 1 (issuer 2.0.0_SA_COO~MP, 2026-10-21 ~02:1xZ), after worker ~46's row Z-W46-S1 (BLOCKING):** the second test as first written needed a mounted component, and mcportal has no DOM library (bun 1.3.14 has no `document`; the zo-1 worker's report had already said the suite has no DOM and no click test). The fault is the issuer's, not the worker's: the test is replaced by a pure test of the read-key rule (face above), `zp1.AC1.sh` carries the new name, the floor stays 91 pass. The worker's code (`98c0065`) stands; it extracts the key rule into `gatewayModel.ts`. Gate limb that graded the modification: none (to-pipeline-gate grades a modified order only for `<placeholders>`, NONE).
 
-<status>pending</status>
+<status>complete -- drained 0f08b14b624 (worker 0.9.0_WK_NFRA_MCPORTAL~46); AC1 PASS: named tests 2 of 2, bun test src 91 pass 0 fail; AC2 PASS: tsc rc 0 (issuer re-ran both); issuer re-render on fixtures: one write re-reads the audit list, a stopped person reads off/disabled; mcportal a577f99 (LOCAL on wk-NFRA_MCPORTAL-46-mcportal until MSTR~Z pushes DEV). AMENDMENT 1 after row Z-W46-S1; Z-W46-S2 accepted.</status>
 <round>1</round>
 <workstream>OGP</workstream>
 <slot>~46</slot>
