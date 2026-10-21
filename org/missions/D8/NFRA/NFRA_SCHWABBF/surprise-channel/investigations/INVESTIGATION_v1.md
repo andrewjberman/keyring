@@ -1594,6 +1594,50 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r2 step 4: for each ENTITLED master, the pull of the last trading day D ends 'DAILY PULL OK'; a day with no files on a trading day dies loud, report it, do not retry with another window. Step 5: landed keys equal the builder address and thread_trace reads the bronze hop held.",
     "world_is": "Each master's served window (2026-10-11..2026-10-21) holds 71 to 78 distinct files, yet none whose AsOf partition date is 2026-10-20. The puller names two readings of its own exit: the floor moved, or the day is not a business day for the feed. The latter is not true by the calendar (2026-10-20 is a Tuesday trading day). What is NOT measured: which partition dates the 71 to 78 files carry, whether Schwab has yet published 2026-10-20 for the Cottonwood masters (the 49F masters' T-1 files arrive after 09:45Z), and whether the new Cottonwood accounts' data starts later than D. I did not retry with another window or run an enumerate-only call, as the order says. Nothing was written to S3. FWD-8's one trace and the AL-r6 gate step 1 (read one day end to end) depend on the same missing day.",
     "notes": "For the issuer (2.0.0_SA_COO~SA): choose the day for the first trace, for example the newest partition date the window actually holds (an enumerate-only read of the window would show it without downloading), then re-cut step 4 for that day. The box, the login and the four entitlements are sound: entitlement exit 0, session lock acquired and released four times, token read as Administrator."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S15",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T15:34:01Z",
+    "one_line": "On the Alongside box the puller's enumerate mode prints no per-feed date lines, and an -OnlyAsOf probe over every calendar day of the search window (2026-10-11 to 2026-10-21, 11 days) exits 9 for all four Cottonwood masters although the window enumerates 71 to 78 files each; no D can be found and nothing was pulled.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step4_enumerate_08719286.json, _08134043.json, _08165601.json, _08480305.json: mode=enumerate lookback=10d exit 0; ENUMERATED=71, 78, 78, 78; after '--- ENUMERATE ONLY (no downloads) ---' the next line is '=== enumerate complete ===' with no '/type n=.. date..date' line (the Group-Object loop at sdd-daily-pull.ps1 lines 561-567 logged nothing)",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step4_walk_<master>.json (4 files): enumerate-only probes -OnlyAsOf 2026-10-19, 16, 15, 14, 13, 12 per master: all 24 exit 9; no download",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step4_probe2_<master>.json (4 files): enumerate-only probes -OnlyAsOf 2026-10-21, 18, 17, 11 per master: all 16 exit 9; no download",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step5_landed_read.txt: 0 keys under schwab/cottonwood/bronze/ (nothing was written); step4_cleanup_check.json: no task or lock left, rules DISABLED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r2 step 4 (amended): D is the newest AsOf day the login serves, read from an enumerate-only log that prints the distinct AsOf dates; then one day is pulled and traced.",
+    "world_is": "Both readings of the missing evidence are open and neither is measured: (a) the 71 to 78 files carry AsOfDATE values outside 2026-10-11..2026-10-21 (the search is by posting date, so a recently posted file can carry an older as-of day, for example a history load for newly onboarded accounts), or (b) the per-feed summary loop and the -OnlyAsOf comparison both fail on the plan items in this scheduled-task context. The first reading is consistent with the 49F masters' behaviour (their latest bronze day is 2026-10-20); the second would also explain the empty summary. The puller is an exact copy I may not edit, so I did not run a diagnostic variant. Open options for the issuer, none run: (1) a download-mode run without -OnlyAsOf over LookbackDays 10 lands all 71 to 78 files per master (more than one day; condition 6 says no pull beyond the first-day trace); (2) a one-file diagnostic with no SNS topic; (3) read the files' dates from the Schwab web view in Andrew's sitting.",
+    "notes": "This is the observation row the issuer asked for in msg 110136 (the unprinted per-feed lines, cause unmeasured, not a fix). TO-AL-r2 steps 4 and 5 and the TO-AL-r6 gate remain unmet; r6 step 2 stays unstarted."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S16",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T15:41:49Z",
+    "one_line": "The whole-window pull of master 08719286 on the Alongside box (no -OnlyAsOf, LookbackDays 10) enumerated and canonicalized 71 of 71 files, then died with exit 5: DENOMINATOR MISMATCH, in-scope=71 but accounted=0 (downloaded=0 skipped=0 failed=0); nothing landed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step4_fullpull_08719286.json: SSM 2eab0ed0 Success; TASK-EXIT-CODE=5; log lines 'ENUMERATED=71', 'canonicalized 71/71 files', '--- DENOMINATOR: enumerated=71 out-of-day=0 in-scope=71 downloaded=0 skipped=0 failed=0 accounted=0 ---', 'FATAL DENOMINATOR MISMATCH ... 71 file(s) VANISHED between enumeration and the loop'",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r2/step5_landed_read_fullpull.txt: KeyCount 0 under schwab/cottonwood/bronze/ and schwab/08719286/bronze/; positive control schwab/08242234/bronze/ reads 5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-AL-r2 step 4 (re-amended @7da6b2250d): the unchanged puller over the 10-day window accounts for itself (DENOMINATOR line) and lands the files; the landed date= keys give D.",
+    "world_is": "The run enumerated 71 files and canonicalized all 71, then the download loop accounted for none and the guard raised. Both this and the earlier 40 of 40 exit-9 probes sit after 'canonicalized 71/71', so the common reading is that the per-file items carry a shape the later loop does not match in this scheduled-task context (an AsOfDATE or type field the loop reads as empty). That reading is unmeasured; the puller is an exact copy I may not edit and the order says do not retry another window. Nothing was written to S3, no other master was pulled, the session lock was released, the task unregistered, rules DISABLED. The run used the SNS argument, so the FATAL may have paged the alert topic.",
+    "notes": "Stopped per the order's clause: the run died, log tail reported, no retry. TO-AL-r2 steps 4 and 5 and the TO-AL-r6 gate remain unmet."
   }
 ]
 ```
