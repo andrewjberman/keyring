@@ -30727,6 +30727,59 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W350-S1 -- AR-y-481 criterion AC3 as named cannot pass: test_audit_live_wiring.py leaks sys.path and test_generate_installed.py fails to collect after it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W350-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~350",
+  "surfaced_at": "2026-10-21T00:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-481 AC3 runs pytest on reports/tests/test_analysis_audit.py, ycharts/generate/tests/test_audit_live_wiring.py and reports/tests/test_generate_installed.py in that order; the run ends '1 error in 0.34s' at collection (rc 2), so the expected '^[0-9]+ passed in ' does not match. The same three files pass in other orders (52 passed reversed; 39 passed for the first and third; 13 passed for the second alone).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_audit_live_wiring.py@728aa33c37d lines 17-27: module-level sys.path.insert of ycharts/generate, ycharts/research, ycharts/session, reports, _keys and lib with no restore (test_analysis_audit.py restores sys.path at lines 17-32 with _sys_path_restored; this file does not)",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py@728aa33c37d line 32: assert Path(GENERATE_ENTRY.__file__) == ycharts/generate/entry.py; the run resolves module entry to ops/entry.py",
+      "measured at 728aa33c37d in infra/aws/lambda/investor-reporting: pytest test_analysis_audit.py test_generate_installed.py -> 39 passed; pytest test_audit_live_wiring.py test_generate_installed.py -> 1 error during collection; pytest test_generate_installed.py test_audit_live_wiring.py test_analysis_audit.py -> 52 passed; pytest test_audit_live_wiring.py alone -> 13 passed"
+    ]
+  },
+  "spec_asserts": "AR-y-481 AC3: (cd infra/aws/lambda/investor-reporting && python -m pytest reports/tests/test_analysis_audit.py ycharts/generate/tests/test_audit_live_wiring.py reports/tests/test_generate_installed.py -q --color=no -p no:cacheprovider 2>&1 | tail -1) expect ^[0-9]+ passed in .",
+  "world_is": "The collision predates AR-y-481: the sys.path leak is in lines 17-27 of test_audit_live_wiring.py, which this order changed only by adding an autouse fixture after line 42. The order's grant does not cover fixing module-level import hygiene in that file for a defect outside the new revision, so the defect is filed and not fixed. AC3 as named reads FAIL; the order stays open unless the CTO or the COO rules the invocation or the import hygiene.",
+  "notes": "INERT: a collection-time import interaction between test files. No runtime path, no deploy, no AWS call is affected."
+}
+```
+
+## IRPT_ANLREQ-D2-W350-S2 -- stale policy naming after AR-y-481 in analysis_audit.py (docstring) and resident_audit_policy.tf (comment), both outside this order's edit
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W350-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~350",
+  "surfaced_at": "2026-10-21T00:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "After AR-y-481 POLICY_REVISION is irpt-anlreq-audit-x10-v1, but two comments still name irpt-anlreq-x10-v1 as the ANALYSIS_AUDIT policy: the module docstring of reports/analysis_audit.py (line 11) and the header comment of ycharts/resident_audit_policy.tf (line 16). The order's grant said 'and nothing else' for analysis_audit.py and did not list resident_audit_policy.tf, so neither comment was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/analysis_audit.py@728aa33c37d line 11: under policy irpt-anlreq-x10-v1 (docstring; line 25 POLICY_REVISION is irpt-anlreq-audit-x10-v1)",
+      "infra/aws/terraform/investor-reporting/ycharts/resident_audit_policy.tf@728aa33c37d line 16: comment names irpt-anlreq-x10-v1 family ANALYSIS_AUDIT; the local it reads, resident_audit_write_prefixes, is built from irpt-anlreq-audit-x10-v1 in resident.tf"
+    ]
+  },
+  "spec_asserts": "AR-y-481 change (2): in analysis_audit.py point the policy revision at irpt-anlreq-audit-x10-v1 and nothing else; AR-y-481 change (3): resident.tf only, no other file changes.",
+  "world_is": "Two comments now misname the audit policy row. No code path reads a comment. A later edit of those comments needs a grant on the two files.",
+  "notes": "INERT: comments only. Left as the order states."
+}
+```
+
 ## IRPT_ANLREQ-D2-W335-S1 -- the cell's double-quoted comparable refusal is stripped by the instrument's own clean(), so AC3's expected line cannot match it; printed with single quotes
 
 ```json

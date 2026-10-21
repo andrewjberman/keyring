@@ -51,10 +51,17 @@ oracle, because the keystroke proves delivery, not submission.)
 
 ## Preconditions + cautions (all load-bearing)
 
-- **The tab must be TITLED with the lane serial at creation** (WT `suppressApplicationTitle`
-  pins creation titles). Untitled tabs are correctly NOT found — title every Codex/lane tab
-  with its serial when instantiating; that convention is what makes positive identification
-  possible.
+- **BY PROCESS FIRST (2026-10-21, CTO ruling 8873).** A seat spawned by `spawn-agent.ps1` is a
+  powershell.exe whose command line ends with `# OPAL_SPAWN_MARKER_v1: <serial>`. `unstick.ps1` finds
+  that process (exactly one, else it refuses), and `--peek` writes the console's screen TEXT to a
+  `.txt` (read it with Read; no image), `--keys` types plain text and Enter into THAT console only
+  (`unstick_console.ps1`, AttachConsole): no focus, no tab cycling, so a project-titled tab (`-Tab
+  <PROJECT>`) is reachable and a sibling tab with the same title cannot be keyed. It refuses to key a
+  host with no live `claude.exe` child, and it sends plain text plus `{ENTER}` only (no `^ % +` SendKeys).
+  Not measured on a live claude seat: keys into a claude composer; peek first and verify the submit.
+- **Fallback: the tab TITLED with the lane serial at creation** (WT `suppressApplicationTitle`
+  pins creation titles) is used when no host process carries the serial's marker (a manually
+  launched Codex/lane tab). Untitled, unmarked tabs are correctly NOT found.
 - **Operator-initiated only.** The procedure steals desktop focus for its duration
   (~seconds) and ends with each cycled window back on its original tab.
 - **A seat not actually at a prompt** receives the keys into its input buffer (submitted as
