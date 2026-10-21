@@ -1527,6 +1527,49 @@ seat's row is `NFRA_SCHWABBF-S<k>`; the CVO's adjudication rows live in `../adju
     "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-r3 step B1: the plan of the two targets, 2 to add, applies; the variant fence and its attachment exist afterwards.",
     "world_is": "The IAM CreatePolicy API accepts tag values made of letters, digits, spaces and _ . : / = + - @ only. The text 'one-way fan-in fence (schwab variant)' has '(' and ')'. A one-token fix in silver.tf line 608, for example 'one-way fan-in fence - schwab variant', passes the pattern. This order may not edit a .tf file (Bounds: a defect is a report, the issuer re-cuts), so the apply is stopped at B1; B2 to B5 and step C were not started because B5 detaches the shared fence and depends on B1. Step A (the fence rows) passed. The window 12:00-20:00Z has time left.",
     "notes": "Re-pin needed: after the fix lands on box/laptop, redo steps B1 to B5 and C from the new commit. The test data/canonical/schwab/tests/test_converter_fan_in_fence.py checks the two resource lists, not the tag characters; a check of tag characters against the IAM pattern would have caught this at the cut."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S12",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T13:05:10Z",
+    "one_line": "TO-BF-r3 step B3 cannot deploy the converter code: the module takes its code from an S3 artifact that still holds the 2026-10-14 build, so the plan changes only the OPAL_BUILD_COMMIT label (12ecbe2b8f -> 27acf60210) and no code hash; 6 of the 12 deployed files differ from the package directory at the pin.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r3/plan_b3.txt: target module.silver_converter[\"schwab\"]; 'Plan: 0 to add, 1 to change, 0 to destroy.'; the only changed attribute is environment variables OPAL_BUILD_COMMIT \"12ecbe2b8f\" -> \"27acf60210\"; no source_code_hash or s3_object_version line",
+        "infra/aws/terraform/modules/yang-lambda/main.tf lines 17-39: the function reads s3_object_version and source_code_hash (metadata content-sha256) from data.aws_s3_object.artifact, key opal-assets/opal-assets-silver-schwab.zip in opal-313476888478-lambda-artifacts",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB3_precondition.txt: latest version ovDRfjMvBLEop3VPgTcBxE10KhrgeOGs, uploaded 2026-10-14T00:31:21Z, 77,397 bytes, content-sha256 U6l7D4fUe125WC53/GblkfHQKtDbpzRorHLLsvlbFmc=; the deployed function's CodeSha256 is the same value; 13 versions of the key exist",
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r3/stepB3_code_compare.txt: the deployed zip (12 files) against infra/aws/lambda/opal-assets/opal-assets-silver-schwab/ at 237f9d51e5: 6 identical, 6 different (backfill_status.py, conversion_manifest.py, schwab_conversion.py, schwab_projections.py, schwab_runtime.py, set_identity_guard.py), 0 only in the zip, 1 only in the directory (BUILD_MANIFEST.json)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO NFRA_SCHWABBF.TO-BF-r3 step B3 EXPECTED: an in-place update of that one function: code hash and the OPAL_BUILD_COMMIT environment value only.",
+    "world_is": "The code hash is not in the plan because no new package has been built and uploaded under the artifact key; the new source sits in the repo directory. Applying the plan as it stands would label the function with the new pin while it keeps running the 2026-10-14 code (a claim the bytes do not carry). Building the zip and writing it to the artifact bucket is an S3 write outside this order's legs (Bounds), so B3 is not applied. B1 and B2 are applied and inert until B4 and B5. B4, B5 and C are not started: B4 must follow the new code, and the CTO's order is fence, converter, puller.",
+    "notes": "Needed from the issuer: who builds the package from the pin and writes it to s3://opal-313476888478-lambda-artifacts/opal-assets/opal-assets-silver-schwab.zip with metadata content-sha256 (base64 of the zip's sha256), then B3 is re-planned and must show a source_code_hash line beside the label. Not measured: the package builder for this family and whether a build at 27acf60210 gives the same six files as the directory at 237f9d51e5."
+  },
+  {
+    "id": "NFRA_SCHWABBF-S13",
+    "project": "NFRA_SCHWABBF",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+    "surfaced_at": "2026-10-21T13:05:10Z",
+    "one_line": "The apply-time naming gate graded the three new schwab inline policy names OUT-OF-PATTERN (it expects a -policy suffix) in its warn-only window; the apply was not blocked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~NFRA1/r3/apply_b2.txt: NAMING REFUSE aws_iam_role_policy.silver_read_schwab_firm_prefix opal-assets-silver-schwab-read-firm-prefix -> opal-assets-silver-schwab-read-firm-prefix-policy; the same for silver_state_write_schwab_firm (state-write-firm) and silver_write_schwab_firm_silver (write-firm-silver); 'NAMING-PLAN: WARN 10 graded'; '(WARN window: 3 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 30: every resource name is name() output; the commit-time naming gate refuses names today.",
+    "world_is": "The three policies exist under the hand-typed names that the TO-BF-r3 order and the release plan list. Nothing broke; if the gate's enforcement is switched on, a re-plan of this root would flag them. Renaming an inline policy replaces it, so it is a later cell's decision.",
+    "notes": "Form only. The same run printed a placement-step error that came from my sparse worktree lacking an unrelated .tf file, not from the repo."
   }
 ]
 ```
