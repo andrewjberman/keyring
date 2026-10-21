@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -95,6 +95,10 @@ Merged since your sixteenth delivery: FT-s-1 (`switcher_list.py`, `perg_seed.py`
 ### REOPENED (issuer, 2026-10-21 ~03:00Z) -- eighteenth delivery: split.py (null account column) and the backfill seam fix, head f75a19d0646
 
 Merged since your seventeenth delivery: FR-s-2 REPAIR 4 (`split.py`: prices and security are not split) and FT-s-7 REPAIR 2 (`backfill_adapter.py`, `backfill_main.py`, `backfill_run.py`). Deliver the shipped set from head f75a19d0646 or later, a NEW ledger (slug `nfra-fidupl-box-code-sync-18-<date>`), check `fu10m`. Same rules: file copy only, no browser, no sign-in, nothing under either profile directory or `/opt/fidelity-uploader/work`, the agent Chrome unit and `config.json` as they are. One line to the issuer when done: the daily-mode proof run (TO-FT-s-8 step 2) waits on it.
+
+### REOPENED (issuer, 2026-10-21 ~03:10Z) -- nineteenth delivery: box/run.py accepts the null account column, head 8a6b473b366
+
+Your row D1-S10 was right and is fixed (FT-s-2 REPAIR 1: `box/run.py` `_check_account_columns` accepts null for prices.txt and security.txt only; module suite 208 passed; I also ran `check_pointers` locally on a config of the measured daily shape: it passes, and a null for position is still refused). Deliver the shipped set from head 8a6b473b366 or later (only `box/run.py` differs), a NEW ledger (slug `nfra-fidupl-box-code-sync-19-<date>`), `fu10m`. Same rules as before: file copy only, nothing else touched. One line to the issuer; the new GO for TO-FT-s-8 step 2 follows from me.
 
 ### ACCEPTANCE
 
