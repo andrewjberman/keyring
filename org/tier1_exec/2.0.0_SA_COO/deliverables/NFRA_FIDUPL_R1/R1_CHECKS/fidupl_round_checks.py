@@ -122,6 +122,24 @@ TEST_FILES = {
         "test_profile_is_resolved_from_the_standing_rows_and_unresolved_is_a_named_stop"]),
     "fv2s": ("%s/tests/test_hist_walk_seam.py" % CF, [
         "test_real_lander_lands_position_prices_and_psn_by_content_date_on_a_fake_s3"]),
+    "fw1": ("%s/tests/test_api_walk.py" % CF, [
+        "test_accounts_are_read_from_the_newest_landed_account_file_column_zero",
+        "test_transaction_windows_are_consecutive_non_overlapping_and_at_most_365_days_anchored_once",
+        "test_an_account_walks_windows_back_until_the_first_empty_window_and_lands_each_by_window_end",
+        "test_a_window_with_2000_rows_is_split_in_halves",
+        "test_an_existing_window_is_not_fetched_again_and_an_existing_empty_window_ends_the_account",
+        "test_a_422_security_violation_is_no_access_recorded_and_not_retried",
+        "test_realized_lots_incomplete_range_is_split_by_date_until_totalcount_matches",
+        "test_realized_lots_land_one_object_per_account_range_by_range_end",
+        "test_open_lots_land_one_snapshot_per_account_by_new_york_day_and_flag_incomplete",
+        "test_the_state_file_resumes_done_accounts_and_the_anchor",
+        "test_wall_budget_and_surface_end_the_run_with_a_named_stop",
+        "test_an_auth_refusal_stops_at_once_and_a_429_or_503_is_a_throttled_stop",
+        "test_the_record_carries_counts_per_surface_and_the_earliest_content_date_per_account",
+        "test_main_signs_in_once_prints_progress_lines_and_closes_the_session",
+        "test_stdout_never_carries_an_account_number"]),
+    "fw1s": ("%s/tests/test_api_walk_seam.py" % CF, [
+        "test_real_address_builder_keys_the_three_surfaces_on_a_fake_s3"]),
     "ft7": ("%s/tests/test_backfill_adapter.py" % CF, [
         "test_empty_status_for_a_day_is_a_retention_stop", "test_refusal_is_an_entitlement_stop",
         "test_one_fetch_serves_all_six_kinds_for_a_day", "test_main_signs_in_once_and_respects_the_session_cap",
@@ -853,6 +871,43 @@ def histwalk_record():
         return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
 
 
+def apiwalk_record():
+    tag = "R1-FW2R"
+    try:
+        sys.path.insert(0, "lib")
+        import boto3
+        import opal_naming
+        prefix = opal_naming.address("fidelity", "alongside", "bronze", "_runs", "00000000").rsplit("/00000000", 1)[0] + "/"
+        m = re.match(r"s3://([^/]+)/(.*)$", prefix)
+        s3 = boto3.client("s3", region_name="us-east-1")
+        best = None
+        scanned = 0
+        for pg in s3.get_paginator("list_objects_v2").paginate(Bucket=m.group(1), Prefix=m.group(2)):
+            for o in pg.get("Contents", []):
+                scanned += 1
+                base = o["Key"].rsplit("/", 1)[-1]
+                if base.startswith("apiwalk-2") and (best is None or o["LastModified"] > best["LastModified"]):
+                    best = o
+        if best is None:
+            return out("%s-FAIL no apiwalk record under %s (scanned %d keys)" % (tag, prefix, scanned))
+        rec = json.loads(s3.get_object(Bucket=m.group(1), Key=best["Key"])["Body"].read().decode("utf-8"))
+        bad = []
+        if rec.get("apiwalk") is not True:
+            bad.append("apiwalk marker")
+        if rec.get("run_error"):
+            bad.append("run_error=%s" % rec.get("run_error"))
+        stop = rec.get("stop") or {}
+        if stop.get("reason") != "all_done":
+            bad.append("stop=%s (the walk is not finished)" % stop.get("reason"))
+        if bad:
+            return out("%s-FAIL %s" % (tag, " ".join(bad)))
+        per = rec.get("per_surface") or {}
+        floors = ",".join("%s:%s" % (k, (per.get(k) or {}).get("earliest_content_date")) for k in sorted(per))
+        return out("%s-OK apiwalk complete: earliest content date %s" % (tag, floors))
+    except Exception as e:  # noqa: BLE001
+        return out("%s-FAIL %s: %s" % (tag, type(e).__name__, str(e)[:120]))
+
+
 def daily_config_copy():
     tag = "R1-FT8C"
     try:
@@ -1164,7 +1219,7 @@ def tf_plan_perg():
 CHECKS = {
     "fu1": lambda: tests("fu1"), "fu2a": lambda: tests("fu2a"), "fu2b": lambda: tests("fu2b"), "fu2c": lambda: tests("fu2c"), "fu2t": lambda: tests("fu2t"),
     "fu3": lambda: tests("fu3"), "fu3c": fu3_contract, "fu4": lambda: tests("fu4"), "fu4d": fu4_dry,
-    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft11r": backfill_record, "ft12t": rule_targets, "ft13s": schedule_start_allowed, "ft14a": automation_getcmd_revoked, "ft15s": schedule_start_three_forms, "fv1": lambda: tests("fv1"), "fv2": lambda: tests("fv2"), "fv2s": lambda: tests("fv2s"), "fv3r": histwalk_record, "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
+    "fu5": lambda: tests("fu5"), "fu5b": fu5_boot, "fu10x": box_headed, "fu11f": chrome_fallback_records, "fu11c": box_cdp, "fu13i": automation_iam, "fu12h": lambda: tests("fu12h"), "ft1": lambda: tests("ft1"), "ft2": lambda: tests("ft2"), "ft3": lambda: tests("ft3"), "ft4": lambda: tests("ft4"), "ft7": lambda: tests("ft7"), "ft9": lambda: tests("ft9"), "ft11r": backfill_record, "ft12t": rule_targets, "ft13s": schedule_start_allowed, "ft14a": automation_getcmd_revoked, "ft15s": schedule_start_three_forms, "fv1": lambda: tests("fv1"), "fv2": lambda: tests("fv2"), "fv2s": lambda: tests("fv2s"), "fv3r": histwalk_record, "fw1": lambda: tests("fw1"), "fw1s": lambda: tests("fw1s"), "fw2r": apiwalk_record, "ft10": lambda: tests("ft10"), "ft8c": daily_config_copy, "ft8r": split_record_proof, "ft5i": box_put_grant, "ft6v": perg_version, "ft6r": rules_enabled, "fu12d": lambda: tests("fu12d"), "fu11s": chrome_fallback_signin, "fu6v": tf_validate, "fu6g": tf_guard, "fu6p": tf_plan,
     "fu7a": tf_nochange, "fr1a": lambda: tests("fr1a"), "fr1b": lambda: tests("fr1b"), "fr2": lambda: tests("fr2"), "fr3": lambda: tests("fr3"), "fr4": lambda: tests("fr4"), "fr6": lambda: tests("fr6"), "fr5p": tf_plan_perg, "fu5c": fu5_static, "fu6c": tf_venv, "fu6p2": tf_plan_doc_only, "fu7b": box_live, "fu8t": autoshutdown_tag, "fu8d": automation_no_stop, "fu8p": automation_role_describe_status, "fu9m": box_md5, "fu10m": box_md5_all, "fu7l": ledger, "x1r": x1_run, "x1g": x1_recon, "x1p": x1_probe,
 }
 
