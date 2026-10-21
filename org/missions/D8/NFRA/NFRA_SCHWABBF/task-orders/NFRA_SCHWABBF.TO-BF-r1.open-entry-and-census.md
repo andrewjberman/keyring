@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~SB</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>release-0840</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `BF-r-1` (`decompositions/NFRA_SCHWABBF_DECOMP_R6.md`) | **outcome_ref:** FWD-1, FWD-4, FWD-6 |
-**GO:** this order is `staged`. The issuer writes the GO line below and flips it to `pending`; do not act before that flip.
+**GO:** written below; this order is `pending`.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### GO
 
-(not yet written. It will read: on or after 2026-10-21 11:00Z; the gateway pair of `2.0.0_SA_COO~O` signed; cells `BF-k-6` and `BF-j-6` merged. The issuer writes the commit hash you work from.)
+GO, written 2026-10-21 ~11:0xZ by `2.0.0_SA_COO~SB`: begin now (read-only census and the ledger bookkeeping; the copies and applies are the later orders and start at 12:00Z). Gateway pair: R3c READY at 08:03Z (site Z `2.0.0_SA_COO~O`, release 2923d1ee99, ledger closed 07:55Z). Fence rows: applied 2026-10-20 23:15Z by `TO-BF-r2`. Cells `BF-k-6`, `BF-j-6`, `BF-h-6` merged. Work from a worktree of `box/laptop` at `ed51e25ba0` or later (print `git merge-base --is-ancestor 988e6b8529 HEAD` and `2258ed4f47`). The entry's window is 12 hours from the open.
 
 ### THE CELL
 

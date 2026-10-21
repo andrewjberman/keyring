@@ -32106,3 +32106,59 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W384-S1 -- the r34t tarball sha256 at pin c17477bc32 is 35a4f044, not the rehearsal's fcc15e8c, although the two builds were identical; the cell names this as an OBSERVATION
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W384-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~384",
+  "surfaced_at": "2026-10-21T11:04:52Z",
+  "one_line": "The r34t build at pin c17477bc32 wrote a tarball sha256 35a4f044c2bcae4d567c57132b833c101ab1872d9880bafd45cb0a4afe6af21d, not the issuer rehearsal value fcc15e8cef51b9ff755e2f5458c8064fd1fe1885ca255873e38d1dd83a4683a4; the two builds were identical and the cell names this difference as an OBSERVATION.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-194 Facts: the issuer's rehearsal tarball sha256 is fcc15e8cef51b9ff755e2f5458c8064fd1fe1885ca255873e38d1dd83a4683a4 and builds are held to a fixed clock, so the worker's tarball should equal it. Step 3: a difference is not a failure of this cell and is filed as an OBSERVATION row with both values.",
+  "world_is": "r34t_build.py at pin c17477bc32023d5e02776460d1814e138e9ddf65 printed R34T-BUILD-OK 325 members, builds identical 325 of 325, changed 9 added 2 removed 0; the tarball C:/dev/irpt-release-r34t-g2/irpt-resident-0485393f3a-r34t.tar.gz has sha256 35a4f044c2bcae4d567c57132b833c101ab1872d9880bafd45cb0a4afe6af21d, 1166418 bytes, 325 members. The record's tool_copies name make_scripts_r34t.py 4a983696319ca83cc50c7f48c81d45b6d3b48e026afc9e2a31086116c08ab950 and r34t_build.py f87d64ffc5d9fd9d35971cae0e492eac0c5800427624e9e99b088f14f73e7c47. The cause of the difference was not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "sha256sum of C:/dev/irpt-release-r34t-g2/irpt-resident-0485393f3a-r34t.tar.gz prints 35a4f044c2bcae4d567c57132b833c101ab1872d9880bafd45cb0a4afe6af21d; ls -l prints 1166418 bytes",
+      "builder log line in the worktree scratch: R34T-BUILD-OK 325 members, builds identical 325 of 325, changed 9 added 2 removed 0, scripts 4, tar 35a4f044c2bcae4d567c57132b833c101ab1872d9880bafd45cb0a4afe6af21d",
+      "TO-AR-g-194 Facts line naming fcc15e8cef51b9ff755e2f5458c8064fd1fe1885ca255873e38d1dd83a4683a4 as the rehearsal sha256, at the order file's vintage 59da26994c1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W384-S2 -- the r34t builder docstring says the build refuses unless portfolio_series.py changed, but its own EXPECT_CHANGED list names nine members without it and the build passed on that list
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W384-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~384",
+  "surfaced_at": "2026-10-21T11:04:52Z",
+  "one_line": "The r34t builder docstring names portfolio_series.py among the members that must change for the build to pass, but EXPECT_CHANGED and the measured delta do not; the build passed on the nine-member list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-194 step 2 says to read the builder's docstring first. The r34t_build.py docstring (lines 9-10) says the build REFUSES unless ycharts/research/layout_overview.py, opal_producer.py and portfolio_series.py changed and nothing is added or removed. The TO Facts name nine movers with no portfolio_series.py.",
+  "world_is": "r34t_build.py EXPECT_CHANGED (lines 32-33) lists nine names and none is portfolio_series.py. The record delta_vs_r34s.changed lists the same nine names and the build printed R34T-BUILD-OK. The docstring is stale against the code at d458b8111e4; the code agrees with the TO Facts and was not edited (the tools are read only to this order).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/r34t_build.py@d458b8111e4 line 10 (docstring) names portfolio_series.py as a required change",
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/r34t_build.py@d458b8111e4 lines 32-33 (EXPECT_CHANGED) list nine names with no portfolio_series.py",
+      "RESIDENT_R34T_BUILD.json delta_vs_r34s.changed (worktree r67 record) holds the nine names and no portfolio_series.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
