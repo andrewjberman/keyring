@@ -31266,3 +31266,58 @@
   "notes": "The W350-S1 leak in test_audit_live_wiring.py is not fixed here; it is outside this grant."
 }
 ```
+
+## IRPT_ANLREQ-D2-W361-S4 -- row W361-S1 describes the superseded alias form after AMENDMENT 1
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W361-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~361",
+  "surfaced_at": "2026-10-21T04:33:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row IRPT_ANLREQ-D2-W361-S1 says test_1's expected call was updated to the four-alias projection. AMENDMENT 1 (2026-10-21, issuer 2.0.0_SA_COO~Y2) removed the aliases and the ExpressionAttributeNames argument. The S1 row is now stale; the current expected call is ProjectionExpression of the plain names with no alias map.",
+  "spec_asserts": "Row W361-S1 (committed at 2f9606ddac3): test_1's expected call was updated to the four-alias projection, with no other assertion changed.",
+  "world_is": "After AMENDMENT 1 the committed test_1 expectation (0e148cb07d9) carries ProjectionExpression 'ticket_id, ticket_type, answers, created_at' and no ExpressionAttributeNames. The S1 statement about aliases is true only of the superseded form committed at 6dcfac8fbe1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_audit_live_wiring.py@0e148cb07d9 (test_1 expected call, plain-name projection)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_audit_live_wiring.py@6dcfac8fbe1 (superseded alias-form expectation)"
+    ]
+  },
+  "notes": "The S1 row is not edited; this row is the follow-up that corrects the record. The no-other-assertion-changed claim of S1 still holds for both forms."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W361-S5 -- the status flip to complete at HEAD removed the worker grant before the amendment could land
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W361-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~361",
+  "surfaced_at": "2026-10-21T04:33:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worker flipped AR-y-487 to complete at ce74278e2a0, and that status removed the worker's path grant. The AMENDMENT 1 commit was then refused by the owned-paths lane gate, which reads the order status at HEAD, so the amendment waited for the order to be reopened at f37dc157604. The order gave no warning that the complete flip ends the grant for any later commit.",
+  "spec_asserts": "The AR-y-487 order and the worker face: the worker's path grant is its non-terminal order's <paths>; the flip to complete is the worker's last commit on the order. The face does not say that a later amendment on the same order needs the order reopened first.",
+  "world_is": "The lane refusal at commit time listed the three amended code files as IRPT_COMPLETION_Y violations. The owned-paths gate reads the order status at HEAD and treats a complete order as granting nothing. The commit was refused, not bypassed; the audited override was not used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/owned-paths-validate.py (the terminal-status rule: a complete order grants nothing)",
+      "git commit f37dc157604 (reopen: status complete back to pending, by the COO lane)",
+      "git commit ce74278e2a0 (the flip to complete, HEAD at the time of the refusal)"
+    ]
+  },
+  "notes": "Resolved: the order was reopened and AMENDMENT 1 is committed at 0e148cb07d9. A follow-up for the issuer: a worker amendment after a flip needs the reopen first; the face should say so."
+}
+```
