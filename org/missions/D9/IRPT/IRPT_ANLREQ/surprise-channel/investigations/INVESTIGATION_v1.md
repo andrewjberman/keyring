@@ -31754,3 +31754,60 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S253 -- S222 resolved on G2's read; S220 stays live until run 7L
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S253",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-21T09:30:00Z",
+  "one_line": "S222 (r34l RecipeRefused) is resolved on 2.0.0_SA_COO~G2's measured read; S220 (kept unknown ticker refused CLOSED_COMPOSITION_REQUIRED) stays LIVE until G2's run 7L reads an unknown-ticker filing on the live resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S222"
+  ],
+  "spec_asserts": "S222: with commentary_requested omitted the r34l resident refused the request at the recipe step. S220: a request carrying a kept-as-typed unknown row was accepted by the door and then refused CLOSED_COMPOSITION_REQUIRED.",
+  "world_is": "G2's read org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/S220_S222_DISPOSITION_READS_20261021.md (a6f55a4119), reported in msg 11963 and not re-measured by this seat: S222, on the r34s modules, omitting commentary_requested is not refused; the vendor-path prepare refused history-priced holdings with or without the field (the S249 class), cured by AR-g-182 and proven by run 7J (PASS). S220: G2 names no commit that makes the door refuse an unknown ticker; by design NOT_KEPT stays UNRESOLVED for Keep and swap; its refusal was the S245 packaging defect (cured in r34q; inferred, run 5B's composition is deleted); a live unknown-ticker read (run 7L, one filing) is open. This seat has not read the S220 evidence itself.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/S220_S222_DISPOSITION_READS_20261021.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S222 only: cured by AR-g-182 and proven by run 7J per G2's measured read. S220 is NOT dismissed here: it stays live (UNDER_INVESTIGATION) until run 7L reads."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S254 -- Run 7k strands eight synthetic S3 objects (nine versions), the audit record and the retained report PDF among them, that the CloudOps principal cannot delete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S254",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-21T09:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Run 7k (RUN-DONE PASS: Multi-Comp PDF 60 pages, packager ATTACHED, audit AUDIT_WRITTEN) leaves EIGHT synthetic S3 objects (nine versions) that the CloudOps principal cannot delete, among them the audit record the resident wrote (one key, two versions) and the retained report PDF; 13 index rows and the synthetic user read ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7k/residue_7k.json (bucket, key, version_id, size for each version, from list-object-versions)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd10_multicomp_7k/state_e2e7k.json (leftover_delete_code AccessDenied; u: packager ATTACHED, audit AUDIT_WRITTEN)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~295/r54/ORIGINAL_HOLDINGS_DELETE_PATH.md W5: no principal the application deletes this prefix with was found"
+    ]
+  },
+  "spec_asserts": "The pair rule that a run deletes what it creates; the order: residue list in residue_7k.json.",
+  "world_is": "These objects remain, bucket opal-data-irpt: irpt/49financial/platinum/analysis_audit/ART-32dd396f2eaee6bafd221db092d9e6635847b778052f92289c77610f6c6657ee/32dd396f2eaee6bafd221db092d9e6635847b778052f92289c77610f6c6657ee.json (VersionId YFQbLl2d3PKoXTePngnBgoICfUgZv2lb); irpt/49financial/platinum/analysis_audit/ART-32dd396f2eaee6bafd221db092d9e6635847b778052f92289c77610f6c6657ee/32dd396f2eaee6bafd221db092d9e6635847b778052f92289c77610f6c6657ee.json (VersionId bwNWmMgqeP6YT0OvnhjWRGW0G7AYICNW); irpt/49financial/state/analysis_commentaries/ART-add8ac3882feb67fc763e23b55d292fc21b83a6f183d5c95de49edefe7793860/38d58e6a0a09a22733846951a5e4fa3477ad15869cd5bc4d323efb0d6957f439.json (VersionId YC15DroHZcsKBzocuw7Wj1M6qpoWttwG); irpt/49financial/state/extraction_evidence/ART-4d46e30520e65806c62d20bfebb5977442c098a512ddbd2745b691e39846d80b/b538e3a5ab914ea856f359aa6db1c83fc6ddd73753347cbda0b35fd027c402bd.json (VersionId TcbCMf1L0f0emKsnGITwCJ2Mr6A0twfr); irpt/49financial/state/normalized_portfolios/ART-6912aaeb9ff8aabf3222671e71f99979826e83fc1d301f851cf9b0970df7349c/0f97fe99afb7df0f734018ae17318d7139c7fb732fd29fdfaecde3669c7e9971.json (VersionId iECR9WyC1RsF7m6ymlrFGL7qBtdBK1Lr); irpt/49financial/state/original_holdings/ART-2d8954799cf18faf28dafb6a686e08574bda817c4e51944a1172fb0400ce2848/a0edb28fd0ee5b456c9aeb06e582174ecd58ae3dc522583537ae65c40b7df1af.csv (VersionId 0UMR_Uk_wjMC_7p_H7ibCFibsqrTNFhh); irpt/49financial/state/request_compositions/ART-856d5ed86555acbdd7e5865ee5e7e58bcc709c111de6172d2ef2a5a1af02b6d0/b183d4dff1e5e131eb353f459dd7b96a721f4e8b450326f45ae009e5bc4da79e.json (VersionId BhhmNHGizJUNsr3.zVyy68jc2HCJ80wh); irpt/49financial/state/ycharts_opal_reports/ART-139f537981a803dab8c87d9791ccc51fe861c73cca0bc3e828cf5c3ce9c02c4b/65a13e6a1901b9ae31aeab1a8c67d0baf41bae836b7c58e045d100db12ce8ff5.pdf (VersionId B9cSxHn6YnUKNdVBWDQJGIhDl6DT9pAn); irpt/49financial/state/ycharts_opal_reports/ART-ff3fdbfa0e4a625d801208722e5deff71f475f515ab9298793545c02575de2d9/2fc0ad5f87268a34b9c9a51e33577a50edbb5c1eb9d46359b2531978d0369a92.pdf (VersionId inie6naJWsh5Eb41vBQuJI.2FqcwUcqw). The two analysis_audit versions are the audit record the resident wrote. No index row points at the others. The synthetic holdings carry no client data.",
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
