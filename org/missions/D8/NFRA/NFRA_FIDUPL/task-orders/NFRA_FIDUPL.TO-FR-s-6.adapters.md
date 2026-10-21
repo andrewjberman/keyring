@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~5</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-20</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -43,12 +43,21 @@ The CRO read the response structure out of Andrew's human capture: `C:/Dev/ajb_w
 2. **Paging.** The total is `accountListResponse.pageResponse.available` (5197 in Andrew's book, with 2000 rows on the first page). `pageResponse` also carries `start` and `sessionCacheId` (both null on the single page captured); their live behaviour is UNMEASURED. Rewrite `make_account_lister`: send the first page WITHOUT `start`; read `available` and `sessionCacheId` from the first response; while the rows collected are fewer than `available`, request the next page with `start=<rows collected so far>` and, when `sessionCacheId` is non-null, `sessionCacheId=<that value>` (the request-side field names are the same two words, an assumption to file as ONE row); stop when collected reaches `available` or a page returns no rows; never loop more than 50 pages; if the loop ends short of `available`, raise `AdapterShapeError` carrying only the two counts (collected, available), never staying silent about a short list.
 Add four tests to the EXISTING `tests/test_adapters.py`: `test_extract_accounts_uses_measured_container_and_number_key`, `test_lister_stops_at_available_total`, `test_lister_sends_session_cache_id_on_later_pages`, `test_lister_fails_loud_when_short_of_available`. FR6-AC1 now needs ten; FR6-AC2 must still pass. Fakes only; no AWS, no live call, no account number in any output. Refresh the proof instance and flip only when both criteria PASS.
 
+### REPAIR 1 (issuer, 2026-10-21 ~03:25Z; CloudOps row D1-S12, your own row D1-W5-S4 predicted this branch) -- the live page-2 request form is unmeasured, so the lister finds it
+
+The daily-mode proof run reached the first G number's account list: page 1 returned 2000 rows with `available` 5204, and the next request under the form `start` + `sessionCacheId` returned no new distinct rows, so the lister failed loud (`collected 2000 of 5204 available`). Nothing in the repo or in the CRO's capture (RESEARCH_20261020_NFRA_FIDUPL_ACCOUNTLIST_SHAPE.md, "Not measured") names the live request form, and waiting for a capture stalls the project, so the lister DISCOVERS the form on the live API and says which one worked. Change `adapters.py` (`make_account_lister`), `box/daily.py` (one print) and `tests/test_adapters.py` only:
+1. A table `PAGING_FORMS` of candidate forms, tried in this order, each a function of (`n` = distinct rows collected so far, `session` = the last `sessionCacheId` seen or None, `available`) returning the EXTRA form fields to send with the usual four fields: form 0 = today's (`start`=n, plus `sessionCacheId` when known); 1 = `pageRequest.start`=n (+ `pageRequest.sessionCacheId`); 2 = `startIndex`=n; 3 = `offset`=n; 4 = `page`=(n // length)+1; 5 = `pageNumber`=(n // length)+1; 6 = `firstResult`=n; 7 = `from`=n; 8 = `startRow`=n; 9 = `start`=n alone (no session); 10 = the FIRST-page form again with `length` = `available` (one big page, no start). A form that returns a non-200 status or an `AdapterShapeError`-grade page is counted as "no new rows" for that form and the next is tried; only a non-200 on the FIRST page is fatal, as today.
+2. For page 2 and later: send the form currently in use; if a response adds NO new distinct number while the total is not yet reached, move to the NEXT form and resend (never the same form twice, never more than the table's length of extra requests in one lister call). The first form that adds new distinct numbers is KEPT for the rest of that call AND for every later call of the same lister (the lister object remembers it, so the other G numbers' lists do not search again). When the table is exhausted raise `AdapterShapeError("accountList paging: no form added rows; tried forms 0-10; collected %d of %d available")` (counts only).
+3. The lister exposes the index of the form in use as the attribute `lister.paging_form` (None until a second page was needed). `box/daily.py`: after the attribution stage finishes, print ONE line `OK: accountList paging form=<index>` when the attribute is not None (nothing when it is None or the lister has no such attribute); record it as `paging_form` in the coverage record. Names the candidate's INDEX only, never a field value.
+4. Everything else stays: distinct counting, `PAGE_CAP`, the PII drop, counts-only errors, the `finally` restore. The existing tests keep passing unchanged (form 0 is today's form).
+5. Two tests in the EXISTING `tests/test_adapters.py`: `test_lister_tries_other_paging_forms_and_keeps_the_one_that_yields_new_rows` (a fake that returns new rows only for form 3 `offset`: the lister ends with every row, `lister.paging_form == 3`, and a SECOND call of the same lister sends form 3 for its page 2 without trying forms 0-2 again) and `test_lister_names_the_forms_tried_when_none_yields_new_rows` (a fake that never pages: `AdapterShapeError` whose message holds the counts and the form range and no value). FR6-AC1 (`fr6`) now needs twelve named; FR6-AC2 (`fr4`) must still pass. The whole module suite: no failure, last line in your report. Synthetic data only (fakes). The checker is `fidupl_round_checks.py`. FAST: a live re-run waits on it.
+
 ### ACCEPTANCE
 
-<criterion id="FR6-AC1" cell_refs="FR-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fr6</invocation><expect>R1-FR6-OK passed=\d+</expect></criterion>
+<criterion id="FR6-AC1" cell_refs="FR-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fr6</invocation><expect>R1-FR6-OK passed=\d+</expect></criterion>
 `FR6-AC1` -- the ten named adapter tests (six built, four of the REPAIR) exist and pass.
 
-<criterion id="FR6-AC2" cell_refs="FR-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/r1_checks.py fr4</invocation><expect>R1-FR4-OK passed=\d+</expect></criterion>
+<criterion id="FR6-AC2" cell_refs="FR-s-6"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py fr4</invocation><expect>R1-FR4-OK passed=\d+</expect></criterion>
 `FR6-AC2` -- the five daily-orchestration tests still pass after the wiring edit.
 
 <expected_criteria>FR6-AC1,FR6-AC2</expected_criteria>
