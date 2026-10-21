@@ -3945,3 +3945,31 @@
   "notes": "This seat takes no override and writes no remediation row (the CVO's)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-21T00:30:34Z",
+  "class": "OBSERVATION",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "id": "NFRA_MCPORTAL-Z-S80",
+  "hazard_standing": "INERT",
+  "one_line": "Z-S63 is DISARMED: the client-data check running WARN-only with no hashed account-id list is the ruled design on every box (Andrew-direct 2026-10-09 ~19:2xZ), not a site Z defect.",
+  "dismissal_reason": "Z-S63 described a state that Andrew ruled intended. The Andrew-direct record says client-data-check.py stays wired and WARN-only and that the hashed id list it needs is NOT built, so the check never refuses a commit. The dell2 CTO confirmed at 2026-10-21 00:17Z that the ABSENT warn-and-pass is the intended state on every box and that no hash list is copied to another box by any route. Nothing is to be placed on site Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md (commit 3d758aed651, 1.0.0_SA_CTO), read in full by this seat at 2026-10-21 ~00:3xZ: item 3, 'client-data-check.py (8c1d8a1966) stays wired and WARN-only. The hashed id list it needs is NOT built (dell2's builder ask is withdrawn), so it never refuses a commit.'",
+      "1.0.0_SA_CTO~DELL2 msg 11652, relayed by 0.0.0_AB_MSTR~DELL2 (agentbus c0203208, 2026-10-21 00:17Z); its words, not measured by this seat: the ABSENT warn-and-pass is the intended state on every box; no hash list is copied to another box by any route; this supersedes item 1 of the containment ruling; the four lists on dell2 were set aside by that CTO on 10-11 06:54Z (msg 4327) and stay.",
+      "existence reads, names and counts only, nobody read or sent a list: the live path is ABSENT on site Z (ls of ~/.opal at 2026-10-21 ~00:1xZ shows demque and ps-lock), on the laptop (0.0.0_AB_MSTR, 00:16Z), on dell2 (0.0.0_AB_MSTR~DELL2, 00:16Z) and on dell1 (0.0.0_AB_MSTR~DELL1, 00:19Z, which adds that its CTO ruled dell1 unprovisioned by design, commit c7381f6135).",
+      ".tools/git-hooks/client-data-check.py header: ABSENT IS NOT EMPTY, with no hash list the gate prints a loud WARN naming the missing file and passes (exit 0)."
+    ]
+  },
+  "spec_asserts": "Z-S63 asserted that safe-commit's client-data check checks no commit on site Z for client account ids, and asked how the list is produced and by when it lands.",
+  "world_is": "True of the tool, and intended: on every box the check prints WARN and checks nothing for client account ids, because Andrew ruled that building the list is not worth the time. Still true after this disarm: no commit's content is checked against a hashed list. Per the dell2 CTO, an order's own pair or trace is what keeps client figures out where a half says so.",
+  "notes": "Filed by this seat, the disarm_owner of Z-S63. An earlier ferry of mine (00:20Z) called this a fabric-wide finding and said the set-aside had no stated reason; both were wrong and were withdrawn in a correction at 00:21Z. This row disarms Z-S63 only; Z-W37-S1 was already disarmed for MP-pf-7 by Z-S62. No account id, hash or list was read, copied or sent."
+}
+```
