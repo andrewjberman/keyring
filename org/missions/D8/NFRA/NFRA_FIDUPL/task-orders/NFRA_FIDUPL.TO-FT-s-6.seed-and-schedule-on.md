@@ -32,7 +32,7 @@
 1. Open a change-management entry (`.tools/deploy_ledger.py open --slug nfra-fidupl-schedule-on-<date> ...`; legs: seed, schedule).
 2. Run `/opt/fidelity-uploader/venv/bin/python /opt/fidelity-uploader/perg_seed.py` once through SSM. Its single stdout line is counts only: record it verbatim. Do not retry on a refusal: report it.
 3. Read the secret's current version id with `describe-secret` (never `get-secret-value`) and write `NFRA_FIDUPL.TO-FT-s-6.schedule_version.md` in your deliverables folder with the version id, the read time, and the counts line. Run `fidupl_round_checks.py ft6v`.
-4. Set `schedule_enabled = true` in the root's tfvars default or the variable default as the root's convention is, plan (exactly the three schedule rules change State to ENABLED, nothing else), and apply with `safe-apply`, no `-target`. Run `fidupl_round_checks.py ft6r`. Close the ledger. Do not start the automation by hand.
+4. **HOLD again (CTO 8919): this step runs ONLY after the issuer's message says ENABLE.** That message follows the CTO's countersign of the never-widen addendum that names the secret version, the seed run's keys, the rule expressions and the first fire read; no enable before the countersign is on file. Then set `schedule_enabled = true` in the root's tfvars default or the variable default as the root's convention is, plan (exactly the three schedule rules change State to ENABLED, nothing else), and apply with `safe-apply`, no `-target`. Run `fidupl_round_checks.py ft6r`. Close the ledger. Do not start the automation by hand.
 
 
 ### ACCEPTANCE
