@@ -103,3 +103,23 @@ per-firm split, schedule-on, and backfill follow. The only Andrew-side items are
   zero have been split into their firm homes to date (M).
 - **Plain answer: one combined export, split per firm after the fact (not per-G exports). The staged files hold all G numbers; none is
   split out yet.**
+
+## 8. Update (ms, bus e1c9a033) -- G-number route accepted; does auth get PAST the OTP?
+
+### G numbers -- settled
+The combined route is the **accepted design**: one master Alongside export, parsed and split per firm after landing. No per-G exports
+are engineered. (Recorded as agreed.)
+
+### Authentication -- does it get past the OTP into a session and pull data? **YES.**
+- Andrew sees Wealthscape OTPs arriving, so attempts are reaching the code step (his observation).
+- **The pipeline gets PAST the OTP.** Proof: three export files downloaded and landed in S3 (2026-10-19). A file can only download after a
+  fully authenticated session, which requires the OTP to have been read from the Quo line and submitted. So the run: signed in, **passed
+  the OTP**, listed the exports, downloaded, and landed (M, from the landed files).
+- **The OTP is NOT the chokepoint.** OTP delivery (to the Quo line) and entry both worked on the successful run.
+- **Where it currently breaks is AFTER auth, not at it:** the remaining three files (`account.txt`, `balance.txt`, `transact.txt`)
+  stalled in the **lander** on which column is the file's as-of date -- a parsing step that runs after the download, nothing to do with
+  the login or OTP. That is fixed (CRO @f5edc86965).
+- **Caveat (unchanged):** this is the first fully-successful pass. That every unattended morning run passes the Akamai behavioral check
+  and the OTP is not yet proven over multiple days; the recovery cell re-does the full sign-in (Quo OTP) when a stored session is refused.
+- **Plain answer: attempts get past the OTP into an authenticated session and pull data -- the OTP step works. The current stopping point
+  is the post-download file parser, now fixed, not authentication.**
