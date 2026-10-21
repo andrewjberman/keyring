@@ -108,7 +108,8 @@ TEST_FILES = {
         "test_psn_date_is_read_from_offset_17_as_mmddyy", "test_psn_lands_under_the_content_date_with_the_fixed_table_name",
         "test_psn_unreadable_date_is_a_named_failure_and_lands_nothing",
         "test_psn_existing_identical_is_skipped_and_different_is_not_overwritten",
-        "test_psn_non_trading_asof_lands_under_the_prior_trading_day"]),
+        "test_psn_non_trading_asof_lands_under_the_prior_trading_day",
+        "test_psn_run_record_key_does_not_collide_with_the_csv_lander_record_of_the_same_second"]),
     "fv2": ("%s/tests/test_hist_walk.py" % CF, [
         "test_one_custom_and_one_standard_request_per_trading_day_newest_first", "test_request_bodies_carry_the_measured_keys",
         "test_files_are_found_by_name_among_new_rows_of_the_request_day_and_downloaded",
