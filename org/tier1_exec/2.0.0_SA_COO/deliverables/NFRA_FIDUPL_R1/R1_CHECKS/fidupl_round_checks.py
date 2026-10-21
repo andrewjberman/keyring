@@ -89,7 +89,9 @@ TEST_FILES = {
     "ft7": ("%s/tests/test_backfill_adapter.py" % CF, [
         "test_empty_status_for_a_day_is_a_retention_stop", "test_refusal_is_an_entitlement_stop",
         "test_one_fetch_serves_all_six_kinds_for_a_day", "test_main_signs_in_once_and_respects_the_session_cap",
-        "test_completion_record_per_file_type_earliest_volume_and_limit"]),
+        "test_completion_record_per_file_type_earliest_volume_and_limit",
+        "test_non_trading_days_are_skipped_not_stops", "test_three_consecutive_empty_trading_days_are_the_retention_stop",
+        "test_main_walks_the_signed_in_domain_once_not_per_g"]),
     "ft4": ("%s/tests/test_backfill_run.py" % CF, [
         "test_one_row_per_g_with_earliest_date_and_reason", "test_run_cap_stops_the_walk_and_records_remaining",
         "test_session_count_rule_refuses_a_third_sign_in_today", "test_resumes_from_the_recorded_earliest_date",

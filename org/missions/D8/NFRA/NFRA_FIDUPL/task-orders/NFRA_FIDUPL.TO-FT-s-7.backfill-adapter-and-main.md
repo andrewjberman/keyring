@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_FIDUPL~8</issued_to>
 <issued_by>2.0.0_SA_COO~P1</issued_by>
 <issued_date>2026-10-21</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -33,10 +33,17 @@
 3. Five tests in `tests/test_backfill_adapter.py` (names in the criterion): fakes for the session, `fetch_day`, the lander and the clock.
 **Fakes only.** No AWS call, no live call, no sign-in, no real secret, no real export file; synthetic data. ASCII, Python 3.9 syntax, ruff py39 clean.
 
+### REPAIR 1 (issuer, 2026-10-21 ~02:10Z) -- your two ARMED rows W8-S1 and W8-S3 are real; close them
+
+Your rows were right and the merge (18a3954c22e) carries your work. Two changes, in `backfill_adapter.py` and `backfill_main.py` and their tests:
+1. **One walk for the signed-in domain, not one per G (row S1).** The Export Status list belongs to the login and its profile, not to the current G: `fetch_day` has no G parameter. `backfill_main` therefore runs the walk ONCE, for the signed-in domain, as ONE planner key (ordinal 0, named `domain` in the record), and never once per switcher G. The completion record says `scope: domain` and states that the per-G dimension of the standing exports is carried by the daily split, not by this walk.
+2. **A holiday is not a retention stop (row S3).** A day for which `trading_calendar.is_trading_day` (`lib/trading_calendar.py`) is False is SKIPPED without a request and is never a stop. An EMPTY listing on a trading day counts toward the stop only as the THIRD consecutive empty trading day: the walk stops then, with the evidence text `empty listing x3` and the earliest SERVED date as the floor; one or two empty trading days followed by a served day do not stop the walk.
+Add three tests to the EXISTING `tests/test_backfill_adapter.py`: `test_non_trading_days_are_skipped_not_stops`, `test_three_consecutive_empty_trading_days_are_the_retention_stop`, `test_main_walks_the_signed_in_domain_once_not_per_g`. FT-s-7-AC1 now needs eight named tests (your nine plus these may pass as eleven; the check requires the eight named ones present). Fakes only. Run the whole module suite and put its last line in your report.
+
 ### ACCEPTANCE
 
 <criterion id="FT-s-7-AC1" cell_refs="FT-s-7"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_FIDUPL_R1/R1_CHECKS/fidupl_round_checks.py ft7</invocation><expect>R1-FT7-OK passed=\d+</expect></criterion>
-`FT-s-7-AC1` -- the five named tests exist and pass.
+`FT-s-7-AC1` -- the eight named tests exist and pass.
 
 <expected_criteria>FT-s-7-AC1</expected_criteria>
 
