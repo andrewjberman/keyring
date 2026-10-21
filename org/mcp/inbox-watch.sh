@@ -80,7 +80,14 @@ fi
 
 # Resolve agent folder name (match on base serial)
 AGENT_DIR=""
+# EXACT folder name first (CloudOps lanes, 2026-10-20): the substring scan below hit
+# tier1_exec/0.7.0_AE_CloudOps~TM1 before tier2_senior/0.7.0_AE_CloudOps, so every CloudOps lane
+# watched inbox/0.7.0_AE_CloudOps~TM1/~<lane> while mail is delivered to inbox/0.7.0_AE_CloudOps/~<lane>.
 for tier in tier0_exec tier0_utility tier1_exec tier2_senior tier3_junior; do
+    if [ -d "$SCRIPT_DIR/../$tier/$BASE_SERIAL" ]; then AGENT_DIR="$BASE_SERIAL"; break; fi
+done
+for tier in tier0_exec tier0_utility tier1_exec tier2_senior tier3_junior; do
+    [ -n "$AGENT_DIR" ] && break
     for d in "$SCRIPT_DIR/../$tier"/*/; do
         [ -d "$d" ] || continue
         case "$(basename "$d")" in
